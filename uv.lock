@@ -1,0 +1,23 @@
+version = 1
+revision = 1
+requires-python = ">=3.10"
+
+[[package]]
+name = "niwrap-python"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "styxdefs" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "styxdefs", specifier = ">=0.5.0" }]
+
+[[package]]
+name = "styxdefs"
+version = "0.5.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/6a/e4/e2abd2d1030074e0b8889c3d17ec4026a879be56ad19d15a310d0bd695e7/styxdefs-0.5.0.tar.gz", hash = "sha256:27d3d480f572703059967afa44a97e0726c0f058cd42fc01dbd2d199495ec2e1", size = 5067 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6f/2c/5e0608fc3522b0aa54314251acefbc2cf3a7c528ca22151c2c2d5ae13114/styxdefs-0.5.0-py3-none-any.whl", hash = "sha256:58bc68d5e226e0f6a7fffc194f1f8e4bfb8f4f46757cc568fface92d131395bd", size = 6804 },
+]

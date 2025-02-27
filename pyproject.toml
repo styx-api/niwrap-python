@@ -1,0 +1,18 @@
+[project]
+name = "niwrap-python"
+version = "0.1.0"
+description = "Neuroimaging python wrappers"
+readme = "README.md"
+license = "LGPL-2.1"
+authors = [{ name = "Child Mind Institute", email = "cmi-dair@childmind.org" }]
+requires-python = ">=3.10"
+dependencies = [
+    "styxdefs>=0.5.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+source = ["niwrap/"]
