@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_XFM_METADATA = Metadata(
-    id="b079bee0db4c9532ed2211cab0dd571d7a59ebde.boutiques",
+    id="5d2f609783e9ca0ec5c5aa4fc30cc9ee58bf3d63.boutiques",
     name="convert_xfm",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -61,7 +61,7 @@ class ConvertXfmOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    output_trasnformation: OutputPathType | None
+    output_transformation: OutputPathType | None
     """Output transformation matrix."""
 
 
@@ -149,7 +149,7 @@ def convert_xfm_outputs(
     """
     ret = ConvertXfmOutputs(
         root=execution.output_file("."),
-        output_trasnformation=execution.output_file(params.get("out_file")) if (params.get("out_file") is not None) else None,
+        output_transformation=execution.output_file(params.get("out_file")) if (params.get("out_file") is not None) else None,
     )
     return ret
 
