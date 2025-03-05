@@ -575,19 +575,19 @@ def ants_apply_transforms_alpha_cargs(
 
 
 def ants_apply_transforms_param_params(
-    params: list[typing.Union[AntsApplyTransformsSigmaParameters, AntsApplyTransformsAlphaParameters]],
+    params_: list[typing.Union[AntsApplyTransformsSigmaParameters, AntsApplyTransformsAlphaParameters]],
 ) -> AntsApplyTransformsParamParameters:
     """
     Build parameters.
     
     Args:
-        params:.
+        params_:.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "param",
-        "params": params,
+        "params": params_,
     }
     return params
 
@@ -611,19 +611,19 @@ def ants_apply_transforms_param_cargs(
 
 
 def ants_apply_transforms_multi_label_params(
-    params: AntsApplyTransformsParamParameters,
+    params_: AntsApplyTransformsParamParameters,
 ) -> AntsApplyTransformsMultiLabelParameters:
     """
     Build parameters.
     
     Args:
-        params:.
+        params_:.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "multiLabel",
-        "params": params,
+        "params": params_,
     }
     return params
 

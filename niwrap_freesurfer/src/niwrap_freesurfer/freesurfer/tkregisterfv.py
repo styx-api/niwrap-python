@@ -116,7 +116,7 @@ def tkregisterfv_params(
     reg3: InputPathType | None = None,
     heat_flag: bool = False,
     regheader_flag: bool = False,
-    params: list[float] | None = None,
+    params_: list[float] | None = None,
     flip_x_flag: bool = False,
     flip_y_flag: bool = False,
     flip_z_flag: bool = False,
@@ -154,7 +154,7 @@ def tkregisterfv_params(
         heat_flag: Use heat map color tables for all volumes.
         regheader_flag: Create registration file assuming the two volumes share\
             a RAS.
-        params: Affine matrix parameters: translations in mm, rotations in\
+        params_: Affine matrix parameters: translations in mm, rotations in\
             degrees.
         flip_x_flag: Regheader with rx=180.
         flip_y_flag: Regheader with ry=180.
@@ -211,8 +211,8 @@ def tkregisterfv_params(
         params["mov3"] = mov3
     if reg3 is not None:
         params["reg3"] = reg3
-    if params is not None:
-        params["params"] = params
+    if params_ is not None:
+        params["params"] = params_
     if aux is not None:
         params["aux"] = aux
     return params
@@ -421,7 +421,7 @@ def tkregisterfv(
     reg3: InputPathType | None = None,
     heat_flag: bool = False,
     regheader_flag: bool = False,
-    params: list[float] | None = None,
+    params_: list[float] | None = None,
     flip_x_flag: bool = False,
     flip_y_flag: bool = False,
     flip_z_flag: bool = False,
@@ -465,7 +465,7 @@ def tkregisterfv(
         heat_flag: Use heat map color tables for all volumes.
         regheader_flag: Create registration file assuming the two volumes share\
             a RAS.
-        params: Affine matrix parameters: translations in mm, rotations in\
+        params_: Affine matrix parameters: translations in mm, rotations in\
             degrees.
         flip_x_flag: Regheader with rx=180.
         flip_y_flag: Regheader with ry=180.
@@ -505,7 +505,7 @@ def tkregisterfv(
         reg3=reg3,
         heat_flag=heat_flag,
         regheader_flag=regheader_flag,
-        params=params,
+        params_=params_,
         flip_x_flag=flip_x_flag,
         flip_y_flag=flip_y_flag,
         flip_z_flag=flip_z_flag,
