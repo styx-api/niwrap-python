@@ -1,6 +1,6 @@
 [project]
 name = "niwrap"
-version = "0.5.0"
+version = "0.5.1"
 description = "Neuroimaging Python wrappers"
 readme = "README.md"
 license = "LGPL-2.1"
