@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWIBIASCORRECT_METADATA = Metadata(
-    id="9185a0c94cb9a81f571005ce1de2411183c6df3f.boutiques",
+    id="4640ee70fc28dad36861c4fa612c0bcaeca0c5a2.boutiques",
     name="dwibiascorrect",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",
@@ -17,6 +17,13 @@ DwibiascorrectFslgradParameters = typing.TypedDict('DwibiascorrectFslgradParamet
     "__STYX_TYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
+})
+
+
+DwibiascorrectConfigParameters = typing.TypedDict('DwibiascorrectConfigParameters', {
+    "__STYX_TYPE__": typing.Literal["config"],
+    "key": str,
+    "value": str,
 })
 
 
@@ -37,6 +44,7 @@ DwibiascorrectParameters = typing.TypedDict('DwibiascorrectParameters', {
     "debug": bool,
     "force": bool,
     "nthreads": typing.NotRequired[float | None],
+    "config": typing.NotRequired[list[DwibiascorrectConfigParameters] | None],
     "help": bool,
     "version": bool,
     "ants_b": typing.NotRequired[str | None],
@@ -59,6 +67,7 @@ def dyn_cargs(
     return {
         "dwibiascorrect": dwibiascorrect_cargs,
         "fslgrad": dwibiascorrect_fslgrad_cargs,
+        "config": dwibiascorrect_config_cargs,
     }.get(t)
 
 
@@ -125,6 +134,47 @@ def dwibiascorrect_fslgrad_cargs(
     return cargs
 
 
+def dwibiascorrect_config_params(
+    key: str,
+    value: str,
+) -> DwibiascorrectConfigParameters:
+    """
+    Build parameters.
+    
+    Args:
+        key: temporarily set the value of an MRtrix config file entry.
+        value: temporarily set the value of an MRtrix config file entry.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "config",
+        "key": key,
+        "value": value,
+    }
+    return params
+
+
+def dwibiascorrect_config_cargs(
+    params: DwibiascorrectConfigParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append("-config")
+    cargs.append(params.get("key"))
+    cargs.append(params.get("value"))
+    return cargs
+
+
 class DwibiascorrectOutputs(typing.NamedTuple):
     """
     Output object returned when calling `dwibiascorrect(...)`.
@@ -153,6 +203,7 @@ def dwibiascorrect_params(
     debug: bool = False,
     force: bool = False,
     nthreads: float | None = None,
+    config: list[DwibiascorrectConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
     ants_b: str | None = None,
@@ -186,6 +237,7 @@ def dwibiascorrect_params(
         force: Force overwrite of output files.
         nthreads: Use this number of threads in multi-threaded applications\
             (set to 0 to disable multi-threading).
+        config: temporarily set the value of an MRtrix config file entry.
         help_: Display help information and exit.
         version: Display version information and exit.
         ants_b: N4BiasFieldCorrection option -b (initial mesh resolution in mm,\
@@ -224,6 +276,8 @@ def dwibiascorrect_params(
         params["continue_scratch_dir"] = continue_scratch_dir
     if nthreads is not None:
         params["nthreads"] = nthreads
+    if config is not None:
+        params["config"] = config
     if ants_b is not None:
         params["ants_b"] = ants_b
     if ants_c is not None:
@@ -293,7 +347,8 @@ def dwibiascorrect_cargs(
             "-nthreads",
             str(params.get("nthreads"))
         ])
-    cargs.append("[CONFIG]")
+    if params.get("config") is not None:
+        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -378,6 +433,7 @@ def dwibiascorrect(
     debug: bool = False,
     force: bool = False,
     nthreads: float | None = None,
+    config: list[DwibiascorrectConfigParameters] | None = None,
     help_: bool = False,
     version: bool = False,
     ants_b: str | None = None,
@@ -417,6 +473,7 @@ def dwibiascorrect(
         force: Force overwrite of output files.
         nthreads: Use this number of threads in multi-threaded applications\
             (set to 0 to disable multi-threading).
+        config: temporarily set the value of an MRtrix config file entry.
         help_: Display help information and exit.
         version: Display version information and exit.
         ants_b: N4BiasFieldCorrection option -b (initial mesh resolution in mm,\
@@ -447,6 +504,7 @@ def dwibiascorrect(
         debug=debug,
         force=force,
         nthreads=nthreads,
+        config=config,
         help_=help_,
         version=version,
         ants_b=ants_b,
@@ -458,10 +516,12 @@ def dwibiascorrect(
 
 __all__ = [
     "DWIBIASCORRECT_METADATA",
+    "DwibiascorrectConfigParameters",
     "DwibiascorrectFslgradParameters",
     "DwibiascorrectOutputs",
     "DwibiascorrectParameters",
     "dwibiascorrect",
+    "dwibiascorrect_config_params",
     "dwibiascorrect_fslgrad_params",
     "dwibiascorrect_params",
 ]
