@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOL2SUBFIELD_METADATA = Metadata(
-    id="ec503af3368509aa5b191ee5f77a6d7c5a57bc38.boutiques",
+    id="5eac73d445c940e914c3170cc398217dabfe1801.boutiques",
     name="vol2subfield",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -24,8 +24,15 @@ Vol2subfieldParameters = typing.TypedDict('Vol2subfieldParameters', {
     "avgwf_output": typing.NotRequired[str | None],
     "avgwfvol_output": typing.NotRequired[str | None],
     "color_table": typing.NotRequired[InputPathType | None],
+    "interpolation_nearest": bool,
+    "interpolation_trilin": bool,
     "interpolation_cubic": bool,
     "tmp_directory": typing.NotRequired[str | None],
+    "preset_subfield_lh_hippoamyg": bool,
+    "preset_subfield_rh_hippoamyg": bool,
+    "preset_subfield_lh_hbt": bool,
+    "preset_subfield_rh_hbt": bool,
+    "preset_subfield_thalamus": bool,
     "preset_subfield_brainstem": bool,
 })
 
@@ -90,8 +97,15 @@ def vol2subfield_params(
     avgwf_output: str | None = None,
     avgwfvol_output: str | None = None,
     color_table: InputPathType | None = None,
+    interpolation_nearest: bool = False,
+    interpolation_trilin: bool = False,
     interpolation_cubic: bool = False,
     tmp_directory: str | None = None,
+    preset_subfield_lh_hippoamyg: bool = False,
+    preset_subfield_rh_hippoamyg: bool = False,
+    preset_subfield_lh_hbt: bool = False,
+    preset_subfield_rh_hbt: bool = False,
+    preset_subfield_thalamus: bool = False,
     preset_subfield_brainstem: bool = False,
 ) -> Vol2subfieldParameters:
     """
@@ -108,8 +122,19 @@ def vol2subfield_params(
         avgwf_output: Run mri_segstats with --avgwf output to this file.
         avgwfvol_output: Run mri_segstats with --avgwfvol output to this file.
         color_table: Color table to use with mri_segstats.
+        interpolation_nearest: Use nearest neighbor interpolation.
+        interpolation_trilin: Use triliear interpolation.
         interpolation_cubic: Use cubic interpolation.
         tmp_directory: Temporary directory for debugging.
+        preset_subfield_lh_hippoamyg: Set subfield to\
+            lh.hippoAmygLabels-T1.v21.mgz.
+        preset_subfield_rh_hippoamyg: Set subfield to\
+            rh.hippoAmygLabels-T1.v21.mgz.
+        preset_subfield_lh_hbt: Set subfield to\
+            lh.hippoAmygLabels-T1.v21.HBT.mgz.
+        preset_subfield_rh_hbt: Set subfield to\
+            rh.hippoAmygLabels-T1.v21.HBT.mgz.
+        preset_subfield_thalamus: Set subfield to ThalamicNuclei.v10.T1.mgz.
         preset_subfield_brainstem: Set subfield to brainstemSsLabels.v12.mgz.
     Returns:
         Parameter dictionary
@@ -119,7 +144,14 @@ def vol2subfield_params(
         "input_volume": input_volume,
         "subfield_volume": subfield_volume,
         "registration_file": registration_file,
+        "interpolation_nearest": interpolation_nearest,
+        "interpolation_trilin": interpolation_trilin,
         "interpolation_cubic": interpolation_cubic,
+        "preset_subfield_lh_hippoamyg": preset_subfield_lh_hippoamyg,
+        "preset_subfield_rh_hippoamyg": preset_subfield_rh_hippoamyg,
+        "preset_subfield_lh_hbt": preset_subfield_lh_hbt,
+        "preset_subfield_rh_hbt": preset_subfield_rh_hbt,
+        "preset_subfield_thalamus": preset_subfield_thalamus,
         "preset_subfield_brainstem": preset_subfield_brainstem,
     }
     if output_volume is not None:
@@ -196,6 +228,10 @@ def vol2subfield_cargs(
             "--ctab",
             execution.input_file(params.get("color_table"))
         ])
+    if params.get("interpolation_nearest"):
+        cargs.append("--nearest")
+    if params.get("interpolation_trilin"):
+        cargs.append("--trilin")
     if params.get("interpolation_cubic"):
         cargs.append("--cubic")
     if params.get("tmp_directory") is not None:
@@ -203,6 +239,16 @@ def vol2subfield_cargs(
             "--tmp",
             params.get("tmp_directory")
         ])
+    if params.get("preset_subfield_lh_hippoamyg"):
+        cargs.append("--lh.hippoamyg")
+    if params.get("preset_subfield_rh_hippoamyg"):
+        cargs.append("--rh.hippoamyg")
+    if params.get("preset_subfield_lh_hbt"):
+        cargs.append("--lh.hbt")
+    if params.get("preset_subfield_rh_hbt"):
+        cargs.append("--rh.hbt")
+    if params.get("preset_subfield_thalamus"):
+        cargs.append("--thalamus")
     if params.get("preset_subfield_brainstem"):
         cargs.append("--brainstem")
     return cargs
@@ -267,8 +313,15 @@ def vol2subfield(
     avgwf_output: str | None = None,
     avgwfvol_output: str | None = None,
     color_table: InputPathType | None = None,
+    interpolation_nearest: bool = False,
+    interpolation_trilin: bool = False,
     interpolation_cubic: bool = False,
     tmp_directory: str | None = None,
+    preset_subfield_lh_hippoamyg: bool = False,
+    preset_subfield_rh_hippoamyg: bool = False,
+    preset_subfield_lh_hbt: bool = False,
+    preset_subfield_rh_hbt: bool = False,
+    preset_subfield_thalamus: bool = False,
     preset_subfield_brainstem: bool = False,
     runner: Runner | None = None,
 ) -> Vol2subfieldOutputs:
@@ -291,8 +344,19 @@ def vol2subfield(
         avgwf_output: Run mri_segstats with --avgwf output to this file.
         avgwfvol_output: Run mri_segstats with --avgwfvol output to this file.
         color_table: Color table to use with mri_segstats.
+        interpolation_nearest: Use nearest neighbor interpolation.
+        interpolation_trilin: Use triliear interpolation.
         interpolation_cubic: Use cubic interpolation.
         tmp_directory: Temporary directory for debugging.
+        preset_subfield_lh_hippoamyg: Set subfield to\
+            lh.hippoAmygLabels-T1.v21.mgz.
+        preset_subfield_rh_hippoamyg: Set subfield to\
+            rh.hippoAmygLabels-T1.v21.mgz.
+        preset_subfield_lh_hbt: Set subfield to\
+            lh.hippoAmygLabels-T1.v21.HBT.mgz.
+        preset_subfield_rh_hbt: Set subfield to\
+            rh.hippoAmygLabels-T1.v21.HBT.mgz.
+        preset_subfield_thalamus: Set subfield to ThalamicNuclei.v10.T1.mgz.
         preset_subfield_brainstem: Set subfield to brainstemSsLabels.v12.mgz.
         runner: Command runner.
     Returns:
@@ -310,8 +374,15 @@ def vol2subfield(
         avgwf_output=avgwf_output,
         avgwfvol_output=avgwfvol_output,
         color_table=color_table,
+        interpolation_nearest=interpolation_nearest,
+        interpolation_trilin=interpolation_trilin,
         interpolation_cubic=interpolation_cubic,
         tmp_directory=tmp_directory,
+        preset_subfield_lh_hippoamyg=preset_subfield_lh_hippoamyg,
+        preset_subfield_rh_hippoamyg=preset_subfield_rh_hippoamyg,
+        preset_subfield_lh_hbt=preset_subfield_lh_hbt,
+        preset_subfield_rh_hbt=preset_subfield_rh_hbt,
+        preset_subfield_thalamus=preset_subfield_thalamus,
         preset_subfield_brainstem=preset_subfield_brainstem,
     )
     return vol2subfield_execute(params, execution)

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRAIN_GCS_ATLAS_METADATA = Metadata(
-    id="915555870bf5ee316610cc5c539e20a5e0db415f.boutiques",
+    id="94c89e1dfe3d6f19edd5cc1f4b3eeb93c181a16d.boutiques",
     name="train-gcs-atlas",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,6 +17,8 @@ TrainGcsAtlasParameters = typing.TypedDict('TrainGcsAtlasParameters', {
     "__STYX_TYPE__": typing.Literal["train-gcs-atlas"],
     "manual_parcellation": typing.NotRequired[str | None],
     "subjlist_file": typing.NotRequired[InputPathType | None],
+    "left_hemi": bool,
+    "right_hemi": bool,
     "hemi_spec": typing.NotRequired[str | None],
     "output_gcs": str,
     "surf_reg": typing.NotRequired[InputPathType | None],
@@ -74,6 +76,8 @@ def train_gcs_atlas_params(
     output_gcs: str,
     manual_parcellation: str | None = None,
     subjlist_file: InputPathType | None = None,
+    left_hemi: bool = False,
+    right_hemi: bool = False,
     hemi_spec: str | None = None,
     surf_reg: InputPathType | None = None,
     color_table: InputPathType | None = None,
@@ -89,6 +93,8 @@ def train_gcs_atlas_params(
         output_gcs: Output GCS file.
         manual_parcellation: Manual parcellation; default is aparc_edited.
         subjlist_file: File containing the list of subjects.
+        left_hemi: Left hemisphere processing.
+        right_hemi: Right hemisphere processing.
         hemi_spec: Specify hemisphere for processing.
         surf_reg: Surface registration file; default is sphere.reg.
         color_table: Color table file.
@@ -101,6 +107,8 @@ def train_gcs_atlas_params(
     """
     params = {
         "__STYXTYPE__": "train-gcs-atlas",
+        "left_hemi": left_hemi,
+        "right_hemi": right_hemi,
         "output_gcs": output_gcs,
         "jackknife_flag": jackknife_flag,
     }
@@ -148,6 +156,10 @@ def train_gcs_atlas_cargs(
             "--f",
             execution.input_file(params.get("subjlist_file"))
         ])
+    if params.get("left_hemi"):
+        cargs.append("--lh")
+    if params.get("right_hemi"):
+        cargs.append("--rh")
     if params.get("hemi_spec") is not None:
         cargs.extend([
             "--hemi",
@@ -236,6 +248,8 @@ def train_gcs_atlas(
     output_gcs: str,
     manual_parcellation: str | None = None,
     subjlist_file: InputPathType | None = None,
+    left_hemi: bool = False,
+    right_hemi: bool = False,
     hemi_spec: str | None = None,
     surf_reg: InputPathType | None = None,
     color_table: InputPathType | None = None,
@@ -257,6 +271,8 @@ def train_gcs_atlas(
         output_gcs: Output GCS file.
         manual_parcellation: Manual parcellation; default is aparc_edited.
         subjlist_file: File containing the list of subjects.
+        left_hemi: Left hemisphere processing.
+        right_hemi: Right hemisphere processing.
         hemi_spec: Specify hemisphere for processing.
         surf_reg: Surface registration file; default is sphere.reg.
         color_table: Color table file.
@@ -273,6 +289,8 @@ def train_gcs_atlas(
     params = train_gcs_atlas_params(
         manual_parcellation=manual_parcellation,
         subjlist_file=subjlist_file,
+        left_hemi=left_hemi,
+        right_hemi=right_hemi,
         hemi_spec=hemi_spec,
         output_gcs=output_gcs,
         surf_reg=surf_reg,

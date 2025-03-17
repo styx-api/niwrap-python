@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANNOT2STD_METADATA = Metadata(
-    id="fcdd66f979c54df988b9364c89c1d5056e322ab6.boutiques",
+    id="2c9123403463828b0f1e87c964b86cb68c130b07.boutiques",
     name="annot2std",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -20,11 +20,14 @@ Annot2stdParameters = typing.TypedDict('Annot2stdParameters', {
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "subject_list_file": typing.NotRequired[InputPathType | None],
     "target": typing.NotRequired[str | None],
+    "left_hemisphere": bool,
     "right_hemisphere": bool,
     "xhemi": bool,
     "surfreg": typing.NotRequired[str | None],
     "srcsurfreg": typing.NotRequired[str | None],
     "trgsurfreg": typing.NotRequired[str | None],
+    "annotname": typing.NotRequired[str | None],
+    "aparc": bool,
     "a2009s": bool,
     "segmentation": typing.NotRequired[str | None],
     "stack": typing.NotRequired[str | None],
@@ -85,11 +88,14 @@ def annot2std_params(
     fsgd_file: InputPathType | None = None,
     subject_list_file: InputPathType | None = None,
     target: str | None = None,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     xhemi: bool = False,
     surfreg: str | None = None,
     srcsurfreg: str | None = None,
     trgsurfreg: str | None = None,
+    annotname: str | None = None,
+    aparc: bool = False,
     a2009s: bool = False,
     segmentation: str | None = None,
     stack: str | None = None,
@@ -106,11 +112,14 @@ def annot2std_params(
         fsgd_file: FSGD file for group descriptor.
         subject_list_file: Subject list file.
         target: Target subject (e.g., fsaverage).
+        left_hemisphere: Use left hemisphere.
         right_hemisphere: Use right hemisphere.
         xhemi: For interhemispheric analysis.
         surfreg: Surface registration type (default is sphere.reg).
         srcsurfreg: Source surface registration type (default is sphere.reg).
         trgsurfreg: Target surface registration type (default is sphere.reg).
+        annotname: Input annotation name (?h.annotname.annot).
+        aparc: Annotation name set to aparc.
         a2009s: Annotation name set to aparc.a2009s.
         segmentation: Save output as a surface segmentation (2 frames, second =\
             p).
@@ -124,8 +133,10 @@ def annot2std_params(
         "__STYXTYPE__": "annot2std",
         "output_annot_path": output_annot_path,
         "subjects": subjects,
+        "left_hemisphere": left_hemisphere,
         "right_hemisphere": right_hemisphere,
         "xhemi": xhemi,
+        "aparc": aparc,
         "a2009s": a2009s,
         "help": help_,
         "version": version,
@@ -142,6 +153,8 @@ def annot2std_params(
         params["srcsurfreg"] = srcsurfreg
     if trgsurfreg is not None:
         params["trgsurfreg"] = trgsurfreg
+    if annotname is not None:
+        params["annotname"] = annotname
     if segmentation is not None:
         params["segmentation"] = segmentation
     if stack is not None:
@@ -187,6 +200,8 @@ def annot2std_cargs(
             "--t",
             params.get("target")
         ])
+    if params.get("left_hemisphere"):
+        cargs.append("--lh")
     if params.get("right_hemisphere"):
         cargs.append("--rh")
     if params.get("xhemi"):
@@ -206,6 +221,13 @@ def annot2std_cargs(
             "--trgsurfreg",
             params.get("trgsurfreg")
         ])
+    if params.get("annotname") is not None:
+        cargs.extend([
+            "--a",
+            params.get("annotname")
+        ])
+    if params.get("aparc"):
+        cargs.append("--aparc")
     if params.get("a2009s"):
         cargs.append("--a2009s")
     if params.get("segmentation") is not None:
@@ -279,11 +301,14 @@ def annot2std(
     fsgd_file: InputPathType | None = None,
     subject_list_file: InputPathType | None = None,
     target: str | None = None,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     xhemi: bool = False,
     surfreg: str | None = None,
     srcsurfreg: str | None = None,
     trgsurfreg: str | None = None,
+    annotname: str | None = None,
+    aparc: bool = False,
     a2009s: bool = False,
     segmentation: str | None = None,
     stack: str | None = None,
@@ -307,11 +332,14 @@ def annot2std(
         fsgd_file: FSGD file for group descriptor.
         subject_list_file: Subject list file.
         target: Target subject (e.g., fsaverage).
+        left_hemisphere: Use left hemisphere.
         right_hemisphere: Use right hemisphere.
         xhemi: For interhemispheric analysis.
         surfreg: Surface registration type (default is sphere.reg).
         srcsurfreg: Source surface registration type (default is sphere.reg).
         trgsurfreg: Target surface registration type (default is sphere.reg).
+        annotname: Input annotation name (?h.annotname.annot).
+        aparc: Annotation name set to aparc.
         a2009s: Annotation name set to aparc.a2009s.
         segmentation: Save output as a surface segmentation (2 frames, second =\
             p).
@@ -330,11 +358,14 @@ def annot2std(
         fsgd_file=fsgd_file,
         subject_list_file=subject_list_file,
         target=target,
+        left_hemisphere=left_hemisphere,
         right_hemisphere=right_hemisphere,
         xhemi=xhemi,
         surfreg=surfreg,
         srcsurfreg=srcsurfreg,
         trgsurfreg=trgsurfreg,
+        annotname=annotname,
+        aparc=aparc,
         a2009s=a2009s,
         segmentation=segmentation,
         stack=stack,

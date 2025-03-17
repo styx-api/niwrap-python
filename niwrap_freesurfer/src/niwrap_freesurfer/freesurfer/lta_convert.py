@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LTA_CONVERT_METADATA = Metadata(
-    id="daaa6767af53c23e0e3f62c31924d12dbc6e0eaa.boutiques",
+    id="089d903b1865bcb03759aa837457f18ed456f5ed.boutiques",
     name="lta_convert",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,7 +15,19 @@ LTA_CONVERT_METADATA = Metadata(
 
 LtaConvertParameters = typing.TypedDict('LtaConvertParameters', {
     "__STYX_TYPE__": typing.Literal["lta_convert"],
+    "in_lta": typing.NotRequired[InputPathType | None],
+    "in_fsl": typing.NotRequired[InputPathType | None],
+    "in_mni": typing.NotRequired[InputPathType | None],
+    "in_reg": typing.NotRequired[InputPathType | None],
+    "in_niftyreg": typing.NotRequired[InputPathType | None],
+    "in_itk": typing.NotRequired[InputPathType | None],
     "in_vox": typing.NotRequired[InputPathType | None],
+    "out_lta": typing.NotRequired[str | None],
+    "out_fsl": typing.NotRequired[str | None],
+    "out_mni": typing.NotRequired[str | None],
+    "out_reg": typing.NotRequired[str | None],
+    "out_niftyreg": typing.NotRequired[str | None],
+    "out_itk": typing.NotRequired[str | None],
     "out_vox": typing.NotRequired[str | None],
     "invert": bool,
     "ltavox2vox": bool,
@@ -70,7 +82,19 @@ class LtaConvertOutputs(typing.NamedTuple):
 
 
 def lta_convert_params(
+    in_lta: InputPathType | None = None,
+    in_fsl: InputPathType | None = None,
+    in_mni: InputPathType | None = None,
+    in_reg: InputPathType | None = None,
+    in_niftyreg: InputPathType | None = None,
+    in_itk: InputPathType | None = None,
     in_vox: InputPathType | None = None,
+    out_lta: str | None = None,
+    out_fsl: str | None = None,
+    out_mni: str | None = None,
+    out_reg: str | None = None,
+    out_niftyreg: str | None = None,
+    out_itk: str | None = None,
     out_vox: str | None = None,
     invert: bool = False,
     ltavox2vox: bool = False,
@@ -84,7 +108,19 @@ def lta_convert_params(
     Build parameters.
     
     Args:
+        in_lta: Input transform of LTA type.
+        in_fsl: Input transform of FSL type.
+        in_mni: Input transform of MNI / XFM type.
+        in_reg: Input transform of TK REG type (deprecated format).
+        in_niftyreg: Input transform of NiftyReg type (inverse RAS2RAS).
+        in_itk: Input ITK transform (inverse LPS2LPS).
         in_vox: Input transform in source image space (inverse VOX2VOX).
+        out_lta: Output linear transform (LTA FreeSurfer format).
+        out_fsl: Output transform in FSL format.
+        out_mni: Output transform in MNI/XFM format.
+        out_reg: Output transform in REG DAT format.
+        out_niftyreg: Output transform in NiftyReg format (inverse RAS2RAS).
+        out_itk: Output transform in ITK TXT format (inverse LPS2LPS).
         out_vox: Output transform in source image space (inverse VOX2VOX).
         invert: Inverts transform.
         ltavox2vox: Output type VOX2VOX (default RAS2RAS) with --ltaout.
@@ -105,8 +141,32 @@ def lta_convert_params(
         "ltatkreg": ltatkreg,
         "trg_conform": trg_conform,
     }
+    if in_lta is not None:
+        params["in_lta"] = in_lta
+    if in_fsl is not None:
+        params["in_fsl"] = in_fsl
+    if in_mni is not None:
+        params["in_mni"] = in_mni
+    if in_reg is not None:
+        params["in_reg"] = in_reg
+    if in_niftyreg is not None:
+        params["in_niftyreg"] = in_niftyreg
+    if in_itk is not None:
+        params["in_itk"] = in_itk
     if in_vox is not None:
         params["in_vox"] = in_vox
+    if out_lta is not None:
+        params["out_lta"] = out_lta
+    if out_fsl is not None:
+        params["out_fsl"] = out_fsl
+    if out_mni is not None:
+        params["out_mni"] = out_mni
+    if out_reg is not None:
+        params["out_reg"] = out_reg
+    if out_niftyreg is not None:
+        params["out_niftyreg"] = out_niftyreg
+    if out_itk is not None:
+        params["out_itk"] = out_itk
     if out_vox is not None:
         params["out_vox"] = out_vox
     if src_geometry is not None:
@@ -133,10 +193,70 @@ def lta_convert_cargs(
     """
     cargs = []
     cargs.append("lta_convert")
+    if params.get("in_lta") is not None:
+        cargs.extend([
+            "--inlta",
+            execution.input_file(params.get("in_lta"))
+        ])
+    if params.get("in_fsl") is not None:
+        cargs.extend([
+            "--infsl",
+            execution.input_file(params.get("in_fsl"))
+        ])
+    if params.get("in_mni") is not None:
+        cargs.extend([
+            "--inmni",
+            execution.input_file(params.get("in_mni"))
+        ])
+    if params.get("in_reg") is not None:
+        cargs.extend([
+            "--inreg",
+            execution.input_file(params.get("in_reg"))
+        ])
+    if params.get("in_niftyreg") is not None:
+        cargs.extend([
+            "--inniftyreg",
+            execution.input_file(params.get("in_niftyreg"))
+        ])
+    if params.get("in_itk") is not None:
+        cargs.extend([
+            "--initk",
+            execution.input_file(params.get("in_itk"))
+        ])
     if params.get("in_vox") is not None:
         cargs.extend([
             "--invox",
             execution.input_file(params.get("in_vox"))
+        ])
+    if params.get("out_lta") is not None:
+        cargs.extend([
+            "--outlta",
+            params.get("out_lta")
+        ])
+    if params.get("out_fsl") is not None:
+        cargs.extend([
+            "--outfsl",
+            params.get("out_fsl")
+        ])
+    if params.get("out_mni") is not None:
+        cargs.extend([
+            "--outmni",
+            params.get("out_mni")
+        ])
+    if params.get("out_reg") is not None:
+        cargs.extend([
+            "--outreg",
+            params.get("out_reg")
+        ])
+    if params.get("out_niftyreg") is not None:
+        cargs.extend([
+            "--outniftyreg",
+            params.get("out_niftyreg")
+        ])
+    if params.get("out_itk") is not None:
+        cargs.extend([
+            "--outitk",
+            params.get("out_itk")
         ])
     if params.get("out_vox") is not None:
         cargs.extend([
@@ -214,7 +334,19 @@ def lta_convert_execute(
 
 
 def lta_convert(
+    in_lta: InputPathType | None = None,
+    in_fsl: InputPathType | None = None,
+    in_mni: InputPathType | None = None,
+    in_reg: InputPathType | None = None,
+    in_niftyreg: InputPathType | None = None,
+    in_itk: InputPathType | None = None,
     in_vox: InputPathType | None = None,
+    out_lta: str | None = None,
+    out_fsl: str | None = None,
+    out_mni: str | None = None,
+    out_reg: str | None = None,
+    out_niftyreg: str | None = None,
+    out_itk: str | None = None,
     out_vox: str | None = None,
     invert: bool = False,
     ltavox2vox: bool = False,
@@ -233,7 +365,19 @@ def lta_convert(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        in_lta: Input transform of LTA type.
+        in_fsl: Input transform of FSL type.
+        in_mni: Input transform of MNI / XFM type.
+        in_reg: Input transform of TK REG type (deprecated format).
+        in_niftyreg: Input transform of NiftyReg type (inverse RAS2RAS).
+        in_itk: Input ITK transform (inverse LPS2LPS).
         in_vox: Input transform in source image space (inverse VOX2VOX).
+        out_lta: Output linear transform (LTA FreeSurfer format).
+        out_fsl: Output transform in FSL format.
+        out_mni: Output transform in MNI/XFM format.
+        out_reg: Output transform in REG DAT format.
+        out_niftyreg: Output transform in NiftyReg format (inverse RAS2RAS).
+        out_itk: Output transform in ITK TXT format (inverse LPS2LPS).
         out_vox: Output transform in source image space (inverse VOX2VOX).
         invert: Inverts transform.
         ltavox2vox: Output type VOX2VOX (default RAS2RAS) with --ltaout.
@@ -251,7 +395,19 @@ def lta_convert(
     runner = runner or get_global_runner()
     execution = runner.start_execution(LTA_CONVERT_METADATA)
     params = lta_convert_params(
+        in_lta=in_lta,
+        in_fsl=in_fsl,
+        in_mni=in_mni,
+        in_reg=in_reg,
+        in_niftyreg=in_niftyreg,
+        in_itk=in_itk,
         in_vox=in_vox,
+        out_lta=out_lta,
+        out_fsl=out_fsl,
+        out_mni=out_mni,
+        out_reg=out_reg,
+        out_niftyreg=out_niftyreg,
+        out_itk=out_itk,
         out_vox=out_vox,
         invert=invert,
         ltavox2vox=ltavox2vox,

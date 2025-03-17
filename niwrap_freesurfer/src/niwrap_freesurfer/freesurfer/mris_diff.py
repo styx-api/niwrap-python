@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_DIFF_METADATA = Metadata(
-    id="30172af00f20644762a6e2ce032311fb482cfc14.boutiques",
+    id="8cd3b28eed03b89b73b4ad8e6f6e7309b348546c.boutiques",
     name="mris_diff",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -22,6 +22,28 @@ MrisDiffParameters = typing.TypedDict('MrisDiffParameters', {
     "subj_dir1": typing.NotRequired[str | None],
     "subj_dir2": typing.NotRequired[str | None],
     "hemisphere": str,
+    "surf": typing.NotRequired[str | None],
+    "curv": typing.NotRequired[str | None],
+    "aparc": typing.NotRequired[str | None],
+    "aparc2": typing.NotRequired[str | None],
+    "simple": bool,
+    "simple_patch": bool,
+    "thresh": typing.NotRequired[float | None],
+    "maxerrs": typing.NotRequired[float | None],
+    "renumbered": bool,
+    "worst_bucket": typing.NotRequired[str | None],
+    "grid": typing.NotRequired[str | None],
+    "no_check_xyz": bool,
+    "no_check_nxyz": bool,
+    "xyz_rms": typing.NotRequired[str | None],
+    "angle_rms": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[float | None],
+    "min_dist": typing.NotRequired[str | None],
+    "debug": bool,
+    "gdiag_no": typing.NotRequired[float | None],
+    "check_opts": bool,
+    "help": bool,
+    "version": bool,
 })
 
 
@@ -72,6 +94,28 @@ def mris_diff_params(
     hemisphere: str,
     subj_dir1: str | None = None,
     subj_dir2: str | None = None,
+    surf: str | None = None,
+    curv: str | None = None,
+    aparc: str | None = None,
+    aparc2: str | None = None,
+    simple: bool = False,
+    simple_patch: bool = False,
+    thresh: float | None = None,
+    maxerrs: float | None = None,
+    renumbered: bool = False,
+    worst_bucket: str | None = None,
+    grid: str | None = None,
+    no_check_xyz: bool = False,
+    no_check_nxyz: bool = False,
+    xyz_rms: str | None = None,
+    angle_rms: str | None = None,
+    seed: float | None = None,
+    min_dist: str | None = None,
+    debug: bool = False,
+    gdiag_no: float | None = None,
+    check_opts: bool = False,
+    help_: bool = False,
+    version: bool = False,
 ) -> MrisDiffParameters:
     """
     Build parameters.
@@ -84,6 +128,30 @@ def mris_diff_params(
         hemisphere: Hemisphere (rh or lh).
         subj_dir1: Directory for Subject 1 (default is SUBJECTS_DIR).
         subj_dir2: Directory for Subject 2 (default is SUBJECTS_DIR).
+        surf: Compare surface.
+        curv: Compare curvature.
+        aparc: Compare aparc annotation.
+        aparc2: Optional different name to compare to aparc.
+        simple: Simple comparison of two surfaces to just report differences.
+        simple_patch: Simple comparison of two patches.
+        thresh: Threshold (default=0) [Note: Not currently implemented!].
+        maxerrs: Stop looping after N errors (default=10).
+        renumbered: Vertices or faces may have been renumbered and a few\
+            deleted.
+        worst_bucket: Compute the worst histogram bucket each vertex is in.
+        grid: Label the vertices of edges that span a grid based on the\
+            provided spacing float.
+        no_check_xyz: Do not check vertex xyz.
+        no_check_nxyz: Do not check vertex normals.
+        xyz_rms: Compute and save RMS diff between xyz.
+        angle_rms: Compute angle on sphere between xyz.
+        seed: Set random seed for degenerate normals.
+        min_dist: Compute vertex-by-vertex RMS distance between surfaces.
+        debug: Enable debugging output.
+        gdiag_no: Specify Gdiag_no.
+        check_opts: Only check options and exit.
+        help_: Display help information.
+        version: Display version information.
     Returns:
         Parameter dictionary
     """
@@ -94,11 +162,46 @@ def mris_diff_params(
         "subject1": subject1,
         "subject2": subject2,
         "hemisphere": hemisphere,
+        "simple": simple,
+        "simple_patch": simple_patch,
+        "renumbered": renumbered,
+        "no_check_xyz": no_check_xyz,
+        "no_check_nxyz": no_check_nxyz,
+        "debug": debug,
+        "check_opts": check_opts,
+        "help": help_,
+        "version": version,
     }
     if subj_dir1 is not None:
         params["subj_dir1"] = subj_dir1
     if subj_dir2 is not None:
         params["subj_dir2"] = subj_dir2
+    if surf is not None:
+        params["surf"] = surf
+    if curv is not None:
+        params["curv"] = curv
+    if aparc is not None:
+        params["aparc"] = aparc
+    if aparc2 is not None:
+        params["aparc2"] = aparc2
+    if thresh is not None:
+        params["thresh"] = thresh
+    if maxerrs is not None:
+        params["maxerrs"] = maxerrs
+    if worst_bucket is not None:
+        params["worst_bucket"] = worst_bucket
+    if grid is not None:
+        params["grid"] = grid
+    if xyz_rms is not None:
+        params["xyz_rms"] = xyz_rms
+    if angle_rms is not None:
+        params["angle_rms"] = angle_rms
+    if seed is not None:
+        params["seed"] = seed
+    if min_dist is not None:
+        params["min_dist"] = min_dist
+    if gdiag_no is not None:
+        params["gdiag_no"] = gdiag_no
     return params
 
 
@@ -141,6 +244,89 @@ def mris_diff_cargs(
         "--hemi",
         params.get("hemisphere")
     ])
+    if params.get("surf") is not None:
+        cargs.extend([
+            "--surf",
+            params.get("surf")
+        ])
+    if params.get("curv") is not None:
+        cargs.extend([
+            "--curv",
+            params.get("curv")
+        ])
+    if params.get("aparc") is not None:
+        cargs.extend([
+            "--aparc",
+            params.get("aparc")
+        ])
+    if params.get("aparc2") is not None:
+        cargs.extend([
+            "--aparc2",
+            params.get("aparc2")
+        ])
+    if params.get("simple"):
+        cargs.append("--simple")
+    if params.get("simple_patch"):
+        cargs.append("--simple-patch")
+    if params.get("thresh") is not None:
+        cargs.extend([
+            "--thresh",
+            str(params.get("thresh"))
+        ])
+    if params.get("maxerrs") is not None:
+        cargs.extend([
+            "--maxerrs",
+            str(params.get("maxerrs"))
+        ])
+    if params.get("renumbered"):
+        cargs.append("--renumbered")
+    if params.get("worst_bucket") is not None:
+        cargs.extend([
+            "--worst-bucket",
+            params.get("worst_bucket")
+        ])
+    if params.get("grid") is not None:
+        cargs.extend([
+            "--grid",
+            params.get("grid")
+        ])
+    if params.get("no_check_xyz"):
+        cargs.append("--no-check-xyz")
+    if params.get("no_check_nxyz"):
+        cargs.append("--no-check-nxyz")
+    if params.get("xyz_rms") is not None:
+        cargs.extend([
+            "--xyz-rms",
+            params.get("xyz_rms")
+        ])
+    if params.get("angle_rms") is not None:
+        cargs.extend([
+            "--angle-rms",
+            params.get("angle_rms")
+        ])
+    if params.get("seed") is not None:
+        cargs.extend([
+            "--seed",
+            str(params.get("seed"))
+        ])
+    if params.get("min_dist") is not None:
+        cargs.extend([
+            "--min-dist",
+            params.get("min_dist")
+        ])
+    if params.get("debug"):
+        cargs.append("--debug")
+    if params.get("gdiag_no") is not None:
+        cargs.extend([
+            "--gdiag_no",
+            str(params.get("gdiag_no"))
+        ])
+    if params.get("check_opts"):
+        cargs.append("--checkopts")
+    if params.get("help"):
+        cargs.append("--help")
+    if params.get("version"):
+        cargs.append("--version")
     return cargs
 
 
@@ -195,6 +381,28 @@ def mris_diff(
     hemisphere: str,
     subj_dir1: str | None = None,
     subj_dir2: str | None = None,
+    surf: str | None = None,
+    curv: str | None = None,
+    aparc: str | None = None,
+    aparc2: str | None = None,
+    simple: bool = False,
+    simple_patch: bool = False,
+    thresh: float | None = None,
+    maxerrs: float | None = None,
+    renumbered: bool = False,
+    worst_bucket: str | None = None,
+    grid: str | None = None,
+    no_check_xyz: bool = False,
+    no_check_nxyz: bool = False,
+    xyz_rms: str | None = None,
+    angle_rms: str | None = None,
+    seed: float | None = None,
+    min_dist: str | None = None,
+    debug: bool = False,
+    gdiag_no: float | None = None,
+    check_opts: bool = False,
+    help_: bool = False,
+    version: bool = False,
     runner: Runner | None = None,
 ) -> MrisDiffOutputs:
     """
@@ -212,6 +420,30 @@ def mris_diff(
         hemisphere: Hemisphere (rh or lh).
         subj_dir1: Directory for Subject 1 (default is SUBJECTS_DIR).
         subj_dir2: Directory for Subject 2 (default is SUBJECTS_DIR).
+        surf: Compare surface.
+        curv: Compare curvature.
+        aparc: Compare aparc annotation.
+        aparc2: Optional different name to compare to aparc.
+        simple: Simple comparison of two surfaces to just report differences.
+        simple_patch: Simple comparison of two patches.
+        thresh: Threshold (default=0) [Note: Not currently implemented!].
+        maxerrs: Stop looping after N errors (default=10).
+        renumbered: Vertices or faces may have been renumbered and a few\
+            deleted.
+        worst_bucket: Compute the worst histogram bucket each vertex is in.
+        grid: Label the vertices of edges that span a grid based on the\
+            provided spacing float.
+        no_check_xyz: Do not check vertex xyz.
+        no_check_nxyz: Do not check vertex normals.
+        xyz_rms: Compute and save RMS diff between xyz.
+        angle_rms: Compute angle on sphere between xyz.
+        seed: Set random seed for degenerate normals.
+        min_dist: Compute vertex-by-vertex RMS distance between surfaces.
+        debug: Enable debugging output.
+        gdiag_no: Specify Gdiag_no.
+        check_opts: Only check options and exit.
+        help_: Display help information.
+        version: Display version information.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDiffOutputs`).
@@ -226,6 +458,28 @@ def mris_diff(
         subj_dir1=subj_dir1,
         subj_dir2=subj_dir2,
         hemisphere=hemisphere,
+        surf=surf,
+        curv=curv,
+        aparc=aparc,
+        aparc2=aparc2,
+        simple=simple,
+        simple_patch=simple_patch,
+        thresh=thresh,
+        maxerrs=maxerrs,
+        renumbered=renumbered,
+        worst_bucket=worst_bucket,
+        grid=grid,
+        no_check_xyz=no_check_xyz,
+        no_check_nxyz=no_check_nxyz,
+        xyz_rms=xyz_rms,
+        angle_rms=angle_rms,
+        seed=seed,
+        min_dist=min_dist,
+        debug=debug,
+        gdiag_no=gdiag_no,
+        check_opts=check_opts,
+        help_=help_,
+        version=version,
     )
     return mris_diff_execute(params, execution)
 

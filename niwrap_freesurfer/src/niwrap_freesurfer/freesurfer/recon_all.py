@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RECON_ALL_METADATA = Metadata(
-    id="de72948bacd270ce7d872b3cb30e555b07de540c.boutiques",
+    id="1798c3fdbe8f172aa9c2b07b5d9c964e492cfd06.boutiques",
     name="recon-all",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,6 +16,14 @@ RECON_ALL_METADATA = Metadata(
 ReconAllParameters = typing.TypedDict('ReconAllParameters', {
     "__STYX_TYPE__": typing.Literal["recon-all"],
     "subjid": str,
+    "all_flag": bool,
+    "autorecon_all_flag": bool,
+    "autorecon1_flag": bool,
+    "autorecon2_flag": bool,
+    "autorecon2_cp_flag": bool,
+    "autorecon2_wm_flag": bool,
+    "autorecon2_inflate1_flag": bool,
+    "autorecon2_perhemi_flag": bool,
     "autorecon3_flag": bool,
     "hemi": typing.NotRequired[str | None],
     "pons_crs": typing.NotRequired[list[float] | None],
@@ -125,6 +133,14 @@ class ReconAllOutputs(typing.NamedTuple):
 
 def recon_all_params(
     subjid: str,
+    all_flag: bool = False,
+    autorecon_all_flag: bool = False,
+    autorecon1_flag: bool = False,
+    autorecon2_flag: bool = False,
+    autorecon2_cp_flag: bool = False,
+    autorecon2_wm_flag: bool = False,
+    autorecon2_inflate1_flag: bool = False,
+    autorecon2_perhemi_flag: bool = False,
     autorecon3_flag: bool = False,
     hemi: str | None = None,
     pons_crs: list[float] | None = None,
@@ -191,6 +207,15 @@ def recon_all_params(
     
     Args:
         subjid: Subject ID for the FreeSurfer analysis.
+        all_flag: Performs all stages of cortical reconstruction.
+        autorecon_all_flag: Same as -all.
+        autorecon1_flag: Process stages 1-5.
+        autorecon2_flag: Process stages 6-23.
+        autorecon2_cp_flag: Process stages 12-23.
+        autorecon2_wm_flag: Process stages 15-23.
+        autorecon2_inflate1_flag: Process stages 6-18.
+        autorecon2_perhemi_flag: Tessellation, Smooth1, Inflate1, Qsphere, Fix,\
+            Smooth2, Inflate2, Finalsurf, Ribbon.
         autorecon3_flag: Process stages 24-34.
         hemi: Specify hemisphere ('lh' or 'rh').
         pons_crs: Specify CRS for pons during fill operation.
@@ -264,6 +289,14 @@ def recon_all_params(
     params = {
         "__STYXTYPE__": "recon-all",
         "subjid": subjid,
+        "all_flag": all_flag,
+        "autorecon_all_flag": autorecon_all_flag,
+        "autorecon1_flag": autorecon1_flag,
+        "autorecon2_flag": autorecon2_flag,
+        "autorecon2_cp_flag": autorecon2_cp_flag,
+        "autorecon2_wm_flag": autorecon2_wm_flag,
+        "autorecon2_inflate1_flag": autorecon2_inflate1_flag,
+        "autorecon2_perhemi_flag": autorecon2_perhemi_flag,
         "autorecon3_flag": autorecon3_flag,
         "nofill": nofill,
         "wsless": wsless,
@@ -377,6 +410,22 @@ def recon_all_cargs(
         "-subjid",
         params.get("subjid")
     ])
+    if params.get("all_flag"):
+        cargs.append("-all")
+    if params.get("autorecon_all_flag"):
+        cargs.append("-autorecon-all")
+    if params.get("autorecon1_flag"):
+        cargs.append("-autorecon1")
+    if params.get("autorecon2_flag"):
+        cargs.append("-autorecon2")
+    if params.get("autorecon2_cp_flag"):
+        cargs.append("-autorecon2-cp")
+    if params.get("autorecon2_wm_flag"):
+        cargs.append("-autorecon2-wm")
+    if params.get("autorecon2_inflate1_flag"):
+        cargs.append("-autorecon2-inflate1")
+    if params.get("autorecon2_perhemi_flag"):
+        cargs.append("-autorecon2-perhemi")
     if params.get("autorecon3_flag"):
         cargs.append("-autorecon3")
     if params.get("hemi") is not None:
@@ -637,6 +686,14 @@ def recon_all_execute(
 
 def recon_all(
     subjid: str,
+    all_flag: bool = False,
+    autorecon_all_flag: bool = False,
+    autorecon1_flag: bool = False,
+    autorecon2_flag: bool = False,
+    autorecon2_cp_flag: bool = False,
+    autorecon2_wm_flag: bool = False,
+    autorecon2_inflate1_flag: bool = False,
+    autorecon2_perhemi_flag: bool = False,
     autorecon3_flag: bool = False,
     hemi: str | None = None,
     pons_crs: list[float] | None = None,
@@ -708,6 +765,15 @@ def recon_all(
     
     Args:
         subjid: Subject ID for the FreeSurfer analysis.
+        all_flag: Performs all stages of cortical reconstruction.
+        autorecon_all_flag: Same as -all.
+        autorecon1_flag: Process stages 1-5.
+        autorecon2_flag: Process stages 6-23.
+        autorecon2_cp_flag: Process stages 12-23.
+        autorecon2_wm_flag: Process stages 15-23.
+        autorecon2_inflate1_flag: Process stages 6-18.
+        autorecon2_perhemi_flag: Tessellation, Smooth1, Inflate1, Qsphere, Fix,\
+            Smooth2, Inflate2, Finalsurf, Ribbon.
         autorecon3_flag: Process stages 24-34.
         hemi: Specify hemisphere ('lh' or 'rh').
         pons_crs: Specify CRS for pons during fill operation.
@@ -783,6 +849,14 @@ def recon_all(
     execution = runner.start_execution(RECON_ALL_METADATA)
     params = recon_all_params(
         subjid=subjid,
+        all_flag=all_flag,
+        autorecon_all_flag=autorecon_all_flag,
+        autorecon1_flag=autorecon1_flag,
+        autorecon2_flag=autorecon2_flag,
+        autorecon2_cp_flag=autorecon2_cp_flag,
+        autorecon2_wm_flag=autorecon2_wm_flag,
+        autorecon2_inflate1_flag=autorecon2_inflate1_flag,
+        autorecon2_perhemi_flag=autorecon2_perhemi_flag,
         autorecon3_flag=autorecon3_flag,
         hemi=hemi,
         pons_crs=pons_crs,

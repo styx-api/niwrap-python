@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_SEG_DIFF_METADATA = Metadata(
-    id="71504722501dfa1ec92d8dd0c51d3ee7e1c9740c.boutiques",
+    id="1ffa8167a31865e0a4ffb1e2d6b11eef8bdddfc0.boutiques",
     name="mri_seg_diff",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -19,6 +19,7 @@ MriSegDiffParameters = typing.TypedDict('MriSegDiffParameters', {
     "seg2": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[InputPathType | None],
     "diff": str,
+    "diff_in": typing.NotRequired[InputPathType | None],
     "merged": typing.NotRequired[str | None],
     "diff_force": bool,
     "debug": bool,
@@ -76,6 +77,7 @@ def mri_seg_diff_params(
     seg1: InputPathType | None = None,
     seg2: InputPathType | None = None,
     seg: InputPathType | None = None,
+    diff_in: InputPathType | None = None,
     merged: str | None = None,
     diff_force: bool = False,
     debug: bool = False,
@@ -90,6 +92,7 @@ def mri_seg_diff_params(
         seg1: First segmentation file (e.g., unedited).
         seg2: Second segmentation file (e.g., edited).
         seg: Source segmentation file (e.g., unedited).
+        diff_in: Input diff segmentation volume.
         merged: Merged output, combining unedited with diff.
         diff_force: Force creation of a diff even if no diff is detected.
         debug: Turn on debugging.
@@ -112,6 +115,8 @@ def mri_seg_diff_params(
         params["seg2"] = seg2
     if seg is not None:
         params["seg"] = seg
+    if diff_in is not None:
+        params["diff_in"] = diff_in
     if merged is not None:
         params["merged"] = merged
     return params
@@ -151,6 +156,11 @@ def mri_seg_diff_cargs(
         "--diff",
         params.get("diff")
     ])
+    if params.get("diff_in") is not None:
+        cargs.extend([
+            "--diff-in",
+            execution.input_file(params.get("diff_in"))
+        ])
     if params.get("merged") is not None:
         cargs.extend([
             "--merged",
@@ -218,6 +228,7 @@ def mri_seg_diff(
     seg1: InputPathType | None = None,
     seg2: InputPathType | None = None,
     seg: InputPathType | None = None,
+    diff_in: InputPathType | None = None,
     merged: str | None = None,
     diff_force: bool = False,
     debug: bool = False,
@@ -238,6 +249,7 @@ def mri_seg_diff(
         seg1: First segmentation file (e.g., unedited).
         seg2: Second segmentation file (e.g., edited).
         seg: Source segmentation file (e.g., unedited).
+        diff_in: Input diff segmentation volume.
         merged: Merged output, combining unedited with diff.
         diff_force: Force creation of a diff even if no diff is detected.
         debug: Turn on debugging.
@@ -254,6 +266,7 @@ def mri_seg_diff(
         seg2=seg2,
         seg=seg,
         diff=diff,
+        diff_in=diff_in,
         merged=merged,
         diff_force=diff_force,
         debug=debug,

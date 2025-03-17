@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 POST_RECON_ALL_METADATA = Metadata(
-    id="043904c04e1a7c309fb6aa5cb7234831a996fdf4.boutiques",
+    id="4506cae7a1f970c99574dc4fac8b9e2fc2792099.boutiques",
     name="post-recon-all",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,9 +16,13 @@ POST_RECON_ALL_METADATA = Metadata(
 PostReconAllParameters = typing.TypedDict('PostReconAllParameters', {
     "__STYX_TYPE__": typing.Literal["post-recon-all"],
     "subject": str,
+    "subfields": bool,
     "no_subfields": bool,
+    "subregions": bool,
     "no_subregions": bool,
+    "cvs": bool,
     "no_cvs": bool,
+    "qcache": bool,
     "no_qcache": bool,
     "no_sclimbic": bool,
     "no_hthsu": bool,
@@ -75,9 +79,13 @@ class PostReconAllOutputs(typing.NamedTuple):
 
 def post_recon_all_params(
     subject: str,
+    subfields: bool = False,
     no_subfields: bool = False,
+    subregions: bool = False,
     no_subregions: bool = False,
+    cvs: bool = False,
     no_cvs: bool = False,
+    qcache: bool = False,
     no_qcache: bool = False,
     no_sclimbic: bool = False,
     no_hthsu: bool = False,
@@ -96,9 +104,13 @@ def post_recon_all_params(
     
     Args:
         subject: Subject identifier to be processed.
+        subfields: Run subfields extraction (default behavior).
         no_subfields: Do not run subfields extraction.
+        subregions: Run subregions extraction (default behavior).
         no_subregions: Do not run subregions extraction.
+        cvs: Run CVS processing.
         no_cvs: Do not run CVS processing (default behavior).
+        qcache: Run qcache processing (default behavior).
         no_qcache: Do not run qcache processing.
         no_sclimbic: Do not run sclimbic processing.
         no_hthsu: Do not run hypothalamic subunits processing.
@@ -117,9 +129,13 @@ def post_recon_all_params(
     params = {
         "__STYXTYPE__": "post-recon-all",
         "subject": subject,
+        "subfields": subfields,
         "no_subfields": no_subfields,
+        "subregions": subregions,
         "no_subregions": no_subregions,
+        "cvs": cvs,
         "no_cvs": no_cvs,
+        "qcache": qcache,
         "no_qcache": no_qcache,
         "no_sclimbic": no_sclimbic,
         "no_hthsu": no_hthsu,
@@ -151,16 +167,25 @@ def post_recon_all_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("post-recon-all")
     cargs.extend([
         "-all",
-        "post-recon" + params.get("subject")
+        params.get("subject")
     ])
+    if params.get("subfields"):
+        cargs.append("--subfields")
     if params.get("no_subfields"):
         cargs.append("--no-subfields")
+    if params.get("subregions"):
+        cargs.append("--subregions")
     if params.get("no_subregions"):
         cargs.append("--no-subregions")
+    if params.get("cvs"):
+        cargs.append("--cvs")
     if params.get("no_cvs"):
         cargs.append("--no-cvs")
+    if params.get("qcache"):
+        cargs.append("--qcache")
     if params.get("no_qcache"):
         cargs.append("--no-qcache")
     if params.get("no_sclimbic"):
@@ -236,9 +261,13 @@ def post_recon_all_execute(
 
 def post_recon_all(
     subject: str,
+    subfields: bool = False,
     no_subfields: bool = False,
+    subregions: bool = False,
     no_subregions: bool = False,
+    cvs: bool = False,
     no_cvs: bool = False,
+    qcache: bool = False,
     no_qcache: bool = False,
     no_sclimbic: bool = False,
     no_hthsu: bool = False,
@@ -262,9 +291,13 @@ def post_recon_all(
     
     Args:
         subject: Subject identifier to be processed.
+        subfields: Run subfields extraction (default behavior).
         no_subfields: Do not run subfields extraction.
+        subregions: Run subregions extraction (default behavior).
         no_subregions: Do not run subregions extraction.
+        cvs: Run CVS processing.
         no_cvs: Do not run CVS processing (default behavior).
+        qcache: Run qcache processing (default behavior).
         no_qcache: Do not run qcache processing.
         no_sclimbic: Do not run sclimbic processing.
         no_hthsu: Do not run hypothalamic subunits processing.
@@ -285,9 +318,13 @@ def post_recon_all(
     execution = runner.start_execution(POST_RECON_ALL_METADATA)
     params = post_recon_all_params(
         subject=subject,
+        subfields=subfields,
         no_subfields=no_subfields,
+        subregions=subregions,
         no_subregions=no_subregions,
+        cvs=cvs,
         no_cvs=no_cvs,
+        qcache=qcache,
         no_qcache=no_qcache,
         no_sclimbic=no_sclimbic,
         no_hthsu=no_hthsu,

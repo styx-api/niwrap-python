@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLORIENT_FSL_METADATA = Metadata(
-    id="91c87d301655f1a487272843a72c1efbca6dd79a.boutiques",
+    id="15cd7a99b2de893a5d0fcdffc84df6b7b7cfaf46.boutiques",
     name="fslorient.fsl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,10 +15,22 @@ FSLORIENT_FSL_METADATA = Metadata(
 
 FslorientFslParameters = typing.TypedDict('FslorientFslParameters', {
     "__STYX_TYPE__": typing.Literal["fslorient.fsl"],
-    "swap_orient": bool,
     "filename": InputPathType,
+    "get_orient": bool,
+    "get_sform": bool,
+    "get_qform": bool,
+    "set_sform": typing.NotRequired[list[float] | None],
     "set_qform": typing.NotRequired[list[float] | None],
+    "get_sform_code": bool,
+    "get_qform_code": bool,
+    "set_sform_code": typing.NotRequired[str | None],
     "set_qform_code": typing.NotRequired[str | None],
+    "copy_sform_to_qform": bool,
+    "copy_qform_to_sform": bool,
+    "delete_orient": bool,
+    "force_radiological": bool,
+    "force_neurological": bool,
+    "swap_orient": bool,
 })
 
 
@@ -63,28 +75,68 @@ class FslorientFslOutputs(typing.NamedTuple):
 
 def fslorient_fsl_params(
     filename: InputPathType,
-    swap_orient: bool = False,
+    get_orient: bool = False,
+    get_sform: bool = False,
+    get_qform: bool = False,
+    set_sform: list[float] | None = None,
     set_qform: list[float] | None = None,
+    get_sform_code: bool = False,
+    get_qform_code: bool = False,
+    set_sform_code: str | None = None,
     set_qform_code: str | None = None,
+    copy_sform_to_qform: bool = False,
+    copy_qform_to_sform: bool = False,
+    delete_orient: bool = False,
+    force_radiological: bool = False,
+    force_neurological: bool = False,
+    swap_orient: bool = False,
 ) -> FslorientFslParameters:
     """
     Build parameters.
     
     Args:
         filename: Input image filename.
-        swap_orient: Swaps FSL radiological and FSL neurological.
+        get_orient: Prints FSL left-right orientation.
+        get_sform: Prints the 16 elements of the sform matrix.
+        get_qform: Prints the 16 elements of the qform matrix.
+        set_sform: Sets the 16 elements of the sform matrix.
         set_qform: Sets the 16 elements of the qform matrix.
+        get_sform_code: Prints the sform integer code.
+        get_qform_code: Prints the qform integer code.
+        set_sform_code: Sets sform integer code.
         set_qform_code: Sets qform integer code.
+        copy_sform_to_qform: Sets the qform equal to the sform (code and\
+            matrix).
+        copy_qform_to_sform: Sets the sform equal to the qform (code and\
+            matrix).
+        delete_orient: Removes orient info from header.
+        force_radiological: Makes FSL radiological header.
+        force_neurological: Makes FSL neurological header (not Analyze).
+        swap_orient: Swaps FSL radiological and FSL neurological.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "fslorient.fsl",
-        "swap_orient": swap_orient,
         "filename": filename,
+        "get_orient": get_orient,
+        "get_sform": get_sform,
+        "get_qform": get_qform,
+        "get_sform_code": get_sform_code,
+        "get_qform_code": get_qform_code,
+        "copy_sform_to_qform": copy_sform_to_qform,
+        "copy_qform_to_sform": copy_qform_to_sform,
+        "delete_orient": delete_orient,
+        "force_radiological": force_radiological,
+        "force_neurological": force_neurological,
+        "swap_orient": swap_orient,
     }
+    if set_sform is not None:
+        params["set_sform"] = set_sform
     if set_qform is not None:
         params["set_qform"] = set_qform
+    if set_sform_code is not None:
+        params["set_sform_code"] = set_sform_code
     if set_qform_code is not None:
         params["set_qform_code"] = set_qform_code
     return params
@@ -104,20 +156,50 @@ def fslorient_fsl_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("fslorient")
-    if params.get("swap_orient"):
-        cargs.append("-swaporient")
+    cargs.append("fslorient.fsl")
     cargs.append(execution.input_file(params.get("filename")))
+    if params.get("get_orient"):
+        cargs.append("-getorient")
+    if params.get("get_sform"):
+        cargs.append("-getsform")
+    if params.get("get_qform"):
+        cargs.append("-getqform")
+    if params.get("set_sform") is not None:
+        cargs.extend([
+            "-setsform",
+            *map(str, params.get("set_sform"))
+        ])
     if params.get("set_qform") is not None:
         cargs.extend([
             "-setqform",
             *map(str, params.get("set_qform"))
+        ])
+    if params.get("get_sform_code"):
+        cargs.append("-getsformcode")
+    if params.get("get_qform_code"):
+        cargs.append("-getqformcode")
+    if params.get("set_sform_code") is not None:
+        cargs.extend([
+            "-setsformcode",
+            params.get("set_sform_code")
         ])
     if params.get("set_qform_code") is not None:
         cargs.extend([
             "-setqformcode",
             params.get("set_qform_code")
         ])
+    if params.get("copy_sform_to_qform"):
+        cargs.append("-copysform2qform")
+    if params.get("copy_qform_to_sform"):
+        cargs.append("-copyqform2sform")
+    if params.get("delete_orient"):
+        cargs.append("-deleteorient")
+    if params.get("force_radiological"):
+        cargs.append("-forceradiological")
+    if params.get("force_neurological"):
+        cargs.append("-forceneurological")
+    if params.get("swap_orient"):
+        cargs.append("-swaporient")
     return cargs
 
 
@@ -166,9 +248,21 @@ def fslorient_fsl_execute(
 
 def fslorient_fsl(
     filename: InputPathType,
-    swap_orient: bool = False,
+    get_orient: bool = False,
+    get_sform: bool = False,
+    get_qform: bool = False,
+    set_sform: list[float] | None = None,
     set_qform: list[float] | None = None,
+    get_sform_code: bool = False,
+    get_qform_code: bool = False,
+    set_sform_code: str | None = None,
     set_qform_code: str | None = None,
+    copy_sform_to_qform: bool = False,
+    copy_qform_to_sform: bool = False,
+    delete_orient: bool = False,
+    force_radiological: bool = False,
+    force_neurological: bool = False,
+    swap_orient: bool = False,
     runner: Runner | None = None,
 ) -> FslorientFslOutputs:
     """
@@ -180,9 +274,23 @@ def fslorient_fsl(
     
     Args:
         filename: Input image filename.
-        swap_orient: Swaps FSL radiological and FSL neurological.
+        get_orient: Prints FSL left-right orientation.
+        get_sform: Prints the 16 elements of the sform matrix.
+        get_qform: Prints the 16 elements of the qform matrix.
+        set_sform: Sets the 16 elements of the sform matrix.
         set_qform: Sets the 16 elements of the qform matrix.
+        get_sform_code: Prints the sform integer code.
+        get_qform_code: Prints the qform integer code.
+        set_sform_code: Sets sform integer code.
         set_qform_code: Sets qform integer code.
+        copy_sform_to_qform: Sets the qform equal to the sform (code and\
+            matrix).
+        copy_qform_to_sform: Sets the sform equal to the qform (code and\
+            matrix).
+        delete_orient: Removes orient info from header.
+        force_radiological: Makes FSL radiological header.
+        force_neurological: Makes FSL neurological header (not Analyze).
+        swap_orient: Swaps FSL radiological and FSL neurological.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslorientFslOutputs`).
@@ -190,10 +298,22 @@ def fslorient_fsl(
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLORIENT_FSL_METADATA)
     params = fslorient_fsl_params(
-        swap_orient=swap_orient,
         filename=filename,
+        get_orient=get_orient,
+        get_sform=get_sform,
+        get_qform=get_qform,
+        set_sform=set_sform,
         set_qform=set_qform,
+        get_sform_code=get_sform_code,
+        get_qform_code=get_qform_code,
+        set_sform_code=set_sform_code,
         set_qform_code=set_qform_code,
+        copy_sform_to_qform=copy_sform_to_qform,
+        copy_qform_to_sform=copy_qform_to_sform,
+        delete_orient=delete_orient,
+        force_radiological=force_radiological,
+        force_neurological=force_neurological,
+        swap_orient=swap_orient,
     )
     return fslorient_fsl_execute(params, execution)
 

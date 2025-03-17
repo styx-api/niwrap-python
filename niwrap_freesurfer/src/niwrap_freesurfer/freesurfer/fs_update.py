@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_UPDATE_METADATA = Metadata(
-    id="4603b7fb31c1aa61646a36fb25725ca6a61d057f.boutiques",
+    id="f55ece15d6ea47dd3edb6a480f7b814dfb337904.boutiques",
     name="fs_update",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,6 +16,8 @@ FS_UPDATE_METADATA = Metadata(
 FsUpdateParameters = typing.TypedDict('FsUpdateParameters', {
     "__STYX_TYPE__": typing.Literal["fs_update"],
     "update_path": typing.NotRequired[str | None],
+    "help_short": bool,
+    "help_medium": bool,
     "help_long": bool,
 })
 
@@ -61,6 +63,8 @@ class FsUpdateOutputs(typing.NamedTuple):
 
 def fs_update_params(
     update_path: str | None = None,
+    help_short: bool = False,
+    help_medium: bool = False,
     help_long: bool = False,
 ) -> FsUpdateParameters:
     """
@@ -69,12 +73,16 @@ def fs_update_params(
     Args:
         update_path: Path to specific files or directories to update, copied\
             recursively.
+        help_short: Show help.
+        help_medium:.
         help_long:.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "fs_update",
+        "help_short": help_short,
+        "help_medium": help_medium,
         "help_long": help_long,
     }
     if update_path is not None:
@@ -99,6 +107,10 @@ def fs_update_cargs(
     cargs.append("fs_update")
     if params.get("update_path") is not None:
         cargs.append(params.get("update_path"))
+    if params.get("help_short"):
+        cargs.append("-h")
+    if params.get("help_medium"):
+        cargs.append("-help")
     if params.get("help_long"):
         cargs.append("--help")
     return cargs
@@ -149,6 +161,8 @@ def fs_update_execute(
 
 def fs_update(
     update_path: str | None = None,
+    help_short: bool = False,
+    help_medium: bool = False,
     help_long: bool = False,
     runner: Runner | None = None,
 ) -> FsUpdateOutputs:
@@ -162,6 +176,8 @@ def fs_update(
     Args:
         update_path: Path to specific files or directories to update, copied\
             recursively.
+        help_short: Show help.
+        help_medium:.
         help_long:.
         runner: Command runner.
     Returns:
@@ -171,6 +187,8 @@ def fs_update(
     execution = runner.start_execution(FS_UPDATE_METADATA)
     params = fs_update_params(
         update_path=update_path,
+        help_short=help_short,
+        help_medium=help_medium,
         help_long=help_long,
     )
     return fs_update_execute(params, execution)

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RBBR_METADATA = Metadata(
-    id="6f8461b7fae6d16cb41c5377c9a0a117f94c76da.boutiques",
+    id="5e244d64ac10cdbe8cb73d1d3628ed3768d60a04.boutiques",
     name="rbbr",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,7 +17,11 @@ RbbrParameters = typing.TypedDict('RbbrParameters', {
     "__STYX_TYPE__": typing.Literal["rbbr"],
     "subject": typing.NotRequired[str | None],
     "moving_image": str,
+    "t1_contrast": bool,
     "t2_contrast": bool,
+    "init_reg": bool,
+    "init_spm": bool,
+    "init_fsl": bool,
     "init_header": bool,
     "cost_threshold": typing.NotRequired[float | None],
     "gtm_synthesize": typing.NotRequired[str | None],
@@ -85,7 +89,11 @@ class RbbrOutputs(typing.NamedTuple):
 def rbbr_params(
     moving_image: str,
     subject: str | None = None,
+    t1_contrast: bool = False,
     t2_contrast: bool = False,
+    init_reg: bool = False,
+    init_spm: bool = False,
+    init_fsl: bool = False,
     init_header: bool = False,
     cost_threshold: float | None = None,
     gtm_synthesize: str | None = None,
@@ -108,7 +116,11 @@ def rbbr_params(
     Args:
         moving_image: Input moving image.
         subject: FreeSurfer subject (not needed with --init-reg).
+        t1_contrast: Use T1 tissue contrast.
         t2_contrast: Use T2 tissue contrast.
+        init_reg: Initialize registration.
+        init_spm: Initialize with SPM.
+        init_fsl: Initialize with FSL.
         init_header: Initialize using header.
         cost_threshold: Cost threshold to define outlier.
         gtm_synthesize: Use GTM to synthesize.
@@ -130,7 +142,11 @@ def rbbr_params(
     params = {
         "__STYXTYPE__": "rbbr",
         "moving_image": moving_image,
+        "t1_contrast": t1_contrast,
         "t2_contrast": t2_contrast,
+        "init_reg": init_reg,
+        "init_spm": init_spm,
+        "init_fsl": init_fsl,
         "init_header": init_header,
         "tt_reduce": tt_reduce,
         "left_hemi": left_hemi,
@@ -186,8 +202,16 @@ def rbbr_cargs(
         "--mov",
         params.get("moving_image")
     ])
+    if params.get("t1_contrast"):
+        cargs.append("--t1")
     if params.get("t2_contrast"):
         cargs.append("--t2")
+    if params.get("init_reg"):
+        cargs.append("--init-reg")
+    if params.get("init_spm"):
+        cargs.append("--init-spm")
+    if params.get("init_fsl"):
+        cargs.append("--init-fsl")
     if params.get("init_header"):
         cargs.append("--init-header")
     if params.get("cost_threshold") is not None:
@@ -300,7 +324,11 @@ def rbbr_execute(
 def rbbr(
     moving_image: str,
     subject: str | None = None,
+    t1_contrast: bool = False,
     t2_contrast: bool = False,
+    init_reg: bool = False,
+    init_spm: bool = False,
+    init_fsl: bool = False,
     init_header: bool = False,
     cost_threshold: float | None = None,
     gtm_synthesize: str | None = None,
@@ -328,7 +356,11 @@ def rbbr(
     Args:
         moving_image: Input moving image.
         subject: FreeSurfer subject (not needed with --init-reg).
+        t1_contrast: Use T1 tissue contrast.
         t2_contrast: Use T2 tissue contrast.
+        init_reg: Initialize registration.
+        init_spm: Initialize with SPM.
+        init_fsl: Initialize with FSL.
         init_header: Initialize using header.
         cost_threshold: Cost threshold to define outlier.
         gtm_synthesize: Use GTM to synthesize.
@@ -353,7 +385,11 @@ def rbbr(
     params = rbbr_params(
         subject=subject,
         moving_image=moving_image,
+        t1_contrast=t1_contrast,
         t2_contrast=t2_contrast,
+        init_reg=init_reg,
+        init_spm=init_spm,
+        init_fsl=init_fsl,
         init_header=init_header,
         cost_threshold=cost_threshold,
         gtm_synthesize=gtm_synthesize,

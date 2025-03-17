@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
-    id="8a6a12eb1eae4567d49625f69155e84f68466b3c.boutiques",
+    id="e6b692a7de46610579fa5e10ad01fb96c5b2f745.boutiques",
     name="segmentSubjectT2_autoEstimateAlveusML",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,7 @@ SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 
 SegmentSubjectT2AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubjectT2AutoEstimateAlveusMlParameters', {
     "__STYX_TYPE__": typing.Literal["segmentSubjectT2_autoEstimateAlveusML"],
+    "missing_library": str,
 })
 
 
@@ -58,16 +59,20 @@ class SegmentSubjectT2AutoEstimateAlveusMlOutputs(typing.NamedTuple):
 
 
 def segment_subject_t2_auto_estimate_alveus_ml_params(
+    missing_library: str = "libmwlaunchermain.so: cannot open shared object file",
 ) -> SegmentSubjectT2AutoEstimateAlveusMlParameters:
     """
     Build parameters.
     
     Args:
+        missing_library: The tool could not be executed due to a missing shared\
+            library: libmwlaunchermain.so.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "segmentSubjectT2_autoEstimateAlveusML",
+        "missing_library": missing_library,
     }
     return params
 
@@ -87,6 +92,7 @@ def segment_subject_t2_auto_estimate_alveus_ml_cargs(
     """
     cargs = []
     cargs.append("segmentSubjectT2_autoEstimateAlveusML")
+    cargs.append(params.get("missing_library"))
     return cargs
 
 
@@ -134,6 +140,7 @@ def segment_subject_t2_auto_estimate_alveus_ml_execute(
 
 
 def segment_subject_t2_auto_estimate_alveus_ml(
+    missing_library: str = "libmwlaunchermain.so: cannot open shared object file",
     runner: Runner | None = None,
 ) -> SegmentSubjectT2AutoEstimateAlveusMlOutputs:
     """
@@ -144,6 +151,8 @@ def segment_subject_t2_auto_estimate_alveus_ml(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        missing_library: The tool could not be executed due to a missing shared\
+            library: libmwlaunchermain.so.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT2AutoEstimateAlveusMlOutputs`).
@@ -151,6 +160,7 @@ def segment_subject_t2_auto_estimate_alveus_ml(
     runner = runner or get_global_runner()
     execution = runner.start_execution(SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = segment_subject_t2_auto_estimate_alveus_ml_params(
+        missing_library=missing_library,
     )
     return segment_subject_t2_auto_estimate_alveus_ml_execute(params, execution)
 

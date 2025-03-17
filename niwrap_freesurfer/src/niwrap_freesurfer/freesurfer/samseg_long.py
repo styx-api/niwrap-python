@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SAMSEG_LONG_METADATA = Metadata(
-    id="686e2f45cf8bcf8f37552255f101cc1d16f93f40.boutiques",
+    id="514c1dbb1911d4434a75fb9f1d1ec8a2a10ee435.boutiques",
     name="samseg-long",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,9 +16,10 @@ SAMSEG_LONG_METADATA = Metadata(
 SamsegLongParameters = typing.TypedDict('SamsegLongParameters', {
     "__STYX_TYPE__": typing.Literal["samseg-long"],
     "output_dir": str,
+    "input_files": list[InputPathType],
+    "align_mc": bool,
     "align_no_mc": bool,
     "threads": typing.NotRequired[float | None],
-    "input_files": list[InputPathType],
     "save_posteriors": bool,
     "force_update": bool,
 })
@@ -73,6 +74,7 @@ class SamsegLongOutputs(typing.NamedTuple):
 def samseg_long_params(
     output_dir: str,
     input_files: list[InputPathType],
+    align_mc: bool = False,
     align_no_mc: bool = False,
     threads: float | None = None,
     save_posteriors: bool = False,
@@ -84,6 +86,7 @@ def samseg_long_params(
     Args:
         output_dir: Output directory.
         input_files: Input image files. All inputs must be a single modality.
+        align_mc: Align all inputs using robust register.
         align_no_mc: Do not align inputs using robust register.
         threads: Number of threads to use.
         save_posteriors: Save posterior probabilities.
@@ -94,8 +97,9 @@ def samseg_long_params(
     params = {
         "__STYXTYPE__": "samseg-long",
         "output_dir": output_dir,
-        "align_no_mc": align_no_mc,
         "input_files": input_files,
+        "align_mc": align_mc,
+        "align_no_mc": align_no_mc,
         "save_posteriors": save_posteriors,
         "force_update": force_update,
     }
@@ -123,6 +127,12 @@ def samseg_long_cargs(
         "--o",
         params.get("output_dir")
     ])
+    cargs.extend([
+        "--i",
+        *[execution.input_file(f) for f in params.get("input_files")]
+    ])
+    if params.get("align_mc"):
+        cargs.append("--mc")
     if params.get("align_no_mc"):
         cargs.append("--no-mc")
     if params.get("threads") is not None:
@@ -130,10 +140,6 @@ def samseg_long_cargs(
             "--threads",
             str(params.get("threads"))
         ])
-    cargs.extend([
-        "--i",
-        *[execution.input_file(f) for f in params.get("input_files")]
-    ])
     if params.get("save_posteriors"):
         cargs.append("--save-posteriors")
     if params.get("force_update"):
@@ -190,6 +196,7 @@ def samseg_long_execute(
 def samseg_long(
     output_dir: str,
     input_files: list[InputPathType],
+    align_mc: bool = False,
     align_no_mc: bool = False,
     threads: float | None = None,
     save_posteriors: bool = False,
@@ -206,6 +213,7 @@ def samseg_long(
     Args:
         output_dir: Output directory.
         input_files: Input image files. All inputs must be a single modality.
+        align_mc: Align all inputs using robust register.
         align_no_mc: Do not align inputs using robust register.
         threads: Number of threads to use.
         save_posteriors: Save posterior probabilities.
@@ -218,9 +226,10 @@ def samseg_long(
     execution = runner.start_execution(SAMSEG_LONG_METADATA)
     params = samseg_long_params(
         output_dir=output_dir,
+        input_files=input_files,
+        align_mc=align_mc,
         align_no_mc=align_no_mc,
         threads=threads,
-        input_files=input_files,
         save_posteriors=save_posteriors,
         force_update=force_update,
     )

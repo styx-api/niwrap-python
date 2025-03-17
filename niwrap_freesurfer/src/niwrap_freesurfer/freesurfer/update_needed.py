@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 UPDATE_NEEDED_METADATA = Metadata(
-    id="81ad1ec598b447ced529bab2b15819d597e08ec9.boutiques",
+    id="bbeff96a804ee5f7f839128e9a8f2889e0e27e42.boutiques",
     name="UpdateNeeded",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,6 +17,7 @@ UpdateNeededParameters = typing.TypedDict('UpdateNeededParameters', {
     "__STYX_TYPE__": typing.Literal["UpdateNeeded"],
     "target_file": InputPathType,
     "source_file": InputPathType,
+    "additional_source_files": typing.NotRequired[list[InputPathType] | None],
 })
 
 
@@ -62,6 +63,7 @@ class UpdateNeededOutputs(typing.NamedTuple):
 def update_needed_params(
     target_file: InputPathType,
     source_file: InputPathType,
+    additional_source_files: list[InputPathType] | None = None,
 ) -> UpdateNeededParameters:
     """
     Build parameters.
@@ -69,6 +71,8 @@ def update_needed_params(
     Args:
         target_file: The target file that needs to be updated.
         source_file: The primary source file for updating the target file.
+        additional_source_files: Additional source files for updating the\
+            target file.
     Returns:
         Parameter dictionary
     """
@@ -77,6 +81,8 @@ def update_needed_params(
         "target_file": target_file,
         "source_file": source_file,
     }
+    if additional_source_files is not None:
+        params["additional_source_files"] = additional_source_files
     return params
 
 
@@ -97,7 +103,8 @@ def update_needed_cargs(
     cargs.append("UpdateNeeded")
     cargs.append(execution.input_file(params.get("target_file")))
     cargs.append(execution.input_file(params.get("source_file")))
-    cargs.append("[ADDITIONAL_SOURCE_FILES...]")
+    if params.get("additional_source_files") is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("additional_source_files")])
     return cargs
 
 
@@ -147,6 +154,7 @@ def update_needed_execute(
 def update_needed(
     target_file: InputPathType,
     source_file: InputPathType,
+    additional_source_files: list[InputPathType] | None = None,
     runner: Runner | None = None,
 ) -> UpdateNeededOutputs:
     """
@@ -159,6 +167,8 @@ def update_needed(
     Args:
         target_file: The target file that needs to be updated.
         source_file: The primary source file for updating the target file.
+        additional_source_files: Additional source files for updating the\
+            target file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UpdateNeededOutputs`).
@@ -168,6 +178,7 @@ def update_needed(
     params = update_needed_params(
         target_file=target_file,
         source_file=source_file,
+        additional_source_files=additional_source_files,
     )
     return update_needed_execute(params, execution)
 

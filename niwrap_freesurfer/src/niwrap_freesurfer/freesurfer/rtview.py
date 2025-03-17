@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RTVIEW_METADATA = Metadata(
-    id="bbfc6a7778d4c734c212389406f89e8b0c6cbe09.boutiques",
+    id="d1062fc3fcb7c8d781138ed45f8feb4a04671369.boutiques",
     name="rtview",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,7 +16,10 @@ RTVIEW_METADATA = Metadata(
 RtviewParameters = typing.TypedDict('RtviewParameters', {
     "__STYX_TYPE__": typing.Literal["rtview"],
     "subject": typing.NotRequired[str | None],
+    "hemi": typing.NotRequired[str | None],
+    "left_hemi": bool,
     "right_hemi": bool,
+    "eccen": bool,
     "polar": bool,
     "real_file": typing.NotRequired[InputPathType | None],
     "imag_file": typing.NotRequired[InputPathType | None],
@@ -70,7 +73,10 @@ class RtviewOutputs(typing.NamedTuple):
 
 def rtview_params(
     subject: str | None = None,
+    hemi: str | None = None,
+    left_hemi: bool = False,
     right_hemi: bool = False,
+    eccen: bool = False,
     polar: bool = False,
     real_file: InputPathType | None = None,
     imag_file: InputPathType | None = None,
@@ -86,7 +92,11 @@ def rtview_params(
     
     Args:
         subject: Subject to use as display.
+        hemi: Hemisphere to display: 'lh' for left hemisphere or 'rh' for right\
+            hemisphere.
+        left_hemi: Display left hemisphere.
         right_hemi: Display right hemisphere.
+        eccen: Display eccentricity data.
         polar: Display polar data.
         real_file: File containing real (cosine) values.
         imag_file: File containing imaginary (sine) values.
@@ -101,13 +111,17 @@ def rtview_params(
     """
     params = {
         "__STYXTYPE__": "rtview",
+        "left_hemi": left_hemi,
         "right_hemi": right_hemi,
+        "eccen": eccen,
         "polar": polar,
         "flat_display": flat_display,
         "no_cleanup": no_cleanup,
     }
     if subject is not None:
         params["subject"] = subject
+    if hemi is not None:
+        params["hemi"] = hemi
     if real_file is not None:
         params["real_file"] = real_file
     if imag_file is not None:
@@ -143,8 +157,17 @@ def rtview_cargs(
             "--s",
             params.get("subject")
         ])
+    if params.get("hemi") is not None:
+        cargs.extend([
+            "--hemi",
+            params.get("hemi")
+        ])
+    if params.get("left_hemi"):
+        cargs.append("--lh")
     if params.get("right_hemi"):
         cargs.append("--rh")
+    if params.get("eccen"):
+        cargs.append("--eccen")
     if params.get("polar"):
         cargs.append("--polar")
     if params.get("real_file") is not None:
@@ -230,7 +253,10 @@ def rtview_execute(
 
 def rtview(
     subject: str | None = None,
+    hemi: str | None = None,
+    left_hemi: bool = False,
     right_hemi: bool = False,
+    eccen: bool = False,
     polar: bool = False,
     real_file: InputPathType | None = None,
     imag_file: InputPathType | None = None,
@@ -252,7 +278,11 @@ def rtview(
     
     Args:
         subject: Subject to use as display.
+        hemi: Hemisphere to display: 'lh' for left hemisphere or 'rh' for right\
+            hemisphere.
+        left_hemi: Display left hemisphere.
         right_hemi: Display right hemisphere.
+        eccen: Display eccentricity data.
         polar: Display polar data.
         real_file: File containing real (cosine) values.
         imag_file: File containing imaginary (sine) values.
@@ -270,7 +300,10 @@ def rtview(
     execution = runner.start_execution(RTVIEW_METADATA)
     params = rtview_params(
         subject=subject,
+        hemi=hemi,
+        left_hemi=left_hemi,
         right_hemi=right_hemi,
+        eccen=eccen,
         polar=polar,
         real_file=real_file,
         imag_file=imag_file,

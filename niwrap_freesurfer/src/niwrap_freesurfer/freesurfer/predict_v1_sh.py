@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PREDICT_V1_SH_METADATA = Metadata(
-    id="9dad70e954292a5df8dae706ae1d13ad401174c0.boutiques",
+    id="fa5102ea5c78705d9124599a58b8008cca2f5a92.boutiques",
     name="predict_v1.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -20,6 +20,7 @@ PredictV1ShParameters = typing.TypedDict('PredictV1ShParameters', {
     "hemisphere": typing.NotRequired[str | None],
     "print_mode_flag": bool,
     "subjects": list[str],
+    "usage_flag": bool,
 })
 
 
@@ -68,6 +69,7 @@ def predict_v1_sh_params(
     inflated_surface_flag: bool = False,
     hemisphere: str | None = None,
     print_mode_flag: bool = False,
+    usage_flag: bool = False,
 ) -> PredictV1ShParameters:
     """
     Build parameters.
@@ -79,6 +81,7 @@ def predict_v1_sh_params(
             registration (backward compatibility).
         hemisphere: Hemisphere (rh or lh) default is both hemispheres.
         print_mode_flag: Print mode (do not run commands, just print them).
+        usage_flag: Print usage.
     Returns:
         Parameter dictionary
     """
@@ -87,6 +90,7 @@ def predict_v1_sh_params(
         "inflated_surface_flag": inflated_surface_flag,
         "print_mode_flag": print_mode_flag,
         "subjects": subjects,
+        "usage_flag": usage_flag,
     }
     if template is not None:
         params["template"] = template
@@ -124,7 +128,9 @@ def predict_v1_sh_cargs(
         ])
     if params.get("print_mode_flag"):
         cargs.append("-p")
-    cargs.append("".join(params.get("subjects")) + "...")
+    cargs.extend(params.get("subjects"))
+    if params.get("usage_flag"):
+        cargs.append("-u")
     return cargs
 
 
@@ -177,6 +183,7 @@ def predict_v1_sh(
     inflated_surface_flag: bool = False,
     hemisphere: str | None = None,
     print_mode_flag: bool = False,
+    usage_flag: bool = False,
     runner: Runner | None = None,
 ) -> PredictV1ShOutputs:
     """
@@ -193,6 +200,7 @@ def predict_v1_sh(
             registration (backward compatibility).
         hemisphere: Hemisphere (rh or lh) default is both hemispheres.
         print_mode_flag: Print mode (do not run commands, just print them).
+        usage_flag: Print usage.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PredictV1ShOutputs`).
@@ -205,6 +213,7 @@ def predict_v1_sh(
         hemisphere=hemisphere,
         print_mode_flag=print_mode_flag,
         subjects=subjects,
+        usage_flag=usage_flag,
     )
     return predict_v1_sh_execute(params, execution)
 

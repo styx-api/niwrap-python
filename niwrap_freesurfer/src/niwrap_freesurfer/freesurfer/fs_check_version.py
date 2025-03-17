@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_CHECK_VERSION_METADATA = Metadata(
-    id="1bb29df8432be8183122dba0b74d19ba214f7751.boutiques",
+    id="660409ce98a2983c236b82f391b2216637f1c37f.boutiques",
     name="fs-check-version",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -18,7 +18,9 @@ FsCheckVersionParameters = typing.TypedDict('FsCheckVersionParameters', {
     "subjects_dir": str,
     "outfile": str,
     "subject": typing.NotRequired[str | None],
+    "require_match": bool,
     "no_require_match": bool,
+    "test": bool,
     "test_debug": bool,
 })
 
@@ -69,7 +71,9 @@ def fs_check_version_params(
     subjects_dir: str,
     outfile: str,
     subject: str | None = None,
+    require_match: bool = False,
     no_require_match: bool = False,
+    test: bool = False,
     test_debug: bool = False,
 ) -> FsCheckVersionParameters:
     """
@@ -79,7 +83,9 @@ def fs_check_version_params(
         subjects_dir: Subjects directory path.
         outfile: Output file path where result of version check will be written.
         subject: Subject name (optional).
+        require_match: Set REQUIRE_FS_MATCH for testing.
         no_require_match: Unset REQUIRE_FS_MATCH for testing.
+        test: Go through permutations for testing.
         test_debug: Go through permutations for debugging.
     Returns:
         Parameter dictionary
@@ -88,7 +94,9 @@ def fs_check_version_params(
         "__STYXTYPE__": "fs-check-version",
         "subjects_dir": subjects_dir,
         "outfile": outfile,
+        "require_match": require_match,
         "no_require_match": no_require_match,
+        "test": test,
         "test_debug": test_debug,
     }
     if subject is not None:
@@ -124,8 +132,12 @@ def fs_check_version_cargs(
             "--s",
             params.get("subject")
         ])
+    if params.get("require_match"):
+        cargs.append("--require-match")
     if params.get("no_require_match"):
         cargs.append("--no-require-match")
+    if params.get("test"):
+        cargs.append("--test")
     if params.get("test_debug"):
         cargs.append("--test-debug")
     return cargs
@@ -180,7 +192,9 @@ def fs_check_version(
     subjects_dir: str,
     outfile: str,
     subject: str | None = None,
+    require_match: bool = False,
     no_require_match: bool = False,
+    test: bool = False,
     test_debug: bool = False,
     runner: Runner | None = None,
 ) -> FsCheckVersionOutputs:
@@ -196,7 +210,9 @@ def fs_check_version(
         subjects_dir: Subjects directory path.
         outfile: Output file path where result of version check will be written.
         subject: Subject name (optional).
+        require_match: Set REQUIRE_FS_MATCH for testing.
         no_require_match: Unset REQUIRE_FS_MATCH for testing.
+        test: Go through permutations for testing.
         test_debug: Go through permutations for debugging.
         runner: Command runner.
     Returns:
@@ -208,7 +224,9 @@ def fs_check_version(
         subjects_dir=subjects_dir,
         outfile=outfile,
         subject=subject,
+        require_match=require_match,
         no_require_match=no_require_match,
+        test=test,
         test_debug=test_debug,
     )
     return fs_check_version_execute(params, execution)

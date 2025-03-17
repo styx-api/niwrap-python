@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_Z2P_METADATA = Metadata(
-    id="993304b1f6f275d376d70048d9e4d541fe6daff2.boutiques",
+    id="78dfd44d5447e6090f81e24d6551a8f322082fcf.boutiques",
     name="mri_z2p",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -24,6 +24,10 @@ MriZ2pParameters = typing.TypedDict('MriZ2pParameters', {
     "signed": bool,
     "feat": typing.NotRequired[str | None],
     "feat_format": typing.NotRequired[str | None],
+    "nii_format": bool,
+    "niigz_format": bool,
+    "mgh_format": bool,
+    "mgz_format": bool,
     "img_format": bool,
     "debug": bool,
     "check_opts": bool,
@@ -84,6 +88,10 @@ def mri_z2p_params(
     signed: bool = False,
     feat: str | None = None,
     feat_format: str | None = None,
+    nii_format: bool = False,
+    niigz_format: bool = False,
+    mgh_format: bool = False,
+    mgz_format: bool = False,
     img_format: bool = False,
     debug: bool = False,
     check_opts: bool = False,
@@ -102,6 +110,10 @@ def mri_z2p_params(
         feat: Convert all z-stats and zf-stats to sigs in the specified\
             directory.
         feat_format: Use specified format for output (e.g., nii, nii.gz, mgh).
+        nii_format: Use NIfTI output format.
+        niigz_format: Use compressed NIfTI output format.
+        mgh_format: Use MGH output format.
+        mgz_format: Use MGZ output format.
         img_format: Use Analyze output format.
         debug: Turn on debugging.
         check_opts: Don't run anything, just check options and exit.
@@ -116,6 +128,10 @@ def mri_z2p_params(
         "two_sided": two_sided,
         "one_sided": one_sided,
         "signed": signed,
+        "nii_format": nii_format,
+        "niigz_format": niigz_format,
+        "mgh_format": mgh_format,
+        "mgz_format": mgz_format,
         "img_format": img_format,
         "debug": debug,
         "check_opts": check_opts,
@@ -177,6 +193,14 @@ def mri_z2p_cargs(
             "--featfmt",
             params.get("feat_format")
         ])
+    if params.get("nii_format"):
+        cargs.append("--nii")
+    if params.get("niigz_format"):
+        cargs.append("--nii.gz")
+    if params.get("mgh_format"):
+        cargs.append("--mgh")
+    if params.get("mgz_format"):
+        cargs.append("--mgz")
     if params.get("img_format"):
         cargs.append("--img")
     if params.get("debug"):
@@ -241,6 +265,10 @@ def mri_z2p(
     signed: bool = False,
     feat: str | None = None,
     feat_format: str | None = None,
+    nii_format: bool = False,
+    niigz_format: bool = False,
+    mgh_format: bool = False,
+    mgz_format: bool = False,
     img_format: bool = False,
     debug: bool = False,
     check_opts: bool = False,
@@ -264,6 +292,10 @@ def mri_z2p(
         feat: Convert all z-stats and zf-stats to sigs in the specified\
             directory.
         feat_format: Use specified format for output (e.g., nii, nii.gz, mgh).
+        nii_format: Use NIfTI output format.
+        niigz_format: Use compressed NIfTI output format.
+        mgh_format: Use MGH output format.
+        mgz_format: Use MGZ output format.
         img_format: Use Analyze output format.
         debug: Turn on debugging.
         check_opts: Don't run anything, just check options and exit.
@@ -283,6 +315,10 @@ def mri_z2p(
         signed=signed,
         feat=feat,
         feat_format=feat_format,
+        nii_format=nii_format,
+        niigz_format=niigz_format,
+        mgh_format=mgh_format,
+        mgz_format=mgz_format,
         img_format=img_format,
         debug=debug,
         check_opts=check_opts,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICETIMER_FSL_METADATA = Metadata(
-    id="27673c86089b795cd88a005218734e798ec23211.boutiques",
+    id="9f6e993d60103d5d70a85a9d3580dffe485d5763.boutiques",
     name="slicetimer.fsl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -138,8 +138,7 @@ def slicetimer_fsl_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("slicetimer")
-    cargs.append("--in")
+    cargs.append("slicetimer.fsl")
     cargs.extend([
         "-i",
         execution.input_file(params.get("infile"))

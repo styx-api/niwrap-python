@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SAMSEG_METADATA = Metadata(
-    id="1947f646fba1c79e354f5efabbda10d0a11595ce.boutiques",
+    id="86da9ab5c96ce79b11eaa8ba3fee321e3bcca1b7.boutiques",
     name="samseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -52,6 +52,7 @@ SamsegParameters = typing.TypedDict('SamsegParameters', {
     "regmat_file": typing.NotRequired[InputPathType | None],
     "init_lta": typing.NotRequired[InputPathType | None],
     "reg_only": bool,
+    "ssdd_directory": typing.NotRequired[str | None],
     "save_mesh": bool,
     "max_iters": typing.NotRequired[float | None],
     "dice_file": typing.NotRequired[InputPathType | None],
@@ -147,6 +148,7 @@ def samseg_params(
     regmat_file: InputPathType | None = None,
     init_lta: InputPathType | None = None,
     reg_only: bool = False,
+    ssdd_directory: str | None = None,
     save_mesh: bool = False,
     max_iters: float | None = None,
     dice_file: InputPathType | None = None,
@@ -207,6 +209,7 @@ def samseg_params(
         regmat_file: Same as --reg.
         init_lta: Initial registration LTA file.
         reg_only: Only perform registration.
+        ssdd_directory: Path to SAMSEG_Data_DIR where the atlas is located.
         save_mesh: Save the mesh, useful for longitudinal analysis.
         max_iters: Maximum number of iterations.
         dice_file: DICE coefficient file for segmentation.
@@ -277,6 +280,8 @@ def samseg_params(
         params["regmat_file"] = regmat_file
     if init_lta is not None:
         params["init_lta"] = init_lta
+    if ssdd_directory is not None:
+        params["ssdd_directory"] = ssdd_directory
     if max_iters is not None:
         params["max_iters"] = max_iters
     if dice_file is not None:
@@ -432,6 +437,11 @@ def samseg_cargs(
         ])
     if params.get("reg_only"):
         cargs.append("--reg-only")
+    if params.get("ssdd_directory") is not None:
+        cargs.extend([
+            "--ssdd",
+            params.get("ssdd_directory")
+        ])
     if params.get("save_mesh"):
         cargs.append("--save-mesh")
     if params.get("max_iters") is not None:
@@ -545,6 +555,7 @@ def samseg(
     regmat_file: InputPathType | None = None,
     init_lta: InputPathType | None = None,
     reg_only: bool = False,
+    ssdd_directory: str | None = None,
     save_mesh: bool = False,
     max_iters: float | None = None,
     dice_file: InputPathType | None = None,
@@ -611,6 +622,7 @@ def samseg(
         regmat_file: Same as --reg.
         init_lta: Initial registration LTA file.
         reg_only: Only perform registration.
+        ssdd_directory: Path to SAMSEG_Data_DIR where the atlas is located.
         save_mesh: Save the mesh, useful for longitudinal analysis.
         max_iters: Maximum number of iterations.
         dice_file: DICE coefficient file for segmentation.
@@ -663,6 +675,7 @@ def samseg(
         regmat_file=regmat_file,
         init_lta=init_lta,
         reg_only=reg_only,
+        ssdd_directory=ssdd_directory,
         save_mesh=save_mesh,
         max_iters=max_iters,
         dice_file=dice_file,

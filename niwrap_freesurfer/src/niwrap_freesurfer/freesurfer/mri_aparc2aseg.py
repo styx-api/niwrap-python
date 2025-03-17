@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_APARC2ASEG_METADATA = Metadata(
-    id="70399c00183edd73f6d174d9a1c242615869d650.boutiques",
+    id="d81366f82e290a78f07433462eedcb07c712e3e6.boutiques",
     name="mri_aparc2aseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -31,6 +31,7 @@ MriAparc2asegParameters = typing.TypedDict('MriAparc2asegParameters', {
     "no_fix_parahip": bool,
     "smooth_normals": typing.NotRequired[float | None],
     "crs_test": typing.NotRequired[str | None],
+    "left_hemisphere": bool,
     "right_hemisphere": bool,
     "threads": typing.NotRequired[float | None],
     "help": bool,
@@ -97,6 +98,7 @@ def mri_aparc2aseg_params(
     no_fix_parahip: bool = False,
     smooth_normals: float | None = None,
     crs_test: str | None = None,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     threads: float | None = None,
     help_: bool = False,
@@ -130,6 +132,7 @@ def mri_aparc2aseg_params(
         smooth_normals: Change number of surface normal smoothing steps\
             (default is 10).
         crs_test: Test mapping of column, row, slice.
+        left_hemisphere: Only process the left hemisphere.
         right_hemisphere: Only process the right hemisphere.
         threads: Run in parallel with the specified number of threads.
         help_: Print out information on how to use this program.
@@ -147,6 +150,7 @@ def mri_aparc2aseg_params(
         "rip_unknown": rip_unknown,
         "hypo_as_wm": hypo_as_wm,
         "no_fix_parahip": no_fix_parahip,
+        "left_hemisphere": left_hemisphere,
         "right_hemisphere": right_hemisphere,
         "help": help_,
         "version": version,
@@ -243,6 +247,8 @@ def mri_aparc2aseg_cargs(
             "--crs-test",
             params.get("crs_test")
         ])
+    if params.get("left_hemisphere"):
+        cargs.append("--lh")
     if params.get("right_hemisphere"):
         cargs.append("--rh")
     if params.get("threads") is not None:
@@ -319,6 +325,7 @@ def mri_aparc2aseg(
     no_fix_parahip: bool = False,
     smooth_normals: float | None = None,
     crs_test: str | None = None,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     threads: float | None = None,
     help_: bool = False,
@@ -358,6 +365,7 @@ def mri_aparc2aseg(
         smooth_normals: Change number of surface normal smoothing steps\
             (default is 10).
         crs_test: Test mapping of column, row, slice.
+        left_hemisphere: Only process the left hemisphere.
         right_hemisphere: Only process the right hemisphere.
         threads: Run in parallel with the specified number of threads.
         help_: Print out information on how to use this program.
@@ -385,6 +393,7 @@ def mri_aparc2aseg(
         no_fix_parahip=no_fix_parahip,
         smooth_normals=smooth_normals,
         crs_test=crs_test,
+        left_hemisphere=left_hemisphere,
         right_hemisphere=right_hemisphere,
         threads=threads,
         help_=help_,

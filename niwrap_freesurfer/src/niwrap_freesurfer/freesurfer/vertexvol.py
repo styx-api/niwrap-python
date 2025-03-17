@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VERTEXVOL_METADATA = Metadata(
-    id="43f2f0ece18dc9707df38e81102c8d727e4682e9.boutiques",
+    id="72720dd9559564a7517285d29ffdf9116e4d731a.boutiques",
     name="vertexvol",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,8 +16,10 @@ VERTEXVOL_METADATA = Metadata(
 VertexvolParameters = typing.TypedDict('VertexvolParameters', {
     "__STYX_TYPE__": typing.Literal["vertexvol"],
     "subject": str,
+    "left_hemisphere": bool,
     "right_hemisphere": bool,
     "output_file": typing.NotRequired[str | None],
+    "use_th3": bool,
     "no_th3": bool,
 })
 
@@ -66,8 +68,10 @@ class VertexvolOutputs(typing.NamedTuple):
 
 def vertexvol_params(
     subject: str,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     output_file: str | None = "?h.volume",
+    use_th3: bool = False,
     no_th3: bool = False,
 ) -> VertexvolParameters:
     """
@@ -75,8 +79,10 @@ def vertexvol_params(
     
     Args:
         subject: Subject identifier.
+        left_hemisphere: Select left hemisphere.
         right_hemisphere: Select right hemisphere.
         output_file: Output file name, default is ?h.volume.
+        use_th3: Use TH3 method for computation.
         no_th3: Don't use TH3 method for computation.
     Returns:
         Parameter dictionary
@@ -84,7 +90,9 @@ def vertexvol_params(
     params = {
         "__STYXTYPE__": "vertexvol",
         "subject": subject,
+        "left_hemisphere": left_hemisphere,
         "right_hemisphere": right_hemisphere,
+        "use_th3": use_th3,
         "no_th3": no_th3,
     }
     if output_file is not None:
@@ -111,6 +119,8 @@ def vertexvol_cargs(
         "--s",
         params.get("subject")
     ])
+    if params.get("left_hemisphere"):
+        cargs.append("--lh")
     if params.get("right_hemisphere"):
         cargs.append("--rh")
     if params.get("output_file") is not None:
@@ -118,6 +128,8 @@ def vertexvol_cargs(
             "--o",
             params.get("output_file")
         ])
+    if params.get("use_th3"):
+        cargs.append("--th3")
     if params.get("no_th3"):
         cargs.append("--no-th3")
     return cargs
@@ -169,8 +181,10 @@ def vertexvol_execute(
 
 def vertexvol(
     subject: str,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     output_file: str | None = "?h.volume",
+    use_th3: bool = False,
     no_th3: bool = False,
     runner: Runner | None = None,
 ) -> VertexvolOutputs:
@@ -183,8 +197,10 @@ def vertexvol(
     
     Args:
         subject: Subject identifier.
+        left_hemisphere: Select left hemisphere.
         right_hemisphere: Select right hemisphere.
         output_file: Output file name, default is ?h.volume.
+        use_th3: Use TH3 method for computation.
         no_th3: Don't use TH3 method for computation.
         runner: Command runner.
     Returns:
@@ -194,8 +210,10 @@ def vertexvol(
     execution = runner.start_execution(VERTEXVOL_METADATA)
     params = vertexvol_params(
         subject=subject,
+        left_hemisphere=left_hemisphere,
         right_hemisphere=right_hemisphere,
         output_file=output_file,
+        use_th3=use_th3,
         no_th3=no_th3,
     )
     return vertexvol_execute(params, execution)
