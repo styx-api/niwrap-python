@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_FORREST_METADATA = Metadata(
-    id="dd4542253804128ad899a822733de446938568c4.boutiques",
+    id="2c71c0f52e15a044282718015b50d98a2a58e574.boutiques",
     name="dmri_forrest",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -23,6 +23,7 @@ DmriForrestParameters = typing.TypedDict('DmriForrestParameters', {
     "diff_file": typing.NotRequired[InputPathType | None],
     "debug": bool,
     "checkopts": bool,
+    "help": bool,
 })
 
 
@@ -74,6 +75,7 @@ def dmri_forrest_params(
     diff_file: InputPathType | None = None,
     debug: bool = False,
     checkopts: bool = False,
+    help_: bool = False,
 ) -> DmriForrestParameters:
     """
     Build parameters.
@@ -88,6 +90,7 @@ def dmri_forrest_params(
             directory.
         debug: Turn on debugging mode.
         checkopts: Only check options and exit.
+        help_: Display help information.
     Returns:
         Parameter dictionary
     """
@@ -99,6 +102,7 @@ def dmri_forrest_params(
         "tract_files": tract_files,
         "debug": debug,
         "checkopts": checkopts,
+        "help": help_,
     }
     if seg_file is not None:
         params["seg_file"] = seg_file
@@ -152,6 +156,8 @@ def dmri_forrest_cargs(
         cargs.append("--debug")
     if params.get("checkopts"):
         cargs.append("--checkopts")
+    if params.get("help"):
+        cargs.append("--help")
     return cargs
 
 
@@ -208,6 +214,7 @@ def dmri_forrest(
     diff_file: InputPathType | None = None,
     debug: bool = False,
     checkopts: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> DmriForrestOutputs:
     """
@@ -228,6 +235,7 @@ def dmri_forrest(
             directory.
         debug: Turn on debugging mode.
         checkopts: Only check options and exit.
+        help_: Display help information.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriForrestOutputs`).
@@ -243,6 +251,7 @@ def dmri_forrest(
         diff_file=diff_file,
         debug=debug,
         checkopts=checkopts,
+        help_=help_,
     )
     return dmri_forrest_execute(params, execution)
 

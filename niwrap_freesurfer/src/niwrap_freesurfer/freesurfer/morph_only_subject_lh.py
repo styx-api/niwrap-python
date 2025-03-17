@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MORPH_ONLY_SUBJECT_LH_METADATA = Metadata(
-    id="352935372f9b953d29e77e48bc48053d0bb7123b.boutiques",
+    id="675fa84f456fc1eaf42786b61325807752029a72.boutiques",
     name="morph_only_subject-lh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -93,9 +93,10 @@ def morph_only_subject_lh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("morph_only_subject-lh")
     cargs.extend([
         "-lh",
-        "morph_only_subject" + params.get("subject_dir")
+        params.get("subject_dir")
     ])
     return cargs
 

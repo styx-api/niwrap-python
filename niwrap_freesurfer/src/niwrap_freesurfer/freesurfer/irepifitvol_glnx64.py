@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IREPIFITVOL_GLNX64_METADATA = Metadata(
-    id="e1b3c71003d88eeb91c6bc522cbeb9c8dec5641d.boutiques",
+    id="a245c53e9539ea6eed51026dad3ae5a54dd3dcd3.boutiques",
     name="irepifitvol.glnx64",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -97,7 +97,7 @@ def irepifitvol_glnx64_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("irepifitvol")
+    cargs.append("irepifitvol.glnx64")
     cargs.append(execution.input_file(params.get("input_file")))
     cargs.append(params.get("output_file"))
     return cargs

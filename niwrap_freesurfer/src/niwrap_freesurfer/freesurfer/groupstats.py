@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GROUPSTATS_METADATA = Metadata(
-    id="b3ed2b7c0070683b40d589d0c64dbdd96b53715f.boutiques",
+    id="355e1a7428f21999fd48f18935d2d56917a02e73.boutiques",
     name="groupstats",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,11 +16,21 @@ GROUPSTATS_METADATA = Metadata(
 GroupstatsParameters = typing.TypedDict('GroupstatsParameters', {
     "__STYX_TYPE__": typing.Literal["groupstats"],
     "outdir": str,
+    "group_fsgd": typing.NotRequired[InputPathType | None],
     "subjectfile": typing.NotRequired[InputPathType | None],
     "fwhm": typing.NotRequired[list[float] | None],
     "subject_dir": typing.NotRequired[str | None],
     "mapname": typing.NotRequired[str | None],
     "srcsurfreg": typing.NotRequired[str | None],
+    "no_maps": bool,
+    "lh_only": bool,
+    "rh_only": bool,
+    "no_aparcstats": bool,
+    "no_asegstats": bool,
+    "no_wparcstats": bool,
+    "no_stats": bool,
+    "new": bool,
+    "base": bool,
     "keep53": bool,
 })
 
@@ -69,11 +79,21 @@ class GroupstatsOutputs(typing.NamedTuple):
 
 def groupstats_params(
     outdir: str,
+    group_fsgd: InputPathType | None = None,
     subjectfile: InputPathType | None = None,
     fwhm: list[float] | None = None,
     subject_dir: str | None = None,
     mapname: str | None = None,
     srcsurfreg: str | None = None,
+    no_maps: bool = False,
+    lh_only: bool = False,
+    rh_only: bool = False,
+    no_aparcstats: bool = False,
+    no_asegstats: bool = False,
+    no_wparcstats: bool = False,
+    no_stats: bool = False,
+    new: bool = False,
+    base: bool = False,
     keep53: bool = False,
 ) -> GroupstatsParameters:
     """
@@ -81,11 +101,22 @@ def groupstats_params(
     
     Args:
         outdir: Output folder.
+        group_fsgd: Specify the FSGD file for the group.
         subjectfile: Subject list file.
         fwhm: Specify smoothing level(s).
         subject_dir: Subject directory.
         mapname: Use the given map name.
         srcsurfreg: Source surface registration (default is sphere.reg).
+        no_maps: Only analyze ROI data.
+        lh_only: Only analyze left hemisphere.
+        rh_only: Only analyze right hemisphere.
+        no_aparcstats: Do not compute aparcstats.
+        no_asegstats: Do not compute asegstats.
+        no_wparcstats: Do not compute wmparcstats.
+        no_stats: Do not perform any ROI stats.
+        new: Append .new.mris_make_surfaces to map names.
+        base: Sets measure thickness area volume curvature sulcus (excludes\
+            white-gray percentage).
         keep53: Keep 5.3 aseg names (e.g., Thalamus-Proper).
     Returns:
         Parameter dictionary
@@ -93,8 +124,19 @@ def groupstats_params(
     params = {
         "__STYXTYPE__": "groupstats",
         "outdir": outdir,
+        "no_maps": no_maps,
+        "lh_only": lh_only,
+        "rh_only": rh_only,
+        "no_aparcstats": no_aparcstats,
+        "no_asegstats": no_asegstats,
+        "no_wparcstats": no_wparcstats,
+        "no_stats": no_stats,
+        "new": new,
+        "base": base,
         "keep53": keep53,
     }
+    if group_fsgd is not None:
+        params["group_fsgd"] = group_fsgd
     if subjectfile is not None:
         params["subjectfile"] = subjectfile
     if fwhm is not None:
@@ -127,6 +169,11 @@ def groupstats_cargs(
         "--o",
         params.get("outdir")
     ])
+    if params.get("group_fsgd") is not None:
+        cargs.extend([
+            "--fsgd",
+            execution.input_file(params.get("group_fsgd"))
+        ])
     if params.get("subjectfile") is not None:
         cargs.extend([
             "--f",
@@ -152,6 +199,24 @@ def groupstats_cargs(
             "--srcsurfreg",
             params.get("srcsurfreg")
         ])
+    if params.get("no_maps"):
+        cargs.append("--no-maps")
+    if params.get("lh_only"):
+        cargs.append("--lh")
+    if params.get("rh_only"):
+        cargs.append("--rh")
+    if params.get("no_aparcstats"):
+        cargs.append("--no-aparcstats")
+    if params.get("no_asegstats"):
+        cargs.append("--no-asegstats")
+    if params.get("no_wparcstats"):
+        cargs.append("--no-wparcstats")
+    if params.get("no_stats"):
+        cargs.append("--no-stats")
+    if params.get("new"):
+        cargs.append("--new")
+    if params.get("base"):
+        cargs.append("--base")
     if params.get("keep53"):
         cargs.append("--keep53")
     return cargs
@@ -204,11 +269,21 @@ def groupstats_execute(
 
 def groupstats(
     outdir: str,
+    group_fsgd: InputPathType | None = None,
     subjectfile: InputPathType | None = None,
     fwhm: list[float] | None = None,
     subject_dir: str | None = None,
     mapname: str | None = None,
     srcsurfreg: str | None = None,
+    no_maps: bool = False,
+    lh_only: bool = False,
+    rh_only: bool = False,
+    no_aparcstats: bool = False,
+    no_asegstats: bool = False,
+    no_wparcstats: bool = False,
+    no_stats: bool = False,
+    new: bool = False,
+    base: bool = False,
     keep53: bool = False,
     runner: Runner | None = None,
 ) -> GroupstatsOutputs:
@@ -222,11 +297,22 @@ def groupstats(
     
     Args:
         outdir: Output folder.
+        group_fsgd: Specify the FSGD file for the group.
         subjectfile: Subject list file.
         fwhm: Specify smoothing level(s).
         subject_dir: Subject directory.
         mapname: Use the given map name.
         srcsurfreg: Source surface registration (default is sphere.reg).
+        no_maps: Only analyze ROI data.
+        lh_only: Only analyze left hemisphere.
+        rh_only: Only analyze right hemisphere.
+        no_aparcstats: Do not compute aparcstats.
+        no_asegstats: Do not compute asegstats.
+        no_wparcstats: Do not compute wmparcstats.
+        no_stats: Do not perform any ROI stats.
+        new: Append .new.mris_make_surfaces to map names.
+        base: Sets measure thickness area volume curvature sulcus (excludes\
+            white-gray percentage).
         keep53: Keep 5.3 aseg names (e.g., Thalamus-Proper).
         runner: Command runner.
     Returns:
@@ -236,11 +322,21 @@ def groupstats(
     execution = runner.start_execution(GROUPSTATS_METADATA)
     params = groupstats_params(
         outdir=outdir,
+        group_fsgd=group_fsgd,
         subjectfile=subjectfile,
         fwhm=fwhm,
         subject_dir=subject_dir,
         mapname=mapname,
         srcsurfreg=srcsurfreg,
+        no_maps=no_maps,
+        lh_only=lh_only,
+        rh_only=rh_only,
+        no_aparcstats=no_aparcstats,
+        no_asegstats=no_asegstats,
+        no_wparcstats=no_wparcstats,
+        no_stats=no_stats,
+        new=new,
+        base=base,
         keep53=keep53,
     )
     return groupstats_execute(params, execution)

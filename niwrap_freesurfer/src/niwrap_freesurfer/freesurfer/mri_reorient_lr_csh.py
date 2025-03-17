@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_REORIENT_LR_CSH_METADATA = Metadata(
-    id="44b9d6ba4983462289bb74a35e46ca2bc4fb3a6c.boutiques",
+    id="0a6ce73f29c18581e75c6c6cc19eafd6b33ca832.boutiques",
     name="mri_reorient_LR.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -118,7 +118,7 @@ def mri_reorient_lr_csh_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("mri_reorient_LR")
+    cargs.append("mri_reorient_LR.csh")
     cargs.extend([
         "--i",
         execution.input_file(params.get("input_vol"))

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RCA_CONFIG2CSH_METADATA = Metadata(
-    id="a6974f7a84f9b447ffa3652155f3daff457ba308.boutiques",
+    id="7da3f443ce243dae4e35d8db7f6e15691dc59ca6.boutiques",
     name="rca-config2csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -90,9 +90,10 @@ def rca_config2csh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("rca-config2csh")
     cargs.extend([
         "-config2csh",
-        "rca" + execution.input_file(params.get("configfile"))
+        execution.input_file(params.get("configfile"))
     ])
     return cargs
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_LABEL_CALC_METADATA = Metadata(
-    id="4566c0b5206cd4d9fc63822cdb713e50b1ee033e.boutiques",
+    id="0dc4043ecf2e55b53be6b5910c84a71bf8a1c707.boutiques",
     name="mris_label_calc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -19,6 +19,7 @@ MrisLabelCalcParameters = typing.TypedDict('MrisLabelCalcParameters', {
     "input1": InputPathType,
     "input2": InputPathType,
     "output": str,
+    "iterations": typing.NotRequired[int | None],
 })
 
 
@@ -69,6 +70,7 @@ def mris_label_calc_params(
     input1: InputPathType,
     input2: InputPathType,
     output: str,
+    iterations: int | None = None,
 ) -> MrisLabelCalcParameters:
     """
     Build parameters.
@@ -79,6 +81,7 @@ def mris_label_calc_params(
         input2: Second input label file (used for 'invert', 'erode', 'dilate'\
             operations).
         output: Output label file.
+        iterations: Number of times to erode or dilate label.
     Returns:
         Parameter dictionary
     """
@@ -89,6 +92,8 @@ def mris_label_calc_params(
         "input2": input2,
         "output": output,
     }
+    if iterations is not None:
+        params["iterations"] = iterations
     return params
 
 
@@ -111,6 +116,11 @@ def mris_label_calc_cargs(
     cargs.append(execution.input_file(params.get("input1")))
     cargs.append(execution.input_file(params.get("input2")))
     cargs.append(params.get("output"))
+    if params.get("iterations") is not None:
+        cargs.extend([
+            "<n>",
+            str(params.get("iterations"))
+        ])
     return cargs
 
 
@@ -163,6 +173,7 @@ def mris_label_calc(
     input1: InputPathType,
     input2: InputPathType,
     output: str,
+    iterations: int | None = None,
     runner: Runner | None = None,
 ) -> MrisLabelCalcOutputs:
     """
@@ -178,6 +189,7 @@ def mris_label_calc(
         input2: Second input label file (used for 'invert', 'erode', 'dilate'\
             operations).
         output: Output label file.
+        iterations: Number of times to erode or dilate label.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisLabelCalcOutputs`).
@@ -189,6 +201,7 @@ def mris_label_calc(
         input1=input1,
         input2=input2,
         output=output,
+        iterations=iterations,
     )
     return mris_label_calc_execute(params, execution)
 

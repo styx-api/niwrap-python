@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LONGMC_METADATA = Metadata(
-    id="51a04d5ffd0bb81591249e8acfb084306bc3edcb.boutiques",
+    id="a60463859b66f4dac910ccf5dd67f14573c1ca1f.boutiques",
     name="longmc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -18,6 +18,7 @@ LongmcParameters = typing.TypedDict('LongmcParameters', {
     "cross_tp_name": str,
     "base_name": str,
     "conform_to_hires": bool,
+    "no_conform_to_hires": bool,
     "subjects_dir": str,
     "subject_name": typing.NotRequired[str | None],
     "no_force_update": bool,
@@ -68,6 +69,7 @@ def longmc_params(
     base_name: str,
     subjects_dir: str,
     conform_to_hires: bool = False,
+    no_conform_to_hires: bool = False,
     subject_name: str | None = None,
     no_force_update: bool = False,
 ) -> LongmcParameters:
@@ -79,6 +81,7 @@ def longmc_params(
         base_name: Base name for the longitudinal analysis.
         subjects_dir: Set the SUBJECTS_DIR directory.
         conform_to_hires: Option to conform input to high-resolution.
+        no_conform_to_hires: Option to not conform input to high-resolution.
         subject_name: Subject name override, must be declared after -long.
         no_force_update: Do not force update.
     Returns:
@@ -89,6 +92,7 @@ def longmc_params(
         "cross_tp_name": cross_tp_name,
         "base_name": base_name,
         "conform_to_hires": conform_to_hires,
+        "no_conform_to_hires": no_conform_to_hires,
         "subjects_dir": subjects_dir,
         "no_force_update": no_force_update,
     }
@@ -119,6 +123,8 @@ def longmc_cargs(
     cargs.append(params.get("base_name"))
     if params.get("conform_to_hires"):
         cargs.append("-conf2hires")
+    if params.get("no_conform_to_hires"):
+        cargs.append("-no-conf2hires")
     cargs.extend([
         "-sd",
         params.get("subjects_dir")
@@ -182,6 +188,7 @@ def longmc(
     base_name: str,
     subjects_dir: str,
     conform_to_hires: bool = False,
+    no_conform_to_hires: bool = False,
     subject_name: str | None = None,
     no_force_update: bool = False,
     runner: Runner | None = None,
@@ -199,6 +206,7 @@ def longmc(
         base_name: Base name for the longitudinal analysis.
         subjects_dir: Set the SUBJECTS_DIR directory.
         conform_to_hires: Option to conform input to high-resolution.
+        no_conform_to_hires: Option to not conform input to high-resolution.
         subject_name: Subject name override, must be declared after -long.
         no_force_update: Do not force update.
         runner: Command runner.
@@ -211,6 +219,7 @@ def longmc(
         cross_tp_name=cross_tp_name,
         base_name=base_name,
         conform_to_hires=conform_to_hires,
+        no_conform_to_hires=no_conform_to_hires,
         subjects_dir=subjects_dir,
         subject_name=subject_name,
         no_force_update=no_force_update,

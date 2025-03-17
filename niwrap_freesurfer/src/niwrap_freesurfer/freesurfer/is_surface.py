@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IS_SURFACE_METADATA = Metadata(
-    id="6cb9d1446618fbf43c51093ee6543e6c01436b21.boutiques",
+    id="86c411bc39041a8b3eae45962259ad09e76de3b1.boutiques",
     name="is-surface",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -90,9 +90,10 @@ def is_surface_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("is-surface")
     cargs.extend([
         "-surface",
-        "is" + execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile"))
     ])
     return cargs
 

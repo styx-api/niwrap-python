@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PLOT_STRUCTURE_STATS_TCL_METADATA = Metadata(
-    id="a74a29bbca7b8c304af58dc63af9e2298f4ac223.boutiques",
+    id="3da14e93a6edf0e5421e7aad0c1e0f8bf5f4b087.boutiques",
     name="plot_structure_stats.tcl",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -97,7 +97,7 @@ def plot_structure_stats_tcl_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("plot_structure_stats")
+    cargs.append("plot_structure_stats.tcl")
     cargs.append(execution.input_file(params.get("input_file")))
     cargs.append(params.get("output_file"))
     return cargs

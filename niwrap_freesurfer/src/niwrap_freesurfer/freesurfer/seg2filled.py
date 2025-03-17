@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEG2FILLED_METADATA = Metadata(
-    id="894fcea3b0a2a4a1b34ad187f3a8016973d50857.boutiques",
+    id="08a923890854a31a1c2fa48662a53980de38b6b2.boutiques",
     name="seg2filled",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -123,15 +123,15 @@ def seg2filled_cargs(
     cargs.append("seg2filled")
     cargs.extend([
         "-seg",
-        "-" + execution.input_file(params.get("seg_file"))
+        execution.input_file(params.get("seg_file"))
     ])
     cargs.extend([
         "-norm",
-        "-" + execution.input_file(params.get("norm_file"))
+        execution.input_file(params.get("norm_file"))
     ])
     cargs.extend([
         "-o",
-        "-" + params.get("output_file")
+        params.get("output_file")
     ])
     if params.get("ndil") is not None:
         cargs.extend([

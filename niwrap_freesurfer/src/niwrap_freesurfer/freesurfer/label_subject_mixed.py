@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_SUBJECT_MIXED_METADATA = Metadata(
-    id="c89d204a94ff9a438c87e6af7616b21249be8dd9.boutiques",
+    id="4fa18aab4c7257494464ce9a6c1ac24cbb5a4c6e.boutiques",
     name="label_subject_mixed",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -109,7 +109,7 @@ def label_subject_mixed_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("mri_ca_label")
+    cargs.append("label_subject_mixed")
     cargs.extend([
         "-mask",
         execution.input_file(params.get("brain_mask"))

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_GTMPVC_METADATA = Metadata(
-    id="fd930d51e0a8f5012076ae523ec1cb2238ba47c5.boutiques",
+    id="3c3042699fe4320ac7c6849c5d7c614e5a318805.boutiques",
     name="mri_gtmpvc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -20,6 +20,8 @@ MriGtmpvcParameters = typing.TypedDict('MriGtmpvcParameters', {
     "psf": float,
     "segmentation": InputPathType,
     "registration": typing.NotRequired[InputPathType | None],
+    "regheader": bool,
+    "reg_identity": bool,
     "output_directory": str,
     "mask": typing.NotRequired[InputPathType | None],
     "auto_mask": typing.NotRequired[int | None],
@@ -149,6 +151,8 @@ def mri_gtmpvc_params(
     output_directory: str,
     frame: float | None = None,
     registration: InputPathType | None = None,
+    regheader: bool = False,
+    reg_identity: bool = False,
     mask: InputPathType | None = None,
     auto_mask: int | None = None,
     no_reduce_fov: bool = False,
@@ -214,6 +218,8 @@ def mri_gtmpvc_params(
         output_directory: Output directory.
         frame: Only process 0-based frame F from input volume.
         registration: LTA registration file that maps PET to anatomical.
+        regheader: Assume input and seg share scanner space.
+        reg_identity: Assume that input is in anatomical space.
         mask: Ignore areas outside of the mask (in input vol space).
         auto_mask: Automatically compute mask with FWHM and threshold.
         no_reduce_fov: Do not reduce FoV to encompass mask.
@@ -285,6 +291,8 @@ def mri_gtmpvc_params(
         "input_volume": input_volume,
         "psf": psf,
         "segmentation": segmentation,
+        "regheader": regheader,
+        "reg_identity": reg_identity,
         "output_directory": output_directory,
         "no_reduce_fov": no_reduce_fov,
         "reduce_fov_eqodd": reduce_fov_eqodd,
@@ -406,6 +414,10 @@ def mri_gtmpvc_cargs(
             "--reg",
             execution.input_file(params.get("registration"))
         ])
+    if params.get("regheader"):
+        cargs.append("--regheader")
+    if params.get("reg_identity"):
+        cargs.append("--reg-identity")
     cargs.extend([
         "--o",
         params.get("output_directory")
@@ -647,6 +659,8 @@ def mri_gtmpvc(
     output_directory: str,
     frame: float | None = None,
     registration: InputPathType | None = None,
+    regheader: bool = False,
+    reg_identity: bool = False,
     mask: InputPathType | None = None,
     auto_mask: int | None = None,
     no_reduce_fov: bool = False,
@@ -718,6 +732,8 @@ def mri_gtmpvc(
         output_directory: Output directory.
         frame: Only process 0-based frame F from input volume.
         registration: LTA registration file that maps PET to anatomical.
+        regheader: Assume input and seg share scanner space.
+        reg_identity: Assume that input is in anatomical space.
         mask: Ignore areas outside of the mask (in input vol space).
         auto_mask: Automatically compute mask with FWHM and threshold.
         no_reduce_fov: Do not reduce FoV to encompass mask.
@@ -793,6 +809,8 @@ def mri_gtmpvc(
         psf=psf,
         segmentation=segmentation,
         registration=registration,
+        regheader=regheader,
+        reg_identity=reg_identity,
         output_directory=output_directory,
         mask=mask,
         auto_mask=auto_mask,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RUN_QDEC_GLM_METADATA = Metadata(
-    id="b83d7c50b5137b0f5530f2c1776edefd9de98fa2.boutiques",
+    id="7d86461bf7f65d864302de80bed43c2de8adbb76.boutiques",
     name="run-qdec-glm",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -90,9 +90,10 @@ def run_qdec_glm_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("run-qdec-glm")
     cargs.extend([
         "-glm",
-        "run-qdec" + params.get("qdec_directory")
+        params.get("qdec_directory")
     ])
     return cargs
 

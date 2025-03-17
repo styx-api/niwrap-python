@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA = Metadata(
-    id="d85f89519ecdd6db050cf20b230dd279bab615ca.boutiques",
+    id="7363f7a4d7e7af9a9827c3ca57854bc1610a9623.boutiques",
     name="compute_interrater_variability.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -18,6 +18,8 @@ ComputeInterraterVariabilityCshParameters = typing.TypedDict('ComputeInterraterV
     "label_vol1": InputPathType,
     "label_vol2": InputPathType,
     "output_prefix": str,
+    "version": bool,
+    "help": bool,
 })
 
 
@@ -72,6 +74,8 @@ def compute_interrater_variability_csh_params(
     label_vol1: InputPathType,
     label_vol2: InputPathType,
     output_prefix: str,
+    version: bool = False,
+    help_: bool = False,
 ) -> ComputeInterraterVariabilityCshParameters:
     """
     Build parameters.
@@ -81,6 +85,8 @@ def compute_interrater_variability_csh_params(
         label_vol2: Label volume from rater 2.
         output_prefix: Prefix for the output text files containing results. A\
             total of three files will be produced.
+        version: Print version information and exit.
+        help_: Print help information and exit.
     Returns:
         Parameter dictionary
     """
@@ -89,6 +95,8 @@ def compute_interrater_variability_csh_params(
         "label_vol1": label_vol1,
         "label_vol2": label_vol2,
         "output_prefix": output_prefix,
+        "version": version,
+        "help": help_,
     }
     return params
 
@@ -107,7 +115,7 @@ def compute_interrater_variability_csh_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("compute_interrater_variability")
+    cargs.append("compute_interrater_variability.csh")
     cargs.extend([
         "--vol1",
         execution.input_file(params.get("label_vol1"))
@@ -120,6 +128,10 @@ def compute_interrater_variability_csh_cargs(
         "--out",
         params.get("output_prefix")
     ])
+    if params.get("version"):
+        cargs.append("--version")
+    if params.get("help"):
+        cargs.append("--help")
     return cargs
 
 
@@ -174,6 +186,8 @@ def compute_interrater_variability_csh(
     label_vol1: InputPathType,
     label_vol2: InputPathType,
     output_prefix: str,
+    version: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> ComputeInterraterVariabilityCshOutputs:
     """
@@ -189,6 +203,8 @@ def compute_interrater_variability_csh(
         label_vol2: Label volume from rater 2.
         output_prefix: Prefix for the output text files containing results. A\
             total of three files will be produced.
+        version: Print version information and exit.
+        help_: Print help information and exit.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ComputeInterraterVariabilityCshOutputs`).
@@ -199,6 +215,8 @@ def compute_interrater_variability_csh(
         label_vol1=label_vol1,
         label_vol2=label_vol2,
         output_prefix=output_prefix,
+        version=version,
+        help_=help_,
     )
     return compute_interrater_variability_csh_execute(params, execution)
 

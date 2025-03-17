@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_PATHSTATS_METADATA = Metadata(
-    id="8110c02ff2c74fe994c5787d89b13efd80585a6a.boutiques",
+    id="73f70ca60d1c2b790ac7388127c1b36f4da4bbff.boutiques",
     name="dmri_pathstats",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -184,7 +184,7 @@ def dmri_pathstats_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("./dmri_pathstats")
+    cargs.append("dmri_pathstats")
     cargs.extend([
         "--intrk",
         execution.input_file(params.get("intrk"))

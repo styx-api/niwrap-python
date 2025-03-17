@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MORPH_RGB_RH_METADATA = Metadata(
-    id="d9ff451dc5d9779a26edbf9b5422cc9aac7df58e.boutiques",
+    id="aff93e163c0c3d9d9260e950945412279336cdbc.boutiques",
     name="morph_rgb-rh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -90,9 +90,10 @@ def morph_rgb_rh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("morph_rgb-rh")
     cargs.extend([
         "-rh",
-        "morph_rgb" + params.get("subject_id")
+        params.get("subject_id")
     ])
     return cargs
 

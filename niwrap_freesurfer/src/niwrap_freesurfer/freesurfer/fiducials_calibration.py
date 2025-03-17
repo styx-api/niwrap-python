@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIDUCIALS_CALIBRATION_METADATA = Metadata(
-    id="445a4b2fe29e36b5286fe1c80268453941ab7144.boutiques",
+    id="b87cb0a61e77503c416b5bd15c7cec1c1ef97456.boutiques",
     name="fiducials_calibration",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,7 @@ FIDUCIALS_CALIBRATION_METADATA = Metadata(
 
 FiducialsCalibrationParameters = typing.TypedDict('FiducialsCalibrationParameters', {
     "__STYX_TYPE__": typing.Literal["fiducials_calibration"],
+    "qt_plugin_installation": typing.NotRequired[str | None],
 })
 
 
@@ -58,17 +59,23 @@ class FiducialsCalibrationOutputs(typing.NamedTuple):
 
 
 def fiducials_calibration_params(
+    qt_plugin_installation: str | None = "Check Qt installation and platform plugin availability",
 ) -> FiducialsCalibrationParameters:
     """
     Build parameters.
     
     Args:
+        qt_plugin_installation: This application requires a functional Qt\
+            installation. If it fails to start, reinstalling the application might\
+            fix the problem.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "fiducials_calibration",
     }
+    if qt_plugin_installation is not None:
+        params["qt_plugin_installation"] = qt_plugin_installation
     return params
 
 
@@ -87,6 +94,8 @@ def fiducials_calibration_cargs(
     """
     cargs = []
     cargs.append("fiducials_calibration")
+    if params.get("qt_plugin_installation") is not None:
+        cargs.append(params.get("qt_plugin_installation"))
     return cargs
 
 
@@ -134,6 +143,7 @@ def fiducials_calibration_execute(
 
 
 def fiducials_calibration(
+    qt_plugin_installation: str | None = "Check Qt installation and platform plugin availability",
     runner: Runner | None = None,
 ) -> FiducialsCalibrationOutputs:
     """
@@ -144,6 +154,9 @@ def fiducials_calibration(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        qt_plugin_installation: This application requires a functional Qt\
+            installation. If it fails to start, reinstalling the application might\
+            fix the problem.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FiducialsCalibrationOutputs`).
@@ -151,6 +164,7 @@ def fiducials_calibration(
     runner = runner or get_global_runner()
     execution = runner.start_execution(FIDUCIALS_CALIBRATION_METADATA)
     params = fiducials_calibration_params(
+        qt_plugin_installation=qt_plugin_installation,
     )
     return fiducials_calibration_execute(params, execution)
 

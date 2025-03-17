@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WMSASEG_METADATA = Metadata(
-    id="70413a8a1c01bd4a41bdede39664427061f28431.boutiques",
+    id="0e54b57545cfb603bf32e4a4495b36bad89ab1d4.boutiques",
     name="wmsaseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -141,7 +141,7 @@ def wmsaseg_cargs(
     cargs.append("wmsaseg")
     cargs.extend([
         "-s",
-        "-" + params.get("subject")
+        params.get("subject")
     ])
     if params.get("source_orig") is not None:
         cargs.extend([

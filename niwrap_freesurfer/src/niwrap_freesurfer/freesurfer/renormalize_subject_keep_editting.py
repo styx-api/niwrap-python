@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
-    id="d1c64f0c85672d74bb2cb15852e56662e6d58c32.boutiques",
+    id="f922d68383395cff18ea3f5fe5e68eae32a7b22e.boutiques",
     name="renormalize_subject_keep_editting",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,7 @@ RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
 
 RenormalizeSubjectKeepEdittingParameters = typing.TypedDict('RenormalizeSubjectKeepEdittingParameters', {
     "__STYX_TYPE__": typing.Literal["renormalize_subject_keep_editting"],
+    "placeholder_input": typing.NotRequired[str | None],
 })
 
 
@@ -61,17 +62,22 @@ class RenormalizeSubjectKeepEdittingOutputs(typing.NamedTuple):
 
 
 def renormalize_subject_keep_editting_params(
+    placeholder_input: str | None = None,
 ) -> RenormalizeSubjectKeepEdittingParameters:
     """
     Build parameters.
     
     Args:
+        placeholder_input: Placeholder input since tool details are not\
+            available.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "renormalize_subject_keep_editting",
     }
+    if placeholder_input is not None:
+        params["placeholder_input"] = placeholder_input
     return params
 
 
@@ -90,6 +96,8 @@ def renormalize_subject_keep_editting_cargs(
     """
     cargs = []
     cargs.append("renormalize_subject_keep_editting")
+    if params.get("placeholder_input") is not None:
+        cargs.append(params.get("placeholder_input"))
     return cargs
 
 
@@ -139,6 +147,7 @@ def renormalize_subject_keep_editting_execute(
 
 
 def renormalize_subject_keep_editting(
+    placeholder_input: str | None = None,
     runner: Runner | None = None,
 ) -> RenormalizeSubjectKeepEdittingOutputs:
     """
@@ -150,6 +159,8 @@ def renormalize_subject_keep_editting(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        placeholder_input: Placeholder input since tool details are not\
+            available.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RenormalizeSubjectKeepEdittingOutputs`).
@@ -157,6 +168,7 @@ def renormalize_subject_keep_editting(
     runner = runner or get_global_runner()
     execution = runner.start_execution(RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA)
     params = renormalize_subject_keep_editting_params(
+        placeholder_input=placeholder_input,
     )
     return renormalize_subject_keep_editting_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MNI152REG_METADATA = Metadata(
-    id="ce57b863d24379ba72442d213f0a02c5cba44366.boutiques",
+    id="8fa95f49688c26996caeccdd18ef44b1edc62d55.boutiques",
     name="mni152reg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -115,7 +115,7 @@ def mni152reg_cargs(
     cargs.append("mni152reg")
     cargs.extend([
         "-s",
-        "-" + params.get("subject")
+        params.get("subject")
     ])
     if params.get("register_1mm"):
         cargs.append("--1")

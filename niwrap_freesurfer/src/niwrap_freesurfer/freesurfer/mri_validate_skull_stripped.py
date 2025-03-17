@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_VALIDATE_SKULL_STRIPPED_METADATA = Metadata(
-    id="2bdfa9e2cc73998aa283c518ac64ca8fd5b27024.boutiques",
+    id="0de0265b82e5cc83b346cf1e1de5cade0f9128b2.boutiques",
     name="mri_validate_skull_stripped",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -98,7 +98,7 @@ def mri_validate_skull_stripped_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("tntester")
+    cargs.append("mri_validate_skull_stripped")
     cargs.append(execution.input_file(params.get("mri_reference")))
     cargs.append(execution.input_file(params.get("mri_test")))
     cargs.append(str(params.get("weight")))

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DICOM_RENAME_METADATA = Metadata(
-    id="2eb87845c3a6be71bcd6bb57089f0cd879da57d4.boutiques",
+    id="967c36e6f1722cec2c2a414d9307145c8c3ca445.boutiques",
     name="dicom-rename",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,6 +17,8 @@ DicomRenameParameters = typing.TypedDict('DicomRenameParameters', {
     "__STYX_TYPE__": typing.Literal["dicom-rename"],
     "input_files": list[InputPathType],
     "output_base": str,
+    "version": bool,
+    "help": bool,
 })
 
 
@@ -65,6 +67,8 @@ class DicomRenameOutputs(typing.NamedTuple):
 def dicom_rename_params(
     input_files: list[InputPathType],
     output_base: str,
+    version: bool = False,
+    help_: bool = False,
 ) -> DicomRenameParameters:
     """
     Build parameters.
@@ -73,6 +77,8 @@ def dicom_rename_params(
         input_files: Input DICOM files to be renamed.
         output_base: Base name for output files that includes series and image\
             numbers.
+        version: Print version and exit.
+        help_: Print help and exit.
     Returns:
         Parameter dictionary
     """
@@ -80,6 +86,8 @@ def dicom_rename_params(
         "__STYXTYPE__": "dicom-rename",
         "input_files": input_files,
         "output_base": output_base,
+        "version": version,
+        "help": help_,
     }
     return params
 
@@ -98,14 +106,19 @@ def dicom_rename_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("dicom-rename")
     cargs.extend([
         "-rename",
-        "dicom" + "".join([execution.input_file(f) for f in params.get("input_files")])
+        *[execution.input_file(f) for f in params.get("input_files")]
     ])
     cargs.extend([
         "--o",
         params.get("output_base")
     ])
+    if params.get("version"):
+        cargs.append("--version")
+    if params.get("help"):
+        cargs.append("--help")
     return cargs
 
 
@@ -156,6 +169,8 @@ def dicom_rename_execute(
 def dicom_rename(
     input_files: list[InputPathType],
     output_base: str,
+    version: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> DicomRenameOutputs:
     """
@@ -169,6 +184,8 @@ def dicom_rename(
         input_files: Input DICOM files to be renamed.
         output_base: Base name for output files that includes series and image\
             numbers.
+        version: Print version and exit.
+        help_: Print help and exit.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DicomRenameOutputs`).
@@ -178,6 +195,8 @@ def dicom_rename(
     params = dicom_rename_params(
         input_files=input_files,
         output_base=output_base,
+        version=version,
+        help_=help_,
     )
     return dicom_rename_execute(params, execution)
 

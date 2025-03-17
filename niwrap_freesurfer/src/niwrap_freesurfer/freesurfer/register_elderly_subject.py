@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REGISTER_ELDERLY_SUBJECT_METADATA = Metadata(
-    id="537220baa60ce5febcf14be16d4b791c3cbbebb9.boutiques",
+    id="6846052f6f1ffde9ddad0703126f73b72a6cd671.boutiques",
     name="register_elderly_subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -117,7 +117,7 @@ def register_elderly_subject_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("mri_em_register")
+    cargs.append("register_elderly_subject")
     if params.get("sampling_percentage") is not None:
         cargs.extend([
             "-p",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_HEAD_METADATA = Metadata(
-    id="fb167e02a7257ba8b9a2343709e24ec6a1664305.boutiques",
+    id="f71c8c4f81d133948a66cd2d08a048fd40c58c30.boutiques",
     name="mri_head",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -18,6 +18,8 @@ MriHeadParameters = typing.TypedDict('MriHeadParameters', {
     "identify": bool,
     "read": bool,
     "filename": typing.NotRequired[str | None],
+    "help": bool,
+    "usage": bool,
     "question_mark_help": bool,
 })
 
@@ -65,6 +67,8 @@ def mri_head_params(
     identify: bool = False,
     read: bool = False,
     filename: str | None = None,
+    help_: bool = False,
+    usage: bool = False,
     question_mark_help: bool = False,
 ) -> MriHeadParameters:
     """
@@ -74,6 +78,8 @@ def mri_head_params(
         identify: Identify the MRI file.
         read: Read the MRI file.
         filename: Filename for identification or reading.
+        help_: Display help information.
+        usage: Display usage information.
         question_mark_help: Display help or usage information.
     Returns:
         Parameter dictionary
@@ -82,6 +88,8 @@ def mri_head_params(
         "__STYXTYPE__": "mri_head",
         "identify": identify,
         "read": read,
+        "help": help_,
+        "usage": usage,
         "question_mark_help": question_mark_help,
     }
     if filename is not None:
@@ -110,6 +118,10 @@ def mri_head_cargs(
         cargs.append("-read")
     if params.get("filename") is not None:
         cargs.append(params.get("filename"))
+    if params.get("help"):
+        cargs.append("-h")
+    if params.get("usage"):
+        cargs.append("-u")
     if params.get("question_mark_help"):
         cargs.append("-?")
     return cargs
@@ -162,6 +174,8 @@ def mri_head(
     identify: bool = False,
     read: bool = False,
     filename: str | None = None,
+    help_: bool = False,
+    usage: bool = False,
     question_mark_help: bool = False,
     runner: Runner | None = None,
 ) -> MriHeadOutputs:
@@ -176,6 +190,8 @@ def mri_head(
         identify: Identify the MRI file.
         read: Read the MRI file.
         filename: Filename for identification or reading.
+        help_: Display help information.
+        usage: Display usage information.
         question_mark_help: Display help or usage information.
         runner: Command runner.
     Returns:
@@ -187,6 +203,8 @@ def mri_head(
         identify=identify,
         read=read,
         filename=filename,
+        help_=help_,
+        usage=usage,
         question_mark_help=question_mark_help,
     )
     return mri_head_execute(params, execution)

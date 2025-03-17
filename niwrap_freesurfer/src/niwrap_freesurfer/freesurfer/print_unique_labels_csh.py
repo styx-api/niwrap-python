@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
-    id="e9fb80f03f3d4d6c2fbe65561d9c32f6e16bc580.boutiques",
+    id="61620e17b7f1d9248e212d87048973a57d06b37e.boutiques",
     name="print_unique_labels.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,7 +16,10 @@ PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
 PrintUniqueLabelsCshParameters = typing.TypedDict('PrintUniqueLabelsCshParameters', {
     "__STYX_TYPE__": typing.Literal["print_unique_labels.csh"],
     "label_volume": InputPathType,
+    "output_file": typing.NotRequired[str | None],
     "list_only": bool,
+    "version": bool,
+    "help": bool,
 })
 
 
@@ -58,20 +61,26 @@ class PrintUniqueLabelsCshOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    results_file: OutputPathType
+    results_file: OutputPathType | None
     """Output file with the list of unique labels"""
 
 
 def print_unique_labels_csh_params(
     label_volume: InputPathType,
+    output_file: str | None = None,
     list_only: bool = False,
+    version: bool = False,
+    help_: bool = False,
 ) -> PrintUniqueLabelsCshParameters:
     """
     Build parameters.
     
     Args:
         label_volume: Label volume to be analyzed.
+        output_file: Text file where the results are written.
         list_only: Only list the labels.
+        version: Print version and exit.
+        help_: Print help and exit.
     Returns:
         Parameter dictionary
     """
@@ -79,7 +88,11 @@ def print_unique_labels_csh_params(
         "__STYXTYPE__": "print_unique_labels.csh",
         "label_volume": label_volume,
         "list_only": list_only,
+        "version": version,
+        "help": help_,
     }
+    if output_file is not None:
+        params["output_file"] = output_file
     return params
 
 
@@ -102,8 +115,17 @@ def print_unique_labels_csh_cargs(
         "--vol",
         execution.input_file(params.get("label_volume"))
     ])
+    if params.get("output_file") is not None:
+        cargs.extend([
+            "--out",
+            params.get("output_file")
+        ])
     if params.get("list_only"):
         cargs.append("--list")
+    if params.get("version"):
+        cargs.append("--version")
+    if params.get("help"):
+        cargs.append("--help")
     return cargs
 
 
@@ -122,7 +144,7 @@ def print_unique_labels_csh_outputs(
     """
     ret = PrintUniqueLabelsCshOutputs(
         root=execution.output_file("."),
-        results_file=execution.output_file("[OUTPUT_FILE]"),
+        results_file=execution.output_file(params.get("output_file")) if (params.get("output_file") is not None) else None,
     )
     return ret
 
@@ -153,7 +175,10 @@ def print_unique_labels_csh_execute(
 
 def print_unique_labels_csh(
     label_volume: InputPathType,
+    output_file: str | None = None,
     list_only: bool = False,
+    version: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> PrintUniqueLabelsCshOutputs:
     """
@@ -165,7 +190,10 @@ def print_unique_labels_csh(
     
     Args:
         label_volume: Label volume to be analyzed.
+        output_file: Text file where the results are written.
         list_only: Only list the labels.
+        version: Print version and exit.
+        help_: Print help and exit.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PrintUniqueLabelsCshOutputs`).
@@ -174,7 +202,10 @@ def print_unique_labels_csh(
     execution = runner.start_execution(PRINT_UNIQUE_LABELS_CSH_METADATA)
     params = print_unique_labels_csh_params(
         label_volume=label_volume,
+        output_file=output_file,
         list_only=list_only,
+        version=version,
+        help_=help_,
     )
     return print_unique_labels_csh_execute(params, execution)
 

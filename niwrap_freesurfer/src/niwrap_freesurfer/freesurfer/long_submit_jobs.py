@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LONG_SUBMIT_JOBS_METADATA = Metadata(
-    id="d9fdcdcc044b4b6a583cb8d7681940ebbb389e10.boutiques",
+    id="73a46d90ad07cf1b262590059e8ca43cc4fde840.boutiques",
     name="long_submit_jobs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -256,12 +256,8 @@ def long_submit_jobs_cargs(
         cargs.append("--simulate")
     if params.get("simfiles"):
         cargs.append("--simfiles")
-    cargs.append("[--skip]")
-    cargs.append("[--skiperror]")
     if params.get("check"):
         cargs.append("--check")
-    cargs.append("[--update-recon-all]")
-    cargs.append("[--use-recon-all]")
     if params.get("pause") is not None:
         cargs.extend([
             "--pause",

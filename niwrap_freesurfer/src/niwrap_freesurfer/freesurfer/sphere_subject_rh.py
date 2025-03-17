@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPHERE_SUBJECT_RH_METADATA = Metadata(
-    id="844b29d70c1496f2da433daa0b47df80e286dc3b.boutiques",
+    id="3f5f7069b0a16e269b65f3d28ad8762b4bb84b90.boutiques",
     name="sphere_subject-rh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -91,9 +91,10 @@ def sphere_subject_rh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("sphere_subject-rh")
     cargs.extend([
         "-rh",
-        "sphere_subject" + execution.input_file(params.get("license_file"))
+        execution.input_file(params.get("license_file"))
     ])
     return cargs
 

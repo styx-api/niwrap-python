@@ -36,7 +36,6 @@ from .bblabel import *
 from .bbmask import *
 from .bbregister import *
 from .bedpostx_mgh import *
-from .bet_fsl import *
 from .beta2sxa import *
 from .biasfield import *
 from .bmedits2surf import *
@@ -90,7 +89,6 @@ from .dmri_trk2trk import *
 from .dmri_violin_plots import *
 from .dmri_vox2vox import *
 from .dt_recon import *
-from .epidewarp_fsl import *
 from .export_gcam import *
 from .extract_seg_waveform import *
 from .exvivo_hemi_proc import *
@@ -104,7 +102,6 @@ from .fix_subject_corrected_rh import *
 from .fix_subject_rh import *
 from .fixup_mni_paths import *
 from .flip_4dfp import *
-from .flirt_fsl import *
 from .flirt_newdefault_20080811_sch import *
 from .fname2ext import *
 from .fname2stem import *
@@ -121,17 +118,12 @@ from .fs_time import *
 from .fs_tutorial_data import *
 from .fs_update import *
 from .fscalc import *
-from .fscalc_fsl import *
 from .fsdcmdecompress import *
-from .fsfirst_fsl import *
 from .fsl_5_0_2_xyztrans_sch import *
 from .fsl_label2voxel import *
 from .fsl_rigid_register import *
 from .fsl_sub_mgh import *
-from .fslmaths_fsl import *
-from .fslorient_fsl import *
 from .fslregister import *
-from .fslswapdim_fsl import *
 from .fspalm import *
 from .fsr_coreg import *
 from .fsr_getxopts import *
@@ -360,7 +352,6 @@ from .mri_modify import *
 from .mri_morphology import *
 from .mri_motion_correct import *
 from .mri_motion_correct2 import *
-from .mri_motion_correct_fsl import *
 from .mri_ms_fitparms import *
 from .mri_nl_align import *
 from .mri_nl_align_binary import *
@@ -651,7 +642,6 @@ from .segpons import *
 from .setlabelstat import *
 from .sfa2fieldsign import *
 from .slicedelay import *
-from .slicetimer_fsl import *
 from .sphere_subject import *
 from .sphere_subject_lh import *
 from .sphere_subject_rh import *

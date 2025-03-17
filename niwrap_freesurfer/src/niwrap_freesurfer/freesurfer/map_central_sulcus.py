@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAP_CENTRAL_SULCUS_METADATA = Metadata(
-    id="13b958f09713b9767ab00695cb856a93c2ef9725.boutiques",
+    id="516b76e8b1ac8749a680661e63215cc41d8c82f4.boutiques",
     name="map_central_sulcus",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -263,7 +263,7 @@ def map_central_sulcus_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("recon-all")
+    cargs.append("map_central_sulcus")
     cargs.extend([
         "-subjid",
         params.get("subjid")

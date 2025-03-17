@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FVCOMPARE_METADATA = Metadata(
-    id="84e27ef54cc73075db70cca3ebbdd40631c9472d.boutiques",
+    id="34ef4943d85118cb4252e43061bab2f274dff0b4.boutiques",
     name="fvcompare",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -26,6 +26,7 @@ FvcompareParameters = typing.TypedDict('FvcompareParameters', {
     "segmentation": typing.NotRequired[str | None],
     "aseg": bool,
     "no_seg": bool,
+    "left_hemi": bool,
     "right_hemi": bool,
     "no_surf": bool,
     "gray_levels": typing.NotRequired[list[float] | None],
@@ -93,6 +94,7 @@ def fvcompare_params(
     segmentation: str | None = None,
     aseg: bool = False,
     no_seg: bool = False,
+    left_hemi: bool = False,
     right_hemi: bool = False,
     no_surf: bool = False,
     gray_levels: list[float] | None = None,
@@ -124,6 +126,7 @@ def fvcompare_params(
             aparc+aseg.mgz, can have multiple).
         aseg: Add aseg.mgz to segmentation list.
         no_seg: Do not display segmentations.
+        left_hemi: Only display left hemisphere.
         right_hemi: Only display right hemisphere.
         no_surf: Do not display surfaces.
         gray_levels: Set gray scale levels.
@@ -147,6 +150,7 @@ def fvcompare_params(
         "subject2": subject2,
         "aseg": aseg,
         "no_seg": no_seg,
+        "left_hemi": left_hemi,
         "right_hemi": right_hemi,
         "no_surf": no_surf,
         "aparc": aparc,
@@ -246,6 +250,8 @@ def fvcompare_cargs(
         cargs.append("--aseg")
     if params.get("no_seg"):
         cargs.append("--no-seg")
+    if params.get("left_hemi"):
+        cargs.append("--lh")
     if params.get("right_hemi"):
         cargs.append("--rh")
     if params.get("no_surf"):
@@ -349,6 +355,7 @@ def fvcompare(
     segmentation: str | None = None,
     aseg: bool = False,
     no_seg: bool = False,
+    left_hemi: bool = False,
     right_hemi: bool = False,
     no_surf: bool = False,
     gray_levels: list[float] | None = None,
@@ -386,6 +393,7 @@ def fvcompare(
             aparc+aseg.mgz, can have multiple).
         aseg: Add aseg.mgz to segmentation list.
         no_seg: Do not display segmentations.
+        left_hemi: Only display left hemisphere.
         right_hemi: Only display right hemisphere.
         no_surf: Do not display surfaces.
         gray_levels: Set gray scale levels.
@@ -418,6 +426,7 @@ def fvcompare(
         segmentation=segmentation,
         aseg=aseg,
         no_seg=no_seg,
+        left_hemi=left_hemi,
         right_hemi=right_hemi,
         no_surf=no_surf,
         gray_levels=gray_levels,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_TEMP_FILE_METADATA = Metadata(
-    id="517fdbcd5c110803a94e295435754191461fd4ee.boutiques",
+    id="66a8be9a7267979a485ac7d37ceb69ea952d8f36.boutiques",
     name="fs_temp_file",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,9 +15,12 @@ FS_TEMP_FILE_METADATA = Metadata(
 
 FsTempFileParameters = typing.TypedDict('FsTempFileParameters', {
     "__STYX_TYPE__": typing.Literal["fs_temp_file"],
+    "base_dir": typing.NotRequired[str | None],
     "base_dir_alt": typing.NotRequired[str | None],
+    "suffix": typing.NotRequired[str | None],
     "suffix_alt": typing.NotRequired[str | None],
     "scratch": bool,
+    "help": bool,
     "help_alt": bool,
 })
 
@@ -62,19 +65,25 @@ class FsTempFileOutputs(typing.NamedTuple):
 
 
 def fs_temp_file_params(
+    base_dir: str | None = None,
     base_dir_alt: str | None = None,
+    suffix: str | None = None,
     suffix_alt: str | None = None,
     scratch: bool = False,
+    help_: bool = False,
     help_alt: bool = False,
 ) -> FsTempFileParameters:
     """
     Build parameters.
     
     Args:
+        base_dir: Manually specify base temporary directory.
         base_dir_alt: Manually specify base temporary directory.
+        suffix: Optional file suffix.
         suffix_alt: Optional file suffix.
         scratch: Use /scratch directory if available, but FS_TMPDIR takes\
             priority.
+        help_: Print help text and exit.
         help_alt: Print help text and exit.
     Returns:
         Parameter dictionary
@@ -82,10 +91,15 @@ def fs_temp_file_params(
     params = {
         "__STYXTYPE__": "fs_temp_file",
         "scratch": scratch,
+        "help": help_,
         "help_alt": help_alt,
     }
+    if base_dir is not None:
+        params["base_dir"] = base_dir
     if base_dir_alt is not None:
         params["base_dir_alt"] = base_dir_alt
+    if suffix is not None:
+        params["suffix"] = suffix
     if suffix_alt is not None:
         params["suffix_alt"] = suffix_alt
     return params
@@ -106,10 +120,20 @@ def fs_temp_file_cargs(
     """
     cargs = []
     cargs.append("fs_temp_file")
+    if params.get("base_dir") is not None:
+        cargs.extend([
+            "-b",
+            params.get("base_dir")
+        ])
     if params.get("base_dir_alt") is not None:
         cargs.extend([
             "--base",
             params.get("base_dir_alt")
+        ])
+    if params.get("suffix") is not None:
+        cargs.extend([
+            "-s",
+            params.get("suffix")
         ])
     if params.get("suffix_alt") is not None:
         cargs.extend([
@@ -118,6 +142,8 @@ def fs_temp_file_cargs(
         ])
     if params.get("scratch"):
         cargs.append("--scratch")
+    if params.get("help"):
+        cargs.append("-h")
     if params.get("help_alt"):
         cargs.append("--help")
     return cargs
@@ -168,9 +194,12 @@ def fs_temp_file_execute(
 
 
 def fs_temp_file(
+    base_dir: str | None = None,
     base_dir_alt: str | None = None,
+    suffix: str | None = None,
     suffix_alt: str | None = None,
     scratch: bool = False,
+    help_: bool = False,
     help_alt: bool = False,
     runner: Runner | None = None,
 ) -> FsTempFileOutputs:
@@ -183,10 +212,13 @@ def fs_temp_file(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        base_dir: Manually specify base temporary directory.
         base_dir_alt: Manually specify base temporary directory.
+        suffix: Optional file suffix.
         suffix_alt: Optional file suffix.
         scratch: Use /scratch directory if available, but FS_TMPDIR takes\
             priority.
+        help_: Print help text and exit.
         help_alt: Print help text and exit.
         runner: Command runner.
     Returns:
@@ -195,9 +227,12 @@ def fs_temp_file(
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_TEMP_FILE_METADATA)
     params = fs_temp_file_params(
+        base_dir=base_dir,
         base_dir_alt=base_dir_alt,
+        suffix=suffix,
         suffix_alt=suffix_alt,
         scratch=scratch,
+        help_=help_,
         help_alt=help_alt,
     )
     return fs_temp_file_execute(params, execution)

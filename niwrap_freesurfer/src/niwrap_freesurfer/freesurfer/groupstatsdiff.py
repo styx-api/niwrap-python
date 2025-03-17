@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GROUPSTATSDIFF_METADATA = Metadata(
-    id="474a0a73a03ccd5e8c25186fbb8a8f0ccde75dd7.boutiques",
+    id="fd778211449d90ec41caacb3a7dc64cdb74d5085.boutiques",
     name="groupstatsdiff",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -177,15 +177,15 @@ def groupstatsdiff_cargs(
     cargs.append("groupstatsdiff")
     cargs.extend([
         "-g1",
-        "-" + params.get("group1_dir")
+        params.get("group1_dir")
     ])
     cargs.extend([
         "-g2",
-        "-" + params.get("group2_dir")
+        params.get("group2_dir")
     ])
     cargs.extend([
         "-o",
-        "-" + params.get("output_dir")
+        params.get("output_dir")
     ])
     if params.get("no_maps"):
         cargs.append("--no-maps")

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SAMSEGMESH2SURF_METADATA = Metadata(
-    id="d985be1373714eb0aff1a308730598604fe9d68c.boutiques",
+    id="d0ca6a468bc9a3a09b97395c0b760ba787b54209.boutiques",
     name="samsegmesh2surf",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -127,24 +127,22 @@ def samsegmesh2surf_cargs(
     if params.get("template") is not None:
         cargs.extend([
             "--template",
-            "(" + execution.input_file(params.get("template"))
+            execution.input_file(params.get("template"))
         ])
-    cargs.append("|")
     if params.get("lta_transform") is not None:
         cargs.extend([
             "--lta",
-            execution.input_file(params.get("lta_transform")) + ")"
+            execution.input_file(params.get("lta_transform"))
         ])
     if params.get("output_surface") is not None:
         cargs.extend([
             "--osurf",
-            "(" + params.get("output_surface")
+            params.get("output_surface")
         ])
-    cargs.append("|")
     if params.get("output_priors") is not None:
         cargs.extend([
             "--opriors",
-            params.get("output_priors") + ")"
+            params.get("output_priors")
         ])
     if params.get("invert_flag"):
         cargs.append("--invert")

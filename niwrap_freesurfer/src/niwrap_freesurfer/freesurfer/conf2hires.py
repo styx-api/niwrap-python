@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONF2HIRES_METADATA = Metadata(
-    id="0daec93cecaaf674dbbc3d770b70999cf8bff082.boutiques",
+    id="2455d1a9818a72df60f5c386c53541cd8cd28eab.boutiques",
     name="conf2hires",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,14 +16,20 @@ CONF2HIRES_METADATA = Metadata(
 Conf2hiresParameters = typing.TypedDict('Conf2hiresParameters', {
     "__STYX_TYPE__": typing.Literal["conf2hires"],
     "subject": str,
+    "t2": bool,
     "no_t2": bool,
     "mm_norm_sigma": typing.NotRequired[float | None],
+    "flair": bool,
     "no_flair": bool,
     "threads": typing.NotRequired[float | None],
     "copy_bias_from_conf": bool,
     "norm_opts_rca": bool,
+    "cubic": bool,
     "trilin": bool,
+    "dev": bool,
     "no_dev": bool,
+    "bbr_con": typing.NotRequired[str | None],
+    "bbr_t1": bool,
     "bbr_t2": bool,
     "first_peak_d1": bool,
     "first_peak_d2": bool,
@@ -74,14 +80,20 @@ class Conf2hiresOutputs(typing.NamedTuple):
 
 def conf2hires_params(
     subject: str,
+    t2: bool = False,
     no_t2: bool = False,
     mm_norm_sigma: float | None = 8,
+    flair: bool = False,
     no_flair: bool = False,
     threads: float | None = None,
     copy_bias_from_conf: bool = False,
     norm_opts_rca: bool = False,
+    cubic: bool = False,
     trilin: bool = False,
+    dev: bool = False,
     no_dev: bool = False,
+    bbr_con: str | None = None,
+    bbr_t1: bool = False,
     bbr_t2: bool = False,
     first_peak_d1: bool = False,
     first_peak_d2: bool = False,
@@ -94,17 +106,23 @@ def conf2hires_params(
     
     Args:
         subject: Subject identifier.
+        t2: Enable T2 processing.
         no_t2: Disable T2 processing (default).
         mm_norm_sigma: Smoothing level for T2 mri_normalize (default is 8).
+        flair: Enable FLAIR processing.
         no_flair: Disable FLAIR processing (default).
         threads: Number of threads to use.
         copy_bias_from_conf: Copy bias field from conformed instead of\
             computing directly.
         norm_opts_rca: Compute bias directly using recon-all opts to\
             mri_normalize.
+        cubic: Use cubic normalization (applies with --copy-bias-from-conf).
         trilin: Use trilinear normalization (default, applies with\
             --copy-bias-from-conf).
+        dev: Use mris_make_surfaces.dev.
         no_dev: Do not use mris_make_surfaces.dev (default).
+        bbr_con: Set BBR contrast type (default t2).
+        bbr_t1: Set BBR contrast type to t1.
         bbr_t2: Set BBR contrast type to t2.
         first_peak_d1: Refine surface targets in MRIScomputeBorderValues()\
             using first peak method D1.
@@ -119,12 +137,17 @@ def conf2hires_params(
     params = {
         "__STYXTYPE__": "conf2hires",
         "subject": subject,
+        "t2": t2,
         "no_t2": no_t2,
+        "flair": flair,
         "no_flair": no_flair,
         "copy_bias_from_conf": copy_bias_from_conf,
         "norm_opts_rca": norm_opts_rca,
+        "cubic": cubic,
         "trilin": trilin,
+        "dev": dev,
         "no_dev": no_dev,
+        "bbr_t1": bbr_t1,
         "bbr_t2": bbr_t2,
         "first_peak_d1": first_peak_d1,
         "first_peak_d2": first_peak_d2,
@@ -134,6 +157,8 @@ def conf2hires_params(
         params["mm_norm_sigma"] = mm_norm_sigma
     if threads is not None:
         params["threads"] = threads
+    if bbr_con is not None:
+        params["bbr_con"] = bbr_con
     if stopmask is not None:
         params["stopmask"] = stopmask
     if expert is not None:
@@ -160,6 +185,8 @@ def conf2hires_cargs(
         "--s",
         params.get("subject")
     ])
+    if params.get("t2"):
+        cargs.append("--t2")
     if params.get("no_t2"):
         cargs.append("--no-t2")
     if params.get("mm_norm_sigma") is not None:
@@ -167,6 +194,8 @@ def conf2hires_cargs(
             "--mm-norm-sigma",
             str(params.get("mm_norm_sigma"))
         ])
+    if params.get("flair"):
+        cargs.append("--flair")
     if params.get("no_flair"):
         cargs.append("--no-flair")
     if params.get("threads") is not None:
@@ -178,10 +207,21 @@ def conf2hires_cargs(
         cargs.append("--copy-bias-from-conf")
     if params.get("norm_opts_rca"):
         cargs.append("--norm-opts-rca")
+    if params.get("cubic"):
+        cargs.append("--cubic")
     if params.get("trilin"):
         cargs.append("--trilin")
+    if params.get("dev"):
+        cargs.append("--dev")
     if params.get("no_dev"):
         cargs.append("--no-dev")
+    if params.get("bbr_con") is not None:
+        cargs.extend([
+            "--bbr-con",
+            params.get("bbr_con")
+        ])
+    if params.get("bbr_t1"):
+        cargs.append("--bbr-t1")
     if params.get("bbr_t2"):
         cargs.append("--bbr-t2")
     if params.get("first_peak_d1"):
@@ -249,14 +289,20 @@ def conf2hires_execute(
 
 def conf2hires(
     subject: str,
+    t2: bool = False,
     no_t2: bool = False,
     mm_norm_sigma: float | None = 8,
+    flair: bool = False,
     no_flair: bool = False,
     threads: float | None = None,
     copy_bias_from_conf: bool = False,
     norm_opts_rca: bool = False,
+    cubic: bool = False,
     trilin: bool = False,
+    dev: bool = False,
     no_dev: bool = False,
+    bbr_con: str | None = None,
+    bbr_t1: bool = False,
     bbr_t2: bool = False,
     first_peak_d1: bool = False,
     first_peak_d2: bool = False,
@@ -275,17 +321,23 @@ def conf2hires(
     
     Args:
         subject: Subject identifier.
+        t2: Enable T2 processing.
         no_t2: Disable T2 processing (default).
         mm_norm_sigma: Smoothing level for T2 mri_normalize (default is 8).
+        flair: Enable FLAIR processing.
         no_flair: Disable FLAIR processing (default).
         threads: Number of threads to use.
         copy_bias_from_conf: Copy bias field from conformed instead of\
             computing directly.
         norm_opts_rca: Compute bias directly using recon-all opts to\
             mri_normalize.
+        cubic: Use cubic normalization (applies with --copy-bias-from-conf).
         trilin: Use trilinear normalization (default, applies with\
             --copy-bias-from-conf).
+        dev: Use mris_make_surfaces.dev.
         no_dev: Do not use mris_make_surfaces.dev (default).
+        bbr_con: Set BBR contrast type (default t2).
+        bbr_t1: Set BBR contrast type to t1.
         bbr_t2: Set BBR contrast type to t2.
         first_peak_d1: Refine surface targets in MRIScomputeBorderValues()\
             using first peak method D1.
@@ -302,14 +354,20 @@ def conf2hires(
     execution = runner.start_execution(CONF2HIRES_METADATA)
     params = conf2hires_params(
         subject=subject,
+        t2=t2,
         no_t2=no_t2,
         mm_norm_sigma=mm_norm_sigma,
+        flair=flair,
         no_flair=no_flair,
         threads=threads,
         copy_bias_from_conf=copy_bias_from_conf,
         norm_opts_rca=norm_opts_rca,
+        cubic=cubic,
         trilin=trilin,
+        dev=dev,
         no_dev=no_dev,
+        bbr_con=bbr_con,
+        bbr_t1=bbr_t1,
         bbr_t2=bbr_t2,
         first_peak_d1=first_peak_d1,
         first_peak_d2=first_peak_d2,

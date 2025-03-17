@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_AVERAGE_METADATA = Metadata(
-    id="9f634edc8e7e1a23500b288fecc20c4dd605a410.boutiques",
+    id="69d82dea302095f344b973c4241c98b9f485dab8.boutiques",
     name="mri_average",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -31,6 +31,7 @@ MriAverageParameters = typing.TypedDict('MriAverageParameters', {
     "translation": typing.NotRequired[list[float] | None],
     "rotation": typing.NotRequired[list[float] | None],
     "momentum": typing.NotRequired[float | None],
+    "rms": bool,
     "rms_alt": bool,
     "percent": bool,
     "binarize": typing.NotRequired[float | None],
@@ -97,6 +98,7 @@ def mri_average_params(
     translation: list[float] | None = None,
     rotation: list[float] | None = None,
     momentum: float | None = None,
+    rms: bool = False,
     rms_alt: bool = False,
     percent: bool = False,
     binarize: float | None = None,
@@ -124,6 +126,7 @@ def mri_average_params(
         translation: Translation of second volume.
         rotation: Rotation of second volume around each axis in degrees.
         momentum: Use momentum n (default=0).
+        rms: Compute sqrt of average of sum of squares (RMS, same as -rms).
         rms_alt: Compute sqrt of average of sum of squares (RMS, same as -sqr).
         percent: Compute percentage.
         binarize: Binarize the input volumes using threshold th.
@@ -141,6 +144,7 @@ def mri_average_params(
         "noconform": noconform,
         "trilinear": trilinear,
         "window": window,
+        "rms": rms,
         "rms_alt": rms_alt,
         "percent": percent,
         "absolute": absolute,
@@ -235,6 +239,8 @@ def mri_average_cargs(
             "-m",
             str(params.get("momentum"))
         ])
+    if params.get("rms"):
+        cargs.append("-sqr")
     if params.get("rms_alt"):
         cargs.append("-rms")
     if params.get("percent"):
@@ -311,6 +317,7 @@ def mri_average(
     translation: list[float] | None = None,
     rotation: list[float] | None = None,
     momentum: float | None = None,
+    rms: bool = False,
     rms_alt: bool = False,
     percent: bool = False,
     binarize: float | None = None,
@@ -344,6 +351,7 @@ def mri_average(
         translation: Translation of second volume.
         rotation: Rotation of second volume around each axis in degrees.
         momentum: Use momentum n (default=0).
+        rms: Compute sqrt of average of sum of squares (RMS, same as -rms).
         rms_alt: Compute sqrt of average of sum of squares (RMS, same as -sqr).
         percent: Compute percentage.
         binarize: Binarize the input volumes using threshold th.
@@ -371,6 +379,7 @@ def mri_average(
         translation=translation,
         rotation=rotation,
         momentum=momentum,
+        rms=rms,
         rms_alt=rms_alt,
         percent=percent,
         binarize=binarize,

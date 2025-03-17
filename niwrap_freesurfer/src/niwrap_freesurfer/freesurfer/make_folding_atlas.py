@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_FOLDING_ATLAS_METADATA = Metadata(
-    id="cd742cf69eb865650042165331953a619d588ea9.boutiques",
+    id="2ea9d8d1b60df2ade6f961abd423e6b44d34ffda.boutiques",
     name="make_folding_atlas",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -24,6 +24,7 @@ MakeFoldingAtlasParameters = typing.TypedDict('MakeFoldingAtlasParameters', {
     "init_surf_reg": typing.NotRequired[str | None],
     "init_subject": typing.NotRequired[str | None],
     "no_annot_template": bool,
+    "left_hemisphere": bool,
     "right_hemisphere": bool,
     "lhrh": bool,
     "ico_order": typing.NotRequired[float | None],
@@ -90,6 +91,7 @@ def make_folding_atlas_params(
     init_surf_reg: str | None = None,
     init_subject: str | None = None,
     no_annot_template: bool = False,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     lhrh: bool = False,
     ico_order: float | None = None,
@@ -116,6 +118,7 @@ def make_folding_atlas_params(
             (default sphere.reg).
         init_subject: Create first atlas from subject instead of all subjects.
         no_annot_template: Disable annotation template (good for monkeys).
+        left_hemisphere: Process left hemisphere.
         right_hemisphere: Process right hemisphere.
         lhrh: Process both left and right hemispheres (default).
         ico_order: Icosahedron order; default is 7.
@@ -136,6 +139,7 @@ def make_folding_atlas_params(
         "__STYXTYPE__": "make_folding_atlas",
         "xhemi": xhemi,
         "no_annot_template": no_annot_template,
+        "left_hemisphere": left_hemisphere,
         "right_hemisphere": right_hemisphere,
         "lhrh": lhrh,
         "no_vol_on_last": no_vol_on_last,
@@ -221,6 +225,8 @@ def make_folding_atlas_cargs(
         ])
     if params.get("no_annot_template"):
         cargs.append("--no-annot-template")
+    if params.get("left_hemisphere"):
+        cargs.append("--lh")
     if params.get("right_hemisphere"):
         cargs.append("--rh")
     if params.get("lhrh"):
@@ -307,6 +313,7 @@ def make_folding_atlas(
     init_surf_reg: str | None = None,
     init_subject: str | None = None,
     no_annot_template: bool = False,
+    left_hemisphere: bool = False,
     right_hemisphere: bool = False,
     lhrh: bool = False,
     ico_order: float | None = None,
@@ -338,6 +345,7 @@ def make_folding_atlas(
             (default sphere.reg).
         init_subject: Create first atlas from subject instead of all subjects.
         no_annot_template: Disable annotation template (good for monkeys).
+        left_hemisphere: Process left hemisphere.
         right_hemisphere: Process right hemisphere.
         lhrh: Process both left and right hemispheres (default).
         ico_order: Icosahedron order; default is 7.
@@ -367,6 +375,7 @@ def make_folding_atlas(
         init_surf_reg=init_surf_reg,
         init_subject=init_subject,
         no_annot_template=no_annot_template,
+        left_hemisphere=left_hemisphere,
         right_hemisphere=right_hemisphere,
         lhrh=lhrh,
         ico_order=ico_order,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PCTSURFCON_METADATA = Metadata(
-    id="0e082a082c6b181a71427db52d685c35d4270743.boutiques",
+    id="ad5f62ba3adae77bc989e8136a6e5d45a335abd9.boutiques",
     name="pctsurfcon",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -147,7 +147,7 @@ def pctsurfcon_cargs(
     cargs.append("pctsurfcon")
     cargs.extend([
         "-s",
-        "-" + params.get("subject")
+        params.get("subject")
     ])
     if params.get("fsvol") is not None:
         cargs.extend([

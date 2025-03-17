@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
-    id="1428559d3a56abaf727b5871834a354591593a62.boutiques",
+    id="183c7a343e730b5d37f38ae332c84cb1365ae30e.boutiques",
     name="mris_spherical_average",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,13 +15,20 @@ MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
 
 MrisSphericalAverageParameters = typing.TypedDict('MrisSphericalAverageParameters', {
     "__STYX_TYPE__": typing.Literal["mris_spherical_average"],
-    "summary_statistics": typing.NotRequired[str | None],
     "which": typing.Literal["coords", "label", "vals", "curv", "area"],
     "fname": str,
     "hemi": typing.Literal["lh", "rh"],
     "spherical_surf": str,
     "subjects": list[str],
     "output": str,
+    "segment": bool,
+    "normalize": bool,
+    "orig": typing.NotRequired[str | None],
+    "output_subject_name": typing.NotRequired[str | None],
+    "output_subject_dir": typing.NotRequired[str | None],
+    "subjects_dir": typing.NotRequired[str | None],
+    "average_area": bool,
+    "summary_statistics": typing.NotRequired[str | None],
 })
 
 
@@ -71,6 +78,13 @@ def mris_spherical_average_params(
     spherical_surf: str,
     subjects: list[str],
     output: str,
+    segment: bool = False,
+    normalize: bool = False,
+    orig: str | None = None,
+    output_subject_name: str | None = None,
+    output_subject_dir: str | None = None,
+    subjects_dir: str | None = None,
+    average_area: bool = False,
     summary_statistics: str | None = None,
 ) -> MrisSphericalAverageParameters:
     """
@@ -83,6 +97,16 @@ def mris_spherical_average_params(
         spherical_surf: The spherical surface file.
         subjects: List of subjects.
         output: Output file or directory.
+        segment: Only use largest connected component of label.
+        normalize: Normalize output so it can be interpreted as a probability.
+        orig: Use <name> as original surface position; default=orig.
+        output_subject_name: Use <output subject name> as the space to write\
+            the results in instead of the last subject given.
+        output_subject_dir: Use <output subject dir> as the subjects dir for\
+            the output subject.
+        subjects_dir: Set the subjects directory.
+        average_area: Compute threshold for label that will give the average\
+            label approximately the average surface area.
         summary_statistics: Generate summary statistics and write them into\
             sigavg<cond #>-<hemi>.w and sigvar<cond #>-<hemi>.w.
     Returns:
@@ -96,7 +120,18 @@ def mris_spherical_average_params(
         "spherical_surf": spherical_surf,
         "subjects": subjects,
         "output": output,
+        "segment": segment,
+        "normalize": normalize,
+        "average_area": average_area,
     }
+    if orig is not None:
+        params["orig"] = orig
+    if output_subject_name is not None:
+        params["output_subject_name"] = output_subject_name
+    if output_subject_dir is not None:
+        params["output_subject_dir"] = output_subject_dir
+    if subjects_dir is not None:
+        params["subjects_dir"] = subjects_dir
     if summary_statistics is not None:
         params["summary_statistics"] = summary_statistics
     return params
@@ -117,17 +152,43 @@ def mris_spherical_average_cargs(
     """
     cargs = []
     cargs.append("mris_spherical_average")
-    if params.get("summary_statistics") is not None:
-        cargs.extend([
-            "-s",
-            params.get("summary_statistics")
-        ])
     cargs.append(params.get("which"))
     cargs.append(params.get("fname"))
     cargs.append(params.get("hemi"))
     cargs.append(params.get("spherical_surf"))
     cargs.extend(params.get("subjects"))
     cargs.append(params.get("output"))
+    if params.get("segment"):
+        cargs.append("-segment")
+    if params.get("normalize"):
+        cargs.append("-n")
+    if params.get("orig") is not None:
+        cargs.extend([
+            "-orig",
+            params.get("orig")
+        ])
+    if params.get("output_subject_name") is not None:
+        cargs.extend([
+            "-o",
+            params.get("output_subject_name")
+        ])
+    if params.get("output_subject_dir") is not None:
+        cargs.extend([
+            "-osdir",
+            params.get("output_subject_dir")
+        ])
+    if params.get("subjects_dir") is not None:
+        cargs.extend([
+            "-sdir",
+            params.get("subjects_dir")
+        ])
+    if params.get("average_area"):
+        cargs.append("-average_area")
+    if params.get("summary_statistics") is not None:
+        cargs.extend([
+            "-s",
+            params.get("summary_statistics")
+        ])
     return cargs
 
 
@@ -181,6 +242,13 @@ def mris_spherical_average(
     spherical_surf: str,
     subjects: list[str],
     output: str,
+    segment: bool = False,
+    normalize: bool = False,
+    orig: str | None = None,
+    output_subject_name: str | None = None,
+    output_subject_dir: str | None = None,
+    subjects_dir: str | None = None,
+    average_area: bool = False,
     summary_statistics: str | None = None,
     runner: Runner | None = None,
 ) -> MrisSphericalAverageOutputs:
@@ -198,6 +266,16 @@ def mris_spherical_average(
         spherical_surf: The spherical surface file.
         subjects: List of subjects.
         output: Output file or directory.
+        segment: Only use largest connected component of label.
+        normalize: Normalize output so it can be interpreted as a probability.
+        orig: Use <name> as original surface position; default=orig.
+        output_subject_name: Use <output subject name> as the space to write\
+            the results in instead of the last subject given.
+        output_subject_dir: Use <output subject dir> as the subjects dir for\
+            the output subject.
+        subjects_dir: Set the subjects directory.
+        average_area: Compute threshold for label that will give the average\
+            label approximately the average surface area.
         summary_statistics: Generate summary statistics and write them into\
             sigavg<cond #>-<hemi>.w and sigvar<cond #>-<hemi>.w.
         runner: Command runner.
@@ -207,13 +285,20 @@ def mris_spherical_average(
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_SPHERICAL_AVERAGE_METADATA)
     params = mris_spherical_average_params(
-        summary_statistics=summary_statistics,
         which=which,
         fname=fname,
         hemi=hemi,
         spherical_surf=spherical_surf,
         subjects=subjects,
         output=output,
+        segment=segment,
+        normalize=normalize,
+        orig=orig,
+        output_subject_name=output_subject_name,
+        output_subject_dir=output_subject_dir,
+        subjects_dir=subjects_dir,
+        average_area=average_area,
+        summary_statistics=summary_statistics,
     )
     return mris_spherical_average_execute(params, execution)
 

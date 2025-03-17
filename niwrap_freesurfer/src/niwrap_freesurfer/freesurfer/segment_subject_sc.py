@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_SUBJECT_SC_METADATA = Metadata(
-    id="02733a36fda91e4ab91ac726bedcbf25c9c93313.boutiques",
+    id="fa16d65c7df23bac2f3fce0055543daf1ef20f51.boutiques",
     name="segment_subject_sc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -106,14 +106,14 @@ def segment_subject_sc_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("mri_nu_correct.mni")
+    cargs.append("segment_subject_sc")
     cargs.extend([
         "-i",
-        "-" + execution.input_file(params.get("invol"))
+        execution.input_file(params.get("invol"))
     ])
     cargs.extend([
         "-xfm",
-        "-" + execution.input_file(params.get("outxfm"))
+        execution.input_file(params.get("outxfm"))
     ])
     if params.get("log") is not None:
         cargs.extend([

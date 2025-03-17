@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_MERGEPATHS_METADATA = Metadata(
-    id="18bc644100dca612df1989666e60cf3a4214164c.boutiques",
+    id="73d51f5dfd2648daefced42e8f22083b6b9e5b42.boutiques",
     name="dmri_mergepaths",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -116,7 +116,7 @@ def dmri_mergepaths_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("./dmri_mergepaths")
+    cargs.append("dmri_mergepaths")
     cargs.extend([execution.input_file(f) for f in params.get("input_volumes")])
     if params.get("input_directory") is not None:
         cargs.extend([

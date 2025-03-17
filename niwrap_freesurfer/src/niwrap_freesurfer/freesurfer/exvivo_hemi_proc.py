@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXVIVO_HEMI_PROC_METADATA = Metadata(
-    id="9ef40c3f2cab9928f235df79043cbc38b92918d6.boutiques",
+    id="e3813e1b2b5ac9842148171363015c6a44f9e300.boutiques",
     name="exvivo-hemi-proc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -18,6 +18,7 @@ ExvivoHemiProcParameters = typing.TypedDict('ExvivoHemiProcParameters', {
     "flashdir": str,
     "outdir": str,
     "subject": str,
+    "left_hemi": bool,
     "right_hemi": bool,
     "suptent": bool,
     "no_rotate": bool,
@@ -75,6 +76,7 @@ def exvivo_hemi_proc_params(
     flashdir: str,
     outdir: str,
     subject: str,
+    left_hemi: bool = False,
     right_hemi: bool = False,
     suptent: bool = False,
     no_rotate: bool = False,
@@ -94,6 +96,7 @@ def exvivo_hemi_proc_params(
         flashdir: Path to the FLASH data directory.
         outdir: Output directory where results will be saved.
         subject: Full path to the subject.
+        left_hemi: Process left hemisphere.
         right_hemi: Process right hemisphere.
         suptent: Indicate no tentorium (cblum and bstem) in the sample.
         no_rotate: Indicate rotation is not needed.
@@ -114,6 +117,7 @@ def exvivo_hemi_proc_params(
         "flashdir": flashdir,
         "outdir": outdir,
         "subject": subject,
+        "left_hemi": left_hemi,
         "right_hemi": right_hemi,
         "suptent": suptent,
         "no_rotate": no_rotate,
@@ -159,6 +163,8 @@ def exvivo_hemi_proc_cargs(
         "--s",
         params.get("subject")
     ])
+    if params.get("left_hemi"):
+        cargs.append("--lh")
     if params.get("right_hemi"):
         cargs.append("--rh")
     if params.get("suptent"):
@@ -240,6 +246,7 @@ def exvivo_hemi_proc(
     flashdir: str,
     outdir: str,
     subject: str,
+    left_hemi: bool = False,
     right_hemi: bool = False,
     suptent: bool = False,
     no_rotate: bool = False,
@@ -264,6 +271,7 @@ def exvivo_hemi_proc(
         flashdir: Path to the FLASH data directory.
         outdir: Output directory where results will be saved.
         subject: Full path to the subject.
+        left_hemi: Process left hemisphere.
         right_hemi: Process right hemisphere.
         suptent: Indicate no tentorium (cblum and bstem) in the sample.
         no_rotate: Indicate rotation is not needed.
@@ -286,6 +294,7 @@ def exvivo_hemi_proc(
         flashdir=flashdir,
         outdir=outdir,
         subject=subject,
+        left_hemi=left_hemi,
         right_hemi=right_hemi,
         suptent=suptent,
         no_rotate=no_rotate,

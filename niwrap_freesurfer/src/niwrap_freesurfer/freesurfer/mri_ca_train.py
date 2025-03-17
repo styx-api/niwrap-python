@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_CA_TRAIN_METADATA = Metadata(
-    id="432e0861913c8c1346f736846e22c0107ee5337f.boutiques",
+    id="b0a0862d8bce51400e3699e4c44a4499c82a6c8a.boutiques",
     name="mri_ca_train",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -23,6 +23,7 @@ MriCaTrainParameters = typing.TypedDict('MriCaTrainParameters', {
     "node_spacing": typing.NotRequired[str | None],
     "prior_spacing": typing.NotRequired[str | None],
     "input_training": typing.NotRequired[list[str] | None],
+    "symmetrize": bool,
     "makesym": typing.NotRequired[list[str] | None],
     "check_symmetry": typing.NotRequired[list[str] | None],
     "sanity_check": bool,
@@ -79,6 +80,7 @@ def mri_ca_train_params(
     node_spacing: str | None = None,
     prior_spacing: str | None = None,
     input_training: list[str] | None = None,
+    symmetrize: bool = False,
     makesym: list[str] | None = None,
     check_symmetry: list[str] | None = None,
     sanity_check: bool = False,
@@ -102,6 +104,7 @@ def mri_ca_train_params(
         prior_spacing: Spacing of class priors in canonical space.
         input_training: Specifying training data, path relative to each\
             subject's MRI directory. Can specify multiple inputs.
+        symmetrize: Symmetrize the atlas after creation.
         makesym: Symmetrize an already existing atlas. Specify input GCA and\
             symmetrized GCA.
         check_symmetry: Check the symmetry of an already existing atlas.\
@@ -117,6 +120,7 @@ def mri_ca_train_params(
         "subjects": subjects,
         "output_gca": output_gca,
         "segmentation": segmentation,
+        "symmetrize": symmetrize,
         "sanity_check": sanity_check,
     }
     if transform is not None:
@@ -186,6 +190,8 @@ def mri_ca_train_cargs(
             "-input",
             *params.get("input_training")
         ])
+    if params.get("symmetrize"):
+        cargs.append("-sym")
     if params.get("makesym") is not None:
         cargs.extend([
             "-makesym",
@@ -264,6 +270,7 @@ def mri_ca_train(
     node_spacing: str | None = None,
     prior_spacing: str | None = None,
     input_training: list[str] | None = None,
+    symmetrize: bool = False,
     makesym: list[str] | None = None,
     check_symmetry: list[str] | None = None,
     sanity_check: bool = False,
@@ -293,6 +300,7 @@ def mri_ca_train(
         prior_spacing: Spacing of class priors in canonical space.
         input_training: Specifying training data, path relative to each\
             subject's MRI directory. Can specify multiple inputs.
+        symmetrize: Symmetrize the atlas after creation.
         makesym: Symmetrize an already existing atlas. Specify input GCA and\
             symmetrized GCA.
         check_symmetry: Check the symmetry of an already existing atlas.\
@@ -315,6 +323,7 @@ def mri_ca_train(
         node_spacing=node_spacing,
         prior_spacing=prior_spacing,
         input_training=input_training,
+        symmetrize=symmetrize,
         makesym=makesym,
         check_symmetry=check_symmetry,
         sanity_check=sanity_check,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_JACOBIAN_METADATA = Metadata(
-    id="261fa5191d385d242b16ec1808b1a5ac51b44bc2.boutiques",
+    id="92cd12066432758c04574ab139770c5aabee1470.boutiques",
     name="mri_jacobian",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -24,6 +24,7 @@ MriJacobianParameters = typing.TypedDict('MriJacobianParameters', {
     "smooth_sigma": typing.NotRequired[float | None],
     "zero_mean_log": bool,
     "tm3d": bool,
+    "help1": bool,
     "help2": bool,
     "dt": bool,
     "debug_voxel": typing.NotRequired[list[float] | None],
@@ -83,6 +84,7 @@ def mri_jacobian_params(
     smooth_sigma: float | None = None,
     zero_mean_log: bool = False,
     tm3d: bool = False,
+    help1: bool = False,
     help2: bool = False,
     dt: bool = False,
     debug_voxel: list[float] | None = None,
@@ -101,6 +103,7 @@ def mri_jacobian_params(
         smooth_sigma: Smoothing Jacobian volume with sigma.
         zero_mean_log: Make log Jacobian zero mean.
         tm3d: The input morph (m3z) originated from tm3d (mri_cvs_register).
+        help1: Writing out help.
         help2: Writing out help.
         dt: DT option (description not provided in help text).
         debug_voxel: Debug voxel with specified Gx, Gy, Gz coordinates.
@@ -118,6 +121,7 @@ def mri_jacobian_params(
         "log_jacobian": log_jacobian,
         "zero_mean_log": zero_mean_log,
         "tm3d": tm3d,
+        "help1": help1,
         "help2": help2,
         "dt": dt,
         "remove": remove,
@@ -162,6 +166,8 @@ def mri_jacobian_cargs(
         cargs.append("-z")
     if params.get("tm3d"):
         cargs.append("-tm3d")
+    if params.get("help1"):
+        cargs.append("-?")
     if params.get("help2"):
         cargs.append("-u")
     if params.get("dt"):
@@ -230,6 +236,7 @@ def mri_jacobian(
     smooth_sigma: float | None = None,
     zero_mean_log: bool = False,
     tm3d: bool = False,
+    help1: bool = False,
     help2: bool = False,
     dt: bool = False,
     debug_voxel: list[float] | None = None,
@@ -253,6 +260,7 @@ def mri_jacobian(
         smooth_sigma: Smoothing Jacobian volume with sigma.
         zero_mean_log: Make log Jacobian zero mean.
         tm3d: The input morph (m3z) originated from tm3d (mri_cvs_register).
+        help1: Writing out help.
         help2: Writing out help.
         dt: DT option (description not provided in help text).
         debug_voxel: Debug voxel with specified Gx, Gy, Gz coordinates.
@@ -273,6 +281,7 @@ def mri_jacobian(
         smooth_sigma=smooth_sigma,
         zero_mean_log=zero_mean_log,
         tm3d=tm3d,
+        help1=help1,
         help2=help2,
         dt=dt,
         debug_voxel=debug_voxel,

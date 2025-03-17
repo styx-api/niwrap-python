@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAP_ALL_LABELS_LH_METADATA = Metadata(
-    id="569f8a45a5f0082dff949fe6bc883e667d21393b.boutiques",
+    id="97a60688b269fc75bd6ea545f965efcd4df1c156.boutiques",
     name="map_all_labels-lh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -19,6 +19,7 @@ MapAllLabelsLhParameters = typing.TypedDict('MapAllLabelsLhParameters', {
     "fname": str,
     "hemi": str,
     "spherical_surf": InputPathType,
+    "subjects": list[str],
     "output": str,
 })
 
@@ -70,6 +71,7 @@ def map_all_labels_lh_params(
     fname: str,
     hemi: str,
     spherical_surf: InputPathType,
+    subjects: list[str],
     output: str,
 ) -> MapAllLabelsLhParameters:
     """
@@ -81,6 +83,7 @@ def map_all_labels_lh_params(
         fname: The file name to process.
         hemi: The hemisphere to process (usually 'lh' for left hemisphere).
         spherical_surf: The spherical surface file.
+        subjects: List of subjects to process.
         output: Output file.
     Returns:
         Parameter dictionary
@@ -91,6 +94,7 @@ def map_all_labels_lh_params(
         "fname": fname,
         "hemi": hemi,
         "spherical_surf": spherical_surf,
+        "subjects": subjects,
         "output": output,
     }
     return params
@@ -110,14 +114,15 @@ def map_all_labels_lh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("map_all_labels-lh")
     cargs.extend([
         "-lh",
-        "map_all_labels" + params.get("which")
+        params.get("which")
     ])
     cargs.append(params.get("fname"))
     cargs.append(params.get("hemi"))
     cargs.append(execution.input_file(params.get("spherical_surf")))
-    cargs.append("[SUBJECTS...]")
+    cargs.extend(params.get("subjects"))
     cargs.append(params.get("output"))
     return cargs
 
@@ -171,6 +176,7 @@ def map_all_labels_lh(
     fname: str,
     hemi: str,
     spherical_surf: InputPathType,
+    subjects: list[str],
     output: str,
     runner: Runner | None = None,
 ) -> MapAllLabelsLhOutputs:
@@ -187,6 +193,7 @@ def map_all_labels_lh(
         fname: The file name to process.
         hemi: The hemisphere to process (usually 'lh' for left hemisphere).
         spherical_surf: The spherical surface file.
+        subjects: List of subjects to process.
         output: Output file.
         runner: Command runner.
     Returns:
@@ -199,6 +206,7 @@ def map_all_labels_lh(
         fname=fname,
         hemi=hemi,
         spherical_surf=spherical_surf,
+        subjects=subjects,
         output=output,
     )
     return map_all_labels_lh_execute(params, execution)

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGPONS_METADATA = Metadata(
-    id="4b38e194fdd9fe1d16fc15d6ac746b2dffa56e0f.boutiques",
+    id="8eb6baa748bcc4187afc21f69060f662b9b141d7.boutiques",
     name="segpons",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -118,7 +118,7 @@ def segpons_cargs(
     cargs.append("segpons")
     cargs.extend([
         "-s",
-        "-" + params.get("subject")
+        params.get("subject")
     ])
     if params.get("aseg"):
         cargs.append("--aseg")

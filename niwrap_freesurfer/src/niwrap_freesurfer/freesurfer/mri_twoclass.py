@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_TWOCLASS_METADATA = Metadata(
-    id="717cefa4d525f9af2426548e3f53f0a54c018c15.boutiques",
+    id="d2a42c55540746e081c5b41bbf3d232cedb5984b.boutiques",
     name="mri_twoclass",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -123,7 +123,6 @@ def mri_twoclass_cargs(
     cargs.append(params.get("output_subject"))
     cargs.append(params.get("output_volume"))
     cargs.extend(params.get("c1_subjects"))
-    cargs.append(":")
     cargs.extend(params.get("c2_subjects"))
     if params.get("f_threshold") is not None:
         cargs.extend([

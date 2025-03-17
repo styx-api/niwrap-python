@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MORPH_TABLES_LH_METADATA = Metadata(
-    id="e50487cf18790588cbef4e2983a79d88589f3cc3.boutiques",
+    id="34324860233ca7709fb6c2b4418a71bd3f0cbdf6.boutiques",
     name="morph_tables-lh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -98,9 +98,10 @@ def morph_tables_lh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("morph_tables-lh")
     cargs.extend([
         "-lh",
-        "morph_tables" + execution.input_file(params.get("input_file"))
+        execution.input_file(params.get("input_file"))
     ])
     if params.get("some_flag"):
         cargs.append("--some-flag")

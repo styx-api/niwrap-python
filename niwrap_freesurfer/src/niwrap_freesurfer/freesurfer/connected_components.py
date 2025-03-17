@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONNECTED_COMPONENTS_METADATA = Metadata(
-    id="415ac7eebb3cd7123aaeb6ad6eb398b6cc1343ba.boutiques",
+    id="f1633b5575d9dbbe6d93199947f8505bc14a7d96.boutiques",
     name="connected_components",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,9 @@ CONNECTED_COMPONENTS_METADATA = Metadata(
 
 ConnectedComponentsParameters = typing.TypedDict('ConnectedComponentsParameters', {
     "__STYX_TYPE__": typing.Literal["connected_components"],
+    "input_image": InputPathType,
+    "output_image": str,
+    "threshold": typing.NotRequired[float | None],
 })
 
 
@@ -61,17 +64,27 @@ class ConnectedComponentsOutputs(typing.NamedTuple):
 
 
 def connected_components_params(
+    input_image: InputPathType,
+    output_image: str = "output_labelled_image",
+    threshold: float | None = None,
 ) -> ConnectedComponentsParameters:
     """
     Build parameters.
     
     Args:
+        input_image: Input image file.
+        output_image: Output labeled connected components image.
+        threshold: Threshold for binarizing the input image.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "connected_components",
+        "input_image": input_image,
+        "output_image": output_image,
     }
+    if threshold is not None:
+        params["threshold"] = threshold
     return params
 
 
@@ -90,6 +103,16 @@ def connected_components_cargs(
     """
     cargs = []
     cargs.append("connected_components")
+    cargs.append(execution.input_file(params.get("input_image")))
+    cargs.extend([
+        "-o",
+        params.get("output_image")
+    ])
+    if params.get("threshold") is not None:
+        cargs.extend([
+            "-t",
+            str(params.get("threshold"))
+        ])
     return cargs
 
 
@@ -108,7 +131,7 @@ def connected_components_outputs(
     """
     ret = ConnectedComponentsOutputs(
         root=execution.output_file("."),
-        output_labelled_image_file=execution.output_file("[OUTPUT_IMAGE].nii.gz"),
+        output_labelled_image_file=execution.output_file(params.get("output_image") + ".nii.gz"),
     )
     return ret
 
@@ -138,6 +161,9 @@ def connected_components_execute(
 
 
 def connected_components(
+    input_image: InputPathType,
+    output_image: str = "output_labelled_image",
+    threshold: float | None = None,
     runner: Runner | None = None,
 ) -> ConnectedComponentsOutputs:
     """
@@ -148,6 +174,9 @@ def connected_components(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        input_image: Input image file.
+        output_image: Output labeled connected components image.
+        threshold: Threshold for binarizing the input image.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConnectedComponentsOutputs`).
@@ -155,6 +184,9 @@ def connected_components(
     runner = runner or get_global_runner()
     execution = runner.start_execution(CONNECTED_COMPONENTS_METADATA)
     params = connected_components_params(
+        input_image=input_image,
+        output_image=output_image,
+        threshold=threshold,
     )
     return connected_components_execute(params, execution)
 

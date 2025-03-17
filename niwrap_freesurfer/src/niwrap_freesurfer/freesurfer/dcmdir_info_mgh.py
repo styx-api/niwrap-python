@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DCMDIR_INFO_MGH_METADATA = Metadata(
-    id="7ccff8790fdd0d584c57e3c31a9bf9ffd1e90e36.boutiques",
+    id="162f400a399c275cd7fef293d1d5ad1cd84402e4.boutiques",
     name="dcmdir-info-mgh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -112,9 +112,10 @@ def dcmdir_info_mgh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("dcmdir-info-mgh")
     cargs.extend([
         "-mgh",
-        "dcmdir-info" + params.get("dicomdir")
+        params.get("dicomdir")
     ])
     if params.get("unpackdir") is not None:
         cargs.append(params.get("unpackdir"))

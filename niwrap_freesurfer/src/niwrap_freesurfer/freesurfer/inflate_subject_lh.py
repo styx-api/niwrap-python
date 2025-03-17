@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 INFLATE_SUBJECT_LH_METADATA = Metadata(
-    id="13f58b307e30c9d1d7c23e3d8eda03727c68266d.boutiques",
+    id="941fff4146cba765ed908e2c762f2faabcdf05c1.boutiques",
     name="inflate_subject-lh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -94,9 +94,10 @@ def inflate_subject_lh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("inflate_subject-lh")
     cargs.extend([
         "-lh",
-        "inflate_subject" + params.get("input_folder")
+        params.get("input_folder")
     ])
     if params.get("hostname_flag"):
         cargs.append("hostname")

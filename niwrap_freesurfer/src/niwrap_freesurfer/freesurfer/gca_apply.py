@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GCA_APPLY_METADATA = Metadata(
-    id="004863971f906d9a0b7892c9101381a0f012a5c2.boutiques",
+    id="37d628d973685edc2921052f548a797e0b449eb8.boutiques",
     name="gca-apply",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -182,9 +182,10 @@ def gca_apply_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("gca-apply")
     cargs.extend([
         "-apply",
-        "gca" + execution.input_file(params.get("gcafile"))
+        execution.input_file(params.get("gcafile"))
     ])
     cargs.append(params.get("subject"))
     if params.get("nthreads") is not None:

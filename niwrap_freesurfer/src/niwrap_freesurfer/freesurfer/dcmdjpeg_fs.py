@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DCMDJPEG_FS_METADATA = Metadata(
-    id="72def5b0b090531bebd9d33b2cf8001287532af2.boutiques",
+    id="23277311b6d3ec67d22170dc491d01934643849c.boutiques",
     name="dcmdjpeg.fs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -260,7 +260,7 @@ def dcmdjpeg_fs_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("dcmdjpeg")
+    cargs.append("dcmdjpeg.fs")
     cargs.append(execution.input_file(params.get("input_file")))
     cargs.append(params.get("output_file"))
     if params.get("help"):

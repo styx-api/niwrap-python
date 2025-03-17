@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GDCMCONV_FS_METADATA = Metadata(
-    id="c4cb69979a329deef98f15b2e797b9c57375a6ef.boutiques",
+    id="98f7b1994832a771c3433368967176f42a435bc4.boutiques",
     name="gdcmconv.fs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -261,7 +261,7 @@ def gdcmconv_fs_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("gdcmconv")
+    cargs.append("gdcmconv.fs")
     cargs.append(execution.input_file(params.get("input_file")))
     cargs.append(params.get("output_file"))
     if params.get("explicit_flag"):

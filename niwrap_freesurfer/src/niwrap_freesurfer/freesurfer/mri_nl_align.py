@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_NL_ALIGN_METADATA = Metadata(
-    id="cd2a19b23e2fec00175500358afe679cc9ee7fc7.boutiques",
+    id="fd12751796479c6b953e5a2ce259ca4890ee3c30.boutiques",
     name="mri_nl_align",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -33,11 +33,13 @@ MriNlAlignParameters = typing.TypedDict('MriNlAlignParameters', {
     "erode": typing.NotRequired[float | None],
     "match_mean": typing.NotRequired[float | None],
     "intensity": typing.NotRequired[float | None],
+    "ll": typing.NotRequired[float | None],
     "noregrid_flag": bool,
     "regrid_flag": bool,
     "view": typing.NotRequired[list[float] | None],
     "levels": typing.NotRequired[float | None],
     "area_smoothness": typing.NotRequired[float | None],
+    "asmooth": typing.NotRequired[float | None],
     "area": typing.NotRequired[float | None],
     "tolerance": typing.NotRequired[float | None],
     "sigma": typing.NotRequired[float | None],
@@ -125,11 +127,13 @@ def mri_nl_align_params(
     erode: float | None = None,
     match_mean: float | None = None,
     intensity: float | None = None,
+    ll: float | None = None,
     noregrid_flag: bool = False,
     regrid_flag: bool = False,
     view: list[float] | None = None,
     levels: float | None = None,
     area_smoothness: float | None = None,
+    asmooth: float | None = None,
     area: float | None = None,
     tolerance: float | None = None,
     sigma: float | None = None,
@@ -176,11 +180,13 @@ def mri_nl_align_params(
         erode: Erode source and target image specified times before morphing.
         match_mean: Control for matching peak of intensity ratio histogram.
         intensity: Set l_log_likelihood to specified value.
+        ll: Set l_log_likelihood to specified value.
         noregrid_flag: Disable regridding.
         regrid_flag: Enable regridding.
         view: View voxel coordinates (Gx, Gy, Gz).
         levels: Set levels to specified value.
         area_smoothness: Set l_area_smoothness to specified value.
+        asmooth: Set l_area_smoothness to specified value.
         area: Set l_area to specified value.
         tolerance: Set tolerance to specified value.
         sigma: Set sigma to specified value.
@@ -240,12 +246,16 @@ def mri_nl_align_params(
         params["match_mean"] = match_mean
     if intensity is not None:
         params["intensity"] = intensity
+    if ll is not None:
+        params["ll"] = ll
     if view is not None:
         params["view"] = view
     if levels is not None:
         params["levels"] = levels
     if area_smoothness is not None:
         params["area_smoothness"] = area_smoothness
+    if asmooth is not None:
+        params["asmooth"] = asmooth
     if area is not None:
         params["area"] = area
     if tolerance is not None:
@@ -373,6 +383,11 @@ def mri_nl_align_cargs(
             "-intensity",
             str(params.get("intensity"))
         ])
+    if params.get("ll") is not None:
+        cargs.extend([
+            "-ll",
+            str(params.get("ll"))
+        ])
     if params.get("noregrid_flag"):
         cargs.append("-noregrid")
     if params.get("regrid_flag"):
@@ -391,6 +406,11 @@ def mri_nl_align_cargs(
         cargs.extend([
             "-areasmoothness",
             str(params.get("area_smoothness"))
+        ])
+    if params.get("asmooth") is not None:
+        cargs.extend([
+            "-asmooth",
+            str(params.get("asmooth"))
         ])
     if params.get("area") is not None:
         cargs.extend([
@@ -573,11 +593,13 @@ def mri_nl_align(
     erode: float | None = None,
     match_mean: float | None = None,
     intensity: float | None = None,
+    ll: float | None = None,
     noregrid_flag: bool = False,
     regrid_flag: bool = False,
     view: list[float] | None = None,
     levels: float | None = None,
     area_smoothness: float | None = None,
+    asmooth: float | None = None,
     area: float | None = None,
     tolerance: float | None = None,
     sigma: float | None = None,
@@ -629,11 +651,13 @@ def mri_nl_align(
         erode: Erode source and target image specified times before morphing.
         match_mean: Control for matching peak of intensity ratio histogram.
         intensity: Set l_log_likelihood to specified value.
+        ll: Set l_log_likelihood to specified value.
         noregrid_flag: Disable regridding.
         regrid_flag: Enable regridding.
         view: View voxel coordinates (Gx, Gy, Gz).
         levels: Set levels to specified value.
         area_smoothness: Set l_area_smoothness to specified value.
+        asmooth: Set l_area_smoothness to specified value.
         area: Set l_area to specified value.
         tolerance: Set tolerance to specified value.
         sigma: Set sigma to specified value.
@@ -682,11 +706,13 @@ def mri_nl_align(
         erode=erode,
         match_mean=match_mean,
         intensity=intensity,
+        ll=ll,
         noregrid_flag=noregrid_flag,
         regrid_flag=regrid_flag,
         view=view,
         levels=levels,
         area_smoothness=area_smoothness,
+        asmooth=asmooth,
         area=area,
         tolerance=tolerance,
         sigma=sigma,

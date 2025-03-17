@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_BSET_METADATA = Metadata(
-    id="a5ba928b721f328bbae969650915bdc4c218018a.boutiques",
+    id="9a9d1299f82ba59a9a11b741685458eb6f480882.boutiques",
     name="dmri_bset",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,6 +17,7 @@ DmriBsetParameters = typing.TypedDict('DmriBsetParameters', {
     "__STYX_TYPE__": typing.Literal["dmri_bset"],
     "input_dwi": InputPathType,
     "output_dwi": str,
+    "b_values": typing.NotRequired[list[float] | None],
     "btol": typing.NotRequired[float | None],
     "bsort": bool,
     "bmax": typing.NotRequired[float | None],
@@ -76,6 +77,7 @@ class DmriBsetOutputs(typing.NamedTuple):
 def dmri_bset_params(
     input_dwi: InputPathType,
     output_dwi: str,
+    b_values: list[float] | None = None,
     btol: float | None = 0.05,
     bsort: bool = False,
     bmax: float | None = None,
@@ -90,6 +92,7 @@ def dmri_bset_params(
     Args:
         input_dwi: Input DWI series.
         output_dwi: Output DWI series.
+        b_values: Extract one or more b-values.
         btol: Tolerance around each single b-value (default: 0.05).
         bsort: Reorder output data by b-shell (default: maintain original\
             order).
@@ -111,6 +114,8 @@ def dmri_bset_params(
         "output_dwi": output_dwi,
         "bsort": bsort,
     }
+    if b_values is not None:
+        params["b_values"] = b_values
     if btol is not None:
         params["btol"] = btol
     if bmax is not None:
@@ -143,7 +148,11 @@ def dmri_bset_cargs(
     cargs.append("dmri_bset")
     cargs.append(execution.input_file(params.get("input_dwi")))
     cargs.append(params.get("output_dwi"))
-    cargs.append("[B_VALUES...]")
+    if params.get("b_values") is not None:
+        cargs.extend([
+            "--b",
+            *map(str, params.get("b_values"))
+        ])
     if params.get("btol") is not None:
         cargs.extend([
             "--btol",
@@ -229,6 +238,7 @@ def dmri_bset_execute(
 def dmri_bset(
     input_dwi: InputPathType,
     output_dwi: str,
+    b_values: list[float] | None = None,
     btol: float | None = 0.05,
     bsort: bool = False,
     bmax: float | None = None,
@@ -249,6 +259,7 @@ def dmri_bset(
     Args:
         input_dwi: Input DWI series.
         output_dwi: Output DWI series.
+        b_values: Extract one or more b-values.
         btol: Tolerance around each single b-value (default: 0.05).
         bsort: Reorder output data by b-shell (default: maintain original\
             order).
@@ -270,6 +281,7 @@ def dmri_bset(
     params = dmri_bset_params(
         input_dwi=input_dwi,
         output_dwi=output_dwi,
+        b_values=b_values,
         btol=btol,
         bsort=bsort,
         bmax=bmax,

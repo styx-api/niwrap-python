@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_AVERAGE_VOLUME_METADATA = Metadata(
-    id="52d00009c5f5db471f13423dea8699f07efa357d.boutiques",
+    id="72e02e18d338618b963b745c51ee6a0b8c78e972.boutiques",
     name="make_average_volume",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -21,12 +21,14 @@ MakeAverageVolumeParameters = typing.TypedDict('MakeAverageVolumeParameters', {
     "topdir": typing.NotRequired[str | None],
     "xform": typing.NotRequired[str | None],
     "sdir": typing.NotRequired[str | None],
+    "sd_flag": bool,
     "force_flag": bool,
     "keep_all_orig_flag": bool,
     "no_aseg_flag": bool,
     "ctab": typing.NotRequired[str | None],
     "ctab_default_flag": bool,
     "echo_flag": bool,
+    "debug_flag": bool,
     "nocleanup_flag": bool,
 })
 
@@ -77,12 +79,14 @@ def make_average_volume_params(
     topdir: str | None = None,
     xform: str | None = None,
     sdir: str | None = None,
+    sd_flag: bool = False,
     force_flag: bool = False,
     keep_all_orig_flag: bool = False,
     no_aseg_flag: bool = False,
     ctab: str | None = None,
     ctab_default_flag: bool = False,
     echo_flag: bool = False,
+    debug_flag: bool = False,
     nocleanup_flag: bool = False,
 ) -> MakeAverageVolumeParameters:
     """
@@ -95,6 +99,7 @@ def make_average_volume_params(
         topdir: Directory to put data and link to SUBJECTS_DIR.
         xform: Transformation name to use, default is talairach.xfm.
         sdir: Use specified SUBJECTS_DIR instead of the environment's one.
+        sd_flag: Same as --sdir.
         force_flag: Overwrite existing average subject data.
         keep_all_orig_flag: Concatenate all original volumes into\
             mri/orig.all.mgz.
@@ -102,6 +107,7 @@ def make_average_volume_params(
         ctab: Embed colortable into segmentations.
         ctab_default_flag: Embed FreeSurferColorLUT.txt into segmentations.
         echo_flag: Enable command echo for debugging.
+        debug_flag: Same as --echo for debugging.
         nocleanup_flag: Do not delete temporary files.
     Returns:
         Parameter dictionary
@@ -109,11 +115,13 @@ def make_average_volume_params(
     params = {
         "__STYXTYPE__": "make_average_volume",
         "subjects": subjects,
+        "sd_flag": sd_flag,
         "force_flag": force_flag,
         "keep_all_orig_flag": keep_all_orig_flag,
         "no_aseg_flag": no_aseg_flag,
         "ctab_default_flag": ctab_default_flag,
         "echo_flag": echo_flag,
+        "debug_flag": debug_flag,
         "nocleanup_flag": nocleanup_flag,
     }
     if fsgd is not None:
@@ -175,6 +183,8 @@ def make_average_volume_cargs(
             "--sdir",
             params.get("sdir")
         ])
+    if params.get("sd_flag"):
+        cargs.append("--sd")
     if params.get("force_flag"):
         cargs.append("--force")
     if params.get("keep_all_orig_flag"):
@@ -190,6 +200,8 @@ def make_average_volume_cargs(
         cargs.append("--ctab-default")
     if params.get("echo_flag"):
         cargs.append("--echo")
+    if params.get("debug_flag"):
+        cargs.append("--debug")
     if params.get("nocleanup_flag"):
         cargs.append("--nocleanup")
     return cargs
@@ -245,12 +257,14 @@ def make_average_volume(
     topdir: str | None = None,
     xform: str | None = None,
     sdir: str | None = None,
+    sd_flag: bool = False,
     force_flag: bool = False,
     keep_all_orig_flag: bool = False,
     no_aseg_flag: bool = False,
     ctab: str | None = None,
     ctab_default_flag: bool = False,
     echo_flag: bool = False,
+    debug_flag: bool = False,
     nocleanup_flag: bool = False,
     runner: Runner | None = None,
 ) -> MakeAverageVolumeOutputs:
@@ -268,6 +282,7 @@ def make_average_volume(
         topdir: Directory to put data and link to SUBJECTS_DIR.
         xform: Transformation name to use, default is talairach.xfm.
         sdir: Use specified SUBJECTS_DIR instead of the environment's one.
+        sd_flag: Same as --sdir.
         force_flag: Overwrite existing average subject data.
         keep_all_orig_flag: Concatenate all original volumes into\
             mri/orig.all.mgz.
@@ -275,6 +290,7 @@ def make_average_volume(
         ctab: Embed colortable into segmentations.
         ctab_default_flag: Embed FreeSurferColorLUT.txt into segmentations.
         echo_flag: Enable command echo for debugging.
+        debug_flag: Same as --echo for debugging.
         nocleanup_flag: Do not delete temporary files.
         runner: Command runner.
     Returns:
@@ -289,12 +305,14 @@ def make_average_volume(
         topdir=topdir,
         xform=xform,
         sdir=sdir,
+        sd_flag=sd_flag,
         force_flag=force_flag,
         keep_all_orig_flag=keep_all_orig_flag,
         no_aseg_flag=no_aseg_flag,
         ctab=ctab,
         ctab_default_flag=ctab_default_flag,
         echo_flag=echo_flag,
+        debug_flag=debug_flag,
         nocleanup_flag=nocleanup_flag,
     )
     return make_average_volume_execute(params, execution)

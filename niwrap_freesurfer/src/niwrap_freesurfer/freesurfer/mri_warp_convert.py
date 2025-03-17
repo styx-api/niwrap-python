@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_WARP_CONVERT_METADATA = Metadata(
-    id="36b7f6d3b0edf16e088ad567445e656a71a7dd89.boutiques",
+    id="32b2750e85eac274b020aca2c35655e2c3b86427.boutiques",
     name="mri_warp_convert",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,7 +15,17 @@ MRI_WARP_CONVERT_METADATA = Metadata(
 
 MriWarpConvertParameters = typing.TypedDict('MriWarpConvertParameters', {
     "__STYX_TYPE__": typing.Literal["mri_warp_convert"],
+    "inm3z": typing.NotRequired[InputPathType | None],
+    "infsl": typing.NotRequired[InputPathType | None],
+    "inlps": typing.NotRequired[InputPathType | None],
+    "initk": typing.NotRequired[InputPathType | None],
+    "inras": typing.NotRequired[InputPathType | None],
     "invox": typing.NotRequired[InputPathType | None],
+    "outm3z": typing.NotRequired[str | None],
+    "outfsl": typing.NotRequired[str | None],
+    "outlps": typing.NotRequired[str | None],
+    "outitk": typing.NotRequired[str | None],
+    "outras": typing.NotRequired[str | None],
     "outvox": typing.NotRequired[str | None],
     "insrcgeom": typing.NotRequired[InputPathType | None],
     "downsample": bool,
@@ -65,7 +75,17 @@ class MriWarpConvertOutputs(typing.NamedTuple):
 
 
 def mri_warp_convert_params(
+    inm3z: InputPathType | None = None,
+    infsl: InputPathType | None = None,
+    inlps: InputPathType | None = None,
+    initk: InputPathType | None = None,
+    inras: InputPathType | None = None,
     invox: InputPathType | None = None,
+    outm3z: str | None = None,
+    outfsl: str | None = None,
+    outlps: str | None = None,
+    outitk: str | None = None,
+    outras: str | None = None,
     outvox: str | None = None,
     insrcgeom: InputPathType | None = None,
     downsample: bool = False,
@@ -74,7 +94,17 @@ def mri_warp_convert_params(
     Build parameters.
     
     Args:
+        inm3z: Input M3Z warp.
+        infsl: Input FSL warp.
+        inlps: Input LPS-to-LPS displacement field (e.g. ITK, ANTs).
+        initk: Input ITK LPS-to-LPS displacement field.
+        inras: Input RAS-to-RAS displacement field (e.g. NiftyReg).
         invox: Input file with displacements in source-voxel space.
+        outm3z: Output warp (M3Z Freesurfer format).
+        outfsl: Output warp (FSL format).
+        outlps: Output LPS-to-LPS displacement field (e.g. ITK, ANTs).
+        outitk: Output ITK LPS-to-LPS displacement field.
+        outras: Output RAS-to-RAS displacement field (e.g. NiftyReg).
         outvox: Output file with displacements in source-voxel space.
         insrcgeom: Specify source image geometry (moving volume).
         downsample: Downsample output M3Z to spacing of 2.
@@ -85,8 +115,28 @@ def mri_warp_convert_params(
         "__STYXTYPE__": "mri_warp_convert",
         "downsample": downsample,
     }
+    if inm3z is not None:
+        params["inm3z"] = inm3z
+    if infsl is not None:
+        params["infsl"] = infsl
+    if inlps is not None:
+        params["inlps"] = inlps
+    if initk is not None:
+        params["initk"] = initk
+    if inras is not None:
+        params["inras"] = inras
     if invox is not None:
         params["invox"] = invox
+    if outm3z is not None:
+        params["outm3z"] = outm3z
+    if outfsl is not None:
+        params["outfsl"] = outfsl
+    if outlps is not None:
+        params["outlps"] = outlps
+    if outitk is not None:
+        params["outitk"] = outitk
+    if outras is not None:
+        params["outras"] = outras
     if outvox is not None:
         params["outvox"] = outvox
     if insrcgeom is not None:
@@ -109,10 +159,60 @@ def mri_warp_convert_cargs(
     """
     cargs = []
     cargs.append("mri_warp_convert")
+    if params.get("inm3z") is not None:
+        cargs.extend([
+            "--inm3z",
+            execution.input_file(params.get("inm3z"))
+        ])
+    if params.get("infsl") is not None:
+        cargs.extend([
+            "--infsl",
+            execution.input_file(params.get("infsl"))
+        ])
+    if params.get("inlps") is not None:
+        cargs.extend([
+            "--inlps",
+            execution.input_file(params.get("inlps"))
+        ])
+    if params.get("initk") is not None:
+        cargs.extend([
+            "--initk",
+            execution.input_file(params.get("initk"))
+        ])
+    if params.get("inras") is not None:
+        cargs.extend([
+            "--inras",
+            execution.input_file(params.get("inras"))
+        ])
     if params.get("invox") is not None:
         cargs.extend([
             "--invox",
             execution.input_file(params.get("invox"))
+        ])
+    if params.get("outm3z") is not None:
+        cargs.extend([
+            "--outm3z",
+            params.get("outm3z")
+        ])
+    if params.get("outfsl") is not None:
+        cargs.extend([
+            "--outfsl",
+            params.get("outfsl")
+        ])
+    if params.get("outlps") is not None:
+        cargs.extend([
+            "--outlps",
+            params.get("outlps")
+        ])
+    if params.get("outitk") is not None:
+        cargs.extend([
+            "--outitk",
+            params.get("outitk")
+        ])
+    if params.get("outras") is not None:
+        cargs.extend([
+            "--outras",
+            params.get("outras")
         ])
     if params.get("outvox") is not None:
         cargs.extend([
@@ -174,7 +274,17 @@ def mri_warp_convert_execute(
 
 
 def mri_warp_convert(
+    inm3z: InputPathType | None = None,
+    infsl: InputPathType | None = None,
+    inlps: InputPathType | None = None,
+    initk: InputPathType | None = None,
+    inras: InputPathType | None = None,
     invox: InputPathType | None = None,
+    outm3z: str | None = None,
+    outfsl: str | None = None,
+    outlps: str | None = None,
+    outitk: str | None = None,
+    outras: str | None = None,
     outvox: str | None = None,
     insrcgeom: InputPathType | None = None,
     downsample: bool = False,
@@ -188,7 +298,17 @@ def mri_warp_convert(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        inm3z: Input M3Z warp.
+        infsl: Input FSL warp.
+        inlps: Input LPS-to-LPS displacement field (e.g. ITK, ANTs).
+        initk: Input ITK LPS-to-LPS displacement field.
+        inras: Input RAS-to-RAS displacement field (e.g. NiftyReg).
         invox: Input file with displacements in source-voxel space.
+        outm3z: Output warp (M3Z Freesurfer format).
+        outfsl: Output warp (FSL format).
+        outlps: Output LPS-to-LPS displacement field (e.g. ITK, ANTs).
+        outitk: Output ITK LPS-to-LPS displacement field.
+        outras: Output RAS-to-RAS displacement field (e.g. NiftyReg).
         outvox: Output file with displacements in source-voxel space.
         insrcgeom: Specify source image geometry (moving volume).
         downsample: Downsample output M3Z to spacing of 2.
@@ -199,7 +319,17 @@ def mri_warp_convert(
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_WARP_CONVERT_METADATA)
     params = mri_warp_convert_params(
+        inm3z=inm3z,
+        infsl=infsl,
+        inlps=inlps,
+        initk=initk,
+        inras=inras,
         invox=invox,
+        outm3z=outm3z,
+        outfsl=outfsl,
+        outlps=outlps,
+        outitk=outitk,
+        outras=outras,
         outvox=outvox,
         insrcgeom=insrcgeom,
         downsample=downsample,

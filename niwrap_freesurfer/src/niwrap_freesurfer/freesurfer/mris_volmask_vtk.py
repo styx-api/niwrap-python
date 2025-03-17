@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_VOLMASK_VTK_METADATA = Metadata(
-    id="800007184636ff21baf1531ccc9b9b9b778933b9.boutiques",
+    id="26e246fc04ff45f83eec1e536a78198e40089ef9.boutiques",
     name="mris_volmask_vtk",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -187,7 +187,7 @@ def mris_volmask_vtk_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("mris_volmask")
+    cargs.append("mris_volmask_vtk")
     if params.get("cap_distance") is not None:
         cargs.extend([
             "--cap_distance",

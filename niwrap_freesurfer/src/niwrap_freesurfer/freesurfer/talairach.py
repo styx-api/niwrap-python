@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TALAIRACH_METADATA = Metadata(
-    id="1512333dd2617cccb8f9ea33a7bc7b56b8c724e3.boutiques",
+    id="fdcf0b0c4d49174cda1f651aa6a291f3c7d090a9.boutiques",
     name="talairach",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -105,14 +105,14 @@ def talairach_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("mri_nu_correct.mni")
+    cargs.append("talairach")
     cargs.extend([
         "-i",
-        "-" + execution.input_file(params.get("input_volume"))
+        execution.input_file(params.get("input_volume"))
     ])
     cargs.extend([
         "-xfm",
-        "-" + params.get("output_transform")
+        params.get("output_transform")
     ])
     if params.get("log_flag"):
         cargs.append("--log")

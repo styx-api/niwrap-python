@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIX_SUBJECT_CORRECTED_RH_METADATA = Metadata(
-    id="52da465b947b94728415b771545cea34c0073071.boutiques",
+    id="7b7e39c32815a5cef6cf9aad3f4046ba8b47ddb9.boutiques",
     name="fix_subject_corrected-rh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -93,9 +93,10 @@ def fix_subject_corrected_rh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("fix_subject_corrected-rh")
     cargs.extend([
         "-rh",
-        "fix_subject_corrected" + params.get("subject_dir")
+        params.get("subject_dir")
     ])
     return cargs
 

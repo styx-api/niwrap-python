@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_SUBJECT_FLASH_METADATA = Metadata(
-    id="6437bdd8443156c21638b016c6209131b9efc309.boutiques",
+    id="1d6e63edc1016916b719770e029fc275fe393603.boutiques",
     name="label_subject_flash",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -109,7 +109,7 @@ def label_subject_flash_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("mri_ca_label")
+    cargs.append("label_subject_flash")
     cargs.extend([
         "-flash",
         execution.input_file(params.get("tissue_params"))

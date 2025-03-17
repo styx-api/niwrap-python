@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_ADD_TEMPLATE_METADATA = Metadata(
-    id="cad5f1397d4979ef787014fa2412a1f0a10cfe8b.boutiques",
+    id="27b09d413ee029bc56c1679ca8d443e525504262.boutiques",
     name="mris_add_template",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,7 @@ MRIS_ADD_TEMPLATE_METADATA = Metadata(
 
 MrisAddTemplateParameters = typing.TypedDict('MrisAddTemplateParameters', {
     "__STYX_TYPE__": typing.Literal["mris_add_template"],
+    "placeholder_input": typing.NotRequired[str | None],
 })
 
 
@@ -61,17 +62,21 @@ class MrisAddTemplateOutputs(typing.NamedTuple):
 
 
 def mris_add_template_params(
+    placeholder_input: str | None = None,
 ) -> MrisAddTemplateParameters:
     """
     Build parameters.
     
     Args:
+        placeholder_input: No inputs available as the tool has been removed.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "mris_add_template",
     }
+    if placeholder_input is not None:
+        params["placeholder_input"] = placeholder_input
     return params
 
 
@@ -90,6 +95,8 @@ def mris_add_template_cargs(
     """
     cargs = []
     cargs.append("mris_add_template")
+    if params.get("placeholder_input") is not None:
+        cargs.append(params.get("placeholder_input"))
     return cargs
 
 
@@ -138,6 +145,7 @@ def mris_add_template_execute(
 
 
 def mris_add_template(
+    placeholder_input: str | None = None,
     runner: Runner | None = None,
 ) -> MrisAddTemplateOutputs:
     """
@@ -148,6 +156,7 @@ def mris_add_template(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        placeholder_input: No inputs available as the tool has been removed.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAddTemplateOutputs`).
@@ -155,6 +164,7 @@ def mris_add_template(
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRIS_ADD_TEMPLATE_METADATA)
     params = mris_add_template_params(
+        placeholder_input=placeholder_input,
     )
     return mris_add_template_execute(params, execution)
 

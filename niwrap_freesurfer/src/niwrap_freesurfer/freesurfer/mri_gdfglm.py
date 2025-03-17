@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_GDFGLM_METADATA = Metadata(
-    id="6bfd0a6b2b32f6fa09eb9767dc1f8e35ce2df1d6.boutiques",
+    id="799723e383e86e6f477fa13e70a258bc7ff7f5f8.boutiques",
     name="mri_gdfglm",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,7 @@ MRI_GDFGLM_METADATA = Metadata(
 
 MriGdfglmParameters = typing.TypedDict('MriGdfglmParameters', {
     "__STYX_TYPE__": typing.Literal["mri_gdfglm"],
+    "inputs": typing.NotRequired[str | None],
 })
 
 
@@ -62,17 +63,22 @@ class MriGdfglmOutputs(typing.NamedTuple):
 
 
 def mri_gdfglm_params(
+    inputs: str | None = None,
 ) -> MriGdfglmParameters:
     """
     Build parameters.
     
     Args:
+        inputs: Input parameters are not available because the command has been\
+            removed.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "mri_gdfglm",
     }
+    if inputs is not None:
+        params["inputs"] = inputs
     return params
 
 
@@ -91,6 +97,8 @@ def mri_gdfglm_cargs(
     """
     cargs = []
     cargs.append("mri_gdfglm")
+    if params.get("inputs") is not None:
+        cargs.append(params.get("inputs"))
     return cargs
 
 
@@ -139,6 +147,7 @@ def mri_gdfglm_execute(
 
 
 def mri_gdfglm(
+    inputs: str | None = None,
     runner: Runner | None = None,
 ) -> MriGdfglmOutputs:
     """
@@ -149,6 +158,8 @@ def mri_gdfglm(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        inputs: Input parameters are not available because the command has been\
+            removed.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGdfglmOutputs`).
@@ -156,6 +167,7 @@ def mri_gdfglm(
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GDFGLM_METADATA)
     params = mri_gdfglm_params(
+        inputs=inputs,
     )
     return mri_gdfglm_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LONG_STATS_TPS_METADATA = Metadata(
-    id="bc2f340c25927fb0b4a967b198182aa268f9cf9f.boutiques",
+    id="1bcd114b81501e8287ad3b93601056a429f0aaa9.boutiques",
     name="long_stats_tps",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -126,27 +126,27 @@ def long_stats_tps_cargs(
     cargs.append("long_stats_tps")
     cargs.extend([
         "--qdec",
-        "--qdec=" + execution.input_file(params.get("qdec_table"))
+        execution.input_file(params.get("qdec_table"))
     ])
     cargs.extend([
         "--stats",
-        "--stats=" + params.get("stats_file")
+        params.get("stats_file")
     ])
     cargs.extend([
         "--meas",
-        "--meas=" + params.get("measure")
+        params.get("measure")
     ])
     cargs.extend([
         "--sd",
-        "--sd=" + params.get("subjects_dir")
+        params.get("subjects_dir")
     ])
     cargs.extend([
         "--tp",
-        "--tp=" + str(params.get("time_point"))
+        str(params.get("time_point"))
     ])
     cargs.extend([
         "--out",
-        "--out=" + params.get("output_file")
+        params.get("output_file")
     ])
     if params.get("qcolumn") is not None:
         cargs.extend([

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_RELABEL_NONWM_HYPOS_METADATA = Metadata(
-    id="93faec099d80076ace8a12bddc7f7a4affe02681.boutiques",
+    id="c2dc64755d5cb891179f87b8ccf2689c8f1b9dde.boutiques",
     name="mri_relabel_nonwm_hypos",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -119,11 +119,11 @@ def mri_relabel_nonwm_hypos_cargs(
     cargs.append("mri_relabel_nonwm_hypos")
     cargs.extend([
         "-i",
-        "-" + execution.input_file(params.get("inputseg"))
+        execution.input_file(params.get("inputseg"))
     ])
     cargs.extend([
         "-o",
-        "-" + params.get("outputseg")
+        params.get("outputseg")
     ])
     if params.get("segments") is not None:
         cargs.extend([

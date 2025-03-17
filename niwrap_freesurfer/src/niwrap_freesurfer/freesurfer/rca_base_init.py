@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RCA_BASE_INIT_METADATA = Metadata(
-    id="40035e4c6889519a8062b007d6e932c3e18ff078.boutiques",
+    id="3c8d3ad6bcb4fc42684b1829ed14e08e22b13cd8.boutiques",
     name="rca-base-init",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -101,10 +101,11 @@ def rca_base_init_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("rca-base-init")
     if params.get("log_file") is not None:
         cargs.extend([
             "-init",
-            "rca-base" + params.get("log_file")
+            params.get("log_file")
         ])
     if params.get("status_file") is not None:
         cargs.append(params.get("status_file"))

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_SUB_MGH_METADATA = Metadata(
-    id="b225e0584e88c37a1a9ef9c5295eb2118fddc2cc.boutiques",
+    id="657f2367434984a9f8159b2c7f6373d5a2b528fc.boutiques",
     name="fsl_sub_mgh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -213,7 +213,6 @@ def fsl_sub_mgh_cargs(
             "-s",
             params.get("shell_path")
         ])
-    cargs.append("<COMMAND>")
     return cargs
 
 

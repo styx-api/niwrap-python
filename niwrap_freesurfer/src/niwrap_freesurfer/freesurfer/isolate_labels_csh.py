@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ISOLATE_LABELS_CSH_METADATA = Metadata(
-    id="38dc57e5ac2ab0f7a3569ce5a6d3b6708f167dad.boutiques",
+    id="b99f5a36e27edd815c27d9c5646229750b881f96.boutiques",
     name="isolate_labels.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,6 +17,7 @@ IsolateLabelsCshParameters = typing.TypedDict('IsolateLabelsCshParameters', {
     "__STYX_TYPE__": typing.Literal["isolate_labels.csh"],
     "label_volume": InputPathType,
     "output_prefix": str,
+    "label_option": typing.NotRequired[str | None],
     "lowercase_label_option": typing.NotRequired[str | None],
     "version": bool,
     "keepval": bool,
@@ -66,6 +67,7 @@ class IsolateLabelsCshOutputs(typing.NamedTuple):
 def isolate_labels_csh_params(
     label_volume: InputPathType,
     output_prefix: str,
+    label_option: str | None = None,
     lowercase_label_option: str | None = None,
     version: bool = False,
     keepval: bool = False,
@@ -77,6 +79,8 @@ def isolate_labels_csh_params(
     Args:
         label_volume: Label volume to be analyzed.
         output_prefix: Prefix of binary label file(s).
+        label_option: The particular label to be analyzed; default is all\
+            labels.
         lowercase_label_option: The particular label to be analyzed; default is\
             all labels.
         version: Print version and exit.
@@ -93,6 +97,8 @@ def isolate_labels_csh_params(
         "keepval": keepval,
         "help": help_,
     }
+    if label_option is not None:
+        params["label_option"] = label_option
     if lowercase_label_option is not None:
         params["lowercase_label_option"] = lowercase_label_option
     return params
@@ -112,7 +118,7 @@ def isolate_labels_csh_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("isolate_labels")
+    cargs.append("isolate_labels.csh")
     cargs.extend([
         "--vol",
         execution.input_file(params.get("label_volume"))
@@ -121,6 +127,11 @@ def isolate_labels_csh_cargs(
         "--outprefix",
         params.get("output_prefix")
     ])
+    if params.get("label_option") is not None:
+        cargs.extend([
+            "--L",
+            params.get("label_option")
+        ])
     if params.get("lowercase_label_option") is not None:
         cargs.extend([
             "--l",
@@ -182,6 +193,7 @@ def isolate_labels_csh_execute(
 def isolate_labels_csh(
     label_volume: InputPathType,
     output_prefix: str,
+    label_option: str | None = None,
     lowercase_label_option: str | None = None,
     version: bool = False,
     keepval: bool = False,
@@ -199,6 +211,8 @@ def isolate_labels_csh(
     Args:
         label_volume: Label volume to be analyzed.
         output_prefix: Prefix of binary label file(s).
+        label_option: The particular label to be analyzed; default is all\
+            labels.
         lowercase_label_option: The particular label to be analyzed; default is\
             all labels.
         version: Print version and exit.
@@ -213,6 +227,7 @@ def isolate_labels_csh(
     params = isolate_labels_csh_params(
         label_volume=label_volume,
         output_prefix=output_prefix,
+        label_option=label_option,
         lowercase_label_option=lowercase_label_option,
         version=version,
         keepval=keepval,

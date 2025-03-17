@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REINFLATE_SUBJECT_LH_METADATA = Metadata(
-    id="3a29a9cc35621246bc04494a51e4c6898d34911c.boutiques",
+    id="02ce6c00d84a61d80dd02bb72d0ef33c7f1446d6.boutiques",
     name="reinflate_subject-lh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -93,9 +93,10 @@ def reinflate_subject_lh_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("reinflate_subject-lh")
     cargs.extend([
         "-lh",
-        "reinflate_subject" + params.get("subject_id")
+        params.get("subject_id")
     ])
     return cargs
 

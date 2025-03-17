@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_GCAB_TRAIN_METADATA = Metadata(
-    id="5b3336956c10bad5fe64ad5c8c726b6429d9bf74.boutiques",
+    id="25854951f0e7de8635b58728b8a09edd107a327e.boutiques",
     name="mri_gcab_train",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,7 @@ MRI_GCAB_TRAIN_METADATA = Metadata(
 
 MriGcabTrainParameters = typing.TypedDict('MriGcabTrainParameters', {
     "__STYX_TYPE__": typing.Literal["mri_gcab_train"],
+    "removed_info": typing.NotRequired[str | None],
 })
 
 
@@ -58,17 +59,23 @@ class MriGcabTrainOutputs(typing.NamedTuple):
 
 
 def mri_gcab_train_params(
+    removed_info: str | None = "mri_gcab_train has been removed from this version of freesurfer.",
 ) -> MriGcabTrainParameters:
     """
     Build parameters.
     
     Args:
+        removed_info: Command has been removed from the current version of\
+            FreeSurfer. For further information, please contact the support mailing\
+            list.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "mri_gcab_train",
     }
+    if removed_info is not None:
+        params["removed_info"] = removed_info
     return params
 
 
@@ -87,6 +94,8 @@ def mri_gcab_train_cargs(
     """
     cargs = []
     cargs.append("mri_gcab_train")
+    if params.get("removed_info") is not None:
+        cargs.append(params.get("removed_info"))
     return cargs
 
 
@@ -135,6 +144,7 @@ def mri_gcab_train_execute(
 
 
 def mri_gcab_train(
+    removed_info: str | None = "mri_gcab_train has been removed from this version of freesurfer.",
     runner: Runner | None = None,
 ) -> MriGcabTrainOutputs:
     """
@@ -146,6 +156,9 @@ def mri_gcab_train(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        removed_info: Command has been removed from the current version of\
+            FreeSurfer. For further information, please contact the support mailing\
+            list.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGcabTrainOutputs`).
@@ -153,6 +166,7 @@ def mri_gcab_train(
     runner = runner or get_global_runner()
     execution = runner.start_execution(MRI_GCAB_TRAIN_METADATA)
     params = mri_gcab_train_params(
+        removed_info=removed_info,
     )
     return mri_gcab_train_execute(params, execution)
 

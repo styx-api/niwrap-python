@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APARC2FEAT_METADATA = Metadata(
-    id="40a686bfd13826d8c5472e46b643ff5ee20464a4.boutiques",
+    id="0ac9c7d7d17f6bd66cfbc4ec10b36ae576f35039.boutiques",
     name="aparc2feat",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -22,6 +22,8 @@ Aparc2featParameters = typing.TypedDict('Aparc2featParameters', {
     "annot_a2005s_flag": bool,
     "annot_a2009s_flag": bool,
     "debug_flag": bool,
+    "help_flag": bool,
+    "version_flag": bool,
 })
 
 
@@ -77,6 +79,8 @@ def aparc2feat_params(
     annot_a2005s_flag: bool = False,
     annot_a2009s_flag: bool = False,
     debug_flag: bool = False,
+    help_flag: bool = False,
+    version_flag: bool = False,
 ) -> Aparc2featParameters:
     """
     Build parameters.
@@ -91,6 +95,8 @@ def aparc2feat_params(
         annot_a2005s_flag: Specify annotation = aparc.a2005s.
         annot_a2009s_flag: Specify annotation = aparc.a2009s.
         debug_flag: Turn on debugging.
+        help_flag: Print help and exit.
+        version_flag: Print version and exit.
     Returns:
         Parameter dictionary
     """
@@ -100,6 +106,8 @@ def aparc2feat_params(
         "annot_a2005s_flag": annot_a2005s_flag,
         "annot_a2009s_flag": annot_a2009s_flag,
         "debug_flag": debug_flag,
+        "help_flag": help_flag,
+        "version_flag": version_flag,
     }
     if featdirfile is not None:
         params["featdirfile"] = featdirfile
@@ -150,6 +158,10 @@ def aparc2feat_cargs(
         cargs.append("--a2009s")
     if params.get("debug_flag"):
         cargs.append("--debug")
+    if params.get("help_flag"):
+        cargs.append("--help")
+    if params.get("version_flag"):
+        cargs.append("--version")
     return cargs
 
 
@@ -207,6 +219,8 @@ def aparc2feat(
     annot_a2005s_flag: bool = False,
     annot_a2009s_flag: bool = False,
     debug_flag: bool = False,
+    help_flag: bool = False,
+    version_flag: bool = False,
     runner: Runner | None = None,
 ) -> Aparc2featOutputs:
     """
@@ -227,6 +241,8 @@ def aparc2feat(
         annot_a2005s_flag: Specify annotation = aparc.a2005s.
         annot_a2009s_flag: Specify annotation = aparc.a2009s.
         debug_flag: Turn on debugging.
+        help_flag: Print help and exit.
+        version_flag: Print version and exit.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Aparc2featOutputs`).
@@ -241,6 +257,8 @@ def aparc2feat(
         annot_a2005s_flag=annot_a2005s_flag,
         annot_a2009s_flag=annot_a2009s_flag,
         debug_flag=debug_flag,
+        help_flag=help_flag,
+        version_flag=version_flag,
     )
     return aparc2feat_execute(params, execution)
 
