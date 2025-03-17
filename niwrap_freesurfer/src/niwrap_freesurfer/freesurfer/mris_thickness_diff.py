@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_THICKNESS_DIFF_METADATA = Metadata(
-    id="fbc123e8965a3bb3509ca33036327b032bbd57be.boutiques",
+    id="9296419cd2bc81214ca3b7a9b2157195a7f31223.boutiques",
     name="mris_thickness_diff",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -153,10 +153,6 @@ def mris_thickness_diff_cargs(
     """
     cargs = []
     cargs.append("mris_thickness_diff")
-    cargs.append("[SURFACE1]")
-    cargs.append("[DATA1]")
-    cargs.append("[SURFACE2]")
-    cargs.append("[DATA2]")
     if params.get("src_type") is not None:
         cargs.extend([
             "-src_type",

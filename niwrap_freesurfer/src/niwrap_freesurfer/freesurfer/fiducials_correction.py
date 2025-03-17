@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIDUCIALS_CORRECTION_METADATA = Metadata(
-    id="4c8ff34a05a460d57cf9bd6ab63606fa5145834f.boutiques",
+    id="6353e9d7f0b132461e7ac43f5dc929e2584cbb0a.boutiques",
     name="fiducials_correction",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,6 +16,7 @@ FIDUCIALS_CORRECTION_METADATA = Metadata(
 FiducialsCorrectionParameters = typing.TypedDict('FiducialsCorrectionParameters', {
     "__STYX_TYPE__": typing.Literal["fiducials_correction"],
     "input_file": InputPathType,
+    "output_file": str,
 })
 
 
@@ -63,6 +64,7 @@ class FiducialsCorrectionOutputs(typing.NamedTuple):
 
 def fiducials_correction_params(
     input_file: InputPathType,
+    output_file: str,
 ) -> FiducialsCorrectionParameters:
     """
     Build parameters.
@@ -70,12 +72,14 @@ def fiducials_correction_params(
     Args:
         input_file: Input file containing imaging data with fiducial markers to\
             correct.
+        output_file: Output file with corrected fiducial markers.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "fiducials_correction",
         "input_file": input_file,
+        "output_file": output_file,
     }
     return params
 
@@ -96,7 +100,7 @@ def fiducials_correction_cargs(
     cargs = []
     cargs.append("fiducials_correction")
     cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append("[OUTPUT_FILE]")
+    cargs.append(params.get("output_file"))
     return cargs
 
 
@@ -115,7 +119,7 @@ def fiducials_correction_outputs(
     """
     ret = FiducialsCorrectionOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file("[OUTPUT_FILE]"),
+        output_file=execution.output_file(params.get("output_file")),
     )
     return ret
 
@@ -148,6 +152,7 @@ def fiducials_correction_execute(
 
 def fiducials_correction(
     input_file: InputPathType,
+    output_file: str,
     runner: Runner | None = None,
 ) -> FiducialsCorrectionOutputs:
     """
@@ -162,6 +167,7 @@ def fiducials_correction(
     Args:
         input_file: Input file containing imaging data with fiducial markers to\
             correct.
+        output_file: Output file with corrected fiducial markers.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FiducialsCorrectionOutputs`).
@@ -170,6 +176,7 @@ def fiducials_correction(
     execution = runner.start_execution(FIDUCIALS_CORRECTION_METADATA)
     params = fiducials_correction_params(
         input_file=input_file,
+        output_file=output_file,
     )
     return fiducials_correction_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 HIAM_MAKE_SURFACES_METADATA = Metadata(
-    id="eedce2967ed9d851c796ec7ce683d74d056d3684.boutiques",
+    id="1b161d9791e99b79bc12c2e006b7a1a47156fb9f.boutiques",
     name="hiam_make_surfaces",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -96,7 +96,6 @@ def hiam_make_surfaces_cargs(
     """
     cargs = []
     cargs.append("hiam_make_surfaces")
-    cargs.append("[OPTIONS]")
     cargs.append(params.get("subject_name"))
     cargs.append(params.get("structure"))
     return cargs

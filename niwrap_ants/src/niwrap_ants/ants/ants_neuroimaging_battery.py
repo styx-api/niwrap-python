@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_NEUROIMAGING_BATTERY_METADATA = Metadata(
-    id="8d5f7d9ec665c8a4728e1d76b9ae72be2a9a3489.boutiques",
+    id="d7414671299662e421a52be2b7c3ae669c337c31.boutiques",
     name="antsNeuroimagingBattery",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -20,6 +20,20 @@ AntsNeuroimagingBatteryParameters = typing.TypedDict('AntsNeuroimagingBatteryPar
     "output_name": str,
     "anatomical_image": InputPathType,
     "anatomical_mask": InputPathType,
+    "template": typing.NotRequired[InputPathType | None],
+    "template_transform_name": typing.NotRequired[str | None],
+    "template_labels": typing.NotRequired[InputPathType | None],
+    "dti_flag": typing.NotRequired[str | None],
+    "pcasl_flag": typing.NotRequired[str | None],
+    "pasl_flag": typing.NotRequired[str | None],
+    "pasl_m0_flag": typing.NotRequired[str | None],
+    "bold_flag": typing.NotRequired[str | None],
+    "rsbold_flag": typing.NotRequired[str | None],
+    "mt_flag": typing.NotRequired[str | None],
+    "no_mt_flag": typing.NotRequired[str | None],
+    "temp_directory": typing.NotRequired[str | None],
+    "help": bool,
+    "info_only": bool,
 })
 
 
@@ -71,6 +85,20 @@ def ants_neuroimaging_battery_params(
     output_name: str,
     anatomical_image: InputPathType,
     anatomical_mask: InputPathType,
+    template: InputPathType | None = None,
+    template_transform_name: str | None = None,
+    template_labels: InputPathType | None = None,
+    dti_flag: str | None = None,
+    pcasl_flag: str | None = None,
+    pasl_flag: str | None = None,
+    pasl_m0_flag: str | None = None,
+    bold_flag: str | None = None,
+    rsbold_flag: str | None = None,
+    mt_flag: str | None = None,
+    no_mt_flag: str | None = None,
+    temp_directory: str | None = None,
+    help_: bool = False,
+    info_only: bool = False,
 ) -> AntsNeuroimagingBatteryParameters:
     """
     Build parameters.
@@ -83,6 +111,22 @@ def ants_neuroimaging_battery_params(
         anatomical_image: Reference subject image (usually T1).
         anatomical_mask: Mask of anatomical image, should contain cerebrum,\
             cerebellum, and brainstem.
+        template: Template image.
+        template_transform_name: Basename of transforms from anatomical to\
+            template space (must be in output base dir).
+        template_labels: Labels in template space.
+        dti_flag: DTI flag in DIRNAME/fileflag/outid format.
+        pcasl_flag: pCASL flag in DIRNAME/fileflag/outid format.
+        pasl_flag: PASL flag in DIRNAME/fileflag/outid format.
+        pasl_m0_flag: PASL M0 flag in DIRNAME/fileflag/outid format.
+        bold_flag: BOLD flag in DIRNAME/fileflag/outid format.
+        rsbold_flag: RSBOLD flag in DIRNAME/fileflag/outid format.
+        mt_flag: MT flag in DIRNAME/fileflag/outid format.
+        no_mt_flag: No MT flag in DIRNAME/fileflag/outid format.
+        temp_directory: Temporary directory.
+        help_: Display help information.
+        info_only: Look for inputs, output what is there, but don't process any\
+            data.
     Returns:
         Parameter dictionary
     """
@@ -93,7 +137,33 @@ def ants_neuroimaging_battery_params(
         "output_name": output_name,
         "anatomical_image": anatomical_image,
         "anatomical_mask": anatomical_mask,
+        "help": help_,
+        "info_only": info_only,
     }
+    if template is not None:
+        params["template"] = template
+    if template_transform_name is not None:
+        params["template_transform_name"] = template_transform_name
+    if template_labels is not None:
+        params["template_labels"] = template_labels
+    if dti_flag is not None:
+        params["dti_flag"] = dti_flag
+    if pcasl_flag is not None:
+        params["pcasl_flag"] = pcasl_flag
+    if pasl_flag is not None:
+        params["pasl_flag"] = pasl_flag
+    if pasl_m0_flag is not None:
+        params["pasl_m0_flag"] = pasl_m0_flag
+    if bold_flag is not None:
+        params["bold_flag"] = bold_flag
+    if rsbold_flag is not None:
+        params["rsbold_flag"] = rsbold_flag
+    if mt_flag is not None:
+        params["mt_flag"] = mt_flag
+    if no_mt_flag is not None:
+        params["no_mt_flag"] = no_mt_flag
+    if temp_directory is not None:
+        params["temp_directory"] = temp_directory
     return params
 
 
@@ -111,7 +181,7 @@ def ants_neuroimaging_battery_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("antsNeuroimagingBattery.pl")
+    cargs.append("antsNeuroimagingBattery")
     cargs.extend([
         "--input-directory",
         params.get("input_directory")
@@ -132,7 +202,70 @@ def ants_neuroimaging_battery_cargs(
         "--anatomical-mask",
         execution.input_file(params.get("anatomical_mask"))
     ])
-    cargs.append("[OPTIONAL_INPUTS]")
+    if params.get("template") is not None:
+        cargs.extend([
+            "--template",
+            execution.input_file(params.get("template"))
+        ])
+    if params.get("template_transform_name") is not None:
+        cargs.extend([
+            "--template-transform-name",
+            params.get("template_transform_name")
+        ])
+    if params.get("template_labels") is not None:
+        cargs.extend([
+            "--template-labels",
+            execution.input_file(params.get("template_labels"))
+        ])
+    if params.get("dti_flag") is not None:
+        cargs.extend([
+            "--dti-flag",
+            params.get("dti_flag")
+        ])
+    if params.get("pcasl_flag") is not None:
+        cargs.extend([
+            "--pcasl-flag",
+            params.get("pcasl_flag")
+        ])
+    if params.get("pasl_flag") is not None:
+        cargs.extend([
+            "--pasl-flag",
+            params.get("pasl_flag")
+        ])
+    if params.get("pasl_m0_flag") is not None:
+        cargs.extend([
+            "--pasl-m0-flag",
+            params.get("pasl_m0_flag")
+        ])
+    if params.get("bold_flag") is not None:
+        cargs.extend([
+            "--bold-flag",
+            params.get("bold_flag")
+        ])
+    if params.get("rsbold_flag") is not None:
+        cargs.extend([
+            "--rsbold-flag",
+            params.get("rsbold_flag")
+        ])
+    if params.get("mt_flag") is not None:
+        cargs.extend([
+            "--mt-flag",
+            params.get("mt_flag")
+        ])
+    if params.get("no_mt_flag") is not None:
+        cargs.extend([
+            "--no-mt-flag",
+            params.get("no_mt_flag")
+        ])
+    if params.get("temp_directory") is not None:
+        cargs.extend([
+            "--temp-directory",
+            params.get("temp_directory")
+        ])
+    if params.get("help"):
+        cargs.append("--help")
+    if params.get("info_only"):
+        cargs.append("--info-only")
     return cargs
 
 
@@ -186,6 +319,20 @@ def ants_neuroimaging_battery(
     output_name: str,
     anatomical_image: InputPathType,
     anatomical_mask: InputPathType,
+    template: InputPathType | None = None,
+    template_transform_name: str | None = None,
+    template_labels: InputPathType | None = None,
+    dti_flag: str | None = None,
+    pcasl_flag: str | None = None,
+    pasl_flag: str | None = None,
+    pasl_m0_flag: str | None = None,
+    bold_flag: str | None = None,
+    rsbold_flag: str | None = None,
+    mt_flag: str | None = None,
+    no_mt_flag: str | None = None,
+    temp_directory: str | None = None,
+    help_: bool = False,
+    info_only: bool = False,
     runner: Runner | None = None,
 ) -> AntsNeuroimagingBatteryOutputs:
     """
@@ -203,6 +350,22 @@ def ants_neuroimaging_battery(
         anatomical_image: Reference subject image (usually T1).
         anatomical_mask: Mask of anatomical image, should contain cerebrum,\
             cerebellum, and brainstem.
+        template: Template image.
+        template_transform_name: Basename of transforms from anatomical to\
+            template space (must be in output base dir).
+        template_labels: Labels in template space.
+        dti_flag: DTI flag in DIRNAME/fileflag/outid format.
+        pcasl_flag: pCASL flag in DIRNAME/fileflag/outid format.
+        pasl_flag: PASL flag in DIRNAME/fileflag/outid format.
+        pasl_m0_flag: PASL M0 flag in DIRNAME/fileflag/outid format.
+        bold_flag: BOLD flag in DIRNAME/fileflag/outid format.
+        rsbold_flag: RSBOLD flag in DIRNAME/fileflag/outid format.
+        mt_flag: MT flag in DIRNAME/fileflag/outid format.
+        no_mt_flag: No MT flag in DIRNAME/fileflag/outid format.
+        temp_directory: Temporary directory.
+        help_: Display help information.
+        info_only: Look for inputs, output what is there, but don't process any\
+            data.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsNeuroimagingBatteryOutputs`).
@@ -215,6 +378,20 @@ def ants_neuroimaging_battery(
         output_name=output_name,
         anatomical_image=anatomical_image,
         anatomical_mask=anatomical_mask,
+        template=template,
+        template_transform_name=template_transform_name,
+        template_labels=template_labels,
+        dti_flag=dti_flag,
+        pcasl_flag=pcasl_flag,
+        pasl_flag=pasl_flag,
+        pasl_m0_flag=pasl_m0_flag,
+        bold_flag=bold_flag,
+        rsbold_flag=rsbold_flag,
+        mt_flag=mt_flag,
+        no_mt_flag=no_mt_flag,
+        temp_directory=temp_directory,
+        help_=help_,
+        info_only=info_only,
     )
     return ants_neuroimaging_battery_execute(params, execution)
 

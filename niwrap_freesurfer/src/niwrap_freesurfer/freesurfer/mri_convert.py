@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_CONVERT_METADATA = Metadata(
-    id="072cf5d2422186514e5e2726e7afe06ff330f744.boutiques",
+    id="2815806c64bc2ae2d1911e8294a65422695fdb8a.boutiques",
     name="mri_convert",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,6 +17,23 @@ MriConvertParameters = typing.TypedDict('MriConvertParameters', {
     "__STYX_TYPE__": typing.Literal["mri_convert"],
     "inp_volume": InputPathType,
     "out_volume": str,
+    "read_only": bool,
+    "no_write": bool,
+    "in_info": bool,
+    "out_info": bool,
+    "in_stats": bool,
+    "out_stats": bool,
+    "upsample": typing.NotRequired[float | None],
+    "force_ras_good": bool,
+    "apply_transform": typing.NotRequired[InputPathType | None],
+    "apply_inverse_transform": typing.NotRequired[InputPathType | None],
+    "in_type": typing.NotRequired[str | None],
+    "out_type": typing.NotRequired[str | None],
+    "in_orientation": typing.NotRequired[str | None],
+    "out_orientation": typing.NotRequired[str | None],
+    "scale_factor": typing.NotRequired[float | None],
+    "bfile_little_endian": bool,
+    "sphinx": bool,
 })
 
 
@@ -65,6 +82,23 @@ class MriConvertOutputs(typing.NamedTuple):
 def mri_convert_params(
     inp_volume: InputPathType,
     out_volume: str,
+    read_only: bool = False,
+    no_write: bool = False,
+    in_info: bool = False,
+    out_info: bool = False,
+    in_stats: bool = False,
+    out_stats: bool = False,
+    upsample: float | None = None,
+    force_ras_good: bool = False,
+    apply_transform: InputPathType | None = None,
+    apply_inverse_transform: InputPathType | None = None,
+    in_type: str | None = None,
+    out_type: str | None = None,
+    in_orientation: str | None = None,
+    out_orientation: str | None = None,
+    scale_factor: float | None = None,
+    bfile_little_endian: bool = False,
+    sphinx: bool = False,
 ) -> MriConvertParameters:
     """
     Build parameters.
@@ -72,6 +106,24 @@ def mri_convert_params(
     Args:
         inp_volume: The input volume file.
         out_volume: The output volume file.
+        read_only: Open in read-only mode.
+        no_write: Do not write output.
+        in_info: Print input volume information.
+        out_info: Print output volume information.
+        in_stats: Print statistics on input volume.
+        out_stats: Print statistics on output volume.
+        upsample: Reduce voxel size by a factor in all dimensions.
+        force_ras_good: Use default when orientation info absent.
+        apply_transform: Apply transform given by xfm or m3z file.
+        apply_inverse_transform: Apply inverse of transform given by xfm or m3z\
+            file.
+        in_type: Specify input file type.
+        out_type: Specify output file type.
+        in_orientation: Specify input orientation.
+        out_orientation: Specify output orientation.
+        scale_factor: Input intensity scale factor.
+        bfile_little_endian: Write out bshort/bfloat files in little endian.
+        sphinx: Reorient to sphinx position.
     Returns:
         Parameter dictionary
     """
@@ -79,7 +131,32 @@ def mri_convert_params(
         "__STYXTYPE__": "mri_convert",
         "inp_volume": inp_volume,
         "out_volume": out_volume,
+        "read_only": read_only,
+        "no_write": no_write,
+        "in_info": in_info,
+        "out_info": out_info,
+        "in_stats": in_stats,
+        "out_stats": out_stats,
+        "force_ras_good": force_ras_good,
+        "bfile_little_endian": bfile_little_endian,
+        "sphinx": sphinx,
     }
+    if upsample is not None:
+        params["upsample"] = upsample
+    if apply_transform is not None:
+        params["apply_transform"] = apply_transform
+    if apply_inverse_transform is not None:
+        params["apply_inverse_transform"] = apply_inverse_transform
+    if in_type is not None:
+        params["in_type"] = in_type
+    if out_type is not None:
+        params["out_type"] = out_type
+    if in_orientation is not None:
+        params["in_orientation"] = in_orientation
+    if out_orientation is not None:
+        params["out_orientation"] = out_orientation
+    if scale_factor is not None:
+        params["scale_factor"] = scale_factor
     return params
 
 
@@ -100,7 +177,64 @@ def mri_convert_cargs(
     cargs.append("mri_convert")
     cargs.append(execution.input_file(params.get("inp_volume")))
     cargs.append(params.get("out_volume"))
-    cargs.append("[OPTIONS]")
+    if params.get("read_only"):
+        cargs.append("-ro")
+    if params.get("no_write"):
+        cargs.append("-nw")
+    if params.get("in_info"):
+        cargs.append("-ii")
+    if params.get("out_info"):
+        cargs.append("-oi")
+    if params.get("in_stats"):
+        cargs.append("-is")
+    if params.get("out_stats"):
+        cargs.append("-os")
+    if params.get("upsample") is not None:
+        cargs.extend([
+            "--upsample",
+            str(params.get("upsample"))
+        ])
+    if params.get("force_ras_good"):
+        cargs.append("--force_ras_good")
+    if params.get("apply_transform") is not None:
+        cargs.extend([
+            "--apply_transform",
+            execution.input_file(params.get("apply_transform"))
+        ])
+    if params.get("apply_inverse_transform") is not None:
+        cargs.extend([
+            "--apply_inverse_transform",
+            execution.input_file(params.get("apply_inverse_transform"))
+        ])
+    if params.get("in_type") is not None:
+        cargs.extend([
+            "--in_type",
+            params.get("in_type")
+        ])
+    if params.get("out_type") is not None:
+        cargs.extend([
+            "--out_type",
+            params.get("out_type")
+        ])
+    if params.get("in_orientation") is not None:
+        cargs.extend([
+            "--in_orientation",
+            params.get("in_orientation")
+        ])
+    if params.get("out_orientation") is not None:
+        cargs.extend([
+            "--out_orientation",
+            params.get("out_orientation")
+        ])
+    if params.get("scale_factor") is not None:
+        cargs.extend([
+            "--scale",
+            str(params.get("scale_factor"))
+        ])
+    if params.get("bfile_little_endian"):
+        cargs.append("--bfile-little-endian")
+    if params.get("sphinx"):
+        cargs.append("--sphinx")
     return cargs
 
 
@@ -152,6 +286,23 @@ def mri_convert_execute(
 def mri_convert(
     inp_volume: InputPathType,
     out_volume: str,
+    read_only: bool = False,
+    no_write: bool = False,
+    in_info: bool = False,
+    out_info: bool = False,
+    in_stats: bool = False,
+    out_stats: bool = False,
+    upsample: float | None = None,
+    force_ras_good: bool = False,
+    apply_transform: InputPathType | None = None,
+    apply_inverse_transform: InputPathType | None = None,
+    in_type: str | None = None,
+    out_type: str | None = None,
+    in_orientation: str | None = None,
+    out_orientation: str | None = None,
+    scale_factor: float | None = None,
+    bfile_little_endian: bool = False,
+    sphinx: bool = False,
     runner: Runner | None = None,
 ) -> MriConvertOutputs:
     """
@@ -165,6 +316,24 @@ def mri_convert(
     Args:
         inp_volume: The input volume file.
         out_volume: The output volume file.
+        read_only: Open in read-only mode.
+        no_write: Do not write output.
+        in_info: Print input volume information.
+        out_info: Print output volume information.
+        in_stats: Print statistics on input volume.
+        out_stats: Print statistics on output volume.
+        upsample: Reduce voxel size by a factor in all dimensions.
+        force_ras_good: Use default when orientation info absent.
+        apply_transform: Apply transform given by xfm or m3z file.
+        apply_inverse_transform: Apply inverse of transform given by xfm or m3z\
+            file.
+        in_type: Specify input file type.
+        out_type: Specify output file type.
+        in_orientation: Specify input orientation.
+        out_orientation: Specify output orientation.
+        scale_factor: Input intensity scale factor.
+        bfile_little_endian: Write out bshort/bfloat files in little endian.
+        sphinx: Reorient to sphinx position.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriConvertOutputs`).
@@ -174,6 +343,23 @@ def mri_convert(
     params = mri_convert_params(
         inp_volume=inp_volume,
         out_volume=out_volume,
+        read_only=read_only,
+        no_write=no_write,
+        in_info=in_info,
+        out_info=out_info,
+        in_stats=in_stats,
+        out_stats=out_stats,
+        upsample=upsample,
+        force_ras_good=force_ras_good,
+        apply_transform=apply_transform,
+        apply_inverse_transform=apply_inverse_transform,
+        in_type=in_type,
+        out_type=out_type,
+        in_orientation=in_orientation,
+        out_orientation=out_orientation,
+        scale_factor=scale_factor,
+        bfile_little_endian=bfile_little_endian,
+        sphinx=sphinx,
     )
     return mri_convert_execute(params, execution)
 

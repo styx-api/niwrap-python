@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_INFO_METADATA = Metadata(
-    id="f8473bd4b6a90f8c8b3dbe8a7c1e45f9016b4d73.boutiques",
+    id="8c4d52b8480a8839ff1677fa53139a6b9fbea64a.boutiques",
     name="mris_info",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -18,23 +18,23 @@ MrisInfoParameters = typing.TypedDict('MrisInfoParameters', {
     "surfacefile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "subject_hemi_surfname": typing.NotRequired[str | None],
+    "talairach_xfm_flag": bool,
+    "rescale_flag": bool,
     "patchfile": typing.NotRequired[InputPathType | None],
     "vertex_number": typing.NotRequired[float | None],
     "extended_vertex_number": typing.NotRequired[float | None],
     "curvfile": typing.NotRequired[InputPathType | None],
     "annotfile": typing.NotRequired[InputPathType | None],
+    "area_stats_flag": bool,
     "edge_stats_id": typing.NotRequired[str | None],
     "edge_number": typing.NotRequired[float | None],
     "vtxno": typing.NotRequired[str | None],
     "matrix_format": typing.NotRequired[str | None],
+    "quality_stats_flag": bool,
+    "intersections_flag": bool,
     "mask_file": typing.NotRequired[InputPathType | None],
     "label_file": typing.NotRequired[InputPathType | None],
     "edge_file": typing.NotRequired[InputPathType | None],
-    "talairach_xfm_flag": bool,
-    "rescale_flag": bool,
-    "area_stats_flag": bool,
-    "quality_stats_flag": bool,
-    "intersections_flag": bool,
     "nogifti_flag": bool,
     "version_flag": bool,
     "help_flag": bool,
@@ -89,23 +89,23 @@ def mris_info_params(
     surfacefile: InputPathType,
     outfile: InputPathType | None = None,
     subject_hemi_surfname: str | None = None,
+    talairach_xfm_flag: bool = False,
+    rescale_flag: bool = False,
     patchfile: InputPathType | None = None,
     vertex_number: float | None = None,
     extended_vertex_number: float | None = None,
     curvfile: InputPathType | None = None,
     annotfile: InputPathType | None = None,
+    area_stats_flag: bool = False,
     edge_stats_id: str | None = None,
     edge_number: float | None = None,
     vtxno: str | None = None,
     matrix_format: str | None = None,
+    quality_stats_flag: bool = False,
+    intersections_flag: bool = False,
     mask_file: InputPathType | None = None,
     label_file: InputPathType | None = None,
     edge_file: InputPathType | None = None,
-    talairach_xfm_flag: bool = False,
-    rescale_flag: bool = False,
-    area_stats_flag: bool = False,
-    quality_stats_flag: bool = False,
-    intersections_flag: bool = False,
     nogifti_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
@@ -117,6 +117,8 @@ def mris_info_params(
         surfacefile: Surface file to process.
         outfile: Save some data to outfile.
         subject_hemi_surfname: Instead of surfacefile.
+        talairach_xfm_flag: Apply talairach xfm before reporting info.
+        rescale_flag: Rescale group surface to match average metrics.
         patchfile: Load patch before reporting.
         vertex_number: Print out vertex information for vertex vnum.
         extended_vertex_number: Print out extended vertex information for\
@@ -124,21 +126,19 @@ def mris_info_params(
         curvfile: Check if curvature file vertices match surface vertices.
         annotfile: Check if annotation file vertices match surface vertices;\
             dump colortable.
+        area_stats_flag: Compute stats on triangle area (n, mean, std, min,\
+            max).
         edge_stats_id: Compute stats on edge metric (n, mean, std, min, max);\
             id=0=length, id=1=dot, id=2=angle, id<0= all.
         edge_number: Print out extended information about edge.
         vtxno: Write Matlab file to plot vertex neighborhood.
         matrix_format: Set format for matrix printing (e.g., %12.8f).
-        mask_file: Only compute edge and area stats using vertices in mask.
-        label_file: Only compute edge and area stats using vertices in label.
-        edge_file: Print edge info for all edges into file.
-        talairach_xfm_flag: Apply talairach xfm before reporting info.
-        rescale_flag: Rescale group surface to match average metrics.
-        area_stats_flag: Compute stats on triangle area (n, mean, std, min,\
-            max).
         quality_stats_flag: Print out surface quality stats.
         intersections_flag: Print the number of vertices that belong to a face\
             that intersects another face.
+        mask_file: Only compute edge and area stats using vertices in mask.
+        label_file: Only compute edge and area stats using vertices in label.
+        edge_file: Print edge info for all edges into file.
         nogifti_flag: No dump of GIFTI struct, read .gii as surface instead.
         version_flag: Print version and exits.
         help_flag: No clue what this does.
@@ -214,6 +214,10 @@ def mris_info_cargs(
             "--s",
             params.get("subject_hemi_surfname")
         ])
+    if params.get("talairach_xfm_flag"):
+        cargs.append("--t")
+    if params.get("rescale_flag"):
+        cargs.append("--r")
     if params.get("patchfile") is not None:
         cargs.extend([
             "--patch",
@@ -239,6 +243,8 @@ def mris_info_cargs(
             "--a",
             execution.input_file(params.get("annotfile"))
         ])
+    if params.get("area_stats_flag"):
+        cargs.append("--area-stats")
     if params.get("edge_stats_id") is not None:
         cargs.extend([
             "--edge-stats",
@@ -259,6 +265,10 @@ def mris_info_cargs(
             "--mtx-fmt",
             params.get("matrix_format")
         ])
+    if params.get("quality_stats_flag"):
+        cargs.append("--quality")
+    if params.get("intersections_flag"):
+        cargs.append("--intersections")
     if params.get("mask_file") is not None:
         cargs.extend([
             "--mask",
@@ -274,17 +284,6 @@ def mris_info_cargs(
             "--edge-file",
             execution.input_file(params.get("edge_file"))
         ])
-    if params.get("talairach_xfm_flag"):
-        cargs.append("--t")
-    if params.get("rescale_flag"):
-        cargs.append("--r")
-    if params.get("area_stats_flag"):
-        cargs.append("--area-stats")
-    cargs.append("[EDGE_STATS_FLAG]")
-    if params.get("quality_stats_flag"):
-        cargs.append("--quality")
-    if params.get("intersections_flag"):
-        cargs.append("--intersections")
     if params.get("nogifti_flag"):
         cargs.append("--nogifti-disp-image")
     if params.get("version_flag"):
@@ -343,23 +342,23 @@ def mris_info(
     surfacefile: InputPathType,
     outfile: InputPathType | None = None,
     subject_hemi_surfname: str | None = None,
+    talairach_xfm_flag: bool = False,
+    rescale_flag: bool = False,
     patchfile: InputPathType | None = None,
     vertex_number: float | None = None,
     extended_vertex_number: float | None = None,
     curvfile: InputPathType | None = None,
     annotfile: InputPathType | None = None,
+    area_stats_flag: bool = False,
     edge_stats_id: str | None = None,
     edge_number: float | None = None,
     vtxno: str | None = None,
     matrix_format: str | None = None,
+    quality_stats_flag: bool = False,
+    intersections_flag: bool = False,
     mask_file: InputPathType | None = None,
     label_file: InputPathType | None = None,
     edge_file: InputPathType | None = None,
-    talairach_xfm_flag: bool = False,
-    rescale_flag: bool = False,
-    area_stats_flag: bool = False,
-    quality_stats_flag: bool = False,
-    intersections_flag: bool = False,
     nogifti_flag: bool = False,
     version_flag: bool = False,
     help_flag: bool = False,
@@ -376,6 +375,8 @@ def mris_info(
         surfacefile: Surface file to process.
         outfile: Save some data to outfile.
         subject_hemi_surfname: Instead of surfacefile.
+        talairach_xfm_flag: Apply talairach xfm before reporting info.
+        rescale_flag: Rescale group surface to match average metrics.
         patchfile: Load patch before reporting.
         vertex_number: Print out vertex information for vertex vnum.
         extended_vertex_number: Print out extended vertex information for\
@@ -383,21 +384,19 @@ def mris_info(
         curvfile: Check if curvature file vertices match surface vertices.
         annotfile: Check if annotation file vertices match surface vertices;\
             dump colortable.
+        area_stats_flag: Compute stats on triangle area (n, mean, std, min,\
+            max).
         edge_stats_id: Compute stats on edge metric (n, mean, std, min, max);\
             id=0=length, id=1=dot, id=2=angle, id<0= all.
         edge_number: Print out extended information about edge.
         vtxno: Write Matlab file to plot vertex neighborhood.
         matrix_format: Set format for matrix printing (e.g., %12.8f).
-        mask_file: Only compute edge and area stats using vertices in mask.
-        label_file: Only compute edge and area stats using vertices in label.
-        edge_file: Print edge info for all edges into file.
-        talairach_xfm_flag: Apply talairach xfm before reporting info.
-        rescale_flag: Rescale group surface to match average metrics.
-        area_stats_flag: Compute stats on triangle area (n, mean, std, min,\
-            max).
         quality_stats_flag: Print out surface quality stats.
         intersections_flag: Print the number of vertices that belong to a face\
             that intersects another face.
+        mask_file: Only compute edge and area stats using vertices in mask.
+        label_file: Only compute edge and area stats using vertices in label.
+        edge_file: Print edge info for all edges into file.
         nogifti_flag: No dump of GIFTI struct, read .gii as surface instead.
         version_flag: Print version and exits.
         help_flag: No clue what this does.
@@ -411,23 +410,23 @@ def mris_info(
         surfacefile=surfacefile,
         outfile=outfile,
         subject_hemi_surfname=subject_hemi_surfname,
+        talairach_xfm_flag=talairach_xfm_flag,
+        rescale_flag=rescale_flag,
         patchfile=patchfile,
         vertex_number=vertex_number,
         extended_vertex_number=extended_vertex_number,
         curvfile=curvfile,
         annotfile=annotfile,
+        area_stats_flag=area_stats_flag,
         edge_stats_id=edge_stats_id,
         edge_number=edge_number,
         vtxno=vtxno,
         matrix_format=matrix_format,
+        quality_stats_flag=quality_stats_flag,
+        intersections_flag=intersections_flag,
         mask_file=mask_file,
         label_file=label_file,
         edge_file=edge_file,
-        talairach_xfm_flag=talairach_xfm_flag,
-        rescale_flag=rescale_flag,
-        area_stats_flag=area_stats_flag,
-        quality_stats_flag=quality_stats_flag,
-        intersections_flag=intersections_flag,
         nogifti_flag=nogifti_flag,
         version_flag=version_flag,
         help_flag=help_flag,

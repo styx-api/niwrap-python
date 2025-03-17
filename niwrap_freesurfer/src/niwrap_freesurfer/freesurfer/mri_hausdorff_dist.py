@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_HAUSDORFF_DIST_METADATA = Metadata(
-    id="44ae0e98e23c4f3e6ba34eebfe000f22002a6a97.boutiques",
+    id="fcb951f6d5703b00765f951fbd55babee3db2ce4.boutiques",
     name="mri_hausdorff_dist",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -131,7 +131,6 @@ def mri_hausdorff_dist_cargs(
     cargs.append(execution.input_file(params.get("vol1")))
     cargs.append(execution.input_file(params.get("vol2")))
     cargs.append(params.get("output_text_file"))
-    cargs.append("[BINARIZE_FLAG]")
     if params.get("threshold") is not None:
         cargs.extend([
             "-b",

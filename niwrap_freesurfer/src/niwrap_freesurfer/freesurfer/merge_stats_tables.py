@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MERGE_STATS_TABLES_METADATA = Metadata(
-    id="004967733986569ad699b7fcfc4e0e899cb02c90.boutiques",
+    id="35129fec9b70b3cf111ebb349d44b5a25140111b.boutiques",
     name="merge_stats_tables",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,16 +15,18 @@ MERGE_STATS_TABLES_METADATA = Metadata(
 
 MergeStatsTablesParameters = typing.TypedDict('MergeStatsTablesParameters', {
     "__STYX_TYPE__": typing.Literal["merge_stats_tables"],
+    "subjects": typing.NotRequired[list[str] | None],
     "subject": typing.NotRequired[str | None],
+    "subjectsfile": typing.NotRequired[InputPathType | None],
+    "inputs": typing.NotRequired[list[InputPathType] | None],
     "input": typing.NotRequired[InputPathType | None],
     "outputfile": str,
     "meas": str,
-    "subjectsfile": typing.NotRequired[InputPathType | None],
+    "common_segs": bool,
+    "all_segs": bool,
     "intable": typing.NotRequired[InputPathType | None],
     "subdir": typing.NotRequired[str | None],
     "delimiter": typing.NotRequired[str | None],
-    "common_segs": bool,
-    "all_segs": bool,
     "transpose": bool,
     "skip": bool,
     "debug": bool,
@@ -76,14 +78,16 @@ class MergeStatsTablesOutputs(typing.NamedTuple):
 def merge_stats_tables_params(
     outputfile: str,
     meas: str,
+    subjects: list[str] | None = None,
     subject: str | None = None,
-    input_: InputPathType | None = None,
     subjectsfile: InputPathType | None = None,
+    inputs: list[InputPathType] | None = None,
+    input_: InputPathType | None = None,
+    common_segs: bool = False,
+    all_segs: bool = False,
     intable: InputPathType | None = None,
     subdir: str | None = None,
     delimiter: str | None = None,
-    common_segs: bool = False,
-    all_segs: bool = False,
     transpose: bool = False,
     skip: bool = False,
     debug: bool = False,
@@ -94,18 +98,20 @@ def merge_stats_tables_params(
     Args:
         outputfile: The output table file.
         meas: Measure to write in output table.
+        subjects: Specify the subjects names.
         subject: Specify a single subject name.
-        input_: Specify a single input stat file.
         subjectsfile: Name of the file which has the list of subjects (one\
             subject per line).
+        inputs: Specify all the input stat files.
+        input_: Specify a single input stat file.
+        common_segs: Output only the common segmentations of all the statsfiles\
+            given.
+        all_segs: Output all the segmentations of the statsfiles given.
         intable: Use `fname` as input (REQUIRED when passing subject ids).
         subdir: Use `subdir` instead of default "stats/" when passing subject\
             ids.
         delimiter: Delimiter between measures in the table. Options are 'tab',\
             'space', 'comma', and 'semicolon'. Default is 'space'.
-        common_segs: Output only the common segmentations of all the statsfiles\
-            given.
-        all_segs: Output all the segmentations of the statsfiles given.
         transpose: Transpose the table (default is subjects in rows and\
             segmentations in cols).
         skip: If a subject does not have a stats file, skip it instead of\
@@ -124,12 +130,16 @@ def merge_stats_tables_params(
         "skip": skip,
         "debug": debug,
     }
+    if subjects is not None:
+        params["subjects"] = subjects
     if subject is not None:
         params["subject"] = subject
-    if input_ is not None:
-        params["input"] = input_
     if subjectsfile is not None:
         params["subjectsfile"] = subjectsfile
+    if inputs is not None:
+        params["inputs"] = inputs
+    if input_ is not None:
+        params["input"] = input_
     if intable is not None:
         params["intable"] = intable
     if subdir is not None:
@@ -154,10 +164,25 @@ def merge_stats_tables_cargs(
     """
     cargs = []
     cargs.append("merge_stats_tables")
+    if params.get("subjects") is not None:
+        cargs.extend([
+            "--subjects",
+            *params.get("subjects")
+        ])
     if params.get("subject") is not None:
         cargs.extend([
             "-s",
             params.get("subject")
+        ])
+    if params.get("subjectsfile") is not None:
+        cargs.extend([
+            "--subjectsfile",
+            execution.input_file(params.get("subjectsfile"))
+        ])
+    if params.get("inputs") is not None:
+        cargs.extend([
+            "--inputs",
+            *[execution.input_file(f) for f in params.get("inputs")]
         ])
     if params.get("input") is not None:
         cargs.extend([
@@ -172,11 +197,10 @@ def merge_stats_tables_cargs(
         "-m",
         params.get("meas")
     ])
-    if params.get("subjectsfile") is not None:
-        cargs.extend([
-            "--subjectsfile",
-            execution.input_file(params.get("subjectsfile"))
-        ])
+    if params.get("common_segs"):
+        cargs.append("--common-segs")
+    if params.get("all_segs"):
+        cargs.append("--all-segs")
     if params.get("intable") is not None:
         cargs.extend([
             "--intable",
@@ -192,13 +216,6 @@ def merge_stats_tables_cargs(
             "-d",
             params.get("delimiter")
         ])
-    if params.get("common_segs"):
-        cargs.append("--common-segs")
-    if params.get("all_segs"):
-        cargs.append("--all-segs")
-    cargs.append("[SEGIDS_FROM_FILE]")
-    cargs.append("[SEGNO]")
-    cargs.append("[NO_SEGNO_FLAG]")
     if params.get("transpose"):
         cargs.append("--transpose")
     if params.get("skip"):
@@ -256,14 +273,16 @@ def merge_stats_tables_execute(
 def merge_stats_tables(
     outputfile: str,
     meas: str,
+    subjects: list[str] | None = None,
     subject: str | None = None,
-    input_: InputPathType | None = None,
     subjectsfile: InputPathType | None = None,
+    inputs: list[InputPathType] | None = None,
+    input_: InputPathType | None = None,
+    common_segs: bool = False,
+    all_segs: bool = False,
     intable: InputPathType | None = None,
     subdir: str | None = None,
     delimiter: str | None = None,
-    common_segs: bool = False,
-    all_segs: bool = False,
     transpose: bool = False,
     skip: bool = False,
     debug: bool = False,
@@ -280,18 +299,20 @@ def merge_stats_tables(
     Args:
         outputfile: The output table file.
         meas: Measure to write in output table.
+        subjects: Specify the subjects names.
         subject: Specify a single subject name.
-        input_: Specify a single input stat file.
         subjectsfile: Name of the file which has the list of subjects (one\
             subject per line).
+        inputs: Specify all the input stat files.
+        input_: Specify a single input stat file.
+        common_segs: Output only the common segmentations of all the statsfiles\
+            given.
+        all_segs: Output all the segmentations of the statsfiles given.
         intable: Use `fname` as input (REQUIRED when passing subject ids).
         subdir: Use `subdir` instead of default "stats/" when passing subject\
             ids.
         delimiter: Delimiter between measures in the table. Options are 'tab',\
             'space', 'comma', and 'semicolon'. Default is 'space'.
-        common_segs: Output only the common segmentations of all the statsfiles\
-            given.
-        all_segs: Output all the segmentations of the statsfiles given.
         transpose: Transpose the table (default is subjects in rows and\
             segmentations in cols).
         skip: If a subject does not have a stats file, skip it instead of\
@@ -304,16 +325,18 @@ def merge_stats_tables(
     runner = runner or get_global_runner()
     execution = runner.start_execution(MERGE_STATS_TABLES_METADATA)
     params = merge_stats_tables_params(
+        subjects=subjects,
         subject=subject,
+        subjectsfile=subjectsfile,
+        inputs=inputs,
         input_=input_,
         outputfile=outputfile,
         meas=meas,
-        subjectsfile=subjectsfile,
+        common_segs=common_segs,
+        all_segs=all_segs,
         intable=intable,
         subdir=subdir,
         delimiter=delimiter,
-        common_segs=common_segs,
-        all_segs=all_segs,
         transpose=transpose,
         skip=skip,
         debug=debug,

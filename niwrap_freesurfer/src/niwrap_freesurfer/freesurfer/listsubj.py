@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LISTSUBJ_METADATA = Metadata(
-    id="e9369381138405e14a70273bc76d2a91dd2f8045.boutiques",
+    id="a18d8b3140e25407e3ae5f429d4a4ba694996847.boutiques",
     name="listsubj",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -16,6 +16,15 @@ LISTSUBJ_METADATA = Metadata(
 ListsubjParameters = typing.TypedDict('ListsubjParameters', {
     "__STYX_TYPE__": typing.Literal["listsubj"],
     "subject_dir": str,
+    "cross": bool,
+    "base": bool,
+    "long": bool,
+    "done": bool,
+    "error": bool,
+    "running": bool,
+    "full_path": bool,
+    "count": bool,
+    "help": bool,
 })
 
 
@@ -60,18 +69,45 @@ class ListsubjOutputs(typing.NamedTuple):
 
 def listsubj_params(
     subject_dir: str,
+    cross: bool = False,
+    base: bool = False,
+    long: bool = False,
+    done: bool = False,
+    error: bool = False,
+    running: bool = False,
+    full_path: bool = False,
+    count: bool = False,
+    help_: bool = False,
 ) -> ListsubjParameters:
     """
     Build parameters.
     
     Args:
         subject_dir: Directory where subjects are stored.
+        cross: Only cross-sectional stream.
+        base: Only base stream.
+        long: Only longitudinal stream.
+        done: Only subject IDs with scripts/recon-all.done.
+        error: Only subject IDs with scripts/recon-all.error.
+        running: Only subject IDs with scripts/IsRunning.?h.
+        full_path: Prepend full absolute path.
+        count: Print number of subjects found.
+        help_: Show this help text.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "listsubj",
         "subject_dir": subject_dir,
+        "cross": cross,
+        "base": base,
+        "long": long,
+        "done": done,
+        "error": error,
+        "running": running,
+        "full_path": full_path,
+        "count": count,
+        "help": help_,
     }
     return params
 
@@ -91,8 +127,25 @@ def listsubj_cargs(
     """
     cargs = []
     cargs.append("listsubj")
-    cargs.append("[OPTIONS]")
     cargs.append(params.get("subject_dir"))
+    if params.get("cross"):
+        cargs.append("-c")
+    if params.get("base"):
+        cargs.append("-b")
+    if params.get("long"):
+        cargs.append("-l")
+    if params.get("done"):
+        cargs.append("-d")
+    if params.get("error"):
+        cargs.append("-e")
+    if params.get("running"):
+        cargs.append("-r")
+    if params.get("full_path"):
+        cargs.append("-f")
+    if params.get("count"):
+        cargs.append("-n")
+    if params.get("help"):
+        cargs.append("-h")
     return cargs
 
 
@@ -141,6 +194,15 @@ def listsubj_execute(
 
 def listsubj(
     subject_dir: str,
+    cross: bool = False,
+    base: bool = False,
+    long: bool = False,
+    done: bool = False,
+    error: bool = False,
+    running: bool = False,
+    full_path: bool = False,
+    count: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> ListsubjOutputs:
     """
@@ -152,6 +214,15 @@ def listsubj(
     
     Args:
         subject_dir: Directory where subjects are stored.
+        cross: Only cross-sectional stream.
+        base: Only base stream.
+        long: Only longitudinal stream.
+        done: Only subject IDs with scripts/recon-all.done.
+        error: Only subject IDs with scripts/recon-all.error.
+        running: Only subject IDs with scripts/IsRunning.?h.
+        full_path: Prepend full absolute path.
+        count: Print number of subjects found.
+        help_: Show this help text.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ListsubjOutputs`).
@@ -160,6 +231,15 @@ def listsubj(
     execution = runner.start_execution(LISTSUBJ_METADATA)
     params = listsubj_params(
         subject_dir=subject_dir,
+        cross=cross,
+        base=base,
+        long=long,
+        done=done,
+        error=error,
+        running=running,
+        full_path=full_path,
+        count=count,
+        help_=help_,
     )
     return listsubj_execute(params, execution)
 

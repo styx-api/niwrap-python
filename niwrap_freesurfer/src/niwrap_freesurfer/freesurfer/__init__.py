@@ -133,7 +133,6 @@ from .fslorient_fsl import *
 from .fslregister import *
 from .fslswapdim_fsl import *
 from .fspalm import *
-from .fspython import *
 from .fsr_coreg import *
 from .fsr_getxopts import *
 from .fsr_import import *

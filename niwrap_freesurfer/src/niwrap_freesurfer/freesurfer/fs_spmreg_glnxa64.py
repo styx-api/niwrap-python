@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_SPMREG_GLNXA64_METADATA = Metadata(
-    id="d96fd1d83e2b7bf77ac2922d1bead84c42091878.boutiques",
+    id="92aa0f707d8268c4082f03447b8e27b77445669e.boutiques",
     name="fs_spmreg.glnxa64",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,8 @@ FS_SPMREG_GLNXA64_METADATA = Metadata(
 
 FsSpmregGlnxa64Parameters = typing.TypedDict('FsSpmregGlnxa64Parameters', {
     "__STYX_TYPE__": typing.Literal["fs_spmreg.glnxa64"],
+    "input_volume": InputPathType,
+    "output_matrix": str,
 })
 
 
@@ -61,16 +63,22 @@ class FsSpmregGlnxa64Outputs(typing.NamedTuple):
 
 
 def fs_spmreg_glnxa64_params(
+    input_volume: InputPathType,
+    output_matrix: str = "output.mat",
 ) -> FsSpmregGlnxa64Parameters:
     """
     Build parameters.
     
     Args:
+        input_volume: Input anatomical volume.
+        output_matrix: Output registration matrix.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "fs_spmreg.glnxa64",
+        "input_volume": input_volume,
+        "output_matrix": output_matrix,
     }
     return params
 
@@ -89,8 +97,9 @@ def fs_spmreg_glnxa64_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("fs_spmreg")
-    cargs.append("[OPTIONS]")
+    cargs.append("fs_spmreg.glnxa64")
+    cargs.append(execution.input_file(params.get("input_volume")))
+    cargs.append(params.get("output_matrix"))
     return cargs
 
 
@@ -109,7 +118,7 @@ def fs_spmreg_glnxa64_outputs(
     """
     ret = FsSpmregGlnxa64Outputs(
         root=execution.output_file("."),
-        output_matrix_file=execution.output_file("[OUTPUT_MATRIX]"),
+        output_matrix_file=execution.output_file(params.get("output_matrix")),
     )
     return ret
 
@@ -139,6 +148,8 @@ def fs_spmreg_glnxa64_execute(
 
 
 def fs_spmreg_glnxa64(
+    input_volume: InputPathType,
+    output_matrix: str = "output.mat",
     runner: Runner | None = None,
 ) -> FsSpmregGlnxa64Outputs:
     """
@@ -149,6 +160,8 @@ def fs_spmreg_glnxa64(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        input_volume: Input anatomical volume.
+        output_matrix: Output registration matrix.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsSpmregGlnxa64Outputs`).
@@ -156,6 +169,8 @@ def fs_spmreg_glnxa64(
     runner = runner or get_global_runner()
     execution = runner.start_execution(FS_SPMREG_GLNXA64_METADATA)
     params = fs_spmreg_glnxa64_params(
+        input_volume=input_volume,
+        output_matrix=output_matrix,
     )
     return fs_spmreg_glnxa64_execute(params, execution)
 

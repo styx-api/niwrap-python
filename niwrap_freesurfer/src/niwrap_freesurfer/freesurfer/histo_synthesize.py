@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 HISTO_SYNTHESIZE_METADATA = Metadata(
-    id="ebfa527b23cadea769992b1ad756ebe6c1f58512.boutiques",
+    id="7ba52ad8ca54fc771c31d5fba965b50932dba8fe.boutiques",
     name="histo_synthesize",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -102,7 +102,6 @@ def histo_synthesize_cargs(
     """
     cargs = []
     cargs.append("histo_synthesize")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("mri_volume")))
     cargs.append(execution.input_file(params.get("histo_volume")))
     cargs.append(params.get("synthetic_histo"))

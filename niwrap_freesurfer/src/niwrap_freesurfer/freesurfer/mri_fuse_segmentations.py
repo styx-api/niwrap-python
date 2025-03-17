@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
-    id="b42ea2ffd32b62f852b2f074e21005b3ac5e5519.boutiques",
+    id="67b2cf4ce2e0dc86fa5a749705372f955d1fc276.boutiques",
     name="mri_fuse_segmentations",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -21,6 +21,7 @@ MriFuseSegmentationsParameters = typing.TypedDict('MriFuseSegmentationsParameter
     "transforms": typing.NotRequired[list[InputPathType] | None],
     "sigma": typing.NotRequired[float | None],
     "input_file": InputPathType,
+    "output_file": str,
 })
 
 
@@ -71,6 +72,7 @@ def mri_fuse_segmentations_params(
     nocc_asegs: list[InputPathType],
     norm_volumes: list[InputPathType],
     input_file: InputPathType,
+    output_file: str,
     transforms: list[InputPathType] | None = None,
     sigma: float | None = 3.0,
 ) -> MriFuseSegmentationsParameters:
@@ -83,6 +85,7 @@ def mri_fuse_segmentations_params(
             per TP.
         norm_volumes: Path to norm.mgz files, one per TP.
         input_file: Input norm.mgz file.
+        output_file: Resulting fused segmentation as aseg.fused.mgz file.
         transforms: Transform files from each TP to the input norm.mgz, can be\
             LTA, M3Z or identity.nofile.
         sigma: Cross-time sigma (default 3.0).
@@ -95,6 +98,7 @@ def mri_fuse_segmentations_params(
         "nocc_asegs": nocc_asegs,
         "norm_volumes": norm_volumes,
         "input_file": input_file,
+        "output_file": output_file,
     }
     if transforms is not None:
         params["transforms"] = transforms
@@ -141,7 +145,7 @@ def mri_fuse_segmentations_cargs(
             str(params.get("sigma"))
         ])
     cargs.append(execution.input_file(params.get("input_file")))
-    cargs.append("[OUTPUT]")
+    cargs.append(params.get("output_file"))
     return cargs
 
 
@@ -160,7 +164,7 @@ def mri_fuse_segmentations_outputs(
     """
     ret = MriFuseSegmentationsOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file("[OUTPUT]"),
+        output_file=execution.output_file(params.get("output_file")),
     )
     return ret
 
@@ -195,6 +199,7 @@ def mri_fuse_segmentations(
     nocc_asegs: list[InputPathType],
     norm_volumes: list[InputPathType],
     input_file: InputPathType,
+    output_file: str,
     transforms: list[InputPathType] | None = None,
     sigma: float | None = 3.0,
     runner: Runner | None = None,
@@ -213,6 +218,7 @@ def mri_fuse_segmentations(
             per TP.
         norm_volumes: Path to norm.mgz files, one per TP.
         input_file: Input norm.mgz file.
+        output_file: Resulting fused segmentation as aseg.fused.mgz file.
         transforms: Transform files from each TP to the input norm.mgz, can be\
             LTA, M3Z or identity.nofile.
         sigma: Cross-time sigma (default 3.0).
@@ -229,6 +235,7 @@ def mri_fuse_segmentations(
         transforms=transforms,
         sigma=sigma,
         input_file=input_file,
+        output_file=output_file,
     )
     return mri_fuse_segmentations_execute(params, execution)
 

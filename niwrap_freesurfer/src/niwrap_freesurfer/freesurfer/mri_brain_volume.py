@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_BRAIN_VOLUME_METADATA = Metadata(
-    id="7e192aa897893490560e7414f5f2c974f66d8c71.boutiques",
+    id="7e9a6415798579853848210ef705f99e9ccb5ca0.boutiques",
     name="mri_brain_volume",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -17,6 +17,8 @@ MriBrainVolumeParameters = typing.TypedDict('MriBrainVolumeParameters', {
     "__STYX_TYPE__": typing.Literal["mri_brain_volume"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
+    "force_param": typing.NotRequired[float | None],
+    "version": bool,
 })
 
 
@@ -65,6 +67,8 @@ class MriBrainVolumeOutputs(typing.NamedTuple):
 def mri_brain_volume_params(
     input_file: InputPathType,
     output_file: str | None = None,
+    force_param: float | None = None,
+    version: bool = False,
 ) -> MriBrainVolumeParameters:
     """
     Build parameters.
@@ -72,15 +76,20 @@ def mri_brain_volume_params(
     Args:
         input_file: Input MRI file.
         output_file: Output file for brain volume.
+        force_param: Change pushout force (default 1.0).
+        version: Show the current version.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "mri_brain_volume",
         "input_file": input_file,
+        "version": version,
     }
     if output_file is not None:
         params["output_file"] = output_file
+    if force_param is not None:
+        params["force_param"] = force_param
     return params
 
 
@@ -99,10 +108,16 @@ def mri_brain_volume_cargs(
     """
     cargs = []
     cargs.append("mri_brain_volume")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("input_file")))
     if params.get("output_file") is not None:
         cargs.append(params.get("output_file"))
+    if params.get("force_param") is not None:
+        cargs.extend([
+            "-forceParam",
+            str(params.get("force_param"))
+        ])
+    if params.get("version"):
+        cargs.append("--version")
     return cargs
 
 
@@ -153,6 +168,8 @@ def mri_brain_volume_execute(
 def mri_brain_volume(
     input_file: InputPathType,
     output_file: str | None = None,
+    force_param: float | None = None,
+    version: bool = False,
     runner: Runner | None = None,
 ) -> MriBrainVolumeOutputs:
     """
@@ -165,6 +182,8 @@ def mri_brain_volume(
     Args:
         input_file: Input MRI file.
         output_file: Output file for brain volume.
+        force_param: Change pushout force (default 1.0).
+        version: Show the current version.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriBrainVolumeOutputs`).
@@ -174,6 +193,8 @@ def mri_brain_volume(
     params = mri_brain_volume_params(
         input_file=input_file,
         output_file=output_file,
+        force_param=force_param,
+        version=version,
     )
     return mri_brain_volume_execute(params, execution)
 

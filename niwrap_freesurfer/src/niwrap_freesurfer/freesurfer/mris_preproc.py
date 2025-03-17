@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_PREPROC_METADATA = Metadata(
-    id="dd5edb4541571b929ce3905d2cb09807c8f4d850.boutiques",
+    id="19354ad334d567c1cc3b6d8c8a574e514f9d7eec.boutiques",
     name="mris_preproc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -27,6 +27,7 @@ MrisPreprocParameters = typing.TypedDict('MrisPreprocParameters', {
     "qdec": typing.NotRequired[InputPathType | None],
     "qdec_long": typing.NotRequired[InputPathType | None],
     "surfmeasfile": typing.NotRequired[list[InputPathType] | None],
+    "volmeasfile_reg": typing.NotRequired[list[str] | None],
     "projfrac": typing.NotRequired[float | None],
     "projfrac_max": typing.NotRequired[list[float] | None],
     "projfrac_avg": typing.NotRequired[list[float] | None],
@@ -118,6 +119,7 @@ def mris_preproc_params(
     qdec: InputPathType | None = None,
     qdec_long: InputPathType | None = None,
     surfmeasfile: list[InputPathType] | None = None,
+    volmeasfile_reg: list[str] | None = None,
     projfrac: float | None = None,
     projfrac_max: list[float] | None = None,
     projfrac_avg: list[float] | None = None,
@@ -176,6 +178,8 @@ def mris_preproc_params(
             column is the "fsid".
         qdec_long: Specify list of subjects via longitudinal qdec table file.
         surfmeasfile: Specify full path to input surface measure file.
+        volmeasfile_reg: Specify full path to a volume file and its\
+            registration matrix file.
         projfrac: When sampling a volume onto the surface, sample a fraction of\
             the thickness along the surface normal.
         projfrac_max: When sampling a volume onto the surface, find max along\
@@ -261,6 +265,8 @@ def mris_preproc_params(
         params["qdec_long"] = qdec_long
     if surfmeasfile is not None:
         params["surfmeasfile"] = surfmeasfile
+    if volmeasfile_reg is not None:
+        params["volmeasfile_reg"] = volmeasfile_reg
     if projfrac is not None:
         params["projfrac"] = projfrac
     if projfrac_max is not None:
@@ -374,7 +380,11 @@ def mris_preproc_cargs(
             "--is",
             *[execution.input_file(f) for f in params.get("surfmeasfile")]
         ])
-    cargs.append("[VOLMEASFILE]")
+    if params.get("volmeasfile_reg") is not None:
+        cargs.extend([
+            "--iv",
+            *params.get("volmeasfile_reg")
+        ])
     if params.get("projfrac") is not None:
         cargs.extend([
             "--projfrac",
@@ -565,6 +575,7 @@ def mris_preproc(
     qdec: InputPathType | None = None,
     qdec_long: InputPathType | None = None,
     surfmeasfile: list[InputPathType] | None = None,
+    volmeasfile_reg: list[str] | None = None,
     projfrac: float | None = None,
     projfrac_max: list[float] | None = None,
     projfrac_avg: list[float] | None = None,
@@ -630,6 +641,8 @@ def mris_preproc(
             column is the "fsid".
         qdec_long: Specify list of subjects via longitudinal qdec table file.
         surfmeasfile: Specify full path to input surface measure file.
+        volmeasfile_reg: Specify full path to a volume file and its\
+            registration matrix file.
         projfrac: When sampling a volume onto the surface, sample a fraction of\
             the thickness along the surface normal.
         projfrac_max: When sampling a volume onto the surface, find max along\
@@ -690,6 +703,7 @@ def mris_preproc(
         qdec=qdec,
         qdec_long=qdec_long,
         surfmeasfile=surfmeasfile,
+        volmeasfile_reg=volmeasfile_reg,
         projfrac=projfrac,
         projfrac_max=projfrac_max,
         projfrac_avg=projfrac_avg,

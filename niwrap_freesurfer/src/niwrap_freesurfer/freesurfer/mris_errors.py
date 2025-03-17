@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_ERRORS_METADATA = Metadata(
-    id="ef9b47e313219e97d7f5d816c34ec14bc6f35660.boutiques",
+    id="84c4666dcea46df17569c6e5d435ebf2cb451d60.boutiques",
     name="mris_errors",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -91,7 +91,6 @@ def mris_errors_cargs(
     """
     cargs = []
     cargs.append("mris_errors")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("input_image_file")))
     return cargs
 

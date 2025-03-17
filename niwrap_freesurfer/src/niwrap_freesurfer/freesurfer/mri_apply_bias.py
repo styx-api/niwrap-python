@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_APPLY_BIAS_METADATA = Metadata(
-    id="b81c79a708e537c2c711365f270f39010a6db69c.boutiques",
+    id="8cf82e2100484415318613b93b2e614090b1cce0.boutiques",
     name="mri_apply_bias",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -102,7 +102,6 @@ def mri_apply_bias_cargs(
     """
     cargs = []
     cargs.append("mri_apply_bias")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("input_volume")))
     cargs.append(execution.input_file(params.get("bias_volume")))
     cargs.append(params.get("output_volume"))

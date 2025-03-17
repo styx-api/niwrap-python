@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_STATS_AC_METADATA = Metadata(
-    id="38bce967cfc9907f2f4aad1d1246fa98b24d0792.boutiques",
+    id="9fdd3938d34618874c191c301489c6b70e1c5c5b.boutiques",
     name="dmri_stats_ac",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -122,8 +122,6 @@ def dmri_stats_ac_cargs(
         "-c",
         params.get("correspondence_file")
     ])
-    cargs.append("-m")
-    cargs.append("[NUM_MEASURES]")
     cargs.extend([
         "-m",
         *params.get("measures")

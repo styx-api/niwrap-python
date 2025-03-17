@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_DISTANCE_MAP_METADATA = Metadata(
-    id="3d8e889c4b656344736f94614b767e1d77d78242.boutiques",
+    id="686ff961ac8e9db74639a1364b1f5b20b600667e.boutiques",
     name="mris_distance_map",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -98,7 +98,6 @@ def mris_distance_map_cargs(
     """
     cargs = []
     cargs.append("mris_distance_map")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("input_surface_file")))
     cargs.append(params.get("output_scalar_field"))
     return cargs

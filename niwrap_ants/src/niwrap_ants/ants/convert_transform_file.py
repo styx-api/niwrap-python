@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_TRANSFORM_FILE_METADATA = Metadata(
-    id="224c137774aff43d94d1fecb5c8b4a19ae81816c.boutiques",
+    id="d418439c73661bae3620741d30dc78169c5a445e.boutiques",
     name="ConvertTransformFile",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -18,6 +18,10 @@ ConvertTransformFileParameters = typing.TypedDict('ConvertTransformFileParameter
     "dimensions": int,
     "input_transform_file": InputPathType,
     "output_transform_file": str,
+    "matrix": bool,
+    "homogeneous_matrix": bool,
+    "RAS": bool,
+    "convert_to_affine_type": bool,
 })
 
 
@@ -64,6 +68,10 @@ def convert_transform_file_params(
     dimensions: int,
     input_transform_file: InputPathType,
     output_transform_file: str,
+    matrix: bool = False,
+    homogeneous_matrix: bool = False,
+    ras: bool = False,
+    convert_to_affine_type: bool = False,
 ) -> ConvertTransformFileParameters:
     """
     Build parameters.
@@ -72,6 +80,15 @@ def convert_transform_file_params(
         dimensions: Dimensionality of the transform file.
         input_transform_file: Path to the input transform file.
         output_transform_file: Path for the output transform file.
+        matrix: Output only the transform matrix to a text file, one row per\
+            line with space-delimited values. Only works for specific transform\
+            types.
+        homogeneous_matrix: Output an N+1 square homogeneous matrix from the\
+            transform matrix and offset. Only works for specific transform types.
+        ras: Convert the output into the RAS coordinate system if combined with\
+            'matrix' or 'homogeneousMatrix'.
+        convert_to_affine_type: Convert the input transform type to\
+            AffineTransform and output again as a binary transform file.
     Returns:
         Parameter dictionary
     """
@@ -80,6 +97,10 @@ def convert_transform_file_params(
         "dimensions": dimensions,
         "input_transform_file": input_transform_file,
         "output_transform_file": output_transform_file,
+        "matrix": matrix,
+        "homogeneous_matrix": homogeneous_matrix,
+        "RAS": ras,
+        "convert_to_affine_type": convert_to_affine_type,
     }
     return params
 
@@ -102,7 +123,14 @@ def convert_transform_file_cargs(
     cargs.append(str(params.get("dimensions")))
     cargs.append(execution.input_file(params.get("input_transform_file")))
     cargs.append(params.get("output_transform_file"))
-    cargs.append("[OPTIONS]")
+    if params.get("matrix"):
+        cargs.append("--matrix")
+    if params.get("homogeneous_matrix"):
+        cargs.append("--homogeneousMatrix")
+    if params.get("RAS"):
+        cargs.append("--RAS")
+    if params.get("convert_to_affine_type"):
+        cargs.append("--convertToAffineType")
     return cargs
 
 
@@ -156,6 +184,10 @@ def convert_transform_file(
     dimensions: int,
     input_transform_file: InputPathType,
     output_transform_file: str,
+    matrix: bool = False,
+    homogeneous_matrix: bool = False,
+    ras: bool = False,
+    convert_to_affine_type: bool = False,
     runner: Runner | None = None,
 ) -> ConvertTransformFileOutputs:
     """
@@ -172,6 +204,15 @@ def convert_transform_file(
         dimensions: Dimensionality of the transform file.
         input_transform_file: Path to the input transform file.
         output_transform_file: Path for the output transform file.
+        matrix: Output only the transform matrix to a text file, one row per\
+            line with space-delimited values. Only works for specific transform\
+            types.
+        homogeneous_matrix: Output an N+1 square homogeneous matrix from the\
+            transform matrix and offset. Only works for specific transform types.
+        ras: Convert the output into the RAS coordinate system if combined with\
+            'matrix' or 'homogeneousMatrix'.
+        convert_to_affine_type: Convert the input transform type to\
+            AffineTransform and output again as a binary transform file.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertTransformFileOutputs`).
@@ -182,6 +223,10 @@ def convert_transform_file(
         dimensions=dimensions,
         input_transform_file=input_transform_file,
         output_transform_file=output_transform_file,
+        matrix=matrix,
+        homogeneous_matrix=homogeneous_matrix,
+        ras=ras,
+        convert_to_affine_type=convert_to_affine_type,
     )
     return convert_transform_file_execute(params, execution)
 

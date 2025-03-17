@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 INFLATE_SUBJECT_SC_METADATA = Metadata(
-    id="bdd6f4bcc49d0163426eb09c58fe6f94a9a23109.boutiques",
+    id="0813ce358c83e50fc62e002b6de9508d35f9a2be.boutiques",
     name="inflate_subject_sc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -15,6 +15,9 @@ INFLATE_SUBJECT_SC_METADATA = Metadata(
 
 InflateSubjectScParameters = typing.TypedDict('InflateSubjectScParameters', {
     "__STYX_TYPE__": typing.Literal["inflate_subject_sc"],
+    "subject_dir": str,
+    "verbose": bool,
+    "debug": bool,
 })
 
 
@@ -61,16 +64,25 @@ class InflateSubjectScOutputs(typing.NamedTuple):
 
 
 def inflate_subject_sc_params(
+    subject_dir: str,
+    verbose: bool = False,
+    debug: bool = False,
 ) -> InflateSubjectScParameters:
     """
     Build parameters.
     
     Args:
+        subject_dir: Path to the subject directory.
+        verbose: Enable verbose output.
+        debug: Enable debug mode.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "inflate_subject_sc",
+        "subject_dir": subject_dir,
+        "verbose": verbose,
+        "debug": debug,
     }
     return params
 
@@ -90,7 +102,11 @@ def inflate_subject_sc_cargs(
     """
     cargs = []
     cargs.append("inflate_subject_sc")
-    cargs.append("[OPTIONS]")
+    cargs.append(params.get("subject_dir"))
+    if params.get("verbose"):
+        cargs.append("--verbose")
+    if params.get("debug"):
+        cargs.append("--debug")
     return cargs
 
 
@@ -109,7 +125,7 @@ def inflate_subject_sc_outputs(
     """
     ret = InflateSubjectScOutputs(
         root=execution.output_file("."),
-        inflated_output=execution.output_file("[SUBJECT_DIR]/inflated_output"),
+        inflated_output=execution.output_file(params.get("subject_dir") + "/inflated_output"),
     )
     return ret
 
@@ -140,6 +156,9 @@ def inflate_subject_sc_execute(
 
 
 def inflate_subject_sc(
+    subject_dir: str,
+    verbose: bool = False,
+    debug: bool = False,
     runner: Runner | None = None,
 ) -> InflateSubjectScOutputs:
     """
@@ -151,6 +170,9 @@ def inflate_subject_sc(
     URL: https://github.com/freesurfer/freesurfer
     
     Args:
+        subject_dir: Path to the subject directory.
+        verbose: Enable verbose output.
+        debug: Enable debug mode.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectScOutputs`).
@@ -158,6 +180,9 @@ def inflate_subject_sc(
     runner = runner or get_global_runner()
     execution = runner.start_execution(INFLATE_SUBJECT_SC_METADATA)
     params = inflate_subject_sc_params(
+        subject_dir=subject_dir,
+        verbose=verbose,
+        debug=debug,
     )
     return inflate_subject_sc_execute(params, execution)
 

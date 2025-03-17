@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_MAP_CUTS_METADATA = Metadata(
-    id="779b9e3d194c64fbf7ebe1bfe928f56ccdd44441.boutiques",
+    id="c694d790811be0a427c0f191c8203d1e2914b980.boutiques",
     name="mris_map_cuts",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -95,7 +95,6 @@ def mris_map_cuts_cargs(
     """
     cargs = []
     cargs.append("mris_map_cuts")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("input_patch")))
     cargs.append(params.get("output_patch"))
     return cargs
