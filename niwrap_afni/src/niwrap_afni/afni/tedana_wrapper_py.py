@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TEDANA_WRAPPER_PY_METADATA = Metadata(
-    id="2a5d2d42a60628be534dad0f8a18d103f5db8377.boutiques",
+    id="2c08ca0025238427f67e66b767bc36524812cd16.boutiques",
     name="tedana_wrapper.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -26,6 +26,8 @@ TedanaWrapperPyParameters = typing.TypedDict('TedanaWrapperPyParameters', {
     "tedana_is_exec": bool,
     "ted_label": typing.NotRequired[str | None],
     "tedana_opts": typing.NotRequired[str | None],
+    "help": bool,
+    "detailed_help": bool,
 })
 
 
@@ -85,6 +87,8 @@ def tedana_wrapper_py_params(
     tedana_is_exec: bool = False,
     ted_label: str | None = None,
     tedana_opts: str | None = None,
+    help_: bool = False,
+    detailed_help: bool = False,
 ) -> TedanaWrapperPyParameters:
     """
     Build parameters.
@@ -106,6 +110,8 @@ def tedana_wrapper_py_params(
             PATH).
         tedana_opts: Additional options to pass to tedana.py. (In quotes)\
             Example: '--initcost=tanh --conv=2.5e-5'.
+        help_: Show help message and exit.
+        detailed_help: Show detailed help and exit.
     Returns:
         Parameter dictionary
     """
@@ -117,6 +123,8 @@ def tedana_wrapper_py_params(
         "save_all": save_all,
         "prep_only": prep_only,
         "tedana_is_exec": tedana_is_exec,
+        "help": help_,
+        "detailed_help": detailed_help,
     }
     if results_dir is not None:
         params["results_dir"] = results_dir
@@ -189,6 +197,10 @@ def tedana_wrapper_py_cargs(
             "-tedana_opts",
             params.get("tedana_opts")
         ])
+    if params.get("help"):
+        cargs.append("-h")
+    if params.get("detailed_help"):
+        cargs.append("-help")
     return cargs
 
 
@@ -249,6 +261,8 @@ def tedana_wrapper_py(
     tedana_is_exec: bool = False,
     ted_label: str | None = None,
     tedana_opts: str | None = None,
+    help_: bool = False,
+    detailed_help: bool = False,
     runner: Runner | None = None,
 ) -> TedanaWrapperPyOutputs:
     """
@@ -275,6 +289,8 @@ def tedana_wrapper_py(
             PATH).
         tedana_opts: Additional options to pass to tedana.py. (In quotes)\
             Example: '--initcost=tanh --conv=2.5e-5'.
+        help_: Show help message and exit.
+        detailed_help: Show detailed help and exit.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TedanaWrapperPyOutputs`).
@@ -293,6 +309,8 @@ def tedana_wrapper_py(
         tedana_is_exec=tedana_is_exec,
         ted_label=ted_label,
         tedana_opts=tedana_opts,
+        help_=help_,
+        detailed_help=detailed_help,
     )
     return tedana_wrapper_py_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__COMMAND_GLOBB_METADATA = Metadata(
-    id="c2faf81a08e05a3e16060acc326e418fbdfeaad0.boutiques",
+    id="a76e1268b2d89b7de3b09ab6908aa83b788189ba.boutiques",
     name="@CommandGlobb",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -112,13 +112,19 @@ def v__command_globb_cargs(
     """
     cargs = []
     cargs.append("@CommandGlobb")
-    cargs.append("-com")
-    cargs.append(params.get("program_command"))
-    cargs.append("-session")
-    cargs.append(params.get("output_dir"))
-    cargs.append("-newxt")
+    cargs.extend([
+        "-com",
+        params.get("program_command")
+    ])
+    cargs.extend([
+        "-session",
+        params.get("output_dir")
+    ])
     if params.get("extension") is not None:
-        cargs.append(params.get("extension"))
+        cargs.extend([
+            "-newext",
+            params.get("extension")
+        ])
     cargs.extend([
         "-list",
         *params.get("brick_list")

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_ALIGN_ANAT_PAIR_METADATA = Metadata(
-    id="b81d41214e66c7f77b2bbc885c2f23369ad68254.boutiques",
+    id="bcbf8258d04aa65236dca0e8a04659e810e17311.boutiques",
     name="fat_proc_align_anat_pair",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,6 +19,7 @@ FatProcAlignAnatPairParameters = typing.TypedDict('FatProcAlignAnatPairParameter
     "input_t2w": InputPathType,
     "output_prefix": str,
     "output_grid": typing.NotRequired[float | None],
+    "out_t2w_grid": bool,
     "input_t2w_mask": typing.NotRequired[InputPathType | None],
     "do_ss_tmp_t1w": bool,
     "warp": typing.NotRequired[str | None],
@@ -80,6 +81,7 @@ def fat_proc_align_anat_pair_params(
     input_t2w: InputPathType,
     output_prefix: str,
     output_grid: float | None = None,
+    out_t2w_grid: bool = False,
     input_t2w_mask: InputPathType | None = None,
     do_ss_tmp_t1w: bool = False,
     warp: str | None = None,
@@ -96,6 +98,7 @@ def fat_proc_align_anat_pair_params(
         input_t2w: T2-weighted volume.
         output_prefix: Output prefix for files and snapshots.
         output_grid: Specify output T1w volume's final resolution (isotropic).
+        out_t2w_grid: Final T1w volume is on the T2W volume's grid.
         input_t2w_mask: Input a mask to apply to the T2w volume for alignment.
         do_ss_tmp_t1w: Apply skullstripping to the T1w volume during an\
             intermediate step.
@@ -114,6 +117,7 @@ def fat_proc_align_anat_pair_params(
         "input_t1w": input_t1w,
         "input_t2w": input_t2w,
         "output_prefix": output_prefix,
+        "out_t2w_grid": out_t2w_grid,
         "do_ss_tmp_t1w": do_ss_tmp_t1w,
         "no_cmd_out": no_cmd_out,
         "no_clean": no_clean,
@@ -163,6 +167,8 @@ def fat_proc_align_anat_pair_cargs(
             "-newgrid",
             str(params.get("output_grid"))
         ])
+    if params.get("out_t2w_grid"):
+        cargs.append("-out_t2w_grid")
     if params.get("input_t2w_mask") is not None:
         cargs.extend([
             "-in_t2w_mask",
@@ -244,6 +250,7 @@ def fat_proc_align_anat_pair(
     input_t2w: InputPathType,
     output_prefix: str,
     output_grid: float | None = None,
+    out_t2w_grid: bool = False,
     input_t2w_mask: InputPathType | None = None,
     do_ss_tmp_t1w: bool = False,
     warp: str | None = None,
@@ -266,6 +273,7 @@ def fat_proc_align_anat_pair(
         input_t2w: T2-weighted volume.
         output_prefix: Output prefix for files and snapshots.
         output_grid: Specify output T1w volume's final resolution (isotropic).
+        out_t2w_grid: Final T1w volume is on the T2W volume's grid.
         input_t2w_mask: Input a mask to apply to the T2w volume for alignment.
         do_ss_tmp_t1w: Apply skullstripping to the T1w volume during an\
             intermediate step.
@@ -287,6 +295,7 @@ def fat_proc_align_anat_pair(
         input_t2w=input_t2w,
         output_prefix=output_prefix,
         output_grid=output_grid,
+        out_t2w_grid=out_t2w_grid,
         input_t2w_mask=input_t2w_mask,
         do_ss_tmp_t1w=do_ss_tmp_t1w,
         warp=warp,

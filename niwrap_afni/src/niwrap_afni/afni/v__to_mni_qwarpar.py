@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__TO_MNI_QWARPAR_METADATA = Metadata(
-    id="04e45eb40a57d1fc1e8c94957315562ee18d3086.boutiques",
+    id="75281e790c897850e305c48d74fb4c5120d9e282.boutiques",
     name="@toMNI_Qwarpar",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,8 @@ V__TO_MNI_QWARPAR_METADATA = Metadata(
 
 VToMniQwarparParameters = typing.TypedDict('VToMniQwarparParameters', {
     "__STYX_TYPE__": typing.Literal["@toMNI_Qwarpar"],
+    "numcpu": float,
+    "numjob": float,
 })
 
 
@@ -61,16 +63,24 @@ class VToMniQwarparOutputs(typing.NamedTuple):
 
 
 def v__to_mni_qwarpar_params(
+    numcpu: float,
+    numjob: float,
 ) -> VToMniQwarparParameters:
     """
     Build parameters.
     
     Args:
+        numcpu: TOTAL NUMBER OF CPUS TO USE; should not exceed the number of\
+            CPUs (cores) on the system.
+        numjob: MAX NUMBER OF JOBS TO USE; often set to the same value as\
+            numcpu so that 1 dataset is processed in 1 core.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "@toMNI_Qwarpar",
+        "numcpu": numcpu,
+        "numjob": numjob,
     }
     return params
 
@@ -90,6 +100,8 @@ def v__to_mni_qwarpar_cargs(
     """
     cargs = []
     cargs.append("@toMNI_Qwarpar")
+    cargs.append(str(params.get("numcpu")))
+    cargs.append(str(params.get("numjob")))
     return cargs
 
 
@@ -139,6 +151,8 @@ def v__to_mni_qwarpar_execute(
 
 
 def v__to_mni_qwarpar(
+    numcpu: float,
+    numjob: float,
     runner: Runner | None = None,
 ) -> VToMniQwarparOutputs:
     """
@@ -150,6 +164,10 @@ def v__to_mni_qwarpar(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        numcpu: TOTAL NUMBER OF CPUS TO USE; should not exceed the number of\
+            CPUs (cores) on the system.
+        numjob: MAX NUMBER OF JOBS TO USE; often set to the same value as\
+            numcpu so that 1 dataset is processed in 1 core.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VToMniQwarparOutputs`).
@@ -157,6 +175,8 @@ def v__to_mni_qwarpar(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__TO_MNI_QWARPAR_METADATA)
     params = v__to_mni_qwarpar_params(
+        numcpu=numcpu,
+        numjob=numjob,
     )
     return v__to_mni_qwarpar_execute(params, execution)
 

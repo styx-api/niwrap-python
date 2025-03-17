@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__4_DAVERAGE_METADATA = Metadata(
-    id="539f6118b726725db3041382540750353fc522e5.boutiques",
+    id="48ae0996463928a201144da1e797f6f4415ed5c4.boutiques",
     name="@4Daverage",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,7 @@ V__4_DAVERAGE_METADATA = Metadata(
 V4DaverageParameters = typing.TypedDict('V4DaverageParameters', {
     "__STYX_TYPE__": typing.Literal["@4Daverage"],
     "output_prefix": str,
+    "input_files": list[InputPathType],
 })
 
 
@@ -60,18 +61,22 @@ class V4DaverageOutputs(typing.NamedTuple):
 
 def v__4_daverage_params(
     output_prefix: str,
+    input_files: list[InputPathType],
 ) -> V4DaverageParameters:
     """
     Build parameters.
     
     Args:
         output_prefix: Prefix for the output 3D+t brick.
+        input_files: List of 3D+t brick filenames to be averaged (e.g.,\
+            brick1+orig, brick2+orig). Can use wildcards.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "@4Daverage",
         "output_prefix": output_prefix,
+        "input_files": input_files,
     }
     return params
 
@@ -92,7 +97,7 @@ def v__4_daverage_cargs(
     cargs = []
     cargs.append("@4Daverage")
     cargs.append(params.get("output_prefix"))
-    cargs.append("[INPUT_FILES...]")
+    cargs.extend([execution.input_file(f) for f in params.get("input_files")])
     return cargs
 
 
@@ -141,6 +146,7 @@ def v__4_daverage_execute(
 
 def v__4_daverage(
     output_prefix: str,
+    input_files: list[InputPathType],
     runner: Runner | None = None,
 ) -> V4DaverageOutputs:
     """
@@ -152,6 +158,8 @@ def v__4_daverage(
     
     Args:
         output_prefix: Prefix for the output 3D+t brick.
+        input_files: List of 3D+t brick filenames to be averaged (e.g.,\
+            brick1+orig, brick2+orig). Can use wildcards.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V4DaverageOutputs`).
@@ -160,6 +168,7 @@ def v__4_daverage(
     execution = runner.start_execution(V__4_DAVERAGE_METADATA)
     params = v__4_daverage_params(
         output_prefix=output_prefix,
+        input_files=input_files,
     )
     return v__4_daverage_execute(params, execution)
 

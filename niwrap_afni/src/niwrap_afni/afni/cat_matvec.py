@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CAT_MATVEC_METADATA = Metadata(
-    id="ea044673965ec2f3a89f325814e9677a680c6cec.boutiques",
+    id="38568441c32dcbccb9c494130a605bc3b4f2c16b.boutiques",
     name="cat_matvec",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,8 @@ CAT_MATVEC_METADATA = Metadata(
 
 CatMatvecParameters = typing.TypedDict('CatMatvecParameters', {
     "__STYX_TYPE__": typing.Literal["cat_matvec"],
+    "matrix_format": bool,
+    "oneline_format": bool,
     "four_by_four_format": bool,
     "matvec_spec": list[str],
 })
@@ -61,6 +63,8 @@ class CatMatvecOutputs(typing.NamedTuple):
 
 def cat_matvec_params(
     matvec_spec: list[str],
+    matrix_format: bool = False,
+    oneline_format: bool = False,
     four_by_four_format: bool = False,
 ) -> CatMatvecParameters:
     """
@@ -69,6 +73,10 @@ def cat_matvec_params(
     Args:
         matvec_spec: Specifies the matrix transformation. Can take forms\
             described in the documentation.
+        matrix_format: Indicates that the resulting matrix will be written in\
+            the 'MATRIX(...)' format (FORM 3).
+        oneline_format: Option indicates that the resulting matrix will simply\
+            be written as 12 numbers on one line.
         four_by_four_format: Output matrix in augmented form (last row is 0 0 0\
             1). This option does not work with -MATRIX or -ONELINE.
     Returns:
@@ -76,6 +84,8 @@ def cat_matvec_params(
     """
     params = {
         "__STYXTYPE__": "cat_matvec",
+        "matrix_format": matrix_format,
+        "oneline_format": oneline_format,
         "four_by_four_format": four_by_four_format,
         "matvec_spec": matvec_spec,
     }
@@ -97,6 +107,10 @@ def cat_matvec_cargs(
     """
     cargs = []
     cargs.append("cat_matvec")
+    if params.get("matrix_format"):
+        cargs.append("-MATRIX")
+    if params.get("oneline_format"):
+        cargs.append("-ONELINE")
     if params.get("four_by_four_format"):
         cargs.append("-4x4")
     cargs.extend(params.get("matvec_spec"))
@@ -148,6 +162,8 @@ def cat_matvec_execute(
 
 def cat_matvec(
     matvec_spec: list[str],
+    matrix_format: bool = False,
+    oneline_format: bool = False,
     four_by_four_format: bool = False,
     runner: Runner | None = None,
 ) -> CatMatvecOutputs:
@@ -161,6 +177,10 @@ def cat_matvec(
     Args:
         matvec_spec: Specifies the matrix transformation. Can take forms\
             described in the documentation.
+        matrix_format: Indicates that the resulting matrix will be written in\
+            the 'MATRIX(...)' format (FORM 3).
+        oneline_format: Option indicates that the resulting matrix will simply\
+            be written as 12 numbers on one line.
         four_by_four_format: Output matrix in augmented form (last row is 0 0 0\
             1). This option does not work with -MATRIX or -ONELINE.
         runner: Command runner.
@@ -170,6 +190,8 @@ def cat_matvec(
     runner = runner or get_global_runner()
     execution = runner.start_execution(CAT_MATVEC_METADATA)
     params = cat_matvec_params(
+        matrix_format=matrix_format,
+        oneline_format=oneline_format,
         four_by_four_format=four_by_four_format,
         matvec_spec=matvec_spec,
     )

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_AMP_TO_RSFC_METADATA = Metadata(
-    id="27e3a8435ad8a4458d62e5fc746c88a2665d19fa.boutiques",
+    id="942616944d84c853b47e970f882430a015aec06f.boutiques",
     name="3dAmpToRSFC",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -20,6 +20,7 @@ V3dAmpToRsfcParameters = typing.TypedDict('V3dAmpToRsfcParameters', {
     "prefix": str,
     "band": list[float],
     "mask": typing.NotRequired[InputPathType | None],
+    "nifti": bool,
 })
 
 
@@ -83,6 +84,7 @@ def v_3d_amp_to_rsfc_params(
     in_amp: InputPathType | None = None,
     in_pow: InputPathType | None = None,
     mask: InputPathType | None = None,
+    nifti: bool = False,
 ) -> V3dAmpToRsfcParameters:
     """
     Build parameters.
@@ -97,6 +99,7 @@ def v_3d_amp_to_rsfc_params(
         in_pow: Input file of a one-sided power spectrum, such as output by\
             3dLombScargle.
         mask: Volume mask of voxels to include for calculations.
+        nifti: Output files as *.nii.gz (default is BRIK/HEAD).
     Returns:
         Parameter dictionary
     """
@@ -104,6 +107,7 @@ def v_3d_amp_to_rsfc_params(
         "__STYXTYPE__": "3dAmpToRSFC",
         "prefix": prefix,
         "band": band,
+        "nifti": nifti,
     }
     if in_amp is not None:
         params["in_amp"] = in_amp
@@ -129,19 +133,16 @@ def v_3d_amp_to_rsfc_cargs(
     """
     cargs = []
     cargs.append("3dAmpToRSFC")
-    cargs.append("{")
     if params.get("in_amp") is not None:
         cargs.extend([
             "-in_amp",
             execution.input_file(params.get("in_amp"))
         ])
-    cargs.append("|")
     if params.get("in_pow") is not None:
         cargs.extend([
             "-in_pow",
             execution.input_file(params.get("in_pow"))
         ])
-    cargs.append("}")
     cargs.extend([
         "-prefix",
         params.get("prefix")
@@ -150,16 +151,13 @@ def v_3d_amp_to_rsfc_cargs(
         "-band",
         *map(str, params.get("band"))
     ])
-    cargs.append("{")
     if params.get("mask") is not None:
         cargs.extend([
             "-mask",
             execution.input_file(params.get("mask"))
         ])
-    cargs.append("}")
-    cargs.append("{")
-    cargs.append("-nifti")
-    cargs.append("}")
+    if params.get("nifti"):
+        cargs.append("-nifti")
     return cargs
 
 
@@ -218,6 +216,7 @@ def v_3d_amp_to_rsfc(
     in_amp: InputPathType | None = None,
     in_pow: InputPathType | None = None,
     mask: InputPathType | None = None,
+    nifti: bool = False,
     runner: Runner | None = None,
 ) -> V3dAmpToRsfcOutputs:
     """
@@ -237,6 +236,7 @@ def v_3d_amp_to_rsfc(
         in_pow: Input file of a one-sided power spectrum, such as output by\
             3dLombScargle.
         mask: Volume mask of voxels to include for calculations.
+        nifti: Output files as *.nii.gz (default is BRIK/HEAD).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAmpToRsfcOutputs`).
@@ -249,6 +249,7 @@ def v_3d_amp_to_rsfc(
         prefix=prefix,
         band=band,
         mask=mask,
+        nifti=nifti,
     )
     return v_3d_amp_to_rsfc_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_ROI_ROW_METADATA = Metadata(
-    id="027b80948cf0bd1ac046353e98ebb2ca04186002.boutiques",
+    id="a4a1c061c97d682d3d4d61503f3c28a11502fc06.boutiques",
     name="fat_roi_row",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -119,19 +119,16 @@ def fat_roi_row_cargs(
         "-r",
         params.get("roi")
     ])
-    cargs.append("{")
     if params.get("matrix_files") is not None:
         cargs.extend([
             "-m",
             params.get("matrix_files")
         ])
-    cargs.append("|")
     if params.get("list_file") is not None:
         cargs.extend([
             "-l",
             execution.input_file(params.get("list_file"))
         ])
-    cargs.append("}")
     if params.get("extern_labs_no"):
         cargs.append("-E")
     return cargs

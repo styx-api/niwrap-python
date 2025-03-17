@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMROTATE_METADATA = Metadata(
-    id="046eb12264816ed4b6d2246d2d697caf596e0670.boutiques",
+    id="7c817965f8c449aac8c4bfbde437361551c5546b.boutiques",
     name="imrotate",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,7 @@ IMROTATE_METADATA = Metadata(
 
 ImrotateParameters = typing.TypedDict('ImrotateParameters', {
     "__STYX_TYPE__": typing.Literal["imrotate"],
+    "linear_interpolation": bool,
     "fourier_interpolation": bool,
     "dx": float,
     "dy": float,
@@ -72,6 +73,7 @@ def imrotate_params(
     phi: float,
     input_image: InputPathType,
     output_image: str,
+    linear_interpolation: bool = False,
     fourier_interpolation: bool = False,
 ) -> ImrotateParameters:
     """
@@ -83,12 +85,14 @@ def imrotate_params(
         phi: Degrees to rotate clockwise.
         input_image: Input image file.
         output_image: Output image file.
+        linear_interpolation: Use bilinear interpolation (default is bicubic).
         fourier_interpolation: Use Fourier interpolation.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "imrotate",
+        "linear_interpolation": linear_interpolation,
         "fourier_interpolation": fourier_interpolation,
         "dx": dx,
         "dy": dy,
@@ -114,6 +118,8 @@ def imrotate_cargs(
     """
     cargs = []
     cargs.append("imrotate")
+    if params.get("linear_interpolation"):
+        cargs.append("-linear")
     if params.get("fourier_interpolation"):
         cargs.append("-Fourier")
     cargs.append(str(params.get("dx")))
@@ -174,6 +180,7 @@ def imrotate(
     phi: float,
     input_image: InputPathType,
     output_image: str,
+    linear_interpolation: bool = False,
     fourier_interpolation: bool = False,
     runner: Runner | None = None,
 ) -> ImrotateOutputs:
@@ -190,6 +197,7 @@ def imrotate(
         phi: Degrees to rotate clockwise.
         input_image: Input image file.
         output_image: Output image file.
+        linear_interpolation: Use bilinear interpolation (default is bicubic).
         fourier_interpolation: Use Fourier interpolation.
         runner: Command runner.
     Returns:
@@ -198,6 +206,7 @@ def imrotate(
     runner = runner or get_global_runner()
     execution = runner.start_execution(IMROTATE_METADATA)
     params = imrotate_params(
+        linear_interpolation=linear_interpolation,
         fourier_interpolation=fourier_interpolation,
         dx=dx,
         dy=dy,

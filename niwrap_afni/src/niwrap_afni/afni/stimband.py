@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 STIMBAND_METADATA = Metadata(
-    id="464e80031a1b4a970344b72621a7160776336ad8.boutiques",
+    id="ca5a92d5ac7d886044df23850ca6ef4054823866.boutiques",
     name="stimband",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,8 @@ STIMBAND_METADATA = Metadata(
 StimbandParameters = typing.TypedDict('StimbandParameters', {
     "__STYX_TYPE__": typing.Literal["stimband"],
     "verbose_flag": bool,
+    "matrixfiles": list[InputPathType],
+    "additional_matrixfiles": typing.NotRequired[list[InputPathType] | None],
     "min_freq": typing.NotRequired[float | None],
     "min_bwidth": typing.NotRequired[float | None],
     "min_pow": typing.NotRequired[float | None],
@@ -66,7 +68,9 @@ class StimbandOutputs(typing.NamedTuple):
 
 
 def stimband_params(
+    matrixfiles: list[InputPathType],
     verbose_flag: bool = False,
+    additional_matrixfiles: list[InputPathType] | None = None,
     min_freq: float | None = None,
     min_bwidth: float | None = None,
     min_pow: float | None = None,
@@ -75,8 +79,10 @@ def stimband_params(
     Build parameters.
     
     Args:
+        matrixfiles: Path to matrix files.
         verbose_flag: Print the power band for each individual stimulus column\
             from each matrix.
+        additional_matrixfiles: Another way to read 1 or more matrix files.
         min_freq: Set the minimum frequency output for the band. Default value\
             is 0.01.
         min_bwidth: Set the minimum bandwidth output (top frequency minus\
@@ -89,7 +95,10 @@ def stimband_params(
     params = {
         "__STYXTYPE__": "stimband",
         "verbose_flag": verbose_flag,
+        "matrixfiles": matrixfiles,
     }
+    if additional_matrixfiles is not None:
+        params["additional_matrixfiles"] = additional_matrixfiles
     if min_freq is not None:
         params["min_freq"] = min_freq
     if min_bwidth is not None:
@@ -116,8 +125,12 @@ def stimband_cargs(
     cargs.append("stimband")
     if params.get("verbose_flag"):
         cargs.append("-verb")
-    cargs.append("[MATRIXFILES...]")
-    cargs.append("[ADDITIONAL_MATRIXFILES...]")
+    cargs.extend([execution.input_file(f) for f in params.get("matrixfiles")])
+    if params.get("additional_matrixfiles") is not None:
+        cargs.extend([
+            "-matrix",
+            *[execution.input_file(f) for f in params.get("additional_matrixfiles")]
+        ])
     if params.get("min_freq") is not None:
         cargs.extend([
             "-min_freq",
@@ -182,7 +195,9 @@ def stimband_execute(
 
 
 def stimband(
+    matrixfiles: list[InputPathType],
     verbose_flag: bool = False,
+    additional_matrixfiles: list[InputPathType] | None = None,
     min_freq: float | None = None,
     min_bwidth: float | None = None,
     min_pow: float | None = None,
@@ -197,8 +212,10 @@ def stimband(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        matrixfiles: Path to matrix files.
         verbose_flag: Print the power band for each individual stimulus column\
             from each matrix.
+        additional_matrixfiles: Another way to read 1 or more matrix files.
         min_freq: Set the minimum frequency output for the band. Default value\
             is 0.01.
         min_bwidth: Set the minimum bandwidth output (top frequency minus\
@@ -213,6 +230,8 @@ def stimband(
     execution = runner.start_execution(STIMBAND_METADATA)
     params = stimband_params(
         verbose_flag=verbose_flag,
+        matrixfiles=matrixfiles,
+        additional_matrixfiles=additional_matrixfiles,
         min_freq=min_freq,
         min_bwidth=min_bwidth,
         min_pow=min_pow,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_BPORT_METADATA = Metadata(
-    id="4be892d519b77ae339eb9adf3a74b7d897d73650.boutiques",
+    id="3e21c923df63dc56e984c041d63c42544214ee22.boutiques",
     name="1dBport",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,7 @@ V1dBportParameters = typing.TypedDict('V1dBportParameters', {
     "__STYX_TYPE__": typing.Literal["1dBport"],
     "band": list[float],
     "invert": bool,
+    "nozero": bool,
     "noconst": bool,
     "quad": bool,
     "input_dataset": typing.NotRequired[InputPathType | None],
@@ -72,6 +73,7 @@ class V1dBportOutputs(typing.NamedTuple):
 def v_1d_bport_params(
     band: list[float],
     invert: bool = False,
+    nozero: bool = False,
     noconst: bool = False,
     quad: bool = False,
     input_dataset: InputPathType | None = None,
@@ -87,6 +89,8 @@ def v_1d_bport_params(
         band: Specify lowest and highest frequencies in the passband.
         invert: Invert the selection after computing which frequency indexes\
             correspond to the input band(s).
+        nozero: Do NOT generate the 0 frequency (constant) component when fbot\
+            = 0.
         noconst: Same as -nozero. Do NOT generate the 0 frequency (constant)\
             component when fbot = 0.
         quad: Add regressors for linear and quadratic trends.
@@ -103,6 +107,7 @@ def v_1d_bport_params(
         "__STYXTYPE__": "1dBport",
         "band": band,
         "invert": invert,
+        "nozero": nozero,
         "noconst": noconst,
         "quad": quad,
     }
@@ -140,6 +145,8 @@ def v_1d_bport_cargs(
     ])
     if params.get("invert"):
         cargs.append("-invert")
+    if params.get("nozero"):
+        cargs.append("-nozero")
     if params.get("noconst"):
         cargs.append("-noconst")
     if params.get("quad"):
@@ -219,6 +226,7 @@ def v_1d_bport_execute(
 def v_1d_bport(
     band: list[float],
     invert: bool = False,
+    nozero: bool = False,
     noconst: bool = False,
     quad: bool = False,
     input_dataset: InputPathType | None = None,
@@ -239,6 +247,8 @@ def v_1d_bport(
         band: Specify lowest and highest frequencies in the passband.
         invert: Invert the selection after computing which frequency indexes\
             correspond to the input band(s).
+        nozero: Do NOT generate the 0 frequency (constant) component when fbot\
+            = 0.
         noconst: Same as -nozero. Do NOT generate the 0 frequency (constant)\
             component when fbot = 0.
         quad: Add regressors for linear and quadratic trends.
@@ -257,6 +267,7 @@ def v_1d_bport(
     params = v_1d_bport_params(
         band=band,
         invert=invert,
+        nozero=nozero,
         noconst=noconst,
         quad=quad,
         input_dataset=input_dataset,

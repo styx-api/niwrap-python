@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_SURFACE_METADATA = Metadata(
-    id="2b7452b8bf057bc43ac7efc4c5a01abd5236749c.boutiques",
+    id="1515f74e677d72fcea38965b1c198adce4b27a82.boutiques",
     name="ConvertSurface",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,8 +19,11 @@ ConvertSurfaceParameters = typing.TypedDict('ConvertSurfaceParameters', {
     "output_surface": str,
     "surface_volume": typing.NotRequired[str | None],
     "transform_tlrc": bool,
+    "mni_rai": bool,
     "mni_lpi": bool,
+    "xmat_1D": typing.NotRequired[str | None],
     "ixmat_1D": typing.NotRequired[str | None],
+    "seed": typing.NotRequired[str | None],
     "native": bool,
 })
 
@@ -72,8 +75,11 @@ def convert_surface_params(
     output_surface: str,
     surface_volume: str | None = None,
     transform_tlrc: bool = False,
+    mni_rai: bool = False,
     mni_lpi: bool = False,
+    xmat_1_d: str | None = None,
     ixmat_1_d: str | None = None,
+    seed: str | None = None,
     native: bool = False,
 ) -> ConvertSurfaceParameters:
     """
@@ -84,8 +90,12 @@ def convert_surface_params(
         output_surface: Specifies the output surface.
         surface_volume: Specifies a surface volume.
         transform_tlrc: Apply Talairach transform.
+        mni_rai: Turn AFNI tlrc coordinates (RAI) into MNI coord space in RAI.
         mni_lpi: Turn AFNI tlrc coordinates (RAI) into MNI coord space in LPI.
+        xmat_1_d: Apply transformation specified in 1D file.
         ixmat_1_d: Apply inverse transformation specified in 1D file.
+        seed: Specify SEED to seed the random number generator for random\
+            matrix generation.
         native: Write the output surface in the coordinate system native to its\
             format.
     Returns:
@@ -96,13 +106,18 @@ def convert_surface_params(
         "input_surface": input_surface,
         "output_surface": output_surface,
         "transform_tlrc": transform_tlrc,
+        "mni_rai": mni_rai,
         "mni_lpi": mni_lpi,
         "native": native,
     }
     if surface_volume is not None:
         params["surface_volume"] = surface_volume
+    if xmat_1_d is not None:
+        params["xmat_1D"] = xmat_1_d
     if ixmat_1_d is not None:
         params["ixmat_1D"] = ixmat_1_d
+    if seed is not None:
+        params["seed"] = seed
     return params
 
 
@@ -136,12 +151,24 @@ def convert_surface_cargs(
         ])
     if params.get("transform_tlrc"):
         cargs.append("-tlrc")
+    if params.get("mni_rai"):
+        cargs.append("-MNI_rai")
     if params.get("mni_lpi"):
         cargs.append("-MNI_lpi")
+    if params.get("xmat_1D") is not None:
+        cargs.extend([
+            "-xmat_1D",
+            params.get("xmat_1D")
+        ])
     if params.get("ixmat_1D") is not None:
         cargs.extend([
             "-ixmat_1D",
             params.get("ixmat_1D")
+        ])
+    if params.get("seed") is not None:
+        cargs.extend([
+            "-seed",
+            params.get("seed")
         ])
     if params.get("native"):
         cargs.append("-native")
@@ -198,8 +225,11 @@ def convert_surface(
     output_surface: str,
     surface_volume: str | None = None,
     transform_tlrc: bool = False,
+    mni_rai: bool = False,
     mni_lpi: bool = False,
+    xmat_1_d: str | None = None,
     ixmat_1_d: str | None = None,
+    seed: str | None = None,
     native: bool = False,
     runner: Runner | None = None,
 ) -> ConvertSurfaceOutputs:
@@ -216,8 +246,12 @@ def convert_surface(
         output_surface: Specifies the output surface.
         surface_volume: Specifies a surface volume.
         transform_tlrc: Apply Talairach transform.
+        mni_rai: Turn AFNI tlrc coordinates (RAI) into MNI coord space in RAI.
         mni_lpi: Turn AFNI tlrc coordinates (RAI) into MNI coord space in LPI.
+        xmat_1_d: Apply transformation specified in 1D file.
         ixmat_1_d: Apply inverse transformation specified in 1D file.
+        seed: Specify SEED to seed the random number generator for random\
+            matrix generation.
         native: Write the output surface in the coordinate system native to its\
             format.
         runner: Command runner.
@@ -231,8 +265,11 @@ def convert_surface(
         output_surface=output_surface,
         surface_volume=surface_volume,
         transform_tlrc=transform_tlrc,
+        mni_rai=mni_rai,
         mni_lpi=mni_lpi,
+        xmat_1_d=xmat_1_d,
         ixmat_1_d=ixmat_1_d,
+        seed=seed,
         native=native,
     )
     return convert_surface_execute(params, execution)

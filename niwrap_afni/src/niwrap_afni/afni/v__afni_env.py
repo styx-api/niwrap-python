@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__AFNI_ENV_METADATA = Metadata(
-    id="b177bf4393f72d4c785c1458de43a3ef880cfb18.boutiques",
+    id="4ce29310252c070804fde47dcdc6587ffd8a7e8e.boutiques",
     name="@AfniEnv",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,7 +19,9 @@ VAfniEnvParameters = typing.TypedDict('VAfniEnvParameters', {
     "unset_flag": typing.NotRequired[str | None],
     "get_flag": typing.NotRequired[str | None],
     "help_flag": bool,
+    "help_web_flag": bool,
     "help_web_flag_alias": bool,
+    "help_view_flag": bool,
     "help_view_flag_alias": bool,
     "all_opts_flag": bool,
     "help_find_flag": typing.NotRequired[str | None],
@@ -70,7 +72,9 @@ def v__afni_env_params(
     unset_flag: str | None = None,
     get_flag: str | None = None,
     help_flag: bool = False,
+    help_web_flag: bool = False,
     help_web_flag_alias: bool = False,
+    help_view_flag: bool = False,
     help_view_flag_alias: bool = False,
     all_opts_flag: bool = False,
     help_find_flag: str | None = None,
@@ -83,7 +87,9 @@ def v__afni_env_params(
         unset_flag: Unset environment variable NAME.
         get_flag: Get the value of environment variable NAME.
         help_flag: Display the help message for @AfniEnv script.
+        help_web_flag: Open webpage with help for this program.
         help_web_flag_alias: Same as -h_web.
+        help_view_flag: Open -help output in a GUI editor.
         help_view_flag_alias: Same as -h_view.
         all_opts_flag: List all of the options for this script.
         help_find_flag: Search for lines containing WORD in -help output.\
@@ -94,7 +100,9 @@ def v__afni_env_params(
     params = {
         "__STYXTYPE__": "@AfniEnv",
         "help_flag": help_flag,
+        "help_web_flag": help_web_flag,
         "help_web_flag_alias": help_web_flag_alias,
+        "help_view_flag": help_view_flag,
         "help_view_flag_alias": help_view_flag_alias,
         "all_opts_flag": all_opts_flag,
     }
@@ -141,8 +149,12 @@ def v__afni_env_cargs(
         ])
     if params.get("help_flag"):
         cargs.append("-help")
+    if params.get("help_web_flag"):
+        cargs.append("-h_web")
     if params.get("help_web_flag_alias"):
         cargs.append("-hweb")
+    if params.get("help_view_flag"):
+        cargs.append("-h_view")
     if params.get("help_view_flag_alias"):
         cargs.append("-hview")
     if params.get("all_opts_flag"):
@@ -203,7 +215,9 @@ def v__afni_env(
     unset_flag: str | None = None,
     get_flag: str | None = None,
     help_flag: bool = False,
+    help_web_flag: bool = False,
     help_web_flag_alias: bool = False,
+    help_view_flag: bool = False,
     help_view_flag_alias: bool = False,
     all_opts_flag: bool = False,
     help_find_flag: str | None = None,
@@ -221,7 +235,9 @@ def v__afni_env(
         unset_flag: Unset environment variable NAME.
         get_flag: Get the value of environment variable NAME.
         help_flag: Display the help message for @AfniEnv script.
+        help_web_flag: Open webpage with help for this program.
         help_web_flag_alias: Same as -h_web.
+        help_view_flag: Open -help output in a GUI editor.
         help_view_flag_alias: Same as -h_view.
         all_opts_flag: List all of the options for this script.
         help_find_flag: Search for lines containing WORD in -help output.\
@@ -237,7 +253,9 @@ def v__afni_env(
         unset_flag=unset_flag,
         get_flag=get_flag,
         help_flag=help_flag,
+        help_web_flag=help_web_flag,
         help_web_flag_alias=help_web_flag_alias,
+        help_view_flag=help_view_flag,
         help_view_flag_alias=help_view_flag_alias,
         all_opts_flag=all_opts_flag,
         help_find_flag=help_find_flag,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSREAD_ANNOT_METADATA = Metadata(
-    id="1aee44cf7efa00cb2630f7f3d7fb84af69eadb4f.boutiques",
+    id="791089bdafa5aacda0d88f6366afe5d004fd749e.boutiques",
     name="FSread_annot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -155,7 +155,7 @@ def fsread_annot_cargs(
     cargs.append("FSread_annot")
     cargs.extend([
         "-input",
-        "-" + execution.input_file(params.get("infile"))
+        execution.input_file(params.get("infile"))
     ])
     if params.get("hemi") is not None:
         cargs.extend([

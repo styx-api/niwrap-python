@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BALLOON_METADATA = Metadata(
-    id="d38a0b74f4c93d5365bdded27c362f4ddc6e6b5f.boutiques",
+    id="efa704edebd4da856d63213685c5a8439a31d101.boutiques",
     name="balloon",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,7 +18,9 @@ BalloonParameters = typing.TypedDict('BalloonParameters', {
     "tr": float,
     "num_scans": int,
     "event_times": InputPathType,
+    "t_rise": typing.NotRequired[list[float] | None],
     "t_fall": typing.NotRequired[list[float] | None],
+    "t_sustain": typing.NotRequired[list[float] | None],
 })
 
 
@@ -65,7 +67,9 @@ def balloon_params(
     tr: float,
     num_scans: int,
     event_times: InputPathType,
+    t_rise: list[float] | None = None,
     t_fall: list[float] | None = None,
+    t_sustain: list[float] | None = None,
 ) -> BalloonParameters:
     """
     Build parameters.
@@ -78,8 +82,12 @@ def balloon_params(
         event_times: The name of a file containing the event timings, in\
             seconds, as ASCII strings separated by white space, with time 0 being\
             the time at which the initial scan occurred.
+        t_rise: Haemodynamic rise time in seconds (typically between 4s and\
+            6s).
         t_fall: Haemodynamic fall time in seconds (typically between 4s and\
             6s).
+        t_sustain: Haemodynamic sustain time in seconds (typically between 0s\
+            and 4s).
     Returns:
         Parameter dictionary
     """
@@ -89,8 +97,12 @@ def balloon_params(
         "num_scans": num_scans,
         "event_times": event_times,
     }
+    if t_rise is not None:
+        params["t_rise"] = t_rise
     if t_fall is not None:
         params["t_fall"] = t_fall
+    if t_sustain is not None:
+        params["t_sustain"] = t_sustain
     return params
 
 
@@ -112,8 +124,12 @@ def balloon_cargs(
     cargs.append(str(params.get("tr")))
     cargs.append(str(params.get("num_scans")))
     cargs.append(execution.input_file(params.get("event_times")))
+    if params.get("t_rise") is not None:
+        cargs.extend(map(str, params.get("t_rise")))
     if params.get("t_fall") is not None:
         cargs.extend(map(str, params.get("t_fall")))
+    if params.get("t_sustain") is not None:
+        cargs.extend(map(str, params.get("t_sustain")))
     return cargs
 
 
@@ -165,7 +181,9 @@ def balloon(
     tr: float,
     num_scans: int,
     event_times: InputPathType,
+    t_rise: list[float] | None = None,
     t_fall: list[float] | None = None,
+    t_sustain: list[float] | None = None,
     runner: Runner | None = None,
 ) -> BalloonOutputs:
     """
@@ -184,8 +202,12 @@ def balloon(
         event_times: The name of a file containing the event timings, in\
             seconds, as ASCII strings separated by white space, with time 0 being\
             the time at which the initial scan occurred.
+        t_rise: Haemodynamic rise time in seconds (typically between 4s and\
+            6s).
         t_fall: Haemodynamic fall time in seconds (typically between 4s and\
             6s).
+        t_sustain: Haemodynamic sustain time in seconds (typically between 0s\
+            and 4s).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BalloonOutputs`).
@@ -196,7 +218,9 @@ def balloon(
         tr=tr,
         num_scans=num_scans,
         event_times=event_times,
+        t_rise=t_rise,
         t_fall=t_fall,
+        t_sustain=t_sustain,
     )
     return balloon_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_GEN_FEATURE_DIST_METADATA = Metadata(
-    id="306602359a0090c4e74a2cc38f89a25555f89cc6.boutiques",
+    id="4e2a6d02fd6017cbe5c9c54a1a9c65bd9ea7921c.boutiques",
     name="3dGenFeatureDist",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -22,6 +22,10 @@ V3dGenFeatureDistParameters = typing.TypedDict('V3dGenFeatureDistParameters', {
     "debug_level": typing.NotRequired[float | None],
     "other": bool,
     "no_other": bool,
+    "samp": typing.NotRequired[list[str] | None],
+    "sig": typing.NotRequired[list[str] | None],
+    "hspec": typing.NotRequired[list[str] | None],
+    "labeltable": typing.NotRequired[InputPathType | None],
     "show_histograms": typing.NotRequired[str | None],
 })
 
@@ -76,6 +80,10 @@ def v_3d_gen_feature_dist_params(
     debug_level: float | None = None,
     other: bool = False,
     no_other: bool = False,
+    samp: list[str] | None = None,
+    sig: list[str] | None = None,
+    hspec: list[str] | None = None,
+    labeltable: InputPathType | None = None,
     show_histograms: str | None = None,
 ) -> V3dGenFeatureDistParameters:
     """
@@ -92,6 +100,10 @@ def v_3d_gen_feature_dist_params(
         debug_level: Debugging level.
         other: Add histograms for an 'OTHER' class that has a uniform pdf.
         no_other: Opposite of -OTHER.
+        samp: Specify which voxels belong to each class of interest.
+        sig: Specify volumes that define the features.
+        hspec: Set histogram parameters for a specific feature.
+        labeltable: Specify the label table.
         show_histograms: Show specified histograms and quit.
     Returns:
         Parameter dictionary
@@ -108,6 +120,14 @@ def v_3d_gen_feature_dist_params(
         params["prefix"] = prefix
     if debug_level is not None:
         params["debug_level"] = debug_level
+    if samp is not None:
+        params["samp"] = samp
+    if sig is not None:
+        params["sig"] = sig
+    if hspec is not None:
+        params["hspec"] = hspec
+    if labeltable is not None:
+        params["labeltable"] = labeltable
     if show_histograms is not None:
         params["show_histograms"] = show_histograms
     return params
@@ -152,6 +172,26 @@ def v_3d_gen_feature_dist_cargs(
         cargs.append("-OTHER")
     if params.get("no_other"):
         cargs.append("-no_OTHER")
+    if params.get("samp") is not None:
+        cargs.extend([
+            "-samp",
+            *params.get("samp")
+        ])
+    if params.get("sig") is not None:
+        cargs.extend([
+            "-sig",
+            *params.get("sig")
+        ])
+    if params.get("hspec") is not None:
+        cargs.extend([
+            "-hspec",
+            *params.get("hspec")
+        ])
+    if params.get("labeltable") is not None:
+        cargs.extend([
+            "-labeltable",
+            execution.input_file(params.get("labeltable"))
+        ])
     if params.get("show_histograms") is not None:
         cargs.extend([
             "-ShowTheseHists",
@@ -212,6 +252,10 @@ def v_3d_gen_feature_dist(
     debug_level: float | None = None,
     other: bool = False,
     no_other: bool = False,
+    samp: list[str] | None = None,
+    sig: list[str] | None = None,
+    hspec: list[str] | None = None,
+    labeltable: InputPathType | None = None,
     show_histograms: str | None = None,
     runner: Runner | None = None,
 ) -> V3dGenFeatureDistOutputs:
@@ -233,6 +277,10 @@ def v_3d_gen_feature_dist(
         debug_level: Debugging level.
         other: Add histograms for an 'OTHER' class that has a uniform pdf.
         no_other: Opposite of -OTHER.
+        samp: Specify which voxels belong to each class of interest.
+        sig: Specify volumes that define the features.
+        hspec: Set histogram parameters for a specific feature.
+        labeltable: Specify the label table.
         show_histograms: Show specified histograms and quit.
         runner: Command runner.
     Returns:
@@ -248,6 +296,10 @@ def v_3d_gen_feature_dist(
         debug_level=debug_level,
         other=other,
         no_other=no_other,
+        samp=samp,
+        sig=sig,
+        hspec=hspec,
+        labeltable=labeltable,
         show_histograms=show_histograms,
     )
     return v_3d_gen_feature_dist_execute(params, execution)

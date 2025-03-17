@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_WILCOXON_METADATA = Metadata(
-    id="463bd0c7f172cd1b8be0a6f1adaeefb51a0010ea.boutiques",
+    id="ab0873d1df66a8478516e2a9302c8e42a90d10ec.boutiques",
     name="3dWilcoxon",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -125,12 +125,14 @@ def v_3d_wilcoxon_cargs(
             "-voxel",
             str(params.get("voxel"))
         ])
-    cargs.append("-dset")
-    cargs.append("1")
-    cargs.extend([execution.input_file(f) for f in params.get("dset1_x")])
-    cargs.append("-dset")
-    cargs.append("2")
-    cargs.extend([execution.input_file(f) for f in params.get("dset2_y")])
+    cargs.extend([
+        "-dset 1",
+        *[execution.input_file(f) for f in params.get("dset1_x")]
+    ])
+    cargs.extend([
+        "-dset 2",
+        *[execution.input_file(f) for f in params.get("dset2_y")]
+    ])
     cargs.extend([
         "-out",
         params.get("output_prefix")

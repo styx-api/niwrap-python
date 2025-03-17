@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA = Metadata(
-    id="b713438ba08e71d534cca42445c2bcd23acbc3af.boutiques",
+    id="5cd9b08bee37168399c0b35d303c4cdeaaeeffeb.boutiques",
     name="adjunct_make_script_and_rst.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -120,7 +120,7 @@ def adjunct_make_script_and_rst_py_cargs(
     cargs.append("adjunct_make_script_and_rst.py")
     cargs.extend([
         "-input",
-        "-" + execution.input_file(params.get("input_script"))
+        execution.input_file(params.get("input_script"))
     ])
     cargs.extend([
         "--prefix_rst",

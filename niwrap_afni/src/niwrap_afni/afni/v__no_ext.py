@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__NO_EXT_METADATA = Metadata(
-    id="e146bd1bed02e711ff41cccbd0a20832085fd087.boutiques",
+    id="b30bcb77c107d7bb2ff272f07e711f98bc966c50.boutiques",
     name="@NoExt",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,7 @@ V__NO_EXT_METADATA = Metadata(
 
 VNoExtParameters = typing.TypedDict('VNoExtParameters', {
     "__STYX_TYPE__": typing.Literal["@NoExt"],
+    "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
 })
 
@@ -62,18 +63,21 @@ class VNoExtOutputs(typing.NamedTuple):
 
 
 def v__no_ext_params(
+    inputfile: str,
     extensions: list[str] | None = None,
 ) -> VNoExtParameters:
     """
     Build parameters.
     
     Args:
+        inputfile: Input file name with extension.
         extensions: Extensions to be removed.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "@NoExt",
+        "inputfile": inputfile,
     }
     if extensions is not None:
         params["extensions"] = extensions
@@ -95,7 +99,7 @@ def v__no_ext_cargs(
     """
     cargs = []
     cargs.append("@NoExt")
-    cargs.append("<inputfile>")
+    cargs.append(params.get("inputfile"))
     if params.get("extensions") is not None:
         cargs.extend(params.get("extensions"))
     return cargs
@@ -146,6 +150,7 @@ def v__no_ext_execute(
 
 
 def v__no_ext(
+    inputfile: str,
     extensions: list[str] | None = None,
     runner: Runner | None = None,
 ) -> VNoExtOutputs:
@@ -157,6 +162,7 @@ def v__no_ext(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        inputfile: Input file name with extension.
         extensions: Extensions to be removed.
         runner: Command runner.
     Returns:
@@ -165,6 +171,7 @@ def v__no_ext(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__NO_EXT_METADATA)
     params = v__no_ext_params(
+        inputfile=inputfile,
         extensions=extensions,
     )
     return v__no_ext_execute(params, execution)

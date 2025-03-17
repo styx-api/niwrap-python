@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PROMPT_POPUP_METADATA = Metadata(
-    id="56ce96c081577f794f865f7030869659d97db1e1.boutiques",
+    id="c24519073e7efb98045929a1a4d42a4a25f3e8ef.boutiques",
     name="prompt_popup",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,8 +15,11 @@ PROMPT_POPUP_METADATA = Metadata(
 
 PromptPopupParameters = typing.TypedDict('PromptPopupParameters', {
     "__STYX_TYPE__": typing.Literal["prompt_popup"],
+    "message": str,
     "message_pause": typing.NotRequired[str | None],
+    "buttons": typing.NotRequired[list[str] | None],
     "buttons_b": typing.NotRequired[list[str] | None],
+    "timeout": typing.NotRequired[float | None],
     "timeout_to": typing.NotRequired[float | None],
 })
 
@@ -61,27 +64,42 @@ class PromptPopupOutputs(typing.NamedTuple):
 
 
 def prompt_popup_params(
+    message: str,
     message_pause: str | None = None,
+    buttons: list[str] | None = None,
     buttons_b: list[str] | None = None,
+    timeout: float | None = None,
     timeout_to: float | None = None,
 ) -> PromptPopupParameters:
     """
     Build parameters.
     
     Args:
+        message: Pops a window prompting the user with MESSAGE. If MESSAGE is\
+            '-', it is read from stdin.
         message_pause: Same as -message to match the old prompt_user.
+        buttons: What do you want the buttons to say? You can give up to three\
+            -button for three buttons. Returns integer 1, 2, or 3. If there is no\
+            -button, there will be one button 'Ok'.
         buttons_b: Same as -button.
+        timeout: Timeout in seconds of prompt message. Default answer is\
+            returned if TT seconds elapse without user input.
         timeout_to: Same as -timeout TT.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "prompt_popup",
+        "message": message,
     }
     if message_pause is not None:
         params["message_pause"] = message_pause
+    if buttons is not None:
+        params["buttons"] = buttons
     if buttons_b is not None:
         params["buttons_b"] = buttons_b
+    if timeout is not None:
+        params["timeout"] = timeout
     if timeout_to is not None:
         params["timeout_to"] = timeout_to
     return params
@@ -102,15 +120,29 @@ def prompt_popup_cargs(
     """
     cargs = []
     cargs.append("prompt_popup")
+    cargs.extend([
+        "-message",
+        params.get("message")
+    ])
     if params.get("message_pause") is not None:
         cargs.extend([
             "-pause",
             params.get("message_pause")
         ])
+    if params.get("buttons") is not None:
+        cargs.extend([
+            "-button",
+            *params.get("buttons")
+        ])
     if params.get("buttons_b") is not None:
         cargs.extend([
             "-b",
             *params.get("buttons_b")
+        ])
+    if params.get("timeout") is not None:
+        cargs.extend([
+            "-timeout",
+            str(params.get("timeout"))
         ])
     if params.get("timeout_to") is not None:
         cargs.extend([
@@ -165,8 +197,11 @@ def prompt_popup_execute(
 
 
 def prompt_popup(
+    message: str,
     message_pause: str | None = None,
+    buttons: list[str] | None = None,
     buttons_b: list[str] | None = None,
+    timeout: float | None = None,
     timeout_to: float | None = None,
     runner: Runner | None = None,
 ) -> PromptPopupOutputs:
@@ -179,8 +214,15 @@ def prompt_popup(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        message: Pops a window prompting the user with MESSAGE. If MESSAGE is\
+            '-', it is read from stdin.
         message_pause: Same as -message to match the old prompt_user.
+        buttons: What do you want the buttons to say? You can give up to three\
+            -button for three buttons. Returns integer 1, 2, or 3. If there is no\
+            -button, there will be one button 'Ok'.
         buttons_b: Same as -button.
+        timeout: Timeout in seconds of prompt message. Default answer is\
+            returned if TT seconds elapse without user input.
         timeout_to: Same as -timeout TT.
         runner: Command runner.
     Returns:
@@ -189,8 +231,11 @@ def prompt_popup(
     runner = runner or get_global_runner()
     execution = runner.start_execution(PROMPT_POPUP_METADATA)
     params = prompt_popup_params(
+        message=message,
         message_pause=message_pause,
+        buttons=buttons,
         buttons_b=buttons_b,
+        timeout=timeout,
         timeout_to=timeout_to,
     )
     return prompt_popup_execute(params, execution)

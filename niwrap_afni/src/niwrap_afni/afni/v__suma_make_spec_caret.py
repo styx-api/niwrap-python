@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SUMA_MAKE_SPEC_CARET_METADATA = Metadata(
-    id="950a20d0f240b4840873e5b78497c9b7e5e19277.boutiques",
+    id="ef058c5698e2c248a0e9c472b24e31f1b02dc1ae.boutiques",
     name="@SUMA_Make_Spec_Caret",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,11 @@ V__SUMA_MAKE_SPEC_CARET_METADATA = Metadata(
 VSumaMakeSpecCaretParameters = typing.TypedDict('VSumaMakeSpecCaretParameters', {
     "__STYX_TYPE__": typing.Literal["@SUMA_Make_Spec_Caret"],
     "subject_id": str,
+    "help": bool,
+    "debug": typing.NotRequired[int | None],
+    "echo": bool,
+    "surface_path": typing.NotRequired[str | None],
+    "side_labels_style": typing.NotRequired[int | None],
 })
 
 
@@ -65,19 +70,39 @@ class VSumaMakeSpecCaretOutputs(typing.NamedTuple):
 
 def v__suma_make_spec_caret_params(
     subject_id: str,
+    help_: bool = False,
+    debug: int | None = None,
+    echo: bool = False,
+    surface_path: str | None = None,
+    side_labels_style: int | None = None,
 ) -> VSumaMakeSpecCaretParameters:
     """
     Build parameters.
     
     Args:
         subject_id: Subject ID for file naming.
+        help_: Show help information.
+        debug: Print debug information along the way.
+        echo: Turn shell echo on.
+        surface_path: Path to directory containing 'SURFACES' and AFNI volume\
+            used in creating the surfaces.
+        side_labels_style: Naming style for Left, Right sides. Allowed values:\
+            1 for L R LR style (default), 2 for LEFT RIGHT LR style, 3 for A B AB.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "@SUMA_Make_Spec_Caret",
         "subject_id": subject_id,
+        "help": help_,
+        "echo": echo,
     }
+    if debug is not None:
+        params["debug"] = debug
+    if surface_path is not None:
+        params["surface_path"] = surface_path
+    if side_labels_style is not None:
+        params["side_labels_style"] = side_labels_style
     return params
 
 
@@ -96,11 +121,29 @@ def v__suma_make_spec_caret_cargs(
     """
     cargs = []
     cargs.append("@SUMA_Make_Spec_Caret")
-    cargs.append("[OPTIONS]")
     cargs.extend([
         "-sid",
         params.get("subject_id")
     ])
+    if params.get("help"):
+        cargs.append("-help")
+    if params.get("debug") is not None:
+        cargs.extend([
+            "-debug",
+            str(params.get("debug"))
+        ])
+    if params.get("echo"):
+        cargs.append("-echo")
+    if params.get("surface_path") is not None:
+        cargs.extend([
+            "-sfpath",
+            params.get("surface_path")
+        ])
+    if params.get("side_labels_style") is not None:
+        cargs.extend([
+            "-side_labels_style",
+            str(params.get("side_labels_style"))
+        ])
     return cargs
 
 
@@ -151,6 +194,11 @@ def v__suma_make_spec_caret_execute(
 
 def v__suma_make_spec_caret(
     subject_id: str,
+    help_: bool = False,
+    debug: int | None = None,
+    echo: bool = False,
+    surface_path: str | None = None,
+    side_labels_style: int | None = None,
     runner: Runner | None = None,
 ) -> VSumaMakeSpecCaretOutputs:
     """
@@ -162,6 +210,13 @@ def v__suma_make_spec_caret(
     
     Args:
         subject_id: Subject ID for file naming.
+        help_: Show help information.
+        debug: Print debug information along the way.
+        echo: Turn shell echo on.
+        surface_path: Path to directory containing 'SURFACES' and AFNI volume\
+            used in creating the surfaces.
+        side_labels_style: Naming style for Left, Right sides. Allowed values:\
+            1 for L R LR style (default), 2 for LEFT RIGHT LR style, 3 for A B AB.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecCaretOutputs`).
@@ -170,6 +225,11 @@ def v__suma_make_spec_caret(
     execution = runner.start_execution(V__SUMA_MAKE_SPEC_CARET_METADATA)
     params = v__suma_make_spec_caret_params(
         subject_id=subject_id,
+        help_=help_,
+        debug=debug,
+        echo=echo,
+        surface_path=surface_path,
+        side_labels_style=side_labels_style,
     )
     return v__suma_make_spec_caret_execute(params, execution)
 

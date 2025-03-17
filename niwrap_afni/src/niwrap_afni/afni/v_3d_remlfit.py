@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_REMLFIT_METADATA = Metadata(
-    id="847ea79f5b61b9773e10438597e56d4e78c62c2e.boutiques",
+    id="9a5a03ff4aea32e95390547c4573b680ae1ca04b.boutiques",
     name="3dREMLfit",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -22,10 +22,14 @@ V3dRemlfitParameters = typing.TypedDict('V3dRemlfitParameters', {
     "temp_storage": bool,
     "mask": typing.NotRequired[InputPathType | None],
     "output_prefix": typing.NotRequired[str | None],
+    "no_fdr_curve": bool,
     "go_for_it": bool,
+    "max_a_param": typing.NotRequired[float | None],
     "max_b_param": typing.NotRequired[float | None],
     "grid_param": typing.NotRequired[float | None],
     "negative_corr": bool,
+    "quiet": bool,
+    "verbose": bool,
 })
 
 
@@ -89,10 +93,14 @@ def v_3d_remlfit_params(
     temp_storage: bool = False,
     mask: InputPathType | None = None,
     output_prefix: str | None = None,
+    no_fdr_curve: bool = False,
     go_for_it: bool = False,
+    max_a_param: float | None = None,
     max_b_param: float | None = None,
     grid_param: float | None = None,
     negative_corr: bool = False,
+    quiet: bool = False,
+    verbose: bool = False,
 ) -> V3dRemlfitParameters:
     """
     Build parameters.
@@ -111,11 +119,15 @@ def v_3d_remlfit_params(
         mask: Read dataset as a mask for the input; voxels outside the mask\
             will not be fit by the regression model.
         output_prefix: Dataset prefix for saving REML variance parameters.
+        no_fdr_curve: Do not add FDR curve data to bucket datasets.
         go_for_it: Force the program to continue past a failed collinearity\
             check.
+        max_a_param: Set max allowed AR a parameter.
         max_b_param: Set max allowed MA b parameter.
         grid_param: Set the number of grid divisions in the (a,b) grid.
         negative_corr: Allows negative correlations to be used.
+        quiet: Turn off most progress messages.
+        verbose: Turn on more progress messages.
     Returns:
         Parameter dictionary
     """
@@ -125,8 +137,11 @@ def v_3d_remlfit_params(
         "regression_matrix": regression_matrix,
         "sort_nods": sort_nods,
         "temp_storage": temp_storage,
+        "no_fdr_curve": no_fdr_curve,
         "go_for_it": go_for_it,
         "negative_corr": negative_corr,
+        "quiet": quiet,
+        "verbose": verbose,
     }
     if baseline_files is not None:
         params["baseline_files"] = baseline_files
@@ -134,6 +149,8 @@ def v_3d_remlfit_params(
         params["mask"] = mask
     if output_prefix is not None:
         params["output_prefix"] = output_prefix
+    if max_a_param is not None:
+        params["max_a_param"] = max_a_param
     if max_b_param is not None:
         params["max_b_param"] = max_b_param
     if grid_param is not None:
@@ -183,8 +200,15 @@ def v_3d_remlfit_cargs(
             "-Rvar",
             params.get("output_prefix")
         ])
+    if params.get("no_fdr_curve"):
+        cargs.append("-noFDR")
     if params.get("go_for_it"):
         cargs.append("-GOFORIT")
+    if params.get("max_a_param") is not None:
+        cargs.extend([
+            "-MAXa",
+            str(params.get("max_a_param"))
+        ])
     if params.get("max_b_param") is not None:
         cargs.extend([
             "-MAXb",
@@ -197,6 +221,10 @@ def v_3d_remlfit_cargs(
         ])
     if params.get("negative_corr"):
         cargs.append("-NEGcor")
+    if params.get("quiet"):
+        cargs.append("quiet")
+    if params.get("verbose"):
+        cargs.append("-verb")
     return cargs
 
 
@@ -258,10 +286,14 @@ def v_3d_remlfit(
     temp_storage: bool = False,
     mask: InputPathType | None = None,
     output_prefix: str | None = None,
+    no_fdr_curve: bool = False,
     go_for_it: bool = False,
+    max_a_param: float | None = None,
     max_b_param: float | None = None,
     grid_param: float | None = None,
     negative_corr: bool = False,
+    quiet: bool = False,
+    verbose: bool = False,
     runner: Runner | None = None,
 ) -> V3dRemlfitOutputs:
     """
@@ -286,11 +318,15 @@ def v_3d_remlfit(
         mask: Read dataset as a mask for the input; voxels outside the mask\
             will not be fit by the regression model.
         output_prefix: Dataset prefix for saving REML variance parameters.
+        no_fdr_curve: Do not add FDR curve data to bucket datasets.
         go_for_it: Force the program to continue past a failed collinearity\
             check.
+        max_a_param: Set max allowed AR a parameter.
         max_b_param: Set max allowed MA b parameter.
         grid_param: Set the number of grid divisions in the (a,b) grid.
         negative_corr: Allows negative correlations to be used.
+        quiet: Turn off most progress messages.
+        verbose: Turn on more progress messages.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRemlfitOutputs`).
@@ -305,10 +341,14 @@ def v_3d_remlfit(
         temp_storage=temp_storage,
         mask=mask,
         output_prefix=output_prefix,
+        no_fdr_curve=no_fdr_curve,
         go_for_it=go_for_it,
+        max_a_param=max_a_param,
         max_b_param=max_b_param,
         grid_param=grid_param,
         negative_corr=negative_corr,
+        quiet=quiet,
+        verbose=verbose,
     )
     return v_3d_remlfit_execute(params, execution)
 

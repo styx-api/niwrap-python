@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_UNDUMP_METADATA = Metadata(
-    id="d8ab76cb95ed8dc992c00cf2e9245c240a475a40.boutiques",
+    id="f0b8af447cf310eefc98d5d8262aaf16f8069930.boutiques",
     name="3dUndump",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -23,6 +23,7 @@ V3dUndumpParameters = typing.TypedDict('V3dUndumpParameters', {
     "datatype": typing.NotRequired[str | None],
     "dval": typing.NotRequired[float | None],
     "fval": typing.NotRequired[float | None],
+    "ijk": bool,
     "xyz": bool,
     "sphere_radius": typing.NotRequired[float | None],
     "cube_mode": bool,
@@ -84,6 +85,7 @@ def v_3d_undump_params(
     datatype: str | None = None,
     dval: float | None = None,
     fval: float | None = None,
+    ijk: bool = False,
     xyz: bool = False,
     sphere_radius: float | None = None,
     cube_mode: bool = False,
@@ -111,6 +113,7 @@ def v_3d_undump_params(
             not have a value supplied in the input file [default = 1].
         fval: 'fff' is the fill value, used for each voxel in the output\
             dataset that is NOT listed in the input file [default = 0].
+        ijk: Coordinates in the input file are (i,j,k) index triples.
         xyz: Coordinates in the input file are (x,y,z) spatial coordinates, in\
             mm.
         sphere_radius: Specifies that a sphere of radius 'rrr' will be filled\
@@ -129,6 +132,7 @@ def v_3d_undump_params(
     params = {
         "__STYXTYPE__": "3dUndump",
         "input_files": input_files,
+        "ijk": ijk,
         "xyz": xyz,
         "cube_mode": cube_mode,
         "head_only": head_only,
@@ -208,6 +212,8 @@ def v_3d_undump_cargs(
             "-fval",
             str(params.get("fval"))
         ])
+    if params.get("ijk"):
+        cargs.append("-ijk")
     if params.get("xyz"):
         cargs.append("-xyz")
     if params.get("sphere_radius") is not None:
@@ -287,6 +293,7 @@ def v_3d_undump(
     datatype: str | None = None,
     dval: float | None = None,
     fval: float | None = None,
+    ijk: bool = False,
     xyz: bool = False,
     sphere_radius: float | None = None,
     cube_mode: bool = False,
@@ -319,6 +326,7 @@ def v_3d_undump(
             not have a value supplied in the input file [default = 1].
         fval: 'fff' is the fill value, used for each voxel in the output\
             dataset that is NOT listed in the input file [default = 0].
+        ijk: Coordinates in the input file are (i,j,k) index triples.
         xyz: Coordinates in the input file are (x,y,z) spatial coordinates, in\
             mm.
         sphere_radius: Specifies that a sphere of radius 'rrr' will be filled\
@@ -346,6 +354,7 @@ def v_3d_undump(
         datatype=datatype,
         dval=dval,
         fval=fval,
+        ijk=ijk,
         xyz=xyz,
         sphere_radius=sphere_radius,
         cube_mode=cube_mode,

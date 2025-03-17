@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_METRICS_METADATA = Metadata(
-    id="5e58dccd9bd1540ac2ae342efc61a7a9fc45c4c2.boutiques",
+    id="4e6e190bf1b36c5ffeddbab85844677bc3f68fe2.boutiques",
     name="SurfaceMetrics",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,26 +15,25 @@ SURFACE_METRICS_METADATA = Metadata(
 
 SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
     "__STYX_TYPE__": typing.Literal["SurfaceMetrics"],
+    "volume": bool,
+    "convexity": bool,
+    "closest_node": typing.NotRequired[InputPathType | None],
+    "area": bool,
+    "tri_sines": bool,
+    "tri_CoSines": bool,
+    "tri_angles": bool,
+    "node_angles": bool,
+    "curvature": bool,
+    "edges": bool,
+    "node_normals": bool,
+    "face_normals": bool,
+    "normals_scale": typing.NotRequired[float | None],
+    "coords": bool,
+    "sph_coords": bool,
+    "sph_coords_center": typing.NotRequired[list[float] | None],
+    "boundary_nodes": bool,
+    "boundary_triangles": bool,
     "internal_nodes": bool,
-    "internal_nodes_1": bool,
-    "internal_nodes_2": bool,
-    "internal_nodes_3": bool,
-    "internal_nodes_4": bool,
-    "internal_nodes_5": bool,
-    "internal_nodes_6": bool,
-    "internal_nodes_7": bool,
-    "internal_nodes_8": bool,
-    "internal_nodes_9": bool,
-    "internal_nodes_10": bool,
-    "internal_nodes_11": bool,
-    "internal_nodes_12": bool,
-    "internal_nodes_13": bool,
-    "internal_nodes_14": bool,
-    "internal_nodes_15": bool,
-    "internal_nodes_16": bool,
-    "internal_nodes_17": bool,
-    "internal_nodes_18": bool,
-    "internal_nodes_19": bool,
     "surf1": str,
     "tlrc": bool,
     "prefix": typing.NotRequired[str | None],
@@ -82,26 +81,25 @@ class SurfaceMetricsOutputs(typing.NamedTuple):
 
 def surface_metrics_params(
     surf1: str,
+    volume: bool = False,
+    convexity: bool = False,
+    closest_node: InputPathType | None = None,
+    area: bool = False,
+    tri_sines: bool = False,
+    tri_co_sines: bool = False,
+    tri_angles: bool = False,
+    node_angles: bool = False,
+    curvature: bool = False,
+    edges: bool = False,
+    node_normals: bool = False,
+    face_normals: bool = False,
+    normals_scale: float | None = None,
+    coords: bool = False,
+    sph_coords: bool = False,
+    sph_coords_center: list[float] | None = None,
+    boundary_nodes: bool = False,
+    boundary_triangles: bool = False,
     internal_nodes: bool = False,
-    internal_nodes_1: bool = False,
-    internal_nodes_2: bool = False,
-    internal_nodes_3: bool = False,
-    internal_nodes_4: bool = False,
-    internal_nodes_5: bool = False,
-    internal_nodes_6: bool = False,
-    internal_nodes_7: bool = False,
-    internal_nodes_8: bool = False,
-    internal_nodes_9: bool = False,
-    internal_nodes_10: bool = False,
-    internal_nodes_11: bool = False,
-    internal_nodes_12: bool = False,
-    internal_nodes_13: bool = False,
-    internal_nodes_14: bool = False,
-    internal_nodes_15: bool = False,
-    internal_nodes_16: bool = False,
-    internal_nodes_17: bool = False,
-    internal_nodes_18: bool = False,
-    internal_nodes_19: bool = False,
     tlrc: bool = False,
     prefix: str | None = None,
 ) -> SurfaceMetricsParameters:
@@ -110,26 +108,27 @@ def surface_metrics_params(
     
     Args:
         surf1: Specifies the input surface.
+        volume: Calculates the volume of a surface.
+        convexity: Output surface convexity at each node.
+        closest_node: Find the closest node to each XYZ triplet in XYZ_LIST.1D.
+        area: Output area of each triangle.
+        tri_sines: Output sine of angles at nodes forming triangles.
+        tri_co_sines: Output both cosines and sines of angles at nodes forming\
+            triangles.
+        tri_angles: Unsigned angles in radians of triangles.
+        node_angles: Unsigned angles in radians at nodes of surface.
+        curvature: Output curvature at each node.
+        edges: Outputs info on each edge.
+        node_normals: Outputs segments along node normals.
+        face_normals: Outputs segments along triangle normals.
+        normals_scale: Scale the normals by a given factor.
+        coords: Output coordinates of each node after any transformation.
+        sph_coords: Output spherical coordinates of each node.
+        sph_coords_center: Shift each node by x y z before calculating\
+            spherical coordinates.
+        boundary_nodes: Output nodes that form a boundary of a surface.
+        boundary_triangles: Output triangles that form a boundary of a surface.
         internal_nodes: Output nodes that are not a boundary.
-        internal_nodes_1: Output nodes that are not a boundary.
-        internal_nodes_2: Output nodes that are not a boundary.
-        internal_nodes_3: Output nodes that are not a boundary.
-        internal_nodes_4: Output nodes that are not a boundary.
-        internal_nodes_5: Output nodes that are not a boundary.
-        internal_nodes_6: Output nodes that are not a boundary.
-        internal_nodes_7: Output nodes that are not a boundary.
-        internal_nodes_8: Output nodes that are not a boundary.
-        internal_nodes_9: Output nodes that are not a boundary.
-        internal_nodes_10: Output nodes that are not a boundary.
-        internal_nodes_11: Output nodes that are not a boundary.
-        internal_nodes_12: Output nodes that are not a boundary.
-        internal_nodes_13: Output nodes that are not a boundary.
-        internal_nodes_14: Output nodes that are not a boundary.
-        internal_nodes_15: Output nodes that are not a boundary.
-        internal_nodes_16: Output nodes that are not a boundary.
-        internal_nodes_17: Output nodes that are not a boundary.
-        internal_nodes_18: Output nodes that are not a boundary.
-        internal_nodes_19: Output nodes that are not a boundary.
         tlrc: Apply Talairach transform to surface.
         prefix: Use prefix for output files.
     Returns:
@@ -137,29 +136,31 @@ def surface_metrics_params(
     """
     params = {
         "__STYXTYPE__": "SurfaceMetrics",
+        "volume": volume,
+        "convexity": convexity,
+        "area": area,
+        "tri_sines": tri_sines,
+        "tri_CoSines": tri_co_sines,
+        "tri_angles": tri_angles,
+        "node_angles": node_angles,
+        "curvature": curvature,
+        "edges": edges,
+        "node_normals": node_normals,
+        "face_normals": face_normals,
+        "coords": coords,
+        "sph_coords": sph_coords,
+        "boundary_nodes": boundary_nodes,
+        "boundary_triangles": boundary_triangles,
         "internal_nodes": internal_nodes,
-        "internal_nodes_1": internal_nodes_1,
-        "internal_nodes_2": internal_nodes_2,
-        "internal_nodes_3": internal_nodes_3,
-        "internal_nodes_4": internal_nodes_4,
-        "internal_nodes_5": internal_nodes_5,
-        "internal_nodes_6": internal_nodes_6,
-        "internal_nodes_7": internal_nodes_7,
-        "internal_nodes_8": internal_nodes_8,
-        "internal_nodes_9": internal_nodes_9,
-        "internal_nodes_10": internal_nodes_10,
-        "internal_nodes_11": internal_nodes_11,
-        "internal_nodes_12": internal_nodes_12,
-        "internal_nodes_13": internal_nodes_13,
-        "internal_nodes_14": internal_nodes_14,
-        "internal_nodes_15": internal_nodes_15,
-        "internal_nodes_16": internal_nodes_16,
-        "internal_nodes_17": internal_nodes_17,
-        "internal_nodes_18": internal_nodes_18,
-        "internal_nodes_19": internal_nodes_19,
         "surf1": surf1,
         "tlrc": tlrc,
     }
+    if closest_node is not None:
+        params["closest_node"] = closest_node
+    if normals_scale is not None:
+        params["normals_scale"] = normals_scale
+    if sph_coords_center is not None:
+        params["sph_coords_center"] = sph_coords_center
     if prefix is not None:
         params["prefix"] = prefix
     return params
@@ -180,45 +181,52 @@ def surface_metrics_cargs(
     """
     cargs = []
     cargs.append("SurfaceMetrics")
+    if params.get("volume"):
+        cargs.append("-vol")
+    if params.get("convexity"):
+        cargs.append("-conv")
+    if params.get("closest_node") is not None:
+        cargs.extend([
+            "-closest_node",
+            execution.input_file(params.get("closest_node"))
+        ])
+    if params.get("area"):
+        cargs.append("-area")
+    if params.get("tri_sines"):
+        cargs.append("-tri_sines")
+    if params.get("tri_CoSines"):
+        cargs.append("-tri_CoSines")
+    if params.get("tri_angles"):
+        cargs.append("-tri_angles")
+    if params.get("node_angles"):
+        cargs.append("-node_angles")
+    if params.get("curvature"):
+        cargs.append("-curv")
+    if params.get("edges"):
+        cargs.append("-edges")
+    if params.get("node_normals"):
+        cargs.append("-node_normals")
+    if params.get("face_normals"):
+        cargs.append("-face_normals")
+    if params.get("normals_scale") is not None:
+        cargs.extend([
+            "-normals_scale",
+            str(params.get("normals_scale"))
+        ])
+    if params.get("coords"):
+        cargs.append("-coords")
+    if params.get("sph_coords"):
+        cargs.append("-sph_coords")
+    if params.get("sph_coords_center") is not None:
+        cargs.extend([
+            "-sph_coords_center",
+            *map(str, params.get("sph_coords_center"))
+        ])
+    if params.get("boundary_nodes"):
+        cargs.append("-boundary_nodes")
+    if params.get("boundary_triangles"):
+        cargs.append("-boundary_triangles")
     if params.get("internal_nodes"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_1"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_2"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_3"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_4"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_5"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_6"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_7"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_8"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_9"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_10"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_11"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_12"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_13"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_14"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_15"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_16"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_17"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_18"):
-        cargs.append("-internal_nodes")
-    if params.get("internal_nodes_19"):
         cargs.append("-internal_nodes")
     cargs.extend([
         "-SURF_1",
@@ -279,26 +287,25 @@ def surface_metrics_execute(
 
 def surface_metrics(
     surf1: str,
+    volume: bool = False,
+    convexity: bool = False,
+    closest_node: InputPathType | None = None,
+    area: bool = False,
+    tri_sines: bool = False,
+    tri_co_sines: bool = False,
+    tri_angles: bool = False,
+    node_angles: bool = False,
+    curvature: bool = False,
+    edges: bool = False,
+    node_normals: bool = False,
+    face_normals: bool = False,
+    normals_scale: float | None = None,
+    coords: bool = False,
+    sph_coords: bool = False,
+    sph_coords_center: list[float] | None = None,
+    boundary_nodes: bool = False,
+    boundary_triangles: bool = False,
     internal_nodes: bool = False,
-    internal_nodes_1: bool = False,
-    internal_nodes_2: bool = False,
-    internal_nodes_3: bool = False,
-    internal_nodes_4: bool = False,
-    internal_nodes_5: bool = False,
-    internal_nodes_6: bool = False,
-    internal_nodes_7: bool = False,
-    internal_nodes_8: bool = False,
-    internal_nodes_9: bool = False,
-    internal_nodes_10: bool = False,
-    internal_nodes_11: bool = False,
-    internal_nodes_12: bool = False,
-    internal_nodes_13: bool = False,
-    internal_nodes_14: bool = False,
-    internal_nodes_15: bool = False,
-    internal_nodes_16: bool = False,
-    internal_nodes_17: bool = False,
-    internal_nodes_18: bool = False,
-    internal_nodes_19: bool = False,
     tlrc: bool = False,
     prefix: str | None = None,
     runner: Runner | None = None,
@@ -312,26 +319,27 @@ def surface_metrics(
     
     Args:
         surf1: Specifies the input surface.
+        volume: Calculates the volume of a surface.
+        convexity: Output surface convexity at each node.
+        closest_node: Find the closest node to each XYZ triplet in XYZ_LIST.1D.
+        area: Output area of each triangle.
+        tri_sines: Output sine of angles at nodes forming triangles.
+        tri_co_sines: Output both cosines and sines of angles at nodes forming\
+            triangles.
+        tri_angles: Unsigned angles in radians of triangles.
+        node_angles: Unsigned angles in radians at nodes of surface.
+        curvature: Output curvature at each node.
+        edges: Outputs info on each edge.
+        node_normals: Outputs segments along node normals.
+        face_normals: Outputs segments along triangle normals.
+        normals_scale: Scale the normals by a given factor.
+        coords: Output coordinates of each node after any transformation.
+        sph_coords: Output spherical coordinates of each node.
+        sph_coords_center: Shift each node by x y z before calculating\
+            spherical coordinates.
+        boundary_nodes: Output nodes that form a boundary of a surface.
+        boundary_triangles: Output triangles that form a boundary of a surface.
         internal_nodes: Output nodes that are not a boundary.
-        internal_nodes_1: Output nodes that are not a boundary.
-        internal_nodes_2: Output nodes that are not a boundary.
-        internal_nodes_3: Output nodes that are not a boundary.
-        internal_nodes_4: Output nodes that are not a boundary.
-        internal_nodes_5: Output nodes that are not a boundary.
-        internal_nodes_6: Output nodes that are not a boundary.
-        internal_nodes_7: Output nodes that are not a boundary.
-        internal_nodes_8: Output nodes that are not a boundary.
-        internal_nodes_9: Output nodes that are not a boundary.
-        internal_nodes_10: Output nodes that are not a boundary.
-        internal_nodes_11: Output nodes that are not a boundary.
-        internal_nodes_12: Output nodes that are not a boundary.
-        internal_nodes_13: Output nodes that are not a boundary.
-        internal_nodes_14: Output nodes that are not a boundary.
-        internal_nodes_15: Output nodes that are not a boundary.
-        internal_nodes_16: Output nodes that are not a boundary.
-        internal_nodes_17: Output nodes that are not a boundary.
-        internal_nodes_18: Output nodes that are not a boundary.
-        internal_nodes_19: Output nodes that are not a boundary.
         tlrc: Apply Talairach transform to surface.
         prefix: Use prefix for output files.
         runner: Command runner.
@@ -341,26 +349,25 @@ def surface_metrics(
     runner = runner or get_global_runner()
     execution = runner.start_execution(SURFACE_METRICS_METADATA)
     params = surface_metrics_params(
+        volume=volume,
+        convexity=convexity,
+        closest_node=closest_node,
+        area=area,
+        tri_sines=tri_sines,
+        tri_co_sines=tri_co_sines,
+        tri_angles=tri_angles,
+        node_angles=node_angles,
+        curvature=curvature,
+        edges=edges,
+        node_normals=node_normals,
+        face_normals=face_normals,
+        normals_scale=normals_scale,
+        coords=coords,
+        sph_coords=sph_coords,
+        sph_coords_center=sph_coords_center,
+        boundary_nodes=boundary_nodes,
+        boundary_triangles=boundary_triangles,
         internal_nodes=internal_nodes,
-        internal_nodes_1=internal_nodes_1,
-        internal_nodes_2=internal_nodes_2,
-        internal_nodes_3=internal_nodes_3,
-        internal_nodes_4=internal_nodes_4,
-        internal_nodes_5=internal_nodes_5,
-        internal_nodes_6=internal_nodes_6,
-        internal_nodes_7=internal_nodes_7,
-        internal_nodes_8=internal_nodes_8,
-        internal_nodes_9=internal_nodes_9,
-        internal_nodes_10=internal_nodes_10,
-        internal_nodes_11=internal_nodes_11,
-        internal_nodes_12=internal_nodes_12,
-        internal_nodes_13=internal_nodes_13,
-        internal_nodes_14=internal_nodes_14,
-        internal_nodes_15=internal_nodes_15,
-        internal_nodes_16=internal_nodes_16,
-        internal_nodes_17=internal_nodes_17,
-        internal_nodes_18=internal_nodes_18,
-        internal_nodes_19=internal_nodes_19,
         surf1=surf1,
         tlrc=tlrc,
         prefix=prefix,

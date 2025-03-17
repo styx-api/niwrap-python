@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_MASK_TO_ASCII_METADATA = Metadata(
-    id="00c7066c6c38f027299750536983f490b1c220de.boutiques",
+    id="20970426ca6ec9c84b1d7625189cb189cffb0a2f.boutiques",
     name="3dMaskToASCII",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,7 @@ V3dMaskToAsciiParameters = typing.TypedDict('V3dMaskToAsciiParameters', {
     "__STYX_TYPE__": typing.Literal["3dMaskToASCII"],
     "tobin_flag": bool,
     "dataset": InputPathType,
+    "outputfile": str,
 })
 
 
@@ -64,6 +65,7 @@ class V3dMaskToAsciiOutputs(typing.NamedTuple):
 
 def v_3d_mask_to_ascii_params(
     dataset: InputPathType,
+    outputfile: str,
     tobin_flag: bool = False,
 ) -> V3dMaskToAsciiParameters:
     """
@@ -71,6 +73,8 @@ def v_3d_mask_to_ascii_params(
     
     Args:
         dataset: Input dataset (e.g. mask.nii.gz).
+        outputfile: Output file where ASCII string mask or binary mask will be\
+            written.
         tobin_flag: Read ASCII mask, expand it to byte-valued dataset, and\
             write to stdout.
     Returns:
@@ -80,6 +84,7 @@ def v_3d_mask_to_ascii_params(
         "__STYXTYPE__": "3dMaskToASCII",
         "tobin_flag": tobin_flag,
         "dataset": dataset,
+        "outputfile": outputfile,
     }
     return params
 
@@ -102,8 +107,7 @@ def v_3d_mask_to_ascii_cargs(
     if params.get("tobin_flag"):
         cargs.append("-tobin")
     cargs.append(execution.input_file(params.get("dataset")))
-    cargs.append(">")
-    cargs.append("[OUTPUTFILE]")
+    cargs.append("> " + params.get("outputfile"))
     return cargs
 
 
@@ -122,7 +126,7 @@ def v_3d_mask_to_ascii_outputs(
     """
     ret = V3dMaskToAsciiOutputs(
         root=execution.output_file("."),
-        outputfile=execution.output_file("[OUTPUTFILE]"),
+        outputfile=execution.output_file(params.get("outputfile")),
     )
     return ret
 
@@ -153,6 +157,7 @@ def v_3d_mask_to_ascii_execute(
 
 def v_3d_mask_to_ascii(
     dataset: InputPathType,
+    outputfile: str,
     tobin_flag: bool = False,
     runner: Runner | None = None,
 ) -> V3dMaskToAsciiOutputs:
@@ -165,6 +170,8 @@ def v_3d_mask_to_ascii(
     
     Args:
         dataset: Input dataset (e.g. mask.nii.gz).
+        outputfile: Output file where ASCII string mask or binary mask will be\
+            written.
         tobin_flag: Read ASCII mask, expand it to byte-valued dataset, and\
             write to stdout.
         runner: Command runner.
@@ -176,6 +183,7 @@ def v_3d_mask_to_ascii(
     params = v_3d_mask_to_ascii_params(
         tobin_flag=tobin_flag,
         dataset=dataset,
+        outputfile=outputfile,
     )
     return v_3d_mask_to_ascii_execute(params, execution)
 

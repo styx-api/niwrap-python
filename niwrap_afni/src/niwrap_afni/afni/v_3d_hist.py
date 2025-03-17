@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_HIST_METADATA = Metadata(
-    id="5dff8f7ac913ce4a3781c6d59d7827316323eded.boutiques",
+    id="848d311049e93b6281b7a88875dd047ad4a77407.boutiques",
     name="3dHist",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,7 @@ V_3D_HIST_METADATA = Metadata(
 V3dHistParameters = typing.TypedDict('V3dHistParameters', {
     "__STYX_TYPE__": typing.Literal["3dHist"],
     "input": InputPathType,
+    "dind_subbrick": typing.NotRequired[float | None],
     "mask_dset": typing.NotRequired[InputPathType | None],
     "mask_range": typing.NotRequired[list[float] | None],
     "cmask": typing.NotRequired[str | None],
@@ -78,6 +79,7 @@ class V3dHistOutputs(typing.NamedTuple):
 
 def v_3d_hist_params(
     input_: InputPathType,
+    dind_subbrick: float | None = None,
     mask_dset: InputPathType | None = None,
     mask_range: list[float] | None = None,
     cmask: str | None = None,
@@ -102,6 +104,7 @@ def v_3d_hist_params(
     
     Args:
         input_: Dataset providing values for histogram.
+        dind_subbrick: Use sub-brick SB from the input rather than 0.
         mask_dset: Provide mask dataset to select subset of input.
         mask_range: Specify the range of values to consider from MSET. Default\
             is anything non-zero.
@@ -136,6 +139,8 @@ def v_3d_hist_params(
         "showhist": showhist,
         "quiet": quiet,
     }
+    if dind_subbrick is not None:
+        params["dind_subbrick"] = dind_subbrick
     if mask_dset is not None:
         params["mask_dset"] = mask_dset
     if mask_range is not None:
@@ -185,6 +190,11 @@ def v_3d_hist_cargs(
     cargs = []
     cargs.append("3dHist")
     cargs.append(execution.input_file(params.get("input")))
+    if params.get("dind_subbrick") is not None:
+        cargs.extend([
+            "-dind",
+            str(params.get("dind_subbrick"))
+        ])
     if params.get("mask_dset") is not None:
         cargs.extend([
             "-mask",
@@ -314,6 +324,7 @@ def v_3d_hist_execute(
 
 def v_3d_hist(
     input_: InputPathType,
+    dind_subbrick: float | None = None,
     mask_dset: InputPathType | None = None,
     mask_range: list[float] | None = None,
     cmask: str | None = None,
@@ -343,6 +354,7 @@ def v_3d_hist(
     
     Args:
         input_: Dataset providing values for histogram.
+        dind_subbrick: Use sub-brick SB from the input rather than 0.
         mask_dset: Provide mask dataset to select subset of input.
         mask_range: Specify the range of values to consider from MSET. Default\
             is anything non-zero.
@@ -375,6 +387,7 @@ def v_3d_hist(
     execution = runner.start_execution(V_3D_HIST_METADATA)
     params = v_3d_hist_params(
         input_=input_,
+        dind_subbrick=dind_subbrick,
         mask_dset=mask_dset,
         mask_range=mask_range,
         cmask=cmask,

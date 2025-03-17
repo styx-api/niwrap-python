@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_FDR_METADATA = Metadata(
-    id="052b0ab8a12acc2def2e27ee40fa90c4b23263c0.boutiques",
+    id="bfccf66ab83c665d5eb67ddf2fb4fae7d2d9767e.boutiques",
     name="3dFDR",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,7 @@ V_3D_FDR_METADATA = Metadata(
 V3dFdrParameters = typing.TypedDict('V3dFdrParameters', {
     "__STYX_TYPE__": typing.Literal["3dFDR"],
     "input_file": InputPathType,
+    "input1d_file": typing.NotRequired[InputPathType | None],
     "mask_file": typing.NotRequired[InputPathType | None],
     "mask_threshold": typing.NotRequired[float | None],
     "constant_type": typing.NotRequired[typing.Literal["cind", "cdep"] | None],
@@ -80,6 +81,7 @@ class V3dFdrOutputs(typing.NamedTuple):
 def v_3d_fdr_params(
     input_file: InputPathType,
     prefix: str,
+    input1d_file: InputPathType | None = None,
     mask_file: InputPathType | None = None,
     mask_threshold: float | None = None,
     constant_type: typing.Literal["cind", "cdep"] | None = None,
@@ -98,6 +100,7 @@ def v_3d_fdr_params(
     Args:
         input_file: Input 3D functional dataset filename.
         prefix: Use 'pname' for the output dataset prefix name.
+        input1d_file: .1D file containing column of p-values.
         mask_file: Use mask values from file mname. If file mname contains more\
             than 1 sub-brick, the mask sub-brick must be specified. Generally\
             should be used to avoid counting non-brain voxels.
@@ -130,6 +133,8 @@ def v_3d_fdr_params(
         "float": float_,
         "qval": qval,
     }
+    if input1d_file is not None:
+        params["input1d_file"] = input1d_file
     if mask_file is not None:
         params["mask_file"] = mask_file
     if mask_threshold is not None:
@@ -160,6 +165,11 @@ def v_3d_fdr_cargs(
         "-input",
         execution.input_file(params.get("input_file"))
     ])
+    if params.get("input1d_file") is not None:
+        cargs.extend([
+            "-input1D",
+            execution.input_file(params.get("input1d_file"))
+        ])
     if params.get("mask_file") is not None:
         cargs.extend([
             "-mask_file",
@@ -251,6 +261,7 @@ def v_3d_fdr_execute(
 def v_3d_fdr(
     input_file: InputPathType,
     prefix: str,
+    input1d_file: InputPathType | None = None,
     mask_file: InputPathType | None = None,
     mask_threshold: float | None = None,
     constant_type: typing.Literal["cind", "cdep"] | None = None,
@@ -275,6 +286,7 @@ def v_3d_fdr(
     Args:
         input_file: Input 3D functional dataset filename.
         prefix: Use 'pname' for the output dataset prefix name.
+        input1d_file: .1D file containing column of p-values.
         mask_file: Use mask values from file mname. If file mname contains more\
             than 1 sub-brick, the mask sub-brick must be specified. Generally\
             should be used to avoid counting non-brain voxels.
@@ -300,6 +312,7 @@ def v_3d_fdr(
     execution = runner.start_execution(V_3D_FDR_METADATA)
     params = v_3d_fdr_params(
         input_file=input_file,
+        input1d_file=input1d_file,
         mask_file=mask_file,
         mask_threshold=mask_threshold,
         constant_type=constant_type,

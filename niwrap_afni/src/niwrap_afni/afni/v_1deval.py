@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1DEVAL_METADATA = Metadata(
-    id="da64e5acb6bc6cd359ef137e00f938392ac2b5e3.boutiques",
+    id="4d289385c575fb0e342e48148cb17a3c5cbf7c68.boutiques",
     name="1deval",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -21,6 +21,7 @@ V1devalParameters = typing.TypedDict('V1devalParameters', {
     "index": typing.NotRequired[InputPathType | None],
     "1D": bool,
     "symbols": typing.NotRequired[list[InputPathType] | None],
+    "symbol_values": typing.NotRequired[list[str] | None],
     "expression": str,
 })
 
@@ -75,6 +76,7 @@ def v_1deval_params(
     index: InputPathType | None = None,
     v_1_d: bool = False,
     symbols: list[InputPathType] | None = None,
+    symbol_values: list[str] | None = None,
 ) -> V1devalParameters:
     """
     Build parameters.
@@ -92,6 +94,8 @@ def v_1deval_params(
             input on the command line of another program.
         symbols: Read time series file and assign it to the symbol 'a'. Letters\
             'a' to 'z' may be used as symbols.
+        symbol_values: Assign a fixed numerical value to the symbol 'a'.\
+            Letters 'a' to 'z' may be used as symbols.
     Returns:
         Parameter dictionary
     """
@@ -110,6 +114,8 @@ def v_1deval_params(
         params["index"] = index
     if symbols is not None:
         params["symbols"] = symbols
+    if symbol_values is not None:
+        params["symbol_values"] = symbol_values
     return params
 
 
@@ -154,6 +160,11 @@ def v_1deval_cargs(
         cargs.extend([
             "-a",
             *[execution.input_file(f) for f in params.get("symbols")]
+        ])
+    if params.get("symbol_values") is not None:
+        cargs.extend([
+            "-a=",
+            *params.get("symbol_values")
         ])
     cargs.extend([
         "-expr",
@@ -215,6 +226,7 @@ def v_1deval(
     index: InputPathType | None = None,
     v_1_d: bool = False,
     symbols: list[InputPathType] | None = None,
+    symbol_values: list[str] | None = None,
     runner: Runner | None = None,
 ) -> V1devalOutputs:
     """
@@ -238,6 +250,8 @@ def v_1deval(
             input on the command line of another program.
         symbols: Read time series file and assign it to the symbol 'a'. Letters\
             'a' to 'z' may be used as symbols.
+        symbol_values: Assign a fixed numerical value to the symbol 'a'.\
+            Letters 'a' to 'z' may be used as symbols.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1devalOutputs`).
@@ -251,6 +265,7 @@ def v_1deval(
         index=index,
         v_1_d=v_1_d,
         symbols=symbols,
+        symbol_values=symbol_values,
         expression=expression,
     )
     return v_1deval_execute(params, execution)

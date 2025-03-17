@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_SEM_METADATA = Metadata(
-    id="22951ac5931e28304cde031a44c651e57c4e4a1e.boutiques",
+    id="a26930914a15136a68f2004d57838df7d226dcb0.boutiques",
     name="1dSEM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,6 +19,18 @@ V1dSemParameters = typing.TypedDict('V1dSemParameters', {
     "correlation_matrix": InputPathType,
     "residual_variance": InputPathType,
     "degrees_of_freedom": float,
+    "max_iterations": typing.NotRequired[int | None],
+    "number_random_trials": typing.NotRequired[int | None],
+    "limits": typing.NotRequired[list[float] | None],
+    "calculate_cost": bool,
+    "verbose": typing.NotRequired[int | None],
+    "tree_growth": bool,
+    "model_search": bool,
+    "max_paths": typing.NotRequired[int | None],
+    "stop_cost": typing.NotRequired[float | None],
+    "forest_growth": bool,
+    "grow_all": bool,
+    "leafpicker": bool,
 })
 
 
@@ -69,6 +81,18 @@ def v_1d_sem_params(
     correlation_matrix: InputPathType,
     residual_variance: InputPathType,
     degrees_of_freedom: float,
+    max_iterations: int | None = None,
+    number_random_trials: int | None = None,
+    limits: list[float] | None = None,
+    calculate_cost: bool = False,
+    verbose: int | None = None,
+    tree_growth: bool = False,
+    model_search: bool = False,
+    max_paths: int | None = None,
+    stop_cost: float | None = None,
+    forest_growth: bool = False,
+    grow_all: bool = False,
+    leafpicker: bool = False,
 ) -> V1dSemParameters:
     """
     Build parameters.
@@ -78,6 +102,30 @@ def v_1d_sem_params(
         correlation_matrix: Correlation matrix 1D file.
         residual_variance: Residual variance vector 1D file.
         degrees_of_freedom: Degrees of freedom.
+        max_iterations: Maximum number of iterations for convergence\
+            (Default=10000). Values can range from 1 to any positive integer less\
+            than 10000.
+        number_random_trials: Number of random trials before optimization\
+            (Default = 100).
+        limits: Lower and upper limits for connection coefficients (Default =\
+            -1.0 to 1.0).
+        calculate_cost: No modeling at all, just calculate the cost function\
+            for the coefficients as given in the theta file.
+        verbose: Print info every nnnnn steps.
+        tree_growth: Search for best model by growing a model for one\
+            additional coefficient from the previous model for n-1 coefficients.
+        model_search: Search for best model by growing a model for one\
+            additional coefficient from the previous model for n-1 coefficients.
+        max_paths: Maximum number of paths to include (Default = 1000).
+        stop_cost: Stop searching for paths when cost function is below this\
+            value (Default = 0.1).
+        forest_growth: Search over all possible models by comparing models at\
+            incrementally increasing number of path coefficients.
+        grow_all: Search over all possible models by comparing models at\
+            incrementally increasing number of path coefficients.
+        leafpicker: Expands the search optimization to look at multiple paths\
+            to avoid local minimum. This method is the default technique for tree\
+            growth and standard coefficient searches.
     Returns:
         Parameter dictionary
     """
@@ -87,7 +135,25 @@ def v_1d_sem_params(
         "correlation_matrix": correlation_matrix,
         "residual_variance": residual_variance,
         "degrees_of_freedom": degrees_of_freedom,
+        "calculate_cost": calculate_cost,
+        "tree_growth": tree_growth,
+        "model_search": model_search,
+        "forest_growth": forest_growth,
+        "grow_all": grow_all,
+        "leafpicker": leafpicker,
     }
+    if max_iterations is not None:
+        params["max_iterations"] = max_iterations
+    if number_random_trials is not None:
+        params["number_random_trials"] = number_random_trials
+    if limits is not None:
+        params["limits"] = limits
+    if verbose is not None:
+        params["verbose"] = verbose
+    if max_paths is not None:
+        params["max_paths"] = max_paths
+    if stop_cost is not None:
+        params["stop_cost"] = stop_cost
     return params
 
 
@@ -122,7 +188,48 @@ def v_1d_sem_cargs(
         "-DF",
         str(params.get("degrees_of_freedom"))
     ])
-    cargs.append("[OPTIONS]")
+    if params.get("max_iterations") is not None:
+        cargs.extend([
+            "-max_iter",
+            str(params.get("max_iterations"))
+        ])
+    if params.get("number_random_trials") is not None:
+        cargs.extend([
+            "-nrand",
+            str(params.get("number_random_trials"))
+        ])
+    if params.get("limits") is not None:
+        cargs.extend([
+            "-limits",
+            *map(str, params.get("limits"))
+        ])
+    if params.get("calculate_cost"):
+        cargs.append("-calccost")
+    if params.get("verbose") is not None:
+        cargs.extend([
+            "-verbose",
+            str(params.get("verbose"))
+        ])
+    if params.get("tree_growth"):
+        cargs.append("-tree_growth")
+    if params.get("model_search"):
+        cargs.append("-model_search")
+    if params.get("max_paths") is not None:
+        cargs.extend([
+            "-max_paths",
+            str(params.get("max_paths"))
+        ])
+    if params.get("stop_cost") is not None:
+        cargs.extend([
+            "-stop_cost",
+            str(params.get("stop_cost"))
+        ])
+    if params.get("forest_growth"):
+        cargs.append("-forest_growth")
+    if params.get("grow_all"):
+        cargs.append("-grow_all")
+    if params.get("leafpicker"):
+        cargs.append("-leafpicker")
     return cargs
 
 
@@ -176,6 +283,18 @@ def v_1d_sem(
     correlation_matrix: InputPathType,
     residual_variance: InputPathType,
     degrees_of_freedom: float,
+    max_iterations: int | None = None,
+    number_random_trials: int | None = None,
+    limits: list[float] | None = None,
+    calculate_cost: bool = False,
+    verbose: int | None = None,
+    tree_growth: bool = False,
+    model_search: bool = False,
+    max_paths: int | None = None,
+    stop_cost: float | None = None,
+    forest_growth: bool = False,
+    grow_all: bool = False,
+    leafpicker: bool = False,
     runner: Runner | None = None,
 ) -> V1dSemOutputs:
     """
@@ -191,6 +310,30 @@ def v_1d_sem(
         correlation_matrix: Correlation matrix 1D file.
         residual_variance: Residual variance vector 1D file.
         degrees_of_freedom: Degrees of freedom.
+        max_iterations: Maximum number of iterations for convergence\
+            (Default=10000). Values can range from 1 to any positive integer less\
+            than 10000.
+        number_random_trials: Number of random trials before optimization\
+            (Default = 100).
+        limits: Lower and upper limits for connection coefficients (Default =\
+            -1.0 to 1.0).
+        calculate_cost: No modeling at all, just calculate the cost function\
+            for the coefficients as given in the theta file.
+        verbose: Print info every nnnnn steps.
+        tree_growth: Search for best model by growing a model for one\
+            additional coefficient from the previous model for n-1 coefficients.
+        model_search: Search for best model by growing a model for one\
+            additional coefficient from the previous model for n-1 coefficients.
+        max_paths: Maximum number of paths to include (Default = 1000).
+        stop_cost: Stop searching for paths when cost function is below this\
+            value (Default = 0.1).
+        forest_growth: Search over all possible models by comparing models at\
+            incrementally increasing number of path coefficients.
+        grow_all: Search over all possible models by comparing models at\
+            incrementally increasing number of path coefficients.
+        leafpicker: Expands the search optimization to look at multiple paths\
+            to avoid local minimum. This method is the default technique for tree\
+            growth and standard coefficient searches.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dSemOutputs`).
@@ -202,6 +345,18 @@ def v_1d_sem(
         correlation_matrix=correlation_matrix,
         residual_variance=residual_variance,
         degrees_of_freedom=degrees_of_freedom,
+        max_iterations=max_iterations,
+        number_random_trials=number_random_trials,
+        limits=limits,
+        calculate_cost=calculate_cost,
+        verbose=verbose,
+        tree_growth=tree_growth,
+        model_search=model_search,
+        max_paths=max_paths,
+        stop_cost=stop_cost,
+        forest_growth=forest_growth,
+        grow_all=grow_all,
+        leafpicker=leafpicker,
     )
     return v_1d_sem_execute(params, execution)
 

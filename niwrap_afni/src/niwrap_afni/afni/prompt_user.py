@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PROMPT_USER_METADATA = Metadata(
-    id="eeffbea4e522408c1d4978572830a23c9b27d7fb.boutiques",
+    id="50f7b3456cf7fa2cd699f8ebd295c575df5c9675.boutiques",
     name="prompt_user",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,7 @@ PROMPT_USER_METADATA = Metadata(
 PromptUserParameters = typing.TypedDict('PromptUserParameters', {
     "__STYX_TYPE__": typing.Literal["prompt_user"],
     "pause_message": str,
+    "timeout": typing.NotRequired[float | None],
     "timeout_alias": typing.NotRequired[float | None],
 })
 
@@ -61,6 +62,7 @@ class PromptUserOutputs(typing.NamedTuple):
 
 def prompt_user_params(
     pause_message: str,
+    timeout: float | None = None,
     timeout_alias: float | None = None,
 ) -> PromptUserParameters:
     """
@@ -69,6 +71,8 @@ def prompt_user_params(
     Args:
         pause_message: Pops a window prompting the user with MESSAGE. If\
             MESSAGE is '-', it is read from stdin.
+        timeout: Timeout in seconds for the prompt message. Default answer is\
+            returned if TT seconds elapse without user input.
         timeout_alias: Alias for -timeout.
     Returns:
         Parameter dictionary
@@ -77,6 +81,8 @@ def prompt_user_params(
         "__STYXTYPE__": "prompt_user",
         "pause_message": pause_message,
     }
+    if timeout is not None:
+        params["timeout"] = timeout
     if timeout_alias is not None:
         params["timeout_alias"] = timeout_alias
     return params
@@ -101,6 +107,11 @@ def prompt_user_cargs(
         "<-pause>",
         params.get("pause_message")
     ])
+    if params.get("timeout") is not None:
+        cargs.extend([
+            "-timeout",
+            str(params.get("timeout"))
+        ])
     if params.get("timeout_alias") is not None:
         cargs.extend([
             "-to",
@@ -154,6 +165,7 @@ def prompt_user_execute(
 
 def prompt_user(
     pause_message: str,
+    timeout: float | None = None,
     timeout_alias: float | None = None,
     runner: Runner | None = None,
 ) -> PromptUserOutputs:
@@ -167,6 +179,8 @@ def prompt_user(
     Args:
         pause_message: Pops a window prompting the user with MESSAGE. If\
             MESSAGE is '-', it is read from stdin.
+        timeout: Timeout in seconds for the prompt message. Default answer is\
+            returned if TT seconds elapse without user input.
         timeout_alias: Alias for -timeout.
         runner: Command runner.
     Returns:
@@ -176,6 +190,7 @@ def prompt_user(
     execution = runner.start_execution(PROMPT_USER_METADATA)
     params = prompt_user_params(
         pause_message=pause_message,
+        timeout=timeout,
         timeout_alias=timeout_alias,
     )
     return prompt_user_execute(params, execution)

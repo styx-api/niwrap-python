@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_RSFC_METADATA = Metadata(
-    id="b5c2a121f1ca24f0166e661caec651b36aec44bd.boutiques",
+    id="143254090adf81d94650422d3da0d7fcae499cc5.boutiques",
     name="3dRSFC",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,6 +18,27 @@ V3dRsfcParameters = typing.TypedDict('V3dRsfcParameters', {
     "fbot": float,
     "ftop": float,
     "input_dataset": InputPathType,
+    "despike": bool,
+    "ort_file": typing.NotRequired[InputPathType | None],
+    "dsort_file": typing.NotRequired[InputPathType | None],
+    "nodetrend": bool,
+    "time_step": typing.NotRequired[float | None],
+    "nfft": typing.NotRequired[int | None],
+    "norm": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "blur": typing.NotRequired[float | None],
+    "localpv": typing.NotRequired[float | None],
+    "input_alt": typing.NotRequired[InputPathType | None],
+    "band": typing.NotRequired[list[float] | None],
+    "prefix": typing.NotRequired[str | None],
+    "quiet": bool,
+    "no_rs_out": bool,
+    "un_bandpass_out": bool,
+    "no_rsfa": bool,
+    "bp_at_end": bool,
+    "notrans": bool,
+    "nosat": bool,
 })
 
 
@@ -59,9 +80,9 @@ class V3dRsfcOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    filtered_time_series: OutputPathType
+    filtered_time_series: OutputPathType | None
     """Filtered time series output"""
-    un_bandpassed_series: OutputPathType
+    un_bandpassed_series: OutputPathType | None
     """Un-bandpassed series output"""
 
 
@@ -69,6 +90,27 @@ def v_3d_rsfc_params(
     fbot: float,
     ftop: float,
     input_dataset: InputPathType,
+    despike: bool = False,
+    ort_file: InputPathType | None = None,
+    dsort_file: InputPathType | None = None,
+    nodetrend: bool = False,
+    time_step: float | None = None,
+    nfft: int | None = None,
+    norm: bool = False,
+    mask: InputPathType | None = None,
+    automask: bool = False,
+    blur: float | None = None,
+    localpv: float | None = None,
+    input_alt: InputPathType | None = None,
+    band: list[float] | None = None,
+    prefix: str | None = None,
+    quiet: bool = False,
+    no_rs_out: bool = False,
+    un_bandpass_out: bool = False,
+    no_rsfa: bool = False,
+    bp_at_end: bool = False,
+    notrans: bool = False,
+    nosat: bool = False,
 ) -> V3dRsfcParameters:
     """
     Build parameters.
@@ -77,6 +119,30 @@ def v_3d_rsfc_params(
         fbot: Lowest frequency in the passband, in Hz.
         ftop: Highest frequency in the passband (must be > fbot).
         input_dataset: Input dataset (3D+time sequence of volumes).
+        despike: Despike each time series before other processing.
+        ort_file: Also orthogonalize input to columns in specified file.
+        dsort_file: Orthogonalize each voxel to the corresponding voxel time\
+            series in specified dataset.
+        nodetrend: Skip the quadratic detrending of input before FFT-based\
+            bandpassing.
+        time_step: Set time step to specified value in seconds.
+        nfft: Set the FFT length to specified value.
+        norm: Make all output time series have L2 norm = 1.
+        mask: Specify mask dataset.
+        automask: Create a mask from the input dataset.
+        blur: Blur inside the mask only with specified FWHM in mm.
+        localpv: Replace each vector by the local Principal Vector from a\
+            neighborhood radius.
+        input_alt: Alternative way to specify input dataset.
+        band: Alternative way to specify passband frequencies.
+        prefix: Set prefix name of the output dataset.
+        quiet: Turn off the fun and informative messages.
+        no_rs_out: Don't output processed time series, just output parameters.
+        un_bandpass_out: Output the un-bandpassed series as well.
+        no_rsfa: Exclude RSFA output (default is to include).
+        bp_at_end: Bandpassing as the last step in the processing sequence.
+        notrans: Don't check for initial positive transients in the data.
+        nosat: Equivalent to -notrans, skips checking for initial transients.
     Returns:
         Parameter dictionary
     """
@@ -85,7 +151,38 @@ def v_3d_rsfc_params(
         "fbot": fbot,
         "ftop": ftop,
         "input_dataset": input_dataset,
+        "despike": despike,
+        "nodetrend": nodetrend,
+        "norm": norm,
+        "automask": automask,
+        "quiet": quiet,
+        "no_rs_out": no_rs_out,
+        "un_bandpass_out": un_bandpass_out,
+        "no_rsfa": no_rsfa,
+        "bp_at_end": bp_at_end,
+        "notrans": notrans,
+        "nosat": nosat,
     }
+    if ort_file is not None:
+        params["ort_file"] = ort_file
+    if dsort_file is not None:
+        params["dsort_file"] = dsort_file
+    if time_step is not None:
+        params["time_step"] = time_step
+    if nfft is not None:
+        params["nfft"] = nfft
+    if mask is not None:
+        params["mask"] = mask
+    if blur is not None:
+        params["blur"] = blur
+    if localpv is not None:
+        params["localpv"] = localpv
+    if input_alt is not None:
+        params["input_alt"] = input_alt
+    if band is not None:
+        params["band"] = band
+    if prefix is not None:
+        params["prefix"] = prefix
     return params
 
 
@@ -104,10 +201,81 @@ def v_3d_rsfc_cargs(
     """
     cargs = []
     cargs.append("3dRSFC")
-    cargs.append("[OPTIONS]")
     cargs.append(str(params.get("fbot")))
     cargs.append(str(params.get("ftop")))
     cargs.append(execution.input_file(params.get("input_dataset")))
+    if params.get("despike"):
+        cargs.append("-despike")
+    if params.get("ort_file") is not None:
+        cargs.extend([
+            "-ort",
+            execution.input_file(params.get("ort_file"))
+        ])
+    if params.get("dsort_file") is not None:
+        cargs.extend([
+            "-dsort",
+            execution.input_file(params.get("dsort_file"))
+        ])
+    if params.get("nodetrend"):
+        cargs.append("-nodetrend")
+    if params.get("time_step") is not None:
+        cargs.extend([
+            "-dt",
+            str(params.get("time_step"))
+        ])
+    if params.get("nfft") is not None:
+        cargs.extend([
+            "-nfft",
+            str(params.get("nfft"))
+        ])
+    if params.get("norm"):
+        cargs.append("-norm")
+    if params.get("mask") is not None:
+        cargs.extend([
+            "-mask",
+            execution.input_file(params.get("mask"))
+        ])
+    if params.get("automask"):
+        cargs.append("-automask")
+    if params.get("blur") is not None:
+        cargs.extend([
+            "-blur",
+            str(params.get("blur"))
+        ])
+    if params.get("localpv") is not None:
+        cargs.extend([
+            "-localPV",
+            str(params.get("localpv"))
+        ])
+    if params.get("input_alt") is not None:
+        cargs.extend([
+            "-input",
+            execution.input_file(params.get("input_alt"))
+        ])
+    if params.get("band") is not None:
+        cargs.extend([
+            "-band",
+            *map(str, params.get("band"))
+        ])
+    if params.get("prefix") is not None:
+        cargs.extend([
+            "-prefix",
+            params.get("prefix")
+        ])
+    if params.get("quiet"):
+        cargs.append("-quiet")
+    if params.get("no_rs_out"):
+        cargs.append("-no_rs_out")
+    if params.get("un_bandpass_out"):
+        cargs.append("-un_bp_out")
+    if params.get("no_rsfa"):
+        cargs.append("-no_rsfa")
+    if params.get("bp_at_end"):
+        cargs.append("-bp_at_end")
+    if params.get("notrans"):
+        cargs.append("-notrans")
+    if params.get("nosat"):
+        cargs.append("-nosat")
     return cargs
 
 
@@ -126,8 +294,8 @@ def v_3d_rsfc_outputs(
     """
     ret = V3dRsfcOutputs(
         root=execution.output_file("."),
-        filtered_time_series=execution.output_file("[PREFIX]_LFF+orig.*"),
-        un_bandpassed_series=execution.output_file("[PREFIX]_unBP+orig.*"),
+        filtered_time_series=execution.output_file(params.get("prefix") + "_LFF+orig.*") if (params.get("prefix") is not None) else None,
+        un_bandpassed_series=execution.output_file(params.get("prefix") + "_unBP+orig.*") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -161,6 +329,27 @@ def v_3d_rsfc(
     fbot: float,
     ftop: float,
     input_dataset: InputPathType,
+    despike: bool = False,
+    ort_file: InputPathType | None = None,
+    dsort_file: InputPathType | None = None,
+    nodetrend: bool = False,
+    time_step: float | None = None,
+    nfft: int | None = None,
+    norm: bool = False,
+    mask: InputPathType | None = None,
+    automask: bool = False,
+    blur: float | None = None,
+    localpv: float | None = None,
+    input_alt: InputPathType | None = None,
+    band: list[float] | None = None,
+    prefix: str | None = None,
+    quiet: bool = False,
+    no_rs_out: bool = False,
+    un_bandpass_out: bool = False,
+    no_rsfa: bool = False,
+    bp_at_end: bool = False,
+    notrans: bool = False,
+    nosat: bool = False,
     runner: Runner | None = None,
 ) -> V3dRsfcOutputs:
     """
@@ -175,6 +364,30 @@ def v_3d_rsfc(
         fbot: Lowest frequency in the passband, in Hz.
         ftop: Highest frequency in the passband (must be > fbot).
         input_dataset: Input dataset (3D+time sequence of volumes).
+        despike: Despike each time series before other processing.
+        ort_file: Also orthogonalize input to columns in specified file.
+        dsort_file: Orthogonalize each voxel to the corresponding voxel time\
+            series in specified dataset.
+        nodetrend: Skip the quadratic detrending of input before FFT-based\
+            bandpassing.
+        time_step: Set time step to specified value in seconds.
+        nfft: Set the FFT length to specified value.
+        norm: Make all output time series have L2 norm = 1.
+        mask: Specify mask dataset.
+        automask: Create a mask from the input dataset.
+        blur: Blur inside the mask only with specified FWHM in mm.
+        localpv: Replace each vector by the local Principal Vector from a\
+            neighborhood radius.
+        input_alt: Alternative way to specify input dataset.
+        band: Alternative way to specify passband frequencies.
+        prefix: Set prefix name of the output dataset.
+        quiet: Turn off the fun and informative messages.
+        no_rs_out: Don't output processed time series, just output parameters.
+        un_bandpass_out: Output the un-bandpassed series as well.
+        no_rsfa: Exclude RSFA output (default is to include).
+        bp_at_end: Bandpassing as the last step in the processing sequence.
+        notrans: Don't check for initial positive transients in the data.
+        nosat: Equivalent to -notrans, skips checking for initial transients.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRsfcOutputs`).
@@ -185,6 +398,27 @@ def v_3d_rsfc(
         fbot=fbot,
         ftop=ftop,
         input_dataset=input_dataset,
+        despike=despike,
+        ort_file=ort_file,
+        dsort_file=dsort_file,
+        nodetrend=nodetrend,
+        time_step=time_step,
+        nfft=nfft,
+        norm=norm,
+        mask=mask,
+        automask=automask,
+        blur=blur,
+        localpv=localpv,
+        input_alt=input_alt,
+        band=band,
+        prefix=prefix,
+        quiet=quiet,
+        no_rs_out=no_rs_out,
+        un_bandpass_out=un_bandpass_out,
+        no_rsfa=no_rsfa,
+        bp_at_end=bp_at_end,
+        notrans=notrans,
+        nosat=nosat,
     )
     return v_3d_rsfc_execute(params, execution)
 

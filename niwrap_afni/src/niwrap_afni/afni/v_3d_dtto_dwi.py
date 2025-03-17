@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_DTTO_DWI_METADATA = Metadata(
-    id="0f0fbb0dc2b7d522416ef673b66be8d6a5895cef.boutiques",
+    id="3ce4d55f82946de86dac4267e097694ede4e7771.boutiques",
     name="3dDTtoDWI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,6 +18,11 @@ V3dDttoDwiParameters = typing.TypedDict('V3dDttoDwiParameters', {
     "gradient_file": InputPathType,
     "i0_dataset": InputPathType,
     "dt_dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "automask": bool,
+    "datum_type": typing.NotRequired[str | None],
+    "scale_out_1000": bool,
+    "help": bool,
 })
 
 
@@ -59,7 +64,7 @@ class V3dDttoDwiOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    output_dwi: OutputPathType
+    output_dwi: OutputPathType | None
     """Computed DWI images including sub-brick for each gradient vector."""
 
 
@@ -67,6 +72,11 @@ def v_3d_dtto_dwi_params(
     gradient_file: InputPathType,
     i0_dataset: InputPathType,
     dt_dataset: InputPathType,
+    prefix: str | None = None,
+    automask: bool = False,
+    datum_type: str | None = None,
+    scale_out_1000: bool = False,
+    help_: bool = False,
 ) -> V3dDttoDwiParameters:
     """
     Build parameters.
@@ -77,6 +87,12 @@ def v_3d_dtto_dwi_params(
         i0_dataset: Volume without any gradient applied.
         dt_dataset: 6-sub-brick dataset containing the diffusion tensor data\
             (Dxx, Dxy, Dyy, Dxz, Dyz, Dzz).
+        prefix: Prefix for the output dataset name.
+        automask: Compute gradient images only for high-intensity (brain)\
+            voxels.
+        datum_type: Type of the output dataset (float, short, or byte).
+        scale_out_1000: Match with 3dDWItoDT's '-scale_out_1000' functionality.
+        help_: Show help message.
     Returns:
         Parameter dictionary
     """
@@ -85,7 +101,14 @@ def v_3d_dtto_dwi_params(
         "gradient_file": gradient_file,
         "i0_dataset": i0_dataset,
         "dt_dataset": dt_dataset,
+        "automask": automask,
+        "scale_out_1000": scale_out_1000,
+        "help": help_,
     }
+    if prefix is not None:
+        params["prefix"] = prefix
+    if datum_type is not None:
+        params["datum_type"] = datum_type
     return params
 
 
@@ -104,10 +127,25 @@ def v_3d_dtto_dwi_cargs(
     """
     cargs = []
     cargs.append("3dDTtoDWI")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("gradient_file")))
     cargs.append(execution.input_file(params.get("i0_dataset")))
     cargs.append(execution.input_file(params.get("dt_dataset")))
+    if params.get("prefix") is not None:
+        cargs.extend([
+            "-prefix",
+            params.get("prefix")
+        ])
+    if params.get("automask"):
+        cargs.append("-automask")
+    if params.get("datum_type") is not None:
+        cargs.extend([
+            "-datum",
+            params.get("datum_type")
+        ])
+    if params.get("scale_out_1000"):
+        cargs.append("-scale_out_1000")
+    if params.get("help"):
+        cargs.append("-help")
     return cargs
 
 
@@ -126,7 +164,7 @@ def v_3d_dtto_dwi_outputs(
     """
     ret = V3dDttoDwiOutputs(
         root=execution.output_file("."),
-        output_dwi=execution.output_file("[PREFIX]*.HEAD"),
+        output_dwi=execution.output_file(params.get("prefix") + "*.HEAD") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -160,6 +198,11 @@ def v_3d_dtto_dwi(
     gradient_file: InputPathType,
     i0_dataset: InputPathType,
     dt_dataset: InputPathType,
+    prefix: str | None = None,
+    automask: bool = False,
+    datum_type: str | None = None,
+    scale_out_1000: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> V3dDttoDwiOutputs:
     """
@@ -176,6 +219,12 @@ def v_3d_dtto_dwi(
         i0_dataset: Volume without any gradient applied.
         dt_dataset: 6-sub-brick dataset containing the diffusion tensor data\
             (Dxx, Dxy, Dyy, Dxz, Dyz, Dzz).
+        prefix: Prefix for the output dataset name.
+        automask: Compute gradient images only for high-intensity (brain)\
+            voxels.
+        datum_type: Type of the output dataset (float, short, or byte).
+        scale_out_1000: Match with 3dDWItoDT's '-scale_out_1000' functionality.
+        help_: Show help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDttoDwiOutputs`).
@@ -186,6 +235,11 @@ def v_3d_dtto_dwi(
         gradient_file=gradient_file,
         i0_dataset=i0_dataset,
         dt_dataset=dt_dataset,
+        prefix=prefix,
+        automask=automask,
+        datum_type=datum_type,
+        scale_out_1000=scale_out_1000,
+        help_=help_,
     )
     return v_3d_dtto_dwi_execute(params, execution)
 

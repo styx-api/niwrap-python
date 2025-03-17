@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSGEN_METADATA = Metadata(
-    id="99758b64781663ffd508cccdf61b5f963c784b4a.boutiques",
+    id="23ea0ec274045284df882fa88ec58e47ba43443f.boutiques",
     name="3dTSgen",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -27,6 +27,7 @@ V3dTsgenParameters = typing.TypedDict('V3dTsgenParameters', {
     "signal_coef": typing.NotRequired[str | None],
     "noise_coef": typing.NotRequired[str | None],
     "bucket_config": typing.NotRequired[str | None],
+    "brick_config": typing.NotRequired[str | None],
 })
 
 
@@ -82,6 +83,7 @@ def v_3d_tsgen_params(
     signal_coef: str | None = None,
     noise_coef: str | None = None,
     bucket_config: str | None = None,
+    brick_config: str | None = None,
 ) -> V3dTsgenParameters:
     """
     Build parameters.
@@ -106,6 +108,9 @@ def v_3d_tsgen_params(
         bucket_config: Create one AFNI 'bucket' dataset containing n\
             sub-bricks. n=0 creates the default output. Output 'bucket' is written\
             to prefixname.
+        brick_config: Specify content for sub-brick in the form 'm t k label'\
+            where m is the sub-brick number, t is 'scoef' or 'ncoef', k is\
+            parameter index, and label is a descriptive label.
     Returns:
         Parameter dictionary
     """
@@ -130,6 +135,8 @@ def v_3d_tsgen_params(
         params["noise_coef"] = noise_coef
     if bucket_config is not None:
         params["bucket_config"] = bucket_config
+    if brick_config is not None:
+        params["brick_config"] = brick_config
     return params
 
 
@@ -197,6 +204,11 @@ def v_3d_tsgen_cargs(
             "-bucket",
             params.get("bucket_config")
         ])
+    if params.get("brick_config") is not None:
+        cargs.extend([
+            "-brick",
+            params.get("brick_config")
+        ])
     return cargs
 
 
@@ -257,6 +269,7 @@ def v_3d_tsgen(
     signal_coef: str | None = None,
     noise_coef: str | None = None,
     bucket_config: str | None = None,
+    brick_config: str | None = None,
     runner: Runner | None = None,
 ) -> V3dTsgenOutputs:
     """
@@ -287,6 +300,9 @@ def v_3d_tsgen(
         bucket_config: Create one AFNI 'bucket' dataset containing n\
             sub-bricks. n=0 creates the default output. Output 'bucket' is written\
             to prefixname.
+        brick_config: Specify content for sub-brick in the form 'm t k label'\
+            where m is the sub-brick number, t is 'scoef' or 'ncoef', k is\
+            parameter index, and label is a descriptive label.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTsgenOutputs`).
@@ -306,6 +322,7 @@ def v_3d_tsgen(
         signal_coef=signal_coef,
         noise_coef=noise_coef,
         bucket_config=bucket_config,
+        brick_config=brick_config,
     )
     return v_3d_tsgen_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CM_METADATA = Metadata(
-    id="b067b12b1032c8b1f441c220e6f5349f1cfe1370.boutiques",
+    id="63ca74289af452584f6dd9b272bc4b15b6ffb8b0.boutiques",
     name="3dCM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,14 @@ V_3D_CM_METADATA = Metadata(
 V3dCmParameters = typing.TypedDict('V3dCmParameters', {
     "__STYX_TYPE__": typing.Literal["3dCM"],
     "dset": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "set_origin": typing.NotRequired[list[float] | None],
+    "local_ijk": bool,
+    "roi_vals": typing.NotRequired[list[float] | None],
+    "all_rois": bool,
+    "icent": bool,
+    "dcent": bool,
 })
 
 
@@ -63,19 +71,55 @@ class V3dCmOutputs(typing.NamedTuple):
 
 def v_3d_cm_params(
     dset: InputPathType,
+    mask: InputPathType | None = None,
+    automask: bool = False,
+    set_origin: list[float] | None = None,
+    local_ijk: bool = False,
+    roi_vals: list[float] | None = None,
+    all_rois: bool = False,
+    icent: bool = False,
+    dcent: bool = False,
 ) -> V3dCmParameters:
     """
     Build parameters.
     
     Args:
         dset: Input dataset.
+        mask: Use the specified dataset as a mask. Only voxels with nonzero\
+            values in 'mset' will be averaged from 'dataset'. Both datasets must\
+            have the same number of voxels.
+        automask: Generate the mask automatically.
+        set_origin: After computing the CM of the dataset, set the origin\
+            fields in the header so that the CM will be at (x,y,z) in DICOM\
+            coordinates.
+        local_ijk: Output values as (i,j,k) in local orientation.
+        roi_vals: Compute center of mass for each blob with specified voxel\
+            values.
+        all_rois: Automatically find all ROI values and compute their centers\
+            of mass.
+        icent: Compute Internal Center, which finds the center voxel closest to\
+            the center of mass.
+        dcent: Compute Distance Center, the center voxel with the shortest\
+            average distance to all other voxels. This is computationally\
+            expensive.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dCM",
         "dset": dset,
+        "automask": automask,
+        "local_ijk": local_ijk,
+        "all_rois": all_rois,
+        "icent": icent,
+        "dcent": dcent,
     }
+    if mask is not None:
+        params["mask"] = mask
+    if set_origin is not None:
+        params["set_origin"] = set_origin
+    if roi_vals is not None:
+        params["roi_vals"] = roi_vals
     return params
 
 
@@ -94,8 +138,32 @@ def v_3d_cm_cargs(
     """
     cargs = []
     cargs.append("3dCM")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("dset")))
+    if params.get("mask") is not None:
+        cargs.extend([
+            "-mask",
+            execution.input_file(params.get("mask"))
+        ])
+    if params.get("automask"):
+        cargs.append("-automask")
+    if params.get("set_origin") is not None:
+        cargs.extend([
+            "-set",
+            *map(str, params.get("set_origin"))
+        ])
+    if params.get("local_ijk"):
+        cargs.append("-local_ijk")
+    if params.get("roi_vals") is not None:
+        cargs.extend([
+            "-roi_vals",
+            *map(str, params.get("roi_vals"))
+        ])
+    if params.get("all_rois"):
+        cargs.append("-all_rois")
+    if params.get("icent"):
+        cargs.append("-Icent")
+    if params.get("dcent"):
+        cargs.append("-Dcent")
     return cargs
 
 
@@ -145,6 +213,14 @@ def v_3d_cm_execute(
 
 def v_3d_cm(
     dset: InputPathType,
+    mask: InputPathType | None = None,
+    automask: bool = False,
+    set_origin: list[float] | None = None,
+    local_ijk: bool = False,
+    roi_vals: list[float] | None = None,
+    all_rois: bool = False,
+    icent: bool = False,
+    dcent: bool = False,
     runner: Runner | None = None,
 ) -> V3dCmOutputs:
     """
@@ -156,6 +232,23 @@ def v_3d_cm(
     
     Args:
         dset: Input dataset.
+        mask: Use the specified dataset as a mask. Only voxels with nonzero\
+            values in 'mset' will be averaged from 'dataset'. Both datasets must\
+            have the same number of voxels.
+        automask: Generate the mask automatically.
+        set_origin: After computing the CM of the dataset, set the origin\
+            fields in the header so that the CM will be at (x,y,z) in DICOM\
+            coordinates.
+        local_ijk: Output values as (i,j,k) in local orientation.
+        roi_vals: Compute center of mass for each blob with specified voxel\
+            values.
+        all_rois: Automatically find all ROI values and compute their centers\
+            of mass.
+        icent: Compute Internal Center, which finds the center voxel closest to\
+            the center of mass.
+        dcent: Compute Distance Center, the center voxel with the shortest\
+            average distance to all other voxels. This is computationally\
+            expensive.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dCmOutputs`).
@@ -164,6 +257,14 @@ def v_3d_cm(
     execution = runner.start_execution(V_3D_CM_METADATA)
     params = v_3d_cm_params(
         dset=dset,
+        mask=mask,
+        automask=automask,
+        set_origin=set_origin,
+        local_ijk=local_ijk,
+        roi_vals=roi_vals,
+        all_rois=all_rois,
+        icent=icent,
+        dcent=dcent,
     )
     return v_3d_cm_execute(params, execution)
 

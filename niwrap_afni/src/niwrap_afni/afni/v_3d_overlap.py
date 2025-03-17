@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_OVERLAP_METADATA = Metadata(
-    id="a1bc040d8dc7e5b89536a75a10ba6ad55a1ecc95.boutiques",
+    id="55cf3c3d26402707160ae90ffa63fe67eaa8da85.boutiques",
     name="3dOverlap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,7 @@ V3dOverlapParameters = typing.TypedDict('V3dOverlapParameters', {
     "__STYX_TYPE__": typing.Literal["3dOverlap"],
     "dataset1": InputPathType,
     "dataset2": list[InputPathType],
+    "save_prefix": typing.NotRequired[str | None],
 })
 
 
@@ -58,15 +59,16 @@ class V3dOverlapOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    output_brik: OutputPathType
+    output_brik: OutputPathType | None
     """BRIK file with count of overlaps at each voxel (if -save is used)"""
-    output_head: OutputPathType
+    output_head: OutputPathType | None
     """HEAD file with count of overlaps at each voxel (if -save is used)"""
 
 
 def v_3d_overlap_params(
     dataset1: InputPathType,
     dataset2: list[InputPathType],
+    save_prefix: str | None = None,
 ) -> V3dOverlapParameters:
     """
     Build parameters.
@@ -74,6 +76,8 @@ def v_3d_overlap_params(
     Args:
         dataset1: First input dataset (e.g. dset1+orig).
         dataset2: Second input dataset (e.g. dset2+orig).
+        save_prefix: Save the count of overlaps at each voxel into a dataset\
+            with the given prefix.
     Returns:
         Parameter dictionary
     """
@@ -82,6 +86,8 @@ def v_3d_overlap_params(
         "dataset1": dataset1,
         "dataset2": dataset2,
     }
+    if save_prefix is not None:
+        params["save_prefix"] = save_prefix
     return params
 
 
@@ -100,9 +106,13 @@ def v_3d_overlap_cargs(
     """
     cargs = []
     cargs.append("3dOverlap")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("dataset1")))
     cargs.extend([execution.input_file(f) for f in params.get("dataset2")])
+    if params.get("save_prefix") is not None:
+        cargs.extend([
+            "-save",
+            params.get("save_prefix")
+        ])
     return cargs
 
 
@@ -121,8 +131,8 @@ def v_3d_overlap_outputs(
     """
     ret = V3dOverlapOutputs(
         root=execution.output_file("."),
-        output_brik=execution.output_file("[SAVE_PREFIX]+orig.BRIK"),
-        output_head=execution.output_file("[SAVE_PREFIX]+orig.HEAD"),
+        output_brik=execution.output_file(params.get("save_prefix") + "+orig.BRIK") if (params.get("save_prefix") is not None) else None,
+        output_head=execution.output_file(params.get("save_prefix") + "+orig.HEAD") if (params.get("save_prefix") is not None) else None,
     )
     return ret
 
@@ -154,6 +164,7 @@ def v_3d_overlap_execute(
 def v_3d_overlap(
     dataset1: InputPathType,
     dataset2: list[InputPathType],
+    save_prefix: str | None = None,
     runner: Runner | None = None,
 ) -> V3dOverlapOutputs:
     """
@@ -166,6 +177,8 @@ def v_3d_overlap(
     Args:
         dataset1: First input dataset (e.g. dset1+orig).
         dataset2: Second input dataset (e.g. dset2+orig).
+        save_prefix: Save the count of overlaps at each voxel into a dataset\
+            with the given prefix.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dOverlapOutputs`).
@@ -175,6 +188,7 @@ def v_3d_overlap(
     params = v_3d_overlap_params(
         dataset1=dataset1,
         dataset2=dataset2,
+        save_prefix=save_prefix,
     )
     return v_3d_overlap_execute(params, execution)
 

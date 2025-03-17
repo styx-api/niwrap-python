@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_MEPFM_METADATA = Metadata(
-    id="44860000dde3dcae9381914d7a939fdce74cff79.boutiques",
+    id="32cebfe19ae42e608df27da2db7aceaf30da29c6.boutiques",
     name="3dMEPFM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -150,7 +150,6 @@ def v_3d_mepfm_cargs(
             "-verb",
             str(params.get("verbosity"))
         ])
-    cargs.append("[OTHER_OPTIONS]")
     return cargs
 
 

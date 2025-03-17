@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1DDOT_METADATA = Metadata(
-    id="89e3bea294b27fb22b4f6d2f28db83dbf8daea66.boutiques",
+    id="3b57cf09716c42dc28cccea1c8b49a4f626abd0b.boutiques",
     name="1ddot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -64,6 +64,8 @@ class V1ddotOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
+    stdout: list[str]
+    """output text file"""
     stdout_output: OutputPathType
     """Output correlation or covariance matrix printed to stdout."""
 
@@ -140,8 +142,6 @@ def v_1ddot_cargs(
     if params.get("okzero_flag"):
         cargs.append("-okzero")
     cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    cargs.append(">")
-    cargs.append("stdout.txt")
     return cargs
 
 
@@ -160,6 +160,7 @@ def v_1ddot_outputs(
     """
     ret = V1ddotOutputs(
         root=execution.output_file("."),
+        stdout=[],
         stdout_output=execution.output_file("stdout.txt"),
     )
     return ret
@@ -186,7 +187,7 @@ def v_1ddot_execute(
     params = execution.params(params)
     cargs = v_1ddot_cargs(params, execution)
     ret = v_1ddot_outputs(params, execution)
-    execution.run(cargs)
+    execution.run(cargs, handle_stdout=lambda s: ret.stdout.append(s))
     return ret
 
 

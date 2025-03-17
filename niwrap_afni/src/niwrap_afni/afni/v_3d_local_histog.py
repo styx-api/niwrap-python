@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LOCAL_HISTOG_METADATA = Metadata(
-    id="de01f1dbbd5bfe5031e2c7c493ec364d82e32012.boutiques",
+    id="b6fca81642196b74e87aaa904d948945eae79fdd.boutiques",
     name="3dLocalHistog",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -20,7 +20,10 @@ V3dLocalHistogParameters = typing.TypedDict('V3dLocalHistogParameters', {
     "hsave": typing.NotRequired[str | None],
     "lab_file": typing.NotRequired[InputPathType | None],
     "exclude": typing.NotRequired[list[str] | None],
+    "exc_nonlab": bool,
     "mincount": typing.NotRequired[float | None],
+    "probability": bool,
+    "quiet": bool,
     "input_datasets": list[InputPathType],
 })
 
@@ -78,7 +81,10 @@ def v_3d_local_histog_params(
     hsave: str | None = None,
     lab_file: InputPathType | None = None,
     exclude: list[str] | None = None,
+    exc_nonlab: bool = False,
     mincount: float | None = None,
+    probability: bool = False,
+    quiet: bool = False,
 ) -> V3dLocalHistogParameters:
     """
     Build parameters.
@@ -94,14 +100,22 @@ def v_3d_local_histog_params(
         lab_file: Use file 'LL' as a label file.
         exclude: Exclude values from 'a' to 'b' from the counting. This option\
             can be used more than once.
+        exc_nonlab: If '-lab_file' is used, then exclude all values that are\
+            NOT in the label file (except for 0).
         mincount: Exclude values which appear in the overall histogram fewer\
             than 'mm' times.
+        probability: Convert each count to a probability by dividing by the\
+            total number of counts at each voxel.
+        quiet: Stop the highly informative progress reports.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dLocalHistog",
         "prefix": prefix,
+        "exc_nonlab": exc_nonlab,
+        "probability": probability,
+        "quiet": quiet,
         "input_datasets": input_datasets,
     }
     if nbhd_option is not None:
@@ -156,11 +170,17 @@ def v_3d_local_histog_cargs(
             "-exclude",
             *params.get("exclude")
         ])
+    if params.get("exc_nonlab"):
+        cargs.append("-excNONLAB")
     if params.get("mincount") is not None:
         cargs.extend([
             "-mincount",
             str(params.get("mincount"))
         ])
+    if params.get("probability"):
+        cargs.append("-prob")
+    if params.get("quiet"):
+        cargs.append("-quiet")
     cargs.extend([execution.input_file(f) for f in params.get("input_datasets")])
     return cargs
 
@@ -218,7 +238,10 @@ def v_3d_local_histog(
     hsave: str | None = None,
     lab_file: InputPathType | None = None,
     exclude: list[str] | None = None,
+    exc_nonlab: bool = False,
     mincount: float | None = None,
+    probability: bool = False,
+    quiet: bool = False,
     runner: Runner | None = None,
 ) -> V3dLocalHistogOutputs:
     """
@@ -239,8 +262,13 @@ def v_3d_local_histog(
         lab_file: Use file 'LL' as a label file.
         exclude: Exclude values from 'a' to 'b' from the counting. This option\
             can be used more than once.
+        exc_nonlab: If '-lab_file' is used, then exclude all values that are\
+            NOT in the label file (except for 0).
         mincount: Exclude values which appear in the overall histogram fewer\
             than 'mm' times.
+        probability: Convert each count to a probability by dividing by the\
+            total number of counts at each voxel.
+        quiet: Stop the highly informative progress reports.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLocalHistogOutputs`).
@@ -253,7 +281,10 @@ def v_3d_local_histog(
         hsave=hsave,
         lab_file=lab_file,
         exclude=exclude,
+        exc_nonlab=exc_nonlab,
         mincount=mincount,
+        probability=probability,
+        quiet=quiet,
         input_datasets=input_datasets,
     )
     return v_3d_local_histog_execute(params, execution)

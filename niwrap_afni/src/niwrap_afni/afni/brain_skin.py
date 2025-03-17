@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BRAIN_SKIN_METADATA = Metadata(
-    id="4f110568466cb173a0801348ecaabe46ca587148.boutiques",
+    id="b29116757bd00299a9e042bed62f178844c81d0f.boutiques",
     name="BrainSkin",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -24,6 +24,7 @@ BrainSkinParameters = typing.TypedDict('BrainSkinParameters', {
     "voxelize": typing.NotRequired[str | None],
     "infill": typing.NotRequired[str | None],
     "out_file": typing.NotRequired[InputPathType | None],
+    "vol_skin": typing.NotRequired[InputPathType | None],
     "vol_hull": typing.NotRequired[InputPathType | None],
     "no_zero_attraction": bool,
     "node_dbg": typing.NotRequired[float | None],
@@ -103,6 +104,7 @@ def brain_skin_params(
     voxelize: str | None = None,
     infill: str | None = None,
     out_file: InputPathType | None = None,
+    vol_skin: InputPathType | None = None,
     vol_hull: InputPathType | None = None,
     no_zero_attraction: bool = False,
     node_dbg: float | None = None,
@@ -124,6 +126,8 @@ def brain_skin_params(
         infill: Infill method. Choose from: slow: proper infill, but not\
             needed, fast: brutish infill, all we need (default).
         out_file: Output intermediary results from skin forming step.
+        vol_skin: Deform an Icosahedron to match the outer boundary of a mask\
+            volume.
         vol_hull: Deform an Icosahedron to match the convex hull of a mask\
             volume.
         no_zero_attraction: With vol_skin, the surface will try to shrink\
@@ -152,6 +156,8 @@ def brain_skin_params(
         params["infill"] = infill
     if out_file is not None:
         params["out_file"] = out_file
+    if vol_skin is not None:
+        params["vol_skin"] = vol_skin
     if vol_hull is not None:
         params["vol_hull"] = vol_hull
     if node_dbg is not None:
@@ -212,6 +218,11 @@ def brain_skin_cargs(
         cargs.extend([
             "-out",
             execution.input_file(params.get("out_file"))
+        ])
+    if params.get("vol_skin") is not None:
+        cargs.extend([
+            "-vol_skin",
+            execution.input_file(params.get("vol_skin"))
         ])
     if params.get("vol_hull") is not None:
         cargs.extend([
@@ -293,6 +304,7 @@ def brain_skin(
     voxelize: str | None = None,
     infill: str | None = None,
     out_file: InputPathType | None = None,
+    vol_skin: InputPathType | None = None,
     vol_hull: InputPathType | None = None,
     no_zero_attraction: bool = False,
     node_dbg: float | None = None,
@@ -320,6 +332,8 @@ def brain_skin(
         infill: Infill method. Choose from: slow: proper infill, but not\
             needed, fast: brutish infill, all we need (default).
         out_file: Output intermediary results from skin forming step.
+        vol_skin: Deform an Icosahedron to match the outer boundary of a mask\
+            volume.
         vol_hull: Deform an Icosahedron to match the convex hull of a mask\
             volume.
         no_zero_attraction: With vol_skin, the surface will try to shrink\
@@ -342,6 +356,7 @@ def brain_skin(
         voxelize=voxelize,
         infill=infill,
         out_file=out_file,
+        vol_skin=vol_skin,
         vol_hull=vol_hull,
         no_zero_attraction=no_zero_attraction,
         node_dbg=node_dbg,

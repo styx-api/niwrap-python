@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__AFNI_REFACER_RUN_METADATA = Metadata(
-    id="72757fe4907642f44cb063cfa3ee5dc5dda0045b.boutiques",
+    id="05c4592de14c41d5679adfa648daf4eba8e4cce2.boutiques",
     name="@afni_refacer_run",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,9 @@ V__AFNI_REFACER_RUN_METADATA = Metadata(
 VAfniRefacerRunParameters = typing.TypedDict('VAfniRefacerRunParameters', {
     "__STYX_TYPE__": typing.Literal["@afni_refacer_run"],
     "input_file": InputPathType,
+    "mode_deface": bool,
+    "mode_reface": bool,
+    "mode_reface_plus": bool,
     "mode_all": bool,
     "prefix": str,
     "anonymize_output": bool,
@@ -81,6 +84,9 @@ class VAfniRefacerRunOutputs(typing.NamedTuple):
 def v__afni_refacer_run_params(
     input_file: InputPathType,
     prefix: str,
+    mode_deface: bool = False,
+    mode_reface: bool = False,
+    mode_reface_plus: bool = False,
     mode_all: bool = False,
     anonymize_output: bool = False,
     cost_function: str | None = None,
@@ -96,6 +102,13 @@ def v__afni_refacer_run_params(
     Args:
         input_file: Name of input dataset; can contain path information.
         prefix: Name of output dataset.
+        mode_deface: Replace the computed face+ears voxels with all zeros\
+            instead of the artificial face (ears are also removed).
+        mode_reface: Replace the subject's face+ears with a scaled set of\
+            artificial values.
+        mode_reface_plus: Replace the subject's face+ears+skull with a scaled\
+            set of artificial values (i.e., like 'refacing', but replacing a more\
+            complete shell around the subject's brain).
         mode_all: Output three volumes: one defaced, one refaced and one\
             reface_plused.
         anonymize_output: Use 3drefit and nifti_tool to anonymize the output\
@@ -120,6 +133,9 @@ def v__afni_refacer_run_params(
     params = {
         "__STYXTYPE__": "@afni_refacer_run",
         "input_file": input_file,
+        "mode_deface": mode_deface,
+        "mode_reface": mode_reface,
+        "mode_reface_plus": mode_reface_plus,
         "mode_all": mode_all,
         "prefix": prefix,
         "anonymize_output": anonymize_output,
@@ -154,6 +170,12 @@ def v__afni_refacer_run_cargs(
         "-input",
         execution.input_file(params.get("input_file"))
     ])
+    if params.get("mode_deface"):
+        cargs.append("-mode_deface")
+    if params.get("mode_reface"):
+        cargs.append("-mode_reface")
+    if params.get("mode_reface_plus"):
+        cargs.append("-mode_reface_plus")
     if params.get("mode_all"):
         cargs.append("-mode_all")
     cargs.extend([
@@ -235,6 +257,9 @@ def v__afni_refacer_run_execute(
 def v__afni_refacer_run(
     input_file: InputPathType,
     prefix: str,
+    mode_deface: bool = False,
+    mode_reface: bool = False,
+    mode_reface_plus: bool = False,
     mode_all: bool = False,
     anonymize_output: bool = False,
     cost_function: str | None = None,
@@ -256,6 +281,13 @@ def v__afni_refacer_run(
     Args:
         input_file: Name of input dataset; can contain path information.
         prefix: Name of output dataset.
+        mode_deface: Replace the computed face+ears voxels with all zeros\
+            instead of the artificial face (ears are also removed).
+        mode_reface: Replace the subject's face+ears with a scaled set of\
+            artificial values.
+        mode_reface_plus: Replace the subject's face+ears+skull with a scaled\
+            set of artificial values (i.e., like 'refacing', but replacing a more\
+            complete shell around the subject's brain).
         mode_all: Output three volumes: one defaced, one refaced and one\
             reface_plused.
         anonymize_output: Use 3drefit and nifti_tool to anonymize the output\
@@ -282,6 +314,9 @@ def v__afni_refacer_run(
     execution = runner.start_execution(V__AFNI_REFACER_RUN_METADATA)
     params = v__afni_refacer_run_params(
         input_file=input_file,
+        mode_deface=mode_deface,
+        mode_reface=mode_reface,
+        mode_reface_plus=mode_reface_plus,
         mode_all=mode_all,
         prefix=prefix,
         anonymize_output=anonymize_output,

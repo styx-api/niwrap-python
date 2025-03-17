@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__MAKE_LABEL_TABLE_METADATA = Metadata(
-    id="20feae505751ac89a0b8a088a83f7ee7d488f8c6.boutiques",
+    id="287075a9705f1e3aa4609a67bab5671fa4e1d6b9.boutiques",
     name="@MakeLabelTable",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,6 +19,7 @@ VMakeLabelTableParameters = typing.TypedDict('VMakeLabelTableParameters', {
     "atlas_pointlist": typing.NotRequired[str | None],
     "lab_r": typing.NotRequired[list[str] | None],
     "lab_v": typing.NotRequired[list[str] | None],
+    "lab_file_delim": typing.NotRequired[str | None],
     "lab_file": typing.NotRequired[list[str] | None],
     "dset": typing.NotRequired[InputPathType | None],
     "longnames": typing.NotRequired[float | None],
@@ -105,6 +106,7 @@ def v__make_label_table_params(
     atlas_pointlist: str | None = None,
     lab_r: list[str] | None = None,
     lab_v: list[str] | None = None,
+    lab_file_delim: str | None = None,
     lab_file: list[str] | None = None,
     dset: InputPathType | None = None,
     longnames: float | None = None,
@@ -144,6 +146,7 @@ def v__make_label_table_params(
         atlas_pointlist: Instead of a label table, produce an atlas point list.
         lab_r: Define a label with its minimum and maximum key values.
         lab_v: Define a label and its value.
+        lab_file_delim: Set column delimiter for -lab_file option.
         lab_file: Specify labels and keys from a text file.
         dset: Attach the label table (or atlas point list) to dataset.
         longnames: Allow for another column of long names for regions.
@@ -202,6 +205,8 @@ def v__make_label_table_params(
         params["lab_r"] = lab_r
     if lab_v is not None:
         params["lab_v"] = lab_v
+    if lab_file_delim is not None:
+        params["lab_file_delim"] = lab_file_delim
     if lab_file is not None:
         params["lab_file"] = lab_file
     if dset is not None:
@@ -278,6 +283,11 @@ def v__make_label_table_cargs(
         cargs.extend([
             "-lab_v",
             *params.get("lab_v")
+        ])
+    if params.get("lab_file_delim") is not None:
+        cargs.extend([
+            "-lab_file_delim",
+            params.get("lab_file_delim")
         ])
     if params.get("lab_file") is not None:
         cargs.extend([
@@ -454,6 +464,7 @@ def v__make_label_table(
     atlas_pointlist: str | None = None,
     lab_r: list[str] | None = None,
     lab_v: list[str] | None = None,
+    lab_file_delim: str | None = None,
     lab_file: list[str] | None = None,
     dset: InputPathType | None = None,
     longnames: float | None = None,
@@ -498,6 +509,7 @@ def v__make_label_table(
         atlas_pointlist: Instead of a label table, produce an atlas point list.
         lab_r: Define a label with its minimum and maximum key values.
         lab_v: Define a label and its value.
+        lab_file_delim: Set column delimiter for -lab_file option.
         lab_file: Specify labels and keys from a text file.
         dset: Attach the label table (or atlas point list) to dataset.
         longnames: Allow for another column of long names for regions.
@@ -544,6 +556,7 @@ def v__make_label_table(
         atlas_pointlist=atlas_pointlist,
         lab_r=lab_r,
         lab_v=lab_v,
+        lab_file_delim=lab_file_delim,
         lab_file=lab_file,
         dset=dset,
         longnames=longnames,

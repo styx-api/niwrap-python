@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_INFO_METADATA = Metadata(
-    id="91fa2904287da85a4df485d2f8c7ffbc9ba1a073.boutiques",
+    id="869be3f2fd4b338333ddb5e88a1f6d232910e89e.boutiques",
     name="SurfInfo",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,12 +19,22 @@ SurfInfoParameters = typing.TypedDict('SurfInfoParameters', {
     "com": bool,
     "debug_level": typing.NotRequired[float | None],
     "detail_level": typing.NotRequired[float | None],
+    "n_node": bool,
+    "n_faceset": bool,
+    "n_tri": bool,
     "quiet": bool,
     "separator": typing.NotRequired[str | None],
     "input_surface": typing.NotRequired[str | None],
     "surface_state": typing.NotRequired[str | None],
     "surface_volume": typing.NotRequired[InputPathType | None],
     "spec_file": typing.NotRequired[InputPathType | None],
+    "novolreg": bool,
+    "noxform": bool,
+    "setenv": typing.NotRequired[str | None],
+    "trace": bool,
+    "extreme_trace": bool,
+    "nomall": bool,
+    "yesmall": bool,
 })
 
 
@@ -75,12 +85,22 @@ def surf_info_params(
     com: bool = False,
     debug_level: float | None = None,
     detail_level: float | None = None,
+    n_node: bool = False,
+    n_faceset: bool = False,
+    n_tri: bool = False,
     quiet: bool = False,
     separator: str | None = None,
     input_surface: str | None = None,
     surface_state: str | None = None,
     surface_volume: InputPathType | None = None,
     spec_file: InputPathType | None = None,
+    novolreg: bool = False,
+    noxform: bool = False,
+    setenv: str | None = None,
+    trace_: bool = False,
+    extreme_trace: bool = False,
+    nomall: bool = False,
+    yesmall: bool = False,
 ) -> SurfInfoParameters:
     """
     Build parameters.
@@ -90,6 +110,9 @@ def surf_info_params(
         com: Output the center of mass.
         debug_level: Debugging level (2 turns LocalHead ON).
         detail_level: Calculate surface metrics. 1=yes, 0=no.
+        n_node: Output the number of nodes.
+        n_faceset: Output the number of face sets.
+        n_tri: Output the number of triangles.
         quiet: Do not include the name of the parameter in output.
         separator: Use string SEP to separate parameter values. Default is ' ;\
             '.
@@ -97,6 +120,15 @@ def surf_info_params(
         surface_state: Specify surface type, state, and name.
         surface_volume: Specify a surface volume file.
         spec_file: Specify a surface specification (spec) file.
+        novolreg: Ignore any Rotate, Volreg, Tagalign, or WarpDrive\
+            transformations present in the Surface Volume.
+        noxform: Same as -novolreg.
+        setenv: Set environment variable ENVname to be ENVvalue. Quotes are\
+            necessary.
+        trace_: Turns on In/Out debug and Memory tracing.
+        extreme_trace: Turns on extreme tracing.
+        nomall: Turn off memory tracing.
+        yesmall: Turn on memory tracing (default).
     Returns:
         Parameter dictionary
     """
@@ -104,7 +136,16 @@ def surf_info_params(
         "__STYXTYPE__": "SurfInfo",
         "surface": surface,
         "com": com,
+        "n_node": n_node,
+        "n_faceset": n_faceset,
+        "n_tri": n_tri,
         "quiet": quiet,
+        "novolreg": novolreg,
+        "noxform": noxform,
+        "trace": trace_,
+        "extreme_trace": extreme_trace,
+        "nomall": nomall,
+        "yesmall": yesmall,
     }
     if debug_level is not None:
         params["debug_level"] = debug_level
@@ -120,6 +161,8 @@ def surf_info_params(
         params["surface_volume"] = surface_volume
     if spec_file is not None:
         params["spec_file"] = spec_file
+    if setenv is not None:
+        params["setenv"] = setenv
     return params
 
 
@@ -138,7 +181,6 @@ def surf_info_cargs(
     """
     cargs = []
     cargs.append("SurfInfo")
-    cargs.append("[options]")
     cargs.append(execution.input_file(params.get("surface")))
     if params.get("com"):
         cargs.append("-COM")
@@ -152,6 +194,12 @@ def surf_info_cargs(
             "-detail",
             str(params.get("detail_level"))
         ])
+    if params.get("n_node"):
+        cargs.append("-N_Node")
+    if params.get("n_faceset"):
+        cargs.append("-N_FaceSet")
+    if params.get("n_tri"):
+        cargs.append("-N_Tri")
     if params.get("quiet"):
         cargs.append("-quiet")
     if params.get("separator") is not None:
@@ -179,6 +227,23 @@ def surf_info_cargs(
             "-spec",
             execution.input_file(params.get("spec_file"))
         ])
+    if params.get("novolreg"):
+        cargs.append("-novolreg")
+    if params.get("noxform"):
+        cargs.append("-noxform")
+    if params.get("setenv") is not None:
+        cargs.extend([
+            "-setenv",
+            params.get("setenv")
+        ])
+    if params.get("trace"):
+        cargs.append("-trace")
+    if params.get("extreme_trace"):
+        cargs.append("-TRACE")
+    if params.get("nomall"):
+        cargs.append("-nomall")
+    if params.get("yesmall"):
+        cargs.append("-yesmall")
     return cargs
 
 
@@ -231,12 +296,22 @@ def surf_info(
     com: bool = False,
     debug_level: float | None = None,
     detail_level: float | None = None,
+    n_node: bool = False,
+    n_faceset: bool = False,
+    n_tri: bool = False,
     quiet: bool = False,
     separator: str | None = None,
     input_surface: str | None = None,
     surface_state: str | None = None,
     surface_volume: InputPathType | None = None,
     spec_file: InputPathType | None = None,
+    novolreg: bool = False,
+    noxform: bool = False,
+    setenv: str | None = None,
+    trace_: bool = False,
+    extreme_trace: bool = False,
+    nomall: bool = False,
+    yesmall: bool = False,
     runner: Runner | None = None,
 ) -> SurfInfoOutputs:
     """
@@ -251,6 +326,9 @@ def surf_info(
         com: Output the center of mass.
         debug_level: Debugging level (2 turns LocalHead ON).
         detail_level: Calculate surface metrics. 1=yes, 0=no.
+        n_node: Output the number of nodes.
+        n_faceset: Output the number of face sets.
+        n_tri: Output the number of triangles.
         quiet: Do not include the name of the parameter in output.
         separator: Use string SEP to separate parameter values. Default is ' ;\
             '.
@@ -258,6 +336,15 @@ def surf_info(
         surface_state: Specify surface type, state, and name.
         surface_volume: Specify a surface volume file.
         spec_file: Specify a surface specification (spec) file.
+        novolreg: Ignore any Rotate, Volreg, Tagalign, or WarpDrive\
+            transformations present in the Surface Volume.
+        noxform: Same as -novolreg.
+        setenv: Set environment variable ENVname to be ENVvalue. Quotes are\
+            necessary.
+        trace_: Turns on In/Out debug and Memory tracing.
+        extreme_trace: Turns on extreme tracing.
+        nomall: Turn off memory tracing.
+        yesmall: Turn on memory tracing (default).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfInfoOutputs`).
@@ -269,12 +356,22 @@ def surf_info(
         com=com,
         debug_level=debug_level,
         detail_level=detail_level,
+        n_node=n_node,
+        n_faceset=n_faceset,
+        n_tri=n_tri,
         quiet=quiet,
         separator=separator,
         input_surface=input_surface,
         surface_state=surface_state,
         surface_volume=surface_volume,
         spec_file=spec_file,
+        novolreg=novolreg,
+        noxform=noxform,
+        setenv=setenv,
+        trace_=trace_,
+        extreme_trace=extreme_trace,
+        nomall=nomall,
+        yesmall=yesmall,
     )
     return surf_info_execute(params, execution)
 

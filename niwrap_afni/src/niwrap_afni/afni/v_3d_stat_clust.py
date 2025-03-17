@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_STAT_CLUST_METADATA = Metadata(
-    id="fc722addfbc175c71d3a318d604f19ee64fdb599.boutiques",
+    id="284f4ab8bc45b6b47b8622cab065942bd38efb9a.boutiques",
     name="3dStatClust",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,6 +18,8 @@ V3dStatClustParameters = typing.TypedDict('V3dStatClustParameters', {
     "prefix": typing.NotRequired[str | None],
     "session_dir": typing.NotRequired[str | None],
     "verbose": bool,
+    "dist_euc": bool,
+    "dist_ind": bool,
     "dist_cor": bool,
     "thresh": str,
     "nclust": float,
@@ -76,6 +78,8 @@ def v_3d_stat_clust_params(
     prefix: str | None = None,
     session_dir: str | None = None,
     verbose: bool = False,
+    dist_euc: bool = False,
+    dist_ind: bool = False,
     dist_cor: bool = False,
 ) -> V3dStatClustParameters:
     """
@@ -92,6 +96,8 @@ def v_3d_stat_clust_params(
         prefix: Use 'pname' for the output dataset prefix name.
         session_dir: Use 'dir' for the output dataset session directory.
         verbose: Print out verbose output as the program proceeds.
+        dist_euc: Calculate Euclidean distance between parameters.
+        dist_ind: Statistical distance for independent parameters.
         dist_cor: Statistical distance for correlated parameters.
     Returns:
         Parameter dictionary
@@ -99,6 +105,8 @@ def v_3d_stat_clust_params(
     params = {
         "__STYXTYPE__": "3dStatClust",
         "verbose": verbose,
+        "dist_euc": dist_euc,
+        "dist_ind": dist_ind,
         "dist_cor": dist_cor,
         "thresh": thresh,
         "nclust": nclust,
@@ -138,6 +146,10 @@ def v_3d_stat_clust_cargs(
         ])
     if params.get("verbose"):
         cargs.append("-verb")
+    if params.get("dist_euc"):
+        cargs.append("-dist_euc")
+    if params.get("dist_ind"):
+        cargs.append("-dist_ind")
     if params.get("dist_cor"):
         cargs.append("-dist_cor")
     cargs.extend([
@@ -206,6 +218,8 @@ def v_3d_stat_clust(
     prefix: str | None = None,
     session_dir: str | None = None,
     verbose: bool = False,
+    dist_euc: bool = False,
+    dist_ind: bool = False,
     dist_cor: bool = False,
     runner: Runner | None = None,
 ) -> V3dStatClustOutputs:
@@ -229,6 +243,8 @@ def v_3d_stat_clust(
         prefix: Use 'pname' for the output dataset prefix name.
         session_dir: Use 'dir' for the output dataset session directory.
         verbose: Print out verbose output as the program proceeds.
+        dist_euc: Calculate Euclidean distance between parameters.
+        dist_ind: Statistical distance for independent parameters.
         dist_cor: Statistical distance for correlated parameters.
         runner: Command runner.
     Returns:
@@ -240,6 +256,8 @@ def v_3d_stat_clust(
         prefix=prefix,
         session_dir=session_dir,
         verbose=verbose,
+        dist_euc=dist_euc,
+        dist_ind=dist_ind,
         dist_cor=dist_cor,
         thresh=thresh,
         nclust=nclust,

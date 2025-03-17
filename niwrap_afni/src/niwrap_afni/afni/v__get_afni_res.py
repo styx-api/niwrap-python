@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__GET_AFNI_RES_METADATA = Metadata(
-    id="8e9d3bd1817738927cfd2699a3bf4ffe4e305e07.boutiques",
+    id="e4786e6ad961f0208b6a0d65d657fb95dbacabc8.boutiques",
     name="@GetAfniRes",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -96,8 +96,9 @@ def v__get_afni_res_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("@GetAfniRes")
     if params.get("output_type") is not None:
-        cargs.append("@GetAfniRes" + params.get("output_type"))
+        cargs.append(params.get("output_type"))
     cargs.append(execution.input_file(params.get("input_dataset")))
     return cargs
 

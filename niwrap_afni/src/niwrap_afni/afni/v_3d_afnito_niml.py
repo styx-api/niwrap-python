@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_AFNITO_NIML_METADATA = Metadata(
-    id="98f63f2e946d67b9373a37700e5abbc719dca8ea.boutiques",
+    id="ce21f3bbaff6b810f369fc126dbb776c6ff48469.boutiques",
     name="3dAFNItoNIML",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,9 @@ V_3D_AFNITO_NIML_METADATA = Metadata(
 V3dAfnitoNimlParameters = typing.TypedDict('V3dAfnitoNimlParameters', {
     "__STYX_TYPE__": typing.Literal["3dAFNItoNIML"],
     "dset": InputPathType,
+    "data": bool,
+    "ascii": bool,
+    "tcp": typing.NotRequired[str | None],
 })
 
 
@@ -60,19 +63,30 @@ class V3dAfnitoNimlOutputs(typing.NamedTuple):
 
 def v_3d_afnito_niml_params(
     dset: InputPathType,
+    data: bool = False,
+    ascii_: bool = False,
+    tcp: str | None = None,
 ) -> V3dAfnitoNimlParameters:
     """
     Build parameters.
     
     Args:
         dset: AFNI dataset.
+        data: Also put the data into the output (will be huge).
+        ascii_: Format in ASCII, not binary (even huger).
+        tcp: Instead of stdout, send the dataset to a socket. Implies '-data'\
+            as well.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dAFNItoNIML",
         "dset": dset,
+        "data": data,
+        "ascii": ascii_,
     }
+    if tcp is not None:
+        params["tcp"] = tcp
     return params
 
 
@@ -91,8 +105,16 @@ def v_3d_afnito_niml_cargs(
     """
     cargs = []
     cargs.append("3dAFNItoNIML")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("dset")))
+    if params.get("data"):
+        cargs.append("-data")
+    if params.get("ascii"):
+        cargs.append("-ascii")
+    if params.get("tcp") is not None:
+        cargs.extend([
+            "-tcp",
+            params.get("tcp")
+        ])
     return cargs
 
 
@@ -142,6 +164,9 @@ def v_3d_afnito_niml_execute(
 
 def v_3d_afnito_niml(
     dset: InputPathType,
+    data: bool = False,
+    ascii_: bool = False,
+    tcp: str | None = None,
     runner: Runner | None = None,
 ) -> V3dAfnitoNimlOutputs:
     """
@@ -154,6 +179,10 @@ def v_3d_afnito_niml(
     
     Args:
         dset: AFNI dataset.
+        data: Also put the data into the output (will be huge).
+        ascii_: Format in ASCII, not binary (even huger).
+        tcp: Instead of stdout, send the dataset to a socket. Implies '-data'\
+            as well.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoNimlOutputs`).
@@ -162,6 +191,9 @@ def v_3d_afnito_niml(
     execution = runner.start_execution(V_3D_AFNITO_NIML_METADATA)
     params = v_3d_afnito_niml_params(
         dset=dset,
+        data=data,
+        ascii_=ascii_,
+        tcp=tcp,
     )
     return v_3d_afnito_niml_execute(params, execution)
 

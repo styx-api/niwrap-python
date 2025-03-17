@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_TSORT_METADATA = Metadata(
-    id="731309e5236007bd69df120b6a0494a5de798eeb.boutiques",
+    id="f4d144dd2a33cb2a0c2516cb757ba2a8c82c7262.boutiques",
     name="1dTsort",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,7 @@ V_1D_TSORT_METADATA = Metadata(
 
 V1dTsortParameters = typing.TypedDict('V1dTsortParameters', {
     "__STYX_TYPE__": typing.Literal["1dTsort"],
+    "inc_order": bool,
     "dec_order": bool,
     "transpose": bool,
     "column": typing.NotRequired[float | None],
@@ -64,6 +65,7 @@ class V1dTsortOutputs(typing.NamedTuple):
 
 def v_1d_tsort_params(
     infile: InputPathType,
+    inc_order: bool = False,
     dec_order: bool = False,
     transpose: bool = False,
     column: float | None = None,
@@ -74,6 +76,7 @@ def v_1d_tsort_params(
     
     Args:
         infile: Input 1D file to be sorted.
+        inc_order: Sort into increasing order [default].
         dec_order: Sort into decreasing order.
         transpose: Transpose the file before output.
         column: Sort only on column #j (counting starts at 0), and carry the\
@@ -85,6 +88,7 @@ def v_1d_tsort_params(
     """
     params = {
         "__STYXTYPE__": "1dTsort",
+        "inc_order": inc_order,
         "dec_order": dec_order,
         "transpose": transpose,
         "imode": imode,
@@ -110,6 +114,8 @@ def v_1d_tsort_cargs(
     """
     cargs = []
     cargs.append("1dTsort")
+    if params.get("inc_order"):
+        cargs.append("-inc")
     if params.get("dec_order"):
         cargs.append("-dec")
     if params.get("transpose"):
@@ -170,6 +176,7 @@ def v_1d_tsort_execute(
 
 def v_1d_tsort(
     infile: InputPathType,
+    inc_order: bool = False,
     dec_order: bool = False,
     transpose: bool = False,
     column: float | None = None,
@@ -185,6 +192,7 @@ def v_1d_tsort(
     
     Args:
         infile: Input 1D file to be sorted.
+        inc_order: Sort into increasing order [default].
         dec_order: Sort into decreasing order.
         transpose: Transpose the file before output.
         column: Sort only on column #j (counting starts at 0), and carry the\
@@ -198,6 +206,7 @@ def v_1d_tsort(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1D_TSORT_METADATA)
     params = v_1d_tsort_params(
+        inc_order=inc_order,
         dec_order=dec_order,
         transpose=transpose,
         column=column,

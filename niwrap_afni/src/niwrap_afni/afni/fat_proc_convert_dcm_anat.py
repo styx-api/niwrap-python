@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_CONVERT_DCM_ANAT_METADATA = Metadata(
-    id="b710eae3e3dfce23951c6f5d44bae1dc65d2b536.boutiques",
+    id="9a696ac4933b9ed6358cfaf7a01ab13f371ba70a.boutiques",
     name="fat_proc_convert_dcm_anat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,7 @@ FAT_PROC_CONVERT_DCM_ANAT_METADATA = Metadata(
 
 FatProcConvertDcmAnatParameters = typing.TypedDict('FatProcConvertDcmAnatParameters', {
     "__STYX_TYPE__": typing.Literal["fat_proc_convert_dcm_anat"],
+    "dicom_directory": typing.NotRequired[str | None],
     "nifti_input": typing.NotRequired[InputPathType | None],
     "prefix": str,
     "workdir": typing.NotRequired[str | None],
@@ -71,6 +72,7 @@ class FatProcConvertDcmAnatOutputs(typing.NamedTuple):
 
 def fat_proc_convert_dcm_anat_params(
     prefix: str,
+    dicom_directory: str | None = None,
     nifti_input: InputPathType | None = None,
     workdir: str | None = None,
     orient: str | None = None,
@@ -85,6 +87,8 @@ def fat_proc_convert_dcm_anat_params(
     
     Args:
         prefix: Set prefix (and path) for output data.
+        dicom_directory: Input as DICOM directory; DIR_IN should contain only\
+            DICOM files; all will be selected.
         nifti_input: Input as NIFTI file (zipped or unzipped fine). Alternative\
             to '-indir ..'.
         workdir: Specify a working directory, which can be removed (default\
@@ -111,6 +115,8 @@ def fat_proc_convert_dcm_anat_params(
         "no_cmd_out": no_cmd_out,
         "no_qc_view": no_qc_view,
     }
+    if dicom_directory is not None:
+        params["dicom_directory"] = dicom_directory
     if nifti_input is not None:
         params["nifti_input"] = nifti_input
     if workdir is not None:
@@ -137,6 +143,11 @@ def fat_proc_convert_dcm_anat_cargs(
     """
     cargs = []
     cargs.append("fat_proc_convert_dcm_anat")
+    if params.get("dicom_directory") is not None:
+        cargs.extend([
+            "-indir",
+            params.get("dicom_directory")
+        ])
     if params.get("nifti_input") is not None:
         cargs.extend([
             "-innii",
@@ -219,6 +230,7 @@ def fat_proc_convert_dcm_anat_execute(
 
 def fat_proc_convert_dcm_anat(
     prefix: str,
+    dicom_directory: str | None = None,
     nifti_input: InputPathType | None = None,
     workdir: str | None = None,
     orient: str | None = None,
@@ -239,6 +251,8 @@ def fat_proc_convert_dcm_anat(
     
     Args:
         prefix: Set prefix (and path) for output data.
+        dicom_directory: Input as DICOM directory; DIR_IN should contain only\
+            DICOM files; all will be selected.
         nifti_input: Input as NIFTI file (zipped or unzipped fine). Alternative\
             to '-indir ..'.
         workdir: Specify a working directory, which can be removed (default\
@@ -261,6 +275,7 @@ def fat_proc_convert_dcm_anat(
     runner = runner or get_global_runner()
     execution = runner.start_execution(FAT_PROC_CONVERT_DCM_ANAT_METADATA)
     params = fat_proc_convert_dcm_anat_params(
+        dicom_directory=dicom_directory,
         nifti_input=nifti_input,
         prefix=prefix,
         workdir=workdir,

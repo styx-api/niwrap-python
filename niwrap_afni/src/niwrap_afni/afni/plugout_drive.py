@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PLUGOUT_DRIVE_METADATA = Metadata(
-    id="65a44f6f7d92c1ad9ba4ed1d48f6c277a7f935fb.boutiques",
+    id="322abb84ee04acd16878a832336aea8a4c964855.boutiques",
     name="plugout_drive",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,12 +16,20 @@ PLUGOUT_DRIVE_METADATA = Metadata(
 PlugoutDriveParameters = typing.TypedDict('PlugoutDriveParameters', {
     "__STYX_TYPE__": typing.Literal["plugout_drive"],
     "host": typing.NotRequired[str | None],
+    "shm": bool,
     "verbose": bool,
     "port": typing.NotRequired[float | None],
     "maxwait": typing.NotRequired[float | None],
     "name": typing.NotRequired[str | None],
     "command": typing.NotRequired[list[str] | None],
     "quit": bool,
+    "np": typing.NotRequired[float | None],
+    "npq": typing.NotRequired[float | None],
+    "npb": typing.NotRequired[float | None],
+    "max_port_bloc": bool,
+    "max_port_bloc_quiet": bool,
+    "num_assigned_ports": bool,
+    "num_assigned_ports_quiet": bool,
 })
 
 
@@ -66,12 +74,20 @@ class PlugoutDriveOutputs(typing.NamedTuple):
 
 def plugout_drive_params(
     host: str | None = None,
+    shm: bool = False,
     verbose: bool = False,
     port: float | None = None,
     maxwait: float | None = None,
     name: str | None = None,
     command: list[str] | None = None,
     quit_: bool = False,
+    np: float | None = None,
+    npq: float | None = None,
+    npb: float | None = None,
+    max_port_bloc: bool = False,
+    max_port_bloc_quiet: bool = False,
+    num_assigned_ports: bool = False,
+    num_assigned_ports_quiet: bool = False,
 ) -> PlugoutDriveParameters:
     """
     Build parameters.
@@ -79,6 +95,8 @@ def plugout_drive_params(
     Args:
         host: Connect to AFNI running on the specified host using TCP/IP.\
             Default is 'localhost'.
+        shm: Connect to the current host using shared memory for large data\
+            transfers.
         verbose: Verbose mode.
         port: Use TCP/IP port number. Default is 8099.
         maxwait: Maximum wait time in seconds for AFNI to connect. Default is 9\
@@ -89,13 +107,28 @@ def plugout_drive_params(
             SomeFunction"'.
         quit_: Quit after executing all -com commands. Default is to wait for\
             more commands.
+        np: Provide a port offset to allow multiple instances of AFNI <-->\
+            SUMA, etc., on the same machine.
+        npq: Like -np but quieter in the face of adversity.
+        npb: Similar to -np, but using a block for easier usage.
+        max_port_bloc: Print the current value of MAX_BLOC and exit.
+        max_port_bloc_quiet: Print MAX_BLOC value and exit quietly.
+        num_assigned_ports: Print the number of assigned ports used by AFNI and\
+            exit.
+        num_assigned_ports_quiet: Print the number of assigned ports used by\
+            AFNI and exit quietly.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "plugout_drive",
+        "shm": shm,
         "verbose": verbose,
         "quit": quit_,
+        "max_port_bloc": max_port_bloc,
+        "max_port_bloc_quiet": max_port_bloc_quiet,
+        "num_assigned_ports": num_assigned_ports,
+        "num_assigned_ports_quiet": num_assigned_ports_quiet,
     }
     if host is not None:
         params["host"] = host
@@ -107,6 +140,12 @@ def plugout_drive_params(
         params["name"] = name
     if command is not None:
         params["command"] = command
+    if np is not None:
+        params["np"] = np
+    if npq is not None:
+        params["npq"] = npq
+    if npb is not None:
+        params["npb"] = npb
     return params
 
 
@@ -130,6 +169,8 @@ def plugout_drive_cargs(
             "-host",
             params.get("host")
         ])
+    if params.get("shm"):
+        cargs.append("-shm")
     if params.get("verbose"):
         cargs.append("-v")
     if params.get("port") is not None:
@@ -154,6 +195,29 @@ def plugout_drive_cargs(
         ])
     if params.get("quit"):
         cargs.append("-quit")
+    if params.get("np") is not None:
+        cargs.extend([
+            "-np",
+            str(params.get("np"))
+        ])
+    if params.get("npq") is not None:
+        cargs.extend([
+            "-npq",
+            str(params.get("npq"))
+        ])
+    if params.get("npb") is not None:
+        cargs.extend([
+            "-npb",
+            str(params.get("npb"))
+        ])
+    if params.get("max_port_bloc"):
+        cargs.append("-max_port_bloc")
+    if params.get("max_port_bloc_quiet"):
+        cargs.append("-max_port_bloc_quiet")
+    if params.get("num_assigned_ports"):
+        cargs.append("-num_assigned_ports")
+    if params.get("num_assigned_ports_quiet"):
+        cargs.append("-num_assigned_ports_quiet")
     return cargs
 
 
@@ -203,12 +267,20 @@ def plugout_drive_execute(
 
 def plugout_drive(
     host: str | None = None,
+    shm: bool = False,
     verbose: bool = False,
     port: float | None = None,
     maxwait: float | None = None,
     name: str | None = None,
     command: list[str] | None = None,
     quit_: bool = False,
+    np: float | None = None,
+    npq: float | None = None,
+    npb: float | None = None,
+    max_port_bloc: bool = False,
+    max_port_bloc_quiet: bool = False,
+    num_assigned_ports: bool = False,
+    num_assigned_ports_quiet: bool = False,
     runner: Runner | None = None,
 ) -> PlugoutDriveOutputs:
     """
@@ -222,6 +294,8 @@ def plugout_drive(
     Args:
         host: Connect to AFNI running on the specified host using TCP/IP.\
             Default is 'localhost'.
+        shm: Connect to the current host using shared memory for large data\
+            transfers.
         verbose: Verbose mode.
         port: Use TCP/IP port number. Default is 8099.
         maxwait: Maximum wait time in seconds for AFNI to connect. Default is 9\
@@ -232,6 +306,16 @@ def plugout_drive(
             SomeFunction"'.
         quit_: Quit after executing all -com commands. Default is to wait for\
             more commands.
+        np: Provide a port offset to allow multiple instances of AFNI <-->\
+            SUMA, etc., on the same machine.
+        npq: Like -np but quieter in the face of adversity.
+        npb: Similar to -np, but using a block for easier usage.
+        max_port_bloc: Print the current value of MAX_BLOC and exit.
+        max_port_bloc_quiet: Print MAX_BLOC value and exit quietly.
+        num_assigned_ports: Print the number of assigned ports used by AFNI and\
+            exit.
+        num_assigned_ports_quiet: Print the number of assigned ports used by\
+            AFNI and exit quietly.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PlugoutDriveOutputs`).
@@ -240,12 +324,20 @@ def plugout_drive(
     execution = runner.start_execution(PLUGOUT_DRIVE_METADATA)
     params = plugout_drive_params(
         host=host,
+        shm=shm,
         verbose=verbose,
         port=port,
         maxwait=maxwait,
         name=name,
         command=command,
         quit_=quit_,
+        np=np,
+        npq=npq,
+        npb=npb,
+        max_port_bloc=max_port_bloc,
+        max_port_bloc_quiet=max_port_bloc_quiet,
+        num_assigned_ports=num_assigned_ports,
+        num_assigned_ports_quiet=num_assigned_ports_quiet,
     )
     return plugout_drive_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_AFNITO3_D_METADATA = Metadata(
-    id="51230e7f67f1e0eb607573872e1507d7fe45f41a.boutiques",
+    id="2e56ef52ac7f3be262fb2b8e920d983be907904e.boutiques",
     name="3dAFNIto3D",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,9 @@ V_3D_AFNITO3_D_METADATA = Metadata(
 V3dAfnito3DParameters = typing.TypedDict('V3dAfnito3DParameters', {
     "__STYX_TYPE__": typing.Literal["3dAFNIto3D"],
     "dataset": InputPathType,
+    "prefix": typing.NotRequired[str | None],
+    "binary": bool,
+    "text": bool,
 })
 
 
@@ -57,25 +60,35 @@ class V3dAfnito3DOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    outfile: OutputPathType
+    outfile: OutputPathType | None
     """Output 3D file, either in binary or text format"""
 
 
 def v_3d_afnito3_d_params(
     dataset: InputPathType,
+    prefix: str | None = None,
+    binary: bool = False,
+    text: bool = False,
 ) -> V3dAfnito3DParameters:
     """
     Build parameters.
     
     Args:
         dataset: AFNI dataset to be converted.
+        prefix: Write result into file with specified prefix.
+        binary: Write data in binary format.
+        text: Write data in text format.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dAFNIto3D",
         "dataset": dataset,
+        "binary": binary,
+        "text": text,
     }
+    if prefix is not None:
+        params["prefix"] = prefix
     return params
 
 
@@ -94,8 +107,16 @@ def v_3d_afnito3_d_cargs(
     """
     cargs = []
     cargs.append("3dAFNIto3D")
-    cargs.append("[OPTIONS]")
     cargs.append(execution.input_file(params.get("dataset")))
+    if params.get("prefix") is not None:
+        cargs.extend([
+            "-prefix",
+            params.get("prefix")
+        ])
+    if params.get("binary"):
+        cargs.append("-bin")
+    if params.get("text"):
+        cargs.append("-txt")
     return cargs
 
 
@@ -114,7 +135,7 @@ def v_3d_afnito3_d_outputs(
     """
     ret = V3dAfnito3DOutputs(
         root=execution.output_file("."),
-        outfile=execution.output_file("[PREFIX].3D"),
+        outfile=execution.output_file(params.get("prefix") + ".3D") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -145,6 +166,9 @@ def v_3d_afnito3_d_execute(
 
 def v_3d_afnito3_d(
     dataset: InputPathType,
+    prefix: str | None = None,
+    binary: bool = False,
+    text: bool = False,
     runner: Runner | None = None,
 ) -> V3dAfnito3DOutputs:
     """
@@ -156,6 +180,9 @@ def v_3d_afnito3_d(
     
     Args:
         dataset: AFNI dataset to be converted.
+        prefix: Write result into file with specified prefix.
+        binary: Write data in binary format.
+        text: Write data in text format.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAfnito3DOutputs`).
@@ -164,6 +191,9 @@ def v_3d_afnito3_d(
     execution = runner.start_execution(V_3D_AFNITO3_D_METADATA)
     params = v_3d_afnito3_d_params(
         dataset=dataset,
+        prefix=prefix,
+        binary=binary,
+        text=text,
     )
     return v_3d_afnito3_d_execute(params, execution)
 

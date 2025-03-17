@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SFIM_METADATA = Metadata(
-    id="62032460073e6537145dc05bebbde2400a1cbdbc.boutiques",
+    id="a13eb6a1647edd69950d6fbc3efb98691eeddce5.boutiques",
     name="sfim",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,7 @@ SFIM_METADATA = Metadata(
 
 SfimParameters = typing.TypedDict('SfimParameters', {
     "__STYX_TYPE__": typing.Literal["sfim"],
+    "input_images": list[InputPathType],
     "sfint_file": typing.NotRequired[str | None],
     "baseline_state": typing.NotRequired[str | None],
     "local_base_option": bool,
@@ -65,6 +66,7 @@ class SfimOutputs(typing.NamedTuple):
 
 
 def sfim_params(
+    input_images: list[InputPathType],
     sfint_file: str | None = None,
     baseline_state: str | None = None,
     local_base_option: bool = False,
@@ -74,6 +76,7 @@ def sfim_params(
     Build parameters.
     
     Args:
+        input_images: Input image files in formats accepted by AFNI.
         sfint_file: Filename which contains the interval definitions. Default\
             is 'sfint'. Example: '3*# 5*rest 4*A 5*rest 4*B 5*rest 4*A 5*rest'.
         baseline_state: Task state name to use as the baseline. Default is\
@@ -89,6 +92,7 @@ def sfim_params(
     """
     params = {
         "__STYXTYPE__": "sfim",
+        "input_images": input_images,
         "local_base_option": local_base_option,
     }
     if sfint_file is not None:
@@ -115,6 +119,7 @@ def sfim_cargs(
     """
     cargs = []
     cargs.append("sfim")
+    cargs.extend([execution.input_file(f) for f in params.get("input_images")])
     if params.get("sfint_file") is not None:
         cargs.extend([
             "-sfint",
@@ -132,7 +137,6 @@ def sfim_cargs(
             "-prefix",
             params.get("output_prefix")
         ])
-    cargs.append("[INPUT_FILES...]")
     return cargs
 
 
@@ -181,6 +185,7 @@ def sfim_execute(
 
 
 def sfim(
+    input_images: list[InputPathType],
     sfint_file: str | None = None,
     baseline_state: str | None = None,
     local_base_option: bool = False,
@@ -195,6 +200,7 @@ def sfim(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        input_images: Input image files in formats accepted by AFNI.
         sfint_file: Filename which contains the interval definitions. Default\
             is 'sfint'. Example: '3*# 5*rest 4*A 5*rest 4*B 5*rest 4*A 5*rest'.
         baseline_state: Task state name to use as the baseline. Default is\
@@ -212,6 +218,7 @@ def sfim(
     runner = runner or get_global_runner()
     execution = runner.start_execution(SFIM_METADATA)
     params = sfim_params(
+        input_images=input_images,
         sfint_file=sfint_file,
         baseline_state=baseline_state,
         local_base_option=local_base_option,

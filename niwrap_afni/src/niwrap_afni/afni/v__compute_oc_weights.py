@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
-    id="4427220e56bd9be0b0fb6b294b7d2992dca6669c.boutiques",
+    id="ebfead8518bbfa4656b258644c98429751538187.boutiques",
     name="@compute_OC_weights",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,7 @@ V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
 VComputeOcWeightsParameters = typing.TypedDict('VComputeOcWeightsParameters', {
     "__STYX_TYPE__": typing.Literal["@compute_OC_weights"],
     "echo_times": typing.NotRequired[str | None],
+    "echo_times_file": typing.NotRequired[InputPathType | None],
     "echo_dsets": list[str],
     "prefix": typing.NotRequired[str | None],
     "def_to_equal": typing.NotRequired[str | None],
@@ -72,6 +73,7 @@ class VComputeOcWeightsOutputs(typing.NamedTuple):
 def v__compute_oc_weights_params(
     echo_dsets: list[str],
     echo_times: str | None = None,
+    echo_times_file: InputPathType | None = None,
     prefix: str | None = None,
     def_to_equal: str | None = None,
     oc_method: str | None = None,
@@ -87,6 +89,8 @@ def v__compute_oc_weights_params(
         echo_dsets: Specify one run of multi-echo EPI data.
         echo_times: Specify echo times as list (e.g., "15 30.5 41"). Use either\
             -echo_times or -echo_times_files.
+        echo_times_file: Specify file with echo times. Use either -echo_times\
+            or -echo_times_files.
         prefix: Specify prefix of resulting OC weights dataset (e.g.,\
             OC.weights.SUBJ).
         def_to_equal: Specify whether to default to equal weights (default =\
@@ -107,6 +111,8 @@ def v__compute_oc_weights_params(
     }
     if echo_times is not None:
         params["echo_times"] = echo_times
+    if echo_times_file is not None:
+        params["echo_times_file"] = echo_times_file
     if prefix is not None:
         params["prefix"] = prefix
     if def_to_equal is not None:
@@ -141,6 +147,11 @@ def v__compute_oc_weights_cargs(
         cargs.extend([
             "-echo_times",
             params.get("echo_times")
+        ])
+    if params.get("echo_times_file") is not None:
+        cargs.extend([
+            "-echo_times_file",
+            execution.input_file(params.get("echo_times_file"))
         ])
     cargs.extend([
         "-echo_dsets",
@@ -228,6 +239,7 @@ def v__compute_oc_weights_execute(
 def v__compute_oc_weights(
     echo_dsets: list[str],
     echo_times: str | None = None,
+    echo_times_file: InputPathType | None = None,
     prefix: str | None = None,
     def_to_equal: str | None = None,
     oc_method: str | None = None,
@@ -248,6 +260,8 @@ def v__compute_oc_weights(
         echo_dsets: Specify one run of multi-echo EPI data.
         echo_times: Specify echo times as list (e.g., "15 30.5 41"). Use either\
             -echo_times or -echo_times_files.
+        echo_times_file: Specify file with echo times. Use either -echo_times\
+            or -echo_times_files.
         prefix: Specify prefix of resulting OC weights dataset (e.g.,\
             OC.weights.SUBJ).
         def_to_equal: Specify whether to default to equal weights (default =\
@@ -266,6 +280,7 @@ def v__compute_oc_weights(
     execution = runner.start_execution(V__COMPUTE_OC_WEIGHTS_METADATA)
     params = v__compute_oc_weights_params(
         echo_times=echo_times,
+        echo_times_file=echo_times_file,
         echo_dsets=echo_dsets,
         prefix=prefix,
         def_to_equal=def_to_equal,

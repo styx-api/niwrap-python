@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSORT_METADATA = Metadata(
-    id="28c28b79e328ac59d8297a59e0298ad19fb48796.boutiques",
+    id="0baecbfda8717ca32038a0d906eaab9d406613ee.boutiques",
     name="3dTsort",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,7 @@ V3dTsortParameters = typing.TypedDict('V3dTsortParameters', {
     "__STYX_TYPE__": typing.Literal["3dTsort"],
     "input_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
+    "inc": bool,
     "dec": bool,
     "rank": bool,
     "ind": bool,
@@ -73,6 +74,7 @@ class V3dTsortOutputs(typing.NamedTuple):
 def v_3d_tsort_params(
     input_file: InputPathType,
     prefix: str | None = None,
+    inc: bool = False,
     dec: bool = False,
     rank: bool = False,
     ind: bool = False,
@@ -88,6 +90,7 @@ def v_3d_tsort_params(
     Args:
         input_file: Input dataset to be sorted.
         prefix: Prefix for the output dataset.
+        inc: Sort into increasing order (default).
         dec: Sort into decreasing order.
         rank: Output rank instead of sorted values; ranks range from 1 to Nvals.
         ind: Output sorting index (0 to Nvals -1).
@@ -103,6 +106,7 @@ def v_3d_tsort_params(
     params = {
         "__STYXTYPE__": "3dTsort",
         "input_file": input_file,
+        "inc": inc,
         "dec": dec,
         "rank": rank,
         "ind": ind,
@@ -139,6 +143,8 @@ def v_3d_tsort_cargs(
             "-prefix",
             params.get("prefix")
         ])
+    if params.get("inc"):
+        cargs.append("-inc")
     if params.get("dec"):
         cargs.append("-dec")
     if params.get("rank"):
@@ -208,6 +214,7 @@ def v_3d_tsort_execute(
 def v_3d_tsort(
     input_file: InputPathType,
     prefix: str | None = None,
+    inc: bool = False,
     dec: bool = False,
     rank: bool = False,
     ind: bool = False,
@@ -228,6 +235,7 @@ def v_3d_tsort(
     Args:
         input_file: Input dataset to be sorted.
         prefix: Prefix for the output dataset.
+        inc: Sort into increasing order (default).
         dec: Sort into decreasing order.
         rank: Output rank instead of sorted values; ranks range from 1 to Nvals.
         ind: Output sorting index (0 to Nvals -1).
@@ -246,6 +254,7 @@ def v_3d_tsort(
     params = v_3d_tsort_params(
         input_file=input_file,
         prefix=prefix,
+        inc=inc,
         dec=dec,
         rank=rank,
         ind=ind,

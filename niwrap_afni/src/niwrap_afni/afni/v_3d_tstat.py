@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSTAT_METADATA = Metadata(
-    id="2c3351f9c202b2f87198789eb63df2ff52ca3826.boutiques",
+    id="e1660f36f2b134d3f7b3ce6ea6944f69d67b9501.boutiques",
     name="3dTstat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,8 +15,11 @@ V_3D_TSTAT_METADATA = Metadata(
 
 V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
     "__STYX_TYPE__": typing.Literal["3dTstat"],
+    "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],
+    "options": typing.NotRequired[str | None],
+    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "sum": bool,
     "abssum": bool,
     "sos": bool,
@@ -73,8 +76,6 @@ V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
     "mask_mset": typing.NotRequired[InputPathType | None],
     "mrange": typing.NotRequired[str | None],
     "cmask": typing.NotRequired[str | None],
-    "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
-    "in_file": InputPathType,
 })
 
 
@@ -124,6 +125,8 @@ def v_3d_tstat_params(
     in_file: InputPathType,
     mask: InputPathType | None = None,
     num_threads: int | None = None,
+    options: str | None = None,
+    outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     sum_: bool = False,
     abssum: bool = False,
     sos: bool = False,
@@ -180,7 +183,6 @@ def v_3d_tstat_params(
     mask_mset: InputPathType | None = None,
     mrange: str | None = None,
     cmask: str | None = None,
-    outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
 ) -> V3dTstatParameters:
     """
     Build parameters.
@@ -189,6 +191,8 @@ def v_3d_tstat_params(
         in_file: Input file to 3dtstat.
         mask: Mask file.
         num_threads: Set number of threads.
+        options: Selected statistical output.
+        outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
         sum_: Compute sum of input voxels.
         abssum: Compute absolute sum of input voxels.
         sos: Compute sum of squares.
@@ -262,12 +266,12 @@ def v_3d_tstat_params(
             values between 'a' and 'b' (inclusive) will be used.
         cmask: Execute the options enclosed in single quotes as a 3dcalc-like\
             program, and produce a mask from the resulting 3D brick.
-        outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dTstat",
+        "in_file": in_file,
         "sum": sum_,
         "abssum": abssum,
         "sos": sos,
@@ -318,12 +322,15 @@ def v_3d_tstat_params(
         "firstvalue": firstvalue,
         "tdiff": tdiff,
         "nscale": nscale,
-        "in_file": in_file,
     }
     if mask is not None:
         params["mask"] = mask
     if num_threads is not None:
         params["num_threads"] = num_threads
+    if options is not None:
+        params["options"] = options
+    if outputtype is not None:
+        params["outputtype"] = outputtype
     if prefix is not None:
         params["prefix"] = prefix
     if datum is not None:
@@ -336,8 +343,6 @@ def v_3d_tstat_params(
         params["mrange"] = mrange
     if cmask is not None:
         params["cmask"] = cmask
-    if outputtype is not None:
-        params["outputtype"] = outputtype
     return params
 
 
@@ -356,6 +361,7 @@ def v_3d_tstat_cargs(
     """
     cargs = []
     cargs.append("3dTstat")
+    cargs.append(execution.input_file(params.get("in_file")))
     if params.get("mask") is not None:
         cargs.extend([
             "-mask",
@@ -363,6 +369,10 @@ def v_3d_tstat_cargs(
         ])
     if params.get("num_threads") is not None:
         cargs.append(str(params.get("num_threads")))
+    if params.get("options") is not None:
+        cargs.append(params.get("options"))
+    if params.get("outputtype") is not None:
+        cargs.append(params.get("outputtype"))
     if params.get("sum"):
         cargs.append("-sum")
     if params.get("abssum"):
@@ -493,9 +503,6 @@ def v_3d_tstat_cargs(
             "-cmask",
             params.get("cmask")
         ])
-    if params.get("outputtype") is not None:
-        cargs.append(params.get("outputtype"))
-    cargs.append(execution.input_file(params.get("in_file")))
     return cargs
 
 
@@ -547,6 +554,8 @@ def v_3d_tstat(
     in_file: InputPathType,
     mask: InputPathType | None = None,
     num_threads: int | None = None,
+    options: str | None = None,
+    outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     sum_: bool = False,
     abssum: bool = False,
     sos: bool = False,
@@ -603,7 +612,6 @@ def v_3d_tstat(
     mask_mset: InputPathType | None = None,
     mrange: str | None = None,
     cmask: str | None = None,
-    outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     runner: Runner | None = None,
 ) -> V3dTstatOutputs:
     """
@@ -617,6 +625,8 @@ def v_3d_tstat(
         in_file: Input file to 3dtstat.
         mask: Mask file.
         num_threads: Set number of threads.
+        options: Selected statistical output.
+        outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
         sum_: Compute sum of input voxels.
         abssum: Compute absolute sum of input voxels.
         sos: Compute sum of squares.
@@ -690,7 +700,6 @@ def v_3d_tstat(
             values between 'a' and 'b' (inclusive) will be used.
         cmask: Execute the options enclosed in single quotes as a 3dcalc-like\
             program, and produce a mask from the resulting 3D brick.
-        outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTstatOutputs`).
@@ -698,8 +707,11 @@ def v_3d_tstat(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_TSTAT_METADATA)
     params = v_3d_tstat_params(
+        in_file=in_file,
         mask=mask,
         num_threads=num_threads,
+        options=options,
+        outputtype=outputtype,
         sum_=sum_,
         abssum=abssum,
         sos=sos,
@@ -756,8 +768,6 @@ def v_3d_tstat(
         mask_mset=mask_mset,
         mrange=mrange,
         cmask=cmask,
-        outputtype=outputtype,
-        in_file=in_file,
     )
     return v_3d_tstat_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ECM_METADATA = Metadata(
-    id="c9bc0ce1e3c30699a348a07653407f3b99801a2a.boutiques",
+    id="fe8e455e00c15b8128839ab77ca8b9a116a3a73b.boutiques",
     name="3dECM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -24,7 +24,9 @@ V3dEcmParameters = typing.TypedDict('V3dEcmParameters', {
     "mask": typing.NotRequired[InputPathType | None],
     "max_iter": typing.NotRequired[int | None],
     "memory": typing.NotRequired[float | None],
+    "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
+    "out_file": typing.NotRequired[str | None],
     "polort": typing.NotRequired[int | None],
     "scale": typing.NotRequired[float | None],
     "shift": typing.NotRequired[float | None],
@@ -87,7 +89,9 @@ def v_3d_ecm_params(
     mask: InputPathType | None = None,
     max_iter: int | None = None,
     memory: float | None = None,
+    num_threads: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
+    out_file: str | None = None,
     polort: int | None = None,
     scale: float | None = None,
     shift: float | None = None,
@@ -114,7 +118,9 @@ def v_3d_ecm_params(
             iteration; default = 1000.
         memory: Limit memory consumption on system by setting the amount of gb\
             to limit the algorithm to; default = 2gb.
+        num_threads: Set number of threads.
         outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
+        out_file: Output image file name.
         polort: No description provided.
         scale: Scale correlation coefficients in similarity matrix to after\
             shifting, x >= 0.0; default = 1.0 for -full, 0.5 for -fecm.
@@ -141,8 +147,12 @@ def v_3d_ecm_params(
         params["max_iter"] = max_iter
     if memory is not None:
         params["memory"] = memory
+    if num_threads is not None:
+        params["num_threads"] = num_threads
     if outputtype is not None:
         params["outputtype"] = outputtype
+    if out_file is not None:
+        params["out_file"] = out_file
     if polort is not None:
         params["polort"] = polort
     if scale is not None:
@@ -200,9 +210,15 @@ def v_3d_ecm_cargs(
             "-memory",
             str(params.get("memory"))
         ])
-    cargs.append("[OUT_FILE]")
+    if params.get("num_threads") is not None:
+        cargs.append(str(params.get("num_threads")))
     if params.get("outputtype") is not None:
         cargs.append(params.get("outputtype"))
+    if params.get("out_file") is not None:
+        cargs.extend([
+            "-prefix",
+            params.get("out_file")
+        ])
     if params.get("polort") is not None:
         cargs.extend([
             "-polort",
@@ -287,7 +303,9 @@ def v_3d_ecm(
     mask: InputPathType | None = None,
     max_iter: int | None = None,
     memory: float | None = None,
+    num_threads: int | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
+    out_file: str | None = None,
     polort: int | None = None,
     scale: float | None = None,
     shift: float | None = None,
@@ -320,7 +338,9 @@ def v_3d_ecm(
             iteration; default = 1000.
         memory: Limit memory consumption on system by setting the amount of gb\
             to limit the algorithm to; default = 2gb.
+        num_threads: Set number of threads.
         outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
+        out_file: Output image file name.
         polort: No description provided.
         scale: Scale correlation coefficients in similarity matrix to after\
             shifting, x >= 0.0; default = 1.0 for -full, 0.5 for -fecm.
@@ -344,7 +364,9 @@ def v_3d_ecm(
         mask=mask,
         max_iter=max_iter,
         memory=memory,
+        num_threads=num_threads,
         outputtype=outputtype,
+        out_file=out_file,
         polort=polort,
         scale=scale,
         shift=shift,

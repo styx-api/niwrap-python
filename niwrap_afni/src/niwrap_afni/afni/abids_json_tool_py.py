@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ABIDS_JSON_TOOL_PY_METADATA = Metadata(
-    id="9cd5d1cbe0772f0f1c51d0bd811ef0336e43437f.boutiques",
+    id="e329338100a8b98497d00dd658e2d105dfa05630.boutiques",
     name="abids_json_tool.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,7 +17,16 @@ AbidsJsonToolPyParameters = typing.TypedDict('AbidsJsonToolPyParameters', {
     "__STYX_TYPE__": typing.Literal["abids_json_tool.py"],
     "input_file": InputPathType,
     "prefix": str,
+    "txt2json": bool,
+    "json2txt": bool,
+    "add_json": typing.NotRequired[list[str] | None],
     "del_json": typing.NotRequired[str | None],
+    "force_add": bool,
+    "overwrite": bool,
+    "help": bool,
+    "delimiter_major": typing.NotRequired[str | None],
+    "delimiter_minor": typing.NotRequired[str | None],
+    "literal_keys": bool,
     "values_stay_str": bool,
 })
 
@@ -64,7 +73,16 @@ class AbidsJsonToolPyOutputs(typing.NamedTuple):
 def abids_json_tool_py_params(
     input_file: InputPathType,
     prefix: str,
+    txt2json: bool = False,
+    json2txt: bool = False,
+    add_json: list[str] | None = None,
     del_json: str | None = None,
+    force_add: bool = False,
+    overwrite: bool = False,
+    help_: bool = False,
+    delimiter_major: str | None = None,
+    delimiter_minor: str | None = None,
+    literal_keys: bool = False,
     values_stay_str: bool = False,
 ) -> AbidsJsonToolPyParameters:
     """
@@ -74,7 +92,21 @@ def abids_json_tool_py_params(
         input_file: One file to convert. Enter NULL with -add_json to create\
             new json file.
         prefix: Output file name.
+        txt2json: Convert from ':' separated text file to json formatted file.
+        json2txt: Convert from json formatted file to ':' separated text file.
+        add_json: Add an attribute to the end of the specified json file.
         del_json: Remove attribute (KEY) from the -input json file.
+        force_add: Use with -add_json to overwrite an existing attribute in the\
+            specified json file.
+        overwrite: Use caution as this will overwrite the -prefix file if it\
+            exists!!.
+        help_: Show this help and exit.
+        delimiter_major: Specify the new (major) delimiter to separate keys and\
+            values when using '-txt2json' opt.
+        delimiter_minor: Specify the new (minor) delimiter to separate value\
+            items when using '-txt2json' opt.
+        literal_keys: Do not replace spaces with '_', nor parentheses and\
+            brackets with ''.
         values_stay_str: Each numeric or str item gets saved as a str;\
             otherwise, guess at int and float.
     Returns:
@@ -84,10 +116,22 @@ def abids_json_tool_py_params(
         "__STYXTYPE__": "abids_json_tool.py",
         "input_file": input_file,
         "prefix": prefix,
+        "txt2json": txt2json,
+        "json2txt": json2txt,
+        "force_add": force_add,
+        "overwrite": overwrite,
+        "help": help_,
+        "literal_keys": literal_keys,
         "values_stay_str": values_stay_str,
     }
+    if add_json is not None:
+        params["add_json"] = add_json
     if del_json is not None:
         params["del_json"] = del_json
+    if delimiter_major is not None:
+        params["delimiter_major"] = delimiter_major
+    if delimiter_minor is not None:
+        params["delimiter_minor"] = delimiter_minor
     return params
 
 
@@ -114,11 +158,38 @@ def abids_json_tool_py_cargs(
         "-prefix",
         params.get("prefix")
     ])
+    if params.get("txt2json"):
+        cargs.append("-txt2json")
+    if params.get("json2txt"):
+        cargs.append("-json2txt")
+    if params.get("add_json") is not None:
+        cargs.extend([
+            "-add_json",
+            *params.get("add_json")
+        ])
     if params.get("del_json") is not None:
         cargs.extend([
             "-del_json",
             params.get("del_json")
         ])
+    if params.get("force_add"):
+        cargs.append("-f")
+    if params.get("overwrite"):
+        cargs.append("-overwrite")
+    if params.get("help"):
+        cargs.append("-help")
+    if params.get("delimiter_major") is not None:
+        cargs.extend([
+            "-delimiter_major",
+            params.get("delimiter_major")
+        ])
+    if params.get("delimiter_minor") is not None:
+        cargs.extend([
+            "-delimiter_minor",
+            params.get("delimiter_minor")
+        ])
+    if params.get("literal_keys"):
+        cargs.append("-literal_keys")
     if params.get("values_stay_str"):
         cargs.append("-values_stay_str")
     return cargs
@@ -170,7 +241,16 @@ def abids_json_tool_py_execute(
 def abids_json_tool_py(
     input_file: InputPathType,
     prefix: str,
+    txt2json: bool = False,
+    json2txt: bool = False,
+    add_json: list[str] | None = None,
     del_json: str | None = None,
+    force_add: bool = False,
+    overwrite: bool = False,
+    help_: bool = False,
+    delimiter_major: str | None = None,
+    delimiter_minor: str | None = None,
+    literal_keys: bool = False,
     values_stay_str: bool = False,
     runner: Runner | None = None,
 ) -> AbidsJsonToolPyOutputs:
@@ -185,7 +265,21 @@ def abids_json_tool_py(
         input_file: One file to convert. Enter NULL with -add_json to create\
             new json file.
         prefix: Output file name.
+        txt2json: Convert from ':' separated text file to json formatted file.
+        json2txt: Convert from json formatted file to ':' separated text file.
+        add_json: Add an attribute to the end of the specified json file.
         del_json: Remove attribute (KEY) from the -input json file.
+        force_add: Use with -add_json to overwrite an existing attribute in the\
+            specified json file.
+        overwrite: Use caution as this will overwrite the -prefix file if it\
+            exists!!.
+        help_: Show this help and exit.
+        delimiter_major: Specify the new (major) delimiter to separate keys and\
+            values when using '-txt2json' opt.
+        delimiter_minor: Specify the new (minor) delimiter to separate value\
+            items when using '-txt2json' opt.
+        literal_keys: Do not replace spaces with '_', nor parentheses and\
+            brackets with ''.
         values_stay_str: Each numeric or str item gets saved as a str;\
             otherwise, guess at int and float.
         runner: Command runner.
@@ -197,7 +291,16 @@ def abids_json_tool_py(
     params = abids_json_tool_py_params(
         input_file=input_file,
         prefix=prefix,
+        txt2json=txt2json,
+        json2txt=json2txt,
+        add_json=add_json,
         del_json=del_json,
+        force_add=force_add,
+        overwrite=overwrite,
+        help_=help_,
+        delimiter_major=delimiter_major,
+        delimiter_minor=delimiter_minor,
+        literal_keys=literal_keys,
         values_stay_str=values_stay_str,
     )
     return abids_json_tool_py_execute(params, execution)

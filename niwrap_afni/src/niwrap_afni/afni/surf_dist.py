@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_DIST_METADATA = Metadata(
-    id="4b7fc8f067afc394968ebdfef5be6b16641eee5b.boutiques",
+    id="8b5c7176c66dac8d05149bdf650ac16471da45a7.boutiques",
     name="SurfDist",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,7 +18,11 @@ SurfDistParameters = typing.TypedDict('SurfDistParameters', {
     "surface": InputPathType,
     "nodepairs": InputPathType,
     "node_path_do": typing.NotRequired[str | None],
+    "euclidean": bool,
+    "euclidian": bool,
     "graph": bool,
+    "from_node": typing.NotRequired[str | None],
+    "to_nodes": typing.NotRequired[InputPathType | None],
 })
 
 
@@ -68,7 +72,11 @@ def surf_dist_params(
     surface: InputPathType,
     nodepairs: InputPathType,
     node_path_do: str | None = None,
+    euclidean: bool = False,
+    euclidian: bool = False,
     graph: bool = False,
+    from_node: str | None = None,
+    to_nodes: InputPathType | None = None,
 ) -> SurfDistParameters:
     """
     Build parameters.
@@ -78,7 +86,12 @@ def surf_dist_params(
         nodepairs: Specify node pairs for distance computation.
         node_path_do: Output the shortest path between each node pair as a SUMA\
             Displayable object.
+        euclidean: Calculate Euclidean distance, rather than graph distance.
+        euclidian: Synonym for '-Euclidean'.
         graph: Calculate distance along the mesh (default).
+        from_node: Specify one starting node for pair calculation.
+        to_nodes: Specify nodes used for pair calculation when using\
+            -from_node.
     Returns:
         Parameter dictionary
     """
@@ -86,10 +99,16 @@ def surf_dist_params(
         "__STYXTYPE__": "SurfDist",
         "surface": surface,
         "nodepairs": nodepairs,
+        "euclidean": euclidean,
+        "euclidian": euclidian,
         "graph": graph,
     }
     if node_path_do is not None:
         params["node_path_do"] = node_path_do
+    if from_node is not None:
+        params["from_node"] = from_node
+    if to_nodes is not None:
+        params["to_nodes"] = to_nodes
     return params
 
 
@@ -115,8 +134,22 @@ def surf_dist_cargs(
             "-node_path_do",
             params.get("node_path_do")
         ])
+    if params.get("euclidean"):
+        cargs.append("-Euclidean")
+    if params.get("euclidian"):
+        cargs.append("-Euclidian")
     if params.get("graph"):
         cargs.append("-graph")
+    if params.get("from_node") is not None:
+        cargs.extend([
+            "-from_node",
+            params.get("from_node")
+        ])
+    if params.get("to_nodes") is not None:
+        cargs.extend([
+            "-input",
+            execution.input_file(params.get("to_nodes"))
+        ])
     return cargs
 
 
@@ -168,7 +201,11 @@ def surf_dist(
     surface: InputPathType,
     nodepairs: InputPathType,
     node_path_do: str | None = None,
+    euclidean: bool = False,
+    euclidian: bool = False,
     graph: bool = False,
+    from_node: str | None = None,
+    to_nodes: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> SurfDistOutputs:
     """
@@ -183,7 +220,12 @@ def surf_dist(
         nodepairs: Specify node pairs for distance computation.
         node_path_do: Output the shortest path between each node pair as a SUMA\
             Displayable object.
+        euclidean: Calculate Euclidean distance, rather than graph distance.
+        euclidian: Synonym for '-Euclidean'.
         graph: Calculate distance along the mesh (default).
+        from_node: Specify one starting node for pair calculation.
+        to_nodes: Specify nodes used for pair calculation when using\
+            -from_node.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfDistOutputs`).
@@ -194,7 +236,11 @@ def surf_dist(
         surface=surface,
         nodepairs=nodepairs,
         node_path_do=node_path_do,
+        euclidean=euclidean,
+        euclidian=euclidian,
         graph=graph,
+        from_node=from_node,
+        to_nodes=to_nodes,
     )
     return surf_dist_execute(params, execution)
 

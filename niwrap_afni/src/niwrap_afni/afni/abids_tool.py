@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ABIDS_TOOL_METADATA = Metadata(
-    id="ecdd7e187a3a330cd02d094f809fb0b75a51fe76.boutiques",
+    id="44f26320aab699eef15ef4c3c6fdea66a995e467.boutiques",
     name="abids_tool",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,7 +16,11 @@ ABIDS_TOOL_METADATA = Metadata(
 AbidsToolParameters = typing.TypedDict('AbidsToolParameters', {
     "__STYX_TYPE__": typing.Literal["abids_tool"],
     "input_files": list[InputPathType],
+    "tr_match": bool,
+    "add_tr": bool,
+    "add_slice_times": bool,
     "copy_prefix": typing.NotRequired[list[str] | None],
+    "help_flag": bool,
 })
 
 
@@ -61,21 +65,36 @@ class AbidsToolOutputs(typing.NamedTuple):
 
 def abids_tool_params(
     input_files: list[InputPathType],
+    tr_match: bool = False,
+    add_tr: bool = False,
+    add_slice_times: bool = False,
     copy_prefix: list[str] | None = None,
+    help_flag: bool = False,
 ) -> AbidsToolParameters:
     """
     Build parameters.
     
     Args:
         input_files: At least one 3d+time dataset in NIFTI format.
+        tr_match: Check if the TR in the json file matches the TR from input\
+            dataset header. (Returns 1 if match).
+        add_tr: Add the TR from the BIDS json file to the input dataset using\
+            3drefit.
+        add_slice_times: Add the slice times from the BIDS json file to the\
+            input dataset using 3drefit.
         copy_prefix: Copy both the NIFTI dataset(s) and matching .json file(s)\
             to PREFIX. Must have the same number of prefixes as datasets.
+        help_flag: Show help information and exit.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "abids_tool",
         "input_files": input_files,
+        "tr_match": tr_match,
+        "add_tr": add_tr,
+        "add_slice_times": add_slice_times,
+        "help_flag": help_flag,
     }
     if copy_prefix is not None:
         params["copy_prefix"] = copy_prefix
@@ -98,11 +117,19 @@ def abids_tool_cargs(
     cargs = []
     cargs.append("abids_tool.py")
     cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    if params.get("tr_match"):
+        cargs.append("-TR_match")
+    if params.get("add_tr"):
+        cargs.append("-add_TR")
+    if params.get("add_slice_times"):
+        cargs.append("-add_slice_times")
     if params.get("copy_prefix") is not None:
         cargs.extend([
             "-copy",
             *params.get("copy_prefix")
         ])
+    if params.get("help_flag"):
+        cargs.append("-help")
     return cargs
 
 
@@ -153,7 +180,11 @@ def abids_tool_execute(
 
 def abids_tool(
     input_files: list[InputPathType],
+    tr_match: bool = False,
+    add_tr: bool = False,
+    add_slice_times: bool = False,
     copy_prefix: list[str] | None = None,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> AbidsToolOutputs:
     """
@@ -167,8 +198,15 @@ def abids_tool(
     
     Args:
         input_files: At least one 3d+time dataset in NIFTI format.
+        tr_match: Check if the TR in the json file matches the TR from input\
+            dataset header. (Returns 1 if match).
+        add_tr: Add the TR from the BIDS json file to the input dataset using\
+            3drefit.
+        add_slice_times: Add the slice times from the BIDS json file to the\
+            input dataset using 3drefit.
         copy_prefix: Copy both the NIFTI dataset(s) and matching .json file(s)\
             to PREFIX. Must have the same number of prefixes as datasets.
+        help_flag: Show help information and exit.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AbidsToolOutputs`).
@@ -177,7 +215,11 @@ def abids_tool(
     execution = runner.start_execution(ABIDS_TOOL_METADATA)
     params = abids_tool_params(
         input_files=input_files,
+        tr_match=tr_match,
+        add_tr=add_tr,
+        add_slice_times=add_slice_times,
         copy_prefix=copy_prefix,
+        help_flag=help_flag,
     )
     return abids_tool_execute(params, execution)
 

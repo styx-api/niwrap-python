@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AFNI_BATCH_R_METADATA = Metadata(
-    id="78789aab686dc723a7f6543875033396e8a4b97c.boutiques",
+    id="8f19b113f220df5c4c707c9f78252bd08a223bb3.boutiques",
     name="AFNI_Batch_R",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -119,7 +119,6 @@ def afni_batch_r_cargs(
         cargs.append("--no-readline")
     if params.get("vanilla_mode"):
         cargs.append("--vanilla")
-    cargs.append("--args")
     if params.get("help"):
         cargs.append("-help")
     return cargs

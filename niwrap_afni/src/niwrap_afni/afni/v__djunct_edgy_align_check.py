@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_EDGY_ALIGN_CHECK_METADATA = Metadata(
-    id="b256b5bb4b47e9c6b85c30cb947f43710826ac49.boutiques",
+    id="8e479ed45f214bcb93f3842c5934b8e03c6fc47c.boutiques",
     name="@djunct_edgy_align_check",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -29,6 +29,15 @@ VDjunctEdgyAlignCheckParameters = typing.TypedDict('VDjunctEdgyAlignCheckParamet
     "monty": typing.NotRequired[float | None],
     "use_olay_grid": typing.NotRequired[str | None],
     "label_mode": typing.NotRequired[str | None],
+    "help_flag": bool,
+    "ver_flag": bool,
+    "echo_flag": bool,
+    "sharpen_ulay_off_flag": bool,
+    "mask_olay_edges_flag": bool,
+    "no_cor_flag": bool,
+    "no_sag_flag": bool,
+    "no_axi_flag": bool,
+    "no_clean_flag": bool,
     "ulay_range": typing.NotRequired[list[float] | None],
     "ulay_range_nz": typing.NotRequired[list[float] | None],
     "ulay_range_am": typing.NotRequired[list[float] | None],
@@ -89,6 +98,15 @@ def v__djunct_edgy_align_check_params(
     monty: float | None = None,
     use_olay_grid: str | None = None,
     label_mode: str | None = None,
+    help_flag: bool = False,
+    ver_flag: bool = False,
+    echo_flag: bool = False,
+    sharpen_ulay_off_flag: bool = False,
+    mask_olay_edges_flag: bool = False,
+    no_cor_flag: bool = False,
+    no_sag_flag: bool = False,
+    no_axi_flag: bool = False,
+    no_clean_flag: bool = False,
     ulay_range: list[float] | None = None,
     ulay_range_nz: list[float] | None = None,
     ulay_range_am: list[float] | None = None,
@@ -111,6 +129,15 @@ def v__djunct_edgy_align_check_params(
         monty: Number of slices in Y-direction for montage.
         use_olay_grid: Grid interpolation method for overlay.
         label_mode: Mode for labeling.
+        help_flag: Display help message.
+        ver_flag: Show version.
+        echo_flag: Echo commands.
+        sharpen_ulay_off_flag: Disable underlay sharpening.
+        mask_olay_edges_flag: Mask overlay edges.
+        no_cor_flag: Exclude coronal plane.
+        no_sag_flag: Exclude sagittal plane.
+        no_axi_flag: Exclude axial plane.
+        no_clean_flag: Disable cleaning temporary files.
         ulay_range: Range for underlay {umin umax}.
         ulay_range_nz: Range for non-zero underlay {umin umax}.
         ulay_range_am: Range for auto-mask underlay {umin umax}.
@@ -122,6 +149,15 @@ def v__djunct_edgy_align_check_params(
         "ULAY": ulay,
         "OLAY": olay,
         "PREFIX": prefix,
+        "help_flag": help_flag,
+        "ver_flag": ver_flag,
+        "echo_flag": echo_flag,
+        "sharpen_ulay_off_flag": sharpen_ulay_off_flag,
+        "mask_olay_edges_flag": mask_olay_edges_flag,
+        "no_cor_flag": no_cor_flag,
+        "no_sag_flag": no_sag_flag,
+        "no_axi_flag": no_axi_flag,
+        "no_clean_flag": no_clean_flag,
     }
     if set_dicom_xyz is not None:
         params["set_dicom_xyz"] = set_dicom_xyz
@@ -194,15 +230,24 @@ def v__djunct_edgy_align_check_cargs(
         cargs.append(params.get("use_olay_grid"))
     if params.get("label_mode") is not None:
         cargs.append(params.get("label_mode"))
-    cargs.append("[help_flag]")
-    cargs.append("[ver_flag]")
-    cargs.append("[echo_flag]")
-    cargs.append("[sharpen_ulay_off_flag]")
-    cargs.append("[mask_olay_edges_flag]")
-    cargs.append("[no_cor_flag]")
-    cargs.append("[no_sag_flag]")
-    cargs.append("[no_axi_flag]")
-    cargs.append("[no_clean_flag]")
+    if params.get("help_flag"):
+        cargs.append("-help")
+    if params.get("ver_flag"):
+        cargs.append("-ver")
+    if params.get("echo_flag"):
+        cargs.append("-echo")
+    if params.get("sharpen_ulay_off_flag"):
+        cargs.append("-sharpen_ulay_off")
+    if params.get("mask_olay_edges_flag"):
+        cargs.append("-mask_olay_edges")
+    if params.get("no_cor_flag"):
+        cargs.append("-no_cor")
+    if params.get("no_sag_flag"):
+        cargs.append("-no_sag")
+    if params.get("no_axi_flag"):
+        cargs.append("-no_axi")
+    if params.get("no_clean_flag"):
+        cargs.append("-no_clean")
     if params.get("ulay_range") is not None:
         cargs.extend(map(str, params.get("ulay_range")))
     if params.get("ulay_range_nz") is not None:
@@ -271,6 +316,15 @@ def v__djunct_edgy_align_check(
     monty: float | None = None,
     use_olay_grid: str | None = None,
     label_mode: str | None = None,
+    help_flag: bool = False,
+    ver_flag: bool = False,
+    echo_flag: bool = False,
+    sharpen_ulay_off_flag: bool = False,
+    mask_olay_edges_flag: bool = False,
+    no_cor_flag: bool = False,
+    no_sag_flag: bool = False,
+    no_axi_flag: bool = False,
+    no_clean_flag: bool = False,
     ulay_range: list[float] | None = None,
     ulay_range_nz: list[float] | None = None,
     ulay_range_am: list[float] | None = None,
@@ -299,6 +353,15 @@ def v__djunct_edgy_align_check(
         monty: Number of slices in Y-direction for montage.
         use_olay_grid: Grid interpolation method for overlay.
         label_mode: Mode for labeling.
+        help_flag: Display help message.
+        ver_flag: Show version.
+        echo_flag: Echo commands.
+        sharpen_ulay_off_flag: Disable underlay sharpening.
+        mask_olay_edges_flag: Mask overlay edges.
+        no_cor_flag: Exclude coronal plane.
+        no_sag_flag: Exclude sagittal plane.
+        no_axi_flag: Exclude axial plane.
+        no_clean_flag: Disable cleaning temporary files.
         ulay_range: Range for underlay {umin umax}.
         ulay_range_nz: Range for non-zero underlay {umin umax}.
         ulay_range_am: Range for auto-mask underlay {umin umax}.
@@ -323,6 +386,15 @@ def v__djunct_edgy_align_check(
         monty=monty,
         use_olay_grid=use_olay_grid,
         label_mode=label_mode,
+        help_flag=help_flag,
+        ver_flag=ver_flag,
+        echo_flag=echo_flag,
+        sharpen_ulay_off_flag=sharpen_ulay_off_flag,
+        mask_olay_edges_flag=mask_olay_edges_flag,
+        no_cor_flag=no_cor_flag,
+        no_sag_flag=no_sag_flag,
+        no_axi_flag=no_axi_flag,
+        no_clean_flag=no_clean_flag,
         ulay_range=ulay_range,
         ulay_range_nz=ulay_range_nz,
         ulay_range_am=ulay_range_am,

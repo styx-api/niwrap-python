@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ICC_METADATA = Metadata(
-    id="6b7ec5c6de013c42d47420ebf12a564c200ff8a3.boutiques",
+    id="1652fdd3c8a77717220b28f06430ccf258c293f3.boutiques",
     name="3dICC",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,6 +19,16 @@ V3dIccParameters = typing.TypedDict('V3dIccParameters', {
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
     "data_table": str,
+    "bounds": typing.NotRequired[list[float] | None],
+    "jobs": typing.NotRequired[float | None],
+    "qVars": typing.NotRequired[str | None],
+    "qVarCenters": typing.NotRequired[str | None],
+    "subj": typing.NotRequired[str | None],
+    "input_file_column": typing.NotRequired[str | None],
+    "tStat": typing.NotRequired[str | None],
+    "dbgArgs": bool,
+    "cio": bool,
+    "rio": bool,
 })
 
 
@@ -69,6 +79,16 @@ def v_3d_icc_params(
     prefix: str,
     data_table: str,
     mask: InputPathType | None = None,
+    bounds: list[float] | None = None,
+    jobs: float | None = None,
+    q_vars: str | None = None,
+    q_var_centers: str | None = None,
+    subj: str | None = None,
+    input_file_column: str | None = None,
+    t_stat: str | None = None,
+    dbg_args: bool = False,
+    cio: bool = False,
+    rio: bool = False,
 ) -> V3dIccParameters:
     """
     Build parameters.
@@ -86,6 +106,25 @@ def v_3d_icc_params(
             The first column is reserved with label 'Subj', and the last is\
             reserved for 'InputFile'.
         mask: Path to mask file. Only process voxels inside this mask.
+        bounds: Bounds for outlier removal. Provide two numbers: the lower\
+            bound (lb) and the upper bound (ub). Input data will be confined within\
+            [lb, ub]. Any values beyond the bounds will be treated as missing.
+        jobs: Number of jobs for parallel computing. Choose 1 for a\
+            single-processor computer.
+        q_vars: Identify quantitative variables with this option. List should\
+            be separated with comma and surrounded within quotes.
+        q_var_centers: Specify centering values for quantitative variables\
+            identified under -qVars. Multiple centers are separated by commas and\
+            should be surrounded within quotes.
+        subj: Specify the column name that is designated as the measuring\
+            entity variable (usually subject).
+        input_file_column: Specify the last column name that is designated for\
+            input files of effect estimate.
+        t_stat: Specify the column name that is designated as the t-statistic.
+        dbg_args: Enable R to save the parameters in a file called\
+            .3dICC.dbg.AFNI.args in the current directory for debugging.
+        cio: Use AFNI's C io functions. Default is -cio.
+        rio: Use R's io functions.
     Returns:
         Parameter dictionary
     """
@@ -94,9 +133,26 @@ def v_3d_icc_params(
         "model": model,
         "prefix": prefix,
         "data_table": data_table,
+        "dbgArgs": dbg_args,
+        "cio": cio,
+        "rio": rio,
     }
     if mask is not None:
         params["mask"] = mask
+    if bounds is not None:
+        params["bounds"] = bounds
+    if jobs is not None:
+        params["jobs"] = jobs
+    if q_vars is not None:
+        params["qVars"] = q_vars
+    if q_var_centers is not None:
+        params["qVarCenters"] = q_var_centers
+    if subj is not None:
+        params["subj"] = subj
+    if input_file_column is not None:
+        params["input_file_column"] = input_file_column
+    if t_stat is not None:
+        params["tStat"] = t_stat
     return params
 
 
@@ -129,7 +185,47 @@ def v_3d_icc_cargs(
         "-dataTable",
         params.get("data_table")
     ])
-    cargs.append("[OPTIONS]")
+    if params.get("bounds") is not None:
+        cargs.extend([
+            "-bounds",
+            *map(str, params.get("bounds"))
+        ])
+    if params.get("jobs") is not None:
+        cargs.extend([
+            "-jobs",
+            str(params.get("jobs"))
+        ])
+    if params.get("qVars") is not None:
+        cargs.extend([
+            "-qVars",
+            params.get("qVars")
+        ])
+    if params.get("qVarCenters") is not None:
+        cargs.extend([
+            "-qVarCenters",
+            params.get("qVarCenters")
+        ])
+    if params.get("subj") is not None:
+        cargs.extend([
+            "-Subj",
+            params.get("subj")
+        ])
+    if params.get("input_file_column") is not None:
+        cargs.extend([
+            "-IF",
+            params.get("input_file_column")
+        ])
+    if params.get("tStat") is not None:
+        cargs.extend([
+            "-tStat",
+            params.get("tStat")
+        ])
+    if params.get("dbgArgs"):
+        cargs.append("-dbgArgs")
+    if params.get("cio"):
+        cargs.append("-cio")
+    if params.get("rio"):
+        cargs.append("-Rio")
     return cargs
 
 
@@ -182,6 +278,16 @@ def v_3d_icc(
     prefix: str,
     data_table: str,
     mask: InputPathType | None = None,
+    bounds: list[float] | None = None,
+    jobs: float | None = None,
+    q_vars: str | None = None,
+    q_var_centers: str | None = None,
+    subj: str | None = None,
+    input_file_column: str | None = None,
+    t_stat: str | None = None,
+    dbg_args: bool = False,
+    cio: bool = False,
+    rio: bool = False,
     runner: Runner | None = None,
 ) -> V3dIccOutputs:
     """
@@ -204,6 +310,25 @@ def v_3d_icc(
             The first column is reserved with label 'Subj', and the last is\
             reserved for 'InputFile'.
         mask: Path to mask file. Only process voxels inside this mask.
+        bounds: Bounds for outlier removal. Provide two numbers: the lower\
+            bound (lb) and the upper bound (ub). Input data will be confined within\
+            [lb, ub]. Any values beyond the bounds will be treated as missing.
+        jobs: Number of jobs for parallel computing. Choose 1 for a\
+            single-processor computer.
+        q_vars: Identify quantitative variables with this option. List should\
+            be separated with comma and surrounded within quotes.
+        q_var_centers: Specify centering values for quantitative variables\
+            identified under -qVars. Multiple centers are separated by commas and\
+            should be surrounded within quotes.
+        subj: Specify the column name that is designated as the measuring\
+            entity variable (usually subject).
+        input_file_column: Specify the last column name that is designated for\
+            input files of effect estimate.
+        t_stat: Specify the column name that is designated as the t-statistic.
+        dbg_args: Enable R to save the parameters in a file called\
+            .3dICC.dbg.AFNI.args in the current directory for debugging.
+        cio: Use AFNI's C io functions. Default is -cio.
+        rio: Use R's io functions.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dIccOutputs`).
@@ -215,6 +340,16 @@ def v_3d_icc(
         prefix=prefix,
         mask=mask,
         data_table=data_table,
+        bounds=bounds,
+        jobs=jobs,
+        q_vars=q_vars,
+        q_var_centers=q_var_centers,
+        subj=subj,
+        input_file_column=input_file_column,
+        t_stat=t_stat,
+        dbg_args=dbg_args,
+        cio=cio,
+        rio=rio,
     )
     return v_3d_icc_execute(params, execution)
 

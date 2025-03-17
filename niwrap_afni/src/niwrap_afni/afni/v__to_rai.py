@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__TO_RAI_METADATA = Metadata(
-    id="ae5bb83cce00bf51d61da1e1b21d495548f69a92.boutiques",
+    id="8c60899686c3401d179992be9780ca970e04a901.boutiques",
     name="@ToRAI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,8 @@ V__TO_RAI_METADATA = Metadata(
 
 VToRaiParameters = typing.TypedDict('VToRaiParameters', {
     "__STYX_TYPE__": typing.Literal["@ToRAI"],
+    "coordinates": list[float],
+    "orientation": str,
 })
 
 
@@ -58,16 +60,22 @@ class VToRaiOutputs(typing.NamedTuple):
 
 
 def v__to_rai_params(
+    coordinates: list[float],
+    orientation: str,
 ) -> VToRaiParameters:
     """
     Build parameters.
     
     Args:
+        coordinates: Specify the X, Y, and Z coordinates.
+        orientation: Specify the orientation.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "@ToRAI",
+        "coordinates": coordinates,
+        "orientation": orientation,
     }
     return params
 
@@ -87,12 +95,14 @@ def v__to_rai_cargs(
     """
     cargs = []
     cargs.append("@ToRAI")
-    cargs.append("<-xyz")
-    cargs.append("X")
-    cargs.append("Y")
-    cargs.append("Z>")
-    cargs.append("<-or")
-    cargs.append("ORIENT>")
+    cargs.extend([
+        "-xyz",
+        *map(str, params.get("coordinates"))
+    ])
+    cargs.extend([
+        "-or",
+        params.get("orientation")
+    ])
     return cargs
 
 
@@ -140,6 +150,8 @@ def v__to_rai_execute(
 
 
 def v__to_rai(
+    coordinates: list[float],
+    orientation: str,
     runner: Runner | None = None,
 ) -> VToRaiOutputs:
     """
@@ -150,6 +162,8 @@ def v__to_rai(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        coordinates: Specify the X, Y, and Z coordinates.
+        orientation: Specify the orientation.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VToRaiOutputs`).
@@ -157,6 +171,8 @@ def v__to_rai(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__TO_RAI_METADATA)
     params = v__to_rai_params(
+        coordinates=coordinates,
+        orientation=orientation,
     )
     return v__to_rai_execute(params, execution)
 

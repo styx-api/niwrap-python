@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LSS_METADATA = Metadata(
-    id="d793e92300ed18c69c7d31223293711fdbbfaaf7.boutiques",
+    id="d4c111d4b5225efa7f8cd3f4642fd461a7ab156b.boutiques",
     name="3dLSS",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,14 @@ V_3D_LSS_METADATA = Metadata(
 
 V3dLssParameters = typing.TypedDict('V3dLssParameters', {
     "__STYX_TYPE__": typing.Literal["3dLSS"],
+    "matrix": InputPathType,
+    "input": typing.NotRequired[InputPathType | None],
+    "nodata": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "automask": bool,
+    "prefix": typing.NotRequired[str | None],
+    "save1D": typing.NotRequired[str | None],
+    "verbose": bool,
 })
 
 
@@ -59,22 +67,57 @@ class V3dLssOutputs(typing.NamedTuple):
     output_dataset: OutputPathType
     """Output dataset containing the LSS estimates of the beta weights for the
     '-stim_times_IM' stimuli."""
-    save1_d_output: OutputPathType
+    save1_d_output: OutputPathType | None
     """Estimator vectors saved in a 1D formatted file."""
 
 
 def v_3d_lss_params(
+    matrix: InputPathType,
+    input_: InputPathType | None = None,
+    nodata: bool = False,
+    mask: InputPathType | None = None,
+    automask: bool = False,
+    prefix: str | None = None,
+    save1_d: str | None = None,
+    verbose: bool = False,
 ) -> V3dLssParameters:
     """
     Build parameters.
     
     Args:
+        matrix: Read the matrix 'mmm', which should have been output from\
+            3dDeconvolve via the '-x1D' option. It should have included exactly one\
+            '-stim_times_IM' option.
+        input_: Read time series dataset 'ddd'.
+        nodata: Just compute the estimator matrix -- to be saved with\
+            '-save1D'.
+        mask: Dataset 'MMM' will be used as a mask for the input; voxels\
+            outside the mask will not be fit by the regression model.
+        automask: If you don't know what this does by now, please don't use\
+            this program.
+        prefix: Prefix name for the output dataset; this dataset will contain\
+            ONLY the LSS estimates of the beta weights for the '-stim_times_IM'\
+            stimuli.
+        save1_d: Save the estimator vectors to a 1D formatted file named 'qqq'.
+        verbose: Write out progress reports.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dLSS",
+        "matrix": matrix,
+        "nodata": nodata,
+        "automask": automask,
+        "verbose": verbose,
     }
+    if input_ is not None:
+        params["input"] = input_
+    if mask is not None:
+        params["mask"] = mask
+    if prefix is not None:
+        params["prefix"] = prefix
+    if save1_d is not None:
+        params["save1D"] = save1_d
     return params
 
 
@@ -93,7 +136,36 @@ def v_3d_lss_cargs(
     """
     cargs = []
     cargs.append("3dLSS")
-    cargs.append("[OPTIONS]")
+    cargs.extend([
+        "-matrix",
+        execution.input_file(params.get("matrix"))
+    ])
+    if params.get("input") is not None:
+        cargs.extend([
+            "-input",
+            execution.input_file(params.get("input"))
+        ])
+    if params.get("nodata"):
+        cargs.append("-nodata")
+    if params.get("mask") is not None:
+        cargs.extend([
+            "-mask",
+            execution.input_file(params.get("mask"))
+        ])
+    if params.get("automask"):
+        cargs.append("-automask")
+    if params.get("prefix") is not None:
+        cargs.extend([
+            "-prefix",
+            params.get("prefix")
+        ])
+    if params.get("save1D") is not None:
+        cargs.extend([
+            "-save1D",
+            params.get("save1D")
+        ])
+    if params.get("verbose"):
+        cargs.append("-verb")
     return cargs
 
 
@@ -113,7 +185,7 @@ def v_3d_lss_outputs(
     ret = V3dLssOutputs(
         root=execution.output_file("."),
         output_dataset=execution.output_file("LSSout+orig.HEAD"),
-        save1_d_output=execution.output_file("[SAVE1D]"),
+        save1_d_output=execution.output_file(params.get("save1D")) if (params.get("save1D") is not None) else None,
     )
     return ret
 
@@ -144,6 +216,14 @@ def v_3d_lss_execute(
 
 
 def v_3d_lss(
+    matrix: InputPathType,
+    input_: InputPathType | None = None,
+    nodata: bool = False,
+    mask: InputPathType | None = None,
+    automask: bool = False,
+    prefix: str | None = None,
+    save1_d: str | None = None,
+    verbose: bool = False,
     runner: Runner | None = None,
 ) -> V3dLssOutputs:
     """
@@ -155,6 +235,21 @@ def v_3d_lss(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        matrix: Read the matrix 'mmm', which should have been output from\
+            3dDeconvolve via the '-x1D' option. It should have included exactly one\
+            '-stim_times_IM' option.
+        input_: Read time series dataset 'ddd'.
+        nodata: Just compute the estimator matrix -- to be saved with\
+            '-save1D'.
+        mask: Dataset 'MMM' will be used as a mask for the input; voxels\
+            outside the mask will not be fit by the regression model.
+        automask: If you don't know what this does by now, please don't use\
+            this program.
+        prefix: Prefix name for the output dataset; this dataset will contain\
+            ONLY the LSS estimates of the beta weights for the '-stim_times_IM'\
+            stimuli.
+        save1_d: Save the estimator vectors to a 1D formatted file named 'qqq'.
+        verbose: Write out progress reports.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLssOutputs`).
@@ -162,6 +257,14 @@ def v_3d_lss(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LSS_METADATA)
     params = v_3d_lss_params(
+        matrix=matrix,
+        input_=input_,
+        nodata=nodata,
+        mask=mask,
+        automask=automask,
+        prefix=prefix,
+        save1_d=save1_d,
+        verbose=verbose,
     )
     return v_3d_lss_execute(params, execution)
 

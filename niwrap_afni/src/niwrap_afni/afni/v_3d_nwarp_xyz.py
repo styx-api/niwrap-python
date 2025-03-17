@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_NWARP_XYZ_METADATA = Metadata(
-    id="5a16d2bee46238f64451cbe6e0fea267dd5ecf53.boutiques",
+    id="1ad64cabce09853e006ac8e3b63d94912f629b5c.boutiques",
     name="3dNwarpXYZ",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,8 +15,10 @@ V_3D_NWARP_XYZ_METADATA = Metadata(
 
 V3dNwarpXyzParameters = typing.TypedDict('V3dNwarpXyzParameters', {
     "__STYX_TYPE__": typing.Literal["3dNwarpXYZ"],
-    "warp_spec": str,
     "xyzfile": InputPathType,
+    "warp_spec": str,
+    "iwarp": bool,
+    "output_file": str,
 })
 
 
@@ -63,22 +65,28 @@ class V3dNwarpXyzOutputs(typing.NamedTuple):
 
 
 def v_3d_nwarp_xyz_params(
-    warp_spec: str,
     xyzfile: InputPathType,
+    warp_spec: str,
+    output_file: str,
+    iwarp: bool = False,
 ) -> V3dNwarpXyzParameters:
     """
     Build parameters.
     
     Args:
-        warp_spec: Warp specification as in 3dNwarpApply.
         xyzfile: XYZ coordinate file containing 3 columns.
+        warp_spec: Warp specification as in 3dNwarpApply.
+        output_file: Warped XYZ coordinates output file.
+        iwarp: Compute the inverse warp for each input (x,y,z) triple.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dNwarpXYZ",
-        "warp_spec": warp_spec,
         "xyzfile": xyzfile,
+        "warp_spec": warp_spec,
+        "iwarp": iwarp,
+        "output_file": output_file,
     }
     return params
 
@@ -98,15 +106,14 @@ def v_3d_nwarp_xyz_cargs(
     """
     cargs = []
     cargs.append("3dNwarpXYZ")
-    cargs.append("[OPTIONS]")
-    cargs.append("-nwarp")
+    cargs.append(execution.input_file(params.get("xyzfile")))
     cargs.extend([
         "-nwarp",
         params.get("warp_spec")
     ])
-    cargs.append(execution.input_file(params.get("xyzfile")))
-    cargs.append(">")
-    cargs.append("[OUTPUT_FILE]")
+    if params.get("iwarp"):
+        cargs.append("-iwarp")
+    cargs.append("> " + params.get("output_file"))
     return cargs
 
 
@@ -125,7 +132,7 @@ def v_3d_nwarp_xyz_outputs(
     """
     ret = V3dNwarpXyzOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file("[OUTPUT_FILE]"),
+        output_file=execution.output_file(params.get("output_file")),
     )
     return ret
 
@@ -156,8 +163,10 @@ def v_3d_nwarp_xyz_execute(
 
 
 def v_3d_nwarp_xyz(
-    warp_spec: str,
     xyzfile: InputPathType,
+    warp_spec: str,
+    output_file: str,
+    iwarp: bool = False,
     runner: Runner | None = None,
 ) -> V3dNwarpXyzOutputs:
     """
@@ -169,8 +178,10 @@ def v_3d_nwarp_xyz(
     URL: https://afni.nimh.nih.gov/
     
     Args:
-        warp_spec: Warp specification as in 3dNwarpApply.
         xyzfile: XYZ coordinate file containing 3 columns.
+        warp_spec: Warp specification as in 3dNwarpApply.
+        output_file: Warped XYZ coordinates output file.
+        iwarp: Compute the inverse warp for each input (x,y,z) triple.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNwarpXyzOutputs`).
@@ -178,8 +189,10 @@ def v_3d_nwarp_xyz(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_NWARP_XYZ_METADATA)
     params = v_3d_nwarp_xyz_params(
-        warp_spec=warp_spec,
         xyzfile=xyzfile,
+        warp_spec=warp_spec,
+        iwarp=iwarp,
+        output_file=output_file,
     )
     return v_3d_nwarp_xyz_execute(params, execution)
 

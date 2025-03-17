@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LRFLIP_METADATA = Metadata(
-    id="b3e8fe43a4546f9996744e159107df5ff817046b.boutiques",
+    id="cccfbbdb6c5cece891a86f81aefb3b59ea32fe70.boutiques",
     name="3dLRflip",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,11 @@ V_3D_LRFLIP_METADATA = Metadata(
 
 V3dLrflipParameters = typing.TypedDict('V3dLrflipParameters', {
     "__STYX_TYPE__": typing.Literal["3dLRflip"],
+    "flip_lr": bool,
+    "flip_ap": bool,
+    "flip_is": bool,
+    "flip_x": bool,
+    "flip_y": bool,
     "flip_z": bool,
     "output_prefix": typing.NotRequired[str | None],
     "datasets": list[InputPathType],
@@ -65,6 +70,11 @@ class V3dLrflipOutputs(typing.NamedTuple):
 
 def v_3d_lrflip_params(
     datasets: list[InputPathType],
+    flip_lr: bool = False,
+    flip_ap: bool = False,
+    flip_is: bool = False,
+    flip_x: bool = False,
+    flip_y: bool = False,
     flip_z: bool = False,
     output_prefix: str | None = None,
 ) -> V3dLrflipParameters:
@@ -73,6 +83,11 @@ def v_3d_lrflip_params(
     
     Args:
         datasets: Datasets to flip.
+        flip_lr: Flip about Left-Right axis.
+        flip_ap: Flip about Anterior-Posterior axis.
+        flip_is: Flip about Inferior-Superior axis.
+        flip_x: Flip about the 1st direction.
+        flip_y: Flip about the 2nd direction.
         flip_z: Flip about the 3rd direction.
         output_prefix: Prefix to use for output. If multiple datasets are\
             input, the program will choose a prefix for each output.
@@ -81,6 +96,11 @@ def v_3d_lrflip_params(
     """
     params = {
         "__STYXTYPE__": "3dLRflip",
+        "flip_lr": flip_lr,
+        "flip_ap": flip_ap,
+        "flip_is": flip_is,
+        "flip_x": flip_x,
+        "flip_y": flip_y,
         "flip_z": flip_z,
         "datasets": datasets,
     }
@@ -104,6 +124,16 @@ def v_3d_lrflip_cargs(
     """
     cargs = []
     cargs.append("3dLRflip")
+    if params.get("flip_lr"):
+        cargs.append("-LR")
+    if params.get("flip_ap"):
+        cargs.append("-AP")
+    if params.get("flip_is"):
+        cargs.append("-IS")
+    if params.get("flip_x"):
+        cargs.append("-X")
+    if params.get("flip_y"):
+        cargs.append("-Y")
     if params.get("flip_z"):
         cargs.append("-Z")
     if params.get("output_prefix") is not None:
@@ -162,6 +192,11 @@ def v_3d_lrflip_execute(
 
 def v_3d_lrflip(
     datasets: list[InputPathType],
+    flip_lr: bool = False,
+    flip_ap: bool = False,
+    flip_is: bool = False,
+    flip_x: bool = False,
+    flip_y: bool = False,
     flip_z: bool = False,
     output_prefix: str | None = None,
     runner: Runner | None = None,
@@ -176,6 +211,11 @@ def v_3d_lrflip(
     
     Args:
         datasets: Datasets to flip.
+        flip_lr: Flip about Left-Right axis.
+        flip_ap: Flip about Anterior-Posterior axis.
+        flip_is: Flip about Inferior-Superior axis.
+        flip_x: Flip about the 1st direction.
+        flip_y: Flip about the 2nd direction.
         flip_z: Flip about the 3rd direction.
         output_prefix: Prefix to use for output. If multiple datasets are\
             input, the program will choose a prefix for each output.
@@ -186,6 +226,11 @@ def v_3d_lrflip(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_LRFLIP_METADATA)
     params = v_3d_lrflip_params(
+        flip_lr=flip_lr,
+        flip_ap=flip_ap,
+        flip_is=flip_is,
+        flip_x=flip_x,
+        flip_y=flip_y,
         flip_z=flip_z,
         output_prefix=output_prefix,
         datasets=datasets,

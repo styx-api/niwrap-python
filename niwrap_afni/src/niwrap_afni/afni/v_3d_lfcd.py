@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LFCD_METADATA = Metadata(
-    id="bf72e901409ebf787635076f27fc633055ebec14.boutiques",
+    id="7698c7de46741d205ab4763adc29dccd492e943b.boutiques",
     name="3dLFCD",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -19,6 +19,8 @@ V3dLfcdParameters = typing.TypedDict('V3dLfcdParameters', {
     "autoclip": bool,
     "automask": bool,
     "mask": typing.NotRequired[InputPathType | None],
+    "num_threads": typing.NotRequired[int | None],
+    "out_file": typing.NotRequired[str | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
     "polort": typing.NotRequired[int | None],
     "thresh": typing.NotRequired[float | None],
@@ -65,8 +67,6 @@ class V3dLfcdOutputs(typing.NamedTuple):
     """Output root folder. This is the root folder for all outputs."""
     out_file: OutputPathType
     """Output image file name."""
-    out_file_: OutputPathType
-    """Output file."""
 
 
 def v_3d_lfcd_params(
@@ -74,6 +74,8 @@ def v_3d_lfcd_params(
     autoclip: bool = False,
     automask: bool = False,
     mask: InputPathType | None = None,
+    num_threads: int | None = None,
+    out_file: str | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     polort: int | None = None,
     thresh: float | None = None,
@@ -86,6 +88,8 @@ def v_3d_lfcd_params(
         autoclip: Clip off low-intensity regions in the dataset.
         automask: Mask the dataset to target brain-only voxels.
         mask: Mask file to mask input data.
+        num_threads: Set number of threads.
+        out_file: Output image file name.
         outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
         polort: No description provided.
         thresh: Threshold to exclude connections where corr <= thresh.
@@ -100,6 +104,10 @@ def v_3d_lfcd_params(
     }
     if mask is not None:
         params["mask"] = mask
+    if num_threads is not None:
+        params["num_threads"] = num_threads
+    if out_file is not None:
+        params["out_file"] = out_file
     if outputtype is not None:
         params["outputtype"] = outputtype
     if polort is not None:
@@ -134,7 +142,13 @@ def v_3d_lfcd_cargs(
             "-mask",
             execution.input_file(params.get("mask"))
         ])
-    cargs.append("[OUT_FILE]")
+    if params.get("num_threads") is not None:
+        cargs.append(str(params.get("num_threads")))
+    if params.get("out_file") is not None:
+        cargs.extend([
+            "-prefix",
+            params.get("out_file")
+        ])
     if params.get("outputtype") is not None:
         cargs.append(params.get("outputtype"))
     if params.get("polort") is not None:
@@ -166,7 +180,6 @@ def v_3d_lfcd_outputs(
     ret = V3dLfcdOutputs(
         root=execution.output_file("."),
         out_file=execution.output_file(pathlib.Path(params.get("in_file")).name + "_afni"),
-        out_file_=execution.output_file("out_file"),
     )
     return ret
 
@@ -201,6 +214,8 @@ def v_3d_lfcd(
     autoclip: bool = False,
     automask: bool = False,
     mask: InputPathType | None = None,
+    num_threads: int | None = None,
+    out_file: str | None = None,
     outputtype: typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None = None,
     polort: int | None = None,
     thresh: float | None = None,
@@ -219,6 +234,8 @@ def v_3d_lfcd(
         autoclip: Clip off low-intensity regions in the dataset.
         automask: Mask the dataset to target brain-only voxels.
         mask: Mask file to mask input data.
+        num_threads: Set number of threads.
+        out_file: Output image file name.
         outputtype: 'nifti' or 'afni' or 'nifti_gz'. Afni output filetype.
         polort: No description provided.
         thresh: Threshold to exclude connections where corr <= thresh.
@@ -233,6 +250,8 @@ def v_3d_lfcd(
         autoclip=autoclip,
         automask=automask,
         mask=mask,
+        num_threads=num_threads,
+        out_file=out_file,
         outputtype=outputtype,
         polort=polort,
         thresh=thresh,

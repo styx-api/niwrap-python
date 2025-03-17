@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_CORRELATE_METADATA = Metadata(
-    id="be0ac3e4b1a192ead53f328b4b3ecf125d8d36fe.boutiques",
+    id="f3dbbb641ceed6bf13990065b1b59dc542a7a7fa.boutiques",
     name="1dCorrelate",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,7 +18,11 @@ V1dCorrelateParameters = typing.TypedDict('V1dCorrelateParameters', {
     "ktaub": bool,
     "nboot": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
+    "block": bool,
     "blk": bool,
+    "pearson": bool,
+    "spearman": bool,
+    "quadrant": bool,
     "input_files": list[InputPathType],
 })
 
@@ -67,7 +71,11 @@ def v_1d_correlate_params(
     ktaub: bool = False,
     nboot: float | None = None,
     alpha: float | None = None,
+    block: bool = False,
     blk: bool = False,
+    pearson: bool = False,
+    spearman: bool = False,
+    quadrant: bool = False,
 ) -> V1dCorrelateParameters:
     """
     Build parameters.
@@ -77,14 +85,23 @@ def v_1d_correlate_params(
         ktaub: Kendall's tau_b correlation (popular somewhere, maybe).
         nboot: Set the number of bootstrap replicates.
         alpha: Set the 2-sided confidence interval width to '100-A' percent.
+        block: Use variable-length block resampling to account for serial\
+            correlation.
         blk: Alternate flag for variable-length block resampling.
+        pearson: Pearson correlation (the default method).
+        spearman: Spearman (rank) correlation (more robust versus outliers).
+        quadrant: Quadrant (binarized) correlation (most robust, but weaker).
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "1dCorrelate",
         "ktaub": ktaub,
+        "block": block,
         "blk": blk,
+        "pearson": pearson,
+        "spearman": spearman,
+        "quadrant": quadrant,
         "input_files": input_files,
     }
     if nboot is not None:
@@ -121,8 +138,16 @@ def v_1d_correlate_cargs(
             "-alpha",
             str(params.get("alpha"))
         ])
+    if params.get("block"):
+        cargs.append("-block")
     if params.get("blk"):
         cargs.append("-blk")
+    if params.get("pearson"):
+        cargs.append("-Pearson")
+    if params.get("spearman"):
+        cargs.append("-Spearman")
+    if params.get("quadrant"):
+        cargs.append("-Quadrant")
     cargs.extend([execution.input_file(f) for f in params.get("input_files")])
     return cargs
 
@@ -176,7 +201,11 @@ def v_1d_correlate(
     ktaub: bool = False,
     nboot: float | None = None,
     alpha: float | None = None,
+    block: bool = False,
     blk: bool = False,
+    pearson: bool = False,
+    spearman: bool = False,
+    quadrant: bool = False,
     runner: Runner | None = None,
 ) -> V1dCorrelateOutputs:
     """
@@ -192,7 +221,12 @@ def v_1d_correlate(
         ktaub: Kendall's tau_b correlation (popular somewhere, maybe).
         nboot: Set the number of bootstrap replicates.
         alpha: Set the 2-sided confidence interval width to '100-A' percent.
+        block: Use variable-length block resampling to account for serial\
+            correlation.
         blk: Alternate flag for variable-length block resampling.
+        pearson: Pearson correlation (the default method).
+        spearman: Spearman (rank) correlation (more robust versus outliers).
+        quadrant: Quadrant (binarized) correlation (most robust, but weaker).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dCorrelateOutputs`).
@@ -203,7 +237,11 @@ def v_1d_correlate(
         ktaub=ktaub,
         nboot=nboot,
         alpha=alpha,
+        block=block,
         blk=blk,
+        pearson=pearson,
+        spearman=spearman,
+        quadrant=quadrant,
         input_files=input_files,
     )
     return v_1d_correlate_execute(params, execution)

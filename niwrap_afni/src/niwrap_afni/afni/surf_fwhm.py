@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_FWHM_METADATA = Metadata(
-    id="e55aebb6889c141305f83d758c57177bec4ec628.boutiques",
+    id="c0c295cfa2772a4d6c7970693902b2233ab45c11.boutiques",
     name="SurfFWHM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -219,10 +219,6 @@ def surf_fwhm_cargs(
         cargs.append("-examples")
     if params.get("slice"):
         cargs.append("-slice")
-    cargs.append("[TALK_SUMA_OPTIONS]")
-    cargs.append("[NIML_OPTIONS]")
-    cargs.append("[DEBUG_OPTIONS]")
-    cargs.append("[HELP_OPTIONS]")
     return cargs
 
 

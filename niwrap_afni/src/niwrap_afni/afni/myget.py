@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MYGET_METADATA = Metadata(
-    id="2f6d3f9ad29fa84e230f411a821134ff68c91853.boutiques",
+    id="10043a869267d2f44f577e75349933f7e7bb0e5e.boutiques",
     name="myget",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,7 @@ MygetParameters = typing.TypedDict('MygetParameters', {
     "__STYX_TYPE__": typing.Literal["myget"],
     "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
     "url": str,
+    "output_file": str,
 })
 
 
@@ -64,6 +65,7 @@ class MygetOutputs(typing.NamedTuple):
 
 def myget_params(
     url: str,
+    output_file: str,
     protocol_version: typing.Literal["-1", "-1.1"] | None = None,
 ) -> MygetParameters:
     """
@@ -71,6 +73,7 @@ def myget_params(
     
     Args:
         url: The URL to download the file from.
+        output_file: The filename to save the downloaded file.
         protocol_version: Specify protocol version. You can choose between -1\
             or -1.1.
     Returns:
@@ -79,6 +82,7 @@ def myget_params(
     params = {
         "__STYXTYPE__": "myget",
         "url": url,
+        "output_file": output_file,
     }
     if protocol_version is not None:
         params["protocol_version"] = protocol_version
@@ -99,8 +103,14 @@ def myget_cargs(
         Command-line arguments.
     """
     cargs = []
+    cargs.append("myget")
     if params.get("protocol_version") is not None:
-        cargs.append("myget" + params.get("protocol_version") + params.get("url"))
+        cargs.append(params.get("protocol_version"))
+    cargs.append(params.get("url"))
+    cargs.extend([
+        ">",
+        params.get("output_file")
+    ])
     return cargs
 
 
@@ -119,7 +129,7 @@ def myget_outputs(
     """
     ret = MygetOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file("[OUTPUT_FILE]"),
+        output_file=execution.output_file(params.get("output_file")),
     )
     return ret
 
@@ -150,6 +160,7 @@ def myget_execute(
 
 def myget(
     url: str,
+    output_file: str,
     protocol_version: typing.Literal["-1", "-1.1"] | None = None,
     runner: Runner | None = None,
 ) -> MygetOutputs:
@@ -162,6 +173,7 @@ def myget(
     
     Args:
         url: The URL to download the file from.
+        output_file: The filename to save the downloaded file.
         protocol_version: Specify protocol version. You can choose between -1\
             or -1.1.
         runner: Command runner.
@@ -173,6 +185,7 @@ def myget(
     params = myget_params(
         protocol_version=protocol_version,
         url=url,
+        output_file=output_file,
     )
     return myget_execute(params, execution)
 

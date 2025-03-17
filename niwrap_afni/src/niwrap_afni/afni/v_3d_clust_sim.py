@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CLUST_SIM_METADATA = Metadata(
-    id="493de4c7d1501714af71d386a011e1fe097ca5fb.boutiques",
+    id="912b449ef9b8c9bbf2596a5e62a4511be33fefad.boutiques",
     name="3dClustSim",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,28 @@ V_3D_CLUST_SIM_METADATA = Metadata(
 
 V3dClustSimParameters = typing.TypedDict('V3dClustSimParameters', {
     "__STYX_TYPE__": typing.Literal["3dClustSim"],
+    "nxyz": typing.NotRequired[str | None],
+    "dxyz": typing.NotRequired[str | None],
+    "ball": bool,
+    "mask": typing.NotRequired[InputPathType | None],
+    "oksmallmask": bool,
+    "inset": typing.NotRequired[list[InputPathType] | None],
+    "fwhm": typing.NotRequired[float | None],
+    "acf": typing.NotRequired[str | None],
+    "nopad": bool,
+    "pthr": typing.NotRequired[str | None],
+    "athr": typing.NotRequired[str | None],
+    "lots": bool,
+    "mega": bool,
+    "iter": typing.NotRequired[float | None],
+    "nodec": bool,
+    "seed": typing.NotRequired[float | None],
+    "niml": bool,
+    "both": bool,
+    "prefix": typing.NotRequired[str | None],
+    "cmd": typing.NotRequired[str | None],
+    "quiet": bool,
+    "ssave": typing.NotRequired[str | None],
 })
 
 
@@ -56,40 +78,121 @@ class V3dClustSimOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    output_nn1_1sided: OutputPathType
+    output_nn1_1sided: OutputPathType | None
     """Output file for NN1 with 1-sided thresholding"""
-    output_nn1_2sided: OutputPathType
+    output_nn1_2sided: OutputPathType | None
     """Output file for NN1 with 2-sided thresholding"""
-    output_nn1_bisided: OutputPathType
+    output_nn1_bisided: OutputPathType | None
     """Output file for NN1 with bi-sided thresholding"""
-    output_nn2_1sided: OutputPathType
+    output_nn2_1sided: OutputPathType | None
     """Output file for NN2 with 1-sided thresholding"""
-    output_nn2_2sided: OutputPathType
+    output_nn2_2sided: OutputPathType | None
     """Output file for NN2 with 2-sided thresholding"""
-    output_nn2_bisided: OutputPathType
+    output_nn2_bisided: OutputPathType | None
     """Output file for NN2 with bi-sided thresholding"""
-    output_nn3_1sided: OutputPathType
+    output_nn3_1sided: OutputPathType | None
     """Output file for NN3 with 1-sided thresholding"""
-    output_nn3_2sided: OutputPathType
+    output_nn3_2sided: OutputPathType | None
     """Output file for NN3 with 2-sided thresholding"""
-    output_nn3_bisided: OutputPathType
+    output_nn3_bisided: OutputPathType | None
     """Output file for NN3 with bi-sided thresholding"""
-    mask_compressed: OutputPathType
+    mask_compressed: OutputPathType | None
     """Compressed ASCII encoding of the mask volume"""
 
 
 def v_3d_clust_sim_params(
+    nxyz: str | None = None,
+    dxyz: str | None = None,
+    ball: bool = False,
+    mask: InputPathType | None = None,
+    oksmallmask: bool = False,
+    inset: list[InputPathType] | None = None,
+    fwhm: float | None = None,
+    acf: str | None = None,
+    nopad: bool = False,
+    pthr: str | None = None,
+    athr: str | None = None,
+    lots: bool = False,
+    mega: bool = False,
+    iter_: float | None = None,
+    nodec: bool = False,
+    seed: float | None = None,
+    niml: bool = False,
+    both: bool = False,
+    prefix: str | None = None,
+    cmd_: str | None = None,
+    quiet: bool = False,
+    ssave: str | None = None,
 ) -> V3dClustSimParameters:
     """
     Build parameters.
     
     Args:
+        nxyz: Size of 3D grid to use for simulation.
+        dxyz: Voxel sizes along each dimension.
+        ball: Mask off points outside a ball at the center of the grid.
+        mask: Use the 0 sub-brick of this dataset as a mask.
+        oksmallmask: Allow small masks with less than 128 nonzero voxels.
+        inset: Use these dataset(s) as the simulations to threshold and\
+            clusterize.
+        fwhm: Gaussian filter width in mm (use -fwhmxyz for different values\
+            per axis).
+        acf: Parameters a, b, c for the autocorrelation function.
+        nopad: Turn off padding slices added for edge effects.
+        pthr: List of uncorrected per voxel p-values.
+        athr: List of corrected whole volume alpha-values.
+        lots: Use a longer list of values for pthr and athr.
+        mega: Add even more values to the pthr and athr grids.
+        iter_: Number of Monte Carlo simulations.
+        nodec: Print the cluster size threshold as an integer.
+        seed: Random number seed.
+        niml: Output the table in XML/NIML format.
+        both: Output the table in both XML/NIML format and in .1D format.
+        prefix: Specify prefix for the output files.
+        cmd_: Write command for putting results into a file's header.
+        quiet: Don't print out progress reports.
+        ssave: Save un-thresholded generated random volumes.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dClustSim",
+        "ball": ball,
+        "oksmallmask": oksmallmask,
+        "nopad": nopad,
+        "lots": lots,
+        "mega": mega,
+        "nodec": nodec,
+        "niml": niml,
+        "both": both,
+        "quiet": quiet,
     }
+    if nxyz is not None:
+        params["nxyz"] = nxyz
+    if dxyz is not None:
+        params["dxyz"] = dxyz
+    if mask is not None:
+        params["mask"] = mask
+    if inset is not None:
+        params["inset"] = inset
+    if fwhm is not None:
+        params["fwhm"] = fwhm
+    if acf is not None:
+        params["acf"] = acf
+    if pthr is not None:
+        params["pthr"] = pthr
+    if athr is not None:
+        params["athr"] = athr
+    if iter_ is not None:
+        params["iter"] = iter_
+    if seed is not None:
+        params["seed"] = seed
+    if prefix is not None:
+        params["prefix"] = prefix
+    if cmd_ is not None:
+        params["cmd"] = cmd_
+    if ssave is not None:
+        params["ssave"] = ssave
     return params
 
 
@@ -108,7 +211,89 @@ def v_3d_clust_sim_cargs(
     """
     cargs = []
     cargs.append("3dClustSim")
-    cargs.append("[OPTIONS]")
+    if params.get("nxyz") is not None:
+        cargs.extend([
+            "-nxyz",
+            params.get("nxyz")
+        ])
+    if params.get("dxyz") is not None:
+        cargs.extend([
+            "-dxyz",
+            params.get("dxyz")
+        ])
+    if params.get("ball"):
+        cargs.append("-BALL")
+    if params.get("mask") is not None:
+        cargs.extend([
+            "-mask",
+            execution.input_file(params.get("mask"))
+        ])
+    if params.get("oksmallmask"):
+        cargs.append("-OKsmallmask")
+    if params.get("inset") is not None:
+        cargs.extend([
+            "-inset",
+            *[execution.input_file(f) for f in params.get("inset")]
+        ])
+    if params.get("fwhm") is not None:
+        cargs.extend([
+            "-fwhm",
+            str(params.get("fwhm"))
+        ])
+    if params.get("acf") is not None:
+        cargs.extend([
+            "-acf",
+            params.get("acf")
+        ])
+    if params.get("nopad"):
+        cargs.append("-nopad")
+    if params.get("pthr") is not None:
+        cargs.extend([
+            "-pthr",
+            params.get("pthr")
+        ])
+    if params.get("athr") is not None:
+        cargs.extend([
+            "-athr",
+            params.get("athr")
+        ])
+    if params.get("lots"):
+        cargs.append("-LOTS")
+    if params.get("mega"):
+        cargs.append("-MEGA")
+    if params.get("iter") is not None:
+        cargs.extend([
+            "-iter",
+            str(params.get("iter"))
+        ])
+    if params.get("nodec"):
+        cargs.append("-nodec")
+    if params.get("seed") is not None:
+        cargs.extend([
+            "-seed",
+            str(params.get("seed"))
+        ])
+    if params.get("niml"):
+        cargs.append("-niml")
+    if params.get("both"):
+        cargs.append("-both")
+    if params.get("prefix") is not None:
+        cargs.extend([
+            "-prefix",
+            params.get("prefix")
+        ])
+    if params.get("cmd") is not None:
+        cargs.extend([
+            "-cmd",
+            params.get("cmd")
+        ])
+    if params.get("quiet"):
+        cargs.append("-quiet")
+    if params.get("ssave") is not None:
+        cargs.extend([
+            "-ssave",
+            params.get("ssave")
+        ])
     return cargs
 
 
@@ -127,16 +312,16 @@ def v_3d_clust_sim_outputs(
     """
     ret = V3dClustSimOutputs(
         root=execution.output_file("."),
-        output_nn1_1sided=execution.output_file("[PREFIX].NN1_1sided.1D"),
-        output_nn1_2sided=execution.output_file("[PREFIX].NN1_2sided.1D"),
-        output_nn1_bisided=execution.output_file("[PREFIX].NN1_bisided.1D"),
-        output_nn2_1sided=execution.output_file("[PREFIX].NN2_1sided.1D"),
-        output_nn2_2sided=execution.output_file("[PREFIX].NN2_2sided.1D"),
-        output_nn2_bisided=execution.output_file("[PREFIX].NN2_bisided.1D"),
-        output_nn3_1sided=execution.output_file("[PREFIX].NN3_1sided.1D"),
-        output_nn3_2sided=execution.output_file("[PREFIX].NN3_2sided.1D"),
-        output_nn3_bisided=execution.output_file("[PREFIX].NN3_bisided.1D"),
-        mask_compressed=execution.output_file("[PREFIX].mask"),
+        output_nn1_1sided=execution.output_file(params.get("prefix") + ".NN1_1sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn1_2sided=execution.output_file(params.get("prefix") + ".NN1_2sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn1_bisided=execution.output_file(params.get("prefix") + ".NN1_bisided.1D") if (params.get("prefix") is not None) else None,
+        output_nn2_1sided=execution.output_file(params.get("prefix") + ".NN2_1sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn2_2sided=execution.output_file(params.get("prefix") + ".NN2_2sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn2_bisided=execution.output_file(params.get("prefix") + ".NN2_bisided.1D") if (params.get("prefix") is not None) else None,
+        output_nn3_1sided=execution.output_file(params.get("prefix") + ".NN3_1sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn3_2sided=execution.output_file(params.get("prefix") + ".NN3_2sided.1D") if (params.get("prefix") is not None) else None,
+        output_nn3_bisided=execution.output_file(params.get("prefix") + ".NN3_bisided.1D") if (params.get("prefix") is not None) else None,
+        mask_compressed=execution.output_file(params.get("prefix") + ".mask") if (params.get("prefix") is not None) else None,
     )
     return ret
 
@@ -166,6 +351,28 @@ def v_3d_clust_sim_execute(
 
 
 def v_3d_clust_sim(
+    nxyz: str | None = None,
+    dxyz: str | None = None,
+    ball: bool = False,
+    mask: InputPathType | None = None,
+    oksmallmask: bool = False,
+    inset: list[InputPathType] | None = None,
+    fwhm: float | None = None,
+    acf: str | None = None,
+    nopad: bool = False,
+    pthr: str | None = None,
+    athr: str | None = None,
+    lots: bool = False,
+    mega: bool = False,
+    iter_: float | None = None,
+    nodec: bool = False,
+    seed: float | None = None,
+    niml: bool = False,
+    both: bool = False,
+    prefix: str | None = None,
+    cmd_: str | None = None,
+    quiet: bool = False,
+    ssave: str | None = None,
     runner: Runner | None = None,
 ) -> V3dClustSimOutputs:
     """
@@ -176,6 +383,30 @@ def v_3d_clust_sim(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        nxyz: Size of 3D grid to use for simulation.
+        dxyz: Voxel sizes along each dimension.
+        ball: Mask off points outside a ball at the center of the grid.
+        mask: Use the 0 sub-brick of this dataset as a mask.
+        oksmallmask: Allow small masks with less than 128 nonzero voxels.
+        inset: Use these dataset(s) as the simulations to threshold and\
+            clusterize.
+        fwhm: Gaussian filter width in mm (use -fwhmxyz for different values\
+            per axis).
+        acf: Parameters a, b, c for the autocorrelation function.
+        nopad: Turn off padding slices added for edge effects.
+        pthr: List of uncorrected per voxel p-values.
+        athr: List of corrected whole volume alpha-values.
+        lots: Use a longer list of values for pthr and athr.
+        mega: Add even more values to the pthr and athr grids.
+        iter_: Number of Monte Carlo simulations.
+        nodec: Print the cluster size threshold as an integer.
+        seed: Random number seed.
+        niml: Output the table in XML/NIML format.
+        both: Output the table in both XML/NIML format and in .1D format.
+        prefix: Specify prefix for the output files.
+        cmd_: Write command for putting results into a file's header.
+        quiet: Don't print out progress reports.
+        ssave: Save un-thresholded generated random volumes.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dClustSimOutputs`).
@@ -183,6 +414,28 @@ def v_3d_clust_sim(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_CLUST_SIM_METADATA)
     params = v_3d_clust_sim_params(
+        nxyz=nxyz,
+        dxyz=dxyz,
+        ball=ball,
+        mask=mask,
+        oksmallmask=oksmallmask,
+        inset=inset,
+        fwhm=fwhm,
+        acf=acf,
+        nopad=nopad,
+        pthr=pthr,
+        athr=athr,
+        lots=lots,
+        mega=mega,
+        iter_=iter_,
+        nodec=nodec,
+        seed=seed,
+        niml=niml,
+        both=both,
+        prefix=prefix,
+        cmd_=cmd_,
+        quiet=quiet,
+        ssave=ssave,
     )
     return v_3d_clust_sim_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DBUCKET_METADATA = Metadata(
-    id="a07bb3d6d6114eb899f05be41e593f262e6cd274.boutiques",
+    id="24263e7460b92cc3d7edf73c1101058593a99f03.boutiques",
     name="3dbucket",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,7 @@ V_3DBUCKET_METADATA = Metadata(
 V3dbucketParameters = typing.TypedDict('V3dbucketParameters', {
     "__STYX_TYPE__": typing.Literal["3dbucket"],
     "prefix": typing.NotRequired[str | None],
+    "output": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
     "glueto": typing.NotRequired[str | None],
     "aglueto": typing.NotRequired[str | None],
@@ -69,6 +70,7 @@ class V3dbucketOutputs(typing.NamedTuple):
 def v_3dbucket_params(
     input_files: list[str],
     prefix: str | None = None,
+    output: str | None = None,
     session: str | None = None,
     glueto: str | None = None,
     aglueto: str | None = None,
@@ -83,6 +85,7 @@ def v_3dbucket_params(
     Args:
         input_files: Input datasets with optional sub-brick selection.
         prefix: Use 'pname' for the output dataset prefix name.
+        output: Use 'pname' for the output dataset prefix name.
         session: Use 'dir' for the output dataset session directory.\
             [default='./'=current working directory].
         glueto: Append bricks to the end of the 'fname' dataset.
@@ -106,6 +109,8 @@ def v_3dbucket_params(
     }
     if prefix is not None:
         params["prefix"] = prefix
+    if output is not None:
+        params["output"] = output
     if session is not None:
         params["session"] = session
     if glueto is not None:
@@ -134,6 +139,11 @@ def v_3dbucket_cargs(
         cargs.extend([
             "-prefix",
             params.get("prefix")
+        ])
+    if params.get("output") is not None:
+        cargs.extend([
+            "-output",
+            params.get("output")
         ])
     if params.get("session") is not None:
         cargs.extend([
@@ -208,6 +218,7 @@ def v_3dbucket_execute(
 def v_3dbucket(
     input_files: list[str],
     prefix: str | None = None,
+    output: str | None = None,
     session: str | None = None,
     glueto: str | None = None,
     aglueto: str | None = None,
@@ -227,6 +238,7 @@ def v_3dbucket(
     Args:
         input_files: Input datasets with optional sub-brick selection.
         prefix: Use 'pname' for the output dataset prefix name.
+        output: Use 'pname' for the output dataset prefix name.
         session: Use 'dir' for the output dataset session directory.\
             [default='./'=current working directory].
         glueto: Append bricks to the end of the 'fname' dataset.
@@ -245,6 +257,7 @@ def v_3dbucket(
     execution = runner.start_execution(V_3DBUCKET_METADATA)
     params = v_3dbucket_params(
         prefix=prefix,
+        output=output,
         session=session,
         glueto=glueto,
         aglueto=aglueto,

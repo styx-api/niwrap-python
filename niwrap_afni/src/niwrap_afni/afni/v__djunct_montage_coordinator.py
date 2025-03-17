@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_MONTAGE_COORDINATOR_METADATA = Metadata(
-    id="9c2cbb473d95421a680be52f18d9f90f2ec86dfb.boutiques",
+    id="8d747f7169ee7e4179813dc1818309f1663d903c.boutiques",
     name="@djunct_montage_coordinator",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,6 +18,7 @@ VDjunctMontageCoordinatorParameters = typing.TypedDict('VDjunctMontageCoordinato
     "input_file": InputPathType,
     "montx": float,
     "monty": float,
+    "out_ijk": bool,
     "out_xyz": bool,
     "help": bool,
     "version": bool,
@@ -70,6 +71,7 @@ def v__djunct_montage_coordinator_params(
     input_file: InputPathType,
     montx: float,
     monty: float,
+    out_ijk: bool = False,
     out_xyz: bool = False,
     help_: bool = False,
     version: bool = False,
@@ -83,6 +85,7 @@ def v__djunct_montage_coordinator_params(
             of cols).
         monty: Montage dimension: number of panels along y-axis (i.e., number\
             of rows).
+        out_ijk: Make program output 'I J K' values.
         out_xyz: Make program output 'X Y Z' values.
         help_: See helpfile.
         version: See version number.
@@ -94,6 +97,7 @@ def v__djunct_montage_coordinator_params(
         "input_file": input_file,
         "montx": montx,
         "monty": monty,
+        "out_ijk": out_ijk,
         "out_xyz": out_xyz,
         "help": help_,
         "version": version,
@@ -128,6 +132,8 @@ def v__djunct_montage_coordinator_cargs(
         "-monty",
         str(params.get("monty"))
     ])
+    if params.get("out_ijk"):
+        cargs.append("-out_ijk")
     if params.get("out_xyz"):
         cargs.append("-out_xyz")
     if params.get("help"):
@@ -186,6 +192,7 @@ def v__djunct_montage_coordinator(
     input_file: InputPathType,
     montx: float,
     monty: float,
+    out_ijk: bool = False,
     out_xyz: bool = False,
     help_: bool = False,
     version: bool = False,
@@ -205,6 +212,7 @@ def v__djunct_montage_coordinator(
             of cols).
         monty: Montage dimension: number of panels along y-axis (i.e., number\
             of rows).
+        out_ijk: Make program output 'I J K' values.
         out_xyz: Make program output 'X Y Z' values.
         help_: See helpfile.
         version: See version number.
@@ -218,6 +226,7 @@ def v__djunct_montage_coordinator(
         input_file=input_file,
         montx=montx,
         monty=monty,
+        out_ijk=out_ijk,
         out_xyz=out_xyz,
         help_=help_,
         version=version,

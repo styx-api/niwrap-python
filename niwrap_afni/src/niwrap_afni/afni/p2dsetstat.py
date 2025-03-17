@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 P2DSETSTAT_METADATA = Metadata(
-    id="425596bb580582f82bf97f7e288cb9c38b721949.boutiques",
+    id="23edaf6df2aa7e769c710a218ab8bd8e6572d021.boutiques",
     name="p2dsetstat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,8 @@ P2dsetstatParameters = typing.TypedDict('P2dsetstatParameters', {
     "__STYX_TYPE__": typing.Literal["p2dsetstat"],
     "dataset": str,
     "pvalue": float,
+    "bisided": bool,
+    "twosided": bool,
     "onesided": bool,
     "quiet": bool,
 })
@@ -67,6 +69,8 @@ class P2dsetstatOutputs(typing.NamedTuple):
 def p2dsetstat_params(
     dataset: str,
     pvalue: float,
+    bisided: bool = False,
+    twosided: bool = False,
     onesided: bool = False,
     quiet: bool = False,
 ) -> P2dsetstatParameters:
@@ -80,6 +84,8 @@ def p2dsetstat_params(
             (because of the square-brackets). 'i' can be either a number or a\
             string label selector.
         pvalue: Input p-value P, which MUST be in the interval [0,1].
+        bisided: Two-sided test.
+        twosided: Two-sided test.
         onesided: One-sided test.
         quiet: Output only the final statistic value.
     Returns:
@@ -89,6 +95,8 @@ def p2dsetstat_params(
         "__STYXTYPE__": "p2dsetstat",
         "dataset": dataset,
         "pvalue": pvalue,
+        "bisided": bisided,
+        "twosided": twosided,
         "onesided": onesided,
         "quiet": quiet,
     }
@@ -118,6 +126,10 @@ def p2dsetstat_cargs(
         "-pval",
         str(params.get("pvalue"))
     ])
+    if params.get("bisided"):
+        cargs.append("-bisided")
+    if params.get("twosided"):
+        cargs.append("-2sided")
     if params.get("onesided"):
         cargs.append("-1sided")
     if params.get("quiet"):
@@ -172,6 +184,8 @@ def p2dsetstat_execute(
 def p2dsetstat(
     dataset: str,
     pvalue: float,
+    bisided: bool = False,
+    twosided: bool = False,
     onesided: bool = False,
     quiet: bool = False,
     runner: Runner | None = None,
@@ -190,6 +204,8 @@ def p2dsetstat(
             (because of the square-brackets). 'i' can be either a number or a\
             string label selector.
         pvalue: Input p-value P, which MUST be in the interval [0,1].
+        bisided: Two-sided test.
+        twosided: Two-sided test.
         onesided: One-sided test.
         quiet: Output only the final statistic value.
         runner: Command runner.
@@ -201,6 +217,8 @@ def p2dsetstat(
     params = p2dsetstat_params(
         dataset=dataset,
         pvalue=pvalue,
+        bisided=bisided,
+        twosided=twosided,
         onesided=onesided,
         quiet=quiet,
     )

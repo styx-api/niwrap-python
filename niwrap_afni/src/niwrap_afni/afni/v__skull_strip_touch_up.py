@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SKULL_STRIP_TOUCH_UP_METADATA = Metadata(
-    id="b6fb601a41c80b9729bd9c95da0d4f3540060f61.boutiques",
+    id="460010f2b657da6818c5cc52af6697286e7b7fd3.boutiques",
     name="@SkullStrip_TouchUp",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -20,6 +20,7 @@ VSkullStripTouchUpParameters = typing.TypedDict('VSkullStripTouchUpParameters', 
     "head_dataset": InputPathType,
     "mask_out": bool,
     "orig_dim": bool,
+    "help": bool,
 })
 
 
@@ -73,6 +74,7 @@ def v__skull_strip_touch_up_params(
     head_dataset: InputPathType,
     mask_out: bool = False,
     orig_dim: bool = False,
+    help_: bool = False,
 ) -> VSkullStripTouchUpParameters:
     """
     Build parameters.
@@ -83,6 +85,7 @@ def v__skull_strip_touch_up_params(
         head_dataset: Whole head anatomical data set.
         mask_out: Output a binary mask in addition to actual data.
         orig_dim: Edit in the original image dimensions.
+        help_: Show this help message.
     Returns:
         Parameter dictionary
     """
@@ -93,6 +96,7 @@ def v__skull_strip_touch_up_params(
         "head_dataset": head_dataset,
         "mask_out": mask_out,
         "orig_dim": orig_dim,
+        "help": help_,
     }
     return params
 
@@ -128,6 +132,8 @@ def v__skull_strip_touch_up_cargs(
         cargs.append("-mask_out")
     if params.get("orig_dim"):
         cargs.append("-orig_dim")
+    if params.get("help"):
+        cargs.append("-help")
     return cargs
 
 
@@ -183,6 +189,7 @@ def v__skull_strip_touch_up(
     head_dataset: InputPathType,
     mask_out: bool = False,
     orig_dim: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> VSkullStripTouchUpOutputs:
     """
@@ -199,6 +206,7 @@ def v__skull_strip_touch_up(
         head_dataset: Whole head anatomical data set.
         mask_out: Output a binary mask in addition to actual data.
         orig_dim: Edit in the original image dimensions.
+        help_: Show this help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSkullStripTouchUpOutputs`).
@@ -211,6 +219,7 @@ def v__skull_strip_touch_up(
         head_dataset=head_dataset,
         mask_out=mask_out,
         orig_dim=orig_dim,
+        help_=help_,
     )
     return v__skull_strip_touch_up_execute(params, execution)
 

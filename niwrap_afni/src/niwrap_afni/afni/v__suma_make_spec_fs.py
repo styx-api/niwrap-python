@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SUMA_MAKE_SPEC_FS_METADATA = Metadata(
-    id="35abec1cbcc0a7c9a8b395b5a4855788850c3f95.boutiques",
+    id="6e44db2e589cac9b6317c8766e1b94b1501e3edc.boutiques",
     name="@SUMA_Make_Spec_FS",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,21 @@ V__SUMA_MAKE_SPEC_FS_METADATA = Metadata(
 VSumaMakeSpecFsParameters = typing.TypedDict('VSumaMakeSpecFsParameters', {
     "__STYX_TYPE__": typing.Literal["@SUMA_Make_Spec_FS"],
     "subject_id": str,
+    "debug": typing.NotRequired[int | None],
+    "fs_setup": bool,
+    "filesystem_path": typing.NotRequired[str | None],
+    "extra_annot_labels": typing.NotRequired[list[str] | None],
+    "extra_fs_dsets": typing.NotRequired[list[str] | None],
+    "make_rank_dsets": bool,
+    "use_mgz": bool,
+    "neuro": bool,
+    "gnifti": bool,
+    "nifti": bool,
+    "inflate": typing.NotRequired[float | None],
+    "set_space": typing.NotRequired[str | None],
+    "ld": typing.NotRequired[float | None],
+    "ldpref": typing.NotRequired[str | None],
+    "no_ld": bool,
 })
 
 
@@ -63,19 +78,78 @@ class VSumaMakeSpecFsOutputs(typing.NamedTuple):
 
 def v__suma_make_spec_fs_params(
     subject_id: str,
+    debug: int | None = None,
+    fs_setup: bool = False,
+    filesystem_path: str | None = None,
+    extra_annot_labels: list[str] | None = None,
+    extra_fs_dsets: list[str] | None = None,
+    make_rank_dsets: bool = False,
+    use_mgz: bool = False,
+    neuro: bool = False,
+    gnifti: bool = False,
+    nifti: bool = False,
+    inflate: float | None = None,
+    set_space: str | None = None,
+    ld: float | None = None,
+    ldpref: str | None = None,
+    no_ld: bool = False,
 ) -> VSumaMakeSpecFsParameters:
     """
     Build parameters.
     
     Args:
         subject_id: Required subject ID for file naming.
+        debug: Print debug information along the way; default level is 0, max\
+            is 2.
+        fs_setup: Source $FREESURFER_HOME/SetUpFreeSurfer.csh.
+        filesystem_path: Path to 'surf' and 'orig' directories; defaults to\
+            './', the current directory.
+        extra_annot_labels: Convert extra annot files into ROI datasets.
+        extra_fs_dsets: List other datasets to include; defaults are thickness,\
+            curv, sulc.
+        make_rank_dsets: Create *rank* datasets; for backward compatibility.
+        use_mgz: Use MGZ volumes even if COR volumes are there.
+        neuro: Use neurological orientation.
+        gnifti: Produce files in exchangeable formats; same as -NIFTI.
+        nifti: Produce files in exchangeable formats; output files in NIFTI\
+            format and surfaces in GIFTI format.
+        inflate: Create moderately inflated surfaces using SurfSmooth; control\
+            the amount of smoothness with INF.
+        set_space: Set the space flag of all volumes; defaults to 'orig' space.
+        ld: Create standard mesh surfaces with mesh density linear depth set to\
+            LD.
+        ldpref: Supply the prefix option for MapIcosahedron; defaults to std.LD.
+        no_ld: Do not run MapIcosahedron.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "@SUMA_Make_Spec_FS",
         "subject_id": subject_id,
+        "fs_setup": fs_setup,
+        "make_rank_dsets": make_rank_dsets,
+        "use_mgz": use_mgz,
+        "neuro": neuro,
+        "gnifti": gnifti,
+        "nifti": nifti,
+        "no_ld": no_ld,
     }
+    if debug is not None:
+        params["debug"] = debug
+    if filesystem_path is not None:
+        params["filesystem_path"] = filesystem_path
+    if extra_annot_labels is not None:
+        params["extra_annot_labels"] = extra_annot_labels
+    if extra_fs_dsets is not None:
+        params["extra_fs_dsets"] = extra_fs_dsets
+    if inflate is not None:
+        params["inflate"] = inflate
+    if set_space is not None:
+        params["set_space"] = set_space
+    if ld is not None:
+        params["ld"] = ld
+    if ldpref is not None:
+        params["ldpref"] = ldpref
     return params
 
 
@@ -94,11 +168,64 @@ def v__suma_make_spec_fs_cargs(
     """
     cargs = []
     cargs.append("@SUMA_Make_Spec_FS")
-    cargs.append("[OPTIONS]")
     cargs.extend([
         "-sid",
         params.get("subject_id")
     ])
+    if params.get("debug") is not None:
+        cargs.extend([
+            "-debug",
+            str(params.get("debug"))
+        ])
+    if params.get("fs_setup"):
+        cargs.append("-fs_setup")
+    if params.get("filesystem_path") is not None:
+        cargs.extend([
+            "-fspath",
+            params.get("filesystem_path")
+        ])
+    if params.get("extra_annot_labels") is not None:
+        cargs.extend([
+            "-extra_annot_labels",
+            *params.get("extra_annot_labels")
+        ])
+    if params.get("extra_fs_dsets") is not None:
+        cargs.extend([
+            "-extra_fs_dsets",
+            *params.get("extra_fs_dsets")
+        ])
+    if params.get("make_rank_dsets"):
+        cargs.append("-make_rank_dsets")
+    if params.get("use_mgz"):
+        cargs.append("-use_mgz")
+    if params.get("neuro"):
+        cargs.append("-neuro")
+    if params.get("gnifti"):
+        cargs.append("-GNIFTI")
+    if params.get("nifti"):
+        cargs.append("-NIFTI")
+    if params.get("inflate") is not None:
+        cargs.extend([
+            "-inflate",
+            str(params.get("inflate"))
+        ])
+    if params.get("set_space") is not None:
+        cargs.extend([
+            "-set_space",
+            params.get("set_space")
+        ])
+    if params.get("ld") is not None:
+        cargs.extend([
+            "-ld",
+            str(params.get("ld"))
+        ])
+    if params.get("ldpref") is not None:
+        cargs.extend([
+            "-ldpref",
+            params.get("ldpref")
+        ])
+    if params.get("no_ld"):
+        cargs.append("-no_ld")
     return cargs
 
 
@@ -148,6 +275,21 @@ def v__suma_make_spec_fs_execute(
 
 def v__suma_make_spec_fs(
     subject_id: str,
+    debug: int | None = None,
+    fs_setup: bool = False,
+    filesystem_path: str | None = None,
+    extra_annot_labels: list[str] | None = None,
+    extra_fs_dsets: list[str] | None = None,
+    make_rank_dsets: bool = False,
+    use_mgz: bool = False,
+    neuro: bool = False,
+    gnifti: bool = False,
+    nifti: bool = False,
+    inflate: float | None = None,
+    set_space: str | None = None,
+    ld: float | None = None,
+    ldpref: str | None = None,
+    no_ld: bool = False,
     runner: Runner | None = None,
 ) -> VSumaMakeSpecFsOutputs:
     """
@@ -159,6 +301,27 @@ def v__suma_make_spec_fs(
     
     Args:
         subject_id: Required subject ID for file naming.
+        debug: Print debug information along the way; default level is 0, max\
+            is 2.
+        fs_setup: Source $FREESURFER_HOME/SetUpFreeSurfer.csh.
+        filesystem_path: Path to 'surf' and 'orig' directories; defaults to\
+            './', the current directory.
+        extra_annot_labels: Convert extra annot files into ROI datasets.
+        extra_fs_dsets: List other datasets to include; defaults are thickness,\
+            curv, sulc.
+        make_rank_dsets: Create *rank* datasets; for backward compatibility.
+        use_mgz: Use MGZ volumes even if COR volumes are there.
+        neuro: Use neurological orientation.
+        gnifti: Produce files in exchangeable formats; same as -NIFTI.
+        nifti: Produce files in exchangeable formats; output files in NIFTI\
+            format and surfaces in GIFTI format.
+        inflate: Create moderately inflated surfaces using SurfSmooth; control\
+            the amount of smoothness with INF.
+        set_space: Set the space flag of all volumes; defaults to 'orig' space.
+        ld: Create standard mesh surfaces with mesh density linear depth set to\
+            LD.
+        ldpref: Supply the prefix option for MapIcosahedron; defaults to std.LD.
+        no_ld: Do not run MapIcosahedron.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecFsOutputs`).
@@ -167,6 +330,21 @@ def v__suma_make_spec_fs(
     execution = runner.start_execution(V__SUMA_MAKE_SPEC_FS_METADATA)
     params = v__suma_make_spec_fs_params(
         subject_id=subject_id,
+        debug=debug,
+        fs_setup=fs_setup,
+        filesystem_path=filesystem_path,
+        extra_annot_labels=extra_annot_labels,
+        extra_fs_dsets=extra_fs_dsets,
+        make_rank_dsets=make_rank_dsets,
+        use_mgz=use_mgz,
+        neuro=neuro,
+        gnifti=gnifti,
+        nifti=nifti,
+        inflate=inflate,
+        set_space=set_space,
+        ld=ld,
+        ldpref=ldpref,
+        no_ld=no_ld,
     )
     return v__suma_make_spec_fs_execute(params, execution)
 

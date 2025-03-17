@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DICE_METRIC_METADATA = Metadata(
-    id="98eaa1a4d4837bef42b0135a72612d83719e6632.boutiques",
+    id="f304dc18b4f65735b81cfb996e5968c559cf2e3d.boutiques",
     name="@DiceMetric",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,8 +18,8 @@ VDiceMetricParameters = typing.TypedDict('VDiceMetricParameters', {
     "base": InputPathType,
     "dsets": list[InputPathType],
     "max_roi": typing.NotRequired[float | None],
+    "labeltable": typing.NotRequired[InputPathType | None],
     "forceoutput": typing.NotRequired[InputPathType | None],
-    "forceoutput_1": typing.NotRequired[InputPathType | None],
     "echo": bool,
     "save_match": bool,
     "save_diff": bool,
@@ -74,8 +74,8 @@ def v__dice_metric_params(
     base: InputPathType,
     dsets: list[InputPathType],
     max_roi: float | None = None,
+    labeltable: InputPathType | None = None,
     forceoutput: InputPathType | None = None,
-    forceoutput_1: InputPathType | None = None,
     echo: bool = False,
     save_match: bool = False,
     save_diff: bool = False,
@@ -94,8 +94,10 @@ def v__dice_metric_params(
             should be the last option on the command line.
         max_roi: The maximum possible ROI index. Default is 12 or based on\
             LTFILE if specified.
+        labeltable: If given, the labeltable is used to set the default MAX_ROI\
+            parameter. Also, this option forces an output for each key in the\
+            LTFILE.
         forceoutput: If given, force output for each class in LTFILE.
-        forceoutput_1: If given, force output for each class in LTFILE.
         echo: Set echo.
         save_match: Save volume showing BASE*equals(BASE,DSET).
         save_diff: Save volume showing BASE*(1-equals(BASE,DSET)).
@@ -126,10 +128,10 @@ def v__dice_metric_params(
     }
     if max_roi is not None:
         params["max_roi"] = max_roi
+    if labeltable is not None:
+        params["labeltable"] = labeltable
     if forceoutput is not None:
         params["forceoutput"] = forceoutput
-    if forceoutput_1 is not None:
-        params["forceoutput_1"] = forceoutput_1
     if prefix is not None:
         params["prefix"] = prefix
     return params
@@ -163,15 +165,15 @@ def v__dice_metric_cargs(
             "-max_N_roi",
             str(params.get("max_roi"))
         ])
+    if params.get("labeltable") is not None:
+        cargs.extend([
+            "-labeltable",
+            execution.input_file(params.get("labeltable"))
+        ])
     if params.get("forceoutput") is not None:
         cargs.extend([
             "-forceoutput",
             execution.input_file(params.get("forceoutput"))
-        ])
-    if params.get("forceoutput_1") is not None:
-        cargs.extend([
-            "-forceoutput",
-            execution.input_file(params.get("forceoutput_1"))
         ])
     if params.get("echo"):
         cargs.append("-echo")
@@ -242,8 +244,8 @@ def v__dice_metric(
     base: InputPathType,
     dsets: list[InputPathType],
     max_roi: float | None = None,
+    labeltable: InputPathType | None = None,
     forceoutput: InputPathType | None = None,
-    forceoutput_1: InputPathType | None = None,
     echo: bool = False,
     save_match: bool = False,
     save_diff: bool = False,
@@ -267,8 +269,10 @@ def v__dice_metric(
             should be the last option on the command line.
         max_roi: The maximum possible ROI index. Default is 12 or based on\
             LTFILE if specified.
+        labeltable: If given, the labeltable is used to set the default MAX_ROI\
+            parameter. Also, this option forces an output for each key in the\
+            LTFILE.
         forceoutput: If given, force output for each class in LTFILE.
-        forceoutput_1: If given, force output for each class in LTFILE.
         echo: Set echo.
         save_match: Save volume showing BASE*equals(BASE,DSET).
         save_diff: Save volume showing BASE*(1-equals(BASE,DSET)).
@@ -292,8 +296,8 @@ def v__dice_metric(
         base=base,
         dsets=dsets,
         max_roi=max_roi,
+        labeltable=labeltable,
         forceoutput=forceoutput,
-        forceoutput_1=forceoutput_1,
         echo=echo,
         save_match=save_match,
         save_diff=save_diff,

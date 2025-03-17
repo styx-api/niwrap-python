@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BUILD_AFNI_PY_METADATA = Metadata(
-    id="8b01bbfc26acb4a73b16110f6849bc381629f972.boutiques",
+    id="e6c59cd0d5e67711746b75a7e41644183586e675.boutiques",
     name="build_afni.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -27,6 +27,9 @@ BuildAfniPyParameters = typing.TypedDict('BuildAfniPyParameters', {
     "run_cmake": typing.NotRequired[str | None],
     "run_make": typing.NotRequired[str | None],
     "verbose_level": typing.NotRequired[float | None],
+    "help": bool,
+    "history": bool,
+    "show_valid_opts": bool,
     "version": bool,
 })
 
@@ -88,6 +91,9 @@ def build_afni_py_params(
     run_cmake: str | None = None,
     run_make: str | None = None,
     verbose_level: float | None = None,
+    help_: bool = False,
+    history: bool = False,
+    show_valid_opts: bool = False,
     version: bool = False,
 ) -> BuildAfniPyParameters:
     """
@@ -106,6 +112,9 @@ def build_afni_py_params(
         run_cmake: Choose whether to run a cmake build. Default is no.
         run_make: Choose whether to run a make build. Default is yes.
         verbose_level: Set the verbosity level. Default is 1.
+        help_: Show help message.
+        history: Show module history.
+        show_valid_opts: List valid options.
         version: Show the current version.
     Returns:
         Parameter dictionary
@@ -114,6 +123,9 @@ def build_afni_py_params(
         "__STYXTYPE__": "build_afni.py",
         "build_root": build_root,
         "prep_only": prep_only,
+        "help": help_,
+        "history": history,
+        "show_valid_opts": show_valid_opts,
         "version": version,
     }
     if clean_root is not None:
@@ -210,6 +222,12 @@ def build_afni_py_cargs(
             "-verb",
             str(params.get("verbose_level"))
         ])
+    if params.get("help"):
+        cargs.append("-help")
+    if params.get("history"):
+        cargs.append("-hist")
+    if params.get("show_valid_opts"):
+        cargs.append("-show_valid_opts")
     if params.get("version"):
         cargs.append("-ver")
     return cargs
@@ -273,6 +291,9 @@ def build_afni_py(
     run_cmake: str | None = None,
     run_make: str | None = None,
     verbose_level: float | None = None,
+    help_: bool = False,
+    history: bool = False,
+    show_valid_opts: bool = False,
     version: bool = False,
     runner: Runner | None = None,
 ) -> BuildAfniPyOutputs:
@@ -296,6 +317,9 @@ def build_afni_py(
         run_cmake: Choose whether to run a cmake build. Default is no.
         run_make: Choose whether to run a make build. Default is yes.
         verbose_level: Set the verbosity level. Default is 1.
+        help_: Show help message.
+        history: Show module history.
+        show_valid_opts: List valid options.
         version: Show the current version.
         runner: Command runner.
     Returns:
@@ -316,6 +340,9 @@ def build_afni_py(
         run_cmake=run_cmake,
         run_make=run_make,
         verbose_level=verbose_level,
+        help_=help_,
+        history=history,
+        show_valid_opts=show_valid_opts,
         version=version,
     )
     return build_afni_py_execute(params, execution)

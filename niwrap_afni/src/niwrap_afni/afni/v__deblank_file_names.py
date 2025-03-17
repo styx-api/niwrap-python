@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DEBLANK_FILE_NAMES_METADATA = Metadata(
-    id="da8da0abd18b50263679955b0ea74ae940b81571.boutiques",
+    id="68ddb73b60e7fe7159ec6fd9653bf2405c5c6592.boutiques",
     name="@DeblankFileNames",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -20,6 +20,7 @@ VDeblankFileNamesParameters = typing.TypedDict('VDeblankFileNamesParameters', {
     "demo_set": bool,
     "echo": bool,
     "help": bool,
+    "files": typing.NotRequired[list[InputPathType] | None],
 })
 
 
@@ -68,6 +69,7 @@ def v__deblank_file_names_params(
     demo_set: bool = False,
     echo: bool = False,
     help_: bool = False,
+    files: list[InputPathType] | None = None,
 ) -> VDeblankFileNamesParameters:
     """
     Build parameters.
@@ -78,6 +80,8 @@ def v__deblank_file_names_params(
         demo_set: Create a toy directory with bad names for testing.
         echo: Turn on script echo.
         help_: Display help message.
+        files: Specify files to fix as opposed to letting it fix all the names\
+            in the current directory.
     Returns:
         Parameter dictionary
     """
@@ -89,6 +93,8 @@ def v__deblank_file_names_params(
         "echo": echo,
         "help": help_,
     }
+    if files is not None:
+        params["files"] = files
     return params
 
 
@@ -117,7 +123,8 @@ def v__deblank_file_names_cargs(
         cargs.append("-echo")
     if params.get("help"):
         cargs.append("-help")
-    cargs.append("[FILES...]")
+    if params.get("files") is not None:
+        cargs.extend([execution.input_file(f) for f in params.get("files")])
     return cargs
 
 
@@ -170,6 +177,7 @@ def v__deblank_file_names(
     demo_set: bool = False,
     echo: bool = False,
     help_: bool = False,
+    files: list[InputPathType] | None = None,
     runner: Runner | None = None,
 ) -> VDeblankFileNamesOutputs:
     """
@@ -185,6 +193,8 @@ def v__deblank_file_names(
         demo_set: Create a toy directory with bad names for testing.
         echo: Turn on script echo.
         help_: Display help message.
+        files: Specify files to fix as opposed to letting it fix all the names\
+            in the current directory.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDeblankFileNamesOutputs`).
@@ -197,6 +207,7 @@ def v__deblank_file_names(
         demo_set=demo_set,
         echo=echo,
         help_=help_,
+        files=files,
     )
     return v__deblank_file_names_execute(params, execution)
 

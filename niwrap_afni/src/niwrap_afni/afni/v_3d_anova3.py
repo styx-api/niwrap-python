@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ANOVA3_METADATA = Metadata(
-    id="fe7391c6cb7a9865c9618e3aa5f2eb36c7ee57f4.boutiques",
+    id="89d3a37a3aeb7f4c6c360f1bc16bdccd1f3a7f46.boutiques",
     name="3dANOVA3",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -23,6 +23,28 @@ V3dAnova3Parameters = typing.TypedDict('V3dAnova3Parameters', {
     "voxel_num": typing.NotRequired[int | None],
     "diskspace": bool,
     "mask": typing.NotRequired[InputPathType | None],
+    "outfile_fa": typing.NotRequired[str | None],
+    "outfile_fb": typing.NotRequired[str | None],
+    "outfile_fc": typing.NotRequired[str | None],
+    "outfile_fab": typing.NotRequired[str | None],
+    "outfile_fac": typing.NotRequired[str | None],
+    "outfile_fbc": typing.NotRequired[str | None],
+    "outfile_fabc": typing.NotRequired[str | None],
+    "outfile_amean": typing.NotRequired[str | None],
+    "outfile_bmean": typing.NotRequired[str | None],
+    "outfile_cmean": typing.NotRequired[str | None],
+    "outfile_xmean": typing.NotRequired[str | None],
+    "outfile_adiff": typing.NotRequired[str | None],
+    "outfile_bdiff": typing.NotRequired[str | None],
+    "outfile_cdiff": typing.NotRequired[str | None],
+    "outfile_xdiff": typing.NotRequired[str | None],
+    "outfile_acontr": typing.NotRequired[str | None],
+    "outfile_bcontr": typing.NotRequired[str | None],
+    "outfile_ccontr": typing.NotRequired[str | None],
+    "outfile_Abcontr": typing.NotRequired[str | None],
+    "outfile_Abdiff": typing.NotRequired[str | None],
+    "outfile_abmean": typing.NotRequired[str | None],
+    "outfile_bucket": typing.NotRequired[str | None],
     "anova_options": typing.NotRequired[list[str] | None],
 })
 
@@ -65,23 +87,23 @@ class V3dAnova3Outputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    outfile_fa: OutputPathType
+    outfile_fa: OutputPathType | None
     """Output file for the main ANOVA result."""
-    outfile_fb: OutputPathType
+    outfile_fb: OutputPathType | None
     """Output file for the main B ANOVA result."""
-    outfile_fc: OutputPathType
+    outfile_fc: OutputPathType | None
     """Output file for the main C ANOVA result."""
-    outfile_fab: OutputPathType
+    outfile_fab: OutputPathType | None
     """Output file for the interaction between A and B."""
-    outfile_fac: OutputPathType
+    outfile_fac: OutputPathType | None
     """Output file for the interaction between A and C."""
-    outfile_fbc: OutputPathType
+    outfile_fbc: OutputPathType | None
     """Output file for the interaction between B and C."""
-    outfile_fabc: OutputPathType
+    outfile_fabc: OutputPathType | None
     """Output file for the interaction between A, B, and C."""
-    outfile_amean: OutputPathType
+    outfile_amean: OutputPathType | None
     """Output file for the A mean results."""
-    outfile_bmean: OutputPathType
+    outfile_bmean: OutputPathType | None
     """Output file for the B mean results."""
 
 
@@ -94,6 +116,28 @@ def v_3d_anova3_params(
     voxel_num: int | None = None,
     diskspace: bool = False,
     mask: InputPathType | None = None,
+    outfile_fa: str | None = None,
+    outfile_fb: str | None = None,
+    outfile_fc: str | None = None,
+    outfile_fab: str | None = None,
+    outfile_fac: str | None = None,
+    outfile_fbc: str | None = None,
+    outfile_fabc: str | None = None,
+    outfile_amean: str | None = None,
+    outfile_bmean: str | None = None,
+    outfile_cmean: str | None = None,
+    outfile_xmean: str | None = None,
+    outfile_adiff: str | None = None,
+    outfile_bdiff: str | None = None,
+    outfile_cdiff: str | None = None,
+    outfile_xdiff: str | None = None,
+    outfile_acontr: str | None = None,
+    outfile_bcontr: str | None = None,
+    outfile_ccontr: str | None = None,
+    outfile_abcontr: str | None = None,
+    outfile_abdiff: str | None = None,
+    outfile_abmean: str | None = None,
+    outfile_bucket: str | None = None,
     anova_options: list[str] | None = None,
 ) -> V3dAnova3Parameters:
     """
@@ -110,6 +154,37 @@ def v_3d_anova3_params(
         voxel_num: Screen output for specified voxel number.
         diskspace: Print out disk space required for program execution.
         mask: Use sub-brick #0 of dataset to define which voxels to process.
+        outfile_fa: Specify the output file for the main ANOVA result.
+        outfile_fb: Specify the output file for the main B ANOVA result.
+        outfile_fc: Specify the output file for the main C ANOVA result.
+        outfile_fab: Specify the output file for the interaction between A and\
+            B.
+        outfile_fac: Specify the output file for the interaction between A and\
+            C.
+        outfile_fbc: Specify the output file for the interaction between B and\
+            C.
+        outfile_fabc: Specify the output file for the interaction between A, B,\
+            and C.
+        outfile_amean: Specify the output file for the A mean results.
+        outfile_bmean: Specify the output file for the B mean results.
+        outfile_cmean: Specify the output file for the C mean results.
+        outfile_xmean: Specify the output file for the overall mean results.
+        outfile_adiff: Specify the output file for the A difference results.
+        outfile_bdiff: Specify the output file for the B difference results.
+        outfile_cdiff: Specify the output file for the C difference results.
+        outfile_xdiff: Specify the output file for the overall difference\
+            results.
+        outfile_acontr: Specify the output file for the A contrast results.
+        outfile_bcontr: Specify the output file for the B contrast results.
+        outfile_ccontr: Specify the output file for the C contrast results.
+        outfile_abcontr: Specify the output file for the interaction contrast\
+            results between A and B (case-sensitive).
+        outfile_abdiff: Specify the output file for the interaction difference\
+            results between A and B (case-sensitive).
+        outfile_abmean: Specify the output file for the mean results of the\
+            interaction between A and B.
+        outfile_bucket: Specify the output file for the bucket (combined)\
+            results.
         anova_options: Modified ANOVA computation options. See:\
             https://afni.nimh.nih.gov/sscc/gangc/ANOVA_Mod.html.
     Returns:
@@ -128,6 +203,50 @@ def v_3d_anova3_params(
         params["voxel_num"] = voxel_num
     if mask is not None:
         params["mask"] = mask
+    if outfile_fa is not None:
+        params["outfile_fa"] = outfile_fa
+    if outfile_fb is not None:
+        params["outfile_fb"] = outfile_fb
+    if outfile_fc is not None:
+        params["outfile_fc"] = outfile_fc
+    if outfile_fab is not None:
+        params["outfile_fab"] = outfile_fab
+    if outfile_fac is not None:
+        params["outfile_fac"] = outfile_fac
+    if outfile_fbc is not None:
+        params["outfile_fbc"] = outfile_fbc
+    if outfile_fabc is not None:
+        params["outfile_fabc"] = outfile_fabc
+    if outfile_amean is not None:
+        params["outfile_amean"] = outfile_amean
+    if outfile_bmean is not None:
+        params["outfile_bmean"] = outfile_bmean
+    if outfile_cmean is not None:
+        params["outfile_cmean"] = outfile_cmean
+    if outfile_xmean is not None:
+        params["outfile_xmean"] = outfile_xmean
+    if outfile_adiff is not None:
+        params["outfile_adiff"] = outfile_adiff
+    if outfile_bdiff is not None:
+        params["outfile_bdiff"] = outfile_bdiff
+    if outfile_cdiff is not None:
+        params["outfile_cdiff"] = outfile_cdiff
+    if outfile_xdiff is not None:
+        params["outfile_xdiff"] = outfile_xdiff
+    if outfile_acontr is not None:
+        params["outfile_acontr"] = outfile_acontr
+    if outfile_bcontr is not None:
+        params["outfile_bcontr"] = outfile_bcontr
+    if outfile_ccontr is not None:
+        params["outfile_ccontr"] = outfile_ccontr
+    if outfile_abcontr is not None:
+        params["outfile_Abcontr"] = outfile_abcontr
+    if outfile_abdiff is not None:
+        params["outfile_Abdiff"] = outfile_abdiff
+    if outfile_abmean is not None:
+        params["outfile_abmean"] = outfile_abmean
+    if outfile_bucket is not None:
+        params["outfile_bucket"] = outfile_bucket
     if anova_options is not None:
         params["anova_options"] = anova_options
     return params
@@ -180,7 +299,116 @@ def v_3d_anova3_cargs(
             "-mask",
             execution.input_file(params.get("mask"))
         ])
-    cargs.append("[OUTFILES]")
+    if params.get("outfile_fa") is not None:
+        cargs.extend([
+            "-fa",
+            params.get("outfile_fa")
+        ])
+    if params.get("outfile_fb") is not None:
+        cargs.extend([
+            "-fb",
+            params.get("outfile_fb")
+        ])
+    if params.get("outfile_fc") is not None:
+        cargs.extend([
+            "-fc",
+            params.get("outfile_fc")
+        ])
+    if params.get("outfile_fab") is not None:
+        cargs.extend([
+            "-fab",
+            params.get("outfile_fab")
+        ])
+    if params.get("outfile_fac") is not None:
+        cargs.extend([
+            "-fac",
+            params.get("outfile_fac")
+        ])
+    if params.get("outfile_fbc") is not None:
+        cargs.extend([
+            "-fbc",
+            params.get("outfile_fbc")
+        ])
+    if params.get("outfile_fabc") is not None:
+        cargs.extend([
+            "-fabc",
+            params.get("outfile_fabc")
+        ])
+    if params.get("outfile_amean") is not None:
+        cargs.extend([
+            "-amean",
+            params.get("outfile_amean")
+        ])
+    if params.get("outfile_bmean") is not None:
+        cargs.extend([
+            "-bmean",
+            params.get("outfile_bmean")
+        ])
+    if params.get("outfile_cmean") is not None:
+        cargs.extend([
+            "-cmean",
+            params.get("outfile_cmean")
+        ])
+    if params.get("outfile_xmean") is not None:
+        cargs.extend([
+            "-xmean",
+            params.get("outfile_xmean")
+        ])
+    if params.get("outfile_adiff") is not None:
+        cargs.extend([
+            "-adiff",
+            params.get("outfile_adiff")
+        ])
+    if params.get("outfile_bdiff") is not None:
+        cargs.extend([
+            "-bdiff",
+            params.get("outfile_bdiff")
+        ])
+    if params.get("outfile_cdiff") is not None:
+        cargs.extend([
+            "-cdiff",
+            params.get("outfile_cdiff")
+        ])
+    if params.get("outfile_xdiff") is not None:
+        cargs.extend([
+            "-xdiff",
+            params.get("outfile_xdiff")
+        ])
+    if params.get("outfile_acontr") is not None:
+        cargs.extend([
+            "-acontr",
+            params.get("outfile_acontr")
+        ])
+    if params.get("outfile_bcontr") is not None:
+        cargs.extend([
+            "-bcontr",
+            params.get("outfile_bcontr")
+        ])
+    if params.get("outfile_ccontr") is not None:
+        cargs.extend([
+            "-ccontr",
+            params.get("outfile_ccontr")
+        ])
+    if params.get("outfile_Abcontr") is not None:
+        cargs.extend([
+            "-Abcontr",
+            params.get("outfile_Abcontr")
+        ])
+    if params.get("outfile_Abdiff") is not None:
+        cargs.extend([
+            "-Abdiff",
+            params.get("outfile_Abdiff")
+        ])
+    if params.get("outfile_abmean") is not None:
+        cargs.extend([
+            "-abmean",
+            params.get("outfile_abmean")
+        ])
+    if params.get("outfile_bucket") is not None:
+        cargs.extend([
+            "-bucket",
+            params.get("outfile_bucket")
+        ])
     if params.get("anova_options") is not None:
         cargs.extend([
             "-old_method -OK -assume_sph",
@@ -204,15 +432,15 @@ def v_3d_anova3_outputs(
     """
     ret = V3dAnova3Outputs(
         root=execution.output_file("."),
-        outfile_fa=execution.output_file("[OUTFILE_FA]"),
-        outfile_fb=execution.output_file("[OUTFILE_FB]"),
-        outfile_fc=execution.output_file("[OUTFILE_FC]"),
-        outfile_fab=execution.output_file("[OUTFILE_FAB]"),
-        outfile_fac=execution.output_file("[OUTFILE_FAC]"),
-        outfile_fbc=execution.output_file("[OUTFILE_FBC]"),
-        outfile_fabc=execution.output_file("[OUTFILE_FABC]"),
-        outfile_amean=execution.output_file("[OUTFILE_AMEAN]"),
-        outfile_bmean=execution.output_file("[OUTFILE_BMEAN]"),
+        outfile_fa=execution.output_file(params.get("outfile_fa")) if (params.get("outfile_fa") is not None) else None,
+        outfile_fb=execution.output_file(params.get("outfile_fb")) if (params.get("outfile_fb") is not None) else None,
+        outfile_fc=execution.output_file(params.get("outfile_fc")) if (params.get("outfile_fc") is not None) else None,
+        outfile_fab=execution.output_file(params.get("outfile_fab")) if (params.get("outfile_fab") is not None) else None,
+        outfile_fac=execution.output_file(params.get("outfile_fac")) if (params.get("outfile_fac") is not None) else None,
+        outfile_fbc=execution.output_file(params.get("outfile_fbc")) if (params.get("outfile_fbc") is not None) else None,
+        outfile_fabc=execution.output_file(params.get("outfile_fabc")) if (params.get("outfile_fabc") is not None) else None,
+        outfile_amean=execution.output_file(params.get("outfile_amean")) if (params.get("outfile_amean") is not None) else None,
+        outfile_bmean=execution.output_file(params.get("outfile_bmean")) if (params.get("outfile_bmean") is not None) else None,
     )
     return ret
 
@@ -250,6 +478,28 @@ def v_3d_anova3(
     voxel_num: int | None = None,
     diskspace: bool = False,
     mask: InputPathType | None = None,
+    outfile_fa: str | None = None,
+    outfile_fb: str | None = None,
+    outfile_fc: str | None = None,
+    outfile_fab: str | None = None,
+    outfile_fac: str | None = None,
+    outfile_fbc: str | None = None,
+    outfile_fabc: str | None = None,
+    outfile_amean: str | None = None,
+    outfile_bmean: str | None = None,
+    outfile_cmean: str | None = None,
+    outfile_xmean: str | None = None,
+    outfile_adiff: str | None = None,
+    outfile_bdiff: str | None = None,
+    outfile_cdiff: str | None = None,
+    outfile_xdiff: str | None = None,
+    outfile_acontr: str | None = None,
+    outfile_bcontr: str | None = None,
+    outfile_ccontr: str | None = None,
+    outfile_abcontr: str | None = None,
+    outfile_abdiff: str | None = None,
+    outfile_abmean: str | None = None,
+    outfile_bucket: str | None = None,
     anova_options: list[str] | None = None,
     runner: Runner | None = None,
 ) -> V3dAnova3Outputs:
@@ -271,6 +521,37 @@ def v_3d_anova3(
         voxel_num: Screen output for specified voxel number.
         diskspace: Print out disk space required for program execution.
         mask: Use sub-brick #0 of dataset to define which voxels to process.
+        outfile_fa: Specify the output file for the main ANOVA result.
+        outfile_fb: Specify the output file for the main B ANOVA result.
+        outfile_fc: Specify the output file for the main C ANOVA result.
+        outfile_fab: Specify the output file for the interaction between A and\
+            B.
+        outfile_fac: Specify the output file for the interaction between A and\
+            C.
+        outfile_fbc: Specify the output file for the interaction between B and\
+            C.
+        outfile_fabc: Specify the output file for the interaction between A, B,\
+            and C.
+        outfile_amean: Specify the output file for the A mean results.
+        outfile_bmean: Specify the output file for the B mean results.
+        outfile_cmean: Specify the output file for the C mean results.
+        outfile_xmean: Specify the output file for the overall mean results.
+        outfile_adiff: Specify the output file for the A difference results.
+        outfile_bdiff: Specify the output file for the B difference results.
+        outfile_cdiff: Specify the output file for the C difference results.
+        outfile_xdiff: Specify the output file for the overall difference\
+            results.
+        outfile_acontr: Specify the output file for the A contrast results.
+        outfile_bcontr: Specify the output file for the B contrast results.
+        outfile_ccontr: Specify the output file for the C contrast results.
+        outfile_abcontr: Specify the output file for the interaction contrast\
+            results between A and B (case-sensitive).
+        outfile_abdiff: Specify the output file for the interaction difference\
+            results between A and B (case-sensitive).
+        outfile_abmean: Specify the output file for the mean results of the\
+            interaction between A and B.
+        outfile_bucket: Specify the output file for the bucket (combined)\
+            results.
         anova_options: Modified ANOVA computation options. See:\
             https://afni.nimh.nih.gov/sscc/gangc/ANOVA_Mod.html.
         runner: Command runner.
@@ -288,6 +569,28 @@ def v_3d_anova3(
         voxel_num=voxel_num,
         diskspace=diskspace,
         mask=mask,
+        outfile_fa=outfile_fa,
+        outfile_fb=outfile_fb,
+        outfile_fc=outfile_fc,
+        outfile_fab=outfile_fab,
+        outfile_fac=outfile_fac,
+        outfile_fbc=outfile_fbc,
+        outfile_fabc=outfile_fabc,
+        outfile_amean=outfile_amean,
+        outfile_bmean=outfile_bmean,
+        outfile_cmean=outfile_cmean,
+        outfile_xmean=outfile_xmean,
+        outfile_adiff=outfile_adiff,
+        outfile_bdiff=outfile_bdiff,
+        outfile_cdiff=outfile_cdiff,
+        outfile_xdiff=outfile_xdiff,
+        outfile_acontr=outfile_acontr,
+        outfile_bcontr=outfile_bcontr,
+        outfile_ccontr=outfile_ccontr,
+        outfile_abcontr=outfile_abcontr,
+        outfile_abdiff=outfile_abdiff,
+        outfile_abmean=outfile_abmean,
+        outfile_bucket=outfile_bucket,
         anova_options=anova_options,
     )
     return v_3d_anova3_execute(params, execution)

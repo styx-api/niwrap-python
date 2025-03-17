@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__GRAYPLOT_METADATA = Metadata(
-    id="3d444976676cbb4979c872f1285979b9e0bd687d.boutiques",
+    id="530147880dced9ec34da9598833b42371288db6a.boutiques",
     name="@grayplot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,9 @@ V__GRAYPLOT_METADATA = Metadata(
 VGrayplotParameters = typing.TypedDict('VGrayplotParameters', {
     "__STYX_TYPE__": typing.Literal["@grayplot"],
     "dirname": str,
+    "pvorder": bool,
+    "peelorder": bool,
+    "ijkorder": bool,
     "allorder": bool,
 })
 
@@ -64,6 +67,9 @@ class VGrayplotOutputs(typing.NamedTuple):
 
 def v__grayplot_params(
     dirname: str,
+    pvorder: bool = False,
+    peelorder: bool = False,
+    ijkorder: bool = False,
     allorder: bool = False,
 ) -> VGrayplotParameters:
     """
@@ -71,6 +77,12 @@ def v__grayplot_params(
     
     Args:
         dirname: Directory containing afni_proc.py results.
+        pvorder: Within each partition, voxels are ordered by a simple\
+            similarity measure.
+        peelorder: Within each partition, voxels are ordered by how many 'peel'\
+            operations are needed to reach a given voxel.
+        ijkorder: Within each partition, voxels are ordered by the 3D index in\
+            which they appear in the dataset.
         allorder: Create grayplots for all ordering methods.
     Returns:
         Parameter dictionary
@@ -78,6 +90,9 @@ def v__grayplot_params(
     params = {
         "__STYXTYPE__": "@grayplot",
         "dirname": dirname,
+        "pvorder": pvorder,
+        "peelorder": peelorder,
+        "ijkorder": ijkorder,
         "allorder": allorder,
     }
     return params
@@ -99,6 +114,12 @@ def v__grayplot_cargs(
     cargs = []
     cargs.append("@grayplot")
     cargs.append(params.get("dirname"))
+    if params.get("pvorder"):
+        cargs.append("-pvorder")
+    if params.get("peelorder"):
+        cargs.append("-peelorder")
+    if params.get("ijkorder"):
+        cargs.append("-ijkorder")
     if params.get("allorder"):
         cargs.append("-ALLorder")
     return cargs
@@ -152,6 +173,9 @@ def v__grayplot_execute(
 
 def v__grayplot(
     dirname: str,
+    pvorder: bool = False,
+    peelorder: bool = False,
+    ijkorder: bool = False,
     allorder: bool = False,
     runner: Runner | None = None,
 ) -> VGrayplotOutputs:
@@ -166,6 +190,12 @@ def v__grayplot(
     
     Args:
         dirname: Directory containing afni_proc.py results.
+        pvorder: Within each partition, voxels are ordered by a simple\
+            similarity measure.
+        peelorder: Within each partition, voxels are ordered by how many 'peel'\
+            operations are needed to reach a given voxel.
+        ijkorder: Within each partition, voxels are ordered by the 3D index in\
+            which they appear in the dataset.
         allorder: Create grayplots for all ordering methods.
         runner: Command runner.
     Returns:
@@ -175,6 +205,9 @@ def v__grayplot(
     execution = runner.start_execution(V__GRAYPLOT_METADATA)
     params = v__grayplot_params(
         dirname=dirname,
+        pvorder=pvorder,
+        peelorder=peelorder,
+        ijkorder=ijkorder,
         allorder=allorder,
     )
     return v__grayplot_execute(params, execution)

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__REORDER_METADATA = Metadata(
-    id="93af53020ee1088a33b0e58234dc8960b688e23e.boutiques",
+    id="a1aaf6dbb807ea79af1609bee99a7c13181932fa.boutiques",
     name="@Reorder",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -21,6 +21,7 @@ VReorderParameters = typing.TypedDict('VReorderParameters', {
     "offset": typing.NotRequired[float | None],
     "save_work": bool,
     "test": bool,
+    "help": bool,
 })
 
 
@@ -73,6 +74,7 @@ def v__reorder_params(
     offset: float | None = None,
     save_work: bool = False,
     test: bool = False,
+    help_: bool = False,
 ) -> VReorderParameters:
     """
     Build parameters.
@@ -84,6 +86,7 @@ def v__reorder_params(
         offset: Offset mapfile TR indices by OFFSET (in TRs).
         save_work: Do not delete work directory (reorder.work.dir) at the end.
         test: Just report sub-bricks, do not create datasets.
+        help_: Show help message.
     Returns:
         Parameter dictionary
     """
@@ -94,6 +97,7 @@ def v__reorder_params(
         "prefix": prefix,
         "save_work": save_work,
         "test": test,
+        "help": help_,
     }
     if offset is not None:
         params["offset"] = offset
@@ -127,6 +131,8 @@ def v__reorder_cargs(
         cargs.append("-save_work")
     if params.get("test"):
         cargs.append("-test")
+    if params.get("help"):
+        cargs.append("-help")
     return cargs
 
 
@@ -182,6 +188,7 @@ def v__reorder(
     offset: float | None = None,
     save_work: bool = False,
     test: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> VReorderOutputs:
     """
@@ -199,6 +206,7 @@ def v__reorder(
         offset: Offset mapfile TR indices by OFFSET (in TRs).
         save_work: Do not delete work directory (reorder.work.dir) at the end.
         test: Just report sub-bricks, do not create datasets.
+        help_: Show help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VReorderOutputs`).
@@ -212,6 +220,7 @@ def v__reorder(
         offset=offset,
         save_work=save_work,
         test=test,
+        help_=help_,
     )
     return v__reorder_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_PAR2_AFNI_METADATA = Metadata(
-    id="955afce507c339e4fbf43caaf056ad39a659f439.boutiques",
+    id="abf07fa80d8ac5cc00c4348273246690b0e76d2a.boutiques",
     name="3dPAR2AFNI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,11 +17,14 @@ V3dPar2AfniParameters = typing.TypedDict('V3dPar2AfniParameters', {
     "__STYX_TYPE__": typing.Literal["3dPAR2AFNI"],
     "input_file": InputPathType,
     "skip_outliers_test": bool,
+    "output_nifti": bool,
     "output_analyze": bool,
     "output_dir": typing.NotRequired[str | None],
     "verbose_flag": bool,
     "gzip_files": bool,
+    "byte_swap_2": bool,
     "byte_swap_4": bool,
+    "help_flag": bool,
 })
 
 
@@ -70,11 +73,14 @@ class V3dPar2AfniOutputs(typing.NamedTuple):
 def v_3d_par2_afni_params(
     input_file: InputPathType,
     skip_outliers_test: bool = False,
+    output_nifti: bool = False,
     output_analyze: bool = False,
     output_dir: str | None = None,
     verbose_flag: bool = False,
     gzip_files: bool = False,
+    byte_swap_2: bool = False,
     byte_swap_4: bool = False,
+    help_flag: bool = False,
 ) -> V3dPar2AfniParameters:
     """
     Build parameters.
@@ -83,6 +89,8 @@ def v_3d_par2_afni_params(
         input_file: Input PAR file (e.g., subject1.PAR).
         skip_outliers_test: Skip the outliers test when converting 4D files.\
             The default is to perform the outliers test.
+        output_nifti: Output NIfTI files instead of HEAD/BRIK. The default is\
+            to create HEAD/BRIK files.
         output_analyze: Output ANALYZE files instead of HEAD/BRIK.
         output_dir: The name of the directory where the created files should be\
             placed. If this directory does not exist, the program exits without\
@@ -90,8 +98,11 @@ def v_3d_par2_afni_params(
         verbose_flag: Be verbose in operation.
         gzip_files: Gzip the files created. The default is not to gzip the\
             files.
+        byte_swap_2: 2-Byte-swap the files created. The default is not to 2\
+            byte-swap.
         byte_swap_4: 4-Byte-swap the files created. The default is not to 4\
             byte-swap.
+        help_flag: Display help message.
     Returns:
         Parameter dictionary
     """
@@ -99,10 +110,13 @@ def v_3d_par2_afni_params(
         "__STYXTYPE__": "3dPAR2AFNI",
         "input_file": input_file,
         "skip_outliers_test": skip_outliers_test,
+        "output_nifti": output_nifti,
         "output_analyze": output_analyze,
         "verbose_flag": verbose_flag,
         "gzip_files": gzip_files,
+        "byte_swap_2": byte_swap_2,
         "byte_swap_4": byte_swap_4,
+        "help_flag": help_flag,
     }
     if output_dir is not None:
         params["output_dir"] = output_dir
@@ -127,6 +141,8 @@ def v_3d_par2_afni_cargs(
     cargs.append(execution.input_file(params.get("input_file")))
     if params.get("skip_outliers_test"):
         cargs.append("-s")
+    if params.get("output_nifti"):
+        cargs.append("-n")
     if params.get("output_analyze"):
         cargs.append("-a")
     if params.get("output_dir") is not None:
@@ -138,8 +154,12 @@ def v_3d_par2_afni_cargs(
         cargs.append("-v")
     if params.get("gzip_files"):
         cargs.append("-g")
+    if params.get("byte_swap_2"):
+        cargs.append("-2")
     if params.get("byte_swap_4"):
         cargs.append("-4")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -190,11 +210,14 @@ def v_3d_par2_afni_execute(
 def v_3d_par2_afni(
     input_file: InputPathType,
     skip_outliers_test: bool = False,
+    output_nifti: bool = False,
     output_analyze: bool = False,
     output_dir: str | None = None,
     verbose_flag: bool = False,
     gzip_files: bool = False,
+    byte_swap_2: bool = False,
     byte_swap_4: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> V3dPar2AfniOutputs:
     """
@@ -208,6 +231,8 @@ def v_3d_par2_afni(
         input_file: Input PAR file (e.g., subject1.PAR).
         skip_outliers_test: Skip the outliers test when converting 4D files.\
             The default is to perform the outliers test.
+        output_nifti: Output NIfTI files instead of HEAD/BRIK. The default is\
+            to create HEAD/BRIK files.
         output_analyze: Output ANALYZE files instead of HEAD/BRIK.
         output_dir: The name of the directory where the created files should be\
             placed. If this directory does not exist, the program exits without\
@@ -215,8 +240,11 @@ def v_3d_par2_afni(
         verbose_flag: Be verbose in operation.
         gzip_files: Gzip the files created. The default is not to gzip the\
             files.
+        byte_swap_2: 2-Byte-swap the files created. The default is not to 2\
+            byte-swap.
         byte_swap_4: 4-Byte-swap the files created. The default is not to 4\
             byte-swap.
+        help_flag: Display help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPar2AfniOutputs`).
@@ -226,11 +254,14 @@ def v_3d_par2_afni(
     params = v_3d_par2_afni_params(
         input_file=input_file,
         skip_outliers_test=skip_outliers_test,
+        output_nifti=output_nifti,
         output_analyze=output_analyze,
         output_dir=output_dir,
         verbose_flag=verbose_flag,
         gzip_files=gzip_files,
+        byte_swap_2=byte_swap_2,
         byte_swap_4=byte_swap_4,
+        help_flag=help_flag,
     )
     return v_3d_par2_afni_execute(params, execution)
 

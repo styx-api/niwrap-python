@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DICOM_HINFO_METADATA = Metadata(
-    id="0de7df6566656068c4dc0dc5d6d2bae576cab754.boutiques",
+    id="f60ca8dfbe8adb47a80fe29002ccd4b8c68b8af2.boutiques",
     name="dicom_hinfo",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -20,6 +20,7 @@ DicomHinfoParameters = typing.TypedDict('DicomHinfoParameters', {
     "full_entry": bool,
     "no_name": bool,
     "namelast": bool,
+    "files": list[InputPathType],
 })
 
 
@@ -64,6 +65,7 @@ class DicomHinfoOutputs(typing.NamedTuple):
 
 def dicom_hinfo_params(
     tag: list[str],
+    files: list[InputPathType],
     sepstr: str | None = None,
     full_entry: bool = False,
     no_name: bool = False,
@@ -75,6 +77,7 @@ def dicom_hinfo_params(
     Args:
         tag: Specify one or more DICOM tags to print, in the format aaaa,bbbb\
             where aaaa and bbbb are hexadecimal digits.
+        files: DICOM file(s) to process.
         sepstr: Use the specified string to separate fields instead of space.
         full_entry: Output the full entry if it is more than one word or\
             contains white space.
@@ -89,6 +92,7 @@ def dicom_hinfo_params(
         "full_entry": full_entry,
         "no_name": no_name,
         "namelast": namelast,
+        "files": files,
     }
     if sepstr is not None:
         params["sepstr"] = sepstr
@@ -125,7 +129,7 @@ def dicom_hinfo_cargs(
         cargs.append("-no_name")
     if params.get("namelast"):
         cargs.append("-namelast")
-    cargs.append("[FILES...]")
+    cargs.extend([execution.input_file(f) for f in params.get("files")])
     return cargs
 
 
@@ -174,6 +178,7 @@ def dicom_hinfo_execute(
 
 def dicom_hinfo(
     tag: list[str],
+    files: list[InputPathType],
     sepstr: str | None = None,
     full_entry: bool = False,
     no_name: bool = False,
@@ -190,6 +195,7 @@ def dicom_hinfo(
     Args:
         tag: Specify one or more DICOM tags to print, in the format aaaa,bbbb\
             where aaaa and bbbb are hexadecimal digits.
+        files: DICOM file(s) to process.
         sepstr: Use the specified string to separate fields instead of space.
         full_entry: Output the full entry if it is more than one word or\
             contains white space.
@@ -207,6 +213,7 @@ def dicom_hinfo(
         full_entry=full_entry,
         no_name=no_name,
         namelast=namelast,
+        files=files,
     )
     return dicom_hinfo_execute(params, execution)
 

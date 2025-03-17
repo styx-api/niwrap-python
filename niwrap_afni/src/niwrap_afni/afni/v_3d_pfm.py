@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_PFM_METADATA = Metadata(
-    id="c5e5e30b454a1a81f02535de2e794be7d716492a.boutiques",
+    id="96e747e1055107a8734dd4f14bdc3fe2e1d0dca3.boutiques",
     name="3dPFM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,21 @@ V_3D_PFM_METADATA = Metadata(
 
 V3dPfmParameters = typing.TypedDict('V3dPfmParameters', {
     "__STYX_TYPE__": typing.Literal["3dPFM"],
+    "input": InputPathType,
+    "mask": typing.NotRequired[InputPathType | None],
+    "algorithm": typing.NotRequired[str | None],
+    "criteria": typing.NotRequired[str | None],
+    "nonzeros": typing.NotRequired[float | None],
+    "maxiter": typing.NotRequired[float | None],
+    "maxiterfactor": typing.NotRequired[float | None],
+    "tr": typing.NotRequired[float | None],
+    "hrf": typing.NotRequired[str | None],
+    "hrf_vol": typing.NotRequired[InputPathType | None],
+    "idx_hrf": typing.NotRequired[InputPathType | None],
+    "LHS": typing.NotRequired[list[InputPathType] | None],
+    "jobs": typing.NotRequired[float | None],
+    "nSeg": typing.NotRequired[float | None],
+    "verb": typing.NotRequired[float | None],
 })
 
 
@@ -113,17 +128,79 @@ class V3dPfmOutputs(typing.NamedTuple):
 
 
 def v_3d_pfm_params(
+    input_: InputPathType,
+    mask: InputPathType | None = None,
+    algorithm: str | None = None,
+    criteria: str | None = None,
+    nonzeros: float | None = None,
+    maxiter: float | None = None,
+    maxiterfactor: float | None = None,
+    tr: float | None = None,
+    hrf: str | None = None,
+    hrf_vol: InputPathType | None = None,
+    idx_hrf: InputPathType | None = None,
+    lhs: list[InputPathType] | None = None,
+    jobs: float | None = None,
+    n_seg: float | None = None,
+    verb: float | None = None,
 ) -> V3dPfmParameters:
     """
     Build parameters.
     
     Args:
+        input_: Specify the dataset to analyze (e.g., epi.nii).
+        mask: Process voxels inside this mask only. Default is no masking.
+        algorithm: Regularization function used for HRF deconvolution (dantzig\
+            or lasso).
+        criteria: Model selection criterion for HRF deconvolution (BIC or AIC).
+        nonzeros: Choose estimate with a fixed number of nonzero coefficients.
+        maxiter: Maximum number of iterations in the homotopy procedure\
+            (absolute value).
+        maxiterfactor: Maximum number of iterations relative to the number of\
+            volumes.
+        tr: Repetition time or sampling period of the input data.
+        hrf: Haemodynamic response function used for deconvolution.
+        hrf_vol: 3D+time dataset with voxel/nodes/vertex -dependent HRFs.
+        idx_hrf: 3D dataset with voxel-dependent indexes for HRF.
+        lhs: Additional regressors to be fitted to the dataset.
+        jobs: Number of parallel jobs to use in processing.
+        n_seg: Divide into segments to report progress.
+        verb: Verbosity level (0 for quiet, 1 for talkative).
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dPFM",
+        "input": input_,
     }
+    if mask is not None:
+        params["mask"] = mask
+    if algorithm is not None:
+        params["algorithm"] = algorithm
+    if criteria is not None:
+        params["criteria"] = criteria
+    if nonzeros is not None:
+        params["nonzeros"] = nonzeros
+    if maxiter is not None:
+        params["maxiter"] = maxiter
+    if maxiterfactor is not None:
+        params["maxiterfactor"] = maxiterfactor
+    if tr is not None:
+        params["tr"] = tr
+    if hrf is not None:
+        params["hrf"] = hrf
+    if hrf_vol is not None:
+        params["hrf_vol"] = hrf_vol
+    if idx_hrf is not None:
+        params["idx_hrf"] = idx_hrf
+    if lhs is not None:
+        params["LHS"] = lhs
+    if jobs is not None:
+        params["jobs"] = jobs
+    if n_seg is not None:
+        params["nSeg"] = n_seg
+    if verb is not None:
+        params["verb"] = verb
     return params
 
 
@@ -142,7 +219,80 @@ def v_3d_pfm_cargs(
     """
     cargs = []
     cargs.append("3dPFM")
-    cargs.append("[PARAMETERS]")
+    cargs.extend([
+        "-input",
+        execution.input_file(params.get("input"))
+    ])
+    if params.get("mask") is not None:
+        cargs.extend([
+            "-mask",
+            execution.input_file(params.get("mask"))
+        ])
+    if params.get("algorithm") is not None:
+        cargs.extend([
+            "-algorithm",
+            params.get("algorithm")
+        ])
+    if params.get("criteria") is not None:
+        cargs.extend([
+            "-criteria",
+            params.get("criteria")
+        ])
+    if params.get("nonzeros") is not None:
+        cargs.extend([
+            "-nonzeros",
+            str(params.get("nonzeros"))
+        ])
+    if params.get("maxiter") is not None:
+        cargs.extend([
+            "-maxiter",
+            str(params.get("maxiter"))
+        ])
+    if params.get("maxiterfactor") is not None:
+        cargs.extend([
+            "-maxiterfactor",
+            str(params.get("maxiterfactor"))
+        ])
+    if params.get("tr") is not None:
+        cargs.extend([
+            "-TR",
+            str(params.get("tr"))
+        ])
+    if params.get("hrf") is not None:
+        cargs.extend([
+            "-hrf",
+            params.get("hrf")
+        ])
+    if params.get("hrf_vol") is not None:
+        cargs.extend([
+            "-hrf_vol",
+            execution.input_file(params.get("hrf_vol"))
+        ])
+    if params.get("idx_hrf") is not None:
+        cargs.extend([
+            "-idx_hrf",
+            execution.input_file(params.get("idx_hrf"))
+        ])
+    if params.get("LHS") is not None:
+        cargs.extend([
+            "-LHS",
+            *[execution.input_file(f) for f in params.get("LHS")]
+        ])
+    if params.get("jobs") is not None:
+        cargs.extend([
+            "-jobs",
+            str(params.get("jobs"))
+        ])
+    if params.get("nSeg") is not None:
+        cargs.extend([
+            "-nSeg",
+            str(params.get("nSeg"))
+        ])
+    if params.get("verb") is not None:
+        cargs.extend([
+            "-verb",
+            str(params.get("verb"))
+        ])
     return cargs
 
 
@@ -217,6 +367,21 @@ def v_3d_pfm_execute(
 
 
 def v_3d_pfm(
+    input_: InputPathType,
+    mask: InputPathType | None = None,
+    algorithm: str | None = None,
+    criteria: str | None = None,
+    nonzeros: float | None = None,
+    maxiter: float | None = None,
+    maxiterfactor: float | None = None,
+    tr: float | None = None,
+    hrf: str | None = None,
+    hrf_vol: InputPathType | None = None,
+    idx_hrf: InputPathType | None = None,
+    lhs: list[InputPathType] | None = None,
+    jobs: float | None = None,
+    n_seg: float | None = None,
+    verb: float | None = None,
     runner: Runner | None = None,
 ) -> V3dPfmOutputs:
     """
@@ -228,6 +393,24 @@ def v_3d_pfm(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        input_: Specify the dataset to analyze (e.g., epi.nii).
+        mask: Process voxels inside this mask only. Default is no masking.
+        algorithm: Regularization function used for HRF deconvolution (dantzig\
+            or lasso).
+        criteria: Model selection criterion for HRF deconvolution (BIC or AIC).
+        nonzeros: Choose estimate with a fixed number of nonzero coefficients.
+        maxiter: Maximum number of iterations in the homotopy procedure\
+            (absolute value).
+        maxiterfactor: Maximum number of iterations relative to the number of\
+            volumes.
+        tr: Repetition time or sampling period of the input data.
+        hrf: Haemodynamic response function used for deconvolution.
+        hrf_vol: 3D+time dataset with voxel/nodes/vertex -dependent HRFs.
+        idx_hrf: 3D dataset with voxel-dependent indexes for HRF.
+        lhs: Additional regressors to be fitted to the dataset.
+        jobs: Number of parallel jobs to use in processing.
+        n_seg: Divide into segments to report progress.
+        verb: Verbosity level (0 for quiet, 1 for talkative).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPfmOutputs`).
@@ -235,6 +418,21 @@ def v_3d_pfm(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_PFM_METADATA)
     params = v_3d_pfm_params(
+        input_=input_,
+        mask=mask,
+        algorithm=algorithm,
+        criteria=criteria,
+        nonzeros=nonzeros,
+        maxiter=maxiter,
+        maxiterfactor=maxiterfactor,
+        tr=tr,
+        hrf=hrf,
+        hrf_vol=hrf_vol,
+        idx_hrf=idx_hrf,
+        lhs=lhs,
+        jobs=jobs,
+        n_seg=n_seg,
+        verb=verb,
     )
     return v_3d_pfm_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_NLFIM_METADATA = Metadata(
-    id="b2553c2bf57346747079630757e1d16620ea8119.boutiques",
+    id="c69cac4ff06ad3ead6a60599ed0432b48e04d528.boutiques",
     name="3dNLfim",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -18,6 +18,40 @@ V3dNlfimParameters = typing.TypedDict('V3dNlfimParameters', {
     "input_file": InputPathType,
     "signal_model": str,
     "noise_model": str,
+    "mask": typing.NotRequired[InputPathType | None],
+    "ignore": typing.NotRequired[int | None],
+    "intr": typing.NotRequired[int | None],
+    "tr": typing.NotRequired[int | None],
+    "time_file": typing.NotRequired[InputPathType | None],
+    "sconstr": typing.NotRequired[str | None],
+    "nconstr": typing.NotRequired[str | None],
+    "nabs": bool,
+    "nrand": typing.NotRequired[int | None],
+    "nbest": typing.NotRequired[int | None],
+    "rmsmin": typing.NotRequired[float | None],
+    "fdisp": typing.NotRequired[float | None],
+    "progress": typing.NotRequired[int | None],
+    "voxel_count": bool,
+    "simplex": bool,
+    "powell": bool,
+    "both": bool,
+    "freg": typing.NotRequired[str | None],
+    "frsqr": typing.NotRequired[str | None],
+    "fsmax": typing.NotRequired[str | None],
+    "ftmax": typing.NotRequired[str | None],
+    "fpsmax": typing.NotRequired[str | None],
+    "farea": typing.NotRequired[str | None],
+    "fparea": typing.NotRequired[str | None],
+    "fscoef": typing.NotRequired[str | None],
+    "fncoef": typing.NotRequired[str | None],
+    "tscoef": typing.NotRequired[str | None],
+    "tncoef": typing.NotRequired[str | None],
+    "bucket": typing.NotRequired[str | None],
+    "brick": typing.NotRequired[str | None],
+    "nofdr": bool,
+    "sfit": typing.NotRequired[str | None],
+    "snfit": typing.NotRequired[str | None],
+    "jobs": typing.NotRequired[int | None],
 })
 
 
@@ -59,33 +93,33 @@ class V3dNlfimOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    freg_outfile: OutputPathType
+    freg_outfile: OutputPathType | None
     """F-test for significance of the regression"""
-    frsqr_outfile: OutputPathType
+    frsqr_outfile: OutputPathType | None
     """R^2 calculation for regression"""
-    fsmax_outfile: OutputPathType
+    fsmax_outfile: OutputPathType | None
     """Signed maximum signal estimate"""
-    ftmax_outfile: OutputPathType
+    ftmax_outfile: OutputPathType | None
     """Time of signed maximum estimate"""
-    fpsmax_outfile: OutputPathType
+    fpsmax_outfile: OutputPathType | None
     """Maximum percentage change estimate"""
-    farea_outfile: OutputPathType
+    farea_outfile: OutputPathType | None
     """Area between signal and baseline"""
-    fparea_outfile: OutputPathType
+    fparea_outfile: OutputPathType | None
     """Percentage area of signal estimate"""
-    fscoef_outfile: OutputPathType
+    fscoef_outfile: OutputPathType | None
     """Signal parameter estimate"""
-    fncoef_outfile: OutputPathType
+    fncoef_outfile: OutputPathType | None
     """Noise parameter estimate"""
-    tscoef_outfile: OutputPathType
+    tscoef_outfile: OutputPathType | None
     """T-test for significance of signal parameter"""
-    tncoef_outfile: OutputPathType
+    tncoef_outfile: OutputPathType | None
     """T-test for significance of noise parameter"""
-    bucket_outfile: OutputPathType
+    bucket_outfile: OutputPathType | None
     """AFNI 'bucket' dataset"""
-    sfit_outfile: OutputPathType
+    sfit_outfile: OutputPathType | None
     """Output 3d+time signal model fit"""
-    snfit_outfile: OutputPathType
+    snfit_outfile: OutputPathType | None
     """Output 3d+time signal+noise fit"""
 
 
@@ -93,6 +127,40 @@ def v_3d_nlfim_params(
     input_file: InputPathType,
     signal_model: str,
     noise_model: str,
+    mask: InputPathType | None = None,
+    ignore: int | None = None,
+    intr: int | None = None,
+    tr: int | None = None,
+    time_file: InputPathType | None = None,
+    sconstr: str | None = None,
+    nconstr: str | None = None,
+    nabs: bool = False,
+    nrand: int | None = None,
+    nbest: int | None = None,
+    rmsmin: float | None = None,
+    fdisp: float | None = None,
+    progress: int | None = None,
+    voxel_count: bool = False,
+    simplex: bool = False,
+    powell: bool = False,
+    both: bool = False,
+    freg: str | None = None,
+    frsqr: str | None = None,
+    fsmax: str | None = None,
+    ftmax: str | None = None,
+    fpsmax: str | None = None,
+    farea: str | None = None,
+    fparea: str | None = None,
+    fscoef: str | None = None,
+    fncoef: str | None = None,
+    tscoef: str | None = None,
+    tncoef: str | None = None,
+    bucket: str | None = None,
+    brick: str | None = None,
+    nofdr: bool = False,
+    sfit: str | None = None,
+    snfit: str | None = None,
+    jobs: int | None = None,
 ) -> V3dNlfimParameters:
     """
     Build parameters.
@@ -101,6 +169,60 @@ def v_3d_nlfim_params(
         input_file: Filename of 3d+time data file for input.
         signal_model: Name of the nonlinear signal model.
         noise_model: Name of the linear noise model.
+        mask: Use the 0 sub-brick of dataset 'mset' as a mask to indicate which\
+            voxels to analyze.
+        ignore: Skip this number of initial images in the time series for\
+            regression analysis; default = 0.
+        intr: Set the TR of the input 3d+time dataset.
+        tr: Directly set the TR of the time series model.
+        time_file: ASCII file containing each time point in the time series.
+        sconstr: Constraints for signal parameters; c <= gs[k] <= d.
+        nconstr: Constraints for noise parameters; c+b[k] <= gn[k] <= d+b[k].
+        nabs: Use absolute constraints for noise parameters; c <= gn[k] <= d.
+        nrand: Number of random test points; default=19999.
+        nbest: Use b best test points to start; default=9.
+        rmsmin: Minimum RMS error to reject reduced model.
+        fdisp: Display results for those voxels whose F-statistic is greater\
+            than fval; default=999.0.
+        progress: Display results every ival number of voxels.
+        voxel_count: Display the current voxel index.
+        simplex: Use Nelder-Mead simplex method for least-square minimization\
+            (default).
+        powell: Use Powell's NEWUOA method instead of Nelder-Mead simplex\
+            method.
+        both: Use both Powell's and Nelder-Mead method.
+        freg: Perform F-test for significance of the regression; output 'fift'\
+            is written to prefix filename fname.
+        frsqr: Calculate R^2 (coef. of multiple determination); store along\
+            with F-test for regression; output 'fift' is written to prefix filename\
+            fname.
+        fsmax: Estimate signed maximum of signal; store along with F-test for\
+            regression; output 'fift' is written to prefix filename fname.
+        ftmax: Estimate time of signed maximum; store along with F-test for\
+            regression; output 'fift' is written to prefix filename fname.
+        fpsmax: Calculate (signed) maximum percentage change of signal from\
+            baseline; output 'fift' is written to prefix filename fname.
+        farea: Calculate area between signal and baseline; store with F-test\
+            for regression; output 'fift' is written to prefix filename fname.
+        fparea: Percentage area of signal relative to baseline; store with\
+            F-test for regression; output 'fift' is written to prefix filename\
+            fname.
+        fscoef: Estimate kth signal parameter gs[k]; store along with F-test\
+            for regression; output 'fift' is written to prefix filename fname.
+        fncoef: Estimate kth noise parameter gn[k]; store along with F-test for\
+            regression; output 'fift' is written to prefix filename fname.
+        tscoef: Perform t-test for significance of kth signal parameter gs[k];\
+            output 'fitt' is written to prefix filename fname.
+        tncoef: Perform t-test for significance of kth noise parameter gn[k];\
+            output 'fitt' is written to prefix filename fname.
+        bucket: Create one AFNI 'bucket' dataset containing n sub-bricks; n=0\
+            creates default output; output 'bucket' is written to prefixname.
+        brick: Specify sub-brick contents for 'bucket' dataset.
+        nofdr: Don't write the FDR (q vs. threshold) curves into the output\
+            dataset.
+        sfit: Prefix for output 3d+time signal model fit.
+        snfit: Prefix for output 3d+time signal+noise fit.
+        jobs: Run the program with 'J' jobs (sub-processes). 1 to 32.
     Returns:
         Parameter dictionary
     """
@@ -109,7 +231,69 @@ def v_3d_nlfim_params(
         "input_file": input_file,
         "signal_model": signal_model,
         "noise_model": noise_model,
+        "nabs": nabs,
+        "voxel_count": voxel_count,
+        "simplex": simplex,
+        "powell": powell,
+        "both": both,
+        "nofdr": nofdr,
     }
+    if mask is not None:
+        params["mask"] = mask
+    if ignore is not None:
+        params["ignore"] = ignore
+    if intr is not None:
+        params["intr"] = intr
+    if tr is not None:
+        params["tr"] = tr
+    if time_file is not None:
+        params["time_file"] = time_file
+    if sconstr is not None:
+        params["sconstr"] = sconstr
+    if nconstr is not None:
+        params["nconstr"] = nconstr
+    if nrand is not None:
+        params["nrand"] = nrand
+    if nbest is not None:
+        params["nbest"] = nbest
+    if rmsmin is not None:
+        params["rmsmin"] = rmsmin
+    if fdisp is not None:
+        params["fdisp"] = fdisp
+    if progress is not None:
+        params["progress"] = progress
+    if freg is not None:
+        params["freg"] = freg
+    if frsqr is not None:
+        params["frsqr"] = frsqr
+    if fsmax is not None:
+        params["fsmax"] = fsmax
+    if ftmax is not None:
+        params["ftmax"] = ftmax
+    if fpsmax is not None:
+        params["fpsmax"] = fpsmax
+    if farea is not None:
+        params["farea"] = farea
+    if fparea is not None:
+        params["fparea"] = fparea
+    if fscoef is not None:
+        params["fscoef"] = fscoef
+    if fncoef is not None:
+        params["fncoef"] = fncoef
+    if tscoef is not None:
+        params["tscoef"] = tscoef
+    if tncoef is not None:
+        params["tncoef"] = tncoef
+    if bucket is not None:
+        params["bucket"] = bucket
+    if brick is not None:
+        params["brick"] = brick
+    if sfit is not None:
+        params["sfit"] = sfit
+    if snfit is not None:
+        params["snfit"] = snfit
+    if jobs is not None:
+        params["jobs"] = jobs
     return params
 
 
@@ -140,7 +324,158 @@ def v_3d_nlfim_cargs(
         "-noise",
         params.get("noise_model")
     ])
-    cargs.append("[ADDITIONAL_OPTIONS]")
+    if params.get("mask") is not None:
+        cargs.extend([
+            "-mask",
+            execution.input_file(params.get("mask"))
+        ])
+    if params.get("ignore") is not None:
+        cargs.extend([
+            "-ignore",
+            str(params.get("ignore"))
+        ])
+    if params.get("intr") is not None:
+        cargs.extend([
+            "-inTR",
+            str(params.get("intr"))
+        ])
+    if params.get("tr") is not None:
+        cargs.extend([
+            "-TR",
+            str(params.get("tr"))
+        ])
+    if params.get("time_file") is not None:
+        cargs.extend([
+            "-time",
+            execution.input_file(params.get("time_file"))
+        ])
+    if params.get("sconstr") is not None:
+        cargs.extend([
+            "-sconstr",
+            params.get("sconstr")
+        ])
+    if params.get("nconstr") is not None:
+        cargs.extend([
+            "-nconstr",
+            params.get("nconstr")
+        ])
+    if params.get("nabs"):
+        cargs.append("-nabs")
+    if params.get("nrand") is not None:
+        cargs.extend([
+            "-nrand",
+            str(params.get("nrand"))
+        ])
+    if params.get("nbest") is not None:
+        cargs.extend([
+            "-nbest",
+            str(params.get("nbest"))
+        ])
+    if params.get("rmsmin") is not None:
+        cargs.extend([
+            "-rmsmin",
+            str(params.get("rmsmin"))
+        ])
+    if params.get("fdisp") is not None:
+        cargs.extend([
+            "-fdisp",
+            str(params.get("fdisp"))
+        ])
+    if params.get("progress") is not None:
+        cargs.extend([
+            "-progress",
+            str(params.get("progress"))
+        ])
+    if params.get("voxel_count"):
+        cargs.append("-voxel_count")
+    if params.get("simplex"):
+        cargs.append("-SIMPLEX")
+    if params.get("powell"):
+        cargs.append("-POWELL")
+    if params.get("both"):
+        cargs.append("-BOTH")
+    if params.get("freg") is not None:
+        cargs.extend([
+            "-freg",
+            params.get("freg")
+        ])
+    if params.get("frsqr") is not None:
+        cargs.extend([
+            "-frsqr",
+            params.get("frsqr")
+        ])
+    if params.get("fsmax") is not None:
+        cargs.extend([
+            "-fsmax",
+            params.get("fsmax")
+        ])
+    if params.get("ftmax") is not None:
+        cargs.extend([
+            "-ftmax",
+            params.get("ftmax")
+        ])
+    if params.get("fpsmax") is not None:
+        cargs.extend([
+            "-fpsmax",
+            params.get("fpsmax")
+        ])
+    if params.get("farea") is not None:
+        cargs.extend([
+            "-farea",
+            params.get("farea")
+        ])
+    if params.get("fparea") is not None:
+        cargs.extend([
+            "-fparea",
+            params.get("fparea")
+        ])
+    if params.get("fscoef") is not None:
+        cargs.extend([
+            "-fscoef",
+            params.get("fscoef")
+        ])
+    if params.get("fncoef") is not None:
+        cargs.extend([
+            "-fncoef",
+            params.get("fncoef")
+        ])
+    if params.get("tscoef") is not None:
+        cargs.extend([
+            "-tscoef",
+            params.get("tscoef")
+        ])
+    if params.get("tncoef") is not None:
+        cargs.extend([
+            "-tncoef",
+            params.get("tncoef")
+        ])
+    if params.get("bucket") is not None:
+        cargs.extend([
+            "-bucket",
+            params.get("bucket")
+        ])
+    if params.get("brick") is not None:
+        cargs.extend([
+            "-brick",
+            params.get("brick")
+        ])
+    if params.get("nofdr"):
+        cargs.append("-noFDR")
+    if params.get("sfit") is not None:
+        cargs.extend([
+            "-sfit",
+            params.get("sfit")
+        ])
+    if params.get("snfit") is not None:
+        cargs.extend([
+            "-snfit",
+            params.get("snfit")
+        ])
+    if params.get("jobs") is not None:
+        cargs.extend([
+            "-jobs",
+            str(params.get("jobs"))
+        ])
     return cargs
 
 
@@ -159,20 +494,20 @@ def v_3d_nlfim_outputs(
     """
     ret = V3dNlfimOutputs(
         root=execution.output_file("."),
-        freg_outfile=execution.output_file("[FREG].fift"),
-        frsqr_outfile=execution.output_file("[FRSQR].fift"),
-        fsmax_outfile=execution.output_file("[FSMAX].fift"),
-        ftmax_outfile=execution.output_file("[FTMAX].fift"),
-        fpsmax_outfile=execution.output_file("[FPSMAX].fift"),
-        farea_outfile=execution.output_file("[FAREA].fift"),
-        fparea_outfile=execution.output_file("[FPAREA].fift"),
-        fscoef_outfile=execution.output_file("[FSCOEF].fift"),
-        fncoef_outfile=execution.output_file("[FNCOEF].fift"),
-        tscoef_outfile=execution.output_file("[TSCOEF].fitt"),
-        tncoef_outfile=execution.output_file("[TNCOEF].fitt"),
-        bucket_outfile=execution.output_file("[BUCKET].bucket"),
-        sfit_outfile=execution.output_file("[SFIT].sfit"),
-        snfit_outfile=execution.output_file("[SNFIT].snfit"),
+        freg_outfile=execution.output_file(params.get("freg") + ".fift") if (params.get("freg") is not None) else None,
+        frsqr_outfile=execution.output_file(params.get("frsqr") + ".fift") if (params.get("frsqr") is not None) else None,
+        fsmax_outfile=execution.output_file(params.get("fsmax") + ".fift") if (params.get("fsmax") is not None) else None,
+        ftmax_outfile=execution.output_file(params.get("ftmax") + ".fift") if (params.get("ftmax") is not None) else None,
+        fpsmax_outfile=execution.output_file(params.get("fpsmax") + ".fift") if (params.get("fpsmax") is not None) else None,
+        farea_outfile=execution.output_file(params.get("farea") + ".fift") if (params.get("farea") is not None) else None,
+        fparea_outfile=execution.output_file(params.get("fparea") + ".fift") if (params.get("fparea") is not None) else None,
+        fscoef_outfile=execution.output_file(params.get("fscoef") + ".fift") if (params.get("fscoef") is not None) else None,
+        fncoef_outfile=execution.output_file(params.get("fncoef") + ".fift") if (params.get("fncoef") is not None) else None,
+        tscoef_outfile=execution.output_file(params.get("tscoef") + ".fitt") if (params.get("tscoef") is not None) else None,
+        tncoef_outfile=execution.output_file(params.get("tncoef") + ".fitt") if (params.get("tncoef") is not None) else None,
+        bucket_outfile=execution.output_file(params.get("bucket") + ".bucket") if (params.get("bucket") is not None) else None,
+        sfit_outfile=execution.output_file(params.get("sfit") + ".sfit") if (params.get("sfit") is not None) else None,
+        snfit_outfile=execution.output_file(params.get("snfit") + ".snfit") if (params.get("snfit") is not None) else None,
     )
     return ret
 
@@ -205,6 +540,40 @@ def v_3d_nlfim(
     input_file: InputPathType,
     signal_model: str,
     noise_model: str,
+    mask: InputPathType | None = None,
+    ignore: int | None = None,
+    intr: int | None = None,
+    tr: int | None = None,
+    time_file: InputPathType | None = None,
+    sconstr: str | None = None,
+    nconstr: str | None = None,
+    nabs: bool = False,
+    nrand: int | None = None,
+    nbest: int | None = None,
+    rmsmin: float | None = None,
+    fdisp: float | None = None,
+    progress: int | None = None,
+    voxel_count: bool = False,
+    simplex: bool = False,
+    powell: bool = False,
+    both: bool = False,
+    freg: str | None = None,
+    frsqr: str | None = None,
+    fsmax: str | None = None,
+    ftmax: str | None = None,
+    fpsmax: str | None = None,
+    farea: str | None = None,
+    fparea: str | None = None,
+    fscoef: str | None = None,
+    fncoef: str | None = None,
+    tscoef: str | None = None,
+    tncoef: str | None = None,
+    bucket: str | None = None,
+    brick: str | None = None,
+    nofdr: bool = False,
+    sfit: str | None = None,
+    snfit: str | None = None,
+    jobs: int | None = None,
     runner: Runner | None = None,
 ) -> V3dNlfimOutputs:
     """
@@ -218,6 +587,60 @@ def v_3d_nlfim(
         input_file: Filename of 3d+time data file for input.
         signal_model: Name of the nonlinear signal model.
         noise_model: Name of the linear noise model.
+        mask: Use the 0 sub-brick of dataset 'mset' as a mask to indicate which\
+            voxels to analyze.
+        ignore: Skip this number of initial images in the time series for\
+            regression analysis; default = 0.
+        intr: Set the TR of the input 3d+time dataset.
+        tr: Directly set the TR of the time series model.
+        time_file: ASCII file containing each time point in the time series.
+        sconstr: Constraints for signal parameters; c <= gs[k] <= d.
+        nconstr: Constraints for noise parameters; c+b[k] <= gn[k] <= d+b[k].
+        nabs: Use absolute constraints for noise parameters; c <= gn[k] <= d.
+        nrand: Number of random test points; default=19999.
+        nbest: Use b best test points to start; default=9.
+        rmsmin: Minimum RMS error to reject reduced model.
+        fdisp: Display results for those voxels whose F-statistic is greater\
+            than fval; default=999.0.
+        progress: Display results every ival number of voxels.
+        voxel_count: Display the current voxel index.
+        simplex: Use Nelder-Mead simplex method for least-square minimization\
+            (default).
+        powell: Use Powell's NEWUOA method instead of Nelder-Mead simplex\
+            method.
+        both: Use both Powell's and Nelder-Mead method.
+        freg: Perform F-test for significance of the regression; output 'fift'\
+            is written to prefix filename fname.
+        frsqr: Calculate R^2 (coef. of multiple determination); store along\
+            with F-test for regression; output 'fift' is written to prefix filename\
+            fname.
+        fsmax: Estimate signed maximum of signal; store along with F-test for\
+            regression; output 'fift' is written to prefix filename fname.
+        ftmax: Estimate time of signed maximum; store along with F-test for\
+            regression; output 'fift' is written to prefix filename fname.
+        fpsmax: Calculate (signed) maximum percentage change of signal from\
+            baseline; output 'fift' is written to prefix filename fname.
+        farea: Calculate area between signal and baseline; store with F-test\
+            for regression; output 'fift' is written to prefix filename fname.
+        fparea: Percentage area of signal relative to baseline; store with\
+            F-test for regression; output 'fift' is written to prefix filename\
+            fname.
+        fscoef: Estimate kth signal parameter gs[k]; store along with F-test\
+            for regression; output 'fift' is written to prefix filename fname.
+        fncoef: Estimate kth noise parameter gn[k]; store along with F-test for\
+            regression; output 'fift' is written to prefix filename fname.
+        tscoef: Perform t-test for significance of kth signal parameter gs[k];\
+            output 'fitt' is written to prefix filename fname.
+        tncoef: Perform t-test for significance of kth noise parameter gn[k];\
+            output 'fitt' is written to prefix filename fname.
+        bucket: Create one AFNI 'bucket' dataset containing n sub-bricks; n=0\
+            creates default output; output 'bucket' is written to prefixname.
+        brick: Specify sub-brick contents for 'bucket' dataset.
+        nofdr: Don't write the FDR (q vs. threshold) curves into the output\
+            dataset.
+        sfit: Prefix for output 3d+time signal model fit.
+        snfit: Prefix for output 3d+time signal+noise fit.
+        jobs: Run the program with 'J' jobs (sub-processes). 1 to 32.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNlfimOutputs`).
@@ -228,6 +651,40 @@ def v_3d_nlfim(
         input_file=input_file,
         signal_model=signal_model,
         noise_model=noise_model,
+        mask=mask,
+        ignore=ignore,
+        intr=intr,
+        tr=tr,
+        time_file=time_file,
+        sconstr=sconstr,
+        nconstr=nconstr,
+        nabs=nabs,
+        nrand=nrand,
+        nbest=nbest,
+        rmsmin=rmsmin,
+        fdisp=fdisp,
+        progress=progress,
+        voxel_count=voxel_count,
+        simplex=simplex,
+        powell=powell,
+        both=both,
+        freg=freg,
+        frsqr=frsqr,
+        fsmax=fsmax,
+        ftmax=ftmax,
+        fpsmax=fpsmax,
+        farea=farea,
+        fparea=fparea,
+        fscoef=fscoef,
+        fncoef=fncoef,
+        tscoef=tscoef,
+        tncoef=tncoef,
+        bucket=bucket,
+        brick=brick,
+        nofdr=nofdr,
+        sfit=sfit,
+        snfit=snfit,
+        jobs=jobs,
     )
     return v_3d_nlfim_execute(params, execution)
 

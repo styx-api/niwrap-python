@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_MARRY_METADATA = Metadata(
-    id="bf4086d827742de99647b8c529893b01461d76ef.boutiques",
+    id="7a4e380e9b92893751b846cf2eca95ba7f37ec68.boutiques",
     name="1dMarry",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -118,7 +118,6 @@ def v_1d_marry_cargs(
     if params.get("divorce"):
         cargs.append("-divorce")
     cargs.extend([execution.input_file(f) for f in params.get("files")])
-    cargs.append("[FILE2]")
     return cargs
 
 

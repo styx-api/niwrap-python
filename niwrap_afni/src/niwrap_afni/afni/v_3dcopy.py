@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DCOPY_METADATA = Metadata(
-    id="4b8187d004c6f4ba95518e709ad1f9b3eb4ed322.boutiques",
+    id="cf613edf42ba1934d2ac712d37faeb09217cdd61.boutiques",
     name="3dcopy",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,9 @@ V3dcopyParameters = typing.TypedDict('V3dcopyParameters', {
     "__STYX_TYPE__": typing.Literal["3dcopy"],
     "verbose": bool,
     "denote": bool,
+    "old_prefix": str,
+    "view": typing.NotRequired[str | None],
+    "new_prefix": str,
 })
 
 
@@ -60,15 +63,22 @@ class V3dcopyOutputs(typing.NamedTuple):
 
 
 def v_3dcopy_params(
+    old_prefix: str,
+    new_prefix: str,
     verbose: bool = False,
     denote: bool = False,
+    view: str | None = None,
 ) -> V3dcopyParameters:
     """
     Build parameters.
     
     Args:
+        old_prefix: Old dataset prefix (and view if specific dataset view is to\
+            be copied).
+        new_prefix: New dataset prefix or directory path.
         verbose: Print progress reports.
         denote: Remove any Notes from the file.
+        view: Specified view (orig, acpc, tlrc).
     Returns:
         Parameter dictionary
     """
@@ -76,7 +86,11 @@ def v_3dcopy_params(
         "__STYXTYPE__": "3dcopy",
         "verbose": verbose,
         "denote": denote,
+        "old_prefix": old_prefix,
+        "new_prefix": new_prefix,
     }
+    if view is not None:
+        params["view"] = view
     return params
 
 
@@ -99,8 +113,12 @@ def v_3dcopy_cargs(
         cargs.append("-verb")
     if params.get("denote"):
         cargs.append("-denote")
-    cargs.append("{OLD_PREFIX}+{VIEW}")
-    cargs.append("{NEW_PREFIX}")
+    if params.get("view") is not None:
+        cargs.extend([
+            "+",
+            params.get("old_prefix") + params.get("view")
+        ])
+    cargs.append(params.get("new_prefix"))
     return cargs
 
 
@@ -148,8 +166,11 @@ def v_3dcopy_execute(
 
 
 def v_3dcopy(
+    old_prefix: str,
+    new_prefix: str,
     verbose: bool = False,
     denote: bool = False,
+    view: str | None = None,
     runner: Runner | None = None,
 ) -> V3dcopyOutputs:
     """
@@ -160,8 +181,12 @@ def v_3dcopy(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        old_prefix: Old dataset prefix (and view if specific dataset view is to\
+            be copied).
+        new_prefix: New dataset prefix or directory path.
         verbose: Print progress reports.
         denote: Remove any Notes from the file.
+        view: Specified view (orig, acpc, tlrc).
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dcopyOutputs`).
@@ -171,6 +196,9 @@ def v_3dcopy(
     params = v_3dcopy_params(
         verbose=verbose,
         denote=denote,
+        old_prefix=old_prefix,
+        view=view,
+        new_prefix=new_prefix,
     )
     return v_3dcopy_execute(params, execution)
 

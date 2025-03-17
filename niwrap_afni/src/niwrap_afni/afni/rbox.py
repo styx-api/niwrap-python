@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RBOX_METADATA = Metadata(
-    id="4f43f8ba19b6a24114997ab42bf7e5c5e5484c74.boutiques",
+    id="9fdf14ab8e16f325f5ea7e753f75ed7953ef61ba.boutiques",
     name="rbox",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,8 +17,23 @@ RboxParameters = typing.TypedDict('RboxParameters', {
     "__STYX_TYPE__": typing.Literal["rbox"],
     "number_points": str,
     "dimension": typing.NotRequired[str | None],
-    "integer_coordinates": bool,
+    "unit_cube": bool,
+    "unit_diamond": bool,
+    "spiral": bool,
+    "regular_polygon": bool,
+    "cospherical_points": bool,
+    "simplex_points": bool,
+    "simplex_plus_points": bool,
+    "add_point": typing.NotRequired[list[str] | None],
+    "lens_distribution": typing.NotRequired[str | None],
+    "random_within": bool,
+    "random_disk": typing.NotRequired[str | None],
     "bounding_box": typing.NotRequired[float | None],
+    "homogeneous_coordinates": bool,
+    "remove_command_line": bool,
+    "time_seed": bool,
+    "integer_coordinates": bool,
+    "bounding_box_1": typing.NotRequired[float | None],
     "offset": typing.NotRequired[float | None],
     "user_seed": typing.NotRequired[float | None],
     "mesh_lattice": typing.NotRequired[list[str] | None],
@@ -67,8 +82,23 @@ class RboxOutputs(typing.NamedTuple):
 def rbox_params(
     number_points: str,
     dimension: str | None = None,
-    integer_coordinates: bool = False,
+    unit_cube: bool = False,
+    unit_diamond: bool = False,
+    spiral: bool = False,
+    regular_polygon: bool = False,
+    cospherical_points: bool = False,
+    simplex_points: bool = False,
+    simplex_plus_points: bool = False,
+    add_point: list[str] | None = None,
+    lens_distribution: str | None = None,
+    random_within: bool = False,
+    random_disk: str | None = None,
     bounding_box: float | None = None,
+    homogeneous_coordinates: bool = False,
+    remove_command_line: bool = False,
+    time_seed: bool = False,
+    integer_coordinates: bool = False,
+    bounding_box_1: float | None = None,
     offset: float | None = None,
     user_seed: float | None = None,
     mesh_lattice: list[str] | None = None,
@@ -80,8 +110,28 @@ def rbox_params(
         number_points: Number of random points in cube, lens, spiral, sphere or\
             grid.
         dimension: Dimension (e.g., D3 for 3-d).
-        integer_coordinates: Print integer coordinates, default 'Bn' is 1e+06.
+        unit_cube: Add a unit cube to the output (optional: 'c G2.0' sets size).
+        unit_diamond: Add a unit diamond to the output (optional: 'd G2.0' sets\
+            size).
+        spiral: Generate a regular 3-d spiral.
+        regular_polygon: Generate a regular polygon (optional: 'r s Z1 G0.1'\
+            makes a cone).
+        cospherical_points: Generate cospherical points.
+        simplex_points: Generate random points in simplex, may use 'r' or 'Wn'.
+        simplex_plus_points: Same as 'x', plus simplex.
+        add_point: Add point [n,m,r] first, pads with 0.
+        lens_distribution: Lens distribution of radius n. Also 's', 'r', 'G',\
+            'W'.
+        random_within: Random distribution within 0.1 of the cube's or sphere's\
+            surface.
+        random_disk: Random points in a 0.5 disk projected to a sphere,\
+            optional gap size (e.g., 'Z0.5 s G0.6').
         bounding_box: Bounding box coordinates, default 0.5.
+        homogeneous_coordinates: Output as homogeneous coordinates for cdd.
+        remove_command_line: Remove command line from the first line of output.
+        time_seed: Use time as the random number seed (default is command line).
+        integer_coordinates: Print integer coordinates, default 'Bn' is 1e+06.
+        bounding_box_1: Bounding box coordinates, default 0.5.
         offset: Offset coordinates by n.
         user_seed: Use n as the random number seed.
         mesh_lattice: Lattice (Mesh) rotated by [n,-m,0], [m,n,0], [0,0,r], ...
@@ -91,12 +141,31 @@ def rbox_params(
     params = {
         "__STYXTYPE__": "rbox",
         "number_points": number_points,
+        "unit_cube": unit_cube,
+        "unit_diamond": unit_diamond,
+        "spiral": spiral,
+        "regular_polygon": regular_polygon,
+        "cospherical_points": cospherical_points,
+        "simplex_points": simplex_points,
+        "simplex_plus_points": simplex_plus_points,
+        "random_within": random_within,
+        "homogeneous_coordinates": homogeneous_coordinates,
+        "remove_command_line": remove_command_line,
+        "time_seed": time_seed,
         "integer_coordinates": integer_coordinates,
     }
     if dimension is not None:
         params["dimension"] = dimension
+    if add_point is not None:
+        params["add_point"] = add_point
+    if lens_distribution is not None:
+        params["lens_distribution"] = lens_distribution
+    if random_disk is not None:
+        params["random_disk"] = random_disk
     if bounding_box is not None:
         params["bounding_box"] = bounding_box
+    if bounding_box_1 is not None:
+        params["bounding_box_1"] = bounding_box_1
     if offset is not None:
         params["offset"] = offset
     if user_seed is not None:
@@ -124,12 +193,54 @@ def rbox_cargs(
     cargs.append(params.get("number_points"))
     if params.get("dimension") is not None:
         cargs.append(params.get("dimension"))
-    if params.get("integer_coordinates"):
-        cargs.append("z")
+    if params.get("unit_cube"):
+        cargs.append("c")
+    if params.get("unit_diamond"):
+        cargs.append("d")
+    if params.get("spiral"):
+        cargs.append("l")
+    if params.get("regular_polygon"):
+        cargs.append("r")
+    if params.get("cospherical_points"):
+        cargs.append("s")
+    if params.get("simplex_points"):
+        cargs.append("x")
+    if params.get("simplex_plus_points"):
+        cargs.append("y")
+    if params.get("add_point") is not None:
+        cargs.extend([
+            "P",
+            *params.get("add_point")
+        ])
+    if params.get("lens_distribution") is not None:
+        cargs.extend([
+            "L",
+            params.get("lens_distribution")
+        ])
+    if params.get("random_within"):
+        cargs.append("W")
+    if params.get("random_disk") is not None:
+        cargs.extend([
+            "Z",
+            params.get("random_disk")
+        ])
     if params.get("bounding_box") is not None:
         cargs.extend([
             "B",
             str(params.get("bounding_box"))
+        ])
+    if params.get("homogeneous_coordinates"):
+        cargs.append("h")
+    if params.get("remove_command_line"):
+        cargs.append("n")
+    if params.get("time_seed"):
+        cargs.append("t")
+    if params.get("integer_coordinates"):
+        cargs.append("z")
+    if params.get("bounding_box_1") is not None:
+        cargs.extend([
+            "B",
+            str(params.get("bounding_box_1"))
         ])
     if params.get("offset") is not None:
         cargs.extend([
@@ -195,8 +306,23 @@ def rbox_execute(
 def rbox(
     number_points: str,
     dimension: str | None = None,
-    integer_coordinates: bool = False,
+    unit_cube: bool = False,
+    unit_diamond: bool = False,
+    spiral: bool = False,
+    regular_polygon: bool = False,
+    cospherical_points: bool = False,
+    simplex_points: bool = False,
+    simplex_plus_points: bool = False,
+    add_point: list[str] | None = None,
+    lens_distribution: str | None = None,
+    random_within: bool = False,
+    random_disk: str | None = None,
     bounding_box: float | None = None,
+    homogeneous_coordinates: bool = False,
+    remove_command_line: bool = False,
+    time_seed: bool = False,
+    integer_coordinates: bool = False,
+    bounding_box_1: float | None = None,
     offset: float | None = None,
     user_seed: float | None = None,
     mesh_lattice: list[str] | None = None,
@@ -213,8 +339,28 @@ def rbox(
         number_points: Number of random points in cube, lens, spiral, sphere or\
             grid.
         dimension: Dimension (e.g., D3 for 3-d).
-        integer_coordinates: Print integer coordinates, default 'Bn' is 1e+06.
+        unit_cube: Add a unit cube to the output (optional: 'c G2.0' sets size).
+        unit_diamond: Add a unit diamond to the output (optional: 'd G2.0' sets\
+            size).
+        spiral: Generate a regular 3-d spiral.
+        regular_polygon: Generate a regular polygon (optional: 'r s Z1 G0.1'\
+            makes a cone).
+        cospherical_points: Generate cospherical points.
+        simplex_points: Generate random points in simplex, may use 'r' or 'Wn'.
+        simplex_plus_points: Same as 'x', plus simplex.
+        add_point: Add point [n,m,r] first, pads with 0.
+        lens_distribution: Lens distribution of radius n. Also 's', 'r', 'G',\
+            'W'.
+        random_within: Random distribution within 0.1 of the cube's or sphere's\
+            surface.
+        random_disk: Random points in a 0.5 disk projected to a sphere,\
+            optional gap size (e.g., 'Z0.5 s G0.6').
         bounding_box: Bounding box coordinates, default 0.5.
+        homogeneous_coordinates: Output as homogeneous coordinates for cdd.
+        remove_command_line: Remove command line from the first line of output.
+        time_seed: Use time as the random number seed (default is command line).
+        integer_coordinates: Print integer coordinates, default 'Bn' is 1e+06.
+        bounding_box_1: Bounding box coordinates, default 0.5.
         offset: Offset coordinates by n.
         user_seed: Use n as the random number seed.
         mesh_lattice: Lattice (Mesh) rotated by [n,-m,0], [m,n,0], [0,0,r], ...
@@ -227,8 +373,23 @@ def rbox(
     params = rbox_params(
         number_points=number_points,
         dimension=dimension,
-        integer_coordinates=integer_coordinates,
+        unit_cube=unit_cube,
+        unit_diamond=unit_diamond,
+        spiral=spiral,
+        regular_polygon=regular_polygon,
+        cospherical_points=cospherical_points,
+        simplex_points=simplex_points,
+        simplex_plus_points=simplex_plus_points,
+        add_point=add_point,
+        lens_distribution=lens_distribution,
+        random_within=random_within,
+        random_disk=random_disk,
         bounding_box=bounding_box,
+        homogeneous_coordinates=homogeneous_coordinates,
+        remove_command_line=remove_command_line,
+        time_seed=time_seed,
+        integer_coordinates=integer_coordinates,
+        bounding_box_1=bounding_box_1,
         offset=offset,
         user_seed=user_seed,
         mesh_lattice=mesh_lattice,

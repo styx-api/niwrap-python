@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1DGEN_ARMA11_METADATA = Metadata(
-    id="9fce1559df8cc31e0d2c99d44319f7a47b38ba76.boutiques",
+    id="db531d2478af899030ee6f05096f794916316ef9.boutiques",
     name="1dgenARMA11",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,7 @@ V_1DGEN_ARMA11_METADATA = Metadata(
 
 V1dgenArma11Parameters = typing.TypedDict('V1dgenArma11Parameters', {
     "__STYX_TYPE__": typing.Literal["1dgenARMA11"],
+    "length": typing.NotRequired[float | None],
     "length_alt": typing.NotRequired[float | None],
     "num_series": typing.NotRequired[float | None],
     "param_a": typing.NotRequired[float | None],
@@ -72,6 +73,7 @@ class V1dgenArma11Outputs(typing.NamedTuple):
 
 
 def v_1dgen_arma11_params(
+    length: float | None = None,
     length_alt: float | None = None,
     num_series: float | None = None,
     param_a: float | None = None,
@@ -88,6 +90,8 @@ def v_1dgen_arma11_params(
     Build parameters.
     
     Args:
+        length: Specify the length of the time series vector to generate\
+            (equivalent to -len option).
         length_alt: Specify the length of the time series vector to generate\
             (equivalent to -num option).
         num_series: The number of time series vectors to generate; defaults to\
@@ -111,6 +115,8 @@ def v_1dgen_arma11_params(
         "__STYXTYPE__": "1dgenARMA11",
         "normalize": normalize,
     }
+    if length is not None:
+        params["length"] = length
     if length_alt is not None:
         params["length_alt"] = length_alt
     if num_series is not None:
@@ -149,6 +155,11 @@ def v_1dgen_arma11_cargs(
     """
     cargs = []
     cargs.append("1dgenARMA11")
+    if params.get("length") is not None:
+        cargs.extend([
+            "-num",
+            str(params.get("length"))
+        ])
     if params.get("length_alt") is not None:
         cargs.extend([
             "-len",
@@ -250,6 +261,7 @@ def v_1dgen_arma11_execute(
 
 
 def v_1dgen_arma11(
+    length: float | None = None,
     length_alt: float | None = None,
     num_series: float | None = None,
     param_a: float | None = None,
@@ -272,6 +284,8 @@ def v_1dgen_arma11(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        length: Specify the length of the time series vector to generate\
+            (equivalent to -len option).
         length_alt: Specify the length of the time series vector to generate\
             (equivalent to -num option).
         num_series: The number of time series vectors to generate; defaults to\
@@ -295,6 +309,7 @@ def v_1dgen_arma11(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_1DGEN_ARMA11_METADATA)
     params = v_1dgen_arma11_params(
+        length=length,
         length_alt=length_alt,
         num_series=num_series,
         param_a=param_a,

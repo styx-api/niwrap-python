@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_CLIP_LEVEL_METADATA = Metadata(
-    id="d74c5cd045e053e286d1b5c8e3587d88d871f128.boutiques",
+    id="e0dffc3fb16b61bec3a898141cfff2cf90509ea6.boutiques",
     name="3dClipLevel",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -16,6 +16,9 @@ V_3D_CLIP_LEVEL_METADATA = Metadata(
 V3dClipLevelParameters = typing.TypedDict('V3dClipLevelParameters', {
     "__STYX_TYPE__": typing.Literal["3dClipLevel"],
     "dataset": InputPathType,
+    "mfrac": typing.NotRequired[float | None],
+    "doall": bool,
+    "grad": typing.NotRequired[str | None],
 })
 
 
@@ -60,19 +63,31 @@ class V3dClipLevelOutputs(typing.NamedTuple):
 
 def v_3d_clip_level_params(
     dataset: InputPathType,
+    mfrac: float | None = None,
+    doall: bool = False,
+    grad: str | None = None,
 ) -> V3dClipLevelParameters:
     """
     Build parameters.
     
     Args:
         dataset: Input dataset (e.g. dataset.nii.gz).
+        mfrac: Use the number ff instead of 0.50 in the algorithm.
+        doall: Apply the algorithm to each sub-brick separately.
+        grad: Compute a 'gradual' clip level as a function of voxel position\
+            and output to a dataset with the given prefix.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "3dClipLevel",
         "dataset": dataset,
+        "doall": doall,
     }
+    if mfrac is not None:
+        params["mfrac"] = mfrac
+    if grad is not None:
+        params["grad"] = grad
     return params
 
 
@@ -91,8 +106,19 @@ def v_3d_clip_level_cargs(
     """
     cargs = []
     cargs.append("3dClipLevel")
-    cargs.append("[options]")
     cargs.append(execution.input_file(params.get("dataset")))
+    if params.get("mfrac") is not None:
+        cargs.extend([
+            "-mfrac",
+            str(params.get("mfrac"))
+        ])
+    if params.get("doall"):
+        cargs.append("-doall")
+    if params.get("grad") is not None:
+        cargs.extend([
+            "-grad",
+            params.get("grad")
+        ])
     return cargs
 
 
@@ -142,6 +168,9 @@ def v_3d_clip_level_execute(
 
 def v_3d_clip_level(
     dataset: InputPathType,
+    mfrac: float | None = None,
+    doall: bool = False,
+    grad: str | None = None,
     runner: Runner | None = None,
 ) -> V3dClipLevelOutputs:
     """
@@ -154,6 +183,10 @@ def v_3d_clip_level(
     
     Args:
         dataset: Input dataset (e.g. dataset.nii.gz).
+        mfrac: Use the number ff instead of 0.50 in the algorithm.
+        doall: Apply the algorithm to each sub-brick separately.
+        grad: Compute a 'gradual' clip level as a function of voxel position\
+            and output to a dataset with the given prefix.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dClipLevelOutputs`).
@@ -162,6 +195,9 @@ def v_3d_clip_level(
     execution = runner.start_execution(V_3D_CLIP_LEVEL_METADATA)
     params = v_3d_clip_level_params(
         dataset=dataset,
+        mfrac=mfrac,
+        doall=doall,
+        grad=grad,
     )
     return v_3d_clip_level_execute(params, execution)
 

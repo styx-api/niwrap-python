@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__HELP_AFNI_METADATA = Metadata(
-    id="87ebd1e4083856099825a6ef50fde5abb2dad615.boutiques",
+    id="feadd2af7149741e9f9192b504b7c09e3ad50dc5.boutiques",
     name="@help.AFNI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,6 +15,12 @@ V__HELP_AFNI_METADATA = Metadata(
 
 VHelpAfniParameters = typing.TypedDict('VHelpAfniParameters', {
     "__STYX_TYPE__": typing.Literal["@help.AFNI"],
+    "match": typing.NotRequired[str | None],
+    "lynx": bool,
+    "vi": bool,
+    "less": bool,
+    "nedit": bool,
+    "noview": bool,
 })
 
 
@@ -58,17 +64,38 @@ class VHelpAfniOutputs(typing.NamedTuple):
 
 
 def v__help_afni_params(
+    match: str | None = None,
+    lynx: bool = False,
+    vi: bool = False,
+    less: bool = False,
+    nedit: bool = False,
+    noview: bool = False,
 ) -> VHelpAfniParameters:
     """
     Build parameters.
     
     Args:
+        match: Looks for occurrence of each word in the list in the help file.\
+            For a match with multiple words, all the words must be on the same line\
+            of text in the help file.
+        lynx: Set viewer to lynx.
+        vi: Set viewer to vi.
+        less: Set viewer to less (default).
+        nedit: Set viewer to nedit.
+        noview: Set viewer to no view.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "@help.AFNI",
+        "lynx": lynx,
+        "vi": vi,
+        "less": less,
+        "nedit": nedit,
+        "noview": noview,
     }
+    if match is not None:
+        params["match"] = match
     return params
 
 
@@ -87,7 +114,21 @@ def v__help_afni_cargs(
     """
     cargs = []
     cargs.append("@help.AFNI")
-    cargs.append("[OPTIONS]")
+    if params.get("match") is not None:
+        cargs.extend([
+            "-match",
+            params.get("match")
+        ])
+    if params.get("lynx"):
+        cargs.append("-lynx")
+    if params.get("vi"):
+        cargs.append("-vi")
+    if params.get("less"):
+        cargs.append("-less")
+    if params.get("nedit"):
+        cargs.append("-nedit")
+    if params.get("noview"):
+        cargs.append("-noview")
     return cargs
 
 
@@ -135,6 +176,12 @@ def v__help_afni_execute(
 
 
 def v__help_afni(
+    match: str | None = None,
+    lynx: bool = False,
+    vi: bool = False,
+    less: bool = False,
+    nedit: bool = False,
+    noview: bool = False,
     runner: Runner | None = None,
 ) -> VHelpAfniOutputs:
     """
@@ -145,6 +192,14 @@ def v__help_afni(
     URL: https://afni.nimh.nih.gov/
     
     Args:
+        match: Looks for occurrence of each word in the list in the help file.\
+            For a match with multiple words, all the words must be on the same line\
+            of text in the help file.
+        lynx: Set viewer to lynx.
+        vi: Set viewer to vi.
+        less: Set viewer to less (default).
+        nedit: Set viewer to nedit.
+        noview: Set viewer to no view.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VHelpAfniOutputs`).
@@ -152,6 +207,12 @@ def v__help_afni(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V__HELP_AFNI_METADATA)
     params = v__help_afni_params(
+        match=match,
+        lynx=lynx,
+        vi=vi,
+        less=less,
+        nedit=nedit,
+        noview=noview,
     )
     return v__help_afni_execute(params, execution)
 

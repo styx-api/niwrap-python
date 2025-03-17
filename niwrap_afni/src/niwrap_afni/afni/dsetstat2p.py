@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DSETSTAT2P_METADATA = Metadata(
-    id="b07011bb5bdd8084543d33f9a06e2ddf0d7fd9f2.boutiques",
+    id="7f3cbe6fcd6916e0065f078f2d35efc0d9307028.boutiques",
     name="dsetstat2p",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -17,6 +17,8 @@ Dsetstat2pParameters = typing.TypedDict('Dsetstat2pParameters', {
     "__STYX_TYPE__": typing.Literal["dsetstat2p"],
     "dataset": str,
     "statval": float,
+    "bisided": bool,
+    "two_sided": bool,
     "one_sided": bool,
     "quiet": bool,
 })
@@ -67,6 +69,8 @@ class Dsetstat2pOutputs(typing.NamedTuple):
 def dsetstat2p_params(
     dataset: str,
     statval: float,
+    bisided: bool = False,
+    two_sided: bool = False,
     one_sided: bool = False,
     quiet: bool = False,
 ) -> Dsetstat2pParameters:
@@ -81,6 +85,8 @@ def dsetstat2p_params(
             of a string label selector.
         statval: Input stat-value S, which MUST be in the interval [0,\
             infinity).
+        bisided: Choose one-sided or bi-sided/two-sided testing.
+        two_sided: Choose one-sided or bi-sided/two-sided testing.
         one_sided: Choose one-sided or bi-sided/two-sided testing.
         quiet: An optional flag so that output ONLY the final statistic value\
             output to standard output; this can be then be viewed, redirected to a\
@@ -93,6 +99,8 @@ def dsetstat2p_params(
         "__STYXTYPE__": "dsetstat2p",
         "dataset": dataset,
         "statval": statval,
+        "bisided": bisided,
+        "two_sided": two_sided,
         "one_sided": one_sided,
         "quiet": quiet,
     }
@@ -116,6 +124,10 @@ def dsetstat2p_cargs(
     cargs.append("dsetstat2p")
     cargs.append(params.get("dataset"))
     cargs.append(str(params.get("statval")))
+    if params.get("bisided"):
+        cargs.append("-bisided")
+    if params.get("two_sided"):
+        cargs.append("-2sided")
     if params.get("one_sided"):
         cargs.append("-1sided")
     if params.get("quiet"):
@@ -170,6 +182,8 @@ def dsetstat2p_execute(
 def dsetstat2p(
     dataset: str,
     statval: float,
+    bisided: bool = False,
+    two_sided: bool = False,
     one_sided: bool = False,
     quiet: bool = False,
     runner: Runner | None = None,
@@ -189,6 +203,8 @@ def dsetstat2p(
             of a string label selector.
         statval: Input stat-value S, which MUST be in the interval [0,\
             infinity).
+        bisided: Choose one-sided or bi-sided/two-sided testing.
+        two_sided: Choose one-sided or bi-sided/two-sided testing.
         one_sided: Choose one-sided or bi-sided/two-sided testing.
         quiet: An optional flag so that output ONLY the final statistic value\
             output to standard output; this can be then be viewed, redirected to a\
@@ -203,6 +219,8 @@ def dsetstat2p(
     params = dsetstat2p_params(
         dataset=dataset,
         statval=statval,
+        bisided=bisided,
+        two_sided=two_sided,
         one_sided=one_sided,
         quiet=quiet,
     )

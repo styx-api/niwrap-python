@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3_DROIMAKER_METADATA = Metadata(
-    id="52994e672a5f137f27dbb8bbd59f66cee7093ffe.boutiques",
+    id="16b5bd8ed0bd228cb0f4654876f7baea2f4af429.boutiques",
     name="3DROIMaker",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -20,6 +20,7 @@ V3DroimakerParameters = typing.TypedDict('V3DroimakerParameters', {
     "prefix": str,
     "refset": typing.NotRequired[InputPathType | None],
     "volthr": typing.NotRequired[float | None],
+    "only_some_top": typing.NotRequired[float | None],
     "only_conn_top": typing.NotRequired[float | None],
     "inflate": typing.NotRequired[float | None],
     "trim_off_wm": bool,
@@ -89,6 +90,7 @@ def v_3_droimaker_params(
     prefix: str,
     refset: InputPathType | None = None,
     volthr: float | None = None,
+    only_some_top: float | None = None,
     only_conn_top: float | None = None,
     inflate: float | None = None,
     trim_off_wm: bool = False,
@@ -118,6 +120,8 @@ def v_3_droimaker_params(
             which to label specific GM ROIs after thresholding.
         volthr: Minimum size a cluster of voxels must have in order to remain a\
             GM ROI after thresholding. Can reduce 'noisy' clusters.
+        only_some_top: Restrict each found region to keep only N voxels with\
+            the highest inset values.
         only_conn_top: Select N max contiguous voxels in a region starting from\
             peak voxel and expanding.
         inflate: Number of voxels to pad each found ROI in order to turn GM\
@@ -161,6 +165,8 @@ def v_3_droimaker_params(
         params["refset"] = refset
     if volthr is not None:
         params["volthr"] = volthr
+    if only_some_top is not None:
+        params["only_some_top"] = only_some_top
     if only_conn_top is not None:
         params["only_conn_top"] = only_conn_top
     if inflate is not None:
@@ -213,6 +219,11 @@ def v_3_droimaker_cargs(
         cargs.extend([
             "-volthr",
             str(params.get("volthr"))
+        ])
+    if params.get("only_some_top") is not None:
+        cargs.extend([
+            "-only_some_top",
+            str(params.get("only_some_top"))
         ])
     if params.get("only_conn_top") is not None:
         cargs.extend([
@@ -321,6 +332,7 @@ def v_3_droimaker(
     prefix: str,
     refset: InputPathType | None = None,
     volthr: float | None = None,
+    only_some_top: float | None = None,
     only_conn_top: float | None = None,
     inflate: float | None = None,
     trim_off_wm: bool = False,
@@ -356,6 +368,8 @@ def v_3_droimaker(
             which to label specific GM ROIs after thresholding.
         volthr: Minimum size a cluster of voxels must have in order to remain a\
             GM ROI after thresholding. Can reduce 'noisy' clusters.
+        only_some_top: Restrict each found region to keep only N voxels with\
+            the highest inset values.
         only_conn_top: Select N max contiguous voxels in a region starting from\
             peak voxel and expanding.
         inflate: Number of voxels to pad each found ROI in order to turn GM\
@@ -392,6 +406,7 @@ def v_3_droimaker(
         prefix=prefix,
         refset=refset,
         volthr=volthr,
+        only_some_top=only_some_top,
         only_conn_top=only_conn_top,
         inflate=inflate,
         trim_off_wm=trim_off_wm,

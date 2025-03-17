@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LME_METADATA = Metadata(
-    id="e9a80d6729c55d33424066db0a326673e6b70516.boutiques",
+    id="793d77145ed7716db55eb8665482b6bfad2c1e45.boutiques",
     name="3dLME",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -295,7 +295,6 @@ def v_3d_lme_cargs(
         cargs.append("-logLik")
     if params.get("LOGIT_FLAG"):
         cargs.append("-LOGIT")
-    cargs.append("-ml")
     if params.get("ML_FLAG"):
         cargs.append("-ML")
     if params.get("QVARS_CENTERS") is not None:
@@ -343,7 +342,6 @@ def v_3d_lme_cargs(
             "-REprefix",
             params.get("REPREFIX")
         ])
-    cargs.append("-RIO")
     if params.get("RIO_FLAG"):
         cargs.append("-Rio")
     if params.get("SHOW_OPTIONS_FLAG"):

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SAMP_BIAS_METADATA = Metadata(
-    id="6e470934bf7282b84b4830d0577fb44d56bf39e3.boutiques",
+    id="e1325d010e905394733e9c7b189375c71f01d74b.boutiques",
     name="SampBias",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -21,6 +21,7 @@ SampBiasParameters = typing.TypedDict('SampBiasParameters', {
     "dlimit": typing.NotRequired[float | None],
     "outfile": str,
     "prefix": typing.NotRequired[str | None],
+    "segdo": typing.NotRequired[str | None],
 })
 
 
@@ -75,6 +76,7 @@ def samp_bias_params(
     plimit: float | None = None,
     dlimit: float | None = None,
     prefix: str | None = None,
+    segdo: str | None = None,
 ) -> SampBiasParameters:
     """
     Build parameters.
@@ -86,6 +88,8 @@ def samp_bias_params(
         plimit: Maximum length of path along surface in mm. Default is 50 mm.
         dlimit: Maximum length of euclidean distance in mm. Default is 1000 mm.
         prefix: Output results into a proper surface-based dataset.
+        segdo: Output a displayable object file that contains segments between\
+            paired nodes.
     Returns:
         Parameter dictionary
     """
@@ -101,6 +105,8 @@ def samp_bias_params(
         params["dlimit"] = dlimit
     if prefix is not None:
         params["prefix"] = prefix
+    if segdo is not None:
+        params["segdo"] = segdo
     return params
 
 
@@ -145,6 +151,11 @@ def samp_bias_cargs(
         cargs.extend([
             "-prefix",
             params.get("prefix")
+        ])
+    if params.get("segdo") is not None:
+        cargs.extend([
+            "-segdo",
+            params.get("segdo")
         ])
     return cargs
 
@@ -202,6 +213,7 @@ def samp_bias(
     plimit: float | None = None,
     dlimit: float | None = None,
     prefix: str | None = None,
+    segdo: str | None = None,
     runner: Runner | None = None,
 ) -> SampBiasOutputs:
     """
@@ -219,6 +231,8 @@ def samp_bias(
         plimit: Maximum length of path along surface in mm. Default is 50 mm.
         dlimit: Maximum length of euclidean distance in mm. Default is 1000 mm.
         prefix: Output results into a proper surface-based dataset.
+        segdo: Output a displayable object file that contains segments between\
+            paired nodes.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SampBiasOutputs`).
@@ -232,6 +246,7 @@ def samp_bias(
         dlimit=dlimit,
         outfile=outfile,
         prefix=prefix,
+        segdo=segdo,
     )
     return samp_bias_execute(params, execution)
 
