@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIGLOSS_METADATA = Metadata(
-    id="925adf9e97058d87551f4f3a27c9b5b1c1c21397.boutiques",
+    id="fa1b091e696a3f12441128ea72b339367ae2d030.boutiques",
     name="sigloss",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -21,6 +21,7 @@ SiglossParameters = typing.TypedDict('SiglossParameters', {
     "echo_time": typing.NotRequired[float | None],
     "slice_direction": typing.NotRequired[typing.Literal["x", "y", "z"] | None],
     "verbose_flag": bool,
+    "help_flag": bool,
 })
 
 
@@ -70,6 +71,7 @@ def sigloss_params(
     echo_time: float | None = None,
     slice_direction: typing.Literal["x", "y", "z"] | None = None,
     verbose_flag: bool = False,
+    help_flag: bool = False,
 ) -> SiglossParameters:
     """
     Build parameters.
@@ -81,6 +83,7 @@ def sigloss_params(
         echo_time: Echo time (in seconds).
         slice_direction: Slice direction (either x, y or z).
         verbose_flag: Switch on diagnostic messages.
+        help_flag: Display this help message.
     Returns:
         Parameter dictionary
     """
@@ -89,6 +92,7 @@ def sigloss_params(
         "input_b0map": input_b0map,
         "output_sigloss": output_sigloss,
         "verbose_flag": verbose_flag,
+        "help_flag": help_flag,
     }
     if input_mask is not None:
         params["input_mask"] = input_mask
@@ -139,6 +143,8 @@ def sigloss_cargs(
         ])
     if params.get("verbose_flag"):
         cargs.append("-v")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -192,6 +198,7 @@ def sigloss(
     echo_time: float | None = None,
     slice_direction: typing.Literal["x", "y", "z"] | None = None,
     verbose_flag: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> SiglossOutputs:
     """
@@ -208,6 +215,7 @@ def sigloss(
         echo_time: Echo time (in seconds).
         slice_direction: Slice direction (either x, y or z).
         verbose_flag: Switch on diagnostic messages.
+        help_flag: Display this help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SiglossOutputs`).
@@ -221,6 +229,7 @@ def sigloss(
         echo_time=echo_time,
         slice_direction=slice_direction,
         verbose_flag=verbose_flag,
+        help_flag=help_flag,
     )
     return sigloss_execute(params, execution)
 

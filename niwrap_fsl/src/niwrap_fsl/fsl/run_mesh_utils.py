@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RUN_MESH_UTILS_METADATA = Metadata(
-    id="f37cf2d8f5013ba6fbfc7ef807691e24ce397261.boutiques",
+    id="cdfab05f24fc32a3b16a3cae0afec233bda94bc8.boutiques",
     name="run_mesh_utils",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -20,6 +20,18 @@ RunMeshUtilsParameters = typing.TypedDict('RunMeshUtilsParameters', {
     "input_image": typing.NotRequired[InputPathType | None],
     "second_input_image": typing.NotRequired[InputPathType | None],
     "weighting_image_force": typing.NotRequired[InputPathType | None],
+    "do_uncentre_model": bool,
+    "do_subtract_constant_from_scalars": bool,
+    "do_vertex_scalars_to_image_volume": bool,
+    "base_mesh2": typing.NotRequired[InputPathType | None],
+    "use_sc2": bool,
+    "flirt_matrix": typing.NotRequired[InputPathType | None],
+    "do_mesh_reg": bool,
+    "threshold": typing.NotRequired[float | None],
+    "degrees_of_freedom": typing.NotRequired[float | None],
+    "inverse": bool,
+    "verbose": bool,
+    "help": bool,
 })
 
 
@@ -71,6 +83,18 @@ def run_mesh_utils_params(
     input_image: InputPathType | None = None,
     second_input_image: InputPathType | None = None,
     weighting_image_force: InputPathType | None = None,
+    do_uncentre_model: bool = False,
+    do_subtract_constant_from_scalars: bool = False,
+    do_vertex_scalars_to_image_volume: bool = False,
+    base_mesh2: InputPathType | None = None,
+    use_sc2: bool = False,
+    flirt_matrix: InputPathType | None = None,
+    do_mesh_reg: bool = False,
+    threshold: float | None = None,
+    degrees_of_freedom: float | None = None,
+    inverse: bool = False,
+    verbose: bool = False,
+    help_: bool = False,
 ) -> RunMeshUtilsParameters:
     """
     Build parameters.
@@ -81,6 +105,18 @@ def run_mesh_utils_params(
         input_image: Filename of input image.
         second_input_image: Filename of second input image.
         weighting_image_force: Weighting image force.
+        do_uncentre_model: Do UnCentre Model.
+        do_subtract_constant_from_scalars: Do Subtract Constant From Scalars.
+        do_vertex_scalars_to_image_volume: Do Vertex Scalars To Image Volume.
+        base_mesh2: Filename of base mesh2.
+        use_sc2: Use SC2.
+        flirt_matrix: Filename of flirt matrix.
+        do_mesh_reg: Do Mesh Registration.
+        threshold: Threshold.
+        degrees_of_freedom: Degrees of freedom.
+        inverse: Inverse Operation.
+        verbose: Switch on diagnostic messages.
+        help_: Display help message.
     Returns:
         Parameter dictionary
     """
@@ -88,6 +124,14 @@ def run_mesh_utils_params(
         "__STYXTYPE__": "run_mesh_utils",
         "base_mesh": base_mesh,
         "output_image": output_image,
+        "do_uncentre_model": do_uncentre_model,
+        "do_subtract_constant_from_scalars": do_subtract_constant_from_scalars,
+        "do_vertex_scalars_to_image_volume": do_vertex_scalars_to_image_volume,
+        "use_sc2": use_sc2,
+        "do_mesh_reg": do_mesh_reg,
+        "inverse": inverse,
+        "verbose": verbose,
+        "help": help_,
     }
     if input_image is not None:
         params["input_image"] = input_image
@@ -95,6 +139,14 @@ def run_mesh_utils_params(
         params["second_input_image"] = second_input_image
     if weighting_image_force is not None:
         params["weighting_image_force"] = weighting_image_force
+    if base_mesh2 is not None:
+        params["base_mesh2"] = base_mesh2
+    if flirt_matrix is not None:
+        params["flirt_matrix"] = flirt_matrix
+    if threshold is not None:
+        params["threshold"] = threshold
+    if degrees_of_freedom is not None:
+        params["degrees_of_freedom"] = degrees_of_freedom
     return params
 
 
@@ -133,7 +185,42 @@ def run_mesh_utils_cargs(
             "-p",
             execution.input_file(params.get("weighting_image_force"))
         ])
-    cargs.append("[OPTIONAL_PARAMS...]")
+    if params.get("do_uncentre_model"):
+        cargs.append("--doUnCentreModel")
+    if params.get("do_subtract_constant_from_scalars"):
+        cargs.append("--doSubtractConstantFromScalars")
+    if params.get("do_vertex_scalars_to_image_volume"):
+        cargs.append("--doVertexScalarsToImageVolume")
+    if params.get("base_mesh2") is not None:
+        cargs.extend([
+            "-n",
+            execution.input_file(params.get("base_mesh2"))
+        ])
+    if params.get("use_sc2"):
+        cargs.append("--useSc2")
+    if params.get("flirt_matrix") is not None:
+        cargs.extend([
+            "-f",
+            execution.input_file(params.get("flirt_matrix"))
+        ])
+    if params.get("do_mesh_reg"):
+        cargs.append("--doMeshReg")
+    if params.get("threshold") is not None:
+        cargs.extend([
+            "-t",
+            str(params.get("threshold"))
+        ])
+    if params.get("degrees_of_freedom") is not None:
+        cargs.extend([
+            "-a",
+            str(params.get("degrees_of_freedom"))
+        ])
+    if params.get("inverse"):
+        cargs.append("--inverse")
+    if params.get("verbose"):
+        cargs.append("-v")
+    if params.get("help"):
+        cargs.append("-h")
     return cargs
 
 
@@ -187,6 +274,18 @@ def run_mesh_utils(
     input_image: InputPathType | None = None,
     second_input_image: InputPathType | None = None,
     weighting_image_force: InputPathType | None = None,
+    do_uncentre_model: bool = False,
+    do_subtract_constant_from_scalars: bool = False,
+    do_vertex_scalars_to_image_volume: bool = False,
+    base_mesh2: InputPathType | None = None,
+    use_sc2: bool = False,
+    flirt_matrix: InputPathType | None = None,
+    do_mesh_reg: bool = False,
+    threshold: float | None = None,
+    degrees_of_freedom: float | None = None,
+    inverse: bool = False,
+    verbose: bool = False,
+    help_: bool = False,
     runner: Runner | None = None,
 ) -> RunMeshUtilsOutputs:
     """
@@ -202,6 +301,18 @@ def run_mesh_utils(
         input_image: Filename of input image.
         second_input_image: Filename of second input image.
         weighting_image_force: Weighting image force.
+        do_uncentre_model: Do UnCentre Model.
+        do_subtract_constant_from_scalars: Do Subtract Constant From Scalars.
+        do_vertex_scalars_to_image_volume: Do Vertex Scalars To Image Volume.
+        base_mesh2: Filename of base mesh2.
+        use_sc2: Use SC2.
+        flirt_matrix: Filename of flirt matrix.
+        do_mesh_reg: Do Mesh Registration.
+        threshold: Threshold.
+        degrees_of_freedom: Degrees of freedom.
+        inverse: Inverse Operation.
+        verbose: Switch on diagnostic messages.
+        help_: Display help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunMeshUtilsOutputs`).
@@ -214,6 +325,18 @@ def run_mesh_utils(
         input_image=input_image,
         second_input_image=second_input_image,
         weighting_image_force=weighting_image_force,
+        do_uncentre_model=do_uncentre_model,
+        do_subtract_constant_from_scalars=do_subtract_constant_from_scalars,
+        do_vertex_scalars_to_image_volume=do_vertex_scalars_to_image_volume,
+        base_mesh2=base_mesh2,
+        use_sc2=use_sc2,
+        flirt_matrix=flirt_matrix,
+        do_mesh_reg=do_mesh_reg,
+        threshold=threshold,
+        degrees_of_freedom=degrees_of_freedom,
+        inverse=inverse,
+        verbose=verbose,
+        help_=help_,
     )
     return run_mesh_utils_execute(params, execution)
 

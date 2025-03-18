@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
-    id="14d19d5d0cd63cddc6a5dbd0cf982ba44c0b6d8b.boutiques",
+    id="21f7ecf88e61f31390dfa72a88706b1d88f8b655.boutiques",
     name="WarpTensorImageMultiTransform",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -23,6 +23,8 @@ WarpTensorImageMultiTransformParameters = typing.TypedDict('WarpTensorImageMulti
     "reslice_by_header": bool,
     "use_nearest_neighbor": bool,
     "transforms": list[str],
+    "ants_prefix": typing.NotRequired[str | None],
+    "ants_prefix_invert": typing.NotRequired[str | None],
 })
 
 
@@ -77,6 +79,8 @@ def warp_tensor_image_multi_transform_params(
     tightest_bounding_box: bool = False,
     reslice_by_header: bool = False,
     use_nearest_neighbor: bool = False,
+    ants_prefix: str | None = None,
+    ants_prefix_invert: str | None = None,
 ) -> WarpTensorImageMultiTransformParameters:
     """
     Build parameters.
@@ -95,6 +99,10 @@ def warp_tensor_image_multi_transform_params(
             image file header for reslicing.
         use_nearest_neighbor: Use Nearest Neighbor Interpolator for the\
             transformation.
+        ants_prefix: Prefix for ANTS-generated deformation and affine\
+            transformation files.
+        ants_prefix_invert: Prefix for inverting ANTS-generated affine and\
+            deformation transformations.
     Returns:
         Parameter dictionary
     """
@@ -110,6 +118,10 @@ def warp_tensor_image_multi_transform_params(
     }
     if reference_image is not None:
         params["reference_image"] = reference_image
+    if ants_prefix is not None:
+        params["ants_prefix"] = ants_prefix
+    if ants_prefix_invert is not None:
+        params["ants_prefix_invert"] = ants_prefix_invert
     return params
 
 
@@ -127,7 +139,7 @@ def warp_tensor_image_multi_transform_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("WarpImageMultiTransform")
+    cargs.append("WarpTensorImageMultiTransform")
     cargs.append(str(params.get("image_dimension")))
     cargs.append(execution.input_file(params.get("moving_image")))
     cargs.append(params.get("output_image"))
@@ -143,6 +155,16 @@ def warp_tensor_image_multi_transform_cargs(
     if params.get("use_nearest_neighbor"):
         cargs.append("--use-NN")
     cargs.extend(params.get("transforms"))
+    if params.get("ants_prefix") is not None:
+        cargs.extend([
+            "--ANTS-prefix",
+            params.get("ants_prefix")
+        ])
+    if params.get("ants_prefix_invert") is not None:
+        cargs.extend([
+            "--ANTS-prefix-invert",
+            params.get("ants_prefix_invert")
+        ])
     return cargs
 
 
@@ -171,8 +193,8 @@ def warp_tensor_image_multi_transform_execute(
     execution: Execution,
 ) -> WarpTensorImageMultiTransformOutputs:
     """
-    WarpImageMultiTransform is used to apply transformations including affine and
-    deformation fields to an image, supporting various interpolation techniques,
+    WarpTensorImageMultiTransform is used to apply transformations including affine
+    and deformation fields to an image, supporting various interpolation techniques,
     image header reslicing, and compatibility with ANTS-generated transformations.
     
     Author: ANTs Developers
@@ -201,11 +223,13 @@ def warp_tensor_image_multi_transform(
     tightest_bounding_box: bool = False,
     reslice_by_header: bool = False,
     use_nearest_neighbor: bool = False,
+    ants_prefix: str | None = None,
+    ants_prefix_invert: str | None = None,
     runner: Runner | None = None,
 ) -> WarpTensorImageMultiTransformOutputs:
     """
-    WarpImageMultiTransform is used to apply transformations including affine and
-    deformation fields to an image, supporting various interpolation techniques,
+    WarpTensorImageMultiTransform is used to apply transformations including affine
+    and deformation fields to an image, supporting various interpolation techniques,
     image header reslicing, and compatibility with ANTS-generated transformations.
     
     Author: ANTs Developers
@@ -226,6 +250,10 @@ def warp_tensor_image_multi_transform(
             image file header for reslicing.
         use_nearest_neighbor: Use Nearest Neighbor Interpolator for the\
             transformation.
+        ants_prefix: Prefix for ANTS-generated deformation and affine\
+            transformation files.
+        ants_prefix_invert: Prefix for inverting ANTS-generated affine and\
+            deformation transformations.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WarpTensorImageMultiTransformOutputs`).
@@ -241,6 +269,8 @@ def warp_tensor_image_multi_transform(
         reslice_by_header=reslice_by_header,
         use_nearest_neighbor=use_nearest_neighbor,
         transforms=transforms,
+        ants_prefix=ants_prefix,
+        ants_prefix_invert=ants_prefix_invert,
     )
     return warp_tensor_image_multi_transform_execute(params, execution)
 

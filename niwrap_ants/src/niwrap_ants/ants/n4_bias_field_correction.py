@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 N4_BIAS_FIELD_CORRECTION_METADATA = Metadata(
-    id="430c0cf662702b145c28eac54a52db1b1f1ee70a.boutiques",
+    id="4a280b084bc5a3cc17740ab9941877cd853f5acd.boutiques",
     name="N4BiasFieldCorrection",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -35,6 +35,19 @@ N4BiasFieldCorrectionHistogramSharpeningParameters = typing.TypedDict('N4BiasFie
 })
 
 
+N4BiasFieldCorrectionCorrectedOutputParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParameters', {
+    "__STYX_TYPE__": typing.Literal["correctedOutput"],
+    "correctedOutputFileName": str,
+})
+
+
+N4BiasFieldCorrectionCorrectedOutputNoiseParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParameters', {
+    "__STYX_TYPE__": typing.Literal["correctedOutputNoise"],
+    "correctedOutputFileName": str,
+    "biasFile": typing.NotRequired[str | None],
+})
+
+
 N4BiasFieldCorrectionParameters = typing.TypedDict('N4BiasFieldCorrectionParameters', {
     "__STYX_TYPE__": typing.Literal["N4BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
@@ -47,8 +60,7 @@ N4BiasFieldCorrectionParameters = typing.TypedDict('N4BiasFieldCorrectionParamet
     "histogram_sharpening": typing.NotRequired[N4BiasFieldCorrectionHistogramSharpeningParameters | None],
     "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
     "input_image": InputPathType,
-    "corrected_image_path": str,
-    "bias_field_path": typing.NotRequired[str | None],
+    "output": typing.Union[N4BiasFieldCorrectionCorrectedOutputParameters, N4BiasFieldCorrectionCorrectedOutputNoiseParameters],
 })
 
 
@@ -68,6 +80,8 @@ def dyn_cargs(
         "convergence": n4_bias_field_correction_convergence_cargs,
         "bspline_fitting": n4_bias_field_correction_bspline_fitting_cargs,
         "histogram_sharpening": n4_bias_field_correction_histogram_sharpening_cargs,
+        "correctedOutput": n4_bias_field_correction_corrected_output_cargs,
+        "correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_cargs,
     }.get(t)
 
 
@@ -84,6 +98,8 @@ def dyn_outputs(
     """
     return {
         "N4BiasFieldCorrection": n4_bias_field_correction_outputs,
+        "correctedOutput": n4_bias_field_correction_corrected_output_outputs,
+        "correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_outputs,
     }.get(t)
 
 
@@ -215,21 +231,160 @@ def n4_bias_field_correction_histogram_sharpening_cargs(
     return cargs
 
 
+class N4BiasFieldCorrectionCorrectedOutputOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `N4BiasFieldCorrectionCorrectedOutputParameters(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    output_image_outfile: OutputPathType
+    """Bias corrected image."""
+
+
+def n4_bias_field_correction_corrected_output_params(
+    corrected_output_file_name: str,
+) -> N4BiasFieldCorrectionCorrectedOutputParameters:
+    """
+    Build parameters.
+    
+    Args:
+        corrected_output_file_name: Output file name.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "correctedOutput",
+        "correctedOutputFileName": corrected_output_file_name,
+    }
+    return params
+
+
+def n4_bias_field_correction_corrected_output_cargs(
+    params: N4BiasFieldCorrectionCorrectedOutputParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append(params.get("correctedOutputFileName"))
+    return cargs
+
+
+def n4_bias_field_correction_corrected_output_outputs(
+    params: N4BiasFieldCorrectionCorrectedOutputParameters,
+    execution: Execution,
+) -> N4BiasFieldCorrectionCorrectedOutputOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = N4BiasFieldCorrectionCorrectedOutputOutputs(
+        root=execution.output_file("."),
+        output_image_outfile=execution.output_file(params.get("correctedOutputFileName")),
+    )
+    return ret
+
+
+class N4BiasFieldCorrectionCorrectedOutputNoiseOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `N4BiasFieldCorrectionCorrectedOutputNoiseParameters(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    output_image_outfile: OutputPathType
+    """Bias corrected image."""
+    output_bias_image: OutputPathType | None
+    """Bias field image."""
+
+
+def n4_bias_field_correction_corrected_output_noise_params(
+    corrected_output_file_name: str,
+    bias_file: str | None = None,
+) -> N4BiasFieldCorrectionCorrectedOutputNoiseParameters:
+    """
+    Build parameters.
+    
+    Args:
+        corrected_output_file_name: Output file name.
+        bias_file: Output bias field image.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "correctedOutputNoise",
+        "correctedOutputFileName": corrected_output_file_name,
+    }
+    if bias_file is not None:
+        params["biasFile"] = bias_file
+    return params
+
+
+def n4_bias_field_correction_corrected_output_noise_cargs(
+    params: N4BiasFieldCorrectionCorrectedOutputNoiseParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("biasFile") is not None:
+        cargs.append("[" + params.get("correctedOutputFileName") + "," + params.get("biasFile") + "]")
+    return cargs
+
+
+def n4_bias_field_correction_corrected_output_noise_outputs(
+    params: N4BiasFieldCorrectionCorrectedOutputNoiseParameters,
+    execution: Execution,
+) -> N4BiasFieldCorrectionCorrectedOutputNoiseOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = N4BiasFieldCorrectionCorrectedOutputNoiseOutputs(
+        root=execution.output_file("."),
+        output_image_outfile=execution.output_file(params.get("correctedOutputFileName")),
+        output_bias_image=execution.output_file(params.get("biasFile")) if (params.get("biasFile") is not None) else None,
+    )
+    return ret
+
+
 class N4BiasFieldCorrectionOutputs(typing.NamedTuple):
     """
     Output object returned when calling `n4_bias_field_correction(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    corrected_image: OutputPathType
-    """The bias corrected version of the input image."""
-    bias_field: OutputPathType | None
-    """Estimated bias field image."""
+    output: typing.Union[N4BiasFieldCorrectionCorrectedOutputOutputs, N4BiasFieldCorrectionCorrectedOutputNoiseOutputs]
+    """Outputs from `N4BiasFieldCorrectionCorrectedOutputParameters` or
+    `N4BiasFieldCorrectionCorrectedOutputNoiseParameters`."""
 
 
 def n4_bias_field_correction_params(
     input_image: InputPathType,
-    corrected_image_path: str,
+    output: typing.Union[N4BiasFieldCorrectionCorrectedOutputParameters, N4BiasFieldCorrectionCorrectedOutputNoiseParameters],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     shrink_factor: int | None = None,
     mask_image: InputPathType | None = None,
@@ -239,7 +394,6 @@ def n4_bias_field_correction_params(
     bspline_fitting: N4BiasFieldCorrectionBsplineFittingParameters | None = None,
     histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParameters | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-    bias_field_path: str | None = None,
 ) -> N4BiasFieldCorrectionParameters:
     """
     Build parameters.
@@ -249,7 +403,8 @@ def n4_bias_field_correction_params(
             expected as input for bias correction. Since N4 log transforms the\
             intensities, negative values or values close to zero should be\
             processed prior to correction.
-        corrected_image_path: The bias corrected version of the input image.
+        output: The bias corrected version of the input image, with optional\
+            noise image.
         image_dimensionality: -d, --image-dimensionality 2/3/4. This option\
             forces the image to be treated as a specified-dimensional image. If not\
             specified, N4 tries to infer the dimensionality from the input image.
@@ -313,14 +468,13 @@ def n4_bias_field_correction_params(
             deconvolution step parameters described in the original N3 algorithm.\
             The default values have been shown to work fairly well.
         verbose: Verbose output.
-        bias_field_path: Estimated bias field image.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "N4BiasFieldCorrection",
         "input_image": input_image,
-        "corrected_image_path": corrected_image_path,
+        "output": output,
     }
     if image_dimensionality is not None:
         params["image_dimensionality"] = image_dimensionality
@@ -340,8 +494,6 @@ def n4_bias_field_correction_params(
         params["histogram_sharpening"] = histogram_sharpening
     if verbose is not None:
         params["verbose"] = verbose
-    if bias_field_path is not None:
-        params["bias_field_path"] = bias_field_path
     return params
 
 
@@ -409,9 +561,10 @@ def n4_bias_field_correction_cargs(
         "--input-image",
         execution.input_file(params.get("input_image"))
     ])
-    cargs.append("--output")
-    if params.get("bias_field_path") is not None:
-        cargs.append("[" + params.get("corrected_image_path") + "," + params.get("bias_field_path") + "]")
+    cargs.extend([
+        "--output",
+        *dyn_cargs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution)
+    ])
     return cargs
 
 
@@ -430,8 +583,7 @@ def n4_bias_field_correction_outputs(
     """
     ret = N4BiasFieldCorrectionOutputs(
         root=execution.output_file("."),
-        corrected_image=execution.output_file(params.get("corrected_image_path")),
-        bias_field=execution.output_file(params.get("bias_field_path")) if (params.get("bias_field_path") is not None) else None,
+        output=dyn_outputs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution),
     )
     return ret
 
@@ -468,7 +620,7 @@ def n4_bias_field_correction_execute(
 
 def n4_bias_field_correction(
     input_image: InputPathType,
-    corrected_image_path: str,
+    output: typing.Union[N4BiasFieldCorrectionCorrectedOutputParameters, N4BiasFieldCorrectionCorrectedOutputNoiseParameters],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     shrink_factor: int | None = None,
     mask_image: InputPathType | None = None,
@@ -478,7 +630,6 @@ def n4_bias_field_correction(
     bspline_fitting: N4BiasFieldCorrectionBsplineFittingParameters | None = None,
     histogram_sharpening: N4BiasFieldCorrectionHistogramSharpeningParameters | None = None,
     verbose: typing.Literal[0, 1] | None = None,
-    bias_field_path: str | None = None,
     runner: Runner | None = None,
 ) -> N4BiasFieldCorrectionOutputs:
     """
@@ -499,7 +650,8 @@ def n4_bias_field_correction(
             expected as input for bias correction. Since N4 log transforms the\
             intensities, negative values or values close to zero should be\
             processed prior to correction.
-        corrected_image_path: The bias corrected version of the input image.
+        output: The bias corrected version of the input image, with optional\
+            noise image.
         image_dimensionality: -d, --image-dimensionality 2/3/4. This option\
             forces the image to be treated as a specified-dimensional image. If not\
             specified, N4 tries to infer the dimensionality from the input image.
@@ -563,7 +715,6 @@ def n4_bias_field_correction(
             deconvolution step parameters described in the original N3 algorithm.\
             The default values have been shown to work fairly well.
         verbose: Verbose output.
-        bias_field_path: Estimated bias field image.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `N4BiasFieldCorrectionOutputs`).
@@ -581,8 +732,7 @@ def n4_bias_field_correction(
         histogram_sharpening=histogram_sharpening,
         verbose=verbose,
         input_image=input_image,
-        corrected_image_path=corrected_image_path,
-        bias_field_path=bias_field_path,
+        output=output,
     )
     return n4_bias_field_correction_execute(params, execution)
 
@@ -590,6 +740,10 @@ def n4_bias_field_correction(
 __all__ = [
     "N4BiasFieldCorrectionBsplineFittingParameters",
     "N4BiasFieldCorrectionConvergenceParameters",
+    "N4BiasFieldCorrectionCorrectedOutputNoiseOutputs",
+    "N4BiasFieldCorrectionCorrectedOutputNoiseParameters",
+    "N4BiasFieldCorrectionCorrectedOutputOutputs",
+    "N4BiasFieldCorrectionCorrectedOutputParameters",
     "N4BiasFieldCorrectionHistogramSharpeningParameters",
     "N4BiasFieldCorrectionOutputs",
     "N4BiasFieldCorrectionParameters",
@@ -597,6 +751,8 @@ __all__ = [
     "n4_bias_field_correction",
     "n4_bias_field_correction_bspline_fitting_params",
     "n4_bias_field_correction_convergence_params",
+    "n4_bias_field_correction_corrected_output_noise_params",
+    "n4_bias_field_correction_corrected_output_params",
     "n4_bias_field_correction_histogram_sharpening_params",
     "n4_bias_field_correction_params",
 ]

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_REGISTRATION_METADATA = Metadata(
-    id="d1fb6c3d9e6d56e2bfee183ed29bef10a59da9d1.boutiques",
+    id="c1ca233b97fb2c34e284eb1f804669cd3da9255a.boutiques",
     name="antsRegistration",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -305,6 +305,7 @@ AntsRegistrationParameters = typing.TypedDict('AntsRegistrationParameters', {
     "minc": typing.NotRequired[typing.Literal[0, 1] | None],
     "random_seed": typing.NotRequired[int | None],
     "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
+    "float": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
@@ -1891,6 +1892,7 @@ def ants_registration_params(
     minc: typing.Literal[0, 1] | None = None,
     random_seed: int | None = None,
     verbose: typing.Literal[0, 1] | None = None,
+    float_: typing.Literal[0, 1] | None = None,
 ) -> AntsRegistrationParameters:
     """
     Build parameters.
@@ -2002,6 +2004,7 @@ def ants_registration_params(
         minc: Use MINC file formats for transformations.
         random_seed: Random seed.
         verbose: Verbose output.
+        float_: Use 'float' instead of 'double' for computations.
     Returns:
         Parameter dictionary
     """
@@ -2045,6 +2048,8 @@ def ants_registration_params(
         params["random_seed"] = random_seed
     if verbose is not None:
         params["verbose"] = verbose
+    if float_ is not None:
+        params["float"] = float_
     return params
 
 
@@ -2154,6 +2159,11 @@ def ants_registration_cargs(
             "-v",
             str(params.get("verbose"))
         ])
+    if params.get("float") is not None:
+        cargs.extend([
+            "--float",
+            str(params.get("float"))
+        ])
     return cargs
 
 
@@ -2230,6 +2240,7 @@ def ants_registration(
     minc: typing.Literal[0, 1] | None = None,
     random_seed: int | None = None,
     verbose: typing.Literal[0, 1] | None = None,
+    float_: typing.Literal[0, 1] | None = None,
     runner: Runner | None = None,
 ) -> AntsRegistrationOutputs:
     """
@@ -2351,6 +2362,7 @@ def ants_registration(
         minc: Use MINC file formats for transformations.
         random_seed: Random seed.
         verbose: Verbose output.
+        float_: Use 'float' instead of 'double' for computations.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationOutputs`).
@@ -2377,6 +2389,7 @@ def ants_registration(
         minc=minc,
         random_seed=random_seed,
         verbose=verbose,
+        float_=float_,
     )
     return ants_registration_execute(params, execution)
 

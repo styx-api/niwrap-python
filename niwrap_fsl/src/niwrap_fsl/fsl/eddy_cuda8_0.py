@@ -5,16 +5,16 @@ import typing
 import pathlib
 from styxdefs import *
 
-EDDY_METADATA = Metadata(
-    id="f596387c4a1472024a7a466d87ce6613e3f73908.boutiques",
-    name="eddy",
+EDDY_CUDA8_0_METADATA = Metadata(
+    id="d0909db7c4d8a0445047724caaff5d46f1dbbd40.boutiques",
+    name="eddy_cuda8.0",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
 )
 
 
-EddyParameters = typing.TypedDict('EddyParameters', {
-    "__STYX_TYPE__": typing.Literal["eddy"],
+EddyCuda80Parameters = typing.TypedDict('EddyCuda80Parameters', {
+    "__STYX_TYPE__": typing.Literal["eddy_cuda8.0"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy": eddy_cargs,
+        "eddy_cuda8.0": eddy_cuda8_0_cargs,
     }.get(t)
 
 
@@ -90,13 +90,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy": eddy_outputs,
+        "eddy_cuda8.0": eddy_cuda8_0_outputs,
     }.get(t)
 
 
-class EddyOutputs(typing.NamedTuple):
+class EddyCuda80Outputs(typing.NamedTuple):
     """
-    Output object returned when calling `eddy(...)`.
+    Output object returned when calling `eddy_cuda8_0(...)`.
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
@@ -143,7 +143,7 @@ class EddyOutputs(typing.NamedTuple):
     """4D image file of residuals, only if --residuals is set"""
 
 
-def eddy_params(
+def eddy_cuda8_0_params(
     imain: InputPathType,
     mask: InputPathType,
     index: InputPathType,
@@ -188,7 +188,7 @@ def eddy_params(
     dont_peas: bool = False,
     data_is_shelled: bool = False,
     verbose: bool = False,
-) -> EddyParameters:
+) -> EddyCuda80Parameters:
     """
     Build parameters.
     
@@ -260,7 +260,7 @@ def eddy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy",
+        "__STYXTYPE__": "eddy_cuda8.0",
         "imain": imain,
         "mask": mask,
         "index": index,
@@ -335,8 +335,8 @@ def eddy_params(
     return params
 
 
-def eddy_cargs(
-    params: EddyParameters,
+def eddy_cuda8_0_cargs(
+    params: EddyCuda80Parameters,
     execution: Execution,
 ) -> list[str]:
     """
@@ -349,7 +349,7 @@ def eddy_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("eddy")
+    cargs.append("eddy_cuda8.0")
     cargs.append("--imain=" + execution.input_file(params.get("imain")))
     cargs.append("--mask=" + execution.input_file(params.get("mask")))
     cargs.append("--index=" + execution.input_file(params.get("index")))
@@ -434,10 +434,10 @@ def eddy_cargs(
     return cargs
 
 
-def eddy_outputs(
-    params: EddyParameters,
+def eddy_cuda8_0_outputs(
+    params: EddyCuda80Parameters,
     execution: Execution,
-) -> EddyOutputs:
+) -> EddyCuda80Outputs:
     """
     Build outputs object containing output file paths and possibly stdout/stderr.
     
@@ -447,7 +447,7 @@ def eddy_outputs(
     Returns:
         Outputs object.
     """
-    ret = EddyOutputs(
+    ret = EddyCuda80Outputs(
         root=execution.output_file("."),
         out=execution.output_file(params.get("out") + ".nii.gz"),
         eddy_parameters=execution.output_file(params.get("out") + ".eddy_parameters"),
@@ -472,10 +472,10 @@ def eddy_outputs(
     return ret
 
 
-def eddy_execute(
-    params: EddyParameters,
+def eddy_cuda8_0_execute(
+    params: EddyCuda80Parameters,
     execution: Execution,
-) -> EddyOutputs:
+) -> EddyCuda80Outputs:
     """
     A tool for correcting eddy currents and movements in diffusion data.
     
@@ -487,16 +487,16 @@ def eddy_execute(
         params: The parameters.
         execution: The execution object.
     Returns:
-        NamedTuple of outputs (described in `EddyOutputs`).
+        NamedTuple of outputs (described in `EddyCuda80Outputs`).
     """
     params = execution.params(params)
-    cargs = eddy_cargs(params, execution)
-    ret = eddy_outputs(params, execution)
+    cargs = eddy_cuda8_0_cargs(params, execution)
+    ret = eddy_cuda8_0_outputs(params, execution)
     execution.run(cargs)
     return ret
 
 
-def eddy(
+def eddy_cuda8_0(
     imain: InputPathType,
     mask: InputPathType,
     index: InputPathType,
@@ -542,7 +542,7 @@ def eddy(
     data_is_shelled: bool = False,
     verbose: bool = False,
     runner: Runner | None = None,
-) -> EddyOutputs:
+) -> EddyCuda80Outputs:
     """
     A tool for correcting eddy currents and movements in diffusion data.
     
@@ -616,11 +616,11 @@ def eddy(
         verbose: switch on diagnostic messages.
         runner: Command runner.
     Returns:
-        NamedTuple of outputs (described in `EddyOutputs`).
+        NamedTuple of outputs (described in `EddyCuda80Outputs`).
     """
     runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_METADATA)
-    params = eddy_params(
+    execution = runner.start_execution(EDDY_CUDA8_0_METADATA)
+    params = eddy_cuda8_0_params(
         imain=imain,
         mask=mask,
         index=index,
@@ -666,13 +666,13 @@ def eddy(
         data_is_shelled=data_is_shelled,
         verbose=verbose,
     )
-    return eddy_execute(params, execution)
+    return eddy_cuda8_0_execute(params, execution)
 
 
 __all__ = [
-    "EDDY_METADATA",
-    "EddyOutputs",
-    "EddyParameters",
-    "eddy",
-    "eddy_params",
+    "EDDY_CUDA8_0_METADATA",
+    "EddyCuda80Outputs",
+    "EddyCuda80Parameters",
+    "eddy_cuda8_0",
+    "eddy_cuda8_0_params",
 ]

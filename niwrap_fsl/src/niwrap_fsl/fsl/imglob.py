@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMGLOB_METADATA = Metadata(
-    id="048af28afaecb36fea36a9848ee9d39cc57bafae.boutiques",
+    id="13226e4faf802dbc2dd125edec75341de4a9155a.boutiques",
     name="imglob",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -17,6 +17,7 @@ ImglobParameters = typing.TypedDict('ImglobParameters', {
     "__STYX_TYPE__": typing.Literal["imglob"],
     "multiple_extensions": bool,
     "input_list": list[str],
+    "single_extension": bool,
 })
 
 
@@ -62,6 +63,7 @@ class ImglobOutputs(typing.NamedTuple):
 def imglob_params(
     input_list: list[str],
     multiple_extensions: bool = False,
+    single_extension: bool = False,
 ) -> ImglobParameters:
     """
     Build parameters.
@@ -69,6 +71,7 @@ def imglob_params(
     Args:
         input_list: List of image names or file paths.
         multiple_extensions: Output list of images with full extensions.
+        single_extension: Output one image with full extension.
     Returns:
         Parameter dictionary
     """
@@ -76,6 +79,7 @@ def imglob_params(
         "__STYXTYPE__": "imglob",
         "multiple_extensions": multiple_extensions,
         "input_list": input_list,
+        "single_extension": single_extension,
     }
     return params
 
@@ -98,6 +102,8 @@ def imglob_cargs(
     if params.get("multiple_extensions"):
         cargs.append("-extensions")
     cargs.extend(params.get("input_list"))
+    if params.get("single_extension"):
+        cargs.append("-extension")
     return cargs
 
 
@@ -147,6 +153,7 @@ def imglob_execute(
 def imglob(
     input_list: list[str],
     multiple_extensions: bool = False,
+    single_extension: bool = False,
     runner: Runner | None = None,
 ) -> ImglobOutputs:
     """
@@ -159,6 +166,7 @@ def imglob(
     Args:
         input_list: List of image names or file paths.
         multiple_extensions: Output list of images with full extensions.
+        single_extension: Output one image with full extension.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImglobOutputs`).
@@ -168,6 +176,7 @@ def imglob(
     params = imglob_params(
         multiple_extensions=multiple_extensions,
         input_list=input_list,
+        single_extension=single_extension,
     )
     return imglob_execute(params, execution)
 

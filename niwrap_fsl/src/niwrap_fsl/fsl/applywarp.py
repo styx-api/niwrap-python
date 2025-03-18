@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APPLYWARP_METADATA = Metadata(
-    id="af3d683241808436d501919df0347e718d9aee29.boutiques",
+    id="f3b271ea5183294815af803d4556178f89f73b26.boutiques",
     name="applywarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -27,6 +27,8 @@ ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
     "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
     "postmat": typing.NotRequired[InputPathType | None],
     "premat": typing.NotRequired[InputPathType | None],
+    "ref_file_1": InputPathType,
+    "superlevel": typing.NotRequired[typing.Literal["a"] | None],
     "superlevel_2": typing.NotRequired[int | None],
     "supersample": bool,
 })
@@ -77,6 +79,7 @@ class ApplywarpOutputs(typing.NamedTuple):
 def applywarp_params(
     in_file: InputPathType,
     ref_file: InputPathType,
+    ref_file_1: InputPathType,
     interp: typing.Literal["nn", "trilinear", "sinc", "spline"] | None = None,
     out_file: str | None = None,
     relwarp: bool = False,
@@ -87,6 +90,7 @@ def applywarp_params(
     output_type: typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None = None,
     postmat: InputPathType | None = None,
     premat: InputPathType | None = None,
+    superlevel: typing.Literal["a"] | None = None,
     superlevel_2: int | None = None,
     supersample: bool = False,
 ) -> ApplywarpParameters:
@@ -96,6 +100,7 @@ def applywarp_params(
     Args:
         in_file: Image to be warped.
         ref_file: Reference image.
+        ref_file_1: Reference image.
         interp: 'nn' or 'trilinear' or 'sinc' or 'spline'. Interpolation\
             method.
         out_file: Output filename.
@@ -109,6 +114,8 @@ def applywarp_params(
             Fsl output type.
         postmat: Filename for post-transform (affine matrix).
         premat: Filename for pre-transform (affine matrix).
+        superlevel: 'a' or an integer. Level of intermediary supersampling, a\
+            for 'automatic' or integer level. default = 2.
         superlevel_2: 'a' or an integer. Level of intermediary supersampling, a\
             for 'automatic' or integer level. default = 2.
         supersample: Intermediary supersampling of output, default is off.
@@ -121,6 +128,7 @@ def applywarp_params(
         "ref_file": ref_file,
         "relwarp": relwarp,
         "abswarp": abswarp,
+        "ref_file_1": ref_file_1,
         "supersample": supersample,
     }
     if interp is not None:
@@ -139,6 +147,8 @@ def applywarp_params(
         params["postmat"] = postmat
     if premat is not None:
         params["premat"] = premat
+    if superlevel is not None:
+        params["superlevel"] = superlevel
     if superlevel_2 is not None:
         params["superlevel_2"] = superlevel_2
     return params
@@ -181,6 +191,9 @@ def applywarp_cargs(
         cargs.append("--postmat=" + execution.input_file(params.get("postmat")))
     if params.get("premat") is not None:
         cargs.append("--premat=" + execution.input_file(params.get("premat")))
+    cargs.append("--ref=" + execution.input_file(params.get("ref_file_1")))
+    if params.get("superlevel") is not None:
+        cargs.append("--superlevel=" + params.get("superlevel"))
     if params.get("superlevel_2") is not None:
         cargs.append("--superlevel=" + str(params.get("superlevel_2")))
     if params.get("supersample"):
@@ -235,6 +248,7 @@ def applywarp_execute(
 def applywarp(
     in_file: InputPathType,
     ref_file: InputPathType,
+    ref_file_1: InputPathType,
     interp: typing.Literal["nn", "trilinear", "sinc", "spline"] | None = None,
     out_file: str | None = None,
     relwarp: bool = False,
@@ -245,6 +259,7 @@ def applywarp(
     output_type: typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None = None,
     postmat: InputPathType | None = None,
     premat: InputPathType | None = None,
+    superlevel: typing.Literal["a"] | None = None,
     superlevel_2: int | None = None,
     supersample: bool = False,
     runner: Runner | None = None,
@@ -259,6 +274,7 @@ def applywarp(
     Args:
         in_file: Image to be warped.
         ref_file: Reference image.
+        ref_file_1: Reference image.
         interp: 'nn' or 'trilinear' or 'sinc' or 'spline'. Interpolation\
             method.
         out_file: Output filename.
@@ -272,6 +288,8 @@ def applywarp(
             Fsl output type.
         postmat: Filename for post-transform (affine matrix).
         premat: Filename for pre-transform (affine matrix).
+        superlevel: 'a' or an integer. Level of intermediary supersampling, a\
+            for 'automatic' or integer level. default = 2.
         superlevel_2: 'a' or an integer. Level of intermediary supersampling, a\
             for 'automatic' or integer level. default = 2.
         supersample: Intermediary supersampling of output, default is off.
@@ -294,6 +312,8 @@ def applywarp(
         output_type=output_type,
         postmat=postmat,
         premat=premat,
+        ref_file_1=ref_file_1,
+        superlevel=superlevel,
         superlevel_2=superlevel_2,
         supersample=supersample,
     )

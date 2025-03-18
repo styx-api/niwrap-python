@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICES_SUMMARY_METADATA = Metadata(
-    id="c5a3bab21de16027f47ca41d594a765937d99825.boutiques",
+    id="ef564b8318b77af06e116ca5d2dc4a9fef06575a.boutiques",
     name="slices_summary",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -18,11 +18,11 @@ SlicesSummaryParameters = typing.TypedDict('SlicesSummaryParameters', {
     "4d_input_file": InputPathType,
     "threshold": float,
     "background_image": InputPathType,
-    "pictures_sum_second": str,
+    "pictures_sum": str,
     "single_slice_flag": bool,
     "darker_background_flag": bool,
     "dumb_rule_flag": bool,
-    "pictures_sum_second_1": str,
+    "pictures_sum_second": str,
     "output_png": str,
     "timepoints": str,
 })
@@ -76,8 +76,8 @@ def slices_summary_params(
     v_4d_input_file: InputPathType,
     threshold: float,
     background_image: InputPathType,
+    pictures_sum: str,
     pictures_sum_second: str,
-    pictures_sum_second_1: str,
     output_png: str,
     timepoints: str,
     single_slice_flag: bool = False,
@@ -91,8 +91,8 @@ def slices_summary_params(
         v_4d_input_file: 4D input image (e.g., melodic_IC).
         threshold: Threshold value for the slices.
         background_image: Background image file (e.g., standard/MNI152_T1_2mm).
+        pictures_sum: Output directory for summary images.
         pictures_sum_second: Path to summary images directory.
-        pictures_sum_second_1: Path to summary images directory.
         output_png: Output PNG file.
         timepoints: Space-separated list of timepoints to use; first timepoint\
             is 0.
@@ -109,11 +109,11 @@ def slices_summary_params(
         "4d_input_file": v_4d_input_file,
         "threshold": threshold,
         "background_image": background_image,
-        "pictures_sum_second": pictures_sum_second,
+        "pictures_sum": pictures_sum,
         "single_slice_flag": single_slice_flag,
         "darker_background_flag": darker_background_flag,
         "dumb_rule_flag": dumb_rule_flag,
-        "pictures_sum_second_1": pictures_sum_second_1,
+        "pictures_sum_second": pictures_sum_second,
         "output_png": output_png,
         "timepoints": timepoints,
     }
@@ -138,16 +138,14 @@ def slices_summary_cargs(
     cargs.append(execution.input_file(params.get("4d_input_file")))
     cargs.append(str(params.get("threshold")))
     cargs.append(execution.input_file(params.get("background_image")))
-    cargs.append(params.get("pictures_sum_second"))
+    cargs.append(params.get("pictures_sum"))
     if params.get("single_slice_flag"):
         cargs.append("-1")
     if params.get("darker_background_flag"):
         cargs.append("-d")
     if params.get("dumb_rule_flag"):
         cargs.append("-c")
-    cargs.append("|")
-    cargs.append("slices_summary")
-    cargs.append(params.get("pictures_sum_second_1"))
+    cargs.append(params.get("pictures_sum_second"))
     cargs.append(params.get("output_png"))
     cargs.append(params.get("timepoints"))
     return cargs
@@ -168,7 +166,7 @@ def slices_summary_outputs(
     """
     ret = SlicesSummaryOutputs(
         root=execution.output_file("."),
-        summary_images_directory=execution.output_file(params.get("pictures_sum_second_1")),
+        summary_images_directory=execution.output_file(params.get("pictures_sum_second")),
         combined_summary_image=execution.output_file(params.get("output_png")),
     )
     return ret
@@ -202,8 +200,8 @@ def slices_summary(
     v_4d_input_file: InputPathType,
     threshold: float,
     background_image: InputPathType,
+    pictures_sum: str,
     pictures_sum_second: str,
-    pictures_sum_second_1: str,
     output_png: str,
     timepoints: str,
     single_slice_flag: bool = False,
@@ -222,8 +220,8 @@ def slices_summary(
         v_4d_input_file: 4D input image (e.g., melodic_IC).
         threshold: Threshold value for the slices.
         background_image: Background image file (e.g., standard/MNI152_T1_2mm).
+        pictures_sum: Output directory for summary images.
         pictures_sum_second: Path to summary images directory.
-        pictures_sum_second_1: Path to summary images directory.
         output_png: Output PNG file.
         timepoints: Space-separated list of timepoints to use; first timepoint\
             is 0.
@@ -242,11 +240,11 @@ def slices_summary(
         v_4d_input_file=v_4d_input_file,
         threshold=threshold,
         background_image=background_image,
-        pictures_sum_second=pictures_sum_second,
+        pictures_sum=pictures_sum,
         single_slice_flag=single_slice_flag,
         darker_background_flag=darker_background_flag,
         dumb_rule_flag=dumb_rule_flag,
-        pictures_sum_second_1=pictures_sum_second_1,
+        pictures_sum_second=pictures_sum_second,
         output_png=output_png,
         timepoints=timepoints,
     )

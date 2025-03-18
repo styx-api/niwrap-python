@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SLICER_METADATA = Metadata(
-    id="7c28c8912deeb7ca0f43a49f175823fe5d4e25b2.boutiques",
+    id="f9dc2c92e18f3efcf34a1f10f22afe657e8159e0.boutiques",
     name="slicer",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -243,7 +243,6 @@ def slicer_cargs(
         cargs.append("-u")
     if params.get("red_dot_marker"):
         cargs.append("-c")
-    cargs.append("...slices...")
     if params.get("output_single_image") is not None:
         cargs.extend([
             "-a",

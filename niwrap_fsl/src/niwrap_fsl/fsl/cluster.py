@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CLUSTER_METADATA = Metadata(
-    id="f9c277296bff6829746b7b450932118c7250ea4d.boutiques",
+    id="1e7115d5f39980c686e1006856f392affa404117.boutiques",
     name="cluster",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -24,13 +24,21 @@ ClusterParameters = typing.TypedDict('ClusterParameters', {
     "minclustersize": bool,
     "no_table": bool,
     "num_maxima": typing.NotRequired[int | None],
+    "out_index_file": bool,
     "out_index_file_2": typing.NotRequired[InputPathType | None],
+    "out_localmax_txt_file": bool,
     "out_localmax_txt_file_2": typing.NotRequired[InputPathType | None],
+    "out_localmax_vol_file": bool,
     "out_localmax_vol_file_2": typing.NotRequired[InputPathType | None],
+    "out_max_file": bool,
     "out_max_file_2": typing.NotRequired[InputPathType | None],
+    "out_mean_file": bool,
     "out_mean_file_2": typing.NotRequired[InputPathType | None],
+    "out_pval_file": bool,
     "out_pval_file_2": typing.NotRequired[InputPathType | None],
+    "out_size_file": bool,
     "out_size_file_2": typing.NotRequired[InputPathType | None],
+    "out_threshold_file": bool,
     "out_threshold_file_2": typing.NotRequired[InputPathType | None],
     "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
     "peak_distance": typing.NotRequired[float | None],
@@ -111,13 +119,21 @@ def cluster_params(
     minclustersize: bool = False,
     no_table: bool = False,
     num_maxima: int | None = None,
+    out_index_file: bool = False,
     out_index_file_2: InputPathType | None = None,
+    out_localmax_txt_file: bool = False,
     out_localmax_txt_file_2: InputPathType | None = None,
+    out_localmax_vol_file: bool = False,
     out_localmax_vol_file_2: InputPathType | None = None,
+    out_max_file: bool = False,
     out_max_file_2: InputPathType | None = None,
+    out_mean_file: bool = False,
     out_mean_file_2: InputPathType | None = None,
+    out_pval_file: bool = False,
     out_pval_file_2: InputPathType | None = None,
+    out_size_file: bool = False,
     out_size_file_2: InputPathType | None = None,
+    out_threshold_file: bool = False,
     out_threshold_file_2: InputPathType | None = None,
     output_type: typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None = None,
     peak_distance: float | None = None,
@@ -142,16 +158,27 @@ def cluster_params(
         minclustersize: Prints out minimum significant cluster size.
         no_table: Suppresses printing of the table info.
         num_maxima: No of local maxima to report.
+        out_index_file: A boolean or file. Output of cluster index (in size\
+            order).
         out_index_file_2: A boolean or file. Output of cluster index (in size\
             order).
+        out_localmax_txt_file: A boolean or file. Local maxima text file.
         out_localmax_txt_file_2: A boolean or file. Local maxima text file.
+        out_localmax_vol_file: A boolean or file. Output of local maxima\
+            volume.
         out_localmax_vol_file_2: A boolean or file. Output of local maxima\
             volume.
+        out_max_file: A boolean or file. Filename for output of max image.
         out_max_file_2: A boolean or file. Filename for output of max image.
+        out_mean_file: A boolean or file. Filename for output of mean image.
         out_mean_file_2: A boolean or file. Filename for output of mean image.
+        out_pval_file: A boolean or file. Filename for image output of log\
+            pvals.
         out_pval_file_2: A boolean or file. Filename for image output of log\
             pvals.
+        out_size_file: A boolean or file. Filename for output of size image.
         out_size_file_2: A boolean or file. Filename for output of size image.
+        out_threshold_file: A boolean or file. Thresholded image.
         out_threshold_file_2: A boolean or file. Thresholded image.
         output_type: 'nifti' or 'nifti_pair' or 'nifti_gz' or 'nifti_pair_gz'.\
             Fsl output type.
@@ -174,6 +201,14 @@ def cluster_params(
         "in_file": in_file,
         "minclustersize": minclustersize,
         "no_table": no_table,
+        "out_index_file": out_index_file,
+        "out_localmax_txt_file": out_localmax_txt_file,
+        "out_localmax_vol_file": out_localmax_vol_file,
+        "out_max_file": out_max_file,
+        "out_mean_file": out_mean_file,
+        "out_pval_file": out_pval_file,
+        "out_size_file": out_size_file,
+        "out_threshold_file": out_threshold_file,
         "threshold": threshold,
         "use_mm": use_mm,
     }
@@ -250,20 +285,36 @@ def cluster_cargs(
         cargs.append("--no_table")
     if params.get("num_maxima") is not None:
         cargs.append("--num=" + str(params.get("num_maxima")))
+    if params.get("out_index_file"):
+        cargs.append("--oindex")
     if params.get("out_index_file_2") is not None:
         cargs.append("--oindex=" + execution.input_file(params.get("out_index_file_2")))
+    if params.get("out_localmax_txt_file"):
+        cargs.append("--olmax")
     if params.get("out_localmax_txt_file_2") is not None:
         cargs.append("--olmax=" + execution.input_file(params.get("out_localmax_txt_file_2")))
+    if params.get("out_localmax_vol_file"):
+        cargs.append("--olmaxim")
     if params.get("out_localmax_vol_file_2") is not None:
         cargs.append("--olmaxim=" + execution.input_file(params.get("out_localmax_vol_file_2")))
+    if params.get("out_max_file"):
+        cargs.append("--omax")
     if params.get("out_max_file_2") is not None:
         cargs.append("--omax=" + execution.input_file(params.get("out_max_file_2")))
+    if params.get("out_mean_file"):
+        cargs.append("--omean")
     if params.get("out_mean_file_2") is not None:
         cargs.append("--omean=" + execution.input_file(params.get("out_mean_file_2")))
+    if params.get("out_pval_file"):
+        cargs.append("--opvals")
     if params.get("out_pval_file_2") is not None:
         cargs.append("--opvals=" + execution.input_file(params.get("out_pval_file_2")))
+    if params.get("out_size_file"):
+        cargs.append("--osize")
     if params.get("out_size_file_2") is not None:
         cargs.append("--osize=" + execution.input_file(params.get("out_size_file_2")))
+    if params.get("out_threshold_file"):
+        cargs.append("--othresh")
     if params.get("out_threshold_file_2") is not None:
         cargs.append("--othresh=" + execution.input_file(params.get("out_threshold_file_2")))
     if params.get("output_type") is not None:
@@ -348,13 +399,21 @@ def cluster(
     minclustersize: bool = False,
     no_table: bool = False,
     num_maxima: int | None = None,
+    out_index_file: bool = False,
     out_index_file_2: InputPathType | None = None,
+    out_localmax_txt_file: bool = False,
     out_localmax_txt_file_2: InputPathType | None = None,
+    out_localmax_vol_file: bool = False,
     out_localmax_vol_file_2: InputPathType | None = None,
+    out_max_file: bool = False,
     out_max_file_2: InputPathType | None = None,
+    out_mean_file: bool = False,
     out_mean_file_2: InputPathType | None = None,
+    out_pval_file: bool = False,
     out_pval_file_2: InputPathType | None = None,
+    out_size_file: bool = False,
     out_size_file_2: InputPathType | None = None,
+    out_threshold_file: bool = False,
     out_threshold_file_2: InputPathType | None = None,
     output_type: typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None = None,
     peak_distance: float | None = None,
@@ -384,16 +443,27 @@ def cluster(
         minclustersize: Prints out minimum significant cluster size.
         no_table: Suppresses printing of the table info.
         num_maxima: No of local maxima to report.
+        out_index_file: A boolean or file. Output of cluster index (in size\
+            order).
         out_index_file_2: A boolean or file. Output of cluster index (in size\
             order).
+        out_localmax_txt_file: A boolean or file. Local maxima text file.
         out_localmax_txt_file_2: A boolean or file. Local maxima text file.
+        out_localmax_vol_file: A boolean or file. Output of local maxima\
+            volume.
         out_localmax_vol_file_2: A boolean or file. Output of local maxima\
             volume.
+        out_max_file: A boolean or file. Filename for output of max image.
         out_max_file_2: A boolean or file. Filename for output of max image.
+        out_mean_file: A boolean or file. Filename for output of mean image.
         out_mean_file_2: A boolean or file. Filename for output of mean image.
+        out_pval_file: A boolean or file. Filename for image output of log\
+            pvals.
         out_pval_file_2: A boolean or file. Filename for image output of log\
             pvals.
+        out_size_file: A boolean or file. Filename for output of size image.
         out_size_file_2: A boolean or file. Filename for output of size image.
+        out_threshold_file: A boolean or file. Thresholded image.
         out_threshold_file_2: A boolean or file. Thresholded image.
         output_type: 'nifti' or 'nifti_pair' or 'nifti_gz' or 'nifti_pair_gz'.\
             Fsl output type.
@@ -422,13 +492,21 @@ def cluster(
         minclustersize=minclustersize,
         no_table=no_table,
         num_maxima=num_maxima,
+        out_index_file=out_index_file,
         out_index_file_2=out_index_file_2,
+        out_localmax_txt_file=out_localmax_txt_file,
         out_localmax_txt_file_2=out_localmax_txt_file_2,
+        out_localmax_vol_file=out_localmax_vol_file,
         out_localmax_vol_file_2=out_localmax_vol_file_2,
+        out_max_file=out_max_file,
         out_max_file_2=out_max_file_2,
+        out_mean_file=out_mean_file,
         out_mean_file_2=out_mean_file_2,
+        out_pval_file=out_pval_file,
         out_pval_file_2=out_pval_file_2,
+        out_size_file=out_size_file,
         out_size_file_2=out_size_file_2,
+        out_threshold_file=out_threshold_file,
         out_threshold_file_2=out_threshold_file_2,
         output_type=output_type,
         peak_distance=peak_distance,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONCAT_BVARS_METADATA = Metadata(
-    id="328d9c324b79e0289369cb9b2b4e758cac2f1131.boutiques",
+    id="510347f86dbed1c84a14f18194f7a263598dc7bb.boutiques",
     name="concat_bvars",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -16,6 +16,7 @@ CONCAT_BVARS_METADATA = Metadata(
 ConcatBvarsParameters = typing.TypedDict('ConcatBvarsParameters', {
     "__STYX_TYPE__": typing.Literal["concat_bvars"],
     "output_bvars": str,
+    "input_bvars": list[InputPathType],
 })
 
 
@@ -63,18 +64,21 @@ class ConcatBvarsOutputs(typing.NamedTuple):
 
 def concat_bvars_params(
     output_bvars: str,
+    input_bvars: list[InputPathType],
 ) -> ConcatBvarsParameters:
     """
     Build parameters.
     
     Args:
         output_bvars: Output .bvars file.
+        input_bvars: List of input .bvars files.
     Returns:
         Parameter dictionary
     """
     params = {
         "__STYXTYPE__": "concat_bvars",
         "output_bvars": output_bvars,
+        "input_bvars": input_bvars,
     }
     return params
 
@@ -95,7 +99,7 @@ def concat_bvars_cargs(
     cargs = []
     cargs.append("concat_bvars")
     cargs.append(params.get("output_bvars"))
-    cargs.append("[INPUT_BVARS...]")
+    cargs.extend([execution.input_file(f) for f in params.get("input_bvars")])
     return cargs
 
 
@@ -145,6 +149,7 @@ def concat_bvars_execute(
 
 def concat_bvars(
     output_bvars: str,
+    input_bvars: list[InputPathType],
     runner: Runner | None = None,
 ) -> ConcatBvarsOutputs:
     """
@@ -156,6 +161,7 @@ def concat_bvars(
     
     Args:
         output_bvars: Output .bvars file.
+        input_bvars: List of input .bvars files.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConcatBvarsOutputs`).
@@ -164,6 +170,7 @@ def concat_bvars(
     execution = runner.start_execution(CONCAT_BVARS_METADATA)
     params = concat_bvars_params(
         output_bvars=output_bvars,
+        input_bvars=input_bvars,
     )
     return concat_bvars_execute(params, execution)
 

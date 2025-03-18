@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_CURVATURE_METADATA = Metadata(
-    id="47bd42166388900cd8ce701c63aa9324fd46a426.boutiques",
+    id="927be22df979e7c726c5de83ea9d6ec0a64535a3.boutiques",
     name="SurfaceCurvature",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -106,7 +106,11 @@ def surface_curvature_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("SurfaceCurvature" + execution.input_file(params.get("filename_in")) + params.get("filename_out") + str(params.get("sigma")) + str(params.get("option")))
+    cargs.append("SurfaceCurvature")
+    cargs.append(execution.input_file(params.get("filename_in")))
+    cargs.append(params.get("filename_out"))
+    cargs.append(str(params.get("sigma")))
+    cargs.append(str(params.get("option")))
     return cargs
 
 

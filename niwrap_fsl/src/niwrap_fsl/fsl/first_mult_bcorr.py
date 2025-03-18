@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIRST_MULT_BCORR_METADATA = Metadata(
-    id="a7d6c8e2e8974e5facac9a650b214397ba549860.boutiques",
+    id="a95f7de2baa97fafc838a6ec196d6bbf3665f45e.boutiques",
     name="first_mult_bcorr",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -20,6 +20,7 @@ FirstMultBcorrParameters = typing.TypedDict('FirstMultBcorrParameters', {
     "uncorrected_4d_labels": InputPathType,
     "output_image": str,
     "verbose_flag": bool,
+    "help_flag": bool,
 })
 
 
@@ -71,6 +72,7 @@ def first_mult_bcorr_params(
     uncorrected_4d_labels: InputPathType,
     output_image: str,
     verbose_flag: bool = False,
+    help_flag: bool = False,
 ) -> FirstMultBcorrParameters:
     """
     Build parameters.
@@ -83,6 +85,7 @@ def first_mult_bcorr_params(
             boundaries).
         output_image: Output image name (3D label image).
         verbose_flag: Output F-stats to standard out.
+        help_flag: Display this help message.
     Returns:
         Parameter dictionary
     """
@@ -93,6 +96,7 @@ def first_mult_bcorr_params(
         "uncorrected_4d_labels": uncorrected_4d_labels,
         "output_image": output_image,
         "verbose_flag": verbose_flag,
+        "help_flag": help_flag,
     }
     return params
 
@@ -130,6 +134,8 @@ def first_mult_bcorr_cargs(
     ])
     if params.get("verbose_flag"):
         cargs.append("-v")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -184,6 +190,7 @@ def first_mult_bcorr(
     uncorrected_4d_labels: InputPathType,
     output_image: str,
     verbose_flag: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> FirstMultBcorrOutputs:
     """
@@ -202,6 +209,7 @@ def first_mult_bcorr(
             boundaries).
         output_image: Output image name (3D label image).
         verbose_flag: Output F-stats to standard out.
+        help_flag: Display this help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FirstMultBcorrOutputs`).
@@ -214,6 +222,7 @@ def first_mult_bcorr(
         uncorrected_4d_labels=uncorrected_4d_labels,
         output_image=output_image,
         verbose_flag=verbose_flag,
+        help_flag=help_flag,
     )
     return first_mult_bcorr_execute(params, execution)
 

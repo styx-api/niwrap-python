@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SWAP_VOXELWISE_METADATA = Metadata(
-    id="4d3f862f263904d851a583fa7d717c4e6949c262.boutiques",
+    id="0e000af7eb62f957a597cea6c58ed3ff2e31327a.boutiques",
     name="swap_voxelwise",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -22,6 +22,7 @@ SwapVoxelwiseParameters = typing.TypedDict('SwapVoxelwiseParameters', {
     "reorder_mode": typing.NotRequired[str | None],
     "init_mask": typing.NotRequired[InputPathType | None],
     "crossing_thresh": typing.NotRequired[float | None],
+    "verbose_flag": bool,
 })
 
 
@@ -75,6 +76,7 @@ def swap_voxelwise_params(
     reorder_mode: str | None = "voxels",
     init_mask: InputPathType | None = None,
     crossing_thresh: float | None = 0.1,
+    verbose_flag: bool = False,
 ) -> SwapVoxelwiseParameters:
     """
     Build parameters.
@@ -89,6 +91,7 @@ def swap_voxelwise_params(
         init_mask: Filename of initialization mask.
         crossing_thresh: Threshold for considering a crossing fibre region -\
             default=0.1.
+        verbose_flag: Switch on diagnostic messages.
     Returns:
         Parameter dictionary
     """
@@ -96,6 +99,7 @@ def swap_voxelwise_params(
         "__STYXTYPE__": "swap_voxelwise",
         "vectors_file_list": vectors_file_list,
         "mask": mask,
+        "verbose_flag": verbose_flag,
     }
     if scalars_file_list is not None:
         params["scalars_file_list"] = scalars_file_list
@@ -158,7 +162,8 @@ def swap_voxelwise_cargs(
             "--xthresh",
             str(params.get("crossing_thresh"))
         ])
-    cargs.append("-V")
+    if params.get("verbose_flag"):
+        cargs.append("-V")
     return cargs
 
 
@@ -214,6 +219,7 @@ def swap_voxelwise(
     reorder_mode: str | None = "voxels",
     init_mask: InputPathType | None = None,
     crossing_thresh: float | None = 0.1,
+    verbose_flag: bool = False,
     runner: Runner | None = None,
 ) -> SwapVoxelwiseOutputs:
     """
@@ -233,6 +239,7 @@ def swap_voxelwise(
         init_mask: Filename of initialization mask.
         crossing_thresh: Threshold for considering a crossing fibre region -\
             default=0.1.
+        verbose_flag: Switch on diagnostic messages.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SwapVoxelwiseOutputs`).
@@ -247,6 +254,7 @@ def swap_voxelwise(
         reorder_mode=reorder_mode,
         init_mask=init_mask,
         crossing_thresh=crossing_thresh,
+        verbose_flag=verbose_flag,
     )
     return swap_voxelwise_execute(params, execution)
 

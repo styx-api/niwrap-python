@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_BOXPLOT_METADATA = Metadata(
-    id="8abcb032f30a04f5dd6924727b860dc8df188123.boutiques",
+    id="1c607fb933cfb9b2aa30f4e4fc2640bc64cf74c5.boutiques",
     name="fsl_boxplot",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -17,6 +17,7 @@ FslBoxplotParameters = typing.TypedDict('FslBoxplotParameters', {
     "__STYX_TYPE__": typing.Literal["fsl_boxplot"],
     "input_files": list[InputPathType],
     "output_image": str,
+    "help_flag": bool,
     "title": typing.NotRequired[str | None],
     "legend_file": typing.NotRequired[InputPathType | None],
     "x_label": typing.NotRequired[str | None],
@@ -71,6 +72,7 @@ class FslBoxplotOutputs(typing.NamedTuple):
 def fsl_boxplot_params(
     input_files: list[InputPathType],
     output_image: str,
+    help_flag: bool = False,
     title: str | None = None,
     legend_file: InputPathType | None = None,
     x_label: str | None = None,
@@ -85,6 +87,7 @@ def fsl_boxplot_params(
         input_files: Comma-separated list of input file names (ASCII text\
             matrices, one column per boxplot).
         output_image: Output filename for the PNG file.
+        help_flag: Display this help message.
         title: Plot title.
         legend_file: File name of ASCII text file, one row per legend entry.
         x_label: X-axis label.
@@ -98,6 +101,7 @@ def fsl_boxplot_params(
         "__STYXTYPE__": "fsl_boxplot",
         "input_files": input_files,
         "output_image": output_image,
+        "help_flag": help_flag,
     }
     if title is not None:
         params["title"] = title
@@ -137,6 +141,8 @@ def fsl_boxplot_cargs(
         "--out",
         params.get("output_image")
     ])
+    if params.get("help_flag"):
+        cargs.append("--help")
     if params.get("title") is not None:
         cargs.extend([
             "--title",
@@ -217,6 +223,7 @@ def fsl_boxplot_execute(
 def fsl_boxplot(
     input_files: list[InputPathType],
     output_image: str,
+    help_flag: bool = False,
     title: str | None = None,
     legend_file: InputPathType | None = None,
     x_label: str | None = None,
@@ -236,6 +243,7 @@ def fsl_boxplot(
         input_files: Comma-separated list of input file names (ASCII text\
             matrices, one column per boxplot).
         output_image: Output filename for the PNG file.
+        help_flag: Display this help message.
         title: Plot title.
         legend_file: File name of ASCII text file, one row per legend entry.
         x_label: X-axis label.
@@ -251,6 +259,7 @@ def fsl_boxplot(
     params = fsl_boxplot_params(
         input_files=input_files,
         output_image=output_image,
+        help_flag=help_flag,
         title=title,
         legend_file=legend_file,
         x_label=x_label,

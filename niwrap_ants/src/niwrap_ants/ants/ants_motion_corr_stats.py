@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_MOTION_CORR_STATS_METADATA = Metadata(
-    id="ae93cc3983b8309bee22c105a3b82c9e97354cf5.boutiques",
+    id="95237c56a3652c4b5bd1f2cf0cee57d368f1c618.boutiques",
     name="antsMotionCorrStats",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -22,6 +22,7 @@ AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters'
     "framewise": typing.NotRequired[typing.Literal[0, 1] | None],
     "spatial_map": bool,
     "timeseries_displacement": bool,
+    "help": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
@@ -75,6 +76,7 @@ def ants_motion_corr_stats_params(
     framewise: typing.Literal[0, 1] | None = None,
     spatial_map: bool = False,
     timeseries_displacement: bool = False,
+    help_: typing.Literal[0, 1] | None = None,
 ) -> AntsMotionCorrStatsParameters:
     """
     Build parameters.
@@ -88,6 +90,7 @@ def ants_motion_corr_stats_params(
         spatial_map: Output image of displacement magnitude.
         timeseries_displacement: Output 4d time-series image of displacement\
             magnitude.
+        help_: Print the help menu. Short version with -h.
     Returns:
         Parameter dictionary
     """
@@ -103,6 +106,8 @@ def ants_motion_corr_stats_params(
         params["transform_index"] = transform_index
     if framewise is not None:
         params["framewise"] = framewise
+    if help_ is not None:
+        params["help"] = help_
     return params
 
 
@@ -147,6 +152,11 @@ def ants_motion_corr_stats_cargs(
         cargs.append("-s")
     if params.get("timeseries_displacement"):
         cargs.append("-d")
+    if params.get("help") is not None:
+        cargs.extend([
+            "--help",
+            str(params.get("help"))
+        ])
     return cargs
 
 
@@ -206,6 +216,7 @@ def ants_motion_corr_stats(
     framewise: typing.Literal[0, 1] | None = None,
     spatial_map: bool = False,
     timeseries_displacement: bool = False,
+    help_: typing.Literal[0, 1] | None = None,
     runner: Runner | None = None,
 ) -> AntsMotionCorrStatsOutputs:
     """
@@ -228,6 +239,7 @@ def ants_motion_corr_stats(
         spatial_map: Output image of displacement magnitude.
         timeseries_displacement: Output 4d time-series image of displacement\
             magnitude.
+        help_: Print the help menu. Short version with -h.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrStatsOutputs`).
@@ -242,6 +254,7 @@ def ants_motion_corr_stats(
         framewise=framewise,
         spatial_map=spatial_map,
         timeseries_displacement=timeseries_displacement,
+        help_=help_,
     )
     return ants_motion_corr_stats_execute(params, execution)
 

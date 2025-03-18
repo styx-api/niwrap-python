@@ -6,11 +6,24 @@ import pathlib
 from styxdefs import *
 
 DENOISE_IMAGE_METADATA = Metadata(
-    id="510d45985961f8069b7889eeca0f9b9d13f57a86.boutiques",
+    id="496721817248c92b0a7f0b2d8b992d1de838f093.boutiques",
     name="DenoiseImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
 )
+
+
+DenoiseImageCorrectedOutputParameters = typing.TypedDict('DenoiseImageCorrectedOutputParameters', {
+    "__STYX_TYPE__": typing.Literal["correctedOutput"],
+    "correctedOutputFileName": str,
+})
+
+
+DenoiseImageCorrectedOutputNoiseParameters = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParameters', {
+    "__STYX_TYPE__": typing.Literal["correctedOutputNoise"],
+    "correctedOutputFileName": str,
+    "noiseFile": typing.NotRequired[str | None],
+})
 
 
 DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
@@ -23,8 +36,7 @@ DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
     "search_radius": typing.NotRequired[str | None],
     "verbose": typing.NotRequired[typing.Literal[0, 1] | None],
     "input_image": InputPathType,
-    "corrected_image_path": str,
-    "noise_image_path": str,
+    "output": typing.Union[DenoiseImageCorrectedOutputParameters, DenoiseImageCorrectedOutputNoiseParameters],
 })
 
 
@@ -41,6 +53,8 @@ def dyn_cargs(
     """
     return {
         "DenoiseImage": denoise_image_cargs,
+        "correctedOutput": denoise_image_corrected_output_cargs,
+        "correctedOutputNoise": denoise_image_corrected_output_noise_cargs,
     }.get(t)
 
 
@@ -57,7 +71,149 @@ def dyn_outputs(
     """
     return {
         "DenoiseImage": denoise_image_outputs,
+        "correctedOutput": denoise_image_corrected_output_outputs,
+        "correctedOutputNoise": denoise_image_corrected_output_noise_outputs,
     }.get(t)
+
+
+class DenoiseImageCorrectedOutputOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `DenoiseImageCorrectedOutputParameters(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    output_image_outfile: OutputPathType
+    """Denoised image."""
+
+
+def denoise_image_corrected_output_params(
+    corrected_output_file_name: str,
+) -> DenoiseImageCorrectedOutputParameters:
+    """
+    Build parameters.
+    
+    Args:
+        corrected_output_file_name: Output file name.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "correctedOutput",
+        "correctedOutputFileName": corrected_output_file_name,
+    }
+    return params
+
+
+def denoise_image_corrected_output_cargs(
+    params: DenoiseImageCorrectedOutputParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    cargs.append(params.get("correctedOutputFileName"))
+    return cargs
+
+
+def denoise_image_corrected_output_outputs(
+    params: DenoiseImageCorrectedOutputParameters,
+    execution: Execution,
+) -> DenoiseImageCorrectedOutputOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = DenoiseImageCorrectedOutputOutputs(
+        root=execution.output_file("."),
+        output_image_outfile=execution.output_file(params.get("correctedOutputFileName")),
+    )
+    return ret
+
+
+class DenoiseImageCorrectedOutputNoiseOutputs(typing.NamedTuple):
+    """
+    Output object returned when calling `DenoiseImageCorrectedOutputNoiseParameters(...)`.
+    """
+    root: OutputPathType
+    """Output root folder. This is the root folder for all outputs."""
+    output_image_outfile: OutputPathType
+    """Denoised output image."""
+    output_bias_image: OutputPathType | None
+    """Noise map image."""
+
+
+def denoise_image_corrected_output_noise_params(
+    corrected_output_file_name: str,
+    noise_file: str | None = None,
+) -> DenoiseImageCorrectedOutputNoiseParameters:
+    """
+    Build parameters.
+    
+    Args:
+        corrected_output_file_name: Output file name.
+        noise_file: Output noise map image.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "correctedOutputNoise",
+        "correctedOutputFileName": corrected_output_file_name,
+    }
+    if noise_file is not None:
+        params["noiseFile"] = noise_file
+    return params
+
+
+def denoise_image_corrected_output_noise_cargs(
+    params: DenoiseImageCorrectedOutputNoiseParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("noiseFile") is not None:
+        cargs.append("[" + params.get("correctedOutputFileName") + "," + params.get("noiseFile") + "]")
+    return cargs
+
+
+def denoise_image_corrected_output_noise_outputs(
+    params: DenoiseImageCorrectedOutputNoiseParameters,
+    execution: Execution,
+) -> DenoiseImageCorrectedOutputNoiseOutputs:
+    """
+    Build outputs object containing output file paths and possibly stdout/stderr.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Outputs object.
+    """
+    ret = DenoiseImageCorrectedOutputNoiseOutputs(
+        root=execution.output_file("."),
+        output_image_outfile=execution.output_file(params.get("correctedOutputFileName")),
+        output_bias_image=execution.output_file(params.get("noiseFile")) if (params.get("noiseFile") is not None) else None,
+    )
+    return ret
 
 
 class DenoiseImageOutputs(typing.NamedTuple):
@@ -66,16 +222,14 @@ class DenoiseImageOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    corrected_image: OutputPathType
-    """The noise corrected version of the input image."""
-    noise_image: OutputPathType
-    """Estimated noise image."""
+    output: typing.Union[DenoiseImageCorrectedOutputOutputs, DenoiseImageCorrectedOutputNoiseOutputs]
+    """Outputs from `DenoiseImageCorrectedOutputParameters` or
+    `DenoiseImageCorrectedOutputNoiseParameters`."""
 
 
 def denoise_image_params(
     input_image: InputPathType,
-    corrected_image_path: str,
-    noise_image_path: str,
+    output: typing.Union[DenoiseImageCorrectedOutputParameters, DenoiseImageCorrectedOutputNoiseParameters],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     noise_model: typing.Literal["Gaussian", "Rician"] | None = None,
     shrink_factor: int | None = None,
@@ -90,8 +244,8 @@ def denoise_image_params(
     Args:
         input_image: -i, --input-image inputImageFilename. A scalar image is\
             expected as input for noise correction.
-        corrected_image_path: The noise corrected version of the input image.
-        noise_image_path: Estimated noise image.
+        output: The denoised version of the input image, with optional noise\
+            map image.
         image_dimensionality: -d, --image-dimensionality 2/3/4. This option\
             forces the image to be treated as a specified-dimensional image. If not\
             specified, the program tries to infer the dimensionality from the input\
@@ -114,8 +268,7 @@ def denoise_image_params(
     params = {
         "__STYXTYPE__": "DenoiseImage",
         "input_image": input_image,
-        "corrected_image_path": corrected_image_path,
-        "noise_image_path": noise_image_path,
+        "output": output,
     }
     if image_dimensionality is not None:
         params["image_dimensionality"] = image_dimensionality
@@ -188,8 +341,10 @@ def denoise_image_cargs(
         "--input-image",
         execution.input_file(params.get("input_image"))
     ])
-    cargs.append("--output")
-    cargs.append("[" + params.get("corrected_image_path") + "," + params.get("noise_image_path") + "]")
+    cargs.extend([
+        "--output",
+        *dyn_cargs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution)
+    ])
     return cargs
 
 
@@ -208,8 +363,7 @@ def denoise_image_outputs(
     """
     ret = DenoiseImageOutputs(
         root=execution.output_file("."),
-        corrected_image=execution.output_file(params.get("corrected_image_path")),
-        noise_image=execution.output_file(params.get("noise_image_path")),
+        output=dyn_outputs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution),
     )
     return ret
 
@@ -243,8 +397,7 @@ def denoise_image_execute(
 
 def denoise_image(
     input_image: InputPathType,
-    corrected_image_path: str,
-    noise_image_path: str,
+    output: typing.Union[DenoiseImageCorrectedOutputParameters, DenoiseImageCorrectedOutputNoiseParameters],
     image_dimensionality: typing.Literal[2, 3, 4] | None = None,
     noise_model: typing.Literal["Gaussian", "Rician"] | None = None,
     shrink_factor: int | None = None,
@@ -267,8 +420,8 @@ def denoise_image(
     Args:
         input_image: -i, --input-image inputImageFilename. A scalar image is\
             expected as input for noise correction.
-        corrected_image_path: The noise corrected version of the input image.
-        noise_image_path: Estimated noise image.
+        output: The denoised version of the input image, with optional noise\
+            map image.
         image_dimensionality: -d, --image-dimensionality 2/3/4. This option\
             forces the image to be treated as a specified-dimensional image. If not\
             specified, the program tries to infer the dimensionality from the input\
@@ -300,16 +453,21 @@ def denoise_image(
         search_radius=search_radius,
         verbose=verbose,
         input_image=input_image,
-        corrected_image_path=corrected_image_path,
-        noise_image_path=noise_image_path,
+        output=output,
     )
     return denoise_image_execute(params, execution)
 
 
 __all__ = [
     "DENOISE_IMAGE_METADATA",
+    "DenoiseImageCorrectedOutputNoiseOutputs",
+    "DenoiseImageCorrectedOutputNoiseParameters",
+    "DenoiseImageCorrectedOutputOutputs",
+    "DenoiseImageCorrectedOutputParameters",
     "DenoiseImageOutputs",
     "DenoiseImageParameters",
     "denoise_image",
+    "denoise_image_corrected_output_noise_params",
+    "denoise_image_corrected_output_params",
     "denoise_image_params",
 ]

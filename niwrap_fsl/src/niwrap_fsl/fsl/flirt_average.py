@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FLIRT_AVERAGE_METADATA = Metadata(
-    id="0cc7b938efcdc9cb9d1e15e1453b173b6ccc4af1.boutiques",
+    id="0a2146e58cdab9fa8a4c7f343edcb6c51001fec8.boutiques",
     name="flirt_average",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -18,6 +18,7 @@ FlirtAverageParameters = typing.TypedDict('FlirtAverageParameters', {
     "ninputs": int,
     "input1": InputPathType,
     "input2": InputPathType,
+    "input3": typing.NotRequired[InputPathType | None],
     "output_file": str,
     "reference_image": typing.NotRequired[InputPathType | None],
     "flirt_options": typing.NotRequired[str | None],
@@ -71,6 +72,7 @@ def flirt_average_params(
     input1: InputPathType,
     input2: InputPathType,
     output_file: str,
+    input3: InputPathType | None = None,
     reference_image: InputPathType | None = None,
     flirt_options: str | None = None,
 ) -> FlirtAverageParameters:
@@ -82,6 +84,7 @@ def flirt_average_params(
         input1: First input image (e.g. rawT1_1.nii.gz).
         input2: Second input image (e.g. rawT1_2.nii.gz).
         output_file: Output image (e.g. averageT1.nii.gz).
+        input3: Third input image (e.g. rawT1_3.nii.gz).
         reference_image: Reference image to use instead of first input.
         flirt_options: Options to be passed to FLIRT.
     Returns:
@@ -94,6 +97,8 @@ def flirt_average_params(
         "input2": input2,
         "output_file": output_file,
     }
+    if input3 is not None:
+        params["input3"] = input3
     if reference_image is not None:
         params["reference_image"] = reference_image
     if flirt_options is not None:
@@ -119,7 +124,8 @@ def flirt_average_cargs(
     cargs.append(str(params.get("ninputs")))
     cargs.append(execution.input_file(params.get("input1")))
     cargs.append(execution.input_file(params.get("input2")))
-    cargs.append("...")
+    if params.get("input3") is not None:
+        cargs.append(execution.input_file(params.get("input3")))
     cargs.append(params.get("output_file"))
     if params.get("reference_image") is not None:
         cargs.extend([
@@ -180,6 +186,7 @@ def flirt_average(
     input1: InputPathType,
     input2: InputPathType,
     output_file: str,
+    input3: InputPathType | None = None,
     reference_image: InputPathType | None = None,
     flirt_options: str | None = None,
     runner: Runner | None = None,
@@ -196,6 +203,7 @@ def flirt_average(
         input1: First input image (e.g. rawT1_1.nii.gz).
         input2: Second input image (e.g. rawT1_2.nii.gz).
         output_file: Output image (e.g. averageT1.nii.gz).
+        input3: Third input image (e.g. rawT1_3.nii.gz).
         reference_image: Reference image to use instead of first input.
         flirt_options: Options to be passed to FLIRT.
         runner: Command runner.
@@ -208,6 +216,7 @@ def flirt_average(
         ninputs=ninputs,
         input1=input1,
         input2=input2,
+        input3=input3,
         output_file=output_file,
         reference_image=reference_image,
         flirt_options=flirt_options,

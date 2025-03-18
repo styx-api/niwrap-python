@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIMPLE_SYN_REGISTRATION_METADATA = Metadata(
-    id="8bdec8bc3a221887858c098adc61e63838dc3139.boutiques",
+    id="8c6a2cfa8d98ae9c6548640110fa2b5fad0e2036.boutiques",
     name="simpleSynRegistration",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -108,9 +108,9 @@ def simple_syn_registration_cargs(
     """
     cargs = []
     cargs.append("simpleSynRegistration")
-    cargs.append(execution.input_file(params.get("fixed_image")) + ",")
-    cargs.append(execution.input_file(params.get("moving_image")) + ",")
-    cargs.append(params.get("initial_transform") + ",")
+    cargs.append(execution.input_file(params.get("fixed_image")))
+    cargs.append(execution.input_file(params.get("moving_image")))
+    cargs.append(params.get("initial_transform"))
     cargs.append(params.get("output_prefix"))
     return cargs
 

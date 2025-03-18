@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMERGE_METADATA = Metadata(
-    id="5d8ea7aca79fd0b196c00441d4f31c201a3f63e6.boutiques",
+    id="8e217bd107048eb1364b79da3a54a0b25c985418.boutiques",
     name="fslmerge",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -16,9 +16,14 @@ FSLMERGE_METADATA = Metadata(
 FslmergeParameters = typing.TypedDict('FslmergeParameters', {
     "__STYX_TYPE__": typing.Literal["fslmerge"],
     "merge_time": bool,
+    "merge_x": bool,
+    "merge_y": bool,
+    "merge_z": bool,
+    "auto_choose": bool,
     "merge_set_tr": bool,
     "output_file": str,
     "input_files": list[InputPathType],
+    "volume_number": typing.NotRequired[float | None],
     "tr_value": typing.NotRequired[float | None],
 })
 
@@ -69,7 +74,12 @@ def fslmerge_params(
     output_file: str,
     input_files: list[InputPathType],
     merge_time: bool = False,
+    merge_x: bool = False,
+    merge_y: bool = False,
+    merge_z: bool = False,
+    auto_choose: bool = False,
     merge_set_tr: bool = False,
+    volume_number: float | None = None,
     tr_value: float | None = None,
 ) -> FslmergeParameters:
     """
@@ -79,8 +89,15 @@ def fslmerge_params(
         output_file: Output concatenated image file.
         input_files: Input image files to concatenate.
         merge_time: Concatenate images in time (4th dimension).
+        merge_x: Concatenate images in the x direction.
+        merge_y: Concatenate images in the y direction.
+        merge_z: Concatenate images in the z direction.
+        auto_choose: Auto-choose: single slices -> volume, volumes -> 4D (time\
+            series).
         merge_set_tr: Concatenate images in time and set the output image tr to\
             the provided value.
+        volume_number: Only use volume <N> from each input file (first volume\
+            is 0 not 1).
         tr_value: TR value in seconds, used with the -tr flag.
     Returns:
         Parameter dictionary
@@ -88,10 +105,16 @@ def fslmerge_params(
     params = {
         "__STYXTYPE__": "fslmerge",
         "merge_time": merge_time,
+        "merge_x": merge_x,
+        "merge_y": merge_y,
+        "merge_z": merge_z,
+        "auto_choose": auto_choose,
         "merge_set_tr": merge_set_tr,
         "output_file": output_file,
         "input_files": input_files,
     }
+    if volume_number is not None:
+        params["volume_number"] = volume_number
     if tr_value is not None:
         params["tr_value"] = tr_value
     return params
@@ -114,10 +137,23 @@ def fslmerge_cargs(
     cargs.append("fslmerge")
     if params.get("merge_time"):
         cargs.append("-t")
+    if params.get("merge_x"):
+        cargs.append("-x")
+    if params.get("merge_y"):
+        cargs.append("-y")
+    if params.get("merge_z"):
+        cargs.append("-z")
+    if params.get("auto_choose"):
+        cargs.append("-a")
     if params.get("merge_set_tr"):
         cargs.append("-tr")
     cargs.append(params.get("output_file"))
     cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    if params.get("volume_number") is not None:
+        cargs.extend([
+            "-n",
+            str(params.get("volume_number"))
+        ])
     if params.get("tr_value") is not None:
         cargs.append(str(params.get("tr_value")))
     return cargs
@@ -171,7 +207,12 @@ def fslmerge(
     output_file: str,
     input_files: list[InputPathType],
     merge_time: bool = False,
+    merge_x: bool = False,
+    merge_y: bool = False,
+    merge_z: bool = False,
+    auto_choose: bool = False,
     merge_set_tr: bool = False,
+    volume_number: float | None = None,
     tr_value: float | None = None,
     runner: Runner | None = None,
 ) -> FslmergeOutputs:
@@ -186,8 +227,15 @@ def fslmerge(
         output_file: Output concatenated image file.
         input_files: Input image files to concatenate.
         merge_time: Concatenate images in time (4th dimension).
+        merge_x: Concatenate images in the x direction.
+        merge_y: Concatenate images in the y direction.
+        merge_z: Concatenate images in the z direction.
+        auto_choose: Auto-choose: single slices -> volume, volumes -> 4D (time\
+            series).
         merge_set_tr: Concatenate images in time and set the output image tr to\
             the provided value.
+        volume_number: Only use volume <N> from each input file (first volume\
+            is 0 not 1).
         tr_value: TR value in seconds, used with the -tr flag.
         runner: Command runner.
     Returns:
@@ -197,9 +245,14 @@ def fslmerge(
     execution = runner.start_execution(FSLMERGE_METADATA)
     params = fslmerge_params(
         merge_time=merge_time,
+        merge_x=merge_x,
+        merge_y=merge_y,
+        merge_z=merge_z,
+        auto_choose=auto_choose,
         merge_set_tr=merge_set_tr,
         output_file=output_file,
         input_files=input_files,
+        volume_number=volume_number,
         tr_value=tr_value,
     )
     return fslmerge_execute(params, execution)

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ASL_MFREE_METADATA = Metadata(
-    id="2c6ac3df84ba3307596d4d4ee92da51804362ee6.boutiques",
+    id="56a5bf1d28bbcccb8dc3a23b62c4c832fbd32509.boutiques",
     name="asl_mfree",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -33,6 +33,7 @@ AslMfreeParameters = typing.TypedDict('AslMfreeParameters', {
     "nwb": typing.NotRequired[float | None],
     "turbo_quasar": bool,
     "shift_factor": typing.NotRequired[float | None],
+    "verbose": bool,
 })
 
 
@@ -99,6 +100,7 @@ def asl_mfree_params(
     nwb: float | None = None,
     turbo_quasar: bool = False,
     shift_factor: float | None = 1,
+    verbose: bool = False,
 ) -> AslMfreeParameters:
     """
     Build parameters.
@@ -127,6 +129,7 @@ def asl_mfree_params(
         turbo_quasar: Specify this is a Turbo QUASAR Sequence (optional).
         shift_factor: Slice shifting factor in Turbo QUASAR (default value: 1,\
             optional).
+        verbose: Enable verbose mode.
     Returns:
         Parameter dictionary
     """
@@ -141,6 +144,7 @@ def asl_mfree_params(
         "bat": bat,
         "std": std,
         "turbo_quasar": turbo_quasar,
+        "verbose": verbose,
     }
     if metric is not None:
         params["metric"] = metric
@@ -251,7 +255,8 @@ def asl_mfree_cargs(
             "--shift_factor",
             str(params.get("shift_factor"))
         ])
-    cargs.append("--verbose")
+    if params.get("verbose"):
+        cargs.append("--verbose")
     return cargs
 
 
@@ -319,6 +324,7 @@ def asl_mfree(
     nwb: float | None = None,
     turbo_quasar: bool = False,
     shift_factor: float | None = 1,
+    verbose: bool = False,
     runner: Runner | None = None,
 ) -> AslMfreeOutputs:
     """
@@ -352,6 +358,7 @@ def asl_mfree(
         turbo_quasar: Specify this is a Turbo QUASAR Sequence (optional).
         shift_factor: Slice shifting factor in Turbo QUASAR (default value: 1,\
             optional).
+        verbose: Enable verbose mode.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AslMfreeOutputs`).
@@ -377,6 +384,7 @@ def asl_mfree(
         nwb=nwb,
         turbo_quasar=turbo_quasar,
         shift_factor=shift_factor,
+        verbose=verbose,
     )
     return asl_mfree_execute(params, execution)
 

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ASL_FILE_METADATA = Metadata(
-    id="cbdbabdffdc0f831f4815b08ad995d7bf14f1cd6.boutiques",
+    id="7d87ad6f19f8ce1c3c10bfebd308a104f8f1e664.boutiques",
     name="asl_file",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -40,6 +40,8 @@ AslFileParameters = typing.TypedDict('AslFileParameters', {
     "epoch_unit": typing.NotRequired[typing.Literal["rpt", "tis"] | None],
     "deconv": bool,
     "aif": typing.NotRequired[InputPathType | None],
+    "help": bool,
+    "version": bool,
 })
 
 
@@ -113,6 +115,8 @@ def asl_file_params(
     epoch_unit: typing.Literal["rpt", "tis"] | None = None,
     deconv: bool = False,
     aif: InputPathType | None = None,
+    help_: bool = False,
+    version: bool = False,
 ) -> AslFileParameters:
     """
     Build parameters.
@@ -154,6 +158,8 @@ def asl_file_params(
         deconv: Deconvolution of data with arterial input functions.
         aif: Arterial input functions for deconvolution (4D volume, one aif for\
             each voxel within mask).
+        help_: Display the help message.
+        version: Display version identification.
     Returns:
         Parameter dictionary
     """
@@ -170,6 +176,8 @@ def asl_file_params(
         "mean": mean,
         "epoch": epoch,
         "deconv": deconv,
+        "help": help_,
+        "version": version,
     }
     if mask is not None:
         params["mask"] = mask
@@ -315,6 +323,10 @@ def asl_file_cargs(
             "--aif",
             execution.input_file(params.get("aif"))
         ])
+    if params.get("help"):
+        cargs.append("-h")
+    if params.get("version"):
+        cargs.append("-v")
     return cargs
 
 
@@ -389,6 +401,8 @@ def asl_file(
     epoch_unit: typing.Literal["rpt", "tis"] | None = None,
     deconv: bool = False,
     aif: InputPathType | None = None,
+    help_: bool = False,
+    version: bool = False,
     runner: Runner | None = None,
 ) -> AslFileOutputs:
     """
@@ -435,6 +449,8 @@ def asl_file(
         deconv: Deconvolution of data with arterial input functions.
         aif: Arterial input functions for deconvolution (4D volume, one aif for\
             each voxel within mask).
+        help_: Display the help message.
+        version: Display version identification.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AslFileOutputs`).
@@ -467,6 +483,8 @@ def asl_file(
         epoch_unit=epoch_unit,
         deconv=deconv,
         aif=aif,
+        help_=help_,
+        version=version,
     )
     return asl_file_execute(params, execution)
 

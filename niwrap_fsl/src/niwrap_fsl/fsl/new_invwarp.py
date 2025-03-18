@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NEW_INVWARP_METADATA = Metadata(
-    id="c1339243d2b878297e61fc1b6693396e5c46a980.boutiques",
+    id="baad182c7d3c52eb0aab700505218877c6e9ad97.boutiques",
     name="new_invwarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -132,7 +132,7 @@ def new_invwarp_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("invwarp")
+    cargs.append("new_invwarp")
     cargs.extend([
         "-w",
         execution.input_file(params.get("warpvol"))

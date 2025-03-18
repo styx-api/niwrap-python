@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLSPLIT_METADATA = Metadata(
-    id="588ee0f4afcc0ecee61fd388fbeb58790d2471e2.boutiques",
+    id="ea6d85b37f2c4f39bad74584587cfcd8367f4b21.boutiques",
     name="fslsplit",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -17,6 +17,8 @@ FslsplitParameters = typing.TypedDict('FslsplitParameters', {
     "__STYX_TYPE__": typing.Literal["fslsplit"],
     "infile": InputPathType,
     "output_basename": typing.NotRequired[str | None],
+    "separation_x": bool,
+    "separation_y": bool,
     "separation_z": bool,
     "separation_time": bool,
 })
@@ -67,6 +69,8 @@ class FslsplitOutputs(typing.NamedTuple):
 def fslsplit_params(
     infile: InputPathType,
     output_basename: str | None = "vol",
+    separation_x: bool = False,
+    separation_y: bool = False,
     separation_z: bool = False,
     separation_time: bool = False,
 ) -> FslsplitParameters:
@@ -76,6 +80,8 @@ def fslsplit_params(
     Args:
         infile: Input image (e.g. img.nii.gz).
         output_basename: Output basename (default: vol).
+        separation_x: Separate images in the x direction.
+        separation_y: Separate images in the y direction.
         separation_z: Separate images in the z direction.
         separation_time: Separate images in time (default behaviour).
     Returns:
@@ -84,6 +90,8 @@ def fslsplit_params(
     params = {
         "__STYXTYPE__": "fslsplit",
         "infile": infile,
+        "separation_x": separation_x,
+        "separation_y": separation_y,
         "separation_z": separation_z,
         "separation_time": separation_time,
     }
@@ -110,6 +118,10 @@ def fslsplit_cargs(
     cargs.append(execution.input_file(params.get("infile")))
     if params.get("output_basename") is not None:
         cargs.append(params.get("output_basename"))
+    if params.get("separation_x"):
+        cargs.append("-x")
+    if params.get("separation_y"):
+        cargs.append("-y")
     if params.get("separation_z"):
         cargs.append("-z")
     if params.get("separation_time"):
@@ -164,6 +176,8 @@ def fslsplit_execute(
 def fslsplit(
     infile: InputPathType,
     output_basename: str | None = "vol",
+    separation_x: bool = False,
+    separation_y: bool = False,
     separation_z: bool = False,
     separation_time: bool = False,
     runner: Runner | None = None,
@@ -178,6 +192,8 @@ def fslsplit(
     Args:
         infile: Input image (e.g. img.nii.gz).
         output_basename: Output basename (default: vol).
+        separation_x: Separate images in the x direction.
+        separation_y: Separate images in the y direction.
         separation_z: Separate images in the z direction.
         separation_time: Separate images in time (default behaviour).
         runner: Command runner.
@@ -189,6 +205,8 @@ def fslsplit(
     params = fslsplit_params(
         infile=infile,
         output_basename=output_basename,
+        separation_x=separation_x,
+        separation_y=separation_y,
         separation_z=separation_z,
         separation_time=separation_time,
     )

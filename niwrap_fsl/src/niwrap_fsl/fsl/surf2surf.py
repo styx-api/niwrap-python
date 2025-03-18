@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF2SURF_METADATA = Metadata(
-    id="d3f6f520e28b08a22c957c86939490db1fe6b107.boutiques",
+    id="33ef19f0111fbc0a4b52d93be653e4608d688aa7.boutiques",
     name="surf2surf",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -135,16 +135,8 @@ def surf2surf_cargs(
     """
     cargs = []
     cargs.append("surf2surf")
-    cargs.append("-i")
-    cargs.extend([
-        "--surfin",
-        execution.input_file(params.get("input_surface"))
-    ])
-    cargs.append("-o")
-    cargs.extend([
-        "--surfout",
-        execution.input_file(params.get("output_surface"))
-    ])
+    cargs.append("--surfin=" + execution.input_file(params.get("input_surface")))
+    cargs.append("--surfout=" + execution.input_file(params.get("output_surface")))
     if params.get("input_convention") is not None:
         cargs.extend([
             "--convin",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MEAN_METADATA = Metadata(
-    id="d608ce9fea57e85bfbfc19ea1af870315c233573.boutiques",
+    id="0639551c0a3c274393d386e803ea40a7f4203aa0.boutiques",
     name="mean",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -33,6 +33,7 @@ MeanParameters = typing.TypedDict('MeanParameters', {
     "noamp_flag": bool,
     "prior_mean": typing.NotRequired[float | None],
     "prior_std": typing.NotRequired[float | None],
+    "help_flag": bool,
 })
 
 
@@ -97,6 +98,7 @@ def mean_params(
     noamp_flag: bool = False,
     prior_mean: float | None = None,
     prior_std: float | None = None,
+    help_flag: bool = False,
 ) -> MeanParameters:
     """
     Build parameters.
@@ -124,6 +126,7 @@ def mean_params(
         noamp_flag: Turn off Analytical Marginalisation of error Precision.
         prior_mean: Prior mean.
         prior_std: Prior standard deviation.
+        help_flag: Display help message.
     Returns:
         Parameter dictionary
     """
@@ -135,6 +138,7 @@ def mean_params(
         "timing_flag": timing_flag,
         "forcedir_flag": forcedir_flag,
         "noamp_flag": noamp_flag,
+        "help_flag": help_flag,
     }
     if debug_level is not None:
         params["debug_level"] = debug_level
@@ -254,6 +258,8 @@ def mean_cargs(
             "--ps",
             str(params.get("prior_std"))
         ])
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -320,6 +326,7 @@ def mean(
     noamp_flag: bool = False,
     prior_mean: float | None = None,
     prior_std: float | None = None,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> MeanOutputs:
     """
@@ -352,6 +359,7 @@ def mean(
         noamp_flag: Turn off Analytical Marginalisation of error Precision.
         prior_mean: Prior mean.
         prior_std: Prior standard deviation.
+        help_flag: Display help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MeanOutputs`).
@@ -377,6 +385,7 @@ def mean(
         noamp_flag=noamp_flag,
         prior_mean=prior_mean,
         prior_std=prior_std,
+        help_flag=help_flag,
     )
     return mean_execute(params, execution)
 

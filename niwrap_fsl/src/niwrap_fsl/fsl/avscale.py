@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 AVSCALE_METADATA = Metadata(
-    id="55dd77b83020d0048dbe4f542385e6f483818b7c.boutiques",
+    id="6cdc303b66c5dbac43bc96344003d91f2c657123.boutiques",
     name="avscale",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -50,7 +50,6 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "avscale": avscale_outputs,
     }.get(t)
 
 
@@ -60,8 +59,8 @@ class AvscaleOutputs(typing.NamedTuple):
     """
     root: OutputPathType
     """Output root folder. This is the root folder for all outputs."""
-    output_file: OutputPathType
-    """The output file."""
+    output: list[str]
+    """output affine transfomration file"""
 
 
 def avscale_params(
@@ -114,8 +113,6 @@ def avscale_cargs(
     cargs.append(execution.input_file(params.get("matrix_file")))
     if params.get("non_reference_volume") is not None:
         cargs.append(execution.input_file(params.get("non_reference_volume")))
-    cargs.append(">")
-    cargs.append("output.txt")
     return cargs
 
 
@@ -134,7 +131,7 @@ def avscale_outputs(
     """
     ret = AvscaleOutputs(
         root=execution.output_file("."),
-        output_file=execution.output_file("output.txt"),
+        output=[],
     )
     return ret
 
@@ -159,7 +156,7 @@ def avscale_execute(
     params = execution.params(params)
     cargs = avscale_cargs(params, execution)
     ret = avscale_outputs(params, execution)
-    execution.run(cargs)
+    execution.run(cargs, handle_stdout=lambda s: ret.output.append(s))
     return ret
 
 

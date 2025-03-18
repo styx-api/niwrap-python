@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLVBM_1_BET_METADATA = Metadata(
-    id="b14f656e797f3613fc30f4f42a5942f8c36bc438.boutiques",
+    id="59366bd9d41da1e2bd5aceb34a31a3b980bb9166.boutiques",
     name="fslvbm_1_bet",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -15,6 +15,7 @@ FSLVBM_1_BET_METADATA = Metadata(
 
 Fslvbm1BetParameters = typing.TypedDict('Fslvbm1BetParameters', {
     "__STYX_TYPE__": typing.Literal["fslvbm_1_bet"],
+    "default_bet": bool,
     "increased_robustness": bool,
     "bet_parameters": typing.NotRequired[str | None],
 })
@@ -60,6 +61,7 @@ class Fslvbm1BetOutputs(typing.NamedTuple):
 
 
 def fslvbm_1_bet_params(
+    default_bet: bool = False,
     increased_robustness: bool = False,
     bet_parameters: str | None = None,
 ) -> Fslvbm1BetParameters:
@@ -67,6 +69,7 @@ def fslvbm_1_bet_params(
     Build parameters.
     
     Args:
+        default_bet: Default BET brain extraction with -f 0.4.
         increased_robustness: Increased robustness in the brain extraction when\
             a lot of neck is present.
         bet_parameters: Additional options to be passed on to BET.
@@ -75,6 +78,7 @@ def fslvbm_1_bet_params(
     """
     params = {
         "__STYXTYPE__": "fslvbm_1_bet",
+        "default_bet": default_bet,
         "increased_robustness": increased_robustness,
     }
     if bet_parameters is not None:
@@ -97,6 +101,8 @@ def fslvbm_1_bet_cargs(
     """
     cargs = []
     cargs.append("fslvbm_1_bet")
+    if params.get("default_bet"):
+        cargs.append("-b")
     if params.get("increased_robustness"):
         cargs.append("-N")
     if params.get("bet_parameters") is not None:
@@ -148,6 +154,7 @@ def fslvbm_1_bet_execute(
 
 
 def fslvbm_1_bet(
+    default_bet: bool = False,
     increased_robustness: bool = False,
     bet_parameters: str | None = None,
     runner: Runner | None = None,
@@ -160,6 +167,7 @@ def fslvbm_1_bet(
     URL: https://fsl.fmrib.ox.ac.uk/fsl/fslwiki
     
     Args:
+        default_bet: Default BET brain extraction with -f 0.4.
         increased_robustness: Increased robustness in the brain extraction when\
             a lot of neck is present.
         bet_parameters: Additional options to be passed on to BET.
@@ -170,6 +178,7 @@ def fslvbm_1_bet(
     runner = runner or get_global_runner()
     execution = runner.start_execution(FSLVBM_1_BET_METADATA)
     params = fslvbm_1_bet_params(
+        default_bet=default_bet,
         increased_robustness=increased_robustness,
         bet_parameters=bet_parameters,
     )

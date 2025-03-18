@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TBSS_NON_FA_METADATA = Metadata(
-    id="3450c5b3e221d9141579102c53fd40ca4340b74c.boutiques",
+    id="e257b6d7924e892a20a9b9f3fc46e1f93d157da7.boutiques",
     name="tbss_non_FA",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -18,6 +18,10 @@ TbssNonFaParameters = typing.TypedDict('TbssNonFaParameters', {
     "concat_auto": bool,
     "output_file": str,
     "input_files": list[InputPathType],
+    "concat_x": bool,
+    "concat_y": bool,
+    "concat_z": bool,
+    "concat_t": bool,
     "concat_tr": typing.NotRequired[float | None],
     "volume_number": typing.NotRequired[float | None],
 })
@@ -69,6 +73,10 @@ def tbss_non_fa_params(
     output_file: str,
     input_files: list[InputPathType],
     concat_auto: bool = False,
+    concat_x: bool = False,
+    concat_y: bool = False,
+    concat_z: bool = False,
+    concat_t: bool = False,
     concat_tr: float | None = 0,
     volume_number: float | None = None,
 ) -> TbssNonFaParameters:
@@ -80,6 +88,10 @@ def tbss_non_fa_params(
         input_files: Images to concatenate.
         concat_auto: Auto-choose: single slices -> volume, volumes -> 4D (time\
             series).
+        concat_x: Concatenate images in the x direction.
+        concat_y: Concatenate images in the y direction.
+        concat_z: Concatenate images in the z direction.
+        concat_t: Concatenate images in time.
         concat_tr: Concatenate images in time and set the output image TR\
             (repetition time) to the final option value.
         volume_number: Only use volume <N> from each input file (first volume\
@@ -92,6 +104,10 @@ def tbss_non_fa_params(
         "concat_auto": concat_auto,
         "output_file": output_file,
         "input_files": input_files,
+        "concat_x": concat_x,
+        "concat_y": concat_y,
+        "concat_z": concat_z,
+        "concat_t": concat_t,
     }
     if concat_tr is not None:
         params["concat_tr"] = concat_tr
@@ -119,6 +135,14 @@ def tbss_non_fa_cargs(
         cargs.append("-a")
     cargs.append(params.get("output_file"))
     cargs.extend([execution.input_file(f) for f in params.get("input_files")])
+    if params.get("concat_x"):
+        cargs.append("-x")
+    if params.get("concat_y"):
+        cargs.append("-y")
+    if params.get("concat_z"):
+        cargs.append("-z")
+    if params.get("concat_t"):
+        cargs.append("-t")
     if params.get("concat_tr") is not None:
         cargs.extend([
             "-tr",
@@ -180,6 +204,10 @@ def tbss_non_fa(
     output_file: str,
     input_files: list[InputPathType],
     concat_auto: bool = False,
+    concat_x: bool = False,
+    concat_y: bool = False,
+    concat_z: bool = False,
+    concat_t: bool = False,
     concat_tr: float | None = 0,
     volume_number: float | None = None,
     runner: Runner | None = None,
@@ -196,6 +224,10 @@ def tbss_non_fa(
         input_files: Images to concatenate.
         concat_auto: Auto-choose: single slices -> volume, volumes -> 4D (time\
             series).
+        concat_x: Concatenate images in the x direction.
+        concat_y: Concatenate images in the y direction.
+        concat_z: Concatenate images in the z direction.
+        concat_t: Concatenate images in time.
         concat_tr: Concatenate images in time and set the output image TR\
             (repetition time) to the final option value.
         volume_number: Only use volume <N> from each input file (first volume\
@@ -210,6 +242,10 @@ def tbss_non_fa(
         concat_auto=concat_auto,
         output_file=output_file,
         input_files=input_files,
+        concat_x=concat_x,
+        concat_y=concat_y,
+        concat_z=concat_z,
+        concat_t=concat_t,
         concat_tr=concat_tr,
         volume_number=volume_number,
     )

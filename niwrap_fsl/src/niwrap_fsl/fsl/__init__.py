@@ -69,6 +69,11 @@ from .easythresh import *
 from .eddy import *
 from .eddy_combine import *
 from .eddy_correct import *
+from .eddy_cuda import *
+from .eddy_cuda10_2 import *
+from .eddy_cuda8_0 import *
+from .eddy_cuda9_1 import *
+from .eddy_openmp import *
 from .eddy_quad import *
 from .eddy_squad import *
 from .epi_reg import *

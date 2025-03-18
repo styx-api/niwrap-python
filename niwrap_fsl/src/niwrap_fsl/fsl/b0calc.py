@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 B0CALC_METADATA = Metadata(
-    id="327bbff7f12ab07ebfd36e73f5f6e8c5d9ba0cf0.boutiques",
+    id="eec8842e2086b747c0dbc0c436e9feba0fb181a1.boutiques",
     name="b0calc",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -29,6 +29,7 @@ B0calcParameters = typing.TypedDict('B0calcParameters', {
     "extend_boundary": typing.NotRequired[float | None],
     "direct_conv": bool,
     "verbose_flag": bool,
+    "help_flag": bool,
 })
 
 
@@ -95,6 +96,7 @@ def b0calc_params(
     extend_boundary: float | None = None,
     direct_conv: bool = False,
     verbose_flag: bool = False,
+    help_flag: bool = False,
 ) -> B0calcParameters:
     """
     Build parameters.
@@ -118,6 +120,7 @@ def b0calc_params(
             default=1.
         direct_conv: Use direct (image space) convolution, not FFT.
         verbose_flag: Switch on diagnostic messages.
+        help_flag: Display help message.
     Returns:
         Parameter dictionary
     """
@@ -128,6 +131,7 @@ def b0calc_params(
         "xyz_flag": xyz_flag,
         "direct_conv": direct_conv,
         "verbose_flag": verbose_flag,
+        "help_flag": help_flag,
     }
     if zero_order_x is not None:
         params["zero_order_x"] = zero_order_x
@@ -224,6 +228,8 @@ def b0calc_cargs(
         cargs.append("--directconv")
     if params.get("verbose_flag"):
         cargs.append("-v")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -289,6 +295,7 @@ def b0calc(
     extend_boundary: float | None = None,
     direct_conv: bool = False,
     verbose_flag: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> B0calcOutputs:
     """
@@ -317,6 +324,7 @@ def b0calc(
             default=1.
         direct_conv: Use direct (image space) convolution, not FFT.
         verbose_flag: Switch on diagnostic messages.
+        help_flag: Display help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `B0calcOutputs`).
@@ -338,6 +346,7 @@ def b0calc(
         extend_boundary=extend_boundary,
         direct_conv=direct_conv,
         verbose_flag=verbose_flag,
+        help_flag=help_flag,
     )
     return b0calc_execute(params, execution)
 

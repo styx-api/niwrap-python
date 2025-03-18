@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APPLYXFM4_D_METADATA = Metadata(
-    id="0b7f726faa4dcd12d271bb6690d77ab6c74bf458.boutiques",
+    id="6e61e41a15ca78446360dd7d24d483b2674318f2.boutiques",
     name="applyxfm4D",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -19,6 +19,10 @@ Applyxfm4DParameters = typing.TypedDict('Applyxfm4DParameters', {
     "ref_volume": InputPathType,
     "output_volume": str,
     "transformation_matrix": str,
+    "interpolation_method": typing.NotRequired[str | None],
+    "single_matrix_flag": bool,
+    "four_digit_flag": bool,
+    "user_prefix": typing.NotRequired[str | None],
 })
 
 
@@ -69,6 +73,10 @@ def applyxfm4_d_params(
     ref_volume: InputPathType,
     output_volume: str,
     transformation_matrix: str,
+    interpolation_method: str | None = "sinc",
+    single_matrix_flag: bool = False,
+    four_digit_flag: bool = False,
+    user_prefix: str | None = None,
 ) -> Applyxfm4DParameters:
     """
     Build parameters.
@@ -79,6 +87,11 @@ def applyxfm4_d_params(
         output_volume: Output volume after applying transformation (e.g.\
             output.nii.gz).
         transformation_matrix: Transformation matrix file or directory.
+        interpolation_method: Interpolation method; options are\
+            nearestneighbour (or nn), trilinear, spline, sinc; default is sinc.
+        single_matrix_flag: Flag to specify a single transformation matrix.
+        four_digit_flag: Flag to use four digits in naming files.
+        user_prefix: User-defined prefix for output files.
     Returns:
         Parameter dictionary
     """
@@ -88,7 +101,13 @@ def applyxfm4_d_params(
         "ref_volume": ref_volume,
         "output_volume": output_volume,
         "transformation_matrix": transformation_matrix,
+        "single_matrix_flag": single_matrix_flag,
+        "four_digit_flag": four_digit_flag,
     }
+    if interpolation_method is not None:
+        params["interpolation_method"] = interpolation_method
+    if user_prefix is not None:
+        params["user_prefix"] = user_prefix
     return params
 
 
@@ -111,6 +130,20 @@ def applyxfm4_d_cargs(
     cargs.append(execution.input_file(params.get("ref_volume")))
     cargs.append(params.get("output_volume"))
     cargs.append(params.get("transformation_matrix"))
+    if params.get("interpolation_method") is not None:
+        cargs.extend([
+            "--interp, -interp",
+            params.get("interpolation_method")
+        ])
+    if params.get("single_matrix_flag"):
+        cargs.append("--singlematrix, -singlematrix")
+    if params.get("four_digit_flag"):
+        cargs.append("--fourdigit, -fourdigit")
+    if params.get("user_prefix") is not None:
+        cargs.extend([
+            "--userprefix, -userprefix",
+            params.get("user_prefix")
+        ])
     return cargs
 
 
@@ -163,6 +196,10 @@ def applyxfm4_d(
     ref_volume: InputPathType,
     output_volume: str,
     transformation_matrix: str,
+    interpolation_method: str | None = "sinc",
+    single_matrix_flag: bool = False,
+    four_digit_flag: bool = False,
+    user_prefix: str | None = None,
     runner: Runner | None = None,
 ) -> Applyxfm4DOutputs:
     """
@@ -178,6 +215,11 @@ def applyxfm4_d(
         output_volume: Output volume after applying transformation (e.g.\
             output.nii.gz).
         transformation_matrix: Transformation matrix file or directory.
+        interpolation_method: Interpolation method; options are\
+            nearestneighbour (or nn), trilinear, spline, sinc; default is sinc.
+        single_matrix_flag: Flag to specify a single transformation matrix.
+        four_digit_flag: Flag to use four digits in naming files.
+        user_prefix: User-defined prefix for output files.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Applyxfm4DOutputs`).
@@ -189,6 +231,10 @@ def applyxfm4_d(
         ref_volume=ref_volume,
         output_volume=output_volume,
         transformation_matrix=transformation_matrix,
+        interpolation_method=interpolation_method,
+        single_matrix_flag=single_matrix_flag,
+        four_digit_flag=four_digit_flag,
+        user_prefix=user_prefix,
     )
     return applyxfm4_d_execute(params, execution)
 

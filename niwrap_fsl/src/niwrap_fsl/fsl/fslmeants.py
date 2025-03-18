@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMEANTS_METADATA = Metadata(
-    id="fcc95512e4d985215019fd1ae002fbea7f289d21.boutiques",
+    id="a664704b3d93ff85fe61f57062d6ab782f4955bd.boutiques",
     name="fslmeants",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -28,6 +28,7 @@ FslmeantsParameters = typing.TypedDict('FslmeantsParameters', {
     "transpose_flag": bool,
     "weighted_mean_flag": bool,
     "verbose_flag": bool,
+    "help_flag": bool,
 })
 
 
@@ -87,6 +88,7 @@ def fslmeants_params(
     transpose_flag: bool = False,
     weighted_mean_flag: bool = False,
     verbose_flag: bool = False,
+    help_flag: bool = False,
 ) -> FslmeantsParameters:
     """
     Build parameters.
@@ -111,6 +113,7 @@ def fslmeants_params(
         weighted_mean_flag: Output weighted mean, using mask values as weights,\
             and exit.
         verbose_flag: Switch on diagnostic messages.
+        help_flag: Display the help message.
     Returns:
         Parameter dictionary
     """
@@ -124,6 +127,7 @@ def fslmeants_params(
         "transpose_flag": transpose_flag,
         "weighted_mean_flag": weighted_mean_flag,
         "verbose_flag": verbose_flag,
+        "help_flag": help_flag,
     }
     if output is not None:
         params["output"] = output
@@ -196,6 +200,8 @@ def fslmeants_cargs(
         cargs.append("-w")
     if params.get("verbose_flag"):
         cargs.append("-v")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -257,6 +263,7 @@ def fslmeants(
     transpose_flag: bool = False,
     weighted_mean_flag: bool = False,
     verbose_flag: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> FslmeantsOutputs:
     """
@@ -286,6 +293,7 @@ def fslmeants(
         weighted_mean_flag: Output weighted mean, using mask values as weights,\
             and exit.
         verbose_flag: Switch on diagnostic messages.
+        help_flag: Display the help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslmeantsOutputs`).
@@ -306,6 +314,7 @@ def fslmeants(
         transpose_flag=transpose_flag,
         weighted_mean_flag=weighted_mean_flag,
         verbose_flag=verbose_flag,
+        help_flag=help_flag,
     )
     return fslmeants_execute(params, execution)
 

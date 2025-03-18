@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLSELECTVOLS_METADATA = Metadata(
-    id="dabd98132f6e29e1943e7c9b7d70ac37b409a5b6.boutiques",
+    id="b97f2d0f36344dd886c04ca097a1839d519105c0.boutiques",
     name="fslselectvols",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -20,6 +20,7 @@ FslselectvolsParameters = typing.TypedDict('FslselectvolsParameters', {
     "vols_list": str,
     "output_mean_flag": bool,
     "output_variance_flag": bool,
+    "help_flag": bool,
 })
 
 
@@ -71,6 +72,7 @@ def fslselectvols_params(
     vols_list: str,
     output_mean_flag: bool = False,
     output_variance_flag: bool = False,
+    help_flag: bool = False,
 ) -> FslselectvolsParameters:
     """
     Build parameters.
@@ -82,6 +84,7 @@ def fslselectvols_params(
             file).
         output_mean_flag: Output mean instead of concatenation.
         output_variance_flag: Output variance instead of concatenation.
+        help_flag: Display help text.
     Returns:
         Parameter dictionary
     """
@@ -92,6 +95,7 @@ def fslselectvols_params(
         "vols_list": vols_list,
         "output_mean_flag": output_mean_flag,
         "output_variance_flag": output_variance_flag,
+        "help_flag": help_flag,
     }
     return params
 
@@ -127,6 +131,8 @@ def fslselectvols_cargs(
         cargs.append("-m")
     if params.get("output_variance_flag"):
         cargs.append("-v")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -180,6 +186,7 @@ def fslselectvols(
     vols_list: str,
     output_mean_flag: bool = False,
     output_variance_flag: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> FslselectvolsOutputs:
     """
@@ -196,6 +203,7 @@ def fslselectvols(
             file).
         output_mean_flag: Output mean instead of concatenation.
         output_variance_flag: Output variance instead of concatenation.
+        help_flag: Display help text.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslselectvolsOutputs`).
@@ -208,6 +216,7 @@ def fslselectvols(
         vols_list=vols_list,
         output_mean_flag=output_mean_flag,
         output_variance_flag=output_variance_flag,
+        help_flag=help_flag,
     )
     return fslselectvols_execute(params, execution)
 

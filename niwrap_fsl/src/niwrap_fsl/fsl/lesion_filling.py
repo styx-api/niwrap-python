@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LESION_FILLING_METADATA = Metadata(
-    id="ed2cf99fe48a14d59b488a818d0b2780af3475ae.boutiques",
+    id="31beff7be4c61479fd13acecfb2776958ac9de6f.boutiques",
     name="lesion_filling",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -21,6 +21,7 @@ LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
     "wmmask": typing.NotRequired[InputPathType | None],
     "verbose_flag": bool,
     "components_flag": bool,
+    "help_flag": bool,
 })
 
 
@@ -73,6 +74,7 @@ def lesion_filling_params(
     wmmask: InputPathType | None = None,
     verbose_flag: bool = False,
     components_flag: bool = False,
+    help_flag: bool = False,
 ) -> LesionFillingParameters:
     """
     Build parameters.
@@ -84,6 +86,7 @@ def lesion_filling_params(
         wmmask: Filename of white matter mask image.
         verbose_flag: Switch on diagnostic messages.
         components_flag: Save all lesion components as volumes.
+        help_flag: Display help message.
     Returns:
         Parameter dictionary
     """
@@ -94,6 +97,7 @@ def lesion_filling_params(
         "lesionmask": lesionmask,
         "verbose_flag": verbose_flag,
         "components_flag": components_flag,
+        "help_flag": help_flag,
     }
     if wmmask is not None:
         params["wmmask"] = wmmask
@@ -136,6 +140,8 @@ def lesion_filling_cargs(
         cargs.append("-v")
     if params.get("components_flag"):
         cargs.append("-c")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -190,6 +196,7 @@ def lesion_filling(
     wmmask: InputPathType | None = None,
     verbose_flag: bool = False,
     components_flag: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> LesionFillingOutputs:
     """
@@ -206,6 +213,7 @@ def lesion_filling(
         wmmask: Filename of white matter mask image.
         verbose_flag: Switch on diagnostic messages.
         components_flag: Save all lesion components as volumes.
+        help_flag: Display help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LesionFillingOutputs`).
@@ -219,6 +227,7 @@ def lesion_filling(
         wmmask=wmmask,
         verbose_flag=verbose_flag,
         components_flag=components_flag,
+        help_flag=help_flag,
     )
     return lesion_filling_execute(params, execution)
 

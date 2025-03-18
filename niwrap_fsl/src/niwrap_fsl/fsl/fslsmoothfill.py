@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLSMOOTHFILL_METADATA = Metadata(
-    id="decfe9aa72638e1ec65326903fe3b064f1752e01.boutiques",
+    id="fbc060a3d94fdea837d41e4627731e10e81a63c1.boutiques",
     name="fslsmoothfill",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -112,21 +112,9 @@ def fslsmoothfill_cargs(
     """
     cargs = []
     cargs.append("fslsmoothfill")
-    cargs.append("-i")
-    cargs.extend([
-        "--in",
-        execution.input_file(params.get("input_image"))
-    ])
-    cargs.append("-m")
-    cargs.extend([
-        "--mask",
-        execution.input_file(params.get("mask_image"))
-    ])
-    cargs.append("-o")
-    cargs.extend([
-        "--out",
-        params.get("output_image")
-    ])
+    cargs.append("--in=" + execution.input_file(params.get("input_image")))
+    cargs.append("--mask=" + execution.input_file(params.get("mask_image")))
+    cargs.append("--out=" + params.get("output_image"))
     if params.get("number_of_iterations") is not None:
         cargs.extend([
             "--niter",

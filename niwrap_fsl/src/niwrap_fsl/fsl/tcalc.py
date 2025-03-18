@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TCALC_METADATA = Metadata(
-    id="f811e9be21119eee4df1778a355c771fb0361c10.boutiques",
+    id="b1adb0f4d7622a781a341b06937114ebf216a6a2.boutiques",
     name="tcalc",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -166,16 +166,8 @@ def tcalc_cargs(
     """
     cargs = []
     cargs.append("tcalc")
-    cargs.append("-i")
-    cargs.extend([
-        "--input",
-        execution.input_file(params.get("input_image"))
-    ])
-    cargs.append("-o")
-    cargs.extend([
-        "--output",
-        params.get("output_image")
-    ])
+    cargs.append("--input=" + execution.input_file(params.get("input_image")))
+    cargs.append("--output=" + params.get("output_image"))
     if params.get("echo_time") is not None:
         cargs.extend([
             "--te",

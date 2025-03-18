@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIGNAL2IMAGE_METADATA = Metadata(
-    id="c966356e7e749d29ae76a10e34270ee060241613.boutiques",
+    id="379c7cbead70bc3c2e0224d3cef103c8189825b6.boutiques",
     name="signal2image",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -27,6 +27,7 @@ Signal2imageParameters = typing.TypedDict('Signal2imageParameters', {
     "cutoff": typing.NotRequired[float | None],
     "rolloff": typing.NotRequired[float | None],
     "save_flag": bool,
+    "help_flag": bool,
 })
 
 
@@ -87,6 +88,7 @@ def signal2image_params(
     cutoff: float | None = 100,
     rolloff: float | None = 10,
     save_flag: bool = False,
+    help_flag: bool = False,
 ) -> Signal2imageParameters:
     """
     Build parameters.
@@ -105,6 +107,7 @@ def signal2image_params(
         cutoff: Apodization with this cutoff; default 100.
         rolloff: Apodization with this rolloff; default 10.
         save_flag: Save window as ASCII matrix (DEBUG!).
+        help_flag: Display help message.
     Returns:
         Parameter dictionary
     """
@@ -116,6 +119,7 @@ def signal2image_params(
         "verbose_flag": verbose_flag,
         "apodize_flag": apodize_flag,
         "save_flag": save_flag,
+        "help_flag": help_flag,
     }
     if input_signal is not None:
         params["input_signal"] = input_signal
@@ -191,6 +195,8 @@ def signal2image_cargs(
         ])
     if params.get("save_flag"):
         cargs.append("-s")
+    if params.get("help_flag"):
+        cargs.append("-h")
     return cargs
 
 
@@ -253,6 +259,7 @@ def signal2image(
     cutoff: float | None = 100,
     rolloff: float | None = 10,
     save_flag: bool = False,
+    help_flag: bool = False,
     runner: Runner | None = None,
 ) -> Signal2imageOutputs:
     """
@@ -277,6 +284,7 @@ def signal2image(
         cutoff: Apodization with this cutoff; default 100.
         rolloff: Apodization with this rolloff; default 10.
         save_flag: Save window as ASCII matrix (DEBUG!).
+        help_flag: Display help message.
         runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Signal2imageOutputs`).
@@ -296,6 +304,7 @@ def signal2image(
         cutoff=cutoff,
         rolloff=rolloff,
         save_flag=save_flag,
+        help_flag=help_flag,
     )
     return signal2image_execute(params, execution)
 
