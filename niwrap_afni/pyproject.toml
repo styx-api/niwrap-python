@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_afni"
-version = "0.5.2"
+version = "0.5.3"
 description = "NiWrap wrappers for AFNI."
 license = "LGPL-2.1"
 authors = [{ name = "CMI DAIR", email = "dair@childmind.org" }]
