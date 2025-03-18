@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_fastsurfer"
-version = "0.5.1"
+version = "0.5.2"
 description = "NiWrap wrappers for FastSurfer."
 license = "LGPL-2.1"
 authors = [{ name = "CMI DAIR", email = "dair@childmind.org" }]
