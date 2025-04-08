@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APPLYWARP_METADATA = Metadata(
-    id="f3b271ea5183294815af803d4556178f89f73b26.boutiques",
+    id="357528f20f7db4478fa8e8b36bb6508ff658e4cd.boutiques",
     name="applywarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -27,7 +27,6 @@ ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
     "output_type": typing.NotRequired[typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None],
     "postmat": typing.NotRequired[InputPathType | None],
     "premat": typing.NotRequired[InputPathType | None],
-    "ref_file_1": InputPathType,
     "superlevel": typing.NotRequired[typing.Literal["a"] | None],
     "superlevel_2": typing.NotRequired[int | None],
     "supersample": bool,
@@ -79,7 +78,6 @@ class ApplywarpOutputs(typing.NamedTuple):
 def applywarp_params(
     in_file: InputPathType,
     ref_file: InputPathType,
-    ref_file_1: InputPathType,
     interp: typing.Literal["nn", "trilinear", "sinc", "spline"] | None = None,
     out_file: str | None = None,
     relwarp: bool = False,
@@ -100,7 +98,6 @@ def applywarp_params(
     Args:
         in_file: Image to be warped.
         ref_file: Reference image.
-        ref_file_1: Reference image.
         interp: 'nn' or 'trilinear' or 'sinc' or 'spline'. Interpolation\
             method.
         out_file: Output filename.
@@ -128,7 +125,6 @@ def applywarp_params(
         "ref_file": ref_file,
         "relwarp": relwarp,
         "abswarp": abswarp,
-        "ref_file_1": ref_file_1,
         "supersample": supersample,
     }
     if interp is not None:
@@ -191,7 +187,6 @@ def applywarp_cargs(
         cargs.append("--postmat=" + execution.input_file(params.get("postmat")))
     if params.get("premat") is not None:
         cargs.append("--premat=" + execution.input_file(params.get("premat")))
-    cargs.append("--ref=" + execution.input_file(params.get("ref_file_1")))
     if params.get("superlevel") is not None:
         cargs.append("--superlevel=" + params.get("superlevel"))
     if params.get("superlevel_2") is not None:
@@ -248,7 +243,6 @@ def applywarp_execute(
 def applywarp(
     in_file: InputPathType,
     ref_file: InputPathType,
-    ref_file_1: InputPathType,
     interp: typing.Literal["nn", "trilinear", "sinc", "spline"] | None = None,
     out_file: str | None = None,
     relwarp: bool = False,
@@ -274,7 +268,6 @@ def applywarp(
     Args:
         in_file: Image to be warped.
         ref_file: Reference image.
-        ref_file_1: Reference image.
         interp: 'nn' or 'trilinear' or 'sinc' or 'spline'. Interpolation\
             method.
         out_file: Output filename.
@@ -312,7 +305,6 @@ def applywarp(
         output_type=output_type,
         postmat=postmat,
         premat=premat,
-        ref_file_1=ref_file_1,
         superlevel=superlevel,
         superlevel_2=superlevel_2,
         supersample=supersample,
