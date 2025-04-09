@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_WARPFIELD_METADATA = Metadata(
-    id="e0f48a3f4d002bf731b7f13e5d1964bc0562c643.boutiques",
+    id="5aca5599202d9368288de6e4b335fa121d4945c6.boutiques",
     name="convert-warpfield",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

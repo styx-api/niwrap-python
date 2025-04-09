@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QBOOT_METADATA = Metadata(
-    id="44b4ad667be58d27640766d256a8ce58b6c36402.boutiques",
+    id="67a2a2ad368ae35d03edb70213501c9e4f00fd1c.boutiques",
     name="qboot",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

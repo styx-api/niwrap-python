@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_DISTORTION_METADATA = Metadata(
-    id="48fa054376bf4c18372dba53ab95fa9cc3a1605c.boutiques",
+    id="926115763800736b439ed76588caf781eeafedfa.boutiques",
     name="surface-distortion",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

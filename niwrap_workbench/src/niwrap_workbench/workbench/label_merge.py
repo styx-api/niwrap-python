@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_MERGE_METADATA = Metadata(
-    id="db3ae692db4c86627df663a917e751144fd992bd.boutiques",
+    id="5efefcd7f737f613c19f0f011a66fc489a39b275.boutiques",
     name="label-merge",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

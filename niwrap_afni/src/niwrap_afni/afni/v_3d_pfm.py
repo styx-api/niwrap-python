@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_PFM_METADATA = Metadata(
-    id="f7aab5e05bd524bd16dfeff45458c7c1170ad012.boutiques",
+    id="d084aee5c4e75cf817ad2d01aebd36c373c18a2d.boutiques",
     name="3dPFM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

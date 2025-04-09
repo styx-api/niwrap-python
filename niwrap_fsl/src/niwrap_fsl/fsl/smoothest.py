@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SMOOTHEST_METADATA = Metadata(
-    id="436ed39c6cb732b926e9d92c735128d22d897615.boutiques",
+    id="ca3a67386fb909e7959f6c335705464ad8eead96.boutiques",
     name="smoothest",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

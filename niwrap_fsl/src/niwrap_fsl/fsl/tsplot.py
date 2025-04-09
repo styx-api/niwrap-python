@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TSPLOT_METADATA = Metadata(
-    id="357f3c74d48e059c3c56760b5ba99627555d9b68.boutiques",
+    id="2190e399a484f23d506d99f37ec724a0e180b64f.boutiques",
     name="tsplot",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

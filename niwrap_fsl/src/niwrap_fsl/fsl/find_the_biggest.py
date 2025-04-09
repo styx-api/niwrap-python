@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIND_THE_BIGGEST_METADATA = Metadata(
-    id="17205d12d19e19dc2a638192370039fcdbc31346.boutiques",
+    id="f239544d494314cd9b9223a5c419f7de4b1e15a8.boutiques",
     name="find_the_biggest",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

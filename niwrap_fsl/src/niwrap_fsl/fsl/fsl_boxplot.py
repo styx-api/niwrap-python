@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_BOXPLOT_METADATA = Metadata(
-    id="9314ef06d0fd90ac65012b5d28378ec59069e582.boutiques",
+    id="cc8df2c2f3c12b3005cb31dda7546753717126f5.boutiques",
     name="fsl_boxplot",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

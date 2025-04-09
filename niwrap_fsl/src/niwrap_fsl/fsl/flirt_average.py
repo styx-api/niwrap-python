@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FLIRT_AVERAGE_METADATA = Metadata(
-    id="063cf9aab3db90cc97915a46a8682e405189879d.boutiques",
+    id="283b294e9e7b11a5721209bbc9adac0d32930cd8.boutiques",
     name="flirt_average",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

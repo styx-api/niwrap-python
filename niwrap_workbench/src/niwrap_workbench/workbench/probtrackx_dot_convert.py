@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PROBTRACKX_DOT_CONVERT_METADATA = Metadata(
-    id="9e2dba40fefa1a515aaf4315769085253c218bf6.boutiques",
+    id="ed4172358924dfb46447aa040742b2f1019a2901.boutiques",
     name="probtrackx-dot-convert",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

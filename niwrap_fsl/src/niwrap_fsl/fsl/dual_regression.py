@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DUAL_REGRESSION_METADATA = Metadata(
-    id="9f0b733564244bcab3815ff1ed38662dd73f08d8.boutiques",
+    id="95761355642a344c37dee8f8760f8d9218f994e1.boutiques",
     name="dual_regression",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

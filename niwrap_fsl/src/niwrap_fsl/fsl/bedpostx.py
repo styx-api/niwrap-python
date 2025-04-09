@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BEDPOSTX_METADATA = Metadata(
-    id="c03ae1378fec184e9e0c20e1ca584f06b71cecd7.boutiques",
+    id="63953cadd31dba0e63cb83d39dff3c9e3f583e39.boutiques",
     name="bedpostx",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BET2_METADATA = Metadata(
-    id="060880fcfdba043292768b18e2d94a940747fdd9.boutiques",
+    id="33a4da96b29af869ab7df9781b4645832e99fcbb.boutiques",
     name="bet2",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

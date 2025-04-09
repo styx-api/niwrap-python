@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 POINTFLIRT_METADATA = Metadata(
-    id="ab04b9408227e5cbe1dc1b00b5f38d5566787968.boutiques",
+    id="40b451262d854dc03cc8c098c10bc804ad96102c.boutiques",
     name="pointflirt",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

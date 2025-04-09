@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_FUNCVITS_METADATA = Metadata(
-    id="6c587fcd20a5508967c6e2405c370dc7a9cfffae.boutiques",
+    id="c31b3fea785150e0e49672d8b3bcc550b5d3bfdb.boutiques",
     name="mri-funcvits",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -76,7 +76,7 @@ def mri_funcvits_params(
     paintsurf: str | None = "white",
     sphere: str | None = "sphere",
     icosize: int | None = 10242,
-    hemi: list[str] | None = ["lh", "rh"],
+    hemi: list[str] | None = None,
     svitdir: str | None = None,
     icodir: str | None = "/usr/local/freesurfer/lib/bem",
     umask: str | None = None,
@@ -252,7 +252,7 @@ def mri_funcvits(
     paintsurf: str | None = "white",
     sphere: str | None = "sphere",
     icosize: int | None = 10242,
-    hemi: list[str] | None = ["lh", "rh"],
+    hemi: list[str] | None = None,
     svitdir: str | None = None,
     icodir: str | None = "/usr/local/freesurfer/lib/bem",
     umask: str | None = None,

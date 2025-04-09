@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANATOMICAL_AVERAGE_METADATA = Metadata(
-    id="96e4c88ea2598e8633d6adc692e9ae380a20853a.boutiques",
+    id="778f5a5c8d722b93a945cefdef351a0babd00a75.boutiques",
     name="AnatomicalAverage",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

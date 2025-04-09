@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_RF_LABEL_METADATA = Metadata(
-    id="f6a8f74bc20598512ca39566372ca9777024a7f0.boutiques",
+    id="b3bf0dd7970ddab056fc6331f77e7af692ba0c3a.boutiques",
     name="mri_rf_label",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -137,7 +137,7 @@ def mri_rf_label_params(
     mask: InputPathType | None = None,
     expand: float | None = None,
     max_iter: float | None = 200,
-    filter_mode: list[float] | None = [0, 0.5],
+    filter_mode: list[float] | None = None,
     longitudinal_vol: InputPathType | None = None,
     longitudinal_lta: InputPathType | None = None,
     relabel_unlikely_flag: list[float] | None = None,
@@ -523,7 +523,7 @@ def mri_rf_label(
     mask: InputPathType | None = None,
     expand: float | None = None,
     max_iter: float | None = 200,
-    filter_mode: list[float] | None = [0, 0.5],
+    filter_mode: list[float] | None = None,
     longitudinal_vol: InputPathType | None = None,
     longitudinal_lta: InputPathType | None = None,
     relabel_unlikely_flag: list[float] | None = None,

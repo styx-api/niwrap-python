@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA = Metadata(
-    id="c7361c4e340d4044ba58e2e93a667ceb9c6989fd.boutiques",
+    id="d0e758c1c3b93d5f135a70ee0789b84e5479108f.boutiques",
     name="volume-warpfield-affine-regression",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

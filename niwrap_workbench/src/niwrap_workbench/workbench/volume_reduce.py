@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_REDUCE_METADATA = Metadata(
-    id="000697a9b57d0ed51137f609e6d5aab7e7d7ec4e.boutiques",
+    id="a3d10b28c0a64f3f19008b0b2e863048dd2693e4.boutiques",
     name="volume-reduce",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

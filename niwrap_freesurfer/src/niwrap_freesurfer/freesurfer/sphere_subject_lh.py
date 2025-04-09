@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPHERE_SUBJECT_LH_METADATA = Metadata(
-    id="9c0f4a116282782306c586aa642bdbfb17888ea4.boutiques",
+    id="ff268b28a43fc5b537953764154fa43ebab2c033.boutiques",
     name="sphere_subject-lh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

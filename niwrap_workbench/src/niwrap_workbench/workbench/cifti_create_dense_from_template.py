@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA = Metadata(
-    id="de8b3c988b8a89e5022f2e54915431053af06271.boutiques",
+    id="da0229304fc3d58a84e54c110629007c8a6c124b.boutiques",
     name="cifti-create-dense-from-template",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

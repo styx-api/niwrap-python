@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 HALFCOSBASIS_METADATA = Metadata(
-    id="723641d1a6daf091dfd62c187e4b62e128df7b02.boutiques",
+    id="640a5e6ac19a0af58d05c69c3337d339e9244a98.boutiques",
     name="halfcosbasis",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

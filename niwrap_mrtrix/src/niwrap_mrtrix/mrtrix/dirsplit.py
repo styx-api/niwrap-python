@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DIRSPLIT_METADATA = Metadata(
-    id="6e37b12fbc3f04f176653870efe5897fa98a5daf.boutiques",
+    id="6943dfd21fe636f218d9d7ac572829fa9eeb0c9b.boutiques",
     name="dirsplit",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

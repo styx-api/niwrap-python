@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CUTOFFCALC_METADATA = Metadata(
-    id="f17af78bd794a8daf34d3e8b451ed1c30a497ea8.boutiques",
+    id="be1d34daf387c7a5ae9534c1adf950c1b20fb7f3.boutiques",
     name="cutoffcalc",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

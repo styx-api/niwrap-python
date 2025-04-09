@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FABBER_ASL_METADATA = Metadata(
-    id="32513c24f23b6f2c49915f0624e2c6116fdc28cc.boutiques",
+    id="78601ea614fc950ecf0f43a99bec42c79e5df181.boutiques",
     name="fabber_asl",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

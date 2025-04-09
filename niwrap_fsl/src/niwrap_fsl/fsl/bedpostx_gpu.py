@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BEDPOSTX_GPU_METADATA = Metadata(
-    id="02e0576b912f976928ffd80cadc861e0456019aa.boutiques",
+    id="02d42bbf7827961e88f74430ee1ce545d0754aae.boutiques",
     name="bedpostx_gpu",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

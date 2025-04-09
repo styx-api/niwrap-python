@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_DESPIKE_METADATA = Metadata(
-    id="44ec753320617541f5d497eb7063805f1b6ba522.boutiques",
+    id="25879c99c0ec4a24f082b425a60ad7b7f6e906a2.boutiques",
     name="3dDespike",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

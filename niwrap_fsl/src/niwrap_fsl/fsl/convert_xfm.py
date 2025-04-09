@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_XFM_METADATA = Metadata(
-    id="38bc1e743ddf56ff89f0cc84ec2bc4af5d3c91f2.boutiques",
+    id="155aa078b734cf1c6ba39afab6b66efc136fbd1c.boutiques",
     name="convert_xfm",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

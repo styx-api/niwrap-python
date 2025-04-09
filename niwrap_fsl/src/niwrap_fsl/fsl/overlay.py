@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 OVERLAY_METADATA = Metadata(
-    id="a8c9ffbfd45df65272a74dd58ff7c74f9f03a850.boutiques",
+    id="f8a4a8f509893b30940a1ef16cf87c7c0609f62c.boutiques",
     name="overlay",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

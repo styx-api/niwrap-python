@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_DEGREE_CENTRALITY_METADATA = Metadata(
-    id="9c1b2a3c28f22a6d88ad020bc342cd234d9457ea.boutiques",
+    id="6b26eb322a598bdf48e84565bbf6674c9e7c8cf4.boutiques",
     name="3dDegreeCentrality",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

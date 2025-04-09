@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ANOVA3_METADATA = Metadata(
-    id="33646b6586bb5ef7c07fd975c7c9226ed2eae469.boutiques",
+    id="0ca071faeca5610f927f49f81f4766db7f8ba8c2.boutiques",
     name="3dANOVA3",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

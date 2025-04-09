@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_LABEL_TO_BORDER_METADATA = Metadata(
-    id="c9144b25b3b7d9cd115a4ceff34091bcdb41ab28.boutiques",
+    id="219fc4b38b48ad206c378cfe5c40df75c43bd2b7.boutiques",
     name="cifti-label-to-border",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

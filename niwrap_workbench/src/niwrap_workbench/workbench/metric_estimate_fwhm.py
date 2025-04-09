@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_ESTIMATE_FWHM_METADATA = Metadata(
-    id="93d4c4a8c6da0ee8cc2cc4c3da48da105c37ad7e.boutiques",
+    id="170cc8e78771282beeff1fcd6f52511afec7b240.boutiques",
     name="metric-estimate-fwhm",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

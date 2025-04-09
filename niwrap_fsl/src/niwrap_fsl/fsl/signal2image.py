@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIGNAL2IMAGE_METADATA = Metadata(
-    id="4eb0ecbc393067a1b8a5954064ab9cdc87aebdbe.boutiques",
+    id="49c8a2ca24a598e9e83ea9066e0f5bc5c7979e72.boutiques",
     name="signal2image",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

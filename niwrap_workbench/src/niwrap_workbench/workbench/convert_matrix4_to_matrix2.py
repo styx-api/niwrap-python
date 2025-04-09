@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
-    id="a21f88ecb76785189b531ec9b9ce9d4663f90fd6.boutiques",
+    id="1b4b91cb4a2c6ab97a7949a78b5b1fae20a20738.boutiques",
     name="convert-matrix4-to-matrix2",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

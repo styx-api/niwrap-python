@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ZTOP_METADATA = Metadata(
-    id="6b31068866f230a27c4cad71ca0d8dd5f91dd96e.boutiques",
+    id="157a935a53ec8ea051c4e2b446e60d5da6ba9ef4.boutiques",
     name="ztop",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

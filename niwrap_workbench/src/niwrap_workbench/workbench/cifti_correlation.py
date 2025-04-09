@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CORRELATION_METADATA = Metadata(
-    id="74e621651497050d1f29b9b0c8ad922ce8039b47.boutiques",
+    id="759256b0c8bab6d5c67ad2ff854228a1103f8688.boutiques",
     name="cifti-correlation",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",
