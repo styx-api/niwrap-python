@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_UPRIGHT_METADATA = Metadata(
-    id="f69f1f73df7f80db3bbc666008c56b37f2fb8894.boutiques",
+    id="9a8f85ef83b8eb4c40293a66c43256e0c3863123.boutiques",
     name="make_upright",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

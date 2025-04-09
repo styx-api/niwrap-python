@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ZREGRID_METADATA = Metadata(
-    id="2597cdebba8fe75de8a28bb8bff140590938cb2b.boutiques",
+    id="db022b59eef3bb41c838694c65e5ebc0749928b2.boutiques",
     name="3dZregrid",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

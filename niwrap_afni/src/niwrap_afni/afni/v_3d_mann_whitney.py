@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_MANN_WHITNEY_METADATA = Metadata(
-    id="796cea2f9bbd9b908f3b7f4c7deae22683bec6f0.boutiques",
+    id="e0fe96cdc7cfcb9551b9f02dac2ae2e304e42627.boutiques",
     name="3dMannWhitney",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

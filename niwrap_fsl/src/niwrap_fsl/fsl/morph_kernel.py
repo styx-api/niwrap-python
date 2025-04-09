@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MORPH_KERNEL_METADATA = Metadata(
-    id="68541ec7748d8d13f5c268560fc3b05f625b4dae.boutiques",
+    id="e47987bb46f4a1bd9d940c19f988a584155c5d5f.boutiques",
     name="morph_kernel",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

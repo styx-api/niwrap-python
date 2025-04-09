@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_LAYERS_METADATA = Metadata(
-    id="e966c2d7b51c012df1e75b107d18f44f83eac9a4.boutiques",
+    id="5e9aa050f045ea0f592f85e3b66ef116c3891cbb.boutiques",
     name="SurfLayers",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

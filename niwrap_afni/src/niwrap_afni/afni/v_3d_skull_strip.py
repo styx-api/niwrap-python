@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SKULL_STRIP_METADATA = Metadata(
-    id="df6efe15ce597ef9d7e30605580718458f380555.boutiques",
+    id="69bfcd11ca7a6e21d0fd8a60bfd86c37aebc3ba9.boutiques",
     name="3dSkullStrip",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GPS_METADATA = Metadata(
-    id="b6e9756556d50c5c524e3645c380d3d12a887881.boutiques",
+    id="3da1436c727dec534f72a2b4b39eb0621940e34e.boutiques",
     name="gps",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

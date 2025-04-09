@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_SHARPEN_METADATA = Metadata(
-    id="44eead3d035544b0d1ef18d1ea40f5df1b442bcb.boutiques",
+    id="bcc67a227d911d875ee67c8740d94a7a8b8e5f4f.boutiques",
     name="3dSharpen",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

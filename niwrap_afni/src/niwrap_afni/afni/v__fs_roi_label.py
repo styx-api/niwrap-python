@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__FS_ROI_LABEL_METADATA = Metadata(
-    id="1309e970f178ba30ffa735edd056d5c550b135f1.boutiques",
+    id="a7302764b06fe1cdcf5b431a5db63243d5a576e3.boutiques",
     name="@FS_roi_label",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MEDIANFILTER_METADATA = Metadata(
-    id="dad8d29bb39aa0253a34873e5359f391f56a7824.boutiques",
+    id="edbb2578b67de8a28b88309d6ea82681507894f5.boutiques",
     name="medianfilter",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

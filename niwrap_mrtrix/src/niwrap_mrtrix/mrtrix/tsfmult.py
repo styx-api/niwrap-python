@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TSFMULT_METADATA = Metadata(
-    id="d0fb73aa277ae97112d7fea63372b505b054a24f.boutiques",
+    id="4b57581032a9d693139dce131b325135d4381b3e.boutiques",
     name="tsfmult",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

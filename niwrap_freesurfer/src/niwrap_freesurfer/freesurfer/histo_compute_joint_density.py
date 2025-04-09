@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 HISTO_COMPUTE_JOINT_DENSITY_METADATA = Metadata(
-    id="f724dcdabbfe196e5a6d9bc856c3b1b0e765be9b.boutiques",
+    id="3a36a770d00bbd1f28b86ef82a2c5b6f1aaee144.boutiques",
     name="histo_compute_joint_density",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

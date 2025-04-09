@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_ROI_ROW_METADATA = Metadata(
-    id="a4a1c061c97d682d3d4d61503f3c28a11502fc06.boutiques",
+    id="739c802e1b22c2e198a3d50de14679a6f269f722.boutiques",
     name="fat_roi_row",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

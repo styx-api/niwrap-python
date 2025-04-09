@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ASEG2FEAT_METADATA = Metadata(
-    id="a171951e01eefa6d930d2f5fc71421003b6f23e3.boutiques",
+    id="6bf8abcd9269ce2c196730b0a3d075256d6019d9.boutiques",
     name="aseg2feat",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

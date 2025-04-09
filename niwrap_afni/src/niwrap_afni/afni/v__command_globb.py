@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__COMMAND_GLOBB_METADATA = Metadata(
-    id="a76e1268b2d89b7de3b09ab6908aa83b788189ba.boutiques",
+    id="5f14a5e6156977564d2f36a3dee265f9e274c661.boutiques",
     name="@CommandGlobb",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

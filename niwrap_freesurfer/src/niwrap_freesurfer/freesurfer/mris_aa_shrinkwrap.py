@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_AA_SHRINKWRAP_METADATA = Metadata(
-    id="35496254b602549d226c6de261156b86767e1155.boutiques",
+    id="f1b620c2d26413faf9fc31bd238562722d3919d1.boutiques",
     name="mris_AA_shrinkwrap",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

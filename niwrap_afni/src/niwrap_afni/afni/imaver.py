@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMAVER_METADATA = Metadata(
-    id="d40eed47338fed1128a04d1c60c1e336c6bcfad8.boutiques",
+    id="8d8afa638c5562c34495b2bfecf8b92253a461cf.boutiques",
     name="imaver",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DJPEG_METADATA = Metadata(
-    id="3600c030d01c581f3a3e8577bb83f497b31a9efb.boutiques",
+    id="9c5e3f0913e97439eefa4801b85b0734d0587e4a.boutiques",
     name="djpeg",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

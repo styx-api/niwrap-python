@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_STIM_TIMES_PY_METADATA = Metadata(
-    id="3d965a39cc5a0128cd3ea1f9b990c124e0c42cd3.boutiques",
+    id="ac5140e177d6c80531b3cd3204780f0d3bd96dd5.boutiques",
     name="make_stim_times.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

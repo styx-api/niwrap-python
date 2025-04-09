@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_FALSE_CORRELATION_METADATA = Metadata(
-    id="1caaae17d3f0c5a13c0d0ecb9b74ca6b5a6dc29b.boutiques",
+    id="b999ec07c385ff34f8bea679627480ede5acb598.boutiques",
     name="metric-false-correlation",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_DISTANCE_MAP_METADATA = Metadata(
-    id="686ff961ac8e9db74639a1364b1f5b20b600667e.boutiques",
+    id="0893c6f050e343dadac472a8f00aeaaaecf0a30c.boutiques",
     name="mris_distance_map",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

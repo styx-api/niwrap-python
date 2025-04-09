@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1DSOUND_METADATA = Metadata(
-    id="27afe9539a9fa717bc8a3162d9645362879cc57c.boutiques",
+    id="a2187dd6e3b2350eeb3cfc198b09c50fce524010.boutiques",
     name="1dsound",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

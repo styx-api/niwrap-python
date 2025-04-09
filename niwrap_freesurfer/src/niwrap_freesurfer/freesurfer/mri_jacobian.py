@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_JACOBIAN_METADATA = Metadata(
-    id="92cd12066432758c04574ab139770c5aabee1470.boutiques",
+    id="e4214d175e806e750a8b72edc08ecd8ce92e140d.boutiques",
     name="mri_jacobian",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

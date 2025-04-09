@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DIRORDER_METADATA = Metadata(
-    id="822332bcb7593b804c24d6da3c7da0a1eb44ba1a.boutiques",
+    id="81e71a9c447cf1cbb6b544733eb04768520936f0.boutiques",
     name="dirorder",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

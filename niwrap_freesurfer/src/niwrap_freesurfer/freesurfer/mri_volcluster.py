@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_VOLCLUSTER_METADATA = Metadata(
-    id="86e5f012e8262b1a51728b36e2469f6a4678ccf5.boutiques",
+    id="b8e77cc6d4af92e88ebd3bb09aeefef51241c3f9.boutiques",
     name="mri_volcluster",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

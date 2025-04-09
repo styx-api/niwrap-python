@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APQC_MAKE_TCSH_PY_METADATA = Metadata(
-    id="9963574d56b682af5542493c6e37b26eeae1361e.boutiques",
+    id="58c74529bc4e59a67eda49c5a845fd56d8f19b94.boutiques",
     name="apqc_make_tcsh.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

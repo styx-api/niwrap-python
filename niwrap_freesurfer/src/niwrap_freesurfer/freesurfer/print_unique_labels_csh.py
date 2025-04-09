@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
-    id="61620e17b7f1d9248e212d87048973a57d06b37e.boutiques",
+    id="5dca4f4c348d9237bae9336374cad3ee2174c9c8.boutiques",
     name="print_unique_labels.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

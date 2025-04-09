@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TQUAL_METADATA = Metadata(
-    id="a5953b420d22f8f6c2b20824e280582d44af991c.boutiques",
+    id="b10cb749ab7883032d18c3d65d9aa72239852046.boutiques",
     name="3dTqual",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

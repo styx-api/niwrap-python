@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_AMP_TO_RSFC_METADATA = Metadata(
-    id="942616944d84c853b47e970f882430a015aec06f.boutiques",
+    id="322ec34577168f15edf52a084c3d09223b534b09.boutiques",
     name="3dAmpToRSFC",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

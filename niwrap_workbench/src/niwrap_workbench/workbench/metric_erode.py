@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_ERODE_METADATA = Metadata(
-    id="4cf14a328dea03747fea8fba741b370398300e90.boutiques",
+    id="a492ce6bed6371b601abe48af82f65a25d3c76e6.boutiques",
     name="metric-erode",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

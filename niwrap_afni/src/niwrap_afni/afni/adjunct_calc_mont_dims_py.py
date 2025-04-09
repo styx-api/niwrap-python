@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_CALC_MONT_DIMS_PY_METADATA = Metadata(
-    id="4d9e1251726a46e6f7e2c846f8a4c9e80c3f25b6.boutiques",
+    id="f169ebd9ae5d43ca57f751be0233358342e513d6.boutiques",
     name="adjunct_calc_mont_dims.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

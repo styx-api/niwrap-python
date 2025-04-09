@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 UNPACKMINCDIR_METADATA = Metadata(
-    id="665926cbe3f5b98854ac7511f567b75246bc682e.boutiques",
+    id="2dc1b33b00ea414a122d0a6f9b270fd885e8e3eb.boutiques",
     name="unpackmincdir",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

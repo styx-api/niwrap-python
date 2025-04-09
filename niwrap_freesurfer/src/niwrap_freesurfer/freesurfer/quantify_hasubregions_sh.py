@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QUANTIFY_HASUBREGIONS_SH_METADATA = Metadata(
-    id="df100705a41731ca1f463e42b7e69b52a1c9d0b4.boutiques",
+    id="2c2579fdfb34fa03272c566e729ceed9f991aef2.boutiques",
     name="quantifyHAsubregions.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

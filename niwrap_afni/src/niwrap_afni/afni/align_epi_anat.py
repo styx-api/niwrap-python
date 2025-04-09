@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ALIGN_EPI_ANAT_METADATA = Metadata(
-    id="8b0229305647603bf69640345954c0975124bb02.boutiques",
+    id="f8698b45584333a566a4ac7a702d9045fad24911.boutiques",
     name="align_epi_anat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

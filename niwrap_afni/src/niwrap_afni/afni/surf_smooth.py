@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_SMOOTH_METADATA = Metadata(
-    id="d12bfab32f106014ff3d8c52a7b720c737313260.boutiques",
+    id="cbedd0f1ab74c263499adcf137b9c374257feae6.boutiques",
     name="SurfSmooth",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

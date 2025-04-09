@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
-    id="f922d68383395cff18ea3f5fe5e68eae32a7b22e.boutiques",
+    id="4fcb9d729e6622ba6a662eb312757c029ce1a009.boutiques",
     name="renormalize_subject_keep_editting",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

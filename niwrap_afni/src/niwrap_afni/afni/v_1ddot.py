@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1DDOT_METADATA = Metadata(
-    id="3b57cf09716c42dc28cccea1c8b49a4f626abd0b.boutiques",
+    id="78349c7b966df3a5026a4b202c3de358faef8d17.boutiques",
     name="1ddot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

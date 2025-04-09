@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MIDEFACE_METADATA = Metadata(
-    id="e4a7d1cf3f8f93ccdd73f64b12dba5ce0fe4110b.boutiques",
+    id="103c9c8e1c2adfa740ce06f20222e2baa57571f0.boutiques",
     name="mideface",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

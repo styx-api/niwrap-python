@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_CONNEC_VIS_METADATA = Metadata(
-    id="3c0e03aae455fbd21d6ab5bd41865b6565e23556.boutiques",
+    id="c7edba572e19b781cc1e3adc9d9172250d96c76f.boutiques",
     name="fat_proc_connec_vis",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

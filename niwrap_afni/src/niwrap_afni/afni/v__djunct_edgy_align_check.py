@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_EDGY_ALIGN_CHECK_METADATA = Metadata(
-    id="8e479ed45f214bcb93f3842c5934b8e03c6fc47c.boutiques",
+    id="aa6a4a0022ad0531d548adba7cc36b0a1b5b39ae.boutiques",
     name="@djunct_edgy_align_check",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__MAKE_PLUG_DIFF_METADATA = Metadata(
-    id="ed24df6f541e54eb4e1231d905483a763eecd72f.boutiques",
+    id="d1ce49de5eb108e0627f42d6a6246b152634ab14.boutiques",
     name="@make_plug_diff",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

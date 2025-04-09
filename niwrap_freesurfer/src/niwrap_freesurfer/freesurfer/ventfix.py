@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VENTFIX_METADATA = Metadata(
-    id="6168063cf3610f25b84854e501fcd4f1bf642f43.boutiques",
+    id="e71901d7b79bb5fd53811d2c81452b885bbecc11.boutiques",
     name="ventfix",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

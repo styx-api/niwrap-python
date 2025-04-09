@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_MAT_SEL_PY_METADATA = Metadata(
-    id="507d4511ca162d3a004cc7ca58b188298e3eea66.boutiques",
+    id="88fca2178c80442aa63260a3d75da0e0c0b65a59.boutiques",
     name="fat_mat_sel.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

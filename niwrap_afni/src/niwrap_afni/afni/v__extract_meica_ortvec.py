@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__EXTRACT_MEICA_ORTVEC_METADATA = Metadata(
-    id="32a644ffdca9e88d2f5a1524f50f811fcef33a2e.boutiques",
+    id="af2a42cd65df6cf5f7af9bf797cce1dbd022d517.boutiques",
     name="@extract_meica_ortvec",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

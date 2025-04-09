@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
-    id="67b2cf4ce2e0dc86fa5a749705372f955d1fc276.boutiques",
+    id="3537b502225e1b3b7decc0bf6c52548a364aee6d.boutiques",
     name="mri_fuse_segmentations",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

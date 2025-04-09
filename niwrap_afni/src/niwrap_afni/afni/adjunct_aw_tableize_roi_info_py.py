@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA = Metadata(
-    id="a22785dcd6a5f1a8653a62de11c6b89177cc48a8.boutiques",
+    id="e640a48f377be12b6e77c80d6bd5595370ba1278.boutiques",
     name="adjunct_aw_tableize_roi_info.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

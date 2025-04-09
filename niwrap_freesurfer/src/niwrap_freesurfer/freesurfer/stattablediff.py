@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 STATTABLEDIFF_METADATA = Metadata(
-    id="1700b5a4affda702434ee9916d498190f06c350c.boutiques",
+    id="3d94abfc9639ba1d887cf8a29a5610dc79fd89d8.boutiques",
     name="stattablediff",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

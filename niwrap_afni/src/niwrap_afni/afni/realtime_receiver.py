@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REALTIME_RECEIVER_METADATA = Metadata(
-    id="558c634c7b6bcd0f07865ebb60363d7d2a9737a2.boutiques",
+    id="3861e74ecb1900a71d5f24f43aeca5e7e336549d.boutiques",
     name="realtime_receiver",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

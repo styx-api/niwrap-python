@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWIDENOISE_METADATA = Metadata(
-    id="ed89d7a30761400bc9f73bcffb1319ae9ec84397.boutiques",
+    id="66375761a5c4ae75db2849ddf80e513a6eeb4c88.boutiques",
     name="dwidenoise",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

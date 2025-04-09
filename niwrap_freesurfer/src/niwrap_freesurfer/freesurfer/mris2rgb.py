@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS2RGB_METADATA = Metadata(
-    id="818f21a5949f0f382881eefc95f28854696728c3.boutiques",
+    id="4fdbc16148efe88b6fd4eb9b58594698623eae7f.boutiques",
     name="mris2rgb",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

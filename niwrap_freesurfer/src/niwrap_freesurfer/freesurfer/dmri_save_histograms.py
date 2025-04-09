@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_SAVE_HISTOGRAMS_METADATA = Metadata(
-    id="ee8d1ca09c1b2241dc168157801f106029c44920.boutiques",
+    id="bb194c65a1426660b384fcbf85e8e5301e4425c1.boutiques",
     name="dmri_saveHistograms",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

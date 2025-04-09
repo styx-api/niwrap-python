@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_MONTAGE_COORDINATOR_METADATA = Metadata(
-    id="8d747f7169ee7e4179813dc1818309f1663d903c.boutiques",
+    id="64d756e8e5ea73bbb91b5d094f44148b8d947acd.boutiques",
     name="@djunct_montage_coordinator",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

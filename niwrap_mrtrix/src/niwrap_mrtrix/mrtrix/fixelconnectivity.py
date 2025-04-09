@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIXELCONNECTIVITY_METADATA = Metadata(
-    id="811fe5b2580b330dbeded0c16e56819fd86331a7.boutiques",
+    id="a28812763f98c83cba5bf32daac94ae191c3ce0f.boutiques",
     name="fixelconnectivity",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

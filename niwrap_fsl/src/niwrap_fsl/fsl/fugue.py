@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FUGUE_METADATA = Metadata(
-    id="e92886e40bebff1fca6ad036e63b3a6f487c4e4c.boutiques",
+    id="7e45d28583bf45efb7232e3d35af17f7b83825cb.boutiques",
     name="fugue",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

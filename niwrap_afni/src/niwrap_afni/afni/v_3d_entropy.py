@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ENTROPY_METADATA = Metadata(
-    id="65268d877950e23f9bd06dfb7ede10b57050e1e9.boutiques",
+    id="0257d51dd6a9431a9662e4b253ceaa842332ae4c.boutiques",
     name="3dEntropy",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

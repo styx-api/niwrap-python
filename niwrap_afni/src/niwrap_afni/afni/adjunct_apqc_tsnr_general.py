@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_APQC_TSNR_GENERAL_METADATA = Metadata(
-    id="a70654cb187bdb9991d41a1bcb7827db58a9c4b0.boutiques",
+    id="dfc055a98634751e23c2cee31e206fea87d3db5d.boutiques",
     name="adjunct_apqc_tsnr_general",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

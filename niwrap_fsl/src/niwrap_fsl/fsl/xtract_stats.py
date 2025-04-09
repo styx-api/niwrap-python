@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XTRACT_STATS_METADATA = Metadata(
-    id="31f00c0b17267b38d4a5cf1ffe466312b56a3c90.boutiques",
+    id="234e42d8af07ff93d021100c888dd2dc9efe5036.boutiques",
     name="xtract_stats",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

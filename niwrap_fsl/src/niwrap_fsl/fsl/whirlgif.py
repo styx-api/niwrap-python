@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WHIRLGIF_METADATA = Metadata(
-    id="5014f57fafa702ba3b19014ba3566e92f5e47369.boutiques",
+    id="a9057496ef5501a1d303c580fec62c7576b5c90a.boutiques",
     name="whirlgif",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

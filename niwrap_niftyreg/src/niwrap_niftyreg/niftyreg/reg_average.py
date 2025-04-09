@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REG_AVERAGE_METADATA = Metadata(
-    id="61e1f607541cf2b120dd32fdab5918c08f2dda1a.boutiques",
+    id="4eb583930a4095ee5ae86540a2d6fbab06d8a5f6.boutiques",
     name="reg_average",
     package="niftyreg",
     container_image_tag="vnmd/niftyreg_1.4.0:20220819",

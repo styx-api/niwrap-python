@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_DWI_SELECTOR_METADATA = Metadata(
-    id="322cd55e91869cfd3befcc11394010a6d10dddc6.boutiques",
+    id="5ab9f2d175d71ed28465ef305cf31b5079bd3841.boutiques",
     name="@djunct_dwi_selector",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

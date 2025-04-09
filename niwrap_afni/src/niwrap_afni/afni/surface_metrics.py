@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_METRICS_METADATA = Metadata(
-    id="4e6e190bf1b36c5ffeddbab85844677bc3f68fe2.boutiques",
+    id="e4df32dd8b28144bf2cbd95cce2803cc7a22e9d3.boutiques",
     name="SurfaceMetrics",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

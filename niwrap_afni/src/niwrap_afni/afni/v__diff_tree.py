@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DIFF_TREE_METADATA = Metadata(
-    id="11a09e53b48435f523465bdd52c5dc27b5e1cb04.boutiques",
+    id="c1b88ca0b49c6f0c6d5e49fb3192c34dfd29e2ba.boutiques",
     name="@diff.tree",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ATLASIZE_METADATA = Metadata(
-    id="5fc4c62439ac62644ef483caa2fc7a4ea1cb35f0.boutiques",
+    id="80ebbb960ab74a3ff7041f59da156e4bd3623503.boutiques",
     name="@Atlasize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

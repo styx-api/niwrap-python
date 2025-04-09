@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_PQ_SCRIPT_PY_METADATA = Metadata(
-    id="a615a94a90a33ebcd0b428159142b2d1a4947946.boutiques",
+    id="92e2566b52307fc16bead6a8f031cd5f8c8b9b62.boutiques",
     name="make_pq_script.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

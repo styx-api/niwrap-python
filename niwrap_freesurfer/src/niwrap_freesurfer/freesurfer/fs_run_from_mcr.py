@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_RUN_FROM_MCR_METADATA = Metadata(
-    id="cde2b930dda53cf7f6ac5ac2d3c81e82bcafc347.boutiques",
+    id="912dbf3151af651160bde9f39e645669c7bf7dcb.boutiques",
     name="fs_run_from_mcr",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

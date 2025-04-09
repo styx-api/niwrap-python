@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__MEASURE_IN2OUT_METADATA = Metadata(
-    id="24cc5193feb14e3737f192161109e71637dc1422.boutiques",
+    id="12e4cb21b35db70d6b2ca1c1f10b19ffe465fb9d.boutiques",
     name="@measure_in2out",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

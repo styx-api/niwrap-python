@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_PRINT_HELP_METADATA = Metadata(
-    id="a91a6c5c64fb27bc188a085d7211176975d7d7d4.boutiques",
+    id="1a0f96c91d8dea90a549b11726b82ded99db191b.boutiques",
     name="fsPrintHelp",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

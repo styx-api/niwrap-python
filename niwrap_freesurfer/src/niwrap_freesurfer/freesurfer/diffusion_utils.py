@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DIFFUSION_UTILS_METADATA = Metadata(
-    id="644c1194ddc618947bb21fc39f90ede191a80b94.boutiques",
+    id="7be8ebb9754439dfbaa88637615d07589e30bde0.boutiques",
     name="diffusionUtils",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

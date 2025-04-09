@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_NWARP_CAT_METADATA = Metadata(
-    id="50ffd879ac4756b7a539af68c646c32f78b68146.boutiques",
+    id="8375fa045d633a347594fc067d7b9dc9dbfedbed.boutiques",
     name="3dNwarpCat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

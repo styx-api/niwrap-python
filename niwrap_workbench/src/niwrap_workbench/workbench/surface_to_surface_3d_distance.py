@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
-    id="3e1ed73b05c8f75edd593f55956978e0e76c8051.boutiques",
+    id="03965e859ff3619a159d64d5430c877f1a605f4c.boutiques",
     name="surface-to-surface-3d-distance",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

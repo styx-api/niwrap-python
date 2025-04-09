@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_SYMMETRIC_METADATA = Metadata(
-    id="0edab2e26b68afca9fa6531a0a4823dd6acee05b.boutiques",
+    id="1c653a3729e019c1a68b0edb9c44bee8ba0b0c6c.boutiques",
     name="make_symmetric",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

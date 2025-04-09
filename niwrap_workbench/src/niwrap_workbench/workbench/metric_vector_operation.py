@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_VECTOR_OPERATION_METADATA = Metadata(
-    id="a16a3d5eebe016ff6fd5576142114de6719372bd.boutiques",
+    id="dfabb9ee1c9e2b4449657824237da8d1aff0d925.boutiques",
     name="metric-vector-operation",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

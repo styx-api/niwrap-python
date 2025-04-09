@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIXEL2PEAKS_METADATA = Metadata(
-    id="06bfc4edb74f24e1df62b484f707ec9d4d317d85.boutiques",
+    id="5e3b8600a7924403d728fedc4abecdb6bc9848fe.boutiques",
     name="fixel2peaks",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
-    id="ada7a00c2444c2cdda91b6587672b293db9d33c4.boutiques",
+    id="18304fa89750715fd7c596df78a24057bc667011.boutiques",
     name="volume-components-to-frames",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

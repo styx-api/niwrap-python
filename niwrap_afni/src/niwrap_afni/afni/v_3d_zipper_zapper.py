@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ZIPPER_ZAPPER_METADATA = Metadata(
-    id="345c0ab457fab3fd59e06829b589145ef0e78581.boutiques",
+    id="7251c6575169756127e2528815aed08a88f0f0f8.boutiques",
     name="3dZipperZapper",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

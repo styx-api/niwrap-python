@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BMEDITS2SURF_METADATA = Metadata(
-    id="f869eae38aafdf868c159585778d592e90997dbd.boutiques",
+    id="c1daef85bf5d51503b439d0cfd018ad263aba494.boutiques",
     name="bmedits2surf",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

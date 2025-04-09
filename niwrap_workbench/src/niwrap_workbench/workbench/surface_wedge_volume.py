@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_WEDGE_VOLUME_METADATA = Metadata(
-    id="3cafae7f1a23ea378f609241b488970ec71c2b15.boutiques",
+    id="8717436927797f17b9d73da5d0bf7d4b30311324.boutiques",
     name="surface-wedge-volume",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

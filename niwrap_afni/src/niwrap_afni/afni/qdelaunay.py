@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QDELAUNAY_METADATA = Metadata(
-    id="6ffd24be5e49d65ad58c48581dbc1c38e779c71c.boutiques",
+    id="a916e82e97bc11f21ddb66b1db2b18fd597bc7b9.boutiques",
     name="qdelaunay",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

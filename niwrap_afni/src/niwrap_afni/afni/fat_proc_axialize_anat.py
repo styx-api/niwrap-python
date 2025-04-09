@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_AXIALIZE_ANAT_METADATA = Metadata(
-    id="e138eb56e5029d03d449b78987c687adf3579333.boutiques",
+    id="93b54cf4587e31bd1fe589e3220826cd9b89c2b5.boutiques",
     name="fat_proc_axialize_anat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

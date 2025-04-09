@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CHANGE_MAPPING_METADATA = Metadata(
-    id="53f8c510829c70200ad060f067b228f1aa52da65.boutiques",
+    id="1554b1264ed43996e869b8586028b1a70e2a201d.boutiques",
     name="cifti-change-mapping",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

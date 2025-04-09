@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CBLUMWMGYRI_METADATA = Metadata(
-    id="fe20341079c6df1e8a587d62997fab1a4bf8a4d8.boutiques",
+    id="d70c321ffd2178f712d23c18fb8f191f7a1abfa4.boutiques",
     name="cblumwmgyri",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

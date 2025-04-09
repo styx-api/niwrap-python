@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
-    id="731fd28e261e758f0a5e308e118201b414f3a4c8.boutiques",
+    id="aa8dd040909087aceb648447d425a7aa0341d6a9.boutiques",
     name="create-signed-distance-volume",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

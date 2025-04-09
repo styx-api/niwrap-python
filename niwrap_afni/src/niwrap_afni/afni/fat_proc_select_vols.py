@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_SELECT_VOLS_METADATA = Metadata(
-    id="797c7f4cdd720c40e5ac1cdfb28e7156b1b6687a.boutiques",
+    id="145158b3e48ed45b0d9dd404e9867ee757291b14.boutiques",
     name="fat_proc_select_vols",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

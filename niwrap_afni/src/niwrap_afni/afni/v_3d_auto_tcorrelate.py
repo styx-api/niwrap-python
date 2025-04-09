@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_AUTO_TCORRELATE_METADATA = Metadata(
-    id="54f323538871e62136cb28afd7fdc9c55ace001b.boutiques",
+    id="f8dd31b3bdbd84c61b724bec91c847beb95fd339.boutiques",
     name="3dAutoTcorrelate",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

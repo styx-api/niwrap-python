@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_AFNITO_NIFTI_METADATA = Metadata(
-    id="c2219650fbe1d83f01eda91dff81cc7a82f46430.boutiques",
+    id="b662117c7046300507a477f8a780feba9be8f57f.boutiques",
     name="3dAFNItoNIFTI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

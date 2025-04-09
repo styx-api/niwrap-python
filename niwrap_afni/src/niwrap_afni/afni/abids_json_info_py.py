@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ABIDS_JSON_INFO_PY_METADATA = Metadata(
-    id="29b15b0c3b3b92b7936e8e79bd8f79411f0e65a4.boutiques",
+    id="dbe784da9ea0070ea74b0200f0a71ea570de859e.boutiques",
     name="abids_json_info.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

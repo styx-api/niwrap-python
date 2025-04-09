@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LPCREGISTER_METADATA = Metadata(
-    id="e5a5971735d364dfe8f37cf7d53f26828a5b15b4.boutiques",
+    id="a83effe70fd200096fd005f862df8be1ea3a7e01.boutiques",
     name="lpcregister",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

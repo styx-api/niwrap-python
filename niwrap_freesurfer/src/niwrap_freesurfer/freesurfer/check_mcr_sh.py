@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CHECK_MCR_SH_METADATA = Metadata(
-    id="791978a63c49f038efea95973ac807e32f4fd537.boutiques",
+    id="3cf223c7fdc62b166c1577a94bc2b4f19d6881da.boutiques",
     name="checkMCR.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

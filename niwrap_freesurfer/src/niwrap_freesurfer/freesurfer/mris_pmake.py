@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_PMAKE_METADATA = Metadata(
-    id="dd00ff607795956546fa917b74a471d7811886b3.boutiques",
+    id="2dbc6dfbda3e3de314e9075048746009fc7c561b.boutiques",
     name="mris_pmake",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA = Metadata(
-    id="85f0f975299d8bde02839f551146666cba69ff1f.boutiques",
+    id="476f4d1a86214009b6eb0878d5070c11cd6a6a27.boutiques",
     name="adjunct_tort_plot_dp_align",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

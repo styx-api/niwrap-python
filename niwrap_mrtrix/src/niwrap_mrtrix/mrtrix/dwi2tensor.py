@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWI2TENSOR_METADATA = Metadata(
-    id="da9a17f80c44190e972d6db8b17af753fd59d62f.boutiques",
+    id="3f5709a6a0e097723b966fa5d55724a203f0e0eb.boutiques",
     name="dwi2tensor",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

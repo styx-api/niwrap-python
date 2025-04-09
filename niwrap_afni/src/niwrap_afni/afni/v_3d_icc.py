@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ICC_METADATA = Metadata(
-    id="1652fdd3c8a77717220b28f06430ccf258c293f3.boutiques",
+    id="58d26a68e385d16936a1a88b29bf7a5505bc0d8f.boutiques",
     name="3dICC",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

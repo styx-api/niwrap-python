@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SH2POWER_METADATA = Metadata(
-    id="536779908dfe6a15e2ec1a07b45bd1fe2e688ccd.boutiques",
+    id="51541fdc4332f8deff6104a920269e275945d304.boutiques",
     name="sh2power",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

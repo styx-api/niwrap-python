@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_ROIS_TO_BORDER_METADATA = Metadata(
-    id="7055195b90d96406ade3173df1aa38a66c4c45c1.boutiques",
+    id="74e3ff216bc623a926f27937a505117774b03cb4.boutiques",
     name="metric-rois-to-border",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

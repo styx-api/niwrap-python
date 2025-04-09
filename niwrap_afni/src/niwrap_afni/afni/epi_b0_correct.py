@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EPI_B0_CORRECT_METADATA = Metadata(
-    id="690e7b1a6986e67ced0f065ca6d025cd2006e8eb.boutiques",
+    id="a6677e9e92afc1f84d2e14c41fd7dc5daf44fd9c.boutiques",
     name="epi_b0_correct",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

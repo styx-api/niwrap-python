@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ADWARP_METADATA = Metadata(
-    id="22410e65c1361d9cb6b13a0fd56cc72bae69129b.boutiques",
+    id="953249962a4c4d7f013a230b770e9eb6de08979f.boutiques",
     name="adwarp",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

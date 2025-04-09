@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_TRANSFORM_INFO_METADATA = Metadata(
-    id="db110d69e8361c7a0293d1d70937a09c146e535a.boutiques",
+    id="639dde226cefbb6123bb32ff026f6143620a9120.boutiques",
     name="antsTransformInfo",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

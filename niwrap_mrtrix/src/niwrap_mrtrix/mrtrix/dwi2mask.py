@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DWI2MASK_METADATA = Metadata(
-    id="e651be545db3db1ef7ebcf19117cf1ddd7e6b8f2.boutiques",
+    id="9d585c1eb8931fbf6a7b9b4efcfcbe79a0ec151f.boutiques",
     name="dwi2mask",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

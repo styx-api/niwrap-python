@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GCA_APPLY_METADATA = Metadata(
-    id="37d628d973685edc2921052f548a797e0b449eb8.boutiques",
+    id="3eeb1cba1d7c8f0e6b004894e26c4716c5d93e5d.boutiques",
     name="gca-apply",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

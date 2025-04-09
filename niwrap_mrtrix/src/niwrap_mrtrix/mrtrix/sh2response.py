@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SH2RESPONSE_METADATA = Metadata(
-    id="73af982ff7a9439d2a7181a0cb546efa4f302105.boutiques",
+    id="4c236ffa31670f857674394a6afbe6341c337edb.boutiques",
     name="sh2response",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WAVER_METADATA = Metadata(
-    id="853f5c7b1276e654db54518623370e48705e17ef.boutiques",
+    id="22c694b493b2abc7c7740befa135d2780eb41019.boutiques",
     name="waver",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

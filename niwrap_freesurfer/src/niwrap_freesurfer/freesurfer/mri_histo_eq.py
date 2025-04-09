@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_HISTO_EQ_METADATA = Metadata(
-    id="d08f7a1c281046fe105c26dd1e467523f2a9672c.boutiques",
+    id="2b9bbd0abe6f9fc2ebfcea12661024fe348b3d7c.boutiques",
     name="mri_histo_eq",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

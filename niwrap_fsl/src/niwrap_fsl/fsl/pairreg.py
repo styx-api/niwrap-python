@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PAIRREG_METADATA = Metadata(
-    id="b91659121aa50786207f87a814c07e8cbf851fc0.boutiques",
+    id="1b9b8596ae0a3b92dba838a73505174c51bfebc8.boutiques",
     name="pairreg",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

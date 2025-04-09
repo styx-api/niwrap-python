@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIXELCROP_METADATA = Metadata(
-    id="df585f30c2a7738dc8886c2e7c7172b7e6cdc09c.boutiques",
+    id="a9dc6e85d8f2c07ebac3e15d9b3d6120feff0aaf.boutiques",
     name="fixelcrop",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

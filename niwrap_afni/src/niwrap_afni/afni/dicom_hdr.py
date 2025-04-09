@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DICOM_HDR_METADATA = Metadata(
-    id="f1dd7c5e97c664a21c6f4e09518ffc5513e4e54f.boutiques",
+    id="06030930d3116d7bf58316357750a3ae68688ced.boutiques",
     name="dicom_hdr",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

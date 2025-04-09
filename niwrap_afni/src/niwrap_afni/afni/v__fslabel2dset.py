@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__FSLABEL2DSET_METADATA = Metadata(
-    id="9fe2630c3f97cdc57615a68de7b89685d793afec.boutiques",
+    id="120b018177e0387cb99f55149df8a35aeb5f323d.boutiques",
     name="@FSlabel2dset",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

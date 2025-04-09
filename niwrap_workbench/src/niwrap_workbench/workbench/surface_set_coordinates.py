@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_SET_COORDINATES_METADATA = Metadata(
-    id="702f4b7168844047af7e00e2db549e4c6b415509.boutiques",
+    id="c6fdf4a985aef6d3f7d1b691e3c199ed0f7a2777.boutiques",
     name="surface-set-coordinates",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RECON_ALL_CLINICAL_SH_METADATA = Metadata(
-    id="38aa6da8e0504acf21091c65fc76ff6026418cb2.boutiques",
+    id="504aa9bce9ae8c5b6244f9955d00b4842b304c48.boutiques",
     name="recon-all-clinical.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

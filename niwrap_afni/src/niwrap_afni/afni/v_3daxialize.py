@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DAXIALIZE_METADATA = Metadata(
-    id="bcc8e30177064f95c8a4e5b95029e8dd46cb1692.boutiques",
+    id="a6d7c2a7a9db46fb00a81d8e8f737c33f01dcc59.boutiques",
     name="3daxialize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

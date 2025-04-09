@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_FIELDSIGN_METADATA = Metadata(
-    id="ab824af01a699004ad68775dafe2a065f72a9634.boutiques",
+    id="96cb7d7d10b6cfdeeed7603268ba12e5c46ce56b.boutiques",
     name="mri_fieldsign",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

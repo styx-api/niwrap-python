@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_MAT_TABLEIZE_METADATA = Metadata(
-    id="5ba44998c47e95e162b9d566a509d5fcbb197e51.boutiques",
+    id="54bddb6e07bcdce4629069126b94b563d0162fab.boutiques",
     name="fat_mat_tableize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

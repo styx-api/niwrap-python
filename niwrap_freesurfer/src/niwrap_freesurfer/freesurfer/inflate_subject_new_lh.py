@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 INFLATE_SUBJECT_NEW_LH_METADATA = Metadata(
-    id="2e5d93e0cd0ec7e2b630ed81133b9ac7aefe52f9.boutiques",
+    id="803ce01fc57b8450dd954e649a01b6a599ec0966.boutiques",
     name="inflate_subject_new-lh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

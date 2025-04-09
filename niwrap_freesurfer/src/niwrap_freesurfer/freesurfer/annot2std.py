@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANNOT2STD_METADATA = Metadata(
-    id="2c9123403463828b0f1e87c964b86cb68c130b07.boutiques",
+    id="94260c16cb751cafe61816e78c1cd15d1558bf0f.boutiques",
     name="annot2std",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMCAT_METADATA = Metadata(
-    id="aaf3852ed2e5487ca6e742c661a53a14976a9a76.boutiques",
+    id="bce786a5067ed7717ffe2af0c0412eb468654e62.boutiques",
     name="imcat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

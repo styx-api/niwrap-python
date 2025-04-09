@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
-    id="a915b7fc618e0a145c90d97ad0abe25a3af42c2f.boutiques",
+    id="340ef0940c32fec80a5794a1b04f3d19beeb072d.boutiques",
     name="volume-remove-islands",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

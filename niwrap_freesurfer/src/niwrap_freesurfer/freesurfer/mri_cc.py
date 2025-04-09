@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_CC_METADATA = Metadata(
-    id="15e13320aa7ce00fbf8db493c28c6884f3b1ec76.boutiques",
+    id="587b9657e3019c8eef25c4532b4599586af52fc7.boutiques",
     name="mri_cc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

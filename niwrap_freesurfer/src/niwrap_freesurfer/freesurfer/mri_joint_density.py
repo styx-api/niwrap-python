@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_JOINT_DENSITY_METADATA = Metadata(
-    id="95c3248976aa45e74859871185ad767414270ee1.boutiques",
+    id="47ff381f1abbc5fa3dfbe8ae02cbf80ec452f68c.boutiques",
     name="mri_joint_density",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

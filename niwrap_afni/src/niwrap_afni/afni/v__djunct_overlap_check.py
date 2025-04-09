@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_OVERLAP_CHECK_METADATA = Metadata(
-    id="61eef1d6dc1535a1dc4452ab3c3b8b5da02a1e6d.boutiques",
+    id="a8443d34f687d1b2ea3ba63dfe89d00208145343.boutiques",
     name="@djunct_overlap_check",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

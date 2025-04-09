@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_ERODE_METADATA = Metadata(
-    id="bc74c026585faa5731c32e77b9b8935b7ad2dc76.boutiques",
+    id="4227cce6f76c06fa867abf5187d9a4a0624ca438.boutiques",
     name="cifti-erode",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

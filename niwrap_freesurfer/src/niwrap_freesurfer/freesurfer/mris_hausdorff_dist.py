@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_HAUSDORFF_DIST_METADATA = Metadata(
-    id="c8c6f8e737d084817096cd5c6491a8218fa2f1ee.boutiques",
+    id="2307a7fed7f332800240bbbcff45ea710d29bdf9.boutiques",
     name="mris_hausdorff_dist",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

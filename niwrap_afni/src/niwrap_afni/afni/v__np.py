@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__NP_METADATA = Metadata(
-    id="19475e309cca046197768d1ade01d7e521898bd3.boutiques",
+    id="eeda44fa5bee1551ed881a09b3fe0993544de8ca.boutiques",
     name="@np",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

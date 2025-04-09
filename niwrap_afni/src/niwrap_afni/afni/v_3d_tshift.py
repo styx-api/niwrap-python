@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSHIFT_METADATA = Metadata(
-    id="1e963c8aacff12ed5089324cd001cc9158093823.boutiques",
+    id="d293e92c11ca3dcbc79d40d9d626b8a63d7239d4.boutiques",
     name="3dTshift",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_MOTION_CORRECT_METADATA = Metadata(
-    id="3cfbb0cc88f7a83298127f974e5ce214fa8cdbf7.boutiques",
+    id="e86ec1f4c949da22c30e69ad1cdf75c01f15a973.boutiques",
     name="mri_motion_correct",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

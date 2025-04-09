@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIND_VARIANCE_LINES_METADATA = Metadata(
-    id="400a7e1ff61116676091a1736a0b5ffb08f0a496.boutiques",
+    id="46cc1bbfa68d9508d98e3c8d1703d0d91c133340.boutiques",
     name="find_variance_lines",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

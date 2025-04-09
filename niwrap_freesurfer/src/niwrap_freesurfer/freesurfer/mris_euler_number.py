@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_EULER_NUMBER_METADATA = Metadata(
-    id="0ad5734919ffe0fbdc78eddad073fdf8082b2ef3.boutiques",
+    id="ff5edf807126bfa9fa22edba44beeccaa0e44710.boutiques",
     name="mris_euler_number",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

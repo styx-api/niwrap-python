@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_FIND_CLUSTERS_METADATA = Metadata(
-    id="41b3ad81263a1518374394996cd3be946ae11a16.boutiques",
+    id="e37c2dfb1607ce4a3d40b543c40a4bbab296405c.boutiques",
     name="cifti-find-clusters",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

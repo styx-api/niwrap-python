@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DVOLREG_AFNI_METADATA = Metadata(
-    id="80aae3856a13a6dd770babdd60fe4d17ad449c07.boutiques",
+    id="a987f8d62b507b62d7469f463040360283d6fc83.boutiques",
     name="3dvolreg.afni",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMAND_METADATA = Metadata(
-    id="0afb6402a062c937d946cf010c86102b9c4a0c96.boutiques",
+    id="b40e806d98777d64f69b492452a28ccfcaf0b51d.boutiques",
     name="imand",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

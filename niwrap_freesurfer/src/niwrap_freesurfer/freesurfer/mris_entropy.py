@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_ENTROPY_METADATA = Metadata(
-    id="5707967e94407108591e9f09a18741e3c81c9aed.boutiques",
+    id="d0ec05255b1b8c8b390b137853362c1447b2a789.boutiques",
     name="mris_entropy",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

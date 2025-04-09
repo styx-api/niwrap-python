@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TSPLIT4_D_METADATA = Metadata(
-    id="861535b6c29e168191a0da4498bda4b743f855bf.boutiques",
+    id="3a3e4440f95ee533103d741ae69655e18e88d3db.boutiques",
     name="3dTsplit4D",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

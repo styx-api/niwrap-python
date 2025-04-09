@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_DTTO_NOISY_DWI_METADATA = Metadata(
-    id="0ef5fe03a8b952b27e737adb59a395ac94790601.boutiques",
+    id="d89d2e3adba6b6e4e6f21f400c343e8140cca0a2.boutiques",
     name="3dDTtoNoisyDWI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

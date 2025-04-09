@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_NET_CORR_METADATA = Metadata(
-    id="958c7038de682b846c408cbd34ee6146fe058e26.boutiques",
+    id="5670b5b4f9d0ab3696cc0b14e6eaa44805f1ab6c.boutiques",
     name="3dNetCorr",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

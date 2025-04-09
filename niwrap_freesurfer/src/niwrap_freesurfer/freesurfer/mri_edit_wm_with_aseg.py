@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_EDIT_WM_WITH_ASEG_METADATA = Metadata(
-    id="f9c976c7dcbdda3256a48669b4d7c0911a56357c.boutiques",
+    id="dba94a75baa2e8d9087db292cdbd668dccb68ca5.boutiques",
     name="mri_edit_wm_with_aseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

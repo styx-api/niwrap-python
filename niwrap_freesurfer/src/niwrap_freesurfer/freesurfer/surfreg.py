@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFREG_METADATA = Metadata(
-    id="68e84766e8130637a36f745fc7308f0bf775b2d7.boutiques",
+    id="d3ce09a4df80f136ffe449469679fe7fc5b7f7ea.boutiques",
     name="surfreg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

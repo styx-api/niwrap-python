@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_LABEL_MODE_METADATA = Metadata(
-    id="1fe77c6bd59d224a85a54c2c3c93d4c52345517b.boutiques",
+    id="591967f9eeb3bb3b9f31868769d0fb3d8379053f.boutiques",
     name="mris_label_mode",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

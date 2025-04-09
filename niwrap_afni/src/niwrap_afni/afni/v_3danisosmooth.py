@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DANISOSMOOTH_METADATA = Metadata(
-    id="0f940845485d0f2e6aa4a1bbafdccc58018a21a2.boutiques",
+    id="1ba569c84d08290efa7b480422abdfb93ead68bf.boutiques",
     name="3danisosmooth",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

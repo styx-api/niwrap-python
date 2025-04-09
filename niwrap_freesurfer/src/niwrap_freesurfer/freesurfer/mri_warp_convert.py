@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_WARP_CONVERT_METADATA = Metadata(
-    id="32b2750e85eac274b020aca2c35655e2c3b86427.boutiques",
+    id="88f6767747c349aa6e8d0167d32cd39374ba05cc.boutiques",
     name="mri_warp_convert",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

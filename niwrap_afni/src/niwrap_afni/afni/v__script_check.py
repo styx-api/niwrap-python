@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SCRIPT_CHECK_METADATA = Metadata(
-    id="1ec7bab89de6f0062a23a1361628a4abde50ae24.boutiques",
+    id="d81cacac508059d0cecc8bef5d4a8425946e1d54.boutiques",
     name="@ScriptCheck",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

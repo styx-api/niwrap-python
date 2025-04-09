@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__MAKE_LABEL_TABLE_METADATA = Metadata(
-    id="287075a9705f1e3aa4609a67bab5671fa4e1d6b9.boutiques",
+    id="bdce4ed3d1cd67a4fbdd4b4b532313914142c2a4.boutiques",
     name="@MakeLabelTable",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

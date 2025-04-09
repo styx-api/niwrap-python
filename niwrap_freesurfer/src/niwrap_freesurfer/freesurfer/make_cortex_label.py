@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_CORTEX_LABEL_METADATA = Metadata(
-    id="f144e3d1e0fdf022a6e2282c867ba8f46fafc1cb.boutiques",
+    id="2211504b8e9709cb80a7eb6e4d9b734d783a055e.boutiques",
     name="make_cortex_label",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

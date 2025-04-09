@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_TOPOLOGYCORRECTION_METADATA = Metadata(
-    id="fb398c893ff0a9507f05f5c97dc95a403a3121a3.boutiques",
+    id="40a7e8816236f767c7c17e74f2b35d577fe73190.boutiques",
     name="mri_topologycorrection",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

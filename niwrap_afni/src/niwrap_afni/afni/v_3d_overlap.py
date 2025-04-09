@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_OVERLAP_METADATA = Metadata(
-    id="55cf3c3d26402707160ae90ffa63fe67eaa8da85.boutiques",
+    id="93e1b7f69d98cd0c2b6369179b0a77d2fb5b72a4.boutiques",
     name="3dOverlap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

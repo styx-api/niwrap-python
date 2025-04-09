@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LTA_DIFF_METADATA = Metadata(
-    id="e99c49541b6ef2ad5939381bb81d7249502ffc0c.boutiques",
+    id="a8aaf9dc5936d4d700e770a1244924798ec88c42.boutiques",
     name="lta_diff",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

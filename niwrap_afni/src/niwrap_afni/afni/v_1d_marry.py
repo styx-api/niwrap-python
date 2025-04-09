@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_MARRY_METADATA = Metadata(
-    id="7a4e380e9b92893751b846cf2eca95ba7f37ec68.boutiques",
+    id="451c2e1e1510e8db86d7d55846288c13e106eaf6.boutiques",
     name="1dMarry",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

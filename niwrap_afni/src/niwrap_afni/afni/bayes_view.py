@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BAYES_VIEW_METADATA = Metadata(
-    id="6b7c34a2ea4931bfe8ed6b989b43904d7d18f61b.boutiques",
+    id="21ede4a2b31dfb05d448cf196912dc72f15188bb.boutiques",
     name="bayes_view",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

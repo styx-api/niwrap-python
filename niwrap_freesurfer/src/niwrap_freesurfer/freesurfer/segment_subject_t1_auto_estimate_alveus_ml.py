@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
-    id="43b0001ab86e4ffd97c64d3a223a099dafddc2e9.boutiques",
+    id="d368e081e4e2e487dc1349e034b665a2cdf1f6d5.boutiques",
     name="segmentSubjectT1_autoEstimateAlveusML",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

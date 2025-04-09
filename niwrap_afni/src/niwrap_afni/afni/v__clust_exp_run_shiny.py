@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__CLUST_EXP_RUN_SHINY_METADATA = Metadata(
-    id="fda3a7d2925f29a17f3a4aecaecf82a67d6aa1fc.boutiques",
+    id="d9831cf53b939c4f9cf4a57c2979fe1ccbb9233f.boutiques",
     name="@ClustExp_run_shiny",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

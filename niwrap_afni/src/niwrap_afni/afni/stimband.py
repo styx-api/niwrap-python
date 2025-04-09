@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 STIMBAND_METADATA = Metadata(
-    id="ca5a92d5ac7d886044df23850ca6ef4054823866.boutiques",
+    id="0fd66dc3c918c574a8c27c7cb16b3f971f5ac250.boutiques",
     name="stimband",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METADATA_STRING_REPLACE_METADATA = Metadata(
-    id="c5101a74a82c5e31a6a055c1295c99ce1b69c5f2.boutiques",
+    id="0e9fbdcc6c931ca67414f0c599ced7cc2aca0006.boutiques",
     name="metadata-string-replace",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

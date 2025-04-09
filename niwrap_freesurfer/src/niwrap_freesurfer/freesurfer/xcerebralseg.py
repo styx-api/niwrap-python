@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XCEREBRALSEG_METADATA = Metadata(
-    id="14c3690bac7554084d7978a923e6d146bea56460.boutiques",
+    id="5fb80211d047813ad88a87144a02240628a74311.boutiques",
     name="xcerebralseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

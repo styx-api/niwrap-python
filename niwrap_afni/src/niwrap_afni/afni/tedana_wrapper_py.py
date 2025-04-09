@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TEDANA_WRAPPER_PY_METADATA = Metadata(
-    id="2c08ca0025238427f67e66b767bc36524812cd16.boutiques",
+    id="062c0aea0577a5fde96bac4b23ec34f8ab38f7ae.boutiques",
     name="tedana_wrapper.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

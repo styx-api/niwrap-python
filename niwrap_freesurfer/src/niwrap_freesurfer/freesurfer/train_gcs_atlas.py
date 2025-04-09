@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRAIN_GCS_ATLAS_METADATA = Metadata(
-    id="94c89e1dfe3d6f19edd5cc1f4b3eeb93c181a16d.boutiques",
+    id="b6cf07c4cdf258fcf1766d6d9378e42cf9ae6cdc.boutiques",
     name="train-gcs-atlas",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

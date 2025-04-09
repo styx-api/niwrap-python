@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_TUTORIAL_DATA_METADATA = Metadata(
-    id="80182cd74220da19e2c55dc09c1599b0b78de72e.boutiques",
+    id="bd2bd293ebd9f33142807aa996b1099448b46897.boutiques",
     name="fs_tutorial_data",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

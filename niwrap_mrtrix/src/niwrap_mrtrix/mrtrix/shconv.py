@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SHCONV_METADATA = Metadata(
-    id="3c84c5743ea66d880048dc5dc975db440966a75e.boutiques",
+    id="fd5362bc6d2af00ffe1866d4f370ae826df3dd4d.boutiques",
     name="shconv",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

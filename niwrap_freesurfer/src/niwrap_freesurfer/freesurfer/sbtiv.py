@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SBTIV_METADATA = Metadata(
-    id="f635fd3b0d71913a55d64eab8618d5ffd1066300.boutiques",
+    id="48b2c4316f4126f05735de6d4b50fba4dbe07310.boutiques",
     name="sbtiv",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

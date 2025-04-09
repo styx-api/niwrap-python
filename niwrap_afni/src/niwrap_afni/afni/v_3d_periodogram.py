@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_PERIODOGRAM_METADATA = Metadata(
-    id="9a68bd8e7aa1c6c39962b274d89b8ea010ab603e.boutiques",
+    id="6103fc4ec1736b577ce1d3b54eaf5ff203d3fbf7.boutiques",
     name="3dPeriodogram",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

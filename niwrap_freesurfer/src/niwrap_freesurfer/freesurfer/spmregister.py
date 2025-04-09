@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPMREGISTER_METADATA = Metadata(
-    id="f04847924393c8dd412a6711f383105c39a90534.boutiques",
+    id="f037d545faca30a5ba9e5094c01f167e854b4f1f.boutiques",
     name="spmregister",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

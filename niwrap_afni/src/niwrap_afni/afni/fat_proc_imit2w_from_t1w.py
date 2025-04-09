@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_PROC_IMIT2W_FROM_T1W_METADATA = Metadata(
-    id="6e7211eeaf18937b51ec873d5287062ff3f44746.boutiques",
+    id="a1967c97adef3727f91855cbde7a0827f8a35dc7.boutiques",
     name="fat_proc_imit2w_from_t1w",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

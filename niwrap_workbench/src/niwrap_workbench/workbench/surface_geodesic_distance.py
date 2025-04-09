@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
-    id="ed6ff5cde669a2d85c0c8b429448c5425d4354ad.boutiques",
+    id="130a4eb6602ae80eca16d31c283d2ae952c92739.boutiques",
     name="surface-geodesic-distance",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IREPIFITVOL_METADATA = Metadata(
-    id="a2bd7dc06ae3c68248647867b862df791e5ba76b.boutiques",
+    id="663ec789ed974f373b832bb8e7b325af94880c4a.boutiques",
     name="irepifitvol",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

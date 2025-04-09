@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_INTRACRANIAL_METADATA = Metadata(
-    id="ea8145ebdfe6804031df6749fa5d0cbc04870c58.boutiques",
+    id="684ca9fab6f781de1e41403ff411216ba16a42b4.boutiques",
     name="3dIntracranial",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

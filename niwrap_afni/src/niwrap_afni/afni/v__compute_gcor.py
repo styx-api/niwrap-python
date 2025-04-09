@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__COMPUTE_GCOR_METADATA = Metadata(
-    id="7c21653eea6abdf613e32c0ba0461541cf95e2ae.boutiques",
+    id="5b49288dc45e60df83fcd651b8cdf3b983aa266d.boutiques",
     name="@compute_gcor",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

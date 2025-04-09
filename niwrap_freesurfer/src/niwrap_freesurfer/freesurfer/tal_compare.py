@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TAL_COMPARE_METADATA = Metadata(
-    id="bd1f3a28d4c8c84481961fd651bc3318b4c7368c.boutiques",
+    id="48a87dd18545a8514cefe13e747f2239a4b0468e.boutiques",
     name="tal_compare",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

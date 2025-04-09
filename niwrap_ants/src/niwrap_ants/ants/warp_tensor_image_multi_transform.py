@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
-    id="21f7ecf88e61f31390dfa72a88706b1d88f8b655.boutiques",
+    id="09b6e7210a53554c4b15442a89fd20d17d52efdc.boutiques",
     name="WarpTensorImageMultiTransform",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

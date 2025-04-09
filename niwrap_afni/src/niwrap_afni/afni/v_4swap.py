@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_4SWAP_METADATA = Metadata(
-    id="b931a726528adf5a726f46c604f9851351673fb9.boutiques",
+    id="6e3e99b3074cad6cf80c60e9ae896765217a911d.boutiques",
     name="4swap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

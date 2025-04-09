@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
-    id="62d776ef4770f80788d15439d0c09cdb0b85568a.boutiques",
+    id="bb56dca2a52a7c8e9da433938bfccacc96707a6b.boutiques",
     name="surface-apply-warpfield",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

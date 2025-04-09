@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LONG_MRIS_SLOPES_METADATA = Metadata(
-    id="5ba2dca61a52a3d9141cc6cd000056f304bcba66.boutiques",
+    id="903e6a1c3ac8764aca75012352e745ee5613437e.boutiques",
     name="long_mris_slopes",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

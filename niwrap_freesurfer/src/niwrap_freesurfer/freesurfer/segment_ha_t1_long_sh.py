@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_HA_T1_LONG_SH_METADATA = Metadata(
-    id="e6413cb2b0b0c7d6ddbeca885e2ef04a50aea294.boutiques",
+    id="4b45b675654faa4685dd58c821b0fe49807c0e5d.boutiques",
     name="segmentHA_T1_long.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

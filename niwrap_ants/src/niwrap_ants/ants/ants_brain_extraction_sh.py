@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
-    id="1f8c451b98f93c105aed231bb6898634ea958829.boutiques",
+    id="acef12aad7368f10e5b7b7798f7a9e605c5cbd67.boutiques",
     name="antsBrainExtraction.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

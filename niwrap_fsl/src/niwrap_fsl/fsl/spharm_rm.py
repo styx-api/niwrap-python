@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPHARM_RM_METADATA = Metadata(
-    id="fb6c310774502ab2cd0038c0fcf5b5c2fa218245.boutiques",
+    id="6d381e2779f347ba4886c9cd3e115a3644a29554.boutiques",
     name="spharm_rm",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

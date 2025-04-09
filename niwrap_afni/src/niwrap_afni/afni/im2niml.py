@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IM2NIML_METADATA = Metadata(
-    id="3c92592db9d506b4424ac028f92405630d2fda18.boutiques",
+    id="2a0436ee9182dd43de4cbf9c42cb1f57c2e1fb60.boutiques",
     name="im2niml",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

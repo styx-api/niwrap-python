@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FDRVAL_METADATA = Metadata(
-    id="f92df9dc9c7bd351f5f06439c97a5434e22b31b8.boutiques",
+    id="a0de8ec4e0e3a36fbc893d3b8b4292e32543fc80.boutiques",
     name="fdrval",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

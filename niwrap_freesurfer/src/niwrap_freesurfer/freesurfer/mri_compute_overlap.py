@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_COMPUTE_OVERLAP_METADATA = Metadata(
-    id="97d8d567d0e1c761a649f9ba5d647b7d4352a61b.boutiques",
+    id="89394442cf520ee4ec9dd5ada3c18bd5fdb4dfe4.boutiques",
     name="mri_compute_overlap",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

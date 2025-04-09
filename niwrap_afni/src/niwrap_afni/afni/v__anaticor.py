@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ANATICOR_METADATA = Metadata(
-    id="48ef68fd2da1d36a9c97f8ae28f53b818a2fe8ee.boutiques",
+    id="a21b28f4b637e8294ef269d38d45d16815c41138.boutiques",
     name="@ANATICOR",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

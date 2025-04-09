@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANALYZE_TRACE_METADATA = Metadata(
-    id="3d880a6da4a3639545433e9f6739d09c2df6cf76.boutiques",
+    id="5171e53d12a5707c7fff96e1018d7b6e069c808d.boutiques",
     name="AnalyzeTrace",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

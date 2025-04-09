@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERTWARP_METADATA = Metadata(
-    id="cd7b2e6bda3ae320e54128fba7348ed3eb91d604.boutiques",
+    id="abbc9808b6350a6d6a267687556e5ef284b82f97.boutiques",
     name="convertwarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

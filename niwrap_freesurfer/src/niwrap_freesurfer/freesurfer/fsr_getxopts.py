@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSR_GETXOPTS_METADATA = Metadata(
-    id="224fcae72cefe1195f88d86eb1986d98d2293a58.boutiques",
+    id="6f917a3a241b51bdf055cbebf239e7fdeaf6d675.boutiques",
     name="fsr-getxopts",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

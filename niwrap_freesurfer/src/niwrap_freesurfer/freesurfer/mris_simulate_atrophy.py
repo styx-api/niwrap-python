@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SIMULATE_ATROPHY_METADATA = Metadata(
-    id="47f609b6ee1597e2511ad3ae3d7e6ccd53da3483.boutiques",
+    id="b2e923443b64cd119265f582a44ff716bd98c53c.boutiques",
     name="mris_simulate_atrophy",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

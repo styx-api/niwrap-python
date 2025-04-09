@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA = Metadata(
-    id="40f0127eb4c39998d72b36223ec17bf7255ab2c2.boutiques",
+    id="fa3c503d811c832b99fa1f69e112206d024886d1.boutiques",
     name="AntsN4BiasFieldCorrectionFs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

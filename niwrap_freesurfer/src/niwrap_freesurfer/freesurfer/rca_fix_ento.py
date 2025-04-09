@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RCA_FIX_ENTO_METADATA = Metadata(
-    id="483fc4d892e00dbb3db293128c06ac20a3ba5034.boutiques",
+    id="64436bb8ee2aa1d776ae3cc1b1413d243ffaba24.boutiques",
     name="rca-fix-ento",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

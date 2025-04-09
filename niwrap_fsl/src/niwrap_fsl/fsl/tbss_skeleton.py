@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TBSS_SKELETON_METADATA = Metadata(
-    id="25571f737489a24f1ca40f7027b3aa2c256d8dc2.boutiques",
+    id="1d1eb1ef7c8c0aea9874c157c358b3b8915a8128.boutiques",
     name="tbss_skeleton",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

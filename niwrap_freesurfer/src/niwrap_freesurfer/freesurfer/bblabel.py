@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BBLABEL_METADATA = Metadata(
-    id="8029e18ce532d6970cd367d113a7d2298a390304.boutiques",
+    id="d1293820501628cd990eec4b275ecca954c2d046.boutiques",
     name="bblabel",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

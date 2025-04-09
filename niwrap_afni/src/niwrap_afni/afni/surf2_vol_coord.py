@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF2_VOL_COORD_METADATA = Metadata(
-    id="a33b1b240a4fa87f79ece3a7f2283645dc3cfa8c.boutiques",
+    id="6fe6474a33c8e23675d3aa29e680feb2c2b37bc1.boutiques",
     name="Surf2VolCoord",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

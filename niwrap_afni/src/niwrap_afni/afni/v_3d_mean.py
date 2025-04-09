@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_MEAN_METADATA = Metadata(
-    id="e324408a8ad006ebdb33f912bb6b96f4f9350026.boutiques",
+    id="66db8b2cf4b9457a41b7a29a860b777a3814d4b9.boutiques",
     name="3dMean",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APARC2FEAT_METADATA = Metadata(
-    id="0ac9c7d7d17f6bd66cfbc4ec10b36ae576f35039.boutiques",
+    id="6a7b6c4f4e986640f48c730530dcf6868ecd3452.boutiques",
     name="aparc2feat",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

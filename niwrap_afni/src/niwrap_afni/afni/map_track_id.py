@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAP_TRACK_ID_METADATA = Metadata(
-    id="8a4654eaf53cc77b2cf484e321c0f2ad7ebde3ea.boutiques",
+    id="202a6fa3ea0cff136f48e1fd155d368bc1c373ce.boutiques",
     name="map_TrackID",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__STATAUXCODE_METADATA = Metadata(
-    id="f6c1767e1a9b29b920fca298ee485697451c9d8a.boutiques",
+    id="ef385d8519f887dde3897dff25a19db608549dca.boutiques",
     name="@statauxcode",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

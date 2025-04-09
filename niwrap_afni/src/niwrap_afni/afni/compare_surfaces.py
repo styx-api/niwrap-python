@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 COMPARE_SURFACES_METADATA = Metadata(
-    id="fae97b4935dc6acada057829467fb30bd5e3f339.boutiques",
+    id="653d6f831efb2cdba11144f083f4857fcc5112b4.boutiques",
     name="CompareSurfaces",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

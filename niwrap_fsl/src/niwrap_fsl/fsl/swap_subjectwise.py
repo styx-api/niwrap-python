@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SWAP_SUBJECTWISE_METADATA = Metadata(
-    id="bf7096e8cee698d846878d13e1f8e94c40f80ba1.boutiques",
+    id="5af24925494f3011f02c35b796b9bf8904045912.boutiques",
     name="swap_subjectwise",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

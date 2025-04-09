@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_BRAIN_VOLUME_METADATA = Metadata(
-    id="7e9a6415798579853848210ef705f99e9ccb5ca0.boutiques",
+    id="0d3c77e17bea54575e22e56b3796c1c1d7d5219d.boutiques",
     name="mri_brain_volume",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

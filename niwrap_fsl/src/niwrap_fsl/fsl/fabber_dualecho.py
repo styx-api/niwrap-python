@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FABBER_DUALECHO_METADATA = Metadata(
-    id="3b814c58103c730b38e41b1c598b309b06d4ea6b.boutiques",
+    id="305de8333d1ad1d57c96dcbf58cb15ddf83c2fea.boutiques",
     name="fabber_dualecho",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

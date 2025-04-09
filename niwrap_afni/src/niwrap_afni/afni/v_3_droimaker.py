@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3_DROIMAKER_METADATA = Metadata(
-    id="16b5bd8ed0bd228cb0f4654876f7baea2f4af429.boutiques",
+    id="5b3355492db520e49a5f6a884aa39664389df7ac.boutiques",
     name="3DROIMaker",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

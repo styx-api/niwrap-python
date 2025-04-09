@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 INVFEATREG_METADATA = Metadata(
-    id="dfd93a0e3c77ac7d8350f0e55ba782b5705b1969.boutiques",
+    id="99bb1f8fb4e4e88660733aa203a1237143f95934.boutiques",
     name="invfeatreg",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

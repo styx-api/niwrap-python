@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_SEM_METADATA = Metadata(
-    id="a26930914a15136a68f2004d57838df7d226dcb0.boutiques",
+    id="aeff1d057462eede99aff722b7dd6ab414847e03.boutiques",
     name="1dSEM",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

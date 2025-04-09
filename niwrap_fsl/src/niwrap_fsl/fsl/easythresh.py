@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EASYTHRESH_METADATA = Metadata(
-    id="98fe51731b5eb29a261a330f299532a959122300.boutiques",
+    id="064c6fd8822b54714ee45bc49ec55585a7d24d97.boutiques",
     name="easythresh",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

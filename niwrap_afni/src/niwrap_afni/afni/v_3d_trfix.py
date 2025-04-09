@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_TRFIX_METADATA = Metadata(
-    id="a34882bc067ee157a81c8d48c065fa3edac1cdc8.boutiques",
+    id="a4d956a40d63cb24aa10d171635193de75a94468.boutiques",
     name="3dTRfix",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

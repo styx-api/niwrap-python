@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_GEODESIC_ROIS_METADATA = Metadata(
-    id="e84a10dd4b7742d06a2cc82bdf785c2ce3993f10.boutiques",
+    id="17465667f4121005f399362ce1feed5001c531cc.boutiques",
     name="surface-geodesic-rois",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_DWUNCERT_METADATA = Metadata(
-    id="8f7f239d86c536d7e540a83e127aed316e05a15c.boutiques",
+    id="36a7630a6addf3cde3da6dc8c065b0d3b2cad85a.boutiques",
     name="3dDWUncert",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

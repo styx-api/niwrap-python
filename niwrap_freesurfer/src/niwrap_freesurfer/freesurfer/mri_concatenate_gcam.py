@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_CONCATENATE_GCAM_METADATA = Metadata(
-    id="f2136516d8c43c1484d6b8f54f1f6627fae4ebe7.boutiques",
+    id="2ecbfef6556154cdb3c80ea22e9da876412bce8e.boutiques",
     name="mri_concatenate_gcam",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_EXTREMA_METADATA = Metadata(
-    id="84b854a87242a5d67c86897020fb70cd6c8e1945.boutiques",
+    id="507b05ba58f203a73a716d406ccd14e862163ac3.boutiques",
     name="SurfExtrema",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

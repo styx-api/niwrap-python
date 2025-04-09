@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL2PATCH_METADATA = Metadata(
-    id="8785c2dbe1c1b6e295f643297a4b281d53553dd6.boutiques",
+    id="1c4c1eb31d054d348645153cd56891912e1a70b1.boutiques",
     name="label2patch",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

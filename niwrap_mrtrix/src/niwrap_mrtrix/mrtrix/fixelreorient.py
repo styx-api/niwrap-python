@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIXELREORIENT_METADATA = Metadata(
-    id="131439582b6a79c991d4bdc5b5ebe9896e2ee937.boutiques",
+    id="1d1bbfeda8f81b813fcbd9b8dd41dc9022366bdd.boutiques",
     name="fixelreorient",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

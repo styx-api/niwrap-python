@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_EDU_01_SCALE_METADATA = Metadata(
-    id="421ae3b97be6019b8194c6bf2db5b0b7024dbd25.boutiques",
+    id="882d93a008679bc5297ea9ae14de61c1a4182b85.boutiques",
     name="3dEdu_01_scale",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

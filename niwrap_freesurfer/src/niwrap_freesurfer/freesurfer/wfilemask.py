@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WFILEMASK_METADATA = Metadata(
-    id="2af18e367bd17f7afc3d6c0507042e5513f946c5.boutiques",
+    id="d9499795a211ad7cff6445d0424d21c8e2190d0f.boutiques",
     name="wfilemask",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

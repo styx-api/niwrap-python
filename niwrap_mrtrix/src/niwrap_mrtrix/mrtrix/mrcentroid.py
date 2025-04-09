@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRCENTROID_METADATA = Metadata(
-    id="d45d49e8b930b948a798b910b254792bd30544a6.boutiques",
+    id="f917eb70b8105e988cc147a312518157cd650728.boutiques",
     name="mrcentroid",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

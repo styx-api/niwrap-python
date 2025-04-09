@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WHIRLGIF_METADATA = Metadata(
-    id="e4c0871988c7cdc7bddc466fe2124de7c556f8a7.boutiques",
+    id="90ac51da8b1e5f7cdec9e864a32a24e4ccdb9243.boutiques",
     name="whirlgif",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

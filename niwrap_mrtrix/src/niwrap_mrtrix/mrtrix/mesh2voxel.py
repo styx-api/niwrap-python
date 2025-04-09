@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MESH2VOXEL_METADATA = Metadata(
-    id="28b90b1b324afdb41ad9cab0242950bac08d3bdd.boutiques",
+    id="121d27a04e5be0003ec7fd7a1de2dfc3d8768d28.boutiques",
     name="mesh2voxel",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

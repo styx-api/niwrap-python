@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BORDER_LENGTH_METADATA = Metadata(
-    id="46facc8762c676e8a92694d6a55a4530d64500dd.boutiques",
+    id="abce828fe31936f1b7fde8ded17bed93a8109cba.boutiques",
     name="border-length",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

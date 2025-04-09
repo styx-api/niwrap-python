@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3DCALC_METADATA = Metadata(
-    id="8562822f45d27f4c091ec9137e9dfa4943f96f87.boutiques",
+    id="316a1b5fba4ac982c5b6ad020a321f9854eee59d.boutiques",
     name="3dcalc",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TSFINFO_METADATA = Metadata(
-    id="93e8dd3a8bf3a767eaca6532b13d53b4050811a0.boutiques",
+    id="45e3911b111372c34cdd626a6ab7dceee95afdc9.boutiques",
     name="tsfinfo",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

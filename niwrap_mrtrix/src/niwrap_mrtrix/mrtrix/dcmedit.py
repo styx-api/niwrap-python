@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DCMEDIT_METADATA = Metadata(
-    id="01158fce9a81a53a1cc2f81c6577cb2f6210d5a8.boutiques",
+    id="8cde5cf6f19725e4d438d7089e7f5a9e71f0b93d.boutiques",
     name="dcmedit",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_INFLATE_METADATA = Metadata(
-    id="43f3d6dc1b42aaf5d8e8b357955f64c384b5d241.boutiques",
+    id="8413bd9727e7211f290ec92777a3dd6eb3902178.boutiques",
     name="mris_inflate",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

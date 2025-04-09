@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_ANONYMIZE_METADATA = Metadata(
-    id="b39c604a1cb220842f1bff1090f5403b2eb497f0.boutiques",
+    id="7bfa2f9016b41e8fc4630ab0e9052f08dddc078c.boutiques",
     name="@djunct_anonymize",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

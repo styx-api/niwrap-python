@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XMAT_TOOL_PY_METADATA = Metadata(
-    id="3a6bcb8aee2e7ab05a9a212e21f7dfef419b3b43.boutiques",
+    id="da417cb8611edbb7f8c8d5e21c61c76035319b7b.boutiques",
     name="xmat_tool.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

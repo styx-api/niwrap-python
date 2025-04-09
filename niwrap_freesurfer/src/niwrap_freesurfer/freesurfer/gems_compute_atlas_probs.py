@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GEMS_COMPUTE_ATLAS_PROBS_METADATA = Metadata(
-    id="e4708282a3cd6c2187910866f5c82a92aef1d963.boutiques",
+    id="bb2ad12b36b45df1472550e075ee393432a9c45e.boutiques",
     name="gems_compute_atlas_probs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

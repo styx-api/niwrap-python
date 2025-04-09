@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REG_ALADIN_METADATA = Metadata(
-    id="0cdcd5294ca36b2c6f5e68cc4ee34d2019bd8f9f.boutiques",
+    id="35a28b870460506a2848c942f448b48ae179b00e.boutiques",
     name="reg_aladin",
     package="niftyreg",
     container_image_tag="vnmd/niftyreg_1.4.0:20220819",

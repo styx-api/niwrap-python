@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMMASK_METADATA = Metadata(
-    id="9c1f93c0cb09202023e9490b9f3feb5a319f6f59.boutiques",
+    id="7997bb8c1d255c2ebdb468789198032af458e485.boutiques",
     name="immask",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

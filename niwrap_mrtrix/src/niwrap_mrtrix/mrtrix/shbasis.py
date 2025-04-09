@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SHBASIS_METADATA = Metadata(
-    id="0f5caf03dc726e74e9825e60ca3aa4026a22a7e2.boutiques",
+    id="342d9aaa228ccec745a5fbb2776b3c0c98248b3c.boutiques",
     name="shbasis",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

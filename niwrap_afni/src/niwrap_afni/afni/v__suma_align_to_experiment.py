@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SUMA_ALIGN_TO_EXPERIMENT_METADATA = Metadata(
-    id="8f81484159017f8749f8211125315dcfa8d64e88.boutiques",
+    id="491c018d4767ea1440661f0921c76cfd02401c41.boutiques",
     name="@SUMA_AlignToExperiment",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

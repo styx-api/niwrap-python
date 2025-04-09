@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ALLINEATE_METADATA = Metadata(
-    id="9e9b34eca4cf79e9ab56b274a89a3cd8dc932bed.boutiques",
+    id="05acda1bcc694397c89e84c0f214f9da9cbb22ef.boutiques",
     name="3dAllineate",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

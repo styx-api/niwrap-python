@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_RANKIZER_METADATA = Metadata(
-    id="e854a99a853a99ed471d7da08fb007bec90426d2.boutiques",
+    id="d25cd53dac78c92a658be818b365fd56efd0a2bb.boutiques",
     name="3dRankizer",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

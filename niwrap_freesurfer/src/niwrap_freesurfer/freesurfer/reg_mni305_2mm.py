@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REG_MNI305_2MM_METADATA = Metadata(
-    id="baca96deead4a89fad3eca8defaa337786ee5cdf.boutiques",
+    id="64e1604135d19d48b71f85d6fedba8ada9ab603b.boutiques",
     name="reg-mni305.2mm",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

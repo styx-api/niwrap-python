@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SCALE_TO_MAP_METADATA = Metadata(
-    id="2f7e7a834eba315bf3a7ddf886a5f54b169d9aeb.boutiques",
+    id="138fa837b12f477298b27ad4f0e790647533e634.boutiques",
     name="ScaleToMap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

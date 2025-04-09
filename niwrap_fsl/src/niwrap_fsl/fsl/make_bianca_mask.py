@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_BIANCA_MASK_METADATA = Metadata(
-    id="6301fdafc66328cb8c345bedf78a2080c05aa6ca.boutiques",
+    id="9ca8a5f420e63a4b25a4e9da62d286bc907b2306.boutiques",
     name="make_bianca_mask",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

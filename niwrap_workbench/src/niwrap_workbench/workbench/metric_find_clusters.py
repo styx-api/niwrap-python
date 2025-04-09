@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_FIND_CLUSTERS_METADATA = Metadata(
-    id="907a04357923661b73b475f443d3ac00387700fc.boutiques",
+    id="8f8c421cfcc6891dc0b34062a0a4b3b1a291fe3e.boutiques",
     name="metric-find-clusters",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

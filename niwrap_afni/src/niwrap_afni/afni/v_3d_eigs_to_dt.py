@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_EIGS_TO_DT_METADATA = Metadata(
-    id="28fad7eb2ac634dd2431ef9451ad93178516ba6f.boutiques",
+    id="2a859820023438ce7134628316920f709603fea4.boutiques",
     name="3dEigsToDT",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PNM_EVS_METADATA = Metadata(
-    id="ad50045387407a73f19e9a4b5604b989851d1d52.boutiques",
+    id="209e63d8df4e313b064ddd0e15f7ff0c258fd870.boutiques",
     name="pnm_evs",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

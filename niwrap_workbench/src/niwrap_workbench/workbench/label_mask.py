@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_MASK_METADATA = Metadata(
-    id="2751ac1aa6078e57d950752da509a34d477965c0.boutiques",
+    id="7fe3e1e37d9be87454fc32a002f912c250a34dc6.boutiques",
     name="label-mask",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

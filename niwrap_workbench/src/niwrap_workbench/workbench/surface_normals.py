@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_NORMALS_METADATA = Metadata(
-    id="bf741b89964614d5dda2065678e1ec762984a361.boutiques",
+    id="d987cf84ec93f8e98f2c21422e35e1510a1f0811.boutiques",
     name="surface-normals",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

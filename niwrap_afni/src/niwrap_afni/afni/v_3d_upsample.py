@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_UPSAMPLE_METADATA = Metadata(
-    id="e4750d1cff9a9b319ed4f1652bde0087af37e6dc.boutiques",
+    id="1517c44535a12e8aed86c6a112d119fc406a90b4.boutiques",
     name="3dUpsample",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

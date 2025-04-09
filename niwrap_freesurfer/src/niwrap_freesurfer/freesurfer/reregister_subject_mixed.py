@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REREGISTER_SUBJECT_MIXED_METADATA = Metadata(
-    id="0d4b2b8c11d9a393c8ab3a72de3e1875d4b1135b.boutiques",
+    id="ca61724bb570a3556d0152f9f5aef400e41c3b8d.boutiques",
     name="reregister_subject_mixed",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

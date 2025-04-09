@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SWI_PREPROCESS_METADATA = Metadata(
-    id="9c092f99975ad21400c19882fe546f899bd6d1ce.boutiques",
+    id="a87ddd55dd6e762a7926ab993ca84eb258e4144c.boutiques",
     name="swi_preprocess",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

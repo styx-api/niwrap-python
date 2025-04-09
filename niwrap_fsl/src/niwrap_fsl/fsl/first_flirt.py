@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIRST_FLIRT_METADATA = Metadata(
-    id="84256599d7a1450603ccdb556a18e0725b6d55be.boutiques",
+    id="da6d58a2981491de46d755a3bd704f011fcc0a4d.boutiques",
     name="first_flirt",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

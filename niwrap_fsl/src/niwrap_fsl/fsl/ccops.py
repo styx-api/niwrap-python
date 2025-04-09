@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CCOPS_METADATA = Metadata(
-    id="15f914d7513b2d71d9d54891eb8992cdb8593e4a.boutiques",
+    id="33c1fa9b926b8122521dcdf681d7ea6d61318e05.boutiques",
     name="ccops",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_THICKNESS_METADATA = Metadata(
-    id="1f70790c09e2a07e9627e797f2437c49106bcce2.boutiques",
+    id="219cc09086fcb3e40767c96cbad6d1655bbeeb34.boutiques",
     name="mris_thickness",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

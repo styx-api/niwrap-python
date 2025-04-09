@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XSANATREG_METADATA = Metadata(
-    id="fa7d0e1f8dd94e54884aa8dac608dad32d5de507.boutiques",
+    id="92e3106d67a2897fb7d26ce43be63611d67973c8.boutiques",
     name="xsanatreg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

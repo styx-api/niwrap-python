@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GROUPSTATSDIFF_METADATA = Metadata(
-    id="fd778211449d90ec41caacb3a7dc64cdb74d5085.boutiques",
+    id="154b9529a21a14783c40c5840307556a8028a848.boutiques",
     name="groupstatsdiff",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMUPSAM_METADATA = Metadata(
-    id="156965091ca5242419f26a19463380332f6a9731.boutiques",
+    id="d769dae1e4c21af6509b731daf0c2ab2e1688ccf.boutiques",
     name="imupsam",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

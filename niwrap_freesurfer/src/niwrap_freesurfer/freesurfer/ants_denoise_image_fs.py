@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_DENOISE_IMAGE_FS_METADATA = Metadata(
-    id="11723bf924918f42194dab2a080f4af8786d3033.boutiques",
+    id="ceaab64d93fccf1f1155efcaaae5de0e2ed14132.boutiques",
     name="AntsDenoiseImageFs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

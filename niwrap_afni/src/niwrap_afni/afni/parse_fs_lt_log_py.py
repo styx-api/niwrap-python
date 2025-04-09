@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PARSE_FS_LT_LOG_PY_METADATA = Metadata(
-    id="bc86d7205c69a1f53932715879d366e6a9ef6795.boutiques",
+    id="eea3154b221cecc946f3e7770034475288b7026a.boutiques",
     name="parse_fs_lt_log.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

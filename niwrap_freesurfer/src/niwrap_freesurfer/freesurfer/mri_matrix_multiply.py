@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_MATRIX_MULTIPLY_METADATA = Metadata(
-    id="e27af9270450150cf8e376927c002e9ad9bce68e.boutiques",
+    id="83fe54c8f9d006084c7a0544c59692e087c8825f.boutiques",
     name="mri_matrix_multiply",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

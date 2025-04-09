@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLSMOOTHFILL_METADATA = Metadata(
-    id="fbc060a3d94fdea837d41e4627731e10e81a63c1.boutiques",
+    id="09030a34f28aca6d22471ec753653343bc245212.boutiques",
     name="fslsmoothfill",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

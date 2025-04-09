@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA = Metadata(
-    id="bb094a739a47e09361aec760ca2b87105ebeb041.boutiques",
+    id="458a2cce6618958955b2061c46dc04c83d13a6a3.boutiques",
     name="quantifyBrainstemStructures.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_CALC_METADATA = Metadata(
-    id="0f04865341178eeb624695b7ff33be523bb926b5.boutiques",
+    id="8fa829f5f800088c450bcf7fa7d7097fee3c8f04.boutiques",
     name="mris_calc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

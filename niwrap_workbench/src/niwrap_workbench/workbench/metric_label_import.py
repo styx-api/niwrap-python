@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_LABEL_IMPORT_METADATA = Metadata(
-    id="6da1f2a3d32c8f47c15c52c268b4fb47c77b1020.boutiques",
+    id="1d6a5e4e35d94b98b820cc2553931224ea565f8d.boutiques",
     name="metric-label-import",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

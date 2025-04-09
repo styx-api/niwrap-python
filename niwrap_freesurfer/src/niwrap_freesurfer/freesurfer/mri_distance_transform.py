@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_DISTANCE_TRANSFORM_METADATA = Metadata(
-    id="7714e4c14a355415364e79e36d2280280f83a066.boutiques",
+    id="e70d33e3cab2523df541297c46b2cf585160584b.boutiques",
     name="mri_distance_transform",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

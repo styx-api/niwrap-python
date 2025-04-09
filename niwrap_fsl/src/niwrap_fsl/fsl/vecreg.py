@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VECREG_METADATA = Metadata(
-    id="5ce185cfd72c01474d13d00830ab8b976c5b35f8.boutiques",
+    id="5064b1425f46565055c7ced1a7351b8b583c894d.boutiques",
     name="vecreg",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

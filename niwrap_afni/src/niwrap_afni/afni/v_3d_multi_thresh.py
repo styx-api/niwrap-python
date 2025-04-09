@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_MULTI_THRESH_METADATA = Metadata(
-    id="ac6c6a539a206612134e8a96c0fd7291780ddc36.boutiques",
+    id="0cd522f82df292e38bac580f53ce63e58f4d0ba1.boutiques",
     name="3dMultiThresh",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

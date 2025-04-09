@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SEG2ANNOT_METADATA = Metadata(
-    id="d008c930a065c732716cdd3422ffc514e12ed385.boutiques",
+    id="55808890fcb2dab6adced966808ff3a154a41714.boutiques",
     name="mris_seg2annot",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

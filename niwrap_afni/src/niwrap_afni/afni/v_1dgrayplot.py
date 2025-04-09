@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1DGRAYPLOT_METADATA = Metadata(
-    id="9f1dfb91ea2888caae64e3a7a65f59bb59e4f314.boutiques",
+    id="19cd85a5a31be03ff742d13e871815986799cf05.boutiques",
     name="1dgrayplot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

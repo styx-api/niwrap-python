@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_ANHIST_METADATA = Metadata(
-    id="00e44f2a97811aa464f9291074e3e9528d7e4939.boutiques",
+    id="0c0bd91348202d1b0045fb9d1e10c4cafea33971.boutiques",
     name="3dAnhist",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_NORMALIZE_METADATA = Metadata(
-    id="600d2e82bac484d0fa09b08fc06b759b58c55a5b.boutiques",
+    id="b2271358abe9a80870f26f922619f2ec9097eaf2.boutiques",
     name="mri_normalize",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

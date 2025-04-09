@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DCM2NIIX_METADATA = Metadata(
-    id="15ccd57203c6c358b266b58ae05fde04fa3d5414.boutiques",
+    id="987e4112a3b72cd8b8aaebf52c5d17574796ab8d.boutiques",
     name="dcm2niix",
     package="dcm2niix",
     container_image_tag="vnmd/dcm2niix_v1.0.20240202:20241125",

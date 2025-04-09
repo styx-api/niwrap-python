@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_ENTOWM_SEG_METADATA = Metadata(
-    id="40109605e55188f3737d75a9e36af58709374335.boutiques",
+    id="ddf086c5e432c411bc2194c0bac1a7f6b35bb81f.boutiques",
     name="mri_entowm_seg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

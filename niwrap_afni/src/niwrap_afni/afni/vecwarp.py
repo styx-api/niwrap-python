@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VECWARP_METADATA = Metadata(
-    id="b6a386dcbdfb7b07edd1e2d0325362df44cdb19e.boutiques",
+    id="09bfed5029029deef59dcf7bcb89635431ccb5cb.boutiques",
     name="Vecwarp",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

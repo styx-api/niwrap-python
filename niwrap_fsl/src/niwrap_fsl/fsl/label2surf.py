@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL2SURF_METADATA = Metadata(
-    id="cd63394affbc5928ed92ba87251a2f8b6f4f20e0.boutiques",
+    id="5059905d7c62a7ca1c0851ff42cf92141987da4e.boutiques",
     name="label2surf",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

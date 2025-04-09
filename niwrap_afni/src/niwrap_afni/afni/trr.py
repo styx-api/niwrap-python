@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRR_METADATA = Metadata(
-    id="9675a33a650bccf2f38cabb937b9b11e9c6b765f.boutiques",
+    id="bd682eac2506d81d16a0fea9c2fa13b1b23a36c9.boutiques",
     name="TRR",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

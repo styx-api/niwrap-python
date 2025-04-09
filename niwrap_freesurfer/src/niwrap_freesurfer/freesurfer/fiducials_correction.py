@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIDUCIALS_CORRECTION_METADATA = Metadata(
-    id="6353e9d7f0b132461e7ac43f5dc929e2584cbb0a.boutiques",
+    id="6d397bd18ad19fd8e968a667c38712a47c10b334.boutiques",
     name="fiducials_correction",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_VEC_RGB_TO_HSL_METADATA = Metadata(
-    id="6117ba68b426e9e30b15374be67ca0934595ccef.boutiques",
+    id="05db8a83da7be7436039f9e5ae40fa617ded47cf.boutiques",
     name="3dVecRGB_to_HSL",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

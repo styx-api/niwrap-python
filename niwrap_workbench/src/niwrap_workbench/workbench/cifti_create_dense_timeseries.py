@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_CREATE_DENSE_TIMESERIES_METADATA = Metadata(
-    id="71533feafcaa802cef4d42e37ca6ad2a75119da8.boutiques",
+    id="cdcb5235c0276d9a64c680f90f6510d67bb9abf5.boutiques",
     name="cifti-create-dense-timeseries",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

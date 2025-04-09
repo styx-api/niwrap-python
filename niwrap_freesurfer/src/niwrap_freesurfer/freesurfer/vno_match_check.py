@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VNO_MATCH_CHECK_METADATA = Metadata(
-    id="d1efb9fab3c72ba5b84a4f1cb65492e1bcaadf76.boutiques",
+    id="f8067972f626da6ba2d1f49f4d099ebfb3bccb87.boutiques",
     name="vno_match_check",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

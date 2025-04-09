@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TCKRESAMPLE_METADATA = Metadata(
-    id="985698dc2451e564202878939f3e4388fbe9d151.boutiques",
+    id="96fe07e9bfb00489a4bfbac66a8efe1f3a526da3.boutiques",
     name="tckresample",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

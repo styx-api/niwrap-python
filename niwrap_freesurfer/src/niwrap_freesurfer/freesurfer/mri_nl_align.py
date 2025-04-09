@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_NL_ALIGN_METADATA = Metadata(
-    id="fd12751796479c6b953e5a2ce259ca4890ee3c30.boutiques",
+    id="6310126949cfa12584523773d4270cc7c8b646c3.boutiques",
     name="mri_nl_align",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

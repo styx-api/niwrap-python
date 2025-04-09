@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_CAL_RENORMALIZE_GCA_METADATA = Metadata(
-    id="df0026a0e8b6f004896d4b13f1e6b7061efe9b96.boutiques",
+    id="14248dd0e801de44865ab35dbf488e7e2c657ff0.boutiques",
     name="mri_cal_renormalize_gca",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

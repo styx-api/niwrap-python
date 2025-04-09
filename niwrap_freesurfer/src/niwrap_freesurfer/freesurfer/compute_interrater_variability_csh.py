@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA = Metadata(
-    id="7363f7a4d7e7af9a9827c3ca57854bc1610a9623.boutiques",
+    id="7c673e67884e719ac415c4fda5f5ca418d13773d.boutiques",
     name="compute_interrater_variability.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

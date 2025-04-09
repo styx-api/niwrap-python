@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_WILCOXON_METADATA = Metadata(
-    id="ab0873d1df66a8478516e2a9302c8e42a90d10ec.boutiques",
+    id="0faf7a4a5820da0066cc57696be816f569b8025d.boutiques",
     name="3dWilcoxon",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

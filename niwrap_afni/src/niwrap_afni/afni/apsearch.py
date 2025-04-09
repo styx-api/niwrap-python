@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APSEARCH_METADATA = Metadata(
-    id="d759bc178b2620ea44d398387e0405f577daa6c5.boutiques",
+    id="cd2ec5b2b99155700676e65bd9c04ed3a27a09dc.boutiques",
     name="apsearch",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

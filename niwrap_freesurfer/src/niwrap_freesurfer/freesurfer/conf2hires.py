@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONF2HIRES_METADATA = Metadata(
-    id="2455d1a9818a72df60f5c386c53541cd8cd28eab.boutiques",
+    id="539c4acfba831cfb4f99ac6d61aa594dba2bc3f2.boutiques",
     name="conf2hires",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

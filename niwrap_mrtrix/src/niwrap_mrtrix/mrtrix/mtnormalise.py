@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MTNORMALISE_METADATA = Metadata(
-    id="3709b0ca1455372ea3dda75e22e31168270b187c.boutiques",
+    id="f1833d2ac76f43cec968d20e8d2c21a993a925a3.boutiques",
     name="mtnormalise",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

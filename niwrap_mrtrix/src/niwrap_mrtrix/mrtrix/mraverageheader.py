@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRAVERAGEHEADER_METADATA = Metadata(
-    id="a78748366d0d3cfec49f44fdcdebe26755e40891.boutiques",
+    id="fd2f9326c744f341eb6c33d25cde30666d1d4b4f.boutiques",
     name="mraverageheader",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

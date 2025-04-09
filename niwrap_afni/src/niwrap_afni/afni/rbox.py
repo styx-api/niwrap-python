@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RBOX_METADATA = Metadata(
-    id="9fdf14ab8e16f325f5ea7e753f75ed7953ef61ba.boutiques",
+    id="68a575328899ce33835ac92e288c0d8133631651.boutiques",
     name="rbox",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

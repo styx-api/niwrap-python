@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WARPINIT_METADATA = Metadata(
-    id="4b6c806f701cb5bc6b23937491e0dab59feb77ec.boutiques",
+    id="8d80b9573339b70a44a4d9c060f4b3d6a7b83231.boutiques",
     name="warpinit",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

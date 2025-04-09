@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FATCAT_MATPLOT_METADATA = Metadata(
-    id="f644c652339bbfb3aa84d71606689abe580b8c2b.boutiques",
+    id="804cde808f328b2d1b8ec82db978eeac78490b19.boutiques",
     name="FATCAT_matplot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

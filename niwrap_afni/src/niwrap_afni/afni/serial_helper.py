@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SERIAL_HELPER_METADATA = Metadata(
-    id="4df7ea7f38a6767c1aba72a89599b9e5c022108c.boutiques",
+    id="8178f88c2d781af8e9aeb5797401a6ba061486fd.boutiques",
     name="serial_helper",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

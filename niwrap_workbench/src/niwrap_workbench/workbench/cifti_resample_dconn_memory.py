@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_RESAMPLE_DCONN_MEMORY_METADATA = Metadata(
-    id="6897a244659820e737362b7b9d26217d4c4a2122.boutiques",
+    id="79d4fe9e7c530f1e80681b1b96505622670c260a.boutiques",
     name="cifti-resample-dconn-memory",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

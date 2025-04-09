@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GIFTI_TOOL_METADATA = Metadata(
-    id="4946ede9cc84ec22d01a494ff249ccac8104538c.boutiques",
+    id="e21384bfaf8b8bcf833d65f05be55ac0e9f035a6.boutiques",
     name="gifti_tool",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

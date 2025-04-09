@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VECTORSTATS_METADATA = Metadata(
-    id="a8a67c93f9ad1cdf03ad2a1e473010538e53830b.boutiques",
+    id="24ba2da446c51868e04d07323b5e99fb4f2ccaad.boutiques",
     name="vectorstats",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QUICKSPEC_SL_METADATA = Metadata(
-    id="6ad0ef7a3cf68472db5f2c42ec5677d562d0ca24.boutiques",
+    id="e5cdd0aedd96bc6df0f947244131010bf4fd383f.boutiques",
     name="quickspecSL",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

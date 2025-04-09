@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PVMFIT_METADATA = Metadata(
-    id="2873389b6bc4586f988630b860c7c91d553dc1af.boutiques",
+    id="8f17260c2322f37f5ada0cb78b6804021a6ac096.boutiques",
     name="pvmfit",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

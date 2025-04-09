@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TALSEGPROB_METADATA = Metadata(
-    id="ddb70e26f179b8729ed68da2fa771aa79e55b360.boutiques",
+    id="142e86d75f85ace3810b1f5f3d1f754943e9619f.boutiques",
     name="talsegprob",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

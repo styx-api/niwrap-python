@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA = Metadata(
-    id="3dfe64fe4b416974b4aa2cc3b180143c7a5ada1d.boutiques",
+    id="0a3436dc5db4b133e39a70c1855022a5b90e8a73.boutiques",
     name="@djunct_modal_smoothing_with_rep",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

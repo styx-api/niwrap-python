@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 READ_MATLAB_FILES_PY_METADATA = Metadata(
-    id="228461aad9e4f1abdf8c4f6cdf4dda42da06fc96.boutiques",
+    id="d93c09c43aac0af7cf212aad65ea83ad160cf02e.boutiques",
     name="read_matlab_files.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

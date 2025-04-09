@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__RADIAL_CORRELATE_METADATA = Metadata(
-    id="1cbb44d20d4e3ca23ba7981bb4c49932fce75bf0.boutiques",
+    id="0864ffc94296f3c83a9716405be98eb83c332604.boutiques",
     name="@radial_correlate",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

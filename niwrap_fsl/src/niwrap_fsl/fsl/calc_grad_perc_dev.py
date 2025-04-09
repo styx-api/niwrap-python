@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CALC_GRAD_PERC_DEV_METADATA = Metadata(
-    id="76e8d6c21efe0b0e70c7144ea3347d4476e917aa.boutiques",
+    id="7e7b6a76bb0f336c9e61d44022025539cb0b2456.boutiques",
     name="calc_grad_perc_dev",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

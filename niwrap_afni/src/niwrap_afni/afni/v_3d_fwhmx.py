@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_FWHMX_METADATA = Metadata(
-    id="b5663599ab067623b1ae3ff871361e65e6cc2740.boutiques",
+    id="6272d178703339c8d6eba97fc0341f4e17ad91e9.boutiques",
     name="3dFWHMx",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

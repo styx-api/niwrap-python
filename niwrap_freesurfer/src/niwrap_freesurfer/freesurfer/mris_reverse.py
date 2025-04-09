@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_REVERSE_METADATA = Metadata(
-    id="ecda44ba479fe2843ae6e0aa5b415f74e9dbf9f9.boutiques",
+    id="a62b3581c919ee2de9ea29c9c8f31b6b9b96227a.boutiques",
     name="mris_reverse",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 INIT_USER_DOTFILES_PY_METADATA = Metadata(
-    id="8d4c58837ffe3486d2bbcb23d32442b108816c2b.boutiques",
+    id="7836d6bef57cb420a1e85769b6dd3d108f252382.boutiques",
     name="init_user_dotfiles.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

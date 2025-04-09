@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RUN_FASTSURFER_SH_METADATA = Metadata(
-    id="26270cd18e89f52fb8cb07dc98fd44dcf0753e14.boutiques",
+    id="16844320fdd509dd7f0092a139a8a74ff8fc083a.boutiques",
     name="run_fastsurfer.sh",
     package="fastsurfer",
     container_image_tag="deepmi/fastsurfer:cpu-v2.3.3",

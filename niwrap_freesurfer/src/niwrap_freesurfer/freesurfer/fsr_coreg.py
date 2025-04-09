@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSR_COREG_METADATA = Metadata(
-    id="b0e85054bb91348e85b4424dfeba924eb15f6a43.boutiques",
+    id="b6136f2ba4c2e2f78f88acaab07f5da54d1d4acf.boutiques",
     name="fsr-coreg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TSFDIVIDE_METADATA = Metadata(
-    id="4ccdf692559c43f81a4682ec0171e369f074e7b7.boutiques",
+    id="73b4285cd16d7ecd5b79ccc7ed4dd1e67b62377d.boutiques",
     name="tsfdivide",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABELS_INTERSECT_METADATA = Metadata(
-    id="1e2c55cb0005072264aed23aaa37a59486e7c119.boutiques",
+    id="983785cc757edbd08493db2a0f88b60b6b753bcf.boutiques",
     name="labels_intersect",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

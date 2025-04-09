@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
-    id="183c7a343e730b5d37f38ae332c84cb1365ae30e.boutiques",
+    id="4f03c5890f4e5fcc3807326ef8dcefa4c44a5776.boutiques",
     name="mris_spherical_average",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

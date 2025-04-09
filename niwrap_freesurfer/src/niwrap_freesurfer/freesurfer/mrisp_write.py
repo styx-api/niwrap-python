@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRISP_WRITE_METADATA = Metadata(
-    id="7b8fc1540fc76774d461ee491e6eccf087b42779.boutiques",
+    id="0ef5a849bb5e74469b12a33ed174cd4f7396c2f1.boutiques",
     name="mrisp_write",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

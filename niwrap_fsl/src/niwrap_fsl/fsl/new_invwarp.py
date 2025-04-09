@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NEW_INVWARP_METADATA = Metadata(
-    id="baad182c7d3c52eb0aab700505218877c6e9ad97.boutiques",
+    id="a7795ab8fb8c1a3741d41052e9c9b61e19007cdc.boutiques",
     name="new_invwarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

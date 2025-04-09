@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RSFGEN_METADATA = Metadata(
-    id="42de4c95300ddfa6a27f2ddbc5b6d9dc63cdd292.boutiques",
+    id="11b25a34307a16d17dd031e0865f508903b6754c.boutiques",
     name="RSFgen",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

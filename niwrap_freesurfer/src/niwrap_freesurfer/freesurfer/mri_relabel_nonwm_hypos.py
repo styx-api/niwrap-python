@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_RELABEL_NONWM_HYPOS_METADATA = Metadata(
-    id="c2dc64755d5cb891179f87b8ccf2689c8f1b9dde.boutiques",
+    id="1c205a744ee3062f4f4c5f23e5931460720a20c9.boutiques",
     name="mri_relabel_nonwm_hypos",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

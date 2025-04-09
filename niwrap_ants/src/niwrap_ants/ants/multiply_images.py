@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MULTIPLY_IMAGES_METADATA = Metadata(
-    id="931cc9c455d8f28ee0d20f1ab002cb39fdc3ac7e.boutiques",
+    id="64bd5aeefb329292176c99df9c9b1e1aeb3e299f.boutiques",
     name="MultiplyImages",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

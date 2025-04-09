@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LISTSUBJ_METADATA = Metadata(
-    id="a18d8b3140e25407e3ae5f429d4a4ba694996847.boutiques",
+    id="88334c9a683da47d52746d6bf16968b8b1d17667.boutiques",
     name="listsubj",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

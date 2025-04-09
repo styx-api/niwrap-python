@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_TO_VOLUME_MAPPING_METADATA = Metadata(
-    id="ae19948841cc9f986f2043fabc666ed7d6114d97.boutiques",
+    id="1002c8cc85faa2800b3c565c6faed87584c74e9e.boutiques",
     name="label-to-volume-mapping",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

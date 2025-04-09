@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_INV_FMRI_METADATA = Metadata(
-    id="0e98d6cd57d0addd162bfa97a9fce6949e7b4f85.boutiques",
+    id="25a087e9b21c2aecd11168bed959695342cab5e2.boutiques",
     name="3dInvFMRI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

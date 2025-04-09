@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 IMREG_METADATA = Metadata(
-    id="4ed217ec6db0c1ed0ca85263b118a5554ebb437a.boutiques",
+    id="818a93bfe29ae4f138331b2556d371211371266b.boutiques",
     name="imreg",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

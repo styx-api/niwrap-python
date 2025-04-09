@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LONG_QDEC_TABLE_METADATA = Metadata(
-    id="3e490486cd37e1e7aa6f857009bf74cde0ba7251.boutiques",
+    id="85d998ffbeab5b312320b201cbb085bfe7125309.boutiques",
     name="long_qdec_table",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

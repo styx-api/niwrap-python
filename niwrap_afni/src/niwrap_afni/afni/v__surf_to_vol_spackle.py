@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SURF_TO_VOL_SPACKLE_METADATA = Metadata(
-    id="b0444f30cf6b3a9a0996f5b8c66a1134d87d5052.boutiques",
+    id="b6dc12ea2739e07bf96f46f96b9e18d749e7c831.boutiques",
     name="@surf_to_vol_spackle",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

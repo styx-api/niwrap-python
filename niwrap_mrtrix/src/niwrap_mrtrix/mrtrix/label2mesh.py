@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL2MESH_METADATA = Metadata(
-    id="cb0fa03ae9a00660e6162ac41aa144e77599bd59.boutiques",
+    id="cdcb0167501c7277846754252872bdd4aafe4ee0.boutiques",
     name="label2mesh",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

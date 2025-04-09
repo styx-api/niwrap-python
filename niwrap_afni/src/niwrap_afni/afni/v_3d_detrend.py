@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_DETREND_METADATA = Metadata(
-    id="e1acbbed353dee123a530befb4df733e98383a20.boutiques",
+    id="4805c402b7d0be16118b8a7e957de4ad2d6dc92c.boutiques",
     name="3dDetrend",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

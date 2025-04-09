@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FOCI_CREATE_METADATA = Metadata(
-    id="f54b92ca66ce06ab8acae5b43f6f0c242d214886.boutiques",
+    id="b44d5a5c475f62b461f92b071ae7cead58a1f1d0.boutiques",
     name="foci-create",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

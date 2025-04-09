@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIBER_DOT_PRODUCTS_METADATA = Metadata(
-    id="3aa47399b8a8bcc86a9191cbbb2b9fa4ddbd8bfd.boutiques",
+    id="6de4250098eba964a2de1317984029cbcc59eda2.boutiques",
     name="fiber-dot-products",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

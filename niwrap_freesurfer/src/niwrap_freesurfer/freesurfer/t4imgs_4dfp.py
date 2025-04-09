@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 T4IMGS_4DFP_METADATA = Metadata(
-    id="ff1e1b6a51149ecedfe8127fd7944168fd2882ae.boutiques",
+    id="f59930980573ba4f92691ede7675eb588b9ae991.boutiques",
     name="t4imgs_4dfp",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

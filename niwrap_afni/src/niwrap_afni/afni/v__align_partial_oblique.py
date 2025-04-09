@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ALIGN_PARTIAL_OBLIQUE_METADATA = Metadata(
-    id="8266c2389908e7353d0356e57b5059a88cdc6548.boutiques",
+    id="d0ac6388c730c43ce7683b59b4069417404eff3d.boutiques",
     name="@align_partial_oblique",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

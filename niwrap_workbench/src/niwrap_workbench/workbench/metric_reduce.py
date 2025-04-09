@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_REDUCE_METADATA = Metadata(
-    id="8f69a9fb5fec167f808d9feb0478740e661cda26.boutiques",
+    id="0e724ddb9d623a8483c26cdb1f635ac5662e0355.boutiques",
     name="metric-reduce",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRANSFORMCOMPOSE_METADATA = Metadata(
-    id="8e378625408e1058e736b1bc94ac29bb3d2555e8.boutiques",
+    id="6d7295675afed0c75d67eae13a94d73c7b970c74.boutiques",
     name="transformcompose",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

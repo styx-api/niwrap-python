@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SUMA_MAKE_SPEC_FS_METADATA = Metadata(
-    id="6e44db2e589cac9b6317c8766e1b94b1501e3edc.boutiques",
+    id="10445ccc3d3a66bb5ebcc9fc5b2ee7040da06041.boutiques",
     name="@SUMA_Make_Spec_FS",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

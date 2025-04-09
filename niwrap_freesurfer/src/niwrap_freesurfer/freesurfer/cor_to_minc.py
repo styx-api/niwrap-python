@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 COR_TO_MINC_METADATA = Metadata(
-    id="40b8ba63752dc024cdd4c61323a6a2c0ec2b41fb.boutiques",
+    id="15dda396a0f22d201e6574171b77090fc72b06a2.boutiques",
     name="cor_to_minc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

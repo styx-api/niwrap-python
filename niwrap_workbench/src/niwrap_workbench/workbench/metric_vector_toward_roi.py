@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
-    id="82ce3915240934b58fb359f7a47c43413230f75c.boutiques",
+    id="39f00246a80e307faadb16ce8706b33001b8daf4.boutiques",
     name="metric-vector-toward-roi",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

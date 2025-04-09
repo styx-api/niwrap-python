@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_EXTREMA_METADATA = Metadata(
-    id="eb5e28d060e46506bf7d2f474eaa01ce1fdbeac0.boutiques",
+    id="862225c81cd52a35dcf97458bacb454a607c88ae.boutiques",
     name="cifti-extrema",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

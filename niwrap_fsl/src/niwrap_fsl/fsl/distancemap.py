@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DISTANCEMAP_METADATA = Metadata(
-    id="9c4305e764cc37b8781416bc4fb2490a6c6bb7a4.boutiques",
+    id="8c91d70b066dae9f7112e48ed64c3d44b99e5208.boutiques",
     name="distancemap",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

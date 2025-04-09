@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSDCMDECOMPRESS_METADATA = Metadata(
-    id="1c245eb1f1f4a476626056075ca7b223ab9946b1.boutiques",
+    id="30d6a93931c489cde2efd8a6696b27e23a3c1869.boutiques",
     name="fsdcmdecompress",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ROI_DECLUSTER_METADATA = Metadata(
-    id="c565e19b7f5a74c17db9a508d6eb500dd6dc0e98.boutiques",
+    id="520624870be5948640fb42dcdddf40d7764da2c4.boutiques",
     name="@ROI_decluster",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

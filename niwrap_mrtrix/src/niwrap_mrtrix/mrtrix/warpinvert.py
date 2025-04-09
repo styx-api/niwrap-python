@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 WARPINVERT_METADATA = Metadata(
-    id="34bd9d16c822603308c19a28bf1253af52fb2b1c.boutiques",
+    id="f3a20aeefbc1d48a0c5c2320a9ad61ef6bb94f89.boutiques",
     name="warpinvert",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

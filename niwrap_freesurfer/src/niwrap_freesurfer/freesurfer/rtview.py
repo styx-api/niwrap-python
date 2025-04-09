@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RTVIEW_METADATA = Metadata(
-    id="d1062fc3fcb7c8d781138ed45f8feb4a04671369.boutiques",
+    id="830ebe4bbc214db991c14d0846c93a10414a4c26.boutiques",
     name="rtview",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

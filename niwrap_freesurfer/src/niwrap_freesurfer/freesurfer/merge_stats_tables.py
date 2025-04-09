@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MERGE_STATS_TABLES_METADATA = Metadata(
-    id="35129fec9b70b3cf111ebb349d44b5a25140111b.boutiques",
+    id="75cd0efd4969a80f33c93957c7f3deb75c32e6cc.boutiques",
     name="merge_stats_tables",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

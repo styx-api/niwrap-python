@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_NEUROIMAGING_BATTERY_METADATA = Metadata(
-    id="d7414671299662e421a52be2b7c3ae669c337c31.boutiques",
+    id="fda9086beff33e279b7a3690f4eec41fd3bcdc45.boutiques",
     name="antsNeuroimagingBattery",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FLIRT_NEWDEFAULT_20080811_SCH_METADATA = Metadata(
-    id="0d9d4a730463f50ed6f5eaf534671e8d5ad1f460.boutiques",
+    id="feb43e2c92a18f6dadfa470638890ab96bd75d9d.boutiques",
     name="flirt.newdefault.20080811.sch",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

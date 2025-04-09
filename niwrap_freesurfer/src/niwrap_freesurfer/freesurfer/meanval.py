@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MEANVAL_METADATA = Metadata(
-    id="abff5f1715da97f4e48f1b5b12b06bbfdebcd6e0.boutiques",
+    id="6d7fa2eae6c9b81ace8c569ec0e5ab41bead6351.boutiques",
     name="meanval",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

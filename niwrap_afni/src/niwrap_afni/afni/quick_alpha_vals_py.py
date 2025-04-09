@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QUICK_ALPHA_VALS_PY_METADATA = Metadata(
-    id="467c10597885378ee65e5261792a6d6f5203efb5.boutiques",
+    id="43400d28d72275606480ec0f8739d52a9c960123.boutiques",
     name="quick.alpha.vals.py",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

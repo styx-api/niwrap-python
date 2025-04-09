@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BAYCEST_METADATA = Metadata(
-    id="4458846c516be1b936785202aa363d6e36d74203.boutiques",
+    id="b1c0ecf2ec328aa9f9be6bb6428c3eaadcedcc53.boutiques",
     name="baycest",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

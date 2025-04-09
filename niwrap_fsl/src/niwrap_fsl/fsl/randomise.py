@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RANDOMISE_METADATA = Metadata(
-    id="09ec23a1b6f8029fbc99416ba9beba51f568a0ef.boutiques",
+    id="0a37f1757c89783d28bc7a352fe207e8da6da1b9.boutiques",
     name="randomise",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PLUGOUT_TT_METADATA = Metadata(
-    id="ba7ffb9cb6205a1d454721d39cc9b04cfa68ec9a.boutiques",
+    id="04af4d4c1502c52e54a05f75f6835830544e9ccb.boutiques",
     name="plugout_tt",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

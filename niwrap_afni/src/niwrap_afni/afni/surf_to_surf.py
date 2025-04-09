@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF_TO_SURF_METADATA = Metadata(
-    id="a2c971cd7bb0ee914e8be7cd7e5159482c16cc13.boutiques",
+    id="af80d3026cea586c9cddcde8e039ab19779b80fa.boutiques",
     name="SurfToSurf",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

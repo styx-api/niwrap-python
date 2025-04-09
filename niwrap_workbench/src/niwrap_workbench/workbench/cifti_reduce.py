@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_REDUCE_METADATA = Metadata(
-    id="be845c30ea79aacef5b10667c734564431b90df3.boutiques",
+    id="7d9cd4d5dcfde4213e6a849325909f16d90985df.boutiques",
     name="cifti-reduce",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

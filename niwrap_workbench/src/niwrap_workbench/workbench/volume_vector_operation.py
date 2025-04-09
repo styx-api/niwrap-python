@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOLUME_VECTOR_OPERATION_METADATA = Metadata(
-    id="659c860de35d61543458fd69cdcc014c15293fe8.boutiques",
+    id="b6b698dbe706997398cf5bc45a651fc0a7b907d5.boutiques",
     name="volume-vector-operation",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

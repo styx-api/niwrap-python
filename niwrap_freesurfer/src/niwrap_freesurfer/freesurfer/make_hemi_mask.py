@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_HEMI_MASK_METADATA = Metadata(
-    id="55920b5b609569d7bec1e1ab50384958b7621427.boutiques",
+    id="b15d79958c2f6378c79d67869d258254bc5455d0.boutiques",
     name="make_hemi_mask",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

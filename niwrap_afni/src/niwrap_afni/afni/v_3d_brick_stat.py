@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_BRICK_STAT_METADATA = Metadata(
-    id="2171879e0c09931b6800be575110e0354a0a8e86.boutiques",
+    id="a69dcfae94945e2d6a2a10deecf9753b5bb81503.boutiques",
     name="3dBrickStat",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

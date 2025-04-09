@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XFMROT_METADATA = Metadata(
-    id="e68f95765471172c3f4d5eecbc6fc6f118b60ba7.boutiques",
+    id="31f4e9f4af4d5258649b001584ed13a30a8aab5e.boutiques",
     name="xfmrot",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

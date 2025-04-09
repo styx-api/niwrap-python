@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_STOPMASK_METADATA = Metadata(
-    id="e7f2a3c2cfe3f7fafce248b01fa340177fa54cc2.boutiques",
+    id="38e7fa2abd35271883a0f65f5dbaff1fc083659f.boutiques",
     name="mri_stopmask",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

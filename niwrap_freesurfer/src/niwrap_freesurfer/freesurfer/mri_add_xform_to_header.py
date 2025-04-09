@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_ADD_XFORM_TO_HEADER_METADATA = Metadata(
-    id="a352e8c6ada4a640929cf21a7797106f093df774.boutiques",
+    id="96d115caa915083b050c992bfe23de6c08af9d27.boutiques",
     name="mri_add_xform_to_header",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

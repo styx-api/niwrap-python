@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_24SWAP_METADATA = Metadata(
-    id="bf5fd18b81c5c9e1a6698d3e136d7e97296fa6fb.boutiques",
+    id="7bff8c87ec5e9d1f68524b27c8cf903189e91f26.boutiques",
     name="24swap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_LRFLIP_METADATA = Metadata(
-    id="cccfbbdb6c5cece891a86f81aefb3b59ea32fe70.boutiques",
+    id="57b905fab9f06f442859815c246d2b61d1ef0e9b.boutiques",
     name="3dLRflip",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

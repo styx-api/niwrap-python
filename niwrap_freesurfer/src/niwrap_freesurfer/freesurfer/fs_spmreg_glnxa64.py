@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FS_SPMREG_GLNXA64_METADATA = Metadata(
-    id="92aa0f707d8268c4082f03447b8e27b77445669e.boutiques",
+    id="9ed2398015232e130c8d384ec8da69f776b63c1c.boutiques",
     name="fs_spmreg.glnxa64",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

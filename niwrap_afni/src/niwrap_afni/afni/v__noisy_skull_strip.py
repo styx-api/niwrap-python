@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__NOISY_SKULL_STRIP_METADATA = Metadata(
-    id="a95b392481360cc4893886c77cddfcea221759d0.boutiques",
+    id="e98b609b47a8089d945c591b91e1f67238f32e0b.boutiques",
     name="@NoisySkullStrip",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

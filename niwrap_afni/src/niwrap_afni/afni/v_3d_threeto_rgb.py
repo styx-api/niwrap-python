@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_THREETO_RGB_METADATA = Metadata(
-    id="66d33991278e852be51fc79205b5a24fbb651ea3.boutiques",
+    id="9e2d64e118fc6f51565e791f8cb22a6510ace6f5.boutiques",
     name="3dThreetoRGB",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

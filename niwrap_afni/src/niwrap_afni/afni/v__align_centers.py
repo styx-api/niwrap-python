@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__ALIGN_CENTERS_METADATA = Metadata(
-    id="f29fbec7d33b88a11144d9ab1edf49dc32ae31cf.boutiques",
+    id="33d48e001912a44e2935434b56014a343a7f22f0.boutiques",
     name="@Align_Centers",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

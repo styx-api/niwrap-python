@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
-    id="d3c94d964daacbf8ae0c2ceed6d693aee86e0ca6.boutiques",
+    id="5441d34fe7da5e1d9fb8b7ac840958f08da38c7b.boutiques",
     name="cifti-label-adjacency",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

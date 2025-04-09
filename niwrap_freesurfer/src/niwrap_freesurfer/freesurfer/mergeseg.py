@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MERGESEG_METADATA = Metadata(
-    id="e04b3424de0fa2092fe3065091e43e9ee626b75c.boutiques",
+    id="624a69773d36ee5f8c473ad56e85306f6dfa8dd3.boutiques",
     name="mergeseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

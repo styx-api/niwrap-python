@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SUMA_GLXDINO_METADATA = Metadata(
-    id="010ab925596263ceb26cb004e13fc1698878aefc.boutiques",
+    id="db20e466e60a0e5e1fdf389e067115a796b337a4.boutiques",
     name="SUMA_glxdino",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

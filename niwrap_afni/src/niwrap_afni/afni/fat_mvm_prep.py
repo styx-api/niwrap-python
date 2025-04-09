@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAT_MVM_PREP_METADATA = Metadata(
-    id="90f6bc657de16af423e425320b0789c1d1f1d2eb.boutiques",
+    id="be0a3158fe3df52caf8c7307710e4bd60769efcd.boutiques",
     name="fat_mvm_prep",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

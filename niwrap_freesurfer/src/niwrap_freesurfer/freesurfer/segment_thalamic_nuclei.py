@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_THALAMIC_NUCLEI_METADATA = Metadata(
-    id="6d4f3bd43ea02912a67101dc7d2bc3abdee4ebd2.boutiques",
+    id="b83efa0c0cbb57aea3ba929d8c2d6ab17399c339.boutiques",
     name="SegmentThalamicNuclei",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

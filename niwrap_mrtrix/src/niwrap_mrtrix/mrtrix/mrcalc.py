@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRCALC_METADATA = Metadata(
-    id="4abff4f051d8a436c35f7a012c41ca90bb2f4df0.boutiques",
+    id="10631d932779573730eb3b7176769590abb94c38.boutiques",
     name="mrcalc",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

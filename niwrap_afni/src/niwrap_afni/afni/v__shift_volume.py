@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__SHIFT_VOLUME_METADATA = Metadata(
-    id="8632323dd36a0ba5f059c998ffcd7826b058d4be.boutiques",
+    id="cc600997e0c495954f45b1b016157de5ebc451b5.boutiques",
     name="@Shift_Volume",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

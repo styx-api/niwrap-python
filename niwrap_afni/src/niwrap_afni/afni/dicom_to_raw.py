@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DICOM_TO_RAW_METADATA = Metadata(
-    id="7eb027b7c5690d1e6ebc29a721254ed558470f1d.boutiques",
+    id="ca648caf3773ae863aa716fd8d0405d25e6caa2c.boutiques",
     name="dicom_to_raw",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

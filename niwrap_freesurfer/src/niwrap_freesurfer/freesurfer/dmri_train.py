@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_TRAIN_METADATA = Metadata(
-    id="918d6285f42340a49fa09c21128213fd2bfe5e71.boutiques",
+    id="bfb05f873d86ddf1fda47974b1309e66877ca244.boutiques",
     name="dmri_train",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

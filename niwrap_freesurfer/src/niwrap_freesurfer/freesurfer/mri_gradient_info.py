@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_GRADIENT_INFO_METADATA = Metadata(
-    id="31065ab477983c227eb79e13fe275d6a65852b07.boutiques",
+    id="729f70a6ddbe9d46e53152c5c3d3044fd189da4b.boutiques",
     name="mri_gradient_info",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_1D_DW_GRAD_O_MAT___METADATA = Metadata(
-    id="46eee009ed5251cf0654dc7e2305bcbaecf3782b.boutiques",
+    id="c0c48de32d7854081b446062bfdcf407dd49efef.boutiques",
     name="1dDW_Grad_o_Mat++",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

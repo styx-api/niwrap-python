@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V__T1SCALE_METADATA = Metadata(
-    id="da9880f00af155a9d926ce79b579ac25dd00b38c.boutiques",
+    id="89645e221a5cc9e1118b45d0730af83cf88ad32b.boutiques",
     name="@T1scale",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

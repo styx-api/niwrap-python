@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REG_FEAT2ANAT_METADATA = Metadata(
-    id="6d99523d12853983a4cb41cacabf4975bd54d655.boutiques",
+    id="90cae5222fb5bffe4289efcaf84a56fc3ceb6ff5.boutiques",
     name="reg-feat2anat",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

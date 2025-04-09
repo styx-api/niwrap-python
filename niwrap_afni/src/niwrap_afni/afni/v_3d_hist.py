@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_HIST_METADATA = Metadata(
-    id="848d311049e93b6281b7a88875dd047ad4a77407.boutiques",
+    id="9e96048d8d417ad0c0b2cb1ebd17194a1c90d3b8.boutiques",
     name="3dHist",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_SPLINE_METADATA = Metadata(
-    id="7d3ca3a45eadd41a58c1c4e8f7cf2661b9cc81d4.boutiques",
+    id="db0c52714eecd19e49a44db58cd57c40602d443c.boutiques",
     name="dmri_spline",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

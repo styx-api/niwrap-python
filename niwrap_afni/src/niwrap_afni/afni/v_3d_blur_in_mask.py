@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_BLUR_IN_MASK_METADATA = Metadata(
-    id="2020eccbab2609356d0e3ab2fdd84a54c25cb900.boutiques",
+    id="78220f12aa00c67903fa95e35580c1c0e4f335bd.boutiques",
     name="3dBlurInMask",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

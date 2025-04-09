@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CIFTI_REORDER_METADATA = Metadata(
-    id="c67346c8c77f6b5bb2cc3860f812ce9450fe272f.boutiques",
+    id="963081e5c312fe6517fb7836c2fcacdfd7e994af.boutiques",
     name="cifti-reorder",
     package="workbench",
     container_image_tag="brainlife/connectome_workbench:1.5.0-freesurfer-update",

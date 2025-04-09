@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RUN_SEGMENT_SUBJECT_SH_METADATA = Metadata(
-    id="3bee4c6b7ffa07b5a4e27cd0261d6a71efb4387a.boutiques",
+    id="edb09a7dae02cd39d07b26767fc90bc0473bdf53.boutiques",
     name="run_SegmentSubject.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",

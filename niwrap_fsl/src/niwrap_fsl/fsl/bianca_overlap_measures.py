@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BIANCA_OVERLAP_MEASURES_METADATA = Metadata(
-    id="07dfbadc968fda1c7126374c9a9779984e529d99.boutiques",
+    id="7ff5764132c25423f4aa0fb43cf59a151cba41b4.boutiques",
     name="bianca_overlap_measures",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",

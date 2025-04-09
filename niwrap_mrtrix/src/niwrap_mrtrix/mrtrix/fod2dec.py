@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FOD2DEC_METADATA = Metadata(
-    id="464092d0c46e0f6d44851c80e38f43548c357c00.boutiques",
+    id="91adc9acb5fba88b24df9894f64378c570f25a44.boutiques",
     name="fod2dec",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ISO_SURFACE_METADATA = Metadata(
-    id="ae4f55d6aa3df9abb44d283d9623f609eefee601.boutiques",
+    id="891f1d7b5d35cf767a77b8a6bbe7028a6cad880f.boutiques",
     name="IsoSurface",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

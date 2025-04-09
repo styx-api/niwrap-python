@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QHULL_METADATA = Metadata(
-    id="d25dad9388d53afd5a2f6019c508abe651c2e611.boutiques",
+    id="36c4abb8c29f69fab57cfb4a2bc32d5fb32edf2e.boutiques",
     name="qhull",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",

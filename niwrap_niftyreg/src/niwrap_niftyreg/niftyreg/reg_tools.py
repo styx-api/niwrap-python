@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REG_TOOLS_METADATA = Metadata(
-    id="f395b2a3b7977bc04bd46c3a00a35e8d43532b2f.boutiques",
+    id="8ddab88152702b1408e63c5155349fff740f50b5.boutiques",
     name="reg_tools",
     package="niftyreg",
     container_image_tag="vnmd/niftyreg_1.4.0:20220819",

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TOPUP_METADATA = Metadata(
-    id="0976e0b733869c1f8949a92a09c05ca0907bd2ef.boutiques",
+    id="1ce5f6bc3fb7d10100e8df605e624bdb9818a6d3.boutiques",
     name="topup",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
