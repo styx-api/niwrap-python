@@ -6,11 +6,18 @@ import pathlib
 from styxdefs import *
 
 SCALE_TO_MAP_METADATA = Metadata(
-    id="138fa837b12f477298b27ad4f0e790647533e634.boutiques",
+    id="9a992db39f38d17e9c86690f3d2805363790bd24.boutiques",
     name="ScaleToMap",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
+
+
+ScaleToMapTraceParameters = typing.TypedDict('ScaleToMapTraceParameters', {
+    "__STYX_TYPE__": typing.Literal["trace"],
+    "trace": bool,
+    "TRACE": bool,
+})
 
 
 ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
@@ -41,8 +48,7 @@ ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
     "novolreg": bool,
     "noxform": bool,
     "setenv": typing.NotRequired[str | None],
-    "TRACE": bool,
-    "TRACE_1": bool,
+    "trace": typing.NotRequired[ScaleToMapTraceParameters | None],
     "nomall": bool,
     "yesmall": bool,
 })
@@ -61,6 +67,7 @@ def dyn_cargs(
     """
     return {
         "ScaleToMap": scale_to_map_cargs,
+        "trace": scale_to_map_trace_cargs,
     }.get(t)
 
 
@@ -77,6 +84,49 @@ def dyn_outputs(
     """
     return {
     }.get(t)
+
+
+def scale_to_map_trace_params(
+    trace_: bool = False,
+    trace_2: bool = False,
+) -> ScaleToMapTraceParameters:
+    """
+    Build parameters.
+    
+    Args:
+        trace_: Turns on In/Out debug and Memory tracing. It's recommended to\
+            redirect stdout to a file when using this option.
+        trace_2: Turns on extreme tracing.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "trace",
+        "trace": trace_,
+        "TRACE": trace_2,
+    }
+    return params
+
+
+def scale_to_map_trace_cargs(
+    params: ScaleToMapTraceParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("trace"):
+        cargs.append("-trace")
+    if params.get("TRACE"):
+        cargs.append("-TRACE")
+    return cargs
 
 
 class ScaleToMapOutputs(typing.NamedTuple):
@@ -114,8 +164,7 @@ def scale_to_map_params(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: bool = False,
-    trace_1: bool = False,
+    trace_: ScaleToMapTraceParameters | None = None,
     nomall: bool = False,
     yesmall: bool = False,
 ) -> ScaleToMapParameters:
@@ -152,8 +201,8 @@ def scale_to_map_params(
         noxform: Same as -novolreg.
         setenv: Set environment variable ENVname to ENVvalue. Quotes are\
             necessary.
-        trace_: Turn on extreme tracing.
-        trace_1: Turn on extreme tracing.
+        trace_: Turns on In/Out debug and Memory tracing. It's recommended to\
+            redirect stdout to a file when using this option.
         nomall: Turn off memory tracing.
         yesmall: Turn on memory tracing (default).
     Returns:
@@ -176,8 +225,6 @@ def scale_to_map_params(
         "showdb": showdb,
         "novolreg": novolreg,
         "noxform": noxform,
-        "TRACE": trace_,
-        "TRACE_1": trace_1,
         "nomall": nomall,
         "yesmall": yesmall,
     }
@@ -203,6 +250,8 @@ def scale_to_map_params(
         params["br"] = br
     if setenv is not None:
         params["setenv"] = setenv
+    if trace_ is not None:
+        params["trace"] = trace_
     return params
 
 
@@ -303,10 +352,8 @@ def scale_to_map_cargs(
             "-setenv",
             params.get("setenv")
         ])
-    if params.get("TRACE"):
-        cargs.append("-TRACE")
-    if params.get("TRACE_1"):
-        cargs.append("-TRACE")
+    if params.get("trace") is not None:
+        cargs.extend(dyn_cargs(params.get("trace")["__STYXTYPE__"])(params.get("trace"), execution))
     if params.get("nomall"):
         cargs.append("-nomall")
     if params.get("yesmall"):
@@ -384,8 +431,7 @@ def scale_to_map(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: bool = False,
-    trace_1: bool = False,
+    trace_: ScaleToMapTraceParameters | None = None,
     nomall: bool = False,
     yesmall: bool = False,
     runner: Runner | None = None,
@@ -427,8 +473,8 @@ def scale_to_map(
         noxform: Same as -novolreg.
         setenv: Set environment variable ENVname to ENVvalue. Quotes are\
             necessary.
-        trace_: Turn on extreme tracing.
-        trace_1: Turn on extreme tracing.
+        trace_: Turns on In/Out debug and Memory tracing. It's recommended to\
+            redirect stdout to a file when using this option.
         nomall: Turn off memory tracing.
         yesmall: Turn on memory tracing (default).
         runner: Command runner.
@@ -465,7 +511,6 @@ def scale_to_map(
         noxform=noxform,
         setenv=setenv,
         trace_=trace_,
-        trace_1=trace_1,
         nomall=nomall,
         yesmall=yesmall,
     )
@@ -476,6 +521,8 @@ __all__ = [
     "SCALE_TO_MAP_METADATA",
     "ScaleToMapOutputs",
     "ScaleToMapParameters",
+    "ScaleToMapTraceParameters",
     "scale_to_map",
     "scale_to_map_params",
+    "scale_to_map_trace_params",
 ]

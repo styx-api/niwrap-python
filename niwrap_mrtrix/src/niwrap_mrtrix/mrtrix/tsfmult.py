@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TSFMULT_METADATA = Metadata(
-    id="4b57581032a9d693139dce131b325135d4381b3e.boutiques",
+    id="105c8e8f8aa0ac88867d8e13a902f5ea3d4b3545.boutiques",
     name="tsfmult",
     package="mrtrix",
     container_image_tag="mrtrix3/mrtrix3:3.0.4",
@@ -31,7 +31,6 @@ TsfmultParameters = typing.TypedDict('TsfmultParameters', {
     "help": bool,
     "version": bool,
     "input1": InputPathType,
-    "input1_1": InputPathType,
     "output": str,
 })
 
@@ -122,7 +121,6 @@ class TsfmultOutputs(typing.NamedTuple):
 
 def tsfmult_params(
     input1: InputPathType,
-    input1_1: InputPathType,
     output: str,
     info: bool = False,
     quiet: bool = False,
@@ -138,7 +136,6 @@ def tsfmult_params(
     
     Args:
         input1: the second input track scalar file.
-        input1_1: the second input track scalar file.
         output: the output track scalar file.
         info: display information messages.
         quiet: do not display information messages or progress status;\
@@ -164,7 +161,6 @@ def tsfmult_params(
         "help": help_,
         "version": version,
         "input1": input1,
-        "input1_1": input1_1,
         "output": output,
     }
     if nthreads is not None:
@@ -209,7 +205,6 @@ def tsfmult_cargs(
     if params.get("version"):
         cargs.append("-version")
     cargs.append(execution.input_file(params.get("input1")))
-    cargs.append(execution.input_file(params.get("input1_1")))
     cargs.append(params.get("output"))
     return cargs
 
@@ -266,7 +261,6 @@ def tsfmult_execute(
 
 def tsfmult(
     input1: InputPathType,
-    input1_1: InputPathType,
     output: str,
     info: bool = False,
     quiet: bool = False,
@@ -293,7 +287,6 @@ def tsfmult(
     
     Args:
         input1: the second input track scalar file.
-        input1_1: the second input track scalar file.
         output: the output track scalar file.
         info: display information messages.
         quiet: do not display information messages or progress status;\
@@ -323,7 +316,6 @@ def tsfmult(
         help_=help_,
         version=version,
         input1=input1,
-        input1_1=input1_1,
         output=output,
     )
     return tsfmult_execute(params, execution)

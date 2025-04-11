@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURFACE_METRICS_METADATA = Metadata(
-    id="e4df32dd8b28144bf2cbd95cce2803cc7a22e9d3.boutiques",
+    id="1ef3c8a44dad85904fd6b95c168fae520751be00.boutiques",
     name="SurfaceMetrics",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -20,6 +20,7 @@ SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
     "closest_node": typing.NotRequired[InputPathType | None],
     "area": bool,
     "tri_sines": bool,
+    "tri_cosines": bool,
     "tri_CoSines": bool,
     "tri_angles": bool,
     "node_angles": bool,
@@ -86,6 +87,7 @@ def surface_metrics_params(
     closest_node: InputPathType | None = None,
     area: bool = False,
     tri_sines: bool = False,
+    tri_cosines: bool = False,
     tri_co_sines: bool = False,
     tri_angles: bool = False,
     node_angles: bool = False,
@@ -113,6 +115,7 @@ def surface_metrics_params(
         closest_node: Find the closest node to each XYZ triplet in XYZ_LIST.1D.
         area: Output area of each triangle.
         tri_sines: Output sine of angles at nodes forming triangles.
+        tri_cosines: Output cosine of angles at nodes forming triangles.
         tri_co_sines: Output both cosines and sines of angles at nodes forming\
             triangles.
         tri_angles: Unsigned angles in radians of triangles.
@@ -140,6 +143,7 @@ def surface_metrics_params(
         "convexity": convexity,
         "area": area,
         "tri_sines": tri_sines,
+        "tri_cosines": tri_cosines,
         "tri_CoSines": tri_co_sines,
         "tri_angles": tri_angles,
         "node_angles": node_angles,
@@ -194,6 +198,8 @@ def surface_metrics_cargs(
         cargs.append("-area")
     if params.get("tri_sines"):
         cargs.append("-tri_sines")
+    if params.get("tri_cosines"):
+        cargs.append("-tri_cosines")
     if params.get("tri_CoSines"):
         cargs.append("-tri_CoSines")
     if params.get("tri_angles"):
@@ -292,6 +298,7 @@ def surface_metrics(
     closest_node: InputPathType | None = None,
     area: bool = False,
     tri_sines: bool = False,
+    tri_cosines: bool = False,
     tri_co_sines: bool = False,
     tri_angles: bool = False,
     node_angles: bool = False,
@@ -324,6 +331,7 @@ def surface_metrics(
         closest_node: Find the closest node to each XYZ triplet in XYZ_LIST.1D.
         area: Output area of each triangle.
         tri_sines: Output sine of angles at nodes forming triangles.
+        tri_cosines: Output cosine of angles at nodes forming triangles.
         tri_co_sines: Output both cosines and sines of angles at nodes forming\
             triangles.
         tri_angles: Unsigned angles in radians of triangles.
@@ -354,6 +362,7 @@ def surface_metrics(
         closest_node=closest_node,
         area=area,
         tri_sines=tri_sines,
+        tri_cosines=tri_cosines,
         tri_co_sines=tri_co_sines,
         tri_angles=tri_angles,
         node_angles=node_angles,

@@ -6,11 +6,32 @@ import pathlib
 from styxdefs import *
 
 V_1DPLOT_METADATA = Metadata(
-    id="6788a8e1515d2599fa0907e7c75462b8f951b805.boutiques",
+    id="c1f84212c52ad16293732b26e206afbcd098f255.boutiques",
     name="1dplot",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
+
+
+V1dplotNolineParameters = typing.TypedDict('V1dplotNolineParameters', {
+    "__STYX_TYPE__": typing.Literal["noline"],
+    "noline": bool,
+    "NOLINE": bool,
+})
+
+
+V1dplotThickParameters = typing.TypedDict('V1dplotThickParameters', {
+    "__STYX_TYPE__": typing.Literal["thick"],
+    "thick": bool,
+    "THICK": bool,
+})
+
+
+V1dplotRboxParameters = typing.TypedDict('V1dplotRboxParameters', {
+    "__STYX_TYPE__": typing.Literal["rbox"],
+    "rbox": typing.NotRequired[str | None],
+    "Rbox": typing.NotRequired[str | None],
+})
 
 
 V1dplotParameters = typing.TypedDict('V1dplotParameters', {
@@ -20,8 +41,7 @@ V1dplotParameters = typing.TypedDict('V1dplotParameters', {
     "sep": bool,
     "one": bool,
     "sepscl": bool,
-    "NOLINE": bool,
-    "NOLINE_1": bool,
+    "noline": typing.NotRequired[V1dplotNolineParameters | None],
     "box": bool,
     "hist": bool,
     "norm2": bool,
@@ -58,16 +78,14 @@ V1dplotParameters = typing.TypedDict('V1dplotParameters', {
     "yaxis": typing.NotRequired[str | None],
     "ynames": typing.NotRequired[list[str] | None],
     "volreg": bool,
-    "THICK": bool,
-    "THICK_1": bool,
+    "thick": typing.NotRequired[V1dplotThickParameters | None],
     "dashed": typing.NotRequired[str | None],
     "setenv": typing.NotRequired[str | None],
     "censor_RGB": typing.NotRequired[str | None],
     "censor": typing.NotRequired[InputPathType | None],
     "CENSORTR": typing.NotRequired[list[str] | None],
     "concat": typing.NotRequired[InputPathType | None],
-    "Rbox": typing.NotRequired[str | None],
-    "Rbox_1": typing.NotRequired[str | None],
+    "rbox": typing.NotRequired[V1dplotRboxParameters | None],
     "line": typing.NotRequired[str | None],
 })
 
@@ -85,6 +103,9 @@ def dyn_cargs(
     """
     return {
         "1dplot": v_1dplot_cargs,
+        "noline": v_1dplot_noline_cargs,
+        "thick": v_1dplot_thick_cargs,
+        "rbox": v_1dplot_rbox_cargs,
     }.get(t)
 
 
@@ -103,6 +124,141 @@ def dyn_outputs(
     }.get(t)
 
 
+def v_1dplot_noline_params(
+    noline: bool = False,
+    noline_: bool = False,
+) -> V1dplotNolineParameters:
+    """
+    Build parameters.
+    
+    Args:
+        noline: Don't plot the connecting lines.
+        noline_: Same as -noline, but will not try to plot values outside the\
+            rectangular box that contains the graph axes.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "noline",
+        "noline": noline,
+        "NOLINE": noline_,
+    }
+    return params
+
+
+def v_1dplot_noline_cargs(
+    params: V1dplotNolineParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("noline"):
+        cargs.append("-noline")
+    if params.get("NOLINE"):
+        cargs.append("-NOLINE")
+    return cargs
+
+
+def v_1dplot_thick_params(
+    thick: bool = False,
+    thick_: bool = False,
+) -> V1dplotThickParameters:
+    """
+    Build parameters.
+    
+    Args:
+        thick: Increase the line thickness used for plotting.
+        thick_: Twice the power of '-thick' at no extra cost!.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "thick",
+        "thick": thick,
+        "THICK": thick_,
+    }
+    return params
+
+
+def v_1dplot_thick_cargs(
+    params: V1dplotThickParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("thick"):
+        cargs.append("-thick")
+    if params.get("THICK"):
+        cargs.append("-THICK")
+    return cargs
+
+
+def v_1dplot_rbox_params(
+    rbox: str | None = None,
+    rbox_: str | None = None,
+) -> V1dplotRboxParameters:
+    """
+    Build parameters.
+    
+    Args:
+        rbox: Draw a rectangular box with specified corners and colors.
+        rbox_: Draw a rectangular box with one extra horizontal line.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "rbox",
+    }
+    if rbox is not None:
+        params["rbox"] = rbox
+    if rbox_ is not None:
+        params["Rbox"] = rbox_
+    return params
+
+
+def v_1dplot_rbox_cargs(
+    params: V1dplotRboxParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("rbox") is not None:
+        cargs.extend([
+            "-rbox",
+            params.get("rbox")
+        ])
+    if params.get("Rbox") is not None:
+        cargs.extend([
+            "-Rbox",
+            params.get("Rbox")
+        ])
+    return cargs
+
+
 class V1dplotOutputs(typing.NamedTuple):
     """
     Output object returned when calling `v_1dplot(...)`.
@@ -117,8 +273,7 @@ def v_1dplot_params(
     sep: bool = False,
     one: bool = False,
     sepscl: bool = False,
-    noline: bool = False,
-    noline_1: bool = False,
+    noline: V1dplotNolineParameters | None = None,
     box: bool = False,
     hist: bool = False,
     norm2: bool = False,
@@ -155,16 +310,14 @@ def v_1dplot_params(
     yaxis: str | None = None,
     ynames: list[str] | None = None,
     volreg: bool = False,
-    thick: bool = False,
-    thick_1: bool = False,
+    thick: V1dplotThickParameters | None = None,
     dashed: str | None = None,
     setenv: str | None = None,
     censor_rgb: str | None = None,
     censor: InputPathType | None = None,
     censortr: list[str] | None = None,
     concat: InputPathType | None = None,
-    rbox: str | None = None,
-    rbox_1: str | None = None,
+    rbox: V1dplotRboxParameters | None = None,
     line: str | None = None,
 ) -> V1dplotParameters:
     """
@@ -178,10 +331,7 @@ def v_1dplot_params(
         sepscl: Plot each column in a separate sub-graph and allow each\
             sub-graph to have a different y-scale. This option is meaningless with\
             -one!.
-        noline: Same as -noline, but will not try to plot values outside the\
-            rectangular box that contains the graph axes.
-        noline_1: Same as -noline, but will not try to plot values outside the\
-            rectangular box that contains the graph axes.
+        noline: Don't plot the connecting lines.
         box: Plot a small 'box' at each data point.
         hist: Plot graphs in histogram style (i.e., vertical boxes).
         norm2: Independently scale each time series plotted to have L_2 norm =\
@@ -233,8 +383,7 @@ def v_1dplot_params(
             corresponding to each input column.
         volreg: Makes the 'ynames' be the same as the 6 labels used in\
             plug_volreg for Roll, Pitch, Yaw, I-S, R-L, and A-P movements.
-        thick: Twice the power of '-thick' at no extra cost!.
-        thick_1: Twice the power of '-thick' at no extra cost!.
+        thick: Increase the line thickness used for plotting.
         dashed: Plot dashed lines between data points using specified\
             colon-separated list of dash values (1: solid, 2: longer dashes, 3:\
             shorter dashes).
@@ -244,8 +393,7 @@ def v_1dplot_params(
         censor: Specify the filename of the censor .1D time series.
         censortr: Specify time indexes to be marked in the graph(s).
         concat: Specify the filename for the list of concatenated runs.
-        rbox: Draw a rectangular box with one extra horizontal line.
-        rbox_1: Draw a rectangular box with one extra horizontal line.
+        rbox: Draw a rectangular box.
         line: Draw one line segment.
     Returns:
         Parameter dictionary
@@ -257,8 +405,6 @@ def v_1dplot_params(
         "sep": sep,
         "one": one,
         "sepscl": sepscl,
-        "NOLINE": noline,
-        "NOLINE_1": noline_1,
         "box": box,
         "hist": hist,
         "norm2": norm2,
@@ -270,9 +416,9 @@ def v_1dplot_params(
         "stdin": stdin,
         "ps": ps,
         "volreg": volreg,
-        "THICK": thick,
-        "THICK_1": thick_1,
     }
+    if noline is not None:
+        params["noline"] = noline
     if x is not None:
         params["x"] = x
     if xl10 is not None:
@@ -323,6 +469,8 @@ def v_1dplot_params(
         params["yaxis"] = yaxis
     if ynames is not None:
         params["ynames"] = ynames
+    if thick is not None:
+        params["thick"] = thick
     if dashed is not None:
         params["dashed"] = dashed
     if setenv is not None:
@@ -336,9 +484,7 @@ def v_1dplot_params(
     if concat is not None:
         params["concat"] = concat
     if rbox is not None:
-        params["Rbox"] = rbox
-    if rbox_1 is not None:
-        params["Rbox_1"] = rbox_1
+        params["rbox"] = rbox
     if line is not None:
         params["line"] = line
     return params
@@ -368,10 +514,8 @@ def v_1dplot_cargs(
         cargs.append("-one")
     if params.get("sepscl"):
         cargs.append("-sepscl")
-    if params.get("NOLINE"):
-        cargs.append("-NOLINE")
-    if params.get("NOLINE_1"):
-        cargs.append("-NOLINE")
+    if params.get("noline") is not None:
+        cargs.extend(dyn_cargs(params.get("noline")["__STYXTYPE__"])(params.get("noline"), execution))
     if params.get("box"):
         cargs.append("-box")
     if params.get("hist"):
@@ -519,10 +663,8 @@ def v_1dplot_cargs(
         ])
     if params.get("volreg"):
         cargs.append("-volreg")
-    if params.get("THICK"):
-        cargs.append("-THICK")
-    if params.get("THICK_1"):
-        cargs.append("-THICK")
+    if params.get("thick") is not None:
+        cargs.extend(dyn_cargs(params.get("thick")["__STYXTYPE__"])(params.get("thick"), execution))
     if params.get("dashed") is not None:
         cargs.extend([
             "-dashed",
@@ -553,16 +695,8 @@ def v_1dplot_cargs(
             "-concat",
             execution.input_file(params.get("concat"))
         ])
-    if params.get("Rbox") is not None:
-        cargs.extend([
-            "-Rbox",
-            params.get("Rbox")
-        ])
-    if params.get("Rbox_1") is not None:
-        cargs.extend([
-            "-Rbox",
-            params.get("Rbox_1")
-        ])
+    if params.get("rbox") is not None:
+        cargs.extend(dyn_cargs(params.get("rbox")["__STYXTYPE__"])(params.get("rbox"), execution))
     if params.get("line") is not None:
         cargs.extend([
             "-line",
@@ -621,8 +755,7 @@ def v_1dplot(
     sep: bool = False,
     one: bool = False,
     sepscl: bool = False,
-    noline: bool = False,
-    noline_1: bool = False,
+    noline: V1dplotNolineParameters | None = None,
     box: bool = False,
     hist: bool = False,
     norm2: bool = False,
@@ -659,16 +792,14 @@ def v_1dplot(
     yaxis: str | None = None,
     ynames: list[str] | None = None,
     volreg: bool = False,
-    thick: bool = False,
-    thick_1: bool = False,
+    thick: V1dplotThickParameters | None = None,
     dashed: str | None = None,
     setenv: str | None = None,
     censor_rgb: str | None = None,
     censor: InputPathType | None = None,
     censortr: list[str] | None = None,
     concat: InputPathType | None = None,
-    rbox: str | None = None,
-    rbox_1: str | None = None,
+    rbox: V1dplotRboxParameters | None = None,
     line: str | None = None,
     runner: Runner | None = None,
 ) -> V1dplotOutputs:
@@ -688,10 +819,7 @@ def v_1dplot(
         sepscl: Plot each column in a separate sub-graph and allow each\
             sub-graph to have a different y-scale. This option is meaningless with\
             -one!.
-        noline: Same as -noline, but will not try to plot values outside the\
-            rectangular box that contains the graph axes.
-        noline_1: Same as -noline, but will not try to plot values outside the\
-            rectangular box that contains the graph axes.
+        noline: Don't plot the connecting lines.
         box: Plot a small 'box' at each data point.
         hist: Plot graphs in histogram style (i.e., vertical boxes).
         norm2: Independently scale each time series plotted to have L_2 norm =\
@@ -743,8 +871,7 @@ def v_1dplot(
             corresponding to each input column.
         volreg: Makes the 'ynames' be the same as the 6 labels used in\
             plug_volreg for Roll, Pitch, Yaw, I-S, R-L, and A-P movements.
-        thick: Twice the power of '-thick' at no extra cost!.
-        thick_1: Twice the power of '-thick' at no extra cost!.
+        thick: Increase the line thickness used for plotting.
         dashed: Plot dashed lines between data points using specified\
             colon-separated list of dash values (1: solid, 2: longer dashes, 3:\
             shorter dashes).
@@ -754,8 +881,7 @@ def v_1dplot(
         censor: Specify the filename of the censor .1D time series.
         censortr: Specify time indexes to be marked in the graph(s).
         concat: Specify the filename for the list of concatenated runs.
-        rbox: Draw a rectangular box with one extra horizontal line.
-        rbox_1: Draw a rectangular box with one extra horizontal line.
+        rbox: Draw a rectangular box.
         line: Draw one line segment.
         runner: Command runner.
     Returns:
@@ -770,7 +896,6 @@ def v_1dplot(
         one=one,
         sepscl=sepscl,
         noline=noline,
-        noline_1=noline_1,
         box=box,
         hist=hist,
         norm2=norm2,
@@ -808,7 +933,6 @@ def v_1dplot(
         ynames=ynames,
         volreg=volreg,
         thick=thick,
-        thick_1=thick_1,
         dashed=dashed,
         setenv=setenv,
         censor_rgb=censor_rgb,
@@ -816,16 +940,21 @@ def v_1dplot(
         censortr=censortr,
         concat=concat,
         rbox=rbox,
-        rbox_1=rbox_1,
         line=line,
     )
     return v_1dplot_execute(params, execution)
 
 
 __all__ = [
+    "V1dplotNolineParameters",
     "V1dplotOutputs",
     "V1dplotParameters",
+    "V1dplotRboxParameters",
+    "V1dplotThickParameters",
     "V_1DPLOT_METADATA",
     "v_1dplot",
+    "v_1dplot_noline_params",
     "v_1dplot_params",
+    "v_1dplot_rbox_params",
+    "v_1dplot_thick_params",
 ]

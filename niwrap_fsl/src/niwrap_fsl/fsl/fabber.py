@@ -6,11 +6,18 @@ import pathlib
 from styxdefs import *
 
 FABBER_METADATA = Metadata(
-    id="5d2a0e6b29e70fe10b66108a8eac5087e85c371d.boutiques",
+    id="101ab2bd38fcd345ee05713b574dfaa5596da053.boutiques",
     name="fabber",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
 )
+
+
+FabberOptfileParameters = typing.TypedDict('FabberOptfileParameters', {
+    "__STYX_TYPE__": typing.Literal["optfile"],
+    "optfile_short": typing.NotRequired[InputPathType | None],
+    "optfile_long": typing.NotRequired[InputPathType | None],
+})
 
 
 FabberParameters = typing.TypedDict('FabberParameters', {
@@ -32,7 +39,7 @@ FabberParameters = typing.TypedDict('FabberParameters', {
     "link_to_latest": bool,
     "load_models": typing.NotRequired[InputPathType | None],
     "debug": bool,
-    "optfile": typing.NotRequired[InputPathType | None],
+    "optfile": typing.NotRequired[FabberOptfileParameters | None],
     "save_model_fit": bool,
     "save_residuals": bool,
     "save_model_extras": bool,
@@ -50,7 +57,6 @@ FabberParameters = typing.TypedDict('FabberParameters', {
     "list_params": bool,
     "desc_params": bool,
     "list_outputs": bool,
-    "optfile_1": typing.NotRequired[InputPathType | None],
     "old_optfile": typing.NotRequired[InputPathType | None],
 })
 
@@ -68,6 +74,7 @@ def dyn_cargs(
     """
     return {
         "fabber": fabber_cargs,
+        "optfile": fabber_optfile_cargs,
     }.get(t)
 
 
@@ -85,6 +92,58 @@ def dyn_outputs(
     return {
         "fabber": fabber_outputs,
     }.get(t)
+
+
+def fabber_optfile_params(
+    optfile_short: InputPathType | None = None,
+    optfile_long: InputPathType | None = None,
+) -> FabberOptfileParameters:
+    """
+    Build parameters.
+    
+    Args:
+        optfile_short: Read options in option=value form from the specified\
+            file.
+        optfile_long: File containing additional options, one per line, in the\
+            same form as specified on the command line.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "optfile",
+    }
+    if optfile_short is not None:
+        params["optfile_short"] = optfile_short
+    if optfile_long is not None:
+        params["optfile_long"] = optfile_long
+    return params
+
+
+def fabber_optfile_cargs(
+    params: FabberOptfileParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("optfile_short") is not None:
+        cargs.extend([
+            "-f",
+            execution.input_file(params.get("optfile_short"))
+        ])
+    if params.get("optfile_long") is not None:
+        cargs.extend([
+            "--optfile",
+            execution.input_file(params.get("optfile_long"))
+        ])
+    return cargs
 
 
 class FabberOutputs(typing.NamedTuple):
@@ -137,7 +196,7 @@ def fabber_params(
     link_to_latest: bool = False,
     load_models: InputPathType | None = None,
     debug: bool = False,
-    optfile: InputPathType | None = None,
+    optfile: FabberOptfileParameters | None = None,
     save_model_fit: bool = False,
     save_residuals: bool = False,
     save_model_extras: bool = False,
@@ -155,7 +214,6 @@ def fabber_params(
     list_params: bool = False,
     desc_params: bool = False,
     list_outputs: bool = False,
-    optfile_1: InputPathType | None = None,
     old_optfile: InputPathType | None = None,
 ) -> FabberParameters:
     """
@@ -190,7 +248,8 @@ def fabber_params(
             should be a DLL/shared library.
         debug: Output large amounts of debug information. ONLY USE WITH VERY\
             SMALL NUMBERS OF VOXELS.
-        optfile: Read options in option=value form from the specified file.
+        optfile: File containing additional options, one per line, in the same\
+            form as specified on the command line.
         save_model_fit: Output the model prediction as a 4d volume.
         save_residuals: Output the residuals (difference between the data and\
             the model prediction).
@@ -215,7 +274,6 @@ def fabber_params(
             models provide parameter descriptions.
         list_outputs: List additional model outputs (requires model\
             configuration options to be given).
-        optfile_1: Read options in option=value form from the specified file.
         old_optfile: Read options in command line form from the specified file\
             (DEPRECATED).
     Returns:
@@ -269,8 +327,6 @@ def fabber_params(
         params["load_models"] = load_models
     if optfile is not None:
         params["optfile"] = optfile
-    if optfile_1 is not None:
-        params["optfile_1"] = optfile_1
     if old_optfile is not None:
         params["old_optfile"] = old_optfile
     return params
@@ -361,10 +417,7 @@ def fabber_cargs(
     if params.get("debug"):
         cargs.append("--debug")
     if params.get("optfile") is not None:
-        cargs.extend([
-            "-f",
-            execution.input_file(params.get("optfile"))
-        ])
+        cargs.extend(dyn_cargs(params.get("optfile")["__STYXTYPE__"])(params.get("optfile"), execution))
     if params.get("save_model_fit"):
         cargs.append("--save-model-fit")
     if params.get("save_residuals"):
@@ -399,11 +452,6 @@ def fabber_cargs(
         cargs.append("--descparams")
     if params.get("list_outputs"):
         cargs.append("--listoutputs")
-    if params.get("optfile_1") is not None:
-        cargs.extend([
-            "-f",
-            execution.input_file(params.get("optfile_1"))
-        ])
     if params.get("old_optfile") is not None:
         cargs.extend([
             "-@",
@@ -485,7 +533,7 @@ def fabber(
     link_to_latest: bool = False,
     load_models: InputPathType | None = None,
     debug: bool = False,
-    optfile: InputPathType | None = None,
+    optfile: FabberOptfileParameters | None = None,
     save_model_fit: bool = False,
     save_residuals: bool = False,
     save_model_extras: bool = False,
@@ -503,7 +551,6 @@ def fabber(
     list_params: bool = False,
     desc_params: bool = False,
     list_outputs: bool = False,
-    optfile_1: InputPathType | None = None,
     old_optfile: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> FabberOutputs:
@@ -543,7 +590,8 @@ def fabber(
             should be a DLL/shared library.
         debug: Output large amounts of debug information. ONLY USE WITH VERY\
             SMALL NUMBERS OF VOXELS.
-        optfile: Read options in option=value form from the specified file.
+        optfile: File containing additional options, one per line, in the same\
+            form as specified on the command line.
         save_model_fit: Output the model prediction as a 4d volume.
         save_residuals: Output the residuals (difference between the data and\
             the model prediction).
@@ -568,7 +616,6 @@ def fabber(
             models provide parameter descriptions.
         list_outputs: List additional model outputs (requires model\
             configuration options to be given).
-        optfile_1: Read options in option=value form from the specified file.
         old_optfile: Read options in command line form from the specified file\
             (DEPRECATED).
         runner: Command runner.
@@ -613,7 +660,6 @@ def fabber(
         list_params=list_params,
         desc_params=desc_params,
         list_outputs=list_outputs,
-        optfile_1=optfile_1,
         old_optfile=old_optfile,
     )
     return fabber_execute(params, execution)
@@ -621,8 +667,10 @@ def fabber(
 
 __all__ = [
     "FABBER_METADATA",
+    "FabberOptfileParameters",
     "FabberOutputs",
     "FabberParameters",
     "fabber",
+    "fabber_optfile_params",
     "fabber_params",
 ]

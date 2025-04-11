@@ -6,11 +6,18 @@ import pathlib
 from styxdefs import *
 
 V_3D_CRUISETO_AFNI_METADATA = Metadata(
-    id="90d0713bc385c41707035728eac40990b25fbf39.boutiques",
+    id="ecced7561c452fa6014dcc10bbbbd514bae7282a.boutiques",
     name="3dCRUISEtoAFNI",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
+
+
+V3dCruisetoAfniTraceParameters = typing.TypedDict('V3dCruisetoAfniTraceParameters', {
+    "__STYX_TYPE__": typing.Literal["trace"],
+    "trace": bool,
+    "TRACE": bool,
+})
 
 
 V3dCruisetoAfniParameters = typing.TypedDict('V3dCruisetoAfniParameters', {
@@ -19,8 +26,7 @@ V3dCruisetoAfniParameters = typing.TypedDict('V3dCruisetoAfniParameters', {
     "novolreg": bool,
     "noxform": bool,
     "setenv": typing.NotRequired[str | None],
-    "TRACE": bool,
-    "TRACE_1": bool,
+    "trace": typing.NotRequired[V3dCruisetoAfniTraceParameters | None],
     "nomall": bool,
     "yesmall": bool,
     "help": bool,
@@ -41,6 +47,7 @@ def dyn_cargs(
     """
     return {
         "3dCRUISEtoAFNI": v_3d_cruiseto_afni_cargs,
+        "trace": v_3d_cruiseto_afni_trace_cargs,
     }.get(t)
 
 
@@ -59,6 +66,49 @@ def dyn_outputs(
     }.get(t)
 
 
+def v_3d_cruiseto_afni_trace_params(
+    trace_: bool = False,
+    trace_2: bool = False,
+) -> V3dCruisetoAfniTraceParameters:
+    """
+    Build parameters.
+    
+    Args:
+        trace_: Turns on In/Out debug and Memory tracing. It's recommended to\
+            redirect stdout to a file when using this option.
+        trace_2: Turns on extreme tracing.
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "trace",
+        "trace": trace_,
+        "TRACE": trace_2,
+    }
+    return params
+
+
+def v_3d_cruiseto_afni_trace_cargs(
+    params: V3dCruisetoAfniTraceParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("trace"):
+        cargs.append("-trace")
+    if params.get("TRACE"):
+        cargs.append("-TRACE")
+    return cargs
+
+
 class V3dCruisetoAfniOutputs(typing.NamedTuple):
     """
     Output object returned when calling `v_3d_cruiseto_afni(...)`.
@@ -72,8 +122,7 @@ def v_3d_cruiseto_afni_params(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: bool = False,
-    trace_1: bool = False,
+    trace_: V3dCruisetoAfniTraceParameters | None = None,
     nomall: bool = False,
     yesmall: bool = False,
     help_: bool = False,
@@ -89,8 +138,8 @@ def v_3d_cruiseto_afni_params(
         noxform: Same as -novolreg.
         setenv: Set environment variable ENVname to be ENVvalue. Quotes are\
             necessary. Example: suma -setenv "'SUMA_BackgroundColor = 1 0 1'".
-        trace_: Turns on extreme tracing.
-        trace_1: Turns on extreme tracing.
+        trace_: Turns on In/Out debug and Memory tracing. It's recommended to\
+            redirect stdout to a file when using this option.
         nomall: Turn off memory tracing.
         yesmall: Turn on memory tracing (default).
         help_: The entire help output.
@@ -103,8 +152,6 @@ def v_3d_cruiseto_afni_params(
         "input": input_,
         "novolreg": novolreg,
         "noxform": noxform,
-        "TRACE": trace_,
-        "TRACE_1": trace_1,
         "nomall": nomall,
         "yesmall": yesmall,
         "help": help_,
@@ -112,6 +159,8 @@ def v_3d_cruiseto_afni_params(
     }
     if setenv is not None:
         params["setenv"] = setenv
+    if trace_ is not None:
+        params["trace"] = trace_
     return params
 
 
@@ -143,10 +192,8 @@ def v_3d_cruiseto_afni_cargs(
             "-setenv",
             params.get("setenv")
         ])
-    if params.get("TRACE"):
-        cargs.append("-TRACE")
-    if params.get("TRACE_1"):
-        cargs.append("-TRACE")
+    if params.get("trace") is not None:
+        cargs.extend(dyn_cargs(params.get("trace")["__STYXTYPE__"])(params.get("trace"), execution))
     if params.get("nomall"):
         cargs.append("-nomall")
     if params.get("yesmall"):
@@ -206,8 +253,7 @@ def v_3d_cruiseto_afni(
     novolreg: bool = False,
     noxform: bool = False,
     setenv: str | None = None,
-    trace_: bool = False,
-    trace_1: bool = False,
+    trace_: V3dCruisetoAfniTraceParameters | None = None,
     nomall: bool = False,
     yesmall: bool = False,
     help_: bool = False,
@@ -228,8 +274,8 @@ def v_3d_cruiseto_afni(
         noxform: Same as -novolreg.
         setenv: Set environment variable ENVname to be ENVvalue. Quotes are\
             necessary. Example: suma -setenv "'SUMA_BackgroundColor = 1 0 1'".
-        trace_: Turns on extreme tracing.
-        trace_1: Turns on extreme tracing.
+        trace_: Turns on In/Out debug and Memory tracing. It's recommended to\
+            redirect stdout to a file when using this option.
         nomall: Turn off memory tracing.
         yesmall: Turn on memory tracing (default).
         help_: The entire help output.
@@ -246,7 +292,6 @@ def v_3d_cruiseto_afni(
         noxform=noxform,
         setenv=setenv,
         trace_=trace_,
-        trace_1=trace_1,
         nomall=nomall,
         yesmall=yesmall,
         help_=help_,
@@ -258,7 +303,9 @@ def v_3d_cruiseto_afni(
 __all__ = [
     "V3dCruisetoAfniOutputs",
     "V3dCruisetoAfniParameters",
+    "V3dCruisetoAfniTraceParameters",
     "V_3D_CRUISETO_AFNI_METADATA",
     "v_3d_cruiseto_afni",
     "v_3d_cruiseto_afni_params",
+    "v_3d_cruiseto_afni_trace_params",
 ]

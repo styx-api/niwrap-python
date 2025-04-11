@@ -6,19 +6,25 @@ import pathlib
 from styxdefs import *
 
 COMPUTE_LABEL_VOLUMES_CSH_METADATA = Metadata(
-    id="b2fbb958f7ad5571a70766cb915b116841f5f5f5.boutiques",
+    id="868d89d16779dfaa8674d3cf6361c520a6cdcca9.boutiques",
     name="compute_label_volumes.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
 )
 
 
+ComputeLabelVolumesCshLabelLParameters = typing.TypedDict('ComputeLabelVolumesCshLabelLParameters', {
+    "__STYX_TYPE__": typing.Literal["label_L"],
+    "upper_L": typing.NotRequired[str | None],
+    "lower_L": typing.NotRequired[str | None],
+})
+
+
 ComputeLabelVolumesCshParameters = typing.TypedDict('ComputeLabelVolumesCshParameters', {
     "__STYX_TYPE__": typing.Literal["compute_label_volumes.csh"],
     "label_vol": InputPathType,
     "output_file": str,
-    "label_l": typing.NotRequired[str | None],
-    "label_l_1": typing.NotRequired[str | None],
+    "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParameters | None],
     "version": bool,
     "help": bool,
 })
@@ -37,6 +43,7 @@ def dyn_cargs(
     """
     return {
         "compute_label_volumes.csh": compute_label_volumes_csh_cargs,
+        "label_L": compute_label_volumes_csh_label_l_cargs,
     }.get(t)
 
 
@@ -56,6 +63,56 @@ def dyn_outputs(
     }.get(t)
 
 
+def compute_label_volumes_csh_label_l_params(
+    upper_l: str | None = None,
+    lower_l: str | None = None,
+) -> ComputeLabelVolumesCshLabelLParameters:
+    """
+    Build parameters.
+    
+    Args:
+        upper_l: The particular label to be analyzed (case-sensitive option).
+        lower_l: The particular label to be analyzed (case-insensitive option).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "label_L",
+    }
+    if upper_l is not None:
+        params["upper_L"] = upper_l
+    if lower_l is not None:
+        params["lower_L"] = lower_l
+    return params
+
+
+def compute_label_volumes_csh_label_l_cargs(
+    params: ComputeLabelVolumesCshLabelLParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("upper_L") is not None:
+        cargs.extend([
+            "--L",
+            params.get("upper_L")
+        ])
+    if params.get("lower_L") is not None:
+        cargs.extend([
+            "--l",
+            params.get("lower_L")
+        ])
+    return cargs
+
+
 class ComputeLabelVolumesCshOutputs(typing.NamedTuple):
     """
     Output object returned when calling `compute_label_volumes_csh(...)`.
@@ -69,8 +126,7 @@ class ComputeLabelVolumesCshOutputs(typing.NamedTuple):
 def compute_label_volumes_csh_params(
     label_vol: InputPathType,
     output_file: str,
-    label_l: str | None = None,
-    label_l_1: str | None = None,
+    label_l: ComputeLabelVolumesCshLabelLParameters | None = None,
     version: bool = False,
     help_: bool = False,
 ) -> ComputeLabelVolumesCshParameters:
@@ -80,9 +136,7 @@ def compute_label_volumes_csh_params(
     Args:
         label_vol: Label volume to be analyzed.
         output_file: Text file where the results are written.
-        label_l: The particular label to be analyzed (case-insensitive option).
-        label_l_1: The particular label to be analyzed (case-insensitive\
-            option).
+        label_l: The particular label to be analyzed.
         version: Print version and exit.
         help_: Print help and exit.
     Returns:
@@ -96,9 +150,7 @@ def compute_label_volumes_csh_params(
         "help": help_,
     }
     if label_l is not None:
-        params["label_l"] = label_l
-    if label_l_1 is not None:
-        params["label_l_1"] = label_l_1
+        params["label_L"] = label_l
     return params
 
 
@@ -125,16 +177,8 @@ def compute_label_volumes_csh_cargs(
         "--out",
         params.get("output_file")
     ])
-    if params.get("label_l") is not None:
-        cargs.extend([
-            "--l",
-            params.get("label_l")
-        ])
-    if params.get("label_l_1") is not None:
-        cargs.extend([
-            "--l",
-            params.get("label_l_1")
-        ])
+    if params.get("label_L") is not None:
+        cargs.extend(dyn_cargs(params.get("label_L")["__STYXTYPE__"])(params.get("label_L"), execution))
     if params.get("version"):
         cargs.append("--version")
     if params.get("help"):
@@ -190,8 +234,7 @@ def compute_label_volumes_csh_execute(
 def compute_label_volumes_csh(
     label_vol: InputPathType,
     output_file: str,
-    label_l: str | None = None,
-    label_l_1: str | None = None,
+    label_l: ComputeLabelVolumesCshLabelLParameters | None = None,
     version: bool = False,
     help_: bool = False,
     runner: Runner | None = None,
@@ -207,9 +250,7 @@ def compute_label_volumes_csh(
     Args:
         label_vol: Label volume to be analyzed.
         output_file: Text file where the results are written.
-        label_l: The particular label to be analyzed (case-insensitive option).
-        label_l_1: The particular label to be analyzed (case-insensitive\
-            option).
+        label_l: The particular label to be analyzed.
         version: Print version and exit.
         help_: Print help and exit.
         runner: Command runner.
@@ -222,7 +263,6 @@ def compute_label_volumes_csh(
         label_vol=label_vol,
         output_file=output_file,
         label_l=label_l,
-        label_l_1=label_l_1,
         version=version,
         help_=help_,
     )
@@ -231,8 +271,10 @@ def compute_label_volumes_csh(
 
 __all__ = [
     "COMPUTE_LABEL_VOLUMES_CSH_METADATA",
+    "ComputeLabelVolumesCshLabelLParameters",
     "ComputeLabelVolumesCshOutputs",
     "ComputeLabelVolumesCshParameters",
     "compute_label_volumes_csh",
+    "compute_label_volumes_csh_label_l_params",
     "compute_label_volumes_csh_params",
 ]

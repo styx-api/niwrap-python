@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RBOX_METADATA = Metadata(
-    id="68a575328899ce33835ac92e288c0d8133631651.boutiques",
+    id="67924a2ff0036f0fdd2043af4f02345db414c076.boutiques",
     name="rbox",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -33,7 +33,6 @@ RboxParameters = typing.TypedDict('RboxParameters', {
     "remove_command_line": bool,
     "time_seed": bool,
     "integer_coordinates": bool,
-    "bounding_box_1": typing.NotRequired[float | None],
     "offset": typing.NotRequired[float | None],
     "user_seed": typing.NotRequired[float | None],
     "mesh_lattice": typing.NotRequired[list[str] | None],
@@ -98,7 +97,6 @@ def rbox_params(
     remove_command_line: bool = False,
     time_seed: bool = False,
     integer_coordinates: bool = False,
-    bounding_box_1: float | None = None,
     offset: float | None = None,
     user_seed: float | None = None,
     mesh_lattice: list[str] | None = None,
@@ -131,7 +129,6 @@ def rbox_params(
         remove_command_line: Remove command line from the first line of output.
         time_seed: Use time as the random number seed (default is command line).
         integer_coordinates: Print integer coordinates, default 'Bn' is 1e+06.
-        bounding_box_1: Bounding box coordinates, default 0.5.
         offset: Offset coordinates by n.
         user_seed: Use n as the random number seed.
         mesh_lattice: Lattice (Mesh) rotated by [n,-m,0], [m,n,0], [0,0,r], ...
@@ -164,8 +161,6 @@ def rbox_params(
         params["random_disk"] = random_disk
     if bounding_box is not None:
         params["bounding_box"] = bounding_box
-    if bounding_box_1 is not None:
-        params["bounding_box_1"] = bounding_box_1
     if offset is not None:
         params["offset"] = offset
     if user_seed is not None:
@@ -237,11 +232,6 @@ def rbox_cargs(
         cargs.append("t")
     if params.get("integer_coordinates"):
         cargs.append("z")
-    if params.get("bounding_box_1") is not None:
-        cargs.extend([
-            "B",
-            str(params.get("bounding_box_1"))
-        ])
     if params.get("offset") is not None:
         cargs.extend([
             "O",
@@ -322,7 +312,6 @@ def rbox(
     remove_command_line: bool = False,
     time_seed: bool = False,
     integer_coordinates: bool = False,
-    bounding_box_1: float | None = None,
     offset: float | None = None,
     user_seed: float | None = None,
     mesh_lattice: list[str] | None = None,
@@ -360,7 +349,6 @@ def rbox(
         remove_command_line: Remove command line from the first line of output.
         time_seed: Use time as the random number seed (default is command line).
         integer_coordinates: Print integer coordinates, default 'Bn' is 1e+06.
-        bounding_box_1: Bounding box coordinates, default 0.5.
         offset: Offset coordinates by n.
         user_seed: Use n as the random number seed.
         mesh_lattice: Lattice (Mesh) rotated by [n,-m,0], [m,n,0], [0,0,r], ...
@@ -389,7 +377,6 @@ def rbox(
         remove_command_line=remove_command_line,
         time_seed=time_seed,
         integer_coordinates=integer_coordinates,
-        bounding_box_1=bounding_box_1,
         offset=offset,
         user_seed=user_seed,
         mesh_lattice=mesh_lattice,

@@ -6,11 +6,25 @@ import pathlib
 from styxdefs import *
 
 V_3D_ANOVA3_METADATA = Metadata(
-    id="0ca071faeca5610f927f49f81f4766db7f8ba8c2.boutiques",
+    id="1e464f155335b3c9815ddb43161916b9ff1a4fe2.boutiques",
     name="3dANOVA3",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
 )
+
+
+V3dAnova3OutfileAbcontrParameters = typing.TypedDict('V3dAnova3OutfileAbcontrParameters', {
+    "__STYX_TYPE__": typing.Literal["outfile_abcontr"],
+    "outfile_abcontr": typing.NotRequired[str | None],
+    "outfile_Abcontr": typing.NotRequired[str | None],
+})
+
+
+V3dAnova3OutfileAbcontr1Parameters = typing.TypedDict('V3dAnova3OutfileAbcontr1Parameters', {
+    "__STYX_TYPE__": typing.Literal["outfile_abcontr_1"],
+    "outfile_abdiff": typing.NotRequired[str | None],
+    "outfile_Abdiff": typing.NotRequired[str | None],
+})
 
 
 V3dAnova3Parameters = typing.TypedDict('V3dAnova3Parameters', {
@@ -41,8 +55,8 @@ V3dAnova3Parameters = typing.TypedDict('V3dAnova3Parameters', {
     "outfile_acontr": typing.NotRequired[str | None],
     "outfile_bcontr": typing.NotRequired[str | None],
     "outfile_ccontr": typing.NotRequired[str | None],
-    "outfile_Abcontr": typing.NotRequired[str | None],
-    "outfile_Abdiff": typing.NotRequired[str | None],
+    "outfile_abcontr": typing.NotRequired[V3dAnova3OutfileAbcontrParameters | None],
+    "outfile_abdiff": typing.NotRequired[V3dAnova3OutfileAbcontr1Parameters | None],
     "outfile_abmean": typing.NotRequired[str | None],
     "outfile_bucket": typing.NotRequired[str | None],
     "anova_options": typing.NotRequired[list[str] | None],
@@ -62,6 +76,8 @@ def dyn_cargs(
     """
     return {
         "3dANOVA3": v_3d_anova3_cargs,
+        "outfile_abcontr": v_3d_anova3_outfile_abcontr_cargs,
+        "outfile_abcontr_1": v_3d_anova3_outfile_abcontr_1_cargs,
     }.get(t)
 
 
@@ -79,6 +95,110 @@ def dyn_outputs(
     return {
         "3dANOVA3": v_3d_anova3_outputs,
     }.get(t)
+
+
+def v_3d_anova3_outfile_abcontr_params(
+    outfile_abcontr: str | None = None,
+    outfile_abcontr_: str | None = None,
+) -> V3dAnova3OutfileAbcontrParameters:
+    """
+    Build parameters.
+    
+    Args:
+        outfile_abcontr: Specify the output file for the interaction contrast\
+            results between A and B.
+        outfile_abcontr_: Specify the output file for the interaction contrast\
+            results between A and B (case-sensitive).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "outfile_abcontr",
+    }
+    if outfile_abcontr is not None:
+        params["outfile_abcontr"] = outfile_abcontr
+    if outfile_abcontr_ is not None:
+        params["outfile_Abcontr"] = outfile_abcontr_
+    return params
+
+
+def v_3d_anova3_outfile_abcontr_cargs(
+    params: V3dAnova3OutfileAbcontrParameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("outfile_abcontr") is not None:
+        cargs.extend([
+            "-aBcontr",
+            params.get("outfile_abcontr")
+        ])
+    if params.get("outfile_Abcontr") is not None:
+        cargs.extend([
+            "-Abcontr",
+            params.get("outfile_Abcontr")
+        ])
+    return cargs
+
+
+def v_3d_anova3_outfile_abcontr_1_params(
+    outfile_abdiff: str | None = None,
+    outfile_abdiff_: str | None = None,
+) -> V3dAnova3OutfileAbcontr1Parameters:
+    """
+    Build parameters.
+    
+    Args:
+        outfile_abdiff: Specify the output file for the interaction difference\
+            results between A and B.
+        outfile_abdiff_: Specify the output file for the interaction difference\
+            results between A and B (case-sensitive).
+    Returns:
+        Parameter dictionary
+    """
+    params = {
+        "__STYXTYPE__": "outfile_abcontr_1",
+    }
+    if outfile_abdiff is not None:
+        params["outfile_abdiff"] = outfile_abdiff
+    if outfile_abdiff_ is not None:
+        params["outfile_Abdiff"] = outfile_abdiff_
+    return params
+
+
+def v_3d_anova3_outfile_abcontr_1_cargs(
+    params: V3dAnova3OutfileAbcontr1Parameters,
+    execution: Execution,
+) -> list[str]:
+    """
+    Build command-line arguments from parameters.
+    
+    Args:
+        params: The parameters.
+        execution: The execution object for resolving input paths.
+    Returns:
+        Command-line arguments.
+    """
+    cargs = []
+    if params.get("outfile_abdiff") is not None:
+        cargs.extend([
+            "-aBdiff",
+            params.get("outfile_abdiff")
+        ])
+    if params.get("outfile_Abdiff") is not None:
+        cargs.extend([
+            "-Abdiff",
+            params.get("outfile_Abdiff")
+        ])
+    return cargs
 
 
 class V3dAnova3Outputs(typing.NamedTuple):
@@ -134,8 +254,8 @@ def v_3d_anova3_params(
     outfile_acontr: str | None = None,
     outfile_bcontr: str | None = None,
     outfile_ccontr: str | None = None,
-    outfile_abcontr: str | None = None,
-    outfile_abdiff: str | None = None,
+    outfile_abcontr: V3dAnova3OutfileAbcontrParameters | None = None,
+    outfile_abdiff: V3dAnova3OutfileAbcontr1Parameters | None = None,
     outfile_abmean: str | None = None,
     outfile_bucket: str | None = None,
     anova_options: list[str] | None = None,
@@ -178,9 +298,9 @@ def v_3d_anova3_params(
         outfile_bcontr: Specify the output file for the B contrast results.
         outfile_ccontr: Specify the output file for the C contrast results.
         outfile_abcontr: Specify the output file for the interaction contrast\
-            results between A and B (case-sensitive).
-        outfile_abdiff: Specify the output file for the interaction difference\
-            results between A and B (case-sensitive).
+            results between A and B.
+        outfile_abdiff: Specify the output file for the interaction contrast\
+            results between A and B.
         outfile_abmean: Specify the output file for the mean results of the\
             interaction between A and B.
         outfile_bucket: Specify the output file for the bucket (combined)\
@@ -240,9 +360,9 @@ def v_3d_anova3_params(
     if outfile_ccontr is not None:
         params["outfile_ccontr"] = outfile_ccontr
     if outfile_abcontr is not None:
-        params["outfile_Abcontr"] = outfile_abcontr
+        params["outfile_abcontr"] = outfile_abcontr
     if outfile_abdiff is not None:
-        params["outfile_Abdiff"] = outfile_abdiff
+        params["outfile_abdiff"] = outfile_abdiff
     if outfile_abmean is not None:
         params["outfile_abmean"] = outfile_abmean
     if outfile_bucket is not None:
@@ -389,16 +509,10 @@ def v_3d_anova3_cargs(
             "-ccontr",
             params.get("outfile_ccontr")
         ])
-    if params.get("outfile_Abcontr") is not None:
-        cargs.extend([
-            "-Abcontr",
-            params.get("outfile_Abcontr")
-        ])
-    if params.get("outfile_Abdiff") is not None:
-        cargs.extend([
-            "-Abdiff",
-            params.get("outfile_Abdiff")
-        ])
+    if params.get("outfile_abcontr") is not None:
+        cargs.extend(dyn_cargs(params.get("outfile_abcontr")["__STYXTYPE__"])(params.get("outfile_abcontr"), execution))
+    if params.get("outfile_abdiff") is not None:
+        cargs.extend(dyn_cargs(params.get("outfile_abdiff")["__STYXTYPE__"])(params.get("outfile_abdiff"), execution))
     if params.get("outfile_abmean") is not None:
         cargs.extend([
             "-abmean",
@@ -496,8 +610,8 @@ def v_3d_anova3(
     outfile_acontr: str | None = None,
     outfile_bcontr: str | None = None,
     outfile_ccontr: str | None = None,
-    outfile_abcontr: str | None = None,
-    outfile_abdiff: str | None = None,
+    outfile_abcontr: V3dAnova3OutfileAbcontrParameters | None = None,
+    outfile_abdiff: V3dAnova3OutfileAbcontr1Parameters | None = None,
     outfile_abmean: str | None = None,
     outfile_bucket: str | None = None,
     anova_options: list[str] | None = None,
@@ -545,9 +659,9 @@ def v_3d_anova3(
         outfile_bcontr: Specify the output file for the B contrast results.
         outfile_ccontr: Specify the output file for the C contrast results.
         outfile_abcontr: Specify the output file for the interaction contrast\
-            results between A and B (case-sensitive).
-        outfile_abdiff: Specify the output file for the interaction difference\
-            results between A and B (case-sensitive).
+            results between A and B.
+        outfile_abdiff: Specify the output file for the interaction contrast\
+            results between A and B.
         outfile_abmean: Specify the output file for the mean results of the\
             interaction between A and B.
         outfile_bucket: Specify the output file for the bucket (combined)\
@@ -597,9 +711,13 @@ def v_3d_anova3(
 
 
 __all__ = [
+    "V3dAnova3OutfileAbcontr1Parameters",
+    "V3dAnova3OutfileAbcontrParameters",
     "V3dAnova3Outputs",
     "V3dAnova3Parameters",
     "V_3D_ANOVA3_METADATA",
     "v_3d_anova3",
+    "v_3d_anova3_outfile_abcontr_1_params",
+    "v_3d_anova3_outfile_abcontr_params",
     "v_3d_anova3_params",
 ]
