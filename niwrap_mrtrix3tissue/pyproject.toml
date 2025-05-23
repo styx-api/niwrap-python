@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_mrtrix3tissue"
-version = "0.5.3"
+version = "0.6.0"
 description = "NiWrap wrappers for MRTrix3Tissue."
 license = "LGPL-2.1"
 authors = [{ name = "CMI DAIR", email = "dair@childmind.org" }]

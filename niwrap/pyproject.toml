@@ -1,6 +1,6 @@
 [project]
 name = "niwrap"
-version = "0.5.3"
+version = "0.6.0"
 description = "Neuroimaging Python wrappers"
 readme = "README.md"
 license = "LGPL-2.1"
@@ -10,18 +10,18 @@ dependencies = [
     "styxdocker",
     "styxsingularity",
     "styxgraph",
-  "niwrap_mrtrix3tissue==0.5.3",
-  "niwrap_niftyreg==0.5.3",
-  "niwrap_fastsurfer==0.5.3",
-  "niwrap_fsl==0.5.3",
-  "niwrap_workbench==0.5.3",
-  "niwrap_afni==0.5.3",
-  "niwrap_mrtrix==0.5.3",
-  "niwrap_ants==0.5.3",
-  "niwrap_c3d==0.5.3",
-  "niwrap_freesurfer==0.5.3",
-  "niwrap_greedy==0.5.3",
-  "niwrap_dcm2niix==0.5.3"
+  "niwrap_ants==0.6.0",
+  "niwrap_workbench==0.6.0",
+  "niwrap_mrtrix3tissue==0.6.0",
+  "niwrap_mrtrix==0.6.0",
+  "niwrap_fsl==0.6.0",
+  "niwrap_dcm2niix==0.6.0",
+  "niwrap_c3d==0.6.0",
+  "niwrap_greedy==0.6.0",
+  "niwrap_freesurfer==0.6.0",
+  "niwrap_fastsurfer==0.6.0",
+  "niwrap_afni==0.6.0",
+  "niwrap_niftyreg==0.6.0"
 ]
 
 [tool.hatch.build.targets.wheel]
