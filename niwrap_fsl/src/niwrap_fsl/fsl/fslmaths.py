@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMATHS_METADATA = Metadata(
-    id="6afa8edeb98c48d6664cbd54b6ec1f52961f305e.boutiques",
+    id="bee6d517966bb652a53c121a65d5ea59827f20a1.boutiques",
     name="fslmaths",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -78,7 +78,7 @@ FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
     "fmedian": bool,
     "fmean": bool,
     "fmeanu": bool,
-    "s": float,
+    "s": typing.NotRequired[float | None],
     "subsamp2": bool,
     "subsamp2offc": bool,
     "Tmean": bool,
@@ -160,7 +160,6 @@ def dyn_outputs(
 
 
 def fslmaths_operation_params(
-    s: float,
     add: float | None = None,
     sub: float | None = None,
     mul: float | None = None,
@@ -224,6 +223,7 @@ def fslmaths_operation_params(
     fmedian: bool = False,
     fmean: bool = False,
     fmeanu: bool = False,
+    s: float | None = None,
     subsamp2: bool = False,
     subsamp2offc: bool = False,
     tmean: bool = False,
@@ -263,7 +263,6 @@ def fslmaths_operation_params(
     Build parameters.
     
     Args:
-        s: Create a gauss kernel of sigma mm and perform mean filtering.
         add: Add following input to current image.
         sub: Subtract following input from current image.
         mul: Multiply current image by following input.
@@ -346,6 +345,7 @@ def fslmaths_operation_params(
             kernel).
         fmeanu: Mean filtering, kernel weighted, un-normalised (gives edge\
             effects).
+        s: Create a gauss kernel of sigma mm and perform mean filtering.
         subsamp2: Downsamples image by a factor of 2 (keeping new voxels\
             centred on old).
         subsamp2offc: Downsamples image by a factor of 2 (non-centred).
@@ -426,7 +426,6 @@ def fslmaths_operation_params(
         "fmedian": fmedian,
         "fmean": fmean,
         "fmeanu": fmeanu,
-        "s": s,
         "subsamp2": subsamp2,
         "subsamp2offc": subsamp2offc,
         "Tmean": tmean,
@@ -509,6 +508,8 @@ def fslmaths_operation_params(
         params["kernel_sphere"] = kernel_sphere
     if kernel_file is not None:
         params["kernel_file"] = kernel_file
+    if s is not None:
+        params["s"] = s
     if tperc is not None:
         params["Tperc"] = tperc
     if xperc is not None:
@@ -747,10 +748,11 @@ def fslmaths_operation_cargs(
         cargs.append("-fmean")
     if params.get("fmeanu"):
         cargs.append("-fmeanu")
-    cargs.extend([
-        "-s",
-        str(params.get("s"))
-    ])
+    if params.get("s") is not None:
+        cargs.extend([
+            "-s",
+            str(params.get("s"))
+        ])
     if params.get("subsamp2"):
         cargs.append("-subsamp2")
     if params.get("subsamp2offc"):
