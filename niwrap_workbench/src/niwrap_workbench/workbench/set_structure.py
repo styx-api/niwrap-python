@@ -14,7 +14,7 @@ SET_STRUCTURE_METADATA = Metadata(
 
 
 SetStructureParameters = typing.TypedDict('SetStructureParameters', {
-    "__STYX_TYPE__": typing.Literal["set-structure"],
+    "__STYXTYPE__": typing.Literal["set-structure"],
     "data_file": str,
     "structure": str,
     "opt_surface_type_type": typing.NotRequired[str | None],

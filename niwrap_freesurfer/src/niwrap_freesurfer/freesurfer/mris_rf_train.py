@@ -14,7 +14,7 @@ MRIS_RF_TRAIN_METADATA = Metadata(
 
 
 MrisRfTrainParameters = typing.TypedDict('MrisRfTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_rf_train"],
+    "__STYXTYPE__": typing.Literal["mris_rf_train"],
     "subjects": list[str],
     "output_name": str,
     "hemi": typing.NotRequired[str | None],

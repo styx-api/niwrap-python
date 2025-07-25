@@ -14,7 +14,7 @@ MRIS_MERGE_PARCELLATIONS_METADATA = Metadata(
 
 
 MrisMergeParcellationsParameters = typing.TypedDict('MrisMergeParcellationsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_merge_parcellations"],
+    "__STYXTYPE__": typing.Literal["mris_merge_parcellations"],
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,

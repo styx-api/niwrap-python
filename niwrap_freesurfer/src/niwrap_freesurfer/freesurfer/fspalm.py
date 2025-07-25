@@ -14,7 +14,7 @@ FSPALM_METADATA = Metadata(
 
 
 FspalmParameters = typing.TypedDict('FspalmParameters', {
-    "__STYX_TYPE__": typing.Literal["fspalm"],
+    "__STYXTYPE__": typing.Literal["fspalm"],
     "glmdir": str,
     "cft": float,
     "cwp": float,

@@ -14,7 +14,7 @@ MRI_EXVIVO_STRIP_METADATA = Metadata(
 
 
 MriExvivoStripParameters = typing.TypedDict('MriExvivoStripParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_exvivo_strip"],
+    "__STYXTYPE__": typing.Literal["mri_exvivo_strip"],
     "invol": InputPathType,
     "outvol": str,
     "hemi": str,

@@ -14,7 +14,7 @@ V__GET_AFNI_PREFIX_METADATA = Metadata(
 
 
 VGetAfniPrefixParameters = typing.TypedDict('VGetAfniPrefixParameters', {
-    "__STYX_TYPE__": typing.Literal["@GetAfniPrefix"],
+    "__STYXTYPE__": typing.Literal["@GetAfniPrefix"],
     "name": InputPathType,
     "suffix": typing.NotRequired[str | None],
 })

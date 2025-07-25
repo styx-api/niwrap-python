@@ -14,7 +14,7 @@ SPHARM_DECO_METADATA = Metadata(
 
 
 SpharmDecoParameters = typing.TypedDict('SpharmDecoParameters', {
-    "__STYX_TYPE__": typing.Literal["SpharmDeco"],
+    "__STYXTYPE__": typing.Literal["SpharmDeco"],
     "i_type_s": InputPathType,
     "unit_sph_label": str,
     "order_l": float,

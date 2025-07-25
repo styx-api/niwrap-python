@@ -14,7 +14,7 @@ MRIS_REGISTER_TO_LABEL_METADATA = Metadata(
 
 
 MrisRegisterToLabelParameters = typing.TypedDict('MrisRegisterToLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_register_to_label"],
+    "__STYXTYPE__": typing.Literal["mris_register_to_label"],
     "surface": InputPathType,
     "regfile": InputPathType,
     "mri_reg": InputPathType,

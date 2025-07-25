@@ -14,20 +14,20 @@ MRCLUSTERSTATS_METADATA = Metadata(
 
 
 MrclusterstatsColumnParameters = typing.TypedDict('MrclusterstatsColumnParameters', {
-    "__STYX_TYPE__": typing.Literal["column"],
+    "__STYXTYPE__": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
 MrclusterstatsConfigParameters = typing.TypedDict('MrclusterstatsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrclusterstatsParameters = typing.TypedDict('MrclusterstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mrclusterstats"],
+    "__STYXTYPE__": typing.Literal["mrclusterstats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],

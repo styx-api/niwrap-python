@@ -14,7 +14,7 @@ TALAIRACH_METADATA = Metadata(
 
 
 TalairachParameters = typing.TypedDict('TalairachParameters', {
-    "__STYX_TYPE__": typing.Literal["talairach"],
+    "__STYXTYPE__": typing.Literal["talairach"],
     "input_volume": InputPathType,
     "output_transform": str,
     "log_flag": bool,

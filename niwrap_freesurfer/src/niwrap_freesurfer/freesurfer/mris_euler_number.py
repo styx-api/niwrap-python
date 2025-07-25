@@ -14,7 +14,7 @@ MRIS_EULER_NUMBER_METADATA = Metadata(
 
 
 MrisEulerNumberParameters = typing.TypedDict('MrisEulerNumberParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_euler_number"],
+    "__STYXTYPE__": typing.Literal["mris_euler_number"],
     "input_surface": InputPathType,
     "output_file": typing.NotRequired[str | None],
 })

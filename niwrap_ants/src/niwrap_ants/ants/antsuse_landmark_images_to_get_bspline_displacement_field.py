@@ -14,7 +14,7 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters = typing.TypedDict('AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters', {
-    "__STYX_TYPE__": typing.Literal["ANTSUseLandmarkImagesToGetBSplineDisplacementField"],
+    "__STYXTYPE__": typing.Literal["ANTSUseLandmarkImagesToGetBSplineDisplacementField"],
     "fixed_image_with_labeled_landmarks": InputPathType,
     "moving_image_with_labeled_landmarks": InputPathType,
     "output_displacement_field": str,

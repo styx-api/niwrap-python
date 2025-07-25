@@ -14,7 +14,7 @@ ICO_SUPERSAMPLE_METADATA = Metadata(
 
 
 IcoSupersampleParameters = typing.TypedDict('IcoSupersampleParameters', {
-    "__STYX_TYPE__": typing.Literal["ico_supersample"],
+    "__STYXTYPE__": typing.Literal["ico_supersample"],
     "refine": bool,
     "radius": typing.NotRequired[float | None],
     "projection_point": typing.NotRequired[list[float] | None],

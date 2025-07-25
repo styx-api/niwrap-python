@@ -14,7 +14,7 @@ FSL2ASCII_METADATA = Metadata(
 
 
 Fsl2asciiParameters = typing.TypedDict('Fsl2asciiParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl2ascii"],
+    "__STYXTYPE__": typing.Literal["fsl2ascii"],
     "input_file": InputPathType,
     "output_file": str,
 })

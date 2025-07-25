@@ -14,7 +14,7 @@ V_3DEDGE3_METADATA = Metadata(
 
 
 V3dedge3Parameters = typing.TypedDict('V3dedge3Parameters', {
-    "__STYX_TYPE__": typing.Literal["3dedge3"],
+    "__STYXTYPE__": typing.Literal["3dedge3"],
     "input_file": InputPathType,
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],

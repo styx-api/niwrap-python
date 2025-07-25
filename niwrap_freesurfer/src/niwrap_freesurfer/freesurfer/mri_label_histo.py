@@ -14,7 +14,7 @@ MRI_LABEL_HISTO_METADATA = Metadata(
 
 
 MriLabelHistoParameters = typing.TypedDict('MriLabelHistoParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_label_histo"],
+    "__STYXTYPE__": typing.Literal["mri_label_histo"],
     "t1_volume": InputPathType,
     "labeled_volume": InputPathType,
     "label": float,

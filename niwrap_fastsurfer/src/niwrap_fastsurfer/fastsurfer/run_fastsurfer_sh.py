@@ -14,7 +14,7 @@ RUN_FASTSURFER_SH_METADATA = Metadata(
 
 
 RunFastsurferShParameters = typing.TypedDict('RunFastsurferShParameters', {
-    "__STYX_TYPE__": typing.Literal["run_fastsurfer.sh"],
+    "__STYXTYPE__": typing.Literal["run_fastsurfer.sh"],
     "sid": str,
     "subjects_dir": str,
     "t1_input": InputPathType,

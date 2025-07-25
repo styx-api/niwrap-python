@@ -14,14 +14,14 @@ MRCOLOUR_METADATA = Metadata(
 
 
 MrcolourConfigParameters = typing.TypedDict('MrcolourConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrcolourParameters = typing.TypedDict('MrcolourParameters', {
-    "__STYX_TYPE__": typing.Literal["mrcolour"],
+    "__STYXTYPE__": typing.Literal["mrcolour"],
     "upper": typing.NotRequired[float | None],
     "lower": typing.NotRequired[float | None],
     "colour": typing.NotRequired[list[float] | None],

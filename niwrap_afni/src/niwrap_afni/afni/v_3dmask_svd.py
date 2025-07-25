@@ -14,7 +14,7 @@ V_3DMASK_SVD_METADATA = Metadata(
 
 
 V3dmaskSvdParameters = typing.TypedDict('V3dmaskSvdParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmaskSVD"],
+    "__STYXTYPE__": typing.Literal["3dmaskSVD"],
     "input_dataset": InputPathType,
     "vnorm": bool,
     "sval": typing.NotRequired[float | None],

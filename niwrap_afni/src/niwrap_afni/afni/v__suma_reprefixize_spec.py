@@ -14,7 +14,7 @@ V__SUMA_REPREFIXIZE_SPEC_METADATA = Metadata(
 
 
 VSumaReprefixizeSpecParameters = typing.TypedDict('VSumaReprefixizeSpecParameters', {
-    "__STYX_TYPE__": typing.Literal["@suma_reprefixize_spec"],
+    "__STYXTYPE__": typing.Literal["@suma_reprefixize_spec"],
     "input_file": InputPathType,
     "prefix": str,
     "output_dir": str,

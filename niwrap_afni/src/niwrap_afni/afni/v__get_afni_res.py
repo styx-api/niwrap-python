@@ -14,7 +14,7 @@ V__GET_AFNI_RES_METADATA = Metadata(
 
 
 VGetAfniResParameters = typing.TypedDict('VGetAfniResParameters', {
-    "__STYX_TYPE__": typing.Literal["@GetAfniRes"],
+    "__STYXTYPE__": typing.Literal["@GetAfniRes"],
     "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
     "input_dataset": InputPathType,
 })

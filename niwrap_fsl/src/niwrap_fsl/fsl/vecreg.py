@@ -14,7 +14,7 @@ VECREG_METADATA = Metadata(
 
 
 VecregParameters = typing.TypedDict('VecregParameters', {
-    "__STYX_TYPE__": typing.Literal["vecreg"],
+    "__STYXTYPE__": typing.Literal["vecreg"],
     "input_file": InputPathType,
     "output_file": str,
     "reference_volume": InputPathType,

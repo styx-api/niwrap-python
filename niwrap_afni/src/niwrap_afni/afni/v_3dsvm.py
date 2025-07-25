@@ -14,7 +14,7 @@ V_3DSVM_METADATA = Metadata(
 
 
 V3dsvmParameters = typing.TypedDict('V3dsvmParameters', {
-    "__STYX_TYPE__": typing.Literal["3dsvm"],
+    "__STYXTYPE__": typing.Literal["3dsvm"],
     "train_vol": typing.NotRequired[InputPathType | None],
     "train_labels": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],

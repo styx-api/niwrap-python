@@ -14,7 +14,7 @@ ISOLATE_LABELS_KEEPORIGVAL_CSH_METADATA = Metadata(
 
 
 IsolateLabelsKeeporigvalCshParameters = typing.TypedDict('IsolateLabelsKeeporigvalCshParameters', {
-    "__STYX_TYPE__": typing.Literal["isolate_labels_keeporigval.csh"],
+    "__STYXTYPE__": typing.Literal["isolate_labels_keeporigval.csh"],
     "vol": InputPathType,
     "outprefix": str,
     "label": typing.NotRequired[str | None],

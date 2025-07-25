@@ -14,7 +14,7 @@ V_3D_TRACK_ID_METADATA = Metadata(
 
 
 V3dTrackIdParameters = typing.TypedDict('V3dTrackIdParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTrackID"],
+    "__STYXTYPE__": typing.Literal["3dTrackID"],
     "mode": typing.Literal["DET", "MINIP", "PROB"],
     "netrois": InputPathType,
     "prefix": str,

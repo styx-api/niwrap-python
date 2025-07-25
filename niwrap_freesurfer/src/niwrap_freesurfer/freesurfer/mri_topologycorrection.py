@@ -14,7 +14,7 @@ MRI_TOPOLOGYCORRECTION_METADATA = Metadata(
 
 
 MriTopologycorrectionParameters = typing.TypedDict('MriTopologycorrectionParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_topologycorrection"],
+    "__STYXTYPE__": typing.Literal["mri_topologycorrection"],
     "input_orig_file": InputPathType,
     "input_segmented_file": InputPathType,
 })

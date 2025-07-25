@@ -14,7 +14,7 @@ STANDARD_SPACE_ROI_METADATA = Metadata(
 
 
 StandardSpaceRoiParameters = typing.TypedDict('StandardSpaceRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["standard_space_roi"],
+    "__STYXTYPE__": typing.Literal["standard_space_roi"],
     "infile": InputPathType,
     "outfile": str,
     "mask_fov_flag": bool,

@@ -14,13 +14,13 @@ VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 VolumeEstimateFwhmWholeFileParameters = typing.TypedDict('VolumeEstimateFwhmWholeFileParameters', {
-    "__STYX_TYPE__": typing.Literal["whole_file"],
+    "__STYXTYPE__": typing.Literal["whole_file"],
     "opt_demean": bool,
 })
 
 
 VolumeEstimateFwhmParameters = typing.TypedDict('VolumeEstimateFwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-estimate-fwhm"],
+    "__STYXTYPE__": typing.Literal["volume-estimate-fwhm"],
     "volume": InputPathType,
     "opt_roi_roivol": typing.NotRequired[InputPathType | None],
     "opt_subvolume_subvol": typing.NotRequired[str | None],

@@ -14,14 +14,14 @@ COMPUTE_LABEL_VOLUMES_CSH_METADATA = Metadata(
 
 
 ComputeLabelVolumesCshLabelLParameters = typing.TypedDict('ComputeLabelVolumesCshLabelLParameters', {
-    "__STYX_TYPE__": typing.Literal["label_L"],
+    "__STYXTYPE__": typing.Literal["label_L"],
     "upper_L": typing.NotRequired[str | None],
     "lower_L": typing.NotRequired[str | None],
 })
 
 
 ComputeLabelVolumesCshParameters = typing.TypedDict('ComputeLabelVolumesCshParameters', {
-    "__STYX_TYPE__": typing.Literal["compute_label_volumes.csh"],
+    "__STYXTYPE__": typing.Literal["compute_label_volumes.csh"],
     "label_vol": InputPathType,
     "output_file": str,
     "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParameters | None],

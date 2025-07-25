@@ -14,7 +14,7 @@ SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
 
 
 SurfaceSphereTriangularPatchesParameters = typing.TypedDict('SurfaceSphereTriangularPatchesParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-sphere-triangular-patches"],
+    "__STYXTYPE__": typing.Literal["surface-sphere-triangular-patches"],
     "sphere": InputPathType,
     "divisions": int,
     "text_out": str,

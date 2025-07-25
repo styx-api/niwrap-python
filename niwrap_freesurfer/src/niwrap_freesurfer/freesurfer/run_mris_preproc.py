@@ -14,7 +14,7 @@ RUN_MRIS_PREPROC_METADATA = Metadata(
 
 
 RunMrisPreprocParameters = typing.TypedDict('RunMrisPreprocParameters', {
-    "__STYX_TYPE__": typing.Literal["run_mris_preproc"],
+    "__STYXTYPE__": typing.Literal["run_mris_preproc"],
     "qdec_table": InputPathType,
     "target_average": typing.NotRequired[str | None],
 })

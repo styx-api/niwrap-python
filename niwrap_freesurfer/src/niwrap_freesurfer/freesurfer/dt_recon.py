@@ -14,7 +14,7 @@ DT_RECON_METADATA = Metadata(
 
 
 DtReconParameters = typing.TypedDict('DtReconParameters', {
-    "__STYX_TYPE__": typing.Literal["dt_recon"],
+    "__STYXTYPE__": typing.Literal["dt_recon"],
     "input_volume": InputPathType,
     "bvals_bvecs": typing.NotRequired[str | None],
     "subject_id": str,

@@ -14,7 +14,7 @@ RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA = Metadata(
 
 
 RunSegmentSubfieldsT1LongitudinalShParameters = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParameters', {
-    "__STYX_TYPE__": typing.Literal["run_SegmentSubfieldsT1Longitudinal.sh"],
+    "__STYXTYPE__": typing.Literal["run_SegmentSubfieldsT1Longitudinal.sh"],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })

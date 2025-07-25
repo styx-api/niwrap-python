@@ -14,7 +14,7 @@ V_3D_WILCOXON_METADATA = Metadata(
 
 
 V3dWilcoxonParameters = typing.TypedDict('V3dWilcoxonParameters', {
-    "__STYX_TYPE__": typing.Literal["3dWilcoxon"],
+    "__STYXTYPE__": typing.Literal["3dWilcoxon"],
     "workmem": typing.NotRequired[float | None],
     "voxel": typing.NotRequired[float | None],
     "dset1_x": list[InputPathType],

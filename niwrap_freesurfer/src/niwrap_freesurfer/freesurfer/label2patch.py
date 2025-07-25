@@ -14,7 +14,7 @@ LABEL2PATCH_METADATA = Metadata(
 
 
 Label2patchParameters = typing.TypedDict('Label2patchParameters', {
-    "__STYX_TYPE__": typing.Literal["label2patch"],
+    "__STYXTYPE__": typing.Literal["label2patch"],
     "subject_name": str,
     "hemisphere": str,
     "label_file": InputPathType,

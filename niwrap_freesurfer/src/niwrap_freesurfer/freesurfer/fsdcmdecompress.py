@@ -14,7 +14,7 @@ FSDCMDECOMPRESS_METADATA = Metadata(
 
 
 FsdcmdecompressParameters = typing.TypedDict('FsdcmdecompressParameters', {
-    "__STYX_TYPE__": typing.Literal["fsdcmdecompress"],
+    "__STYXTYPE__": typing.Literal["fsdcmdecompress"],
     "indcmfile": InputPathType,
     "outdcmfile": str,
     "dcmtk": bool,

@@ -14,7 +14,7 @@ FIRST_MULT_BCORR_METADATA = Metadata(
 
 
 FirstMultBcorrParameters = typing.TypedDict('FirstMultBcorrParameters', {
-    "__STYX_TYPE__": typing.Literal["first_mult_bcorr"],
+    "__STYXTYPE__": typing.Literal["first_mult_bcorr"],
     "input_image": InputPathType,
     "corrected_4d_labels": InputPathType,
     "uncorrected_4d_labels": InputPathType,

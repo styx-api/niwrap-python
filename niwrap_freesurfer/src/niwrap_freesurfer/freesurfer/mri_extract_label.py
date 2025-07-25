@@ -14,7 +14,7 @@ MRI_EXTRACT_LABEL_METADATA = Metadata(
 
 
 MriExtractLabelParameters = typing.TypedDict('MriExtractLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_extract_label"],
+    "__STYXTYPE__": typing.Literal["mri_extract_label"],
     "input_volume": InputPathType,
     "labels": list[str],
     "output_name": str,

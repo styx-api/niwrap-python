@@ -14,7 +14,7 @@ GETFULLPATH_METADATA = Metadata(
 
 
 GetfullpathParameters = typing.TypedDict('GetfullpathParameters', {
-    "__STYX_TYPE__": typing.Literal["getfullpath"],
+    "__STYXTYPE__": typing.Literal["getfullpath"],
     "filename": str,
 })
 

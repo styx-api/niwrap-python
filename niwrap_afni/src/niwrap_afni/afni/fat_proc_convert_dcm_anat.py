@@ -14,7 +14,7 @@ FAT_PROC_CONVERT_DCM_ANAT_METADATA = Metadata(
 
 
 FatProcConvertDcmAnatParameters = typing.TypedDict('FatProcConvertDcmAnatParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_convert_dcm_anat"],
+    "__STYXTYPE__": typing.Literal["fat_proc_convert_dcm_anat"],
     "dicom_directory": typing.NotRequired[str | None],
     "nifti_input": typing.NotRequired[InputPathType | None],
     "prefix": str,

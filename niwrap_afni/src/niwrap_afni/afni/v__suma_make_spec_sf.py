@@ -14,7 +14,7 @@ V__SUMA_MAKE_SPEC_SF_METADATA = Metadata(
 
 
 VSumaMakeSpecSfParameters = typing.TypedDict('VSumaMakeSpecSfParameters', {
-    "__STYX_TYPE__": typing.Literal["@SUMA_Make_Spec_SF"],
+    "__STYXTYPE__": typing.Literal["@SUMA_Make_Spec_SF"],
     "debug_level": typing.NotRequired[int | None],
     "surface_path": typing.NotRequired[str | None],
     "subject_id": str,

@@ -14,7 +14,7 @@ MRI_COMPUTE_SEG_OVERLAP_METADATA = Metadata(
 
 
 MriComputeSegOverlapParameters = typing.TypedDict('MriComputeSegOverlapParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compute_seg_overlap"],
+    "__STYXTYPE__": typing.Literal["mri_compute_seg_overlap"],
     "segvol1": InputPathType,
     "segvol2": InputPathType,
     "log_file": typing.NotRequired[str | None],

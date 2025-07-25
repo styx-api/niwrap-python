@@ -14,7 +14,7 @@ SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
 
 
 SurfaceGeodesicDistanceAllToAllParameters = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-geodesic-distance-all-to-all"],
+    "__STYXTYPE__": typing.Literal["surface-geodesic-distance-all-to-all"],
     "surface": InputPathType,
     "cifti_out": str,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],

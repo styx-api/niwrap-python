@@ -14,7 +14,7 @@ FAT_PROC_MAP_TO_DTI_METADATA = Metadata(
 
 
 FatProcMapToDtiParameters = typing.TypedDict('FatProcMapToDtiParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_map_to_dti"],
+    "__STYXTYPE__": typing.Literal["fat_proc_map_to_dti"],
     "source": InputPathType,
     "base": InputPathType,
     "prefix": str,

@@ -14,7 +14,7 @@ EDDY_QUAD_METADATA = Metadata(
 
 
 EddyQuadParameters = typing.TypedDict('EddyQuadParameters', {
-    "__STYX_TYPE__": typing.Literal["eddy_quad"],
+    "__STYXTYPE__": typing.Literal["eddy_quad"],
     "eddyBase": str,
     "eddyIndex": InputPathType,
     "eddyParams": InputPathType,

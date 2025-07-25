@@ -14,7 +14,7 @@ V_3D_BANDPASS_METADATA = Metadata(
 
 
 V3dBandpassParameters = typing.TypedDict('V3dBandpassParameters', {
-    "__STYX_TYPE__": typing.Literal["3dBandpass"],
+    "__STYXTYPE__": typing.Literal["3dBandpass"],
     "prefix": typing.NotRequired[str | None],
     "automask": bool,
     "blur": typing.NotRequired[float | None],

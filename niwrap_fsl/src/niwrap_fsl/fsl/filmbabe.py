@@ -14,7 +14,7 @@ FILMBABE_METADATA = Metadata(
 
 
 FilmbabeParameters = typing.TypedDict('FilmbabeParameters', {
-    "__STYX_TYPE__": typing.Literal["filmbabe"],
+    "__STYXTYPE__": typing.Literal["filmbabe"],
     "datafile": InputPathType,
     "datafile_alias": InputPathType,
     "mask": InputPathType,

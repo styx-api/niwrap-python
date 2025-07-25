@@ -14,7 +14,7 @@ ALIGN_EPI_ANAT_METADATA = Metadata(
 
 
 AlignEpiAnatParameters = typing.TypedDict('AlignEpiAnatParameters', {
-    "__STYX_TYPE__": typing.Literal["align_epi_anat"],
+    "__STYXTYPE__": typing.Literal["align_epi_anat"],
     "epi": InputPathType,
     "anat": InputPathType,
     "epi_base": str,

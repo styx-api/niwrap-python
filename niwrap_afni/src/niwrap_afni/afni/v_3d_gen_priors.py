@@ -14,7 +14,7 @@ V_3D_GEN_PRIORS_METADATA = Metadata(
 
 
 V3dGenPriorsParameters = typing.TypedDict('V3dGenPriorsParameters', {
-    "__STYX_TYPE__": typing.Literal["3dGenPriors"],
+    "__STYXTYPE__": typing.Literal["3dGenPriors"],
     "sigs": InputPathType,
     "tdist": InputPathType,
     "cprefix": str,

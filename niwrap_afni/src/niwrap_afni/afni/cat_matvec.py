@@ -14,7 +14,7 @@ CAT_MATVEC_METADATA = Metadata(
 
 
 CatMatvecParameters = typing.TypedDict('CatMatvecParameters', {
-    "__STYX_TYPE__": typing.Literal["cat_matvec"],
+    "__STYXTYPE__": typing.Literal["cat_matvec"],
     "matrix_format": bool,
     "oneline_format": bool,
     "four_by_four_format": bool,

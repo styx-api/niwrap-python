@@ -14,7 +14,7 @@ V__GRAD_FLIP_TEST_METADATA = Metadata(
 
 
 VGradFlipTestParameters = typing.TypedDict('VGradFlipTestParameters', {
-    "__STYX_TYPE__": typing.Literal["@GradFlipTest"],
+    "__STYXTYPE__": typing.Literal["@GradFlipTest"],
     "dwi": InputPathType,
     "grad_row_vec": typing.NotRequired[InputPathType | None],
     "grad_col_vec": typing.NotRequired[InputPathType | None],

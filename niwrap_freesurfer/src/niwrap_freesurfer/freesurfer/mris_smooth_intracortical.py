@@ -14,7 +14,7 @@ MRIS_SMOOTH_INTRACORTICAL_METADATA = Metadata(
 
 
 MrisSmoothIntracorticalParameters = typing.TypedDict('MrisSmoothIntracorticalParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_smooth_intracortical"],
+    "__STYXTYPE__": typing.Literal["mris_smooth_intracortical"],
     "surf_dir": str,
     "surf_name": str,
     "overlay_dir": str,

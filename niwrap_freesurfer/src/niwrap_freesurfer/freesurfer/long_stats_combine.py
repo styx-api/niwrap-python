@@ -14,7 +14,7 @@ LONG_STATS_COMBINE_METADATA = Metadata(
 
 
 LongStatsCombineParameters = typing.TypedDict('LongStatsCombineParameters', {
-    "__STYX_TYPE__": typing.Literal["long_stats_combine"],
+    "__STYXTYPE__": typing.Literal["long_stats_combine"],
     "qdec": InputPathType,
     "stats": str,
     "measure": str,

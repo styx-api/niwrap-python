@@ -14,7 +14,7 @@ VOLUME_VECTOR_OPERATION_METADATA = Metadata(
 
 
 VolumeVectorOperationParameters = typing.TypedDict('VolumeVectorOperationParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-vector-operation"],
+    "__STYXTYPE__": typing.Literal["volume-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,

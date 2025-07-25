@@ -14,7 +14,7 @@ SURF_PROJ_METADATA = Metadata(
 
 
 SurfProjParameters = typing.TypedDict('SurfProjParameters', {
-    "__STYX_TYPE__": typing.Literal["surf_proj"],
+    "__STYXTYPE__": typing.Literal["surf_proj"],
     "data": InputPathType,
     "surface": InputPathType,
     "output_file": str,

@@ -14,7 +14,7 @@ V_3D_ZIPPER_ZAPPER_METADATA = Metadata(
 
 
 V3dZipperZapperParameters = typing.TypedDict('V3dZipperZapperParameters', {
-    "__STYX_TYPE__": typing.Literal["3dZipperZapper"],
+    "__STYXTYPE__": typing.Literal["3dZipperZapper"],
     "input_file": InputPathType,
     "output_prefix": str,
     "mask_file": typing.NotRequired[InputPathType | None],

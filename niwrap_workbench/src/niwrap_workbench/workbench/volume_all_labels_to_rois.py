@@ -14,7 +14,7 @@ VOLUME_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 VolumeAllLabelsToRoisParameters = typing.TypedDict('VolumeAllLabelsToRoisParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-all-labels-to-rois"],
+    "__STYXTYPE__": typing.Literal["volume-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "volume_out": str,

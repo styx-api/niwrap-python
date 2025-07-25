@@ -14,7 +14,7 @@ DMRI_TRAIN_METADATA = Metadata(
 
 
 DmriTrainParameters = typing.TypedDict('DmriTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_train"],
+    "__STYXTYPE__": typing.Literal["dmri_train"],
     "slist": InputPathType,
     "trk_files": list[InputPathType],
     "rois": typing.NotRequired[list[InputPathType] | None],

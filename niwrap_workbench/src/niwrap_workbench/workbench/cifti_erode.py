@@ -14,28 +14,28 @@ CIFTI_ERODE_METADATA = Metadata(
 
 
 CiftiErodeLeftSurfaceParameters = typing.TypedDict('CiftiErodeLeftSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["left_surface"],
+    "__STYXTYPE__": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeRightSurfaceParameters = typing.TypedDict('CiftiErodeRightSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["right_surface"],
+    "__STYXTYPE__": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeCerebellumSurfaceParameters = typing.TypedDict('CiftiErodeCerebellumSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_surface"],
+    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeParameters = typing.TypedDict('CiftiErodeParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-erode"],
+    "__STYXTYPE__": typing.Literal["cifti-erode"],
     "cifti_in": InputPathType,
     "direction": str,
     "surface_distance": float,

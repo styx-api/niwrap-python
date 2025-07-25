@@ -14,7 +14,7 @@ V__MEASURE_BB_THICK_METADATA = Metadata(
 
 
 VMeasureBbThickParameters = typing.TypedDict('VMeasureBbThickParameters', {
-    "__STYX_TYPE__": typing.Literal["@measure_bb_thick"],
+    "__STYXTYPE__": typing.Literal["@measure_bb_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],

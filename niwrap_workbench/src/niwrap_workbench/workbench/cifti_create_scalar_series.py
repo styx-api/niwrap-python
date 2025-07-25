@@ -14,7 +14,7 @@ CIFTI_CREATE_SCALAR_SERIES_METADATA = Metadata(
 
 
 CiftiCreateScalarSeriesSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesSeriesParameters', {
-    "__STYX_TYPE__": typing.Literal["series"],
+    "__STYXTYPE__": typing.Literal["series"],
     "unit": str,
     "start": float,
     "step": float,
@@ -22,7 +22,7 @@ CiftiCreateScalarSeriesSeriesParameters = typing.TypedDict('CiftiCreateScalarSer
 
 
 CiftiCreateScalarSeriesParameters = typing.TypedDict('CiftiCreateScalarSeriesParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-create-scalar-series"],
+    "__STYXTYPE__": typing.Literal["cifti-create-scalar-series"],
     "input": str,
     "cifti_out": str,
     "opt_transpose": bool,

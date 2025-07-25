@@ -14,7 +14,7 @@ MRIS_SKELETONIZE_METADATA = Metadata(
 
 
 MrisSkeletonizeParameters = typing.TypedDict('MrisSkeletonizeParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_skeletonize"],
+    "__STYXTYPE__": typing.Literal["mris_skeletonize"],
     "surface": str,
     "surfvals": str,
     "mask": str,

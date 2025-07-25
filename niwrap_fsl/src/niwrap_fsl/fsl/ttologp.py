@@ -14,7 +14,7 @@ TTOLOGP_METADATA = Metadata(
 
 
 TtologpParameters = typing.TypedDict('TtologpParameters', {
-    "__STYX_TYPE__": typing.Literal["ttologp"],
+    "__STYXTYPE__": typing.Literal["ttologp"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": str,

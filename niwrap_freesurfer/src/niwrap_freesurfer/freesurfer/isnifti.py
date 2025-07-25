@@ -14,7 +14,7 @@ ISNIFTI_METADATA = Metadata(
 
 
 IsniftiParameters = typing.TypedDict('IsniftiParameters', {
-    "__STYX_TYPE__": typing.Literal["isnifti"],
+    "__STYXTYPE__": typing.Literal["isnifti"],
     "infile": InputPathType,
 })
 

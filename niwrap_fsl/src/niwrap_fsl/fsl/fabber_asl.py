@@ -14,7 +14,7 @@ FABBER_ASL_METADATA = Metadata(
 
 
 FabberAslParameters = typing.TypedDict('FabberAslParameters', {
-    "__STYX_TYPE__": typing.Literal["fabber_asl"],
+    "__STYXTYPE__": typing.Literal["fabber_asl"],
     "listmethods": bool,
     "listmodels": bool,
     "listparams": bool,

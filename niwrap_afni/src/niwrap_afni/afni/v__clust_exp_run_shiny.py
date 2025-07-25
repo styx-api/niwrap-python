@@ -14,7 +14,7 @@ V__CLUST_EXP_RUN_SHINY_METADATA = Metadata(
 
 
 VClustExpRunShinyParameters = typing.TypedDict('VClustExpRunShinyParameters', {
-    "__STYX_TYPE__": typing.Literal["@ClustExp_run_shiny"],
+    "__STYXTYPE__": typing.Literal["@ClustExp_run_shiny"],
     "directory": str,
     "help": bool,
 })

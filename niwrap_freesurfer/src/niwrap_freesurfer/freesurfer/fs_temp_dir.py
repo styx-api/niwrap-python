@@ -14,7 +14,7 @@ FS_TEMP_DIR_METADATA = Metadata(
 
 
 FsTempDirParameters = typing.TypedDict('FsTempDirParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_temp_dir"],
+    "__STYXTYPE__": typing.Literal["fs_temp_dir"],
     "base_directory": typing.NotRequired[str | None],
     "scratch": bool,
 })

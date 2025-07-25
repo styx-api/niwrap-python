@@ -14,7 +14,7 @@ MRIS_LEFT_RIGHT_REGISTER_METADATA = Metadata(
 
 
 MrisLeftRightRegisterParameters = typing.TypedDict('MrisLeftRightRegisterParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_left_right_register"],
+    "__STYXTYPE__": typing.Literal["mris_left_right_register"],
     "lh_sphere": InputPathType,
     "rh_sphere": InputPathType,
     "lh_sphere_left_right": str,

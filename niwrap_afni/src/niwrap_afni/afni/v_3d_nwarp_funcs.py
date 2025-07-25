@@ -14,7 +14,7 @@ V_3D_NWARP_FUNCS_METADATA = Metadata(
 
 
 V3dNwarpFuncsParameters = typing.TypedDict('V3dNwarpFuncsParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNwarpFuncs"],
+    "__STYXTYPE__": typing.Literal["3dNwarpFuncs"],
     "input_warp": InputPathType,
     "output_prefix": str,
     "bulk_flag": bool,

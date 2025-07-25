@@ -14,7 +14,7 @@ V__SUMA_FSVOL_TO_BRIK_METADATA = Metadata(
 
 
 VSumaFsvolToBrikParameters = typing.TypedDict('VSumaFsvolToBrikParameters', {
-    "__STYX_TYPE__": typing.Literal["@SUMA_FSvolToBRIK"],
+    "__STYXTYPE__": typing.Literal["@SUMA_FSvolToBRIK"],
     "fs_vol_data": InputPathType,
     "prefix": str,
 })

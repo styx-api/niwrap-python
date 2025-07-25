@@ -14,7 +14,7 @@ V_3D_ZCUTUP_METADATA = Metadata(
 
 
 V3dZcutupParameters = typing.TypedDict('V3dZcutupParameters', {
-    "__STYX_TYPE__": typing.Literal["3dZcutup"],
+    "__STYXTYPE__": typing.Literal["3dZcutup"],
     "keep_slices": str,
     "prefix": typing.NotRequired[str | None],
     "dataset": InputPathType,

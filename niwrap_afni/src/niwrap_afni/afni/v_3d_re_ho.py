@@ -14,7 +14,7 @@ V_3D_RE_HO_METADATA = Metadata(
 
 
 V3dReHoParameters = typing.TypedDict('V3dReHoParameters', {
-    "__STYX_TYPE__": typing.Literal["3dReHo"],
+    "__STYXTYPE__": typing.Literal["3dReHo"],
     "prefix": str,
     "inset": InputPathType,
     "nneigh": typing.NotRequired[str | None],

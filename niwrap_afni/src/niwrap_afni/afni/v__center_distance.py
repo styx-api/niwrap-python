@@ -14,7 +14,7 @@ V__CENTER_DISTANCE_METADATA = Metadata(
 
 
 VCenterDistanceParameters = typing.TypedDict('VCenterDistanceParameters', {
-    "__STYX_TYPE__": typing.Literal["@Center_Distance"],
+    "__STYXTYPE__": typing.Literal["@Center_Distance"],
     "dset1": InputPathType,
     "dset2": InputPathType,
 })

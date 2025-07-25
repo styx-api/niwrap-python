@@ -14,7 +14,7 @@ MRIS_COMPUTE_LAYER_INTENSITIES_METADATA = Metadata(
 
 
 MrisComputeLayerIntensitiesParameters = typing.TypedDict('MrisComputeLayerIntensitiesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_compute_layer_intensities"],
+    "__STYXTYPE__": typing.Literal["mris_compute_layer_intensities"],
     "input_intensity_volume": InputPathType,
     "layer_volume_fractions_file": InputPathType,
     "input_surface": InputPathType,

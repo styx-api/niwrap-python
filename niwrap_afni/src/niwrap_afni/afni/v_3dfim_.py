@@ -14,7 +14,7 @@ V_3DFIM__METADATA = Metadata(
 
 
 V3dfimParameters = typing.TypedDict('V3dfimParameters', {
-    "__STYX_TYPE__": typing.Literal["3dfim+"],
+    "__STYXTYPE__": typing.Literal["3dfim+"],
     "infile": InputPathType,
     "input1dfile": typing.NotRequired[InputPathType | None],
     "maskfile": typing.NotRequired[InputPathType | None],

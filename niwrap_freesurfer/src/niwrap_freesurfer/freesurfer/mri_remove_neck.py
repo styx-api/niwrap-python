@@ -14,7 +14,7 @@ MRI_REMOVE_NECK_METADATA = Metadata(
 
 
 MriRemoveNeckParameters = typing.TypedDict('MriRemoveNeckParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_remove_neck"],
+    "__STYXTYPE__": typing.Literal["mri_remove_neck"],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "gca": InputPathType,

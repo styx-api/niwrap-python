@@ -14,7 +14,7 @@ V__NO_POUND_METADATA = Metadata(
 
 
 VNoPoundParameters = typing.TypedDict('VNoPoundParameters', {
-    "__STYX_TYPE__": typing.Literal["@NoPound"],
+    "__STYXTYPE__": typing.Literal["@NoPound"],
     "afni_files": list[str],
 })
 

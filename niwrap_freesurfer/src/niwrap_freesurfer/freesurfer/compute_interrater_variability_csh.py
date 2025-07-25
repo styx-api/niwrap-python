@@ -14,7 +14,7 @@ COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA = Metadata(
 
 
 ComputeInterraterVariabilityCshParameters = typing.TypedDict('ComputeInterraterVariabilityCshParameters', {
-    "__STYX_TYPE__": typing.Literal["compute_interrater_variability.csh"],
+    "__STYXTYPE__": typing.Literal["compute_interrater_variability.csh"],
     "label_vol1": InputPathType,
     "label_vol2": InputPathType,
     "output_prefix": str,

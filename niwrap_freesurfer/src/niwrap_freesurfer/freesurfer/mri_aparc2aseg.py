@@ -14,7 +14,7 @@ MRI_APARC2ASEG_METADATA = Metadata(
 
 
 MriAparc2asegParameters = typing.TypedDict('MriAparc2asegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_aparc2aseg"],
+    "__STYXTYPE__": typing.Literal["mri_aparc2aseg"],
     "subject": typing.NotRequired[str | None],
     "output_volfile": typing.NotRequired[str | None],
     "old_ribbon": bool,

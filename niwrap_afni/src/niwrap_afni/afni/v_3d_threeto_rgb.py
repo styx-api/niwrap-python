@@ -14,7 +14,7 @@ V_3D_THREETO_RGB_METADATA = Metadata(
 
 
 V3dThreetoRgbParameters = typing.TypedDict('V3dThreetoRgbParameters', {
-    "__STYX_TYPE__": typing.Literal["3dThreetoRGB"],
+    "__STYXTYPE__": typing.Literal["3dThreetoRGB"],
     "output_prefix": typing.NotRequired[str | None],
     "scale_factor": typing.NotRequired[float | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],

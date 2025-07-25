@@ -14,7 +14,7 @@ SWE_METADATA = Metadata(
 
 
 SweParameters = typing.TypedDict('SweParameters', {
-    "__STYX_TYPE__": typing.Literal["swe"],
+    "__STYXTYPE__": typing.Literal["swe"],
     "input_file": InputPathType,
     "output_root": str,
     "design_mat": InputPathType,

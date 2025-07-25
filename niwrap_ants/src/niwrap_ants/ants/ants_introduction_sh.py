@@ -14,7 +14,7 @@ ANTS_INTRODUCTION_SH_METADATA = Metadata(
 
 
 AntsIntroductionShParameters = typing.TypedDict('AntsIntroductionShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsIntroduction.sh"],
+    "__STYXTYPE__": typing.Literal["antsIntroduction.sh"],
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
     "input_image": InputPathType,

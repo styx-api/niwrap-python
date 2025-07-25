@@ -14,7 +14,7 @@ V_3D_TQUAL_METADATA = Metadata(
 
 
 V3dTqualParameters = typing.TypedDict('V3dTqualParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTqual"],
+    "__STYXTYPE__": typing.Literal["3dTqual"],
     "dataset": InputPathType,
     "spearman": bool,
     "quadrant": bool,

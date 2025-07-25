@@ -14,7 +14,7 @@ CREATE_TILED_MOSAIC_METADATA = Metadata(
 
 
 CreateTiledMosaicParameters = typing.TypedDict('CreateTiledMosaicParameters', {
-    "__STYX_TYPE__": typing.Literal["CreateTiledMosaic"],
+    "__STYXTYPE__": typing.Literal["CreateTiledMosaic"],
     "input_image": InputPathType,
     "rgb_image": typing.NotRequired[InputPathType | None],
     "mask_image": typing.NotRequired[InputPathType | None],

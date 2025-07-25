@@ -14,7 +14,7 @@ MRIS_MULTISCALE_STATS_METADATA = Metadata(
 
 
 MrisMultiscaleStatsParameters = typing.TypedDict('MrisMultiscaleStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_multiscale_stats"],
+    "__STYXTYPE__": typing.Literal["mris_multiscale_stats"],
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,

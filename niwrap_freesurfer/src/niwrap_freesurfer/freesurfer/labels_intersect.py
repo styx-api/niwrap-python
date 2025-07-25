@@ -14,7 +14,7 @@ LABELS_INTERSECT_METADATA = Metadata(
 
 
 LabelsIntersectParameters = typing.TypedDict('LabelsIntersectParameters', {
-    "__STYX_TYPE__": typing.Literal["labels_intersect"],
+    "__STYXTYPE__": typing.Literal["labels_intersect"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,

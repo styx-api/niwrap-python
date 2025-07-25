@@ -14,7 +14,7 @@ REGDAT2XFM_METADATA = Metadata(
 
 
 Regdat2xfmParameters = typing.TypedDict('Regdat2xfmParameters', {
-    "__STYX_TYPE__": typing.Literal["regdat2xfm"],
+    "__STYXTYPE__": typing.Literal["regdat2xfm"],
     "input_file": InputPathType,
     "output_file": str,
 })

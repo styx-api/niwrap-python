@@ -14,7 +14,7 @@ FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
 
 
 FociGetProjectionVertexParameters = typing.TypedDict('FociGetProjectionVertexParameters', {
-    "__STYX_TYPE__": typing.Literal["foci-get-projection-vertex"],
+    "__STYXTYPE__": typing.Literal["foci-get-projection-vertex"],
     "foci": InputPathType,
     "surface": InputPathType,
     "metric_out": str,

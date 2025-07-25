@@ -14,7 +14,7 @@ MRI_POLV_METADATA = Metadata(
 
 
 MriPolvParameters = typing.TypedDict('MriPolvParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_polv"],
+    "__STYXTYPE__": typing.Literal["mri_polv"],
     "window_size": typing.NotRequired[float | None],
     "input_image": InputPathType,
     "output_image": InputPathType,

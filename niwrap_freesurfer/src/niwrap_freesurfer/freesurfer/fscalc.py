@@ -14,7 +14,7 @@ FSCALC_METADATA = Metadata(
 
 
 FscalcParameters = typing.TypedDict('FscalcParameters', {
-    "__STYX_TYPE__": typing.Literal["fscalc"],
+    "__STYXTYPE__": typing.Literal["fscalc"],
     "input1": str,
     "operation": str,
     "input2": typing.NotRequired[str | None],

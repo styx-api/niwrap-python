@@ -14,26 +14,26 @@ TCKCONVERT_METADATA = Metadata(
 
 
 TckconvertConfigParameters = typing.TypedDict('TckconvertConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckconvertVariousStringParameters = typing.TypedDict('TckconvertVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckconvertVariousFileParameters = typing.TypedDict('TckconvertVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckconvertParameters = typing.TypedDict('TckconvertParameters', {
-    "__STYX_TYPE__": typing.Literal["tckconvert"],
+    "__STYXTYPE__": typing.Literal["tckconvert"],
     "scanner2voxel": typing.NotRequired[InputPathType | None],
     "scanner2image": typing.NotRequired[InputPathType | None],
     "voxel2scanner": typing.NotRequired[InputPathType | None],

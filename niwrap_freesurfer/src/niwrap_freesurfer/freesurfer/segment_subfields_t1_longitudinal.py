@@ -14,7 +14,7 @@ SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA = Metadata(
 
 
 SegmentSubfieldsT1LongitudinalParameters = typing.TypedDict('SegmentSubfieldsT1LongitudinalParameters', {
-    "__STYX_TYPE__": typing.Literal["SegmentSubfieldsT1Longitudinal"],
+    "__STYXTYPE__": typing.Literal["SegmentSubfieldsT1Longitudinal"],
     "subject_id": str,
     "input_image": InputPathType,
     "output_dir": str,

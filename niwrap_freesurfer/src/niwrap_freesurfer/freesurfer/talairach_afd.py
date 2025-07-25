@@ -14,7 +14,7 @@ TALAIRACH_AFD_METADATA = Metadata(
 
 
 TalairachAfdParameters = typing.TypedDict('TalairachAfdParameters', {
-    "__STYX_TYPE__": typing.Literal["talairach_afd"],
+    "__STYXTYPE__": typing.Literal["talairach_afd"],
     "subject_name": typing.NotRequired[str | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
     "p_value_threshold": typing.NotRequired[float | None],

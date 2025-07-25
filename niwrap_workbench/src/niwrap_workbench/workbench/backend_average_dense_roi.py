@@ -14,7 +14,7 @@ BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
 
 
 BackendAverageDenseRoiParameters = typing.TypedDict('BackendAverageDenseRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["backend-average-dense-roi"],
+    "__STYXTYPE__": typing.Literal["backend-average-dense-roi"],
     "index_list": str,
     "out_file": str,
 })

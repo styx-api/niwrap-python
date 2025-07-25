@@ -14,7 +14,7 @@ V_3D_TCORR_MAP_METADATA = Metadata(
 
 
 V3dTcorrMapParameters = typing.TypedDict('V3dTcorrMapParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTcorrMap"],
+    "__STYXTYPE__": typing.Literal["3dTcorrMap"],
     "input": InputPathType,
     "seed": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V__DIFF_FILES_METADATA = Metadata(
 
 
 VDiffFilesParameters = typing.TypedDict('VDiffFilesParameters', {
-    "__STYX_TYPE__": typing.Literal["@diff.files"],
+    "__STYXTYPE__": typing.Literal["@diff.files"],
     "files": list[str],
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],

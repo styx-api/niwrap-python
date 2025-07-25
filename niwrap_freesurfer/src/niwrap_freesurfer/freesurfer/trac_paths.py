@@ -14,7 +14,7 @@ TRAC_PATHS_METADATA = Metadata(
 
 
 TracPathsParameters = typing.TypedDict('TracPathsParameters', {
-    "__STYX_TYPE__": typing.Literal["trac-paths"],
+    "__STYXTYPE__": typing.Literal["trac-paths"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "no_log": bool,

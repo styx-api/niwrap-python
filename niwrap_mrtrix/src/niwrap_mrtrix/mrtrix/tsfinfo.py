@@ -14,14 +14,14 @@ TSFINFO_METADATA = Metadata(
 
 
 TsfinfoConfigParameters = typing.TypedDict('TsfinfoConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfinfoParameters = typing.TypedDict('TsfinfoParameters', {
-    "__STYX_TYPE__": typing.Literal["tsfinfo"],
+    "__STYXTYPE__": typing.Literal["tsfinfo"],
     "count": bool,
     "ascii": typing.NotRequired[str | None],
     "info": bool,

@@ -14,7 +14,7 @@ CJPEG_METADATA = Metadata(
 
 
 CjpegParameters = typing.TypedDict('CjpegParameters', {
-    "__STYX_TYPE__": typing.Literal["cjpeg"],
+    "__STYXTYPE__": typing.Literal["cjpeg"],
     "quality": typing.NotRequired[float | None],
     "grayscale": bool,
     "optimize": bool,

@@ -14,7 +14,7 @@ VIENA_QUANT_METADATA = Metadata(
 
 
 VienaQuantParameters = typing.TypedDict('VienaQuantParameters', {
-    "__STYX_TYPE__": typing.Literal["viena_quant"],
+    "__STYXTYPE__": typing.Literal["viena_quant"],
     "input1": InputPathType,
     "input2": InputPathType,
     "ventricle_mask": InputPathType,

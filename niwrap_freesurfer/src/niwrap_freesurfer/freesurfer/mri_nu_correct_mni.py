@@ -14,7 +14,7 @@ MRI_NU_CORRECT_MNI_METADATA = Metadata(
 
 
 MriNuCorrectMniParameters = typing.TypedDict('MriNuCorrectMniParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_nu_correct.mni"],
+    "__STYXTYPE__": typing.Literal["mri_nu_correct.mni"],
     "input_volume": InputPathType,
     "output_volume": str,
     "iterations": float,

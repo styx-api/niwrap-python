@@ -14,13 +14,13 @@ CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA = Metadata(
 
 
 CiftiCreateParcellatedFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiCreateParcellatedFromTemplateParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-create-parcellated-from-template"],
+    "__STYXTYPE__": typing.Literal["cifti-create-parcellated-from-template"],
     "cifti_template": InputPathType,
     "modify_direction": str,
     "cifti_out": str,

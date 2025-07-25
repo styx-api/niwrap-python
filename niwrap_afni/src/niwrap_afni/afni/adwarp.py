@@ -14,7 +14,7 @@ ADWARP_METADATA = Metadata(
 
 
 AdwarpParameters = typing.TypedDict('AdwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["adwarp"],
+    "__STYXTYPE__": typing.Literal["adwarp"],
     "apar": InputPathType,
     "dpar": str,
     "prefix": typing.NotRequired[str | None],

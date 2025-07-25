@@ -14,7 +14,7 @@ GEMS_COMPUTE_ATLAS_PROBS_METADATA = Metadata(
 
 
 GemsComputeAtlasProbsParameters = typing.TypedDict('GemsComputeAtlasProbsParameters', {
-    "__STYX_TYPE__": typing.Literal["gems_compute_atlas_probs"],
+    "__STYXTYPE__": typing.Literal["gems_compute_atlas_probs"],
     "subjects_dir": str,
     "mesh_collections": list[str],
     "out_dir": str,

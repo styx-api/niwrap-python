@@ -14,7 +14,7 @@ FSL_ANAT_METADATA = Metadata(
 
 
 FslAnatParameters = typing.TypedDict('FslAnatParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_anat"],
+    "__STYXTYPE__": typing.Literal["fsl_anat"],
     "structural_image": typing.NotRequired[InputPathType | None],
     "existing_anat_dir": typing.NotRequired[str | None],
     "output_dir": typing.NotRequired[str | None],

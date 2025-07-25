@@ -14,7 +14,7 @@ TALAIRACH_AVI_METADATA = Metadata(
 
 
 TalairachAviParameters = typing.TypedDict('TalairachAviParameters', {
-    "__STYX_TYPE__": typing.Literal["talairach_avi"],
+    "__STYXTYPE__": typing.Literal["talairach_avi"],
     "input_file": InputPathType,
     "output_xfm": str,
     "atlas": typing.NotRequired[str | None],

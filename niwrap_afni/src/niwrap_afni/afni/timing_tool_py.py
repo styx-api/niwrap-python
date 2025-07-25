@@ -14,7 +14,7 @@ TIMING_TOOL_PY_METADATA = Metadata(
 
 
 TimingToolPyParameters = typing.TypedDict('TimingToolPyParameters', {
-    "__STYX_TYPE__": typing.Literal["timing_tool.py"],
+    "__STYXTYPE__": typing.Literal["timing_tool.py"],
     "timing_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
     "run_length": typing.NotRequired[list[float] | None],

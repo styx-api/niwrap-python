@@ -14,7 +14,7 @@ NMOVIE_QT_METADATA = Metadata(
 
 
 NmovieQtParameters = typing.TypedDict('NmovieQtParameters', {
-    "__STYX_TYPE__": typing.Literal["nmovie_qt"],
+    "__STYXTYPE__": typing.Literal["nmovie_qt"],
     "images": list[InputPathType],
 })
 

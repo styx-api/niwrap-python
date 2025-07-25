@@ -14,7 +14,7 @@ ATLASQUERY_METADATA = Metadata(
 
 
 AtlasqueryParameters = typing.TypedDict('AtlasqueryParameters', {
-    "__STYX_TYPE__": typing.Literal["atlasquery"],
+    "__STYXTYPE__": typing.Literal["atlasquery"],
     "dumpatlases_flag": bool,
     "atlas": typing.NotRequired[str | None],
     "coord": typing.NotRequired[str | None],

@@ -14,14 +14,14 @@ VOXEL2FIXEL_METADATA = Metadata(
 
 
 Voxel2fixelConfigParameters = typing.TypedDict('Voxel2fixelConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Voxel2fixelParameters = typing.TypedDict('Voxel2fixelParameters', {
-    "__STYX_TYPE__": typing.Literal["voxel2fixel"],
+    "__STYXTYPE__": typing.Literal["voxel2fixel"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

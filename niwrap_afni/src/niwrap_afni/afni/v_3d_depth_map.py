@@ -14,7 +14,7 @@ V_3D_DEPTH_MAP_METADATA = Metadata(
 
 
 V3dDepthMapParameters = typing.TypedDict('V3dDepthMapParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDepthMap"],
+    "__STYXTYPE__": typing.Literal["3dDepthMap"],
     "input_dataset": InputPathType,
     "output_prefix": str,
     "mask": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ SIGLOSS_METADATA = Metadata(
 
 
 SiglossParameters = typing.TypedDict('SiglossParameters', {
-    "__STYX_TYPE__": typing.Literal["sigloss"],
+    "__STYXTYPE__": typing.Literal["sigloss"],
     "input_b0map": InputPathType,
     "output_sigloss": str,
     "input_mask": typing.NotRequired[InputPathType | None],

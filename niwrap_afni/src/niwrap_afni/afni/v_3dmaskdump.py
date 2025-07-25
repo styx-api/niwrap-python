@@ -14,7 +14,7 @@ V_3DMASKDUMP_METADATA = Metadata(
 
 
 V3dmaskdumpParameters = typing.TypedDict('V3dmaskdumpParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmaskdump"],
+    "__STYXTYPE__": typing.Literal["3dmaskdump"],
     "input_files": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "mask_range": typing.NotRequired[list[str] | None],

@@ -14,7 +14,7 @@ FAT_PROC_IMIT2W_FROM_T1W_METADATA = Metadata(
 
 
 FatProcImit2wFromT1wParameters = typing.TypedDict('FatProcImit2wFromT1wParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_imit2w_from_t1w"],
+    "__STYXTYPE__": typing.Literal["fat_proc_imit2w_from_t1w"],
     "t1_file": InputPathType,
     "prefix": str,
     "workdir": typing.NotRequired[str | None],

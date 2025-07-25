@@ -14,7 +14,7 @@ MRI_EASYREG_METADATA = Metadata(
 
 
 MriEasyregParameters = typing.TypedDict('MriEasyregParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_easyreg"],
+    "__STYXTYPE__": typing.Literal["mri_easyreg"],
     "reference_image": InputPathType,
     "reference_segmentation": typing.NotRequired[InputPathType | None],
     "floating_image": InputPathType,

@@ -14,7 +14,7 @@ CONNECTED_COMPONENTS_METADATA = Metadata(
 
 
 ConnectedComponentsParameters = typing.TypedDict('ConnectedComponentsParameters', {
-    "__STYX_TYPE__": typing.Literal["connected_components"],
+    "__STYXTYPE__": typing.Literal["connected_components"],
     "input_image": InputPathType,
     "output_image": str,
     "threshold": typing.NotRequired[float | None],

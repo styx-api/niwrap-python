@@ -14,7 +14,7 @@ RESAMPLE_IMAGE_METADATA = Metadata(
 
 
 ResampleImageParameters = typing.TypedDict('ResampleImageParameters', {
-    "__STYX_TYPE__": typing.Literal["ResampleImage"],
+    "__STYXTYPE__": typing.Literal["ResampleImage"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,

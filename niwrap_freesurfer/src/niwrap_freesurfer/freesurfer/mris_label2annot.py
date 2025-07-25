@@ -14,7 +14,7 @@ MRIS_LABEL2ANNOT_METADATA = Metadata(
 
 
 MrisLabel2annotParameters = typing.TypedDict('MrisLabel2annotParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_label2annot"],
+    "__STYXTYPE__": typing.Literal["mris_label2annot"],
     "subject": str,
     "hemi": str,
     "ctabfile": InputPathType,

@@ -14,7 +14,7 @@ TEST_RECON_ALL_CSH_METADATA = Metadata(
 
 
 TestReconAllCshParameters = typing.TypedDict('TestReconAllCshParameters', {
-    "__STYX_TYPE__": typing.Literal["test_recon-all.csh"],
+    "__STYXTYPE__": typing.Literal["test_recon-all.csh"],
     "reference_subj_source_dir": typing.NotRequired[str | None],
     "reference_subjid": typing.NotRequired[str | None],
     "test_subject_dest_dir": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ FEAT2SURF_METADATA = Metadata(
 
 
 Feat2surfParameters = typing.TypedDict('Feat2surfParameters', {
-    "__STYX_TYPE__": typing.Literal["feat2surf"],
+    "__STYXTYPE__": typing.Literal["feat2surf"],
     "feat_dirs": list[str],
     "feat_dirfile": typing.NotRequired[InputPathType | None],
     "proj_frac": typing.NotRequired[float | None],

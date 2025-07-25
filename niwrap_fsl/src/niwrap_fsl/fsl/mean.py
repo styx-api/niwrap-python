@@ -14,7 +14,7 @@ MEAN_METADATA = Metadata(
 
 
 MeanParameters = typing.TypedDict('MeanParameters', {
-    "__STYX_TYPE__": typing.Literal["mean"],
+    "__STYXTYPE__": typing.Literal["mean"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "verbose_flag": bool,

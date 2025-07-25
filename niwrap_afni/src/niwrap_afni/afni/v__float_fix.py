@@ -14,7 +14,7 @@ V__FLOAT_FIX_METADATA = Metadata(
 
 
 VFloatFixParameters = typing.TypedDict('VFloatFixParameters', {
-    "__STYX_TYPE__": typing.Literal["@float_fix"],
+    "__STYXTYPE__": typing.Literal["@float_fix"],
     "input_files": list[InputPathType],
 })
 

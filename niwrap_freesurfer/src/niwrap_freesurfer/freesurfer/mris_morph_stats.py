@@ -14,7 +14,7 @@ MRIS_MORPH_STATS_METADATA = Metadata(
 
 
 MrisMorphStatsParameters = typing.TypedDict('MrisMorphStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_morph_stats"],
+    "__STYXTYPE__": typing.Literal["mris_morph_stats"],
     "subject_name": str,
     "hemisphere": typing.Literal["lh", "rh"],
     "morphed_surface": InputPathType,

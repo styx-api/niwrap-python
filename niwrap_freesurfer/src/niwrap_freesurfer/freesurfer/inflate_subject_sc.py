@@ -14,7 +14,7 @@ INFLATE_SUBJECT_SC_METADATA = Metadata(
 
 
 InflateSubjectScParameters = typing.TypedDict('InflateSubjectScParameters', {
-    "__STYX_TYPE__": typing.Literal["inflate_subject_sc"],
+    "__STYXTYPE__": typing.Literal["inflate_subject_sc"],
     "subject_dir": str,
     "verbose": bool,
     "debug": bool,

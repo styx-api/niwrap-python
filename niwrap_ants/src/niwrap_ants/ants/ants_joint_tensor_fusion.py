@@ -14,7 +14,7 @@ ANTS_JOINT_TENSOR_FUSION_METADATA = Metadata(
 
 
 AntsJointTensorFusionParameters = typing.TypedDict('AntsJointTensorFusionParameters', {
-    "__STYX_TYPE__": typing.Literal["antsJointTensorFusion"],
+    "__STYXTYPE__": typing.Literal["antsJointTensorFusion"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[str],
     "atlas_image": list[str],

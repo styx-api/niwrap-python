@@ -14,7 +14,7 @@ V_3D_LOCAL_HISTOG_METADATA = Metadata(
 
 
 V3dLocalHistogParameters = typing.TypedDict('V3dLocalHistogParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLocalHistog"],
+    "__STYXTYPE__": typing.Literal["3dLocalHistog"],
     "nbhd_option": typing.NotRequired[str | None],
     "prefix": str,
     "hsave": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ BRAIN_SKIN_METADATA = Metadata(
 
 
 BrainSkinParameters = typing.TypedDict('BrainSkinParameters', {
-    "__STYX_TYPE__": typing.Literal["BrainSkin"],
+    "__STYXTYPE__": typing.Literal["BrainSkin"],
     "surface": str,
     "skingrid_volume": InputPathType,
     "prefix": str,

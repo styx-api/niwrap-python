@@ -14,33 +14,33 @@ EXTRACT_REGION_FROM_IMAGE_METADATA = Metadata(
 
 
 ExtractRegionFromImageRegionMinMaxIndexParameters = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParameters', {
-    "__STYX_TYPE__": typing.Literal["region_min_max_index"],
+    "__STYXTYPE__": typing.Literal["region_min_max_index"],
     "min_index": str,
     "max_index": str,
 })
 
 
 ExtractRegionFromImageRegionLabelParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["region_label"],
+    "__STYXTYPE__": typing.Literal["region_label"],
     "label": str,
 })
 
 
 ExtractRegionFromImageRegionDomainImageParameters = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParameters', {
-    "__STYX_TYPE__": typing.Literal["region_domain_image"],
+    "__STYXTYPE__": typing.Literal["region_domain_image"],
     "domain_image": InputPathType,
 })
 
 
 ExtractRegionFromImageRegionLabelWithImageParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParameters', {
-    "__STYX_TYPE__": typing.Literal["region_label_with_image"],
+    "__STYXTYPE__": typing.Literal["region_label_with_image"],
     "label": str,
     "label_image": InputPathType,
 })
 
 
 ExtractRegionFromImageParameters = typing.TypedDict('ExtractRegionFromImageParameters', {
-    "__STYX_TYPE__": typing.Literal["ExtractRegionFromImage"],
+    "__STYXTYPE__": typing.Literal["ExtractRegionFromImage"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,

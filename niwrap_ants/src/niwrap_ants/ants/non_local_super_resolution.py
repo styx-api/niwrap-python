@@ -14,7 +14,7 @@ NON_LOCAL_SUPER_RESOLUTION_METADATA = Metadata(
 
 
 NonLocalSuperResolutionParameters = typing.TypedDict('NonLocalSuperResolutionParameters', {
-    "__STYX_TYPE__": typing.Literal["NonLocalSuperResolution"],
+    "__STYXTYPE__": typing.Literal["NonLocalSuperResolution"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "interpolated_image": typing.NotRequired[InputPathType | None],

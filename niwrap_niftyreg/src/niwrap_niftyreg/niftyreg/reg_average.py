@@ -14,7 +14,7 @@ REG_AVERAGE_METADATA = Metadata(
 
 
 RegAverageParameters = typing.TypedDict('RegAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["reg_average"],
+    "__STYXTYPE__": typing.Literal["reg_average"],
     "output_file": str,
     "input_files": list[InputPathType],
 })

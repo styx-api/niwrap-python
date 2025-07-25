@@ -14,7 +14,7 @@ MRI_RELABEL_NONWM_HYPOS_METADATA = Metadata(
 
 
 MriRelabelNonwmHyposParameters = typing.TypedDict('MriRelabelNonwmHyposParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_relabel_nonwm_hypos"],
+    "__STYXTYPE__": typing.Literal["mri_relabel_nonwm_hypos"],
     "inputseg": InputPathType,
     "outputseg": str,
     "segments": typing.NotRequired[list[str] | None],

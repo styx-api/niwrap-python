@@ -14,7 +14,7 @@ RESPONSEMEAN_METADATA = Metadata(
 
 
 ResponsemeanParameters = typing.TypedDict('ResponsemeanParameters', {
-    "__STYX_TYPE__": typing.Literal["responsemean"],
+    "__STYXTYPE__": typing.Literal["responsemean"],
     "input_response": list[InputPathType],
     "output_response": str,
     "legacy": bool,

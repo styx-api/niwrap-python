@@ -14,47 +14,47 @@ DWIEXTRACT_METADATA = Metadata(
 
 
 DwiextractFslgradParameters = typing.TypedDict('DwiextractFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DwiextractExportGradFslParameters = typing.TypedDict('DwiextractExportGradFslParameters', {
-    "__STYX_TYPE__": typing.Literal["export_grad_fsl"],
+    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 DwiextractImportPeEddyParameters = typing.TypedDict('DwiextractImportPeEddyParameters', {
-    "__STYX_TYPE__": typing.Literal["import_pe_eddy"],
+    "__STYXTYPE__": typing.Literal["import_pe_eddy"],
     "config": InputPathType,
     "indices": InputPathType,
 })
 
 
 DwiextractVariousStringParameters = typing.TypedDict('DwiextractVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 DwiextractVariousFileParameters = typing.TypedDict('DwiextractVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 DwiextractConfigParameters = typing.TypedDict('DwiextractConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DwiextractParameters = typing.TypedDict('DwiextractParameters', {
-    "__STYX_TYPE__": typing.Literal["dwiextract"],
+    "__STYXTYPE__": typing.Literal["dwiextract"],
     "bzero": bool,
     "no_bzero": bool,
     "singleshell": bool,

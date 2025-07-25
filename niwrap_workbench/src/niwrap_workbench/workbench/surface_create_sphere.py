@@ -14,7 +14,7 @@ SURFACE_CREATE_SPHERE_METADATA = Metadata(
 
 
 SurfaceCreateSphereParameters = typing.TypedDict('SurfaceCreateSphereParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-create-sphere"],
+    "__STYXTYPE__": typing.Literal["surface-create-sphere"],
     "num_vertices": int,
     "sphere_out": str,
 })

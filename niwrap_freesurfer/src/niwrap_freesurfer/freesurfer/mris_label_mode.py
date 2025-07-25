@@ -14,7 +14,7 @@ MRIS_LABEL_MODE_METADATA = Metadata(
 
 
 MrisLabelModeParameters = typing.TypedDict('MrisLabelModeParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_label_mode"],
+    "__STYXTYPE__": typing.Literal["mris_label_mode"],
     "input_curv_file": InputPathType,
     "hemi": str,
     "surface": str,

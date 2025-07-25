@@ -14,7 +14,7 @@ FAT_PROC_DECMAP_METADATA = Metadata(
 
 
 FatProcDecmapParameters = typing.TypedDict('FatProcDecmapParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_decmap"],
+    "__STYXTYPE__": typing.Literal["fat_proc_decmap"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "prefix": str,

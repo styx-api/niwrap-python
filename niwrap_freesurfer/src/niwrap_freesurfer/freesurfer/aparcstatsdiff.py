@@ -14,7 +14,7 @@ APARCSTATSDIFF_METADATA = Metadata(
 
 
 AparcstatsdiffParameters = typing.TypedDict('AparcstatsdiffParameters', {
-    "__STYX_TYPE__": typing.Literal["aparcstatsdiff"],
+    "__STYXTYPE__": typing.Literal["aparcstatsdiff"],
     "subj1": str,
     "subj2": str,
     "hemi": str,

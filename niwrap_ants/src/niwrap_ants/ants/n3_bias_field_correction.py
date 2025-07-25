@@ -14,7 +14,7 @@ N3_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 
 
 N3BiasFieldCorrectionParameters = typing.TypedDict('N3BiasFieldCorrectionParameters', {
-    "__STYX_TYPE__": typing.Literal["N3BiasFieldCorrection"],
+    "__STYXTYPE__": typing.Literal["N3BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "mask_image": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V_3D_CLUSTERIZE_METADATA = Metadata(
 
 
 V3dClusterizeParameters = typing.TypedDict('V3dClusterizeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dClusterize"],
+    "__STYXTYPE__": typing.Literal["3dClusterize"],
     "inset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mask_from_hdr": bool,

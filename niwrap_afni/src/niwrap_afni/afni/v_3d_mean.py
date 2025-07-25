@@ -14,7 +14,7 @@ V_3D_MEAN_METADATA = Metadata(
 
 
 V3dMeanParameters = typing.TypedDict('V3dMeanParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMean"],
+    "__STYXTYPE__": typing.Literal["3dMean"],
     "input_files": list[InputPathType],
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],

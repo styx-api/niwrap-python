@@ -14,7 +14,7 @@ XFMROT_METADATA = Metadata(
 
 
 XfmrotParameters = typing.TypedDict('XfmrotParameters', {
-    "__STYX_TYPE__": typing.Literal["xfmrot"],
+    "__STYXTYPE__": typing.Literal["xfmrot"],
     "transform_file": InputPathType,
     "input_vector_file": InputPathType,
     "output_vector_file": typing.NotRequired[str | None],

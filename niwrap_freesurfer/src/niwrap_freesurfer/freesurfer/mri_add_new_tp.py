@@ -14,7 +14,7 @@ MRI_ADD_NEW_TP_METADATA = Metadata(
 
 
 MriAddNewTpParameters = typing.TypedDict('MriAddNewTpParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_add_new_tp"],
+    "__STYXTYPE__": typing.Literal["mri_add_new_tp"],
     "base_id": str,
     "newtp_id": str,
 })

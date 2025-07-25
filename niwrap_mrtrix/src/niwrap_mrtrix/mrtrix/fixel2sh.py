@@ -14,14 +14,14 @@ FIXEL2SH_METADATA = Metadata(
 
 
 Fixel2shConfigParameters = typing.TypedDict('Fixel2shConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2shParameters = typing.TypedDict('Fixel2shParameters', {
-    "__STYX_TYPE__": typing.Literal["fixel2sh"],
+    "__STYXTYPE__": typing.Literal["fixel2sh"],
     "lmax": typing.NotRequired[int | None],
     "info": bool,
     "quiet": bool,

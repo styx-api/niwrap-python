@@ -14,7 +14,7 @@ V__SIMULATE_MOTION_METADATA = Metadata(
 
 
 VSimulateMotionParameters = typing.TypedDict('VSimulateMotionParameters', {
-    "__STYX_TYPE__": typing.Literal["@simulate_motion"],
+    "__STYXTYPE__": typing.Literal["@simulate_motion"],
     "epi": InputPathType,
     "motion_file": InputPathType,
     "epi_timing": typing.NotRequired[InputPathType | None],

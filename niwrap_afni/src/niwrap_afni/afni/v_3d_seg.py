@@ -14,7 +14,7 @@ V_3D_SEG_METADATA = Metadata(
 
 
 V3dSegParameters = typing.TypedDict('V3dSegParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSeg"],
+    "__STYXTYPE__": typing.Literal["3dSeg"],
     "anat": InputPathType,
     "mask": typing.NotRequired[str | None],
     "blur_meth": typing.NotRequired[str | None],

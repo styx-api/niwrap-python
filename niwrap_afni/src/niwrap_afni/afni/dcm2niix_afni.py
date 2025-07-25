@@ -14,7 +14,7 @@ DCM2NIIX_AFNI_METADATA = Metadata(
 
 
 Dcm2niixAfniParameters = typing.TypedDict('Dcm2niixAfniParameters', {
-    "__STYX_TYPE__": typing.Literal["dcm2niix_afni"],
+    "__STYXTYPE__": typing.Literal["dcm2niix_afni"],
     "input_folder": str,
     "compression_level": typing.NotRequired[int | None],
     "adjacent_dicoms": typing.NotRequired[str | None],

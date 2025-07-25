@@ -14,7 +14,7 @@ PLUGOUT_IJK_METADATA = Metadata(
 
 
 PlugoutIjkParameters = typing.TypedDict('PlugoutIjkParameters', {
-    "__STYX_TYPE__": typing.Literal["plugout_ijk"],
+    "__STYXTYPE__": typing.Literal["plugout_ijk"],
     "host": typing.NotRequired[str | None],
     "verbose": bool,
     "port": typing.NotRequired[float | None],

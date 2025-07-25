@@ -14,7 +14,7 @@ FAT_PROC_SELECT_VOLS_METADATA = Metadata(
 
 
 FatProcSelectVolsParameters = typing.TypedDict('FatProcSelectVolsParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_select_vols"],
+    "__STYXTYPE__": typing.Literal["fat_proc_select_vols"],
     "dwi_input": InputPathType,
     "img_input": InputPathType,
     "prefix": str,

@@ -14,7 +14,7 @@ METADATA_STRING_REPLACE_METADATA = Metadata(
 
 
 MetadataStringReplaceParameters = typing.TypedDict('MetadataStringReplaceParameters', {
-    "__STYX_TYPE__": typing.Literal["metadata-string-replace"],
+    "__STYXTYPE__": typing.Literal["metadata-string-replace"],
     "input_file": str,
     "find_string": str,
     "replace_string": str,

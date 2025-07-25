@@ -14,7 +14,7 @@ XSANATREG_METADATA = Metadata(
 
 
 XsanatregParameters = typing.TypedDict('XsanatregParameters', {
-    "__STYX_TYPE__": typing.Literal["xsanatreg"],
+    "__STYXTYPE__": typing.Literal["xsanatreg"],
     "src_cordir": str,
     "targ_cordir": str,
     "transform_file": str,

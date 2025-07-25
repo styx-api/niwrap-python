@@ -14,7 +14,7 @@ ADJUNCT_SUMA_FS_ROI_INFO_METADATA = Metadata(
 
 
 AdjunctSumaFsRoiInfoParameters = typing.TypedDict('AdjunctSumaFsRoiInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_suma_fs_roi_info"],
+    "__STYXTYPE__": typing.Literal["adjunct_suma_fs_roi_info"],
     "subject_id": str,
     "suma_directory": str,
     "help": bool,

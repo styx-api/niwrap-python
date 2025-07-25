@@ -14,28 +14,28 @@ CIFTI_REPLACE_STRUCTURE_METADATA = Metadata(
 
 
 CiftiReplaceStructureVolumeAllParameters = typing.TypedDict('CiftiReplaceStructureVolumeAllParameters', {
-    "__STYX_TYPE__": typing.Literal["volume_all"],
+    "__STYXTYPE__": typing.Literal["volume_all"],
     "volume": InputPathType,
     "opt_from_cropped": bool,
 })
 
 
 CiftiReplaceStructureLabelParameters = typing.TypedDict('CiftiReplaceStructureLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["label"],
+    "__STYXTYPE__": typing.Literal["label"],
     "structure": str,
     "label": InputPathType,
 })
 
 
 CiftiReplaceStructureMetricParameters = typing.TypedDict('CiftiReplaceStructureMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["metric"],
+    "__STYXTYPE__": typing.Literal["metric"],
     "structure": str,
     "metric": InputPathType,
 })
 
 
 CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume"],
+    "__STYXTYPE__": typing.Literal["volume"],
     "structure": str,
     "volume": InputPathType,
     "opt_from_cropped": bool,
@@ -43,7 +43,7 @@ CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureV
 
 
 CiftiReplaceStructureParameters = typing.TypedDict('CiftiReplaceStructureParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-replace-structure"],
+    "__STYXTYPE__": typing.Literal["cifti-replace-structure"],
     "cifti": str,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],

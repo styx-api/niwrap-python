@@ -14,7 +14,7 @@ V_1D_RPLOT_METADATA = Metadata(
 
 
 V1dRplotParameters = typing.TypedDict('V1dRplotParameters', {
-    "__STYX_TYPE__": typing.Literal["1dRplot"],
+    "__STYXTYPE__": typing.Literal["1dRplot"],
     "input_file": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "save_size": typing.NotRequired[list[float] | None],

@@ -14,7 +14,7 @@ V__IS_OBLIQUE_METADATA = Metadata(
 
 
 VIsObliqueParameters = typing.TypedDict('VIsObliqueParameters', {
-    "__STYX_TYPE__": typing.Literal["@isOblique"],
+    "__STYXTYPE__": typing.Literal["@isOblique"],
     "infile": InputPathType,
 })
 

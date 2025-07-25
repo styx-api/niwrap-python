@@ -14,7 +14,7 @@ TAL_QC_AZS_METADATA = Metadata(
 
 
 TalQcAzsParameters = typing.TypedDict('TalQcAzsParameters', {
-    "__STYX_TYPE__": typing.Literal["tal_QC_AZS"],
+    "__STYXTYPE__": typing.Literal["tal_QC_AZS"],
     "logfile": InputPathType,
 })
 

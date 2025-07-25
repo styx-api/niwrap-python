@@ -14,7 +14,7 @@ TRK_TOOLS_METADATA = Metadata(
 
 
 TrkToolsParameters = typing.TypedDict('TrkToolsParameters', {
-    "__STYX_TYPE__": typing.Literal["trk_tools"],
+    "__STYXTYPE__": typing.Literal["trk_tools"],
     "reference_image": InputPathType,
     "input_trk": InputPathType,
     "output_trk": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ V_3D_EXTREMA_METADATA = Metadata(
 
 
 V3dExtremaParameters = typing.TypedDict('V3dExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["3dExtrema"],
+    "__STYXTYPE__": typing.Literal["3dExtrema"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "output_session": typing.NotRequired[str | None],

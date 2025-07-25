@@ -14,7 +14,7 @@ MRI_EXVIVO_NORM_METADATA = Metadata(
 
 
 MriExvivoNormParameters = typing.TypedDict('MriExvivoNormParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_exvivo_norm"],
+    "__STYXTYPE__": typing.Literal["mri_exvivo_norm"],
     "input_volume": InputPathType,
     "output_volume": str,
     "hemi": str,

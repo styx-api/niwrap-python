@@ -14,7 +14,7 @@ V_3D_MVM_VALIDATOR_METADATA = Metadata(
 
 
 V3dMvmValidatorParameters = typing.TypedDict('V3dMvmValidatorParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMVM_validator"],
+    "__STYXTYPE__": typing.Literal["3dMVM_validator"],
     "datatable": InputPathType,
     "shinyfolder": typing.NotRequired[str | None],
 })

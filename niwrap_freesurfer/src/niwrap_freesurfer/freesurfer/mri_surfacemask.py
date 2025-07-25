@@ -14,7 +14,7 @@ MRI_SURFACEMASK_METADATA = Metadata(
 
 
 MriSurfacemaskParameters = typing.TypedDict('MriSurfacemaskParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_surfacemask"],
+    "__STYXTYPE__": typing.Literal["mri_surfacemask"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_volume": str,

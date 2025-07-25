@@ -14,7 +14,7 @@ FAT_PROC_DWI_TO_DT_METADATA = Metadata(
 
 
 FatProcDwiToDtParameters = typing.TypedDict('FatProcDwiToDtParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_dwi_to_dt"],
+    "__STYXTYPE__": typing.Literal["fat_proc_dwi_to_dt"],
     "in_dwi": InputPathType,
     "in_gradmat": InputPathType,
     "prefix": str,

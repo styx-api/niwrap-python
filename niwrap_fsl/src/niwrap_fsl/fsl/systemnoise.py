@@ -14,7 +14,7 @@ SYSTEMNOISE_METADATA = Metadata(
 
 
 SystemnoiseParameters = typing.TypedDict('SystemnoiseParameters', {
-    "__STYX_TYPE__": typing.Literal["systemnoise"],
+    "__STYXTYPE__": typing.Literal["systemnoise"],
     "input_signal": InputPathType,
     "output_signal": str,
     "noise_standard_deviation": float,

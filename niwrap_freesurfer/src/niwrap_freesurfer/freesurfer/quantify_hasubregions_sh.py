@@ -14,7 +14,7 @@ QUANTIFY_HASUBREGIONS_SH_METADATA = Metadata(
 
 
 QuantifyHasubregionsShParameters = typing.TypedDict('QuantifyHasubregionsShParameters', {
-    "__STYX_TYPE__": typing.Literal["quantifyHAsubregions.sh"],
+    "__STYXTYPE__": typing.Literal["quantifyHAsubregions.sh"],
     "prefix": str,
     "suffix": str,
     "output_file": str,

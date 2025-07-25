@@ -14,7 +14,7 @@ GCA_APPLY_METADATA = Metadata(
 
 
 GcaApplyParameters = typing.TypedDict('GcaApplyParameters', {
-    "__STYX_TYPE__": typing.Literal["gca-apply"],
+    "__STYXTYPE__": typing.Literal["gca-apply"],
     "gcafile": InputPathType,
     "subject": str,
     "nthreads": typing.NotRequired[float | None],

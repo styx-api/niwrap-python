@@ -14,7 +14,7 @@ MAKE_DYADIC_VECTORS_METADATA = Metadata(
 
 
 MakeDyadicVectorsParameters = typing.TypedDict('MakeDyadicVectorsParameters', {
-    "__STYX_TYPE__": typing.Literal["make_dyadic_vectors"],
+    "__STYXTYPE__": typing.Literal["make_dyadic_vectors"],
     "theta_vol": InputPathType,
     "phi_vol": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ BET_METADATA = Metadata(
 
 
 BetParameters = typing.TypedDict('BetParameters', {
-    "__STYX_TYPE__": typing.Literal["bet"],
+    "__STYXTYPE__": typing.Literal["bet"],
     "infile": InputPathType,
     "maskfile": str,
     "fractional_intensity": typing.NotRequired[float | None],

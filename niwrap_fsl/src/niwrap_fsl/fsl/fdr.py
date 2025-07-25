@@ -14,7 +14,7 @@ FDR_METADATA = Metadata(
 
 
 FdrParameters = typing.TypedDict('FdrParameters', {
-    "__STYX_TYPE__": typing.Literal["fdr"],
+    "__STYXTYPE__": typing.Literal["fdr"],
     "infile": InputPathType,
     "maskfile": typing.NotRequired[InputPathType | None],
     "qvalue": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ FEAT2SEGSTATS_METADATA = Metadata(
 
 
 Feat2segstatsParameters = typing.TypedDict('Feat2segstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["feat2segstats"],
+    "__STYXTYPE__": typing.Literal["feat2segstats"],
     "feat_dir": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg_vol": typing.NotRequired[str | None],

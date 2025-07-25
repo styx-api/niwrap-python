@@ -14,14 +14,14 @@ WARPCONVERT_METADATA = Metadata(
 
 
 WarpconvertConfigParameters = typing.TypedDict('WarpconvertConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 WarpconvertParameters = typing.TypedDict('WarpconvertParameters', {
-    "__STYX_TYPE__": typing.Literal["warpconvert"],
+    "__STYXTYPE__": typing.Literal["warpconvert"],
     "template": typing.NotRequired[InputPathType | None],
     "midway_space": bool,
     "from": typing.NotRequired[int | None],

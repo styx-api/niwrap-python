@@ -14,7 +14,7 @@ DMRI_NEIGHBORING_REGIONS_METADATA = Metadata(
 
 
 DmriNeighboringRegionsParameters = typing.TypedDict('DmriNeighboringRegionsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_neighboringRegions"],
+    "__STYXTYPE__": typing.Literal["dmri_neighboringRegions"],
     "input_file": InputPathType,
     "output_file": str,
 })

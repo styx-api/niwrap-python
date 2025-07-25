@@ -14,7 +14,7 @@ CIFTI_LABEL_TO_ROI_METADATA = Metadata(
 
 
 CiftiLabelToRoiParameters = typing.TypedDict('CiftiLabelToRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-label-to-roi"],
+    "__STYXTYPE__": typing.Literal["cifti-label-to-roi"],
     "label_in": InputPathType,
     "scalar_out": str,
     "opt_name_label_name": typing.NotRequired[str | None],

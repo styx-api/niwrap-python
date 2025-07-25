@@ -14,7 +14,7 @@ MELODIC_METADATA = Metadata(
 
 
 MelodicParameters = typing.TypedDict('MelodicParameters', {
-    "__STYX_TYPE__": typing.Literal["melodic"],
+    "__STYXTYPE__": typing.Literal["melodic"],
     "input_file": InputPathType,
     "output_directory": typing.NotRequired[str | None],
     "mask_file": typing.NotRequired[InputPathType | None],

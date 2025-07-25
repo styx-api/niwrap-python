@@ -14,7 +14,7 @@ V__GRAYPLOT_METADATA = Metadata(
 
 
 VGrayplotParameters = typing.TypedDict('VGrayplotParameters', {
-    "__STYX_TYPE__": typing.Literal["@grayplot"],
+    "__STYXTYPE__": typing.Literal["@grayplot"],
     "dirname": str,
     "pvorder": bool,
     "peelorder": bool,

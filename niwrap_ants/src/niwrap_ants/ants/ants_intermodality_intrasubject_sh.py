@@ -14,7 +14,7 @@ ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA = Metadata(
 
 
 AntsIntermodalityIntrasubjectShParameters = typing.TypedDict('AntsIntermodalityIntrasubjectShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsIntermodalityIntrasubject.sh"],
+    "__STYXTYPE__": typing.Literal["antsIntermodalityIntrasubject.sh"],
     "dimension": int,
     "anatomical_t1_image": InputPathType,
     "anatomical_reference_image": typing.NotRequired[InputPathType | None],

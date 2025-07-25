@@ -14,7 +14,7 @@ BORDER_LENGTH_METADATA = Metadata(
 
 
 BorderLengthParameters = typing.TypedDict('BorderLengthParameters', {
-    "__STYX_TYPE__": typing.Literal["border-length"],
+    "__STYXTYPE__": typing.Literal["border-length"],
     "border": InputPathType,
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],

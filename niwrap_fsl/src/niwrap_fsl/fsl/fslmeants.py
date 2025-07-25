@@ -14,7 +14,7 @@ FSLMEANTS_METADATA = Metadata(
 
 
 FslmeantsParameters = typing.TypedDict('FslmeantsParameters', {
-    "__STYX_TYPE__": typing.Literal["fslmeants"],
+    "__STYXTYPE__": typing.Literal["fslmeants"],
     "input_image": InputPathType,
     "output": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],

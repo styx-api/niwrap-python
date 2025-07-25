@@ -14,7 +14,7 @@ V_3D_AUTOBOX_METADATA = Metadata(
 
 
 V3dAutoboxParameters = typing.TypedDict('V3dAutoboxParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAutobox"],
+    "__STYXTYPE__": typing.Literal["3dAutobox"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "alt_input": typing.NotRequired[InputPathType | None],

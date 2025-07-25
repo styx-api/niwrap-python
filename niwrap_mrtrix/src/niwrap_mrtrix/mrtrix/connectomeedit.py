@@ -14,14 +14,14 @@ CONNECTOMEEDIT_METADATA = Metadata(
 
 
 ConnectomeeditConfigParameters = typing.TypedDict('ConnectomeeditConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 ConnectomeeditParameters = typing.TypedDict('ConnectomeeditParameters', {
-    "__STYX_TYPE__": typing.Literal["connectomeedit"],
+    "__STYXTYPE__": typing.Literal["connectomeedit"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

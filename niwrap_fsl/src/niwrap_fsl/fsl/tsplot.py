@@ -14,7 +14,7 @@ TSPLOT_METADATA = Metadata(
 
 
 TsplotParameters = typing.TypedDict('TsplotParameters', {
-    "__STYX_TYPE__": typing.Literal["tsplot"],
+    "__STYXTYPE__": typing.Literal["tsplot"],
     "input_directory": str,
     "main_filtered_data": typing.NotRequired[InputPathType | None],
     "coordinates": typing.NotRequired[list[float] | None],

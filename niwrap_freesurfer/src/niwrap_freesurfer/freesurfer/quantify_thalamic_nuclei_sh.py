@@ -14,7 +14,7 @@ QUANTIFY_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 
 
 QuantifyThalamicNucleiShParameters = typing.TypedDict('QuantifyThalamicNucleiShParameters', {
-    "__STYX_TYPE__": typing.Literal["quantifyThalamicNuclei.sh"],
+    "__STYXTYPE__": typing.Literal["quantifyThalamicNuclei.sh"],
     "output_file": str,
     "analysis_id": str,
     "subjects_directory": typing.NotRequired[str | None],

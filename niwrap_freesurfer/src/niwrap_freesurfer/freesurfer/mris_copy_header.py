@@ -14,7 +14,7 @@ MRIS_COPY_HEADER_METADATA = Metadata(
 
 
 MrisCopyHeaderParameters = typing.TypedDict('MrisCopyHeaderParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_copy_header"],
+    "__STYXTYPE__": typing.Literal["mris_copy_header"],
     "input_surface": InputPathType,
     "template_surface": InputPathType,
     "output_surface": str,

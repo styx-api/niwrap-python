@@ -14,7 +14,7 @@ MRI_MAPS2CSD_METADATA = Metadata(
 
 
 MriMaps2csdParameters = typing.TypedDict('MriMaps2csdParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_maps2csd"],
+    "__STYXTYPE__": typing.Literal["mri_maps2csd"],
     "input_files": list[str],
     "csd_file": typing.NotRequired[str | None],
     "pdf_file": typing.NotRequired[str | None],

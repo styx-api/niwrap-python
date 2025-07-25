@@ -14,7 +14,7 @@ ATROPOS_METADATA = Metadata(
 
 
 AtroposParameters = typing.TypedDict('AtroposParameters', {
-    "__STYX_TYPE__": typing.Literal["Atropos"],
+    "__STYXTYPE__": typing.Literal["Atropos"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "intensity_image": str,
     "bspline": typing.NotRequired[str | None],

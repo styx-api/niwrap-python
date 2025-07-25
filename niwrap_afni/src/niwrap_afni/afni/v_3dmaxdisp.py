@@ -14,7 +14,7 @@ V_3DMAXDISP_METADATA = Metadata(
 
 
 V3dmaxdispParameters = typing.TypedDict('V3dmaxdispParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmaxdisp"],
+    "__STYXTYPE__": typing.Literal["3dmaxdisp"],
     "inset": InputPathType,
     "matrix": InputPathType,
     "verbose": bool,

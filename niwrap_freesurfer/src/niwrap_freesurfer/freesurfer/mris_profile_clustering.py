@@ -14,7 +14,7 @@ MRIS_PROFILE_CLUSTERING_METADATA = Metadata(
 
 
 MrisProfileClusteringParameters = typing.TypedDict('MrisProfileClusteringParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_profileClustering"],
+    "__STYXTYPE__": typing.Literal["mris_profileClustering"],
     "input_file": InputPathType,
     "output_file": str,
     "other_options": typing.NotRequired[str | None],

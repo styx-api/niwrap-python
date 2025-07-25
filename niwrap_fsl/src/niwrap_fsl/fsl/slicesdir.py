@@ -14,7 +14,7 @@ SLICESDIR_METADATA = Metadata(
 
 
 SlicesdirParameters = typing.TypedDict('SlicesdirParameters', {
-    "__STYX_TYPE__": typing.Literal["slicesdir"],
+    "__STYXTYPE__": typing.Literal["slicesdir"],
     "flag_filelist": bool,
     "outline_image": typing.NotRequired[InputPathType | None],
     "edge_threshold": typing.NotRequired[float | None],

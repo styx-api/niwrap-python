@@ -14,7 +14,7 @@ V__TIME_DIFF_METADATA = Metadata(
 
 
 VTimeDiffParameters = typing.TypedDict('VTimeDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["@TimeDiff"],
+    "__STYXTYPE__": typing.Literal["@TimeDiff"],
     "file1": InputPathType,
     "file2": InputPathType,
 })

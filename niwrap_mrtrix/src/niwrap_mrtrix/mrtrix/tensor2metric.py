@@ -14,14 +14,14 @@ TENSOR2METRIC_METADATA = Metadata(
 
 
 Tensor2metricConfigParameters = typing.TypedDict('Tensor2metricConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Tensor2metricParameters = typing.TypedDict('Tensor2metricParameters', {
-    "__STYX_TYPE__": typing.Literal["tensor2metric"],
+    "__STYXTYPE__": typing.Literal["tensor2metric"],
     "adc": typing.NotRequired[str | None],
     "fa": typing.NotRequired[str | None],
     "ad": typing.NotRequired[str | None],

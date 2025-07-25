@@ -14,7 +14,7 @@ V_3D_EDU_01_SCALE_METADATA = Metadata(
 
 
 V3dEdu01ScaleParameters = typing.TypedDict('V3dEdu01ScaleParameters', {
-    "__STYX_TYPE__": typing.Literal["3dEdu_01_scale"],
+    "__STYXTYPE__": typing.Literal["3dEdu_01_scale"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mult_factors": typing.NotRequired[list[float] | None],

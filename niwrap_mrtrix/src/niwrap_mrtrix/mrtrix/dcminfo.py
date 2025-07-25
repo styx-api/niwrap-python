@@ -14,21 +14,21 @@ DCMINFO_METADATA = Metadata(
 
 
 DcminfoTagParameters = typing.TypedDict('DcminfoTagParameters', {
-    "__STYX_TYPE__": typing.Literal["tag"],
+    "__STYXTYPE__": typing.Literal["tag"],
     "group": str,
     "element": str,
 })
 
 
 DcminfoConfigParameters = typing.TypedDict('DcminfoConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DcminfoParameters = typing.TypedDict('DcminfoParameters', {
-    "__STYX_TYPE__": typing.Literal["dcminfo"],
+    "__STYXTYPE__": typing.Literal["dcminfo"],
     "all": bool,
     "csa": bool,
     "phoenix": bool,

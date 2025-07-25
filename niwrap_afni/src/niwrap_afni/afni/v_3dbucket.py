@@ -14,7 +14,7 @@ V_3DBUCKET_METADATA = Metadata(
 
 
 V3dbucketParameters = typing.TypedDict('V3dbucketParameters', {
-    "__STYX_TYPE__": typing.Literal["3dbucket"],
+    "__STYXTYPE__": typing.Literal["3dbucket"],
     "prefix": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],

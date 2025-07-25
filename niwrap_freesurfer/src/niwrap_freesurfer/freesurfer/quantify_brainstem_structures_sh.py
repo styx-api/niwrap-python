@@ -14,7 +14,7 @@ QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA = Metadata(
 
 
 QuantifyBrainstemStructuresShParameters = typing.TypedDict('QuantifyBrainstemStructuresShParameters', {
-    "__STYX_TYPE__": typing.Literal["quantifyBrainstemStructures.sh"],
+    "__STYXTYPE__": typing.Literal["quantifyBrainstemStructures.sh"],
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
 })

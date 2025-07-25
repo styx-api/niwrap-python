@@ -14,7 +14,7 @@ CHECK_MCR_SH_METADATA = Metadata(
 
 
 CheckMcrShParameters = typing.TypedDict('CheckMcrShParameters', {
-    "__STYX_TYPE__": typing.Literal["checkMCR.sh"],
+    "__STYXTYPE__": typing.Literal["checkMCR.sh"],
     "help": bool,
 })
 

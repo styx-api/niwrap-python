@@ -14,7 +14,7 @@ V__EXAMINE_GEN_FEAT_DISTS_METADATA = Metadata(
 
 
 VExamineGenFeatDistsParameters = typing.TypedDict('VExamineGenFeatDistsParameters', {
-    "__STYX_TYPE__": typing.Literal["@ExamineGenFeatDists"],
+    "__STYXTYPE__": typing.Literal["@ExamineGenFeatDists"],
     "features_dir": str,
     "wildcards": typing.NotRequired[list[str] | None],
     "output_suffix": typing.NotRequired[str | None],

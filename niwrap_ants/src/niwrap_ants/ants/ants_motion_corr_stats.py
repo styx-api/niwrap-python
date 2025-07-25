@@ -14,7 +14,7 @@ ANTS_MOTION_CORR_STATS_METADATA = Metadata(
 
 
 AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["antsMotionCorrStats"],
+    "__STYXTYPE__": typing.Literal["antsMotionCorrStats"],
     "mask": InputPathType,
     "moco_params": InputPathType,
     "output": str,

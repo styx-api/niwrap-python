@@ -14,7 +14,7 @@ CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 CiftiLabelModifyKeysParameters = typing.TypedDict('CiftiLabelModifyKeysParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-label-modify-keys"],
+    "__STYXTYPE__": typing.Literal["cifti-label-modify-keys"],
     "cifti_in": InputPathType,
     "remap_file": str,
     "cifti_out": str,

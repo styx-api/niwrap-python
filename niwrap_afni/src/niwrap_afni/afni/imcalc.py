@@ -14,7 +14,7 @@ IMCALC_METADATA = Metadata(
 
 
 ImcalcParameters = typing.TypedDict('ImcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["imcalc"],
+    "__STYXTYPE__": typing.Literal["imcalc"],
     "datum_type": typing.NotRequired[str | None],
     "image_inputs": typing.NotRequired[list[InputPathType] | None],
     "expression": str,

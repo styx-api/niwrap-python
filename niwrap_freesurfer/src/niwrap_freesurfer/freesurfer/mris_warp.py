@@ -14,7 +14,7 @@ MRIS_WARP_METADATA = Metadata(
 
 
 MrisWarpParameters = typing.TypedDict('MrisWarpParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_warp"],
+    "__STYXTYPE__": typing.Literal["mris_warp"],
     "deformvol": typing.NotRequired[str | None],
     "m3z": typing.NotRequired[str | None],
     "regfile": typing.NotRequired[str | None],

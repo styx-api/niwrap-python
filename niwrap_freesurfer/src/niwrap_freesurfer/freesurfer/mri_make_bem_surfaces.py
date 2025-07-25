@@ -14,7 +14,7 @@ MRI_MAKE_BEM_SURFACES_METADATA = Metadata(
 
 
 MriMakeBemSurfacesParameters = typing.TypedDict('MriMakeBemSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_make_bem_surfaces"],
+    "__STYXTYPE__": typing.Literal["mri_make_bem_surfaces"],
     "name": str,
     "mfile": typing.NotRequired[InputPathType | None],
 })

@@ -14,28 +14,28 @@ BORDER_MERGE_METADATA = Metadata(
 
 
 BorderMergeUpToParameters = typing.TypedDict('BorderMergeUpToParameters', {
-    "__STYX_TYPE__": typing.Literal["up_to"],
+    "__STYXTYPE__": typing.Literal["up_to"],
     "last_border": str,
     "opt_reverse": bool,
 })
 
 
 BorderMergeSelectParameters = typing.TypedDict('BorderMergeSelectParameters', {
-    "__STYX_TYPE__": typing.Literal["select"],
+    "__STYXTYPE__": typing.Literal["select"],
     "border": str,
     "up_to": typing.NotRequired[BorderMergeUpToParameters | None],
 })
 
 
 BorderMergeBorderParameters = typing.TypedDict('BorderMergeBorderParameters', {
-    "__STYX_TYPE__": typing.Literal["border"],
+    "__STYXTYPE__": typing.Literal["border"],
     "border_file_in": InputPathType,
     "select": typing.NotRequired[list[BorderMergeSelectParameters] | None],
 })
 
 
 BorderMergeParameters = typing.TypedDict('BorderMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["border-merge"],
+    "__STYXTYPE__": typing.Literal["border-merge"],
     "border_file_out": str,
     "border": typing.NotRequired[list[BorderMergeBorderParameters] | None],
 })

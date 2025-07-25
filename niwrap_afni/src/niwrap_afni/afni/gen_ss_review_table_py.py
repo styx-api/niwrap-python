@@ -14,7 +14,7 @@ GEN_SS_REVIEW_TABLE_PY_METADATA = Metadata(
 
 
 GenSsReviewTablePyParameters = typing.TypedDict('GenSsReviewTablePyParameters', {
-    "__STYX_TYPE__": typing.Literal["gen_ss_review_table.py"],
+    "__STYXTYPE__": typing.Literal["gen_ss_review_table.py"],
     "infiles": list[InputPathType],
     "write_table": typing.NotRequired[InputPathType | None],
     "write_outliers": typing.NotRequired[InputPathType | None],

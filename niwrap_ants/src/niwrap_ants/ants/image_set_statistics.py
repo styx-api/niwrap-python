@@ -14,7 +14,7 @@ IMAGE_SET_STATISTICS_METADATA = Metadata(
 
 
 ImageSetStatisticsParameters = typing.TypedDict('ImageSetStatisticsParameters', {
-    "__STYX_TYPE__": typing.Literal["ImageSetStatistics"],
+    "__STYXTYPE__": typing.Literal["ImageSetStatistics"],
     "image_dimension": int,
     "controls_list": InputPathType,
     "output_image": str,

@@ -14,14 +14,14 @@ MRHISTMATCH_METADATA = Metadata(
 
 
 MrhistmatchConfigParameters = typing.TypedDict('MrhistmatchConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrhistmatchParameters = typing.TypedDict('MrhistmatchParameters', {
-    "__STYX_TYPE__": typing.Literal["mrhistmatch"],
+    "__STYXTYPE__": typing.Literal["mrhistmatch"],
     "mask_input": typing.NotRequired[InputPathType | None],
     "mask_target": typing.NotRequired[InputPathType | None],
     "bins": typing.NotRequired[int | None],

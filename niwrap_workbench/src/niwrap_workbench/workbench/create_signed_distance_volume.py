@@ -14,7 +14,7 @@ CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
 
 
 CreateSignedDistanceVolumeParameters = typing.TypedDict('CreateSignedDistanceVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["create-signed-distance-volume"],
+    "__STYXTYPE__": typing.Literal["create-signed-distance-volume"],
     "surface": InputPathType,
     "refspace": str,
     "outvol": str,

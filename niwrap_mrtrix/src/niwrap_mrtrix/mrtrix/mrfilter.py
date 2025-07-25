@@ -14,26 +14,26 @@ MRFILTER_METADATA = Metadata(
 
 
 MrfilterVariousStringParameters = typing.TypedDict('MrfilterVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrfilterVariousFileParameters = typing.TypedDict('MrfilterVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrfilterConfigParameters = typing.TypedDict('MrfilterConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrfilterParameters = typing.TypedDict('MrfilterParameters', {
-    "__STYX_TYPE__": typing.Literal["mrfilter"],
+    "__STYXTYPE__": typing.Literal["mrfilter"],
     "axes": typing.NotRequired[list[int] | None],
     "inverse": bool,
     "magnitude": bool,

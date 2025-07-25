@@ -14,7 +14,7 @@ V_3D_RSFC_METADATA = Metadata(
 
 
 V3dRsfcParameters = typing.TypedDict('V3dRsfcParameters', {
-    "__STYX_TYPE__": typing.Literal["3dRSFC"],
+    "__STYXTYPE__": typing.Literal["3dRSFC"],
     "fbot": float,
     "ftop": float,
     "input_dataset": InputPathType,

@@ -14,7 +14,7 @@ V_1D_ASTRIP_METADATA = Metadata(
 
 
 V1dAstripParameters = typing.TypedDict('V1dAstripParameters', {
-    "__STYX_TYPE__": typing.Literal["1dAstrip"],
+    "__STYXTYPE__": typing.Literal["1dAstrip"],
     "infile": InputPathType,
 })
 

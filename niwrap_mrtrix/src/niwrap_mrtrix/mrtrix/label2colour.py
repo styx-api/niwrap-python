@@ -14,14 +14,14 @@ LABEL2COLOUR_METADATA = Metadata(
 
 
 Label2colourConfigParameters = typing.TypedDict('Label2colourConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Label2colourParameters = typing.TypedDict('Label2colourParameters', {
-    "__STYX_TYPE__": typing.Literal["label2colour"],
+    "__STYXTYPE__": typing.Literal["label2colour"],
     "lut": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,

@@ -14,35 +14,35 @@ VOLUME_PALETTE_METADATA = Metadata(
 
 
 VolumePalettePosPercentParameters = typing.TypedDict('VolumePalettePosPercentParameters', {
-    "__STYX_TYPE__": typing.Literal["pos_percent"],
+    "__STYXTYPE__": typing.Literal["pos_percent"],
     "pos_min__": float,
     "pos_max__": float,
 })
 
 
 VolumePaletteNegPercentParameters = typing.TypedDict('VolumePaletteNegPercentParameters', {
-    "__STYX_TYPE__": typing.Literal["neg_percent"],
+    "__STYXTYPE__": typing.Literal["neg_percent"],
     "neg_min__": float,
     "neg_max__": float,
 })
 
 
 VolumePalettePosUserParameters = typing.TypedDict('VolumePalettePosUserParameters', {
-    "__STYX_TYPE__": typing.Literal["pos_user"],
+    "__STYXTYPE__": typing.Literal["pos_user"],
     "pos_min_user": float,
     "pos_max_user": float,
 })
 
 
 VolumePaletteNegUserParameters = typing.TypedDict('VolumePaletteNegUserParameters', {
-    "__STYX_TYPE__": typing.Literal["neg_user"],
+    "__STYXTYPE__": typing.Literal["neg_user"],
     "neg_min_user": float,
     "neg_max_user": float,
 })
 
 
 VolumePaletteThresholdingParameters = typing.TypedDict('VolumePaletteThresholdingParameters', {
-    "__STYX_TYPE__": typing.Literal["thresholding"],
+    "__STYXTYPE__": typing.Literal["thresholding"],
     "type": str,
     "test": str,
     "min": float,
@@ -51,7 +51,7 @@ VolumePaletteThresholdingParameters = typing.TypedDict('VolumePaletteThresholdin
 
 
 VolumePaletteParameters = typing.TypedDict('VolumePaletteParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-palette"],
+    "__STYXTYPE__": typing.Literal["volume-palette"],
     "volume": str,
     "mode": str,
     "opt_subvolume_subvolume": typing.NotRequired[str | None],

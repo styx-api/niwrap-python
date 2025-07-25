@@ -14,7 +14,7 @@ REG2SUBJECT_METADATA = Metadata(
 
 
 Reg2subjectParameters = typing.TypedDict('Reg2subjectParameters', {
-    "__STYX_TYPE__": typing.Literal["reg2subject"],
+    "__STYXTYPE__": typing.Literal["reg2subject"],
     "regfile": InputPathType,
 })
 

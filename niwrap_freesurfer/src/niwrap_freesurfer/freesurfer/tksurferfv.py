@@ -14,7 +14,7 @@ TKSURFERFV_METADATA = Metadata(
 
 
 TksurferfvParameters = typing.TypedDict('TksurferfvParameters', {
-    "__STYX_TYPE__": typing.Literal["tksurferfv"],
+    "__STYXTYPE__": typing.Literal["tksurferfv"],
     "subject": str,
     "hemi": str,
     "surface": str,

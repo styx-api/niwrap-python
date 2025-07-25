@@ -14,7 +14,7 @@ SURFMATHS_METADATA = Metadata(
 
 
 SurfmathsParameters = typing.TypedDict('SurfmathsParameters', {
-    "__STYX_TYPE__": typing.Literal["surfmaths"],
+    "__STYXTYPE__": typing.Literal["surfmaths"],
     "first_input": InputPathType,
     "operations_inputs": typing.NotRequired[list[str] | None],
     "output": str,

@@ -14,7 +14,7 @@ V_3D_LOCAL_UNIFIZE_METADATA = Metadata(
 
 
 V3dLocalUnifizeParameters = typing.TypedDict('V3dLocalUnifizeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLocalUnifize"],
+    "__STYXTYPE__": typing.Literal["3dLocalUnifize"],
     "input": InputPathType,
     "output": str,
     "working_dir": typing.NotRequired[str | None],

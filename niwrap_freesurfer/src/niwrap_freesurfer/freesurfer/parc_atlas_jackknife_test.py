@@ -14,7 +14,7 @@ PARC_ATLAS_JACKKNIFE_TEST_METADATA = Metadata(
 
 
 ParcAtlasJackknifeTestParameters = typing.TypedDict('ParcAtlasJackknifeTestParameters', {
-    "__STYX_TYPE__": typing.Literal["parc_atlas_jackknife_test"],
+    "__STYXTYPE__": typing.Literal["parc_atlas_jackknife_test"],
     "register": bool,
     "reg_dist": typing.NotRequired[str | None],
     "reg_append": typing.NotRequired[str | None],

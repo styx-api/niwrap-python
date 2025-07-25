@@ -14,7 +14,7 @@ V_1D_NLFIT_METADATA = Metadata(
 
 
 V1dNlfitParameters = typing.TypedDict('V1dNlfitParameters', {
-    "__STYX_TYPE__": typing.Literal["1dNLfit"],
+    "__STYXTYPE__": typing.Literal["1dNLfit"],
     "expression": str,
     "independent_variable": str,
     "parameters": list[str],

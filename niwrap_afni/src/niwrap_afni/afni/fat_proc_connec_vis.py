@@ -14,7 +14,7 @@ FAT_PROC_CONNEC_VIS_METADATA = Metadata(
 
 
 FatProcConnecVisParameters = typing.TypedDict('FatProcConnecVisParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_connec_vis"],
+    "__STYXTYPE__": typing.Literal["fat_proc_connec_vis"],
     "in_rois": str,
     "prefix": str,
     "prefix_file": typing.NotRequired[str | None],

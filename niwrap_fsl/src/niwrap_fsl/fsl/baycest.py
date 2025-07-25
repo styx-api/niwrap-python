@@ -14,7 +14,7 @@ BAYCEST_METADATA = Metadata(
 
 
 BaycestParameters = typing.TypedDict('BaycestParameters', {
-    "__STYX_TYPE__": typing.Literal["baycest"],
+    "__STYXTYPE__": typing.Literal["baycest"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "output_dir": str,

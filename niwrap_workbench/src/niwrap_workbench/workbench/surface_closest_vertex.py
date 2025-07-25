@@ -14,7 +14,7 @@ SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
 
 
 SurfaceClosestVertexParameters = typing.TypedDict('SurfaceClosestVertexParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-closest-vertex"],
+    "__STYXTYPE__": typing.Literal["surface-closest-vertex"],
     "surface": InputPathType,
     "coord_list_file": str,
     "vertex_list_out": str,

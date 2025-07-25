@@ -14,7 +14,7 @@ TRAIN_GCS_ATLAS_METADATA = Metadata(
 
 
 TrainGcsAtlasParameters = typing.TypedDict('TrainGcsAtlasParameters', {
-    "__STYX_TYPE__": typing.Literal["train-gcs-atlas"],
+    "__STYXTYPE__": typing.Literal["train-gcs-atlas"],
     "manual_parcellation": typing.NotRequired[str | None],
     "subjlist_file": typing.NotRequired[InputPathType | None],
     "left_hemi": bool,

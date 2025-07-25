@@ -14,7 +14,7 @@ NIML_FEEDME_METADATA = Metadata(
 
 
 NimlFeedmeParameters = typing.TypedDict('NimlFeedmeParameters', {
-    "__STYX_TYPE__": typing.Literal["niml_feedme"],
+    "__STYXTYPE__": typing.Literal["niml_feedme"],
     "host": typing.NotRequired[str | None],
     "interval": typing.NotRequired[float | None],
     "verbose": bool,

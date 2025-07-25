@@ -14,7 +14,7 @@ ANTS_JOINT_LABEL_FUSION_SH_METADATA = Metadata(
 
 
 AntsJointLabelFusionShParameters = typing.TypedDict('AntsJointLabelFusionShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsJointLabelFusion.sh"],
+    "__STYXTYPE__": typing.Literal["antsJointLabelFusion.sh"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "output": typing.NotRequired[str | None],
     "atlas_image_mrf": typing.NotRequired[str | None],

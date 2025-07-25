@@ -14,7 +14,7 @@ V__HELP_AFNI_METADATA = Metadata(
 
 
 VHelpAfniParameters = typing.TypedDict('VHelpAfniParameters', {
-    "__STYX_TYPE__": typing.Literal["@help.AFNI"],
+    "__STYXTYPE__": typing.Literal["@help.AFNI"],
     "match": typing.NotRequired[str | None],
     "lynx": bool,
     "vi": bool,

@@ -14,7 +14,7 @@ V__AFNI_ENV_METADATA = Metadata(
 
 
 VAfniEnvParameters = typing.TypedDict('VAfniEnvParameters', {
-    "__STYX_TYPE__": typing.Literal["@AfniEnv"],
+    "__STYXTYPE__": typing.Literal["@AfniEnv"],
     "set_flag": typing.NotRequired[list[str] | None],
     "unset_flag": typing.NotRequired[str | None],
     "get_flag": typing.NotRequired[str | None],

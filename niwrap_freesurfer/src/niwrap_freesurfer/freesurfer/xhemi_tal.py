@@ -14,7 +14,7 @@ XHEMI_TAL_METADATA = Metadata(
 
 
 XhemiTalParameters = typing.TypedDict('XhemiTalParameters', {
-    "__STYX_TYPE__": typing.Literal["xhemi-tal"],
+    "__STYXTYPE__": typing.Literal["xhemi-tal"],
     "subject": str,
 })
 

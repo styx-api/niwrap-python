@@ -14,7 +14,7 @@ MASKDYADS_METADATA = Metadata(
 
 
 MaskdyadsParameters = typing.TypedDict('MaskdyadsParameters', {
-    "__STYX_TYPE__": typing.Literal["maskdyads"],
+    "__STYXTYPE__": typing.Literal["maskdyads"],
     "dyads": InputPathType,
     "fsamples": InputPathType,
     "threshold": typing.NotRequired[float | None],

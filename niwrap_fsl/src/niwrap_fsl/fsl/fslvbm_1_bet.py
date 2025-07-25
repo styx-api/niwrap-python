@@ -14,7 +14,7 @@ FSLVBM_1_BET_METADATA = Metadata(
 
 
 Fslvbm1BetParameters = typing.TypedDict('Fslvbm1BetParameters', {
-    "__STYX_TYPE__": typing.Literal["fslvbm_1_bet"],
+    "__STYXTYPE__": typing.Literal["fslvbm_1_bet"],
     "default_bet": bool,
     "increased_robustness": bool,
     "bet_parameters": typing.NotRequired[str | None],

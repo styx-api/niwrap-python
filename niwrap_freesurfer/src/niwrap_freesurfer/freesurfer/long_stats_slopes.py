@@ -14,7 +14,7 @@ LONG_STATS_SLOPES_METADATA = Metadata(
 
 
 LongStatsSlopesParameters = typing.TypedDict('LongStatsSlopesParameters', {
-    "__STYX_TYPE__": typing.Literal["long_stats_slopes"],
+    "__STYXTYPE__": typing.Literal["long_stats_slopes"],
     "qdec_table": InputPathType,
     "stats_file": InputPathType,
     "measure": str,

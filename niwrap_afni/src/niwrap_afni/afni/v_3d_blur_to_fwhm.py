@@ -14,7 +14,7 @@ V_3D_BLUR_TO_FWHM_METADATA = Metadata(
 
 
 V3dBlurToFwhmParameters = typing.TypedDict('V3dBlurToFwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["3dBlurToFWHM"],
+    "__STYXTYPE__": typing.Literal["3dBlurToFWHM"],
     "automask": bool,
     "blurmaster": typing.NotRequired[InputPathType | None],
     "fwhm": typing.NotRequired[float | None],

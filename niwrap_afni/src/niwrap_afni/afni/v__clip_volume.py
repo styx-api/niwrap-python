@@ -14,7 +14,7 @@ V__CLIP_VOLUME_METADATA = Metadata(
 
 
 VClipVolumeParameters = typing.TypedDict('VClipVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["@clip_volume"],
+    "__STYXTYPE__": typing.Literal["@clip_volume"],
     "input_volume": InputPathType,
     "below_zmm": typing.NotRequired[float | None],
     "above_zmm": typing.NotRequired[float | None],

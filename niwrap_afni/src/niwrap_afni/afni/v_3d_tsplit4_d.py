@@ -14,7 +14,7 @@ V_3D_TSPLIT4_D_METADATA = Metadata(
 
 
 V3dTsplit4DParameters = typing.TypedDict('V3dTsplit4DParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTsplit4D"],
+    "__STYXTYPE__": typing.Literal["3dTsplit4D"],
     "prefix": str,
     "infile": InputPathType,
     "keep_datum": bool,

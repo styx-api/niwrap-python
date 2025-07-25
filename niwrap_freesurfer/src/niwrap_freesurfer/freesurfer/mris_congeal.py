@@ -14,7 +14,7 @@ MRIS_CONGEAL_METADATA = Metadata(
 
 
 MrisCongealParameters = typing.TypedDict('MrisCongealParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_congeal"],
+    "__STYXTYPE__": typing.Literal["mris_congeal"],
     "input_surface_name": str,
     "hemi": str,
     "subjects": list[str],

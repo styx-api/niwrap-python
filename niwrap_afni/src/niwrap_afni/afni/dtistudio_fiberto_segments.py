@@ -14,7 +14,7 @@ DTISTUDIO_FIBERTO_SEGMENTS_METADATA = Metadata(
 
 
 DtistudioFibertoSegmentsParameters = typing.TypedDict('DtistudioFibertoSegmentsParameters', {
-    "__STYX_TYPE__": typing.Literal["DTIStudioFibertoSegments"],
+    "__STYXTYPE__": typing.Literal["DTIStudioFibertoSegments"],
     "dataset": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "swap_flag": bool,

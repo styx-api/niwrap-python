@@ -14,7 +14,7 @@ MAKE_EXVIVO_FILLED_METADATA = Metadata(
 
 
 MakeExvivoFilledParameters = typing.TypedDict('MakeExvivoFilledParameters', {
-    "__STYX_TYPE__": typing.Literal["make_exvivo_filled"],
+    "__STYXTYPE__": typing.Literal["make_exvivo_filled"],
     "subject_name": str,
     "input_samseg": InputPathType,
     "input_intensity_vol": InputPathType,

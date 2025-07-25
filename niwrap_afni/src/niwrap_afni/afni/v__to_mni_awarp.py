@@ -14,7 +14,7 @@ V__TO_MNI_AWARP_METADATA = Metadata(
 
 
 VToMniAwarpParameters = typing.TypedDict('VToMniAwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["@toMNI_Awarp"],
+    "__STYXTYPE__": typing.Literal["@toMNI_Awarp"],
     "directory": str,
     "datasets": list[InputPathType],
 })

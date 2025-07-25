@@ -14,7 +14,7 @@ MPR2MNI305_METADATA = Metadata(
 
 
 Mpr2mni305Parameters = typing.TypedDict('Mpr2mni305Parameters', {
-    "__STYX_TYPE__": typing.Literal["mpr2mni305"],
+    "__STYXTYPE__": typing.Literal["mpr2mni305"],
     "mpr_anat": str,
 })
 

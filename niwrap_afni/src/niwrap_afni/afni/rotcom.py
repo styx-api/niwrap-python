@@ -14,7 +14,7 @@ ROTCOM_METADATA = Metadata(
 
 
 RotcomParameters = typing.TypedDict('RotcomParameters', {
-    "__STYX_TYPE__": typing.Literal["rotcom"],
+    "__STYXTYPE__": typing.Literal["rotcom"],
     "rotate_ashift": str,
     "dataset": typing.NotRequired[InputPathType | None],
 })

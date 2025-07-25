@@ -14,7 +14,7 @@ SIENA_FLIRT_METADATA = Metadata(
 
 
 SienaFlirtParameters = typing.TypedDict('SienaFlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["siena_flirt"],
+    "__STYXTYPE__": typing.Literal["siena_flirt"],
     "input1_fileroot": str,
     "input2_fileroot": str,
 })

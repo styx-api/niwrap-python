@@ -14,7 +14,7 @@ IMCP_METADATA = Metadata(
 
 
 ImcpParameters = typing.TypedDict('ImcpParameters', {
-    "__STYX_TYPE__": typing.Literal["imcp"],
+    "__STYXTYPE__": typing.Literal["imcp"],
     "infiles": list[InputPathType],
     "output_location": str,
 })

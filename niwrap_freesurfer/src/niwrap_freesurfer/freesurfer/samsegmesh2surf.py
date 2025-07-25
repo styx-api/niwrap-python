@@ -14,7 +14,7 @@ SAMSEGMESH2SURF_METADATA = Metadata(
 
 
 Samsegmesh2surfParameters = typing.TypedDict('Samsegmesh2surfParameters', {
-    "__STYX_TYPE__": typing.Literal["samsegmesh2surf"],
+    "__STYXTYPE__": typing.Literal["samsegmesh2surf"],
     "atlas_mesh": InputPathType,
     "template": typing.NotRequired[InputPathType | None],
     "lta_transform": typing.NotRequired[InputPathType | None],

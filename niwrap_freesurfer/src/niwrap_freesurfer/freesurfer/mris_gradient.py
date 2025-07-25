@@ -14,7 +14,7 @@ MRIS_GRADIENT_METADATA = Metadata(
 
 
 MrisGradientParameters = typing.TypedDict('MrisGradientParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_gradient"],
+    "__STYXTYPE__": typing.Literal["mris_gradient"],
     "input_surface": InputPathType,
     "input_vector_field": InputPathType,
     "output_gradient_file": str,

@@ -14,7 +14,7 @@ MAKE_HEMI_MASK_METADATA = Metadata(
 
 
 MakeHemiMaskParameters = typing.TypedDict('MakeHemiMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["make_hemi_mask"],
+    "__STYXTYPE__": typing.Literal["make_hemi_mask"],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,

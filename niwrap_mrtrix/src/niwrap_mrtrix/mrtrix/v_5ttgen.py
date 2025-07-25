@@ -14,7 +14,7 @@ V_5TTGEN_METADATA = Metadata(
 
 
 V5ttgenFreesurferParameters = typing.TypedDict('V5ttgenFreesurferParameters', {
-    "__STYX_TYPE__": typing.Literal["freesurfer"],
+    "__STYXTYPE__": typing.Literal["freesurfer"],
     "input": InputPathType,
     "output": str,
     "lut": typing.NotRequired[InputPathType | None],
@@ -22,7 +22,7 @@ V5ttgenFreesurferParameters = typing.TypedDict('V5ttgenFreesurferParameters', {
 
 
 V5ttgenFslParameters = typing.TypedDict('V5ttgenFslParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl"],
+    "__STYXTYPE__": typing.Literal["fsl"],
     "input": InputPathType,
     "output": str,
     "t2": typing.NotRequired[InputPathType | None],
@@ -32,14 +32,14 @@ V5ttgenFslParameters = typing.TypedDict('V5ttgenFslParameters', {
 
 
 V5ttgenGifParameters = typing.TypedDict('V5ttgenGifParameters', {
-    "__STYX_TYPE__": typing.Literal["gif"],
+    "__STYXTYPE__": typing.Literal["gif"],
     "input": InputPathType,
     "output": str,
 })
 
 
 V5ttgenHsvsParameters = typing.TypedDict('V5ttgenHsvsParameters', {
-    "__STYX_TYPE__": typing.Literal["hsvs"],
+    "__STYXTYPE__": typing.Literal["hsvs"],
     "input": InputPathType,
     "output": str,
     "template": typing.NotRequired[InputPathType | None],
@@ -50,14 +50,14 @@ V5ttgenHsvsParameters = typing.TypedDict('V5ttgenHsvsParameters', {
 
 
 V5ttgenConfigParameters = typing.TypedDict('V5ttgenConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 V5ttgenParameters = typing.TypedDict('V5ttgenParameters', {
-    "__STYX_TYPE__": typing.Literal["5ttgen"],
+    "__STYXTYPE__": typing.Literal["5ttgen"],
     "algorithm": typing.Union[V5ttgenFreesurferParameters, V5ttgenFslParameters, V5ttgenGifParameters, V5ttgenHsvsParameters],
     "nocrop": bool,
     "sgm_amyg_hipp": bool,

@@ -14,7 +14,7 @@ DICOM_TO_RAW_METADATA = Metadata(
 
 
 DicomToRawParameters = typing.TypedDict('DicomToRawParameters', {
-    "__STYX_TYPE__": typing.Literal["dicom_to_raw"],
+    "__STYXTYPE__": typing.Literal["dicom_to_raw"],
     "input_dicom": InputPathType,
 })
 

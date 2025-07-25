@@ -14,7 +14,7 @@ MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA = Metadata(
 
 
 MrisTransmantleDysplasiaPathsParameters = typing.TypedDict('MrisTransmantleDysplasiaPathsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_transmantle_dysplasia_paths"],
+    "__STYXTYPE__": typing.Literal["mris_transmantle_dysplasia_paths"],
     "surface": InputPathType,
     "aseg_volume": InputPathType,
     "intensity_volume": InputPathType,

@@ -14,7 +14,7 @@ VOLUME_ERODE_METADATA = Metadata(
 
 
 VolumeErodeParameters = typing.TypedDict('VolumeErodeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-erode"],
+    "__STYXTYPE__": typing.Literal["volume-erode"],
     "volume": InputPathType,
     "distance": float,
     "volume_out": str,

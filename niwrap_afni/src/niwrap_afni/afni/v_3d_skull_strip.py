@@ -14,7 +14,7 @@ V_3D_SKULL_STRIP_METADATA = Metadata(
 
 
 V3dSkullStripParameters = typing.TypedDict('V3dSkullStripParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSkullStrip"],
+    "__STYXTYPE__": typing.Literal["3dSkullStrip"],
     "in_file": InputPathType,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],

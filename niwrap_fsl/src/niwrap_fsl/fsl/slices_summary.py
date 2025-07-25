@@ -14,7 +14,7 @@ SLICES_SUMMARY_METADATA = Metadata(
 
 
 SlicesSummaryParameters = typing.TypedDict('SlicesSummaryParameters', {
-    "__STYX_TYPE__": typing.Literal["slices_summary"],
+    "__STYXTYPE__": typing.Literal["slices_summary"],
     "4d_input_file": InputPathType,
     "threshold": float,
     "background_image": InputPathType,

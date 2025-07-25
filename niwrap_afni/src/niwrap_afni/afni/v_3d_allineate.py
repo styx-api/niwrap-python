@@ -14,7 +14,7 @@ V_3D_ALLINEATE_METADATA = Metadata(
 
 
 V3dAllineateParameters = typing.TypedDict('V3dAllineateParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAllineate"],
+    "__STYXTYPE__": typing.Literal["3dAllineate"],
     "source": InputPathType,
     "base": typing.NotRequired[InputPathType | None],
     "prefix": str,

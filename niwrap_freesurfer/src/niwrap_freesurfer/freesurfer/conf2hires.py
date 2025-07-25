@@ -14,7 +14,7 @@ CONF2HIRES_METADATA = Metadata(
 
 
 Conf2hiresParameters = typing.TypedDict('Conf2hiresParameters', {
-    "__STYX_TYPE__": typing.Literal["conf2hires"],
+    "__STYXTYPE__": typing.Literal["conf2hires"],
     "subject": str,
     "t2": bool,
     "no_t2": bool,

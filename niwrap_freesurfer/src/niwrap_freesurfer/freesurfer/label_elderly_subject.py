@@ -14,7 +14,7 @@ LABEL_ELDERLY_SUBJECT_METADATA = Metadata(
 
 
 LabelElderlySubjectParameters = typing.TypedDict('LabelElderlySubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["label_elderly_subject"],
+    "__STYXTYPE__": typing.Literal["label_elderly_subject"],
     "norm_volume": InputPathType,
     "transform_lta": InputPathType,
     "classifier_array": typing.NotRequired[InputPathType | None],

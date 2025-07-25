@@ -14,7 +14,7 @@ V_3D_CONFORMIST_METADATA = Metadata(
 
 
 V3dConformistParameters = typing.TypedDict('V3dConformistParameters', {
-    "__STYX_TYPE__": typing.Literal["3dConformist"],
+    "__STYXTYPE__": typing.Literal["3dConformist"],
     "input_files": list[InputPathType],
 })
 

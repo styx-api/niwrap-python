@@ -14,7 +14,7 @@ BUILD_AFNI_PY_METADATA = Metadata(
 
 
 BuildAfniPyParameters = typing.TypedDict('BuildAfniPyParameters', {
-    "__STYX_TYPE__": typing.Literal["build_afni.py"],
+    "__STYXTYPE__": typing.Literal["build_afni.py"],
     "build_root": str,
     "clean_root": typing.NotRequired[str | None],
     "git_branch": typing.NotRequired[str | None],

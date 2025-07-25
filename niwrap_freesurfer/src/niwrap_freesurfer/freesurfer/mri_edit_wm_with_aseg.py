@@ -14,7 +14,7 @@ MRI_EDIT_WM_WITH_ASEG_METADATA = Metadata(
 
 
 MriEditWmWithAsegParameters = typing.TypedDict('MriEditWmWithAsegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_edit_wm_with_aseg"],
+    "__STYXTYPE__": typing.Literal["mri_edit_wm_with_aseg"],
     "input_wm": InputPathType,
     "input_t1_brain": InputPathType,
     "aseg": InputPathType,

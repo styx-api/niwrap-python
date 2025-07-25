@@ -14,7 +14,7 @@ V_3D_BRICK_STAT_METADATA = Metadata(
 
 
 V3dBrickStatParameters = typing.TypedDict('V3dBrickStatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dBrickStat"],
+    "__STYXTYPE__": typing.Literal["3dBrickStat"],
     "dataset": str,
     "quick": bool,
     "slow": bool,

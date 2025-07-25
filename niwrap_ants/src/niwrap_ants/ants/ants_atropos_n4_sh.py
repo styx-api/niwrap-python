@@ -14,14 +14,14 @@ ANTS_ATROPOS_N4_SH_METADATA = Metadata(
 
 
 AntsAtroposN4ShSegmentationPriorsParameters = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParameters', {
-    "__STYX_TYPE__": typing.Literal["segmentation_priors"],
+    "__STYXTYPE__": typing.Literal["segmentation_priors"],
     "segmentation_priors_pattern": typing.NotRequired[str | None],
     "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
 })
 
 
 AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsAtroposN4.sh"],
+    "__STYXTYPE__": typing.Literal["antsAtroposN4.sh"],
     "image_dimension": typing.Literal[2, 3],
     "input_image": InputPathType,
     "mask_image": InputPathType,

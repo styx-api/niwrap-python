@@ -14,7 +14,7 @@ MKSURFATLAS_METADATA = Metadata(
 
 
 MksurfatlasParameters = typing.TypedDict('MksurfatlasParameters', {
-    "__STYX_TYPE__": typing.Literal["mksurfatlas"],
+    "__STYXTYPE__": typing.Literal["mksurfatlas"],
     "atlas": str,
     "hemi": str,
     "subjects": list[str],

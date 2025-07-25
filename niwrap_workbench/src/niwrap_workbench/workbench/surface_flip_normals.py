@@ -14,7 +14,7 @@ SURFACE_FLIP_NORMALS_METADATA = Metadata(
 
 
 SurfaceFlipNormalsParameters = typing.TypedDict('SurfaceFlipNormalsParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-flip-normals"],
+    "__STYXTYPE__": typing.Literal["surface-flip-normals"],
     "surface": InputPathType,
     "surface_out": str,
 })

@@ -14,14 +14,14 @@ LABELCONVERT_METADATA = Metadata(
 
 
 LabelconvertConfigParameters = typing.TypedDict('LabelconvertConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 LabelconvertParameters = typing.TypedDict('LabelconvertParameters', {
-    "__STYX_TYPE__": typing.Literal["labelconvert"],
+    "__STYXTYPE__": typing.Literal["labelconvert"],
     "spine": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,

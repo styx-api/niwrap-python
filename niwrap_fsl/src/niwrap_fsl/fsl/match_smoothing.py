@@ -14,7 +14,7 @@ MATCH_SMOOTHING_METADATA = Metadata(
 
 
 MatchSmoothingParameters = typing.TypedDict('MatchSmoothingParameters', {
-    "__STYX_TYPE__": typing.Literal["match_smoothing"],
+    "__STYXTYPE__": typing.Literal["match_smoothing"],
     "example_func": InputPathType,
     "func_smoothing_FWHM": float,
     "example_structural": InputPathType,

@@ -14,7 +14,7 @@ MRI_ADD_XFORM_TO_HEADER_METADATA = Metadata(
 
 
 MriAddXformToHeaderParameters = typing.TypedDict('MriAddXformToHeaderParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_add_xform_to_header"],
+    "__STYXTYPE__": typing.Literal["mri_add_xform_to_header"],
     "xfm_file": InputPathType,
     "input_volume": InputPathType,
     "output_volume": str,

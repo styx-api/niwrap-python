@@ -14,7 +14,7 @@ IMGREG_4DFP_METADATA = Metadata(
 
 
 Imgreg4dfpParameters = typing.TypedDict('Imgreg4dfpParameters', {
-    "__STYX_TYPE__": typing.Literal["imgreg_4dfp"],
+    "__STYXTYPE__": typing.Literal["imgreg_4dfp"],
     "target_image": InputPathType,
     "target_mask": str,
     "source_image": InputPathType,

@@ -14,7 +14,7 @@ V__SURF_TO_VOL_SPACKLE_METADATA = Metadata(
 
 
 VSurfToVolSpackleParameters = typing.TypedDict('VSurfToVolSpackleParameters', {
-    "__STYX_TYPE__": typing.Literal["@surf_to_vol_spackle"],
+    "__STYXTYPE__": typing.Literal["@surf_to_vol_spackle"],
     "maskset": InputPathType,
     "spec": InputPathType,
     "surfA": str,

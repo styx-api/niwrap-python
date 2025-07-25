@@ -14,7 +14,7 @@ V__SUMA_RENUMBER_FS_METADATA = Metadata(
 
 
 VSumaRenumberFsParameters = typing.TypedDict('VSumaRenumberFsParameters', {
-    "__STYX_TYPE__": typing.Literal["@SUMA_renumber_FS"],
+    "__STYXTYPE__": typing.Literal["@SUMA_renumber_FS"],
     "sumadir": str,
 })
 

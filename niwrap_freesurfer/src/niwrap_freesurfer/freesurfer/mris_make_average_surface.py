@@ -14,7 +14,7 @@ MRIS_MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 
 
 MrisMakeAverageSurfaceParameters = typing.TypedDict('MrisMakeAverageSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_make_average_surface"],
+    "__STYXTYPE__": typing.Literal["mris_make_average_surface"],
     "hemi": str,
     "outsurfname": str,
     "cansurfname": str,

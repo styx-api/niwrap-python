@@ -14,7 +14,7 @@ POSSUM_MATRIX_METADATA = Metadata(
 
 
 PossumMatrixParameters = typing.TypedDict('PossumMatrixParameters', {
-    "__STYX_TYPE__": typing.Literal["possum_matrix"],
+    "__STYXTYPE__": typing.Literal["possum_matrix"],
     "pulse_sequence": str,
     "motion_matrix": str,
     "output_matrix": str,

@@ -14,7 +14,7 @@ MRIS_SEGMENTATION_STATS_METADATA = Metadata(
 
 
 MrisSegmentationStatsParameters = typing.TypedDict('MrisSegmentationStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_segmentation_stats"],
+    "__STYXTYPE__": typing.Literal["mris_segmentation_stats"],
     "overlay_name": str,
     "segmentation_label_name": str,
     "subjects": list[str],

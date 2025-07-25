@@ -14,7 +14,7 @@ V_3D_ANOVA2_METADATA = Metadata(
 
 
 V3dAnova2Parameters = typing.TypedDict('V3dAnova2Parameters', {
-    "__STYX_TYPE__": typing.Literal["3dANOVA2"],
+    "__STYXTYPE__": typing.Literal["3dANOVA2"],
     "type": int,
     "alevels": int,
     "blevels": int,

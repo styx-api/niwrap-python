@@ -14,7 +14,7 @@ FABBER_DWI_METADATA = Metadata(
 
 
 FabberDwiParameters = typing.TypedDict('FabberDwiParameters', {
-    "__STYX_TYPE__": typing.Literal["fabber_dwi"],
+    "__STYXTYPE__": typing.Literal["fabber_dwi"],
     "output_dir": str,
     "method": str,
     "model": str,

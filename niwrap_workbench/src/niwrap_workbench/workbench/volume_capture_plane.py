@@ -14,7 +14,7 @@ VOLUME_CAPTURE_PLANE_METADATA = Metadata(
 
 
 VolumeCapturePlaneParameters = typing.TypedDict('VolumeCapturePlaneParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-capture-plane"],
+    "__STYXTYPE__": typing.Literal["volume-capture-plane"],
     "volume": InputPathType,
     "subvolume": str,
     "interp": str,

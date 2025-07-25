@@ -14,7 +14,7 @@ EDDY_SQUAD_METADATA = Metadata(
 
 
 EddySquadParameters = typing.TypedDict('EddySquadParameters', {
-    "__STYX_TYPE__": typing.Literal["eddy_squad"],
+    "__STYXTYPE__": typing.Literal["eddy_squad"],
     "grouping": typing.NotRequired[str | None],
     "group_db": typing.NotRequired[InputPathType | None],
     "update": bool,

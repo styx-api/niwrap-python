@@ -14,7 +14,7 @@ SLICESMASK_METADATA = Metadata(
 
 
 SlicesmaskParameters = typing.TypedDict('SlicesmaskParameters', {
-    "__STYX_TYPE__": typing.Literal["slicesmask"],
+    "__STYXTYPE__": typing.Literal["slicesmask"],
     "image": InputPathType,
     "mask": InputPathType,
     "output": str,

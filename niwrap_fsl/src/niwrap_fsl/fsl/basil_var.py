@@ -14,7 +14,7 @@ BASIL_VAR_METADATA = Metadata(
 
 
 BasilVarParameters = typing.TypedDict('BasilVarParameters', {
-    "__STYX_TYPE__": typing.Literal["basil_var"],
+    "__STYXTYPE__": typing.Literal["basil_var"],
     "results_dir": str,
     "mask_image": InputPathType,
 })

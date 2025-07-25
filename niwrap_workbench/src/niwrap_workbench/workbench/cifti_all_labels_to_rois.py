@@ -14,7 +14,7 @@ CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 CiftiAllLabelsToRoisParameters = typing.TypedDict('CiftiAllLabelsToRoisParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-all-labels-to-rois"],
+    "__STYXTYPE__": typing.Literal["cifti-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "cifti_out": str,

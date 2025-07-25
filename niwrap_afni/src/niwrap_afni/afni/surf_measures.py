@@ -14,7 +14,7 @@ SURF_MEASURES_METADATA = Metadata(
 
 
 SurfMeasuresParameters = typing.TypedDict('SurfMeasuresParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfMeasures"],
+    "__STYXTYPE__": typing.Literal["SurfMeasures"],
     "spec_file": InputPathType,
     "surf_A": str,
     "surf_B": typing.NotRequired[str | None],

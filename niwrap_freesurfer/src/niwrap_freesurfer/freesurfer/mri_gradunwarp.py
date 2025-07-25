@@ -14,7 +14,7 @@ MRI_GRADUNWARP_METADATA = Metadata(
 
 
 MriGradunwarpParameters = typing.TypedDict('MriGradunwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gradunwarp"],
+    "__STYXTYPE__": typing.Literal["mri_gradunwarp"],
     "gradient_coeff": typing.NotRequired[InputPathType | None],
     "load_transtbl": typing.NotRequired[InputPathType | None],
     "input_file": InputPathType,

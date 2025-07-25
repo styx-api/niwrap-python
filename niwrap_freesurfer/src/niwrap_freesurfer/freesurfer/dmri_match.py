@@ -14,7 +14,7 @@ DMRI_MATCH_METADATA = Metadata(
 
 
 DmriMatchParameters = typing.TypedDict('DmriMatchParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_match"],
+    "__STYXTYPE__": typing.Literal["dmri_match"],
     "parcellation1": InputPathType,
     "parcellation2": InputPathType,
     "num_clusters": float,

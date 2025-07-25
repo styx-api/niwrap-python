@@ -14,7 +14,7 @@ PNM_EVS_METADATA = Metadata(
 
 
 PnmEvsParameters = typing.TypedDict('PnmEvsParameters', {
-    "__STYX_TYPE__": typing.Literal["pnm_evs"],
+    "__STYXTYPE__": typing.Literal["pnm_evs"],
     "input_file": InputPathType,
     "output_file": str,
     "tr_value": float,

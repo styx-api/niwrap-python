@@ -14,7 +14,7 @@ V_1D_TOOL_PY_METADATA = Metadata(
 
 
 V1dToolPyParameters = typing.TypedDict('V1dToolPyParameters', {
-    "__STYX_TYPE__": typing.Literal["1d_tool.py"],
+    "__STYXTYPE__": typing.Literal["1d_tool.py"],
     "infile": InputPathType,
     "write": typing.NotRequired[str | None],
     "select_cols": typing.NotRequired[str | None],

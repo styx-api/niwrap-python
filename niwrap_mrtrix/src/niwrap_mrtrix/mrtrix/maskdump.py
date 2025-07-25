@@ -14,14 +14,14 @@ MASKDUMP_METADATA = Metadata(
 
 
 MaskdumpConfigParameters = typing.TypedDict('MaskdumpConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MaskdumpParameters = typing.TypedDict('MaskdumpParameters', {
-    "__STYX_TYPE__": typing.Literal["maskdump"],
+    "__STYXTYPE__": typing.Literal["maskdump"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

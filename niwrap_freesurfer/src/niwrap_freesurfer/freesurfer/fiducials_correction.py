@@ -14,7 +14,7 @@ FIDUCIALS_CORRECTION_METADATA = Metadata(
 
 
 FiducialsCorrectionParameters = typing.TypedDict('FiducialsCorrectionParameters', {
-    "__STYX_TYPE__": typing.Literal["fiducials_correction"],
+    "__STYXTYPE__": typing.Literal["fiducials_correction"],
     "input_file": InputPathType,
     "output_file": str,
 })

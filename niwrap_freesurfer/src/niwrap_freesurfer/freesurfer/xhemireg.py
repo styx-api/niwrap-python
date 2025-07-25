@@ -14,7 +14,7 @@ XHEMIREG_METADATA = Metadata(
 
 
 XhemiregParameters = typing.TypedDict('XhemiregParameters', {
-    "__STYX_TYPE__": typing.Literal["xhemireg"],
+    "__STYXTYPE__": typing.Literal["xhemireg"],
     "subject": str,
     "output_dir": typing.NotRequired[str | None],
     "map_lh": bool,

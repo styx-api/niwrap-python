@@ -14,7 +14,7 @@ SPHERE_SUBJECT_METADATA = Metadata(
 
 
 SphereSubjectParameters = typing.TypedDict('SphereSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["sphere_subject"],
+    "__STYXTYPE__": typing.Literal["sphere_subject"],
     "input_dir": str,
     "output_file": str,
     "license_file": typing.NotRequired[str | None],

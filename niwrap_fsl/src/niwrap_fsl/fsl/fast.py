@@ -14,7 +14,7 @@ FAST_METADATA = Metadata(
 
 
 FastParameters = typing.TypedDict('FastParameters', {
-    "__STYX_TYPE__": typing.Literal["fast"],
+    "__STYXTYPE__": typing.Literal["fast"],
     "number_classes": typing.NotRequired[int | None],
     "bias_iters": typing.NotRequired[int | None],
     "bias_lowpass": typing.NotRequired[float | None],

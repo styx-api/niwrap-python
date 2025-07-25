@@ -14,7 +14,7 @@ MRI_CC_METADATA = Metadata(
 
 
 MriCcParameters = typing.TypedDict('MriCcParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_cc"],
+    "__STYXTYPE__": typing.Literal["mri_cc"],
     "subject_name": str,
     "output_file": typing.NotRequired[str | None],
     "aseg_file": typing.NotRequired[InputPathType | None],

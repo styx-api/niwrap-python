@@ -14,7 +14,7 @@ EXTRACTTXT_METADATA = Metadata(
 
 
 ExtracttxtParameters = typing.TypedDict('ExtracttxtParameters', {
-    "__STYX_TYPE__": typing.Literal["extracttxt"],
+    "__STYXTYPE__": typing.Literal["extracttxt"],
     "search_word": str,
     "file": InputPathType,
     "num_trailing_lines": typing.NotRequired[float | None],

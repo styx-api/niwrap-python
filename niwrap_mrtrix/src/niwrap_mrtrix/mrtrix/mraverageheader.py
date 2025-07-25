@@ -14,14 +14,14 @@ MRAVERAGEHEADER_METADATA = Metadata(
 
 
 MraverageheaderConfigParameters = typing.TypedDict('MraverageheaderConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MraverageheaderParameters = typing.TypedDict('MraverageheaderParameters', {
-    "__STYX_TYPE__": typing.Literal["mraverageheader"],
+    "__STYXTYPE__": typing.Literal["mraverageheader"],
     "padding": typing.NotRequired[float | None],
     "resolution": typing.NotRequired[str | None],
     "fill": bool,

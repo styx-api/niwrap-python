@@ -14,7 +14,7 @@ TABLE2MAP_METADATA = Metadata(
 
 
 Table2mapParameters = typing.TypedDict('Table2mapParameters', {
-    "__STYX_TYPE__": typing.Literal["table2map"],
+    "__STYXTYPE__": typing.Literal["table2map"],
     "input_table": InputPathType,
     "output_map": str,
     "segmentation": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ PLUGOUT_TT_METADATA = Metadata(
 
 
 PlugoutTtParameters = typing.TypedDict('PlugoutTtParameters', {
-    "__STYX_TYPE__": typing.Literal["plugout_tt"],
+    "__STYXTYPE__": typing.Literal["plugout_tt"],
     "host": typing.NotRequired[str | None],
     "ijk_option": bool,
     "verbose": bool,

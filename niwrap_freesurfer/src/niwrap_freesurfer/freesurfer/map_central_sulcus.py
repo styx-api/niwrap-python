@@ -14,7 +14,7 @@ MAP_CENTRAL_SULCUS_METADATA = Metadata(
 
 
 MapCentralSulcusParameters = typing.TypedDict('MapCentralSulcusParameters', {
-    "__STYX_TYPE__": typing.Literal["map_central_sulcus"],
+    "__STYXTYPE__": typing.Literal["map_central_sulcus"],
     "subjid": str,
     "process_directive": str,
     "hemi_flag": typing.NotRequired[str | None],

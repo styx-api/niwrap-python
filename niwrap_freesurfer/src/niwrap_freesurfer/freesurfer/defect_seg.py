@@ -14,7 +14,7 @@ DEFECT_SEG_METADATA = Metadata(
 
 
 DefectSegParameters = typing.TypedDict('DefectSegParameters', {
-    "__STYX_TYPE__": typing.Literal["defect-seg"],
+    "__STYXTYPE__": typing.Literal["defect-seg"],
     "subject": str,
     "lh_only": bool,
     "rh_only": bool,

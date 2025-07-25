@@ -14,7 +14,7 @@ ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
 
 
 EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParameters', {
-    "__STYX_TYPE__": typing.Literal["estimate-fiber-binghams"],
+    "__STYXTYPE__": typing.Literal["estimate-fiber-binghams"],
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
     "merged_ph1samples": InputPathType,

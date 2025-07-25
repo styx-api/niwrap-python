@@ -14,7 +14,7 @@ REG_JACOBIAN_METADATA = Metadata(
 
 
 RegJacobianParameters = typing.TypedDict('RegJacobianParameters', {
-    "__STYX_TYPE__": typing.Literal["reg_jacobian"],
+    "__STYXTYPE__": typing.Literal["reg_jacobian"],
     "reference_image": InputPathType,
     "deformation_field": typing.NotRequired[InputPathType | None],
     "control_point_lattice": typing.NotRequired[InputPathType | None],

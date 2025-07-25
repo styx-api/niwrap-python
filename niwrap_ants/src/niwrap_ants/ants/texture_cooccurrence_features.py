@@ -14,7 +14,7 @@ TEXTURE_COOCCURRENCE_FEATURES_METADATA = Metadata(
 
 
 TextureCooccurrenceFeaturesParameters = typing.TypedDict('TextureCooccurrenceFeaturesParameters', {
-    "__STYX_TYPE__": typing.Literal["TextureCooccurrenceFeatures"],
+    "__STYXTYPE__": typing.Literal["TextureCooccurrenceFeatures"],
     "image_dimension": int,
     "input_image": InputPathType,
     "number_of_bins_per_axis": typing.NotRequired[int | None],

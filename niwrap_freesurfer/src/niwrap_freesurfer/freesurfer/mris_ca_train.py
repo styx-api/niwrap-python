@@ -14,7 +14,7 @@ MRIS_CA_TRAIN_METADATA = Metadata(
 
 
 MrisCaTrainParameters = typing.TypedDict('MrisCaTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_ca_train"],
+    "__STYXTYPE__": typing.Literal["mris_ca_train"],
     "hemi": str,
     "canonsurf": InputPathType,
     "annot_file": InputPathType,

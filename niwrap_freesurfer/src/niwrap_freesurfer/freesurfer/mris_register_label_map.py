@@ -14,7 +14,7 @@ MRIS_REGISTER_LABEL_MAP_METADATA = Metadata(
 
 
 MrisRegisterLabelMapParameters = typing.TypedDict('MrisRegisterLabelMapParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_register_label_map"],
+    "__STYXTYPE__": typing.Literal["mris_register_label_map"],
     "subjects_list": str,
     "target_subject": str,
     "prior": str,

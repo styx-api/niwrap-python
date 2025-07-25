@@ -14,7 +14,7 @@ MRI_JOINT_DENSITY_METADATA = Metadata(
 
 
 MriJointDensityParameters = typing.TypedDict('MriJointDensityParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_joint_density"],
+    "__STYXTYPE__": typing.Literal["mri_joint_density"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_density_file": str,

@@ -14,7 +14,7 @@ MRIS_JACOBIAN_METADATA = Metadata(
 
 
 MrisJacobianParameters = typing.TypedDict('MrisJacobianParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_jacobian"],
+    "__STYXTYPE__": typing.Literal["mris_jacobian"],
     "original_surface": InputPathType,
     "mapped_surface": InputPathType,
     "jacobian_file": str,

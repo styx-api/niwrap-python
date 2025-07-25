@@ -14,7 +14,7 @@ CONVERT_CDIFLIST_TO_GRADS_METADATA = Metadata(
 
 
 ConvertCdiflistToGradsParameters = typing.TypedDict('ConvertCdiflistToGradsParameters', {
-    "__STYX_TYPE__": typing.Literal["convert_cdiflist_to_grads"],
+    "__STYXTYPE__": typing.Literal["convert_cdiflist_to_grads"],
     "cdiflist": InputPathType,
     "bval_max": float,
     "prefix": str,

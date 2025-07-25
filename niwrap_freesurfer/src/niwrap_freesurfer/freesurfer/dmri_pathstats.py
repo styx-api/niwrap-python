@@ -14,7 +14,7 @@ DMRI_PATHSTATS_METADATA = Metadata(
 
 
 DmriPathstatsParameters = typing.TypedDict('DmriPathstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_pathstats"],
+    "__STYXTYPE__": typing.Literal["dmri_pathstats"],
     "intrk": InputPathType,
     "rois": typing.NotRequired[list[InputPathType] | None],
     "intrc": InputPathType,

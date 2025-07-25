@@ -14,7 +14,7 @@ PLUGOUT_DRIVE_METADATA = Metadata(
 
 
 PlugoutDriveParameters = typing.TypedDict('PlugoutDriveParameters', {
-    "__STYX_TYPE__": typing.Literal["plugout_drive"],
+    "__STYXTYPE__": typing.Literal["plugout_drive"],
     "host": typing.NotRequired[str | None],
     "shm": bool,
     "verbose": bool,

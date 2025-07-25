@@ -14,7 +14,7 @@ DMRI_SPLINE_METADATA = Metadata(
 
 
 DmriSplineParameters = typing.TypedDict('DmriSplineParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_spline"],
+    "__STYXTYPE__": typing.Literal["dmri_spline"],
     "control_points_file": InputPathType,
     "mask_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MRI_EXTRACT_FCD_FEATURES_METADATA = Metadata(
 
 
 MriExtractFcdFeaturesParameters = typing.TypedDict('MriExtractFcdFeaturesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_extract_fcd_features"],
+    "__STYXTYPE__": typing.Literal["mri_extract_fcd_features"],
     "subject": str,
     "hemi": str,
     "output_file": InputPathType,

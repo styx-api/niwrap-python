@@ -14,7 +14,7 @@ MRI_SYNTHMORPH_METADATA = Metadata(
 
 
 MriSynthmorphParameters = typing.TypedDict('MriSynthmorphParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_synthmorph"],
+    "__STYXTYPE__": typing.Literal["mri_synthmorph"],
     "moving_image": InputPathType,
     "fixed_image": InputPathType,
     "moved_output": typing.NotRequired[str | None],

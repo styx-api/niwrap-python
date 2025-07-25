@@ -14,7 +14,7 @@ GET_LABEL_THICKNESS_METADATA = Metadata(
 
 
 GetLabelThicknessParameters = typing.TypedDict('GetLabelThicknessParameters', {
-    "__STYX_TYPE__": typing.Literal["get_label_thickness"],
+    "__STYXTYPE__": typing.Literal["get_label_thickness"],
     "infile": InputPathType,
 })
 

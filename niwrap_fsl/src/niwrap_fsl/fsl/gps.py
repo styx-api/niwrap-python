@@ -14,7 +14,7 @@ GPS_METADATA = Metadata(
 
 
 GpsParameters = typing.TypedDict('GpsParameters', {
-    "__STYX_TYPE__": typing.Literal["gps"],
+    "__STYXTYPE__": typing.Literal["gps"],
     "ndir": float,
     "optws": bool,
     "output": typing.NotRequired[str | None],

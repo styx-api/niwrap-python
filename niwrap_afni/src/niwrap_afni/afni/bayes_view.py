@@ -14,7 +14,7 @@ BAYES_VIEW_METADATA = Metadata(
 
 
 BayesViewParameters = typing.TypedDict('BayesViewParameters', {
-    "__STYX_TYPE__": typing.Literal["bayes_view"],
+    "__STYXTYPE__": typing.Literal["bayes_view"],
     "input_folder": str,
     "help": bool,
     "shiny_folder": typing.NotRequired[str | None],

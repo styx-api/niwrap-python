@@ -14,7 +14,7 @@ V_3D_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dGroupInCorrParameters = typing.TypedDict('V3dGroupInCorrParameters', {
-    "__STYX_TYPE__": typing.Literal["3dGroupInCorr"],
+    "__STYXTYPE__": typing.Literal["3dGroupInCorr"],
     "set_a": InputPathType,
     "set_b": typing.NotRequired[InputPathType | None],
     "apair": bool,

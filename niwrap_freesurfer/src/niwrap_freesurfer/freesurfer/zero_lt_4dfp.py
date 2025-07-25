@@ -14,7 +14,7 @@ ZERO_LT_4DFP_METADATA = Metadata(
 
 
 ZeroLt4dfpParameters = typing.TypedDict('ZeroLt4dfpParameters', {
-    "__STYX_TYPE__": typing.Literal["zero_lt_4dfp"],
+    "__STYXTYPE__": typing.Literal["zero_lt_4dfp"],
     "flt_value": float,
     "file_4dfp": InputPathType,
     "outroot": typing.NotRequired[str | None],

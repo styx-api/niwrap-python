@@ -14,7 +14,7 @@ SURF_FWHM_METADATA = Metadata(
 
 
 SurfFwhmParameters = typing.TypedDict('SurfFwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfFWHM"],
+    "__STYXTYPE__": typing.Literal["SurfFWHM"],
     "input_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "surf_1": typing.NotRequired[str | None],

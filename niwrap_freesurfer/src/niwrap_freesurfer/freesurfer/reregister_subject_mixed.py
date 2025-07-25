@@ -14,7 +14,7 @@ REREGISTER_SUBJECT_MIXED_METADATA = Metadata(
 
 
 ReregisterSubjectMixedParameters = typing.TypedDict('ReregisterSubjectMixedParameters', {
-    "__STYX_TYPE__": typing.Literal["reregister_subject_mixed"],
+    "__STYXTYPE__": typing.Literal["reregister_subject_mixed"],
     "input_volume": InputPathType,
     "output_directory": str,
     "threads": typing.NotRequired[float | None],

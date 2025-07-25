@@ -14,7 +14,7 @@ V_3D_ICC_METADATA = Metadata(
 
 
 V3dIccParameters = typing.TypedDict('V3dIccParameters', {
-    "__STYX_TYPE__": typing.Literal["3dICC"],
+    "__STYXTYPE__": typing.Literal["3dICC"],
     "model": str,
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],

@@ -14,28 +14,28 @@ TIME_SCCAN_METADATA = Metadata(
 
 
 TimeSccanTimeseriesimageToMatrixParameters = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParameters', {
-    "__STYX_TYPE__": typing.Literal["timeseriesimage_to_matrix"],
+    "__STYXTYPE__": typing.Literal["timeseriesimage_to_matrix"],
     "timeseries_image": InputPathType,
     "mask_image": InputPathType,
 })
 
 
 TimeSccanNetworkSccaParameters = typing.TypedDict('TimeSccanNetworkSccaParameters', {
-    "__STYX_TYPE__": typing.Literal["network_scca"],
+    "__STYXTYPE__": typing.Literal["network_scca"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
 TimeSccanNetworkRegionAveragingParameters = typing.TypedDict('TimeSccanNetworkRegionAveragingParameters', {
-    "__STYX_TYPE__": typing.Literal["network_region_averaging"],
+    "__STYXTYPE__": typing.Literal["network_region_averaging"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
 TimeSccanParameters = typing.TypedDict('TimeSccanParameters', {
-    "__STYX_TYPE__": typing.Literal["TimeSCCAN"],
+    "__STYXTYPE__": typing.Literal["TimeSCCAN"],
     "output": str,
     "number_consecutive_labels": typing.NotRequired[int | None],
     "minimum_region_size": typing.NotRequired[int | None],

@@ -14,7 +14,7 @@ GEN_SS_REVIEW_SCRIPTS_METADATA = Metadata(
 
 
 GenSsReviewScriptsParameters = typing.TypedDict('GenSsReviewScriptsParameters', {
-    "__STYX_TYPE__": typing.Literal["gen_ss_review_scripts"],
+    "__STYXTYPE__": typing.Literal["gen_ss_review_scripts"],
     "subject_id": typing.NotRequired[str | None],
     "rm_trs": typing.NotRequired[float | None],
     "num_stim": typing.NotRequired[float | None],

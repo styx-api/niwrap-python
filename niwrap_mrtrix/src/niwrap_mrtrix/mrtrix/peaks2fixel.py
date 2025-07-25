@@ -14,14 +14,14 @@ PEAKS2FIXEL_METADATA = Metadata(
 
 
 Peaks2fixelConfigParameters = typing.TypedDict('Peaks2fixelConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Peaks2fixelParameters = typing.TypedDict('Peaks2fixelParameters', {
-    "__STYX_TYPE__": typing.Literal["peaks2fixel"],
+    "__STYXTYPE__": typing.Literal["peaks2fixel"],
     "dataname": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,

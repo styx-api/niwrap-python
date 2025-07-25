@@ -14,13 +14,13 @@ WBSPARSE_MERGE_DENSE_METADATA = Metadata(
 
 
 WbsparseMergeDenseWbsparseParameters = typing.TypedDict('WbsparseMergeDenseWbsparseParameters', {
-    "__STYX_TYPE__": typing.Literal["wbsparse"],
+    "__STYXTYPE__": typing.Literal["wbsparse"],
     "wbsparse_in": str,
 })
 
 
 WbsparseMergeDenseParameters = typing.TypedDict('WbsparseMergeDenseParameters', {
-    "__STYX_TYPE__": typing.Literal["wbsparse-merge-dense"],
+    "__STYXTYPE__": typing.Literal["wbsparse-merge-dense"],
     "direction": str,
     "wbsparse_out": str,
     "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],

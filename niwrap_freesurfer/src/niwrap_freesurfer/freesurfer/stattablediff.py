@@ -14,7 +14,7 @@ STATTABLEDIFF_METADATA = Metadata(
 
 
 StattablediffParameters = typing.TypedDict('StattablediffParameters', {
-    "__STYX_TYPE__": typing.Literal["stattablediff"],
+    "__STYXTYPE__": typing.Literal["stattablediff"],
     "t1": InputPathType,
     "t2": InputPathType,
     "output": str,

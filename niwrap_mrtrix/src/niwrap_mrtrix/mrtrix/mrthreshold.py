@@ -14,14 +14,14 @@ MRTHRESHOLD_METADATA = Metadata(
 
 
 MrthresholdConfigParameters = typing.TypedDict('MrthresholdConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrthresholdParameters = typing.TypedDict('MrthresholdParameters', {
-    "__STYX_TYPE__": typing.Literal["mrthreshold"],
+    "__STYXTYPE__": typing.Literal["mrthreshold"],
     "abs": typing.NotRequired[float | None],
     "percentile": typing.NotRequired[float | None],
     "top": typing.NotRequired[int | None],

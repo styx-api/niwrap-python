@@ -14,7 +14,7 @@ V_3D_ECM_METADATA = Metadata(
 
 
 V3dEcmParameters = typing.TypedDict('V3dEcmParameters', {
-    "__STYX_TYPE__": typing.Literal["3dECM"],
+    "__STYXTYPE__": typing.Literal["3dECM"],
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,

@@ -14,7 +14,7 @@ V_3D_CM_METADATA = Metadata(
 
 
 V3dCmParameters = typing.TypedDict('V3dCmParameters', {
-    "__STYX_TYPE__": typing.Literal["3dCM"],
+    "__STYXTYPE__": typing.Literal["3dCM"],
     "dset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,

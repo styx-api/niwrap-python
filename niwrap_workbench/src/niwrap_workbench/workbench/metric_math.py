@@ -14,7 +14,7 @@ METRIC_MATH_METADATA = Metadata(
 
 
 MetricMathVarParameters = typing.TypedDict('MetricMathVarParameters', {
-    "__STYX_TYPE__": typing.Literal["var"],
+    "__STYXTYPE__": typing.Literal["var"],
     "name": str,
     "metric": InputPathType,
     "opt_column_column": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ MetricMathVarParameters = typing.TypedDict('MetricMathVarParameters', {
 
 
 MetricMathParameters = typing.TypedDict('MetricMathParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-math"],
+    "__STYXTYPE__": typing.Literal["metric-math"],
     "expression": str,
     "metric_out": str,
     "opt_fixnan_replace": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ FSLCREATEHD_METADATA = Metadata(
 
 
 FslcreatehdParameters = typing.TypedDict('FslcreatehdParameters', {
-    "__STYX_TYPE__": typing.Literal["fslcreatehd"],
+    "__STYXTYPE__": typing.Literal["fslcreatehd"],
     "xsize": float,
     "ysize": float,
     "zsize": float,

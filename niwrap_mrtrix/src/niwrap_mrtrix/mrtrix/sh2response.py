@@ -14,14 +14,14 @@ SH2RESPONSE_METADATA = Metadata(
 
 
 Sh2responseConfigParameters = typing.TypedDict('Sh2responseConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2responseParameters = typing.TypedDict('Sh2responseParameters', {
-    "__STYX_TYPE__": typing.Literal["sh2response"],
+    "__STYXTYPE__": typing.Literal["sh2response"],
     "lmax": typing.NotRequired[int | None],
     "dump": typing.NotRequired[str | None],
     "info": bool,

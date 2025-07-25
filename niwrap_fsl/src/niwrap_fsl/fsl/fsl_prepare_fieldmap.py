@@ -14,7 +14,7 @@ FSL_PREPARE_FIELDMAP_METADATA = Metadata(
 
 
 FslPrepareFieldmapParameters = typing.TypedDict('FslPrepareFieldmapParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_prepare_fieldmap"],
+    "__STYXTYPE__": typing.Literal["fsl_prepare_fieldmap"],
     "scanner": str,
     "phase_image": InputPathType,
     "magnitude_image": InputPathType,

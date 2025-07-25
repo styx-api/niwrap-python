@@ -14,7 +14,7 @@ V_3D_SPACE_TIME_CORR_METADATA = Metadata(
 
 
 V3dSpaceTimeCorrParameters = typing.TypedDict('V3dSpaceTimeCorrParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSpaceTimeCorr"],
+    "__STYXTYPE__": typing.Literal["3dSpaceTimeCorr"],
     "insetA": InputPathType,
     "insetB": InputPathType,
     "prefix": str,

@@ -14,14 +14,14 @@ MRDUMP_METADATA = Metadata(
 
 
 MrdumpConfigParameters = typing.TypedDict('MrdumpConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrdumpParameters = typing.TypedDict('MrdumpParameters', {
-    "__STYX_TYPE__": typing.Literal["mrdump"],
+    "__STYXTYPE__": typing.Literal["mrdump"],
     "mask": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,

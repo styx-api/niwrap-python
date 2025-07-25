@@ -14,7 +14,7 @@ SEGPONS_METADATA = Metadata(
 
 
 SegponsParameters = typing.TypedDict('SegponsParameters', {
-    "__STYX_TYPE__": typing.Literal["segpons"],
+    "__STYXTYPE__": typing.Literal["segpons"],
     "subject": str,
     "aseg": bool,
     "apas": bool,

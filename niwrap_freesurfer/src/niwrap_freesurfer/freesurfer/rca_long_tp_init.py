@@ -14,7 +14,7 @@ RCA_LONG_TP_INIT_METADATA = Metadata(
 
 
 RcaLongTpInitParameters = typing.TypedDict('RcaLongTpInitParameters', {
-    "__STYX_TYPE__": typing.Literal["rca-long-tp-init"],
+    "__STYXTYPE__": typing.Literal["rca-long-tp-init"],
     "timepoint": str,
     "base": str,
     "use_long_base_ctrl_vol": bool,

@@ -14,26 +14,26 @@ TRANSFORMCOMPOSE_METADATA = Metadata(
 
 
 TransformcomposeConfigParameters = typing.TypedDict('TransformcomposeConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TransformcomposeVariousStringParameters = typing.TypedDict('TransformcomposeVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TransformcomposeVariousFileParameters = typing.TypedDict('TransformcomposeVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TransformcomposeParameters = typing.TypedDict('TransformcomposeParameters', {
-    "__STYX_TYPE__": typing.Literal["transformcompose"],
+    "__STYXTYPE__": typing.Literal["transformcompose"],
     "template": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,

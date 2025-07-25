@@ -14,7 +14,7 @@ UNPACK_MNC_TCL_METADATA = Metadata(
 
 
 UnpackMncTclParameters = typing.TypedDict('UnpackMncTclParameters', {
-    "__STYX_TYPE__": typing.Literal["unpack_mnc.tcl"],
+    "__STYXTYPE__": typing.Literal["unpack_mnc.tcl"],
     "verbose": bool,
     "output_dir": typing.NotRequired[str | None],
     "input_file": typing.NotRequired[InputPathType | None],

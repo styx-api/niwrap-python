@@ -14,7 +14,7 @@ V_3D_ROW_FILLIN_METADATA = Metadata(
 
 
 V3dRowFillinParameters = typing.TypedDict('V3dRowFillinParameters', {
-    "__STYX_TYPE__": typing.Literal["3dRowFillin"],
+    "__STYXTYPE__": typing.Literal["3dRowFillin"],
     "maxgap": typing.NotRequired[float | None],
     "dir": typing.NotRequired[str | None],
     "binary": bool,

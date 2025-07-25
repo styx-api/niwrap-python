@@ -14,7 +14,7 @@ MRIS_FIX_TOPOLOGY_METADATA = Metadata(
 
 
 MrisFixTopologyParameters = typing.TypedDict('MrisFixTopologyParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_fix_topology"],
+    "__STYXTYPE__": typing.Literal["mris_fix_topology"],
     "subject_name": str,
     "hemisphere": str,
     "orig_name": typing.NotRequired[str | None],

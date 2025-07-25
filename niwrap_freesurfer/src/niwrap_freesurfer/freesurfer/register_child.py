@@ -14,7 +14,7 @@ REGISTER_CHILD_METADATA = Metadata(
 
 
 RegisterChildParameters = typing.TypedDict('RegisterChildParameters', {
-    "__STYX_TYPE__": typing.Literal["register_child"],
+    "__STYXTYPE__": typing.Literal["register_child"],
     "input_volume": InputPathType,
     "output_directory": str,
 })

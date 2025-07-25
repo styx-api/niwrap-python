@@ -14,7 +14,7 @@ MRI_MAP_CPDAT_METADATA = Metadata(
 
 
 MriMapCpdatParameters = typing.TypedDict('MriMapCpdatParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_map_cpdat"],
+    "__STYXTYPE__": typing.Literal["mri_map_cpdat"],
     "input_file": InputPathType,
     "output_file": str,
     "lta_file": typing.NotRequired[InputPathType | None],

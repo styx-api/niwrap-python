@@ -14,7 +14,7 @@ FSL_ENTS_METADATA = Metadata(
 
 
 FslEntsParameters = typing.TypedDict('FslEntsParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_ents"],
+    "__STYXTYPE__": typing.Literal["fsl_ents"],
     "icadir": str,
     "components": list[str],
     "outfile": typing.NotRequired[InputPathType | None],

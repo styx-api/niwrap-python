@@ -14,7 +14,7 @@ V__FIND_AFNI_DSET_PATH_METADATA = Metadata(
 
 
 VFindAfniDsetPathParameters = typing.TypedDict('VFindAfniDsetPathParameters', {
-    "__STYX_TYPE__": typing.Literal["@FindAfniDsetPath"],
+    "__STYXTYPE__": typing.Literal["@FindAfniDsetPath"],
     "dsetname": str,
     "append_file": bool,
     "full_path": bool,

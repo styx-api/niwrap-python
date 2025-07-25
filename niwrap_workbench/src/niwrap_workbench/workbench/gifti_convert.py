@@ -14,7 +14,7 @@ GIFTI_CONVERT_METADATA = Metadata(
 
 
 GiftiConvertParameters = typing.TypedDict('GiftiConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["gifti-convert"],
+    "__STYXTYPE__": typing.Literal["gifti-convert"],
     "gifti_encoding": str,
     "input_gifti_file": str,
     "output_gifti_file": str,

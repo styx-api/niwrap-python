@@ -14,7 +14,7 @@ ANTS_DENOISE_IMAGE_FS_METADATA = Metadata(
 
 
 AntsDenoiseImageFsParameters = typing.TypedDict('AntsDenoiseImageFsParameters', {
-    "__STYX_TYPE__": typing.Literal["AntsDenoiseImageFs"],
+    "__STYXTYPE__": typing.Literal["AntsDenoiseImageFs"],
     "input_image": InputPathType,
     "output_image": str,
     "rician_flag": bool,

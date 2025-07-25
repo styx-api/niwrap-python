@@ -14,7 +14,7 @@ V_3DRESAMPLE_METADATA = Metadata(
 
 
 V3dresampleParameters = typing.TypedDict('V3dresampleParameters', {
-    "__STYX_TYPE__": typing.Literal["3dresample"],
+    "__STYXTYPE__": typing.Literal["3dresample"],
     "in_file": InputPathType,
     "master": typing.NotRequired[InputPathType | None],
     "orientation": typing.NotRequired[typing.Literal["AIL", "AIR", "ASL", "ASR", "PIL", "PIR", "PSL", "PSR", "ALI", "ALS", "ARI", "ARS", "PLI", "PLS", "PRI", "PRS", "IAL", "IAR", "IPL", "IPR", "SAL", "SAR", "SPL", "SPR", "ILA", "ILP", "IRA", "IRP", "SLA", "SLP", "SRA", "SRP", "LAI", "LAS", "LPI", "LPS", "RAI", "RAS", "RPI", "RPS", "LIA", "LIP", "LSA", "LSP", "RIA", "RIP", "RSA", "RSP"] | None],

@@ -14,7 +14,7 @@ V_1DMATCALC_METADATA = Metadata(
 
 
 V1dmatcalcParameters = typing.TypedDict('V1dmatcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["1dmatcalc"],
+    "__STYXTYPE__": typing.Literal["1dmatcalc"],
     "expression": typing.NotRequired[str | None],
 })
 

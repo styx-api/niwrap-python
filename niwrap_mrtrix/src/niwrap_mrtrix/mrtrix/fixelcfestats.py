@@ -14,32 +14,32 @@ FIXELCFESTATS_METADATA = Metadata(
 
 
 FixelcfestatsColumnParameters = typing.TypedDict('FixelcfestatsColumnParameters', {
-    "__STYX_TYPE__": typing.Literal["column"],
+    "__STYXTYPE__": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
 FixelcfestatsConfigParameters = typing.TypedDict('FixelcfestatsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcfestatsVariousStringParameters = typing.TypedDict('FixelcfestatsVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 FixelcfestatsVariousFileParameters = typing.TypedDict('FixelcfestatsVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelcfestatsParameters = typing.TypedDict('FixelcfestatsParameters', {
-    "__STYX_TYPE__": typing.Literal["fixelcfestats"],
+    "__STYXTYPE__": typing.Literal["fixelcfestats"],
     "mask": typing.NotRequired[InputPathType | None],
     "notest": bool,
     "errors": typing.NotRequired[str | None],

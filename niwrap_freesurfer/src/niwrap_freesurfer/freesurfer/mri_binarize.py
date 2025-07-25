@@ -14,7 +14,7 @@ MRI_BINARIZE_METADATA = Metadata(
 
 
 MriBinarizeParameters = typing.TypedDict('MriBinarizeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_binarize"],
+    "__STYXTYPE__": typing.Literal["mri_binarize"],
     "input_volume": InputPathType,
     "output_volume": str,
     "min_threshold": typing.NotRequired[float | None],

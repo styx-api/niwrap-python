@@ -14,21 +14,21 @@ MESHCONVERT_METADATA = Metadata(
 
 
 MeshconvertTransformParameters = typing.TypedDict('MeshconvertTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["transform"],
+    "__STYXTYPE__": typing.Literal["transform"],
     "mode": str,
     "image": InputPathType,
 })
 
 
 MeshconvertConfigParameters = typing.TypedDict('MeshconvertConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MeshconvertParameters = typing.TypedDict('MeshconvertParameters', {
-    "__STYX_TYPE__": typing.Literal["meshconvert"],
+    "__STYXTYPE__": typing.Literal["meshconvert"],
     "binary": bool,
     "transform": typing.NotRequired[MeshconvertTransformParameters | None],
     "info": bool,

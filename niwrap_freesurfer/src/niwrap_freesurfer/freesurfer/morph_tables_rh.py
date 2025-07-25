@@ -14,7 +14,7 @@ MORPH_TABLES_RH_METADATA = Metadata(
 
 
 MorphTablesRhParameters = typing.TypedDict('MorphTablesRhParameters', {
-    "__STYX_TYPE__": typing.Literal["morph_tables-rh"],
+    "__STYXTYPE__": typing.Literal["morph_tables-rh"],
     "options": typing.NotRequired[str | None],
 })
 

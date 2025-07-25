@@ -14,7 +14,7 @@ FIND_THE_BIGGEST_METADATA = Metadata(
 
 
 FindTheBiggestParameters = typing.TypedDict('FindTheBiggestParameters', {
-    "__STYX_TYPE__": typing.Literal["find_the_biggest"],
+    "__STYXTYPE__": typing.Literal["find_the_biggest"],
     "volumes_surfaces": list[InputPathType],
     "output_index": str,
 })

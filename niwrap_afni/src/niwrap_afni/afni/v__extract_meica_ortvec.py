@@ -14,7 +14,7 @@ V__EXTRACT_MEICA_ORTVEC_METADATA = Metadata(
 
 
 VExtractMeicaOrtvecParameters = typing.TypedDict('VExtractMeicaOrtvecParameters', {
-    "__STYX_TYPE__": typing.Literal["@extract_meica_ortvec"],
+    "__STYXTYPE__": typing.Literal["@extract_meica_ortvec"],
     "prefix": str,
     "meica_dir": typing.NotRequired[str | None],
     "reject_ignored": typing.NotRequired[int | None],

@@ -14,7 +14,7 @@ CREATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 CreateDisplacementFieldParameters = typing.TypedDict('CreateDisplacementFieldParameters', {
-    "__STYX_TYPE__": typing.Literal["CreateDisplacementField"],
+    "__STYXTYPE__": typing.Literal["CreateDisplacementField"],
     "image_dimension": int,
     "enforce_zero_boundary_flag": typing.Literal[0, 1],
     "component_images": list[InputPathType],

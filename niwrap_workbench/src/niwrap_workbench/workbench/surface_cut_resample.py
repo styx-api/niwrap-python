@@ -14,7 +14,7 @@ SURFACE_CUT_RESAMPLE_METADATA = Metadata(
 
 
 SurfaceCutResampleParameters = typing.TypedDict('SurfaceCutResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-cut-resample"],
+    "__STYXTYPE__": typing.Literal["surface-cut-resample"],
     "surface_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,

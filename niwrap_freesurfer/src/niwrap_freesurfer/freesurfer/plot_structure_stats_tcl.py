@@ -14,7 +14,7 @@ PLOT_STRUCTURE_STATS_TCL_METADATA = Metadata(
 
 
 PlotStructureStatsTclParameters = typing.TypedDict('PlotStructureStatsTclParameters', {
-    "__STYX_TYPE__": typing.Literal["plot_structure_stats.tcl"],
+    "__STYXTYPE__": typing.Literal["plot_structure_stats.tcl"],
     "input_file": InputPathType,
     "output_file": str,
 })

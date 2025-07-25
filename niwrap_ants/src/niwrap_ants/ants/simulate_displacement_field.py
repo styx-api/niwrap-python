@@ -14,20 +14,20 @@ SIMULATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 SimulateDisplacementFieldBsplineOptionsParameters = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParameters', {
-    "__STYX_TYPE__": typing.Literal["bspline_options"],
+    "__STYXTYPE__": typing.Literal["bspline_options"],
     "number_of_fitting_levels": typing.NotRequired[int | None],
     "number_of_control_points": typing.NotRequired[int | None],
 })
 
 
 SimulateDisplacementFieldExponentialOptionsParameters = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParameters', {
-    "__STYX_TYPE__": typing.Literal["exponential_options"],
+    "__STYXTYPE__": typing.Literal["exponential_options"],
     "smoothing_standard_deviation": typing.NotRequired[float | None],
 })
 
 
 SimulateDisplacementFieldParameters = typing.TypedDict('SimulateDisplacementFieldParameters', {
-    "__STYX_TYPE__": typing.Literal["SimulateDisplacementField"],
+    "__STYXTYPE__": typing.Literal["SimulateDisplacementField"],
     "image_dimension": int,
     "displacement_field_type": typing.Literal["BSpline", "Exponential"],
     "domain_image": InputPathType,

@@ -14,7 +14,7 @@ TALAIRACH2_METADATA = Metadata(
 
 
 Talairach2Parameters = typing.TypedDict('Talairach2Parameters', {
-    "__STYX_TYPE__": typing.Literal["talairach2"],
+    "__STYXTYPE__": typing.Literal["talairach2"],
     "subject_id": str,
     "mgz_flag": typing.NotRequired[str | None],
 })

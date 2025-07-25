@@ -14,7 +14,7 @@ UPDATE_NEEDED_METADATA = Metadata(
 
 
 UpdateNeededParameters = typing.TypedDict('UpdateNeededParameters', {
-    "__STYX_TYPE__": typing.Literal["UpdateNeeded"],
+    "__STYXTYPE__": typing.Literal["UpdateNeeded"],
     "target_file": InputPathType,
     "source_file": InputPathType,
     "additional_source_files": typing.NotRequired[list[InputPathType] | None],

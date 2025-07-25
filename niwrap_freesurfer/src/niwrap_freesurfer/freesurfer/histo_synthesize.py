@@ -14,7 +14,7 @@ HISTO_SYNTHESIZE_METADATA = Metadata(
 
 
 HistoSynthesizeParameters = typing.TypedDict('HistoSynthesizeParameters', {
-    "__STYX_TYPE__": typing.Literal["histo_synthesize"],
+    "__STYXTYPE__": typing.Literal["histo_synthesize"],
     "mri_volume": InputPathType,
     "histo_volume": InputPathType,
     "synthetic_histo": str,

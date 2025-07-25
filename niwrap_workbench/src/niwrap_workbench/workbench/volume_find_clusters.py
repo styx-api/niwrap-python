@@ -14,7 +14,7 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
 
 
 VolumeFindClustersParameters = typing.TypedDict('VolumeFindClustersParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-find-clusters"],
+    "__STYXTYPE__": typing.Literal["volume-find-clusters"],
     "volume_in": InputPathType,
     "value_threshold": float,
     "minimum_volume": float,

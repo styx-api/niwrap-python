@@ -14,33 +14,33 @@ AMP2SH_METADATA = Metadata(
 
 
 Amp2shFslgradParameters = typing.TypedDict('Amp2shFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Amp2shVariousStringParameters = typing.TypedDict('Amp2shVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 Amp2shVariousFileParameters = typing.TypedDict('Amp2shVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 Amp2shConfigParameters = typing.TypedDict('Amp2shConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Amp2shParameters = typing.TypedDict('Amp2shParameters', {
-    "__STYX_TYPE__": typing.Literal["amp2sh"],
+    "__STYXTYPE__": typing.Literal["amp2sh"],
     "lmax": typing.NotRequired[int | None],
     "normalise": bool,
     "directions": typing.NotRequired[InputPathType | None],

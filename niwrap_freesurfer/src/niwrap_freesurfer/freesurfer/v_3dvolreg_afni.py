@@ -14,7 +14,7 @@ V_3DVOLREG_AFNI_METADATA = Metadata(
 
 
 V3dvolregAfniParameters = typing.TypedDict('V3dvolregAfniParameters', {
-    "__STYX_TYPE__": typing.Literal["3dvolreg.afni"],
+    "__STYXTYPE__": typing.Literal["3dvolreg.afni"],
     "input_file": InputPathType,
     "output_file": str,
     "options": typing.NotRequired[str | None],

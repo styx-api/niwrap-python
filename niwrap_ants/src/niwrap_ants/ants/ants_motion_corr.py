@@ -14,7 +14,7 @@ ANTS_MOTION_CORR_METADATA = Metadata(
 
 
 AntsMotionCorrParameters = typing.TypedDict('AntsMotionCorrParameters', {
-    "__STYX_TYPE__": typing.Literal["antsMotionCorr"],
+    "__STYXTYPE__": typing.Literal["antsMotionCorr"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "n_images": typing.NotRequired[int | None],
     "metric": typing.NotRequired[str | None],

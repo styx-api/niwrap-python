@@ -14,20 +14,20 @@ CIFTI_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 CiftiEstimateFwhmWholeFileParameters = typing.TypedDict('CiftiEstimateFwhmWholeFileParameters', {
-    "__STYX_TYPE__": typing.Literal["whole_file"],
+    "__STYXTYPE__": typing.Literal["whole_file"],
     "opt_demean": bool,
 })
 
 
 CiftiEstimateFwhmSurfaceParameters = typing.TypedDict('CiftiEstimateFwhmSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["surface"],
+    "__STYXTYPE__": typing.Literal["surface"],
     "structure": str,
     "surface": InputPathType,
 })
 
 
 CiftiEstimateFwhmParameters = typing.TypedDict('CiftiEstimateFwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-estimate-fwhm"],
+    "__STYXTYPE__": typing.Literal["cifti-estimate-fwhm"],
     "cifti": InputPathType,
     "opt_merged_volume": bool,
     "opt_column_column": typing.NotRequired[int | None],

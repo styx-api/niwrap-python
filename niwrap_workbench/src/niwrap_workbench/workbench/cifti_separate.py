@@ -14,7 +14,7 @@ CIFTI_SEPARATE_METADATA = Metadata(
 
 
 CiftiSeparateVolumeAllParameters = typing.TypedDict('CiftiSeparateVolumeAllParameters', {
-    "__STYX_TYPE__": typing.Literal["volume_all"],
+    "__STYXTYPE__": typing.Literal["volume_all"],
     "volume_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
     "opt_label_label_out": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ CiftiSeparateVolumeAllParameters = typing.TypedDict('CiftiSeparateVolumeAllParam
 
 
 CiftiSeparateLabelParameters = typing.TypedDict('CiftiSeparateLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["label"],
+    "__STYXTYPE__": typing.Literal["label"],
     "structure": str,
     "label_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ CiftiSeparateLabelParameters = typing.TypedDict('CiftiSeparateLabelParameters', 
 
 
 CiftiSeparateMetricParameters = typing.TypedDict('CiftiSeparateMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["metric"],
+    "__STYXTYPE__": typing.Literal["metric"],
     "structure": str,
     "metric_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ CiftiSeparateMetricParameters = typing.TypedDict('CiftiSeparateMetricParameters'
 
 
 CiftiSeparateVolumeParameters = typing.TypedDict('CiftiSeparateVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume"],
+    "__STYXTYPE__": typing.Literal["volume"],
     "structure": str,
     "volume_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -48,7 +48,7 @@ CiftiSeparateVolumeParameters = typing.TypedDict('CiftiSeparateVolumeParameters'
 
 
 CiftiSeparateParameters = typing.TypedDict('CiftiSeparateParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-separate"],
+    "__STYXTYPE__": typing.Literal["cifti-separate"],
     "cifti_in": InputPathType,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiSeparateVolumeAllParameters | None],

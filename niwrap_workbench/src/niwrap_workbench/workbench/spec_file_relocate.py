@@ -14,7 +14,7 @@ SPEC_FILE_RELOCATE_METADATA = Metadata(
 
 
 SpecFileRelocateParameters = typing.TypedDict('SpecFileRelocateParameters', {
-    "__STYX_TYPE__": typing.Literal["spec-file-relocate"],
+    "__STYXTYPE__": typing.Literal["spec-file-relocate"],
     "input_spec": str,
     "output_spec": str,
 })

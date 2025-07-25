@@ -14,7 +14,7 @@ MRI_MARK_TEMPORAL_LOBE_METADATA = Metadata(
 
 
 MriMarkTemporalLobeParameters = typing.TypedDict('MriMarkTemporalLobeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_mark_temporal_lobe"],
+    "__STYXTYPE__": typing.Literal["mri_mark_temporal_lobe"],
     "spacing": typing.NotRequired[str | None],
     "use_gradient": bool,
     "subjects": list[InputPathType],

@@ -14,7 +14,7 @@ DMRI_COLORED_FA_METADATA = Metadata(
 
 
 DmriColoredFaParameters = typing.TypedDict('DmriColoredFaParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_coloredFA"],
+    "__STYXTYPE__": typing.Literal["dmri_coloredFA"],
     "input_volume": InputPathType,
     "output_volume": str,
 })

@@ -14,21 +14,21 @@ TCKDFC_METADATA = Metadata(
 
 
 TckdfcDynamicParameters = typing.TypedDict('TckdfcDynamicParameters', {
-    "__STYX_TYPE__": typing.Literal["dynamic"],
+    "__STYXTYPE__": typing.Literal["dynamic"],
     "shape": str,
     "width": int,
 })
 
 
 TckdfcConfigParameters = typing.TypedDict('TckdfcConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckdfcParameters = typing.TypedDict('TckdfcParameters', {
-    "__STYX_TYPE__": typing.Literal["tckdfc"],
+    "__STYXTYPE__": typing.Literal["tckdfc"],
     "static": bool,
     "dynamic": typing.NotRequired[TckdfcDynamicParameters | None],
     "template": typing.NotRequired[InputPathType | None],

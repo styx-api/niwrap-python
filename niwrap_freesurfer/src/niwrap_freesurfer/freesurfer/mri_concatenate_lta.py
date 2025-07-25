@@ -14,7 +14,7 @@ MRI_CONCATENATE_LTA_METADATA = Metadata(
 
 
 MriConcatenateLtaParameters = typing.TypedDict('MriConcatenateLtaParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_concatenate_lta"],
+    "__STYXTYPE__": typing.Literal["mri_concatenate_lta"],
     "lta_1": InputPathType,
     "lta_2": InputPathType,
     "lta_final": str,

@@ -14,7 +14,7 @@ BBLABEL_METADATA = Metadata(
 
 
 BblabelParameters = typing.TypedDict('BblabelParameters', {
-    "__STYX_TYPE__": typing.Literal["bblabel"],
+    "__STYXTYPE__": typing.Literal["bblabel"],
     "labelfile": InputPathType,
     "xmin": typing.NotRequired[float | None],
     "xmax": typing.NotRequired[float | None],

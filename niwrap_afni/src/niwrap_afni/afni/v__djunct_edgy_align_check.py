@@ -14,7 +14,7 @@ V__DJUNCT_EDGY_ALIGN_CHECK_METADATA = Metadata(
 
 
 VDjunctEdgyAlignCheckParameters = typing.TypedDict('VDjunctEdgyAlignCheckParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_edgy_align_check"],
+    "__STYXTYPE__": typing.Literal["@djunct_edgy_align_check"],
     "ULAY": str,
     "OLAY": str,
     "PREFIX": str,

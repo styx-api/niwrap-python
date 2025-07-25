@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_NOTAL_METADATA = Metadata(
 
 
 SegmentSubjectNotalParameters = typing.TypedDict('SegmentSubjectNotalParameters', {
-    "__STYX_TYPE__": typing.Literal["segment_subject_notal"],
+    "__STYXTYPE__": typing.Literal["segment_subject_notal"],
     "subject_path": str,
 })
 

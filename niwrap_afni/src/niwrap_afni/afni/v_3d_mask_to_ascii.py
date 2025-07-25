@@ -14,7 +14,7 @@ V_3D_MASK_TO_ASCII_METADATA = Metadata(
 
 
 V3dMaskToAsciiParameters = typing.TypedDict('V3dMaskToAsciiParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMaskToASCII"],
+    "__STYXTYPE__": typing.Literal["3dMaskToASCII"],
     "tobin_flag": bool,
     "dataset": InputPathType,
     "outputfile": str,

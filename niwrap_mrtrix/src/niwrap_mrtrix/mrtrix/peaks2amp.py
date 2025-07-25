@@ -14,14 +14,14 @@ PEAKS2AMP_METADATA = Metadata(
 
 
 Peaks2ampConfigParameters = typing.TypedDict('Peaks2ampConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Peaks2ampParameters = typing.TypedDict('Peaks2ampParameters', {
-    "__STYX_TYPE__": typing.Literal["peaks2amp"],
+    "__STYXTYPE__": typing.Literal["peaks2amp"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

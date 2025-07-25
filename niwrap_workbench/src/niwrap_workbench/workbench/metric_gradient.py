@@ -14,21 +14,21 @@ METRIC_GRADIENT_METADATA = Metadata(
 
 
 MetricGradientPresmoothParameters = typing.TypedDict('MetricGradientPresmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["presmooth"],
+    "__STYXTYPE__": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricGradientRoiParameters = typing.TypedDict('MetricGradientRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_columns": bool,
 })
 
 
 MetricGradientParameters = typing.TypedDict('MetricGradientParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-gradient"],
+    "__STYXTYPE__": typing.Literal["metric-gradient"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,

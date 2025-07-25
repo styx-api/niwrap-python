@@ -14,7 +14,7 @@ MRIS_COMPUTE_LGI_METADATA = Metadata(
 
 
 MrisComputeLgiParameters = typing.TypedDict('MrisComputeLgiParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_compute_lgi"],
+    "__STYXTYPE__": typing.Literal["mris_compute_lgi"],
     "input_surface": InputPathType,
     "close_sphere_size": typing.NotRequired[float | None],
     "smooth_iters": typing.NotRequired[float | None],

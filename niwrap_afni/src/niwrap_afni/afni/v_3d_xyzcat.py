@@ -14,7 +14,7 @@ V_3D_XYZCAT_METADATA = Metadata(
 
 
 V3dXyzcatParameters = typing.TypedDict('V3dXyzcatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dXYZcat"],
+    "__STYXTYPE__": typing.Literal["3dXYZcat"],
     "direction": typing.NotRequired[str | None],
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,

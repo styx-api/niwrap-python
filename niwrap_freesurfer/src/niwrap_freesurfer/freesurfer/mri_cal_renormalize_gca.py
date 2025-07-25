@@ -14,7 +14,7 @@ MRI_CAL_RENORMALIZE_GCA_METADATA = Metadata(
 
 
 MriCalRenormalizeGcaParameters = typing.TypedDict('MriCalRenormalizeGcaParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_cal_renormalize_gca"],
+    "__STYXTYPE__": typing.Literal["mri_cal_renormalize_gca"],
     "timepoint_file": InputPathType,
     "in_vol": InputPathType,
     "input_atlas": InputPathType,

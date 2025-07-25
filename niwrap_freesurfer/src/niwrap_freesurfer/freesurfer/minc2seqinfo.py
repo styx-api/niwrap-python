@@ -14,7 +14,7 @@ MINC2SEQINFO_METADATA = Metadata(
 
 
 Minc2seqinfoParameters = typing.TypedDict('Minc2seqinfoParameters', {
-    "__STYX_TYPE__": typing.Literal["minc2seqinfo"],
+    "__STYXTYPE__": typing.Literal["minc2seqinfo"],
     "mincfile": InputPathType,
     "seqinfofile": str,
 })

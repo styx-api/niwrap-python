@@ -14,7 +14,7 @@ BIANCA_CLUSTER_STATS_METADATA = Metadata(
 
 
 BiancaClusterStatsParameters = typing.TypedDict('BiancaClusterStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["bianca_cluster_stats"],
+    "__STYXTYPE__": typing.Literal["bianca_cluster_stats"],
     "bianca_output_map": InputPathType,
     "threshold": float,
     "min_cluster_size": float,

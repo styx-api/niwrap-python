@@ -14,7 +14,7 @@ V__FS_ROI_LABEL_METADATA = Metadata(
 
 
 VFsRoiLabelParameters = typing.TypedDict('VFsRoiLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["@FS_roi_label"],
+    "__STYXTYPE__": typing.Literal["@FS_roi_label"],
     "label_int": typing.NotRequired[float | None],
     "lab_flag": typing.NotRequired[float | None],
     "rank_int": typing.NotRequired[float | None],

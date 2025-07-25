@@ -14,7 +14,7 @@ V__DEBLANK_FILE_NAMES_METADATA = Metadata(
 
 
 VDeblankFileNamesParameters = typing.TypedDict('VDeblankFileNamesParameters', {
-    "__STYX_TYPE__": typing.Literal["@DeblankFileNames"],
+    "__STYXTYPE__": typing.Literal["@DeblankFileNames"],
     "move": bool,
     "nobrac": bool,
     "demo_set": bool,

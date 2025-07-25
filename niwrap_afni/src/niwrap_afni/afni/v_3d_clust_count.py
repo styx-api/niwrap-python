@@ -14,7 +14,7 @@ V_3D_CLUST_COUNT_METADATA = Metadata(
 
 
 V3dClustCountParameters = typing.TypedDict('V3dClustCountParameters', {
-    "__STYX_TYPE__": typing.Literal["3dClustCount"],
+    "__STYXTYPE__": typing.Literal["3dClustCount"],
     "datasets": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "final": bool,

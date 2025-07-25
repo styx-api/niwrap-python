@@ -14,7 +14,7 @@ V_1DSVD_METADATA = Metadata(
 
 
 V1dsvdParameters = typing.TypedDict('V1dsvdParameters', {
-    "__STYX_TYPE__": typing.Literal["1dsvd"],
+    "__STYXTYPE__": typing.Literal["1dsvd"],
     "one": bool,
     "vmean": bool,
     "vnorm": bool,

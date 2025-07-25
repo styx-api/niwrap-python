@@ -14,7 +14,7 @@ SAMP_BIAS_METADATA = Metadata(
 
 
 SampBiasParameters = typing.TypedDict('SampBiasParameters', {
-    "__STYX_TYPE__": typing.Literal["SampBias"],
+    "__STYXTYPE__": typing.Literal["SampBias"],
     "specfile": InputPathType,
     "surfname": str,
     "plimit": typing.NotRequired[float | None],

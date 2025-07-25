@@ -14,7 +14,7 @@ MRI_MERGELABELS_METADATA = Metadata(
 
 
 MriMergelabelsParameters = typing.TypedDict('MriMergelabelsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_mergelabels"],
+    "__STYXTYPE__": typing.Literal["mri_mergelabels"],
     "input_labels": list[InputPathType],
     "output_label": str,
     "input_directory": typing.NotRequired[str | None],

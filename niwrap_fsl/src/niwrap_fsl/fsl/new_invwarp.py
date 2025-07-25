@@ -14,7 +14,7 @@ NEW_INVWARP_METADATA = Metadata(
 
 
 NewInvwarpParameters = typing.TypedDict('NewInvwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["new_invwarp"],
+    "__STYXTYPE__": typing.Literal["new_invwarp"],
     "warpvol": InputPathType,
     "outvol": str,
     "refvol": InputPathType,

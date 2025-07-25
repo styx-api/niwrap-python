@@ -14,7 +14,7 @@ POST_RECON_ALL_METADATA = Metadata(
 
 
 PostReconAllParameters = typing.TypedDict('PostReconAllParameters', {
-    "__STYX_TYPE__": typing.Literal["post-recon-all"],
+    "__STYXTYPE__": typing.Literal["post-recon-all"],
     "subject": str,
     "subfields": bool,
     "no_subfields": bool,

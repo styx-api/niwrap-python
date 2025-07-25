@@ -14,7 +14,7 @@ MRI_SBBR_METADATA = Metadata(
 
 
 MriSbbrParameters = typing.TypedDict('MriSbbrParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_sbbr"],
+    "__STYXTYPE__": typing.Literal["mri_sbbr"],
     "template_volume": InputPathType,
     "surface_file": InputPathType,
     "init_reg_file": InputPathType,

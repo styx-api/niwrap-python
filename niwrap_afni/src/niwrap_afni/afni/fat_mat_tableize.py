@@ -14,7 +14,7 @@ FAT_MAT_TABLEIZE_METADATA = Metadata(
 
 
 FatMatTableizeParameters = typing.TypedDict('FatMatTableizeParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_mat_tableize"],
+    "__STYXTYPE__": typing.Literal["fat_mat_tableize"],
     "input_matrices": list[str],
     "input_csv": typing.NotRequired[InputPathType | None],
     "input_list": typing.NotRequired[InputPathType | None],

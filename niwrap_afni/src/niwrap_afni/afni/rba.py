@@ -14,7 +14,7 @@ RBA_METADATA = Metadata(
 
 
 RbaParameters = typing.TypedDict('RbaParameters', {
-    "__STYX_TYPE__": typing.Literal["RBA"],
+    "__STYXTYPE__": typing.Literal["RBA"],
     "prefix": str,
     "dataTable": InputPathType,
     "chains": typing.NotRequired[float | None],

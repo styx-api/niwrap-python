@@ -14,7 +14,7 @@ ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA = Metadata(
 
 
 AntsMotionCorrDiffusionDirectionParameters = typing.TypedDict('AntsMotionCorrDiffusionDirectionParameters', {
-    "__STYX_TYPE__": typing.Literal["antsMotionCorrDiffusionDirection"],
+    "__STYXTYPE__": typing.Literal["antsMotionCorrDiffusionDirection"],
     "scheme": InputPathType,
     "bvec": InputPathType,
     "physical": InputPathType,

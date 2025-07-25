@@ -14,7 +14,7 @@ MRIS_REFINE_SURFACES_METADATA = Metadata(
 
 
 MrisRefineSurfacesParameters = typing.TypedDict('MrisRefineSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_refine_surfaces"],
+    "__STYXTYPE__": typing.Literal["mris_refine_surfaces"],
     "subject_name": str,
     "hemi": str,
     "hires_volume": str,

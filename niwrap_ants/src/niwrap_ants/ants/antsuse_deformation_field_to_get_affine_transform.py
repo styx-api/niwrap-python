@@ -14,7 +14,7 @@ ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 
 
 AntsuseDeformationFieldToGetAffineTransformParameters = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["ANTSUseDeformationFieldToGetAffineTransform"],
+    "__STYXTYPE__": typing.Literal["ANTSUseDeformationFieldToGetAffineTransform"],
     "deformation_field": InputPathType,
     "load_ratio": float,
     "transform_type": typing.Literal["rigid", "affine"],

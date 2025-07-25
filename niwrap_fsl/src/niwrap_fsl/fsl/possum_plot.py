@@ -14,7 +14,7 @@ POSSUM_PLOT_METADATA = Metadata(
 
 
 PossumPlotParameters = typing.TypedDict('PossumPlotParameters', {
-    "__STYX_TYPE__": typing.Literal["possum_plot"],
+    "__STYXTYPE__": typing.Literal["possum_plot"],
     "input_file": InputPathType,
     "output_basename": str,
 })

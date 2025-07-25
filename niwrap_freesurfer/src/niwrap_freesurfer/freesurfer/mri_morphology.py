@@ -14,7 +14,7 @@ MRI_MORPHOLOGY_METADATA = Metadata(
 
 
 MriMorphologyParameters = typing.TypedDict('MriMorphologyParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_morphology"],
+    "__STYXTYPE__": typing.Literal["mri_morphology"],
     "input_volume": InputPathType,
     "operation": typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"],
     "number_iter": int,

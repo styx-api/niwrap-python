@@ -14,14 +14,14 @@ MRHISTOGRAM_METADATA = Metadata(
 
 
 MrhistogramConfigParameters = typing.TypedDict('MrhistogramConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrhistogramParameters = typing.TypedDict('MrhistogramParameters', {
-    "__STYX_TYPE__": typing.Literal["mrhistogram"],
+    "__STYXTYPE__": typing.Literal["mrhistogram"],
     "bins": typing.NotRequired[int | None],
     "template": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],

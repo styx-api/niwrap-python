@@ -14,7 +14,7 @@ DMRI_TRK2TRK_METADATA = Metadata(
 
 
 DmriTrk2trkParameters = typing.TypedDict('DmriTrk2trkParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_trk2trk"],
+    "__STYXTYPE__": typing.Literal["dmri_trk2trk"],
     "in_trk": list[InputPathType],
     "in_asc": typing.NotRequired[list[InputPathType] | None],
     "in_dir": typing.NotRequired[str | None],

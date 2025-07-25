@@ -14,7 +14,7 @@ V__GET_AFNI_VERSION_METADATA = Metadata(
 
 
 VGetAfniVersionParameters = typing.TypedDict('VGetAfniVersionParameters', {
-    "__STYX_TYPE__": typing.Literal["@get.afni.version"],
+    "__STYXTYPE__": typing.Literal["@get.afni.version"],
     "version": str,
 })
 

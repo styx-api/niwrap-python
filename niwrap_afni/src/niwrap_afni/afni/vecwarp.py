@@ -14,7 +14,7 @@ VECWARP_METADATA = Metadata(
 
 
 VecwarpParameters = typing.TypedDict('VecwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["Vecwarp"],
+    "__STYXTYPE__": typing.Literal["Vecwarp"],
     "apar": typing.NotRequired[InputPathType | None],
     "matvec": typing.NotRequired[InputPathType | None],
     "forward": bool,

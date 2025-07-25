@@ -14,7 +14,7 @@ MRIS_EXVIVO_SURFACES_METADATA = Metadata(
 
 
 MrisExvivoSurfacesParameters = typing.TypedDict('MrisExvivoSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_exvivo_surfaces"],
+    "__STYXTYPE__": typing.Literal["mris_exvivo_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,

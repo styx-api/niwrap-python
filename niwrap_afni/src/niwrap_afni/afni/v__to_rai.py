@@ -14,7 +14,7 @@ V__TO_RAI_METADATA = Metadata(
 
 
 VToRaiParameters = typing.TypedDict('VToRaiParameters', {
-    "__STYX_TYPE__": typing.Literal["@ToRAI"],
+    "__STYXTYPE__": typing.Literal["@ToRAI"],
     "coordinates": list[float],
     "orientation": str,
 })

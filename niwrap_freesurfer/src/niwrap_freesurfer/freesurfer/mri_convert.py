@@ -14,7 +14,7 @@ MRI_CONVERT_METADATA = Metadata(
 
 
 MriConvertParameters = typing.TypedDict('MriConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_convert"],
+    "__STYXTYPE__": typing.Literal["mri_convert"],
     "inp_volume": InputPathType,
     "out_volume": str,
     "read_only": bool,

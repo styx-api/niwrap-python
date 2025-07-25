@@ -14,7 +14,7 @@ V__SUMA_ACKNOWLEDGE_METADATA = Metadata(
 
 
 VSumaAcknowledgeParameters = typing.TypedDict('VSumaAcknowledgeParameters', {
-    "__STYX_TYPE__": typing.Literal["@suma_acknowledge"],
+    "__STYXTYPE__": typing.Literal["@suma_acknowledge"],
     "input_file": InputPathType,
     "surface_file": InputPathType,
     "output_prefix": str,

@@ -14,7 +14,7 @@ V_3D_TWOTO_COMPLEX_METADATA = Metadata(
 
 
 V3dTwotoComplexParameters = typing.TypedDict('V3dTwotoComplexParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTwotoComplex"],
+    "__STYXTYPE__": typing.Literal["3dTwotoComplex"],
     "dataset1": InputPathType,
     "dataset2": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],

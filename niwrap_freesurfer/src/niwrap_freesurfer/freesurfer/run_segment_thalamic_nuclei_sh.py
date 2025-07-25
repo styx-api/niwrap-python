@@ -14,7 +14,7 @@ RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 
 
 RunSegmentThalamicNucleiShParameters = typing.TypedDict('RunSegmentThalamicNucleiShParameters', {
-    "__STYX_TYPE__": typing.Literal["run_SegmentThalamicNuclei.sh"],
+    "__STYXTYPE__": typing.Literal["run_SegmentThalamicNuclei.sh"],
     "mcr_root": str,
     "args": typing.NotRequired[list[str] | None],
 })

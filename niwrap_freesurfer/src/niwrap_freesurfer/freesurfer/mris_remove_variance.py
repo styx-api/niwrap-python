@@ -14,7 +14,7 @@ MRIS_REMOVE_VARIANCE_METADATA = Metadata(
 
 
 MrisRemoveVarianceParameters = typing.TypedDict('MrisRemoveVarianceParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_remove_variance"],
+    "__STYXTYPE__": typing.Literal["mris_remove_variance"],
     "input_surface_file": InputPathType,
     "curvature_file": InputPathType,
     "curvature_file_to_remove": InputPathType,

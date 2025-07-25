@@ -14,14 +14,14 @@ FIXELCROP_METADATA = Metadata(
 
 
 FixelcropConfigParameters = typing.TypedDict('FixelcropConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcropParameters = typing.TypedDict('FixelcropParameters', {
-    "__STYX_TYPE__": typing.Literal["fixelcrop"],
+    "__STYXTYPE__": typing.Literal["fixelcrop"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

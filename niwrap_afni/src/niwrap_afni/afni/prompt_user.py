@@ -14,7 +14,7 @@ PROMPT_USER_METADATA = Metadata(
 
 
 PromptUserParameters = typing.TypedDict('PromptUserParameters', {
-    "__STYX_TYPE__": typing.Literal["prompt_user"],
+    "__STYXTYPE__": typing.Literal["prompt_user"],
     "pause_message": str,
     "timeout": typing.NotRequired[float | None],
     "timeout_alias": typing.NotRequired[float | None],

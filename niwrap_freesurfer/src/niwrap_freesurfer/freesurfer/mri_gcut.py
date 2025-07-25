@@ -14,7 +14,7 @@ MRI_GCUT_METADATA = Metadata(
 
 
 MriGcutParameters = typing.TypedDict('MriGcutParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gcut"],
+    "__STYXTYPE__": typing.Literal["mri_gcut"],
     "wmmask_110": bool,
     "mult_file": typing.NotRequired[InputPathType | None],
     "threshold_value": typing.NotRequired[float | None],

@@ -14,21 +14,21 @@ VOLUME_TFCE_METADATA = Metadata(
 
 
 VolumeTfcePresmoothParameters = typing.TypedDict('VolumeTfcePresmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["presmooth"],
+    "__STYXTYPE__": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeTfceParametersParameters = typing.TypedDict('VolumeTfceParametersParameters', {
-    "__STYX_TYPE__": typing.Literal["parameters"],
+    "__STYXTYPE__": typing.Literal["parameters"],
     "e": float,
     "h": float,
 })
 
 
 VolumeTfceParameters = typing.TypedDict('VolumeTfceParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-tfce"],
+    "__STYXTYPE__": typing.Literal["volume-tfce"],
     "volume_in": InputPathType,
     "volume_out": str,
     "presmooth": typing.NotRequired[VolumeTfcePresmoothParameters | None],

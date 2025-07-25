@@ -14,7 +14,7 @@ V__4_DAVERAGE_METADATA = Metadata(
 
 
 V4DaverageParameters = typing.TypedDict('V4DaverageParameters', {
-    "__STYX_TYPE__": typing.Literal["@4Daverage"],
+    "__STYXTYPE__": typing.Literal["@4Daverage"],
     "output_prefix": str,
     "input_files": list[InputPathType],
 })

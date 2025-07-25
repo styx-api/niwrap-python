@@ -14,7 +14,7 @@ MRI_DEFACE_METADATA = Metadata(
 
 
 MriDefaceParameters = typing.TypedDict('MriDefaceParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_deface"],
+    "__STYXTYPE__": typing.Literal["mri_deface"],
     "input_volume": InputPathType,
     "brain_template": InputPathType,
     "face_template": InputPathType,

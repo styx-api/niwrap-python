@@ -14,7 +14,7 @@ SPLIT_PARTS_GPU_METADATA = Metadata(
 
 
 SplitPartsGpuParameters = typing.TypedDict('SplitPartsGpuParameters', {
-    "__STYX_TYPE__": typing.Literal["split_parts_gpu"],
+    "__STYXTYPE__": typing.Literal["split_parts_gpu"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvals_file": InputPathType,

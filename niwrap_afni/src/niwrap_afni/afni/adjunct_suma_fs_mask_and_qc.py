@@ -14,7 +14,7 @@ ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA = Metadata(
 
 
 AdjunctSumaFsMaskAndQcParameters = typing.TypedDict('AdjunctSumaFsMaskAndQcParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_suma_fs_mask_and_qc"],
+    "__STYXTYPE__": typing.Literal["adjunct_suma_fs_mask_and_qc"],
     "subj_id": str,
     "suma_dir": str,
     "no_clean": bool,

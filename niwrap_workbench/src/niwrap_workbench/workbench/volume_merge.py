@@ -14,28 +14,28 @@ VOLUME_MERGE_METADATA = Metadata(
 
 
 VolumeMergeUpToParameters = typing.TypedDict('VolumeMergeUpToParameters', {
-    "__STYX_TYPE__": typing.Literal["up_to"],
+    "__STYXTYPE__": typing.Literal["up_to"],
     "last_subvol": str,
     "opt_reverse": bool,
 })
 
 
 VolumeMergeSubvolumeParameters = typing.TypedDict('VolumeMergeSubvolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["subvolume"],
+    "__STYXTYPE__": typing.Literal["subvolume"],
     "subvol": str,
     "up_to": typing.NotRequired[VolumeMergeUpToParameters | None],
 })
 
 
 VolumeMergeVolumeParameters = typing.TypedDict('VolumeMergeVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume"],
+    "__STYXTYPE__": typing.Literal["volume"],
     "volume_in": InputPathType,
     "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
 })
 
 
 VolumeMergeParameters = typing.TypedDict('VolumeMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-merge"],
+    "__STYXTYPE__": typing.Literal["volume-merge"],
     "volume_out": str,
     "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
 })

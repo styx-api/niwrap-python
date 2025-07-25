@@ -14,7 +14,7 @@ MRI_PROBE_IMA_METADATA = Metadata(
 
 
 MriProbeImaParameters = typing.TypedDict('MriProbeImaParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_probe_ima"],
+    "__STYXTYPE__": typing.Literal["mri_probe_ima"],
     "ima_file": InputPathType,
     "key_string": typing.NotRequired[str | None],
     "offset_type_len": typing.NotRequired[str | None],

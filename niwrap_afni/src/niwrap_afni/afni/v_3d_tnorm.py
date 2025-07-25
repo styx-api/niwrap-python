@@ -14,7 +14,7 @@ V_3D_TNORM_METADATA = Metadata(
 
 
 V3dTnormParameters = typing.TypedDict('V3dTnormParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTnorm"],
+    "__STYXTYPE__": typing.Literal["3dTnorm"],
     "prefix": typing.NotRequired[str | None],
     "norm2": bool,
     "normR": bool,

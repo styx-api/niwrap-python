@@ -14,7 +14,7 @@ ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA = Metadata(
 
 
 AntsN4BiasFieldCorrectionFsParameters = typing.TypedDict('AntsN4BiasFieldCorrectionFsParameters', {
-    "__STYX_TYPE__": typing.Literal["AntsN4BiasFieldCorrectionFs"],
+    "__STYXTYPE__": typing.Literal["AntsN4BiasFieldCorrectionFs"],
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],

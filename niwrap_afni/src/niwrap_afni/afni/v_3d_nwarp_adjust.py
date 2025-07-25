@@ -14,7 +14,7 @@ V_3D_NWARP_ADJUST_METADATA = Metadata(
 
 
 V3dNwarpAdjustParameters = typing.TypedDict('V3dNwarpAdjustParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNwarpAdjust"],
+    "__STYXTYPE__": typing.Literal["3dNwarpAdjust"],
     "input_warps": list[InputPathType],
     "source_datasets": typing.NotRequired[list[InputPathType] | None],
     "output_prefix": typing.NotRequired[str | None],

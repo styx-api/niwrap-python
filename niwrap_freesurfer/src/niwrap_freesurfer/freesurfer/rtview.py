@@ -14,7 +14,7 @@ RTVIEW_METADATA = Metadata(
 
 
 RtviewParameters = typing.TypedDict('RtviewParameters', {
-    "__STYX_TYPE__": typing.Literal["rtview"],
+    "__STYXTYPE__": typing.Literal["rtview"],
     "subject": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[str | None],
     "left_hemi": bool,

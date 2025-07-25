@@ -14,7 +14,7 @@ MRIS_RF_LABEL_METADATA = Metadata(
 
 
 MrisRfLabelParameters = typing.TypedDict('MrisRfLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_rf_label"],
+    "__STYXTYPE__": typing.Literal["mris_rf_label"],
     "subject": str,
     "rf_classifier": str,
     "output_name": str,

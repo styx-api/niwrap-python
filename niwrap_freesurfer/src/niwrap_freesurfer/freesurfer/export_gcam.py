@@ -14,7 +14,7 @@ EXPORT_GCAM_METADATA = Metadata(
 
 
 ExportGcamParameters = typing.TypedDict('ExportGcamParameters', {
-    "__STYX_TYPE__": typing.Literal["exportGcam"],
+    "__STYXTYPE__": typing.Literal["exportGcam"],
     "fixed": InputPathType,
     "moving": InputPathType,
     "morph": InputPathType,

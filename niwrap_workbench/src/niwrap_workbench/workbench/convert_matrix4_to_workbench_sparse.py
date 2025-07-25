@@ -14,14 +14,14 @@ CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA = Metadata(
 
 
 ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters', {
-    "__STYX_TYPE__": typing.Literal["volume_seeds"],
+    "__STYXTYPE__": typing.Literal["volume_seeds"],
     "cifti_template": InputPathType,
     "direction": str,
 })
 
 
 ConvertMatrix4ToWorkbenchSparseParameters = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParameters', {
-    "__STYX_TYPE__": typing.Literal["convert-matrix4-to-workbench-sparse"],
+    "__STYXTYPE__": typing.Literal["convert-matrix4-to-workbench-sparse"],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,

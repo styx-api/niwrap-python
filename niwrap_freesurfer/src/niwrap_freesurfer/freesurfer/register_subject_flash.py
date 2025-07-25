@@ -14,7 +14,7 @@ REGISTER_SUBJECT_FLASH_METADATA = Metadata(
 
 
 RegisterSubjectFlashParameters = typing.TypedDict('RegisterSubjectFlashParameters', {
-    "__STYX_TYPE__": typing.Literal["register_subject_flash"],
+    "__STYXTYPE__": typing.Literal["register_subject_flash"],
     "input_volumes": list[InputPathType],
 })
 

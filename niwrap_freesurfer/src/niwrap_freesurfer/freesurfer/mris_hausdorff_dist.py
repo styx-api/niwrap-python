@@ -14,7 +14,7 @@ MRIS_HAUSDORFF_DIST_METADATA = Metadata(
 
 
 MrisHausdorffDistParameters = typing.TypedDict('MrisHausdorffDistParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_hausdorff_dist"],
+    "__STYXTYPE__": typing.Literal["mris_hausdorff_dist"],
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,

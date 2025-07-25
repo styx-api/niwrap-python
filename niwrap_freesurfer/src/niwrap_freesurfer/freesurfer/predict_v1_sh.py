@@ -14,7 +14,7 @@ PREDICT_V1_SH_METADATA = Metadata(
 
 
 PredictV1ShParameters = typing.TypedDict('PredictV1ShParameters', {
-    "__STYX_TYPE__": typing.Literal["predict_v1.sh"],
+    "__STYXTYPE__": typing.Literal["predict_v1.sh"],
     "template": typing.NotRequired[str | None],
     "inflated_surface_flag": bool,
     "hemisphere": typing.NotRequired[str | None],

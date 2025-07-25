@@ -14,7 +14,7 @@ V_3D_TSORT_METADATA = Metadata(
 
 
 V3dTsortParameters = typing.TypedDict('V3dTsortParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTsort"],
+    "__STYXTYPE__": typing.Literal["3dTsort"],
     "input_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "inc": bool,

@@ -14,7 +14,7 @@ FSR_IMPORT_METADATA = Metadata(
 
 
 FsrImportParameters = typing.TypedDict('FsrImportParameters', {
-    "__STYX_TYPE__": typing.Literal["fsr-import"],
+    "__STYXTYPE__": typing.Literal["fsr-import"],
     "outdir": str,
     "t1w_input": typing.NotRequired[list[InputPathType] | None],
     "t2w_input": typing.NotRequired[list[InputPathType] | None],

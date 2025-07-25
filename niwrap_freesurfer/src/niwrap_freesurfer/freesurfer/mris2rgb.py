@@ -14,7 +14,7 @@ MRIS2RGB_METADATA = Metadata(
 
 
 Mris2rgbParameters = typing.TypedDict('Mris2rgbParameters', {
-    "__STYX_TYPE__": typing.Literal["mris2rgb"],
+    "__STYXTYPE__": typing.Literal["mris2rgb"],
     "library_path": str,
 })
 

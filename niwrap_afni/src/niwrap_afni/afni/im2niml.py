@@ -14,7 +14,7 @@ IM2NIML_METADATA = Metadata(
 
 
 Im2nimlParameters = typing.TypedDict('Im2nimlParameters', {
-    "__STYX_TYPE__": typing.Literal["im2niml"],
+    "__STYXTYPE__": typing.Literal["im2niml"],
     "input_files": list[InputPathType],
 })
 

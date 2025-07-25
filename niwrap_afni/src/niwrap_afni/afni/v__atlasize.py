@@ -14,7 +14,7 @@ V__ATLASIZE_METADATA = Metadata(
 
 
 VAtlasizeParameters = typing.TypedDict('VAtlasizeParameters', {
-    "__STYX_TYPE__": typing.Literal["@Atlasize"],
+    "__STYXTYPE__": typing.Literal["@Atlasize"],
     "dset": typing.NotRequired[InputPathType | None],
     "space": typing.NotRequired[str | None],
     "lab_file": typing.NotRequired[list[str] | None],

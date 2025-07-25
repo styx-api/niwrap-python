@@ -14,7 +14,7 @@ EDDY_OPENMP_METADATA = Metadata(
 
 
 EddyOpenmpParameters = typing.TypedDict('EddyOpenmpParameters', {
-    "__STYX_TYPE__": typing.Literal["eddy_openmp"],
+    "__STYXTYPE__": typing.Literal["eddy_openmp"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,

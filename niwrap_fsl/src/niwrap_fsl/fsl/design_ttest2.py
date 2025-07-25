@@ -14,7 +14,7 @@ DESIGN_TTEST2_METADATA = Metadata(
 
 
 DesignTtest2Parameters = typing.TypedDict('DesignTtest2Parameters', {
-    "__STYX_TYPE__": typing.Literal["design_ttest2"],
+    "__STYXTYPE__": typing.Literal["design_ttest2"],
     "design_files_rootname": str,
     "ngroupa": float,
     "ngroupb": float,

@@ -14,7 +14,7 @@ FABBER_QBOLD_METADATA = Metadata(
 
 
 FabberQboldParameters = typing.TypedDict('FabberQboldParameters', {
-    "__STYX_TYPE__": typing.Literal["fabber_qbold"],
+    "__STYXTYPE__": typing.Literal["fabber_qbold"],
     "output_dir": str,
     "method": str,
     "model": str,

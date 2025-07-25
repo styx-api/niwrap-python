@@ -14,7 +14,7 @@ MRIS_ADD_TEMPLATE_METADATA = Metadata(
 
 
 MrisAddTemplateParameters = typing.TypedDict('MrisAddTemplateParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_add_template"],
+    "__STYXTYPE__": typing.Literal["mris_add_template"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 

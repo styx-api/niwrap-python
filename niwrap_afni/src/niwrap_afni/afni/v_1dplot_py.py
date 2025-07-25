@@ -14,7 +14,7 @@ V_1DPLOT_PY_METADATA = Metadata(
 
 
 V1dplotPyParameters = typing.TypedDict('V1dplotPyParameters', {
-    "__STYX_TYPE__": typing.Literal["1dplot.py"],
+    "__STYXTYPE__": typing.Literal["1dplot.py"],
     "infiles": list[InputPathType],
     "prefix": str,
     "help": bool,

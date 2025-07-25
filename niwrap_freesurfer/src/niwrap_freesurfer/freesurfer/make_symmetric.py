@@ -14,7 +14,7 @@ MAKE_SYMMETRIC_METADATA = Metadata(
 
 
 MakeSymmetricParameters = typing.TypedDict('MakeSymmetricParameters', {
-    "__STYX_TYPE__": typing.Literal["make_symmetric"],
+    "__STYXTYPE__": typing.Literal["make_symmetric"],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,

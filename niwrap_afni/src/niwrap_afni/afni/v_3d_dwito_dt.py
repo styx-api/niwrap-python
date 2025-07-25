@@ -14,7 +14,7 @@ V_3D_DWITO_DT_METADATA = Metadata(
 
 
 V3dDwitoDtParameters = typing.TypedDict('V3dDwitoDtParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDWItoDT"],
+    "__STYXTYPE__": typing.Literal["3dDWItoDT"],
     "gradient_file": InputPathType,
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],

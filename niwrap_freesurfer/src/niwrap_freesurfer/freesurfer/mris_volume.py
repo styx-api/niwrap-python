@@ -14,7 +14,7 @@ MRIS_VOLUME_METADATA = Metadata(
 
 
 MrisVolumeParameters = typing.TypedDict('MrisVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_volume"],
+    "__STYXTYPE__": typing.Literal["mris_volume"],
     "surface_file": InputPathType,
     "verbose_flag": bool,
 })

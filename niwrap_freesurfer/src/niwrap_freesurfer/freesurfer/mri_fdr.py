@@ -14,7 +14,7 @@ MRI_FDR_METADATA = Metadata(
 
 
 MriFdrParameters = typing.TypedDict('MriFdrParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fdr"],
+    "__STYXTYPE__": typing.Literal["mri_fdr"],
     "input_files": list[str],
     "fdr_value": float,
     "default_frame": typing.NotRequired[int | None],

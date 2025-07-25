@@ -14,7 +14,7 @@ V_3DMASKAVE_METADATA = Metadata(
 
 
 V3dmaskaveParameters = typing.TypedDict('V3dmaskaveParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmaskave"],
+    "__STYXTYPE__": typing.Literal["3dmaskave"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],

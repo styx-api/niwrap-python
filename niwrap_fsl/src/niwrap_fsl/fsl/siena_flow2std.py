@@ -14,7 +14,7 @@ SIENA_FLOW2STD_METADATA = Metadata(
 
 
 SienaFlow2stdParameters = typing.TypedDict('SienaFlow2stdParameters', {
-    "__STYX_TYPE__": typing.Literal["siena_flow2std"],
+    "__STYXTYPE__": typing.Literal["siena_flow2std"],
     "fileroot1": str,
     "fileroot2": str,
     "sigma": typing.NotRequired[float | None],

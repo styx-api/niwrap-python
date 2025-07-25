@@ -14,7 +14,7 @@ FSLSPLIT_METADATA = Metadata(
 
 
 FslsplitParameters = typing.TypedDict('FslsplitParameters', {
-    "__STYX_TYPE__": typing.Literal["fslsplit"],
+    "__STYXTYPE__": typing.Literal["fslsplit"],
     "infile": InputPathType,
     "output_basename": typing.NotRequired[str | None],
     "separation_x": bool,

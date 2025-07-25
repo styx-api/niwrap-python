@@ -14,14 +14,14 @@ CIFTI_LABEL_TO_BORDER_METADATA = Metadata(
 
 
 CiftiLabelToBorderBorderParameters = typing.TypedDict('CiftiLabelToBorderBorderParameters', {
-    "__STYX_TYPE__": typing.Literal["border"],
+    "__STYXTYPE__": typing.Literal["border"],
     "surface": InputPathType,
     "border_out": str,
 })
 
 
 CiftiLabelToBorderParameters = typing.TypedDict('CiftiLabelToBorderParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-label-to-border"],
+    "__STYXTYPE__": typing.Literal["cifti-label-to-border"],
     "cifti_in": InputPathType,
     "opt_placement_fraction": typing.NotRequired[float | None],
     "opt_column_column": typing.NotRequired[str | None],

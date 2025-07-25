@@ -14,27 +14,27 @@ VOLUME_WEIGHTED_STATS_METADATA = Metadata(
 
 
 VolumeWeightedStatsWeightVolumeParameters = typing.TypedDict('VolumeWeightedStatsWeightVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["weight_volume"],
+    "__STYXTYPE__": typing.Literal["weight_volume"],
     "weight_volume": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 VolumeWeightedStatsRoiParameters = typing.TypedDict('VolumeWeightedStatsRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_volume": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 VolumeWeightedStatsStdevParameters = typing.TypedDict('VolumeWeightedStatsStdevParameters', {
-    "__STYX_TYPE__": typing.Literal["stdev"],
+    "__STYXTYPE__": typing.Literal["stdev"],
     "opt_sample": bool,
 })
 
 
 VolumeWeightedStatsParameters = typing.TypedDict('VolumeWeightedStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-weighted-stats"],
+    "__STYXTYPE__": typing.Literal["volume-weighted-stats"],
     "volume_in": InputPathType,
     "weight_volume": typing.NotRequired[VolumeWeightedStatsWeightVolumeParameters | None],
     "opt_subvolume_subvolume": typing.NotRequired[str | None],

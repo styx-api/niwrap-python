@@ -14,7 +14,7 @@ MRI_COMPUTE_CHANGE_MAP_METADATA = Metadata(
 
 
 MriComputeChangeMapParameters = typing.TypedDict('MriComputeChangeMapParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compute_change_map"],
+    "__STYXTYPE__": typing.Literal["mri_compute_change_map"],
     "mean_filter": bool,
     "gaussian_sigma": typing.NotRequired[float | None],
     "volume1": InputPathType,

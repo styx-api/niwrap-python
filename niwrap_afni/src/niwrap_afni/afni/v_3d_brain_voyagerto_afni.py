@@ -14,7 +14,7 @@ V_3D_BRAIN_VOYAGERTO_AFNI_METADATA = Metadata(
 
 
 V3dBrainVoyagertoAfniParameters = typing.TypedDict('V3dBrainVoyagertoAfniParameters', {
-    "__STYX_TYPE__": typing.Literal["3dBRAIN_VOYAGERtoAFNI"],
+    "__STYXTYPE__": typing.Literal["3dBRAIN_VOYAGERtoAFNI"],
     "input_file": InputPathType,
     "force_byte_swap": bool,
     "brainvoyager_qx": bool,

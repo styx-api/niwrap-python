@@ -14,7 +14,7 @@ PERFUSION_SUBTRACT_METADATA = Metadata(
 
 
 PerfusionSubtractParameters = typing.TypedDict('PerfusionSubtractParameters', {
-    "__STYX_TYPE__": typing.Literal["perfusion_subtract"],
+    "__STYXTYPE__": typing.Literal["perfusion_subtract"],
     "four_d_input": InputPathType,
     "four_d_output": str,
     "control_first_flag": bool,

@@ -14,7 +14,7 @@ V__SCRIPT_CHECK_METADATA = Metadata(
 
 
 VScriptCheckParameters = typing.TypedDict('VScriptCheckParameters', {
-    "__STYX_TYPE__": typing.Literal["@ScriptCheck"],
+    "__STYXTYPE__": typing.Literal["@ScriptCheck"],
     "clean": bool,
     "suffix": typing.NotRequired[str | None],
     "scripts": list[InputPathType],

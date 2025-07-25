@@ -14,7 +14,7 @@ WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 
 
 WarpTensorImageMultiTransformParameters = typing.TypedDict('WarpTensorImageMultiTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["WarpTensorImageMultiTransform"],
+    "__STYXTYPE__": typing.Literal["WarpTensorImageMultiTransform"],
     "image_dimension": int,
     "moving_image": InputPathType,
     "output_image": str,

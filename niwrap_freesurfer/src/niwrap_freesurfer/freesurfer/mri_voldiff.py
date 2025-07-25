@@ -14,7 +14,7 @@ MRI_VOLDIFF_METADATA = Metadata(
 
 
 MriVoldiffParameters = typing.TypedDict('MriVoldiffParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_voldiff"],
+    "__STYXTYPE__": typing.Literal["mri_voldiff"],
     "volume1": InputPathType,
     "volume2": InputPathType,
     "vox2ras_thresh": typing.NotRequired[float | None],

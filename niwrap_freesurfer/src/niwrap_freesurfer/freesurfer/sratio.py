@@ -14,7 +14,7 @@ SRATIO_METADATA = Metadata(
 
 
 SratioParameters = typing.TypedDict('SratioParameters', {
-    "__STYX_TYPE__": typing.Literal["sratio"],
+    "__STYXTYPE__": typing.Literal["sratio"],
     "value_a": float,
     "value_b": float,
     "abs_flag": bool,

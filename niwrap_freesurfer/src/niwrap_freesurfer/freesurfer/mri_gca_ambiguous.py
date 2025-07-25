@@ -14,7 +14,7 @@ MRI_GCA_AMBIGUOUS_METADATA = Metadata(
 
 
 MriGcaAmbiguousParameters = typing.TypedDict('MriGcaAmbiguousParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gca_ambiguous"],
+    "__STYXTYPE__": typing.Literal["mri_gca_ambiguous"],
     "gca_file": InputPathType,
     "output_volume": str,
 })

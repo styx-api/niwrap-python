@@ -14,7 +14,7 @@ INVFEATREG_METADATA = Metadata(
 
 
 InvfeatregParameters = typing.TypedDict('InvfeatregParameters', {
-    "__STYX_TYPE__": typing.Literal["invfeatreg"],
+    "__STYXTYPE__": typing.Literal["invfeatreg"],
     "feat_directory": str,
 })
 

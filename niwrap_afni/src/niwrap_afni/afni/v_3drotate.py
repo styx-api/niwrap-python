@@ -14,7 +14,7 @@ V_3DROTATE_METADATA = Metadata(
 
 
 V3drotateParameters = typing.TypedDict('V3drotateParameters', {
-    "__STYX_TYPE__": typing.Literal["3drotate"],
+    "__STYXTYPE__": typing.Literal["3drotate"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,

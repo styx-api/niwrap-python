@@ -14,7 +14,7 @@ MRI_CVS_REGISTER_METADATA = Metadata(
 
 
 MriCvsRegisterParameters = typing.TypedDict('MriCvsRegisterParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_cvs_register"],
+    "__STYXTYPE__": typing.Literal["mri_cvs_register"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "templatedir": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ LONG_QDEC_TABLE_METADATA = Metadata(
 
 
 LongQdecTableParameters = typing.TypedDict('LongQdecTableParameters', {
-    "__STYX_TYPE__": typing.Literal["long_qdec_table"],
+    "__STYXTYPE__": typing.Literal["long_qdec_table"],
     "qdec_table": InputPathType,
     "split": typing.NotRequired[str | None],
     "cross_flag": bool,

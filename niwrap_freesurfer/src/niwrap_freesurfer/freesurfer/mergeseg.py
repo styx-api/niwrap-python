@@ -14,7 +14,7 @@ MERGESEG_METADATA = Metadata(
 
 
 MergesegParameters = typing.TypedDict('MergesegParameters', {
-    "__STYX_TYPE__": typing.Literal["mergeseg"],
+    "__STYXTYPE__": typing.Literal["mergeseg"],
     "src_seg": InputPathType,
     "merge_seg": InputPathType,
     "out_seg": str,

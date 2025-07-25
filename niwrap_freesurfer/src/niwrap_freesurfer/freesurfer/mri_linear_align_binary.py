@@ -14,7 +14,7 @@ MRI_LINEAR_ALIGN_BINARY_METADATA = Metadata(
 
 
 MriLinearAlignBinaryParameters = typing.TypedDict('MriLinearAlignBinaryParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_linear_align_binary"],
+    "__STYXTYPE__": typing.Literal["mri_linear_align_binary"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,

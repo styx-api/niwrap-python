@@ -14,21 +14,21 @@ VOLUME_EXTREMA_METADATA = Metadata(
 
 
 VolumeExtremaPresmoothParameters = typing.TypedDict('VolumeExtremaPresmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["presmooth"],
+    "__STYXTYPE__": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeExtremaThresholdParameters = typing.TypedDict('VolumeExtremaThresholdParameters', {
-    "__STYX_TYPE__": typing.Literal["threshold"],
+    "__STYXTYPE__": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
 VolumeExtremaParameters = typing.TypedDict('VolumeExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-extrema"],
+    "__STYXTYPE__": typing.Literal["volume-extrema"],
     "volume_in": InputPathType,
     "distance": float,
     "volume_out": str,

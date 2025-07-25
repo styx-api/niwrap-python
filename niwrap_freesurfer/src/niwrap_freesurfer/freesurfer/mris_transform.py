@@ -14,7 +14,7 @@ MRIS_TRANSFORM_METADATA = Metadata(
 
 
 MrisTransformParameters = typing.TypedDict('MrisTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_transform"],
+    "__STYXTYPE__": typing.Literal["mris_transform"],
     "input_surface": InputPathType,
     "transform": InputPathType,
     "output_surface": str,

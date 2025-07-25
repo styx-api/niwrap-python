@@ -14,7 +14,7 @@ V_1D_TSORT_METADATA = Metadata(
 
 
 V1dTsortParameters = typing.TypedDict('V1dTsortParameters', {
-    "__STYX_TYPE__": typing.Literal["1dTsort"],
+    "__STYXTYPE__": typing.Literal["1dTsort"],
     "inc_order": bool,
     "dec_order": bool,
     "transpose": bool,

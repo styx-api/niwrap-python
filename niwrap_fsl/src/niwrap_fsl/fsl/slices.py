@@ -14,7 +14,7 @@ SLICES_METADATA = Metadata(
 
 
 SlicesParameters = typing.TypedDict('SlicesParameters', {
-    "__STYX_TYPE__": typing.Literal["slices"],
+    "__STYXTYPE__": typing.Literal["slices"],
     "primary_input": InputPathType,
     "secondary_input": typing.NotRequired[InputPathType | None],
     "scale_factor": typing.NotRequired[float | None],

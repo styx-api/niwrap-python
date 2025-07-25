@@ -14,7 +14,7 @@ RCA_CONFIG2CSH_METADATA = Metadata(
 
 
 RcaConfig2cshParameters = typing.TypedDict('RcaConfig2cshParameters', {
-    "__STYX_TYPE__": typing.Literal["rca-config2csh"],
+    "__STYXTYPE__": typing.Literal["rca-config2csh"],
     "configfile": InputPathType,
 })
 

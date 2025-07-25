@@ -14,7 +14,7 @@ FSLVAL_METADATA = Metadata(
 
 
 FslvalParameters = typing.TypedDict('FslvalParameters', {
-    "__STYX_TYPE__": typing.Literal["fslval"],
+    "__STYXTYPE__": typing.Literal["fslval"],
     "input_file": InputPathType,
     "keyword": str,
 })

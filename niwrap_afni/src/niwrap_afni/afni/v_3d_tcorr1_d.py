@@ -14,7 +14,7 @@ V_3D_TCORR1_D_METADATA = Metadata(
 
 
 V3dTcorr1DParameters = typing.TypedDict('V3dTcorr1DParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTcorr1D"],
+    "__STYXTYPE__": typing.Literal["3dTcorr1D"],
     "ktaub": bool,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],

@@ -14,7 +14,7 @@ REG_ALADIN_METADATA = Metadata(
 
 
 RegAladinParameters = typing.TypedDict('RegAladinParameters', {
-    "__STYX_TYPE__": typing.Literal["reg_aladin"],
+    "__STYXTYPE__": typing.Literal["reg_aladin"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "symmetric": bool,

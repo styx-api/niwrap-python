@@ -14,7 +14,7 @@ VSM_SMOOTH_METADATA = Metadata(
 
 
 VsmSmoothParameters = typing.TypedDict('VsmSmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["vsm-smooth"],
+    "__STYXTYPE__": typing.Literal["vsm-smooth"],
     "input_file": InputPathType,
     "output_file": str,
     "fwhm_value": float,

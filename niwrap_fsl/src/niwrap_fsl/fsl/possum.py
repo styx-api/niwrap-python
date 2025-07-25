@@ -14,7 +14,7 @@ POSSUM_METADATA = Metadata(
 
 
 PossumParameters = typing.TypedDict('PossumParameters', {
-    "__STYX_TYPE__": typing.Literal["possum"],
+    "__STYXTYPE__": typing.Literal["possum"],
     "input_volume": InputPathType,
     "mr_parameters": InputPathType,
     "motion_matrix": InputPathType,

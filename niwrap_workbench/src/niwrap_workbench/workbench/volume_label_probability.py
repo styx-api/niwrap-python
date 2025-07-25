@@ -14,7 +14,7 @@ VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 VolumeLabelProbabilityParameters = typing.TypedDict('VolumeLabelProbabilityParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-label-probability"],
+    "__STYXTYPE__": typing.Literal["volume-label-probability"],
     "label_maps": InputPathType,
     "probability_out": str,
     "opt_exclude_unlabeled": bool,

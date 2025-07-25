@@ -14,14 +14,14 @@ CONVERT_WARPFIELD_METADATA = Metadata(
 
 
 ConvertWarpfieldFromWorldParameters = typing.TypedDict('ConvertWarpfieldFromWorldParameters', {
-    "__STYX_TYPE__": typing.Literal["from_world"],
+    "__STYXTYPE__": typing.Literal["from_world"],
     "input": str,
     "opt_absolute": bool,
 })
 
 
 ConvertWarpfieldFromFnirtParameters = typing.TypedDict('ConvertWarpfieldFromFnirtParameters', {
-    "__STYX_TYPE__": typing.Literal["from_fnirt"],
+    "__STYXTYPE__": typing.Literal["from_fnirt"],
     "input": str,
     "source_volume": str,
     "opt_absolute": bool,
@@ -29,14 +29,14 @@ ConvertWarpfieldFromFnirtParameters = typing.TypedDict('ConvertWarpfieldFromFnir
 
 
 ConvertWarpfieldToFnirtParameters = typing.TypedDict('ConvertWarpfieldToFnirtParameters', {
-    "__STYX_TYPE__": typing.Literal["to_fnirt"],
+    "__STYXTYPE__": typing.Literal["to_fnirt"],
     "output": str,
     "source_volume": str,
 })
 
 
 ConvertWarpfieldParameters = typing.TypedDict('ConvertWarpfieldParameters', {
-    "__STYX_TYPE__": typing.Literal["convert-warpfield"],
+    "__STYXTYPE__": typing.Literal["convert-warpfield"],
     "from_world": typing.NotRequired[ConvertWarpfieldFromWorldParameters | None],
     "opt_from_itk_input": typing.NotRequired[str | None],
     "from_fnirt": typing.NotRequired[ConvertWarpfieldFromFnirtParameters | None],

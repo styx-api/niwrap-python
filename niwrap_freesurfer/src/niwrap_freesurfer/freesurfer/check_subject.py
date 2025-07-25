@@ -14,7 +14,7 @@ CHECK_SUBJECT_METADATA = Metadata(
 
 
 CheckSubjectParameters = typing.TypedDict('CheckSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["check_subject"],
+    "__STYXTYPE__": typing.Literal["check_subject"],
     "subject_dir": str,
 })
 

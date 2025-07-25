@@ -14,7 +14,7 @@ RCA_CONFIG_METADATA = Metadata(
 
 
 RcaConfigParameters = typing.TypedDict('RcaConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["rca-config"],
+    "__STYXTYPE__": typing.Literal["rca-config"],
     "source_config": InputPathType,
     "updated_config": InputPathType,
     "unknown_args_file": InputPathType,

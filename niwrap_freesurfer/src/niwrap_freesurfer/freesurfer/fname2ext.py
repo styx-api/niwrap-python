@@ -14,7 +14,7 @@ FNAME2EXT_METADATA = Metadata(
 
 
 Fname2extParameters = typing.TypedDict('Fname2extParameters', {
-    "__STYX_TYPE__": typing.Literal["fname2ext"],
+    "__STYXTYPE__": typing.Literal["fname2ext"],
     "filename": str,
 })
 

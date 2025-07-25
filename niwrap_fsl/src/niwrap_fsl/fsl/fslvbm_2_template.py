@@ -14,7 +14,7 @@ FSLVBM_2_TEMPLATE_METADATA = Metadata(
 
 
 Fslvbm2TemplateParameters = typing.TypedDict('Fslvbm2TemplateParameters', {
-    "__STYX_TYPE__": typing.Literal["fslvbm_2_template"],
+    "__STYXTYPE__": typing.Literal["fslvbm_2_template"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[str | None],

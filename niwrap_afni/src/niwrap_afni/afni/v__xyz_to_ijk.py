@@ -14,7 +14,7 @@ V__XYZ_TO_IJK_METADATA = Metadata(
 
 
 VXyzToIjkParameters = typing.TypedDict('VXyzToIjkParameters', {
-    "__STYX_TYPE__": typing.Literal["@xyz_to_ijk"],
+    "__STYXTYPE__": typing.Literal["@xyz_to_ijk"],
     "inset": InputPathType,
     "x_coord": float,
     "y_coord": float,

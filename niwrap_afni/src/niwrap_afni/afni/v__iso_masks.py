@@ -14,7 +14,7 @@ V__ISO_MASKS_METADATA = Metadata(
 
 
 VIsoMasksParameters = typing.TypedDict('VIsoMasksParameters', {
-    "__STYX_TYPE__": typing.Literal["@IsoMasks"],
+    "__STYXTYPE__": typing.Literal["@IsoMasks"],
     "input_dataset": InputPathType,
     "isovals": typing.NotRequired[list[float] | None],
 })

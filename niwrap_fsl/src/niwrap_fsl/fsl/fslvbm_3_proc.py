@@ -14,7 +14,7 @@ FSLVBM_3_PROC_METADATA = Metadata(
 
 
 Fslvbm3ProcParameters = typing.TypedDict('Fslvbm3ProcParameters', {
-    "__STYX_TYPE__": typing.Literal["fslvbm_3_proc"],
+    "__STYXTYPE__": typing.Literal["fslvbm_3_proc"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MRI_MODIFY_METADATA = Metadata(
 
 
 MriModifyParameters = typing.TypedDict('MriModifyParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_modify"],
+    "__STYXTYPE__": typing.Literal["mri_modify"],
     "x_ras": list[float],
     "y_ras": list[float],
     "z_ras": list[float],

@@ -14,14 +14,14 @@ SURFACE_AVERAGE_METADATA = Metadata(
 
 
 SurfaceAverageSurfParameters = typing.TypedDict('SurfaceAverageSurfParameters', {
-    "__STYX_TYPE__": typing.Literal["surf"],
+    "__STYXTYPE__": typing.Literal["surf"],
     "surface": InputPathType,
     "opt_weight_weight": typing.NotRequired[float | None],
 })
 
 
 SurfaceAverageParameters = typing.TypedDict('SurfaceAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-average"],
+    "__STYXTYPE__": typing.Literal["surface-average"],
     "surface_out": str,
     "opt_stddev_stddev_metric_out": typing.NotRequired[str | None],
     "opt_uncertainty_uncert_metric_out": typing.NotRequired[str | None],

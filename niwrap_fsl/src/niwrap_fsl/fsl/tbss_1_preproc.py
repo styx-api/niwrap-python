@@ -14,7 +14,7 @@ TBSS_1_PREPROC_METADATA = Metadata(
 
 
 Tbss1PreprocParameters = typing.TypedDict('Tbss1PreprocParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_1_preproc"],
+    "__STYXTYPE__": typing.Literal["tbss_1_preproc"],
     "images": list[InputPathType],
 })
 

@@ -14,7 +14,7 @@ MRI_WARP_CONVERT_METADATA = Metadata(
 
 
 MriWarpConvertParameters = typing.TypedDict('MriWarpConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_warp_convert"],
+    "__STYXTYPE__": typing.Literal["mri_warp_convert"],
     "inm3z": typing.NotRequired[InputPathType | None],
     "infsl": typing.NotRequired[InputPathType | None],
     "inlps": typing.NotRequired[InputPathType | None],

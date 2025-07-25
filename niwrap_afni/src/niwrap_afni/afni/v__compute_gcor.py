@@ -14,7 +14,7 @@ V__COMPUTE_GCOR_METADATA = Metadata(
 
 
 VComputeGcorParameters = typing.TypedDict('VComputeGcorParameters', {
-    "__STYX_TYPE__": typing.Literal["@compute_gcor"],
+    "__STYXTYPE__": typing.Literal["@compute_gcor"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "corr_vol_prefix": typing.NotRequired[str | None],

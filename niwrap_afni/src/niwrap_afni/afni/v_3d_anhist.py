@@ -14,7 +14,7 @@ V_3D_ANHIST_METADATA = Metadata(
 
 
 V3dAnhistParameters = typing.TypedDict('V3dAnhistParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAnhist"],
+    "__STYXTYPE__": typing.Literal["3dAnhist"],
     "dataset": InputPathType,
     "quiet": bool,
     "dump_histogram": bool,

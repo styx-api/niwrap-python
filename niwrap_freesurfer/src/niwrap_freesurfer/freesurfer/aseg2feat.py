@@ -14,7 +14,7 @@ ASEG2FEAT_METADATA = Metadata(
 
 
 Aseg2featParameters = typing.TypedDict('Aseg2featParameters', {
-    "__STYX_TYPE__": typing.Literal["aseg2feat"],
+    "__STYXTYPE__": typing.Literal["aseg2feat"],
     "feat": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[str | None],

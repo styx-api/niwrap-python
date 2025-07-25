@@ -14,7 +14,7 @@ CUTOFFCALC_METADATA = Metadata(
 
 
 CutoffcalcParameters = typing.TypedDict('CutoffcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["cutoffcalc"],
+    "__STYXTYPE__": typing.Literal["cutoffcalc"],
     "input_design": InputPathType,
     "threshold": typing.NotRequired[float | None],
     "tr": typing.NotRequired[float | None],

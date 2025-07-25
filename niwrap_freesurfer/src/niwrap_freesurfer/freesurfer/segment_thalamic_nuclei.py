@@ -14,7 +14,7 @@ SEGMENT_THALAMIC_NUCLEI_METADATA = Metadata(
 
 
 SegmentThalamicNucleiParameters = typing.TypedDict('SegmentThalamicNucleiParameters', {
-    "__STYX_TYPE__": typing.Literal["SegmentThalamicNuclei"],
+    "__STYXTYPE__": typing.Literal["SegmentThalamicNuclei"],
     "t1_image": InputPathType,
     "output_dir": str,
 })

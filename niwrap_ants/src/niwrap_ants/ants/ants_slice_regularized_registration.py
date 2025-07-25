@@ -14,7 +14,7 @@ ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA = Metadata(
 
 
 AntsSliceRegularizedRegistrationParameters = typing.TypedDict('AntsSliceRegularizedRegistrationParameters', {
-    "__STYX_TYPE__": typing.Literal["antsSliceRegularizedRegistration"],
+    "__STYXTYPE__": typing.Literal["antsSliceRegularizedRegistration"],
     "polydegree": int,
     "output": str,
     "metric": str,

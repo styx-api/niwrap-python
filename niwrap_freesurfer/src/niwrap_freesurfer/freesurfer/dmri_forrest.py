@@ -14,7 +14,7 @@ DMRI_FORREST_METADATA = Metadata(
 
 
 DmriForrestParameters = typing.TypedDict('DmriForrestParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_forrest"],
+    "__STYXTYPE__": typing.Literal["dmri_forrest"],
     "test_dir": str,
     "train_file": InputPathType,
     "mask_file": InputPathType,

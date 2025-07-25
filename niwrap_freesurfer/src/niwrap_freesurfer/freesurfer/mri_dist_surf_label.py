@@ -14,7 +14,7 @@ MRI_DIST_SURF_LABEL_METADATA = Metadata(
 
 
 MriDistSurfLabelParameters = typing.TypedDict('MriDistSurfLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_dist_surf_label"],
+    "__STYXTYPE__": typing.Literal["mri_dist_surf_label"],
     "surface": InputPathType,
     "label_file": InputPathType,
     "output": str,

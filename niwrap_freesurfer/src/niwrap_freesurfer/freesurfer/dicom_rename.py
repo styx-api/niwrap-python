@@ -14,7 +14,7 @@ DICOM_RENAME_METADATA = Metadata(
 
 
 DicomRenameParameters = typing.TypedDict('DicomRenameParameters', {
-    "__STYX_TYPE__": typing.Literal["dicom-rename"],
+    "__STYXTYPE__": typing.Literal["dicom-rename"],
     "input_files": list[InputPathType],
     "output_base": str,
     "version": bool,

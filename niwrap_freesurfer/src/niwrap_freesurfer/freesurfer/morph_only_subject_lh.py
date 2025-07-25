@@ -14,7 +14,7 @@ MORPH_ONLY_SUBJECT_LH_METADATA = Metadata(
 
 
 MorphOnlySubjectLhParameters = typing.TypedDict('MorphOnlySubjectLhParameters', {
-    "__STYX_TYPE__": typing.Literal["morph_only_subject-lh"],
+    "__STYXTYPE__": typing.Literal["morph_only_subject-lh"],
     "subject_dir": str,
 })
 

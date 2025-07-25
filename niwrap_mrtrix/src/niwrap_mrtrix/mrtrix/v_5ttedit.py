@@ -14,14 +14,14 @@ V_5TTEDIT_METADATA = Metadata(
 
 
 V5tteditConfigParameters = typing.TypedDict('V5tteditConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 V5tteditParameters = typing.TypedDict('V5tteditParameters', {
-    "__STYX_TYPE__": typing.Literal["5ttedit"],
+    "__STYXTYPE__": typing.Literal["5ttedit"],
     "cgm": typing.NotRequired[InputPathType | None],
     "sgm": typing.NotRequired[InputPathType | None],
     "wm": typing.NotRequired[InputPathType | None],

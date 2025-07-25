@@ -14,7 +14,7 @@ POINTSET2LABEL_METADATA = Metadata(
 
 
 Pointset2labelParameters = typing.TypedDict('Pointset2labelParameters', {
-    "__STYX_TYPE__": typing.Literal["pointset2label"],
+    "__STYXTYPE__": typing.Literal["pointset2label"],
     "waypoint_file": InputPathType,
     "input_volume": InputPathType,
     "label_value": float,

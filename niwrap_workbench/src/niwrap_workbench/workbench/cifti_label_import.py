@@ -14,7 +14,7 @@ CIFTI_LABEL_IMPORT_METADATA = Metadata(
 
 
 CiftiLabelImportParameters = typing.TypedDict('CiftiLabelImportParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-label-import"],
+    "__STYXTYPE__": typing.Literal["cifti-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,

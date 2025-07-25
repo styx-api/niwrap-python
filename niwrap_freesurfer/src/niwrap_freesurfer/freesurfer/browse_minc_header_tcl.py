@@ -14,7 +14,7 @@ BROWSE_MINC_HEADER_TCL_METADATA = Metadata(
 
 
 BrowseMincHeaderTclParameters = typing.TypedDict('BrowseMincHeaderTclParameters', {
-    "__STYX_TYPE__": typing.Literal["browse-minc-header.tcl"],
+    "__STYXTYPE__": typing.Literal["browse-minc-header.tcl"],
     "infile": InputPathType,
 })
 

@@ -14,7 +14,7 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
 
 
 MetricFindClustersParameters = typing.TypedDict('MetricFindClustersParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-find-clusters"],
+    "__STYXTYPE__": typing.Literal["metric-find-clusters"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "value_threshold": float,

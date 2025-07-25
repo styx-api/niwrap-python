@@ -14,7 +14,7 @@ JKGCATRAIN_METADATA = Metadata(
 
 
 JkgcatrainParameters = typing.TypedDict('JkgcatrainParameters', {
-    "__STYX_TYPE__": typing.Literal["jkgcatrain"],
+    "__STYXTYPE__": typing.Literal["jkgcatrain"],
     "gca_directory": str,
     "iteration_number": typing.NotRequired[float | None],
     "num_threads": typing.NotRequired[float | None],

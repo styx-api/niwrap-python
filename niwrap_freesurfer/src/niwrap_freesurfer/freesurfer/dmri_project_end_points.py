@@ -14,7 +14,7 @@ DMRI_PROJECT_END_POINTS_METADATA = Metadata(
 
 
 DmriProjectEndPointsParameters = typing.TypedDict('DmriProjectEndPointsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_projectEndPoints"],
+    "__STYXTYPE__": typing.Literal["dmri_projectEndPoints"],
     "streamline_file": InputPathType,
     "left_surface_file": InputPathType,
     "right_surface_file": InputPathType,

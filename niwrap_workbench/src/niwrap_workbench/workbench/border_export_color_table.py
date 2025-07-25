@@ -14,7 +14,7 @@ BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
 
 
 BorderExportColorTableParameters = typing.TypedDict('BorderExportColorTableParameters', {
-    "__STYX_TYPE__": typing.Literal["border-export-color-table"],
+    "__STYXTYPE__": typing.Literal["border-export-color-table"],
     "border_file": InputPathType,
     "table_out": str,
     "opt_class_colors": bool,

@@ -14,7 +14,7 @@ RBBR_METADATA = Metadata(
 
 
 RbbrParameters = typing.TypedDict('RbbrParameters', {
-    "__STYX_TYPE__": typing.Literal["rbbr"],
+    "__STYXTYPE__": typing.Literal["rbbr"],
     "subject": typing.NotRequired[str | None],
     "moving_image": str,
     "t1_contrast": bool,

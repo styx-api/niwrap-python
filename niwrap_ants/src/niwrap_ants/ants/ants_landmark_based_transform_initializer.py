@@ -14,7 +14,7 @@ ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA = Metadata(
 
 
 AntsLandmarkBasedTransformInitializerParameters = typing.TypedDict('AntsLandmarkBasedTransformInitializerParameters', {
-    "__STYX_TYPE__": typing.Literal["antsLandmarkBasedTransformInitializer"],
+    "__STYXTYPE__": typing.Literal["antsLandmarkBasedTransformInitializer"],
     "dimension": int,
     "fixed_image": InputPathType,
     "moving_image": InputPathType,

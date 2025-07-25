@@ -14,7 +14,7 @@ MRIS_DISTANCE_TRANSFORM_METADATA = Metadata(
 
 
 MrisDistanceTransformParameters = typing.TypedDict('MrisDistanceTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_distance_transform"],
+    "__STYXTYPE__": typing.Literal["mris_distance_transform"],
     "surface": InputPathType,
     "label": InputPathType,
     "mode": typing.Literal["signed", "unsigned", "outside"],

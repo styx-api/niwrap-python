@@ -14,7 +14,7 @@ GCAINIT_METADATA = Metadata(
 
 
 GcainitParameters = typing.TypedDict('GcainitParameters', {
-    "__STYX_TYPE__": typing.Literal["gcainit"],
+    "__STYXTYPE__": typing.Literal["gcainit"],
     "gcadir": str,
 })
 

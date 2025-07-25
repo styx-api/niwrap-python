@@ -14,7 +14,7 @@ SIMPLE_SYN_REGISTRATION_METADATA = Metadata(
 
 
 SimpleSynRegistrationParameters = typing.TypedDict('SimpleSynRegistrationParameters', {
-    "__STYX_TYPE__": typing.Literal["simpleSynRegistration"],
+    "__STYXTYPE__": typing.Literal["simpleSynRegistration"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initial_transform": str,

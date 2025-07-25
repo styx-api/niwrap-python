@@ -14,7 +14,7 @@ MRIS_SURF2VTK_METADATA = Metadata(
 
 
 MrisSurf2vtkParameters = typing.TypedDict('MrisSurf2vtkParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_surf2vtk"],
+    "__STYXTYPE__": typing.Literal["mris_surf2vtk"],
     "input_surface": InputPathType,
     "output_surface": str,
 })

@@ -14,7 +14,7 @@ V__AFNI_REFACER_RUN_METADATA = Metadata(
 
 
 VAfniRefacerRunParameters = typing.TypedDict('VAfniRefacerRunParameters', {
-    "__STYX_TYPE__": typing.Literal["@afni_refacer_run"],
+    "__STYXTYPE__": typing.Literal["@afni_refacer_run"],
     "input_file": InputPathType,
     "mode_deface": bool,
     "mode_reface": bool,

@@ -14,7 +14,7 @@ MRIS_NITERS2FWHM_METADATA = Metadata(
 
 
 MrisNiters2fwhmParameters = typing.TypedDict('MrisNiters2fwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_niters2fwhm"],
+    "__STYXTYPE__": typing.Literal["mris_niters2fwhm"],
     "subject": str,
     "hemi": str,
     "surf": str,

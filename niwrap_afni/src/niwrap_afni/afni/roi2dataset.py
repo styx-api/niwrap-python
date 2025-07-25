@@ -14,7 +14,7 @@ ROI2DATASET_METADATA = Metadata(
 
 
 Roi2datasetParameters = typing.TypedDict('Roi2datasetParameters', {
-    "__STYX_TYPE__": typing.Literal["ROI2dataset"],
+    "__STYXTYPE__": typing.Literal["ROI2dataset"],
     "prefix": str,
     "input_rois": list[InputPathType],
     "keep_separate": bool,

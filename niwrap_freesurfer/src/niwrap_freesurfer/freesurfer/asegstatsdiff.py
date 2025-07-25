@@ -14,7 +14,7 @@ ASEGSTATSDIFF_METADATA = Metadata(
 
 
 AsegstatsdiffParameters = typing.TypedDict('AsegstatsdiffParameters', {
-    "__STYX_TYPE__": typing.Literal["asegstatsdiff"],
+    "__STYXTYPE__": typing.Literal["asegstatsdiff"],
     "subject1": str,
     "subject2": str,
     "outdir": typing.NotRequired[str | None],

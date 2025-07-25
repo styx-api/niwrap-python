@@ -14,7 +14,7 @@ V_3D_NWARP_APPLY_METADATA = Metadata(
 
 
 V3dNwarpApplyParameters = typing.TypedDict('V3dNwarpApplyParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNwarpApply"],
+    "__STYXTYPE__": typing.Literal["3dNwarpApply"],
     "nwarp": str,
     "iwarp": bool,
     "source": str,

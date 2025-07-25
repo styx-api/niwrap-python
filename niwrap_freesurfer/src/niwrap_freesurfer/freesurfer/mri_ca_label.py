@@ -14,7 +14,7 @@ MRI_CA_LABEL_METADATA = Metadata(
 
 
 MriCaLabelParameters = typing.TypedDict('MriCaLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_ca_label"],
+    "__STYXTYPE__": typing.Literal["mri_ca_label"],
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
     "gca_file": InputPathType,

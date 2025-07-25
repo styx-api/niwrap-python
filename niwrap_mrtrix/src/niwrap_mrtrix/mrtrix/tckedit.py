@@ -14,74 +14,74 @@ TCKEDIT_METADATA = Metadata(
 
 
 TckeditVariousStringParameters = typing.TypedDict('TckeditVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckeditVariousFileParameters = typing.TypedDict('TckeditVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckeditIncludeParameters = typing.TypedDict('TckeditIncludeParameters', {
-    "__STYX_TYPE__": typing.Literal["include"],
+    "__STYXTYPE__": typing.Literal["include"],
     "spec": typing.Union[TckeditVariousStringParameters, TckeditVariousFileParameters],
 })
 
 
 TckeditIncludeOrderedParameters = typing.TypedDict('TckeditIncludeOrderedParameters', {
-    "__STYX_TYPE__": typing.Literal["include_ordered"],
+    "__STYXTYPE__": typing.Literal["include_ordered"],
     "image": str,
 })
 
 
 TckeditVariousString1Parameters = typing.TypedDict('TckeditVariousString1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString_1"],
+    "__STYXTYPE__": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 TckeditVariousFile1Parameters = typing.TypedDict('TckeditVariousFile1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile_1"],
+    "__STYXTYPE__": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 TckeditExcludeParameters = typing.TypedDict('TckeditExcludeParameters', {
-    "__STYX_TYPE__": typing.Literal["exclude"],
+    "__STYXTYPE__": typing.Literal["exclude"],
     "spec": typing.Union[TckeditVariousString1Parameters, TckeditVariousFile1Parameters],
 })
 
 
 TckeditVariousString2Parameters = typing.TypedDict('TckeditVariousString2Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString_2"],
+    "__STYXTYPE__": typing.Literal["VariousString_2"],
     "obj": str,
 })
 
 
 TckeditVariousFile2Parameters = typing.TypedDict('TckeditVariousFile2Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile_2"],
+    "__STYXTYPE__": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
 
 
 TckeditMaskParameters = typing.TypedDict('TckeditMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["mask"],
+    "__STYXTYPE__": typing.Literal["mask"],
     "spec": typing.Union[TckeditVariousString2Parameters, TckeditVariousFile2Parameters],
 })
 
 
 TckeditConfigParameters = typing.TypedDict('TckeditConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckeditParameters = typing.TypedDict('TckeditParameters', {
-    "__STYX_TYPE__": typing.Literal["tckedit"],
+    "__STYXTYPE__": typing.Literal["tckedit"],
     "include": typing.NotRequired[list[TckeditIncludeParameters] | None],
     "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParameters] | None],
     "exclude": typing.NotRequired[list[TckeditExcludeParameters] | None],

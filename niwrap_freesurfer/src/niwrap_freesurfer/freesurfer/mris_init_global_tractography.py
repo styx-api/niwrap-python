@@ -14,7 +14,7 @@ MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA = Metadata(
 
 
 MrisInitGlobalTractographyParameters = typing.TypedDict('MrisInitGlobalTractographyParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_init_global_tractography"],
+    "__STYXTYPE__": typing.Literal["mris_init_global_tractography"],
     "subject": str,
     "parcellation": str,
     "output_volume": str,

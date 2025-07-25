@@ -14,7 +14,7 @@ SURF_MESH_METADATA = Metadata(
 
 
 SurfMeshParameters = typing.TypedDict('SurfMeshParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfMesh"],
+    "__STYXTYPE__": typing.Literal["SurfMesh"],
     "input_surface": str,
     "output_surface": str,
     "edge_fraction": float,

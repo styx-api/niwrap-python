@@ -14,7 +14,7 @@ MRI_HEAD_METADATA = Metadata(
 
 
 MriHeadParameters = typing.TypedDict('MriHeadParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_head"],
+    "__STYXTYPE__": typing.Literal["mri_head"],
     "identify": bool,
     "read": bool,
     "filename": typing.NotRequired[str | None],

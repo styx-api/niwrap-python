@@ -14,7 +14,7 @@ LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 LabelExportTableParameters = typing.TypedDict('LabelExportTableParameters', {
-    "__STYX_TYPE__": typing.Literal["label-export-table"],
+    "__STYXTYPE__": typing.Literal["label-export-table"],
     "label_in": InputPathType,
     "table_out": str,
 })

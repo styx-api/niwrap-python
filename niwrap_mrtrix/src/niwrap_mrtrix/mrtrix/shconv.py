@@ -14,26 +14,26 @@ SHCONV_METADATA = Metadata(
 
 
 ShconvVariousStringParameters = typing.TypedDict('ShconvVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 ShconvVariousFileParameters = typing.TypedDict('ShconvVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 ShconvConfigParameters = typing.TypedDict('ShconvConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 ShconvParameters = typing.TypedDict('ShconvParameters', {
-    "__STYX_TYPE__": typing.Literal["shconv"],
+    "__STYXTYPE__": typing.Literal["shconv"],
     "datatype": typing.NotRequired[str | None],
     "strides": typing.NotRequired[typing.Union[ShconvVariousStringParameters, ShconvVariousFileParameters] | None],
     "info": bool,

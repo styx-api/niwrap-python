@@ -14,7 +14,7 @@ V_3D_INTRACRANIAL_METADATA = Metadata(
 
 
 V3dIntracranialParameters = typing.TypedDict('V3dIntracranialParameters', {
-    "__STYX_TYPE__": typing.Literal["3dIntracranial"],
+    "__STYXTYPE__": typing.Literal["3dIntracranial"],
     "infile": InputPathType,
     "prefix": str,
     "min_val": typing.NotRequired[float | None],

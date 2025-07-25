@@ -14,7 +14,7 @@ V_3D_EXTRACT_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dExtractGroupInCorrParameters = typing.TypedDict('V3dExtractGroupInCorrParameters', {
-    "__STYX_TYPE__": typing.Literal["3dExtractGroupInCorr"],
+    "__STYXTYPE__": typing.Literal["3dExtractGroupInCorr"],
     "group_in_corr_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
 })

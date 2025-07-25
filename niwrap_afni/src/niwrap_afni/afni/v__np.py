@@ -14,7 +14,7 @@ V__NP_METADATA = Metadata(
 
 
 VNpParameters = typing.TypedDict('VNpParameters', {
-    "__STYX_TYPE__": typing.Literal["@np"],
+    "__STYXTYPE__": typing.Literal["@np"],
     "prefix": str,
 })
 

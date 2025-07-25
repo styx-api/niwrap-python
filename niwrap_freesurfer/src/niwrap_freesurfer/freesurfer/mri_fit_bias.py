@@ -14,7 +14,7 @@ MRI_FIT_BIAS_METADATA = Metadata(
 
 
 MriFitBiasParameters = typing.TypedDict('MriFitBiasParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fit_bias"],
+    "__STYXTYPE__": typing.Literal["mri_fit_bias"],
     "inputvol": InputPathType,
     "lpf_cutoff": typing.NotRequired[float | None],
     "segvol": InputPathType,

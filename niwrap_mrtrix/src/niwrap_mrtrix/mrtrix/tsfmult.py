@@ -14,14 +14,14 @@ TSFMULT_METADATA = Metadata(
 
 
 TsfmultConfigParameters = typing.TypedDict('TsfmultConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfmultParameters = typing.TypedDict('TsfmultParameters', {
-    "__STYX_TYPE__": typing.Literal["tsfmult"],
+    "__STYXTYPE__": typing.Literal["tsfmult"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

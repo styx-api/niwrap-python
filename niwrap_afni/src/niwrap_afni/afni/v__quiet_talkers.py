@@ -14,7 +14,7 @@ V__QUIET_TALKERS_METADATA = Metadata(
 
 
 VQuietTalkersParameters = typing.TypedDict('VQuietTalkersParameters', {
-    "__STYX_TYPE__": typing.Literal["@Quiet_Talkers"],
+    "__STYXTYPE__": typing.Literal["@Quiet_Talkers"],
     "sudo": bool,
     "prog": typing.NotRequired[list[str] | None],
     "npb_val": typing.NotRequired[list[float] | None],

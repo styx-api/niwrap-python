@@ -14,7 +14,7 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
 
 
 SurfaceGeodesicDistanceParameters = typing.TypedDict('SurfaceGeodesicDistanceParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-geodesic-distance"],
+    "__STYXTYPE__": typing.Literal["surface-geodesic-distance"],
     "surface": InputPathType,
     "vertex": int,
     "metric_out": str,

@@ -14,7 +14,7 @@ P2DSETSTAT_METADATA = Metadata(
 
 
 P2dsetstatParameters = typing.TypedDict('P2dsetstatParameters', {
-    "__STYX_TYPE__": typing.Literal["p2dsetstat"],
+    "__STYXTYPE__": typing.Literal["p2dsetstat"],
     "dataset": str,
     "pvalue": float,
     "bisided": bool,

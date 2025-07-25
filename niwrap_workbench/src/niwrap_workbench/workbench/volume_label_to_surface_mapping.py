@@ -14,7 +14,7 @@ VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA = Metadata(
 
 
 VolumeLabelToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParameters', {
-    "__STYX_TYPE__": typing.Literal["ribbon_constrained"],
+    "__STYXTYPE__": typing.Literal["ribbon_constrained"],
     "inner_surf": InputPathType,
     "outer_surf": InputPathType,
     "opt_volume_roi_roi_volume": typing.NotRequired[InputPathType | None],
@@ -24,7 +24,7 @@ VolumeLabelToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('Volum
 
 
 VolumeLabelToSurfaceMappingParameters = typing.TypedDict('VolumeLabelToSurfaceMappingParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-label-to-surface-mapping"],
+    "__STYXTYPE__": typing.Literal["volume-label-to-surface-mapping"],
     "volume": InputPathType,
     "surface": InputPathType,
     "label_out": str,

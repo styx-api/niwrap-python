@@ -14,7 +14,7 @@ FSL_DEFACE_METADATA = Metadata(
 
 
 FslDefaceParameters = typing.TypedDict('FslDefaceParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_deface"],
+    "__STYXTYPE__": typing.Literal["fsl_deface"],
     "infile": InputPathType,
     "outfile": str,
     "cropped_defacing_flag": bool,

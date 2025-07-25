@@ -14,7 +14,7 @@ V_3D_LOMB_SCARGLE_METADATA = Metadata(
 
 
 V3dLombScargleParameters = typing.TypedDict('V3dLombScargleParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLombScargle"],
+    "__STYXTYPE__": typing.Literal["3dLombScargle"],
     "prefix": str,
     "inset": InputPathType,
     "censor_1d": typing.NotRequired[InputPathType | None],

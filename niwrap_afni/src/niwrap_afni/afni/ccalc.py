@@ -14,7 +14,7 @@ CCALC_METADATA = Metadata(
 
 
 CcalcParameters = typing.TypedDict('CcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["ccalc"],
+    "__STYXTYPE__": typing.Literal["ccalc"],
     "format": typing.NotRequired[str | None],
     "expr": str,
 })

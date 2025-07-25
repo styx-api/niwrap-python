@@ -14,7 +14,7 @@ V_3D_ERRTS_CORMAT_METADATA = Metadata(
 
 
 V3dErrtsCormatParameters = typing.TypedDict('V3dErrtsCormatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dErrtsCormat"],
+    "__STYXTYPE__": typing.Literal["3dErrtsCormat"],
     "dset": InputPathType,
     "concat": typing.NotRequired[str | None],
     "input": typing.NotRequired[InputPathType | None],

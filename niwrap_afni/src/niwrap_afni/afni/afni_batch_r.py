@@ -14,7 +14,7 @@ AFNI_BATCH_R_METADATA = Metadata(
 
 
 AfniBatchRParameters = typing.TypedDict('AfniBatchRParameters', {
-    "__STYX_TYPE__": typing.Literal["AFNI_Batch_R"],
+    "__STYXTYPE__": typing.Literal["AFNI_Batch_R"],
     "no_restore": bool,
     "save_workspace": bool,
     "no_readline": bool,

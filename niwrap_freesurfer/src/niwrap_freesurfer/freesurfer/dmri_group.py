@@ -14,7 +14,7 @@ DMRI_GROUP_METADATA = Metadata(
 
 
 DmriGroupParameters = typing.TypedDict('DmriGroupParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_group"],
+    "__STYXTYPE__": typing.Literal["dmri_group"],
     "input_list": InputPathType,
     "reference_volume": InputPathType,
     "output_base": str,

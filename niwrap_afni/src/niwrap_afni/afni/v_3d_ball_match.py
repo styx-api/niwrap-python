@@ -14,7 +14,7 @@ V_3D_BALL_MATCH_METADATA = Metadata(
 
 
 V3dBallMatchParameters = typing.TypedDict('V3dBallMatchParameters', {
-    "__STYX_TYPE__": typing.Literal["3dBallMatch"],
+    "__STYXTYPE__": typing.Literal["3dBallMatch"],
     "input_dataset": InputPathType,
     "radius": typing.NotRequired[float | None],
     "dataset_option": typing.NotRequired[str | None],

@@ -14,14 +14,14 @@ TCKSAMPLE_METADATA = Metadata(
 
 
 TcksampleConfigParameters = typing.TypedDict('TcksampleConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TcksampleParameters = typing.TypedDict('TcksampleParameters', {
-    "__STYX_TYPE__": typing.Literal["tcksample"],
+    "__STYXTYPE__": typing.Literal["tcksample"],
     "stat_tck": typing.NotRequired[str | None],
     "nointerp": bool,
     "precise": bool,

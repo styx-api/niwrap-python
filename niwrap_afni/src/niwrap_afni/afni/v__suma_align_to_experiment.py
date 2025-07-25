@@ -14,7 +14,7 @@ V__SUMA_ALIGN_TO_EXPERIMENT_METADATA = Metadata(
 
 
 VSumaAlignToExperimentParameters = typing.TypedDict('VSumaAlignToExperimentParameters', {
-    "__STYX_TYPE__": typing.Literal["@SUMA_AlignToExperiment"],
+    "__STYXTYPE__": typing.Literal["@SUMA_AlignToExperiment"],
     "exp_anat": InputPathType,
     "surf_anat": InputPathType,
     "dxyz": typing.NotRequired[float | None],

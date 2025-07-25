@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 
 
 SegmentSubjectT1AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParameters', {
-    "__STYX_TYPE__": typing.Literal["segmentSubjectT1_autoEstimateAlveusML"],
+    "__STYXTYPE__": typing.Literal["segmentSubjectT1_autoEstimateAlveusML"],
     "t1_file": InputPathType,
     "output_folder": str,
 })

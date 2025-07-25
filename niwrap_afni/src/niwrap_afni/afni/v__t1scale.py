@@ -14,7 +14,7 @@ V__T1SCALE_METADATA = Metadata(
 
 
 VT1scaleParameters = typing.TypedDict('VT1scaleParameters', {
-    "__STYX_TYPE__": typing.Literal["@T1scale"],
+    "__STYXTYPE__": typing.Literal["@T1scale"],
     "t1_volume": InputPathType,
     "pd_volume": typing.NotRequired[InputPathType | None],
     "output_directory": typing.NotRequired[str | None],

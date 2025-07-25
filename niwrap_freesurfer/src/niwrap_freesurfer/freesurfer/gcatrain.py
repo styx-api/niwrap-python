@@ -14,7 +14,7 @@ GCATRAIN_METADATA = Metadata(
 
 
 GcatrainParameters = typing.TypedDict('GcatrainParameters', {
-    "__STYX_TYPE__": typing.Literal["gcatrain"],
+    "__STYXTYPE__": typing.Literal["gcatrain"],
     "gcadir": str,
     "subjectlistfile": InputPathType,
     "init_subject_transform": list[str],

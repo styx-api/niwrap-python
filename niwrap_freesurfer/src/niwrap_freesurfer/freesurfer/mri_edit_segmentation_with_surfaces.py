@@ -14,7 +14,7 @@ MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA = Metadata(
 
 
 MriEditSegmentationWithSurfacesParameters = typing.TypedDict('MriEditSegmentationWithSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_edit_segmentation_with_surfaces"],
+    "__STYXTYPE__": typing.Literal["mri_edit_segmentation_with_surfaces"],
     "aseg_name": InputPathType,
     "surface_dir": str,
     "norm_volume": InputPathType,

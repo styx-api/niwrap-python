@@ -14,14 +14,14 @@ V_5TTCHECK_METADATA = Metadata(
 
 
 V5ttcheckConfigParameters = typing.TypedDict('V5ttcheckConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 V5ttcheckParameters = typing.TypedDict('V5ttcheckParameters', {
-    "__STYX_TYPE__": typing.Literal["5ttcheck"],
+    "__STYXTYPE__": typing.Literal["5ttcheck"],
     "voxels": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,

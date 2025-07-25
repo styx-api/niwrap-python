@@ -14,7 +14,7 @@ MRI_ANNOTATION2LABEL_METADATA = Metadata(
 
 
 MriAnnotation2labelParameters = typing.TypedDict('MriAnnotation2labelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_annotation2label"],
+    "__STYXTYPE__": typing.Literal["mri_annotation2label"],
     "subject": str,
     "hemi": str,
     "lobes": typing.NotRequired[InputPathType | None],

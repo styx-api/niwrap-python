@@ -14,7 +14,7 @@ MRIS_ANNOT_TO_SEGMENTATION_METADATA = Metadata(
 
 
 MrisAnnotToSegmentationParameters = typing.TypedDict('MrisAnnotToSegmentationParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_annot_to_segmentation"],
+    "__STYXTYPE__": typing.Literal["mris_annot_to_segmentation"],
     "subject_name": str,
     "hemi": str,
     "surface": str,

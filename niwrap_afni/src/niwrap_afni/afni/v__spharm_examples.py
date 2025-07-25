@@ -14,7 +14,7 @@ V__SPHARM_EXAMPLES_METADATA = Metadata(
 
 
 VSpharmExamplesParameters = typing.TypedDict('VSpharmExamplesParameters', {
-    "__STYX_TYPE__": typing.Literal["@Spharm.examples"],
+    "__STYXTYPE__": typing.Literal["@Spharm.examples"],
     "help_web": bool,
     "help_web_alias": bool,
     "help_view": bool,

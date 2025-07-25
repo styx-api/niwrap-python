@@ -14,7 +14,7 @@ MRI_JACOBIAN_METADATA = Metadata(
 
 
 MriJacobianParameters = typing.TypedDict('MriJacobianParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_jacobian"],
+    "__STYXTYPE__": typing.Literal["mri_jacobian"],
     "morph_file": InputPathType,
     "template_vol": InputPathType,
     "output_vol": str,

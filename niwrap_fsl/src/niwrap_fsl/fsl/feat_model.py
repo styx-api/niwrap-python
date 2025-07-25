@@ -14,7 +14,7 @@ FEAT_MODEL_METADATA = Metadata(
 
 
 FeatModelParameters = typing.TypedDict('FeatModelParameters', {
-    "__STYX_TYPE__": typing.Literal["feat_model"],
+    "__STYXTYPE__": typing.Literal["feat_model"],
     "design_name_root": str,
     "confound_matrix": typing.NotRequired[InputPathType | None],
 })

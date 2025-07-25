@@ -14,7 +14,7 @@ MRI_TRANSFORM_METADATA = Metadata(
 
 
 MriTransformParameters = typing.TypedDict('MriTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_transform"],
+    "__STYXTYPE__": typing.Literal["mri_transform"],
     "input_volume": InputPathType,
     "lta_file": InputPathType,
     "output_file": str,

@@ -14,7 +14,7 @@ FSLMATHS_METADATA = Metadata(
 
 
 FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
-    "__STYX_TYPE__": typing.Literal["operation"],
+    "__STYXTYPE__": typing.Literal["operation"],
     "add": typing.NotRequired[float | None],
     "sub": typing.NotRequired[float | None],
     "mul": typing.NotRequired[float | None],
@@ -117,7 +117,7 @@ FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
 
 
 FslmathsParameters = typing.TypedDict('FslmathsParameters', {
-    "__STYX_TYPE__": typing.Literal["fslmaths"],
+    "__STYXTYPE__": typing.Literal["fslmaths"],
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
     "operations": list[FslmathsOperationParameters],

@@ -14,7 +14,7 @@ READ_MATLAB_FILES_PY_METADATA = Metadata(
 
 
 ReadMatlabFilesPyParameters = typing.TypedDict('ReadMatlabFilesPyParameters', {
-    "__STYX_TYPE__": typing.Literal["read_matlab_files.py"],
+    "__STYXTYPE__": typing.Literal["read_matlab_files.py"],
     "infiles": list[str],
     "prefix": typing.NotRequired[str | None],
     "overwrite": bool,

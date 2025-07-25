@@ -14,7 +14,7 @@ AP_RUN_SIMPLE_REST_METADATA = Metadata(
 
 
 ApRunSimpleRestParameters = typing.TypedDict('ApRunSimpleRestParameters', {
-    "__STYX_TYPE__": typing.Literal["ap_run_simple_rest"],
+    "__STYXTYPE__": typing.Literal["ap_run_simple_rest"],
     "anat": typing.NotRequired[InputPathType | None],
     "epi": list[InputPathType],
     "nt_rm": typing.NotRequired[float | None],

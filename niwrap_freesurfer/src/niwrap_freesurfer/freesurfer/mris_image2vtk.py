@@ -14,7 +14,7 @@ MRIS_IMAGE2VTK_METADATA = Metadata(
 
 
 MrisImage2vtkParameters = typing.TypedDict('MrisImage2vtkParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_image2vtk"],
+    "__STYXTYPE__": typing.Literal["mris_image2vtk"],
     "input_filename": InputPathType,
     "output_filename": str,
     "lower_threshold": float,

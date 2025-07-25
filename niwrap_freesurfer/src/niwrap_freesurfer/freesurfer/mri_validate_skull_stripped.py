@@ -14,7 +14,7 @@ MRI_VALIDATE_SKULL_STRIPPED_METADATA = Metadata(
 
 
 MriValidateSkullStrippedParameters = typing.TypedDict('MriValidateSkullStrippedParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_validate_skull_stripped"],
+    "__STYXTYPE__": typing.Literal["mri_validate_skull_stripped"],
     "mri_reference": InputPathType,
     "mri_test": InputPathType,
     "weight": float,

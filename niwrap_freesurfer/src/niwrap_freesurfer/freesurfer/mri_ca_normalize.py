@@ -14,7 +14,7 @@ MRI_CA_NORMALIZE_METADATA = Metadata(
 
 
 MriCaNormalizeParameters = typing.TypedDict('MriCaNormalizeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_ca_normalize"],
+    "__STYXTYPE__": typing.Literal["mri_ca_normalize"],
     "input_brain_volumes": list[InputPathType],
     "atlas_file": InputPathType,
     "xform_file": InputPathType,

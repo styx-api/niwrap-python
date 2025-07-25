@@ -14,14 +14,14 @@ MESH2VOXEL_METADATA = Metadata(
 
 
 Mesh2voxelConfigParameters = typing.TypedDict('Mesh2voxelConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Mesh2voxelParameters = typing.TypedDict('Mesh2voxelParameters', {
-    "__STYX_TYPE__": typing.Literal["mesh2voxel"],
+    "__STYXTYPE__": typing.Literal["mesh2voxel"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

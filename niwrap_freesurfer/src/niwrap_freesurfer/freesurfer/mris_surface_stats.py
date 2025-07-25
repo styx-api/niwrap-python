@@ -14,7 +14,7 @@ MRIS_SURFACE_STATS_METADATA = Metadata(
 
 
 MrisSurfaceStatsParameters = typing.TypedDict('MrisSurfaceStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_surface_stats"],
+    "__STYXTYPE__": typing.Literal["mris_surface_stats"],
     "nsmooth": typing.NotRequired[float | None],
     "surf_name": InputPathType,
     "mask_name": typing.NotRequired[InputPathType | None],

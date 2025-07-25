@@ -14,7 +14,7 @@ ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA = Metadata(
 
 
 AdjunctMakeScriptAndRstPyParameters = typing.TypedDict('AdjunctMakeScriptAndRstPyParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_make_script_and_rst.py"],
+    "__STYXTYPE__": typing.Literal["adjunct_make_script_and_rst.py"],
     "input_script": InputPathType,
     "prefix_rst": str,
     "prefix_script": str,

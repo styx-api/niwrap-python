@@ -14,7 +14,7 @@ ZEROPAD_METADATA = Metadata(
 
 
 ZeropadParameters = typing.TypedDict('ZeropadParameters', {
-    "__STYX_TYPE__": typing.Literal["zeropad"],
+    "__STYXTYPE__": typing.Literal["zeropad"],
     "input_number": str,
     "length": float,
 })

@@ -14,7 +14,7 @@ MRIS_REPOSITION_SURFACE_METADATA = Metadata(
 
 
 MrisRepositionSurfaceParameters = typing.TypedDict('MrisRepositionSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_reposition_surface"],
+    "__STYXTYPE__": typing.Literal["mris_reposition_surface"],
     "surf": InputPathType,
     "volume": InputPathType,
     "points": InputPathType,

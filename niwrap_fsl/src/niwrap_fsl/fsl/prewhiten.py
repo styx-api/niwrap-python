@@ -14,7 +14,7 @@ PREWHITEN_METADATA = Metadata(
 
 
 PrewhitenParameters = typing.TypedDict('PrewhitenParameters', {
-    "__STYX_TYPE__": typing.Literal["prewhiten"],
+    "__STYXTYPE__": typing.Literal["prewhiten"],
     "feat_directory": str,
     "output_directory": typing.NotRequired[str | None],
 })

@@ -14,7 +14,7 @@ RECONBATCHJOBS_METADATA = Metadata(
 
 
 ReconbatchjobsParameters = typing.TypedDict('ReconbatchjobsParameters', {
-    "__STYX_TYPE__": typing.Literal["reconbatchjobs"],
+    "__STYXTYPE__": typing.Literal["reconbatchjobs"],
     "logfile": str,
     "cmdfiles": list[str],
 })

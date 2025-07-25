@@ -14,7 +14,7 @@ MRIS_PREPROC_METADATA = Metadata(
 
 
 MrisPreprocParameters = typing.TypedDict('MrisPreprocParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_preproc"],
+    "__STYXTYPE__": typing.Literal["mris_preproc"],
     "outfile": str,
     "target_subject": str,
     "hemi": str,

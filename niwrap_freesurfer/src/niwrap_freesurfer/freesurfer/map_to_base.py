@@ -14,7 +14,7 @@ MAP_TO_BASE_METADATA = Metadata(
 
 
 MapToBaseParameters = typing.TypedDict('MapToBaseParameters', {
-    "__STYX_TYPE__": typing.Literal["map_to_base"],
+    "__STYXTYPE__": typing.Literal["map_to_base"],
     "baseid": str,
     "tpid": str,
     "input_image": str,

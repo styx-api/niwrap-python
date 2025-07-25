@@ -14,28 +14,28 @@ CIFTI_FALSE_CORRELATION_METADATA = Metadata(
 
 
 CiftiFalseCorrelationLeftSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["left_surface"],
+    "__STYXTYPE__": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_dump_text_text_out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationRightSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["right_surface"],
+    "__STYXTYPE__": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_dump_text_text_out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationCerebellumSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_surface"],
+    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_dump_text_text_out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationParameters = typing.TypedDict('CiftiFalseCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-false-correlation"],
+    "__STYXTYPE__": typing.Literal["cifti-false-correlation"],
     "cifti_in": InputPathType,
     "3d_dist": float,
     "geo_outer": float,

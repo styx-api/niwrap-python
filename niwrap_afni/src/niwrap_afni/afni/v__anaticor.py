@@ -14,7 +14,7 @@ V__ANATICOR_METADATA = Metadata(
 
 
 VAnaticorParameters = typing.TypedDict('VAnaticorParameters', {
-    "__STYX_TYPE__": typing.Literal["@ANATICOR"],
+    "__STYXTYPE__": typing.Literal["@ANATICOR"],
     "ts": InputPathType,
     "polort": str,
     "motion": InputPathType,

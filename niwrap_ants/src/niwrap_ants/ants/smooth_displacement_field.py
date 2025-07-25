@@ -14,7 +14,7 @@ SMOOTH_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 SmoothDisplacementFieldParameters = typing.TypedDict('SmoothDisplacementFieldParameters', {
-    "__STYX_TYPE__": typing.Literal["SmoothDisplacementField"],
+    "__STYXTYPE__": typing.Literal["SmoothDisplacementField"],
     "image_dimension": int,
     "input_field": InputPathType,
     "output_field": str,

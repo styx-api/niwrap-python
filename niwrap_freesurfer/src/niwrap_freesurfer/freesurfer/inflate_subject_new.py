@@ -14,7 +14,7 @@ INFLATE_SUBJECT_NEW_METADATA = Metadata(
 
 
 InflateSubjectNewParameters = typing.TypedDict('InflateSubjectNewParameters', {
-    "__STYX_TYPE__": typing.Literal["inflate_subject_new"],
+    "__STYXTYPE__": typing.Literal["inflate_subject_new"],
     "subject_dir": str,
 })
 

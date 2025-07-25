@@ -14,7 +14,7 @@ INFLATE_SUBJECT_NEW_RH_METADATA = Metadata(
 
 
 InflateSubjectNewRhParameters = typing.TypedDict('InflateSubjectNewRhParameters', {
-    "__STYX_TYPE__": typing.Literal["inflate_subject_new-rh"],
+    "__STYXTYPE__": typing.Literal["inflate_subject_new-rh"],
     "args": typing.NotRequired[str | None],
 })
 

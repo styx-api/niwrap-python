@@ -14,7 +14,7 @@ RUN_QDEC_GLM_METADATA = Metadata(
 
 
 RunQdecGlmParameters = typing.TypedDict('RunQdecGlmParameters', {
-    "__STYX_TYPE__": typing.Literal["run-qdec-glm"],
+    "__STYXTYPE__": typing.Literal["run-qdec-glm"],
     "qdec_directory": str,
 })
 

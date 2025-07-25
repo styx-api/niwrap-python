@@ -14,7 +14,7 @@ UNCONFOUND_METADATA = Metadata(
 
 
 UnconfoundParameters = typing.TypedDict('UnconfoundParameters', {
-    "__STYX_TYPE__": typing.Literal["unconfound"],
+    "__STYXTYPE__": typing.Literal["unconfound"],
     "in4d": InputPathType,
     "out4d": str,
     "confound_mat": InputPathType,

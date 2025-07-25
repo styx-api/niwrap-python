@@ -14,7 +14,7 @@ V_3D_NORMALITY_TEST_METADATA = Metadata(
 
 
 V3dNormalityTestParameters = typing.TypedDict('V3dNormalityTestParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNormalityTest"],
+    "__STYXTYPE__": typing.Literal["3dNormalityTest"],
     "input": InputPathType,
     "prefix": str,
     "noexp": bool,

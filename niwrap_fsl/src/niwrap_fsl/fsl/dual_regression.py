@@ -14,7 +14,7 @@ DUAL_REGRESSION_METADATA = Metadata(
 
 
 DualRegressionParameters = typing.TypedDict('DualRegressionParameters', {
-    "__STYX_TYPE__": typing.Literal["dual_regression"],
+    "__STYXTYPE__": typing.Literal["dual_regression"],
     "group_ic_maps": InputPathType,
     "des_norm": float,
     "design_mat": InputPathType,

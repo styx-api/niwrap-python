@@ -14,7 +14,7 @@ IMAND_METADATA = Metadata(
 
 
 ImandParameters = typing.TypedDict('ImandParameters', {
-    "__STYX_TYPE__": typing.Literal["imand"],
+    "__STYXTYPE__": typing.Literal["imand"],
     "threshold": typing.NotRequired[float | None],
     "input_images": list[InputPathType],
     "output_image": str,

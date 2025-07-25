@@ -14,7 +14,7 @@ FSLNVOLS_METADATA = Metadata(
 
 
 FslnvolsParameters = typing.TypedDict('FslnvolsParameters', {
-    "__STYX_TYPE__": typing.Literal["fslnvols"],
+    "__STYXTYPE__": typing.Literal["fslnvols"],
     "infile": InputPathType,
 })
 

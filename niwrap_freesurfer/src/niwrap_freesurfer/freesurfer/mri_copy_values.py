@@ -14,7 +14,7 @@ MRI_COPY_VALUES_METADATA = Metadata(
 
 
 MriCopyValuesParameters = typing.TypedDict('MriCopyValuesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_copy_values"],
+    "__STYXTYPE__": typing.Literal["mri_copy_values"],
     "source_volume": InputPathType,
     "target_volume": InputPathType,
     "output_volume": str,

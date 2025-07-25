@@ -14,21 +14,21 @@ VOLUME_TO_SURFACE_MAPPING_METADATA = Metadata(
 
 
 VolumeToSurfaceMappingVolumeRoiParameters = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["volume_roi"],
+    "__STYXTYPE__": typing.Literal["volume_roi"],
     "roi_volume": InputPathType,
     "opt_weighted": bool,
 })
 
 
 VolumeToSurfaceMappingOutputWeightsParameters = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParameters', {
-    "__STYX_TYPE__": typing.Literal["output_weights"],
+    "__STYXTYPE__": typing.Literal["output_weights"],
     "vertex": int,
     "weights_out": str,
 })
 
 
 VolumeToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParameters', {
-    "__STYX_TYPE__": typing.Literal["ribbon_constrained"],
+    "__STYXTYPE__": typing.Literal["ribbon_constrained"],
     "inner_surf": InputPathType,
     "outer_surf": InputPathType,
     "volume_roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
@@ -43,7 +43,7 @@ VolumeToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeToSu
 
 
 VolumeToSurfaceMappingMyelinStyleParameters = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParameters', {
-    "__STYX_TYPE__": typing.Literal["myelin_style"],
+    "__STYXTYPE__": typing.Literal["myelin_style"],
     "ribbon_roi": InputPathType,
     "thickness": InputPathType,
     "sigma": float,
@@ -52,7 +52,7 @@ VolumeToSurfaceMappingMyelinStyleParameters = typing.TypedDict('VolumeToSurfaceM
 
 
 VolumeToSurfaceMappingParameters = typing.TypedDict('VolumeToSurfaceMappingParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-to-surface-mapping"],
+    "__STYXTYPE__": typing.Literal["volume-to-surface-mapping"],
     "volume": InputPathType,
     "surface": InputPathType,
     "metric_out": str,

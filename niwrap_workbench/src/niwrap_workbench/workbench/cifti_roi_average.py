@@ -14,7 +14,7 @@ CIFTI_ROI_AVERAGE_METADATA = Metadata(
 
 
 CiftiRoiAverageParameters = typing.TypedDict('CiftiRoiAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-roi-average"],
+    "__STYXTYPE__": typing.Literal["cifti-roi-average"],
     "cifti_in": InputPathType,
     "text_out": str,
     "opt_cifti_roi_roi_cifti": typing.NotRequired[InputPathType | None],

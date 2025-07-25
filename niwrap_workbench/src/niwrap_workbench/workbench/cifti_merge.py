@@ -14,28 +14,28 @@ CIFTI_MERGE_METADATA = Metadata(
 
 
 CiftiMergeUpToParameters = typing.TypedDict('CiftiMergeUpToParameters', {
-    "__STYX_TYPE__": typing.Literal["up_to"],
+    "__STYXTYPE__": typing.Literal["up_to"],
     "last_index": str,
     "opt_reverse": bool,
 })
 
 
 CiftiMergeIndexParameters = typing.TypedDict('CiftiMergeIndexParameters', {
-    "__STYX_TYPE__": typing.Literal["index"],
+    "__STYXTYPE__": typing.Literal["index"],
     "index": str,
     "up_to": typing.NotRequired[CiftiMergeUpToParameters | None],
 })
 
 
 CiftiMergeCiftiParameters = typing.TypedDict('CiftiMergeCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
     "index": typing.NotRequired[list[CiftiMergeIndexParameters] | None],
 })
 
 
 CiftiMergeParameters = typing.TypedDict('CiftiMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-merge"],
+    "__STYXTYPE__": typing.Literal["cifti-merge"],
     "cifti_out": str,
     "opt_direction_direction": typing.NotRequired[str | None],
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],

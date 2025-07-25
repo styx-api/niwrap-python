@@ -14,7 +14,7 @@ ADD_NOISE_TO_IMAGE_METADATA = Metadata(
 
 
 AddNoiseToImageParameters = typing.TypedDict('AddNoiseToImageParameters', {
-    "__STYX_TYPE__": typing.Literal["AddNoiseToImage"],
+    "__STYXTYPE__": typing.Literal["AddNoiseToImage"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "noise_model": typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],

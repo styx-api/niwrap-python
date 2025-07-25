@@ -14,7 +14,7 @@ LABEL_SUBJECT_MIXED_METADATA = Metadata(
 
 
 LabelSubjectMixedParameters = typing.TypedDict('LabelSubjectMixedParameters', {
-    "__STYX_TYPE__": typing.Literal["label_subject_mixed"],
+    "__STYXTYPE__": typing.Literal["label_subject_mixed"],
     "brain_mask": InputPathType,
     "norm_volume": InputPathType,
     "transform": InputPathType,

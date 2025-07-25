@@ -14,7 +14,7 @@ NSIZE_METADATA = Metadata(
 
 
 NsizeParameters = typing.TypedDict('NsizeParameters', {
-    "__STYX_TYPE__": typing.Literal["nsize"],
+    "__STYXTYPE__": typing.Literal["nsize"],
     "image_in": InputPathType,
     "image_out": str,
 })

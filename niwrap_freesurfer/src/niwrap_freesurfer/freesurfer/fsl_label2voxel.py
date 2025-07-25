@@ -14,7 +14,7 @@ FSL_LABEL2VOXEL_METADATA = Metadata(
 
 
 FslLabel2voxelParameters = typing.TypedDict('FslLabel2voxelParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_label2voxel"],
+    "__STYXTYPE__": typing.Literal["fsl_label2voxel"],
     "label_value": float,
     "labeled_volume": InputPathType,
     "src_volume": InputPathType,

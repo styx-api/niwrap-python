@@ -14,7 +14,7 @@ V_3D_NET_CORR_METADATA = Metadata(
 
 
 V3dNetCorrParameters = typing.TypedDict('V3dNetCorrParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNetCorr"],
+    "__STYXTYPE__": typing.Literal["3dNetCorr"],
     "prefix": str,
     "inset": InputPathType,
     "in_rois": InputPathType,

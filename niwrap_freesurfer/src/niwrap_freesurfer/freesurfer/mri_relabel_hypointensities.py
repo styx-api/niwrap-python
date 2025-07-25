@@ -14,7 +14,7 @@ MRI_RELABEL_HYPOINTENSITIES_METADATA = Metadata(
 
 
 MriRelabelHypointensitiesParameters = typing.TypedDict('MriRelabelHypointensitiesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_relabel_hypointensities"],
+    "__STYXTYPE__": typing.Literal["mri_relabel_hypointensities"],
     "input_aseg": InputPathType,
     "surface_directory": str,
     "output_aseg": str,

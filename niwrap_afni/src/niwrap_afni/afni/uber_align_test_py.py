@@ -14,7 +14,7 @@ UBER_ALIGN_TEST_PY_METADATA = Metadata(
 
 
 UberAlignTestPyParameters = typing.TypedDict('UberAlignTestPyParameters', {
-    "__STYX_TYPE__": typing.Literal["uber_align_test.py"],
+    "__STYXTYPE__": typing.Literal["uber_align_test.py"],
     "no_gui": bool,
     "print_script": bool,
     "save_script": typing.NotRequired[str | None],

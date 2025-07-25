@@ -14,7 +14,7 @@ MRIS_CURVATURE2IMAGE_METADATA = Metadata(
 
 
 MrisCurvature2imageParameters = typing.TypedDict('MrisCurvature2imageParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_curvature2image"],
+    "__STYXTYPE__": typing.Literal["mris_curvature2image"],
     "surface": InputPathType,
     "mask": InputPathType,
     "output_overlay": str,

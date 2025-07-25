@@ -14,7 +14,7 @@ NIFTI_TOOL_METADATA = Metadata(
 
 
 NiftiToolParameters = typing.TypedDict('NiftiToolParameters', {
-    "__STYX_TYPE__": typing.Literal["nifti_tool"],
+    "__STYXTYPE__": typing.Literal["nifti_tool"],
     "action": str,
     "input_files": typing.NotRequired[list[InputPathType] | None],
     "field": typing.NotRequired[str | None],

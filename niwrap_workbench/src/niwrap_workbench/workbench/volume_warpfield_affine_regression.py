@@ -14,14 +14,14 @@ VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA = Metadata(
 
 
 VolumeWarpfieldAffineRegressionFlirtOutParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParameters', {
-    "__STYX_TYPE__": typing.Literal["flirt_out"],
+    "__STYXTYPE__": typing.Literal["flirt_out"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeWarpfieldAffineRegressionParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-warpfield-affine-regression"],
+    "__STYXTYPE__": typing.Literal["volume-warpfield-affine-regression"],
     "warpfield": str,
     "affine_out": str,
     "opt_roi_roi_vol": typing.NotRequired[InputPathType | None],

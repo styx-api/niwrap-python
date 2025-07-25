@@ -14,7 +14,7 @@ CIFTI_PARCELLATE_METADATA = Metadata(
 
 
 CiftiParcellateSpatialWeightsParameters = typing.TypedDict('CiftiParcellateSpatialWeightsParameters', {
-    "__STYX_TYPE__": typing.Literal["spatial_weights"],
+    "__STYXTYPE__": typing.Literal["spatial_weights"],
     "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
     "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
     "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
@@ -25,14 +25,14 @@ CiftiParcellateSpatialWeightsParameters = typing.TypedDict('CiftiParcellateSpati
 
 
 CiftiParcellateExcludeOutliersParameters = typing.TypedDict('CiftiParcellateExcludeOutliersParameters', {
-    "__STYX_TYPE__": typing.Literal["exclude_outliers"],
+    "__STYXTYPE__": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 CiftiParcellateParameters = typing.TypedDict('CiftiParcellateParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-parcellate"],
+    "__STYXTYPE__": typing.Literal["cifti-parcellate"],
     "cifti_in": InputPathType,
     "cifti_label": InputPathType,
     "direction": str,

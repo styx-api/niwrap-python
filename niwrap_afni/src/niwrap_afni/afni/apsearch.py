@@ -14,7 +14,7 @@ APSEARCH_METADATA = Metadata(
 
 
 ApsearchParameters = typing.TypedDict('ApsearchParameters', {
-    "__STYX_TYPE__": typing.Literal["apsearch"],
+    "__STYXTYPE__": typing.Literal["apsearch"],
     "search_term": str,
     "file_output": typing.NotRequired[str | None],
     "verbose": bool,

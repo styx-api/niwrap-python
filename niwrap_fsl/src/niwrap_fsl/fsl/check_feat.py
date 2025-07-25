@@ -14,7 +14,7 @@ CHECK_FEAT_METADATA = Metadata(
 
 
 CheckFeatParameters = typing.TypedDict('CheckFeatParameters', {
-    "__STYX_TYPE__": typing.Literal["checkFEAT"],
+    "__STYXTYPE__": typing.Literal["checkFEAT"],
     "report_file": InputPathType,
     "report_log_file": InputPathType,
 })

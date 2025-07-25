@@ -14,7 +14,7 @@ V_3D_SHARPEN_METADATA = Metadata(
 
 
 V3dSharpenParameters = typing.TypedDict('V3dSharpenParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSharpen"],
+    "__STYXTYPE__": typing.Literal["3dSharpen"],
     "sharpening_factor": typing.NotRequired[float | None],
     "input_dataset": InputPathType,
     "output_prefix": str,

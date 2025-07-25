@@ -14,7 +14,7 @@ V_3DEDGEDOG_METADATA = Metadata(
 
 
 V3dedgedogParameters = typing.TypedDict('V3dedgedogParameters', {
-    "__STYX_TYPE__": typing.Literal["3dedgedog"],
+    "__STYXTYPE__": typing.Literal["3dedgedog"],
     "input": InputPathType,
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],

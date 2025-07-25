@@ -14,7 +14,7 @@ V_3D_LME_METADATA = Metadata(
 
 
 V3dLmeParameters = typing.TypedDict('V3dLmeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLME"],
+    "__STYXTYPE__": typing.Literal["3dLME"],
     "PREFIX": str,
     "MODEL": str,
     "DATA_TABLE": str,

@@ -14,7 +14,7 @@ STD2IMGCOORD_METADATA = Metadata(
 
 
 Std2imgcoordParameters = typing.TypedDict('Std2imgcoordParameters', {
-    "__STYX_TYPE__": typing.Literal["std2imgcoord"],
+    "__STYXTYPE__": typing.Literal["std2imgcoord"],
     "filename_coordinates": InputPathType,
     "standard_image": typing.NotRequired[InputPathType | None],
     "input_image": InputPathType,

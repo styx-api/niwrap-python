@@ -14,21 +14,21 @@ CIFTI_AVERAGE_METADATA = Metadata(
 
 
 CiftiAverageExcludeOutliersParameters = typing.TypedDict('CiftiAverageExcludeOutliersParameters', {
-    "__STYX_TYPE__": typing.Literal["exclude_outliers"],
+    "__STYXTYPE__": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 CiftiAverageCiftiParameters = typing.TypedDict('CiftiAverageCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
     "opt_weight_weight": typing.NotRequired[float | None],
 })
 
 
 CiftiAverageParameters = typing.TypedDict('CiftiAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-average"],
+    "__STYXTYPE__": typing.Literal["cifti-average"],
     "cifti_out": str,
     "exclude_outliers": typing.NotRequired[CiftiAverageExcludeOutliersParameters | None],
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ TFIM_METADATA = Metadata(
 
 
 TfimParameters = typing.TypedDict('TfimParameters', {
-    "__STYX_TYPE__": typing.Literal["tfim"],
+    "__STYXTYPE__": typing.Literal["tfim"],
     "prefix": typing.NotRequired[str | None],
     "pthresh": typing.NotRequired[float | None],
     "eqcorr": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ VNO_MATCH_CHECK_METADATA = Metadata(
 
 
 VnoMatchCheckParameters = typing.TypedDict('VnoMatchCheckParameters', {
-    "__STYX_TYPE__": typing.Literal["vno_match_check"],
+    "__STYXTYPE__": typing.Literal["vno_match_check"],
     "subjid": str,
     "debug": bool,
     "right_hemi": bool,

@@ -14,7 +14,7 @@ SMOOTHEST_METADATA = Metadata(
 
 
 SmoothestParameters = typing.TypedDict('SmoothestParameters', {
-    "__STYX_TYPE__": typing.Literal["smoothest"],
+    "__STYXTYPE__": typing.Literal["smoothest"],
     "dof": typing.NotRequired[float | None],
     "residual_fit_image": typing.NotRequired[InputPathType | None],
     "zstat_image": typing.NotRequired[InputPathType | None],

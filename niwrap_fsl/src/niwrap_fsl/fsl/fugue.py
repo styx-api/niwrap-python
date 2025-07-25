@@ -14,7 +14,7 @@ FUGUE_METADATA = Metadata(
 
 
 FugueParameters = typing.TypedDict('FugueParameters', {
-    "__STYX_TYPE__": typing.Literal["fugue"],
+    "__STYXTYPE__": typing.Literal["fugue"],
     "asym_se_time": typing.NotRequired[float | None],
     "despike_2dfilter": bool,
     "despike_threshold": typing.NotRequired[float | None],

@@ -14,21 +14,21 @@ METRIC_EXTREMA_METADATA = Metadata(
 
 
 MetricExtremaPresmoothParameters = typing.TypedDict('MetricExtremaPresmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["presmooth"],
+    "__STYXTYPE__": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricExtremaThresholdParameters = typing.TypedDict('MetricExtremaThresholdParameters', {
-    "__STYX_TYPE__": typing.Literal["threshold"],
+    "__STYXTYPE__": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
 MetricExtremaParameters = typing.TypedDict('MetricExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-extrema"],
+    "__STYXTYPE__": typing.Literal["metric-extrema"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "distance": float,

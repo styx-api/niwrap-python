@@ -14,119 +14,119 @@ TCKGEN_METADATA = Metadata(
 
 
 TckgenSeedImageParameters = typing.TypedDict('TckgenSeedImageParameters', {
-    "__STYX_TYPE__": typing.Literal["seed_image"],
+    "__STYXTYPE__": typing.Literal["seed_image"],
     "image": InputPathType,
 })
 
 
 TckgenSeedSphereParameters = typing.TypedDict('TckgenSeedSphereParameters', {
-    "__STYX_TYPE__": typing.Literal["seed_sphere"],
+    "__STYXTYPE__": typing.Literal["seed_sphere"],
     "spec": list[float],
 })
 
 
 TckgenSeedRandomPerVoxelParameters = typing.TypedDict('TckgenSeedRandomPerVoxelParameters', {
-    "__STYX_TYPE__": typing.Literal["seed_random_per_voxel"],
+    "__STYXTYPE__": typing.Literal["seed_random_per_voxel"],
     "image": InputPathType,
     "num_per_voxel": int,
 })
 
 
 TckgenSeedGridPerVoxelParameters = typing.TypedDict('TckgenSeedGridPerVoxelParameters', {
-    "__STYX_TYPE__": typing.Literal["seed_grid_per_voxel"],
+    "__STYXTYPE__": typing.Literal["seed_grid_per_voxel"],
     "image": InputPathType,
     "grid_size": int,
 })
 
 
 TckgenSeedRejectionParameters = typing.TypedDict('TckgenSeedRejectionParameters', {
-    "__STYX_TYPE__": typing.Literal["seed_rejection"],
+    "__STYXTYPE__": typing.Literal["seed_rejection"],
     "image": InputPathType,
 })
 
 
 TckgenSeedGmwmiParameters = typing.TypedDict('TckgenSeedGmwmiParameters', {
-    "__STYX_TYPE__": typing.Literal["seed_gmwmi"],
+    "__STYXTYPE__": typing.Literal["seed_gmwmi"],
     "image": InputPathType,
 })
 
 
 TckgenVariousStringParameters = typing.TypedDict('TckgenVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckgenVariousFileParameters = typing.TypedDict('TckgenVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckgenIncludeParameters = typing.TypedDict('TckgenIncludeParameters', {
-    "__STYX_TYPE__": typing.Literal["include"],
+    "__STYXTYPE__": typing.Literal["include"],
     "spec": typing.Union[TckgenVariousStringParameters, TckgenVariousFileParameters],
 })
 
 
 TckgenIncludeOrderedParameters = typing.TypedDict('TckgenIncludeOrderedParameters', {
-    "__STYX_TYPE__": typing.Literal["include_ordered"],
+    "__STYXTYPE__": typing.Literal["include_ordered"],
     "image": str,
 })
 
 
 TckgenVariousString1Parameters = typing.TypedDict('TckgenVariousString1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString_1"],
+    "__STYXTYPE__": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 TckgenVariousFile1Parameters = typing.TypedDict('TckgenVariousFile1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile_1"],
+    "__STYXTYPE__": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 TckgenExcludeParameters = typing.TypedDict('TckgenExcludeParameters', {
-    "__STYX_TYPE__": typing.Literal["exclude"],
+    "__STYXTYPE__": typing.Literal["exclude"],
     "spec": typing.Union[TckgenVariousString1Parameters, TckgenVariousFile1Parameters],
 })
 
 
 TckgenVariousString2Parameters = typing.TypedDict('TckgenVariousString2Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString_2"],
+    "__STYXTYPE__": typing.Literal["VariousString_2"],
     "obj": str,
 })
 
 
 TckgenVariousFile2Parameters = typing.TypedDict('TckgenVariousFile2Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile_2"],
+    "__STYXTYPE__": typing.Literal["VariousFile_2"],
     "obj": InputPathType,
 })
 
 
 TckgenMaskParameters = typing.TypedDict('TckgenMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["mask"],
+    "__STYXTYPE__": typing.Literal["mask"],
     "spec": typing.Union[TckgenVariousString2Parameters, TckgenVariousFile2Parameters],
 })
 
 
 TckgenFslgradParameters = typing.TypedDict('TckgenFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 TckgenConfigParameters = typing.TypedDict('TckgenConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckgenParameters = typing.TypedDict('TckgenParameters', {
-    "__STYX_TYPE__": typing.Literal["tckgen"],
+    "__STYXTYPE__": typing.Literal["tckgen"],
     "algorithm": typing.NotRequired[str | None],
     "select": typing.NotRequired[int | None],
     "step": typing.NotRequired[float | None],

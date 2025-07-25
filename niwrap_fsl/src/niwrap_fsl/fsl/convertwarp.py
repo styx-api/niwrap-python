@@ -14,7 +14,7 @@ CONVERTWARP_METADATA = Metadata(
 
 
 ConvertwarpParameters = typing.TypedDict('ConvertwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["convertwarp"],
+    "__STYXTYPE__": typing.Literal["convertwarp"],
     "abswarp": bool,
     "cons_jacobian": bool,
     "jacobian_max": typing.NotRequired[float | None],

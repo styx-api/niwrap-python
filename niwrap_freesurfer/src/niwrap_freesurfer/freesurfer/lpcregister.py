@@ -14,7 +14,7 @@ LPCREGISTER_METADATA = Metadata(
 
 
 LpcregisterParameters = typing.TypedDict('LpcregisterParameters', {
-    "__STYX_TYPE__": typing.Literal["lpcregister"],
+    "__STYXTYPE__": typing.Literal["lpcregister"],
     "subject_id": str,
     "mov_volume": str,
     "reg_file": str,

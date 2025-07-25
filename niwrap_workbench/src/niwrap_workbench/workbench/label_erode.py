@@ -14,7 +14,7 @@ LABEL_ERODE_METADATA = Metadata(
 
 
 LabelErodeParameters = typing.TypedDict('LabelErodeParameters', {
-    "__STYX_TYPE__": typing.Literal["label-erode"],
+    "__STYXTYPE__": typing.Literal["label-erode"],
     "label": InputPathType,
     "surface": InputPathType,
     "erode_dist": float,

@@ -14,7 +14,7 @@ BBMASK_METADATA = Metadata(
 
 
 BbmaskParameters = typing.TypedDict('BbmaskParameters', {
-    "__STYX_TYPE__": typing.Literal["bbmask"],
+    "__STYXTYPE__": typing.Literal["bbmask"],
     "mask": list[InputPathType],
     "src_volumes": typing.NotRequired[list[InputPathType] | None],
     "npad": typing.NotRequired[float | None],

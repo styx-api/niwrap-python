@@ -14,7 +14,7 @@ IMREG_METADATA = Metadata(
 
 
 ImregParameters = typing.TypedDict('ImregParameters', {
-    "__STYX_TYPE__": typing.Literal["imreg"],
+    "__STYXTYPE__": typing.Literal["imreg"],
     "base_image": str,
     "image_sequence": list[InputPathType],
     "nowrite": bool,

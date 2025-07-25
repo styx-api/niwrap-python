@@ -14,7 +14,7 @@ LIST_OTL_LABELS_METADATA = Metadata(
 
 
 ListOtlLabelsParameters = typing.TypedDict('ListOtlLabelsParameters', {
-    "__STYX_TYPE__": typing.Literal["list_otl_labels"],
+    "__STYXTYPE__": typing.Literal["list_otl_labels"],
     "input_file": InputPathType,
 })
 

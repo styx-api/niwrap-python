@@ -14,7 +14,7 @@ TBSS_2_REG_METADATA = Metadata(
 
 
 Tbss2RegParameters = typing.TypedDict('Tbss2RegParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_2_reg"],
+    "__STYXTYPE__": typing.Literal["tbss_2_reg"],
     "use_fmrib58_fa_1mm": bool,
     "target_image": typing.NotRequired[InputPathType | None],
     "find_best_target": bool,

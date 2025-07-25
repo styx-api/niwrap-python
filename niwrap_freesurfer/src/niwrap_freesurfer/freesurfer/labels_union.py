@@ -14,7 +14,7 @@ LABELS_UNION_METADATA = Metadata(
 
 
 LabelsUnionParameters = typing.TypedDict('LabelsUnionParameters', {
-    "__STYX_TYPE__": typing.Literal["labels_union"],
+    "__STYXTYPE__": typing.Literal["labels_union"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,

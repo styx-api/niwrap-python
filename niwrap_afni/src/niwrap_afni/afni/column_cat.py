@@ -14,7 +14,7 @@ COLUMN_CAT_METADATA = Metadata(
 
 
 ColumnCatParameters = typing.TypedDict('ColumnCatParameters', {
-    "__STYX_TYPE__": typing.Literal["column_cat"],
+    "__STYXTYPE__": typing.Literal["column_cat"],
     "line_number": typing.NotRequired[float | None],
     "separator_string": typing.NotRequired[str | None],
     "input_files": list[InputPathType],

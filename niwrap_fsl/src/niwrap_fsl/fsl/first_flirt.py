@@ -14,7 +14,7 @@ FIRST_FLIRT_METADATA = Metadata(
 
 
 FirstFlirtParameters = typing.TypedDict('FirstFlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["first_flirt"],
+    "__STYXTYPE__": typing.Literal["first_flirt"],
     "input_image": InputPathType,
     "output_basename": str,
     "already_brain_extracted_flag": bool,

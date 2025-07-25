@@ -14,7 +14,7 @@ FSL_HISTOGRAM_METADATA = Metadata(
 
 
 FslHistogramParameters = typing.TypedDict('FslHistogramParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_histogram"],
+    "__STYXTYPE__": typing.Literal["fsl_histogram"],
     "input_file": InputPathType,
     "input_file_duplicate": InputPathType,
     "output_file": str,

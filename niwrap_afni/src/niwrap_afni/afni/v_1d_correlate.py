@@ -14,7 +14,7 @@ V_1D_CORRELATE_METADATA = Metadata(
 
 
 V1dCorrelateParameters = typing.TypedDict('V1dCorrelateParameters', {
-    "__STYX_TYPE__": typing.Literal["1dCorrelate"],
+    "__STYXTYPE__": typing.Literal["1dCorrelate"],
     "ktaub": bool,
     "nboot": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],

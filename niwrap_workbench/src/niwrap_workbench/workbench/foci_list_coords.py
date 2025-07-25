@@ -14,7 +14,7 @@ FOCI_LIST_COORDS_METADATA = Metadata(
 
 
 FociListCoordsParameters = typing.TypedDict('FociListCoordsParameters', {
-    "__STYX_TYPE__": typing.Literal["foci-list-coords"],
+    "__STYXTYPE__": typing.Literal["foci-list-coords"],
     "foci_file": InputPathType,
     "coord_file_out": str,
     "opt_names_out_names_file_out": typing.NotRequired[str | None],

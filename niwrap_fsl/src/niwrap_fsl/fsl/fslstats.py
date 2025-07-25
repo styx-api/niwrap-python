@@ -14,7 +14,7 @@ FSLSTATS_METADATA = Metadata(
 
 
 FslstatsParameters = typing.TypedDict('FslstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["fslstats"],
+    "__STYXTYPE__": typing.Literal["fslstats"],
     "input_file": InputPathType,
     "index_mask": typing.NotRequired[InputPathType | None],
     "lower_threshold": typing.NotRequired[float | None],

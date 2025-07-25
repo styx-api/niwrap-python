@@ -14,7 +14,7 @@ MRI_FUSE_INTENSITY_IMAGES_METADATA = Metadata(
 
 
 MriFuseIntensityImagesParameters = typing.TypedDict('MriFuseIntensityImagesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fuse_intensity_images"],
+    "__STYXTYPE__": typing.Literal["mri_fuse_intensity_images"],
     "longitudinal_time_point_file": InputPathType,
     "input_volume": InputPathType,
     "transform_file": InputPathType,

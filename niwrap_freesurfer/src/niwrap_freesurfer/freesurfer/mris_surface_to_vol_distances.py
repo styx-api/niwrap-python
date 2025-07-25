@@ -14,7 +14,7 @@ MRIS_SURFACE_TO_VOL_DISTANCES_METADATA = Metadata(
 
 
 MrisSurfaceToVolDistancesParameters = typing.TypedDict('MrisSurfaceToVolDistancesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_surface_to_vol_distances"],
+    "__STYXTYPE__": typing.Literal["mris_surface_to_vol_distances"],
     "average_subject": str,
     "hemisphere": str,
     "subjects": list[str],

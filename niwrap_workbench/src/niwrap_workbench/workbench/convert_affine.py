@@ -14,14 +14,14 @@ CONVERT_AFFINE_METADATA = Metadata(
 
 
 ConvertAffineFromWorldParameters = typing.TypedDict('ConvertAffineFromWorldParameters', {
-    "__STYX_TYPE__": typing.Literal["from_world"],
+    "__STYXTYPE__": typing.Literal["from_world"],
     "input": str,
     "opt_inverse": bool,
 })
 
 
 ConvertAffineFromFlirtParameters = typing.TypedDict('ConvertAffineFromFlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["from_flirt"],
+    "__STYXTYPE__": typing.Literal["from_flirt"],
     "input": str,
     "source_volume": str,
     "target_volume": str,
@@ -29,14 +29,14 @@ ConvertAffineFromFlirtParameters = typing.TypedDict('ConvertAffineFromFlirtParam
 
 
 ConvertAffineToWorldParameters = typing.TypedDict('ConvertAffineToWorldParameters', {
-    "__STYX_TYPE__": typing.Literal["to_world"],
+    "__STYXTYPE__": typing.Literal["to_world"],
     "output": str,
     "opt_inverse": bool,
 })
 
 
 ConvertAffineToFlirtParameters = typing.TypedDict('ConvertAffineToFlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["to_flirt"],
+    "__STYXTYPE__": typing.Literal["to_flirt"],
     "output": str,
     "source_volume": str,
     "target_volume": str,
@@ -44,7 +44,7 @@ ConvertAffineToFlirtParameters = typing.TypedDict('ConvertAffineToFlirtParameter
 
 
 ConvertAffineParameters = typing.TypedDict('ConvertAffineParameters', {
-    "__STYX_TYPE__": typing.Literal["convert-affine"],
+    "__STYXTYPE__": typing.Literal["convert-affine"],
     "from_world": typing.NotRequired[ConvertAffineFromWorldParameters | None],
     "opt_from_itk_input": typing.NotRequired[str | None],
     "from_flirt": typing.NotRequired[ConvertAffineFromFlirtParameters | None],

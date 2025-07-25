@@ -14,7 +14,7 @@ FABBER_DUALECHO_METADATA = Metadata(
 
 
 FabberDualechoParameters = typing.TypedDict('FabberDualechoParameters', {
-    "__STYX_TYPE__": typing.Literal["fabber_dualecho"],
+    "__STYXTYPE__": typing.Literal["fabber_dualecho"],
     "output_directory": str,
     "method": str,
     "model": str,

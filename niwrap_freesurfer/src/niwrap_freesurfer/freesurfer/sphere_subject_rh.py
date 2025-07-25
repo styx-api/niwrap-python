@@ -14,7 +14,7 @@ SPHERE_SUBJECT_RH_METADATA = Metadata(
 
 
 SphereSubjectRhParameters = typing.TypedDict('SphereSubjectRhParameters', {
-    "__STYX_TYPE__": typing.Literal["sphere_subject-rh"],
+    "__STYXTYPE__": typing.Literal["sphere_subject-rh"],
     "license_file": InputPathType,
 })
 

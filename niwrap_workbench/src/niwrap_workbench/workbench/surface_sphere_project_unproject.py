@@ -14,7 +14,7 @@ SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
 
 
 SurfaceSphereProjectUnprojectParameters = typing.TypedDict('SurfaceSphereProjectUnprojectParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-sphere-project-unproject"],
+    "__STYXTYPE__": typing.Literal["surface-sphere-project-unproject"],
     "sphere_in": InputPathType,
     "sphere_project_to": InputPathType,
     "sphere_unproject_from": InputPathType,

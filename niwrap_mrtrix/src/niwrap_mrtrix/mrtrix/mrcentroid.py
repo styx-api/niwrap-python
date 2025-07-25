@@ -14,14 +14,14 @@ MRCENTROID_METADATA = Metadata(
 
 
 MrcentroidConfigParameters = typing.TypedDict('MrcentroidConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrcentroidParameters = typing.TypedDict('MrcentroidParameters', {
-    "__STYX_TYPE__": typing.Literal["mrcentroid"],
+    "__STYXTYPE__": typing.Literal["mrcentroid"],
     "mask": typing.NotRequired[InputPathType | None],
     "voxelspace": bool,
     "info": bool,

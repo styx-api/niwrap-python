@@ -14,7 +14,7 @@ V_3D_FWHMX_METADATA = Metadata(
 
 
 V3dFwhmxParameters = typing.TypedDict('V3dFwhmxParameters', {
-    "__STYX_TYPE__": typing.Literal["3dFWHMx"],
+    "__STYXTYPE__": typing.Literal["3dFWHMx"],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
     "demed": bool,

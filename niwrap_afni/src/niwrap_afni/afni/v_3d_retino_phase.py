@@ -14,7 +14,7 @@ V_3D_RETINO_PHASE_METADATA = Metadata(
 
 
 V3dRetinoPhaseParameters = typing.TypedDict('V3dRetinoPhaseParameters', {
-    "__STYX_TYPE__": typing.Literal["3dRetinoPhase"],
+    "__STYXTYPE__": typing.Literal["3dRetinoPhase"],
     "prefix": str,
     "dataset": InputPathType,
     "exp": typing.NotRequired[str | None],

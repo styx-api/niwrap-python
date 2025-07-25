@@ -14,7 +14,7 @@ MRI_AVERAGE_METADATA = Metadata(
 
 
 MriAverageParameters = typing.TypedDict('MriAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_average"],
+    "__STYXTYPE__": typing.Literal["mri_average"],
     "input_volumes": list[InputPathType],
     "output_volume": str,
     "rigid_alignment": bool,

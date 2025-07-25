@@ -14,7 +14,7 @@ CREATE_LUT_METADATA = Metadata(
 
 
 CreateLutParameters = typing.TypedDict('CreateLutParameters', {
-    "__STYX_TYPE__": typing.Literal["create_lut"],
+    "__STYXTYPE__": typing.Literal["create_lut"],
     "output_file_root": str,
 })
 

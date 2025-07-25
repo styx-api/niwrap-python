@@ -14,7 +14,7 @@ GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 GiftiAllLabelsToRoisParameters = typing.TypedDict('GiftiAllLabelsToRoisParameters', {
-    "__STYX_TYPE__": typing.Literal["gifti-all-labels-to-rois"],
+    "__STYXTYPE__": typing.Literal["gifti-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "metric_out": str,

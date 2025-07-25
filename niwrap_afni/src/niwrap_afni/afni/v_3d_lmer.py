@@ -14,7 +14,7 @@ V_3D_LMER_METADATA = Metadata(
 
 
 V3dLmerParameters = typing.TypedDict('V3dLmerParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLMEr"],
+    "__STYXTYPE__": typing.Literal["3dLMEr"],
     "bound_lower": typing.NotRequired[float | None],
     "bound_upper": typing.NotRequired[float | None],
     "cio": bool,

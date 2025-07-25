@@ -14,7 +14,7 @@ V__MEASURE_EROSION_THICK_METADATA = Metadata(
 
 
 VMeasureErosionThickParameters = typing.TypedDict('VMeasureErosionThickParameters', {
-    "__STYX_TYPE__": typing.Literal["@measure_erosion_thick"],
+    "__STYXTYPE__": typing.Literal["@measure_erosion_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],

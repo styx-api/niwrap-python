@@ -14,7 +14,7 @@ WFILEMASK_METADATA = Metadata(
 
 
 WfilemaskParameters = typing.TypedDict('WfilemaskParameters', {
-    "__STYX_TYPE__": typing.Literal["wfilemask"],
+    "__STYXTYPE__": typing.Literal["wfilemask"],
     "w_file": InputPathType,
     "label_file": InputPathType,
     "output_file": str,

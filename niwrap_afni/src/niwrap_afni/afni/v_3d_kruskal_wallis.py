@@ -14,7 +14,7 @@ V_3D_KRUSKAL_WALLIS_METADATA = Metadata(
 
 
 V3dKruskalWallisParameters = typing.TypedDict('V3dKruskalWallisParameters', {
-    "__STYX_TYPE__": typing.Literal["3dKruskalWallis"],
+    "__STYXTYPE__": typing.Literal["3dKruskalWallis"],
     "levels": int,
     "datasets": list[str],
     "workmem": typing.NotRequired[int | None],

@@ -14,7 +14,7 @@ V__ROI_MODAL_GROW_METADATA = Metadata(
 
 
 VRoiModalGrowParameters = typing.TypedDict('VRoiModalGrowParameters', {
-    "__STYX_TYPE__": typing.Literal["@ROI_modal_grow"],
+    "__STYXTYPE__": typing.Literal["@ROI_modal_grow"],
     "input_dset": InputPathType,
     "niters": float,
     "outdir": typing.NotRequired[str | None],

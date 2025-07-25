@@ -14,7 +14,7 @@ FAT_MVM_GRIDCONV_PY_METADATA = Metadata(
 
 
 FatMvmGridconvPyParameters = typing.TypedDict('FatMvmGridconvPyParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_mvm_gridconv.py"],
+    "__STYXTYPE__": typing.Literal["fat_mvm_gridconv.py"],
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
 })

@@ -14,7 +14,7 @@ V__COMMAND_GLOBB_METADATA = Metadata(
 
 
 VCommandGlobbParameters = typing.TypedDict('VCommandGlobbParameters', {
-    "__STYX_TYPE__": typing.Literal["@CommandGlobb"],
+    "__STYXTYPE__": typing.Literal["@CommandGlobb"],
     "program_command": str,
     "output_dir": str,
     "extension": typing.NotRequired[str | None],

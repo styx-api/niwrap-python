@@ -14,7 +14,7 @@ V_3DMAXIMA_METADATA = Metadata(
 
 
 V3dmaximaParameters = typing.TypedDict('V3dmaximaParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmaxima"],
+    "__STYXTYPE__": typing.Literal["3dmaxima"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "threshold": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ MRI_APARC2WMSEG_METADATA = Metadata(
 
 
 MriAparc2wmsegParameters = typing.TypedDict('MriAparc2wmsegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_aparc2wmseg"],
+    "__STYXTYPE__": typing.Literal["mri_aparc2wmseg"],
     "subject": str,
     "wmseg_file": str,
     "help": bool,

@@ -14,7 +14,7 @@ QHULL_METADATA = Metadata(
 
 
 QhullParameters = typing.TypedDict('QhullParameters', {
-    "__STYX_TYPE__": typing.Literal["qhull"],
+    "__STYXTYPE__": typing.Literal["qhull"],
     "input_coords": str,
     "delaunay": bool,
     "furthest_delaunay": bool,

@@ -14,7 +14,7 @@ V_3D_COMPARE_AFFINE_METADATA = Metadata(
 
 
 V3dCompareAffineParameters = typing.TypedDict('V3dCompareAffineParameters', {
-    "__STYX_TYPE__": typing.Literal["3dCompareAffine"],
+    "__STYXTYPE__": typing.Literal["3dCompareAffine"],
     "mask": typing.NotRequired[str | None],
     "dset": typing.NotRequired[InputPathType | None],
     "affine": typing.NotRequired[list[str] | None],

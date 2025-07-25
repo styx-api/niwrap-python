@@ -14,7 +14,7 @@ CREATE_MORPH_METADATA = Metadata(
 
 
 CreateMorphParameters = typing.TypedDict('CreateMorphParameters', {
-    "__STYX_TYPE__": typing.Literal["createMorph"],
+    "__STYXTYPE__": typing.Literal["createMorph"],
     "input_transforms": list[str],
     "output_transform": str,
     "template": typing.NotRequired[InputPathType | None],

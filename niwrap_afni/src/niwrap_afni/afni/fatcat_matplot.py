@@ -14,7 +14,7 @@ FATCAT_MATPLOT_METADATA = Metadata(
 
 
 FatcatMatplotParameters = typing.TypedDict('FatcatMatplotParameters', {
-    "__STYX_TYPE__": typing.Literal["FATCAT_matplot"],
+    "__STYXTYPE__": typing.Literal["FATCAT_matplot"],
     "directory": str,
     "shiny_folder": bool,
 })

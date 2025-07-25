@@ -14,7 +14,7 @@ MKMNC_INDEX_TCL_METADATA = Metadata(
 
 
 MkmncIndexTclParameters = typing.TypedDict('MkmncIndexTclParameters', {
-    "__STYX_TYPE__": typing.Literal["mkmnc_index.tcl"],
+    "__STYXTYPE__": typing.Literal["mkmnc_index.tcl"],
     "infile": InputPathType,
     "outfile": str,
 })

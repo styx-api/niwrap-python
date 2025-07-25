@@ -14,14 +14,14 @@ LABELSTATS_METADATA = Metadata(
 
 
 LabelstatsConfigParameters = typing.TypedDict('LabelstatsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 LabelstatsParameters = typing.TypedDict('LabelstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["labelstats"],
+    "__STYXTYPE__": typing.Literal["labelstats"],
     "output": typing.NotRequired[str | None],
     "voxelspace": bool,
     "info": bool,

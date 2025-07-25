@@ -14,14 +14,14 @@ WARPINIT_METADATA = Metadata(
 
 
 WarpinitConfigParameters = typing.TypedDict('WarpinitConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 WarpinitParameters = typing.TypedDict('WarpinitParameters', {
-    "__STYX_TYPE__": typing.Literal["warpinit"],
+    "__STYXTYPE__": typing.Literal["warpinit"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

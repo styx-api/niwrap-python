@@ -14,7 +14,7 @@ BUGR_METADATA = Metadata(
 
 
 BugrParameters = typing.TypedDict('BugrParameters', {
-    "__STYX_TYPE__": typing.Literal["bugr"],
+    "__STYXTYPE__": typing.Literal["bugr"],
     "subject_name": str,
     "command_line": str,
     "error_message": str,

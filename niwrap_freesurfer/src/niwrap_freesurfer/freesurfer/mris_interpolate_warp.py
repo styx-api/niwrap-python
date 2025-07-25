@@ -14,7 +14,7 @@ MRIS_INTERPOLATE_WARP_METADATA = Metadata(
 
 
 MrisInterpolateWarpParameters = typing.TypedDict('MrisInterpolateWarpParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_interpolate_warp"],
+    "__STYXTYPE__": typing.Literal["mris_interpolate_warp"],
     "start_surface": InputPathType,
     "end_surface": InputPathType,
     "warp_field": InputPathType,

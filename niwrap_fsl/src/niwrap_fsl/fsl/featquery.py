@@ -14,7 +14,7 @@ FEATQUERY_METADATA = Metadata(
 
 
 FeatqueryParameters = typing.TypedDict('FeatqueryParameters', {
-    "__STYX_TYPE__": typing.Literal["featquery"],
+    "__STYXTYPE__": typing.Literal["featquery"],
     "n_featdirs": float,
     "featdirs": list[str],
     "n_stats": float,

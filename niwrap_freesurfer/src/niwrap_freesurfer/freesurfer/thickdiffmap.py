@@ -14,7 +14,7 @@ THICKDIFFMAP_METADATA = Metadata(
 
 
 ThickdiffmapParameters = typing.TypedDict('ThickdiffmapParameters', {
-    "__STYX_TYPE__": typing.Literal["thickdiffmap"],
+    "__STYXTYPE__": typing.Literal["thickdiffmap"],
     "subjscan1": InputPathType,
     "subjscan2": InputPathType,
     "commonsubj": str,

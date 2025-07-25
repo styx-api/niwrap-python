@@ -14,7 +14,7 @@ MRI_STRIP_SUBJECT_INFO_METADATA = Metadata(
 
 
 MriStripSubjectInfoParameters = typing.TypedDict('MriStripSubjectInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_strip_subject_info"],
+    "__STYXTYPE__": typing.Literal["mri_strip_subject_info"],
     "input_files": list[InputPathType],
     "output_directory": str,
 })

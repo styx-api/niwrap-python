@@ -14,7 +14,7 @@ TBSS_3_POSTREG_METADATA = Metadata(
 
 
 Tbss3PostregParameters = typing.TypedDict('Tbss3PostregParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_3_postreg"],
+    "__STYXTYPE__": typing.Literal["tbss_3_postreg"],
     "derive_mean_from_study": bool,
     "use_fmrib58": bool,
 })

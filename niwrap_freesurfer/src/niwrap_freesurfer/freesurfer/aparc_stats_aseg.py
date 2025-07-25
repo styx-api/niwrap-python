@@ -14,7 +14,7 @@ APARC_STATS_ASEG_METADATA = Metadata(
 
 
 AparcStatsAsegParameters = typing.TypedDict('AparcStatsAsegParameters', {
-    "__STYX_TYPE__": typing.Literal["aparc_stats_aseg"],
+    "__STYXTYPE__": typing.Literal["aparc_stats_aseg"],
     "subject_name": str,
     "gcs_name": str,
     "subject_dir": typing.NotRequired[str | None],

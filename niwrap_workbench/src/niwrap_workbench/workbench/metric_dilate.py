@@ -14,7 +14,7 @@ METRIC_DILATE_METADATA = Metadata(
 
 
 MetricDilateParameters = typing.TypedDict('MetricDilateParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-dilate"],
+    "__STYXTYPE__": typing.Literal["metric-dilate"],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,

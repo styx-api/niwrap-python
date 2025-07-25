@@ -14,14 +14,14 @@ FIXELCORRESPONDENCE_METADATA = Metadata(
 
 
 FixelcorrespondenceConfigParameters = typing.TypedDict('FixelcorrespondenceConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcorrespondenceParameters = typing.TypedDict('FixelcorrespondenceParameters', {
-    "__STYX_TYPE__": typing.Literal["fixelcorrespondence"],
+    "__STYXTYPE__": typing.Literal["fixelcorrespondence"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,

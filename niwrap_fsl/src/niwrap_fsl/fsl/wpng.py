@@ -14,7 +14,7 @@ WPNG_METADATA = Metadata(
 
 
 WpngParameters = typing.TypedDict('WpngParameters', {
-    "__STYX_TYPE__": typing.Literal["wpng"],
+    "__STYXTYPE__": typing.Literal["wpng"],
     "input_file": typing.NotRequired[InputPathType | None],
     "gamma": typing.NotRequired[float | None],
     "bgcolor": typing.NotRequired[str | None],

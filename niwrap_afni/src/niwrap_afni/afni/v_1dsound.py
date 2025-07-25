@@ -14,7 +14,7 @@ V_1DSOUND_METADATA = Metadata(
 
 
 V1dsoundParameters = typing.TypedDict('V1dsoundParameters', {
-    "__STYX_TYPE__": typing.Literal["1dsound"],
+    "__STYXTYPE__": typing.Literal["1dsound"],
     "tsfile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "encoding_16PCM": bool,

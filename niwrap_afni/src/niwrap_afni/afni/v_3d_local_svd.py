@@ -14,7 +14,7 @@ V_3D_LOCAL_SVD_METADATA = Metadata(
 
 
 V3dLocalSvdParameters = typing.TypedDict('V3dLocalSvdParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLocalSVD"],
+    "__STYXTYPE__": typing.Literal["3dLocalSVD"],
     "auto_mask": bool,
     "input_file": InputPathType,
     "mask_file": typing.NotRequired[InputPathType | None],

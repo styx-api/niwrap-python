@@ -14,7 +14,7 @@ MRIS_ERRORS_METADATA = Metadata(
 
 
 MrisErrorsParameters = typing.TypedDict('MrisErrorsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_errors"],
+    "__STYXTYPE__": typing.Literal["mris_errors"],
     "input_image_file": InputPathType,
 })
 

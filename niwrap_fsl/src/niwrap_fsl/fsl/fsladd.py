@@ -14,7 +14,7 @@ FSLADD_METADATA = Metadata(
 
 
 FsladdParameters = typing.TypedDict('FsladdParameters', {
-    "__STYX_TYPE__": typing.Literal["fsladd"],
+    "__STYXTYPE__": typing.Literal["fsladd"],
     "output_file": str,
     "mean_flag": bool,
     "scale_flag": bool,

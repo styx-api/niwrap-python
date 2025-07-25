@@ -14,7 +14,7 @@ MRI_EXTRACT_LARGEST_CC_METADATA = Metadata(
 
 
 MriExtractLargestCcParameters = typing.TypedDict('MriExtractLargestCcParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_extract_largest_CC"],
+    "__STYXTYPE__": typing.Literal["mri_extract_largest_CC"],
     "input_volume": InputPathType,
     "output_volume": str,
     "threshold": typing.NotRequired[float | None],

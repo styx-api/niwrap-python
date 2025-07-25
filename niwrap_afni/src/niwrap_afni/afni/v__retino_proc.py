@@ -14,7 +14,7 @@ V__RETINO_PROC_METADATA = Metadata(
 
 
 VRetinoProcParameters = typing.TypedDict('VRetinoProcParameters', {
-    "__STYX_TYPE__": typing.Literal["@RetinoProc"],
+    "__STYXTYPE__": typing.Literal["@RetinoProc"],
     "ccw": typing.NotRequired[list[InputPathType] | None],
     "clw": typing.NotRequired[list[InputPathType] | None],
     "exp": typing.NotRequired[list[InputPathType] | None],

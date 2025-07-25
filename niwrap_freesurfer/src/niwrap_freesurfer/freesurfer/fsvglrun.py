@@ -14,7 +14,7 @@ FSVGLRUN_METADATA = Metadata(
 
 
 FsvglrunParameters = typing.TypedDict('FsvglrunParameters', {
-    "__STYX_TYPE__": typing.Literal["fsvglrun"],
+    "__STYXTYPE__": typing.Literal["fsvglrun"],
     "zeroth_arg_name": typing.NotRequired[str | None],
     "empty_env": bool,
     "dashed_arg": bool,

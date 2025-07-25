@@ -14,7 +14,7 @@ CLUSTER2HTML_METADATA = Metadata(
 
 
 Cluster2htmlParameters = typing.TypedDict('Cluster2htmlParameters', {
-    "__STYX_TYPE__": typing.Literal["cluster2html"],
+    "__STYXTYPE__": typing.Literal["cluster2html"],
     "featdir": str,
     "inroot": str,
     "std_flag": bool,

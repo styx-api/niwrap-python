@@ -14,7 +14,7 @@ V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA = Metadata(
 
 
 VDjunctSswIntermedEdgeImgsParameters = typing.TypedDict('VDjunctSswIntermedEdgeImgsParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_ssw_intermed_edge_imgs"],
+    "__STYXTYPE__": typing.Literal["@djunct_ssw_intermed_edge_imgs"],
     "prefix": str,
     "ulay": InputPathType,
     "olay": InputPathType,

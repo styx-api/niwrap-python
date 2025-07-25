@@ -14,7 +14,7 @@ CREATE_ICOSAHEDRON_METADATA = Metadata(
 
 
 CreateIcosahedronParameters = typing.TypedDict('CreateIcosahedronParameters', {
-    "__STYX_TYPE__": typing.Literal["CreateIcosahedron"],
+    "__STYXTYPE__": typing.Literal["CreateIcosahedron"],
     "rad": typing.NotRequired[float | None],
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],

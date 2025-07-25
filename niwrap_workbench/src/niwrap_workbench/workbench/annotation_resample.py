@@ -14,14 +14,14 @@ ANNOTATION_RESAMPLE_METADATA = Metadata(
 
 
 AnnotationResampleSurfacePairParameters = typing.TypedDict('AnnotationResampleSurfacePairParameters', {
-    "__STYX_TYPE__": typing.Literal["surface_pair"],
+    "__STYXTYPE__": typing.Literal["surface_pair"],
     "source_surface": InputPathType,
     "target_surface": InputPathType,
 })
 
 
 AnnotationResampleParameters = typing.TypedDict('AnnotationResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["annotation-resample"],
+    "__STYXTYPE__": typing.Literal["annotation-resample"],
     "annotation_in": InputPathType,
     "annotation_out": str,
     "surface_pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],

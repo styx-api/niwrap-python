@@ -14,7 +14,7 @@ MRI_GLMFIT_METADATA = Metadata(
 
 
 MriGlmfitParameters = typing.TypedDict('MriGlmfitParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_glmfit"],
+    "__STYXTYPE__": typing.Literal["mri_glmfit"],
     "glmdir": typing.NotRequired[str | None],
     "y_input": InputPathType,
     "table_input": typing.NotRequired[InputPathType | None],

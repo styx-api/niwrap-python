@@ -14,7 +14,7 @@ SIGNAL2IMAGE_METADATA = Metadata(
 
 
 Signal2imageParameters = typing.TypedDict('Signal2imageParameters', {
-    "__STYX_TYPE__": typing.Literal["signal2image"],
+    "__STYXTYPE__": typing.Literal["signal2image"],
     "pulse_sequence": InputPathType,
     "input_signal": typing.NotRequired[InputPathType | None],
     "output_image": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MRIS_CONVERT_METADATA = Metadata(
 
 
 MrisConvertParameters = typing.TypedDict('MrisConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_convert"],
+    "__STYXTYPE__": typing.Literal["mris_convert"],
     "input_file": InputPathType,
     "second_input_file": typing.NotRequired[InputPathType | None],
     "output_file": str,

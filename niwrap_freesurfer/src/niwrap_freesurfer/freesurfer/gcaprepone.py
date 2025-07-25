@@ -14,7 +14,7 @@ GCAPREPONE_METADATA = Metadata(
 
 
 GcapreponeParameters = typing.TypedDict('GcapreponeParameters', {
-    "__STYX_TYPE__": typing.Literal["gcaprepone"],
+    "__STYXTYPE__": typing.Literal["gcaprepone"],
     "gcadir": str,
     "subject": str,
     "init_subject": bool,

@@ -14,7 +14,7 @@ DMRI_BSET_METADATA = Metadata(
 
 
 DmriBsetParameters = typing.TypedDict('DmriBsetParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_bset"],
+    "__STYXTYPE__": typing.Literal["dmri_bset"],
     "input_dwi": InputPathType,
     "output_dwi": str,
     "b_values": typing.NotRequired[list[float] | None],

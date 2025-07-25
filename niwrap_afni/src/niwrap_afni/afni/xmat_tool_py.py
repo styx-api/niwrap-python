@@ -14,7 +14,7 @@ XMAT_TOOL_PY_METADATA = Metadata(
 
 
 XmatToolPyParameters = typing.TypedDict('XmatToolPyParameters', {
-    "__STYX_TYPE__": typing.Literal["xmat_tool.py"],
+    "__STYXTYPE__": typing.Literal["xmat_tool.py"],
     "no_gui": bool,
     "load_xmat": typing.NotRequired[InputPathType | None],
     "load_1d": typing.NotRequired[InputPathType | None],

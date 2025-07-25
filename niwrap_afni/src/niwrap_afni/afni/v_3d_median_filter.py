@@ -14,7 +14,7 @@ V_3D_MEDIAN_FILTER_METADATA = Metadata(
 
 
 V3dMedianFilterParameters = typing.TypedDict('V3dMedianFilterParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMedianFilter"],
+    "__STYXTYPE__": typing.Literal["3dMedianFilter"],
     "irad": typing.NotRequired[float | None],
     "iter": typing.NotRequired[float | None],
     "verbose": bool,

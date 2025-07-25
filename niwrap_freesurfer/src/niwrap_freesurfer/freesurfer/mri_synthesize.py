@@ -14,7 +14,7 @@ MRI_SYNTHESIZE_METADATA = Metadata(
 
 
 MriSynthesizeParameters = typing.TypedDict('MriSynthesizeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_synthesize"],
+    "__STYXTYPE__": typing.Literal["mri_synthesize"],
     "tr": float,
     "alpha": float,
     "te": float,

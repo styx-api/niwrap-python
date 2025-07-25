@@ -14,7 +14,7 @@ MRIS_EXPAND_METADATA = Metadata(
 
 
 MrisExpandParameters = typing.TypedDict('MrisExpandParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_expand"],
+    "__STYXTYPE__": typing.Literal["mris_expand"],
     "input_surface": InputPathType,
     "expansion_distance": float,
     "output_surface": str,

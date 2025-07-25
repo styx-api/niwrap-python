@@ -14,7 +14,7 @@ LONG_SUBMIT_POSTPROC_METADATA = Metadata(
 
 
 LongSubmitPostprocParameters = typing.TypedDict('LongSubmitPostprocParameters', {
-    "__STYX_TYPE__": typing.Literal["long_submit_postproc"],
+    "__STYXTYPE__": typing.Literal["long_submit_postproc"],
     "qdec": InputPathType,
     "prog": str,
     "flags": typing.NotRequired[str | None],

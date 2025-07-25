@@ -14,7 +14,7 @@ V_1D_FLAG_MOTION_METADATA = Metadata(
 
 
 V1dFlagMotionParameters = typing.TypedDict('V1dFlagMotionParameters', {
-    "__STYX_TYPE__": typing.Literal["1dFlagMotion"],
+    "__STYXTYPE__": typing.Literal["1dFlagMotion"],
     "input_motion_file": InputPathType,
     "max_translation": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],

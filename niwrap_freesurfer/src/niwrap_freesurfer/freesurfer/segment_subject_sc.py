@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_SC_METADATA = Metadata(
 
 
 SegmentSubjectScParameters = typing.TypedDict('SegmentSubjectScParameters', {
-    "__STYX_TYPE__": typing.Literal["segment_subject_sc"],
+    "__STYXTYPE__": typing.Literal["segment_subject_sc"],
     "invol": InputPathType,
     "outxfm": InputPathType,
     "log": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MRI_RIBBON_METADATA = Metadata(
 
 
 MriRibbonParameters = typing.TypedDict('MriRibbonParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_ribbon"],
+    "__STYXTYPE__": typing.Literal["mri_ribbon"],
     "label_file": typing.NotRequired[InputPathType | None],
     "inner_surface": InputPathType,
     "outer_surface": InputPathType,

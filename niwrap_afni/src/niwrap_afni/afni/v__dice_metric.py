@@ -14,7 +14,7 @@ V__DICE_METRIC_METADATA = Metadata(
 
 
 VDiceMetricParameters = typing.TypedDict('VDiceMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["@DiceMetric"],
+    "__STYXTYPE__": typing.Literal["@DiceMetric"],
     "base": InputPathType,
     "dsets": list[InputPathType],
     "max_roi": typing.NotRequired[float | None],

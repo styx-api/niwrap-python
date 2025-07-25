@@ -14,7 +14,7 @@ V__NO_EXT_METADATA = Metadata(
 
 
 VNoExtParameters = typing.TypedDict('VNoExtParameters', {
-    "__STYX_TYPE__": typing.Literal["@NoExt"],
+    "__STYXTYPE__": typing.Literal["@NoExt"],
     "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
 })

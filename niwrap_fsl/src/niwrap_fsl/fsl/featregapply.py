@@ -14,7 +14,7 @@ FEATREGAPPLY_METADATA = Metadata(
 
 
 FeatregapplyParameters = typing.TypedDict('FeatregapplyParameters', {
-    "__STYX_TYPE__": typing.Literal["featregapply"],
+    "__STYXTYPE__": typing.Literal["featregapply"],
     "feat_directory": str,
     "force_flag": bool,
     "cleanup_flag": bool,

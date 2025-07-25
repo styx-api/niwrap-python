@@ -14,7 +14,7 @@ RCBF_PREP_METADATA = Metadata(
 
 
 RcbfPrepParameters = typing.TypedDict('RcbfPrepParameters', {
-    "__STYX_TYPE__": typing.Literal["rcbf-prep"],
+    "__STYXTYPE__": typing.Literal["rcbf-prep"],
     "outdir": str,
     "rcbfvol": InputPathType,
     "subject": typing.NotRequired[str | None],

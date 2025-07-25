@@ -14,7 +14,7 @@ MREDIT_METADATA = Metadata(
 
 
 MreditPlaneParameters = typing.TypedDict('MreditPlaneParameters', {
-    "__STYX_TYPE__": typing.Literal["plane"],
+    "__STYXTYPE__": typing.Literal["plane"],
     "axis": int,
     "coord": list[int],
     "value": float,
@@ -22,7 +22,7 @@ MreditPlaneParameters = typing.TypedDict('MreditPlaneParameters', {
 
 
 MreditSphereParameters = typing.TypedDict('MreditSphereParameters', {
-    "__STYX_TYPE__": typing.Literal["sphere"],
+    "__STYXTYPE__": typing.Literal["sphere"],
     "position": list[float],
     "radius": float,
     "value": float,
@@ -30,21 +30,21 @@ MreditSphereParameters = typing.TypedDict('MreditSphereParameters', {
 
 
 MreditVoxelParameters = typing.TypedDict('MreditVoxelParameters', {
-    "__STYX_TYPE__": typing.Literal["voxel"],
+    "__STYXTYPE__": typing.Literal["voxel"],
     "position": list[float],
     "value": float,
 })
 
 
 MreditConfigParameters = typing.TypedDict('MreditConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MreditParameters = typing.TypedDict('MreditParameters', {
-    "__STYX_TYPE__": typing.Literal["mredit"],
+    "__STYXTYPE__": typing.Literal["mredit"],
     "plane": typing.NotRequired[list[MreditPlaneParameters] | None],
     "sphere": typing.NotRequired[list[MreditSphereParameters] | None],
     "voxel": typing.NotRequired[list[MreditVoxelParameters] | None],

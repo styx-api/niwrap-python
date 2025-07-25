@@ -14,7 +14,7 @@ METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
 
 
 MetricVectorTowardRoiParameters = typing.TypedDict('MetricVectorTowardRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-vector-toward-roi"],
+    "__STYXTYPE__": typing.Literal["metric-vector-toward-roi"],
     "surface": InputPathType,
     "target_roi": InputPathType,
     "metric_out": str,

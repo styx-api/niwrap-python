@@ -14,7 +14,7 @@ SLICEANIMATE_METADATA = Metadata(
 
 
 SliceanimateParameters = typing.TypedDict('SliceanimateParameters', {
-    "__STYX_TYPE__": typing.Literal["sliceanimate"],
+    "__STYXTYPE__": typing.Literal["sliceanimate"],
     "output_file": str,
     "input_files": list[InputPathType],
 })

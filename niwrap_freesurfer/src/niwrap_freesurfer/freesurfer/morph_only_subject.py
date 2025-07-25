@@ -14,7 +14,7 @@ MORPH_ONLY_SUBJECT_METADATA = Metadata(
 
 
 MorphOnlySubjectParameters = typing.TypedDict('MorphOnlySubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["morph_only_subject"],
+    "__STYXTYPE__": typing.Literal["morph_only_subject"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 

@@ -14,7 +14,7 @@ MRIS_LABEL_AREA_METADATA = Metadata(
 
 
 MrisLabelAreaParameters = typing.TypedDict('MrisLabelAreaParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_label_area"],
+    "__STYXTYPE__": typing.Literal["mris_label_area"],
     "pct_flag": bool,
     "log_file": typing.NotRequired[str | None],
     "brain_vol": typing.NotRequired[str | None],

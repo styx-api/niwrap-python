@@ -14,7 +14,7 @@ MRIS_AUTODET_GWSTATS_METADATA = Metadata(
 
 
 MrisAutodetGwstatsParameters = typing.TypedDict('MrisAutodetGwstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_autodet_gwstats"],
+    "__STYXTYPE__": typing.Literal["mris_autodet_gwstats"],
     "output_file": str,
     "t1w_volume": InputPathType,
     "wm_volume": InputPathType,

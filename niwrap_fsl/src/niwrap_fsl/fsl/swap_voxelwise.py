@@ -14,7 +14,7 @@ SWAP_VOXELWISE_METADATA = Metadata(
 
 
 SwapVoxelwiseParameters = typing.TypedDict('SwapVoxelwiseParameters', {
-    "__STYX_TYPE__": typing.Literal["swap_voxelwise"],
+    "__STYXTYPE__": typing.Literal["swap_voxelwise"],
     "vectors_file_list": InputPathType,
     "scalars_file_list": typing.NotRequired[InputPathType | None],
     "mask": InputPathType,

@@ -14,20 +14,20 @@ DENOISE_IMAGE_METADATA = Metadata(
 
 
 DenoiseImageCorrectedOutputParameters = typing.TypedDict('DenoiseImageCorrectedOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["correctedOutput"],
+    "__STYXTYPE__": typing.Literal["correctedOutput"],
     "correctedOutputFileName": str,
 })
 
 
 DenoiseImageCorrectedOutputNoiseParameters = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParameters', {
-    "__STYX_TYPE__": typing.Literal["correctedOutputNoise"],
+    "__STYXTYPE__": typing.Literal["correctedOutputNoise"],
     "correctedOutputFileName": str,
     "noiseFile": typing.NotRequired[str | None],
 })
 
 
 DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
-    "__STYX_TYPE__": typing.Literal["DenoiseImage"],
+    "__STYXTYPE__": typing.Literal["DenoiseImage"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "noise_model": typing.NotRequired[typing.Literal["Gaussian", "Rician"] | None],
     "shrink_factor": typing.NotRequired[int | None],

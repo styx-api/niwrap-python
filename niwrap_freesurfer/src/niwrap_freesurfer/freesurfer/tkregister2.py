@@ -14,7 +14,7 @@ TKREGISTER2_METADATA = Metadata(
 
 
 Tkregister2Parameters = typing.TypedDict('Tkregister2Parameters', {
-    "__STYX_TYPE__": typing.Literal["tkregister2"],
+    "__STYXTYPE__": typing.Literal["tkregister2"],
     "fixed_volume": InputPathType,
     "moving_volume": InputPathType,
     "reg_file": InputPathType,

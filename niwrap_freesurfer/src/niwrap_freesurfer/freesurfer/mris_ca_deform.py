@@ -14,7 +14,7 @@ MRIS_CA_DEFORM_METADATA = Metadata(
 
 
 MrisCaDeformParameters = typing.TypedDict('MrisCaDeformParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_ca_deform"],
+    "__STYXTYPE__": typing.Literal["mris_ca_deform"],
     "input_surface": InputPathType,
     "label_vol": InputPathType,
     "transform": InputPathType,

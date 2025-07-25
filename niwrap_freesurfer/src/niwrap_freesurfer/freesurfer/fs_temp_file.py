@@ -14,7 +14,7 @@ FS_TEMP_FILE_METADATA = Metadata(
 
 
 FsTempFileParameters = typing.TypedDict('FsTempFileParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_temp_file"],
+    "__STYXTYPE__": typing.Literal["fs_temp_file"],
     "base_dir": typing.NotRequired[str | None],
     "base_dir_alt": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],

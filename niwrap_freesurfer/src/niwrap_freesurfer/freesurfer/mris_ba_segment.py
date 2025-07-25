@@ -14,7 +14,7 @@ MRIS_BA_SEGMENT_METADATA = Metadata(
 
 
 MrisBaSegmentParameters = typing.TypedDict('MrisBaSegmentParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_BA_segment"],
+    "__STYXTYPE__": typing.Literal["mris_BA_segment"],
     "surface": InputPathType,
     "profiles": InputPathType,
     "prior_label": InputPathType,

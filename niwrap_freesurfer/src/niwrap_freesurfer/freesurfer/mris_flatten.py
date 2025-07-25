@@ -14,7 +14,7 @@ MRIS_FLATTEN_METADATA = Metadata(
 
 
 MrisFlattenParameters = typing.TypedDict('MrisFlattenParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_flatten"],
+    "__STYXTYPE__": typing.Literal["mris_flatten"],
     "input_patch": InputPathType,
     "output_patch": str,
     "iterations": typing.NotRequired[float | None],

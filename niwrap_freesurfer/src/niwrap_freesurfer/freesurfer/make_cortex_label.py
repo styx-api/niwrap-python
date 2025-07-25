@@ -14,7 +14,7 @@ MAKE_CORTEX_LABEL_METADATA = Metadata(
 
 
 MakeCortexLabelParameters = typing.TypedDict('MakeCortexLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["make_cortex_label"],
+    "__STYXTYPE__": typing.Literal["make_cortex_label"],
     "subject": str,
     "hemi": typing.NotRequired[str | None],
     "use_a2009s": bool,

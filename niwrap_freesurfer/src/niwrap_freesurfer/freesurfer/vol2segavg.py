@@ -14,7 +14,7 @@ VOL2SEGAVG_METADATA = Metadata(
 
 
 Vol2segavgParameters = typing.TypedDict('Vol2segavgParameters', {
-    "__STYX_TYPE__": typing.Literal["vol2segavg"],
+    "__STYXTYPE__": typing.Literal["vol2segavg"],
     "output_file": str,
     "input_volume": InputPathType,
     "registration": str,

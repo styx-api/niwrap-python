@@ -14,7 +14,7 @@ MRI_CONCAT_METADATA = Metadata(
 
 
 MriConcatParameters = typing.TypedDict('MriConcatParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_concat"],
+    "__STYXTYPE__": typing.Literal["mri_concat"],
     "input_files": list[InputPathType],
     "output_file": str,
     "file_list": typing.NotRequired[str | None],

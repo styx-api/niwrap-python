@@ -14,7 +14,7 @@ V_3D_DTEIG_METADATA = Metadata(
 
 
 V3dDteigParameters = typing.TypedDict('V3dDteigParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDTeig"],
+    "__STYXTYPE__": typing.Literal["3dDTeig"],
     "input_dataset": str,
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],

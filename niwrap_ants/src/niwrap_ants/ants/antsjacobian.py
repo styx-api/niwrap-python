@@ -14,7 +14,7 @@ ANTSJACOBIAN_METADATA = Metadata(
 
 
 AntsjacobianParameters = typing.TypedDict('AntsjacobianParameters', {
-    "__STYX_TYPE__": typing.Literal["ANTSJacobian"],
+    "__STYXTYPE__": typing.Literal["ANTSJacobian"],
     "imagedim": int,
     "gwarp": InputPathType,
     "outfile": str,

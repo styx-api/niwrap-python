@@ -14,7 +14,7 @@ MRIS_VOLMASK_NOVTK_METADATA = Metadata(
 
 
 MrisVolmaskNovtkParameters = typing.TypedDict('MrisVolmaskNovtkParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_volmask_novtk"],
+    "__STYXTYPE__": typing.Literal["mris_volmask_novtk"],
     "io": str,
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],

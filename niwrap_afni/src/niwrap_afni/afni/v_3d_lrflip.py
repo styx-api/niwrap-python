@@ -14,7 +14,7 @@ V_3D_LRFLIP_METADATA = Metadata(
 
 
 V3dLrflipParameters = typing.TypedDict('V3dLrflipParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLRflip"],
+    "__STYXTYPE__": typing.Literal["3dLRflip"],
     "flip_lr": bool,
     "flip_ap": bool,
     "flip_is": bool,

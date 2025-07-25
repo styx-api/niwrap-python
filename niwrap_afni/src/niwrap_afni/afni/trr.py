@@ -14,7 +14,7 @@ TRR_METADATA = Metadata(
 
 
 TrrParameters = typing.TypedDict('TrrParameters', {
-    "__STYX_TYPE__": typing.Literal["TRR"],
+    "__STYXTYPE__": typing.Literal["TRR"],
     "prefix": str,
     "chains": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[float | None],

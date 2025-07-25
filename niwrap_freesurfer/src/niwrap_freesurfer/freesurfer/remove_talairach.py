@@ -14,7 +14,7 @@ REMOVE_TALAIRACH_METADATA = Metadata(
 
 
 RemoveTalairachParameters = typing.TypedDict('RemoveTalairachParameters', {
-    "__STYX_TYPE__": typing.Literal["remove_talairach"],
+    "__STYXTYPE__": typing.Literal["remove_talairach"],
     "input_file": InputPathType,
     "output_file": str,
 })

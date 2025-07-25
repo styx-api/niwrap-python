@@ -14,7 +14,7 @@ DMRI_GROUP_BY_ENDPOINTS_METADATA = Metadata(
 
 
 DmriGroupByEndpointsParameters = typing.TypedDict('DmriGroupByEndpointsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_groupByEndpoints"],
+    "__STYXTYPE__": typing.Literal["dmri_groupByEndpoints"],
     "streamline_file": InputPathType,
     "image_file": InputPathType,
     "output_directory": str,

@@ -14,42 +14,42 @@ VOLUME_RESAMPLE_METADATA = Metadata(
 
 
 VolumeResampleFlirtParameters = typing.TypedDict('VolumeResampleFlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["flirt"],
+    "__STYXTYPE__": typing.Literal["flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeResampleAffineParameters = typing.TypedDict('VolumeResampleAffineParameters', {
-    "__STYX_TYPE__": typing.Literal["affine"],
+    "__STYXTYPE__": typing.Literal["affine"],
     "affine": str,
     "flirt": typing.NotRequired[VolumeResampleFlirtParameters | None],
 })
 
 
 VolumeResampleFlirt1Parameters = typing.TypedDict('VolumeResampleFlirt1Parameters', {
-    "__STYX_TYPE__": typing.Literal["flirt_1"],
+    "__STYXTYPE__": typing.Literal["flirt_1"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeResampleAffineSeriesParameters = typing.TypedDict('VolumeResampleAffineSeriesParameters', {
-    "__STYX_TYPE__": typing.Literal["affine_series"],
+    "__STYXTYPE__": typing.Literal["affine_series"],
     "affine_series": str,
     "flirt": typing.NotRequired[VolumeResampleFlirt1Parameters | None],
 })
 
 
 VolumeResampleWarpParameters = typing.TypedDict('VolumeResampleWarpParameters', {
-    "__STYX_TYPE__": typing.Literal["warp"],
+    "__STYXTYPE__": typing.Literal["warp"],
     "warpfield": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],
 })
 
 
 VolumeResampleParameters = typing.TypedDict('VolumeResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-resample"],
+    "__STYXTYPE__": typing.Literal["volume-resample"],
     "volume_in": InputPathType,
     "volume_space": str,
     "method": str,

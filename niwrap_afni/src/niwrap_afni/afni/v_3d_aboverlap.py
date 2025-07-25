@@ -14,7 +14,7 @@ V_3D_ABOVERLAP_METADATA = Metadata(
 
 
 V3dAboverlapParameters = typing.TypedDict('V3dAboverlapParameters', {
-    "__STYX_TYPE__": typing.Literal["3dABoverlap"],
+    "__STYXTYPE__": typing.Literal["3dABoverlap"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
     "no_automask": bool,

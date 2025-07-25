@@ -14,7 +14,7 @@ APPLYXFM4_D_METADATA = Metadata(
 
 
 Applyxfm4DParameters = typing.TypedDict('Applyxfm4DParameters', {
-    "__STYX_TYPE__": typing.Literal["applyxfm4D"],
+    "__STYXTYPE__": typing.Literal["applyxfm4D"],
     "input_volume": InputPathType,
     "ref_volume": InputPathType,
     "output_volume": str,

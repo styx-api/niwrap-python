@@ -14,7 +14,7 @@ VOLUME_CREATE_METADATA = Metadata(
 
 
 VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
-    "__STYX_TYPE__": typing.Literal["plumb"],
+    "__STYXTYPE__": typing.Literal["plumb"],
     "axis_order": str,
     "x_spacing": float,
     "y_spacing": float,
@@ -26,7 +26,7 @@ VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
 
 
 VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
-    "__STYX_TYPE__": typing.Literal["sform"],
+    "__STYXTYPE__": typing.Literal["sform"],
     "xi_spacing": float,
     "xj_spacing": float,
     "xk_spacing": float,
@@ -43,7 +43,7 @@ VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
 
 
 VolumeCreateParameters = typing.TypedDict('VolumeCreateParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-create"],
+    "__STYXTYPE__": typing.Literal["volume-create"],
     "i_dim": int,
     "j_dim": int,
     "k_dim": int,

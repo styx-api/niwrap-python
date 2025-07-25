@@ -14,7 +14,7 @@ BEDPOSTX_METADATA = Metadata(
 
 
 BedpostxParameters = typing.TypedDict('BedpostxParameters', {
-    "__STYX_TYPE__": typing.Literal["bedpostx"],
+    "__STYXTYPE__": typing.Literal["bedpostx"],
     "subject_dir": str,
     "num_fibres": typing.NotRequired[float | None],
     "ard_weight": typing.NotRequired[float | None],

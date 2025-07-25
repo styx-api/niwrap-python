@@ -14,7 +14,7 @@ FS_SPMREG_GLNXA64_METADATA = Metadata(
 
 
 FsSpmregGlnxa64Parameters = typing.TypedDict('FsSpmregGlnxa64Parameters', {
-    "__STYX_TYPE__": typing.Literal["fs_spmreg.glnxa64"],
+    "__STYXTYPE__": typing.Literal["fs_spmreg.glnxa64"],
     "input_volume": InputPathType,
     "output_matrix": str,
 })

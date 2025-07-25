@@ -14,7 +14,7 @@ INSPEC_METADATA = Metadata(
 
 
 InspecParameters = typing.TypedDict('InspecParameters', {
-    "__STYX_TYPE__": typing.Literal["inspec"],
+    "__STYXTYPE__": typing.Literal["inspec"],
     "specfile": InputPathType,
     "newspecname": typing.NotRequired[str | None],
     "detail": typing.NotRequired[float | None],

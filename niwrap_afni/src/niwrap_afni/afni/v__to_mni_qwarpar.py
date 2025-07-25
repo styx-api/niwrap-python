@@ -14,7 +14,7 @@ V__TO_MNI_QWARPAR_METADATA = Metadata(
 
 
 VToMniQwarparParameters = typing.TypedDict('VToMniQwarparParameters', {
-    "__STYX_TYPE__": typing.Literal["@toMNI_Qwarpar"],
+    "__STYXTYPE__": typing.Literal["@toMNI_Qwarpar"],
     "numcpu": float,
     "numjob": float,
 })

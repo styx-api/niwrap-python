@@ -14,7 +14,7 @@ V_3D_AFNITO_NIML_METADATA = Metadata(
 
 
 V3dAfnitoNimlParameters = typing.TypedDict('V3dAfnitoNimlParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAFNItoNIML"],
+    "__STYXTYPE__": typing.Literal["3dAFNItoNIML"],
     "dset": InputPathType,
     "data": bool,
     "ascii": bool,

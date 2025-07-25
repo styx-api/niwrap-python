@@ -14,7 +14,7 @@ WM_ANAT_SNR_METADATA = Metadata(
 
 
 WmAnatSnrParameters = typing.TypedDict('WmAnatSnrParameters', {
-    "__STYX_TYPE__": typing.Literal["wm-anat-snr"],
+    "__STYXTYPE__": typing.Literal["wm-anat-snr"],
     "subject": str,
     "output_file": str,
     "force": bool,

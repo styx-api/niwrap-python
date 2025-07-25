@@ -14,7 +14,7 @@ V_1D_MARRY_METADATA = Metadata(
 
 
 V1dMarryParameters = typing.TypedDict('V1dMarryParameters', {
-    "__STYX_TYPE__": typing.Literal["1dMarry"],
+    "__STYXTYPE__": typing.Literal["1dMarry"],
     "sep": typing.NotRequired[str | None],
     "divorce": bool,
     "files": list[InputPathType],

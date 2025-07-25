@@ -14,7 +14,7 @@ MNI152REG_METADATA = Metadata(
 
 
 Mni152regParameters = typing.TypedDict('Mni152regParameters', {
-    "__STYX_TYPE__": typing.Literal["mni152reg"],
+    "__STYXTYPE__": typing.Literal["mni152reg"],
     "subject": str,
     "register_1mm": bool,
     "output": typing.NotRequired[str | None],

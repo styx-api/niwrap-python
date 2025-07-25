@@ -14,1081 +14,1081 @@ C2D_METADATA = Metadata(
 
 
 C2dAccumParameters = typing.TypedDict('C2dAccumParameters', {
-    "__STYX_TYPE__": typing.Literal["accum"],
+    "__STYXTYPE__": typing.Literal["accum"],
     "accum": str,
 })
 
 
 C2dAcosParameters = typing.TypedDict('C2dAcosParameters', {
-    "__STYX_TYPE__": typing.Literal["acos"],
+    "__STYXTYPE__": typing.Literal["acos"],
     "acos": str,
 })
 
 
 C2dAddParameters = typing.TypedDict('C2dAddParameters', {
-    "__STYX_TYPE__": typing.Literal["add"],
+    "__STYXTYPE__": typing.Literal["add"],
     "add": str,
 })
 
 
 C2dAlignLandmarksParameters = typing.TypedDict('C2dAlignLandmarksParameters', {
-    "__STYX_TYPE__": typing.Literal["align_landmarks"],
+    "__STYXTYPE__": typing.Literal["align_landmarks"],
     "align_landmarks": str,
 })
 
 
 C2dAnisotropicDiffusionParameters = typing.TypedDict('C2dAnisotropicDiffusionParameters', {
-    "__STYX_TYPE__": typing.Literal["anisotropic_diffusion"],
+    "__STYXTYPE__": typing.Literal["anisotropic_diffusion"],
     "anisotropic_diffusion": str,
 })
 
 
 C2dAntialiasParameters = typing.TypedDict('C2dAntialiasParameters', {
-    "__STYX_TYPE__": typing.Literal["antialias"],
+    "__STYXTYPE__": typing.Literal["antialias"],
     "antialias": str,
 })
 
 
 C2dSetParameters = typing.TypedDict('C2dSetParameters', {
-    "__STYX_TYPE__": typing.Literal["set"],
+    "__STYXTYPE__": typing.Literal["set"],
     "set": str,
 })
 
 
 C2dAsinParameters = typing.TypedDict('C2dAsinParameters', {
-    "__STYX_TYPE__": typing.Literal["asin"],
+    "__STYXTYPE__": typing.Literal["asin"],
     "asin": str,
 })
 
 
 C2dAtan2Parameters = typing.TypedDict('C2dAtan2Parameters', {
-    "__STYX_TYPE__": typing.Literal["atan2"],
+    "__STYXTYPE__": typing.Literal["atan2"],
     "atan2": str,
 })
 
 
 C2dBackgroundParameters = typing.TypedDict('C2dBackgroundParameters', {
-    "__STYX_TYPE__": typing.Literal["background"],
+    "__STYXTYPE__": typing.Literal["background"],
     "background": str,
 })
 
 
 C2dN4BiasCorrectionParameters = typing.TypedDict('C2dN4BiasCorrectionParameters', {
-    "__STYX_TYPE__": typing.Literal["n4_bias_correction"],
+    "__STYXTYPE__": typing.Literal["n4_bias_correction"],
     "n4_bias_correction": str,
 })
 
 
 C2dBinarizeParameters = typing.TypedDict('C2dBinarizeParameters', {
-    "__STYX_TYPE__": typing.Literal["binarize"],
+    "__STYXTYPE__": typing.Literal["binarize"],
     "binarize": str,
 })
 
 
 C2dCannyParameters = typing.TypedDict('C2dCannyParameters', {
-    "__STYX_TYPE__": typing.Literal["canny"],
+    "__STYXTYPE__": typing.Literal["canny"],
     "canny": str,
 })
 
 
 C2dCeilParameters = typing.TypedDict('C2dCeilParameters', {
-    "__STYX_TYPE__": typing.Literal["ceil"],
+    "__STYXTYPE__": typing.Literal["ceil"],
     "ceil": str,
 })
 
 
 C2dCentroidParameters = typing.TypedDict('C2dCentroidParameters', {
-    "__STYX_TYPE__": typing.Literal["centroid"],
+    "__STYXTYPE__": typing.Literal["centroid"],
     "centroid": str,
 })
 
 
 C2dCentroidMarkParameters = typing.TypedDict('C2dCentroidMarkParameters', {
-    "__STYX_TYPE__": typing.Literal["centroid_mark"],
+    "__STYXTYPE__": typing.Literal["centroid_mark"],
     "centroid_mark": str,
 })
 
 
 C2dConnectedComponentsParameters = typing.TypedDict('C2dConnectedComponentsParameters', {
-    "__STYX_TYPE__": typing.Literal["connected_components"],
+    "__STYXTYPE__": typing.Literal["connected_components"],
     "connected_components": str,
 })
 
 
 C2dClearParameters = typing.TypedDict('C2dClearParameters', {
-    "__STYX_TYPE__": typing.Literal["clear"],
+    "__STYXTYPE__": typing.Literal["clear"],
     "clear": str,
 })
 
 
 C2dClipParameters = typing.TypedDict('C2dClipParameters', {
-    "__STYX_TYPE__": typing.Literal["clip"],
+    "__STYXTYPE__": typing.Literal["clip"],
     "clip": str,
 })
 
 
 C2dColorMapParameters = typing.TypedDict('C2dColorMapParameters', {
-    "__STYX_TYPE__": typing.Literal["color_map"],
+    "__STYXTYPE__": typing.Literal["color_map"],
     "color_map": str,
 })
 
 
 C2dCompressParameters = typing.TypedDict('C2dCompressParameters', {
-    "__STYX_TYPE__": typing.Literal["compress"],
+    "__STYXTYPE__": typing.Literal["compress"],
     "compress": str,
 })
 
 
 C2dNoCompressParameters = typing.TypedDict('C2dNoCompressParameters', {
-    "__STYX_TYPE__": typing.Literal["no_compress"],
+    "__STYXTYPE__": typing.Literal["no_compress"],
     "no_compress": str,
 })
 
 
 C2dConvParameters = typing.TypedDict('C2dConvParameters', {
-    "__STYX_TYPE__": typing.Literal["conv"],
+    "__STYXTYPE__": typing.Literal["conv"],
     "conv": str,
 })
 
 
 C2dCoordinateMapVoxelParameters = typing.TypedDict('C2dCoordinateMapVoxelParameters', {
-    "__STYX_TYPE__": typing.Literal["coordinate_map_voxel"],
+    "__STYXTYPE__": typing.Literal["coordinate_map_voxel"],
     "coordinate_map_voxel": str,
 })
 
 
 C2dCoordinateMapPhysicalParameters = typing.TypedDict('C2dCoordinateMapPhysicalParameters', {
-    "__STYX_TYPE__": typing.Literal["coordinate_map_physical"],
+    "__STYXTYPE__": typing.Literal["coordinate_map_physical"],
     "coordinate_map_physical": str,
 })
 
 
 C2dCopyTransformParameters = typing.TypedDict('C2dCopyTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["copy_transform"],
+    "__STYXTYPE__": typing.Literal["copy_transform"],
     "copy_transform": str,
 })
 
 
 C2dCosParameters = typing.TypedDict('C2dCosParameters', {
-    "__STYX_TYPE__": typing.Literal["cos"],
+    "__STYXTYPE__": typing.Literal["cos"],
     "cos": str,
 })
 
 
 C2dCreateParameters = typing.TypedDict('C2dCreateParameters', {
-    "__STYX_TYPE__": typing.Literal["create"],
+    "__STYXTYPE__": typing.Literal["create"],
     "create": str,
 })
 
 
 C2dDicomSeriesListParameters = typing.TypedDict('C2dDicomSeriesListParameters', {
-    "__STYX_TYPE__": typing.Literal["dicom_series_list"],
+    "__STYXTYPE__": typing.Literal["dicom_series_list"],
     "dicom_series_list": str,
 })
 
 
 C2dDicomSeriesReadParameters = typing.TypedDict('C2dDicomSeriesReadParameters', {
-    "__STYX_TYPE__": typing.Literal["dicom_series_read"],
+    "__STYXTYPE__": typing.Literal["dicom_series_read"],
     "dicom_series_read": str,
 })
 
 
 C2dDilateParameters = typing.TypedDict('C2dDilateParameters', {
-    "__STYX_TYPE__": typing.Literal["dilate"],
+    "__STYXTYPE__": typing.Literal["dilate"],
     "dilate": str,
 })
 
 
 C2dDivideParameters = typing.TypedDict('C2dDivideParameters', {
-    "__STYX_TYPE__": typing.Literal["divide"],
+    "__STYXTYPE__": typing.Literal["divide"],
     "divide": str,
 })
 
 
 C2dDuplicateParameters = typing.TypedDict('C2dDuplicateParameters', {
-    "__STYX_TYPE__": typing.Literal["duplicate"],
+    "__STYXTYPE__": typing.Literal["duplicate"],
     "duplicate": str,
 })
 
 
 C2dEndaccumParameters = typing.TypedDict('C2dEndaccumParameters', {
-    "__STYX_TYPE__": typing.Literal["endaccum"],
+    "__STYXTYPE__": typing.Literal["endaccum"],
     "endaccum": str,
 })
 
 
 C2dEndforParameters = typing.TypedDict('C2dEndforParameters', {
-    "__STYX_TYPE__": typing.Literal["endfor"],
+    "__STYXTYPE__": typing.Literal["endfor"],
     "endfor": str,
 })
 
 
 C2dErodeParameters = typing.TypedDict('C2dErodeParameters', {
-    "__STYX_TYPE__": typing.Literal["erode"],
+    "__STYXTYPE__": typing.Literal["erode"],
     "erode": str,
 })
 
 
 C2dErfParameters = typing.TypedDict('C2dErfParameters', {
-    "__STYX_TYPE__": typing.Literal["erf"],
+    "__STYXTYPE__": typing.Literal["erf"],
     "erf": str,
 })
 
 
 C2dExpParameters = typing.TypedDict('C2dExpParameters', {
-    "__STYX_TYPE__": typing.Literal["exp"],
+    "__STYXTYPE__": typing.Literal["exp"],
     "exp": str,
 })
 
 
 C2dExportPatchesParameters = typing.TypedDict('C2dExportPatchesParameters', {
-    "__STYX_TYPE__": typing.Literal["export_patches"],
+    "__STYXTYPE__": typing.Literal["export_patches"],
     "export_patches": str,
 })
 
 
 C2dExportPatchesAugParameters = typing.TypedDict('C2dExportPatchesAugParameters', {
-    "__STYX_TYPE__": typing.Literal["export_patches_aug"],
+    "__STYXTYPE__": typing.Literal["export_patches_aug"],
     "export_patches_aug": str,
 })
 
 
 C2dExtrudeSegParameters = typing.TypedDict('C2dExtrudeSegParameters', {
-    "__STYX_TYPE__": typing.Literal["extrude_seg"],
+    "__STYXTYPE__": typing.Literal["extrude_seg"],
     "extrude_seg": str,
 })
 
 
 C2dFillBackgroundWithNoiseParameters = typing.TypedDict('C2dFillBackgroundWithNoiseParameters', {
-    "__STYX_TYPE__": typing.Literal["fill_background_with_noise"],
+    "__STYXTYPE__": typing.Literal["fill_background_with_noise"],
     "fill_background_with_noise": str,
 })
 
 
 C2dFftParameters = typing.TypedDict('C2dFftParameters', {
-    "__STYX_TYPE__": typing.Literal["fft"],
+    "__STYXTYPE__": typing.Literal["fft"],
     "fft": str,
 })
 
 
 C2dFlipParameters = typing.TypedDict('C2dFlipParameters', {
-    "__STYX_TYPE__": typing.Literal["flip"],
+    "__STYXTYPE__": typing.Literal["flip"],
     "flip": str,
 })
 
 
 C2dFloorParameters = typing.TypedDict('C2dFloorParameters', {
-    "__STYX_TYPE__": typing.Literal["floor"],
+    "__STYXTYPE__": typing.Literal["floor"],
     "floor": str,
 })
 
 
 C2dForeachParameters = typing.TypedDict('C2dForeachParameters', {
-    "__STYX_TYPE__": typing.Literal["foreach"],
+    "__STYXTYPE__": typing.Literal["foreach"],
     "foreach": str,
 })
 
 
 C2dForeachCompParameters = typing.TypedDict('C2dForeachCompParameters', {
-    "__STYX_TYPE__": typing.Literal["foreach_comp"],
+    "__STYXTYPE__": typing.Literal["foreach_comp"],
     "foreach_comp": str,
 })
 
 
 C2dGlmParameters = typing.TypedDict('C2dGlmParameters', {
-    "__STYX_TYPE__": typing.Literal["glm"],
+    "__STYXTYPE__": typing.Literal["glm"],
     "glm": str,
 })
 
 
 C2dGradientParameters = typing.TypedDict('C2dGradientParameters', {
-    "__STYX_TYPE__": typing.Literal["gradient"],
+    "__STYXTYPE__": typing.Literal["gradient"],
     "gradient": str,
 })
 
 
 C2dHelpParameters = typing.TypedDict('C2dHelpParameters', {
-    "__STYX_TYPE__": typing.Literal["_help"],
+    "__STYXTYPE__": typing.Literal["_help"],
     "_help": str,
 })
 
 
 C2dHolefillParameters = typing.TypedDict('C2dHolefillParameters', {
-    "__STYX_TYPE__": typing.Literal["holefill"],
+    "__STYXTYPE__": typing.Literal["holefill"],
     "holefill": str,
 })
 
 
 C2dHessianEigenvaluesParameters = typing.TypedDict('C2dHessianEigenvaluesParameters', {
-    "__STYX_TYPE__": typing.Literal["hessian_eigenvalues"],
+    "__STYXTYPE__": typing.Literal["hessian_eigenvalues"],
     "hessian_eigenvalues": str,
 })
 
 
 C2dHessianObjectnessParameters = typing.TypedDict('C2dHessianObjectnessParameters', {
-    "__STYX_TYPE__": typing.Literal["hessian_objectness"],
+    "__STYXTYPE__": typing.Literal["hessian_objectness"],
     "hessian_objectness": str,
 })
 
 
 C2dHistogramMatchParameters = typing.TypedDict('C2dHistogramMatchParameters', {
-    "__STYX_TYPE__": typing.Literal["histogram_match"],
+    "__STYXTYPE__": typing.Literal["histogram_match"],
     "histogram_match": str,
 })
 
 
 C2dInfoParameters = typing.TypedDict('C2dInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["info"],
+    "__STYXTYPE__": typing.Literal["info"],
     "info": str,
 })
 
 
 C2dInfoFullParameters = typing.TypedDict('C2dInfoFullParameters', {
-    "__STYX_TYPE__": typing.Literal["info_full"],
+    "__STYXTYPE__": typing.Literal["info_full"],
     "info_full": str,
 })
 
 
 C2dInsertParameters = typing.TypedDict('C2dInsertParameters', {
-    "__STYX_TYPE__": typing.Literal["insert"],
+    "__STYXTYPE__": typing.Literal["insert"],
     "insert": str,
 })
 
 
 C2dInterpolationParameters = typing.TypedDict('C2dInterpolationParameters', {
-    "__STYX_TYPE__": typing.Literal["interpolation"],
+    "__STYXTYPE__": typing.Literal["interpolation"],
     "interpolation": str,
 })
 
 
 C2dIterationsParameters = typing.TypedDict('C2dIterationsParameters', {
-    "__STYX_TYPE__": typing.Literal["iterations"],
+    "__STYXTYPE__": typing.Literal["iterations"],
     "iterations": str,
 })
 
 
 C2dLabelOverlapParameters = typing.TypedDict('C2dLabelOverlapParameters', {
-    "__STYX_TYPE__": typing.Literal["label_overlap"],
+    "__STYXTYPE__": typing.Literal["label_overlap"],
     "label_overlap": str,
 })
 
 
 C2dLabelStatisticsParameters = typing.TypedDict('C2dLabelStatisticsParameters', {
-    "__STYX_TYPE__": typing.Literal["label_statistics"],
+    "__STYXTYPE__": typing.Literal["label_statistics"],
     "label_statistics": str,
 })
 
 
 C2dLandmarksToSpheresParameters = typing.TypedDict('C2dLandmarksToSpheresParameters', {
-    "__STYX_TYPE__": typing.Literal["landmarks_to_spheres"],
+    "__STYXTYPE__": typing.Literal["landmarks_to_spheres"],
     "landmarks_to_spheres": str,
 })
 
 
 C2dLaplacianParameters = typing.TypedDict('C2dLaplacianParameters', {
-    "__STYX_TYPE__": typing.Literal["laplacian"],
+    "__STYXTYPE__": typing.Literal["laplacian"],
     "laplacian": str,
 })
 
 
 C2dLevelsetParameters = typing.TypedDict('C2dLevelsetParameters', {
-    "__STYX_TYPE__": typing.Literal["levelset"],
+    "__STYXTYPE__": typing.Literal["levelset"],
     "levelset": str,
 })
 
 
 C2dLevelsetCurvatureParameters = typing.TypedDict('C2dLevelsetCurvatureParameters', {
-    "__STYX_TYPE__": typing.Literal["levelset_curvature"],
+    "__STYXTYPE__": typing.Literal["levelset_curvature"],
     "levelset_curvature": str,
 })
 
 
 C2dLevelsetAdvectionParameters = typing.TypedDict('C2dLevelsetAdvectionParameters', {
-    "__STYX_TYPE__": typing.Literal["levelset_advection"],
+    "__STYXTYPE__": typing.Literal["levelset_advection"],
     "levelset_advection": str,
 })
 
 
 C2dLogParameters = typing.TypedDict('C2dLogParameters', {
-    "__STYX_TYPE__": typing.Literal["log"],
+    "__STYXTYPE__": typing.Literal["log"],
     "log": str,
 })
 
 
 C2dLog10Parameters = typing.TypedDict('C2dLog10Parameters', {
-    "__STYX_TYPE__": typing.Literal["log10"],
+    "__STYXTYPE__": typing.Literal["log10"],
     "log10": str,
 })
 
 
 C2dManualParameters = typing.TypedDict('C2dManualParameters', {
-    "__STYX_TYPE__": typing.Literal["manual"],
+    "__STYXTYPE__": typing.Literal["manual"],
     "manual": str,
 })
 
 
 C2dMatchBoundingBoxParameters = typing.TypedDict('C2dMatchBoundingBoxParameters', {
-    "__STYX_TYPE__": typing.Literal["match_bounding_box"],
+    "__STYXTYPE__": typing.Literal["match_bounding_box"],
     "match_bounding_box": str,
 })
 
 
 C2dMaximumParameters = typing.TypedDict('C2dMaximumParameters', {
-    "__STYX_TYPE__": typing.Literal["maximum"],
+    "__STYXTYPE__": typing.Literal["maximum"],
     "maximum": str,
 })
 
 
 C2dMulticomponentSplitParameters = typing.TypedDict('C2dMulticomponentSplitParameters', {
-    "__STYX_TYPE__": typing.Literal["multicomponent_split"],
+    "__STYXTYPE__": typing.Literal["multicomponent_split"],
     "multicomponent_split": str,
 })
 
 
 C2dMeanParameters = typing.TypedDict('C2dMeanParameters', {
-    "__STYX_TYPE__": typing.Literal["mean"],
+    "__STYXTYPE__": typing.Literal["mean"],
     "mean": str,
 })
 
 
 C2dMedianFilterParameters = typing.TypedDict('C2dMedianFilterParameters', {
-    "__STYX_TYPE__": typing.Literal["median_filter"],
+    "__STYXTYPE__": typing.Literal["median_filter"],
     "median_filter": str,
 })
 
 
 C2dMergeParameters = typing.TypedDict('C2dMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["merge"],
+    "__STYXTYPE__": typing.Literal["merge"],
     "merge": str,
 })
 
 
 C2dMeanFilterParameters = typing.TypedDict('C2dMeanFilterParameters', {
-    "__STYX_TYPE__": typing.Literal["mean_filter"],
+    "__STYXTYPE__": typing.Literal["mean_filter"],
     "mean_filter": str,
 })
 
 
 C2dMutualInfoParameters = typing.TypedDict('C2dMutualInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["mutual_info"],
+    "__STYXTYPE__": typing.Literal["mutual_info"],
     "mutual_info": str,
 })
 
 
 C2dMinimumParameters = typing.TypedDict('C2dMinimumParameters', {
-    "__STYX_TYPE__": typing.Literal["minimum"],
+    "__STYXTYPE__": typing.Literal["minimum"],
     "minimum": str,
 })
 
 
 C2dMixtureModelParameters = typing.TypedDict('C2dMixtureModelParameters', {
-    "__STYX_TYPE__": typing.Literal["mixture_model"],
+    "__STYXTYPE__": typing.Literal["mixture_model"],
     "mixture_model": str,
 })
 
 
 C2dMomentsParameters = typing.TypedDict('C2dMomentsParameters', {
-    "__STYX_TYPE__": typing.Literal["moments"],
+    "__STYXTYPE__": typing.Literal["moments"],
     "moments": str,
 })
 
 
 C2dMattesMutualInfoParameters = typing.TypedDict('C2dMattesMutualInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["mattes_mutual_info"],
+    "__STYXTYPE__": typing.Literal["mattes_mutual_info"],
     "mattes_mutual_info": str,
 })
 
 
 C2dMeanSquareParameters = typing.TypedDict('C2dMeanSquareParameters', {
-    "__STYX_TYPE__": typing.Literal["mean_square"],
+    "__STYXTYPE__": typing.Literal["mean_square"],
     "mean_square": str,
 })
 
 
 C2dMultiplyParameters = typing.TypedDict('C2dMultiplyParameters', {
-    "__STYX_TYPE__": typing.Literal["multiply"],
+    "__STYXTYPE__": typing.Literal["multiply"],
     "multiply": str,
 })
 
 
 C2dNormalizedCrossCorrelationParameters = typing.TypedDict('C2dNormalizedCrossCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["normalized_cross_correlation"],
+    "__STYXTYPE__": typing.Literal["normalized_cross_correlation"],
     "normalized_cross_correlation": str,
 })
 
 
 C2dNormalizedCorrelationParameters = typing.TypedDict('C2dNormalizedCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["normalized_correlation"],
+    "__STYXTYPE__": typing.Literal["normalized_correlation"],
     "normalized_correlation": str,
 })
 
 
 C2dNormalizedMutualInfoParameters = typing.TypedDict('C2dNormalizedMutualInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["normalized_mutual_info"],
+    "__STYXTYPE__": typing.Literal["normalized_mutual_info"],
     "normalized_mutual_info": str,
 })
 
 
 C2dNoiseGaussianParameters = typing.TypedDict('C2dNoiseGaussianParameters', {
-    "__STYX_TYPE__": typing.Literal["noise_gaussian"],
+    "__STYXTYPE__": typing.Literal["noise_gaussian"],
     "noise_gaussian": str,
 })
 
 
 C2dNoisePoissonParameters = typing.TypedDict('C2dNoisePoissonParameters', {
-    "__STYX_TYPE__": typing.Literal["noise_poisson"],
+    "__STYXTYPE__": typing.Literal["noise_poisson"],
     "noise_poisson": str,
 })
 
 
 C2dNoiseSpeckleParameters = typing.TypedDict('C2dNoiseSpeckleParameters', {
-    "__STYX_TYPE__": typing.Literal["noise_speckle"],
+    "__STYXTYPE__": typing.Literal["noise_speckle"],
     "noise_speckle": str,
 })
 
 
 C2dNoiseSaltPepperParameters = typing.TypedDict('C2dNoiseSaltPepperParameters', {
-    "__STYX_TYPE__": typing.Literal["noise_salt_pepper"],
+    "__STYXTYPE__": typing.Literal["noise_salt_pepper"],
     "noise_salt_pepper": str,
 })
 
 
 C2dNoMulticomponentSplitParameters = typing.TypedDict('C2dNoMulticomponentSplitParameters', {
-    "__STYX_TYPE__": typing.Literal["no_multicomponent_split"],
+    "__STYXTYPE__": typing.Literal["no_multicomponent_split"],
     "no_multicomponent_split": str,
 })
 
 
 C2dNormalizeLocalWindowParameters = typing.TypedDict('C2dNormalizeLocalWindowParameters', {
-    "__STYX_TYPE__": typing.Literal["normalize_local_window"],
+    "__STYXTYPE__": typing.Literal["normalize_local_window"],
     "normalize_local_window": str,
 })
 
 
 C2dNormpdfParameters = typing.TypedDict('C2dNormpdfParameters', {
-    "__STYX_TYPE__": typing.Literal["normpdf"],
+    "__STYXTYPE__": typing.Literal["normpdf"],
     "normpdf": str,
 })
 
 
 C2dNoroundParameters = typing.TypedDict('C2dNoroundParameters', {
-    "__STYX_TYPE__": typing.Literal["noround"],
+    "__STYXTYPE__": typing.Literal["noround"],
     "noround": str,
 })
 
 
 C2dNospmParameters = typing.TypedDict('C2dNospmParameters', {
-    "__STYX_TYPE__": typing.Literal["nospm"],
+    "__STYXTYPE__": typing.Literal["nospm"],
     "nospm": str,
 })
 
 
 C2dOutputParameters = typing.TypedDict('C2dOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["output"],
+    "__STYXTYPE__": typing.Literal["output"],
     "output": str,
 })
 
 
 C2dOutputMulticomponentParameters = typing.TypedDict('C2dOutputMulticomponentParameters', {
-    "__STYX_TYPE__": typing.Literal["output_multicomponent"],
+    "__STYXTYPE__": typing.Literal["output_multicomponent"],
     "output_multicomponent": str,
 })
 
 
 C2dOutputMultipleMulticomponentParameters = typing.TypedDict('C2dOutputMultipleMulticomponentParameters', {
-    "__STYX_TYPE__": typing.Literal["output_multiple_multicomponent"],
+    "__STYXTYPE__": typing.Literal["output_multiple_multicomponent"],
     "output_multiple_multicomponent": str,
 })
 
 
 C2dOrientParameters = typing.TypedDict('C2dOrientParameters', {
-    "__STYX_TYPE__": typing.Literal["orient"],
+    "__STYXTYPE__": typing.Literal["orient"],
     "orient": str,
 })
 
 
 C2dOutputMultipleParameters = typing.TypedDict('C2dOutputMultipleParameters', {
-    "__STYX_TYPE__": typing.Literal["output_multiple"],
+    "__STYXTYPE__": typing.Literal["output_multiple"],
     "output_multiple": str,
 })
 
 
 C2dOrient1Parameters = typing.TypedDict('C2dOrient1Parameters', {
-    "__STYX_TYPE__": typing.Literal["orient_1"],
+    "__STYXTYPE__": typing.Literal["orient_1"],
     "orient": str,
 })
 
 
 C2dOriginParameters = typing.TypedDict('C2dOriginParameters', {
-    "__STYX_TYPE__": typing.Literal["origin"],
+    "__STYXTYPE__": typing.Literal["origin"],
     "origin": str,
 })
 
 
 C2dOriginVoxelParameters = typing.TypedDict('C2dOriginVoxelParameters', {
-    "__STYX_TYPE__": typing.Literal["origin_voxel"],
+    "__STYXTYPE__": typing.Literal["origin_voxel"],
     "origin_voxel": str,
 })
 
 
 C2dOriginVoxelCoordParameters = typing.TypedDict('C2dOriginVoxelCoordParameters', {
-    "__STYX_TYPE__": typing.Literal["origin_voxel_coord"],
+    "__STYXTYPE__": typing.Literal["origin_voxel_coord"],
     "origin_voxel_coord": str,
 })
 
 
 C2dOverlapParameters = typing.TypedDict('C2dOverlapParameters', {
-    "__STYX_TYPE__": typing.Literal["overlap"],
+    "__STYXTYPE__": typing.Literal["overlap"],
     "overlap": str,
 })
 
 
 C2dOverlayLabelImageParameters = typing.TypedDict('C2dOverlayLabelImageParameters', {
-    "__STYX_TYPE__": typing.Literal["overlay_label_image"],
+    "__STYXTYPE__": typing.Literal["overlay_label_image"],
     "overlay_label_image": str,
 })
 
 
 C2dPadParameters = typing.TypedDict('C2dPadParameters', {
-    "__STYX_TYPE__": typing.Literal["pad"],
+    "__STYXTYPE__": typing.Literal["pad"],
     "pad": str,
 })
 
 
 C2dPadToParameters = typing.TypedDict('C2dPadToParameters', {
-    "__STYX_TYPE__": typing.Literal["pad_to"],
+    "__STYXTYPE__": typing.Literal["pad_to"],
     "pad_to": str,
 })
 
 
 C2dPcaParameters = typing.TypedDict('C2dPcaParameters', {
-    "__STYX_TYPE__": typing.Literal["pca"],
+    "__STYXTYPE__": typing.Literal["pca"],
     "pca": str,
 })
 
 
 C2dPercentIntensityModeParameters = typing.TypedDict('C2dPercentIntensityModeParameters', {
-    "__STYX_TYPE__": typing.Literal["percent_intensity_mode"],
+    "__STYXTYPE__": typing.Literal["percent_intensity_mode"],
     "percent_intensity_mode": str,
 })
 
 
 C2dPixelParameters = typing.TypedDict('C2dPixelParameters', {
-    "__STYX_TYPE__": typing.Literal["pixel"],
+    "__STYXTYPE__": typing.Literal["pixel"],
     "pixel": str,
 })
 
 
 C2dPopParameters = typing.TypedDict('C2dPopParameters', {
-    "__STYX_TYPE__": typing.Literal["pop"],
+    "__STYXTYPE__": typing.Literal["pop"],
     "pop": str,
 })
 
 
 C2dPopasParameters = typing.TypedDict('C2dPopasParameters', {
-    "__STYX_TYPE__": typing.Literal["popas"],
+    "__STYXTYPE__": typing.Literal["popas"],
     "popas": str,
 })
 
 
 C2dProbeParameters = typing.TypedDict('C2dProbeParameters', {
-    "__STYX_TYPE__": typing.Literal["probe"],
+    "__STYXTYPE__": typing.Literal["probe"],
     "probe": str,
 })
 
 
 C2dPushParameters = typing.TypedDict('C2dPushParameters', {
-    "__STYX_TYPE__": typing.Literal["push"],
+    "__STYXTYPE__": typing.Literal["push"],
     "push": str,
 })
 
 
 C2dRankParameters = typing.TypedDict('C2dRankParameters', {
-    "__STYX_TYPE__": typing.Literal["rank"],
+    "__STYXTYPE__": typing.Literal["rank"],
     "rank": str,
 })
 
 
 C2dReciprocalParameters = typing.TypedDict('C2dReciprocalParameters', {
-    "__STYX_TYPE__": typing.Literal["reciprocal"],
+    "__STYXTYPE__": typing.Literal["reciprocal"],
     "reciprocal": str,
 })
 
 
 C2dRegionParameters = typing.TypedDict('C2dRegionParameters', {
-    "__STYX_TYPE__": typing.Literal["region"],
+    "__STYXTYPE__": typing.Literal["region"],
     "region": str,
 })
 
 
 C2dReorderParameters = typing.TypedDict('C2dReorderParameters', {
-    "__STYX_TYPE__": typing.Literal["reorder"],
+    "__STYXTYPE__": typing.Literal["reorder"],
     "reorder": str,
 })
 
 
 C2dRetainLabelsParameters = typing.TypedDict('C2dRetainLabelsParameters', {
-    "__STYX_TYPE__": typing.Literal["retain_labels"],
+    "__STYXTYPE__": typing.Literal["retain_labels"],
     "retain_labels": str,
 })
 
 
 C2dRfApplyParameters = typing.TypedDict('C2dRfApplyParameters', {
-    "__STYX_TYPE__": typing.Literal["rf_apply"],
+    "__STYXTYPE__": typing.Literal["rf_apply"],
     "rf_apply": str,
 })
 
 
 C2dRfTrainParameters = typing.TypedDict('C2dRfTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["rf_train"],
+    "__STYXTYPE__": typing.Literal["rf_train"],
     "rf_train": str,
 })
 
 
 C2dRfParamPatchParameters = typing.TypedDict('C2dRfParamPatchParameters', {
-    "__STYX_TYPE__": typing.Literal["rf_param_patch"],
+    "__STYXTYPE__": typing.Literal["rf_param_patch"],
     "rf_param_patch": str,
 })
 
 
 C2dRfParamUsexyzParameters = typing.TypedDict('C2dRfParamUsexyzParameters', {
-    "__STYX_TYPE__": typing.Literal["rf_param_usexyz"],
+    "__STYXTYPE__": typing.Literal["rf_param_usexyz"],
     "rf_param_usexyz": str,
 })
 
 
 C2dRfParamNousexyzParameters = typing.TypedDict('C2dRfParamNousexyzParameters', {
-    "__STYX_TYPE__": typing.Literal["rf_param_nousexyz"],
+    "__STYXTYPE__": typing.Literal["rf_param_nousexyz"],
     "rf_param_nousexyz": str,
 })
 
 
 C2dRfParamNtreesParameters = typing.TypedDict('C2dRfParamNtreesParameters', {
-    "__STYX_TYPE__": typing.Literal["rf_param_ntrees"],
+    "__STYXTYPE__": typing.Literal["rf_param_ntrees"],
     "rf_param_ntrees": str,
 })
 
 
 C2dRfParamTreedepthParameters = typing.TypedDict('C2dRfParamTreedepthParameters', {
-    "__STYX_TYPE__": typing.Literal["rf_param_treedepth"],
+    "__STYXTYPE__": typing.Literal["rf_param_treedepth"],
     "rf_param_treedepth": str,
 })
 
 
 C2dSetSformParameters = typing.TypedDict('C2dSetSformParameters', {
-    "__STYX_TYPE__": typing.Literal["set_sform"],
+    "__STYXTYPE__": typing.Literal["set_sform"],
     "set_sform": str,
 })
 
 
 C2dReplaceParameters = typing.TypedDict('C2dReplaceParameters', {
-    "__STYX_TYPE__": typing.Literal["replace"],
+    "__STYXTYPE__": typing.Literal["replace"],
     "replace": str,
 })
 
 
 C2dResampleParameters = typing.TypedDict('C2dResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["resample"],
+    "__STYXTYPE__": typing.Literal["resample"],
     "resample": str,
 })
 
 
 C2dResampleIsoParameters = typing.TypedDict('C2dResampleIsoParameters', {
-    "__STYX_TYPE__": typing.Literal["resample_iso"],
+    "__STYXTYPE__": typing.Literal["resample_iso"],
     "resample_iso": str,
 })
 
 
 C2dResampleMmParameters = typing.TypedDict('C2dResampleMmParameters', {
-    "__STYX_TYPE__": typing.Literal["resample_mm"],
+    "__STYXTYPE__": typing.Literal["resample_mm"],
     "resample_mm": str,
 })
 
 
 C2dResliceItkParameters = typing.TypedDict('C2dResliceItkParameters', {
-    "__STYX_TYPE__": typing.Literal["reslice_itk"],
+    "__STYXTYPE__": typing.Literal["reslice_itk"],
     "reslice_itk": str,
 })
 
 
 C2dResliceMatrixParameters = typing.TypedDict('C2dResliceMatrixParameters', {
-    "__STYX_TYPE__": typing.Literal["reslice_matrix"],
+    "__STYXTYPE__": typing.Literal["reslice_matrix"],
     "reslice_matrix": str,
 })
 
 
 C2dResliceIdentityParameters = typing.TypedDict('C2dResliceIdentityParameters', {
-    "__STYX_TYPE__": typing.Literal["reslice_identity"],
+    "__STYXTYPE__": typing.Literal["reslice_identity"],
     "reslice_identity": str,
 })
 
 
 C2dRgb2hsvParameters = typing.TypedDict('C2dRgb2hsvParameters', {
-    "__STYX_TYPE__": typing.Literal["rgb2hsv"],
+    "__STYXTYPE__": typing.Literal["rgb2hsv"],
     "rgb2hsv": str,
 })
 
 
 C2dRmsParameters = typing.TypedDict('C2dRmsParameters', {
-    "__STYX_TYPE__": typing.Literal["rms"],
+    "__STYXTYPE__": typing.Literal["rms"],
     "rms": str,
 })
 
 
 C2dRoundParameters = typing.TypedDict('C2dRoundParameters', {
-    "__STYX_TYPE__": typing.Literal["round"],
+    "__STYXTYPE__": typing.Literal["round"],
     "round": str,
 })
 
 
 C2dScaleParameters = typing.TypedDict('C2dScaleParameters', {
-    "__STYX_TYPE__": typing.Literal["scale"],
+    "__STYXTYPE__": typing.Literal["scale"],
     "scale": str,
 })
 
 
 C2dSetSform1Parameters = typing.TypedDict('C2dSetSform1Parameters', {
-    "__STYX_TYPE__": typing.Literal["set_sform_1"],
+    "__STYXTYPE__": typing.Literal["set_sform_1"],
     "set_sform": str,
 })
 
 
 C2dSinParameters = typing.TypedDict('C2dSinParameters', {
-    "__STYX_TYPE__": typing.Literal["sin"],
+    "__STYXTYPE__": typing.Literal["sin"],
     "sin": str,
 })
 
 
 C2dSliceParameters = typing.TypedDict('C2dSliceParameters', {
-    "__STYX_TYPE__": typing.Literal["slice"],
+    "__STYXTYPE__": typing.Literal["slice"],
     "slice": str,
 })
 
 
 C2dSliceAllParameters = typing.TypedDict('C2dSliceAllParameters', {
-    "__STYX_TYPE__": typing.Literal["slice_all"],
+    "__STYXTYPE__": typing.Literal["slice_all"],
     "slice_all": str,
 })
 
 
 C2dSharpenParameters = typing.TypedDict('C2dSharpenParameters', {
-    "__STYX_TYPE__": typing.Literal["sharpen"],
+    "__STYXTYPE__": typing.Literal["sharpen"],
     "sharpen": str,
 })
 
 
 C2dShiftParameters = typing.TypedDict('C2dShiftParameters', {
-    "__STYX_TYPE__": typing.Literal["shift"],
+    "__STYXTYPE__": typing.Literal["shift"],
     "shift": str,
 })
 
 
 C2dSignedDistanceTransformParameters = typing.TypedDict('C2dSignedDistanceTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["signed_distance_transform"],
+    "__STYXTYPE__": typing.Literal["signed_distance_transform"],
     "signed_distance_transform": str,
 })
 
 
 C2dSmoothParameters = typing.TypedDict('C2dSmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["smooth"],
+    "__STYXTYPE__": typing.Literal["smooth"],
     "smooth": str,
 })
 
 
 C2dSmoothFastParameters = typing.TypedDict('C2dSmoothFastParameters', {
-    "__STYX_TYPE__": typing.Literal["smooth_fast"],
+    "__STYXTYPE__": typing.Literal["smooth_fast"],
     "smooth_fast": str,
 })
 
 
 C2dSpacingParameters = typing.TypedDict('C2dSpacingParameters', {
-    "__STYX_TYPE__": typing.Literal["spacing"],
+    "__STYXTYPE__": typing.Literal["spacing"],
     "spacing": str,
 })
 
 
 C2dSplitParameters = typing.TypedDict('C2dSplitParameters', {
-    "__STYX_TYPE__": typing.Literal["split"],
+    "__STYXTYPE__": typing.Literal["split"],
     "split": str,
 })
 
 
 C2dSqrtParameters = typing.TypedDict('C2dSqrtParameters', {
-    "__STYX_TYPE__": typing.Literal["sqrt"],
+    "__STYXTYPE__": typing.Literal["sqrt"],
     "sqrt": str,
 })
 
 
 C2dStapleParameters = typing.TypedDict('C2dStapleParameters', {
-    "__STYX_TYPE__": typing.Literal["staple"],
+    "__STYXTYPE__": typing.Literal["staple"],
     "staple": str,
 })
 
 
 C2dStructureTensorEigenvaluesParameters = typing.TypedDict('C2dStructureTensorEigenvaluesParameters', {
-    "__STYX_TYPE__": typing.Literal["structure_tensor_eigenvalues"],
+    "__STYXTYPE__": typing.Literal["structure_tensor_eigenvalues"],
     "structure_tensor_eigenvalues": str,
 })
 
 
 C2dSpmParameters = typing.TypedDict('C2dSpmParameters', {
-    "__STYX_TYPE__": typing.Literal["spm"],
+    "__STYXTYPE__": typing.Literal["spm"],
     "spm": str,
 })
 
 
 C2dSubtractParameters = typing.TypedDict('C2dSubtractParameters', {
-    "__STYX_TYPE__": typing.Literal["subtract"],
+    "__STYXTYPE__": typing.Literal["subtract"],
     "subtract": str,
 })
 
 
 C2dSupervoxelParameters = typing.TypedDict('C2dSupervoxelParameters', {
-    "__STYX_TYPE__": typing.Literal["supervoxel"],
+    "__STYXTYPE__": typing.Literal["supervoxel"],
     "supervoxel": str,
 })
 
 
 C2dStretchParameters = typing.TypedDict('C2dStretchParameters', {
-    "__STYX_TYPE__": typing.Literal["stretch"],
+    "__STYXTYPE__": typing.Literal["stretch"],
     "stretch": str,
 })
 
 
 C2dSwapdimParameters = typing.TypedDict('C2dSwapdimParameters', {
-    "__STYX_TYPE__": typing.Literal["swapdim"],
+    "__STYXTYPE__": typing.Literal["swapdim"],
     "swapdim": str,
 })
 
 
 C2dTestImageParameters = typing.TypedDict('C2dTestImageParameters', {
-    "__STYX_TYPE__": typing.Literal["test_image"],
+    "__STYXTYPE__": typing.Literal["test_image"],
     "test_image": str,
 })
 
 
 C2dTestProbeParameters = typing.TypedDict('C2dTestProbeParameters', {
-    "__STYX_TYPE__": typing.Literal["test_probe"],
+    "__STYXTYPE__": typing.Literal["test_probe"],
     "test_probe": str,
 })
 
 
 C2dThresholdParameters = typing.TypedDict('C2dThresholdParameters', {
-    "__STYX_TYPE__": typing.Literal["threshold"],
+    "__STYXTYPE__": typing.Literal["threshold"],
     "threshold": str,
 })
 
 
 C2dTileParameters = typing.TypedDict('C2dTileParameters', {
-    "__STYX_TYPE__": typing.Literal["tile"],
+    "__STYXTYPE__": typing.Literal["tile"],
     "tile": str,
 })
 
 
 C2dTrimParameters = typing.TypedDict('C2dTrimParameters', {
-    "__STYX_TYPE__": typing.Literal["trim"],
+    "__STYXTYPE__": typing.Literal["trim"],
     "trim": str,
 })
 
 
 C2dTrimToSizeParameters = typing.TypedDict('C2dTrimToSizeParameters', {
-    "__STYX_TYPE__": typing.Literal["trim_to_size"],
+    "__STYXTYPE__": typing.Literal["trim_to_size"],
     "trim_to_size": str,
 })
 
 
 C2dTypeParameters = typing.TypedDict('C2dTypeParameters', {
-    "__STYX_TYPE__": typing.Literal["type"],
+    "__STYXTYPE__": typing.Literal["type"],
     "type": str,
 })
 
 
 C2dVerboseParameters = typing.TypedDict('C2dVerboseParameters', {
-    "__STYX_TYPE__": typing.Literal["verbose"],
+    "__STYXTYPE__": typing.Literal["verbose"],
     "verbose": str,
 })
 
 
 C2dNoverboseParameters = typing.TypedDict('C2dNoverboseParameters', {
-    "__STYX_TYPE__": typing.Literal["noverbose"],
+    "__STYXTYPE__": typing.Literal["noverbose"],
     "noverbose": str,
 })
 
 
 C2dVersionParameters = typing.TypedDict('C2dVersionParameters', {
-    "__STYX_TYPE__": typing.Literal["version"],
+    "__STYXTYPE__": typing.Literal["version"],
     "version": str,
 })
 
 
 C2dVoteParameters = typing.TypedDict('C2dVoteParameters', {
-    "__STYX_TYPE__": typing.Literal["vote"],
+    "__STYXTYPE__": typing.Literal["vote"],
     "vote": str,
 })
 
 
 C2dVoteMrfParameters = typing.TypedDict('C2dVoteMrfParameters', {
-    "__STYX_TYPE__": typing.Literal["vote_mrf"],
+    "__STYXTYPE__": typing.Literal["vote_mrf"],
     "vote_mrf": str,
 })
 
 
 C2dVoteLabelParameters = typing.TypedDict('C2dVoteLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["vote_label"],
+    "__STYXTYPE__": typing.Literal["vote_label"],
     "vote_label": str,
 })
 
 
 C2dVoxelSumParameters = typing.TypedDict('C2dVoxelSumParameters', {
-    "__STYX_TYPE__": typing.Literal["voxel_sum"],
+    "__STYXTYPE__": typing.Literal["voxel_sum"],
     "voxel_sum": str,
 })
 
 
 C2dVoxelIntegralParameters = typing.TypedDict('C2dVoxelIntegralParameters', {
-    "__STYX_TYPE__": typing.Literal["voxel_integral"],
+    "__STYXTYPE__": typing.Literal["voxel_integral"],
     "voxel_integral": str,
 })
 
 
 C2dVoxelwiseRegressionParameters = typing.TypedDict('C2dVoxelwiseRegressionParameters', {
-    "__STYX_TYPE__": typing.Literal["voxelwise_regression"],
+    "__STYXTYPE__": typing.Literal["voxelwise_regression"],
     "voxelwise_regression": str,
 })
 
 
 C2dWarpParameters = typing.TypedDict('C2dWarpParameters', {
-    "__STYX_TYPE__": typing.Literal["warp"],
+    "__STYXTYPE__": typing.Literal["warp"],
     "warp": str,
 })
 
 
 C2dWarpLabelParameters = typing.TypedDict('C2dWarpLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["warp_label"],
+    "__STYXTYPE__": typing.Literal["warp_label"],
     "warp_label": str,
 })
 
 
 C2dWrapParameters = typing.TypedDict('C2dWrapParameters', {
-    "__STYX_TYPE__": typing.Literal["wrap"],
+    "__STYXTYPE__": typing.Literal["wrap"],
     "wrap": str,
 })
 
 
 C2dWeightedSumParameters = typing.TypedDict('C2dWeightedSumParameters', {
-    "__STYX_TYPE__": typing.Literal["weighted_sum"],
+    "__STYXTYPE__": typing.Literal["weighted_sum"],
     "weighted_sum": str,
 })
 
 
 C2dWeightedSumVoxelwiseParameters = typing.TypedDict('C2dWeightedSumVoxelwiseParameters', {
-    "__STYX_TYPE__": typing.Literal["weighted_sum_voxelwise"],
+    "__STYXTYPE__": typing.Literal["weighted_sum_voxelwise"],
     "weighted_sum_voxelwise": str,
 })
 
 
 C2dParameters = typing.TypedDict('C2dParameters', {
-    "__STYX_TYPE__": typing.Literal["c2d"],
+    "__STYXTYPE__": typing.Literal["c2d"],
     "input": list[InputPathType],
     "operations": list[typing.Union[C2dAccumParameters, C2dAcosParameters, C2dAddParameters, C2dAlignLandmarksParameters, C2dAnisotropicDiffusionParameters, C2dAntialiasParameters, C2dSetParameters, C2dAsinParameters, C2dAtan2Parameters, C2dBackgroundParameters, C2dN4BiasCorrectionParameters, C2dBinarizeParameters, C2dCannyParameters, C2dCeilParameters, C2dCentroidParameters, C2dCentroidMarkParameters, C2dConnectedComponentsParameters, C2dClearParameters, C2dClipParameters, C2dColorMapParameters, C2dCompressParameters, C2dNoCompressParameters, C2dConvParameters, C2dCoordinateMapVoxelParameters, C2dCoordinateMapPhysicalParameters, C2dCopyTransformParameters, C2dCosParameters, C2dCreateParameters, C2dDicomSeriesListParameters, C2dDicomSeriesReadParameters, C2dDilateParameters, C2dDivideParameters, C2dDuplicateParameters, C2dEndaccumParameters, C2dEndforParameters, C2dErodeParameters, C2dErfParameters, C2dExpParameters, C2dExportPatchesParameters, C2dExportPatchesAugParameters, C2dExtrudeSegParameters, C2dFillBackgroundWithNoiseParameters, C2dFftParameters, C2dFlipParameters, C2dFloorParameters, C2dForeachParameters, C2dForeachCompParameters, C2dGlmParameters, C2dGradientParameters, C2dHelpParameters, C2dHolefillParameters, C2dHessianEigenvaluesParameters, C2dHessianObjectnessParameters, C2dHistogramMatchParameters, C2dInfoParameters, C2dInfoFullParameters, C2dInsertParameters, C2dInterpolationParameters, C2dIterationsParameters, C2dLabelOverlapParameters, C2dLabelStatisticsParameters, C2dLandmarksToSpheresParameters, C2dLaplacianParameters, C2dLevelsetParameters, C2dLevelsetCurvatureParameters, C2dLevelsetAdvectionParameters, C2dLogParameters, C2dLog10Parameters, C2dManualParameters, C2dMatchBoundingBoxParameters, C2dMaximumParameters, C2dMulticomponentSplitParameters, C2dMeanParameters, C2dMedianFilterParameters, C2dMergeParameters, C2dMeanFilterParameters, C2dMutualInfoParameters, C2dMinimumParameters, C2dMixtureModelParameters, C2dMomentsParameters, C2dMattesMutualInfoParameters, C2dMeanSquareParameters, C2dMultiplyParameters, C2dNormalizedCrossCorrelationParameters, C2dNormalizedCorrelationParameters, C2dNormalizedMutualInfoParameters, C2dNoiseGaussianParameters, C2dNoisePoissonParameters, C2dNoiseSpeckleParameters, C2dNoiseSaltPepperParameters, C2dNoMulticomponentSplitParameters, C2dNormalizeLocalWindowParameters, C2dNormpdfParameters, C2dNoroundParameters, C2dNospmParameters, C2dOutputParameters, C2dOutputMulticomponentParameters, C2dOutputMultipleMulticomponentParameters, C2dOrientParameters, C2dOutputMultipleParameters, C2dOrient1Parameters, C2dOriginParameters, C2dOriginVoxelParameters, C2dOriginVoxelCoordParameters, C2dOverlapParameters, C2dOverlayLabelImageParameters, C2dPadParameters, C2dPadToParameters, C2dPcaParameters, C2dPercentIntensityModeParameters, C2dPixelParameters, C2dPopParameters, C2dPopasParameters, C2dProbeParameters, C2dPushParameters, C2dRankParameters, C2dReciprocalParameters, C2dRegionParameters, C2dReorderParameters, C2dRetainLabelsParameters, C2dRfApplyParameters, C2dRfTrainParameters, C2dRfParamPatchParameters, C2dRfParamUsexyzParameters, C2dRfParamNousexyzParameters, C2dRfParamNtreesParameters, C2dRfParamTreedepthParameters, C2dSetSformParameters, C2dReplaceParameters, C2dResampleParameters, C2dResampleIsoParameters, C2dResampleMmParameters, C2dResliceItkParameters, C2dResliceMatrixParameters, C2dResliceIdentityParameters, C2dRgb2hsvParameters, C2dRmsParameters, C2dRoundParameters, C2dScaleParameters, C2dSetSform1Parameters, C2dSinParameters, C2dSliceParameters, C2dSliceAllParameters, C2dSharpenParameters, C2dShiftParameters, C2dSignedDistanceTransformParameters, C2dSmoothParameters, C2dSmoothFastParameters, C2dSpacingParameters, C2dSplitParameters, C2dSqrtParameters, C2dStapleParameters, C2dStructureTensorEigenvaluesParameters, C2dSpmParameters, C2dSubtractParameters, C2dSupervoxelParameters, C2dStretchParameters, C2dSwapdimParameters, C2dTestImageParameters, C2dTestProbeParameters, C2dThresholdParameters, C2dTileParameters, C2dTrimParameters, C2dTrimToSizeParameters, C2dTypeParameters, C2dVerboseParameters, C2dNoverboseParameters, C2dVersionParameters, C2dVoteParameters, C2dVoteMrfParameters, C2dVoteLabelParameters, C2dVoxelSumParameters, C2dVoxelIntegralParameters, C2dVoxelwiseRegressionParameters, C2dWarpParameters, C2dWarpLabelParameters, C2dWrapParameters, C2dWeightedSumParameters, C2dWeightedSumVoxelwiseParameters]],
     "output": str,

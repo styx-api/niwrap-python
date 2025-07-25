@@ -14,7 +14,7 @@ MRI_XVOLAVG_METADATA = Metadata(
 
 
 MriXvolavgParameters = typing.TypedDict('MriXvolavgParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_xvolavg"],
+    "__STYXTYPE__": typing.Literal["mri_xvolavg"],
     "input_volumes": list[InputPathType],
     "vol_type": str,
     "output_volume": str,

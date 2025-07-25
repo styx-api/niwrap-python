@@ -14,7 +14,7 @@ MRI_NORMALIZE_METADATA = Metadata(
 
 
 MriNormalizeParameters = typing.TypedDict('MriNormalizeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_normalize"],
+    "__STYXTYPE__": typing.Literal["mri_normalize"],
     "input_vol": InputPathType,
     "output_vol": str,
     "norm_iters": typing.NotRequired[float | None],

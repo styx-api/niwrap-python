@@ -14,7 +14,7 @@ FSREALPATH_METADATA = Metadata(
 
 
 FsrealpathParameters = typing.TypedDict('FsrealpathParameters', {
-    "__STYX_TYPE__": typing.Literal["fsrealpath"],
+    "__STYXTYPE__": typing.Literal["fsrealpath"],
     "path": str,
     "help": bool,
 })

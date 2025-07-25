@@ -14,7 +14,7 @@ FEAT_METADATA = Metadata(
 
 
 FeatParameters = typing.TypedDict('FeatParameters', {
-    "__STYX_TYPE__": typing.Literal["feat"],
+    "__STYXTYPE__": typing.Literal["feat"],
     "design_file": InputPathType,
 })
 

@@ -14,7 +14,7 @@ SURFACE_VERTEX_AREAS_METADATA = Metadata(
 
 
 SurfaceVertexAreasParameters = typing.TypedDict('SurfaceVertexAreasParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-vertex-areas"],
+    "__STYXTYPE__": typing.Literal["surface-vertex-areas"],
     "surface": InputPathType,
     "metric": str,
 })

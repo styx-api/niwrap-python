@@ -14,7 +14,7 @@ CHECK_RECONS_SH_METADATA = Metadata(
 
 
 CheckReconsShParameters = typing.TypedDict('CheckReconsShParameters', {
-    "__STYX_TYPE__": typing.Literal["check_recons.sh"],
+    "__STYXTYPE__": typing.Literal["check_recons.sh"],
     "subject_directory": typing.NotRequired[str | None],
 })
 

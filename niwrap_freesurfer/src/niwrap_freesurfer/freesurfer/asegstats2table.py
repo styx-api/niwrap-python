@@ -14,7 +14,7 @@ ASEGSTATS2TABLE_METADATA = Metadata(
 
 
 Asegstats2tableParameters = typing.TypedDict('Asegstats2tableParameters', {
-    "__STYX_TYPE__": typing.Literal["asegstats2table"],
+    "__STYXTYPE__": typing.Literal["asegstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "inputs": typing.NotRequired[list[str] | None],
     "tablefile": str,

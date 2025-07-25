@@ -14,7 +14,7 @@ APQC_MAKE_TCSH_PY_METADATA = Metadata(
 
 
 ApqcMakeTcshPyParameters = typing.TypedDict('ApqcMakeTcshPyParameters', {
-    "__STYX_TYPE__": typing.Literal["apqc_make_tcsh.py"],
+    "__STYXTYPE__": typing.Literal["apqc_make_tcsh.py"],
     "uvar_json": InputPathType,
     "subj_dir": str,
     "review_style": typing.NotRequired[str | None],

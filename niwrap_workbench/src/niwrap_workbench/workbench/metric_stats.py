@@ -14,14 +14,14 @@ METRIC_STATS_METADATA = Metadata(
 
 
 MetricStatsRoiParameters = typing.TypedDict('MetricStatsRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 MetricStatsParameters = typing.TypedDict('MetricStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-stats"],
+    "__STYXTYPE__": typing.Literal["metric-stats"],
     "metric_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],

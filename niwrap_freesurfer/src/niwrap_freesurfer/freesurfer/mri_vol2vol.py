@@ -14,7 +14,7 @@ MRI_VOL2VOL_METADATA = Metadata(
 
 
 MriVol2volParameters = typing.TypedDict('MriVol2volParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_vol2vol"],
+    "__STYXTYPE__": typing.Literal["mri_vol2vol"],
     "movvol": InputPathType,
     "targvol": InputPathType,
     "outvol": InputPathType,

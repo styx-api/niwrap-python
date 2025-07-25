@@ -14,7 +14,7 @@ EDDY_COMBINE_METADATA = Metadata(
 
 
 EddyCombineParameters = typing.TypedDict('EddyCombineParameters', {
-    "__STYX_TYPE__": typing.Literal["eddy_combine"],
+    "__STYXTYPE__": typing.Literal["eddy_combine"],
     "pos_data": InputPathType,
     "pos_bvals": InputPathType,
     "pos_bvecs": InputPathType,

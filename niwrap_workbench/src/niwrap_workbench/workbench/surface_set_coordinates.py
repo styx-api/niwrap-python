@@ -14,7 +14,7 @@ SURFACE_SET_COORDINATES_METADATA = Metadata(
 
 
 SurfaceSetCoordinatesParameters = typing.TypedDict('SurfaceSetCoordinatesParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-set-coordinates"],
+    "__STYXTYPE__": typing.Literal["surface-set-coordinates"],
     "surface_in": InputPathType,
     "coord_metric": InputPathType,
     "surface_out": str,

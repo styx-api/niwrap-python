@@ -14,7 +14,7 @@ REALTIME_RECEIVER_METADATA = Metadata(
 
 
 RealtimeReceiverParameters = typing.TypedDict('RealtimeReceiverParameters', {
-    "__STYX_TYPE__": typing.Literal["realtime_receiver"],
+    "__STYXTYPE__": typing.Literal["realtime_receiver"],
     "show_data": typing.NotRequired[typing.Literal["yes", "no"] | None],
     "write_text_data": typing.NotRequired[str | None],
     "data_choice": typing.NotRequired[typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None],

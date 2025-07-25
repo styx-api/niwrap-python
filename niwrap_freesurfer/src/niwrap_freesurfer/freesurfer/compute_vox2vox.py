@@ -14,7 +14,7 @@ COMPUTE_VOX2VOX_METADATA = Metadata(
 
 
 ComputeVox2voxParameters = typing.TypedDict('ComputeVox2voxParameters', {
-    "__STYX_TYPE__": typing.Literal["compute_vox2vox"],
+    "__STYXTYPE__": typing.Literal["compute_vox2vox"],
     "source": InputPathType,
     "t4file": InputPathType,
     "target": InputPathType,

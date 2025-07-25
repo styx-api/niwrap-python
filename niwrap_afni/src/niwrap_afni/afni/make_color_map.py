@@ -14,7 +14,7 @@ MAKE_COLOR_MAP_METADATA = Metadata(
 
 
 MakeColorMapParameters = typing.TypedDict('MakeColorMapParameters', {
-    "__STYX_TYPE__": typing.Literal["MakeColorMap"],
+    "__STYXTYPE__": typing.Literal["MakeColorMap"],
     "fiducials_ncol": typing.NotRequired[InputPathType | None],
     "fiducials": typing.NotRequired[InputPathType | None],
     "num_colors": typing.NotRequired[float | None],

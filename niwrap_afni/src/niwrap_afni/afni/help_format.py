@@ -14,7 +14,7 @@ HELP_FORMAT_METADATA = Metadata(
 
 
 HelpFormatParameters = typing.TypedDict('HelpFormatParameters', {
-    "__STYX_TYPE__": typing.Literal["help_format"],
+    "__STYXTYPE__": typing.Literal["help_format"],
     "stdin": str,
 })
 

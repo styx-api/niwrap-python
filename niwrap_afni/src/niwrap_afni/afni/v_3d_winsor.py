@@ -14,7 +14,7 @@ V_3D_WINSOR_METADATA = Metadata(
 
 
 V3dWinsorParameters = typing.TypedDict('V3dWinsorParameters', {
-    "__STYX_TYPE__": typing.Literal["3dWinsor"],
+    "__STYXTYPE__": typing.Literal["3dWinsor"],
     "irad": typing.NotRequired[float | None],
     "cbot": typing.NotRequired[float | None],
     "ctop": typing.NotRequired[float | None],

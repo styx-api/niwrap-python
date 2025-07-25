@@ -14,7 +14,7 @@ V__ADD_EDGE_METADATA = Metadata(
 
 
 VAddEdgeParameters = typing.TypedDict('VAddEdgeParameters', {
-    "__STYX_TYPE__": typing.Literal["@AddEdge"],
+    "__STYXTYPE__": typing.Literal["@AddEdge"],
     "input_files": list[InputPathType],
     "examine_list": typing.NotRequired[str | None],
     "ax_mont": typing.NotRequired[str | None],

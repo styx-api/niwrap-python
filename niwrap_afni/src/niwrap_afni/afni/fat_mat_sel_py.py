@@ -14,7 +14,7 @@ FAT_MAT_SEL_PY_METADATA = Metadata(
 
 
 FatMatSelPyParameters = typing.TypedDict('FatMatSelPyParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_mat_sel.py"],
+    "__STYXTYPE__": typing.Literal["fat_mat_sel.py"],
     "parameters": str,
     "matr_in": typing.NotRequired[str | None],
     "list_match": typing.NotRequired[InputPathType | None],

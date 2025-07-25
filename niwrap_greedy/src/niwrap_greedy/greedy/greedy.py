@@ -14,21 +14,21 @@ GREEDY_METADATA = Metadata(
 
 
 GreedyInputImagesParameters = typing.TypedDict('GreedyInputImagesParameters', {
-    "__STYX_TYPE__": typing.Literal["input_images"],
+    "__STYXTYPE__": typing.Literal["input_images"],
     "fixed": InputPathType,
     "moving": InputPathType,
 })
 
 
 GreedyInvertParameters = typing.TypedDict('GreedyInvertParameters', {
-    "__STYX_TYPE__": typing.Literal["invert"],
+    "__STYXTYPE__": typing.Literal["invert"],
     "inwarp": InputPathType,
     "outwarp": str,
 })
 
 
 GreedyRootParameters = typing.TypedDict('GreedyRootParameters', {
-    "__STYX_TYPE__": typing.Literal["root"],
+    "__STYXTYPE__": typing.Literal["root"],
     "inwarp": InputPathType,
     "outwarp": str,
     "n": int,
@@ -36,28 +36,28 @@ GreedyRootParameters = typing.TypedDict('GreedyRootParameters', {
 
 
 GreedyJacobianParameters = typing.TypedDict('GreedyJacobianParameters', {
-    "__STYX_TYPE__": typing.Literal["jacobian"],
+    "__STYXTYPE__": typing.Literal["jacobian"],
     "inwarp": InputPathType,
     "outjac": str,
 })
 
 
 GreedyMetricParameters = typing.TypedDict('GreedyMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["metric"],
+    "__STYXTYPE__": typing.Literal["metric"],
     "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     "metric_param": typing.NotRequired[float | None],
 })
 
 
 GreedyTjrParameters = typing.TypedDict('GreedyTjrParameters', {
-    "__STYX_TYPE__": typing.Literal["tjr"],
+    "__STYXTYPE__": typing.Literal["tjr"],
     "mesh": InputPathType,
     "weight": float,
 })
 
 
 GreedySearchParameters = typing.TypedDict('GreedySearchParameters', {
-    "__STYX_TYPE__": typing.Literal["search"],
+    "__STYXTYPE__": typing.Literal["search"],
     "n": int,
     "rot": str,
     "tran": float,
@@ -65,28 +65,28 @@ GreedySearchParameters = typing.TypedDict('GreedySearchParameters', {
 
 
 GreedyResliceMovingImageParameters = typing.TypedDict('GreedyResliceMovingImageParameters', {
-    "__STYX_TYPE__": typing.Literal["reslice_moving_image"],
+    "__STYXTYPE__": typing.Literal["reslice_moving_image"],
     "moving": InputPathType,
     "output": str,
 })
 
 
 GreedyResliceSurfaceParameters = typing.TypedDict('GreedyResliceSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["reslice_surface"],
+    "__STYXTYPE__": typing.Literal["reslice_surface"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
 GreedyResliceSimplexJacobianParameters = typing.TypedDict('GreedyResliceSimplexJacobianParameters', {
-    "__STYX_TYPE__": typing.Literal["reslice_simplex_jacobian"],
+    "__STYXTYPE__": typing.Literal["reslice_simplex_jacobian"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
 GreedyParameters = typing.TypedDict('GreedyParameters', {
-    "__STYX_TYPE__": typing.Literal["greedy"],
+    "__STYXTYPE__": typing.Literal["greedy"],
     "dimensions": int,
     "input_images": typing.NotRequired[GreedyInputImagesParameters | None],
     "output": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ SURFACE_METRICS_METADATA = Metadata(
 
 
 SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfaceMetrics"],
+    "__STYXTYPE__": typing.Literal["SurfaceMetrics"],
     "volume": bool,
     "convexity": bool,
     "closest_node": typing.NotRequired[InputPathType | None],

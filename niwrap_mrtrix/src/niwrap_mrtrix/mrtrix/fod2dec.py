@@ -14,14 +14,14 @@ FOD2DEC_METADATA = Metadata(
 
 
 Fod2decConfigParameters = typing.TypedDict('Fod2decConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fod2decParameters = typing.TypedDict('Fod2decParameters', {
-    "__STYX_TYPE__": typing.Literal["fod2dec"],
+    "__STYXTYPE__": typing.Literal["fod2dec"],
     "mask": typing.NotRequired[InputPathType | None],
     "contrast": typing.NotRequired[InputPathType | None],
     "lum": bool,

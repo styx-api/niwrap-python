@@ -14,7 +14,7 @@ FSREAD_ANNOT_METADATA = Metadata(
 
 
 FsreadAnnotParameters = typing.TypedDict('FsreadAnnotParameters', {
-    "__STYX_TYPE__": typing.Literal["FSread_annot"],
+    "__STYXTYPE__": typing.Literal["FSread_annot"],
     "infile": InputPathType,
     "hemi": typing.NotRequired[str | None],
     "fscmap": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V__SUMA_MAKE_SPEC_CARET_METADATA = Metadata(
 
 
 VSumaMakeSpecCaretParameters = typing.TypedDict('VSumaMakeSpecCaretParameters', {
-    "__STYX_TYPE__": typing.Literal["@SUMA_Make_Spec_Caret"],
+    "__STYXTYPE__": typing.Literal["@SUMA_Make_Spec_Caret"],
     "subject_id": str,
     "help": bool,
     "debug": typing.NotRequired[int | None],

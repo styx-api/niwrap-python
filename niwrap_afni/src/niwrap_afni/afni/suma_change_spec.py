@@ -14,7 +14,7 @@ SUMA_CHANGE_SPEC_METADATA = Metadata(
 
 
 SumaChangeSpecParameters = typing.TypedDict('SumaChangeSpecParameters', {
-    "__STYX_TYPE__": typing.Literal["suma_change_spec"],
+    "__STYXTYPE__": typing.Literal["suma_change_spec"],
     "input": InputPathType,
     "state": str,
     "domainparent": typing.NotRequired[str | None],

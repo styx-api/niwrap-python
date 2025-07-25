@@ -14,7 +14,7 @@ SEGMENT_SUBREGIONS_METADATA = Metadata(
 
 
 SegmentSubregionsParameters = typing.TypedDict('SegmentSubregionsParameters', {
-    "__STYX_TYPE__": typing.Literal["segment_subregions"],
+    "__STYXTYPE__": typing.Literal["segment_subregions"],
     "structure": str,
     "cross": typing.NotRequired[str | None],
     "long_base": typing.NotRequired[str | None],

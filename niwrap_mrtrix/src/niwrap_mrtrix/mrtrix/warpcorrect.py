@@ -14,14 +14,14 @@ WARPCORRECT_METADATA = Metadata(
 
 
 WarpcorrectConfigParameters = typing.TypedDict('WarpcorrectConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 WarpcorrectParameters = typing.TypedDict('WarpcorrectParameters', {
-    "__STYX_TYPE__": typing.Literal["warpcorrect"],
+    "__STYXTYPE__": typing.Literal["warpcorrect"],
     "marker": typing.NotRequired[list[float] | None],
     "tolerance": typing.NotRequired[float | None],
     "info": bool,

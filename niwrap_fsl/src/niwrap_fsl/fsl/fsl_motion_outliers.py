@@ -14,7 +14,7 @@ FSL_MOTION_OUTLIERS_METADATA = Metadata(
 
 
 FslMotionOutliersParameters = typing.TypedDict('FslMotionOutliersParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_motion_outliers"],
+    "__STYXTYPE__": typing.Literal["fsl_motion_outliers"],
     "input_4d_image": InputPathType,
     "output_confound_file": str,
     "mask_image": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V_3D_WARP_METADATA = Metadata(
 
 
 V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
-    "__STYX_TYPE__": typing.Literal["3dWarp"],
+    "__STYXTYPE__": typing.Literal["3dWarp"],
     "dataset": str,
     "matvec_in2out": typing.NotRequired[InputPathType | None],
     "matvec_out2in": typing.NotRequired[InputPathType | None],

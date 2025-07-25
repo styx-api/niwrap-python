@@ -14,7 +14,7 @@ EDDY_CORRECT_METADATA = Metadata(
 
 
 EddyCorrectParameters = typing.TypedDict('EddyCorrectParameters', {
-    "__STYX_TYPE__": typing.Literal["eddy_correct"],
+    "__STYXTYPE__": typing.Literal["eddy_correct"],
     "4d_input": InputPathType,
     "4d_output": str,
     "reference_no": int,

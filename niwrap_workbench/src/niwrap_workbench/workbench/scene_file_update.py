@@ -14,25 +14,25 @@ SCENE_FILE_UPDATE_METADATA = Metadata(
 
 
 SceneFileUpdateCopyMapOnePaletteParameters = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParameters', {
-    "__STYX_TYPE__": typing.Literal["copy_map_one_palette"],
+    "__STYXTYPE__": typing.Literal["copy_map_one_palette"],
     "data_file_name_suffix": str,
 })
 
 
 SceneFileUpdateDataFileAddParameters = typing.TypedDict('SceneFileUpdateDataFileAddParameters', {
-    "__STYX_TYPE__": typing.Literal["data_file_add"],
+    "__STYXTYPE__": typing.Literal["data_file_add"],
     "name_of_data_file": str,
 })
 
 
 SceneFileUpdateDataFileRemoveParameters = typing.TypedDict('SceneFileUpdateDataFileRemoveParameters', {
-    "__STYX_TYPE__": typing.Literal["data_file_remove"],
+    "__STYXTYPE__": typing.Literal["data_file_remove"],
     "name_of_data_file": str,
 })
 
 
 SceneFileUpdateParameters = typing.TypedDict('SceneFileUpdateParameters', {
-    "__STYX_TYPE__": typing.Literal["scene-file-update"],
+    "__STYXTYPE__": typing.Literal["scene-file-update"],
     "input_scene_file": str,
     "output_scene_file": str,
     "scene_name_or_number": str,

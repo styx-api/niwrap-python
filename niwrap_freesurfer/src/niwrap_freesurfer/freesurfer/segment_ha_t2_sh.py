@@ -14,7 +14,7 @@ SEGMENT_HA_T2_SH_METADATA = Metadata(
 
 
 SegmentHaT2ShParameters = typing.TypedDict('SegmentHaT2ShParameters', {
-    "__STYX_TYPE__": typing.Literal["segmentHA_T2.sh"],
+    "__STYXTYPE__": typing.Literal["segmentHA_T2.sh"],
     "input_image": InputPathType,
     "output_directory": str,
 })

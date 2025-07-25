@@ -14,7 +14,7 @@ MRIS_DEFECTS_POINTSET_METADATA = Metadata(
 
 
 MrisDefectsPointsetParameters = typing.TypedDict('MrisDefectsPointsetParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_defects_pointset"],
+    "__STYXTYPE__": typing.Literal["mris_defects_pointset"],
     "surface": InputPathType,
     "defects": InputPathType,
     "out": str,

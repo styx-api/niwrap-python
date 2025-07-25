@@ -14,7 +14,7 @@ V_3D_EXCHANGE_METADATA = Metadata(
 
 
 V3dExchangeParameters = typing.TypedDict('V3dExchangeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dExchange"],
+    "__STYXTYPE__": typing.Literal["3dExchange"],
     "prefix": str,
     "infile": InputPathType,
     "mapfile": InputPathType,

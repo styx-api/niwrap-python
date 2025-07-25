@@ -14,7 +14,7 @@ ROBUSTFOV_METADATA = Metadata(
 
 
 RobustfovParameters = typing.TypedDict('RobustfovParameters', {
-    "__STYX_TYPE__": typing.Literal["robustfov"],
+    "__STYXTYPE__": typing.Literal["robustfov"],
     "input_file": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "brain_size": typing.NotRequired[float | None],

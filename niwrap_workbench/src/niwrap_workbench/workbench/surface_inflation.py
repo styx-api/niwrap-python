@@ -14,7 +14,7 @@ SURFACE_INFLATION_METADATA = Metadata(
 
 
 SurfaceInflationParameters = typing.TypedDict('SurfaceInflationParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-inflation"],
+    "__STYXTYPE__": typing.Literal["surface-inflation"],
     "anatomical_surface_in": InputPathType,
     "surface_in": InputPathType,
     "number_of_smoothing_cycles": int,

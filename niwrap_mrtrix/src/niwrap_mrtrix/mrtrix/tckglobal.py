@@ -14,20 +14,20 @@ TCKGLOBAL_METADATA = Metadata(
 
 
 TckglobalRisoParameters = typing.TypedDict('TckglobalRisoParameters', {
-    "__STYX_TYPE__": typing.Literal["riso"],
+    "__STYXTYPE__": typing.Literal["riso"],
     "response": InputPathType,
 })
 
 
 TckglobalConfigParameters = typing.TypedDict('TckglobalConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckglobalParameters = typing.TypedDict('TckglobalParameters', {
-    "__STYX_TYPE__": typing.Literal["tckglobal"],
+    "__STYXTYPE__": typing.Literal["tckglobal"],
     "grad": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
     "riso": typing.NotRequired[list[TckglobalRisoParameters] | None],

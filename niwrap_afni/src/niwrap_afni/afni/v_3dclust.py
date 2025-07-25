@@ -14,7 +14,7 @@ V_3DCLUST_METADATA = Metadata(
 
 
 V3dclustParameters = typing.TypedDict('V3dclustParameters', {
-    "__STYX_TYPE__": typing.Literal["3dclust"],
+    "__STYXTYPE__": typing.Literal["3dclust"],
     "rmm": typing.NotRequired[float | None],
     "vmul": typing.NotRequired[float | None],
     "datasets": list[InputPathType],

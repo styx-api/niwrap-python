@@ -14,35 +14,35 @@ PROBTRACKX_DOT_CONVERT_METADATA = Metadata(
 
 
 ProbtrackxDotConvertRowVoxelsParameters = typing.TypedDict('ProbtrackxDotConvertRowVoxelsParameters', {
-    "__STYX_TYPE__": typing.Literal["row_voxels"],
+    "__STYXTYPE__": typing.Literal["row_voxels"],
     "voxel_list_file": str,
     "label_vol": InputPathType,
 })
 
 
 ProbtrackxDotConvertRowCiftiParameters = typing.TypedDict('ProbtrackxDotConvertRowCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["row_cifti"],
+    "__STYXTYPE__": typing.Literal["row_cifti"],
     "cifti": InputPathType,
     "direction": str,
 })
 
 
 ProbtrackxDotConvertColVoxelsParameters = typing.TypedDict('ProbtrackxDotConvertColVoxelsParameters', {
-    "__STYX_TYPE__": typing.Literal["col_voxels"],
+    "__STYXTYPE__": typing.Literal["col_voxels"],
     "voxel_list_file": str,
     "label_vol": InputPathType,
 })
 
 
 ProbtrackxDotConvertColCiftiParameters = typing.TypedDict('ProbtrackxDotConvertColCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["col_cifti"],
+    "__STYXTYPE__": typing.Literal["col_cifti"],
     "cifti": InputPathType,
     "direction": str,
 })
 
 
 ProbtrackxDotConvertParameters = typing.TypedDict('ProbtrackxDotConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["probtrackx-dot-convert"],
+    "__STYXTYPE__": typing.Literal["probtrackx-dot-convert"],
     "dot_file": str,
     "cifti_out": str,
     "row_voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParameters | None],

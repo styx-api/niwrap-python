@@ -14,7 +14,7 @@ V_3DTO_XDATASET_METADATA = Metadata(
 
 
 V3dtoXdatasetParameters = typing.TypedDict('V3dtoXdatasetParameters', {
-    "__STYX_TYPE__": typing.Literal["3dtoXdataset"],
+    "__STYXTYPE__": typing.Literal["3dtoXdataset"],
     "prefix": str,
     "mask": InputPathType,
     "input_files": list[InputPathType],

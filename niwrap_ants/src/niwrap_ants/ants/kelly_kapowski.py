@@ -14,7 +14,7 @@ KELLY_KAPOWSKI_METADATA = Metadata(
 
 
 KellyKapowskiParameters = typing.TypedDict('KellyKapowskiParameters', {
-    "__STYX_TYPE__": typing.Literal["KellyKapowski"],
+    "__STYXTYPE__": typing.Literal["KellyKapowski"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "segmentation_image": typing.NotRequired[InputPathType | None],
     "gray_matter_probability_image": typing.NotRequired[InputPathType | None],

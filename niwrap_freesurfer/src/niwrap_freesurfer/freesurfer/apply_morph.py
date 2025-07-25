@@ -14,7 +14,7 @@ APPLY_MORPH_METADATA = Metadata(
 
 
 ApplyMorphParameters = typing.TypedDict('ApplyMorphParameters', {
-    "__STYX_TYPE__": typing.Literal["applyMorph"],
+    "__STYXTYPE__": typing.Literal["applyMorph"],
     "inputs": list[InputPathType],
     "template": InputPathType,
     "transform": InputPathType,

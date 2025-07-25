@@ -14,7 +14,7 @@ MRI_CVS_CHECK_METADATA = Metadata(
 
 
 MriCvsCheckParameters = typing.TypedDict('MriCvsCheckParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_cvs_check"],
+    "__STYXTYPE__": typing.Literal["mri_cvs_check"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[typing.Literal["lh", "rh"] | None],

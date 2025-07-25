@@ -14,7 +14,7 @@ MRI_EXTRACT_METADATA = Metadata(
 
 
 MriExtractParameters = typing.TypedDict('MriExtractParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_extract"],
+    "__STYXTYPE__": typing.Literal["mri_extract"],
     "like_template": typing.NotRequired[InputPathType | None],
     "src_volume": InputPathType,
     "dst_volume": InputPathType,

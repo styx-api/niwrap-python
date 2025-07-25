@@ -14,7 +14,7 @@ EDDY_CUDA8_0_METADATA = Metadata(
 
 
 EddyCuda80Parameters = typing.TypedDict('EddyCuda80Parameters', {
-    "__STYX_TYPE__": typing.Literal["eddy_cuda8.0"],
+    "__STYXTYPE__": typing.Literal["eddy_cuda8.0"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,

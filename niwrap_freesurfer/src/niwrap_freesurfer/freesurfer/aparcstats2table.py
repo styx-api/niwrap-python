@@ -14,7 +14,7 @@ APARCSTATS2TABLE_METADATA = Metadata(
 
 
 Aparcstats2tableParameters = typing.TypedDict('Aparcstats2tableParameters', {
-    "__STYX_TYPE__": typing.Literal["aparcstats2table"],
+    "__STYXTYPE__": typing.Literal["aparcstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
     "qdec": typing.NotRequired[InputPathType | None],

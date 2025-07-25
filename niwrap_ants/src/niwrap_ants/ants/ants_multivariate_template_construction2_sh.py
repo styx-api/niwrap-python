@@ -14,7 +14,7 @@ ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA = Metadata(
 
 
 AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsMultivariateTemplateConstruction2.sh"],
+    "__STYXTYPE__": typing.Literal["antsMultivariateTemplateConstruction2.sh"],
     "input": str,
 })
 

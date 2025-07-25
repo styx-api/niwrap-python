@@ -14,7 +14,7 @@ FSLORIENT_METADATA = Metadata(
 
 
 FslorientParameters = typing.TypedDict('FslorientParameters', {
-    "__STYX_TYPE__": typing.Literal["fslorient"],
+    "__STYXTYPE__": typing.Literal["fslorient"],
     "get_orient": bool,
     "get_sform": bool,
     "get_qform": bool,

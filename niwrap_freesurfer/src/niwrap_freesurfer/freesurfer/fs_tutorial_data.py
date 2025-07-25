@@ -14,7 +14,7 @@ FS_TUTORIAL_DATA_METADATA = Metadata(
 
 
 FsTutorialDataParameters = typing.TypedDict('FsTutorialDataParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_tutorial_data"],
+    "__STYXTYPE__": typing.Literal["fs_tutorial_data"],
     "rsync_options": typing.NotRequired[list[str] | None],
 })
 

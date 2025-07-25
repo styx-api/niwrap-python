@@ -14,7 +14,7 @@ V__1D_DIFF_MAG_METADATA = Metadata(
 
 
 V1dDiffMagParameters = typing.TypedDict('V1dDiffMagParameters', {
-    "__STYX_TYPE__": typing.Literal["@1dDiffMag"],
+    "__STYXTYPE__": typing.Literal["@1dDiffMag"],
     "infile": InputPathType,
 })
 

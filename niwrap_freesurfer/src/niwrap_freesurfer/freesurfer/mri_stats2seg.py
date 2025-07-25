@@ -14,7 +14,7 @@ MRI_STATS2SEG_METADATA = Metadata(
 
 
 MriStats2segParameters = typing.TypedDict('MriStats2segParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_stats2seg"],
+    "__STYXTYPE__": typing.Literal["mri_stats2seg"],
     "stat_file": InputPathType,
     "segmentation_volume": InputPathType,
     "output_file": str,

@@ -14,7 +14,7 @@ MRI_MC_METADATA = Metadata(
 
 
 MriMcParameters = typing.TypedDict('MriMcParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_mc"],
+    "__STYXTYPE__": typing.Literal["mri_mc"],
     "input_volume": InputPathType,
     "label_value": float,
     "output_surface": str,

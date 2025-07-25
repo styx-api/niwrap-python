@@ -14,7 +14,7 @@ DCMUNPACK_METADATA = Metadata(
 
 
 DcmunpackParameters = typing.TypedDict('DcmunpackParameters', {
-    "__STYX_TYPE__": typing.Literal["dcmunpack"],
+    "__STYXTYPE__": typing.Literal["dcmunpack"],
     "src": str,
     "targ": typing.NotRequired[str | None],
     "run": typing.NotRequired[str | None],

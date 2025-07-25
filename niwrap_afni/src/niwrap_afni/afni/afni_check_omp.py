@@ -14,7 +14,7 @@ AFNI_CHECK_OMP_METADATA = Metadata(
 
 
 AfniCheckOmpParameters = typing.TypedDict('AfniCheckOmpParameters', {
-    "__STYX_TYPE__": typing.Literal["afni_check_omp"],
+    "__STYXTYPE__": typing.Literal["afni_check_omp"],
     "iterations": typing.NotRequired[float | None],
 })
 

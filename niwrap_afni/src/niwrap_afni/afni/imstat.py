@@ -14,7 +14,7 @@ IMSTAT_METADATA = Metadata(
 
 
 ImstatParameters = typing.TypedDict('ImstatParameters', {
-    "__STYX_TYPE__": typing.Literal["imstat"],
+    "__STYXTYPE__": typing.Literal["imstat"],
     "no_label": bool,
     "quiet": bool,
     "pixstat_prefix": typing.NotRequired[str | None],

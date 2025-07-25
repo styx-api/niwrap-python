@@ -14,7 +14,7 @@ MRIS_CURVATURE_METADATA = Metadata(
 
 
 MrisCurvatureParameters = typing.TypedDict('MrisCurvatureParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_curvature"],
+    "__STYXTYPE__": typing.Literal["mris_curvature"],
     "save_curvature_files": bool,
     "max_principal_curvature": bool,
     "mgh_output_format": bool,

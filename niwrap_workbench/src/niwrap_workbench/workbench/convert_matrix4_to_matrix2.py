@@ -14,7 +14,7 @@ CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
 
 
 ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParameters', {
-    "__STYX_TYPE__": typing.Literal["individual_fibers"],
+    "__STYXTYPE__": typing.Literal["individual_fibers"],
     "fiber_1": str,
     "fiber_2": str,
     "fiber_3": str,
@@ -22,7 +22,7 @@ ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMat
 
 
 ConvertMatrix4ToMatrix2Parameters = typing.TypedDict('ConvertMatrix4ToMatrix2Parameters', {
-    "__STYX_TYPE__": typing.Literal["convert-matrix4-to-matrix2"],
+    "__STYXTYPE__": typing.Literal["convert-matrix4-to-matrix2"],
     "matrix4_wbsparse": str,
     "counts_out": str,
     "opt_distances_distance_out": typing.NotRequired[str | None],

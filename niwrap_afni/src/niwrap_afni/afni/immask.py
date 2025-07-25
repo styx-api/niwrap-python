@@ -14,7 +14,7 @@ IMMASK_METADATA = Metadata(
 
 
 ImmaskParameters = typing.TypedDict('ImmaskParameters', {
-    "__STYX_TYPE__": typing.Literal["immask"],
+    "__STYXTYPE__": typing.Literal["immask"],
     "threshold": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "positive_only": bool,

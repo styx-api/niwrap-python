@@ -14,7 +14,7 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 MetricRoisFromExtremaParameters = typing.TypedDict('MetricRoisFromExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-rois-from-extrema"],
+    "__STYXTYPE__": typing.Literal["metric-rois-from-extrema"],
     "surface": InputPathType,
     "metric": InputPathType,
     "limit": float,

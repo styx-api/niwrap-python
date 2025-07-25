@@ -14,7 +14,7 @@ V_3D_TCAT_METADATA = Metadata(
 
 
 V3dTcatParameters = typing.TypedDict('V3dTcatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTcat"],
+    "__STYXTYPE__": typing.Literal["3dTcat"],
     "rlt": typing.NotRequired[typing.Literal["", "+", "++"] | None],
     "in_files": InputPathType,
     "out_file": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ RMZ_METADATA = Metadata(
 
 
 RmzParameters = typing.TypedDict('RmzParameters', {
-    "__STYX_TYPE__": typing.Literal["rmz"],
+    "__STYXTYPE__": typing.Literal["rmz"],
     "quiet": bool,
     "hash_flag": typing.NotRequired[float | None],
     "keep_flag": bool,

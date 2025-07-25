@@ -14,7 +14,7 @@ V_3DDELAY_METADATA = Metadata(
 
 
 V3ddelayParameters = typing.TypedDict('V3ddelayParameters', {
-    "__STYX_TYPE__": typing.Literal["3ddelay"],
+    "__STYXTYPE__": typing.Literal["3ddelay"],
     "input_file": InputPathType,
     "reference_file": InputPathType,
     "sampling_freq": float,

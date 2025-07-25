@@ -14,7 +14,7 @@ MRI_STRIP_NONWHITE_METADATA = Metadata(
 
 
 MriStripNonwhiteParameters = typing.TypedDict('MriStripNonwhiteParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_strip_nonwhite"],
+    "__STYXTYPE__": typing.Literal["mri_strip_nonwhite"],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "template_volume": InputPathType,

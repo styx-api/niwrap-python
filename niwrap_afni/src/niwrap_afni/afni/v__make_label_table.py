@@ -14,7 +14,7 @@ V__MAKE_LABEL_TABLE_METADATA = Metadata(
 
 
 VMakeLabelTableParameters = typing.TypedDict('VMakeLabelTableParameters', {
-    "__STYX_TYPE__": typing.Literal["@MakeLabelTable"],
+    "__STYXTYPE__": typing.Literal["@MakeLabelTable"],
     "labeltable": str,
     "atlas_pointlist": typing.NotRequired[str | None],
     "lab_r": typing.NotRequired[list[str] | None],

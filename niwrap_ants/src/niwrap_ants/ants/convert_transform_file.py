@@ -14,7 +14,7 @@ CONVERT_TRANSFORM_FILE_METADATA = Metadata(
 
 
 ConvertTransformFileParameters = typing.TypedDict('ConvertTransformFileParameters', {
-    "__STYX_TYPE__": typing.Literal["ConvertTransformFile"],
+    "__STYXTYPE__": typing.Literal["ConvertTransformFile"],
     "dimensions": int,
     "input_transform_file": InputPathType,
     "output_transform_file": str,

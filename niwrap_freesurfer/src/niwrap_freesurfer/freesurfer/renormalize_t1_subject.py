@@ -14,7 +14,7 @@ RENORMALIZE_T1_SUBJECT_METADATA = Metadata(
 
 
 RenormalizeT1SubjectParameters = typing.TypedDict('RenormalizeT1SubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["renormalize_T1_subject"],
+    "__STYXTYPE__": typing.Literal["renormalize_T1_subject"],
     "subject_dir": str,
 })
 

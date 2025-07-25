@@ -14,7 +14,7 @@ TCALC_METADATA = Metadata(
 
 
 TcalcParameters = typing.TypedDict('TcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["tcalc"],
+    "__STYXTYPE__": typing.Literal["tcalc"],
     "input_image": InputPathType,
     "output_image": str,
     "echo_time": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ MAP_ICOSAHEDRON_METADATA = Metadata(
 
 
 MapIcosahedronParameters = typing.TypedDict('MapIcosahedronParameters', {
-    "__STYX_TYPE__": typing.Literal["MapIcosahedron"],
+    "__STYXTYPE__": typing.Literal["MapIcosahedron"],
     "spec_file": InputPathType,
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],

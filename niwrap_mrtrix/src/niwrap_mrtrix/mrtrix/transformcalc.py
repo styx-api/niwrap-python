@@ -14,14 +14,14 @@ TRANSFORMCALC_METADATA = Metadata(
 
 
 TransformcalcConfigParameters = typing.TypedDict('TransformcalcConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TransformcalcParameters = typing.TypedDict('TransformcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["transformcalc"],
+    "__STYXTYPE__": typing.Literal["transformcalc"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

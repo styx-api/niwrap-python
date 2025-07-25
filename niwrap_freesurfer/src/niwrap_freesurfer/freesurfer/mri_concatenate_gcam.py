@@ -14,7 +14,7 @@ MRI_CONCATENATE_GCAM_METADATA = Metadata(
 
 
 MriConcatenateGcamParameters = typing.TypedDict('MriConcatenateGcamParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_concatenate_gcam"],
+    "__STYXTYPE__": typing.Literal["mri_concatenate_gcam"],
     "inputs": list[InputPathType],
     "output": str,
     "source_image": typing.NotRequired[InputPathType | None],

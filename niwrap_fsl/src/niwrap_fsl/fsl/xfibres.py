@@ -14,7 +14,7 @@ XFIBRES_METADATA = Metadata(
 
 
 XfibresParameters = typing.TypedDict('XfibresParameters', {
-    "__STYX_TYPE__": typing.Literal["xfibres"],
+    "__STYXTYPE__": typing.Literal["xfibres"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvecs": InputPathType,

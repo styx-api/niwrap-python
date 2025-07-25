@@ -14,7 +14,7 @@ V_3DNVALS_METADATA = Metadata(
 
 
 V3dnvalsParameters = typing.TypedDict('V3dnvalsParameters', {
-    "__STYX_TYPE__": typing.Literal["3dnvals"],
+    "__STYXTYPE__": typing.Literal["3dnvals"],
     "datasets": list[InputPathType],
     "all_flag": bool,
     "verbose_flag": bool,

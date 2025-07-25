@@ -14,7 +14,7 @@ VOLUME_SET_SPACE_METADATA = Metadata(
 
 
 VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters', {
-    "__STYX_TYPE__": typing.Literal["plumb"],
+    "__STYXTYPE__": typing.Literal["plumb"],
     "axis_order": str,
     "x_spacing": float,
     "y_spacing": float,
@@ -26,7 +26,7 @@ VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters'
 
 
 VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters', {
-    "__STYX_TYPE__": typing.Literal["sform"],
+    "__STYXTYPE__": typing.Literal["sform"],
     "xi_spacing": float,
     "xj_spacing": float,
     "xk_spacing": float,
@@ -43,14 +43,14 @@ VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters'
 
 
 VolumeSetSpaceFileParameters = typing.TypedDict('VolumeSetSpaceFileParameters', {
-    "__STYX_TYPE__": typing.Literal["file"],
+    "__STYXTYPE__": typing.Literal["file"],
     "volume_ref": str,
     "opt_ignore_dims": bool,
 })
 
 
 VolumeSetSpaceParameters = typing.TypedDict('VolumeSetSpaceParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-set-space"],
+    "__STYXTYPE__": typing.Literal["volume-set-space"],
     "volume_in": InputPathType,
     "volume_out": str,
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],

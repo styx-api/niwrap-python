@@ -14,7 +14,7 @@ MRI_SEGMENT_METADATA = Metadata(
 
 
 MriSegmentParameters = typing.TypedDict('MriSegmentParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_segment"],
+    "__STYXTYPE__": typing.Literal["mri_segment"],
     "in_vol": InputPathType,
     "out_vol": str,
     "no1d_remove": typing.NotRequired[float | None],

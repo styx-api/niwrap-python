@@ -14,7 +14,7 @@ V__DEMO_PROMPT_METADATA = Metadata(
 
 
 VDemoPromptParameters = typing.TypedDict('VDemoPromptParameters', {
-    "__STYX_TYPE__": typing.Literal["@demo_prompt"],
+    "__STYXTYPE__": typing.Literal["@demo_prompt"],
     "message": str,
 })
 

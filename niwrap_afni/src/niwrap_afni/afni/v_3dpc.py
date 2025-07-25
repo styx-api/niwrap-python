@@ -14,7 +14,7 @@ V_3DPC_METADATA = Metadata(
 
 
 V3dpcParameters = typing.TypedDict('V3dpcParameters', {
-    "__STYX_TYPE__": typing.Literal["3dpc"],
+    "__STYXTYPE__": typing.Literal["3dpc"],
     "datasets": list[InputPathType],
     "dmean": bool,
     "vmean": bool,

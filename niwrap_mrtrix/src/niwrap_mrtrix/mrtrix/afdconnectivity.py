@@ -14,14 +14,14 @@ AFDCONNECTIVITY_METADATA = Metadata(
 
 
 AfdconnectivityConfigParameters = typing.TypedDict('AfdconnectivityConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 AfdconnectivityParameters = typing.TypedDict('AfdconnectivityParameters', {
-    "__STYX_TYPE__": typing.Literal["afdconnectivity"],
+    "__STYXTYPE__": typing.Literal["afdconnectivity"],
     "wbft": typing.NotRequired[InputPathType | None],
     "afd_map": typing.NotRequired[str | None],
     "all_fixels": bool,

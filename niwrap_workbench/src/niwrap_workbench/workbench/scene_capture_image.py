@@ -14,35 +14,35 @@ SCENE_CAPTURE_IMAGE_METADATA = Metadata(
 
 
 SceneCaptureImageSizeWidthHeightParameters = typing.TypedDict('SceneCaptureImageSizeWidthHeightParameters', {
-    "__STYX_TYPE__": typing.Literal["size_width_height"],
+    "__STYXTYPE__": typing.Literal["size_width_height"],
     "width": float,
     "height": float,
 })
 
 
 SceneCaptureImageResolutionParameters = typing.TypedDict('SceneCaptureImageResolutionParameters', {
-    "__STYX_TYPE__": typing.Literal["resolution"],
+    "__STYXTYPE__": typing.Literal["resolution"],
     "number_of_pixels": float,
     "units_name": str,
 })
 
 
 SceneCaptureImageSetMapYokeParameters = typing.TypedDict('SceneCaptureImageSetMapYokeParameters', {
-    "__STYX_TYPE__": typing.Literal["set_map_yoke"],
+    "__STYXTYPE__": typing.Literal["set_map_yoke"],
     "map_yoking_roman_numeral": str,
     "map_undex": int,
 })
 
 
 SceneCaptureImageConnDbLoginParameters = typing.TypedDict('SceneCaptureImageConnDbLoginParameters', {
-    "__STYX_TYPE__": typing.Literal["conn_db_login"],
+    "__STYXTYPE__": typing.Literal["conn_db_login"],
     "username": str,
     "password": str,
 })
 
 
 SceneCaptureImageParameters = typing.TypedDict('SceneCaptureImageParameters', {
-    "__STYX_TYPE__": typing.Literal["scene-capture-image"],
+    "__STYXTYPE__": typing.Literal["scene-capture-image"],
     "scene_file": str,
     "scene_name_or_number": str,
     "image_file_name": str,

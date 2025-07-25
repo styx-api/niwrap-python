@@ -14,7 +14,7 @@ V__NOISY_SKULL_STRIP_METADATA = Metadata(
 
 
 VNoisySkullStripParameters = typing.TypedDict('VNoisySkullStripParameters', {
-    "__STYX_TYPE__": typing.Literal["@NoisySkullStrip"],
+    "__STYXTYPE__": typing.Literal["@NoisySkullStrip"],
     "input_file": InputPathType,
     "keep_tmp": bool,
     "3dskullstrip_opts": typing.NotRequired[str | None],

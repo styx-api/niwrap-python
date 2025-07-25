@@ -14,14 +14,14 @@ VOLUME_GRADIENT_METADATA = Metadata(
 
 
 VolumeGradientPresmoothParameters = typing.TypedDict('VolumeGradientPresmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["presmooth"],
+    "__STYXTYPE__": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeGradientParameters = typing.TypedDict('VolumeGradientParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-gradient"],
+    "__STYXTYPE__": typing.Literal["volume-gradient"],
     "volume_in": InputPathType,
     "volume_out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],

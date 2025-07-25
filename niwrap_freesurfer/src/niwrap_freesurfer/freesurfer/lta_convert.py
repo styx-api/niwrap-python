@@ -14,7 +14,7 @@ LTA_CONVERT_METADATA = Metadata(
 
 
 LtaConvertParameters = typing.TypedDict('LtaConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["lta_convert"],
+    "__STYXTYPE__": typing.Literal["lta_convert"],
     "in_lta": typing.NotRequired[InputPathType | None],
     "in_fsl": typing.NotRequired[InputPathType | None],
     "in_mni": typing.NotRequired[InputPathType | None],

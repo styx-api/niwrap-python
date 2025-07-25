@@ -14,7 +14,7 @@ ABIDS_TOOL_METADATA = Metadata(
 
 
 AbidsToolParameters = typing.TypedDict('AbidsToolParameters', {
-    "__STYX_TYPE__": typing.Literal["abids_tool"],
+    "__STYXTYPE__": typing.Literal["abids_tool"],
     "input_files": list[InputPathType],
     "tr_match": bool,
     "add_tr": bool,

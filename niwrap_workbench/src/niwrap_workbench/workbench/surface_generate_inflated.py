@@ -14,7 +14,7 @@ SURFACE_GENERATE_INFLATED_METADATA = Metadata(
 
 
 SurfaceGenerateInflatedParameters = typing.TypedDict('SurfaceGenerateInflatedParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-generate-inflated"],
+    "__STYXTYPE__": typing.Literal["surface-generate-inflated"],
     "anatomical_surface_in": InputPathType,
     "inflated_surface_out": str,
     "very_inflated_surface_out": str,

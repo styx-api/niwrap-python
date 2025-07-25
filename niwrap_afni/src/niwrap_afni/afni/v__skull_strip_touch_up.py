@@ -14,7 +14,7 @@ V__SKULL_STRIP_TOUCH_UP_METADATA = Metadata(
 
 
 VSkullStripTouchUpParameters = typing.TypedDict('VSkullStripTouchUpParameters', {
-    "__STYX_TYPE__": typing.Literal["@SkullStrip_TouchUp"],
+    "__STYXTYPE__": typing.Literal["@SkullStrip_TouchUp"],
     "prefix": str,
     "brain_dataset": InputPathType,
     "head_dataset": InputPathType,

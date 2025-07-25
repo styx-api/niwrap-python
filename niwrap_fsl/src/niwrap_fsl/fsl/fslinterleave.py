@@ -14,7 +14,7 @@ FSLINTERLEAVE_METADATA = Metadata(
 
 
 FslinterleaveParameters = typing.TypedDict('FslinterleaveParameters', {
-    "__STYX_TYPE__": typing.Literal["fslinterleave"],
+    "__STYXTYPE__": typing.Literal["fslinterleave"],
     "infile1": InputPathType,
     "infile2": InputPathType,
     "outfile": str,

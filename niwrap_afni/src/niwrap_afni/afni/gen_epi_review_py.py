@@ -14,7 +14,7 @@ GEN_EPI_REVIEW_PY_METADATA = Metadata(
 
 
 GenEpiReviewPyParameters = typing.TypedDict('GenEpiReviewPyParameters', {
-    "__STYX_TYPE__": typing.Literal["gen_epi_review.py"],
+    "__STYXTYPE__": typing.Literal["gen_epi_review.py"],
     "datasets": list[str],
     "script_name": typing.NotRequired[str | None],
     "windows": typing.NotRequired[list[str] | None],

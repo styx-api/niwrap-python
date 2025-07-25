@@ -14,7 +14,7 @@ V_3D_TOY_PROG_METADATA = Metadata(
 
 
 V3dToyProgParameters = typing.TypedDict('V3dToyProgParameters', {
-    "__STYX_TYPE__": typing.Literal["3dToyProg"],
+    "__STYXTYPE__": typing.Literal["3dToyProg"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],

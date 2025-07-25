@@ -14,7 +14,7 @@ DMRI_PATHS_METADATA = Metadata(
 
 
 DmriPathsParameters = typing.TypedDict('DmriPathsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_paths"],
+    "__STYXTYPE__": typing.Literal["dmri_paths"],
     "indir": typing.NotRequired[str | None],
     "outdir": typing.NotRequired[str | None],
     "dwi": typing.NotRequired[InputPathType | None],

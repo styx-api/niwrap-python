@@ -14,7 +14,7 @@ FSLSWAPDIM_METADATA = Metadata(
 
 
 FslswapdimParameters = typing.TypedDict('FslswapdimParameters', {
-    "__STYX_TYPE__": typing.Literal["fslswapdim"],
+    "__STYXTYPE__": typing.Literal["fslswapdim"],
     "input_file": InputPathType,
     "axis_a": str,
     "axis_b": str,

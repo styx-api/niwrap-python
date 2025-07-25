@@ -14,7 +14,7 @@ MRIS_ANNOT_DIFF_METADATA = Metadata(
 
 
 MrisAnnotDiffParameters = typing.TypedDict('MrisAnnotDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_annot_diff"],
+    "__STYXTYPE__": typing.Literal["mris_annot_diff"],
     "annot1": InputPathType,
     "annot2": InputPathType,
     "diff_ctab": bool,

@@ -14,7 +14,7 @@ CREATE_WARPED_GRID_IMAGE_METADATA = Metadata(
 
 
 CreateWarpedGridImageParameters = typing.TypedDict('CreateWarpedGridImageParameters', {
-    "__STYX_TYPE__": typing.Literal["CreateWarpedGridImage"],
+    "__STYXTYPE__": typing.Literal["CreateWarpedGridImage"],
     "image_dimension": int,
     "deformation_field": InputPathType,
     "output_image": str,

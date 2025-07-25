@@ -14,21 +14,21 @@ DWI2ADC_METADATA = Metadata(
 
 
 Dwi2adcFslgradParameters = typing.TypedDict('Dwi2adcFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2adcConfigParameters = typing.TypedDict('Dwi2adcConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2adcParameters = typing.TypedDict('Dwi2adcParameters', {
-    "__STYX_TYPE__": typing.Literal["dwi2adc"],
+    "__STYXTYPE__": typing.Literal["dwi2adc"],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2adcFslgradParameters | None],
     "info": bool,

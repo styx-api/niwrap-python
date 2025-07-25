@@ -14,7 +14,7 @@ MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
 
 
 MriFuseSegmentationsParameters = typing.TypedDict('MriFuseSegmentationsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fuse_segmentations"],
+    "__STYXTYPE__": typing.Literal["mri_fuse_segmentations"],
     "asegs": list[InputPathType],
     "nocc_asegs": list[InputPathType],
     "norm_volumes": list[InputPathType],

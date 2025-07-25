@@ -14,7 +14,7 @@ SFA2FIELDSIGN_METADATA = Metadata(
 
 
 Sfa2fieldsignParameters = typing.TypedDict('Sfa2fieldsignParameters', {
-    "__STYX_TYPE__": typing.Literal["sfa2fieldsign"],
+    "__STYXTYPE__": typing.Literal["sfa2fieldsign"],
     "sfadir": str,
     "register_dat": str,
     "threshold": typing.NotRequired[float | None],

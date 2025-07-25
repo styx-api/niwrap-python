@@ -14,7 +14,7 @@ V_3D_DETREND_METADATA = Metadata(
 
 
 V3dDetrendParameters = typing.TypedDict('V3dDetrendParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDetrend"],
+    "__STYXTYPE__": typing.Literal["3dDetrend"],
     "in_file": InputPathType,
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })

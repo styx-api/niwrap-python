@@ -14,7 +14,7 @@ CIFTI_EXPORT_DENSE_MAPPING_METADATA = Metadata(
 
 
 CiftiExportDenseMappingVolumeAllParameters = typing.TypedDict('CiftiExportDenseMappingVolumeAllParameters', {
-    "__STYX_TYPE__": typing.Literal["volume_all"],
+    "__STYXTYPE__": typing.Literal["volume_all"],
     "text_out": str,
     "opt_no_cifti_index": bool,
     "opt_structure": bool,
@@ -22,7 +22,7 @@ CiftiExportDenseMappingVolumeAllParameters = typing.TypedDict('CiftiExportDenseM
 
 
 CiftiExportDenseMappingSurfaceParameters = typing.TypedDict('CiftiExportDenseMappingSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["surface"],
+    "__STYXTYPE__": typing.Literal["surface"],
     "structure": str,
     "text_out": str,
     "opt_no_cifti_index": bool,
@@ -30,7 +30,7 @@ CiftiExportDenseMappingSurfaceParameters = typing.TypedDict('CiftiExportDenseMap
 
 
 CiftiExportDenseMappingVolumeParameters = typing.TypedDict('CiftiExportDenseMappingVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume"],
+    "__STYXTYPE__": typing.Literal["volume"],
     "structure": str,
     "text_out": str,
     "opt_no_cifti_index": bool,
@@ -38,7 +38,7 @@ CiftiExportDenseMappingVolumeParameters = typing.TypedDict('CiftiExportDenseMapp
 
 
 CiftiExportDenseMappingParameters = typing.TypedDict('CiftiExportDenseMappingParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-export-dense-mapping"],
+    "__STYXTYPE__": typing.Literal["cifti-export-dense-mapping"],
     "cifti": InputPathType,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],

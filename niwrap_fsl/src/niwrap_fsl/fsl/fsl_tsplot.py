@@ -14,7 +14,7 @@ FSL_TSPLOT_METADATA = Metadata(
 
 
 FslTsplotParameters = typing.TypedDict('FslTsplotParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_tsplot"],
+    "__STYXTYPE__": typing.Literal["fsl_tsplot"],
     "input_files": str,
     "output_file": str,
     "title": typing.NotRequired[str | None],

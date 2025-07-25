@@ -14,7 +14,7 @@ TEDANA_WRAPPER_PY_METADATA = Metadata(
 
 
 TedanaWrapperPyParameters = typing.TypedDict('TedanaWrapperPyParameters', {
-    "__STYX_TYPE__": typing.Literal["tedana_wrapper.py"],
+    "__STYXTYPE__": typing.Literal["tedana_wrapper.py"],
     "input_files": list[InputPathType],
     "echo_times": list[float],
     "mask": InputPathType,

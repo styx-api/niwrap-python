@@ -14,7 +14,7 @@ HIST2PROB_METADATA = Metadata(
 
 
 Hist2probParameters = typing.TypedDict('Hist2probParameters', {
-    "__STYX_TYPE__": typing.Literal["hist2prob"],
+    "__STYXTYPE__": typing.Literal["hist2prob"],
     "image": InputPathType,
     "size": int,
     "low_threshold": float,

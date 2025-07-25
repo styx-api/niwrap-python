@@ -14,7 +14,7 @@ CONVERT_TO_JPG_METADATA = Metadata(
 
 
 ConvertToJpgParameters = typing.TypedDict('ConvertToJpgParameters', {
-    "__STYX_TYPE__": typing.Literal["ConvertToJpg"],
+    "__STYXTYPE__": typing.Literal["ConvertToJpg"],
     "infile": InputPathType,
     "outfile": str,
 })

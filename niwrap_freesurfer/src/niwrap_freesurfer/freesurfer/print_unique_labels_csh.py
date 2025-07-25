@@ -14,7 +14,7 @@ PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
 
 
 PrintUniqueLabelsCshParameters = typing.TypedDict('PrintUniqueLabelsCshParameters', {
-    "__STYX_TYPE__": typing.Literal["print_unique_labels.csh"],
+    "__STYXTYPE__": typing.Literal["print_unique_labels.csh"],
     "label_volume": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "list_only": bool,

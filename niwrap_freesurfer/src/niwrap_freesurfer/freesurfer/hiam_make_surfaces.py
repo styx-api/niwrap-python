@@ -14,7 +14,7 @@ HIAM_MAKE_SURFACES_METADATA = Metadata(
 
 
 HiamMakeSurfacesParameters = typing.TypedDict('HiamMakeSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["hiam_make_surfaces"],
+    "__STYXTYPE__": typing.Literal["hiam_make_surfaces"],
     "subject_name": str,
     "structure": typing.Literal["RA", "LA", "RH", "LH"],
 })

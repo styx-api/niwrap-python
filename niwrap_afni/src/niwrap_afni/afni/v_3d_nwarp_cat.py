@@ -14,7 +14,7 @@ V_3D_NWARP_CAT_METADATA = Metadata(
 
 
 V3dNwarpCatParameters = typing.TypedDict('V3dNwarpCatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNwarpCat"],
+    "__STYXTYPE__": typing.Literal["3dNwarpCat"],
     "interpolation": typing.NotRequired[str | None],
     "verbosity": bool,
     "output_prefix": str,

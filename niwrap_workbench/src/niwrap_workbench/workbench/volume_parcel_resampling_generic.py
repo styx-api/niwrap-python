@@ -14,7 +14,7 @@ VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA = Metadata(
 
 
 VolumeParcelResamplingGenericParameters = typing.TypedDict('VolumeParcelResamplingGenericParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-parcel-resampling-generic"],
+    "__STYXTYPE__": typing.Literal["volume-parcel-resampling-generic"],
     "volume_in": InputPathType,
     "cur_parcels": InputPathType,
     "new_parcels": InputPathType,

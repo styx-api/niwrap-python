@@ -14,7 +14,7 @@ TKREGISTER2_CMDL_METADATA = Metadata(
 
 
 Tkregister2CmdlParameters = typing.TypedDict('Tkregister2CmdlParameters', {
-    "__STYX_TYPE__": typing.Literal["tkregister2_cmdl"],
+    "__STYXTYPE__": typing.Literal["tkregister2_cmdl"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "fstarg_flag": bool,

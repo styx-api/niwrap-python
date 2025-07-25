@@ -14,14 +14,14 @@ CIFTI_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 CiftiRoisFromExtremaGaussianParameters = typing.TypedDict('CiftiRoisFromExtremaGaussianParameters', {
-    "__STYX_TYPE__": typing.Literal["gaussian"],
+    "__STYXTYPE__": typing.Literal["gaussian"],
     "surf_sigma": float,
     "vol_sigma": float,
 })
 
 
 CiftiRoisFromExtremaParameters = typing.TypedDict('CiftiRoisFromExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-rois-from-extrema"],
+    "__STYXTYPE__": typing.Literal["cifti-rois-from-extrema"],
     "cifti": InputPathType,
     "surf_limit": float,
     "vol_limit": float,

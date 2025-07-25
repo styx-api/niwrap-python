@@ -14,7 +14,7 @@ SEG2RECON_METADATA = Metadata(
 
 
 Seg2reconParameters = typing.TypedDict('Seg2reconParameters', {
-    "__STYX_TYPE__": typing.Literal["seg2recon"],
+    "__STYXTYPE__": typing.Literal["seg2recon"],
     "subject": str,
     "segvol": InputPathType,
     "inputvol": InputPathType,

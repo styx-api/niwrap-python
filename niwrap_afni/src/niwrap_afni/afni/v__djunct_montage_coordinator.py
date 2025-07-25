@@ -14,7 +14,7 @@ V__DJUNCT_MONTAGE_COORDINATOR_METADATA = Metadata(
 
 
 VDjunctMontageCoordinatorParameters = typing.TypedDict('VDjunctMontageCoordinatorParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_montage_coordinator"],
+    "__STYXTYPE__": typing.Literal["@djunct_montage_coordinator"],
     "input_file": InputPathType,
     "montx": float,
     "monty": float,

@@ -14,7 +14,7 @@ COUNT_METADATA = Metadata(
 
 
 CountParameters = typing.TypedDict('CountParameters', {
-    "__STYX_TYPE__": typing.Literal["count"],
+    "__STYXTYPE__": typing.Literal["count"],
     "bot": str,
     "top": str,
     "step": typing.NotRequired[str | None],

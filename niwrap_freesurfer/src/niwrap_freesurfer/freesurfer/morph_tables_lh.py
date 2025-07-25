@@ -14,7 +14,7 @@ MORPH_TABLES_LH_METADATA = Metadata(
 
 
 MorphTablesLhParameters = typing.TypedDict('MorphTablesLhParameters', {
-    "__STYX_TYPE__": typing.Literal["morph_tables-lh"],
+    "__STYXTYPE__": typing.Literal["morph_tables-lh"],
     "input_file": InputPathType,
     "some_flag": bool,
 })

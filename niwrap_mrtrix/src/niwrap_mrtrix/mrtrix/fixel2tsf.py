@@ -14,14 +14,14 @@ FIXEL2TSF_METADATA = Metadata(
 
 
 Fixel2tsfConfigParameters = typing.TypedDict('Fixel2tsfConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2tsfParameters = typing.TypedDict('Fixel2tsfParameters', {
-    "__STYX_TYPE__": typing.Literal["fixel2tsf"],
+    "__STYXTYPE__": typing.Literal["fixel2tsf"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,

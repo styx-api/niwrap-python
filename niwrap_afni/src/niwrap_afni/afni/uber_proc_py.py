@@ -14,7 +14,7 @@ UBER_PROC_PY_METADATA = Metadata(
 
 
 UberProcPyParameters = typing.TypedDict('UberProcPyParameters', {
-    "__STYX_TYPE__": typing.Literal["uber_proc.py"],
+    "__STYXTYPE__": typing.Literal["uber_proc.py"],
     "results_dir": typing.NotRequired[str | None],
 })
 

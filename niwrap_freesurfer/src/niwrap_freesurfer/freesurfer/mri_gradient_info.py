@@ -14,7 +14,7 @@ MRI_GRADIENT_INFO_METADATA = Metadata(
 
 
 MriGradientInfoParameters = typing.TypedDict('MriGradientInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gradient_info"],
+    "__STYXTYPE__": typing.Literal["mri_gradient_info"],
     "input_image": InputPathType,
 })
 

@@ -14,7 +14,7 @@ V_24SWAP_METADATA = Metadata(
 
 
 V24swapParameters = typing.TypedDict('V24swapParameters', {
-    "__STYX_TYPE__": typing.Literal["24swap"],
+    "__STYXTYPE__": typing.Literal["24swap"],
     "quiet": bool,
     "pattern": typing.NotRequired[str | None],
     "input_files": list[InputPathType],

@@ -14,7 +14,7 @@ AVI2TALXFM_METADATA = Metadata(
 
 
 Avi2talxfmParameters = typing.TypedDict('Avi2talxfmParameters', {
-    "__STYX_TYPE__": typing.Literal["avi2talxfm"],
+    "__STYXTYPE__": typing.Literal["avi2talxfm"],
     "input_volume": InputPathType,
     "target_volume": InputPathType,
     "vox2vox_transform": InputPathType,

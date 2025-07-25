@@ -14,35 +14,35 @@ METRIC_PALETTE_METADATA = Metadata(
 
 
 MetricPalettePosPercentParameters = typing.TypedDict('MetricPalettePosPercentParameters', {
-    "__STYX_TYPE__": typing.Literal["pos_percent"],
+    "__STYXTYPE__": typing.Literal["pos_percent"],
     "pos_min__": float,
     "pos_max__": float,
 })
 
 
 MetricPaletteNegPercentParameters = typing.TypedDict('MetricPaletteNegPercentParameters', {
-    "__STYX_TYPE__": typing.Literal["neg_percent"],
+    "__STYXTYPE__": typing.Literal["neg_percent"],
     "neg_min__": float,
     "neg_max__": float,
 })
 
 
 MetricPalettePosUserParameters = typing.TypedDict('MetricPalettePosUserParameters', {
-    "__STYX_TYPE__": typing.Literal["pos_user"],
+    "__STYXTYPE__": typing.Literal["pos_user"],
     "pos_min_user": float,
     "pos_max_user": float,
 })
 
 
 MetricPaletteNegUserParameters = typing.TypedDict('MetricPaletteNegUserParameters', {
-    "__STYX_TYPE__": typing.Literal["neg_user"],
+    "__STYXTYPE__": typing.Literal["neg_user"],
     "neg_min_user": float,
     "neg_max_user": float,
 })
 
 
 MetricPaletteThresholdingParameters = typing.TypedDict('MetricPaletteThresholdingParameters', {
-    "__STYX_TYPE__": typing.Literal["thresholding"],
+    "__STYXTYPE__": typing.Literal["thresholding"],
     "type": str,
     "test": str,
     "min": float,
@@ -51,7 +51,7 @@ MetricPaletteThresholdingParameters = typing.TypedDict('MetricPaletteThresholdin
 
 
 MetricPaletteParameters = typing.TypedDict('MetricPaletteParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-palette"],
+    "__STYXTYPE__": typing.Literal["metric-palette"],
     "metric": str,
     "mode": str,
     "opt_column_column": typing.NotRequired[str | None],

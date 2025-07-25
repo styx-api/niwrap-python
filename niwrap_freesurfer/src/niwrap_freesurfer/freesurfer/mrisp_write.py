@@ -14,7 +14,7 @@ MRISP_WRITE_METADATA = Metadata(
 
 
 MrispWriteParameters = typing.TypedDict('MrispWriteParameters', {
-    "__STYX_TYPE__": typing.Literal["mrisp_write"],
+    "__STYXTYPE__": typing.Literal["mrisp_write"],
     "input_surface": InputPathType,
     "overlay_filename": InputPathType,
     "output_name": str,

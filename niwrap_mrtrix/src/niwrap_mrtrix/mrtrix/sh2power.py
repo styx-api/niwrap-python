@@ -14,14 +14,14 @@ SH2POWER_METADATA = Metadata(
 
 
 Sh2powerConfigParameters = typing.TypedDict('Sh2powerConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2powerParameters = typing.TypedDict('Sh2powerParameters', {
-    "__STYX_TYPE__": typing.Literal["sh2power"],
+    "__STYXTYPE__": typing.Literal["sh2power"],
     "spectrum": bool,
     "info": bool,
     "quiet": bool,

@@ -14,7 +14,7 @@ FSL_GLM_METADATA = Metadata(
 
 
 FslGlmParameters = typing.TypedDict('FslGlmParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_glm"],
+    "__STYXTYPE__": typing.Literal["fsl_glm"],
     "input_file": InputPathType,
     "design_matrix": InputPathType,
     "output_file": typing.NotRequired[str | None],

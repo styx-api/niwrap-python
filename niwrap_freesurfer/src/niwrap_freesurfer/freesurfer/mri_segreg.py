@@ -14,7 +14,7 @@ MRI_SEGREG_METADATA = Metadata(
 
 
 MriSegregParameters = typing.TypedDict('MriSegregParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_segreg"],
+    "__STYXTYPE__": typing.Literal["mri_segreg"],
     "input_file": InputPathType,
     "output_file": str,
 })

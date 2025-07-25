@@ -14,7 +14,7 @@ COMPARE_SURFACES_METADATA = Metadata(
 
 
 CompareSurfacesParameters = typing.TypedDict('CompareSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["CompareSurfaces"],
+    "__STYXTYPE__": typing.Literal["CompareSurfaces"],
     "spec_file": InputPathType,
     "hemisphere": typing.Literal["L", "R"],
     "volume_parent_1": InputPathType,

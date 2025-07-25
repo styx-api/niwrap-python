@@ -14,7 +14,7 @@ TBSS_X_METADATA = Metadata(
 
 
 TbssXParameters = typing.TypedDict('TbssXParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_x"],
+    "__STYXTYPE__": typing.Literal["tbss_x"],
     "scalar_dirs": list[str],
     "vector_dirs": list[str],
 })

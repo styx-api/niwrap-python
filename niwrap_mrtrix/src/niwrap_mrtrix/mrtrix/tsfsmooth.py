@@ -14,14 +14,14 @@ TSFSMOOTH_METADATA = Metadata(
 
 
 TsfsmoothConfigParameters = typing.TypedDict('TsfsmoothConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfsmoothParameters = typing.TypedDict('TsfsmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["tsfsmooth"],
+    "__STYXTYPE__": typing.Literal["tsfsmooth"],
     "stdev": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,

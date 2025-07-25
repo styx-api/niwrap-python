@@ -14,7 +14,7 @@ T4IMGS_4DFP_METADATA = Metadata(
 
 
 T4imgs4dfpParameters = typing.TypedDict('T4imgs4dfpParameters', {
-    "__STYX_TYPE__": typing.Literal["t4imgs_4dfp"],
+    "__STYXTYPE__": typing.Literal["t4imgs_4dfp"],
     "sqrt_normalize": bool,
     "cubic_spline": bool,
     "output_nan": bool,

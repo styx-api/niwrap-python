@@ -14,7 +14,7 @@ QDELAUNAY_METADATA = Metadata(
 
 
 QdelaunayParameters = typing.TypedDict('QdelaunayParameters', {
-    "__STYX_TYPE__": typing.Literal["qdelaunay"],
+    "__STYXTYPE__": typing.Literal["qdelaunay"],
     "input_file": InputPathType,
     "furthest_site": bool,
     "triangulated_output": bool,

@@ -14,7 +14,7 @@ SWAP_SUBJECTWISE_METADATA = Metadata(
 
 
 SwapSubjectwiseParameters = typing.TypedDict('SwapSubjectwiseParameters', {
-    "__STYX_TYPE__": typing.Literal["swap_subjectwise"],
+    "__STYXTYPE__": typing.Literal["swap_subjectwise"],
     "dyads": InputPathType,
     "fmean": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],

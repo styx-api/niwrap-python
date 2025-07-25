@@ -14,7 +14,7 @@ V__RADIAL_CORRELATE_METADATA = Metadata(
 
 
 VRadialCorrelateParameters = typing.TypedDict('VRadialCorrelateParameters', {
-    "__STYX_TYPE__": typing.Literal["@radial_correlate"],
+    "__STYXTYPE__": typing.Literal["@radial_correlate"],
     "input_files": list[InputPathType],
     "results_dir": typing.NotRequired[str | None],
     "do_corr": typing.NotRequired[str | None],

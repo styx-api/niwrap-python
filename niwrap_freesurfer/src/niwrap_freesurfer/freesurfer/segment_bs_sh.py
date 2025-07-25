@@ -14,7 +14,7 @@ SEGMENT_BS_SH_METADATA = Metadata(
 
 
 SegmentBsShParameters = typing.TypedDict('SegmentBsShParameters', {
-    "__STYX_TYPE__": typing.Literal["segmentBS.sh"],
+    "__STYXTYPE__": typing.Literal["segmentBS.sh"],
     "matlab_runtime": typing.NotRequired[str | None],
 })
 

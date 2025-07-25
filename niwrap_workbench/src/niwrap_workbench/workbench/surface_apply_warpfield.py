@@ -14,7 +14,7 @@ SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
 
 
 SurfaceApplyWarpfieldParameters = typing.TypedDict('SurfaceApplyWarpfieldParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-apply-warpfield"],
+    "__STYXTYPE__": typing.Literal["surface-apply-warpfield"],
     "in_surf": InputPathType,
     "warpfield": str,
     "out_surf": str,

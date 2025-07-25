@@ -14,7 +14,7 @@ V_3D_NOTES_METADATA = Metadata(
 
 
 V3dNotesParameters = typing.TypedDict('V3dNotesParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNotes"],
+    "__STYXTYPE__": typing.Literal["3dNotes"],
     "add_note": typing.NotRequired[str | None],
     "append_history": typing.NotRequired[str | None],
     "replace_history": typing.NotRequired[str | None],

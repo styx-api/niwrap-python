@@ -14,7 +14,7 @@ FIBER_DOT_PRODUCTS_METADATA = Metadata(
 
 
 FiberDotProductsParameters = typing.TypedDict('FiberDotProductsParameters', {
-    "__STYX_TYPE__": typing.Literal["fiber-dot-products"],
+    "__STYXTYPE__": typing.Literal["fiber-dot-products"],
     "white_surf": InputPathType,
     "fiber_file": InputPathType,
     "max_dist": float,

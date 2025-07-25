@@ -14,7 +14,7 @@ AFNI_METADATA = Metadata(
 
 
 AfniParameters = typing.TypedDict('AfniParameters', {
-    "__STYX_TYPE__": typing.Literal["afni"],
+    "__STYXTYPE__": typing.Literal["afni"],
     "session_directories": typing.NotRequired[str | None],
     "bysub": typing.NotRequired[list[str] | None],
     "all_dsets": bool,

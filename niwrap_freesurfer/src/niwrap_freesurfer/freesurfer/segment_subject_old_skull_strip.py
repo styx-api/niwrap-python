@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA = Metadata(
 
 
 SegmentSubjectOldSkullStripParameters = typing.TypedDict('SegmentSubjectOldSkullStripParameters', {
-    "__STYX_TYPE__": typing.Literal["segment_subject_old_skull_strip"],
+    "__STYXTYPE__": typing.Literal["segment_subject_old_skull_strip"],
     "input_volume": InputPathType,
     "output_xfm": str,
     "log_file": typing.NotRequired[str | None],

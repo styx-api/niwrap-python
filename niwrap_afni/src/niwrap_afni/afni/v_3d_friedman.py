@@ -14,7 +14,7 @@ V_3D_FRIEDMAN_METADATA = Metadata(
 
 
 V3dFriedmanParameters = typing.TypedDict('V3dFriedmanParameters', {
-    "__STYX_TYPE__": typing.Literal["3dFriedman"],
+    "__STYXTYPE__": typing.Literal["3dFriedman"],
     "levels": int,
     "datasets": list[InputPathType],
     "workmem": typing.NotRequired[int | None],

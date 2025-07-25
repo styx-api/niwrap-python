@@ -14,7 +14,7 @@ FLIP_4DFP_METADATA = Metadata(
 
 
 Flip4dfpParameters = typing.TypedDict('Flip4dfpParameters', {
-    "__STYX_TYPE__": typing.Literal["flip_4dfp"],
+    "__STYXTYPE__": typing.Literal["flip_4dfp"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "flip_x": bool,

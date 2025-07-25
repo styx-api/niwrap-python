@@ -14,7 +14,7 @@ V_3DNEWID_METADATA = Metadata(
 
 
 V3dnewidParameters = typing.TypedDict('V3dnewidParameters', {
-    "__STYX_TYPE__": typing.Literal["3dnewid"],
+    "__STYXTYPE__": typing.Literal["3dnewid"],
     "datasets": list[InputPathType],
     "fun": typing.NotRequired[float | None],
     "fun11": bool,

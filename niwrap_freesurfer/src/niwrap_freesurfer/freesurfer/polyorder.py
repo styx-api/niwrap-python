@@ -14,7 +14,7 @@ POLYORDER_METADATA = Metadata(
 
 
 PolyorderParameters = typing.TypedDict('PolyorderParameters', {
-    "__STYX_TYPE__": typing.Literal["polyorder"],
+    "__STYXTYPE__": typing.Literal["polyorder"],
     "ntp": float,
     "tr": float,
     "cutoff": float,

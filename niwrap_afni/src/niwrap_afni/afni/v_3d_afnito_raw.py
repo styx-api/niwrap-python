@@ -14,7 +14,7 @@ V_3D_AFNITO_RAW_METADATA = Metadata(
 
 
 V3dAfnitoRawParameters = typing.TypedDict('V3dAfnitoRawParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAFNItoRaw"],
+    "__STYXTYPE__": typing.Literal["3dAFNItoRaw"],
     "output_file": typing.NotRequired[str | None],
     "force_float": bool,
     "dataset": str,

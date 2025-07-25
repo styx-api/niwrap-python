@@ -14,7 +14,7 @@ ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA = Metadata(
 
 
 AdjunctAwTableizeRoiInfoPyParameters = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_aw_tableize_roi_info.py"],
+    "__STYXTYPE__": typing.Literal["adjunct_aw_tableize_roi_info.py"],
     "output_file": str,
     "warped_atlas": InputPathType,
     "warped_mask": InputPathType,

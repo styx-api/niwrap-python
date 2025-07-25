@@ -14,7 +14,7 @@ MRIS_DIFF_METADATA = Metadata(
 
 
 MrisDiffParameters = typing.TypedDict('MrisDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_diff"],
+    "__STYXTYPE__": typing.Literal["mris_diff"],
     "surface1": InputPathType,
     "surface2": InputPathType,
     "subject1": str,

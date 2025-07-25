@@ -14,7 +14,7 @@ DMRI_AC_SH_METADATA = Metadata(
 
 
 DmriAcShParameters = typing.TypedDict('DmriAcShParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_ac.sh"],
+    "__STYXTYPE__": typing.Literal["dmri_ac.sh"],
     "additional_args": typing.NotRequired[str | None],
 })
 

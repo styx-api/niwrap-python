@@ -14,7 +14,7 @@ MRI_GCAB_TRAIN_METADATA = Metadata(
 
 
 MriGcabTrainParameters = typing.TypedDict('MriGcabTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gcab_train"],
+    "__STYXTYPE__": typing.Literal["mri_gcab_train"],
     "removed_info": typing.NotRequired[str | None],
 })
 

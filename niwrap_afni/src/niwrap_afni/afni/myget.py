@@ -14,7 +14,7 @@ MYGET_METADATA = Metadata(
 
 
 MygetParameters = typing.TypedDict('MygetParameters', {
-    "__STYX_TYPE__": typing.Literal["myget"],
+    "__STYXTYPE__": typing.Literal["myget"],
     "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
     "url": str,
     "output_file": str,

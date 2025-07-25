@@ -14,7 +14,7 @@ V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA = Metadata(
 
 
 VDjunct4dSlicesTo3dVolParameters = typing.TypedDict('VDjunct4dSlicesTo3dVolParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_4d_slices_to_3d_vol"],
+    "__STYXTYPE__": typing.Literal["@djunct_4d_slices_to_3d_vol"],
     "do_something": bool,
 })
 

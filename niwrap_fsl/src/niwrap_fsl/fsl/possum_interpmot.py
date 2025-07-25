@@ -14,7 +14,7 @@ POSSUM_INTERPMOT_METADATA = Metadata(
 
 
 PossumInterpmotParameters = typing.TypedDict('PossumInterpmotParameters', {
-    "__STYX_TYPE__": typing.Literal["possum_interpmot"],
+    "__STYXTYPE__": typing.Literal["possum_interpmot"],
     "motion_type": int,
     "tr": float,
     "tr_slice": float,

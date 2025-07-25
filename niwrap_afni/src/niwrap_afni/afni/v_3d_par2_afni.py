@@ -14,7 +14,7 @@ V_3D_PAR2_AFNI_METADATA = Metadata(
 
 
 V3dPar2AfniParameters = typing.TypedDict('V3dPar2AfniParameters', {
-    "__STYX_TYPE__": typing.Literal["3dPAR2AFNI"],
+    "__STYXTYPE__": typing.Literal["3dPAR2AFNI"],
     "input_file": InputPathType,
     "skip_outliers_test": bool,
     "output_nifti": bool,

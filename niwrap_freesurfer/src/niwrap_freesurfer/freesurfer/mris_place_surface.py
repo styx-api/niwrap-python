@@ -14,7 +14,7 @@ MRIS_PLACE_SURFACE_METADATA = Metadata(
 
 
 MrisPlaceSurfaceParameters = typing.TypedDict('MrisPlaceSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_place_surface"],
+    "__STYXTYPE__": typing.Literal["mris_place_surface"],
     "output_surface": str,
     "input_surface": str,
     "autodetect_gray_white_stats": str,

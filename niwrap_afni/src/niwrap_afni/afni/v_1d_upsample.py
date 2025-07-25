@@ -14,7 +14,7 @@ V_1D_UPSAMPLE_METADATA = Metadata(
 
 
 V1dUpsampleParameters = typing.TypedDict('V1dUpsampleParameters', {
-    "__STYX_TYPE__": typing.Literal["1dUpsample"],
+    "__STYXTYPE__": typing.Literal["1dUpsample"],
     "upsample_factor": float,
     "input_file": InputPathType,
     "linear_interpolation": bool,

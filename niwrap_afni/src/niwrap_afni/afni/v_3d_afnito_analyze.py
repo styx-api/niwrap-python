@@ -14,7 +14,7 @@ V_3D_AFNITO_ANALYZE_METADATA = Metadata(
 
 
 V3dAfnitoAnalyzeParameters = typing.TypedDict('V3dAfnitoAnalyzeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAFNItoANALYZE"],
+    "__STYXTYPE__": typing.Literal["3dAFNItoANALYZE"],
     "4d_option": bool,
     "orient_option": typing.NotRequired[str | None],
     "output_name": str,

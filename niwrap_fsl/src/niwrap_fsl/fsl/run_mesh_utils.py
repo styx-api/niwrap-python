@@ -14,7 +14,7 @@ RUN_MESH_UTILS_METADATA = Metadata(
 
 
 RunMeshUtilsParameters = typing.TypedDict('RunMeshUtilsParameters', {
-    "__STYX_TYPE__": typing.Literal["run_mesh_utils"],
+    "__STYXTYPE__": typing.Literal["run_mesh_utils"],
     "base_mesh": InputPathType,
     "output_image": str,
     "input_image": typing.NotRequired[InputPathType | None],

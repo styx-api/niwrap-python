@@ -14,7 +14,7 @@ DCM2NIIX_METADATA = Metadata(
 
 
 Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
-    "__STYX_TYPE__": typing.Literal["dcm2niix"],
+    "__STYXTYPE__": typing.Literal["dcm2niix"],
     "compression_level": typing.NotRequired[float | None],
     "adjacent": typing.NotRequired[typing.Literal["y", "n"] | None],
     "bids": typing.NotRequired[typing.Literal["y", "n", "o"] | None],

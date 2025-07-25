@@ -14,7 +14,7 @@ ORIENT_LAS_METADATA = Metadata(
 
 
 OrientLasParameters = typing.TypedDict('OrientLasParameters', {
-    "__STYX_TYPE__": typing.Literal["orientLAS"],
+    "__STYXTYPE__": typing.Literal["orientLAS"],
     "input_image": InputPathType,
     "output_image": str,
     "check": bool,

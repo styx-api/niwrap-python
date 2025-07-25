@@ -14,14 +14,14 @@ DIRSPLIT_METADATA = Metadata(
 
 
 DirsplitConfigParameters = typing.TypedDict('DirsplitConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirsplitParameters = typing.TypedDict('DirsplitParameters', {
-    "__STYX_TYPE__": typing.Literal["dirsplit"],
+    "__STYXTYPE__": typing.Literal["dirsplit"],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
     "info": bool,

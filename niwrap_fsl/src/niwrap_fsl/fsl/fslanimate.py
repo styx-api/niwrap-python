@@ -14,7 +14,7 @@ FSLANIMATE_METADATA = Metadata(
 
 
 FslanimateParameters = typing.TypedDict('FslanimateParameters', {
-    "__STYX_TYPE__": typing.Literal["fslanimate"],
+    "__STYXTYPE__": typing.Literal["fslanimate"],
     "input_file": InputPathType,
     "output_file": str,
     "tmp_dir": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ SURFACE_WEDGE_VOLUME_METADATA = Metadata(
 
 
 SurfaceWedgeVolumeParameters = typing.TypedDict('SurfaceWedgeVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-wedge-volume"],
+    "__STYXTYPE__": typing.Literal["surface-wedge-volume"],
     "inner_surface": InputPathType,
     "outer_surface": InputPathType,
     "metric": str,

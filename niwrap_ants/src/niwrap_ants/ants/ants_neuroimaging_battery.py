@@ -14,7 +14,7 @@ ANTS_NEUROIMAGING_BATTERY_METADATA = Metadata(
 
 
 AntsNeuroimagingBatteryParameters = typing.TypedDict('AntsNeuroimagingBatteryParameters', {
-    "__STYX_TYPE__": typing.Literal["antsNeuroimagingBattery"],
+    "__STYXTYPE__": typing.Literal["antsNeuroimagingBattery"],
     "input_directory": str,
     "output_directory": str,
     "output_name": str,

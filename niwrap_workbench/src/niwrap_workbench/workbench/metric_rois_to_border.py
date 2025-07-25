@@ -14,7 +14,7 @@ METRIC_ROIS_TO_BORDER_METADATA = Metadata(
 
 
 MetricRoisToBorderParameters = typing.TypedDict('MetricRoisToBorderParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-rois-to-border"],
+    "__STYXTYPE__": typing.Literal["metric-rois-to-border"],
     "surface": InputPathType,
     "metric": InputPathType,
     "class_name": str,

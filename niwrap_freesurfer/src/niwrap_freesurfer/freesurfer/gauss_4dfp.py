@@ -14,7 +14,7 @@ GAUSS_4DFP_METADATA = Metadata(
 
 
 Gauss4dfpParameters = typing.TypedDict('Gauss4dfpParameters', {
-    "__STYX_TYPE__": typing.Literal["gauss_4dfp"],
+    "__STYXTYPE__": typing.Literal["gauss_4dfp"],
     "input_file": str,
     "f_half": float,
     "output_root": typing.NotRequired[str | None],

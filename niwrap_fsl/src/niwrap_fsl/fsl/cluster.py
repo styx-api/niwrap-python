@@ -14,7 +14,7 @@ CLUSTER_METADATA = Metadata(
 
 
 ClusterParameters = typing.TypedDict('ClusterParameters', {
-    "__STYX_TYPE__": typing.Literal["cluster"],
+    "__STYXTYPE__": typing.Literal["cluster"],
     "connectivity": typing.NotRequired[int | None],
     "cope_file": typing.NotRequired[InputPathType | None],
     "dlh": typing.NotRequired[float | None],

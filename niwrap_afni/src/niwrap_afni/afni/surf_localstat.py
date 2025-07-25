@@ -14,7 +14,7 @@ SURF_LOCALSTAT_METADATA = Metadata(
 
 
 SurfLocalstatParameters = typing.TypedDict('SurfLocalstatParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfLocalstat"],
+    "__STYXTYPE__": typing.Literal["SurfLocalstat"],
     "hood": typing.NotRequired[float | None],
     "nbhd_rad": typing.NotRequired[float | None],
     "prefix": str,

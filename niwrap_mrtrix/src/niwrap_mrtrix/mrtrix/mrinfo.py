@@ -14,41 +14,41 @@ MRINFO_METADATA = Metadata(
 
 
 MrinfoPropertyParameters = typing.TypedDict('MrinfoPropertyParameters', {
-    "__STYX_TYPE__": typing.Literal["property"],
+    "__STYXTYPE__": typing.Literal["property"],
     "key": str,
 })
 
 
 MrinfoFslgradParameters = typing.TypedDict('MrinfoFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrinfoExportGradFslParameters = typing.TypedDict('MrinfoExportGradFslParameters', {
-    "__STYX_TYPE__": typing.Literal["export_grad_fsl"],
+    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrinfoExportPeEddyParameters = typing.TypedDict('MrinfoExportPeEddyParameters', {
-    "__STYX_TYPE__": typing.Literal["export_pe_eddy"],
+    "__STYXTYPE__": typing.Literal["export_pe_eddy"],
     "config": str,
     "indices": str,
 })
 
 
 MrinfoConfigParameters = typing.TypedDict('MrinfoConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrinfoParameters = typing.TypedDict('MrinfoParameters', {
-    "__STYX_TYPE__": typing.Literal["mrinfo"],
+    "__STYXTYPE__": typing.Literal["mrinfo"],
     "all": bool,
     "name": bool,
     "format": bool,

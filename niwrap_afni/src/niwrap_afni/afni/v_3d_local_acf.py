@@ -14,7 +14,7 @@ V_3D_LOCAL_ACF_METADATA = Metadata(
 
 
 V3dLocalAcfParameters = typing.TypedDict('V3dLocalAcfParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLocalACF"],
+    "__STYXTYPE__": typing.Literal["3dLocalACF"],
     "prefix": str,
     "input_file": InputPathType,
     "neighborhood": typing.NotRequired[str | None],

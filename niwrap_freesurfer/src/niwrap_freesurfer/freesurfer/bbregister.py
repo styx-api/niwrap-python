@@ -14,7 +14,7 @@ BBREGISTER_METADATA = Metadata(
 
 
 BbregisterParameters = typing.TypedDict('BbregisterParameters', {
-    "__STYX_TYPE__": typing.Literal["bbregister"],
+    "__STYXTYPE__": typing.Literal["bbregister"],
     "subject": str,
     "moveable_volume": InputPathType,
     "reg_file": str,

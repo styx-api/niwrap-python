@@ -14,7 +14,7 @@ ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
 
 
 AntsBrainExtractionShParameters = typing.TypedDict('AntsBrainExtractionShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsBrainExtraction.sh"],
+    "__STYXTYPE__": typing.Literal["antsBrainExtraction.sh"],
     "image_dimension": int,
     "anatomical_image": InputPathType,
     "template": InputPathType,

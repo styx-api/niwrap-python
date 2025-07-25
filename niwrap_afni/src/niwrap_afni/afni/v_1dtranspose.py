@@ -14,7 +14,7 @@ V_1DTRANSPOSE_METADATA = Metadata(
 
 
 V1dtransposeParameters = typing.TypedDict('V1dtransposeParameters', {
-    "__STYX_TYPE__": typing.Literal["1dtranspose"],
+    "__STYXTYPE__": typing.Literal["1dtranspose"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })

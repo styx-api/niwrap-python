@@ -14,7 +14,7 @@ MRIS_FWHM_METADATA = Metadata(
 
 
 MrisFwhmParameters = typing.TypedDict('MrisFwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_fwhm"],
+    "__STYXTYPE__": typing.Literal["mris_fwhm"],
     "input_file": InputPathType,
     "subject": str,
     "hemi": str,

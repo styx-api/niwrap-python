@@ -14,7 +14,7 @@ EASYTHRESH_METADATA = Metadata(
 
 
 EasythreshParameters = typing.TypedDict('EasythreshParameters', {
-    "__STYX_TYPE__": typing.Literal["easythresh"],
+    "__STYXTYPE__": typing.Literal["easythresh"],
     "raw_zstat_input": InputPathType,
     "brain_mask_input": InputPathType,
     "cluster_z_thresh_input": float,

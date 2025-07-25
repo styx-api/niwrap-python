@@ -14,7 +14,7 @@ IFH2HDR_METADATA = Metadata(
 
 
 Ifh2hdrParameters = typing.TypedDict('Ifh2hdrParameters', {
-    "__STYX_TYPE__": typing.Literal["ifh2hdr"],
+    "__STYXTYPE__": typing.Literal["ifh2hdr"],
     "input_file": InputPathType,
     "range": typing.NotRequired[str | None],
 })

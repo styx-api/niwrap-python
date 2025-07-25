@@ -14,7 +14,7 @@ AVSCALE_METADATA = Metadata(
 
 
 AvscaleParameters = typing.TypedDict('AvscaleParameters', {
-    "__STYX_TYPE__": typing.Literal["avscale"],
+    "__STYXTYPE__": typing.Literal["avscale"],
     "allparams_flag": bool,
     "inverteddies_flag": bool,
     "matrix_file": InputPathType,

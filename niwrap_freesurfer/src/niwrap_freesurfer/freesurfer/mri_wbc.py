@@ -14,7 +14,7 @@ MRI_WBC_METADATA = Metadata(
 
 
 MriWbcParameters = typing.TypedDict('MriWbcParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_wbc"],
+    "__STYXTYPE__": typing.Literal["mri_wbc"],
     "functional_volume": InputPathType,
     "volume_mask": typing.NotRequired[InputPathType | None],
     "lh_functional_surface": InputPathType,

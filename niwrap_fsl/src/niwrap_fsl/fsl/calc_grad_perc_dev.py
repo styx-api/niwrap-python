@@ -14,7 +14,7 @@ CALC_GRAD_PERC_DEV_METADATA = Metadata(
 
 
 CalcGradPercDevParameters = typing.TypedDict('CalcGradPercDevParameters', {
-    "__STYX_TYPE__": typing.Literal["calc_grad_perc_dev"],
+    "__STYXTYPE__": typing.Literal["calc_grad_perc_dev"],
     "fullwarp_image": InputPathType,
     "out_basename": str,
     "verbose_flag": bool,

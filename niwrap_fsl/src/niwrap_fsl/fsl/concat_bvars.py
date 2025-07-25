@@ -14,7 +14,7 @@ CONCAT_BVARS_METADATA = Metadata(
 
 
 ConcatBvarsParameters = typing.TypedDict('ConcatBvarsParameters', {
-    "__STYX_TYPE__": typing.Literal["concat_bvars"],
+    "__STYXTYPE__": typing.Literal["concat_bvars"],
     "output_bvars": str,
     "input_bvars": list[InputPathType],
 })

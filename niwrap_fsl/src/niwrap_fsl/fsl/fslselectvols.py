@@ -14,7 +14,7 @@ FSLSELECTVOLS_METADATA = Metadata(
 
 
 FslselectvolsParameters = typing.TypedDict('FslselectvolsParameters', {
-    "__STYX_TYPE__": typing.Literal["fslselectvols"],
+    "__STYXTYPE__": typing.Literal["fslselectvols"],
     "input_file": InputPathType,
     "output_file": str,
     "vols_list": str,

@@ -14,7 +14,7 @@ LABELS_DISJOINT_METADATA = Metadata(
 
 
 LabelsDisjointParameters = typing.TypedDict('LabelsDisjointParameters', {
-    "__STYX_TYPE__": typing.Literal["labels_disjoint"],
+    "__STYXTYPE__": typing.Literal["labels_disjoint"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,

@@ -14,7 +14,7 @@ DCMDJPEG_FS_METADATA = Metadata(
 
 
 DcmdjpegFsParameters = typing.TypedDict('DcmdjpegFsParameters', {
-    "__STYX_TYPE__": typing.Literal["dcmdjpeg.fs"],
+    "__STYXTYPE__": typing.Literal["dcmdjpeg.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,

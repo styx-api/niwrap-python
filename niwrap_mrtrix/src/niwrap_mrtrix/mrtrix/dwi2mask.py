@@ -14,21 +14,21 @@ DWI2MASK_METADATA = Metadata(
 
 
 Dwi2maskFslgradParameters = typing.TypedDict('Dwi2maskFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2maskConfigParameters = typing.TypedDict('Dwi2maskConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2maskParameters = typing.TypedDict('Dwi2maskParameters', {
-    "__STYX_TYPE__": typing.Literal["dwi2mask"],
+    "__STYXTYPE__": typing.Literal["dwi2mask"],
     "clean_scale": typing.NotRequired[int | None],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2maskFslgradParameters | None],

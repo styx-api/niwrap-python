@@ -14,7 +14,7 @@ FS_PRINT_HELP_METADATA = Metadata(
 
 
 FsPrintHelpParameters = typing.TypedDict('FsPrintHelpParameters', {
-    "__STYX_TYPE__": typing.Literal["fsPrintHelp"],
+    "__STYXTYPE__": typing.Literal["fsPrintHelp"],
     "arguments": typing.NotRequired[str | None],
 })
 

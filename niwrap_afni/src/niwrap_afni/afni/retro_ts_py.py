@@ -14,7 +14,7 @@ RETRO_TS_PY_METADATA = Metadata(
 
 
 RetroTsPyParameters = typing.TypedDict('RetroTsPyParameters', {
-    "__STYX_TYPE__": typing.Literal["RetroTS.py"],
+    "__STYXTYPE__": typing.Literal["RetroTS.py"],
     "resp_file": typing.NotRequired[InputPathType | None],
     "card_file": typing.NotRequired[InputPathType | None],
     "phys_fs": typing.NotRequired[float | None],

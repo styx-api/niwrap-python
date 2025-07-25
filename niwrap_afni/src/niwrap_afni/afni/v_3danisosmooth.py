@@ -14,7 +14,7 @@ V_3DANISOSMOOTH_METADATA = Metadata(
 
 
 V3danisosmoothParameters = typing.TypedDict('V3danisosmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["3danisosmooth"],
+    "__STYXTYPE__": typing.Literal["3danisosmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[float | None],

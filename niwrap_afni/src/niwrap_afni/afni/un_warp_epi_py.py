@@ -14,7 +14,7 @@ UN_WARP_EPI_PY_METADATA = Metadata(
 
 
 UnWarpEpiPyParameters = typing.TypedDict('UnWarpEpiPyParameters', {
-    "__STYX_TYPE__": typing.Literal["unWarpEPI.py"],
+    "__STYXTYPE__": typing.Literal["unWarpEPI.py"],
     "forward": InputPathType,
     "reverse": InputPathType,
     "anat4warp": InputPathType,

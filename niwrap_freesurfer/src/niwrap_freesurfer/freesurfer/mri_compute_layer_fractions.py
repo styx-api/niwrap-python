@@ -14,7 +14,7 @@ MRI_COMPUTE_LAYER_FRACTIONS_METADATA = Metadata(
 
 
 MriComputeLayerFractionsParameters = typing.TypedDict('MriComputeLayerFractionsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compute_layer_fractions"],
+    "__STYXTYPE__": typing.Literal["mri_compute_layer_fractions"],
     "reg_file": InputPathType,
     "input_volume": InputPathType,
     "output_stem": str,

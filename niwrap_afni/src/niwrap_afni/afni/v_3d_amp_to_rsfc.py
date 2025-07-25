@@ -14,7 +14,7 @@ V_3D_AMP_TO_RSFC_METADATA = Metadata(
 
 
 V3dAmpToRsfcParameters = typing.TypedDict('V3dAmpToRsfcParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAmpToRSFC"],
+    "__STYXTYPE__": typing.Literal["3dAmpToRSFC"],
     "in_amp": typing.NotRequired[InputPathType | None],
     "in_pow": typing.NotRequired[InputPathType | None],
     "prefix": str,

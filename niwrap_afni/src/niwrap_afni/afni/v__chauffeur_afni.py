@@ -14,7 +14,7 @@ V__CHAUFFEUR_AFNI_METADATA = Metadata(
 
 
 VChauffeurAfniParameters = typing.TypedDict('VChauffeurAfniParameters', {
-    "__STYX_TYPE__": typing.Literal["@chauffeur_afni"],
+    "__STYXTYPE__": typing.Literal["@chauffeur_afni"],
     "ulay": InputPathType,
     "olay": typing.NotRequired[InputPathType | None],
     "prefix": str,

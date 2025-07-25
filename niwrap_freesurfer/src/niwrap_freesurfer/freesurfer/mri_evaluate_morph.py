@@ -14,7 +14,7 @@ MRI_EVALUATE_MORPH_METADATA = Metadata(
 
 
 MriEvaluateMorphParameters = typing.TypedDict('MriEvaluateMorphParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_evaluate_morph"],
+    "__STYXTYPE__": typing.Literal["mri_evaluate_morph"],
     "xform_name": InputPathType,
     "segmentation_files": list[InputPathType],
     "output_file": str,

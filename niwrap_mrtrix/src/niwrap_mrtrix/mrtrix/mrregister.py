@@ -14,34 +14,34 @@ MRREGISTER_METADATA = Metadata(
 
 
 MrregisterTransformedParameters = typing.TypedDict('MrregisterTransformedParameters', {
-    "__STYX_TYPE__": typing.Literal["transformed"],
+    "__STYXTYPE__": typing.Literal["transformed"],
     "image": str,
 })
 
 
 MrregisterTransformedMidwayParameters = typing.TypedDict('MrregisterTransformedMidwayParameters', {
-    "__STYX_TYPE__": typing.Literal["transformed_midway"],
+    "__STYXTYPE__": typing.Literal["transformed_midway"],
     "image1_transformed": str,
     "image2_transformed": str,
 })
 
 
 MrregisterNlWarpParameters = typing.TypedDict('MrregisterNlWarpParameters', {
-    "__STYX_TYPE__": typing.Literal["nl_warp"],
+    "__STYXTYPE__": typing.Literal["nl_warp"],
     "warp1": str,
     "warp2": str,
 })
 
 
 MrregisterConfigParameters = typing.TypedDict('MrregisterConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrregisterParameters = typing.TypedDict('MrregisterParameters', {
-    "__STYX_TYPE__": typing.Literal["mrregister"],
+    "__STYXTYPE__": typing.Literal["mrregister"],
     "type": typing.NotRequired[str | None],
     "transformed": typing.NotRequired[list[MrregisterTransformedParameters] | None],
     "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParameters] | None],

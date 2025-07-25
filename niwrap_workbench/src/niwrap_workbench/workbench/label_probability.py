@@ -14,7 +14,7 @@ LABEL_PROBABILITY_METADATA = Metadata(
 
 
 LabelProbabilityParameters = typing.TypedDict('LabelProbabilityParameters', {
-    "__STYX_TYPE__": typing.Literal["label-probability"],
+    "__STYXTYPE__": typing.Literal["label-probability"],
     "label_maps": InputPathType,
     "probability_metric_out": str,
     "opt_exclude_unlabeled": bool,

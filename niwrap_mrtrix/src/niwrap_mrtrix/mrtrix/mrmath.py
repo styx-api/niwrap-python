@@ -14,14 +14,14 @@ MRMATH_METADATA = Metadata(
 
 
 MrmathConfigParameters = typing.TypedDict('MrmathConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrmathParameters = typing.TypedDict('MrmathParameters', {
-    "__STYX_TYPE__": typing.Literal["mrmath"],
+    "__STYXTYPE__": typing.Literal["mrmath"],
     "axis": typing.NotRequired[int | None],
     "keep_unary_axes": bool,
     "datatype": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MCFLIRT_METADATA = Metadata(
 
 
 McflirtParameters = typing.TypedDict('McflirtParameters', {
-    "__STYX_TYPE__": typing.Literal["mcflirt"],
+    "__STYXTYPE__": typing.Literal["mcflirt"],
     "in_file": InputPathType,
     "bins": typing.NotRequired[int | None],
     "cost": typing.NotRequired[typing.Literal["mutualinfo", "woods", "corratio", "normcorr", "normmi", "leastsquares"] | None],

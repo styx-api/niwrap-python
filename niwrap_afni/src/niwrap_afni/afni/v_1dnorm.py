@@ -14,7 +14,7 @@ V_1DNORM_METADATA = Metadata(
 
 
 V1dnormParameters = typing.TypedDict('V1dnormParameters', {
-    "__STYX_TYPE__": typing.Literal["1dnorm"],
+    "__STYXTYPE__": typing.Literal["1dnorm"],
     "infile": InputPathType,
     "outfile": str,
     "norm1": bool,

@@ -14,7 +14,7 @@ VERTEXVOL_METADATA = Metadata(
 
 
 VertexvolParameters = typing.TypedDict('VertexvolParameters', {
-    "__STYX_TYPE__": typing.Literal["vertexvol"],
+    "__STYXTYPE__": typing.Literal["vertexvol"],
     "subject": str,
     "left_hemisphere": bool,
     "right_hemisphere": bool,

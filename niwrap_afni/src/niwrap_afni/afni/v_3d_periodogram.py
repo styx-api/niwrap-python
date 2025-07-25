@@ -14,7 +14,7 @@ V_3D_PERIODOGRAM_METADATA = Metadata(
 
 
 V3dPeriodogramParameters = typing.TypedDict('V3dPeriodogramParameters', {
-    "__STYX_TYPE__": typing.Literal["3dPeriodogram"],
+    "__STYXTYPE__": typing.Literal["3dPeriodogram"],
     "prefix": typing.NotRequired[str | None],
     "taper": typing.NotRequired[float | None],
     "nfft": typing.NotRequired[float | None],

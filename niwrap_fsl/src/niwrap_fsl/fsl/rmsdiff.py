@@ -14,7 +14,7 @@ RMSDIFF_METADATA = Metadata(
 
 
 RmsdiffParameters = typing.TypedDict('RmsdiffParameters', {
-    "__STYX_TYPE__": typing.Literal["rmsdiff"],
+    "__STYXTYPE__": typing.Literal["rmsdiff"],
     "matrixfile1": InputPathType,
     "matrixfile2": InputPathType,
     "refvol": InputPathType,

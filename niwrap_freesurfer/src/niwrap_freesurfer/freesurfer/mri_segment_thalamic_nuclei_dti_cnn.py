@@ -14,7 +14,7 @@ MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA = Metadata(
 
 
 MriSegmentThalamicNucleiDtiCnnParameters = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_segment_thalamic_nuclei_dti_cnn"],
+    "__STYXTYPE__": typing.Literal["mri_segment_thalamic_nuclei_dti_cnn"],
     "t1_images": InputPathType,
     "aseg": typing.NotRequired[InputPathType | None],
     "fa": InputPathType,

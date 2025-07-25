@@ -14,7 +14,7 @@ V_3D_EIGS_TO_DT_METADATA = Metadata(
 
 
 V3dEigsToDtParameters = typing.TypedDict('V3dEigsToDtParameters', {
-    "__STYX_TYPE__": typing.Literal["3dEigsToDT"],
+    "__STYXTYPE__": typing.Literal["3dEigsToDT"],
     "eig_vals": str,
     "eig_vecs": str,
     "prefix": str,

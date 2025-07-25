@@ -14,13 +14,13 @@ CIFTI_MERGE_PARCELS_METADATA = Metadata(
 
 
 CiftiMergeParcelsCiftiParameters = typing.TypedDict('CiftiMergeParcelsCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiMergeParcelsParameters = typing.TypedDict('CiftiMergeParcelsParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-merge-parcels"],
+    "__STYXTYPE__": typing.Literal["cifti-merge-parcels"],
     "direction": str,
     "cifti_out": str,
     "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParameters] | None],

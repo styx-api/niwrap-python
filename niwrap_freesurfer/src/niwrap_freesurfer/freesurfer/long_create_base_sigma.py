@@ -14,7 +14,7 @@ LONG_CREATE_BASE_SIGMA_METADATA = Metadata(
 
 
 LongCreateBaseSigmaParameters = typing.TypedDict('LongCreateBaseSigmaParameters', {
-    "__STYX_TYPE__": typing.Literal["long_create_base_sigma"],
+    "__STYXTYPE__": typing.Literal["long_create_base_sigma"],
     "base_id": str,
     "sigma": int,
 })

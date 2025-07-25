@@ -14,7 +14,7 @@ FILMBABESCRIPT_METADATA = Metadata(
 
 
 FilmbabescriptParameters = typing.TypedDict('FilmbabescriptParameters', {
-    "__STYX_TYPE__": typing.Literal["filmbabescript"],
+    "__STYXTYPE__": typing.Literal["filmbabescript"],
     "feat_dir": str,
     "flobs_dir": str,
 })

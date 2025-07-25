@@ -14,7 +14,7 @@ MRIS_SEG2ANNOT_METADATA = Metadata(
 
 
 MrisSeg2annotParameters = typing.TypedDict('MrisSeg2annotParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_seg2annot"],
+    "__STYXTYPE__": typing.Literal["mris_seg2annot"],
     "surfseg": InputPathType,
     "colortable": typing.NotRequired[InputPathType | None],
     "auto_ctab": typing.NotRequired[str | None],

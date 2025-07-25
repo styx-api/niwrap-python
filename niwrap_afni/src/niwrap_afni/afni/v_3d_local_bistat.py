@@ -14,7 +14,7 @@ V_3D_LOCAL_BISTAT_METADATA = Metadata(
 
 
 V3dLocalBistatParameters = typing.TypedDict('V3dLocalBistatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLocalBistat"],
+    "__STYXTYPE__": typing.Literal["3dLocalBistat"],
     "nbhd": str,
     "stats": list[str],
     "mask": typing.NotRequired[InputPathType | None],

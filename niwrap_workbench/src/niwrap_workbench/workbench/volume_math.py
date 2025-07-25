@@ -14,7 +14,7 @@ VOLUME_MATH_METADATA = Metadata(
 
 
 VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
-    "__STYX_TYPE__": typing.Literal["var"],
+    "__STYXTYPE__": typing.Literal["var"],
     "name": str,
     "volume": InputPathType,
     "opt_subvolume_subvol": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
 
 
 VolumeMathParameters = typing.TypedDict('VolumeMathParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-math"],
+    "__STYXTYPE__": typing.Literal["volume-math"],
     "expression": str,
     "volume_out": str,
     "opt_fixnan_replace": typing.NotRequired[float | None],

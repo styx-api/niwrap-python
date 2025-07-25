@@ -14,7 +14,7 @@ FFTEST_METADATA = Metadata(
 
 
 FftestParameters = typing.TypedDict('FftestParameters', {
-    "__STYX_TYPE__": typing.Literal["fftest"],
+    "__STYXTYPE__": typing.Literal["fftest"],
     "length": float,
     "num_tests": float,
     "vector_size": float,

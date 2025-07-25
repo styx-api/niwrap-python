@@ -14,7 +14,7 @@ GCATRAINSKULL_METADATA = Metadata(
 
 
 GcatrainskullParameters = typing.TypedDict('GcatrainskullParameters', {
-    "__STYX_TYPE__": typing.Literal["gcatrainskull"],
+    "__STYXTYPE__": typing.Literal["gcatrainskull"],
     "gcatrain_dir": str,
 })
 

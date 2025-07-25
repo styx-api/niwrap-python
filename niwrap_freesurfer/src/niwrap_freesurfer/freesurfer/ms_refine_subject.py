@@ -14,7 +14,7 @@ MS_REFINE_SUBJECT_METADATA = Metadata(
 
 
 MsRefineSubjectParameters = typing.TypedDict('MsRefineSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["ms_refine_subject"],
+    "__STYXTYPE__": typing.Literal["ms_refine_subject"],
     "subjects_dir": str,
 })
 

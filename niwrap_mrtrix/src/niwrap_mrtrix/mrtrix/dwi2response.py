@@ -14,7 +14,7 @@ DWI2RESPONSE_METADATA = Metadata(
 
 
 Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParameters', {
-    "__STYX_TYPE__": typing.Literal["dhollander"],
+    "__STYXTYPE__": typing.Literal["dhollander"],
     "input": InputPathType,
     "out_sfwm": str,
     "out_gm": str,
@@ -29,7 +29,7 @@ Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParam
 
 
 Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
-    "__STYX_TYPE__": typing.Literal["fa"],
+    "__STYXTYPE__": typing.Literal["fa"],
     "input": InputPathType,
     "output": str,
     "erode": typing.NotRequired[int | None],
@@ -39,7 +39,7 @@ Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
 
 
 Dwi2responseManualParameters = typing.TypedDict('Dwi2responseManualParameters', {
-    "__STYX_TYPE__": typing.Literal["manual"],
+    "__STYXTYPE__": typing.Literal["manual"],
     "input": InputPathType,
     "in_voxels": InputPathType,
     "output": str,
@@ -48,7 +48,7 @@ Dwi2responseManualParameters = typing.TypedDict('Dwi2responseManualParameters', 
 
 
 Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters', {
-    "__STYX_TYPE__": typing.Literal["msmt_5tt"],
+    "__STYXTYPE__": typing.Literal["msmt_5tt"],
     "input": InputPathType,
     "in_5tt": InputPathType,
     "out_wm": str,
@@ -63,7 +63,7 @@ Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters'
 
 
 Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
-    "__STYX_TYPE__": typing.Literal["tax"],
+    "__STYXTYPE__": typing.Literal["tax"],
     "input": InputPathType,
     "output": str,
     "peak_ratio": typing.NotRequired[float | None],
@@ -73,7 +73,7 @@ Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
 
 
 Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameters', {
-    "__STYX_TYPE__": typing.Literal["tournier"],
+    "__STYXTYPE__": typing.Literal["tournier"],
     "input": InputPathType,
     "output": str,
     "number": typing.NotRequired[int | None],
@@ -84,21 +84,21 @@ Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameter
 
 
 Dwi2responseFslgradParameters = typing.TypedDict('Dwi2responseFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2responseConfigParameters = typing.TypedDict('Dwi2responseConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2responseParameters = typing.TypedDict('Dwi2responseParameters', {
-    "__STYX_TYPE__": typing.Literal["dwi2response"],
+    "__STYXTYPE__": typing.Literal["dwi2response"],
     "algorithm": typing.Union[Dwi2responseDhollanderParameters, Dwi2responseFaParameters, Dwi2responseManualParameters, Dwi2responseMsmt5ttParameters, Dwi2responseTaxParameters, Dwi2responseTournierParameters],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2responseFslgradParameters | None],

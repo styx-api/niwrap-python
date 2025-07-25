@@ -14,7 +14,7 @@ IS_SURFACE_METADATA = Metadata(
 
 
 IsSurfaceParameters = typing.TypedDict('IsSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["is-surface"],
+    "__STYXTYPE__": typing.Literal["is-surface"],
     "infile": InputPathType,
 })
 

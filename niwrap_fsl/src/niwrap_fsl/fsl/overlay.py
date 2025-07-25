@@ -14,7 +14,7 @@ OVERLAY_METADATA = Metadata(
 
 
 OverlayParameters = typing.TypedDict('OverlayParameters', {
-    "__STYX_TYPE__": typing.Literal["overlay"],
+    "__STYXTYPE__": typing.Literal["overlay"],
     "auto_thresh_bg": bool,
     "background_image": InputPathType,
     "bg_thresh": list[float],

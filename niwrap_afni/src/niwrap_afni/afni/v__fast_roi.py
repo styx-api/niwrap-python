@@ -14,7 +14,7 @@ V__FAST_ROI_METADATA = Metadata(
 
 
 VFastRoiParameters = typing.TypedDict('VFastRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["@fast_roi"],
+    "__STYXTYPE__": typing.Literal["@fast_roi"],
     "region": list[str],
     "drawn_roi": typing.NotRequired[InputPathType | None],
     "anat": InputPathType,

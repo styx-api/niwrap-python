@@ -14,7 +14,7 @@ CLUST_EXP_HIST_TABLE_PY_METADATA = Metadata(
 
 
 ClustExpHistTablePyParameters = typing.TypedDict('ClustExpHistTablePyParameters', {
-    "__STYX_TYPE__": typing.Literal["ClustExp_HistTable.py"],
+    "__STYXTYPE__": typing.Literal["ClustExp_HistTable.py"],
     "stat_dset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],

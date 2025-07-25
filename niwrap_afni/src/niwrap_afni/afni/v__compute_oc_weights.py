@@ -14,7 +14,7 @@ V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
 
 
 VComputeOcWeightsParameters = typing.TypedDict('VComputeOcWeightsParameters', {
-    "__STYX_TYPE__": typing.Literal["@compute_OC_weights"],
+    "__STYXTYPE__": typing.Literal["@compute_OC_weights"],
     "echo_times": typing.NotRequired[str | None],
     "echo_times_file": typing.NotRequired[InputPathType | None],
     "echo_dsets": list[str],

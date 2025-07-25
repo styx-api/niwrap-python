@@ -14,7 +14,7 @@ MP_DIFFPOW_METADATA = Metadata(
 
 
 MpDiffpowParameters = typing.TypedDict('MpDiffpowParameters', {
-    "__STYX_TYPE__": typing.Literal["mp_diffpow"],
+    "__STYXTYPE__": typing.Literal["mp_diffpow"],
     "reg_file": InputPathType,
     "diff_reg_file": str,
 })

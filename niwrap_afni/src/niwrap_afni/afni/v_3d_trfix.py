@@ -14,7 +14,7 @@ V_3D_TRFIX_METADATA = Metadata(
 
 
 V3dTrfixParameters = typing.TypedDict('V3dTrfixParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTRfix"],
+    "__STYXTYPE__": typing.Literal["3dTRfix"],
     "input_file": InputPathType,
     "tr_list": typing.NotRequired[InputPathType | None],
     "time_list": typing.NotRequired[InputPathType | None],

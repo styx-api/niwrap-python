@@ -14,7 +14,7 @@ SURFACE_FLIP_LR_METADATA = Metadata(
 
 
 SurfaceFlipLrParameters = typing.TypedDict('SurfaceFlipLrParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-flip-lr"],
+    "__STYXTYPE__": typing.Literal["surface-flip-lr"],
     "surface": InputPathType,
     "surface_out": str,
 })

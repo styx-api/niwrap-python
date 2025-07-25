@@ -14,14 +14,14 @@ V_5TT2GMWMI_METADATA = Metadata(
 
 
 V5tt2gmwmiConfigParameters = typing.TypedDict('V5tt2gmwmiConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 V5tt2gmwmiParameters = typing.TypedDict('V5tt2gmwmiParameters', {
-    "__STYX_TYPE__": typing.Literal["5tt2gmwmi"],
+    "__STYXTYPE__": typing.Literal["5tt2gmwmi"],
     "mask_in": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,

@@ -14,7 +14,7 @@ AFF2RIGID_METADATA = Metadata(
 
 
 Aff2rigidParameters = typing.TypedDict('Aff2rigidParameters', {
-    "__STYX_TYPE__": typing.Literal["aff2rigid"],
+    "__STYXTYPE__": typing.Literal["aff2rigid"],
     "input_transform": InputPathType,
     "output_transform": str,
 })

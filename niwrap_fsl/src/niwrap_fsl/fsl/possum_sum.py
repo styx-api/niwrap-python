@@ -14,7 +14,7 @@ POSSUM_SUM_METADATA = Metadata(
 
 
 PossumSumParameters = typing.TypedDict('PossumSumParameters', {
-    "__STYX_TYPE__": typing.Literal["possum_sum"],
+    "__STYXTYPE__": typing.Literal["possum_sum"],
     "input_signal": InputPathType,
     "output_signal": str,
     "num_processors": typing.NotRequired[int | None],

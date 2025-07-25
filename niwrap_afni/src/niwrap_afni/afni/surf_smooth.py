@@ -14,7 +14,7 @@ SURF_SMOOTH_METADATA = Metadata(
 
 
 SurfSmoothParameters = typing.TypedDict('SurfSmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfSmooth"],
+    "__STYXTYPE__": typing.Literal["SurfSmooth"],
     "surface": str,
     "method": str,
     "input_data": typing.NotRequired[InputPathType | None],

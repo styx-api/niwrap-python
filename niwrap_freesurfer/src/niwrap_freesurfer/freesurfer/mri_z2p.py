@@ -14,7 +14,7 @@ MRI_Z2P_METADATA = Metadata(
 
 
 MriZ2pParameters = typing.TypedDict('MriZ2pParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_z2p"],
+    "__STYXTYPE__": typing.Literal["mri_z2p"],
     "z_volume": InputPathType,
     "p_volume": str,
     "sig_volume": str,

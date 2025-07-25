@@ -14,7 +14,7 @@ MRIS_TOPO_FIXER_METADATA = Metadata(
 
 
 MrisTopoFixerParameters = typing.TypedDict('MrisTopoFixerParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_topo_fixer"],
+    "__STYXTYPE__": typing.Literal["mris_topo_fixer"],
     "input_surface": InputPathType,
     "output_surface": str,
 })

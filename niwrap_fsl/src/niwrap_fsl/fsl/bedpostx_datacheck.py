@@ -14,7 +14,7 @@ BEDPOSTX_DATACHECK_METADATA = Metadata(
 
 
 BedpostxDatacheckParameters = typing.TypedDict('BedpostxDatacheckParameters', {
-    "__STYX_TYPE__": typing.Literal["bedpostx_datacheck"],
+    "__STYXTYPE__": typing.Literal["bedpostx_datacheck"],
     "data_dir": str,
 })
 

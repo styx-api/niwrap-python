@@ -14,7 +14,7 @@ MRI_3D_PHOTO_RECON_METADATA = Metadata(
 
 
 Mri3dPhotoReconParameters = typing.TypedDict('Mri3dPhotoReconParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_3d_photo_recon"],
+    "__STYXTYPE__": typing.Literal["mri_3d_photo_recon"],
     "input_photo_dir": list[InputPathType],
     "input_segmentation_dir": list[InputPathType],
     "slice_thickness": float,

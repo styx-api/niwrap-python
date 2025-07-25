@@ -14,7 +14,7 @@ MRIS_TALAIRACH_METADATA = Metadata(
 
 
 MrisTalairachParameters = typing.TypedDict('MrisTalairachParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_talairach"],
+    "__STYXTYPE__": typing.Literal["mris_talairach"],
     "input_image": InputPathType,
 })
 

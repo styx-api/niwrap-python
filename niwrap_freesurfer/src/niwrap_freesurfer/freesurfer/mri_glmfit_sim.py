@@ -14,7 +14,7 @@ MRI_GLMFIT_SIM_METADATA = Metadata(
 
 
 MriGlmfitSimParameters = typing.TypedDict('MriGlmfitSimParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_glmfit-sim"],
+    "__STYXTYPE__": typing.Literal["mri_glmfit-sim"],
     "glmdir": str,
     "cwp": typing.NotRequired[float | None],
     "mczsim": typing.NotRequired[str | None],

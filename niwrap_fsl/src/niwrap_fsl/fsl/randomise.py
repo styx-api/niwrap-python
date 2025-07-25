@@ -14,7 +14,7 @@ RANDOMISE_METADATA = Metadata(
 
 
 RandomiseParameters = typing.TypedDict('RandomiseParameters', {
-    "__STYX_TYPE__": typing.Literal["randomise"],
+    "__STYXTYPE__": typing.Literal["randomise"],
     "in_file": InputPathType,
     "base_name": typing.NotRequired[str | None],
     "design_mat": typing.NotRequired[InputPathType | None],

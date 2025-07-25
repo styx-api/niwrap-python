@@ -14,7 +14,7 @@ ZIP_SPEC_FILE_METADATA = Metadata(
 
 
 ZipSpecFileParameters = typing.TypedDict('ZipSpecFileParameters', {
-    "__STYX_TYPE__": typing.Literal["zip-spec-file"],
+    "__STYXTYPE__": typing.Literal["zip-spec-file"],
     "spec_file": str,
     "extract_folder": str,
     "zip_file": str,

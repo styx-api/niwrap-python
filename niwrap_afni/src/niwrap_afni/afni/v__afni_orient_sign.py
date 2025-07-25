@@ -14,7 +14,7 @@ V__AFNI_ORIENT_SIGN_METADATA = Metadata(
 
 
 VAfniOrientSignParameters = typing.TypedDict('VAfniOrientSignParameters', {
-    "__STYX_TYPE__": typing.Literal["@AfniOrientSign"],
+    "__STYXTYPE__": typing.Literal["@AfniOrientSign"],
     "infile": InputPathType,
 })
 

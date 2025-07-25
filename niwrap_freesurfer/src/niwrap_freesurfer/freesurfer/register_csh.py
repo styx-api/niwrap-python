@@ -14,7 +14,7 @@ REGISTER_CSH_METADATA = Metadata(
 
 
 RegisterCshParameters = typing.TypedDict('RegisterCshParameters', {
-    "__STYX_TYPE__": typing.Literal["register.csh"],
+    "__STYXTYPE__": typing.Literal["register.csh"],
     "base_image": InputPathType,
     "new_image": InputPathType,
     "options": typing.NotRequired[str | None],

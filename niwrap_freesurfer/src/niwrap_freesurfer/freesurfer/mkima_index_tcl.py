@@ -14,7 +14,7 @@ MKIMA_INDEX_TCL_METADATA = Metadata(
 
 
 MkimaIndexTclParameters = typing.TypedDict('MkimaIndexTclParameters', {
-    "__STYX_TYPE__": typing.Literal["mkima_index.tcl"],
+    "__STYXTYPE__": typing.Literal["mkima_index.tcl"],
     "input_file": InputPathType,
     "output_flag": bool,
 })

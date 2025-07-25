@@ -14,14 +14,14 @@ AMP2RESPONSE_METADATA = Metadata(
 
 
 Amp2responseConfigParameters = typing.TypedDict('Amp2responseConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Amp2responseParameters = typing.TypedDict('Amp2responseParameters', {
-    "__STYX_TYPE__": typing.Literal["amp2response"],
+    "__STYXTYPE__": typing.Literal["amp2response"],
     "isotropic": bool,
     "noconstraint": bool,
     "directions": typing.NotRequired[InputPathType | None],

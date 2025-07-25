@@ -14,7 +14,7 @@ STEM2FNAME_METADATA = Metadata(
 
 
 Stem2fnameParameters = typing.TypedDict('Stem2fnameParameters', {
-    "__STYX_TYPE__": typing.Literal["stem2fname"],
+    "__STYXTYPE__": typing.Literal["stem2fname"],
     "stem": str,
 })
 

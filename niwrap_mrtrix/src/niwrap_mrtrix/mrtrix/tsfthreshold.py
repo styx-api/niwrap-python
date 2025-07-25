@@ -14,14 +14,14 @@ TSFTHRESHOLD_METADATA = Metadata(
 
 
 TsfthresholdConfigParameters = typing.TypedDict('TsfthresholdConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfthresholdParameters = typing.TypedDict('TsfthresholdParameters', {
-    "__STYX_TYPE__": typing.Literal["tsfthreshold"],
+    "__STYXTYPE__": typing.Literal["tsfthreshold"],
     "invert": bool,
     "info": bool,
     "quiet": bool,

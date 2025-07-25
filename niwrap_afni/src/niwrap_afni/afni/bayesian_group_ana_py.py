@@ -14,7 +14,7 @@ BAYESIAN_GROUP_ANA_PY_METADATA = Metadata(
 
 
 BayesianGroupAnaPyParameters = typing.TypedDict('BayesianGroupAnaPyParameters', {
-    "__STYX_TYPE__": typing.Literal["BayesianGroupAna.py"],
+    "__STYXTYPE__": typing.Literal["BayesianGroupAna.py"],
     "dataTable": InputPathType,
     "y_variable": str,
     "prefix": typing.NotRequired[str | None],

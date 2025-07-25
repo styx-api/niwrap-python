@@ -14,7 +14,7 @@ ADD_TO_SPEC_FILE_METADATA = Metadata(
 
 
 AddToSpecFileParameters = typing.TypedDict('AddToSpecFileParameters', {
-    "__STYX_TYPE__": typing.Literal["add-to-spec-file"],
+    "__STYXTYPE__": typing.Literal["add-to-spec-file"],
     "specfile": str,
     "structure": str,
     "filename": str,

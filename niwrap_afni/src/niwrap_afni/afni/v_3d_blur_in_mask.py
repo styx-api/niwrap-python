@@ -14,7 +14,7 @@ V_3D_BLUR_IN_MASK_METADATA = Metadata(
 
 
 V3dBlurInMaskParameters = typing.TypedDict('V3dBlurInMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["3dBlurInMask"],
+    "__STYXTYPE__": typing.Literal["3dBlurInMask"],
     "input_file": InputPathType,
     "output_prefix": str,
     "fwhm": float,

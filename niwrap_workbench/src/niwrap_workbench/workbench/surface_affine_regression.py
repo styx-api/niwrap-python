@@ -14,7 +14,7 @@ SURFACE_AFFINE_REGRESSION_METADATA = Metadata(
 
 
 SurfaceAffineRegressionParameters = typing.TypedDict('SurfaceAffineRegressionParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-affine-regression"],
+    "__STYXTYPE__": typing.Literal["surface-affine-regression"],
     "source": InputPathType,
     "target": InputPathType,
     "affine_out": str,

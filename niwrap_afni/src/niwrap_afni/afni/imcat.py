@@ -14,7 +14,7 @@ IMCAT_METADATA = Metadata(
 
 
 ImcatParameters = typing.TypedDict('ImcatParameters', {
-    "__STYX_TYPE__": typing.Literal["imcat"],
+    "__STYXTYPE__": typing.Literal["imcat"],
     "input_files": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
     "scale_pixels": typing.NotRequired[InputPathType | None],

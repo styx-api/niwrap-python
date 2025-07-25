@@ -14,7 +14,7 @@ CONVEX_HULL_METADATA = Metadata(
 
 
 ConvexHullParameters = typing.TypedDict('ConvexHullParameters', {
-    "__STYX_TYPE__": typing.Literal["ConvexHull"],
+    "__STYXTYPE__": typing.Literal["ConvexHull"],
     "vol": typing.NotRequired[InputPathType | None],
     "isoval": typing.NotRequired[float | None],
     "isorange": typing.NotRequired[list[float] | None],

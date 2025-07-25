@@ -14,14 +14,14 @@ TSFVALIDATE_METADATA = Metadata(
 
 
 TsfvalidateConfigParameters = typing.TypedDict('TsfvalidateConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfvalidateParameters = typing.TypedDict('TsfvalidateParameters', {
-    "__STYX_TYPE__": typing.Literal["tsfvalidate"],
+    "__STYXTYPE__": typing.Literal["tsfvalidate"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

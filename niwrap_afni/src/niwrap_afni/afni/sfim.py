@@ -14,7 +14,7 @@ SFIM_METADATA = Metadata(
 
 
 SfimParameters = typing.TypedDict('SfimParameters', {
-    "__STYX_TYPE__": typing.Literal["sfim"],
+    "__STYXTYPE__": typing.Literal["sfim"],
     "input_images": list[InputPathType],
     "sfint_file": typing.NotRequired[str | None],
     "baseline_state": typing.NotRequired[str | None],

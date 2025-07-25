@@ -14,7 +14,7 @@ MRI_REFINE_SEG_METADATA = Metadata(
 
 
 MriRefineSegParameters = typing.TypedDict('MriRefineSegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_refine_seg"],
+    "__STYXTYPE__": typing.Literal["mri_refine_seg"],
     "input_segmentation": InputPathType,
     "output_segmentation": str,
     "debug": bool,

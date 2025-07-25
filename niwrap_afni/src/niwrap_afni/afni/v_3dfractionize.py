@@ -14,7 +14,7 @@ V_3DFRACTIONIZE_METADATA = Metadata(
 
 
 V3dfractionizeParameters = typing.TypedDict('V3dfractionizeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dfractionize"],
+    "__STYXTYPE__": typing.Literal["3dfractionize"],
     "template": InputPathType,
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],

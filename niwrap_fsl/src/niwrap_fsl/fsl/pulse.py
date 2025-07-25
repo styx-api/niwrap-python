@@ -14,7 +14,7 @@ PULSE_METADATA = Metadata(
 
 
 PulseParameters = typing.TypedDict('PulseParameters', {
-    "__STYX_TYPE__": typing.Literal["pulse"],
+    "__STYXTYPE__": typing.Literal["pulse"],
     "input_file": InputPathType,
     "output_base": str,
     "seq": typing.NotRequired[str | None],

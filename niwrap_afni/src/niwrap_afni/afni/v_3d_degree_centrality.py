@@ -14,7 +14,7 @@ V_3D_DEGREE_CENTRALITY_METADATA = Metadata(
 
 
 V3dDegreeCentralityParameters = typing.TypedDict('V3dDegreeCentralityParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDegreeCentrality"],
+    "__STYXTYPE__": typing.Literal["3dDegreeCentrality"],
     "autoclip": bool,
     "automask": bool,
     "in_file": InputPathType,

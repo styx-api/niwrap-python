@@ -14,7 +14,7 @@ SUPER_RESOLUTION_METADATA = Metadata(
 
 
 SuperResolutionParameters = typing.TypedDict('SuperResolutionParameters', {
-    "__STYX_TYPE__": typing.Literal["SuperResolution"],
+    "__STYXTYPE__": typing.Literal["SuperResolution"],
     "image_dimension": int,
     "output_image": str,
     "domain_image": InputPathType,

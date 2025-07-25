@@ -14,7 +14,7 @@ V_3DMATMULT_METADATA = Metadata(
 
 
 V3dmatmultParameters = typing.TypedDict('V3dmatmultParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmatmult"],
+    "__STYXTYPE__": typing.Literal["3dmatmult"],
     "inputA": InputPathType,
     "inputB": InputPathType,
     "prefix": str,

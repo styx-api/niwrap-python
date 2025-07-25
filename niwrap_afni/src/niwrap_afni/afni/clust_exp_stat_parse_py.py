@@ -14,7 +14,7 @@ CLUST_EXP_STAT_PARSE_PY_METADATA = Metadata(
 
 
 ClustExpStatParsePyParameters = typing.TypedDict('ClustExpStatParsePyParameters', {
-    "__STYX_TYPE__": typing.Literal["ClustExp_StatParse.py"],
+    "__STYXTYPE__": typing.Literal["ClustExp_StatParse.py"],
     "statdset": InputPathType,
     "meanbrik": float,
     "threshbrik": float,

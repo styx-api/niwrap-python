@@ -14,7 +14,7 @@ SCCAN_METADATA = Metadata(
 
 
 SccanParameters = typing.TypedDict('SccanParameters', {
-    "__STYX_TYPE__": typing.Literal["sccan"],
+    "__STYXTYPE__": typing.Literal["sccan"],
     "output": typing.NotRequired[str | None],
     "n_permutations": typing.NotRequired[int | None],
     "smoother": typing.NotRequired[int | None],

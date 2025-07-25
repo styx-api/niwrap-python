@@ -14,7 +14,7 @@ V_3D_DECONVOLVE_METADATA = Metadata(
 
 
 V3dDeconvolveParameters = typing.TypedDict('V3dDeconvolveParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDeconvolve"],
+    "__STYXTYPE__": typing.Literal["3dDeconvolve"],
     "input_dataset": InputPathType,
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "num_stimts": typing.NotRequired[int | None],

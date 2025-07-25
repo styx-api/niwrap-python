@@ -14,40 +14,40 @@ MRTRANSFORM_METADATA = Metadata(
 
 
 MrtransformFslgradParameters = typing.TypedDict('MrtransformFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrtransformExportGradFslParameters = typing.TypedDict('MrtransformExportGradFslParameters', {
-    "__STYX_TYPE__": typing.Literal["export_grad_fsl"],
+    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrtransformVariousStringParameters = typing.TypedDict('MrtransformVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrtransformVariousFileParameters = typing.TypedDict('MrtransformVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrtransformConfigParameters = typing.TypedDict('MrtransformConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrtransformParameters = typing.TypedDict('MrtransformParameters', {
-    "__STYX_TYPE__": typing.Literal["mrtransform"],
+    "__STYXTYPE__": typing.Literal["mrtransform"],
     "linear": typing.NotRequired[InputPathType | None],
     "flip": typing.NotRequired[list[int] | None],
     "inverse": bool,

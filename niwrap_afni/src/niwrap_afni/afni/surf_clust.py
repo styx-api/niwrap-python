@@ -14,7 +14,7 @@ SURF_CLUST_METADATA = Metadata(
 
 
 SurfClustParameters = typing.TypedDict('SurfClustParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfClust"],
+    "__STYXTYPE__": typing.Literal["SurfClust"],
     "specfile": typing.NotRequired[InputPathType | None],
     "input_surface": typing.NotRequired[str | None],
     "input_surf_name": typing.NotRequired[InputPathType | None],

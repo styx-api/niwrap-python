@@ -14,7 +14,7 @@ QUOTIZE_METADATA = Metadata(
 
 
 QuotizeParameters = typing.TypedDict('QuotizeParameters', {
-    "__STYX_TYPE__": typing.Literal["quotize"],
+    "__STYXTYPE__": typing.Literal["quotize"],
     "name": str,
     "input_file": InputPathType,
     "output_file": str,

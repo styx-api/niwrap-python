@@ -14,7 +14,7 @@ LABEL_MASK_METADATA = Metadata(
 
 
 LabelMaskParameters = typing.TypedDict('LabelMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["label-mask"],
+    "__STYXTYPE__": typing.Literal["label-mask"],
     "label": InputPathType,
     "mask": InputPathType,
     "label_out": str,

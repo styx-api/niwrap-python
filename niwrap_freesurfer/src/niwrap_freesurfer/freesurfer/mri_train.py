@@ -14,7 +14,7 @@ MRI_TRAIN_METADATA = Metadata(
 
 
 MriTrainParameters = typing.TypedDict('MriTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_train"],
+    "__STYXTYPE__": typing.Literal["mri_train"],
     "training_file": InputPathType,
     "output_file": str,
 })

@@ -14,7 +14,7 @@ FNIRTFILEUTILS_METADATA = Metadata(
 
 
 FnirtfileutilsParameters = typing.TypedDict('FnirtfileutilsParameters', {
-    "__STYX_TYPE__": typing.Literal["fnirtfileutils"],
+    "__STYXTYPE__": typing.Literal["fnirtfileutils"],
     "input_coefs": InputPathType,
     "ref_volume": typing.NotRequired[InputPathType | None],
     "out_field": typing.NotRequired[str | None],

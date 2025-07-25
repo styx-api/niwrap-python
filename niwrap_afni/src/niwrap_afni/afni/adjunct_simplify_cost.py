@@ -14,7 +14,7 @@ ADJUNCT_SIMPLIFY_COST_METADATA = Metadata(
 
 
 AdjunctSimplifyCostParameters = typing.TypedDict('AdjunctSimplifyCostParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_simplify_cost"],
+    "__STYXTYPE__": typing.Literal["adjunct_simplify_cost"],
     "cost_function": str,
 })
 

@@ -14,7 +14,7 @@ DMRI_MERGEPATHS_METADATA = Metadata(
 
 
 DmriMergepathsParameters = typing.TypedDict('DmriMergepathsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_mergepaths"],
+    "__STYXTYPE__": typing.Literal["dmri_mergepaths"],
     "input_volumes": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_volume": str,

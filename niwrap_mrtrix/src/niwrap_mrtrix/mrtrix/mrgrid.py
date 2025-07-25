@@ -14,33 +14,33 @@ MRGRID_METADATA = Metadata(
 
 
 MrgridAxisParameters = typing.TypedDict('MrgridAxisParameters', {
-    "__STYX_TYPE__": typing.Literal["axis"],
+    "__STYXTYPE__": typing.Literal["axis"],
     "index": int,
     "spec": str,
 })
 
 
 MrgridVariousStringParameters = typing.TypedDict('MrgridVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrgridVariousFileParameters = typing.TypedDict('MrgridVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrgridConfigParameters = typing.TypedDict('MrgridConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrgridParameters = typing.TypedDict('MrgridParameters', {
-    "__STYX_TYPE__": typing.Literal["mrgrid"],
+    "__STYXTYPE__": typing.Literal["mrgrid"],
     "template": typing.NotRequired[InputPathType | None],
     "size": typing.NotRequired[list[int] | None],
     "voxel": typing.NotRequired[list[float] | None],

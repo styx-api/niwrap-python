@@ -14,7 +14,7 @@ REGISTER_SUBJECT_METADATA = Metadata(
 
 
 RegisterSubjectParameters = typing.TypedDict('RegisterSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["register_subject"],
+    "__STYXTYPE__": typing.Literal["register_subject"],
     "input_volume": typing.NotRequired[InputPathType | None],
     "mask_volume": typing.NotRequired[InputPathType | None],
     "control_points": typing.NotRequired[str | None],

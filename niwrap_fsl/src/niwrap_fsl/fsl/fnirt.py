@@ -14,7 +14,7 @@ FNIRT_METADATA = Metadata(
 
 
 FnirtParameters = typing.TypedDict('FnirtParameters', {
-    "__STYX_TYPE__": typing.Literal["fnirt"],
+    "__STYXTYPE__": typing.Literal["fnirt"],
     "affine_file": typing.NotRequired[InputPathType | None],
     "config_file": typing.NotRequired[typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None],
     "field_file": typing.NotRequired[InputPathType | None],

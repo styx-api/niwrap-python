@@ -14,7 +14,7 @@ MBA_METADATA = Metadata(
 
 
 MbaParameters = typing.TypedDict('MbaParameters', {
-    "__STYX_TYPE__": typing.Literal["MBA"],
+    "__STYXTYPE__": typing.Literal["MBA"],
     "prefix": str,
     "chains": typing.NotRequired[int | None],
     "iterations": typing.NotRequired[int | None],

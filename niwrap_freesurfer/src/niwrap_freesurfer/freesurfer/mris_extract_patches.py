@@ -14,7 +14,7 @@ MRIS_EXTRACT_PATCHES_METADATA = Metadata(
 
 
 MrisExtractPatchesParameters = typing.TypedDict('MrisExtractPatchesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_extract_patches"],
+    "__STYXTYPE__": typing.Literal["mris_extract_patches"],
     "subject": str,
     "output_dir": str,
 })

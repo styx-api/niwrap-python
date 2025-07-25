@@ -14,21 +14,21 @@ N4_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 
 
 N4BiasFieldCorrectionConvergenceParameters = typing.TypedDict('N4BiasFieldCorrectionConvergenceParameters', {
-    "__STYX_TYPE__": typing.Literal["convergence"],
+    "__STYXTYPE__": typing.Literal["convergence"],
     "convergence": list[int],
     "convergence_threshold": typing.NotRequired[float | None],
 })
 
 
 N4BiasFieldCorrectionBsplineFittingParameters = typing.TypedDict('N4BiasFieldCorrectionBsplineFittingParameters', {
-    "__STYX_TYPE__": typing.Literal["bspline_fitting"],
+    "__STYXTYPE__": typing.Literal["bspline_fitting"],
     "spline_distance": list[float],
     "spline_order": typing.NotRequired[int | None],
 })
 
 
 N4BiasFieldCorrectionHistogramSharpeningParameters = typing.TypedDict('N4BiasFieldCorrectionHistogramSharpeningParameters', {
-    "__STYX_TYPE__": typing.Literal["histogram_sharpening"],
+    "__STYXTYPE__": typing.Literal["histogram_sharpening"],
     "fwhm": typing.NotRequired[float | None],
     "wiener_noise": typing.NotRequired[float | None],
     "number_of_histogram_bins": typing.NotRequired[int | None],
@@ -36,20 +36,20 @@ N4BiasFieldCorrectionHistogramSharpeningParameters = typing.TypedDict('N4BiasFie
 
 
 N4BiasFieldCorrectionCorrectedOutputParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["correctedOutput"],
+    "__STYXTYPE__": typing.Literal["correctedOutput"],
     "correctedOutputFileName": str,
 })
 
 
 N4BiasFieldCorrectionCorrectedOutputNoiseParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParameters', {
-    "__STYX_TYPE__": typing.Literal["correctedOutputNoise"],
+    "__STYXTYPE__": typing.Literal["correctedOutputNoise"],
     "correctedOutputFileName": str,
     "biasFile": typing.NotRequired[str | None],
 })
 
 
 N4BiasFieldCorrectionParameters = typing.TypedDict('N4BiasFieldCorrectionParameters', {
-    "__STYX_TYPE__": typing.Literal["N4BiasFieldCorrection"],
+    "__STYXTYPE__": typing.Literal["N4BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "shrink_factor": typing.NotRequired[int | None],
     "mask_image": typing.NotRequired[InputPathType | None],

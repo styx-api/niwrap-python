@@ -14,7 +14,7 @@ V_3D_UNIFIZE_METADATA = Metadata(
 
 
 V3dUnifizeParameters = typing.TypedDict('V3dUnifizeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dUnifize"],
+    "__STYXTYPE__": typing.Literal["3dUnifize"],
     "cl_frac": typing.NotRequired[float | None],
     "epi": bool,
     "gm": bool,

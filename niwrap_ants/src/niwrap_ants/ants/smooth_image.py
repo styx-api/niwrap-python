@@ -14,7 +14,7 @@ SMOOTH_IMAGE_METADATA = Metadata(
 
 
 SmoothImageParameters = typing.TypedDict('SmoothImageParameters', {
-    "__STYX_TYPE__": typing.Literal["SmoothImage"],
+    "__STYXTYPE__": typing.Literal["SmoothImage"],
     "image_dimension": int,
     "image_ext": InputPathType,
     "smoothing_sigma": str,

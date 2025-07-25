@@ -14,7 +14,7 @@ MRI_MS_FITPARMS_METADATA = Metadata(
 
 
 MriMsFitparmsParameters = typing.TypedDict('MriMsFitparmsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_ms_fitparms"],
+    "__STYXTYPE__": typing.Literal["mri_ms_fitparms"],
     "volumes": list[InputPathType],
     "output_dir": str,
     "afi_flag": bool,

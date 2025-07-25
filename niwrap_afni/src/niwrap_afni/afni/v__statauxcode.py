@@ -14,7 +14,7 @@ V__STATAUXCODE_METADATA = Metadata(
 
 
 VStatauxcodeParameters = typing.TypedDict('VStatauxcodeParameters', {
-    "__STYX_TYPE__": typing.Literal["@statauxcode"],
+    "__STYXTYPE__": typing.Literal["@statauxcode"],
     "code": str,
 })
 

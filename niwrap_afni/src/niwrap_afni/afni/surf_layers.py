@@ -14,7 +14,7 @@ SURF_LAYERS_METADATA = Metadata(
 
 
 SurfLayersParameters = typing.TypedDict('SurfLayersParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfLayers"],
+    "__STYXTYPE__": typing.Literal["SurfLayers"],
     "spec_dset": typing.NotRequired[InputPathType | None],
     "outdir": typing.NotRequired[str | None],
     "states": typing.NotRequired[str | None],

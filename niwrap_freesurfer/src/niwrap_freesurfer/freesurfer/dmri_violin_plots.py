@@ -14,7 +14,7 @@ DMRI_VIOLIN_PLOTS_METADATA = Metadata(
 
 
 DmriViolinPlotsParameters = typing.TypedDict('DmriViolinPlotsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_violinPlots"],
+    "__STYXTYPE__": typing.Literal["dmri_violinPlots"],
     "input_directory": str,
     "labels": InputPathType,
     "structure": str,

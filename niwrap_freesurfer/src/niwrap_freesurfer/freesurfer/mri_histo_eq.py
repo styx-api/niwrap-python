@@ -14,7 +14,7 @@ MRI_HISTO_EQ_METADATA = Metadata(
 
 
 MriHistoEqParameters = typing.TypedDict('MriHistoEqParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_histo_eq"],
+    "__STYXTYPE__": typing.Literal["mri_histo_eq"],
     "input_volume_1": InputPathType,
     "input_volume_2": InputPathType,
 })

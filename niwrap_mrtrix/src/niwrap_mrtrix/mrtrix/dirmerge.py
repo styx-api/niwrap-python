@@ -14,14 +14,14 @@ DIRMERGE_METADATA = Metadata(
 
 
 DirmergeConfigParameters = typing.TypedDict('DirmergeConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirmergeParameters = typing.TypedDict('DirmergeParameters', {
-    "__STYX_TYPE__": typing.Literal["dirmerge"],
+    "__STYXTYPE__": typing.Literal["dirmerge"],
     "unipolar_weight": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,

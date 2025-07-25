@@ -14,7 +14,7 @@ ASL_FILE_METADATA = Metadata(
 
 
 AslFileParameters = typing.TypedDict('AslFileParameters', {
-    "__STYX_TYPE__": typing.Literal["asl_file"],
+    "__STYXTYPE__": typing.Literal["asl_file"],
     "datafile": InputPathType,
     "ntis": float,
     "mask": typing.NotRequired[InputPathType | None],

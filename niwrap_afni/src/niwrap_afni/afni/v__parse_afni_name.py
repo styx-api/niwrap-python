@@ -14,7 +14,7 @@ V__PARSE_AFNI_NAME_METADATA = Metadata(
 
 
 VParseAfniNameParameters = typing.TypedDict('VParseAfniNameParameters', {
-    "__STYX_TYPE__": typing.Literal["@parse_afni_name"],
+    "__STYXTYPE__": typing.Literal["@parse_afni_name"],
     "afni_name": str,
 })
 

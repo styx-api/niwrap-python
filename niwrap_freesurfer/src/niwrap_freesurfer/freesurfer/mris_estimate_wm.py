@@ -14,7 +14,7 @@ MRIS_ESTIMATE_WM_METADATA = Metadata(
 
 
 MrisEstimateWmParameters = typing.TypedDict('MrisEstimateWmParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_estimate_wm"],
+    "__STYXTYPE__": typing.Literal["mris_estimate_wm"],
     "subjs": list[str],
     "hemi": str,
     "sdir": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MRI_LONG_NORMALIZE_METADATA = Metadata(
 
 
 MriLongNormalizeParameters = typing.TypedDict('MriLongNormalizeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_long_normalize"],
+    "__STYXTYPE__": typing.Literal["mri_long_normalize"],
     "input_vol": InputPathType,
     "base_tp_file": InputPathType,
     "output_vol": str,

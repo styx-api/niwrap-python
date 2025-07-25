@@ -14,7 +14,7 @@ MRI_MAKE_UCHAR_METADATA = Metadata(
 
 
 MriMakeUcharParameters = typing.TypedDict('MriMakeUcharParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_make_uchar"],
+    "__STYXTYPE__": typing.Literal["mri_make_uchar"],
     "input_volume": InputPathType,
     "talairach_xform": InputPathType,
     "output_volume": str,

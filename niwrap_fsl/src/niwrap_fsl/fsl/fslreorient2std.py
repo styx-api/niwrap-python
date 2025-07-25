@@ -14,7 +14,7 @@ FSLREORIENT2STD_METADATA = Metadata(
 
 
 Fslreorient2stdParameters = typing.TypedDict('Fslreorient2stdParameters', {
-    "__STYX_TYPE__": typing.Literal["fslreorient2std"],
+    "__STYXTYPE__": typing.Literal["fslreorient2std"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "matrix_file": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ PRELUDE_METADATA = Metadata(
 
 
 PreludeParameters = typing.TypedDict('PreludeParameters', {
-    "__STYX_TYPE__": typing.Literal["prelude"],
+    "__STYXTYPE__": typing.Literal["prelude"],
     "output_unwrap": str,
     "output_unwrap_alias": InputPathType,
     "complex_phase": typing.NotRequired[InputPathType | None],

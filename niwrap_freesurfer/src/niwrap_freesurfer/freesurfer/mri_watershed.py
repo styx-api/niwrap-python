@@ -14,7 +14,7 @@ MRI_WATERSHED_METADATA = Metadata(
 
 
 MriWatershedParameters = typing.TypedDict('MriWatershedParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_watershed"],
+    "__STYXTYPE__": typing.Literal["mri_watershed"],
     "input_volume": InputPathType,
     "output_volume": str,
     "weight": typing.NotRequired[float | None],

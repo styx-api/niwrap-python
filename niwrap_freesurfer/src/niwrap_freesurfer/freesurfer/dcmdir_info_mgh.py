@@ -14,7 +14,7 @@ DCMDIR_INFO_MGH_METADATA = Metadata(
 
 
 DcmdirInfoMghParameters = typing.TypedDict('DcmdirInfoMghParameters', {
-    "__STYX_TYPE__": typing.Literal["dcmdir-info-mgh"],
+    "__STYXTYPE__": typing.Literal["dcmdir-info-mgh"],
     "dicomdir": str,
     "unpackdir": typing.NotRequired[str | None],
     "version": bool,

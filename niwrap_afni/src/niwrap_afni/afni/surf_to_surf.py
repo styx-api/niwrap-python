@@ -14,7 +14,7 @@ SURF_TO_SURF_METADATA = Metadata(
 
 
 SurfToSurfParameters = typing.TypedDict('SurfToSurfParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfToSurf"],
+    "__STYXTYPE__": typing.Literal["SurfToSurf"],
     "input_surface_1": InputPathType,
     "input_surface_2": InputPathType,
     "surface_volume": typing.NotRequired[InputPathType | None],

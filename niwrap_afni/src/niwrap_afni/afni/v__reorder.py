@@ -14,7 +14,7 @@ V__REORDER_METADATA = Metadata(
 
 
 VReorderParameters = typing.TypedDict('VReorderParameters', {
-    "__STYX_TYPE__": typing.Literal["@Reorder"],
+    "__STYXTYPE__": typing.Literal["@Reorder"],
     "input_dataset": InputPathType,
     "mapfile": InputPathType,
     "prefix": str,

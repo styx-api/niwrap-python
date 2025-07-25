@@ -14,7 +14,7 @@ V__SCALE_VOLUME_METADATA = Metadata(
 
 
 VScaleVolumeParameters = typing.TypedDict('VScaleVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["@ScaleVolume"],
+    "__STYXTYPE__": typing.Literal["@ScaleVolume"],
     "input_dset": InputPathType,
     "prefix": str,
     "val_clip": typing.NotRequired[list[float] | None],

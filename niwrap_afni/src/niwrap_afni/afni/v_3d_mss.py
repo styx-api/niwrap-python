@@ -14,7 +14,7 @@ V_3D_MSS_METADATA = Metadata(
 
 
 V3dMssParameters = typing.TypedDict('V3dMssParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMSS"],
+    "__STYXTYPE__": typing.Literal["3dMSS"],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "mrr_formula": typing.NotRequired[str | None],

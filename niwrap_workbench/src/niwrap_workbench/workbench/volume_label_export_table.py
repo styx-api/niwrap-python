@@ -14,7 +14,7 @@ VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 VolumeLabelExportTableParameters = typing.TypedDict('VolumeLabelExportTableParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-label-export-table"],
+    "__STYXTYPE__": typing.Literal["volume-label-export-table"],
     "label_in": InputPathType,
     "map": str,
     "table_out": str,

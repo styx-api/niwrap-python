@@ -14,7 +14,7 @@ V_1D_BPORT_METADATA = Metadata(
 
 
 V1dBportParameters = typing.TypedDict('V1dBportParameters', {
-    "__STYX_TYPE__": typing.Literal["1dBport"],
+    "__STYXTYPE__": typing.Literal["1dBport"],
     "band": list[float],
     "invert": bool,
     "nozero": bool,

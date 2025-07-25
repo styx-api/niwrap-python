@@ -14,7 +14,7 @@ ANATOMI_CUTS_UTILS_METADATA = Metadata(
 
 
 AnatomiCutsUtilsParameters = typing.TypedDict('AnatomiCutsUtilsParameters', {
-    "__STYX_TYPE__": typing.Literal["anatomiCutsUtils"],
+    "__STYXTYPE__": typing.Literal["anatomiCutsUtils"],
     "modules": typing.NotRequired[list[str] | None],
 })
 

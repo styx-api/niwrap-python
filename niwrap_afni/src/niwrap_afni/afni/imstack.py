@@ -14,7 +14,7 @@ IMSTACK_METADATA = Metadata(
 
 
 ImstackParameters = typing.TypedDict('ImstackParameters', {
-    "__STYX_TYPE__": typing.Literal["imstack"],
+    "__STYXTYPE__": typing.Literal["imstack"],
     "image_files": list[InputPathType],
     "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
     "output_prefix": typing.NotRequired[str | None],

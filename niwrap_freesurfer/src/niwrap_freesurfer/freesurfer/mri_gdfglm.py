@@ -14,7 +14,7 @@ MRI_GDFGLM_METADATA = Metadata(
 
 
 MriGdfglmParameters = typing.TypedDict('MriGdfglmParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gdfglm"],
+    "__STYXTYPE__": typing.Literal["mri_gdfglm"],
     "inputs": typing.NotRequired[str | None],
 })
 

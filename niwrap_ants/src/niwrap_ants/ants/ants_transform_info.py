@@ -14,7 +14,7 @@ ANTS_TRANSFORM_INFO_METADATA = Metadata(
 
 
 AntsTransformInfoParameters = typing.TypedDict('AntsTransformInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["antsTransformInfo"],
+    "__STYXTYPE__": typing.Literal["antsTransformInfo"],
     "transform_file": InputPathType,
 })
 

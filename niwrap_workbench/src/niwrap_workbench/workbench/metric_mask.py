@@ -14,7 +14,7 @@ METRIC_MASK_METADATA = Metadata(
 
 
 MetricMaskParameters = typing.TypedDict('MetricMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-mask"],
+    "__STYXTYPE__": typing.Literal["metric-mask"],
     "metric": InputPathType,
     "mask": InputPathType,
     "metric_out": str,

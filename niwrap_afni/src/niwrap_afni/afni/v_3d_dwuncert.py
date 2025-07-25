@@ -14,7 +14,7 @@ V_3D_DWUNCERT_METADATA = Metadata(
 
 
 V3dDwuncertParameters = typing.TypedDict('V3dDwuncertParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDWUncert"],
+    "__STYXTYPE__": typing.Literal["3dDWUncert"],
     "input_file": InputPathType,
     "input_prefix": str,
     "output_prefix": str,

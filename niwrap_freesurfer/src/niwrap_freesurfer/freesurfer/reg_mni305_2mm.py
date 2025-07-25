@@ -14,7 +14,7 @@ REG_MNI305_2MM_METADATA = Metadata(
 
 
 RegMni3052mmParameters = typing.TypedDict('RegMni3052mmParameters', {
-    "__STYX_TYPE__": typing.Literal["reg-mni305.2mm"],
+    "__STYXTYPE__": typing.Literal["reg-mni305.2mm"],
     "subject_id": str,
     "regfile": InputPathType,
 })

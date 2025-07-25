@@ -14,7 +14,7 @@ V_3D_GEN_FEATURE_DIST_METADATA = Metadata(
 
 
 V3dGenFeatureDistParameters = typing.TypedDict('V3dGenFeatureDistParameters', {
-    "__STYX_TYPE__": typing.Literal["3dGenFeatureDist"],
+    "__STYXTYPE__": typing.Literal["3dGenFeatureDist"],
     "features_string": str,
     "class_string": str,
     "prefix": typing.NotRequired[str | None],

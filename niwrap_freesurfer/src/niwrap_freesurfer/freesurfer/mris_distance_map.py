@@ -14,7 +14,7 @@ MRIS_DISTANCE_MAP_METADATA = Metadata(
 
 
 MrisDistanceMapParameters = typing.TypedDict('MrisDistanceMapParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_distance_map"],
+    "__STYXTYPE__": typing.Literal["mris_distance_map"],
     "input_surface_file": InputPathType,
     "output_scalar_field": str,
 })

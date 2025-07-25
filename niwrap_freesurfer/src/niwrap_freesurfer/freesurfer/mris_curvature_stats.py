@@ -14,7 +14,7 @@ MRIS_CURVATURE_STATS_METADATA = Metadata(
 
 
 MrisCurvatureStatsParameters = typing.TypedDict('MrisCurvatureStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_curvature_stats"],
+    "__STYXTYPE__": typing.Literal["mris_curvature_stats"],
     "subject_name": str,
     "hemisphere": str,
     "curvature_files": typing.NotRequired[list[InputPathType] | None],

@@ -14,7 +14,7 @@ SERIAL_HELPER_METADATA = Metadata(
 
 
 SerialHelperParameters = typing.TypedDict('SerialHelperParameters', {
-    "__STYX_TYPE__": typing.Literal["serial_helper"],
+    "__STYXTYPE__": typing.Literal["serial_helper"],
     "serial_port": str,
     "sock_num": typing.NotRequired[float | None],
     "mp_max": typing.NotRequired[float | None],

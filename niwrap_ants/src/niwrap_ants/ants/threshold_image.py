@@ -14,7 +14,7 @@ THRESHOLD_IMAGE_METADATA = Metadata(
 
 
 ThresholdImageParameters = typing.TypedDict('ThresholdImageParameters', {
-    "__STYX_TYPE__": typing.Literal["ThresholdImage"],
+    "__STYXTYPE__": typing.Literal["ThresholdImage"],
     "image_dimension": int,
     "image_in": InputPathType,
     "out_image": str,

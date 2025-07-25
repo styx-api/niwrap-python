@@ -14,7 +14,7 @@ MRIS_REMOVE_INTERSECTION_METADATA = Metadata(
 
 
 MrisRemoveIntersectionParameters = typing.TypedDict('MrisRemoveIntersectionParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_remove_intersection"],
+    "__STYXTYPE__": typing.Literal["mris_remove_intersection"],
     "surface_in_file": InputPathType,
     "corrected_surface_out_file": str,
     "fill_holes": bool,

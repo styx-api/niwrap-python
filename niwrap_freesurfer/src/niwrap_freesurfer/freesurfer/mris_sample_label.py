@@ -14,7 +14,7 @@ MRIS_SAMPLE_LABEL_METADATA = Metadata(
 
 
 MrisSampleLabelParameters = typing.TypedDict('MrisSampleLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_sample_label"],
+    "__STYXTYPE__": typing.Literal["mris_sample_label"],
     "input_label_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_label_file": str,

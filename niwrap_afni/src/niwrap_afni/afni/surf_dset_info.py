@@ -14,7 +14,7 @@ SURF_DSET_INFO_METADATA = Metadata(
 
 
 SurfDsetInfoParameters = typing.TypedDict('SurfDsetInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfDsetInfo"],
+    "__STYXTYPE__": typing.Literal["SurfDsetInfo"],
     "input_dsets": list[InputPathType],
     "debug_level": typing.NotRequired[int | None],
     "novolreg": bool,

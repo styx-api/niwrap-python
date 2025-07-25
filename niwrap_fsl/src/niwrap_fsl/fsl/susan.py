@@ -14,7 +14,7 @@ SUSAN_METADATA = Metadata(
 
 
 SusanParameters = typing.TypedDict('SusanParameters', {
-    "__STYX_TYPE__": typing.Literal["susan"],
+    "__STYXTYPE__": typing.Literal["susan"],
     "input_file": InputPathType,
     "brightness_threshold": float,
     "spatial_size": float,

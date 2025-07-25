@@ -14,7 +14,7 @@ MRI_FUNCVITS_METADATA = Metadata(
 
 
 MriFuncvitsParameters = typing.TypedDict('MriFuncvitsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri-funcvits"],
+    "__STYXTYPE__": typing.Literal["mri-funcvits"],
     "stem": str,
     "outdir": str,
     "reg": typing.NotRequired[str | None],

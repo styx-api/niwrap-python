@@ -14,40 +14,40 @@ DWI2FOD_METADATA = Metadata(
 
 
 Dwi2fodFslgradParameters = typing.TypedDict('Dwi2fodFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2fodVariousStringParameters = typing.TypedDict('Dwi2fodVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 Dwi2fodVariousFileParameters = typing.TypedDict('Dwi2fodVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 Dwi2fodConfigParameters = typing.TypedDict('Dwi2fodConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2fodResponseOdfParameters = typing.TypedDict('Dwi2fodResponseOdfParameters', {
-    "__STYX_TYPE__": typing.Literal["response_odf"],
+    "__STYXTYPE__": typing.Literal["response_odf"],
     "response": InputPathType,
     "odf": str,
 })
 
 
 Dwi2fodParameters = typing.TypedDict('Dwi2fodParameters', {
-    "__STYX_TYPE__": typing.Literal["dwi2fod"],
+    "__STYXTYPE__": typing.Literal["dwi2fod"],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2fodFslgradParameters | None],
     "shells": typing.NotRequired[list[float] | None],

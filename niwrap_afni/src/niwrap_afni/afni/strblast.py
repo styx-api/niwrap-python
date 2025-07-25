@@ -14,7 +14,7 @@ STRBLAST_METADATA = Metadata(
 
 
 StrblastParameters = typing.TypedDict('StrblastParameters', {
-    "__STYX_TYPE__": typing.Literal["strblast"],
+    "__STYXTYPE__": typing.Literal["strblast"],
     "targetstring": str,
     "input_files": list[InputPathType],
     "new_char": typing.NotRequired[str | None],

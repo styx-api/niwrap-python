@@ -14,7 +14,7 @@ METRIC_FALSE_CORRELATION_METADATA = Metadata(
 
 
 MetricFalseCorrelationParameters = typing.TypedDict('MetricFalseCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-false-correlation"],
+    "__STYXTYPE__": typing.Literal["metric-false-correlation"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "3d_dist": float,

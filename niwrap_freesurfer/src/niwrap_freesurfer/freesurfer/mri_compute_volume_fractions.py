@@ -14,7 +14,7 @@ MRI_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 
 
 MriComputeVolumeFractionsParameters = typing.TypedDict('MriComputeVolumeFractionsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compute_volume_fractions"],
+    "__STYXTYPE__": typing.Literal["mri_compute_volume_fractions"],
     "output_stem": str,
     "registration_file": typing.NotRequired[InputPathType | None],
     "regheader": typing.NotRequired[str | None],

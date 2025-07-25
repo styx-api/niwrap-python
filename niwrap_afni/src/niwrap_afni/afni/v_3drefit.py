@@ -14,7 +14,7 @@ V_3DREFIT_METADATA = Metadata(
 
 
 V3drefitParameters = typing.TypedDict('V3drefitParameters', {
-    "__STYX_TYPE__": typing.Literal["3drefit"],
+    "__STYXTYPE__": typing.Literal["3drefit"],
     "atrcopy": typing.NotRequired[list[str] | None],
     "atrfloat": typing.NotRequired[list[str] | None],
     "atrint": typing.NotRequired[list[str] | None],

@@ -14,14 +14,14 @@ SURFACE_APPLY_AFFINE_METADATA = Metadata(
 
 
 SurfaceApplyAffineFlirtParameters = typing.TypedDict('SurfaceApplyAffineFlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["flirt"],
+    "__STYXTYPE__": typing.Literal["flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 SurfaceApplyAffineParameters = typing.TypedDict('SurfaceApplyAffineParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-apply-affine"],
+    "__STYXTYPE__": typing.Literal["surface-apply-affine"],
     "in_surf": InputPathType,
     "affine": str,
     "out_surf": str,

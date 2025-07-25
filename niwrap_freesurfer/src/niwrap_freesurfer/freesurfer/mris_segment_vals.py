@@ -14,7 +14,7 @@ MRIS_SEGMENT_VALS_METADATA = Metadata(
 
 
 MrisSegmentValsParameters = typing.TypedDict('MrisSegmentValsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_segment_vals"],
+    "__STYXTYPE__": typing.Literal["mris_segment_vals"],
     "input_surface": InputPathType,
     "input_curv_file": InputPathType,
     "output_curv_file": str,

@@ -14,7 +14,7 @@ ROIGROW_METADATA = Metadata(
 
 
 RoigrowParameters = typing.TypedDict('RoigrowParameters', {
-    "__STYX_TYPE__": typing.Literal["ROIgrow"],
+    "__STYXTYPE__": typing.Literal["ROIgrow"],
     "input_surface": str,
     "roi_labels": str,
     "lim_distance": float,

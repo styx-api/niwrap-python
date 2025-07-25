@@ -14,21 +14,21 @@ DWI2TENSOR_METADATA = Metadata(
 
 
 Dwi2tensorFslgradParameters = typing.TypedDict('Dwi2tensorFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2tensorConfigParameters = typing.TypedDict('Dwi2tensorConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2tensorParameters = typing.TypedDict('Dwi2tensorParameters', {
-    "__STYX_TYPE__": typing.Literal["dwi2tensor"],
+    "__STYXTYPE__": typing.Literal["dwi2tensor"],
     "ols": bool,
     "mask": typing.NotRequired[InputPathType | None],
     "b0": typing.NotRequired[str | None],

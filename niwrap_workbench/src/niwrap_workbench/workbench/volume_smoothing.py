@@ -14,7 +14,7 @@ VOLUME_SMOOTHING_METADATA = Metadata(
 
 
 VolumeSmoothingParameters = typing.TypedDict('VolumeSmoothingParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-smoothing"],
+    "__STYXTYPE__": typing.Literal["volume-smoothing"],
     "volume_in": InputPathType,
     "kernel": float,
     "volume_out": str,

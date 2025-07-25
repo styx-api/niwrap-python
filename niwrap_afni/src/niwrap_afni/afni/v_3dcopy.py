@@ -14,7 +14,7 @@ V_3DCOPY_METADATA = Metadata(
 
 
 V3dcopyParameters = typing.TypedDict('V3dcopyParameters', {
-    "__STYX_TYPE__": typing.Literal["3dcopy"],
+    "__STYXTYPE__": typing.Literal["3dcopy"],
     "verbose": bool,
     "denote": bool,
     "old_prefix": str,

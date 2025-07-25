@@ -14,7 +14,7 @@ FSLHD_METADATA = Metadata(
 
 
 FslhdParameters = typing.TypedDict('FslhdParameters', {
-    "__STYX_TYPE__": typing.Literal["fslhd"],
+    "__STYXTYPE__": typing.Literal["fslhd"],
     "xml_flag": bool,
     "input_file": InputPathType,
 })

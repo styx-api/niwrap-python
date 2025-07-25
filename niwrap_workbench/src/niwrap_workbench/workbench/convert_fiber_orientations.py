@@ -14,7 +14,7 @@ CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
 
 
 ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientationsFiberParameters', {
-    "__STYX_TYPE__": typing.Literal["fiber"],
+    "__STYXTYPE__": typing.Literal["fiber"],
     "mean_f": InputPathType,
     "stdev_f": InputPathType,
     "theta": InputPathType,
@@ -26,7 +26,7 @@ ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientat
 
 
 ConvertFiberOrientationsParameters = typing.TypedDict('ConvertFiberOrientationsParameters', {
-    "__STYX_TYPE__": typing.Literal["convert-fiber-orientations"],
+    "__STYXTYPE__": typing.Literal["convert-fiber-orientations"],
     "label_volume": InputPathType,
     "fiber_out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],

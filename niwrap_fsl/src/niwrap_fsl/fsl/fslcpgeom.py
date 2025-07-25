@@ -14,7 +14,7 @@ FSLCPGEOM_METADATA = Metadata(
 
 
 FslcpgeomParameters = typing.TypedDict('FslcpgeomParameters', {
-    "__STYX_TYPE__": typing.Literal["fslcpgeom"],
+    "__STYXTYPE__": typing.Literal["fslcpgeom"],
     "source_file": InputPathType,
     "destination_file": InputPathType,
     "dimensions_flag": bool,

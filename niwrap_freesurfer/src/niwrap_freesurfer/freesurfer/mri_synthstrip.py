@@ -14,7 +14,7 @@ MRI_SYNTHSTRIP_METADATA = Metadata(
 
 
 MriSynthstripParameters = typing.TypedDict('MriSynthstripParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_synthstrip"],
+    "__STYXTYPE__": typing.Literal["mri_synthstrip"],
     "image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],

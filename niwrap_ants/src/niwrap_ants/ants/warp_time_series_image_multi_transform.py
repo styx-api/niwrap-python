@@ -14,7 +14,7 @@ WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 
 
 WarpTimeSeriesImageMultiTransformParameters = typing.TypedDict('WarpTimeSeriesImageMultiTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["WarpTimeSeriesImageMultiTransform"],
+    "__STYXTYPE__": typing.Literal["WarpTimeSeriesImageMultiTransform"],
     "image_dimension": typing.Literal[3, 4],
     "moving_image": InputPathType,
     "output_image": str,

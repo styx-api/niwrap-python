@@ -14,7 +14,7 @@ V_3D_MEPFM_METADATA = Metadata(
 
 
 V3dMepfmParameters = typing.TypedDict('V3dMepfmParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMEPFM"],
+    "__STYXTYPE__": typing.Literal["3dMEPFM"],
     "input_files": list[str],
     "dbgArgs": bool,
     "mask": typing.NotRequired[InputPathType | None],

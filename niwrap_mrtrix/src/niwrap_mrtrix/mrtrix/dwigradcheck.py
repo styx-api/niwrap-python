@@ -14,21 +14,21 @@ DWIGRADCHECK_METADATA = Metadata(
 
 
 DwigradcheckFslgradParameters = typing.TypedDict('DwigradcheckFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DwigradcheckExportGradFslParameters = typing.TypedDict('DwigradcheckExportGradFslParameters', {
-    "__STYX_TYPE__": typing.Literal["export_grad_fsl"],
+    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 DwigradcheckParameters = typing.TypedDict('DwigradcheckParameters', {
-    "__STYX_TYPE__": typing.Literal["dwigradcheck"],
+    "__STYXTYPE__": typing.Literal["dwigradcheck"],
     "input_image": InputPathType,
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[DwigradcheckFslgradParameters | None],

@@ -14,7 +14,7 @@ POPP_METADATA = Metadata(
 
 
 PoppParameters = typing.TypedDict('PoppParameters', {
-    "__STYX_TYPE__": typing.Literal["popp"],
+    "__STYXTYPE__": typing.Literal["popp"],
     "input_file": InputPathType,
     "output_basename": str,
     "sampling_rate": typing.NotRequired[float | None],

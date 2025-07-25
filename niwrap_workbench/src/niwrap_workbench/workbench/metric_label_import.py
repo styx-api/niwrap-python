@@ -14,7 +14,7 @@ METRIC_LABEL_IMPORT_METADATA = Metadata(
 
 
 MetricLabelImportParameters = typing.TypedDict('MetricLabelImportParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-label-import"],
+    "__STYXTYPE__": typing.Literal["metric-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,

@@ -14,7 +14,7 @@ MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
 
 
 MrisSphericalAverageParameters = typing.TypedDict('MrisSphericalAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_spherical_average"],
+    "__STYXTYPE__": typing.Literal["mris_spherical_average"],
     "which": typing.Literal["coords", "label", "vals", "curv", "area"],
     "fname": str,
     "hemi": typing.Literal["lh", "rh"],

@@ -14,7 +14,7 @@ V_3D_NLFIM_METADATA = Metadata(
 
 
 V3dNlfimParameters = typing.TypedDict('V3dNlfimParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNLfim"],
+    "__STYXTYPE__": typing.Literal["3dNLfim"],
     "input_file": InputPathType,
     "signal_model": str,
     "noise_model": str,

@@ -14,7 +14,7 @@ FSL_SBCA_METADATA = Metadata(
 
 
 FslSbcaParameters = typing.TypedDict('FslSbcaParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_sbca"],
+    "__STYXTYPE__": typing.Literal["fsl_sbca"],
     "infile": InputPathType,
     "seed": InputPathType,
     "target": InputPathType,

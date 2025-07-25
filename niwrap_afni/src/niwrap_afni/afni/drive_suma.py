@@ -14,7 +14,7 @@ DRIVE_SUMA_METADATA = Metadata(
 
 
 DriveSumaParameters = typing.TypedDict('DriveSumaParameters', {
-    "__STYX_TYPE__": typing.Literal["DriveSuma"],
+    "__STYXTYPE__": typing.Literal["DriveSuma"],
     "command": str,
     "surf_label": typing.NotRequired[str | None],
     "surface_file": typing.NotRequired[InputPathType | None],

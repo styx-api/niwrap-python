@@ -14,7 +14,7 @@ MRIS_CA_LABEL_METADATA = Metadata(
 
 
 MrisCaLabelParameters = typing.TypedDict('MrisCaLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_ca_label"],
+    "__STYXTYPE__": typing.Literal["mris_ca_label"],
     "subject": str,
     "hemi": str,
     "canonsurf": InputPathType,

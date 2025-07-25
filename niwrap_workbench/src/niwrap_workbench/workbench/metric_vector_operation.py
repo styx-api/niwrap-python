@@ -14,7 +14,7 @@ METRIC_VECTOR_OPERATION_METADATA = Metadata(
 
 
 MetricVectorOperationParameters = typing.TypedDict('MetricVectorOperationParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-vector-operation"],
+    "__STYXTYPE__": typing.Literal["metric-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,

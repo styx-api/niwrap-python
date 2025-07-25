@@ -14,7 +14,7 @@ RUN_SEGMENT_SUBJECT_SH_METADATA = Metadata(
 
 
 RunSegmentSubjectShParameters = typing.TypedDict('RunSegmentSubjectShParameters', {
-    "__STYX_TYPE__": typing.Literal["run_SegmentSubject.sh"],
+    "__STYXTYPE__": typing.Literal["run_SegmentSubject.sh"],
     "deployedMCRroot": str,
     "arguments": typing.NotRequired[str | None],
 })

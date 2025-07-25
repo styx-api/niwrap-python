@@ -14,7 +14,7 @@ T4IMG_4DFP_METADATA = Metadata(
 
 
 T4img4dfpParameters = typing.TypedDict('T4img4dfpParameters', {
-    "__STYX_TYPE__": typing.Literal["t4img_4dfp"],
+    "__STYXTYPE__": typing.Literal["t4img_4dfp"],
     "t4file": InputPathType,
     "imgfile": InputPathType,
     "outfile": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ FILM_CIFTI_METADATA = Metadata(
 
 
 FilmCiftiParameters = typing.TypedDict('FilmCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["film_cifti"],
+    "__STYXTYPE__": typing.Literal["film_cifti"],
     "input_filename": InputPathType,
     "basename": str,
     "left_surface": InputPathType,

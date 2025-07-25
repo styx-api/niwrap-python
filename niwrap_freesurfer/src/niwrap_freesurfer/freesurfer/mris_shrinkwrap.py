@@ -14,7 +14,7 @@ MRIS_SHRINKWRAP_METADATA = Metadata(
 
 
 MrisShrinkwrapParameters = typing.TypedDict('MrisShrinkwrapParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_shrinkwrap"],
+    "__STYXTYPE__": typing.Literal["mris_shrinkwrap"],
     "volume": InputPathType,
     "output_name": str,
     "threshold": typing.NotRequired[float | None],

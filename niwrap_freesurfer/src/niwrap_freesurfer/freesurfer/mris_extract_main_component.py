@@ -14,7 +14,7 @@ MRIS_EXTRACT_MAIN_COMPONENT_METADATA = Metadata(
 
 
 MrisExtractMainComponentParameters = typing.TypedDict('MrisExtractMainComponentParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_extract_main_component"],
+    "__STYXTYPE__": typing.Literal["mris_extract_main_component"],
     "input_surface": InputPathType,
     "output_surface": str,
 })

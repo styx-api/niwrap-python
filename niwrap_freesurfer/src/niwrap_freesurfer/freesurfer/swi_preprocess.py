@@ -14,7 +14,7 @@ SWI_PREPROCESS_METADATA = Metadata(
 
 
 SwiPreprocessParameters = typing.TypedDict('SwiPreprocessParameters', {
-    "__STYX_TYPE__": typing.Literal["swi_preprocess"],
+    "__STYXTYPE__": typing.Literal["swi_preprocess"],
     "scanner": typing.Literal["ge", "siemens", "philips"],
     "ge_file": typing.NotRequired[InputPathType | None],
     "philips_file": typing.NotRequired[InputPathType | None],

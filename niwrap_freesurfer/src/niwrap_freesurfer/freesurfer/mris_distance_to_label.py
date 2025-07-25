@@ -14,7 +14,7 @@ MRIS_DISTANCE_TO_LABEL_METADATA = Metadata(
 
 
 MrisDistanceToLabelParameters = typing.TypedDict('MrisDistanceToLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_distance_to_label"],
+    "__STYXTYPE__": typing.Literal["mris_distance_to_label"],
     "hemisphere": str,
     "subject_1": str,
 })

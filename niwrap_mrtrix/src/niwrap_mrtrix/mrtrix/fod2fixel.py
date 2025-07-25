@@ -14,14 +14,14 @@ FOD2FIXEL_METADATA = Metadata(
 
 
 Fod2fixelConfigParameters = typing.TypedDict('Fod2fixelConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fod2fixelParameters = typing.TypedDict('Fod2fixelParameters', {
-    "__STYX_TYPE__": typing.Literal["fod2fixel"],
+    "__STYXTYPE__": typing.Literal["fod2fixel"],
     "afd": typing.NotRequired[str | None],
     "peak_amp": typing.NotRequired[str | None],
     "disp": typing.NotRequired[str | None],

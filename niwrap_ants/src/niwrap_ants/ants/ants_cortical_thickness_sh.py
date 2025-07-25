@@ -14,7 +14,7 @@ ANTS_CORTICAL_THICKNESS_SH_METADATA = Metadata(
 
 
 AntsCorticalThicknessShParameters = typing.TypedDict('AntsCorticalThicknessShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsCorticalThickness.sh"],
+    "__STYXTYPE__": typing.Literal["antsCorticalThickness.sh"],
     "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
     "brain_template": InputPathType,

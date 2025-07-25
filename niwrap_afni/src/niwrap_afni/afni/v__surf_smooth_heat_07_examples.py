@@ -14,7 +14,7 @@ V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA = Metadata(
 
 
 VSurfSmoothHeat07ExamplesParameters = typing.TypedDict('VSurfSmoothHeat07ExamplesParameters', {
-    "__STYX_TYPE__": typing.Literal["@SurfSmooth.HEAT_07.examples"],
+    "__STYXTYPE__": typing.Literal["@SurfSmooth.HEAT_07.examples"],
     "path_to_suma_demo": str,
 })
 

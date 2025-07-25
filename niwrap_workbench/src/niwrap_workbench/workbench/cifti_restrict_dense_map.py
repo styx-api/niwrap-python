@@ -14,7 +14,7 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
 
 
 CiftiRestrictDenseMapParameters = typing.TypedDict('CiftiRestrictDenseMapParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-restrict-dense-map"],
+    "__STYXTYPE__": typing.Literal["cifti-restrict-dense-map"],
     "cifti_in": InputPathType,
     "direction": str,
     "cifti_out": str,

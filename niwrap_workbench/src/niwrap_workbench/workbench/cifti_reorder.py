@@ -14,7 +14,7 @@ CIFTI_REORDER_METADATA = Metadata(
 
 
 CiftiReorderParameters = typing.TypedDict('CiftiReorderParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-reorder"],
+    "__STYXTYPE__": typing.Literal["cifti-reorder"],
     "cifti_in": InputPathType,
     "direction": str,
     "reorder_list": str,

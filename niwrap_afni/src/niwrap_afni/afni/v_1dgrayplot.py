@@ -14,7 +14,7 @@ V_1DGRAYPLOT_METADATA = Metadata(
 
 
 V1dgrayplotParameters = typing.TypedDict('V1dgrayplotParameters', {
-    "__STYX_TYPE__": typing.Literal["1dgrayplot"],
+    "__STYXTYPE__": typing.Literal["1dgrayplot"],
     "tsfile": InputPathType,
     "install": bool,
     "ignore": typing.NotRequired[float | None],

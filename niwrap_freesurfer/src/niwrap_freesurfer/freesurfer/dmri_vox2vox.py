@@ -14,7 +14,7 @@ DMRI_VOX2VOX_METADATA = Metadata(
 
 
 DmriVox2voxParameters = typing.TypedDict('DmriVox2voxParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_vox2vox"],
+    "__STYXTYPE__": typing.Literal["dmri_vox2vox"],
     "input_files": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_files": list[str],

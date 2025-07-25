@@ -14,7 +14,7 @@ MIST_FA_REG_METADATA = Metadata(
 
 
 MistFaRegParameters = typing.TypedDict('MistFaRegParameters', {
-    "__STYX_TYPE__": typing.Literal["mist_FA_reg"],
+    "__STYXTYPE__": typing.Literal["mist_FA_reg"],
     "fa_volume": InputPathType,
     "s0_volume": InputPathType,
     "reference_t1_volume": InputPathType,

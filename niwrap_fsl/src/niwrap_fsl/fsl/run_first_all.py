@@ -14,7 +14,7 @@ RUN_FIRST_ALL_METADATA = Metadata(
 
 
 RunFirstAllParameters = typing.TypedDict('RunFirstAllParameters', {
-    "__STYX_TYPE__": typing.Literal["run_first_all"],
+    "__STYXTYPE__": typing.Literal["run_first_all"],
     "method": typing.NotRequired[typing.Literal["auto", "fast", "none"] | None],
     "brainextract_flag": bool,
     "structure": typing.NotRequired[str | None],

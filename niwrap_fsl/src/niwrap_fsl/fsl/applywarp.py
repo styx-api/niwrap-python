@@ -14,7 +14,7 @@ APPLYWARP_METADATA = Metadata(
 
 
 ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
-    "__STYX_TYPE__": typing.Literal["applywarp"],
+    "__STYXTYPE__": typing.Literal["applywarp"],
     "interp": typing.NotRequired[typing.Literal["nn", "trilinear", "sinc", "spline"] | None],
     "in_file": InputPathType,
     "ref_file": InputPathType,

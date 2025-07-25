@@ -14,7 +14,7 @@ REINFLATE_SUBJECT_METADATA = Metadata(
 
 
 ReinflateSubjectParameters = typing.TypedDict('ReinflateSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["reinflate_subject"],
+    "__STYXTYPE__": typing.Literal["reinflate_subject"],
     "args": typing.NotRequired[str | None],
 })
 

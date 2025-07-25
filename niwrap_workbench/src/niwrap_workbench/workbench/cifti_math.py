@@ -14,7 +14,7 @@ CIFTI_MATH_METADATA = Metadata(
 
 
 CiftiMathSelectParameters = typing.TypedDict('CiftiMathSelectParameters', {
-    "__STYX_TYPE__": typing.Literal["select"],
+    "__STYXTYPE__": typing.Literal["select"],
     "dim": int,
     "index": str,
     "opt_repeat": bool,
@@ -22,7 +22,7 @@ CiftiMathSelectParameters = typing.TypedDict('CiftiMathSelectParameters', {
 
 
 CiftiMathVarParameters = typing.TypedDict('CiftiMathVarParameters', {
-    "__STYX_TYPE__": typing.Literal["var"],
+    "__STYXTYPE__": typing.Literal["var"],
     "name": str,
     "cifti": InputPathType,
     "select": typing.NotRequired[list[CiftiMathSelectParameters] | None],
@@ -30,7 +30,7 @@ CiftiMathVarParameters = typing.TypedDict('CiftiMathVarParameters', {
 
 
 CiftiMathParameters = typing.TypedDict('CiftiMathParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-math"],
+    "__STYXTYPE__": typing.Literal["cifti-math"],
     "expression": str,
     "cifti_out": str,
     "opt_fixnan_replace": typing.NotRequired[float | None],

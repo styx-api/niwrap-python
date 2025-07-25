@@ -14,7 +14,7 @@ FAT_ROI_ROW_METADATA = Metadata(
 
 
 FatRoiRowParameters = typing.TypedDict('FatRoiRowParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_roi_row"],
+    "__STYXTYPE__": typing.Literal["fat_roi_row"],
     "roi": str,
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],

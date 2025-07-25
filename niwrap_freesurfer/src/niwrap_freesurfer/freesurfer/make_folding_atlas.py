@@ -14,7 +14,7 @@ MAKE_FOLDING_ATLAS_METADATA = Metadata(
 
 
 MakeFoldingAtlasParameters = typing.TypedDict('MakeFoldingAtlasParameters', {
-    "__STYX_TYPE__": typing.Literal["make_folding_atlas"],
+    "__STYXTYPE__": typing.Literal["make_folding_atlas"],
     "subjlistfile": typing.NotRequired[InputPathType | None],
     "fsgdfile": typing.NotRequired[InputPathType | None],
     "subjects": typing.NotRequired[list[str] | None],

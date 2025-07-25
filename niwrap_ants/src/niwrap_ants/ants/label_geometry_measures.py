@@ -14,7 +14,7 @@ LABEL_GEOMETRY_MEASURES_METADATA = Metadata(
 
 
 LabelGeometryMeasuresParameters = typing.TypedDict('LabelGeometryMeasuresParameters', {
-    "__STYX_TYPE__": typing.Literal["LabelGeometryMeasures"],
+    "__STYXTYPE__": typing.Literal["LabelGeometryMeasures"],
     "image_dimension": int,
     "label_image": InputPathType,
     "intensity_image": typing.NotRequired[str | None],

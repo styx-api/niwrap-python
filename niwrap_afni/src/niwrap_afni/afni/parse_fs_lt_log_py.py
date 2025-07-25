@@ -14,7 +14,7 @@ PARSE_FS_LT_LOG_PY_METADATA = Metadata(
 
 
 ParseFsLtLogPyParameters = typing.TypedDict('ParseFsLtLogPyParameters', {
-    "__STYX_TYPE__": typing.Literal["parse_fs_lt_log.py"],
+    "__STYXTYPE__": typing.Literal["parse_fs_lt_log.py"],
     "logfile": InputPathType,
     "labels": list[str],
     "show_orig": bool,

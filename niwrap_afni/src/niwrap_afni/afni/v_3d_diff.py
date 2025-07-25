@@ -14,7 +14,7 @@ V_3D_DIFF_METADATA = Metadata(
 
 
 V3dDiffParameters = typing.TypedDict('V3dDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDiff"],
+    "__STYXTYPE__": typing.Literal["3dDiff"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
     "tolerance": typing.NotRequired[float | None],

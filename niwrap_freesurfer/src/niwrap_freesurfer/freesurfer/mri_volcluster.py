@@ -14,7 +14,7 @@ MRI_VOLCLUSTER_METADATA = Metadata(
 
 
 MriVolclusterParameters = typing.TypedDict('MriVolclusterParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_volcluster"],
+    "__STYXTYPE__": typing.Literal["mri_volcluster"],
     "input_file": InputPathType,
     "summary_file": typing.NotRequired[str | None],
     "output_volid": typing.NotRequired[str | None],

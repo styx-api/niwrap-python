@@ -14,7 +14,7 @@ VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
 
 
 VolumeCopyExtensionsParameters = typing.TypedDict('VolumeCopyExtensionsParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-copy-extensions"],
+    "__STYXTYPE__": typing.Literal["volume-copy-extensions"],
     "data_volume": InputPathType,
     "extension_volume": InputPathType,
     "volume_out": str,

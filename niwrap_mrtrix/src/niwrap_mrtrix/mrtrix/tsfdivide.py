@@ -14,14 +14,14 @@ TSFDIVIDE_METADATA = Metadata(
 
 
 TsfdivideConfigParameters = typing.TypedDict('TsfdivideConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TsfdivideParameters = typing.TypedDict('TsfdivideParameters', {
-    "__STYX_TYPE__": typing.Literal["tsfdivide"],
+    "__STYXTYPE__": typing.Literal["tsfdivide"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

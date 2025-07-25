@@ -14,7 +14,7 @@ SURFREG_METADATA = Metadata(
 
 
 SurfregParameters = typing.TypedDict('SurfregParameters', {
-    "__STYX_TYPE__": typing.Literal["surfreg"],
+    "__STYXTYPE__": typing.Literal["surfreg"],
     "subject": str,
     "target": str,
     "cross_hemi": bool,

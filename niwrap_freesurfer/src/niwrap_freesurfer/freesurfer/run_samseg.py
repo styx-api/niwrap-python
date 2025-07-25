@@ -14,7 +14,7 @@ RUN_SAMSEG_METADATA = Metadata(
 
 
 RunSamsegParameters = typing.TypedDict('RunSamsegParameters', {
-    "__STYX_TYPE__": typing.Literal["run_samseg"],
+    "__STYXTYPE__": typing.Literal["run_samseg"],
     "output_dir": str,
     "input_files": list[InputPathType],
     "input_mode": typing.NotRequired[list[str] | None],

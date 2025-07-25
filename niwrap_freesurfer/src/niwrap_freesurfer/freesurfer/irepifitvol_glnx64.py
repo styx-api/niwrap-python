@@ -14,7 +14,7 @@ IREPIFITVOL_GLNX64_METADATA = Metadata(
 
 
 IrepifitvolGlnx64Parameters = typing.TypedDict('IrepifitvolGlnx64Parameters', {
-    "__STYX_TYPE__": typing.Literal["irepifitvol.glnx64"],
+    "__STYXTYPE__": typing.Literal["irepifitvol.glnx64"],
     "input_file": InputPathType,
     "output_file": str,
 })

@@ -14,7 +14,7 @@ V_3DDOT_METADATA = Metadata(
 
 
 V3ddotParameters = typing.TypedDict('V3ddotParameters', {
-    "__STYX_TYPE__": typing.Literal["3ddot"],
+    "__STYXTYPE__": typing.Literal["3ddot"],
     "input_datasets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "mrange": typing.NotRequired[list[float] | None],

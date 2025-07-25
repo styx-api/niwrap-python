@@ -14,7 +14,7 @@ MAKE_SEGVOL_TABLE_METADATA = Metadata(
 
 
 MakeSegvolTableParameters = typing.TypedDict('MakeSegvolTableParameters', {
-    "__STYX_TYPE__": typing.Literal["make-segvol-table"],
+    "__STYXTYPE__": typing.Literal["make-segvol-table"],
     "subjects": list[str],
     "subject_file": InputPathType,
     "outfile": str,

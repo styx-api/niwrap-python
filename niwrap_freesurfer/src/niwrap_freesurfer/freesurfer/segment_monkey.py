@@ -14,7 +14,7 @@ SEGMENT_MONKEY_METADATA = Metadata(
 
 
 SegmentMonkeyParameters = typing.TypedDict('SegmentMonkeyParameters', {
-    "__STYX_TYPE__": typing.Literal["segment_monkey"],
+    "__STYXTYPE__": typing.Literal["segment_monkey"],
     "control_points": list[str],
 })
 

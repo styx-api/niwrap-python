@@ -14,7 +14,7 @@ MRI_DIFF_METADATA = Metadata(
 
 
 MriDiffParameters = typing.TypedDict('MriDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_diff"],
+    "__STYXTYPE__": typing.Literal["mri_diff"],
     "vol1file": InputPathType,
     "vol2file": InputPathType,
     "resolution_check": bool,

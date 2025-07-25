@@ -14,7 +14,7 @@ FSLFFT_METADATA = Metadata(
 
 
 FslfftParameters = typing.TypedDict('FslfftParameters', {
-    "__STYX_TYPE__": typing.Literal["fslfft"],
+    "__STYXTYPE__": typing.Literal["fslfft"],
     "input_volume": InputPathType,
     "output_volume": str,
     "inverse_flag": bool,

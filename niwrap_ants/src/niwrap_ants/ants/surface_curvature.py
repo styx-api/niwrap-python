@@ -14,7 +14,7 @@ SURFACE_CURVATURE_METADATA = Metadata(
 
 
 SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfaceCurvature"],
+    "__STYXTYPE__": typing.Literal["SurfaceCurvature"],
     "filename_in": InputPathType,
     "filename_out": str,
     "sigma": float,

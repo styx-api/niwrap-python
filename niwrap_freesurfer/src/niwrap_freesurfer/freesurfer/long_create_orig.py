@@ -14,7 +14,7 @@ LONG_CREATE_ORIG_METADATA = Metadata(
 
 
 LongCreateOrigParameters = typing.TypedDict('LongCreateOrigParameters', {
-    "__STYX_TYPE__": typing.Literal["long_create_orig"],
+    "__STYXTYPE__": typing.Literal["long_create_orig"],
     "base_id": str,
     "tp_id": typing.NotRequired[str | None],
 })

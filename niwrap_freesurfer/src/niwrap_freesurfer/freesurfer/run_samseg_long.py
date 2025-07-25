@@ -14,7 +14,7 @@ RUN_SAMSEG_LONG_METADATA = Metadata(
 
 
 RunSamsegLongParameters = typing.TypedDict('RunSamsegLongParameters', {
-    "__STYX_TYPE__": typing.Literal["run_samseg_long"],
+    "__STYXTYPE__": typing.Literal["run_samseg_long"],
     "timepoint": list[InputPathType],
     "output": str,
     "lesion": bool,

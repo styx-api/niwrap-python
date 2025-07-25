@@ -14,7 +14,7 @@ MRIS_SAMPLE_PARC_METADATA = Metadata(
 
 
 MrisSampleParcParameters = typing.TypedDict('MrisSampleParcParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_sample_parc"],
+    "__STYXTYPE__": typing.Literal["mris_sample_parc"],
     "subject_name": str,
     "hemisphere": str,
     "parc_name": str,

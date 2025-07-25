@@ -14,7 +14,7 @@ MRI_RF_TRAIN_METADATA = Metadata(
 
 
 MriRfTrainParameters = typing.TypedDict('MriRfTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_rf_train"],
+    "__STYXTYPE__": typing.Literal["mri_rf_train"],
     "seg_volume": str,
     "atlas_transform": str,
     "mask_volume": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ CONVERT_SURFACE_METADATA = Metadata(
 
 
 ConvertSurfaceParameters = typing.TypedDict('ConvertSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["ConvertSurface"],
+    "__STYXTYPE__": typing.Literal["ConvertSurface"],
     "input_surface": str,
     "output_surface": str,
     "surface_volume": typing.NotRequired[str | None],

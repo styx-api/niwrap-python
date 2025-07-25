@@ -14,7 +14,7 @@ ADJUNCT_SELECT_STR_PY_METADATA = Metadata(
 
 
 AdjunctSelectStrPyParameters = typing.TypedDict('AdjunctSelectStrPyParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_select_str.py"],
+    "__STYXTYPE__": typing.Literal["adjunct_select_str.py"],
     "input_file": InputPathType,
     "num_bricks": float,
     "output_file": str,

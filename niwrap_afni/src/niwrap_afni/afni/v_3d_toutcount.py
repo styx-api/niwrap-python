@@ -14,7 +14,7 @@ V_3D_TOUTCOUNT_METADATA = Metadata(
 
 
 V3dToutcountParameters = typing.TypedDict('V3dToutcountParameters', {
-    "__STYX_TYPE__": typing.Literal["3dToutcount"],
+    "__STYXTYPE__": typing.Literal["3dToutcount"],
     "input_dataset": str,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[str | None],

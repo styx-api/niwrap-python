@@ -14,7 +14,7 @@ V__ELECTRO_GRID_METADATA = Metadata(
 
 
 VElectroGridParameters = typing.TypedDict('VElectroGridParameters', {
-    "__STYX_TYPE__": typing.Literal["@ElectroGrid"],
+    "__STYXTYPE__": typing.Literal["@ElectroGrid"],
     "strip": typing.NotRequired[int | None],
     "grid": typing.NotRequired[list[int] | None],
     "prefix": typing.NotRequired[str | None],

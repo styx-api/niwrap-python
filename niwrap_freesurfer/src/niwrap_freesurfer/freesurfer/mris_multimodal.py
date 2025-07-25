@@ -14,7 +14,7 @@ MRIS_MULTIMODAL_METADATA = Metadata(
 
 
 MrisMultimodalParameters = typing.TypedDict('MrisMultimodalParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_multimodal"],
+    "__STYXTYPE__": typing.Literal["mris_multimodal"],
     "input_surface": InputPathType,
     "target_surface": InputPathType,
     "output_surface": str,

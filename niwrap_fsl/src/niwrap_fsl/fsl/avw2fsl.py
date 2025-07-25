@@ -14,7 +14,7 @@ AVW2FSL_METADATA = Metadata(
 
 
 Avw2fslParameters = typing.TypedDict('Avw2fslParameters', {
-    "__STYX_TYPE__": typing.Literal["avw2fsl"],
+    "__STYXTYPE__": typing.Literal["avw2fsl"],
     "source": list[str],
     "destination": str,
     "archive": bool,

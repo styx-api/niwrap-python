@@ -14,7 +14,7 @@ MRIS_NUDGE_METADATA = Metadata(
 
 
 MrisNudgeParameters = typing.TypedDict('MrisNudgeParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_nudge"],
+    "__STYXTYPE__": typing.Literal["mris_nudge"],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "vertex": int,

@@ -14,7 +14,7 @@ V__GET_AFNI_DIMS_METADATA = Metadata(
 
 
 VGetAfniDimsParameters = typing.TypedDict('VGetAfniDimsParameters', {
-    "__STYX_TYPE__": typing.Literal["@GetAfniDims"],
+    "__STYXTYPE__": typing.Literal["@GetAfniDims"],
     "input_dset": InputPathType,
 })
 

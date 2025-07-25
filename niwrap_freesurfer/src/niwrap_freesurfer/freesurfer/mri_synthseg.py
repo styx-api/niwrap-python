@@ -14,7 +14,7 @@ MRI_SYNTHSEG_METADATA = Metadata(
 
 
 MriSynthsegParameters = typing.TypedDict('MriSynthsegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_synthseg"],
+    "__STYXTYPE__": typing.Literal["mri_synthseg"],
     "input_image": InputPathType,
     "output_segmentation": str,
     "cortex_parcellation": bool,

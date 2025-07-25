@@ -14,7 +14,7 @@ HALFCOSBASIS_METADATA = Metadata(
 
 
 HalfcosbasisParameters = typing.TypedDict('HalfcosbasisParameters', {
-    "__STYX_TYPE__": typing.Literal["halfcosbasis"],
+    "__STYXTYPE__": typing.Literal["halfcosbasis"],
     "hrf_param_file": InputPathType,
     "hrf_param_file_hf": InputPathType,
     "verbose_flag": bool,

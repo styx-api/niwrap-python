@@ -14,7 +14,7 @@ V_3D_FFT_METADATA = Metadata(
 
 
 V3dFftParameters = typing.TypedDict('V3dFftParameters', {
-    "__STYX_TYPE__": typing.Literal["3dFFT"],
+    "__STYXTYPE__": typing.Literal["3dFFT"],
     "dataset": InputPathType,
     "abs": bool,
     "phase": bool,

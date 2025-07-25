@@ -14,20 +14,20 @@ MRSTATS_METADATA = Metadata(
 
 
 MrstatsOutputParameters = typing.TypedDict('MrstatsOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["output"],
+    "__STYXTYPE__": typing.Literal["output"],
     "field": str,
 })
 
 
 MrstatsConfigParameters = typing.TypedDict('MrstatsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrstatsParameters = typing.TypedDict('MrstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mrstats"],
+    "__STYXTYPE__": typing.Literal["mrstats"],
     "output": typing.NotRequired[list[MrstatsOutputParameters] | None],
     "mask": typing.NotRequired[InputPathType | None],
     "ignorezero": bool,

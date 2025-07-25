@@ -14,7 +14,7 @@ V_3D_CLUST_SIM_METADATA = Metadata(
 
 
 V3dClustSimParameters = typing.TypedDict('V3dClustSimParameters', {
-    "__STYX_TYPE__": typing.Literal["3dClustSim"],
+    "__STYXTYPE__": typing.Literal["3dClustSim"],
     "nxyz": typing.NotRequired[str | None],
     "dxyz": typing.NotRequired[str | None],
     "ball": bool,

@@ -14,7 +14,7 @@ IMAGE_MATH_METADATA = Metadata(
 
 
 ImageMathParameters = typing.TypedDict('ImageMathParameters', {
-    "__STYX_TYPE__": typing.Literal["ImageMath"],
+    "__STYXTYPE__": typing.Literal["ImageMath"],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
     "operations_and_inputs": str,

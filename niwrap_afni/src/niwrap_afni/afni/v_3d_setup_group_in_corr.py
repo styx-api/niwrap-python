@@ -14,7 +14,7 @@ V_3D_SETUP_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dSetupGroupInCorrParameters = typing.TypedDict('V3dSetupGroupInCorrParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSetupGroupInCorr"],
+    "__STYXTYPE__": typing.Literal["3dSetupGroupInCorr"],
     "datasets": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "prefix": str,

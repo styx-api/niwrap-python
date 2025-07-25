@@ -14,7 +14,7 @@ V_3D_TORTOISETO_HERE_METADATA = Metadata(
 
 
 V3dTortoisetoHereParameters = typing.TypedDict('V3dTortoisetoHereParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTORTOISEtoHere"],
+    "__STYXTYPE__": typing.Literal["3dTORTOISEtoHere"],
     "dt_tort": InputPathType,
     "prefix": str,
     "scale_factor": typing.NotRequired[float | None],

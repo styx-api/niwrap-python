@@ -14,28 +14,28 @@ CIFTI_DILATE_METADATA = Metadata(
 
 
 CiftiDilateLeftSurfaceParameters = typing.TypedDict('CiftiDilateLeftSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["left_surface"],
+    "__STYXTYPE__": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiDilateRightSurfaceParameters = typing.TypedDict('CiftiDilateRightSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["right_surface"],
+    "__STYXTYPE__": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiDilateCerebellumSurfaceParameters = typing.TypedDict('CiftiDilateCerebellumSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_surface"],
+    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiDilateParameters = typing.TypedDict('CiftiDilateParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-dilate"],
+    "__STYXTYPE__": typing.Literal["cifti-dilate"],
     "cifti_in": InputPathType,
     "direction": str,
     "surface_distance": float,

@@ -14,7 +14,7 @@ TRAC_PREPROC_METADATA = Metadata(
 
 
 TracPreprocParameters = typing.TypedDict('TracPreprocParameters', {
-    "__STYX_TYPE__": typing.Literal["trac-preproc"],
+    "__STYXTYPE__": typing.Literal["trac-preproc"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "nolog": bool,

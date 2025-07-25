@@ -14,7 +14,7 @@ MRI_PARSE_SDCMDIR_METADATA = Metadata(
 
 
 MriParseSdcmdirParameters = typing.TypedDict('MriParseSdcmdirParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_parse_sdcmdir"],
+    "__STYXTYPE__": typing.Literal["mri_parse_sdcmdir"],
     "sdicomdir": str,
     "outfile": typing.NotRequired[str | None],
     "sortbyrun": bool,

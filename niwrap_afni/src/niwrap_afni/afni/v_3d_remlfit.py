@@ -14,7 +14,7 @@ V_3D_REMLFIT_METADATA = Metadata(
 
 
 V3dRemlfitParameters = typing.TypedDict('V3dRemlfitParameters', {
-    "__STYX_TYPE__": typing.Literal["3dREMLfit"],
+    "__STYXTYPE__": typing.Literal["3dREMLfit"],
     "input_file": InputPathType,
     "regression_matrix": InputPathType,
     "baseline_files": typing.NotRequired[list[str] | None],

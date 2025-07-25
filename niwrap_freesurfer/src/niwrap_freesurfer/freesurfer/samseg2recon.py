@@ -14,7 +14,7 @@ SAMSEG2RECON_METADATA = Metadata(
 
 
 Samseg2reconParameters = typing.TypedDict('Samseg2reconParameters', {
-    "__STYX_TYPE__": typing.Literal["samseg2recon"],
+    "__STYXTYPE__": typing.Literal["samseg2recon"],
     "subject": str,
     "samseg_dir": typing.NotRequired[str | None],
     "no_cc": bool,

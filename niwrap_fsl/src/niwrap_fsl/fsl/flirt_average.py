@@ -14,7 +14,7 @@ FLIRT_AVERAGE_METADATA = Metadata(
 
 
 FlirtAverageParameters = typing.TypedDict('FlirtAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["flirt_average"],
+    "__STYXTYPE__": typing.Literal["flirt_average"],
     "ninputs": int,
     "input1": InputPathType,
     "input2": InputPathType,

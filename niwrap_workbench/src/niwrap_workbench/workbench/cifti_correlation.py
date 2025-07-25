@@ -14,7 +14,7 @@ CIFTI_CORRELATION_METADATA = Metadata(
 
 
 CiftiCorrelationRoiOverrideParameters = typing.TypedDict('CiftiCorrelationRoiOverrideParameters', {
-    "__STYX_TYPE__": typing.Literal["roi_override"],
+    "__STYXTYPE__": typing.Literal["roi_override"],
     "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
     "opt_right_roi_roi_metric": typing.NotRequired[InputPathType | None],
     "opt_cerebellum_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -24,7 +24,7 @@ CiftiCorrelationRoiOverrideParameters = typing.TypedDict('CiftiCorrelationRoiOve
 
 
 CiftiCorrelationParameters = typing.TypedDict('CiftiCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-correlation"],
+    "__STYXTYPE__": typing.Literal["cifti-correlation"],
     "cifti": InputPathType,
     "cifti_out": str,
     "roi_override": typing.NotRequired[CiftiCorrelationRoiOverrideParameters | None],

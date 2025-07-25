@@ -14,7 +14,7 @@ TBSS_4_PRESTATS_METADATA = Metadata(
 
 
 Tbss4PrestatsParameters = typing.TypedDict('Tbss4PrestatsParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_4_prestats"],
+    "__STYXTYPE__": typing.Literal["tbss_4_prestats"],
     "threshold": float,
 })
 

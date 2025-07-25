@@ -14,7 +14,7 @@ SPLINE3_TEST_METADATA = Metadata(
 
 
 Spline3TestParameters = typing.TypedDict('Spline3TestParameters', {
-    "__STYX_TYPE__": typing.Literal["Spline3_test"],
+    "__STYXTYPE__": typing.Literal["Spline3_test"],
     "x_values": list[float],
     "y_values": list[float],
     "x_new_values": list[float],

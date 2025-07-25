@@ -14,7 +14,7 @@ RECON_ALL_EXVIVO_METADATA = Metadata(
 
 
 ReconAllExvivoParameters = typing.TypedDict('ReconAllExvivoParameters', {
-    "__STYX_TYPE__": typing.Literal["recon-all-exvivo"],
+    "__STYXTYPE__": typing.Literal["recon-all-exvivo"],
     "subject_id": str,
     "hemisphere": typing.NotRequired[str | None],
     "nocerebellum": bool,

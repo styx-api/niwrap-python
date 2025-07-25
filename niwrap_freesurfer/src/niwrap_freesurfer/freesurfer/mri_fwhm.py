@@ -14,7 +14,7 @@ MRI_FWHM_METADATA = Metadata(
 
 
 MriFwhmParameters = typing.TypedDict('MriFwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fwhm"],
+    "__STYXTYPE__": typing.Literal["mri_fwhm"],
     "inputvol": InputPathType,
     "outputvol": str,
     "save_detrended": bool,

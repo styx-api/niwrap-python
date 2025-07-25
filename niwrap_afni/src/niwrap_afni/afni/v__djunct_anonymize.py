@@ -14,7 +14,7 @@ V__DJUNCT_ANONYMIZE_METADATA = Metadata(
 
 
 VDjunctAnonymizeParameters = typing.TypedDict('VDjunctAnonymizeParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_anonymize"],
+    "__STYXTYPE__": typing.Literal["@djunct_anonymize"],
     "input": InputPathType,
     "add_note": typing.NotRequired[str | None],
     "copy_to": typing.NotRequired[InputPathType | None],

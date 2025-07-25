@@ -14,7 +14,7 @@ DMRI_MOTION_METADATA = Metadata(
 
 
 DmriMotionParameters = typing.TypedDict('DmriMotionParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_motion"],
+    "__STYXTYPE__": typing.Literal["dmri_motion"],
     "outfile": InputPathType,
     "outf": typing.NotRequired[InputPathType | None],
     "mat": typing.NotRequired[InputPathType | None],

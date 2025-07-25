@@ -14,14 +14,14 @@ DIRORDER_METADATA = Metadata(
 
 
 DirorderConfigParameters = typing.TypedDict('DirorderConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirorderParameters = typing.TypedDict('DirorderParameters', {
-    "__STYX_TYPE__": typing.Literal["dirorder"],
+    "__STYXTYPE__": typing.Literal["dirorder"],
     "cartesian": bool,
     "info": bool,
     "quiet": bool,

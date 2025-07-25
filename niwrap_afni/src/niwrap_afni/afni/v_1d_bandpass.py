@@ -14,7 +14,7 @@ V_1D_BANDPASS_METADATA = Metadata(
 
 
 V1dBandpassParameters = typing.TypedDict('V1dBandpassParameters', {
-    "__STYX_TYPE__": typing.Literal["1dBandpass"],
+    "__STYXTYPE__": typing.Literal["1dBandpass"],
     "fbot": float,
     "ftop": float,
     "infile": InputPathType,

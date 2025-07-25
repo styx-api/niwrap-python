@@ -14,7 +14,7 @@ RCA_FIX_ENTO_METADATA = Metadata(
 
 
 RcaFixEntoParameters = typing.TypedDict('RcaFixEntoParameters', {
-    "__STYX_TYPE__": typing.Literal["rca-fix-ento"],
+    "__STYXTYPE__": typing.Literal["rca-fix-ento"],
     "subject": str,
     "threads": typing.NotRequired[float | None],
     "submit": bool,

@@ -14,7 +14,7 @@ MRI_EASYWARP_METADATA = Metadata(
 
 
 MriEasywarpParameters = typing.TypedDict('MriEasywarpParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_easywarp"],
+    "__STYXTYPE__": typing.Literal["mri_easywarp"],
     "input_image": InputPathType,
     "output_image": str,
     "deformation_field": typing.NotRequired[InputPathType | None],

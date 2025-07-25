@@ -14,7 +14,7 @@ HIAM_REGISTER_METADATA = Metadata(
 
 
 HiamRegisterParameters = typing.TypedDict('HiamRegisterParameters', {
-    "__STYX_TYPE__": typing.Literal["hiam_register"],
+    "__STYXTYPE__": typing.Literal["hiam_register"],
     "input_surface": InputPathType,
     "average_surface": InputPathType,
     "output_surface": str,

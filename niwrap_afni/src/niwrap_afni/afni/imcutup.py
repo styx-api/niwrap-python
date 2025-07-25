@@ -14,7 +14,7 @@ IMCUTUP_METADATA = Metadata(
 
 
 ImcutupParameters = typing.TypedDict('ImcutupParameters', {
-    "__STYX_TYPE__": typing.Literal["imcutup"],
+    "__STYXTYPE__": typing.Literal["imcutup"],
     "prefix": typing.NotRequired[str | None],
     "xynum": bool,
     "yxnum": bool,

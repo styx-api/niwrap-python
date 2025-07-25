@@ -14,7 +14,7 @@ MKSUBJDIRS_METADATA = Metadata(
 
 
 MksubjdirsParameters = typing.TypedDict('MksubjdirsParameters', {
-    "__STYX_TYPE__": typing.Literal["mksubjdirs"],
+    "__STYXTYPE__": typing.Literal["mksubjdirs"],
     "subj_name": str,
     "mode": typing.NotRequired[str | None],
     "parents": bool,

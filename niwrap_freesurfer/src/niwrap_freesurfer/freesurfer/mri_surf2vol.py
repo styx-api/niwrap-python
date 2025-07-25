@@ -14,7 +14,7 @@ MRI_SURF2VOL_METADATA = Metadata(
 
 
 MriSurf2volParameters = typing.TypedDict('MriSurf2volParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_surf2vol"],
+    "__STYXTYPE__": typing.Literal["mri_surf2vol"],
     "surface_overlay": typing.NotRequired[list[str] | None],
     "ltafile": typing.NotRequired[InputPathType | None],
     "outfile": str,

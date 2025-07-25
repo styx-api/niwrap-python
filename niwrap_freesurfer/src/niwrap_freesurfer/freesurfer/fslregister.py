@@ -14,7 +14,7 @@ FSLREGISTER_METADATA = Metadata(
 
 
 FslregisterParameters = typing.TypedDict('FslregisterParameters', {
-    "__STYX_TYPE__": typing.Literal["fslregister"],
+    "__STYXTYPE__": typing.Literal["fslregister"],
     "subjid": str,
     "mov_vol": str,
     "reg_file": str,

@@ -14,7 +14,7 @@ GTMSEG_METADATA = Metadata(
 
 
 GtmsegParameters = typing.TypedDict('GtmsegParameters', {
-    "__STYX_TYPE__": typing.Literal["gtmseg"],
+    "__STYXTYPE__": typing.Literal["gtmseg"],
     "subject": str,
     "outvol": typing.NotRequired[str | None],
     "usf": typing.NotRequired[float | None],

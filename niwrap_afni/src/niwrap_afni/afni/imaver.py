@@ -14,7 +14,7 @@ IMAVER_METADATA = Metadata(
 
 
 ImaverParameters = typing.TypedDict('ImaverParameters', {
-    "__STYX_TYPE__": typing.Literal["imaver"],
+    "__STYXTYPE__": typing.Literal["imaver"],
     "out_ave": typing.NotRequired[str | None],
     "out_sig": typing.NotRequired[str | None],
     "input_images": list[InputPathType],

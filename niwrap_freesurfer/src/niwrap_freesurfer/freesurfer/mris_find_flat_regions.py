@@ -14,7 +14,7 @@ MRIS_FIND_FLAT_REGIONS_METADATA = Metadata(
 
 
 MrisFindFlatRegionsParameters = typing.TypedDict('MrisFindFlatRegionsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_find_flat_regions"],
+    "__STYXTYPE__": typing.Literal["mris_find_flat_regions"],
     "surface": InputPathType,
     "wfile": str,
     "threshold": typing.NotRequired[float | None],

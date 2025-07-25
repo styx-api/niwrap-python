@@ -14,7 +14,7 @@ LABEL_SUBJECT_METADATA = Metadata(
 
 
 LabelSubjectParameters = typing.TypedDict('LabelSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["label_subject"],
+    "__STYXTYPE__": typing.Literal["label_subject"],
     "nu_file": typing.NotRequired[InputPathType | None],
     "orig_dir": typing.NotRequired[str | None],
 })

@@ -14,7 +14,7 @@ CCOPS_METADATA = Metadata(
 
 
 CcopsParameters = typing.TypedDict('CcopsParameters', {
-    "__STYX_TYPE__": typing.Literal["ccops"],
+    "__STYXTYPE__": typing.Literal["ccops"],
     "basename": str,
     "infile": typing.NotRequired[InputPathType | None],
     "tract_dir": typing.NotRequired[str | None],

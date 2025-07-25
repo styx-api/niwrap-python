@@ -14,7 +14,7 @@ V_2D_IM_REG_METADATA = Metadata(
 
 
 V2dImRegParameters = typing.TypedDict('V2dImRegParameters', {
-    "__STYX_TYPE__": typing.Literal["2dImReg"],
+    "__STYXTYPE__": typing.Literal["2dImReg"],
     "input_file": InputPathType,
     "base_file": typing.NotRequired[InputPathType | None],
     "base": typing.NotRequired[float | None],

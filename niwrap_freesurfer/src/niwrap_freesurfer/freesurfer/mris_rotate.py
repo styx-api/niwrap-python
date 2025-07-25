@@ -14,7 +14,7 @@ MRIS_ROTATE_METADATA = Metadata(
 
 
 MrisRotateParameters = typing.TypedDict('MrisRotateParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_rotate"],
+    "__STYXTYPE__": typing.Literal["mris_rotate"],
     "input_surface": InputPathType,
     "alpha_deg": float,
     "beta_deg": float,

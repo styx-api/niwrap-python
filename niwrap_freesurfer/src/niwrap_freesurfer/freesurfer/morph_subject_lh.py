@@ -14,7 +14,7 @@ MORPH_SUBJECT_LH_METADATA = Metadata(
 
 
 MorphSubjectLhParameters = typing.TypedDict('MorphSubjectLhParameters', {
-    "__STYX_TYPE__": typing.Literal["morph_subject-lh"],
+    "__STYXTYPE__": typing.Literal["morph_subject-lh"],
     "subject_id": str,
 })
 

@@ -14,7 +14,7 @@ FIDUCIALS_CALIBRATION_METADATA = Metadata(
 
 
 FiducialsCalibrationParameters = typing.TypedDict('FiducialsCalibrationParameters', {
-    "__STYX_TYPE__": typing.Literal["fiducials_calibration"],
+    "__STYXTYPE__": typing.Literal["fiducials_calibration"],
     "qt_plugin_installation": typing.NotRequired[str | None],
 })
 

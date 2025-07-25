@@ -14,7 +14,7 @@ MRIS_FILL_METADATA = Metadata(
 
 
 MrisFillParameters = typing.TypedDict('MrisFillParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_fill"],
+    "__STYXTYPE__": typing.Literal["mris_fill"],
     "resolution": typing.NotRequired[float | None],
     "conform": bool,
     "input_surface": InputPathType,

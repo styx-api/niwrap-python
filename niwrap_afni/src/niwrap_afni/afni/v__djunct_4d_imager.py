@@ -14,7 +14,7 @@ V__DJUNCT_4D_IMAGER_METADATA = Metadata(
 
 
 VDjunct4dImagerParameters = typing.TypedDict('VDjunct4dImagerParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_4d_imager"],
+    "__STYXTYPE__": typing.Literal["@djunct_4d_imager"],
     "inset": InputPathType,
     "prefix": str,
     "do_movie": typing.NotRequired[typing.Literal["MPEG", "AGIF"] | None],

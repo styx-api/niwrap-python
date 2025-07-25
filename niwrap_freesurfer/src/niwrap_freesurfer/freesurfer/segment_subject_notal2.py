@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_NOTAL2_METADATA = Metadata(
 
 
 SegmentSubjectNotal2Parameters = typing.TypedDict('SegmentSubjectNotal2Parameters', {
-    "__STYX_TYPE__": typing.Literal["segment_subject_notal2"],
+    "__STYXTYPE__": typing.Literal["segment_subject_notal2"],
     "license_file": InputPathType,
 })
 

@@ -14,7 +14,7 @@ CSVPRINT_METADATA = Metadata(
 
 
 CsvprintParameters = typing.TypedDict('CsvprintParameters', {
-    "__STYX_TYPE__": typing.Literal["csvprint"],
+    "__STYXTYPE__": typing.Literal["csvprint"],
     "infile": InputPathType,
 })
 

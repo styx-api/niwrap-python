@@ -14,7 +14,7 @@ SURF_QUAL_METADATA = Metadata(
 
 
 SurfQualParameters = typing.TypedDict('SurfQualParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfQual"],
+    "__STYXTYPE__": typing.Literal["SurfQual"],
     "spec_file": InputPathType,
     "surface_a": list[InputPathType],
     "sphere_flag": bool,

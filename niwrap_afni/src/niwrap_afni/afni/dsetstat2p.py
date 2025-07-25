@@ -14,7 +14,7 @@ DSETSTAT2P_METADATA = Metadata(
 
 
 Dsetstat2pParameters = typing.TypedDict('Dsetstat2pParameters', {
-    "__STYX_TYPE__": typing.Literal["dsetstat2p"],
+    "__STYXTYPE__": typing.Literal["dsetstat2p"],
     "dataset": str,
     "statval": float,
     "bisided": bool,

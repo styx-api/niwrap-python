@@ -14,7 +14,7 @@ METRIC_FILL_HOLES_METADATA = Metadata(
 
 
 MetricFillHolesParameters = typing.TypedDict('MetricFillHolesParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-fill-holes"],
+    "__STYXTYPE__": typing.Literal["metric-fill-holes"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,

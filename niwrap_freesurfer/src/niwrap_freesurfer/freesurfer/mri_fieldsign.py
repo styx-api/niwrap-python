@@ -14,7 +14,7 @@ MRI_FIELDSIGN_METADATA = Metadata(
 
 
 MriFieldsignParameters = typing.TypedDict('MriFieldsignParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fieldsign"],
+    "__STYXTYPE__": typing.Literal["mri_fieldsign"],
     "fieldsign_file": str,
     "eccen_values": list[float],
     "polar_values": list[float],

@@ -14,7 +14,7 @@ RCA_BASE_INIT_METADATA = Metadata(
 
 
 RcaBaseInitParameters = typing.TypedDict('RcaBaseInitParameters', {
-    "__STYX_TYPE__": typing.Literal["rca-base-init"],
+    "__STYXTYPE__": typing.Literal["rca-base-init"],
     "log_file": typing.NotRequired[str | None],
     "status_file": typing.NotRequired[str | None],
     "cmd_file": typing.NotRequired[str | None],

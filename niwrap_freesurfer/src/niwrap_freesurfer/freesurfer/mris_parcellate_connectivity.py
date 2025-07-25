@@ -14,7 +14,7 @@ MRIS_PARCELLATE_CONNECTIVITY_METADATA = Metadata(
 
 
 MrisParcellateConnectivityParameters = typing.TypedDict('MrisParcellateConnectivityParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_parcellate_connectivity"],
+    "__STYXTYPE__": typing.Literal["mris_parcellate_connectivity"],
     "smooth_iterations": typing.NotRequired[float | None],
     "input_surface": InputPathType,
     "input_correlations": InputPathType,

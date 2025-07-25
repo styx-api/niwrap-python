@@ -14,7 +14,7 @@ V_3D_AUTO_TCORRELATE_METADATA = Metadata(
 
 
 V3dAutoTcorrelateParameters = typing.TypedDict('V3dAutoTcorrelateParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAutoTcorrelate"],
+    "__STYXTYPE__": typing.Literal["3dAutoTcorrelate"],
     "input_dataset": InputPathType,
     "pearson": bool,
     "eta2": bool,

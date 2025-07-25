@@ -14,7 +14,7 @@ UNPACKIMADIR2_METADATA = Metadata(
 
 
 Unpackimadir2Parameters = typing.TypedDict('Unpackimadir2Parameters', {
-    "__STYX_TYPE__": typing.Literal["unpackimadir2"],
+    "__STYXTYPE__": typing.Literal["unpackimadir2"],
     "directory": InputPathType,
 })
 

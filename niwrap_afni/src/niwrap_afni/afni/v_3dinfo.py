@@ -14,7 +14,7 @@ V_3DINFO_METADATA = Metadata(
 
 
 V3dinfoParameters = typing.TypedDict('V3dinfoParameters', {
-    "__STYX_TYPE__": typing.Literal["3dinfo"],
+    "__STYXTYPE__": typing.Literal["3dinfo"],
     "orient": bool,
     "Lextent": bool,
     "Rextent": bool,

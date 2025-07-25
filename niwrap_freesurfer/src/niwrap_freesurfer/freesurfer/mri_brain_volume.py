@@ -14,7 +14,7 @@ MRI_BRAIN_VOLUME_METADATA = Metadata(
 
 
 MriBrainVolumeParameters = typing.TypedDict('MriBrainVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_brain_volume"],
+    "__STYXTYPE__": typing.Literal["mri_brain_volume"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "force_param": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
 
 
 GiftiLabelAddPrefixParameters = typing.TypedDict('GiftiLabelAddPrefixParameters', {
-    "__STYX_TYPE__": typing.Literal["gifti-label-add-prefix"],
+    "__STYXTYPE__": typing.Literal["gifti-label-add-prefix"],
     "label_in": InputPathType,
     "prefix": str,
     "label_out": str,

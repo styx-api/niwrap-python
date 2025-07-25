@@ -14,7 +14,7 @@ CIFTI_PAIRWISE_CORRELATION_METADATA = Metadata(
 
 
 CiftiPairwiseCorrelationParameters = typing.TypedDict('CiftiPairwiseCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-pairwise-correlation"],
+    "__STYXTYPE__": typing.Literal["cifti-pairwise-correlation"],
     "cifti_a": InputPathType,
     "cifti_b": InputPathType,
     "cifti_out": str,

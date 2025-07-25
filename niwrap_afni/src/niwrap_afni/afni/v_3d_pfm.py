@@ -14,7 +14,7 @@ V_3D_PFM_METADATA = Metadata(
 
 
 V3dPfmParameters = typing.TypedDict('V3dPfmParameters', {
-    "__STYX_TYPE__": typing.Literal["3dPFM"],
+    "__STYXTYPE__": typing.Literal["3dPFM"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "algorithm": typing.NotRequired[str | None],

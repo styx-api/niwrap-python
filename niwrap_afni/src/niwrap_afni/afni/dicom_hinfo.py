@@ -14,7 +14,7 @@ DICOM_HINFO_METADATA = Metadata(
 
 
 DicomHinfoParameters = typing.TypedDict('DicomHinfoParameters', {
-    "__STYX_TYPE__": typing.Literal["dicom_hinfo"],
+    "__STYXTYPE__": typing.Literal["dicom_hinfo"],
     "tag": list[str],
     "sepstr": typing.NotRequired[str | None],
     "full_entry": bool,

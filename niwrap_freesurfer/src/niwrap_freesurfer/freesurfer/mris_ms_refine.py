@@ -14,7 +14,7 @@ MRIS_MS_REFINE_METADATA = Metadata(
 
 
 MrisMsRefineParameters = typing.TypedDict('MrisMsRefineParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_ms_refine"],
+    "__STYXTYPE__": typing.Literal["mris_ms_refine"],
     "subject_name": str,
     "hemisphere": str,
     "xform": InputPathType,

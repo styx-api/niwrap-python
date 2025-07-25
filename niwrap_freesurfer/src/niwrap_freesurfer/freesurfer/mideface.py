@@ -14,7 +14,7 @@ MIDEFACE_METADATA = Metadata(
 
 
 MidefaceParameters = typing.TypedDict('MidefaceParameters', {
-    "__STYX_TYPE__": typing.Literal["mideface"],
+    "__STYXTYPE__": typing.Literal["mideface"],
     "input_volume": InputPathType,
     "output_volume": str,
     "facemask": typing.NotRequired[InputPathType | None],

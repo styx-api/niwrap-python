@@ -14,7 +14,7 @@ MRI_HIRES_REGISTER_METADATA = Metadata(
 
 
 MriHiresRegisterParameters = typing.TypedDict('MriHiresRegisterParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_hires_register"],
+    "__STYXTYPE__": typing.Literal["mri_hires_register"],
     "hires_labeling": InputPathType,
     "input_intensity": InputPathType,
     "input_aseg": InputPathType,

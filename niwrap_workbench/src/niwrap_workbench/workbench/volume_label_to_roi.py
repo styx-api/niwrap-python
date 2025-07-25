@@ -14,7 +14,7 @@ VOLUME_LABEL_TO_ROI_METADATA = Metadata(
 
 
 VolumeLabelToRoiParameters = typing.TypedDict('VolumeLabelToRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-label-to-roi"],
+    "__STYXTYPE__": typing.Literal["volume-label-to-roi"],
     "label_in": InputPathType,
     "volume_out": str,
     "opt_name_label_name": typing.NotRequired[str | None],

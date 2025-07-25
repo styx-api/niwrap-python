@@ -14,7 +14,7 @@ SIENA_DIFF_METADATA = Metadata(
 
 
 SienaDiffParameters = typing.TypedDict('SienaDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["siena_diff"],
+    "__STYXTYPE__": typing.Literal["siena_diff"],
     "input1_basename": str,
     "input2_basename": str,
     "debug_flag": bool,

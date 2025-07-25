@@ -14,7 +14,7 @@ V_3D_TSHIFT_METADATA = Metadata(
 
 
 V3dTshiftParameters = typing.TypedDict('V3dTshiftParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTshift"],
+    "__STYXTYPE__": typing.Literal["3dTshift"],
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
     "in_file": InputPathType,

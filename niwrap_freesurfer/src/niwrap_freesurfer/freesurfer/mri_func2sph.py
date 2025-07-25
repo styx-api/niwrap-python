@@ -14,7 +14,7 @@ MRI_FUNC2SPH_METADATA = Metadata(
 
 
 MriFunc2sphParameters = typing.TypedDict('MriFunc2sphParameters', {
-    "__STYX_TYPE__": typing.Literal["mri-func2sph"],
+    "__STYXTYPE__": typing.Literal["mri-func2sph"],
     "instem": str,
     "outstem": str,
     "hemisphere": typing.Literal["lh", "rh"],

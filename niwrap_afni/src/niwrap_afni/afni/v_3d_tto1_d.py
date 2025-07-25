@@ -14,7 +14,7 @@ V_3D_TTO1_D_METADATA = Metadata(
 
 
 V3dTto1DParameters = typing.TypedDict('V3dTto1DParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTto1D"],
+    "__STYXTYPE__": typing.Literal["3dTto1D"],
     "input_dataset": InputPathType,
     "method": str,
     "automask": bool,

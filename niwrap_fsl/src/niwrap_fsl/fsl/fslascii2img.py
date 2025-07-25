@@ -14,7 +14,7 @@ FSLASCII2IMG_METADATA = Metadata(
 
 
 Fslascii2imgParameters = typing.TypedDict('Fslascii2imgParameters', {
-    "__STYX_TYPE__": typing.Literal["fslascii2img"],
+    "__STYXTYPE__": typing.Literal["fslascii2img"],
     "infile": InputPathType,
     "xsize": int,
     "ysize": int,

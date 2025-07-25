@@ -14,7 +14,7 @@ MRI_LABEL_VALS_METADATA = Metadata(
 
 
 MriLabelValsParameters = typing.TypedDict('MriLabelValsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_label_vals"],
+    "__STYXTYPE__": typing.Literal["mri_label_vals"],
     "volume": InputPathType,
     "label_file": InputPathType,
     "cras_flag": bool,

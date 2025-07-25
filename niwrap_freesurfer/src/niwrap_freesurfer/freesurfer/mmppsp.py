@@ -14,7 +14,7 @@ MMPPSP_METADATA = Metadata(
 
 
 MmppspParameters = typing.TypedDict('MmppspParameters', {
-    "__STYX_TYPE__": typing.Literal["mmppsp"],
+    "__STYXTYPE__": typing.Literal["mmppsp"],
     "samseg_dir": str,
     "outdir": str,
     "lh_flag": bool,

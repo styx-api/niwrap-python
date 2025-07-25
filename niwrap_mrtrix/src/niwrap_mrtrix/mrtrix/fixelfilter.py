@@ -14,38 +14,38 @@ FIXELFILTER_METADATA = Metadata(
 
 
 FixelfilterConfigParameters = typing.TypedDict('FixelfilterConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelfilterVariousStringParameters = typing.TypedDict('FixelfilterVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 FixelfilterVariousFileParameters = typing.TypedDict('FixelfilterVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelfilterVariousString1Parameters = typing.TypedDict('FixelfilterVariousString1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString_1"],
+    "__STYXTYPE__": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 FixelfilterVariousFile1Parameters = typing.TypedDict('FixelfilterVariousFile1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile_1"],
+    "__STYXTYPE__": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 FixelfilterParameters = typing.TypedDict('FixelfilterParameters', {
-    "__STYX_TYPE__": typing.Literal["fixelfilter"],
+    "__STYXTYPE__": typing.Literal["fixelfilter"],
     "matrix": InputPathType,
     "threshold_value": typing.NotRequired[float | None],
     "threshold_connectivity": typing.NotRequired[float | None],

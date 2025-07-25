@@ -14,7 +14,7 @@ MAKE_STIM_TIMES_PY_METADATA = Metadata(
 
 
 MakeStimTimesPyParameters = typing.TypedDict('MakeStimTimesPyParameters', {
-    "__STYX_TYPE__": typing.Literal["make_stim_times.py"],
+    "__STYXTYPE__": typing.Literal["make_stim_times.py"],
     "files": list[InputPathType],
     "prefix": str,
     "tr": float,

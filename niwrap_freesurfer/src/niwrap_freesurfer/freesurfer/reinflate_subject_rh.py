@@ -14,7 +14,7 @@ REINFLATE_SUBJECT_RH_METADATA = Metadata(
 
 
 ReinflateSubjectRhParameters = typing.TypedDict('ReinflateSubjectRhParameters', {
-    "__STYX_TYPE__": typing.Literal["reinflate_subject-rh"],
+    "__STYXTYPE__": typing.Literal["reinflate_subject-rh"],
     "subject_dir": str,
     "additional_options": typing.NotRequired[str | None],
 })

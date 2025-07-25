@@ -14,7 +14,7 @@ SURFACE_FDR_METADATA = Metadata(
 
 
 SurfaceFdrParameters = typing.TypedDict('SurfaceFdrParameters', {
-    "__STYX_TYPE__": typing.Literal["surface_fdr"],
+    "__STYXTYPE__": typing.Literal["surface_fdr"],
     "input_vtk": InputPathType,
 })
 

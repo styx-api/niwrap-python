@@ -14,7 +14,7 @@ SURFACE_MATCH_METADATA = Metadata(
 
 
 SurfaceMatchParameters = typing.TypedDict('SurfaceMatchParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-match"],
+    "__STYXTYPE__": typing.Literal["surface-match"],
     "match_surface_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_surface_name": str,

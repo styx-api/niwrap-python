@@ -14,7 +14,7 @@ MRIS_REMESH_METADATA = Metadata(
 
 
 MrisRemeshParameters = typing.TypedDict('MrisRemeshParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_remesh"],
+    "__STYXTYPE__": typing.Literal["mris_remesh"],
     "input": InputPathType,
     "output": str,
     "edge_length": typing.NotRequired[float | None],

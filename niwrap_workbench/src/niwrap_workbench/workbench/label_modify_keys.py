@@ -14,7 +14,7 @@ LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 LabelModifyKeysParameters = typing.TypedDict('LabelModifyKeysParameters', {
-    "__STYX_TYPE__": typing.Literal["label-modify-keys"],
+    "__STYXTYPE__": typing.Literal["label-modify-keys"],
     "label_in": InputPathType,
     "remap_file": str,
     "label_out": str,

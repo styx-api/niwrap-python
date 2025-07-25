@@ -14,7 +14,7 @@ REBASE_TENSOR_IMAGE_METADATA = Metadata(
 
 
 RebaseTensorImageParameters = typing.TypedDict('RebaseTensorImageParameters', {
-    "__STYX_TYPE__": typing.Literal["RebaseTensorImage"],
+    "__STYXTYPE__": typing.Literal["RebaseTensorImage"],
     "dimension": int,
     "infile": InputPathType,
     "outfile": InputPathType,

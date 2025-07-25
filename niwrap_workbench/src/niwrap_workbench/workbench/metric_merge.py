@@ -14,28 +14,28 @@ METRIC_MERGE_METADATA = Metadata(
 
 
 MetricMergeUpToParameters = typing.TypedDict('MetricMergeUpToParameters', {
-    "__STYX_TYPE__": typing.Literal["up_to"],
+    "__STYXTYPE__": typing.Literal["up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 MetricMergeColumnParameters = typing.TypedDict('MetricMergeColumnParameters', {
-    "__STYX_TYPE__": typing.Literal["column"],
+    "__STYXTYPE__": typing.Literal["column"],
     "column": str,
     "up_to": typing.NotRequired[MetricMergeUpToParameters | None],
 })
 
 
 MetricMergeMetricParameters = typing.TypedDict('MetricMergeMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["metric"],
+    "__STYXTYPE__": typing.Literal["metric"],
     "metric_in": InputPathType,
     "column": typing.NotRequired[list[MetricMergeColumnParameters] | None],
 })
 
 
 MetricMergeParameters = typing.TypedDict('MetricMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-merge"],
+    "__STYXTYPE__": typing.Literal["metric-merge"],
     "metric_out": str,
     "metric": typing.NotRequired[list[MetricMergeMetricParameters] | None],
 })

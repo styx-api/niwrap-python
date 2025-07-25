@@ -14,7 +14,7 @@ V__FSLABEL2DSET_METADATA = Metadata(
 
 
 VFslabel2dsetParameters = typing.TypedDict('VFslabel2dsetParameters', {
-    "__STYX_TYPE__": typing.Literal["@FSlabel2dset"],
+    "__STYXTYPE__": typing.Literal["@FSlabel2dset"],
     "fs_label_file": InputPathType,
     "val": typing.NotRequired[float | None],
     "help": bool,

@@ -14,7 +14,7 @@ TRIDEC_METADATA = Metadata(
 
 
 TridecParameters = typing.TypedDict('TridecParameters', {
-    "__STYX_TYPE__": typing.Literal["tridec"],
+    "__STYXTYPE__": typing.Literal["tridec"],
     "subject_name": str,
     "fine_file": InputPathType,
     "ico_file": InputPathType,

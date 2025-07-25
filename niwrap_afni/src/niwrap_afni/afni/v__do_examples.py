@@ -14,7 +14,7 @@ V__DO_EXAMPLES_METADATA = Metadata(
 
 
 VDoExamplesParameters = typing.TypedDict('VDoExamplesParameters', {
-    "__STYX_TYPE__": typing.Literal["@DO.examples"],
+    "__STYXTYPE__": typing.Literal["@DO.examples"],
     "auto_test": bool,
 })
 

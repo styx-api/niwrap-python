@@ -14,7 +14,7 @@ MRIS_EXTRACT_VALUES_METADATA = Metadata(
 
 
 MrisExtractValuesParameters = typing.TypedDict('MrisExtractValuesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_extract_values"],
+    "__STYXTYPE__": typing.Literal["mris_extract_values"],
     "surface": InputPathType,
     "overlay": InputPathType,
     "annotation": InputPathType,

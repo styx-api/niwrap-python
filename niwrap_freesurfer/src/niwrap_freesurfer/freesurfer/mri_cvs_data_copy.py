@@ -14,7 +14,7 @@ MRI_CVS_DATA_COPY_METADATA = Metadata(
 
 
 MriCvsDataCopyParameters = typing.TypedDict('MriCvsDataCopyParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_cvs_data_copy"],
+    "__STYXTYPE__": typing.Literal["mri_cvs_data_copy"],
     "subjid": str,
     "olddir": str,
     "newdir": str,

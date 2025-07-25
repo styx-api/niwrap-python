@@ -14,7 +14,7 @@ NEURO_DECONVOLVE_PY_METADATA = Metadata(
 
 
 NeuroDeconvolvePyParameters = typing.TypedDict('NeuroDeconvolvePyParameters', {
-    "__STYX_TYPE__": typing.Literal["neuro_deconvolve.py"],
+    "__STYXTYPE__": typing.Literal["neuro_deconvolve.py"],
     "input_file": InputPathType,
     "prefix": str,
     "script": str,

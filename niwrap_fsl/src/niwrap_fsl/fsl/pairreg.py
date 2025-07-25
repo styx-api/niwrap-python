@@ -14,7 +14,7 @@ PAIRREG_METADATA = Metadata(
 
 
 PairregParameters = typing.TypedDict('PairregParameters', {
-    "__STYX_TYPE__": typing.Literal["pairreg"],
+    "__STYXTYPE__": typing.Literal["pairreg"],
     "brain1": InputPathType,
     "brain2": InputPathType,
     "skull1": InputPathType,

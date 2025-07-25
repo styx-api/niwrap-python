@@ -14,7 +14,7 @@ TTOZ_METADATA = Metadata(
 
 
 TtozParameters = typing.TypedDict('TtozParameters', {
-    "__STYX_TYPE__": typing.Literal["ttoz"],
+    "__STYXTYPE__": typing.Literal["ttoz"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": int,

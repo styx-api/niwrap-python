@@ -14,7 +14,7 @@ EPI_B0_CORRECT_METADATA = Metadata(
 
 
 EpiB0CorrectParameters = typing.TypedDict('EpiB0CorrectParameters', {
-    "__STYX_TYPE__": typing.Literal["epi_b0_correct"],
+    "__STYXTYPE__": typing.Literal["epi_b0_correct"],
     "prefix": str,
     "input_freq": InputPathType,
     "input_epi": InputPathType,

@@ -14,7 +14,7 @@ V_3D_EMPTY_METADATA = Metadata(
 
 
 V3dEmptyParameters = typing.TypedDict('V3dEmptyParameters', {
-    "__STYX_TYPE__": typing.Literal["3dEmpty"],
+    "__STYXTYPE__": typing.Literal["3dEmpty"],
     "prefix": typing.NotRequired[str | None],
     "geometry": typing.NotRequired[str | None],
     "nxyz": typing.NotRequired[list[float] | None],

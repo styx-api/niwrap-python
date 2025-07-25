@@ -14,7 +14,7 @@ GROUPSTATS_METADATA = Metadata(
 
 
 GroupstatsParameters = typing.TypedDict('GroupstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["groupstats"],
+    "__STYXTYPE__": typing.Literal["groupstats"],
     "outdir": str,
     "group_fsgd": typing.NotRequired[InputPathType | None],
     "subjectfile": typing.NotRequired[InputPathType | None],

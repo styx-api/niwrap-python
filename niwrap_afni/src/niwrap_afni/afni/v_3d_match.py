@@ -14,7 +14,7 @@ V_3D_MATCH_METADATA = Metadata(
 
 
 V3dMatchParameters = typing.TypedDict('V3dMatchParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMatch"],
+    "__STYXTYPE__": typing.Literal["3dMatch"],
     "inset": InputPathType,
     "refset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],

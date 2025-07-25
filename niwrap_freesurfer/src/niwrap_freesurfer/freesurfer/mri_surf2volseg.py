@@ -14,7 +14,7 @@ MRI_SURF2VOLSEG_METADATA = Metadata(
 
 
 MriSurf2volsegParameters = typing.TypedDict('MriSurf2volsegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_surf2volseg"],
+    "__STYXTYPE__": typing.Literal["mri_surf2volseg"],
     "input_segmentation": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "source_segmentation": typing.NotRequired[InputPathType | None],

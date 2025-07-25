@@ -14,7 +14,7 @@ AUTO_WARP_PY_METADATA = Metadata(
 
 
 AutoWarpPyParameters = typing.TypedDict('AutoWarpPyParameters', {
-    "__STYX_TYPE__": typing.Literal["auto_warp.py"],
+    "__STYXTYPE__": typing.Literal["auto_warp.py"],
     "base": InputPathType,
     "input": InputPathType,
     "skull_strip_input": bool,

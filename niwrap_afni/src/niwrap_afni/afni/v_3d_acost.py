@@ -14,7 +14,7 @@ V_3D_ACOST_METADATA = Metadata(
 
 
 V3dAcostParameters = typing.TypedDict('V3dAcostParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAcost"],
+    "__STYXTYPE__": typing.Literal["3dAcost"],
     "infile": InputPathType,
     "basefile": InputPathType,
     "outfile": str,

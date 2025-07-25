@@ -14,7 +14,7 @@ V_3D_DTTO_NOISY_DWI_METADATA = Metadata(
 
 
 V3dDttoNoisyDwiParameters = typing.TypedDict('V3dDttoNoisyDwiParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDTtoNoisyDWI"],
+    "__STYXTYPE__": typing.Literal["3dDTtoNoisyDWI"],
     "dt_file": InputPathType,
     "grad_file": InputPathType,
     "noise_dwi": float,

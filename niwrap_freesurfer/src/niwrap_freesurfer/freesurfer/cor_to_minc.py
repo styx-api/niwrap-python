@@ -14,7 +14,7 @@ COR_TO_MINC_METADATA = Metadata(
 
 
 CorToMincParameters = typing.TypedDict('CorToMincParameters', {
-    "__STYX_TYPE__": typing.Literal["cor_to_minc"],
+    "__STYXTYPE__": typing.Literal["cor_to_minc"],
     "cor_directory": str,
     "minc_file": str,
 })

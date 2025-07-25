@@ -14,7 +14,7 @@ SIENA_CAL_METADATA = Metadata(
 
 
 SienaCalParameters = typing.TypedDict('SienaCalParameters', {
-    "__STYX_TYPE__": typing.Literal["siena_cal"],
+    "__STYXTYPE__": typing.Literal["siena_cal"],
     "input1_file": InputPathType,
     "input2_file": InputPathType,
     "scale": float,

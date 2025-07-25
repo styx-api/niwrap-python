@@ -14,7 +14,7 @@ V_3D_UPSAMPLE_METADATA = Metadata(
 
 
 V3dUpsampleParameters = typing.TypedDict('V3dUpsampleParameters', {
-    "__STYX_TYPE__": typing.Literal["3dUpsample"],
+    "__STYXTYPE__": typing.Literal["3dUpsample"],
     "upsample_factor": int,
     "input_dataset": str,
     "linear_interpolation": bool,

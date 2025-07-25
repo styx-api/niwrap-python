@@ -14,7 +14,7 @@ SAMSEG_METADATA = Metadata(
 
 
 SamsegParameters = typing.TypedDict('SamsegParameters', {
-    "__STYX_TYPE__": typing.Literal["samseg"],
+    "__STYXTYPE__": typing.Literal["samseg"],
     "input_files": list[InputPathType],
     "t1w_files": typing.NotRequired[list[InputPathType] | None],
     "t2w_files": typing.NotRequired[list[InputPathType] | None],

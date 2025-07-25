@@ -14,7 +14,7 @@ V_3D_SURF_MASK_METADATA = Metadata(
 
 
 V3dSurfMaskParameters = typing.TypedDict('V3dSurfMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSurfMask"],
+    "__STYXTYPE__": typing.Literal["3dSurfMask"],
     "surface_type": str,
     "surface_file": InputPathType,
     "prefix": str,

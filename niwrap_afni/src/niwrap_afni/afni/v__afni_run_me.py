@@ -14,7 +14,7 @@ V__AFNI_RUN_ME_METADATA = Metadata(
 
 
 VAfniRunMeParameters = typing.TypedDict('VAfniRunMeParameters', {
-    "__STYX_TYPE__": typing.Literal["@afni.run.me"],
+    "__STYXTYPE__": typing.Literal["@afni.run.me"],
     "go": bool,
     "curl": bool,
     "help": bool,

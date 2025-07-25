@@ -14,7 +14,7 @@ V__SHOW_DYNAMIC_RANGE_METADATA = Metadata(
 
 
 VShowDynamicRangeParameters = typing.TypedDict('VShowDynamicRangeParameters', {
-    "__STYX_TYPE__": typing.Literal["@ShowDynamicRange"],
+    "__STYXTYPE__": typing.Literal["@ShowDynamicRange"],
     "infile": InputPathType,
 })
 

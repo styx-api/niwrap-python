@@ -14,7 +14,7 @@ V_3DINFILL_METADATA = Metadata(
 
 
 V3dinfillParameters = typing.TypedDict('V3dinfillParameters', {
-    "__STYX_TYPE__": typing.Literal["3dinfill"],
+    "__STYXTYPE__": typing.Literal["3dinfill"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "niter": typing.NotRequired[float | None],

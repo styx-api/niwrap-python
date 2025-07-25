@@ -14,7 +14,7 @@ CONNECTEDCOMP_METADATA = Metadata(
 
 
 ConnectedcompParameters = typing.TypedDict('ConnectedcompParameters', {
-    "__STYX_TYPE__": typing.Literal["connectedcomp"],
+    "__STYXTYPE__": typing.Literal["connectedcomp"],
     "in_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
     "num_connect": typing.NotRequired[int | None],

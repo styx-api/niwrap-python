@@ -14,7 +14,7 @@ MRI_GTMPVC_METADATA = Metadata(
 
 
 MriGtmpvcParameters = typing.TypedDict('MriGtmpvcParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gtmpvc"],
+    "__STYXTYPE__": typing.Literal["mri_gtmpvc"],
     "input_volume": InputPathType,
     "frame": typing.NotRequired[float | None],
     "psf": float,

@@ -14,7 +14,7 @@ MRIS_VOLSMOOTH_METADATA = Metadata(
 
 
 MrisVolsmoothParameters = typing.TypedDict('MrisVolsmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_volsmooth"],
+    "__STYXTYPE__": typing.Literal["mris_volsmooth"],
     "input_volume": InputPathType,
     "output_volume": str,
     "registration": InputPathType,

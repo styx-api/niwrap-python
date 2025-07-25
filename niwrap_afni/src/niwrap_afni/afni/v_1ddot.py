@@ -14,7 +14,7 @@ V_1DDOT_METADATA = Metadata(
 
 
 V1ddotParameters = typing.TypedDict('V1ddotParameters', {
-    "__STYX_TYPE__": typing.Literal["1ddot"],
+    "__STYXTYPE__": typing.Literal["1ddot"],
     "one_flag": bool,
     "dem_flag": bool,
     "cov_flag": bool,

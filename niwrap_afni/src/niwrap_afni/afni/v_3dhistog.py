@@ -14,7 +14,7 @@ V_3DHISTOG_METADATA = Metadata(
 
 
 V3dhistogParameters = typing.TypedDict('V3dhistogParameters', {
-    "__STYX_TYPE__": typing.Literal["3dhistog"],
+    "__STYXTYPE__": typing.Literal["3dhistog"],
     "dataset": InputPathType,
     "nbin": typing.NotRequired[float | None],
     "dind": typing.NotRequired[float | None],

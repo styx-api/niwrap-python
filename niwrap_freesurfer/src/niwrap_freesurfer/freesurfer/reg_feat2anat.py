@@ -14,7 +14,7 @@ REG_FEAT2ANAT_METADATA = Metadata(
 
 
 RegFeat2anatParameters = typing.TypedDict('RegFeat2anatParameters', {
-    "__STYX_TYPE__": typing.Literal["reg-feat2anat"],
+    "__STYXTYPE__": typing.Literal["reg-feat2anat"],
     "feat_dir": str,
     "subject_id": str,
     "overwrite_exf2std": bool,

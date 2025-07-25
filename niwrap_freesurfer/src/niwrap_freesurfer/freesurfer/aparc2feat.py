@@ -14,7 +14,7 @@ APARC2FEAT_METADATA = Metadata(
 
 
 Aparc2featParameters = typing.TypedDict('Aparc2featParameters', {
-    "__STYX_TYPE__": typing.Literal["aparc2feat"],
+    "__STYXTYPE__": typing.Literal["aparc2feat"],
     "feat_directories": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "hemi": typing.NotRequired[str | None],

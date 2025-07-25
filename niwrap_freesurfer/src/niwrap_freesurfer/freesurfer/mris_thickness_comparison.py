@@ -14,7 +14,7 @@ MRIS_THICKNESS_COMPARISON_METADATA = Metadata(
 
 
 MrisThicknessComparisonParameters = typing.TypedDict('MrisThicknessComparisonParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_thickness_comparison"],
+    "__STYXTYPE__": typing.Literal["mris_thickness_comparison"],
     "subject": str,
     "hemi": str,
     "thickness_file": InputPathType,

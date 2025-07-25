@@ -14,28 +14,28 @@ CIFTI_SMOOTHING_METADATA = Metadata(
 
 
 CiftiSmoothingLeftSurfaceParameters = typing.TypedDict('CiftiSmoothingLeftSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["left_surface"],
+    "__STYXTYPE__": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiSmoothingRightSurfaceParameters = typing.TypedDict('CiftiSmoothingRightSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["right_surface"],
+    "__STYXTYPE__": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiSmoothingCerebellumSurfaceParameters = typing.TypedDict('CiftiSmoothingCerebellumSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_surface"],
+    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiSmoothingParameters = typing.TypedDict('CiftiSmoothingParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-smoothing"],
+    "__STYXTYPE__": typing.Literal["cifti-smoothing"],
     "cifti": InputPathType,
     "surface_kernel": float,
     "volume_kernel": float,

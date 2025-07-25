@@ -14,28 +14,28 @@ FOCI_RESAMPLE_METADATA = Metadata(
 
 
 FociResampleLeftSurfacesParameters = typing.TypedDict('FociResampleLeftSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["left_surfaces"],
+    "__STYXTYPE__": typing.Literal["left_surfaces"],
     "current_surf": InputPathType,
     "new_surf": InputPathType,
 })
 
 
 FociResampleRightSurfacesParameters = typing.TypedDict('FociResampleRightSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["right_surfaces"],
+    "__STYXTYPE__": typing.Literal["right_surfaces"],
     "current_surf": InputPathType,
     "new_surf": InputPathType,
 })
 
 
 FociResampleCerebellumSurfacesParameters = typing.TypedDict('FociResampleCerebellumSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_surfaces"],
+    "__STYXTYPE__": typing.Literal["cerebellum_surfaces"],
     "current_surf": InputPathType,
     "new_surf": InputPathType,
 })
 
 
 FociResampleParameters = typing.TypedDict('FociResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["foci-resample"],
+    "__STYXTYPE__": typing.Literal["foci-resample"],
     "foci_in": InputPathType,
     "foci_out": str,
     "left_surfaces": typing.NotRequired[FociResampleLeftSurfacesParameters | None],

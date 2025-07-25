@@ -14,7 +14,7 @@ MRIS_TARGET_POS_METADATA = Metadata(
 
 
 MrisTargetPosParameters = typing.TypedDict('MrisTargetPosParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_target_pos"],
+    "__STYXTYPE__": typing.Literal["mris_target_pos"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_surface": str,

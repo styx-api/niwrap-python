@@ -14,7 +14,7 @@ SURFACE_MODIFY_SPHERE_METADATA = Metadata(
 
 
 SurfaceModifySphereParameters = typing.TypedDict('SurfaceModifySphereParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-modify-sphere"],
+    "__STYXTYPE__": typing.Literal["surface-modify-sphere"],
     "sphere_in": InputPathType,
     "radius": float,
     "sphere_out": str,

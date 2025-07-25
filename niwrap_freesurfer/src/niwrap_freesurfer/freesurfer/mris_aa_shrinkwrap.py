@@ -14,7 +14,7 @@ MRIS_AA_SHRINKWRAP_METADATA = Metadata(
 
 
 MrisAaShrinkwrapParameters = typing.TypedDict('MrisAaShrinkwrapParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_AA_shrinkwrap"],
+    "__STYXTYPE__": typing.Literal["mris_AA_shrinkwrap"],
     "t1_vol": InputPathType,
     "pd_vol": InputPathType,
     "output_dir": str,

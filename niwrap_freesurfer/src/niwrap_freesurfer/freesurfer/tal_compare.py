@@ -14,7 +14,7 @@ TAL_COMPARE_METADATA = Metadata(
 
 
 TalCompareParameters = typing.TypedDict('TalCompareParameters', {
-    "__STYX_TYPE__": typing.Literal["tal_compare"],
+    "__STYXTYPE__": typing.Literal["tal_compare"],
     "ref_file": InputPathType,
     "moving_file": InputPathType,
     "output_file": str,

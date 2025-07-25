@@ -14,7 +14,7 @@ CIFTI_LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 CiftiLabelExportTableParameters = typing.TypedDict('CiftiLabelExportTableParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-label-export-table"],
+    "__STYXTYPE__": typing.Literal["cifti-label-export-table"],
     "label_in": InputPathType,
     "map": str,
     "table_out": str,

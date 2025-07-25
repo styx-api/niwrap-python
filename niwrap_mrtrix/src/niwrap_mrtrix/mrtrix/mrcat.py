@@ -14,14 +14,14 @@ MRCAT_METADATA = Metadata(
 
 
 MrcatConfigParameters = typing.TypedDict('MrcatConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrcatParameters = typing.TypedDict('MrcatParameters', {
-    "__STYX_TYPE__": typing.Literal["mrcat"],
+    "__STYXTYPE__": typing.Literal["mrcat"],
     "axis": typing.NotRequired[int | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,

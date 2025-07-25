@@ -14,7 +14,7 @@ V_3D_AFNITO3_D_METADATA = Metadata(
 
 
 V3dAfnito3DParameters = typing.TypedDict('V3dAfnito3DParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAFNIto3D"],
+    "__STYXTYPE__": typing.Literal["3dAFNIto3D"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "binary": bool,

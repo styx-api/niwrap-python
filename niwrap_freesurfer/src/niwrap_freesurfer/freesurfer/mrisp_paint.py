@@ -14,7 +14,7 @@ MRISP_PAINT_METADATA = Metadata(
 
 
 MrispPaintParameters = typing.TypedDict('MrispPaintParameters', {
-    "__STYX_TYPE__": typing.Literal["mrisp_paint"],
+    "__STYXTYPE__": typing.Literal["mrisp_paint"],
     "template_file": InputPathType,
     "input_surface": InputPathType,
     "output_name": str,

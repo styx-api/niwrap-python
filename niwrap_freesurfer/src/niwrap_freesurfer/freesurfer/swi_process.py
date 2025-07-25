@@ -14,7 +14,7 @@ SWI_PROCESS_METADATA = Metadata(
 
 
 SwiProcessParameters = typing.TypedDict('SwiProcessParameters', {
-    "__STYX_TYPE__": typing.Literal["swi_process"],
+    "__STYXTYPE__": typing.Literal["swi_process"],
     "magnitude_image": InputPathType,
     "phase_image": InputPathType,
     "swi_output": str,

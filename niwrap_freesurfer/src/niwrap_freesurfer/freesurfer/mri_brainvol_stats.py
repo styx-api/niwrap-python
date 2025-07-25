@@ -14,7 +14,7 @@ MRI_BRAINVOL_STATS_METADATA = Metadata(
 
 
 MriBrainvolStatsParameters = typing.TypedDict('MriBrainvolStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_brainvol_stats"],
+    "__STYXTYPE__": typing.Literal["mri_brainvol_stats"],
     "subject_id": str,
     "xml_string": typing.NotRequired[str | None],
     "no_surface": bool,

@@ -14,7 +14,7 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 VolumeRoisFromExtremaParameters = typing.TypedDict('VolumeRoisFromExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-rois-from-extrema"],
+    "__STYXTYPE__": typing.Literal["volume-rois-from-extrema"],
     "volume_in": InputPathType,
     "limit": float,
     "volume_out": str,

@@ -14,13 +14,13 @@ CIFTI_MERGE_DENSE_METADATA = Metadata(
 
 
 CiftiMergeDenseCiftiParameters = typing.TypedDict('CiftiMergeDenseCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiMergeDenseParameters = typing.TypedDict('CiftiMergeDenseParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-merge-dense"],
+    "__STYXTYPE__": typing.Literal["cifti-merge-dense"],
     "direction": str,
     "cifti_out": str,
     "opt_label_collision_action": typing.NotRequired[str | None],

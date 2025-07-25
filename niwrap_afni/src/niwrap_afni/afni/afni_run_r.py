@@ -14,7 +14,7 @@ AFNI_RUN_R_METADATA = Metadata(
 
 
 AfniRunRParameters = typing.TypedDict('AfniRunRParameters', {
-    "__STYX_TYPE__": typing.Literal["afni_run_R"],
+    "__STYXTYPE__": typing.Literal["afni_run_R"],
     "r_script": InputPathType,
     "r_args": list[str],
 })

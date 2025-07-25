@@ -14,7 +14,7 @@ V_3D_SLICE_NDICE_METADATA = Metadata(
 
 
 V3dSliceNdiceParameters = typing.TypedDict('V3dSliceNdiceParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSliceNDice"],
+    "__STYXTYPE__": typing.Literal["3dSliceNDice"],
     "infile_a": InputPathType,
     "infile_b": InputPathType,
     "output_prefix": str,

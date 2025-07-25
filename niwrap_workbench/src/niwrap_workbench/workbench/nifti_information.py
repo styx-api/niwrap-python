@@ -14,19 +14,19 @@ NIFTI_INFORMATION_METADATA = Metadata(
 
 
 NiftiInformationPrintHeaderParameters = typing.TypedDict('NiftiInformationPrintHeaderParameters', {
-    "__STYX_TYPE__": typing.Literal["print_header"],
+    "__STYXTYPE__": typing.Literal["print_header"],
     "opt_allow_truncated": bool,
 })
 
 
 NiftiInformationPrintXmlParameters = typing.TypedDict('NiftiInformationPrintXmlParameters', {
-    "__STYX_TYPE__": typing.Literal["print_xml"],
+    "__STYXTYPE__": typing.Literal["print_xml"],
     "opt_version_version": typing.NotRequired[str | None],
 })
 
 
 NiftiInformationParameters = typing.TypedDict('NiftiInformationParameters', {
-    "__STYX_TYPE__": typing.Literal["nifti-information"],
+    "__STYXTYPE__": typing.Literal["nifti-information"],
     "nifti_file": str,
     "print_header": typing.NotRequired[NiftiInformationPrintHeaderParameters | None],
     "opt_print_matrix": bool,

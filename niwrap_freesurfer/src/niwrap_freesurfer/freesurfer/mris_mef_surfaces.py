@@ -14,7 +14,7 @@ MRIS_MEF_SURFACES_METADATA = Metadata(
 
 
 MrisMefSurfacesParameters = typing.TypedDict('MrisMefSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_mef_surfaces"],
+    "__STYXTYPE__": typing.Literal["mris_mef_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,

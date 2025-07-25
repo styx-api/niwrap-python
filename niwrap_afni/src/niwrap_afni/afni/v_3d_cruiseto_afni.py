@@ -14,14 +14,14 @@ V_3D_CRUISETO_AFNI_METADATA = Metadata(
 
 
 V3dCruisetoAfniTraceParameters = typing.TypedDict('V3dCruisetoAfniTraceParameters', {
-    "__STYX_TYPE__": typing.Literal["trace"],
+    "__STYXTYPE__": typing.Literal["trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
 V3dCruisetoAfniParameters = typing.TypedDict('V3dCruisetoAfniParameters', {
-    "__STYX_TYPE__": typing.Literal["3dCRUISEtoAFNI"],
+    "__STYXTYPE__": typing.Literal["3dCRUISEtoAFNI"],
     "input": InputPathType,
     "novolreg": bool,
     "noxform": bool,

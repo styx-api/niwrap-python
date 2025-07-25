@@ -14,7 +14,7 @@ SPMREGISTER_METADATA = Metadata(
 
 
 SpmregisterParameters = typing.TypedDict('SpmregisterParameters', {
-    "__STYX_TYPE__": typing.Literal["spmregister"],
+    "__STYXTYPE__": typing.Literal["spmregister"],
     "subjid": str,
     "mov": str,
     "reg": str,

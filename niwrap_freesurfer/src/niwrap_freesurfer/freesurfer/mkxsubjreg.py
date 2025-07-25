@@ -14,7 +14,7 @@ MKXSUBJREG_METADATA = Metadata(
 
 
 MkxsubjregParameters = typing.TypedDict('MkxsubjregParameters', {
-    "__STYX_TYPE__": typing.Literal["mkxsubjreg"],
+    "__STYXTYPE__": typing.Literal["mkxsubjreg"],
     "srcreg": InputPathType,
     "targreg": InputPathType,
     "targsubj": typing.NotRequired[str | None],

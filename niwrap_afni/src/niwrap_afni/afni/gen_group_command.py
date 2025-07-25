@@ -14,7 +14,7 @@ GEN_GROUP_COMMAND_METADATA = Metadata(
 
 
 GenGroupCommandParameters = typing.TypedDict('GenGroupCommandParameters', {
-    "__STYX_TYPE__": typing.Literal["gen_group_command"],
+    "__STYXTYPE__": typing.Literal["gen_group_command"],
     "command_name": str,
     "datasets": list[str],
     "prefix": typing.NotRequired[str | None],

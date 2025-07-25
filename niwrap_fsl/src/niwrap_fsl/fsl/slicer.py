@@ -14,7 +14,7 @@ SLICER_METADATA = Metadata(
 
 
 SlicerParameters = typing.TypedDict('SlicerParameters', {
-    "__STYX_TYPE__": typing.Literal["slicer"],
+    "__STYXTYPE__": typing.Literal["slicer"],
     "in_file": InputPathType,
     "overlay_file": typing.NotRequired[InputPathType | None],
     "label_slices": bool,

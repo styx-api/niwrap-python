@@ -14,7 +14,7 @@ V__ANIMAL_WARPER_METADATA = Metadata(
 
 
 VAnimalWarperParameters = typing.TypedDict('VAnimalWarperParameters', {
-    "__STYX_TYPE__": typing.Literal["@animal_warper"],
+    "__STYXTYPE__": typing.Literal["@animal_warper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
     "output_dir": str,

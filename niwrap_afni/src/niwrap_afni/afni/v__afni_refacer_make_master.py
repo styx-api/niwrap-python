@@ -14,7 +14,7 @@ V__AFNI_REFACER_MAKE_MASTER_METADATA = Metadata(
 
 
 VAfniRefacerMakeMasterParameters = typing.TypedDict('VAfniRefacerMakeMasterParameters', {
-    "__STYX_TYPE__": typing.Literal["@afni_refacer_make_master"],
+    "__STYXTYPE__": typing.Literal["@afni_refacer_make_master"],
     "input_datasets": list[InputPathType],
 })
 

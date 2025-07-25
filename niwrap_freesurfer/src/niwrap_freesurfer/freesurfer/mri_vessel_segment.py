@@ -14,7 +14,7 @@ MRI_VESSEL_SEGMENT_METADATA = Metadata(
 
 
 MriVesselSegmentParameters = typing.TypedDict('MriVesselSegmentParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_vessel_segment"],
+    "__STYXTYPE__": typing.Literal["mri_vessel_segment"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "aseg_file": InputPathType,

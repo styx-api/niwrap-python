@@ -14,7 +14,7 @@ V__GET_AFNI_ID_METADATA = Metadata(
 
 
 VGetAfniIdParameters = typing.TypedDict('VGetAfniIdParameters', {
-    "__STYX_TYPE__": typing.Literal["@GetAfniID"],
+    "__STYXTYPE__": typing.Literal["@GetAfniID"],
     "dset": InputPathType,
 })
 

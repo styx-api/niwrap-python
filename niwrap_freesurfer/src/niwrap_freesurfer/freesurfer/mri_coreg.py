@@ -14,7 +14,7 @@ MRI_COREG_METADATA = Metadata(
 
 
 MriCoregParameters = typing.TypedDict('MriCoregParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_coreg"],
+    "__STYXTYPE__": typing.Literal["mri_coreg"],
     "movvol": InputPathType,
     "refvol": InputPathType,
     "reg": str,

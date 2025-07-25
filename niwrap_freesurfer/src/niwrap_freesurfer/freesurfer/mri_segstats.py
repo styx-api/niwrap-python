@@ -14,7 +14,7 @@ MRI_SEGSTATS_METADATA = Metadata(
 
 
 MriSegstatsParameters = typing.TypedDict('MriSegstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_segstats"],
+    "__STYXTYPE__": typing.Literal["mri_segstats"],
     "segvol": InputPathType,
     "annot_subject": typing.NotRequired[str | None],
     "annot_hemisphere": typing.NotRequired[str | None],

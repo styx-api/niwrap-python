@@ -14,7 +14,7 @@ MRI_APPLY_BIAS_METADATA = Metadata(
 
 
 MriApplyBiasParameters = typing.TypedDict('MriApplyBiasParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_apply_bias"],
+    "__STYXTYPE__": typing.Literal["mri_apply_bias"],
     "input_volume": InputPathType,
     "bias_volume": InputPathType,
     "output_volume": str,

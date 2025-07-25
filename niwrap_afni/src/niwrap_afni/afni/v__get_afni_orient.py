@@ -14,7 +14,7 @@ V__GET_AFNI_ORIENT_METADATA = Metadata(
 
 
 VGetAfniOrientParameters = typing.TypedDict('VGetAfniOrientParameters', {
-    "__STYX_TYPE__": typing.Literal["@GetAfniOrient"],
+    "__STYXTYPE__": typing.Literal["@GetAfniOrient"],
     "exploratory": bool,
     "infile": InputPathType,
 })

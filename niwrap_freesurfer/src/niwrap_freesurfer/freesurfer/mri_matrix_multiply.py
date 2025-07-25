@@ -14,7 +14,7 @@ MRI_MATRIX_MULTIPLY_METADATA = Metadata(
 
 
 MriMatrixMultiplyParameters = typing.TypedDict('MriMatrixMultiplyParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_matrix_multiply"],
+    "__STYXTYPE__": typing.Literal["mri_matrix_multiply"],
     "input_matrices": list[InputPathType],
     "inverted_input_matrices": typing.NotRequired[list[InputPathType] | None],
     "output_matrix": str,

@@ -14,7 +14,7 @@ ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA = Metadata(
 
 
 AdjunctTortPlotDpAlignParameters = typing.TypedDict('AdjunctTortPlotDpAlignParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_tort_plot_dp_align"],
+    "__STYXTYPE__": typing.Literal["adjunct_tort_plot_dp_align"],
     "input_file": InputPathType,
     "output_prefix": str,
     "enorm_max": typing.NotRequired[float | None],

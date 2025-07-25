@@ -14,7 +14,7 @@ MRI_FILL_METADATA = Metadata(
 
 
 MriFillParameters = typing.TypedDict('MriFillParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fill"],
+    "__STYXTYPE__": typing.Literal["mri_fill"],
     "input_mr_dir": str,
     "output_mr_dir": str,
     "threshold": typing.NotRequired[float | None],

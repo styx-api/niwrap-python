@@ -14,7 +14,7 @@ MRIS_REVERSE_METADATA = Metadata(
 
 
 MrisReverseParameters = typing.TypedDict('MrisReverseParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_reverse"],
+    "__STYXTYPE__": typing.Literal["mris_reverse"],
     "input_surface": InputPathType,
     "output_surface": str,
 })

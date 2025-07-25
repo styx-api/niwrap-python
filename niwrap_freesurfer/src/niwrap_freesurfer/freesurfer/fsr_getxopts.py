@@ -14,7 +14,7 @@ FSR_GETXOPTS_METADATA = Metadata(
 
 
 FsrGetxoptsParameters = typing.TypedDict('FsrGetxoptsParameters', {
-    "__STYX_TYPE__": typing.Literal["fsr-getxopts"],
+    "__STYXTYPE__": typing.Literal["fsr-getxopts"],
     "help": bool,
 })
 

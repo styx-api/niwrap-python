@@ -14,7 +14,7 @@ MRIS_APPLY_REG_METADATA = Metadata(
 
 
 MrisApplyRegParameters = typing.TypedDict('MrisApplyRegParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_apply_reg"],
+    "__STYXTYPE__": typing.Literal["mris_apply_reg"],
     "src_input": InputPathType,
     "trg_output": str,
     "streg_pair": str,

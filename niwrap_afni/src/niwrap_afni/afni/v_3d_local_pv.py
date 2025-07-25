@@ -14,7 +14,7 @@ V_3D_LOCAL_PV_METADATA = Metadata(
 
 
 V3dLocalPvParameters = typing.TypedDict('V3dLocalPvParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLocalPV"],
+    "__STYXTYPE__": typing.Literal["3dLocalPV"],
     "input_dataset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,

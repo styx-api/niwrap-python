@@ -14,7 +14,7 @@ MRI_REDUCE_METADATA = Metadata(
 
 
 MriReduceParameters = typing.TypedDict('MriReduceParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_reduce"],
+    "__STYXTYPE__": typing.Literal["mri_reduce"],
     "input_file": InputPathType,
     "output_file": str,
 })

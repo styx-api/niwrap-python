@@ -14,7 +14,7 @@ VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 VolumeLabelModifyKeysParameters = typing.TypedDict('VolumeLabelModifyKeysParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-label-modify-keys"],
+    "__STYXTYPE__": typing.Literal["volume-label-modify-keys"],
     "volume_in": InputPathType,
     "remap_file": str,
     "volume_out": str,

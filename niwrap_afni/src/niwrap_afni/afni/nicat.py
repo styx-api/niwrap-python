@@ -14,7 +14,7 @@ NICAT_METADATA = Metadata(
 
 
 NicatParameters = typing.TypedDict('NicatParameters', {
-    "__STYX_TYPE__": typing.Literal["nicat"],
+    "__STYXTYPE__": typing.Literal["nicat"],
     "stream_spec": str,
     "reopen": typing.NotRequired[str | None],
     "copy_stream": bool,

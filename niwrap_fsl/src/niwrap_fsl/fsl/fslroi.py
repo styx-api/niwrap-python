@@ -14,7 +14,7 @@ FSLROI_METADATA = Metadata(
 
 
 FslroiParameters = typing.TypedDict('FslroiParameters', {
-    "__STYX_TYPE__": typing.Literal["fslroi"],
+    "__STYXTYPE__": typing.Literal["fslroi"],
     "infile": InputPathType,
     "outfile": str,
     "xmin": typing.NotRequired[float | None],

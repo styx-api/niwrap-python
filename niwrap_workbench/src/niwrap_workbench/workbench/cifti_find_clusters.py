@@ -14,42 +14,42 @@ CIFTI_FIND_CLUSTERS_METADATA = Metadata(
 
 
 CiftiFindClustersLeftSurfaceParameters = typing.TypedDict('CiftiFindClustersLeftSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["left_surface"],
+    "__STYXTYPE__": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiFindClustersRightSurfaceParameters = typing.TypedDict('CiftiFindClustersRightSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["right_surface"],
+    "__STYXTYPE__": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiFindClustersCerebellumSurfaceParameters = typing.TypedDict('CiftiFindClustersCerebellumSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_surface"],
+    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiFindClustersSizeRatioParameters = typing.TypedDict('CiftiFindClustersSizeRatioParameters', {
-    "__STYX_TYPE__": typing.Literal["size_ratio"],
+    "__STYXTYPE__": typing.Literal["size_ratio"],
     "surface_ratio": float,
     "volume_ratio": float,
 })
 
 
 CiftiFindClustersDistanceParameters = typing.TypedDict('CiftiFindClustersDistanceParameters', {
-    "__STYX_TYPE__": typing.Literal["distance"],
+    "__STYXTYPE__": typing.Literal["distance"],
     "surface_distance": float,
     "volume_distance": float,
 })
 
 
 CiftiFindClustersParameters = typing.TypedDict('CiftiFindClustersParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-find-clusters"],
+    "__STYXTYPE__": typing.Literal["cifti-find-clusters"],
     "cifti": InputPathType,
     "surface_value_threshold": float,
     "surface_minimum_area": float,

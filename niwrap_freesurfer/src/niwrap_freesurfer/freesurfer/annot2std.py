@@ -14,7 +14,7 @@ ANNOT2STD_METADATA = Metadata(
 
 
 Annot2stdParameters = typing.TypedDict('Annot2stdParameters', {
-    "__STYX_TYPE__": typing.Literal["annot2std"],
+    "__STYXTYPE__": typing.Literal["annot2std"],
     "output_annot_path": str,
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],

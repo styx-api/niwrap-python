@@ -14,7 +14,7 @@ MEICA_PY_METADATA = Metadata(
 
 
 MeicaPyParameters = typing.TypedDict('MeicaPyParameters', {
-    "__STYX_TYPE__": typing.Literal["meica.py"],
+    "__STYXTYPE__": typing.Literal["meica.py"],
     "infile": InputPathType,
     "echo_times": str,
     "affine": str,

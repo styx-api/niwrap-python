@@ -14,20 +14,20 @@ CONNECTOMESTATS_METADATA = Metadata(
 
 
 ConnectomestatsColumnParameters = typing.TypedDict('ConnectomestatsColumnParameters', {
-    "__STYX_TYPE__": typing.Literal["column"],
+    "__STYXTYPE__": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
 ConnectomestatsConfigParameters = typing.TypedDict('ConnectomestatsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 ConnectomestatsParameters = typing.TypedDict('ConnectomestatsParameters', {
-    "__STYX_TYPE__": typing.Literal["connectomestats"],
+    "__STYXTYPE__": typing.Literal["connectomestats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],

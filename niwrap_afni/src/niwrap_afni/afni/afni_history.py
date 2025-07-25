@@ -14,7 +14,7 @@ AFNI_HISTORY_METADATA = Metadata(
 
 
 AfniHistoryParameters = typing.TypedDict('AfniHistoryParameters', {
-    "__STYX_TYPE__": typing.Literal["afni_history"],
+    "__STYXTYPE__": typing.Literal["afni_history"],
     "verb_level": typing.NotRequired[int | None],
     "check_date": typing.NotRequired[str | None],
     "help": bool,

@@ -14,28 +14,28 @@ V_1DPLOT_METADATA = Metadata(
 
 
 V1dplotNolineParameters = typing.TypedDict('V1dplotNolineParameters', {
-    "__STYX_TYPE__": typing.Literal["noline"],
+    "__STYXTYPE__": typing.Literal["noline"],
     "noline": bool,
     "NOLINE": bool,
 })
 
 
 V1dplotThickParameters = typing.TypedDict('V1dplotThickParameters', {
-    "__STYX_TYPE__": typing.Literal["thick"],
+    "__STYXTYPE__": typing.Literal["thick"],
     "thick": bool,
     "THICK": bool,
 })
 
 
 V1dplotRboxParameters = typing.TypedDict('V1dplotRboxParameters', {
-    "__STYX_TYPE__": typing.Literal["rbox"],
+    "__STYXTYPE__": typing.Literal["rbox"],
     "rbox": typing.NotRequired[str | None],
     "Rbox": typing.NotRequired[str | None],
 })
 
 
 V1dplotParameters = typing.TypedDict('V1dplotParameters', {
-    "__STYX_TYPE__": typing.Literal["1dplot"],
+    "__STYXTYPE__": typing.Literal["1dplot"],
     "tsfiles": list[InputPathType],
     "install": bool,
     "sep": bool,

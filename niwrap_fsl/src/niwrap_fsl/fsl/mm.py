@@ -14,7 +14,7 @@ MM_METADATA = Metadata(
 
 
 MmParameters = typing.TypedDict('MmParameters', {
-    "__STYX_TYPE__": typing.Literal["mm"],
+    "__STYXTYPE__": typing.Literal["mm"],
     "spatial_data_file": InputPathType,
     "mask_file": InputPathType,
     "verbose_flag": bool,

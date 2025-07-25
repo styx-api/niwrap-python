@@ -14,7 +14,7 @@ SURFACE_CORTEX_LAYER_METADATA = Metadata(
 
 
 SurfaceCortexLayerParameters = typing.TypedDict('SurfaceCortexLayerParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-cortex-layer"],
+    "__STYXTYPE__": typing.Literal["surface-cortex-layer"],
     "white_surface": InputPathType,
     "pial_surface": InputPathType,
     "location": float,

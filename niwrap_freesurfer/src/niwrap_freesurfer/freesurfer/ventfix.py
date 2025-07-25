@@ -14,7 +14,7 @@ VENTFIX_METADATA = Metadata(
 
 
 VentfixParameters = typing.TypedDict('VentfixParameters', {
-    "__STYX_TYPE__": typing.Literal["ventfix"],
+    "__STYXTYPE__": typing.Literal["ventfix"],
     "subject_dir": str,
     "option1": typing.NotRequired[str | None],
 })

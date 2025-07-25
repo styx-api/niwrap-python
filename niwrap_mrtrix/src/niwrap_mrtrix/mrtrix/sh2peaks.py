@@ -14,21 +14,21 @@ SH2PEAKS_METADATA = Metadata(
 
 
 Sh2peaksDirectionParameters = typing.TypedDict('Sh2peaksDirectionParameters', {
-    "__STYX_TYPE__": typing.Literal["direction"],
+    "__STYXTYPE__": typing.Literal["direction"],
     "phi": float,
     "theta": float,
 })
 
 
 Sh2peaksConfigParameters = typing.TypedDict('Sh2peaksConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2peaksParameters = typing.TypedDict('Sh2peaksParameters', {
-    "__STYX_TYPE__": typing.Literal["sh2peaks"],
+    "__STYXTYPE__": typing.Literal["sh2peaks"],
     "num": typing.NotRequired[int | None],
     "direction": typing.NotRequired[list[Sh2peaksDirectionParameters] | None],
     "peaks": typing.NotRequired[InputPathType | None],

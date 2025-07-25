@@ -14,7 +14,7 @@ TO3D_METADATA = Metadata(
 
 
 To3dParameters = typing.TypedDict('To3dParameters', {
-    "__STYX_TYPE__": typing.Literal["to3d"],
+    "__STYXTYPE__": typing.Literal["to3d"],
     "input_files": list[InputPathType],
     "type": typing.NotRequired[typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None],
     "statpar": typing.NotRequired[list[float] | None],

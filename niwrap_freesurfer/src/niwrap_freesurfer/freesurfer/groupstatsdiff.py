@@ -14,7 +14,7 @@ GROUPSTATSDIFF_METADATA = Metadata(
 
 
 GroupstatsdiffParameters = typing.TypedDict('GroupstatsdiffParameters', {
-    "__STYX_TYPE__": typing.Literal["groupstatsdiff"],
+    "__STYXTYPE__": typing.Literal["groupstatsdiff"],
     "group1_dir": str,
     "group2_dir": str,
     "output_dir": str,

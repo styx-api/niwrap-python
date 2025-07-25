@@ -14,7 +14,7 @@ CONVERT_SCALAR_IMAGE_TO_RGB_METADATA = Metadata(
 
 
 ConvertScalarImageToRgbParameters = typing.TypedDict('ConvertScalarImageToRgbParameters', {
-    "__STYX_TYPE__": typing.Literal["ConvertScalarImageToRGB"],
+    "__STYXTYPE__": typing.Literal["ConvertScalarImageToRGB"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,

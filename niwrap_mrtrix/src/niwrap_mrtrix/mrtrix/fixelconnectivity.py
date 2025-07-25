@@ -14,14 +14,14 @@ FIXELCONNECTIVITY_METADATA = Metadata(
 
 
 FixelconnectivityConfigParameters = typing.TypedDict('FixelconnectivityConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelconnectivityParameters = typing.TypedDict('FixelconnectivityParameters', {
-    "__STYX_TYPE__": typing.Literal["fixelconnectivity"],
+    "__STYXTYPE__": typing.Literal["fixelconnectivity"],
     "threshold": typing.NotRequired[float | None],
     "angle": typing.NotRequired[float | None],
     "mask": typing.NotRequired[InputPathType | None],

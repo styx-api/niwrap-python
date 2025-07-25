@@ -14,7 +14,7 @@ V_3D_TFILTER_METADATA = Metadata(
 
 
 V3dTfilterParameters = typing.TypedDict('V3dTfilterParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTfilter"],
+    "__STYXTYPE__": typing.Literal["3dTfilter"],
     "inputdataset": InputPathType,
     "outputdataset": str,
     "filters": list[str],

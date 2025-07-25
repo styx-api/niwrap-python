@@ -14,7 +14,7 @@ V_2PERM_METADATA = Metadata(
 
 
 V2permParameters = typing.TypedDict('V2permParameters', {
-    "__STYX_TYPE__": typing.Literal["2perm"],
+    "__STYXTYPE__": typing.Literal["2perm"],
     "prefix": typing.NotRequired[str | None],
     "comma": bool,
     "bottom_int": float,

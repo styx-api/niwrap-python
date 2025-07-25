@@ -14,7 +14,7 @@ BETSURF_METADATA = Metadata(
 
 
 BetsurfParameters = typing.TypedDict('BetsurfParameters', {
-    "__STYX_TYPE__": typing.Literal["betsurf"],
+    "__STYXTYPE__": typing.Literal["betsurf"],
     "t1_image": InputPathType,
     "t2_image": typing.NotRequired[InputPathType | None],
     "bet_mesh": InputPathType,

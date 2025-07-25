@@ -14,7 +14,7 @@ FS_CHECK_VERSION_METADATA = Metadata(
 
 
 FsCheckVersionParameters = typing.TypedDict('FsCheckVersionParameters', {
-    "__STYX_TYPE__": typing.Literal["fs-check-version"],
+    "__STYXTYPE__": typing.Literal["fs-check-version"],
     "subjects_dir": str,
     "outfile": str,
     "subject": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ V_3D_LSS_METADATA = Metadata(
 
 
 V3dLssParameters = typing.TypedDict('V3dLssParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLSS"],
+    "__STYXTYPE__": typing.Literal["3dLSS"],
     "matrix": InputPathType,
     "input": typing.NotRequired[InputPathType | None],
     "nodata": bool,

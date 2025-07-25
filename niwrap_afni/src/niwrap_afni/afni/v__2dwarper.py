@@ -14,7 +14,7 @@ V__2DWARPER_METADATA = Metadata(
 
 
 V2dwarperParameters = typing.TypedDict('V2dwarperParameters', {
-    "__STYX_TYPE__": typing.Literal["@2dwarper"],
+    "__STYXTYPE__": typing.Literal["@2dwarper"],
     "input_dataset": InputPathType,
 })
 

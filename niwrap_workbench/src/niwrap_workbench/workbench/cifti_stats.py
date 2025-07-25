@@ -14,14 +14,14 @@ CIFTI_STATS_METADATA = Metadata(
 
 
 CiftiStatsRoiParameters = typing.TypedDict('CiftiStatsRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_cifti": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 CiftiStatsParameters = typing.TypedDict('CiftiStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-stats"],
+    "__STYXTYPE__": typing.Literal["cifti-stats"],
     "cifti_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],

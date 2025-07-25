@@ -14,7 +14,7 @@ FABBER_CEST_METADATA = Metadata(
 
 
 FabberCestParameters = typing.TypedDict('FabberCestParameters', {
-    "__STYX_TYPE__": typing.Literal["fabber_cest"],
+    "__STYXTYPE__": typing.Literal["fabber_cest"],
     "output": str,
     "method": str,
     "model": str,

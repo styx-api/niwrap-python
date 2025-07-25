@@ -14,7 +14,7 @@ V__DIFF_TREE_METADATA = Metadata(
 
 
 VDiffTreeParameters = typing.TypedDict('VDiffTreeParameters', {
-    "__STYX_TYPE__": typing.Literal["@diff.tree"],
+    "__STYXTYPE__": typing.Literal["@diff.tree"],
     "new_dir": str,
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],

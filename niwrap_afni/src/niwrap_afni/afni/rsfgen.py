@@ -14,7 +14,7 @@ RSFGEN_METADATA = Metadata(
 
 
 RsfgenParameters = typing.TypedDict('RsfgenParameters', {
-    "__STYX_TYPE__": typing.Literal["RSFgen"],
+    "__STYXTYPE__": typing.Literal["RSFgen"],
     "length": int,
     "num_experimental_conditions": int,
     "block_length": typing.NotRequired[str | None],

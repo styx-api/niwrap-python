@@ -14,7 +14,7 @@ V_3D_MSE_METADATA = Metadata(
 
 
 V3dMseParameters = typing.TypedDict('V3dMseParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMSE"],
+    "__STYXTYPE__": typing.Literal["3dMSE"],
     "polynomial_order": typing.NotRequired[int | None],
     "autoclip": bool,
     "automask": bool,

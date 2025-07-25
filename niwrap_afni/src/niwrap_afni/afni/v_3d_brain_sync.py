@@ -14,7 +14,7 @@ V_3D_BRAIN_SYNC_METADATA = Metadata(
 
 
 V3dBrainSyncParameters = typing.TypedDict('V3dBrainSyncParameters', {
-    "__STYX_TYPE__": typing.Literal["3dBrainSync"],
+    "__STYXTYPE__": typing.Literal["3dBrainSync"],
     "inset1": InputPathType,
     "inset2": InputPathType,
     "qprefix": typing.NotRequired[str | None],

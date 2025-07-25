@@ -14,7 +14,7 @@ MRI_REORIENT_LR_CSH_METADATA = Metadata(
 
 
 MriReorientLrCshParameters = typing.TypedDict('MriReorientLrCshParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_reorient_LR.csh"],
+    "__STYXTYPE__": typing.Literal["mri_reorient_LR.csh"],
     "input_vol": InputPathType,
     "output_vol": str,
     "display_result": bool,

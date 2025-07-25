@@ -14,7 +14,7 @@ MRI_SEGHEAD_METADATA = Metadata(
 
 
 MriSegheadParameters = typing.TypedDict('MriSegheadParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_seghead"],
+    "__STYXTYPE__": typing.Literal["mri_seghead"],
     "input_volume": str,
     "output_volume": str,
     "fill_value": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ DCMDRLE_FS_METADATA = Metadata(
 
 
 DcmdrleFsParameters = typing.TypedDict('DcmdrleFsParameters', {
-    "__STYX_TYPE__": typing.Literal["dcmdrle.fs"],
+    "__STYXTYPE__": typing.Literal["dcmdrle.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,

@@ -14,7 +14,7 @@ V_3D_VOL2_SURF_METADATA = Metadata(
 
 
 V3dVol2SurfParameters = typing.TypedDict('V3dVol2SurfParameters', {
-    "__STYX_TYPE__": typing.Literal["3dVol2Surf"],
+    "__STYXTYPE__": typing.Literal["3dVol2Surf"],
     "spec_file": InputPathType,
     "sv": InputPathType,
     "grid_parent": InputPathType,

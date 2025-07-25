@@ -14,7 +14,7 @@ VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
 
 
 VolumeRemoveIslandsParameters = typing.TypedDict('VolumeRemoveIslandsParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-remove-islands"],
+    "__STYXTYPE__": typing.Literal["volume-remove-islands"],
     "volume_in": InputPathType,
     "volume_out": str,
 })

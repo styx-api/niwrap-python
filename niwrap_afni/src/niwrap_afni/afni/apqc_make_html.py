@@ -14,7 +14,7 @@ APQC_MAKE_HTML_METADATA = Metadata(
 
 
 ApqcMakeHtmlParameters = typing.TypedDict('ApqcMakeHtmlParameters', {
-    "__STYX_TYPE__": typing.Literal["apqc_make_html"],
+    "__STYXTYPE__": typing.Literal["apqc_make_html"],
     "qc_dir": str,
 })
 

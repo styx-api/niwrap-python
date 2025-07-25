@@ -14,7 +14,7 @@ MORPH_RGB_RH_METADATA = Metadata(
 
 
 MorphRgbRhParameters = typing.TypedDict('MorphRgbRhParameters', {
-    "__STYX_TYPE__": typing.Literal["morph_rgb-rh"],
+    "__STYXTYPE__": typing.Literal["morph_rgb-rh"],
     "subject_id": str,
 })
 

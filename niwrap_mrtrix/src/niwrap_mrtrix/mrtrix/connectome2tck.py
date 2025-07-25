@@ -14,14 +14,14 @@ CONNECTOME2TCK_METADATA = Metadata(
 
 
 Connectome2tckConfigParameters = typing.TypedDict('Connectome2tckConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Connectome2tckParameters = typing.TypedDict('Connectome2tckParameters', {
-    "__STYX_TYPE__": typing.Literal["connectome2tck"],
+    "__STYXTYPE__": typing.Literal["connectome2tck"],
     "nodes": typing.NotRequired[list[int] | None],
     "exclusive": bool,
     "files": typing.NotRequired[str | None],

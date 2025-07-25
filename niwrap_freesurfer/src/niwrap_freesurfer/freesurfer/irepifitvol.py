@@ -14,7 +14,7 @@ IREPIFITVOL_METADATA = Metadata(
 
 
 IrepifitvolParameters = typing.TypedDict('IrepifitvolParameters', {
-    "__STYX_TYPE__": typing.Literal["irepifitvol"],
+    "__STYXTYPE__": typing.Literal["irepifitvol"],
     "input_file": InputPathType,
     "output_file": str,
 })

@@ -14,7 +14,7 @@ TOKENS_METADATA = Metadata(
 
 
 TokensParameters = typing.TypedDict('TokensParameters', {
-    "__STYX_TYPE__": typing.Literal["tokens"],
+    "__STYXTYPE__": typing.Literal["tokens"],
     "infile": typing.NotRequired[InputPathType | None],
     "extra_char": typing.NotRequired[list[str] | None],
 })

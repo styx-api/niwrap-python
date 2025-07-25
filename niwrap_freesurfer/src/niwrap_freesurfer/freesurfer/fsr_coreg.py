@@ -14,7 +14,7 @@ FSR_COREG_METADATA = Metadata(
 
 
 FsrCoregParameters = typing.TypedDict('FsrCoregParameters', {
-    "__STYX_TYPE__": typing.Literal["fsr-coreg"],
+    "__STYXTYPE__": typing.Literal["fsr-coreg"],
     "import_dir": str,
     "reference_mode": str,
     "num_threads": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ EXAMINE_XMAT_METADATA = Metadata(
 
 
 ExamineXmatParameters = typing.TypedDict('ExamineXmatParameters', {
-    "__STYX_TYPE__": typing.Literal["ExamineXmat"],
+    "__STYXTYPE__": typing.Literal["ExamineXmat"],
     "input_file": typing.NotRequired[InputPathType | None],
     "interactive": bool,
     "prefix": typing.NotRequired[str | None],

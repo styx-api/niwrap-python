@@ -14,7 +14,7 @@ V_3DSVM_LINPREDICT_METADATA = Metadata(
 
 
 V3dsvmLinpredictParameters = typing.TypedDict('V3dsvmLinpredictParameters', {
-    "__STYX_TYPE__": typing.Literal["3dsvm_linpredict"],
+    "__STYXTYPE__": typing.Literal["3dsvm_linpredict"],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "weight_vector": InputPathType,
     "input_dataset": str,

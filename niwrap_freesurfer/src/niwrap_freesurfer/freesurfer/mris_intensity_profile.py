@@ -14,7 +14,7 @@ MRIS_INTENSITY_PROFILE_METADATA = Metadata(
 
 
 MrisIntensityProfileParameters = typing.TypedDict('MrisIntensityProfileParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_intensity_profile"],
+    "__STYXTYPE__": typing.Literal["mris_intensity_profile"],
     "subject_name": str,
     "hemi": str,
     "volume": InputPathType,

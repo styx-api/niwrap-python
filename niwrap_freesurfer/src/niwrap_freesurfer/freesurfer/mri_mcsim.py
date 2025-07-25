@@ -14,7 +14,7 @@ MRI_MCSIM_METADATA = Metadata(
 
 
 MriMcsimParameters = typing.TypedDict('MriMcsimParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_mcsim"],
+    "__STYXTYPE__": typing.Literal["mri_mcsim"],
     "top_output_dir": str,
     "base_name": str,
     "surface": list[str],

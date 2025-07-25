@@ -14,7 +14,7 @@ MRI_NLFILTER_METADATA = Metadata(
 
 
 MriNlfilterParameters = typing.TypedDict('MriNlfilterParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_nlfilter"],
+    "__STYXTYPE__": typing.Literal["mri_nlfilter"],
     "input_image": InputPathType,
     "output_image": str,
     "blur_sigma": typing.NotRequired[float | None],

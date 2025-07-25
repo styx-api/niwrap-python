@@ -14,7 +14,7 @@ FILM_GLS_METADATA = Metadata(
 
 
 FilmGlsParameters = typing.TypedDict('FilmGlsParameters', {
-    "__STYX_TYPE__": typing.Literal["film_gls"],
+    "__STYXTYPE__": typing.Literal["film_gls"],
     "infile": InputPathType,
     "ac_flag": bool,
     "threshold": typing.NotRequired[float | None],

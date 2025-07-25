@@ -14,7 +14,7 @@ SPHARM_RM_METADATA = Metadata(
 
 
 SpharmRmParameters = typing.TypedDict('SpharmRmParameters', {
-    "__STYX_TYPE__": typing.Literal["spharm_rm"],
+    "__STYXTYPE__": typing.Literal["spharm_rm"],
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],

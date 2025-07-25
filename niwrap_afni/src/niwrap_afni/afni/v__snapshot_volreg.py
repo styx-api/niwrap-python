@@ -14,7 +14,7 @@ V__SNAPSHOT_VOLREG_METADATA = Metadata(
 
 
 VSnapshotVolregParameters = typing.TypedDict('VSnapshotVolregParameters', {
-    "__STYX_TYPE__": typing.Literal["@snapshot_volreg"],
+    "__STYXTYPE__": typing.Literal["@snapshot_volreg"],
     "anatdataset": InputPathType,
     "epidataset": InputPathType,
     "jname": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ V_3D_TFITTER_METADATA = Metadata(
 
 
 V3dTfitterParameters = typing.TypedDict('V3dTfitterParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTfitter"],
+    "__STYXTYPE__": typing.Literal["3dTfitter"],
     "RHS": str,
     "LHS": typing.NotRequired[list[str] | None],
     "polort": typing.NotRequired[float | None],

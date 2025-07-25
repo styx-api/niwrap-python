@@ -14,7 +14,7 @@ V_3D_MVM_METADATA = Metadata(
 
 
 V3dMvmParameters = typing.TypedDict('V3dMvmParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMVM"],
+    "__STYXTYPE__": typing.Literal["3dMVM"],
     "dbgArgs": typing.NotRequired[str | None],
     "prefix": str,
     "jobs": typing.NotRequired[int | None],

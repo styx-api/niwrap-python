@@ -14,7 +14,7 @@ MRIS_ANATOMICAL_STATS_METADATA = Metadata(
 
 
 MrisAnatomicalStatsParameters = typing.TypedDict('MrisAnatomicalStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_anatomical_stats"],
+    "__STYXTYPE__": typing.Literal["mris_anatomical_stats"],
     "subjectname": str,
     "hemisphere": str,
     "surfacename": typing.NotRequired[str | None],

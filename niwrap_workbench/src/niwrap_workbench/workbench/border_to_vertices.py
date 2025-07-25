@@ -14,7 +14,7 @@ BORDER_TO_VERTICES_METADATA = Metadata(
 
 
 BorderToVerticesParameters = typing.TypedDict('BorderToVerticesParameters', {
-    "__STYX_TYPE__": typing.Literal["border-to-vertices"],
+    "__STYXTYPE__": typing.Literal["border-to-vertices"],
     "surface": InputPathType,
     "border_file": InputPathType,
     "metric_out": str,

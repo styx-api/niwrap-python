@@ -14,7 +14,7 @@ ADJUNCT_CALC_MONT_DIMS_PY_METADATA = Metadata(
 
 
 AdjunctCalcMontDimsPyParameters = typing.TypedDict('AdjunctCalcMontDimsPyParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_calc_mont_dims.py"],
+    "__STYXTYPE__": typing.Literal["adjunct_calc_mont_dims.py"],
     "help": bool,
 })
 

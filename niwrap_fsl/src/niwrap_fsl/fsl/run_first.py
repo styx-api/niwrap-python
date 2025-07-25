@@ -14,7 +14,7 @@ RUN_FIRST_METADATA = Metadata(
 
 
 RunFirstParameters = typing.TypedDict('RunFirstParameters', {
-    "__STYX_TYPE__": typing.Literal["run_first"],
+    "__STYXTYPE__": typing.Literal["run_first"],
     "input_image": InputPathType,
     "transformation_matrix": InputPathType,
     "n_modes": float,

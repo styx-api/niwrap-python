@@ -14,7 +14,7 @@ V_3DCALC_METADATA = Metadata(
 
 
 V3dcalcParameters = typing.TypedDict('V3dcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["3dcalc"],
+    "__STYXTYPE__": typing.Literal["3dcalc"],
     "in_file_a": InputPathType,
     "in_file_b": typing.NotRequired[InputPathType | None],
     "in_file_c": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V__DJUNCT_OVERLAP_CHECK_METADATA = Metadata(
 
 
 VDjunctOverlapCheckParameters = typing.TypedDict('VDjunctOverlapCheckParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_overlap_check"],
+    "__STYXTYPE__": typing.Literal["@djunct_overlap_check"],
     "ulay": InputPathType,
     "olay": InputPathType,
     "prefix": str,

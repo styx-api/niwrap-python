@@ -14,7 +14,7 @@ REG_F3D_METADATA = Metadata(
 
 
 RegF3dParameters = typing.TypedDict('RegF3dParameters', {
-    "__STYX_TYPE__": typing.Literal["reg_f3d"],
+    "__STYXTYPE__": typing.Literal["reg_f3d"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ ANTS_JOINT_FUSION_METADATA = Metadata(
 
 
 AntsJointFusionParameters = typing.TypedDict('AntsJointFusionParameters', {
-    "__STYX_TYPE__": typing.Literal["antsJointFusion"],
+    "__STYXTYPE__": typing.Literal["antsJointFusion"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[InputPathType],
     "atlas_image": list[InputPathType],

@@ -14,7 +14,7 @@ FS_LIB_CHECK_METADATA = Metadata(
 
 
 FsLibCheckParameters = typing.TypedDict('FsLibCheckParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_lib_check"],
+    "__STYXTYPE__": typing.Literal["fs_lib_check"],
     "use_ldconfig": bool,
     "use_rpm": bool,
     "show_help": bool,

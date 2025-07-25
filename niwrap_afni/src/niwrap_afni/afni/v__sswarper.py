@@ -14,7 +14,7 @@ V__SSWARPER_METADATA = Metadata(
 
 
 VSswarperParameters = typing.TypedDict('VSswarperParameters', {
-    "__STYX_TYPE__": typing.Literal["@SSwarper"],
+    "__STYXTYPE__": typing.Literal["@SSwarper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
     "subject_id": str,

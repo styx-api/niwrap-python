@@ -14,7 +14,7 @@ MRIS_SMOOTH_METADATA = Metadata(
 
 
 MrisSmoothParameters = typing.TypedDict('MrisSmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_smooth"],
+    "__STYXTYPE__": typing.Literal["mris_smooth"],
     "input_surface": InputPathType,
     "output_surface": str,
     "average_iters": typing.NotRequired[float | None],

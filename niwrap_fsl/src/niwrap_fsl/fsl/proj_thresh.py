@@ -14,7 +14,7 @@ PROJ_THRESH_METADATA = Metadata(
 
 
 ProjThreshParameters = typing.TypedDict('ProjThreshParameters', {
-    "__STYX_TYPE__": typing.Literal["proj_thresh"],
+    "__STYXTYPE__": typing.Literal["proj_thresh"],
     "input_paths": list[InputPathType],
     "threshold": float,
 })

@@ -14,7 +14,7 @@ IMAGES_EQUAL_METADATA = Metadata(
 
 
 ImagesEqualParameters = typing.TypedDict('ImagesEqualParameters', {
-    "__STYX_TYPE__": typing.Literal["images_equal"],
+    "__STYXTYPE__": typing.Literal["images_equal"],
     "file_a": InputPathType,
     "file_b": InputPathType,
     "all_flag": bool,

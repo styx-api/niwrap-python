@@ -14,14 +14,14 @@ SET_MAP_NAMES_METADATA = Metadata(
 
 
 SetMapNamesMapParameters = typing.TypedDict('SetMapNamesMapParameters', {
-    "__STYX_TYPE__": typing.Literal["map"],
+    "__STYXTYPE__": typing.Literal["map"],
     "index": int,
     "new_name": str,
 })
 
 
 SetMapNamesParameters = typing.TypedDict('SetMapNamesParameters', {
-    "__STYX_TYPE__": typing.Literal["set-map-names"],
+    "__STYXTYPE__": typing.Literal["set-map-names"],
     "data_file": str,
     "opt_name_file_file": typing.NotRequired[str | None],
     "opt_from_data_file_file": typing.NotRequired[str | None],

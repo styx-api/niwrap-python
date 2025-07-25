@@ -14,7 +14,7 @@ V_1DSUM_METADATA = Metadata(
 
 
 V1dsumParameters = typing.TypedDict('V1dsumParameters', {
-    "__STYX_TYPE__": typing.Literal["1dsum"],
+    "__STYXTYPE__": typing.Literal["1dsum"],
     "input_files": list[InputPathType],
     "ignore_rows": typing.NotRequired[float | None],
     "use_rows": typing.NotRequired[float | None],

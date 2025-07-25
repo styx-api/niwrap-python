@@ -14,93 +14,93 @@ MRCONVERT_METADATA = Metadata(
 
 
 MrconvertCoordParameters = typing.TypedDict('MrconvertCoordParameters', {
-    "__STYX_TYPE__": typing.Literal["coord"],
+    "__STYXTYPE__": typing.Literal["coord"],
     "axis": int,
     "selection": list[int],
 })
 
 
 MrconvertClearPropertyParameters = typing.TypedDict('MrconvertClearPropertyParameters', {
-    "__STYX_TYPE__": typing.Literal["clear_property"],
+    "__STYXTYPE__": typing.Literal["clear_property"],
     "key": str,
 })
 
 
 MrconvertSetPropertyParameters = typing.TypedDict('MrconvertSetPropertyParameters', {
-    "__STYX_TYPE__": typing.Literal["set_property"],
+    "__STYXTYPE__": typing.Literal["set_property"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertAppendPropertyParameters = typing.TypedDict('MrconvertAppendPropertyParameters', {
-    "__STYX_TYPE__": typing.Literal["append_property"],
+    "__STYXTYPE__": typing.Literal["append_property"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertVariousStringParameters = typing.TypedDict('MrconvertVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MrconvertVariousFileParameters = typing.TypedDict('MrconvertVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrconvertVariousString1Parameters = typing.TypedDict('MrconvertVariousString1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString_1"],
+    "__STYXTYPE__": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 MrconvertVariousFile1Parameters = typing.TypedDict('MrconvertVariousFile1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile_1"],
+    "__STYXTYPE__": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 MrconvertFslgradParameters = typing.TypedDict('MrconvertFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrconvertExportGradFslParameters = typing.TypedDict('MrconvertExportGradFslParameters', {
-    "__STYX_TYPE__": typing.Literal["export_grad_fsl"],
+    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrconvertImportPeEddyParameters = typing.TypedDict('MrconvertImportPeEddyParameters', {
-    "__STYX_TYPE__": typing.Literal["import_pe_eddy"],
+    "__STYXTYPE__": typing.Literal["import_pe_eddy"],
     "config": InputPathType,
     "indices": InputPathType,
 })
 
 
 MrconvertExportPeEddyParameters = typing.TypedDict('MrconvertExportPeEddyParameters', {
-    "__STYX_TYPE__": typing.Literal["export_pe_eddy"],
+    "__STYXTYPE__": typing.Literal["export_pe_eddy"],
     "config": str,
     "indices": str,
 })
 
 
 MrconvertConfigParameters = typing.TypedDict('MrconvertConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertParameters = typing.TypedDict('MrconvertParameters', {
-    "__STYX_TYPE__": typing.Literal["mrconvert"],
+    "__STYXTYPE__": typing.Literal["mrconvert"],
     "coord": typing.NotRequired[list[MrconvertCoordParameters] | None],
     "vox": typing.NotRequired[list[float] | None],
     "axes": typing.NotRequired[list[int] | None],

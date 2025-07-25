@@ -14,7 +14,7 @@ MRIS_COMPUTE_ACORR_METADATA = Metadata(
 
 
 MrisComputeAcorrParameters = typing.TypedDict('MrisComputeAcorrParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_compute_acorr"],
+    "__STYXTYPE__": typing.Literal["mris_compute_acorr"],
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,

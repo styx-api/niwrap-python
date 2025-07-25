@@ -14,35 +14,35 @@ CIFTI_CREATE_DENSE_SCALAR_METADATA = Metadata(
 
 
 CiftiCreateDenseScalarVolumeParameters = typing.TypedDict('CiftiCreateDenseScalarVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume"],
+    "__STYXTYPE__": typing.Literal["volume"],
     "volume_data": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateDenseScalarLeftMetricParameters = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["left_metric"],
+    "__STYXTYPE__": typing.Literal["left_metric"],
     "metric": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarRightMetricParameters = typing.TypedDict('CiftiCreateDenseScalarRightMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["right_metric"],
+    "__STYXTYPE__": typing.Literal["right_metric"],
     "metric": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_metric"],
+    "__STYXTYPE__": typing.Literal["cerebellum_metric"],
     "metric": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarParameters = typing.TypedDict('CiftiCreateDenseScalarParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-create-dense-scalar"],
+    "__STYXTYPE__": typing.Literal["cifti-create-dense-scalar"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParameters | None],
     "left_metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParameters | None],

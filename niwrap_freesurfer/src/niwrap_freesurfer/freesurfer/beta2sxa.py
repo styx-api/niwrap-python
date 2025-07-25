@@ -14,7 +14,7 @@ BETA2SXA_METADATA = Metadata(
 
 
 Beta2sxaParameters = typing.TypedDict('Beta2sxaParameters', {
-    "__STYX_TYPE__": typing.Literal["beta2sxa"],
+    "__STYXTYPE__": typing.Literal["beta2sxa"],
     "beta_files": list[InputPathType],
     "number_of_conditions": float,
     "number_of_per_subjects": float,

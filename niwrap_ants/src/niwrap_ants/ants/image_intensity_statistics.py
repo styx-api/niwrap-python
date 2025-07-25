@@ -14,7 +14,7 @@ IMAGE_INTENSITY_STATISTICS_METADATA = Metadata(
 
 
 ImageIntensityStatisticsParameters = typing.TypedDict('ImageIntensityStatisticsParameters', {
-    "__STYX_TYPE__": typing.Literal["ImageIntensityStatistics"],
+    "__STYXTYPE__": typing.Literal["ImageIntensityStatistics"],
     "image_dimension": int,
     "input_image": InputPathType,
     "label_image": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ DCMEDIT_METADATA = Metadata(
 
 
 DcmeditTagParameters = typing.TypedDict('DcmeditTagParameters', {
-    "__STYX_TYPE__": typing.Literal["tag"],
+    "__STYXTYPE__": typing.Literal["tag"],
     "group": str,
     "element": str,
     "newvalue": str,
@@ -22,14 +22,14 @@ DcmeditTagParameters = typing.TypedDict('DcmeditTagParameters', {
 
 
 DcmeditConfigParameters = typing.TypedDict('DcmeditConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DcmeditParameters = typing.TypedDict('DcmeditParameters', {
-    "__STYX_TYPE__": typing.Literal["dcmedit"],
+    "__STYXTYPE__": typing.Literal["dcmedit"],
     "anonymise": bool,
     "id": typing.NotRequired[str | None],
     "tag": typing.NotRequired[list[DcmeditTagParameters] | None],

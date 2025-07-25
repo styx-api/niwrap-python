@@ -14,7 +14,7 @@ FSLCHFILETYPE_METADATA = Metadata(
 
 
 FslchfiletypeParameters = typing.TypedDict('FslchfiletypeParameters', {
-    "__STYX_TYPE__": typing.Literal["fslchfiletype"],
+    "__STYXTYPE__": typing.Literal["fslchfiletype"],
     "filetype": str,
     "filename": InputPathType,
     "filename2": typing.NotRequired[str | None],

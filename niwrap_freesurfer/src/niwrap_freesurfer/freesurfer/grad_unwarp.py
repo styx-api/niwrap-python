@@ -14,7 +14,7 @@ GRAD_UNWARP_METADATA = Metadata(
 
 
 GradUnwarpParameters = typing.TypedDict('GradUnwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["grad_unwarp"],
+    "__STYXTYPE__": typing.Literal["grad_unwarp"],
     "infile": InputPathType,
     "seriesno": typing.NotRequired[str | None],
     "unwarp_type": typing.NotRequired[str | None],

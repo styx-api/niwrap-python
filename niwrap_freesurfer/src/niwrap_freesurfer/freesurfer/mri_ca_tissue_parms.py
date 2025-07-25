@@ -14,7 +14,7 @@ MRI_CA_TISSUE_PARMS_METADATA = Metadata(
 
 
 MriCaTissueParmsParameters = typing.TypedDict('MriCaTissueParmsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_ca_tissue_parms"],
+    "__STYXTYPE__": typing.Literal["mri_ca_tissue_parms"],
     "subjects": list[str],
     "output_file": str,
     "spacing_flag": bool,

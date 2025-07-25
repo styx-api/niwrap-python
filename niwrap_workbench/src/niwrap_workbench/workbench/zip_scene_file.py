@@ -14,7 +14,7 @@ ZIP_SCENE_FILE_METADATA = Metadata(
 
 
 ZipSceneFileParameters = typing.TypedDict('ZipSceneFileParameters', {
-    "__STYX_TYPE__": typing.Literal["zip-scene-file"],
+    "__STYXTYPE__": typing.Literal["zip-scene-file"],
     "scene_file": str,
     "extract_folder": str,
     "zip_file": str,

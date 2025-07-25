@@ -14,7 +14,7 @@ CIFTI_TOOL_METADATA = Metadata(
 
 
 CiftiToolParameters = typing.TypedDict('CiftiToolParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti_tool"],
+    "__STYXTYPE__": typing.Literal["cifti_tool"],
     "input_file": InputPathType,
     "as_cext": bool,
     "disp_cext": bool,

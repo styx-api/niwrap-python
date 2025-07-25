@@ -14,7 +14,7 @@ OXFORD_ASL_METADATA = Metadata(
 
 
 OxfordAslParameters = typing.TypedDict('OxfordAslParameters', {
-    "__STYX_TYPE__": typing.Literal["oxford_asl"],
+    "__STYXTYPE__": typing.Literal["oxford_asl"],
     "asl_data": InputPathType,
     "output_dir_name": str,
     "mask": typing.NotRequired[InputPathType | None],

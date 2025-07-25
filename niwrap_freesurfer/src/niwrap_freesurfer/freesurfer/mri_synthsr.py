@@ -14,7 +14,7 @@ MRI_SYNTHSR_METADATA = Metadata(
 
 
 MriSynthsrParameters = typing.TypedDict('MriSynthsrParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_synthsr"],
+    "__STYXTYPE__": typing.Literal["mri_synthsr"],
     "input": str,
     "output": str,
     "ct": bool,

@@ -14,7 +14,7 @@ MRI_INFO_METADATA = Metadata(
 
 
 MriInfoParameters = typing.TypedDict('MriInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_info"],
+    "__STYXTYPE__": typing.Literal["mri_info"],
     "input1": InputPathType,
     "input2": typing.NotRequired[InputPathType | None],
     "conformed": bool,

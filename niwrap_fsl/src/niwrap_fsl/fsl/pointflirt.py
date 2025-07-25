@@ -14,7 +14,7 @@ POINTFLIRT_METADATA = Metadata(
 
 
 PointflirtParameters = typing.TypedDict('PointflirtParameters', {
-    "__STYX_TYPE__": typing.Literal["pointflirt"],
+    "__STYXTYPE__": typing.Literal["pointflirt"],
     "invol_coords": InputPathType,
     "refvol_coords": InputPathType,
     "out_matrix": typing.NotRequired[str | None],

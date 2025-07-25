@@ -14,7 +14,7 @@ FEAT_GM_PREPARE_METADATA = Metadata(
 
 
 FeatGmPrepareParameters = typing.TypedDict('FeatGmPrepareParameters', {
-    "__STYX_TYPE__": typing.Literal["feat_gm_prepare"],
+    "__STYXTYPE__": typing.Literal["feat_gm_prepare"],
     "gm_output": str,
     "feat_dirs_list": list[InputPathType],
 })

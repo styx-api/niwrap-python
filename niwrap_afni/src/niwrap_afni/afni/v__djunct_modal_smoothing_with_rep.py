@@ -14,7 +14,7 @@ V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA = Metadata(
 
 
 VDjunctModalSmoothingWithRepParameters = typing.TypedDict('VDjunctModalSmoothingWithRepParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_modal_smoothing_with_rep"],
+    "__STYXTYPE__": typing.Literal["@djunct_modal_smoothing_with_rep"],
     "input_file": InputPathType,
     "output_prefix": str,
     "modesmooth": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ OCT_REGISTER_MOSAIC_METADATA = Metadata(
 
 
 OctRegisterMosaicParameters = typing.TypedDict('OctRegisterMosaicParameters', {
-    "__STYX_TYPE__": typing.Literal["oct_register_mosaic"],
+    "__STYXTYPE__": typing.Literal["oct_register_mosaic"],
     "tiles_or_mosaic_list": list[str],
     "output_volume": str,
     "downsample": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ EXTRACT_SEG_WAVEFORM_METADATA = Metadata(
 
 
 ExtractSegWaveformParameters = typing.TypedDict('ExtractSegWaveformParameters', {
-    "__STYX_TYPE__": typing.Literal["extract_seg_waveform"],
+    "__STYXTYPE__": typing.Literal["extract_seg_waveform"],
     "seg_file": InputPathType,
     "seg_indices": list[float],
     "input_volume": InputPathType,

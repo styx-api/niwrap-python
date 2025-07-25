@@ -14,7 +14,7 @@ V__DJUNCT_DWI_SELECTOR_METADATA = Metadata(
 
 
 VDjunctDwiSelectorParameters = typing.TypedDict('VDjunctDwiSelectorParameters', {
-    "__STYX_TYPE__": typing.Literal["@djunct_dwi_selector"],
+    "__STYXTYPE__": typing.Literal["@djunct_dwi_selector"],
     "dwi": InputPathType,
     "png": InputPathType,
     "outfile": str,

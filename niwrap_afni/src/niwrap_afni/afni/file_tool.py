@@ -14,7 +14,7 @@ FILE_TOOL_METADATA = Metadata(
 
 
 FileToolParameters = typing.TypedDict('FileToolParameters', {
-    "__STYX_TYPE__": typing.Literal["file_tool"],
+    "__STYXTYPE__": typing.Literal["file_tool"],
     "help": bool,
     "version": bool,
     "hist": bool,

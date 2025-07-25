@@ -14,7 +14,7 @@ V__BUILD_AFNI_XLIB_METADATA = Metadata(
 
 
 VBuildAfniXlibParameters = typing.TypedDict('VBuildAfniXlibParameters', {
-    "__STYX_TYPE__": typing.Literal["@build_afni_Xlib"],
+    "__STYXTYPE__": typing.Literal["@build_afni_Xlib"],
     "afniX": bool,
     "localinstall": bool,
     "debug_symbols": bool,

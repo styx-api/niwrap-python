@@ -14,7 +14,7 @@ ANTS_AI_METADATA = Metadata(
 
 
 AntsAiParameters = typing.TypedDict('AntsAiParameters', {
-    "__STYX_TYPE__": typing.Literal["antsAI"],
+    "__STYXTYPE__": typing.Literal["antsAI"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
     "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],

@@ -14,7 +14,7 @@ ANALYZETO4DFP_METADATA = Metadata(
 
 
 Analyzeto4dfpParameters = typing.TypedDict('Analyzeto4dfpParameters', {
-    "__STYX_TYPE__": typing.Literal["analyzeto4dfp"],
+    "__STYXTYPE__": typing.Literal["analyzeto4dfp"],
     "analyze_image": InputPathType,
     "rois_scale": bool,
     "flip_x": bool,

@@ -14,7 +14,7 @@ FSLMERGE_METADATA = Metadata(
 
 
 FslmergeParameters = typing.TypedDict('FslmergeParameters', {
-    "__STYX_TYPE__": typing.Literal["fslmerge"],
+    "__STYXTYPE__": typing.Literal["fslmerge"],
     "merge_time": bool,
     "merge_x": bool,
     "merge_y": bool,

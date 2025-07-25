@@ -14,28 +14,28 @@ SCENE_FILE_MERGE_METADATA = Metadata(
 
 
 SceneFileMergeUpToParameters = typing.TypedDict('SceneFileMergeUpToParameters', {
-    "__STYX_TYPE__": typing.Literal["up_to"],
+    "__STYXTYPE__": typing.Literal["up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 SceneFileMergeSceneParameters = typing.TypedDict('SceneFileMergeSceneParameters', {
-    "__STYX_TYPE__": typing.Literal["scene"],
+    "__STYXTYPE__": typing.Literal["scene"],
     "scene": str,
     "up_to": typing.NotRequired[SceneFileMergeUpToParameters | None],
 })
 
 
 SceneFileMergeSceneFileParameters = typing.TypedDict('SceneFileMergeSceneFileParameters', {
-    "__STYX_TYPE__": typing.Literal["scene_file"],
+    "__STYXTYPE__": typing.Literal["scene_file"],
     "scene_file": str,
     "scene": typing.NotRequired[list[SceneFileMergeSceneParameters] | None],
 })
 
 
 SceneFileMergeParameters = typing.TypedDict('SceneFileMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["scene-file-merge"],
+    "__STYXTYPE__": typing.Literal["scene-file-merge"],
     "scene_file_out": str,
     "scene_file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
 })

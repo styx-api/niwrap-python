@@ -14,7 +14,7 @@ EDDY_METADATA = Metadata(
 
 
 EddyParameters = typing.TypedDict('EddyParameters', {
-    "__STYX_TYPE__": typing.Literal["eddy"],
+    "__STYXTYPE__": typing.Literal["eddy"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,

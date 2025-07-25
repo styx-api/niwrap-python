@@ -14,7 +14,7 @@ V_1DFFT_METADATA = Metadata(
 
 
 V1dfftParameters = typing.TypedDict('V1dfftParameters', {
-    "__STYX_TYPE__": typing.Literal["1dfft"],
+    "__STYXTYPE__": typing.Literal["1dfft"],
     "infile": InputPathType,
     "outfile": str,
     "ignore": typing.NotRequired[float | None],

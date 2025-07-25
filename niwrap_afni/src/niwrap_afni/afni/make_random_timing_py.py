@@ -14,7 +14,7 @@ MAKE_RANDOM_TIMING_PY_METADATA = Metadata(
 
 
 MakeRandomTimingPyParameters = typing.TypedDict('MakeRandomTimingPyParameters', {
-    "__STYX_TYPE__": typing.Literal["make_random_timing.py"],
+    "__STYXTYPE__": typing.Literal["make_random_timing.py"],
     "num_runs": float,
     "run_time": list[float],
     "num_stim": float,

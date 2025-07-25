@@ -14,7 +14,7 @@ FVCOMPARE_METADATA = Metadata(
 
 
 FvcompareParameters = typing.TypedDict('FvcompareParameters', {
-    "__STYX_TYPE__": typing.Literal["fvcompare"],
+    "__STYXTYPE__": typing.Literal["fvcompare"],
     "subject1": str,
     "subject2": str,
     "subject_dir1": typing.NotRequired[str | None],

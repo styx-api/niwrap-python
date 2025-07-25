@@ -14,14 +14,14 @@ SHBASIS_METADATA = Metadata(
 
 
 ShbasisConfigParameters = typing.TypedDict('ShbasisConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 ShbasisParameters = typing.TypedDict('ShbasisParameters', {
-    "__STYX_TYPE__": typing.Literal["shbasis"],
+    "__STYXTYPE__": typing.Literal["shbasis"],
     "convert": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,

@@ -14,14 +14,14 @@ TCKTRANSFORM_METADATA = Metadata(
 
 
 TcktransformConfigParameters = typing.TypedDict('TcktransformConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TcktransformParameters = typing.TypedDict('TcktransformParameters', {
-    "__STYX_TYPE__": typing.Literal["tcktransform"],
+    "__STYXTYPE__": typing.Literal["tcktransform"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

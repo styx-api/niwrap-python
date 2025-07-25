@@ -14,7 +14,7 @@ WARP2METRIC_METADATA = Metadata(
 
 
 Warp2metricFcParameters = typing.TypedDict('Warp2metricFcParameters', {
-    "__STYX_TYPE__": typing.Literal["fc"],
+    "__STYXTYPE__": typing.Literal["fc"],
     "template_fixel_directory": InputPathType,
     "output_fixel_directory": str,
     "output_fixel_data": str,
@@ -22,14 +22,14 @@ Warp2metricFcParameters = typing.TypedDict('Warp2metricFcParameters', {
 
 
 Warp2metricConfigParameters = typing.TypedDict('Warp2metricConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Warp2metricParameters = typing.TypedDict('Warp2metricParameters', {
-    "__STYX_TYPE__": typing.Literal["warp2metric"],
+    "__STYXTYPE__": typing.Literal["warp2metric"],
     "fc": typing.NotRequired[Warp2metricFcParameters | None],
     "jmat": typing.NotRequired[str | None],
     "jdet": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ HISTO_COMPUTE_JOINT_DENSITY_METADATA = Metadata(
 
 
 HistoComputeJointDensityParameters = typing.TypedDict('HistoComputeJointDensityParameters', {
-    "__STYX_TYPE__": typing.Literal["histo_compute_joint_density"],
+    "__STYXTYPE__": typing.Literal["histo_compute_joint_density"],
     "volume1": InputPathType,
     "volume2": InputPathType,
     "joint_density_file": str,

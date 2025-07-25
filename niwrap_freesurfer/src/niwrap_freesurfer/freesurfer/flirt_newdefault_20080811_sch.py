@@ -14,7 +14,7 @@ FLIRT_NEWDEFAULT_20080811_SCH_METADATA = Metadata(
 
 
 FlirtNewdefault20080811SchParameters = typing.TypedDict('FlirtNewdefault20080811SchParameters', {
-    "__STYX_TYPE__": typing.Literal["flirt.newdefault.20080811.sch"],
+    "__STYXTYPE__": typing.Literal["flirt.newdefault.20080811.sch"],
     "term_option": typing.NotRequired[str | None],
     "curses_flag": bool,
     "scrollback_flag": bool,

@@ -14,7 +14,7 @@ LONG_STATS_TPS_METADATA = Metadata(
 
 
 LongStatsTpsParameters = typing.TypedDict('LongStatsTpsParameters', {
-    "__STYX_TYPE__": typing.Literal["long_stats_tps"],
+    "__STYXTYPE__": typing.Literal["long_stats_tps"],
     "qdec_table": InputPathType,
     "stats_file": str,
     "measure": str,

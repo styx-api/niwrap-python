@@ -14,7 +14,7 @@ MRI_OR_METADATA = Metadata(
 
 
 MriOrParameters = typing.TypedDict('MriOrParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_or"],
+    "__STYXTYPE__": typing.Literal["mri_or"],
     "original_labels": bool,
     "input_files": list[InputPathType],
 })

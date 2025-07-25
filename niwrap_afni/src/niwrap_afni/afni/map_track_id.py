@@ -14,7 +14,7 @@ MAP_TRACK_ID_METADATA = Metadata(
 
 
 MapTrackIdParameters = typing.TypedDict('MapTrackIdParameters', {
-    "__STYX_TYPE__": typing.Literal["map_TrackID"],
+    "__STYXTYPE__": typing.Literal["map_TrackID"],
     "prefix": str,
     "in_trk": InputPathType,
     "in_map": InputPathType,

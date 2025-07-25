@@ -14,7 +14,7 @@ V_3D_UNDUMP_METADATA = Metadata(
 
 
 V3dUndumpParameters = typing.TypedDict('V3dUndumpParameters', {
-    "__STYX_TYPE__": typing.Literal["3dUndump"],
+    "__STYXTYPE__": typing.Literal["3dUndump"],
     "input_files": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "master": typing.NotRequired[InputPathType | None],

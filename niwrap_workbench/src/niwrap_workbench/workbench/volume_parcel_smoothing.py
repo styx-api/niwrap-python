@@ -14,7 +14,7 @@ VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
 
 
 VolumeParcelSmoothingParameters = typing.TypedDict('VolumeParcelSmoothingParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-parcel-smoothing"],
+    "__STYXTYPE__": typing.Literal["volume-parcel-smoothing"],
     "data_volume": InputPathType,
     "label_volume": InputPathType,
     "kernel": float,

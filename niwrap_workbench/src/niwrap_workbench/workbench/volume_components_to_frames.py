@@ -14,7 +14,7 @@ VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
 
 
 VolumeComponentsToFramesParameters = typing.TypedDict('VolumeComponentsToFramesParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-components-to-frames"],
+    "__STYXTYPE__": typing.Literal["volume-components-to-frames"],
     "input": InputPathType,
     "output": str,
 })

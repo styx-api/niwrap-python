@@ -14,21 +14,21 @@ DWIBIASCORRECT_METADATA = Metadata(
 
 
 DwibiascorrectFslgradParameters = typing.TypedDict('DwibiascorrectFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DwibiascorrectConfigParameters = typing.TypedDict('DwibiascorrectConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DwibiascorrectParameters = typing.TypedDict('DwibiascorrectParameters', {
-    "__STYX_TYPE__": typing.Literal["dwibiascorrect"],
+    "__STYXTYPE__": typing.Literal["dwibiascorrect"],
     "algorithm": str,
     "input_image": InputPathType,
     "output_image": str,

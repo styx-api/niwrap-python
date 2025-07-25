@@ -14,7 +14,7 @@ V_3DTTEST___METADATA = Metadata(
 
 
 V3dttestParameters = typing.TypedDict('V3dttestParameters', {
-    "__STYX_TYPE__": typing.Literal["3dttest++"],
+    "__STYXTYPE__": typing.Literal["3dttest++"],
     "setA": list[str],
     "setB": typing.NotRequired[list[str] | None],
     "setA_long": typing.NotRequired[list[str] | None],

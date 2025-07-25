@@ -14,14 +14,14 @@ VOLUME_STATS_METADATA = Metadata(
 
 
 VolumeStatsRoiParameters = typing.TypedDict('VolumeStatsRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_volume": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 VolumeStatsParameters = typing.TypedDict('VolumeStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-stats"],
+    "__STYXTYPE__": typing.Literal["volume-stats"],
     "volume_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],

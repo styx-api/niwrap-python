@@ -14,21 +14,21 @@ V_3D_ANOVA3_METADATA = Metadata(
 
 
 V3dAnova3OutfileAbcontrParameters = typing.TypedDict('V3dAnova3OutfileAbcontrParameters', {
-    "__STYX_TYPE__": typing.Literal["outfile_abcontr"],
+    "__STYXTYPE__": typing.Literal["outfile_abcontr"],
     "outfile_abcontr": typing.NotRequired[str | None],
     "outfile_Abcontr": typing.NotRequired[str | None],
 })
 
 
 V3dAnova3OutfileAbcontr1Parameters = typing.TypedDict('V3dAnova3OutfileAbcontr1Parameters', {
-    "__STYX_TYPE__": typing.Literal["outfile_abcontr_1"],
+    "__STYXTYPE__": typing.Literal["outfile_abcontr_1"],
     "outfile_abdiff": typing.NotRequired[str | None],
     "outfile_Abdiff": typing.NotRequired[str | None],
 })
 
 
 V3dAnova3Parameters = typing.TypedDict('V3dAnova3Parameters', {
-    "__STYX_TYPE__": typing.Literal["3dANOVA3"],
+    "__STYXTYPE__": typing.Literal["3dANOVA3"],
     "type": int,
     "alevels": int,
     "blevels": int,

@@ -14,7 +14,7 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
 
 
 SurfaceGeodesicRoisParameters = typing.TypedDict('SurfaceGeodesicRoisParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-geodesic-rois"],
+    "__STYXTYPE__": typing.Literal["surface-geodesic-rois"],
     "surface": InputPathType,
     "limit": float,
     "vertex_list_file": str,

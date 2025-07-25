@@ -14,7 +14,7 @@ FSL_SUB_METADATA = Metadata(
 
 
 FslSubParameters = typing.TypedDict('FslSubParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_sub"],
+    "__STYXTYPE__": typing.Literal["fsl_sub"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[float | None],

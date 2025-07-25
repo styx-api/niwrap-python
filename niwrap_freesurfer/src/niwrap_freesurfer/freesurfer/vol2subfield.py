@@ -14,7 +14,7 @@ VOL2SUBFIELD_METADATA = Metadata(
 
 
 Vol2subfieldParameters = typing.TypedDict('Vol2subfieldParameters', {
-    "__STYX_TYPE__": typing.Literal["vol2subfield"],
+    "__STYXTYPE__": typing.Literal["vol2subfield"],
     "input_volume": InputPathType,
     "subfield_volume": InputPathType,
     "registration_file": InputPathType,

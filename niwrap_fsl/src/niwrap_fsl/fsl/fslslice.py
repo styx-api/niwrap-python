@@ -14,7 +14,7 @@ FSLSLICE_METADATA = Metadata(
 
 
 FslsliceParameters = typing.TypedDict('FslsliceParameters', {
-    "__STYX_TYPE__": typing.Literal["fslslice"],
+    "__STYXTYPE__": typing.Literal["fslslice"],
     "volume": InputPathType,
     "output_basename": typing.NotRequired[str | None],
 })

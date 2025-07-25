@@ -14,7 +14,7 @@ FIRST_ROI_SLICESDIR_METADATA = Metadata(
 
 
 FirstRoiSlicesdirParameters = typing.TypedDict('FirstRoiSlicesdirParameters', {
-    "__STYX_TYPE__": typing.Literal["first_roi_slicesdir"],
+    "__STYXTYPE__": typing.Literal["first_roi_slicesdir"],
     "input_t1_images": str,
     "input_label_images": str,
 })

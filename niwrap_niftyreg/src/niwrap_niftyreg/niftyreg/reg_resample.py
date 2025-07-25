@@ -14,7 +14,7 @@ REG_RESAMPLE_METADATA = Metadata(
 
 
 RegResampleParameters = typing.TypedDict('RegResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["reg_resample"],
+    "__STYXTYPE__": typing.Literal["reg_resample"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],

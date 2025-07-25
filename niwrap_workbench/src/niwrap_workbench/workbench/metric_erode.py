@@ -14,7 +14,7 @@ METRIC_ERODE_METADATA = Metadata(
 
 
 MetricErodeParameters = typing.TypedDict('MetricErodeParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-erode"],
+    "__STYXTYPE__": typing.Literal["metric-erode"],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,

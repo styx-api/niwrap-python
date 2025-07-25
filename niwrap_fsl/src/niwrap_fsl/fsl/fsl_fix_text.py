@@ -14,7 +14,7 @@ FSL_FIX_TEXT_METADATA = Metadata(
 
 
 FslFixTextParameters = typing.TypedDict('FslFixTextParameters', {
-    "__STYX_TYPE__": typing.Literal["fslFixText"],
+    "__STYXTYPE__": typing.Literal["fslFixText"],
     "input_text_file": InputPathType,
     "output_text_file": str,
 })

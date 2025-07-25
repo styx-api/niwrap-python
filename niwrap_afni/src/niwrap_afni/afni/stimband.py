@@ -14,7 +14,7 @@ STIMBAND_METADATA = Metadata(
 
 
 StimbandParameters = typing.TypedDict('StimbandParameters', {
-    "__STYX_TYPE__": typing.Literal["stimband"],
+    "__STYXTYPE__": typing.Literal["stimband"],
     "verbose_flag": bool,
     "matrixfiles": list[InputPathType],
     "additional_matrixfiles": typing.NotRequired[list[InputPathType] | None],

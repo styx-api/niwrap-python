@@ -14,20 +14,20 @@ SURFACE_DISTORTION_METADATA = Metadata(
 
 
 SurfaceDistortionSmoothParameters = typing.TypedDict('SurfaceDistortionSmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["smooth"],
+    "__STYXTYPE__": typing.Literal["smooth"],
     "sigma": float,
     "opt_fwhm": bool,
 })
 
 
 SurfaceDistortionLocalAffineMethodParameters = typing.TypedDict('SurfaceDistortionLocalAffineMethodParameters', {
-    "__STYX_TYPE__": typing.Literal["local_affine_method"],
+    "__STYXTYPE__": typing.Literal["local_affine_method"],
     "opt_log2": bool,
 })
 
 
 SurfaceDistortionParameters = typing.TypedDict('SurfaceDistortionParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-distortion"],
+    "__STYXTYPE__": typing.Literal["surface-distortion"],
     "surface_reference": InputPathType,
     "surface_distorted": InputPathType,
     "metric_out": str,

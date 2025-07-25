@@ -14,26 +14,26 @@ MASKFILTER_METADATA = Metadata(
 
 
 MaskfilterVariousStringParameters = typing.TypedDict('MaskfilterVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 MaskfilterVariousFileParameters = typing.TypedDict('MaskfilterVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 MaskfilterConfigParameters = typing.TypedDict('MaskfilterConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MaskfilterParameters = typing.TypedDict('MaskfilterParameters', {
-    "__STYX_TYPE__": typing.Literal["maskfilter"],
+    "__STYXTYPE__": typing.Literal["maskfilter"],
     "scale": typing.NotRequired[int | None],
     "axes": typing.NotRequired[list[int] | None],
     "largest": bool,

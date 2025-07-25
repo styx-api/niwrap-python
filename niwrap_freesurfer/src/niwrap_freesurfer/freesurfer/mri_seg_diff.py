@@ -14,7 +14,7 @@ MRI_SEG_DIFF_METADATA = Metadata(
 
 
 MriSegDiffParameters = typing.TypedDict('MriSegDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_seg_diff"],
+    "__STYXTYPE__": typing.Literal["mri_seg_diff"],
     "seg1": typing.NotRequired[InputPathType | None],
     "seg2": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[InputPathType | None],

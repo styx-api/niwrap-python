@@ -14,7 +14,7 @@ MAKE_BIANCA_MASK_METADATA = Metadata(
 
 
 MakeBiancaMaskParameters = typing.TypedDict('MakeBiancaMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["make_bianca_mask"],
+    "__STYXTYPE__": typing.Literal["make_bianca_mask"],
     "input_image": InputPathType,
     "output_image": str,
     "overlay_flag": bool,

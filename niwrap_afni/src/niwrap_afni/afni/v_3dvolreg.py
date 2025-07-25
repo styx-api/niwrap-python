@@ -14,7 +14,7 @@ V_3DVOLREG_METADATA = Metadata(
 
 
 V3dvolregParameters = typing.TypedDict('V3dvolregParameters', {
-    "__STYX_TYPE__": typing.Literal["3dvolreg"],
+    "__STYXTYPE__": typing.Literal["3dvolreg"],
     "copyorigin": bool,
     "twopass": bool,
     "Fourier": bool,

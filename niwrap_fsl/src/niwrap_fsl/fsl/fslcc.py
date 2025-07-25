@@ -14,7 +14,7 @@ FSLCC_METADATA = Metadata(
 
 
 FslccParameters = typing.TypedDict('FslccParameters', {
-    "__STYX_TYPE__": typing.Literal["fslcc"],
+    "__STYXTYPE__": typing.Literal["fslcc"],
     "first_input": InputPathType,
     "second_input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],

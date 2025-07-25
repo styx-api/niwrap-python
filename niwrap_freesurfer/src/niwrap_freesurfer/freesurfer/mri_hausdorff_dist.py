@@ -14,7 +14,7 @@ MRI_HAUSDORFF_DIST_METADATA = Metadata(
 
 
 MriHausdorffDistParameters = typing.TypedDict('MriHausdorffDistParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_hausdorff_dist"],
+    "__STYXTYPE__": typing.Literal["mri_hausdorff_dist"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_text_file": str,

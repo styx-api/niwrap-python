@@ -14,7 +14,7 @@ MRIS_AVERAGE_CURVATURE_METADATA = Metadata(
 
 
 MrisAverageCurvatureParameters = typing.TypedDict('MrisAverageCurvatureParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_average_curvature"],
+    "__STYXTYPE__": typing.Literal["mris_average_curvature"],
     "input_curvature_file": InputPathType,
     "hemi": str,
     "surface": str,

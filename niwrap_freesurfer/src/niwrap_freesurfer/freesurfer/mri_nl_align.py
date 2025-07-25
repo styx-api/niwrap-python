@@ -14,7 +14,7 @@ MRI_NL_ALIGN_METADATA = Metadata(
 
 
 MriNlAlignParameters = typing.TypedDict('MriNlAlignParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_nl_align"],
+    "__STYXTYPE__": typing.Literal["mri_nl_align"],
     "source": InputPathType,
     "target": InputPathType,
     "warp": str,

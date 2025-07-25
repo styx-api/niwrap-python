@@ -14,7 +14,7 @@ XTRACT_STATS_METADATA = Metadata(
 
 
 XtractStatsParameters = typing.TypedDict('XtractStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["xtract_stats"],
+    "__STYXTYPE__": typing.Literal["xtract_stats"],
     "folder_basename": str,
     "XTRACT_dir": str,
     "xtract2diff": str,

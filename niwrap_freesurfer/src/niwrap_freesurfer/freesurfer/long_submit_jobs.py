@@ -14,7 +14,7 @@ LONG_SUBMIT_JOBS_METADATA = Metadata(
 
 
 LongSubmitJobsParameters = typing.TypedDict('LongSubmitJobsParameters', {
-    "__STYX_TYPE__": typing.Literal["long_submit_jobs"],
+    "__STYXTYPE__": typing.Literal["long_submit_jobs"],
     "qdec": InputPathType,
     "cdir": str,
     "bdir": typing.NotRequired[str | None],

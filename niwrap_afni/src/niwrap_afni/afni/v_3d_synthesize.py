@@ -14,7 +14,7 @@ V_3D_SYNTHESIZE_METADATA = Metadata(
 
 
 V3dSynthesizeParameters = typing.TypedDict('V3dSynthesizeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSynthesize"],
+    "__STYXTYPE__": typing.Literal["3dSynthesize"],
     "c_bucket": InputPathType,
     "matrix": InputPathType,
     "select": str,

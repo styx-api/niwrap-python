@@ -14,7 +14,7 @@ V_3D_GRAYPLOT_METADATA = Metadata(
 
 
 V3dGrayplotParameters = typing.TypedDict('V3dGrayplotParameters', {
-    "__STYX_TYPE__": typing.Literal["3dGrayplot"],
+    "__STYXTYPE__": typing.Literal["3dGrayplot"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],

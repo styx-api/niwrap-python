@@ -14,7 +14,7 @@ V_3D_ATTRIBUTE_METADATA = Metadata(
 
 
 V3dAttributeParameters = typing.TypedDict('V3dAttributeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAttribute"],
+    "__STYXTYPE__": typing.Literal["3dAttribute"],
     "all": bool,
     "name": bool,
     "center": bool,

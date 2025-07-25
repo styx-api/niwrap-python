@@ -14,7 +14,7 @@ MRI_ENTOWM_SEG_METADATA = Metadata(
 
 
 MriEntowmSegParameters = typing.TypedDict('MriEntowmSegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_entowm_seg"],
+    "__STYXTYPE__": typing.Literal["mri_entowm_seg"],
     "input_image": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "recon_subjects": typing.NotRequired[list[str] | None],

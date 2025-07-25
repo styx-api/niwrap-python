@@ -14,7 +14,7 @@ MCCUTUP_METADATA = Metadata(
 
 
 MccutupParameters = typing.TypedDict('MccutupParameters', {
-    "__STYX_TYPE__": typing.Literal["mccutup"],
+    "__STYXTYPE__": typing.Literal["mccutup"],
     "input": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "param1": typing.NotRequired[str | None],

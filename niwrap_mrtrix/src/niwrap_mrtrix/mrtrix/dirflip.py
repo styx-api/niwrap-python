@@ -14,14 +14,14 @@ DIRFLIP_METADATA = Metadata(
 
 
 DirflipConfigParameters = typing.TypedDict('DirflipConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirflipParameters = typing.TypedDict('DirflipParameters', {
-    "__STYX_TYPE__": typing.Literal["dirflip"],
+    "__STYXTYPE__": typing.Literal["dirflip"],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
     "info": bool,

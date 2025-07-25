@@ -14,7 +14,7 @@ MKHEADSURF_METADATA = Metadata(
 
 
 MkheadsurfParameters = typing.TypedDict('MkheadsurfParameters', {
-    "__STYX_TYPE__": typing.Literal["mkheadsurf"],
+    "__STYXTYPE__": typing.Literal["mkheadsurf"],
     "input_vol": InputPathType,
     "output_vol": str,
     "output_surf": str,

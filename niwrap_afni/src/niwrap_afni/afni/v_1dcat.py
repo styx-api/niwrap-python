@@ -14,7 +14,7 @@ V_1DCAT_METADATA = Metadata(
 
 
 V1dcatParameters = typing.TypedDict('V1dcatParameters', {
-    "__STYX_TYPE__": typing.Literal["1dcat"],
+    "__STYXTYPE__": typing.Literal["1dcat"],
     "input_files": list[InputPathType],
     "tsv_output": bool,
     "csv_output": bool,

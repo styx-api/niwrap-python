@@ -14,7 +14,7 @@ V_3D_INV_FMRI_METADATA = Metadata(
 
 
 V3dInvFmriParameters = typing.TypedDict('V3dInvFmriParameters', {
-    "__STYX_TYPE__": typing.Literal["3dInvFMRI"],
+    "__STYXTYPE__": typing.Literal["3dInvFMRI"],
     "input_file": InputPathType,
     "activation_map": InputPathType,
     "map_weight": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V_3D_MEMA_METADATA = Metadata(
 
 
 V3dMemaParameters = typing.TypedDict('V3dMemaParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMEMA"],
+    "__STYXTYPE__": typing.Literal["3dMEMA"],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "set": list[str],

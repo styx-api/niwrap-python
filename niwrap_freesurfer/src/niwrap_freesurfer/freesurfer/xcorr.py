@@ -14,7 +14,7 @@ XCORR_METADATA = Metadata(
 
 
 XcorrParameters = typing.TypedDict('XcorrParameters', {
-    "__STYX_TYPE__": typing.Literal["xcorr"],
+    "__STYXTYPE__": typing.Literal["xcorr"],
     "input1": InputPathType,
     "input2": InputPathType,
     "output": str,

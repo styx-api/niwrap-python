@@ -14,7 +14,7 @@ V_4DFPTOANALYZE_METADATA = Metadata(
 
 
 V4dfptoanalyzeParameters = typing.TypedDict('V4dfptoanalyzeParameters', {
-    "__STYX_TYPE__": typing.Literal["4dfptoanalyze"],
+    "__STYXTYPE__": typing.Literal["4dfptoanalyze"],
     "input_file": InputPathType,
     "scale_factor": typing.NotRequired[float | None],
     "output_8bit": bool,

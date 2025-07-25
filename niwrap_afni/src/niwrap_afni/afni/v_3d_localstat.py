@@ -14,7 +14,7 @@ V_3D_LOCALSTAT_METADATA = Metadata(
 
 
 V3dLocalstatParameters = typing.TypedDict('V3dLocalstatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLocalstat"],
+    "__STYXTYPE__": typing.Literal["3dLocalstat"],
     "dataset": InputPathType,
     "nbhd": str,
     "stat": typing.NotRequired[list[str] | None],

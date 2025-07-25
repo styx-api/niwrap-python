@@ -14,7 +14,7 @@ SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
 
 
 SignedDistanceToSurfaceParameters = typing.TypedDict('SignedDistanceToSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["signed-distance-to-surface"],
+    "__STYXTYPE__": typing.Literal["signed-distance-to-surface"],
     "surface_comp": InputPathType,
     "surface_ref": InputPathType,
     "metric": str,

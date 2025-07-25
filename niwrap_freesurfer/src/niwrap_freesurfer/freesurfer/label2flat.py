@@ -14,7 +14,7 @@ LABEL2FLAT_METADATA = Metadata(
 
 
 Label2flatParameters = typing.TypedDict('Label2flatParameters', {
-    "__STYX_TYPE__": typing.Literal["label2flat"],
+    "__STYXTYPE__": typing.Literal["label2flat"],
     "subject_name": str,
     "label_file": InputPathType,
     "patch_file": InputPathType,

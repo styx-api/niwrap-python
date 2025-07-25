@@ -14,7 +14,7 @@ BIANCA_METADATA = Metadata(
 
 
 BiancaParameters = typing.TypedDict('BiancaParameters', {
-    "__STYX_TYPE__": typing.Literal["bianca"],
+    "__STYXTYPE__": typing.Literal["bianca"],
     "master_file": InputPathType,
     "label_feature_num": float,
     "brain_mask_feature_num": float,

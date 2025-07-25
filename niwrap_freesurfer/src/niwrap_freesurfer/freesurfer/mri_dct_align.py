@@ -14,7 +14,7 @@ MRI_DCT_ALIGN_METADATA = Metadata(
 
 
 MriDctAlignParameters = typing.TypedDict('MriDctAlignParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_dct_align"],
+    "__STYXTYPE__": typing.Literal["mri_dct_align"],
     "source": InputPathType,
     "destination": InputPathType,
     "output_xform": str,

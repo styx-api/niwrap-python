@@ -14,14 +14,14 @@ MRMETRIC_METADATA = Metadata(
 
 
 MrmetricConfigParameters = typing.TypedDict('MrmetricConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrmetricParameters = typing.TypedDict('MrmetricParameters', {
-    "__STYX_TYPE__": typing.Literal["mrmetric"],
+    "__STYXTYPE__": typing.Literal["mrmetric"],
     "space": typing.NotRequired[str | None],
     "interp": typing.NotRequired[str | None],
     "metric": typing.NotRequired[str | None],

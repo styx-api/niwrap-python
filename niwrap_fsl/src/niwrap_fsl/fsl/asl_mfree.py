@@ -14,7 +14,7 @@ ASL_MFREE_METADATA = Metadata(
 
 
 AslMfreeParameters = typing.TypedDict('AslMfreeParameters', {
-    "__STYX_TYPE__": typing.Literal["asl_mfree"],
+    "__STYXTYPE__": typing.Literal["asl_mfree"],
     "datafile": InputPathType,
     "mask": InputPathType,
     "out": str,

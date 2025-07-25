@@ -14,7 +14,7 @@ LABEL_SUBJECT_FLASH_METADATA = Metadata(
 
 
 LabelSubjectFlashParameters = typing.TypedDict('LabelSubjectFlashParameters', {
-    "__STYX_TYPE__": typing.Literal["label_subject_flash"],
+    "__STYXTYPE__": typing.Literal["label_subject_flash"],
     "tissue_params": InputPathType,
     "norm_volume": InputPathType,
     "transform_file": InputPathType,

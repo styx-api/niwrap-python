@@ -14,7 +14,7 @@ PROMPT_POPUP_METADATA = Metadata(
 
 
 PromptPopupParameters = typing.TypedDict('PromptPopupParameters', {
-    "__STYX_TYPE__": typing.Literal["prompt_popup"],
+    "__STYXTYPE__": typing.Literal["prompt_popup"],
     "message": str,
     "message_pause": typing.NotRequired[str | None],
     "buttons": typing.NotRequired[list[str] | None],

@@ -14,14 +14,14 @@ MESHFILTER_METADATA = Metadata(
 
 
 MeshfilterConfigParameters = typing.TypedDict('MeshfilterConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MeshfilterParameters = typing.TypedDict('MeshfilterParameters', {
-    "__STYX_TYPE__": typing.Literal["meshfilter"],
+    "__STYXTYPE__": typing.Literal["meshfilter"],
     "smooth_spatial": typing.NotRequired[float | None],
     "smooth_influence": typing.NotRequired[float | None],
     "info": bool,

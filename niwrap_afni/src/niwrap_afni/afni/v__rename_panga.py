@@ -14,7 +14,7 @@ V__RENAME_PANGA_METADATA = Metadata(
 
 
 VRenamePangaParameters = typing.TypedDict('VRenamePangaParameters', {
-    "__STYX_TYPE__": typing.Literal["@RenamePanga"],
+    "__STYXTYPE__": typing.Literal["@RenamePanga"],
     "dir_number": str,
     "first_image_number": str,
     "num_slices": float,

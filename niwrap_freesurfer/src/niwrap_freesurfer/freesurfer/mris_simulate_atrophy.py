@@ -14,7 +14,7 @@ MRIS_SIMULATE_ATROPHY_METADATA = Metadata(
 
 
 MrisSimulateAtrophyParameters = typing.TypedDict('MrisSimulateAtrophyParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_simulate_atrophy"],
+    "__STYXTYPE__": typing.Literal["mris_simulate_atrophy"],
     "subject": str,
     "hemi": str,
     "label": str,

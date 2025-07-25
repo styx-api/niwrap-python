@@ -14,7 +14,7 @@ MRI_SEGCENTROIDS_METADATA = Metadata(
 
 
 MriSegcentroidsParameters = typing.TypedDict('MriSegcentroidsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_segcentroids"],
+    "__STYXTYPE__": typing.Literal["mri_segcentroids"],
     "input_segmentation": InputPathType,
     "output_file": str,
     "pointset_flag": bool,

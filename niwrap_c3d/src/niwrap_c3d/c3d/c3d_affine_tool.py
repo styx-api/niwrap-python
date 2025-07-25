@@ -14,7 +14,7 @@ C3D_AFFINE_TOOL_METADATA = Metadata(
 
 
 C3dAffineToolParameters = typing.TypedDict('C3dAffineToolParameters', {
-    "__STYX_TYPE__": typing.Literal["c3d_affine_tool"],
+    "__STYXTYPE__": typing.Literal["c3d_affine_tool"],
     "transform_file": typing.NotRequired[InputPathType | None],
     "reference_file": typing.NotRequired[InputPathType | None],
     "source_file": typing.NotRequired[InputPathType | None],

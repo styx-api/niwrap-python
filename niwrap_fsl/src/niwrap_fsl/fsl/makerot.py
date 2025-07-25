@@ -14,7 +14,7 @@ MAKEROT_METADATA = Metadata(
 
 
 MakerotParameters = typing.TypedDict('MakerotParameters', {
-    "__STYX_TYPE__": typing.Literal["makerot"],
+    "__STYXTYPE__": typing.Literal["makerot"],
     "axis": typing.NotRequired[str | None],
     "cov": typing.NotRequired[InputPathType | None],
     "center": typing.NotRequired[str | None],

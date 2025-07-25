@@ -14,7 +14,7 @@ MRI_LABEL_VOLUME_METADATA = Metadata(
 
 
 MriLabelVolumeParameters = typing.TypedDict('MriLabelVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_label_volume"],
+    "__STYXTYPE__": typing.Literal["mri_label_volume"],
     "volume": InputPathType,
     "labels": list[str],
     "partial_volume_effects": typing.NotRequired[InputPathType | None],

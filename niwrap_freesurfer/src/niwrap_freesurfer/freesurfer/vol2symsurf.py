@@ -14,7 +14,7 @@ VOL2SYMSURF_METADATA = Metadata(
 
 
 Vol2symsurfParameters = typing.TypedDict('Vol2symsurfParameters', {
-    "__STYX_TYPE__": typing.Literal["vol2symsurf"],
+    "__STYXTYPE__": typing.Literal["vol2symsurf"],
     "registration_file": InputPathType,
     "input_volume": InputPathType,
     "fwhm": float,

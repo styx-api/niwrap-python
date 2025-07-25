@@ -14,7 +14,7 @@ TKMEDITFV_METADATA = Metadata(
 
 
 TkmeditfvParameters = typing.TypedDict('TkmeditfvParameters', {
-    "__STYX_TYPE__": typing.Literal["tkmeditfv"],
+    "__STYXTYPE__": typing.Literal["tkmeditfv"],
     "subject": typing.NotRequired[str | None],
     "mainvol": InputPathType,
     "aux_volume": typing.NotRequired[InputPathType | None],

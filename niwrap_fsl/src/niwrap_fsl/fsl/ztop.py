@@ -14,7 +14,7 @@ ZTOP_METADATA = Metadata(
 
 
 ZtopParameters = typing.TypedDict('ZtopParameters', {
-    "__STYX_TYPE__": typing.Literal["ztop"],
+    "__STYXTYPE__": typing.Literal["ztop"],
     "z_score": float,
     "tail_flag": bool,
     "grf_flag": bool,

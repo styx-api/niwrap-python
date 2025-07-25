@@ -14,7 +14,7 @@ TKMEDIT_METADATA = Metadata(
 
 
 TkmeditParameters = typing.TypedDict('TkmeditParameters', {
-    "__STYX_TYPE__": typing.Literal["tkmedit"],
+    "__STYXTYPE__": typing.Literal["tkmedit"],
     "input_volume": InputPathType,
     "options": typing.NotRequired[str | None],
 })

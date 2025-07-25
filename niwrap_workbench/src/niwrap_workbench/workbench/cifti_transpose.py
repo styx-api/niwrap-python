@@ -14,7 +14,7 @@ CIFTI_TRANSPOSE_METADATA = Metadata(
 
 
 CiftiTransposeParameters = typing.TypedDict('CiftiTransposeParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-transpose"],
+    "__STYXTYPE__": typing.Literal["cifti-transpose"],
     "cifti_in": InputPathType,
     "cifti_out": str,
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ TCKRESAMPLE_METADATA = Metadata(
 
 
 TckresampleLineParameters = typing.TypedDict('TckresampleLineParameters', {
-    "__STYX_TYPE__": typing.Literal["line"],
+    "__STYXTYPE__": typing.Literal["line"],
     "num": int,
     "start": list[float],
     "end": list[float],
@@ -22,7 +22,7 @@ TckresampleLineParameters = typing.TypedDict('TckresampleLineParameters', {
 
 
 TckresampleArcParameters = typing.TypedDict('TckresampleArcParameters', {
-    "__STYX_TYPE__": typing.Literal["arc"],
+    "__STYXTYPE__": typing.Literal["arc"],
     "num": int,
     "start": list[float],
     "mid": list[float],
@@ -31,14 +31,14 @@ TckresampleArcParameters = typing.TypedDict('TckresampleArcParameters', {
 
 
 TckresampleConfigParameters = typing.TypedDict('TckresampleConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckresampleParameters = typing.TypedDict('TckresampleParameters', {
-    "__STYX_TYPE__": typing.Literal["tckresample"],
+    "__STYXTYPE__": typing.Literal["tckresample"],
     "upsample": typing.NotRequired[int | None],
     "downsample": typing.NotRequired[int | None],
     "step_size": typing.NotRequired[float | None],

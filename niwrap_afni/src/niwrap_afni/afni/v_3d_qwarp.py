@@ -14,7 +14,7 @@ V_3D_QWARP_METADATA = Metadata(
 
 
 V3dQwarpParameters = typing.TypedDict('V3dQwarpParameters', {
-    "__STYX_TYPE__": typing.Literal["3dQwarp"],
+    "__STYXTYPE__": typing.Literal["3dQwarp"],
     "base_dataset": InputPathType,
     "source_dataset": InputPathType,
     "prefix": str,

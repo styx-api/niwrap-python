@@ -14,7 +14,7 @@ GET_AFNI_MODEL_PRF_6_METADATA = Metadata(
 
 
 GetAfniModelPrf6Parameters = typing.TypedDict('GetAfniModelPrf6Parameters', {
-    "__STYX_TYPE__": typing.Literal["get_afni_model_PRF_6"],
+    "__STYXTYPE__": typing.Literal["get_afni_model_PRF_6"],
     "NT": float,
     "AMP": float,
     "X": float,

@@ -14,7 +14,7 @@ BIANCA_OVERLAP_MEASURES_METADATA = Metadata(
 
 
 BiancaOverlapMeasuresParameters = typing.TypedDict('BiancaOverlapMeasuresParameters', {
-    "__STYX_TYPE__": typing.Literal["bianca_overlap_measures"],
+    "__STYXTYPE__": typing.Literal["bianca_overlap_measures"],
     "lesion_mask": InputPathType,
     "manual_mask": InputPathType,
     "output_dir": str,

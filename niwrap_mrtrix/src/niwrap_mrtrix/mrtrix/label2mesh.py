@@ -14,14 +14,14 @@ LABEL2MESH_METADATA = Metadata(
 
 
 Label2meshConfigParameters = typing.TypedDict('Label2meshConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Label2meshParameters = typing.TypedDict('Label2meshParameters', {
-    "__STYX_TYPE__": typing.Literal["label2mesh"],
+    "__STYXTYPE__": typing.Literal["label2mesh"],
     "blocky": bool,
     "info": bool,
     "quiet": bool,

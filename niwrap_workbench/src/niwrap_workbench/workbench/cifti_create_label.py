@@ -14,35 +14,35 @@ CIFTI_CREATE_LABEL_METADATA = Metadata(
 
 
 CiftiCreateLabelVolumeParameters = typing.TypedDict('CiftiCreateLabelVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume"],
+    "__STYXTYPE__": typing.Literal["volume"],
     "label_volume": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateLabelLeftLabelParameters = typing.TypedDict('CiftiCreateLabelLeftLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["left_label"],
+    "__STYXTYPE__": typing.Literal["left_label"],
     "label": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelRightLabelParameters = typing.TypedDict('CiftiCreateLabelRightLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["right_label"],
+    "__STYXTYPE__": typing.Literal["right_label"],
     "label": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelCerebellumLabelParameters = typing.TypedDict('CiftiCreateLabelCerebellumLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_label"],
+    "__STYXTYPE__": typing.Literal["cerebellum_label"],
     "label": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelParameters = typing.TypedDict('CiftiCreateLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-create-label"],
+    "__STYXTYPE__": typing.Literal["cifti-create-label"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateLabelVolumeParameters | None],
     "left_label": typing.NotRequired[CiftiCreateLabelLeftLabelParameters | None],

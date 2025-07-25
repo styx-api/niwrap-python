@@ -14,7 +14,7 @@ MAKE_UPRIGHT_METADATA = Metadata(
 
 
 MakeUprightParameters = typing.TypedDict('MakeUprightParameters', {
-    "__STYX_TYPE__": typing.Literal["make_upright"],
+    "__STYXTYPE__": typing.Literal["make_upright"],
     "input_image": InputPathType,
     "output_image": str,
     "transformation_map": InputPathType,

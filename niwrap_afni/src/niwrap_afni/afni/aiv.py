@@ -14,7 +14,7 @@ AIV_METADATA = Metadata(
 
 
 AivParameters = typing.TypedDict('AivParameters', {
-    "__STYX_TYPE__": typing.Literal["aiv"],
+    "__STYXTYPE__": typing.Literal["aiv"],
     "verbose": bool,
     "quiet": bool,
     "title": typing.NotRequired[str | None],

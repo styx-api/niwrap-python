@@ -14,7 +14,7 @@ TBSS_SKELETON_METADATA = Metadata(
 
 
 TbssSkeletonParameters = typing.TypedDict('TbssSkeletonParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_skeleton"],
+    "__STYXTYPE__": typing.Literal["tbss_skeleton"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "skeleton_params": typing.NotRequired[list[str] | None],

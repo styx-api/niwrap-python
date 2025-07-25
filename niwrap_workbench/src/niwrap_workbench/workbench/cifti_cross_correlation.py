@@ -14,7 +14,7 @@ CIFTI_CROSS_CORRELATION_METADATA = Metadata(
 
 
 CiftiCrossCorrelationParameters = typing.TypedDict('CiftiCrossCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-cross-correlation"],
+    "__STYXTYPE__": typing.Literal["cifti-cross-correlation"],
     "cifti_a": InputPathType,
     "cifti_b": InputPathType,
     "cifti_out": str,

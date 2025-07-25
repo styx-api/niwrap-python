@@ -14,7 +14,7 @@ INIT_USER_DOTFILES_PY_METADATA = Metadata(
 
 
 InitUserDotfilesPyParameters = typing.TypedDict('InitUserDotfilesPyParameters', {
-    "__STYX_TYPE__": typing.Literal["init_user_dotfiles.py"],
+    "__STYXTYPE__": typing.Literal["init_user_dotfiles.py"],
     "help": bool,
     "help_dotfiles_all": bool,
     "help_dotfiles_mod": bool,

@@ -14,7 +14,7 @@ OLD_BETALL_METADATA = Metadata(
 
 
 OldBetallParameters = typing.TypedDict('OldBetallParameters', {
-    "__STYX_TYPE__": typing.Literal["old_betall"],
+    "__STYXTYPE__": typing.Literal["old_betall"],
     "t1_filerout": str,
     "t2_filerout": str,
 })

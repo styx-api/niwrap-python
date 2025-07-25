@@ -14,7 +14,7 @@ MRIS_INFO_METADATA = Metadata(
 
 
 MrisInfoParameters = typing.TypedDict('MrisInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_info"],
+    "__STYXTYPE__": typing.Literal["mris_info"],
     "surfacefile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "subject_hemi_surfname": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ EXVIVO_HEMI_PROC_METADATA = Metadata(
 
 
 ExvivoHemiProcParameters = typing.TypedDict('ExvivoHemiProcParameters', {
-    "__STYX_TYPE__": typing.Literal["exvivo-hemi-proc"],
+    "__STYXTYPE__": typing.Literal["exvivo-hemi-proc"],
     "flashdir": str,
     "outdir": str,
     "subject": str,

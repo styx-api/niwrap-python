@@ -14,7 +14,7 @@ NICCC_METADATA = Metadata(
 
 
 NicccParameters = typing.TypedDict('NicccParameters', {
-    "__STYX_TYPE__": typing.Literal["niccc"],
+    "__STYXTYPE__": typing.Literal["niccc"],
     "streamspec": str,
     "duplicate": bool,
     "nodata": bool,

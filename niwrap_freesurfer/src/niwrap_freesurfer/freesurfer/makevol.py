@@ -14,7 +14,7 @@ MAKEVOL_METADATA = Metadata(
 
 
 MakevolParameters = typing.TypedDict('MakevolParameters', {
-    "__STYX_TYPE__": typing.Literal["makevol"],
+    "__STYXTYPE__": typing.Literal["makevol"],
     "filename": typing.NotRequired[str | None],
     "width": typing.NotRequired[int | None],
     "height": typing.NotRequired[int | None],

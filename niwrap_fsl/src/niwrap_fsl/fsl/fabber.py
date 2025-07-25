@@ -14,14 +14,14 @@ FABBER_METADATA = Metadata(
 
 
 FabberOptfileParameters = typing.TypedDict('FabberOptfileParameters', {
-    "__STYX_TYPE__": typing.Literal["optfile"],
+    "__STYXTYPE__": typing.Literal["optfile"],
     "optfile_short": typing.NotRequired[InputPathType | None],
     "optfile_long": typing.NotRequired[InputPathType | None],
 })
 
 
 FabberParameters = typing.TypedDict('FabberParameters', {
-    "__STYX_TYPE__": typing.Literal["fabber"],
+    "__STYXTYPE__": typing.Literal["fabber"],
     "output": str,
     "method": str,
     "model": str,

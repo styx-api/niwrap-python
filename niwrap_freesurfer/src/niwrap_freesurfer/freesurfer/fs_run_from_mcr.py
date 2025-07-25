@@ -14,7 +14,7 @@ FS_RUN_FROM_MCR_METADATA = Metadata(
 
 
 FsRunFromMcrParameters = typing.TypedDict('FsRunFromMcrParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_run_from_mcr"],
+    "__STYXTYPE__": typing.Literal["fs_run_from_mcr"],
     "name": typing.NotRequired[str | None],
     "command": typing.NotRequired[str | None],
     "zeroth_flag": bool,

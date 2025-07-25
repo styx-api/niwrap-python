@@ -14,7 +14,7 @@ FIX_SUBJECT_METADATA = Metadata(
 
 
 FixSubjectParameters = typing.TypedDict('FixSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["fix_subject"],
+    "__STYXTYPE__": typing.Literal["fix_subject"],
     "arguments": typing.NotRequired[str | None],
 })
 

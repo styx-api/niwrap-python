@@ -14,7 +14,7 @@ V_3DKMEANS_METADATA = Metadata(
 
 
 V3dkmeansParameters = typing.TypedDict('V3dkmeansParameters', {
-    "__STYX_TYPE__": typing.Literal["3dkmeans"],
+    "__STYXTYPE__": typing.Literal["3dkmeans"],
     "version": bool,
     "input": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],

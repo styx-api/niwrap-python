@@ -14,7 +14,7 @@ MRIS_MAKE_SURFACES_METADATA = Metadata(
 
 
 MrisMakeSurfacesParameters = typing.TypedDict('MrisMakeSurfacesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_make_surfaces"],
+    "__STYXTYPE__": typing.Literal["mris_make_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "white": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA = Metadata(
 
 
 MriSegmentHypothalamicSubunitsParameters = typing.TypedDict('MriSegmentHypothalamicSubunitsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_segment_hypothalamic_subunits"],
+    "__STYXTYPE__": typing.Literal["mri_segment_hypothalamic_subunits"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjects_dir": typing.NotRequired[str | None],
     "write_posteriors": bool,

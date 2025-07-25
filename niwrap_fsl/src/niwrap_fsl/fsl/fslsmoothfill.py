@@ -14,7 +14,7 @@ FSLSMOOTHFILL_METADATA = Metadata(
 
 
 FslsmoothfillParameters = typing.TypedDict('FslsmoothfillParameters', {
-    "__STYX_TYPE__": typing.Literal["fslsmoothfill"],
+    "__STYXTYPE__": typing.Literal["fslsmoothfill"],
     "input_image": InputPathType,
     "mask_image": InputPathType,
     "output_image": str,

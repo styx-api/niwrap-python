@@ -14,7 +14,7 @@ VOLUME_DISTORTION_METADATA = Metadata(
 
 
 VolumeDistortionParameters = typing.TypedDict('VolumeDistortionParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-distortion"],
+    "__STYXTYPE__": typing.Literal["volume-distortion"],
     "warpfield": str,
     "volume_out": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],

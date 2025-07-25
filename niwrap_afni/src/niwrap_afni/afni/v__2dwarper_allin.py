@@ -14,7 +14,7 @@ V__2DWARPER_ALLIN_METADATA = Metadata(
 
 
 V2dwarperAllinParameters = typing.TypedDict('V2dwarperAllinParameters', {
-    "__STYX_TYPE__": typing.Literal["@2dwarper.Allin"],
+    "__STYXTYPE__": typing.Literal["@2dwarper.Allin"],
     "input_prefix": str,
     "mask_prefix": typing.NotRequired[str | None],
     "output_prefix": typing.NotRequired[str | None],

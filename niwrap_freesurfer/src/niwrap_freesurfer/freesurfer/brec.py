@@ -14,7 +14,7 @@ BREC_METADATA = Metadata(
 
 
 BrecParameters = typing.TypedDict('BrecParameters', {
-    "__STYX_TYPE__": typing.Literal["brec"],
+    "__STYXTYPE__": typing.Literal["brec"],
     "my_file": str,
     "depth_limit": bool,
 })

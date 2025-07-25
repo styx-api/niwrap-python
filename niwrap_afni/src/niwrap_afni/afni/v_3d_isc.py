@@ -14,7 +14,7 @@ V_3D_ISC_METADATA = Metadata(
 
 
 V3dIscParameters = typing.TypedDict('V3dIscParameters', {
-    "__STYX_TYPE__": typing.Literal["3dISC"],
+    "__STYXTYPE__": typing.Literal["3dISC"],
     "outfile_prefix": str,
     "num_jobs": typing.NotRequired[float | None],
     "mask_file": typing.NotRequired[InputPathType | None],

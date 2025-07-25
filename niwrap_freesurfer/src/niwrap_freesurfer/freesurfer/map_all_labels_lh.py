@@ -14,7 +14,7 @@ MAP_ALL_LABELS_LH_METADATA = Metadata(
 
 
 MapAllLabelsLhParameters = typing.TypedDict('MapAllLabelsLhParameters', {
-    "__STYX_TYPE__": typing.Literal["map_all_labels-lh"],
+    "__STYXTYPE__": typing.Literal["map_all_labels-lh"],
     "which": str,
     "fname": str,
     "hemi": str,

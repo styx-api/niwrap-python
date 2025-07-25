@@ -14,14 +14,14 @@ TRANSFORMCONVERT_METADATA = Metadata(
 
 
 TransformconvertConfigParameters = typing.TypedDict('TransformconvertConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TransformconvertParameters = typing.TypedDict('TransformconvertParameters', {
-    "__STYX_TYPE__": typing.Literal["transformconvert"],
+    "__STYXTYPE__": typing.Literal["transformconvert"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

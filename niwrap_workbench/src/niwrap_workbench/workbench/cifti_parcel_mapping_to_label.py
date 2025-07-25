@@ -14,7 +14,7 @@ CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
 
 
 CiftiParcelMappingToLabelParameters = typing.TypedDict('CiftiParcelMappingToLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-parcel-mapping-to-label"],
+    "__STYXTYPE__": typing.Literal["cifti-parcel-mapping-to-label"],
     "cifti_in": InputPathType,
     "direction": str,
     "template_cifti": InputPathType,

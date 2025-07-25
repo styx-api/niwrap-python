@@ -14,7 +14,7 @@ SPEC_FILE_MERGE_METADATA = Metadata(
 
 
 SpecFileMergeParameters = typing.TypedDict('SpecFileMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["spec-file-merge"],
+    "__STYXTYPE__": typing.Literal["spec-file-merge"],
     "spec_1": str,
     "spec_2": str,
     "out_spec": str,

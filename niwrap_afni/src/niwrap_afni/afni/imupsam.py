@@ -14,7 +14,7 @@ IMUPSAM_METADATA = Metadata(
 
 
 ImupsamParameters = typing.TypedDict('ImupsamParameters', {
-    "__STYX_TYPE__": typing.Literal["imupsam"],
+    "__STYXTYPE__": typing.Literal["imupsam"],
     "ascii_flag": bool,
     "factor": int,
     "input_image": InputPathType,

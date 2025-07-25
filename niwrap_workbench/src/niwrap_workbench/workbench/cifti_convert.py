@@ -14,14 +14,14 @@ CIFTI_CONVERT_METADATA = Metadata(
 
 
 CiftiConvertToGiftiExtParameters = typing.TypedDict('CiftiConvertToGiftiExtParameters', {
-    "__STYX_TYPE__": typing.Literal["to_gifti_ext"],
+    "__STYXTYPE__": typing.Literal["to_gifti_ext"],
     "cifti_in": InputPathType,
     "gifti_out": str,
 })
 
 
 CiftiConvertResetTimepointsParameters = typing.TypedDict('CiftiConvertResetTimepointsParameters', {
-    "__STYX_TYPE__": typing.Literal["reset_timepoints"],
+    "__STYXTYPE__": typing.Literal["reset_timepoints"],
     "timestep": float,
     "timestart": float,
     "opt_unit_unit": typing.NotRequired[str | None],
@@ -29,7 +29,7 @@ CiftiConvertResetTimepointsParameters = typing.TypedDict('CiftiConvertResetTimep
 
 
 CiftiConvertReplaceBinaryParameters = typing.TypedDict('CiftiConvertReplaceBinaryParameters', {
-    "__STYX_TYPE__": typing.Literal["replace_binary"],
+    "__STYXTYPE__": typing.Literal["replace_binary"],
     "binary_in": str,
     "opt_flip_endian": bool,
     "opt_transpose": bool,
@@ -37,7 +37,7 @@ CiftiConvertReplaceBinaryParameters = typing.TypedDict('CiftiConvertReplaceBinar
 
 
 CiftiConvertFromGiftiExtParameters = typing.TypedDict('CiftiConvertFromGiftiExtParameters', {
-    "__STYX_TYPE__": typing.Literal["from_gifti_ext"],
+    "__STYXTYPE__": typing.Literal["from_gifti_ext"],
     "gifti_in": str,
     "cifti_out": str,
     "reset_timepoints": typing.NotRequired[CiftiConvertResetTimepointsParameters | None],
@@ -48,7 +48,7 @@ CiftiConvertFromGiftiExtParameters = typing.TypedDict('CiftiConvertFromGiftiExtP
 
 
 CiftiConvertToNiftiParameters = typing.TypedDict('CiftiConvertToNiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["to_nifti"],
+    "__STYXTYPE__": typing.Literal["to_nifti"],
     "cifti_in": InputPathType,
     "nifti_out": str,
     "opt_smaller_file": bool,
@@ -57,7 +57,7 @@ CiftiConvertToNiftiParameters = typing.TypedDict('CiftiConvertToNiftiParameters'
 
 
 CiftiConvertResetTimepoints1Parameters = typing.TypedDict('CiftiConvertResetTimepoints1Parameters', {
-    "__STYX_TYPE__": typing.Literal["reset_timepoints_1"],
+    "__STYXTYPE__": typing.Literal["reset_timepoints_1"],
     "timestep": float,
     "timestart": float,
     "opt_unit_unit": typing.NotRequired[str | None],
@@ -65,7 +65,7 @@ CiftiConvertResetTimepoints1Parameters = typing.TypedDict('CiftiConvertResetTime
 
 
 CiftiConvertFromNiftiParameters = typing.TypedDict('CiftiConvertFromNiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["from_nifti"],
+    "__STYXTYPE__": typing.Literal["from_nifti"],
     "nifti_in": InputPathType,
     "cifti_template": InputPathType,
     "cifti_out": str,
@@ -75,7 +75,7 @@ CiftiConvertFromNiftiParameters = typing.TypedDict('CiftiConvertFromNiftiParamet
 
 
 CiftiConvertToTextParameters = typing.TypedDict('CiftiConvertToTextParameters', {
-    "__STYX_TYPE__": typing.Literal["to_text"],
+    "__STYXTYPE__": typing.Literal["to_text"],
     "cifti_in": InputPathType,
     "text_out": str,
     "opt_col_delim_delim_string": typing.NotRequired[str | None],
@@ -83,7 +83,7 @@ CiftiConvertToTextParameters = typing.TypedDict('CiftiConvertToTextParameters', 
 
 
 CiftiConvertResetTimepoints2Parameters = typing.TypedDict('CiftiConvertResetTimepoints2Parameters', {
-    "__STYX_TYPE__": typing.Literal["reset_timepoints_2"],
+    "__STYXTYPE__": typing.Literal["reset_timepoints_2"],
     "timestep": float,
     "timestart": float,
     "opt_unit_unit": typing.NotRequired[str | None],
@@ -91,7 +91,7 @@ CiftiConvertResetTimepoints2Parameters = typing.TypedDict('CiftiConvertResetTime
 
 
 CiftiConvertFromTextParameters = typing.TypedDict('CiftiConvertFromTextParameters', {
-    "__STYX_TYPE__": typing.Literal["from_text"],
+    "__STYXTYPE__": typing.Literal["from_text"],
     "text_in": str,
     "cifti_template": InputPathType,
     "cifti_out": str,
@@ -102,7 +102,7 @@ CiftiConvertFromTextParameters = typing.TypedDict('CiftiConvertFromTextParameter
 
 
 CiftiConvertParameters = typing.TypedDict('CiftiConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-convert"],
+    "__STYXTYPE__": typing.Literal["cifti-convert"],
     "to_gifti_ext": typing.NotRequired[CiftiConvertToGiftiExtParameters | None],
     "from_gifti_ext": typing.NotRequired[CiftiConvertFromGiftiExtParameters | None],
     "to_nifti": typing.NotRequired[CiftiConvertToNiftiParameters | None],

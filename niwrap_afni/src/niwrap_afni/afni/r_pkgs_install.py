@@ -14,7 +14,7 @@ R_PKGS_INSTALL_METADATA = Metadata(
 
 
 RPkgsInstallParameters = typing.TypedDict('RPkgsInstallParameters', {
-    "__STYX_TYPE__": typing.Literal["rPkgsInstall"],
+    "__STYXTYPE__": typing.Literal["rPkgsInstall"],
     "packages": str,
     "download_site": typing.NotRequired[str | None],
     "check": bool,

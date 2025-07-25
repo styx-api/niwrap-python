@@ -14,7 +14,7 @@ FILE_CONVERT_METADATA = Metadata(
 
 
 FileConvertBorderVersionConvertParameters = typing.TypedDict('FileConvertBorderVersionConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["border_version_convert"],
+    "__STYXTYPE__": typing.Literal["border_version_convert"],
     "border_in": InputPathType,
     "out_version": int,
     "border_out": str,
@@ -23,7 +23,7 @@ FileConvertBorderVersionConvertParameters = typing.TypedDict('FileConvertBorderV
 
 
 FileConvertNiftiVersionConvertParameters = typing.TypedDict('FileConvertNiftiVersionConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["nifti_version_convert"],
+    "__STYXTYPE__": typing.Literal["nifti_version_convert"],
     "input": str,
     "version": int,
     "output": str,
@@ -31,7 +31,7 @@ FileConvertNiftiVersionConvertParameters = typing.TypedDict('FileConvertNiftiVer
 
 
 FileConvertCiftiVersionConvertParameters = typing.TypedDict('FileConvertCiftiVersionConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti_version_convert"],
+    "__STYXTYPE__": typing.Literal["cifti_version_convert"],
     "cifti_in": InputPathType,
     "version": str,
     "cifti_out": str,
@@ -39,7 +39,7 @@ FileConvertCiftiVersionConvertParameters = typing.TypedDict('FileConvertCiftiVer
 
 
 FileConvertParameters = typing.TypedDict('FileConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["file-convert"],
+    "__STYXTYPE__": typing.Literal["file-convert"],
     "border_version_convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
     "nifti_version_convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
     "cifti_version_convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],

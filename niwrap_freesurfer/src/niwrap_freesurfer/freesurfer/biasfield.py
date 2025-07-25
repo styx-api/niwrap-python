@@ -14,7 +14,7 @@ BIASFIELD_METADATA = Metadata(
 
 
 BiasfieldParameters = typing.TypedDict('BiasfieldParameters', {
-    "__STYX_TYPE__": typing.Literal["biasfield"],
+    "__STYXTYPE__": typing.Literal["biasfield"],
     "subject": str,
     "tmpdir": typing.NotRequired[str | None],
     "no_cleanup": bool,

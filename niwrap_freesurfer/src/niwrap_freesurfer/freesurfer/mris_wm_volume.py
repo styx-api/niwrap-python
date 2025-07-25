@@ -14,7 +14,7 @@ MRIS_WM_VOLUME_METADATA = Metadata(
 
 
 MrisWmVolumeParameters = typing.TypedDict('MrisWmVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_wm_volume"],
+    "__STYXTYPE__": typing.Literal["mris_wm_volume"],
     "subject": str,
     "hemi": str,
     "subjects_dir": typing.NotRequired[str | None],

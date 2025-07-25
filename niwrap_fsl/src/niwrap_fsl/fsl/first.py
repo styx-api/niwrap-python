@@ -14,7 +14,7 @@ FIRST_METADATA = Metadata(
 
 
 FirstParameters = typing.TypedDict('FirstParameters', {
-    "__STYX_TYPE__": typing.Literal["first"],
+    "__STYXTYPE__": typing.Literal["first"],
     "input_file": InputPathType,
     "output_name": str,
     "input_model": InputPathType,

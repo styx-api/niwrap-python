@@ -14,7 +14,7 @@ V__UPDATE_AFNI_BINARIES_METADATA = Metadata(
 
 
 VUpdateAfniBinariesParameters = typing.TypedDict('VUpdateAfniBinariesParameters', {
-    "__STYX_TYPE__": typing.Literal["@update.afni.binaries"],
+    "__STYXTYPE__": typing.Literal["@update.afni.binaries"],
     "defaults_flag": bool,
     "help_flag": bool,
     "help_sys_progs_flag": bool,

@@ -14,7 +14,7 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 
 
 AntsuseLandmarkImagesToGetAffineTransformParameters = typing.TypedDict('AntsuseLandmarkImagesToGetAffineTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["ANTSUseLandmarkImagesToGetAffineTransform"],
+    "__STYXTYPE__": typing.Literal["ANTSUseLandmarkImagesToGetAffineTransform"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "transform_type": typing.Literal["rigid", "affine"],

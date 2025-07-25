@@ -14,7 +14,7 @@ DMRI_STATS_AC_METADATA = Metadata(
 
 
 DmriStatsAcParameters = typing.TypedDict('DmriStatsAcParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_stats_ac"],
+    "__STYXTYPE__": typing.Literal["dmri_stats_ac"],
     "anatomicuts_folder": str,
     "num_clusters": int,
     "correspondence_file": str,

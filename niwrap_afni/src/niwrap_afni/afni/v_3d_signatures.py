@@ -14,7 +14,7 @@ V_3D_SIGNATURES_METADATA = Metadata(
 
 
 V3dSignaturesParameters = typing.TypedDict('V3dSignaturesParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSignatures"],
+    "__STYXTYPE__": typing.Literal["3dSignatures"],
     "infile": InputPathType,
     "outfile": str,
     "segmentation": bool,

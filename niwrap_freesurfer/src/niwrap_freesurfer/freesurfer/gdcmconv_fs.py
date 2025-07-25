@@ -14,7 +14,7 @@ GDCMCONV_FS_METADATA = Metadata(
 
 
 GdcmconvFsParameters = typing.TypedDict('GdcmconvFsParameters', {
-    "__STYX_TYPE__": typing.Literal["gdcmconv.fs"],
+    "__STYXTYPE__": typing.Literal["gdcmconv.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "explicit_flag": bool,

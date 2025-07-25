@@ -14,7 +14,7 @@ ADJUNCT_COMBINE_STR_PY_METADATA = Metadata(
 
 
 AdjunctCombineStrPyParameters = typing.TypedDict('AdjunctCombineStrPyParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_combine_str.py"],
+    "__STYXTYPE__": typing.Literal["adjunct_combine_str.py"],
     "output_file": str,
     "upper_index": float,
     "string_selectors": list[str],

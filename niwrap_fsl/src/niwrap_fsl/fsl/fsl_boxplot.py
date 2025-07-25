@@ -14,7 +14,7 @@ FSL_BOXPLOT_METADATA = Metadata(
 
 
 FslBoxplotParameters = typing.TypedDict('FslBoxplotParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_boxplot"],
+    "__STYXTYPE__": typing.Literal["fsl_boxplot"],
     "input_files": list[InputPathType],
     "output_image": str,
     "help_flag": bool,

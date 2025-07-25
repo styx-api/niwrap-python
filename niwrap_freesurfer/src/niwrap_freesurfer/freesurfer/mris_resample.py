@@ -14,7 +14,7 @@ MRIS_RESAMPLE_METADATA = Metadata(
 
 
 MrisResampleParameters = typing.TypedDict('MrisResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_resample"],
+    "__STYXTYPE__": typing.Literal["mris_resample"],
     "atlas_reg": InputPathType,
     "subject_reg": InputPathType,
     "subject_surf": InputPathType,

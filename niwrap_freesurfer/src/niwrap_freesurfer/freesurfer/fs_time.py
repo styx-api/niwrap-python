@@ -14,7 +14,7 @@ FS_TIME_METADATA = Metadata(
 
 
 FsTimeParameters = typing.TypedDict('FsTimeParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_time"],
+    "__STYXTYPE__": typing.Literal["fs_time"],
     "output_file": typing.NotRequired[str | None],
     "key": typing.NotRequired[str | None],
     "load_avg": bool,

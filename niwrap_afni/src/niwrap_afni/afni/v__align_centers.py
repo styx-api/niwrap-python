@@ -14,7 +14,7 @@ V__ALIGN_CENTERS_METADATA = Metadata(
 
 
 VAlignCentersParameters = typing.TypedDict('VAlignCentersParameters', {
-    "__STYX_TYPE__": typing.Literal["@Align_Centers"],
+    "__STYXTYPE__": typing.Literal["@Align_Centers"],
     "base": InputPathType,
     "dset": InputPathType,
     "children": typing.NotRequired[list[InputPathType] | None],

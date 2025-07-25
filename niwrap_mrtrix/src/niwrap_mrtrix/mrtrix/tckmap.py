@@ -14,26 +14,26 @@ TCKMAP_METADATA = Metadata(
 
 
 TckmapVariousStringParameters = typing.TypedDict('TckmapVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 TckmapVariousFileParameters = typing.TypedDict('TckmapVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckmapConfigParameters = typing.TypedDict('TckmapConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckmapParameters = typing.TypedDict('TckmapParameters', {
-    "__STYX_TYPE__": typing.Literal["tckmap"],
+    "__STYXTYPE__": typing.Literal["tckmap"],
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "datatype": typing.NotRequired[str | None],

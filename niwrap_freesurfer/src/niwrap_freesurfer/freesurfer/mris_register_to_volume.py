@@ -14,7 +14,7 @@ MRIS_REGISTER_TO_VOLUME_METADATA = Metadata(
 
 
 MrisRegisterToVolumeParameters = typing.TypedDict('MrisRegisterToVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_register_to_volume"],
+    "__STYXTYPE__": typing.Literal["mris_register_to_volume"],
     "surface": str,
     "pial": str,
     "pial_only": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ CREATE_DTICOHORT_METADATA = Metadata(
 
 
 CreateDticohortParameters = typing.TypedDict('CreateDticohortParameters', {
-    "__STYX_TYPE__": typing.Literal["CreateDTICohort"],
+    "__STYXTYPE__": typing.Literal["CreateDTICohort"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "dti_atlas": InputPathType,
     "label_mask_image": typing.NotRequired[str | None],

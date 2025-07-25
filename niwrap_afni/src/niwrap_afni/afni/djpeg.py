@@ -14,7 +14,7 @@ DJPEG_METADATA = Metadata(
 
 
 DjpegParameters = typing.TypedDict('DjpegParameters', {
-    "__STYX_TYPE__": typing.Literal["djpeg"],
+    "__STYXTYPE__": typing.Literal["djpeg"],
     "input_file": InputPathType,
     "output_file": str,
     "gray": bool,

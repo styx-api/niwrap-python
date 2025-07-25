@@ -14,7 +14,7 @@ IS_LTA_METADATA = Metadata(
 
 
 IsLtaParameters = typing.TypedDict('IsLtaParameters', {
-    "__STYX_TYPE__": typing.Literal["IsLTA"],
+    "__STYXTYPE__": typing.Literal["IsLTA"],
     "candidate_file": InputPathType,
     "outfile": str,
 })

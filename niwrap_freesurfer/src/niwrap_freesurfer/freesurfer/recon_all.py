@@ -14,7 +14,7 @@ RECON_ALL_METADATA = Metadata(
 
 
 ReconAllParameters = typing.TypedDict('ReconAllParameters', {
-    "__STYX_TYPE__": typing.Literal["recon-all"],
+    "__STYXTYPE__": typing.Literal["recon-all"],
     "subjid": str,
     "all_flag": bool,
     "autorecon_all_flag": bool,

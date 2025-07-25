@@ -14,7 +14,7 @@ FAT_PROC_ALIGN_ANAT_PAIR_METADATA = Metadata(
 
 
 FatProcAlignAnatPairParameters = typing.TypedDict('FatProcAlignAnatPairParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_align_anat_pair"],
+    "__STYXTYPE__": typing.Literal["fat_proc_align_anat_pair"],
     "input_t1w": InputPathType,
     "input_t2w": InputPathType,
     "output_prefix": str,

@@ -14,7 +14,7 @@ APPLYTOPUP_METADATA = Metadata(
 
 
 ApplytopupParameters = typing.TypedDict('ApplytopupParameters', {
-    "__STYX_TYPE__": typing.Literal["applytopup"],
+    "__STYXTYPE__": typing.Literal["applytopup"],
     "imain": list[InputPathType],
     "datain": InputPathType,
     "inindex": list[str],

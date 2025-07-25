@@ -14,7 +14,7 @@ MSM_METADATA = Metadata(
 
 
 MsmParameters = typing.TypedDict('MsmParameters', {
-    "__STYX_TYPE__": typing.Literal["msm"],
+    "__STYXTYPE__": typing.Literal["msm"],
     "inmesh": InputPathType,
     "out": str,
     "refmesh": typing.NotRequired[InputPathType | None],

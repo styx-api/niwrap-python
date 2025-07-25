@@ -14,21 +14,21 @@ METRIC_TFCE_METADATA = Metadata(
 
 
 MetricTfcePresmoothParameters = typing.TypedDict('MetricTfcePresmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["presmooth"],
+    "__STYXTYPE__": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricTfceParametersParameters = typing.TypedDict('MetricTfceParametersParameters', {
-    "__STYX_TYPE__": typing.Literal["parameters"],
+    "__STYXTYPE__": typing.Literal["parameters"],
     "e": float,
     "h": float,
 })
 
 
 MetricTfceParameters = typing.TypedDict('MetricTfceParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-tfce"],
+    "__STYXTYPE__": typing.Literal["metric-tfce"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,

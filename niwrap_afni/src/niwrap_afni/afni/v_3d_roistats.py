@@ -14,7 +14,7 @@ V_3D_ROISTATS_METADATA = Metadata(
 
 
 V3dRoistatsParameters = typing.TypedDict('V3dRoistatsParameters', {
-    "__STYX_TYPE__": typing.Literal["3dROIstats"],
+    "__STYXTYPE__": typing.Literal["3dROIstats"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "debug": bool,

@@ -14,7 +14,7 @@ PCTSURFCON_METADATA = Metadata(
 
 
 PctsurfconParameters = typing.TypedDict('PctsurfconParameters', {
-    "__STYX_TYPE__": typing.Literal["pctsurfcon"],
+    "__STYXTYPE__": typing.Literal["pctsurfcon"],
     "subject": str,
     "fsvol": typing.NotRequired[str | None],
     "outbase": typing.NotRequired[str | None],

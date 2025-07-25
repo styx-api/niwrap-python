@@ -14,7 +14,7 @@ MRI_PROBEDICOM_METADATA = Metadata(
 
 
 MriProbedicomParameters = typing.TypedDict('MriProbedicomParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_probedicom"],
+    "__STYXTYPE__": typing.Literal["mri_probedicom"],
     "dicom_file": InputPathType,
     "option1": typing.NotRequired[str | None],
     "option2": typing.NotRequired[str | None],

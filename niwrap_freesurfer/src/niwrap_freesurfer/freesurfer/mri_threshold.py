@@ -14,7 +14,7 @@ MRI_THRESHOLD_METADATA = Metadata(
 
 
 MriThresholdParameters = typing.TypedDict('MriThresholdParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_threshold"],
+    "__STYXTYPE__": typing.Literal["mri_threshold"],
     "input_vol": InputPathType,
     "threshold": float,
     "output_vol": str,

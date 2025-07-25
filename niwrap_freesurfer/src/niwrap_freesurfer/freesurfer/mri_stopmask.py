@@ -14,7 +14,7 @@ MRI_STOPMASK_METADATA = Metadata(
 
 
 MriStopmaskParameters = typing.TypedDict('MriStopmaskParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_stopmask"],
+    "__STYXTYPE__": typing.Literal["mri_stopmask"],
     "output_mask": str,
     "filled": list[InputPathType],
     "aseg_presurf": InputPathType,

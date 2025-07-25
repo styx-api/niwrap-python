@@ -14,21 +14,21 @@ METRIC_RESAMPLE_METADATA = Metadata(
 
 
 MetricResampleAreaSurfsParameters = typing.TypedDict('MetricResampleAreaSurfsParameters', {
-    "__STYX_TYPE__": typing.Literal["area_surfs"],
+    "__STYXTYPE__": typing.Literal["area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 MetricResampleAreaMetricsParameters = typing.TypedDict('MetricResampleAreaMetricsParameters', {
-    "__STYX_TYPE__": typing.Literal["area_metrics"],
+    "__STYXTYPE__": typing.Literal["area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 MetricResampleParameters = typing.TypedDict('MetricResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-resample"],
+    "__STYXTYPE__": typing.Literal["metric-resample"],
     "metric_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,

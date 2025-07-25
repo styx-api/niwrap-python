@@ -14,7 +14,7 @@ DTIFIT_METADATA = Metadata(
 
 
 DtifitParameters = typing.TypedDict('DtifitParameters', {
-    "__STYX_TYPE__": typing.Literal["dtifit"],
+    "__STYXTYPE__": typing.Literal["dtifit"],
     "data_file": InputPathType,
     "output_basename": str,
     "mask_file": InputPathType,

@@ -14,7 +14,7 @@ TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA = Metadata(
 
 
 TestOrientationPlanesFromParcellationParameters = typing.TypedDict('TestOrientationPlanesFromParcellationParameters', {
-    "__STYX_TYPE__": typing.Literal["testOrientationPlanesFromParcellation"],
+    "__STYXTYPE__": typing.Literal["testOrientationPlanesFromParcellation"],
     "input_file": InputPathType,
     "output_file": str,
     "bb_flag": bool,

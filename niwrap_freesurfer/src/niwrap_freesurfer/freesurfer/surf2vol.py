@@ -14,7 +14,7 @@ SURF2VOL_METADATA = Metadata(
 
 
 Surf2volParameters = typing.TypedDict('Surf2volParameters', {
-    "__STYX_TYPE__": typing.Literal["surf2vol"],
+    "__STYXTYPE__": typing.Literal["surf2vol"],
     "fixed_surface": InputPathType,
     "moving_surface": InputPathType,
     "fixed_mri": InputPathType,

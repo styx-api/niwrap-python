@@ -14,20 +14,20 @@ CIFTI_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 
 
 CiftiAverageRoiCorrelationCiftiRoiParameters = typing.TypedDict('CiftiAverageRoiCorrelationCiftiRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti_roi"],
+    "__STYXTYPE__": typing.Literal["cifti_roi"],
     "roi_cifti": InputPathType,
     "opt_in_memory": bool,
 })
 
 
 CiftiAverageRoiCorrelationCiftiParameters = typing.TypedDict('CiftiAverageRoiCorrelationCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiAverageRoiCorrelationParameters = typing.TypedDict('CiftiAverageRoiCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-average-roi-correlation"],
+    "__STYXTYPE__": typing.Literal["cifti-average-roi-correlation"],
     "cifti_out": str,
     "cifti_roi": typing.NotRequired[CiftiAverageRoiCorrelationCiftiRoiParameters | None],
     "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],

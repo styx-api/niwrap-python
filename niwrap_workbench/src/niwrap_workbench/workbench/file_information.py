@@ -14,13 +14,13 @@ FILE_INFORMATION_METADATA = Metadata(
 
 
 FileInformationOnlyMetadataParameters = typing.TypedDict('FileInformationOnlyMetadataParameters', {
-    "__STYX_TYPE__": typing.Literal["only_metadata"],
+    "__STYXTYPE__": typing.Literal["only_metadata"],
     "opt_key_key": typing.NotRequired[str | None],
 })
 
 
 FileInformationParameters = typing.TypedDict('FileInformationParameters', {
-    "__STYX_TYPE__": typing.Literal["file-information"],
+    "__STYXTYPE__": typing.Literal["file-information"],
     "data_file": str,
     "opt_no_map_info": bool,
     "opt_only_step_interval": bool,

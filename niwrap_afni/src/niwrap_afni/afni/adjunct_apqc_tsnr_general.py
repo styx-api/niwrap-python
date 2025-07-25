@@ -14,7 +14,7 @@ ADJUNCT_APQC_TSNR_GENERAL_METADATA = Metadata(
 
 
 AdjunctApqcTsnrGeneralParameters = typing.TypedDict('AdjunctApqcTsnrGeneralParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_apqc_tsnr_general"],
+    "__STYXTYPE__": typing.Literal["adjunct_apqc_tsnr_general"],
     "montgap": typing.NotRequired[str | None],
     "montcolor": typing.NotRequired[str | None],
     "montx": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ MORPH_KERNEL_METADATA = Metadata(
 
 
 MorphKernelParameters = typing.TypedDict('MorphKernelParameters', {
-    "__STYX_TYPE__": typing.Literal["morph_kernel"],
+    "__STYXTYPE__": typing.Literal["morph_kernel"],
     "cube_side_length": float,
     "sphere_radius": float,
 })

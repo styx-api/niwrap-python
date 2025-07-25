@@ -14,7 +14,7 @@ MRI_LOG_LIKELIHOOD_METADATA = Metadata(
 
 
 MriLogLikelihoodParameters = typing.TypedDict('MriLogLikelihoodParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_log_likelihood"],
+    "__STYXTYPE__": typing.Literal["mri_log_likelihood"],
     "input_brain_images": list[InputPathType],
     "atlas_file": InputPathType,
     "transform_file": InputPathType,

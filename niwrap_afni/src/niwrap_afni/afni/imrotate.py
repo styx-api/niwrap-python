@@ -14,7 +14,7 @@ IMROTATE_METADATA = Metadata(
 
 
 ImrotateParameters = typing.TypedDict('ImrotateParameters', {
-    "__STYX_TYPE__": typing.Literal["imrotate"],
+    "__STYXTYPE__": typing.Literal["imrotate"],
     "linear_interpolation": bool,
     "fourier_interpolation": bool,
     "dx": float,

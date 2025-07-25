@@ -14,14 +14,14 @@ TCK2FIXEL_METADATA = Metadata(
 
 
 Tck2fixelConfigParameters = typing.TypedDict('Tck2fixelConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Tck2fixelParameters = typing.TypedDict('Tck2fixelParameters', {
-    "__STYX_TYPE__": typing.Literal["tck2fixel"],
+    "__STYXTYPE__": typing.Literal["tck2fixel"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,

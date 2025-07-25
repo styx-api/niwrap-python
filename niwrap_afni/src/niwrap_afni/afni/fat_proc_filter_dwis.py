@@ -14,7 +14,7 @@ FAT_PROC_FILTER_DWIS_METADATA = Metadata(
 
 
 FatProcFilterDwisParameters = typing.TypedDict('FatProcFilterDwisParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_filter_dwis"],
+    "__STYXTYPE__": typing.Literal["fat_proc_filter_dwis"],
     "input_dwi": InputPathType,
     "input_gradient": InputPathType,
     "select_string": str,

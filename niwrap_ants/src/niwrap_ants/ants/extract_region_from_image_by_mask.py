@@ -14,7 +14,7 @@ EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA = Metadata(
 
 
 ExtractRegionFromImageByMaskParameters = typing.TypedDict('ExtractRegionFromImageByMaskParameters', {
-    "__STYX_TYPE__": typing.Literal["ExtractRegionFromImageByMask"],
+    "__STYXTYPE__": typing.Literal["ExtractRegionFromImageByMask"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": InputPathType,

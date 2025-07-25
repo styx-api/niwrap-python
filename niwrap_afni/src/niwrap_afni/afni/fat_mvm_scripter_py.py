@@ -14,7 +14,7 @@ FAT_MVM_SCRIPTER_PY_METADATA = Metadata(
 
 
 FatMvmScripterPyParameters = typing.TypedDict('FatMvmScripterPyParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_mvm_scripter.py"],
+    "__STYXTYPE__": typing.Literal["fat_mvm_scripter.py"],
     "prefix": str,
     "table": InputPathType,
     "log": InputPathType,

@@ -14,7 +14,7 @@ V_3D_ZCAT_METADATA = Metadata(
 
 
 V3dZcatParameters = typing.TypedDict('V3dZcatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dZcat"],
+    "__STYXTYPE__": typing.Literal["3dZcat"],
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "fscale": bool,

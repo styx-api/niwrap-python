@@ -14,7 +14,7 @@ FSL_SUB_MGH_METADATA = Metadata(
 
 
 FslSubMghParameters = typing.TypedDict('FslSubMghParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_sub_mgh"],
+    "__STYXTYPE__": typing.Literal["fsl_sub_mgh"],
     "estimated_time": typing.NotRequired[int | None],
     "queue_name": typing.NotRequired[str | None],
     "architecture": typing.NotRequired[str | None],

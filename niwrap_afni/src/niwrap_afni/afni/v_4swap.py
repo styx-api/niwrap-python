@@ -14,7 +14,7 @@ V_4SWAP_METADATA = Metadata(
 
 
 V4swapParameters = typing.TypedDict('V4swapParameters', {
-    "__STYX_TYPE__": typing.Literal["4swap"],
+    "__STYXTYPE__": typing.Literal["4swap"],
     "files": list[InputPathType],
     "quiet": bool,
 })

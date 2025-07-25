@@ -14,20 +14,20 @@ VOLUME_DILATE_METADATA = Metadata(
 
 
 VolumeDilatePresmoothParameters = typing.TypedDict('VolumeDilatePresmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["presmooth"],
+    "__STYXTYPE__": typing.Literal["presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeDilateGradExtrapolateParameters = typing.TypedDict('VolumeDilateGradExtrapolateParameters', {
-    "__STYX_TYPE__": typing.Literal["grad_extrapolate"],
+    "__STYXTYPE__": typing.Literal["grad_extrapolate"],
     "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
 })
 
 
 VolumeDilateParameters = typing.TypedDict('VolumeDilateParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-dilate"],
+    "__STYXTYPE__": typing.Literal["volume-dilate"],
     "volume": InputPathType,
     "distance": float,
     "method": str,

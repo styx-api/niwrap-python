@@ -14,7 +14,7 @@ PVMFIT_METADATA = Metadata(
 
 
 PvmfitParameters = typing.TypedDict('PvmfitParameters', {
-    "__STYX_TYPE__": typing.Literal["pvmfit"],
+    "__STYXTYPE__": typing.Literal["pvmfit"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvec_file": InputPathType,

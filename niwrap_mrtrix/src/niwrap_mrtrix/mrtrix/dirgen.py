@@ -14,14 +14,14 @@ DIRGEN_METADATA = Metadata(
 
 
 DirgenConfigParameters = typing.TypedDict('DirgenConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirgenParameters = typing.TypedDict('DirgenParameters', {
-    "__STYX_TYPE__": typing.Literal["dirgen"],
+    "__STYXTYPE__": typing.Literal["dirgen"],
     "power": typing.NotRequired[int | None],
     "niter": typing.NotRequired[int | None],
     "restarts": typing.NotRequired[int | None],

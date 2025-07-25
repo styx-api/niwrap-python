@@ -14,7 +14,7 @@ UBER_SKEL_METADATA = Metadata(
 
 
 UberSkelParameters = typing.TypedDict('UberSkelParameters', {
-    "__STYX_TYPE__": typing.Literal["uber_skel"],
+    "__STYXTYPE__": typing.Literal["uber_skel"],
     "qt_options": typing.NotRequired[str | None],
     "no_gui_flag": bool,
     "print_script": bool,

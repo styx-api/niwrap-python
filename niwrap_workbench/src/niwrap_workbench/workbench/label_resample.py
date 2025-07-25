@@ -14,21 +14,21 @@ LABEL_RESAMPLE_METADATA = Metadata(
 
 
 LabelResampleAreaSurfsParameters = typing.TypedDict('LabelResampleAreaSurfsParameters', {
-    "__STYX_TYPE__": typing.Literal["area_surfs"],
+    "__STYXTYPE__": typing.Literal["area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 LabelResampleAreaMetricsParameters = typing.TypedDict('LabelResampleAreaMetricsParameters', {
-    "__STYX_TYPE__": typing.Literal["area_metrics"],
+    "__STYXTYPE__": typing.Literal["area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 LabelResampleParameters = typing.TypedDict('LabelResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["label-resample"],
+    "__STYXTYPE__": typing.Literal["label-resample"],
     "label_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,

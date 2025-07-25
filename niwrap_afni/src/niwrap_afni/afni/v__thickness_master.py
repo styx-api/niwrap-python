@@ -14,7 +14,7 @@ V__THICKNESS_MASTER_METADATA = Metadata(
 
 
 VThicknessMasterParameters = typing.TypedDict('VThicknessMasterParameters', {
-    "__STYX_TYPE__": typing.Literal["@thickness_master"],
+    "__STYXTYPE__": typing.Literal["@thickness_master"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],

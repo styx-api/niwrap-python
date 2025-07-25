@@ -14,7 +14,7 @@ V_3D_TPROJECT_METADATA = Metadata(
 
 
 V3dTprojectParameters = typing.TypedDict('V3dTprojectParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTproject"],
+    "__STYXTYPE__": typing.Literal["3dTproject"],
     "TR": typing.NotRequired[float | None],
     "automask": bool,
     "bandpass": typing.NotRequired[list[float] | None],

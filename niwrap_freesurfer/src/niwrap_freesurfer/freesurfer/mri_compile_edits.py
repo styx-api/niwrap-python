@@ -14,7 +14,7 @@ MRI_COMPILE_EDITS_METADATA = Metadata(
 
 
 MriCompileEditsParameters = typing.TypedDict('MriCompileEditsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compile_edits"],
+    "__STYXTYPE__": typing.Literal["mri_compile_edits"],
     "subject_name": str,
     "output_volume": str,
 })

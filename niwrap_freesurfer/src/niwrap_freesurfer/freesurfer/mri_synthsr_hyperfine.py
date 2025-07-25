@@ -14,7 +14,7 @@ MRI_SYNTHSR_HYPERFINE_METADATA = Metadata(
 
 
 MriSynthsrHyperfineParameters = typing.TypedDict('MriSynthsrHyperfineParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_synthsr_hyperfine"],
+    "__STYXTYPE__": typing.Literal["mri_synthsr_hyperfine"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "output": str,

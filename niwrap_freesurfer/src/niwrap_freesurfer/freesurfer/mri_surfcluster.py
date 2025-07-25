@@ -14,7 +14,7 @@ MRI_SURFCLUSTER_METADATA = Metadata(
 
 
 MriSurfclusterParameters = typing.TypedDict('MriSurfclusterParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_surfcluster"],
+    "__STYXTYPE__": typing.Literal["mri_surfcluster"],
     "infile": InputPathType,
     "thmin": typing.NotRequired[float | None],
     "sign": typing.NotRequired[str | None],

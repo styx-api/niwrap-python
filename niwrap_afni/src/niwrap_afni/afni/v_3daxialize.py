@@ -14,7 +14,7 @@ V_3DAXIALIZE_METADATA = Metadata(
 
 
 V3daxializeParameters = typing.TypedDict('V3daxializeParameters', {
-    "__STYX_TYPE__": typing.Literal["3daxialize"],
+    "__STYXTYPE__": typing.Literal["3daxialize"],
     "infile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verb": bool,

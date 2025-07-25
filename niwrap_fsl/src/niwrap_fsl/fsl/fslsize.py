@@ -14,7 +14,7 @@ FSLSIZE_METADATA = Metadata(
 
 
 FslsizeParameters = typing.TypedDict('FslsizeParameters', {
-    "__STYX_TYPE__": typing.Literal["fslsize"],
+    "__STYXTYPE__": typing.Literal["fslsize"],
     "input_file": InputPathType,
     "short_format_flag": bool,
 })

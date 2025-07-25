@@ -14,7 +14,7 @@ V_3D_POLYFIT_METADATA = Metadata(
 
 
 V3dPolyfitParameters = typing.TypedDict('V3dPolyfitParameters', {
-    "__STYX_TYPE__": typing.Literal["3dPolyfit"],
+    "__STYXTYPE__": typing.Literal["3dPolyfit"],
     "input_dataset": InputPathType,
     "poly_order": typing.NotRequired[int | None],
     "blur": typing.NotRequired[float | None],

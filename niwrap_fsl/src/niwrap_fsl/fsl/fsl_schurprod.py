@@ -14,7 +14,7 @@ FSL_SCHURPROD_METADATA = Metadata(
 
 
 FslSchurprodParameters = typing.TypedDict('FslSchurprodParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_schurprod"],
+    "__STYXTYPE__": typing.Literal["fsl_schurprod"],
     "input_file": InputPathType,
     "design_file": InputPathType,
     "output_file": str,

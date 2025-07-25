@@ -14,35 +14,35 @@ CIFTI_PALETTE_METADATA = Metadata(
 
 
 CiftiPalettePosPercentParameters = typing.TypedDict('CiftiPalettePosPercentParameters', {
-    "__STYX_TYPE__": typing.Literal["pos_percent"],
+    "__STYXTYPE__": typing.Literal["pos_percent"],
     "pos_min__": float,
     "pos_max__": float,
 })
 
 
 CiftiPaletteNegPercentParameters = typing.TypedDict('CiftiPaletteNegPercentParameters', {
-    "__STYX_TYPE__": typing.Literal["neg_percent"],
+    "__STYXTYPE__": typing.Literal["neg_percent"],
     "neg_min__": float,
     "neg_max__": float,
 })
 
 
 CiftiPalettePosUserParameters = typing.TypedDict('CiftiPalettePosUserParameters', {
-    "__STYX_TYPE__": typing.Literal["pos_user"],
+    "__STYXTYPE__": typing.Literal["pos_user"],
     "pos_min_user": float,
     "pos_max_user": float,
 })
 
 
 CiftiPaletteNegUserParameters = typing.TypedDict('CiftiPaletteNegUserParameters', {
-    "__STYX_TYPE__": typing.Literal["neg_user"],
+    "__STYXTYPE__": typing.Literal["neg_user"],
     "neg_min_user": float,
     "neg_max_user": float,
 })
 
 
 CiftiPaletteThresholdingParameters = typing.TypedDict('CiftiPaletteThresholdingParameters', {
-    "__STYX_TYPE__": typing.Literal["thresholding"],
+    "__STYXTYPE__": typing.Literal["thresholding"],
     "type": str,
     "test": str,
     "min": float,
@@ -51,7 +51,7 @@ CiftiPaletteThresholdingParameters = typing.TypedDict('CiftiPaletteThresholdingP
 
 
 CiftiPaletteParameters = typing.TypedDict('CiftiPaletteParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-palette"],
+    "__STYXTYPE__": typing.Literal["cifti-palette"],
     "cifti_in": InputPathType,
     "mode": str,
     "cifti_out": str,

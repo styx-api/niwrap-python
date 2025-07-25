@@ -14,7 +14,7 @@ V_3D_ANOVA_METADATA = Metadata(
 
 
 V3dAnovaParameters = typing.TypedDict('V3dAnovaParameters', {
-    "__STYX_TYPE__": typing.Literal["3dANOVA"],
+    "__STYXTYPE__": typing.Literal["3dANOVA"],
     "levels": int,
     "datasets": list[str],
     "voxel": typing.NotRequired[int | None],

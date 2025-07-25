@@ -14,7 +14,7 @@ ESTNOISE_METADATA = Metadata(
 
 
 EstnoiseParameters = typing.TypedDict('EstnoiseParameters', {
-    "__STYX_TYPE__": typing.Literal["estnoise"],
+    "__STYXTYPE__": typing.Literal["estnoise"],
     "input_4d_data": InputPathType,
     "spatial_sigma": typing.NotRequired[float | None],
     "temp_hp_sigma": typing.NotRequired[float | None],

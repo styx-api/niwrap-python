@@ -14,7 +14,7 @@ V_1D_DW_GRAD_O_MAT___METADATA = Metadata(
 
 
 V1dDwGradOMatParameters = typing.TypedDict('V1dDwGradOMatParameters', {
-    "__STYX_TYPE__": typing.Literal["1dDW_Grad_o_Mat++"],
+    "__STYXTYPE__": typing.Literal["1dDW_Grad_o_Mat++"],
     "in_row_vec": InputPathType,
     "in_col_vec": InputPathType,
     "in_col_matA": InputPathType,

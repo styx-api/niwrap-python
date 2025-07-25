@@ -14,7 +14,7 @@ CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA = Metadata(
 
 
 CiftiCreateDenseFromTemplateSeriesParameters = typing.TypedDict('CiftiCreateDenseFromTemplateSeriesParameters', {
-    "__STYX_TYPE__": typing.Literal["series"],
+    "__STYXTYPE__": typing.Literal["series"],
     "step": float,
     "start": float,
     "opt_unit_unit": typing.NotRequired[str | None],
@@ -22,34 +22,34 @@ CiftiCreateDenseFromTemplateSeriesParameters = typing.TypedDict('CiftiCreateDens
 
 
 CiftiCreateDenseFromTemplateVolumeAllParameters = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeAllParameters', {
-    "__STYX_TYPE__": typing.Literal["volume_all"],
+    "__STYXTYPE__": typing.Literal["volume_all"],
     "volume_in": InputPathType,
     "opt_from_cropped": bool,
 })
 
 
 CiftiCreateDenseFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiCreateDenseFromTemplateMetricParameters = typing.TypedDict('CiftiCreateDenseFromTemplateMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["metric"],
+    "__STYXTYPE__": typing.Literal["metric"],
     "structure": str,
     "metric_in": InputPathType,
 })
 
 
 CiftiCreateDenseFromTemplateLabelParameters = typing.TypedDict('CiftiCreateDenseFromTemplateLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["label"],
+    "__STYXTYPE__": typing.Literal["label"],
     "structure": str,
     "label_in": InputPathType,
 })
 
 
 CiftiCreateDenseFromTemplateVolumeParameters = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["volume"],
+    "__STYXTYPE__": typing.Literal["volume"],
     "structure": str,
     "volume_in": InputPathType,
     "opt_from_cropped": bool,
@@ -57,7 +57,7 @@ CiftiCreateDenseFromTemplateVolumeParameters = typing.TypedDict('CiftiCreateDens
 
 
 CiftiCreateDenseFromTemplateParameters = typing.TypedDict('CiftiCreateDenseFromTemplateParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-create-dense-from-template"],
+    "__STYXTYPE__": typing.Literal["cifti-create-dense-from-template"],
     "template_cifti": InputPathType,
     "cifti_out": str,
     "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParameters | None],

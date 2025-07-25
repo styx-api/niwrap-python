@@ -14,7 +14,7 @@ V_3D_ZREGRID_METADATA = Metadata(
 
 
 V3dZregridParameters = typing.TypedDict('V3dZregridParameters', {
-    "__STYX_TYPE__": typing.Literal["3dZregrid"],
+    "__STYXTYPE__": typing.Literal["3dZregrid"],
     "z_thickness": typing.NotRequired[float | None],
     "slice_count": typing.NotRequired[float | None],
     "z_size": typing.NotRequired[float | None],

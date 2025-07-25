@@ -14,7 +14,7 @@ FIRDESIGN_METADATA = Metadata(
 
 
 FirdesignParameters = typing.TypedDict('FirdesignParameters', {
-    "__STYX_TYPE__": typing.Literal["FIRdesign"],
+    "__STYXTYPE__": typing.Literal["FIRdesign"],
     "fbot": float,
     "ftop": float,
     "ntap": float,

@@ -14,7 +14,7 @@ FLIRT_METADATA = Metadata(
 
 
 FlirtParameters = typing.TypedDict('FlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["flirt"],
+    "__STYXTYPE__": typing.Literal["flirt"],
     "in_file": InputPathType,
     "reference": InputPathType,
     "out_file": str,

@@ -14,7 +14,7 @@ FAT_MAT2D_PLOT_PY_METADATA = Metadata(
 
 
 FatMat2dPlotPyParameters = typing.TypedDict('FatMat2dPlotPyParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_mat2d_plot.py"],
+    "__STYXTYPE__": typing.Literal["fat_mat2d_plot.py"],
     "input_file": InputPathType,
     "matrices": typing.NotRequired[list[str] | None],
     "prefix": typing.NotRequired[str | None],

@@ -14,20 +14,20 @@ CIFTI_AVERAGE_DENSE_ROI_METADATA = Metadata(
 
 
 CiftiAverageDenseRoiCiftiRoiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti_roi"],
+    "__STYXTYPE__": typing.Literal["cifti_roi"],
     "roi_cifti": InputPathType,
     "opt_in_memory": bool,
 })
 
 
 CiftiAverageDenseRoiCiftiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti"],
+    "__STYXTYPE__": typing.Literal["cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiAverageDenseRoiParameters = typing.TypedDict('CiftiAverageDenseRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-average-dense-roi"],
+    "__STYXTYPE__": typing.Literal["cifti-average-dense-roi"],
     "cifti_out": str,
     "cifti_roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParameters | None],
     "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],

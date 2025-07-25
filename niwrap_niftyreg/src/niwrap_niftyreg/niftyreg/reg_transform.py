@@ -14,7 +14,7 @@ REG_TRANSFORM_METADATA = Metadata(
 
 
 RegTransformParameters = typing.TypedDict('RegTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["reg_transform"],
+    "__STYXTYPE__": typing.Literal["reg_transform"],
     "reference_image": InputPathType,
     "cpp2def_input": typing.NotRequired[InputPathType | None],
     "cpp2def_output": typing.NotRequired[str | None],

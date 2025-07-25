@@ -14,7 +14,7 @@ CONVERT_XFM_METADATA = Metadata(
 
 
 ConvertXfmParameters = typing.TypedDict('ConvertXfmParameters', {
-    "__STYX_TYPE__": typing.Literal["convert_xfm"],
+    "__STYXTYPE__": typing.Literal["convert_xfm"],
     "out_file": typing.NotRequired[str | None],
     "invert_xfm": bool,
     "concat_xfm": typing.NotRequired[InputPathType | None],

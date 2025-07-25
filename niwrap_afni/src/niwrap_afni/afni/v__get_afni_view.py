@@ -14,7 +14,7 @@ V__GET_AFNI_VIEW_METADATA = Metadata(
 
 
 VGetAfniViewParameters = typing.TypedDict('VGetAfniViewParameters', {
-    "__STYX_TYPE__": typing.Literal["@GetAfniView"],
+    "__STYXTYPE__": typing.Literal["@GetAfniView"],
     "dataset_name": str,
 })
 

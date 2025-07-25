@@ -14,7 +14,7 @@ V_3DMASK_TOOL_METADATA = Metadata(
 
 
 V3dmaskToolParameters = typing.TypedDict('V3dmaskToolParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmask_tool"],
+    "__STYXTYPE__": typing.Literal["3dmask_tool"],
     "count": bool,
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "dilate_inputs": typing.NotRequired[str | None],

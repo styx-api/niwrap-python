@@ -14,7 +14,7 @@ MRI_CA_TRAIN_METADATA = Metadata(
 
 
 MriCaTrainParameters = typing.TypedDict('MriCaTrainParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_ca_train"],
+    "__STYXTYPE__": typing.Literal["mri_ca_train"],
     "subjects": list[str],
     "output_gca": str,
     "segmentation": str,

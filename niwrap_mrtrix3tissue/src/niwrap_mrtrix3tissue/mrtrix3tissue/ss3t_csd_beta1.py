@@ -14,21 +14,21 @@ SS3T_CSD_BETA1_METADATA = Metadata(
 
 
 Ss3tCsdBeta1ConfigParameters = typing.TypedDict('Ss3tCsdBeta1ConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Ss3tCsdBeta1ResponseOdfParameters = typing.TypedDict('Ss3tCsdBeta1ResponseOdfParameters', {
-    "__STYX_TYPE__": typing.Literal["response_odf"],
+    "__STYXTYPE__": typing.Literal["response_odf"],
     "response": InputPathType,
     "odf": str,
 })
 
 
 Ss3tCsdBeta1Parameters = typing.TypedDict('Ss3tCsdBeta1Parameters', {
-    "__STYX_TYPE__": typing.Literal["ss3t_csd_beta1"],
+    "__STYXTYPE__": typing.Literal["ss3t_csd_beta1"],
     "mask": typing.NotRequired[InputPathType | None],
     "bzero_pct": typing.NotRequired[float | None],
     "niter": typing.NotRequired[int | None],

@@ -14,7 +14,7 @@ MRI_SCLIMBIC_SEG_METADATA = Metadata(
 
 
 MriSclimbicSegParameters = typing.TypedDict('MriSclimbicSegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_sclimbic_seg"],
+    "__STYXTYPE__": typing.Literal["mri_sclimbic_seg"],
     "input_file": str,
     "output_file": str,
     "subjects": typing.NotRequired[list[str] | None],

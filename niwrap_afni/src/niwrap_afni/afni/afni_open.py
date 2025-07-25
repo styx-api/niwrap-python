@@ -14,7 +14,7 @@ AFNI_OPEN_METADATA = Metadata(
 
 
 AfniOpenParameters = typing.TypedDict('AfniOpenParameters', {
-    "__STYX_TYPE__": typing.Literal["afni_open"],
+    "__STYXTYPE__": typing.Literal["afni_open"],
     "files": list[InputPathType],
     "method": typing.NotRequired[str | None],
     "editor": bool,

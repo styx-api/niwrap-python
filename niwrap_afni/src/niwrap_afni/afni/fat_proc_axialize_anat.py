@@ -14,7 +14,7 @@ FAT_PROC_AXIALIZE_ANAT_METADATA = Metadata(
 
 
 FatProcAxializeAnatParameters = typing.TypedDict('FatProcAxializeAnatParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_axialize_anat"],
+    "__STYXTYPE__": typing.Literal["fat_proc_axialize_anat"],
     "in_file": InputPathType,
     "ref_file": InputPathType,
     "prefix": str,

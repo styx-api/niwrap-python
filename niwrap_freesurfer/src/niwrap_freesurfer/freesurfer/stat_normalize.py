@@ -14,7 +14,7 @@ STAT_NORMALIZE_METADATA = Metadata(
 
 
 StatNormalizeParameters = typing.TypedDict('StatNormalizeParameters', {
-    "__STYX_TYPE__": typing.Literal["stat_normalize"],
+    "__STYXTYPE__": typing.Literal["stat_normalize"],
     "input_sv_prefix": str,
     "output_sv_prefix": str,
     "resolution": typing.NotRequired[float | None],

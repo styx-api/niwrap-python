@@ -14,20 +14,20 @@ METRIC_WEIGHTED_STATS_METADATA = Metadata(
 
 
 MetricWeightedStatsRoiParameters = typing.TypedDict('MetricWeightedStatsRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 MetricWeightedStatsStdevParameters = typing.TypedDict('MetricWeightedStatsStdevParameters', {
-    "__STYX_TYPE__": typing.Literal["stdev"],
+    "__STYXTYPE__": typing.Literal["stdev"],
     "opt_sample": bool,
 })
 
 
 MetricWeightedStatsParameters = typing.TypedDict('MetricWeightedStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-weighted-stats"],
+    "__STYXTYPE__": typing.Literal["metric-weighted-stats"],
     "metric_in": InputPathType,
     "opt_area_surface_area_surface": typing.NotRequired[InputPathType | None],
     "opt_weight_metric_weight_metric": typing.NotRequired[InputPathType | None],

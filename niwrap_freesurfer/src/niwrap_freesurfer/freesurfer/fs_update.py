@@ -14,7 +14,7 @@ FS_UPDATE_METADATA = Metadata(
 
 
 FsUpdateParameters = typing.TypedDict('FsUpdateParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_update"],
+    "__STYXTYPE__": typing.Literal["fs_update"],
     "update_path": typing.NotRequired[str | None],
     "help_short": bool,
     "help_medium": bool,

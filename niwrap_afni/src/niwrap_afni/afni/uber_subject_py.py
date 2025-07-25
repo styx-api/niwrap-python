@@ -14,7 +14,7 @@ UBER_SUBJECT_PY_METADATA = Metadata(
 
 
 UberSubjectPyParameters = typing.TypedDict('UberSubjectPyParameters', {
-    "__STYX_TYPE__": typing.Literal["uber_subject.py"],
+    "__STYXTYPE__": typing.Literal["uber_subject.py"],
     "qt_opts": typing.NotRequired[str | None],
     "svar": typing.NotRequired[str | None],
     "cvar": typing.NotRequired[str | None],

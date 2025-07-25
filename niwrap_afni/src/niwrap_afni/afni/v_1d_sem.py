@@ -14,7 +14,7 @@ V_1D_SEM_METADATA = Metadata(
 
 
 V1dSemParameters = typing.TypedDict('V1dSemParameters', {
-    "__STYX_TYPE__": typing.Literal["1dSEM"],
+    "__STYXTYPE__": typing.Literal["1dSEM"],
     "theta": InputPathType,
     "correlation_matrix": InputPathType,
     "residual_variance": InputPathType,

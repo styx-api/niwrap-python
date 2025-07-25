@@ -14,7 +14,7 @@ HISTO_REGISTER_BLOCK_METADATA = Metadata(
 
 
 HistoRegisterBlockParameters = typing.TypedDict('HistoRegisterBlockParameters', {
-    "__STYX_TYPE__": typing.Literal["histo_register_block"],
+    "__STYXTYPE__": typing.Literal["histo_register_block"],
     "seg_time1": InputPathType,
     "seg_time2": InputPathType,
     "transform1": InputPathType,

@@ -14,7 +14,7 @@ XCEREBRALSEG_METADATA = Metadata(
 
 
 XcerebralsegParameters = typing.TypedDict('XcerebralsegParameters', {
-    "__STYX_TYPE__": typing.Literal["xcerebralseg"],
+    "__STYXTYPE__": typing.Literal["xcerebralseg"],
     "subject": str,
     "output_volume": typing.NotRequired[str | None],
     "atlas": typing.NotRequired[str | None],

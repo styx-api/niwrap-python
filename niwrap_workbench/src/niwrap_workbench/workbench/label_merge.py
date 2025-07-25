@@ -14,28 +14,28 @@ LABEL_MERGE_METADATA = Metadata(
 
 
 LabelMergeUpToParameters = typing.TypedDict('LabelMergeUpToParameters', {
-    "__STYX_TYPE__": typing.Literal["up_to"],
+    "__STYXTYPE__": typing.Literal["up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 LabelMergeColumnParameters = typing.TypedDict('LabelMergeColumnParameters', {
-    "__STYX_TYPE__": typing.Literal["column"],
+    "__STYXTYPE__": typing.Literal["column"],
     "column": str,
     "up_to": typing.NotRequired[LabelMergeUpToParameters | None],
 })
 
 
 LabelMergeLabelParameters = typing.TypedDict('LabelMergeLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["label"],
+    "__STYXTYPE__": typing.Literal["label"],
     "label_in": InputPathType,
     "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
 })
 
 
 LabelMergeParameters = typing.TypedDict('LabelMergeParameters', {
-    "__STYX_TYPE__": typing.Literal["label-merge"],
+    "__STYXTYPE__": typing.Literal["label-merge"],
     "label_out": str,
     "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
 })

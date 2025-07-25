@@ -14,7 +14,7 @@ GIFTI_TOOL_METADATA = Metadata(
 
 
 GiftiToolParameters = typing.TypedDict('GiftiToolParameters', {
-    "__STYX_TYPE__": typing.Literal["gifti_tool"],
+    "__STYXTYPE__": typing.Literal["gifti_tool"],
     "infile": InputPathType,
     "new_numda": typing.NotRequired[float | None],
     "new_dtype": typing.NotRequired[str | None],

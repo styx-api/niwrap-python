@@ -14,7 +14,7 @@ DISTANCEMAP_METADATA = Metadata(
 
 
 DistancemapParameters = typing.TypedDict('DistancemapParameters', {
-    "__STYX_TYPE__": typing.Literal["distancemap"],
+    "__STYXTYPE__": typing.Literal["distancemap"],
     "input_image": InputPathType,
     "output_image": str,
     "mask_image": typing.NotRequired[InputPathType | None],

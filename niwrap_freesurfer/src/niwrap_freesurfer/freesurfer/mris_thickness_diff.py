@@ -14,7 +14,7 @@ MRIS_THICKNESS_DIFF_METADATA = Metadata(
 
 
 MrisThicknessDiffParameters = typing.TypedDict('MrisThicknessDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_thickness_diff"],
+    "__STYXTYPE__": typing.Literal["mris_thickness_diff"],
     "src_type": typing.NotRequired[str | None],
     "trg_type": typing.NotRequired[str | None],
     "out_file": str,

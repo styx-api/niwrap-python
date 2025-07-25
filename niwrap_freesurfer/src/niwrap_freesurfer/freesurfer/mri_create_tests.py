@@ -14,7 +14,7 @@ MRI_CREATE_TESTS_METADATA = Metadata(
 
 
 MriCreateTestsParameters = typing.TypedDict('MriCreateTestsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_create_tests"],
+    "__STYXTYPE__": typing.Literal["mri_create_tests"],
     "input_file": InputPathType,
     "out_src": str,
     "out_target": str,

@@ -14,7 +14,7 @@ WAVER_METADATA = Metadata(
 
 
 WaverParameters = typing.TypedDict('WaverParameters', {
-    "__STYX_TYPE__": typing.Literal["waver"],
+    "__STYXTYPE__": typing.Literal["waver"],
     "wav": bool,
     "gam": bool,
     "expr": typing.NotRequired[str | None],

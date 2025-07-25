@@ -14,7 +14,7 @@ FIX_SUBJECT_CORRECTED_RH_METADATA = Metadata(
 
 
 FixSubjectCorrectedRhParameters = typing.TypedDict('FixSubjectCorrectedRhParameters', {
-    "__STYX_TYPE__": typing.Literal["fix_subject_corrected-rh"],
+    "__STYXTYPE__": typing.Literal["fix_subject_corrected-rh"],
     "subject_dir": str,
 })
 

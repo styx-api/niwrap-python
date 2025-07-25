@@ -14,7 +14,7 @@ PASTE_IMAGE_INTO_IMAGE_METADATA = Metadata(
 
 
 PasteImageIntoImageParameters = typing.TypedDict('PasteImageIntoImageParameters', {
-    "__STYX_TYPE__": typing.Literal["PasteImageIntoImage"],
+    "__STYXTYPE__": typing.Literal["PasteImageIntoImage"],
     "image_dimension": int,
     "input_canvas_image": InputPathType,
     "input_image": InputPathType,

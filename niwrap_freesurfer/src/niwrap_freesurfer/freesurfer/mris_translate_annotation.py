@@ -14,7 +14,7 @@ MRIS_TRANSLATE_ANNOTATION_METADATA = Metadata(
 
 
 MrisTranslateAnnotationParameters = typing.TypedDict('MrisTranslateAnnotationParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_translate_annotation"],
+    "__STYXTYPE__": typing.Literal["mris_translate_annotation"],
     "subject": str,
     "hemi": str,
     "in_annot": InputPathType,

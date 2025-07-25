@@ -14,7 +14,7 @@ MRIS_MESH_SUBDIVIDE_METADATA = Metadata(
 
 
 MrisMeshSubdivideParameters = typing.TypedDict('MrisMeshSubdivideParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_mesh_subdivide"],
+    "__STYXTYPE__": typing.Literal["mris_mesh_subdivide"],
     "input_surface": InputPathType,
     "output_surface": str,
     "subdivision_method": typing.NotRequired[typing.Literal["butterfly", "loop", "linear"] | None],

@@ -14,7 +14,7 @@ MRIS_SPHERE_METADATA = Metadata(
 
 
 MrisSphereParameters = typing.TypedDict('MrisSphereParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_sphere"],
+    "__STYXTYPE__": typing.Literal["mris_sphere"],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,

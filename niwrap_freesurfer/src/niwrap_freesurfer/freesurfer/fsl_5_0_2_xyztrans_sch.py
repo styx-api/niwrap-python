@@ -14,7 +14,7 @@ FSL_5_0_2_XYZTRANS_SCH_METADATA = Metadata(
 
 
 Fsl502XyztransSchParameters = typing.TypedDict('Fsl502XyztransSchParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl.5.0.2.xyztrans.sch"],
+    "__STYXTYPE__": typing.Literal["fsl.5.0.2.xyztrans.sch"],
     "term_option": typing.NotRequired[str | None],
     "version_flag": bool,
     "no_scrollback_flag": bool,

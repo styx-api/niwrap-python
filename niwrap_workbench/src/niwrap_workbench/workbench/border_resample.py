@@ -14,7 +14,7 @@ BORDER_RESAMPLE_METADATA = Metadata(
 
 
 BorderResampleParameters = typing.TypedDict('BorderResampleParameters', {
-    "__STYX_TYPE__": typing.Literal["border-resample"],
+    "__STYXTYPE__": typing.Literal["border-resample"],
     "border_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,

@@ -14,14 +14,14 @@ METRIC_REDUCE_METADATA = Metadata(
 
 
 MetricReduceExcludeOutliersParameters = typing.TypedDict('MetricReduceExcludeOutliersParameters', {
-    "__STYX_TYPE__": typing.Literal["exclude_outliers"],
+    "__STYXTYPE__": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 MetricReduceParameters = typing.TypedDict('MetricReduceParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-reduce"],
+    "__STYXTYPE__": typing.Literal["metric-reduce"],
     "metric_in": InputPathType,
     "operation": str,
     "metric_out": str,

@@ -14,7 +14,7 @@ RTFEEDME_METADATA = Metadata(
 
 
 RtfeedmeParameters = typing.TypedDict('RtfeedmeParameters', {
-    "__STYX_TYPE__": typing.Literal["rtfeedme"],
+    "__STYXTYPE__": typing.Literal["rtfeedme"],
     "datasets": list[InputPathType],
     "host": typing.NotRequired[str | None],
     "interval_ms": typing.NotRequired[float | None],

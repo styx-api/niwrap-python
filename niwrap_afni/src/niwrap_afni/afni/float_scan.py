@@ -14,7 +14,7 @@ FLOAT_SCAN_METADATA = Metadata(
 
 
 FloatScanParameters = typing.TypedDict('FloatScanParameters', {
-    "__STYX_TYPE__": typing.Literal["float_scan"],
+    "__STYXTYPE__": typing.Literal["float_scan"],
     "fix_illegal_values": bool,
     "verbose_mode": bool,
     "skip_count": typing.NotRequired[int | None],

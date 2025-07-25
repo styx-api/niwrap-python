@@ -14,7 +14,7 @@ V_3D_TSTAT_METADATA = Metadata(
 
 
 V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTstat"],
+    "__STYXTYPE__": typing.Literal["3dTstat"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],

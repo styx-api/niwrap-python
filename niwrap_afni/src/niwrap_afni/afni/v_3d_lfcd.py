@@ -14,7 +14,7 @@ V_3D_LFCD_METADATA = Metadata(
 
 
 V3dLfcdParameters = typing.TypedDict('V3dLfcdParameters', {
-    "__STYX_TYPE__": typing.Literal["3dLFCD"],
+    "__STYXTYPE__": typing.Literal["3dLFCD"],
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,

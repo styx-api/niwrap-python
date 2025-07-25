@@ -14,7 +14,7 @@ ISANALYZE_METADATA = Metadata(
 
 
 IsanalyzeParameters = typing.TypedDict('IsanalyzeParameters', {
-    "__STYX_TYPE__": typing.Literal["isanalyze"],
+    "__STYXTYPE__": typing.Literal["isanalyze"],
     "input_file": InputPathType,
 })
 

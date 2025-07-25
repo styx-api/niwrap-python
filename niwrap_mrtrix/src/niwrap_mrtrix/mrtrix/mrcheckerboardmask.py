@@ -14,14 +14,14 @@ MRCHECKERBOARDMASK_METADATA = Metadata(
 
 
 MrcheckerboardmaskConfigParameters = typing.TypedDict('MrcheckerboardmaskConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrcheckerboardmaskParameters = typing.TypedDict('MrcheckerboardmaskParameters', {
-    "__STYX_TYPE__": typing.Literal["mrcheckerboardmask"],
+    "__STYXTYPE__": typing.Literal["mrcheckerboardmask"],
     "tiles": typing.NotRequired[int | None],
     "invert": bool,
     "nan": bool,

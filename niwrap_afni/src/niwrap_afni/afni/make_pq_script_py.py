@@ -14,7 +14,7 @@ MAKE_PQ_SCRIPT_PY_METADATA = Metadata(
 
 
 MakePqScriptPyParameters = typing.TypedDict('MakePqScriptPyParameters', {
-    "__STYX_TYPE__": typing.Literal["make_pq_script.py"],
+    "__STYXTYPE__": typing.Literal["make_pq_script.py"],
     "dataset": InputPathType,
     "brick_index": float,
     "mask": InputPathType,

@@ -14,7 +14,7 @@ SET_SPACING_METADATA = Metadata(
 
 
 SetSpacingParameters = typing.TypedDict('SetSpacingParameters', {
-    "__STYX_TYPE__": typing.Literal["SetSpacing"],
+    "__STYXTYPE__": typing.Literal["SetSpacing"],
     "dimension": int,
     "input_file": InputPathType,
     "output_file": str,

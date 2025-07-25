@@ -14,7 +14,7 @@ MRIS_ENTROPY_METADATA = Metadata(
 
 
 MrisEntropyParameters = typing.TypedDict('MrisEntropyParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_entropy"],
+    "__STYXTYPE__": typing.Literal["mris_entropy"],
     "subject": str,
     "hemi": str,
     "wfile": InputPathType,

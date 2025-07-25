@@ -14,7 +14,7 @@ FDRVAL_METADATA = Metadata(
 
 
 FdrvalParameters = typing.TypedDict('FdrvalParameters', {
-    "__STYX_TYPE__": typing.Literal["fdrval"],
+    "__STYXTYPE__": typing.Literal["fdrval"],
     "dset": InputPathType,
     "sub": float,
     "val_list": list[float],

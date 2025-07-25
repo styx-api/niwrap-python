@@ -14,7 +14,7 @@ ANALYZE_TRACE_METADATA = Metadata(
 
 
 AnalyzeTraceParameters = typing.TypedDict('AnalyzeTraceParameters', {
-    "__STYX_TYPE__": typing.Literal["AnalyzeTrace"],
+    "__STYXTYPE__": typing.Literal["AnalyzeTrace"],
     "tracefile": InputPathType,
     "max_func_lines": typing.NotRequired[int | None],
     "suma_c": typing.NotRequired[InputPathType | None],

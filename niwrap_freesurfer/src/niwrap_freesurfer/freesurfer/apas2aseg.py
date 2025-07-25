@@ -14,7 +14,7 @@ APAS2ASEG_METADATA = Metadata(
 
 
 Apas2asegParameters = typing.TypedDict('Apas2asegParameters', {
-    "__STYX_TYPE__": typing.Literal["apas2aseg"],
+    "__STYXTYPE__": typing.Literal["apas2aseg"],
     "subject": typing.NotRequired[str | None],
     "input_aparc_aseg": typing.NotRequired[InputPathType | None],
     "output_seg": typing.NotRequired[str | None],

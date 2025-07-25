@@ -14,7 +14,7 @@ V_3D_NWARP_XYZ_METADATA = Metadata(
 
 
 V3dNwarpXyzParameters = typing.TypedDict('V3dNwarpXyzParameters', {
-    "__STYX_TYPE__": typing.Literal["3dNwarpXYZ"],
+    "__STYXTYPE__": typing.Literal["3dNwarpXYZ"],
     "xyzfile": InputPathType,
     "warp_spec": str,
     "iwarp": bool,

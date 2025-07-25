@@ -14,7 +14,7 @@ ABIDS_JSON_INFO_PY_METADATA = Metadata(
 
 
 AbidsJsonInfoPyParameters = typing.TypedDict('AbidsJsonInfoPyParameters', {
-    "__STYX_TYPE__": typing.Literal["abids_json_info.py"],
+    "__STYXTYPE__": typing.Literal["abids_json_info.py"],
     "json_files": list[InputPathType],
     "tr_flag": bool,
     "te_flag": bool,

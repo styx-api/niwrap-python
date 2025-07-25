@@ -14,14 +14,14 @@ METRIC_SMOOTHING_METADATA = Metadata(
 
 
 MetricSmoothingRoiParameters = typing.TypedDict('MetricSmoothingRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_metric": InputPathType,
     "opt_match_columns": bool,
 })
 
 
 MetricSmoothingParameters = typing.TypedDict('MetricSmoothingParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-smoothing"],
+    "__STYXTYPE__": typing.Literal["metric-smoothing"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "smoothing_kernel": float,

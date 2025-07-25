@@ -14,7 +14,7 @@ V_3D_RANK_METADATA = Metadata(
 
 
 V3dRankParameters = typing.TypedDict('V3dRankParameters', {
-    "__STYX_TYPE__": typing.Literal["3dRank"],
+    "__STYXTYPE__": typing.Literal["3dRank"],
     "input_datasets": list[InputPathType],
     "output_prefix": typing.NotRequired[str | None],
     "version_info": bool,

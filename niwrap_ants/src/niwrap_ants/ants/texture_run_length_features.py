@@ -14,7 +14,7 @@ TEXTURE_RUN_LENGTH_FEATURES_METADATA = Metadata(
 
 
 TextureRunLengthFeaturesParameters = typing.TypedDict('TextureRunLengthFeaturesParameters', {
-    "__STYX_TYPE__": typing.Literal["TextureRunLengthFeatures"],
+    "__STYXTYPE__": typing.Literal["TextureRunLengthFeatures"],
     "image_dimension": int,
     "input_image": InputPathType,
     "number_of_bins_per_axis": typing.NotRequired[int | None],

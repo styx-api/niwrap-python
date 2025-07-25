@@ -14,7 +14,7 @@ V__MAKE_PLUG_DIFF_METADATA = Metadata(
 
 
 VMakePlugDiffParameters = typing.TypedDict('VMakePlugDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["@make_plug_diff"],
+    "__STYXTYPE__": typing.Literal["@make_plug_diff"],
     "vtk_dir": str,
     "xm_dir": str,
     "afni_src_dir": str,

@@ -14,7 +14,7 @@ MERGE_STATS_TABLES_METADATA = Metadata(
 
 
 MergeStatsTablesParameters = typing.TypedDict('MergeStatsTablesParameters', {
-    "__STYX_TYPE__": typing.Literal["merge_stats_tables"],
+    "__STYXTYPE__": typing.Literal["merge_stats_tables"],
     "subjects": typing.NotRequired[list[str] | None],
     "subject": typing.NotRequired[str | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],

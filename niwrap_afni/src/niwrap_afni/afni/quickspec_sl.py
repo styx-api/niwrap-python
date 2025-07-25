@@ -14,7 +14,7 @@ QUICKSPEC_SL_METADATA = Metadata(
 
 
 QuickspecSlParameters = typing.TypedDict('QuickspecSlParameters', {
-    "__STYX_TYPE__": typing.Literal["quickspecSL"],
+    "__STYXTYPE__": typing.Literal["quickspecSL"],
     "surf_A": InputPathType,
     "surf_B": InputPathType,
     "surf_intermed_pref": typing.NotRequired[str | None],

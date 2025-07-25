@@ -14,7 +14,7 @@ LONG_MRIS_SLOPES_METADATA = Metadata(
 
 
 LongMrisSlopesParameters = typing.TypedDict('LongMrisSlopesParameters', {
-    "__STYX_TYPE__": typing.Literal["long_mris_slopes"],
+    "__STYXTYPE__": typing.Literal["long_mris_slopes"],
     "qdec": InputPathType,
     "meas": str,
     "hemi": str,

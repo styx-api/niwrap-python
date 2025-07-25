@@ -14,7 +14,7 @@ MRI_LINEAR_REGISTER_METADATA = Metadata(
 
 
 MriLinearRegisterParameters = typing.TypedDict('MriLinearRegisterParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_linear_register"],
+    "__STYXTYPE__": typing.Literal["mri_linear_register"],
     "input_brain": InputPathType,
     "template": InputPathType,
     "output_file": str,

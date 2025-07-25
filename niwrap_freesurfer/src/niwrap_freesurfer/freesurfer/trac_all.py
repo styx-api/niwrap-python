@@ -14,7 +14,7 @@ TRAC_ALL_METADATA = Metadata(
 
 
 TracAllParameters = typing.TypedDict('TracAllParameters', {
-    "__STYX_TYPE__": typing.Literal["trac-all"],
+    "__STYXTYPE__": typing.Literal["trac-all"],
     "config_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
     "dicom_file": typing.NotRequired[InputPathType | None],

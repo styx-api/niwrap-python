@@ -14,7 +14,7 @@ PRINT_HEADER_METADATA = Metadata(
 
 
 PrintHeaderParameters = typing.TypedDict('PrintHeaderParameters', {
-    "__STYX_TYPE__": typing.Literal["PrintHeader"],
+    "__STYXTYPE__": typing.Literal["PrintHeader"],
     "image": InputPathType,
     "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
 })

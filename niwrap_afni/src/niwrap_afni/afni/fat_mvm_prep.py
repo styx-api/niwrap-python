@@ -14,7 +14,7 @@ FAT_MVM_PREP_METADATA = Metadata(
 
 
 FatMvmPrepParameters = typing.TypedDict('FatMvmPrepParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_mvm_prep"],
+    "__STYXTYPE__": typing.Literal["fat_mvm_prep"],
     "prefix": str,
     "csv_file": InputPathType,
     "matrix_files": typing.NotRequired[str | None],

@@ -14,20 +14,20 @@ TCKSTATS_METADATA = Metadata(
 
 
 TckstatsOutputParameters = typing.TypedDict('TckstatsOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["output"],
+    "__STYXTYPE__": typing.Literal["output"],
     "field": str,
 })
 
 
 TckstatsConfigParameters = typing.TypedDict('TckstatsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckstatsParameters = typing.TypedDict('TckstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["tckstats"],
+    "__STYXTYPE__": typing.Literal["tckstats"],
     "output": typing.NotRequired[list[TckstatsOutputParameters] | None],
     "histogram": typing.NotRequired[str | None],
     "dump": typing.NotRequired[str | None],

@@ -14,7 +14,7 @@ TKSURFER_METADATA = Metadata(
 
 
 TksurferParameters = typing.TypedDict('TksurferParameters', {
-    "__STYX_TYPE__": typing.Literal["tksurfer"],
+    "__STYXTYPE__": typing.Literal["tksurfer"],
     "subject_id": str,
     "hemisphere": str,
     "surface_name": str,

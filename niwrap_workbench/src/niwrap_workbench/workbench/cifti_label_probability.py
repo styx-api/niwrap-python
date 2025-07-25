@@ -14,7 +14,7 @@ CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 CiftiLabelProbabilityParameters = typing.TypedDict('CiftiLabelProbabilityParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-label-probability"],
+    "__STYXTYPE__": typing.Literal["cifti-label-probability"],
     "label_maps": InputPathType,
     "probability_dscalar_out": str,
     "opt_exclude_unlabeled": bool,

@@ -14,7 +14,7 @@ MRI_COR2LABEL_METADATA = Metadata(
 
 
 MriCor2labelParameters = typing.TypedDict('MriCor2labelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_cor2label"],
+    "__STYXTYPE__": typing.Literal["mri_cor2label"],
     "input_file": InputPathType,
     "label_id": float,
     "label_file": str,

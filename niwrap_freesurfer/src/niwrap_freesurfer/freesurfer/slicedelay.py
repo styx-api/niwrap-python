@@ -14,7 +14,7 @@ SLICEDELAY_METADATA = Metadata(
 
 
 SlicedelayParameters = typing.TypedDict('SlicedelayParameters', {
-    "__STYX_TYPE__": typing.Literal["slicedelay"],
+    "__STYXTYPE__": typing.Literal["slicedelay"],
     "slicedelayfile": str,
     "nslices": float,
     "order": typing.Literal["up", "down", "odd", "even", "siemens"],

@@ -14,7 +14,7 @@ ANTSINTEGRATE_VECTOR_FIELD_METADATA = Metadata(
 
 
 AntsintegrateVectorFieldParameters = typing.TypedDict('AntsintegrateVectorFieldParameters', {
-    "__STYX_TYPE__": typing.Literal["ANTSIntegrateVectorField"],
+    "__STYXTYPE__": typing.Literal["ANTSIntegrateVectorField"],
     "vector_field_input": InputPathType,
     "roi_mask_input": InputPathType,
     "fibers_output": str,

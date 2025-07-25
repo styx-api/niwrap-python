@@ -14,7 +14,7 @@ MRI_MOTION_CORRECT_METADATA = Metadata(
 
 
 MriMotionCorrectParameters = typing.TypedDict('MriMotionCorrectParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_motion_correct"],
+    "__STYXTYPE__": typing.Literal["mri_motion_correct"],
     "outfile": str,
     "infiles": list[InputPathType],
 })

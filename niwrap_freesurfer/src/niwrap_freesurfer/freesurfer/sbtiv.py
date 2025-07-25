@@ -14,7 +14,7 @@ SBTIV_METADATA = Metadata(
 
 
 SbtivParameters = typing.TypedDict('SbtivParameters', {
-    "__STYX_TYPE__": typing.Literal["sbtiv"],
+    "__STYXTYPE__": typing.Literal["sbtiv"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "labels_file": typing.NotRequired[InputPathType | None],

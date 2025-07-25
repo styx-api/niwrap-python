@@ -14,7 +14,7 @@ CIFTI_CHANGE_MAPPING_METADATA = Metadata(
 
 
 CiftiChangeMappingSeriesParameters = typing.TypedDict('CiftiChangeMappingSeriesParameters', {
-    "__STYX_TYPE__": typing.Literal["series"],
+    "__STYXTYPE__": typing.Literal["series"],
     "step": float,
     "start": float,
     "opt_unit_unit": typing.NotRequired[str | None],
@@ -22,20 +22,20 @@ CiftiChangeMappingSeriesParameters = typing.TypedDict('CiftiChangeMappingSeriesP
 
 
 CiftiChangeMappingScalarParameters = typing.TypedDict('CiftiChangeMappingScalarParameters', {
-    "__STYX_TYPE__": typing.Literal["scalar"],
+    "__STYXTYPE__": typing.Literal["scalar"],
     "opt_name_file_file": typing.NotRequired[str | None],
 })
 
 
 CiftiChangeMappingFromCiftiParameters = typing.TypedDict('CiftiChangeMappingFromCiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["from_cifti"],
+    "__STYXTYPE__": typing.Literal["from_cifti"],
     "template_cifti": InputPathType,
     "direction": str,
 })
 
 
 CiftiChangeMappingParameters = typing.TypedDict('CiftiChangeMappingParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-change-mapping"],
+    "__STYXTYPE__": typing.Literal["cifti-change-mapping"],
     "data_cifti": InputPathType,
     "direction": str,
     "cifti_out": str,

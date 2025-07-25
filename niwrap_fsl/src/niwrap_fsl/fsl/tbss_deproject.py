@@ -14,7 +14,7 @@ TBSS_DEPROJECT_METADATA = Metadata(
 
 
 TbssDeprojectParameters = typing.TypedDict('TbssDeprojectParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_deproject"],
+    "__STYXTYPE__": typing.Literal["tbss_deproject"],
     "skeleton_space_input_image": InputPathType,
     "final_space_option": int,
     "index_image_flag": bool,

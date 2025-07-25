@@ -14,7 +14,7 @@ ADJUNCT_IS_LABEL_PY_METADATA = Metadata(
 
 
 AdjunctIsLabelPyParameters = typing.TypedDict('AdjunctIsLabelPyParameters', {
-    "__STYX_TYPE__": typing.Literal["adjunct_is_label.py"],
+    "__STYXTYPE__": typing.Literal["adjunct_is_label.py"],
     "infile": InputPathType,
     "label": str,
 })

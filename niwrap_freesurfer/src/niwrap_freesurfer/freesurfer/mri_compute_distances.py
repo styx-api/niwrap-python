@@ -14,7 +14,7 @@ MRI_COMPUTE_DISTANCES_METADATA = Metadata(
 
 
 MriComputeDistancesParameters = typing.TypedDict('MriComputeDistancesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compute_distances"],
+    "__STYXTYPE__": typing.Literal["mri_compute_distances"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,

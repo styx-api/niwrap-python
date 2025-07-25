@@ -14,7 +14,7 @@ FS_INSTALL_MCR_METADATA = Metadata(
 
 
 FsInstallMcrParameters = typing.TypedDict('FsInstallMcrParameters', {
-    "__STYX_TYPE__": typing.Literal["fs_install_mcr"],
+    "__STYXTYPE__": typing.Literal["fs_install_mcr"],
     "mcr_version": str,
 })
 

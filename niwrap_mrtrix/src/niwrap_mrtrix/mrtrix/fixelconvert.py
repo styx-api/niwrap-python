@@ -14,38 +14,38 @@ FIXELCONVERT_METADATA = Metadata(
 
 
 FixelconvertConfigParameters = typing.TypedDict('FixelconvertConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelconvertVariousStringParameters = typing.TypedDict('FixelconvertVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 FixelconvertVariousFileParameters = typing.TypedDict('FixelconvertVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelconvertVariousString1Parameters = typing.TypedDict('FixelconvertVariousString1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString_1"],
+    "__STYXTYPE__": typing.Literal["VariousString_1"],
     "obj": str,
 })
 
 
 FixelconvertVariousFile1Parameters = typing.TypedDict('FixelconvertVariousFile1Parameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile_1"],
+    "__STYXTYPE__": typing.Literal["VariousFile_1"],
     "obj": InputPathType,
 })
 
 
 FixelconvertParameters = typing.TypedDict('FixelconvertParameters', {
-    "__STYX_TYPE__": typing.Literal["fixelconvert"],
+    "__STYXTYPE__": typing.Literal["fixelconvert"],
     "name": typing.NotRequired[str | None],
     "nii": bool,
     "out_size": bool,

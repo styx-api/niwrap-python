@@ -14,7 +14,7 @@ SURFACE_NORMALS_METADATA = Metadata(
 
 
 SurfaceNormalsParameters = typing.TypedDict('SurfaceNormalsParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-normals"],
+    "__STYXTYPE__": typing.Literal["surface-normals"],
     "surface": InputPathType,
     "metric_out": str,
 })

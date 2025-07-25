@@ -14,7 +14,7 @@ V_1D_APAR2MAT_METADATA = Metadata(
 
 
 V1dApar2matParameters = typing.TypedDict('V1dApar2matParameters', {
-    "__STYX_TYPE__": typing.Literal["1dApar2mat"],
+    "__STYXTYPE__": typing.Literal["1dApar2mat"],
     "x_shift": float,
     "y_shift": float,
     "z_shift": float,

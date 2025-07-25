@@ -14,28 +14,28 @@ CIFTI_CORRELATION_GRADIENT_METADATA = Metadata(
 
 
 CiftiCorrelationGradientLeftSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientLeftSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["left_surface"],
+    "__STYXTYPE__": typing.Literal["left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCorrelationGradientRightSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientRightSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["right_surface"],
+    "__STYXTYPE__": typing.Literal["right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCorrelationGradientCerebellumSurfaceParameters = typing.TypedDict('CiftiCorrelationGradientCerebellumSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_surface"],
+    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCorrelationGradientDoubleCorrelationParameters = typing.TypedDict('CiftiCorrelationGradientDoubleCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["double_correlation"],
+    "__STYXTYPE__": typing.Literal["double_correlation"],
     "opt_fisher_z_first": bool,
     "opt_no_demean_first": bool,
     "opt_covariance_first": bool,
@@ -43,7 +43,7 @@ CiftiCorrelationGradientDoubleCorrelationParameters = typing.TypedDict('CiftiCor
 
 
 CiftiCorrelationGradientParameters = typing.TypedDict('CiftiCorrelationGradientParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-correlation-gradient"],
+    "__STYXTYPE__": typing.Literal["cifti-correlation-gradient"],
     "cifti": InputPathType,
     "cifti_out": str,
     "left_surface": typing.NotRequired[CiftiCorrelationGradientLeftSurfaceParameters | None],

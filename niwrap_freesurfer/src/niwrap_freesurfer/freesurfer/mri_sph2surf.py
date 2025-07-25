@@ -14,7 +14,7 @@ MRI_SPH2SURF_METADATA = Metadata(
 
 
 MriSph2surfParameters = typing.TypedDict('MriSph2surfParameters', {
-    "__STYX_TYPE__": typing.Literal["mri-sph2surf"],
+    "__STYXTYPE__": typing.Literal["mri-sph2surf"],
     "instem": str,
     "outstem": str,
     "hemi": str,

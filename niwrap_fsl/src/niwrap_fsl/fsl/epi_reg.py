@@ -14,7 +14,7 @@ EPI_REG_METADATA = Metadata(
 
 
 EpiRegParameters = typing.TypedDict('EpiRegParameters', {
-    "__STYX_TYPE__": typing.Literal["epi_reg"],
+    "__STYXTYPE__": typing.Literal["epi_reg"],
     "epi": InputPathType,
     "t1_head": InputPathType,
     "t1_brain": InputPathType,

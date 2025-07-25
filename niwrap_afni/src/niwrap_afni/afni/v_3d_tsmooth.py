@@ -14,7 +14,7 @@ V_3D_TSMOOTH_METADATA = Metadata(
 
 
 V3dTsmoothParameters = typing.TypedDict('V3dTsmoothParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTsmooth"],
+    "__STYXTYPE__": typing.Literal["3dTsmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "datum_type": typing.NotRequired[str | None],

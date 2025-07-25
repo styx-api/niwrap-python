@@ -14,7 +14,7 @@ V__FIX_FSSPHERE_METADATA = Metadata(
 
 
 VFixFssphereParameters = typing.TypedDict('VFixFssphereParameters', {
-    "__STYX_TYPE__": typing.Literal["@fix_FSsphere"],
+    "__STYXTYPE__": typing.Literal["@fix_FSsphere"],
     "spec_file": InputPathType,
     "sphere_file": InputPathType,
     "num_iterations": typing.NotRequired[int | None],

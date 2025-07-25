@@ -14,7 +14,7 @@ V_3D_TAGALIGN_METADATA = Metadata(
 
 
 V3dTagalignParameters = typing.TypedDict('V3dTagalignParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTagalign"],
+    "__STYXTYPE__": typing.Literal["3dTagalign"],
     "input_dataset": InputPathType,
     "master_dataset": InputPathType,
     "tagset_file": typing.NotRequired[InputPathType | None],

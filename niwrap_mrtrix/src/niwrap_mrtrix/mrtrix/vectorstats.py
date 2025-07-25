@@ -14,20 +14,20 @@ VECTORSTATS_METADATA = Metadata(
 
 
 VectorstatsColumnParameters = typing.TypedDict('VectorstatsColumnParameters', {
-    "__STYX_TYPE__": typing.Literal["column"],
+    "__STYXTYPE__": typing.Literal["column"],
     "path": InputPathType,
 })
 
 
 VectorstatsConfigParameters = typing.TypedDict('VectorstatsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 VectorstatsParameters = typing.TypedDict('VectorstatsParameters', {
-    "__STYX_TYPE__": typing.Literal["vectorstats"],
+    "__STYXTYPE__": typing.Literal["vectorstats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V_3D_PVAL_METADATA = Metadata(
 
 
 V3dPvalParameters = typing.TypedDict('V3dPvalParameters', {
-    "__STYX_TYPE__": typing.Literal["3dPval"],
+    "__STYXTYPE__": typing.Literal["3dPval"],
     "input_dataset": InputPathType,
     "zscore": bool,
     "log2": bool,

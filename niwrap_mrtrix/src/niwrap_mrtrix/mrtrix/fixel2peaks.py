@@ -14,26 +14,26 @@ FIXEL2PEAKS_METADATA = Metadata(
 
 
 Fixel2peaksConfigParameters = typing.TypedDict('Fixel2peaksConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2peaksVariousStringParameters = typing.TypedDict('Fixel2peaksVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 Fixel2peaksVariousFileParameters = typing.TypedDict('Fixel2peaksVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 Fixel2peaksParameters = typing.TypedDict('Fixel2peaksParameters', {
-    "__STYX_TYPE__": typing.Literal["fixel2peaks"],
+    "__STYXTYPE__": typing.Literal["fixel2peaks"],
     "number": typing.NotRequired[int | None],
     "nan": bool,
     "info": bool,

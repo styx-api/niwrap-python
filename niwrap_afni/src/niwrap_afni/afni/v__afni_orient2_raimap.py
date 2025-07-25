@@ -14,7 +14,7 @@ V__AFNI_ORIENT2_RAIMAP_METADATA = Metadata(
 
 
 VAfniOrient2RaimapParameters = typing.TypedDict('VAfniOrient2RaimapParameters', {
-    "__STYX_TYPE__": typing.Literal["@AfniOrient2RAImap"],
+    "__STYXTYPE__": typing.Literal["@AfniOrient2RAImap"],
     "orientation_code": str,
 })
 

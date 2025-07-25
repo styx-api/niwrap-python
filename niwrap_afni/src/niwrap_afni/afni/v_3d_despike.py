@@ -14,7 +14,7 @@ V_3D_DESPIKE_METADATA = Metadata(
 
 
 V3dDespikeParameters = typing.TypedDict('V3dDespikeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dDespike"],
+    "__STYXTYPE__": typing.Literal["3dDespike"],
     "prefix": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })

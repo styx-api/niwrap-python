@@ -14,7 +14,7 @@ MRI_PAINT_METADATA = Metadata(
 
 
 MriPaintParameters = typing.TypedDict('MriPaintParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_paint"],
+    "__STYXTYPE__": typing.Literal["mri_paint"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "registration_file": InputPathType,

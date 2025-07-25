@@ -14,7 +14,7 @@ SLICETIMER_METADATA = Metadata(
 
 
 SlicetimerParameters = typing.TypedDict('SlicetimerParameters', {
-    "__STYX_TYPE__": typing.Literal["slicetimer"],
+    "__STYXTYPE__": typing.Literal["slicetimer"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "verbose_flag": bool,

@@ -14,14 +14,14 @@ MRDEGIBBS_METADATA = Metadata(
 
 
 MrdegibbsConfigParameters = typing.TypedDict('MrdegibbsConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MrdegibbsParameters = typing.TypedDict('MrdegibbsParameters', {
-    "__STYX_TYPE__": typing.Literal["mrdegibbs"],
+    "__STYXTYPE__": typing.Literal["mrdegibbs"],
     "axes": typing.NotRequired[list[int] | None],
     "nshifts": typing.NotRequired[int | None],
     "minW": typing.NotRequired[int | None],

@@ -14,7 +14,7 @@ DMRI_SAVE_HISTOGRAMS_METADATA = Metadata(
 
 
 DmriSaveHistogramsParameters = typing.TypedDict('DmriSaveHistogramsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_saveHistograms"],
+    "__STYXTYPE__": typing.Literal["dmri_saveHistograms"],
     "parcellation": InputPathType,
     "number_of_bundles": float,
     "vtk_bundle_list": list[InputPathType],

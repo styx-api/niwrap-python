@@ -14,7 +14,7 @@ V__SHIFT_VOLUME_METADATA = Metadata(
 
 
 VShiftVolumeParameters = typing.TypedDict('VShiftVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["@Shift_Volume"],
+    "__STYXTYPE__": typing.Literal["@Shift_Volume"],
     "rai_shift_vector": typing.NotRequired[list[float] | None],
     "mni_anat_to_mni": bool,
     "mni_to_mni_anat": bool,

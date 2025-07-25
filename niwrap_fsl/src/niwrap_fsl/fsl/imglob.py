@@ -14,7 +14,7 @@ IMGLOB_METADATA = Metadata(
 
 
 ImglobParameters = typing.TypedDict('ImglobParameters', {
-    "__STYX_TYPE__": typing.Literal["imglob"],
+    "__STYXTYPE__": typing.Literal["imglob"],
     "multiple_extensions": bool,
     "input_list": list[str],
     "single_extension": bool,

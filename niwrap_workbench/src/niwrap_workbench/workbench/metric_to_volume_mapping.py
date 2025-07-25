@@ -14,7 +14,7 @@ METRIC_TO_VOLUME_MAPPING_METADATA = Metadata(
 
 
 MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParameters', {
-    "__STYX_TYPE__": typing.Literal["ribbon_constrained"],
+    "__STYXTYPE__": typing.Literal["ribbon_constrained"],
     "inner_surf": InputPathType,
     "outer_surf": InputPathType,
     "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
@@ -24,7 +24,7 @@ MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVol
 
 
 MetricToVolumeMappingParameters = typing.TypedDict('MetricToVolumeMappingParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-to-volume-mapping"],
+    "__STYXTYPE__": typing.Literal["metric-to-volume-mapping"],
     "metric": InputPathType,
     "surface": InputPathType,
     "volume_space": InputPathType,

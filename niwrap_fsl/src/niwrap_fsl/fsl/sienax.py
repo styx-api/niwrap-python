@@ -14,7 +14,7 @@ SIENAX_METADATA = Metadata(
 
 
 SienaxParameters = typing.TypedDict('SienaxParameters', {
-    "__STYX_TYPE__": typing.Literal["sienax"],
+    "__STYXTYPE__": typing.Literal["sienax"],
     "infile": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "debug_flag": bool,

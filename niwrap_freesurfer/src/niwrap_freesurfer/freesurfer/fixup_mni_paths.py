@@ -14,7 +14,7 @@ FIXUP_MNI_PATHS_METADATA = Metadata(
 
 
 FixupMniPathsParameters = typing.TypedDict('FixupMniPathsParameters', {
-    "__STYX_TYPE__": typing.Literal["fixup_mni_paths"],
+    "__STYXTYPE__": typing.Literal["fixup_mni_paths"],
     "verbose": bool,
 })
 

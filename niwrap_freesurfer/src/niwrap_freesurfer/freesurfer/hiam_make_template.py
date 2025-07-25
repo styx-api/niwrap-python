@@ -14,7 +14,7 @@ HIAM_MAKE_TEMPLATE_METADATA = Metadata(
 
 
 HiamMakeTemplateParameters = typing.TypedDict('HiamMakeTemplateParameters', {
-    "__STYX_TYPE__": typing.Literal["hiam_make_template"],
+    "__STYXTYPE__": typing.Literal["hiam_make_template"],
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],

@@ -14,7 +14,7 @@ MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA = Metadata(
 
 
 MrisMultimodalSurfacePlacementParameters = typing.TypedDict('MrisMultimodalSurfacePlacementParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_multimodal_surface_placement"],
+    "__STYXTYPE__": typing.Literal["mris_multimodal_surface_placement"],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
     "sphere_surface": InputPathType,

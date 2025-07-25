@@ -14,7 +14,7 @@ FTOZ_METADATA = Metadata(
 
 
 FtozParameters = typing.TypedDict('FtozParameters', {
-    "__STYX_TYPE__": typing.Literal["ftoz"],
+    "__STYXTYPE__": typing.Literal["ftoz"],
     "input_file": InputPathType,
     "dof1": float,
     "dof2": float,

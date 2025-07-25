@@ -14,7 +14,7 @@ PTOZ_METADATA = Metadata(
 
 
 PtozParameters = typing.TypedDict('PtozParameters', {
-    "__STYX_TYPE__": typing.Literal["ptoz"],
+    "__STYXTYPE__": typing.Literal["ptoz"],
     "p_value": float,
     "tail_flag": bool,
     "grf_flag": typing.NotRequired[float | None],

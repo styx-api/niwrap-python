@@ -14,7 +14,7 @@ FROM3D_METADATA = Metadata(
 
 
 From3dParameters = typing.TypedDict('From3dParameters', {
-    "__STYX_TYPE__": typing.Literal["from3d"],
+    "__STYXTYPE__": typing.Literal["from3d"],
     "verbose": bool,
     "nsize": bool,
     "raw": bool,

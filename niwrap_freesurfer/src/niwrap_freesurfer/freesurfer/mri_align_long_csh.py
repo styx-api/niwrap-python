@@ -14,7 +14,7 @@ MRI_ALIGN_LONG_CSH_METADATA = Metadata(
 
 
 MriAlignLongCshParameters = typing.TypedDict('MriAlignLongCshParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_align_long.csh"],
+    "__STYXTYPE__": typing.Literal["mri_align_long.csh"],
     "base_id": str,
 })
 

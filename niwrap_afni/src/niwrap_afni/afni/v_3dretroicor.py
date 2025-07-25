@@ -14,7 +14,7 @@ V_3DRETROICOR_METADATA = Metadata(
 
 
 V3dretroicorParameters = typing.TypedDict('V3dretroicorParameters', {
-    "__STYX_TYPE__": typing.Literal["3dretroicor"],
+    "__STYXTYPE__": typing.Literal["3dretroicor"],
     "ignore": typing.NotRequired[float | None],
     "prefix": typing.NotRequired[str | None],
     "card": typing.NotRequired[InputPathType | None],

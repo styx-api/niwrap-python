@@ -14,7 +14,7 @@ CIFTI_WEIGHTED_STATS_METADATA = Metadata(
 
 
 CiftiWeightedStatsSpatialWeightsParameters = typing.TypedDict('CiftiWeightedStatsSpatialWeightsParameters', {
-    "__STYX_TYPE__": typing.Literal["spatial_weights"],
+    "__STYXTYPE__": typing.Literal["spatial_weights"],
     "opt_left_area_surf_left_surf": typing.NotRequired[InputPathType | None],
     "opt_right_area_surf_right_surf": typing.NotRequired[InputPathType | None],
     "opt_cerebellum_area_surf_cerebellum_surf": typing.NotRequired[InputPathType | None],
@@ -25,20 +25,20 @@ CiftiWeightedStatsSpatialWeightsParameters = typing.TypedDict('CiftiWeightedStat
 
 
 CiftiWeightedStatsRoiParameters = typing.TypedDict('CiftiWeightedStatsRoiParameters', {
-    "__STYX_TYPE__": typing.Literal["roi"],
+    "__STYXTYPE__": typing.Literal["roi"],
     "roi_cifti": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 CiftiWeightedStatsStdevParameters = typing.TypedDict('CiftiWeightedStatsStdevParameters', {
-    "__STYX_TYPE__": typing.Literal["stdev"],
+    "__STYXTYPE__": typing.Literal["stdev"],
     "opt_sample": bool,
 })
 
 
 CiftiWeightedStatsParameters = typing.TypedDict('CiftiWeightedStatsParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-weighted-stats"],
+    "__STYXTYPE__": typing.Literal["cifti-weighted-stats"],
     "cifti_in": InputPathType,
     "spatial_weights": typing.NotRequired[CiftiWeightedStatsSpatialWeightsParameters | None],
     "opt_cifti_weights_weight_cifti": typing.NotRequired[InputPathType | None],

@@ -14,7 +14,7 @@ V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA = Metadata(
 
 
 VAfniRefacerMakeOnebigA12Parameters = typing.TypedDict('VAfniRefacerMakeOnebigA12Parameters', {
-    "__STYX_TYPE__": typing.Literal["@afni_refacer_make_onebigA12"],
+    "__STYXTYPE__": typing.Literal["@afni_refacer_make_onebigA12"],
     "t1w_dataset": InputPathType,
 })
 

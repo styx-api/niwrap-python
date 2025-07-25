@@ -14,7 +14,7 @@ MRIS_CALC_METADATA = Metadata(
 
 
 MrisCalcParameters = typing.TypedDict('MrisCalcParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_calc"],
+    "__STYXTYPE__": typing.Literal["mris_calc"],
     "input_file1": InputPathType,
     "action": str,
     "input_file2_or_float": typing.NotRequired[InputPathType | None],

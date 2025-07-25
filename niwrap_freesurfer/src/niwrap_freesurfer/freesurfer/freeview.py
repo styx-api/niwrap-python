@@ -14,7 +14,7 @@ FREEVIEW_METADATA = Metadata(
 
 
 FreeviewParameters = typing.TypedDict('FreeviewParameters', {
-    "__STYX_TYPE__": typing.Literal["freeview"],
+    "__STYXTYPE__": typing.Literal["freeview"],
     "args": typing.NotRequired[str | None],
 })
 

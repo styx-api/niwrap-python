@@ -14,7 +14,7 @@ V_3D_VEC_RGB_TO_HSL_METADATA = Metadata(
 
 
 V3dVecRgbToHslParameters = typing.TypedDict('V3dVecRgbToHslParameters', {
-    "__STYX_TYPE__": typing.Literal["3dVecRGB_to_HSL"],
+    "__STYXTYPE__": typing.Literal["3dVecRGB_to_HSL"],
     "prefix": str,
     "in_vec": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],

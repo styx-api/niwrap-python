@@ -14,7 +14,7 @@ SPHARM_RECO_METADATA = Metadata(
 
 
 SpharmRecoParameters = typing.TypedDict('SpharmRecoParameters', {
-    "__STYX_TYPE__": typing.Literal["SpharmReco"],
+    "__STYXTYPE__": typing.Literal["SpharmReco"],
     "input_surface": str,
     "decomposition_order": float,
     "bases_prefix": str,

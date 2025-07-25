@@ -14,7 +14,7 @@ SIENA_METADATA = Metadata(
 
 
 SienaParameters = typing.TypedDict('SienaParameters', {
-    "__STYX_TYPE__": typing.Literal["siena"],
+    "__STYXTYPE__": typing.Literal["siena"],
     "input1": InputPathType,
     "input2": InputPathType,
     "output_dir": typing.NotRequired[str | None],

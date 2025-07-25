@@ -14,7 +14,7 @@ B0CALC_METADATA = Metadata(
 
 
 B0calcParameters = typing.TypedDict('B0calcParameters', {
-    "__STYX_TYPE__": typing.Literal["b0calc"],
+    "__STYXTYPE__": typing.Literal["b0calc"],
     "input_file": InputPathType,
     "output_file": str,
     "zero_order_x": typing.NotRequired[float | None],

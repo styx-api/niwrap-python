@@ -14,7 +14,7 @@ MRI_VOL2LABEL_METADATA = Metadata(
 
 
 MriVol2labelParameters = typing.TypedDict('MriVol2labelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_vol2label"],
+    "__STYXTYPE__": typing.Literal["mri_vol2label"],
     "input": InputPathType,
     "label_id": typing.NotRequired[float | None],
     "threshold": typing.NotRequired[float | None],

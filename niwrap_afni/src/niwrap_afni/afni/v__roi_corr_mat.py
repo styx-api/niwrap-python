@@ -14,7 +14,7 @@ V__ROI_CORR_MAT_METADATA = Metadata(
 
 
 VRoiCorrMatParameters = typing.TypedDict('VRoiCorrMatParameters', {
-    "__STYX_TYPE__": typing.Literal["@ROI_Corr_Mat"],
+    "__STYXTYPE__": typing.Literal["@ROI_Corr_Mat"],
     "ts_vol": InputPathType,
     "roi_vol": InputPathType,
     "prefix": str,

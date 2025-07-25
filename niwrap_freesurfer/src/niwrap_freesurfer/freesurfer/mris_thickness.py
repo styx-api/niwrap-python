@@ -14,7 +14,7 @@ MRIS_THICKNESS_METADATA = Metadata(
 
 
 MrisThicknessParameters = typing.TypedDict('MrisThicknessParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_thickness"],
+    "__STYXTYPE__": typing.Literal["mris_thickness"],
     "subject_name": str,
     "hemi": str,
     "thickness_file": str,

@@ -14,7 +14,7 @@ V__AUTO_TLRC_METADATA = Metadata(
 
 
 VAutoTlrcParameters = typing.TypedDict('VAutoTlrcParameters', {
-    "__STYX_TYPE__": typing.Literal["@auto_tlrc"],
+    "__STYXTYPE__": typing.Literal["@auto_tlrc"],
     "base_template": InputPathType,
     "input_anat": InputPathType,
     "no_ss": bool,

@@ -14,7 +14,7 @@ V_3D_REG_ANA_METADATA = Metadata(
 
 
 V3dRegAnaParameters = typing.TypedDict('V3dRegAnaParameters', {
-    "__STYX_TYPE__": typing.Literal["3dRegAna"],
+    "__STYXTYPE__": typing.Literal["3dRegAna"],
     "rows": float,
     "cols": float,
     "xydata": list[str],

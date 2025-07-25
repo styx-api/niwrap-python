@@ -14,7 +14,7 @@ MRI_CNR_METADATA = Metadata(
 
 
 MriCnrParameters = typing.TypedDict('MriCnrParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_cnr"],
+    "__STYXTYPE__": typing.Literal["mri_cnr"],
     "surf_dir": str,
     "volume_files": list[InputPathType],
     "slope": typing.NotRequired[list[str] | None],

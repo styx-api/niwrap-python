@@ -14,7 +14,7 @@ V_3D_MANN_WHITNEY_METADATA = Metadata(
 
 
 V3dMannWhitneyParameters = typing.TypedDict('V3dMannWhitneyParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMannWhitney"],
+    "__STYXTYPE__": typing.Literal["3dMannWhitney"],
     "dset1_x": list[str],
     "dset2_y": list[str],
     "output_prefix": str,

@@ -14,7 +14,7 @@ V_3_DROIMAKER_METADATA = Metadata(
 
 
 V3DroimakerParameters = typing.TypedDict('V3DroimakerParameters', {
-    "__STYX_TYPE__": typing.Literal["3DROIMaker"],
+    "__STYXTYPE__": typing.Literal["3DROIMaker"],
     "inset": InputPathType,
     "thresh": float,
     "prefix": str,

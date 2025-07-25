@@ -14,7 +14,7 @@ IMLN_METADATA = Metadata(
 
 
 ImlnParameters = typing.TypedDict('ImlnParameters', {
-    "__STYX_TYPE__": typing.Literal["imln"],
+    "__STYXTYPE__": typing.Literal["imln"],
     "input_file": InputPathType,
     "link_name": str,
 })

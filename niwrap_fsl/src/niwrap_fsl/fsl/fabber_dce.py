@@ -14,7 +14,7 @@ FABBER_DCE_METADATA = Metadata(
 
 
 FabberDceParameters = typing.TypedDict('FabberDceParameters', {
-    "__STYX_TYPE__": typing.Literal["fabber_dce"],
+    "__STYXTYPE__": typing.Literal["fabber_dce"],
     "output_directory": str,
     "inference_method": str,
     "forward_model": str,

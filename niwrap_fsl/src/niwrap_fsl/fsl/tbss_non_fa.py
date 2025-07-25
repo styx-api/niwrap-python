@@ -14,7 +14,7 @@ TBSS_NON_FA_METADATA = Metadata(
 
 
 TbssNonFaParameters = typing.TypedDict('TbssNonFaParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_non_FA"],
+    "__STYXTYPE__": typing.Literal["tbss_non_FA"],
     "concat_auto": bool,
     "output_file": str,
     "input_files": list[InputPathType],

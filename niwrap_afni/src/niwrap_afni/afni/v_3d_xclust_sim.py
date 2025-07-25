@@ -14,7 +14,7 @@ V_3D_XCLUST_SIM_METADATA = Metadata(
 
 
 V3dXclustSimParameters = typing.TypedDict('V3dXclustSimParameters', {
-    "__STYX_TYPE__": typing.Literal["3dXClustSim"],
+    "__STYXTYPE__": typing.Literal["3dXClustSim"],
     "inset": InputPathType,
     "insdat": typing.NotRequired[InputPathType | None],
     "nn": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ MRI_SURF2SURF_METADATA = Metadata(
 
 
 MriSurf2surfParameters = typing.TypedDict('MriSurf2surfParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_surf2surf"],
+    "__STYXTYPE__": typing.Literal["mri_surf2surf"],
     "src_subject": str,
     "sval_path": typing.NotRequired[InputPathType | None],
     "sval_xyz": typing.NotRequired[str | None],

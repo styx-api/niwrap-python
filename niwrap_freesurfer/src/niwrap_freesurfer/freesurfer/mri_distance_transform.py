@@ -14,7 +14,7 @@ MRI_DISTANCE_TRANSFORM_METADATA = Metadata(
 
 
 MriDistanceTransformParameters = typing.TypedDict('MriDistanceTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_distance_transform"],
+    "__STYXTYPE__": typing.Literal["mri_distance_transform"],
     "input_volume": InputPathType,
     "label": int,
     "max_distance": int,

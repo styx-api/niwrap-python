@@ -14,7 +14,7 @@ AFNI_PROC_PY_METADATA = Metadata(
 
 
 AfniProcPyParameters = typing.TypedDict('AfniProcPyParameters', {
-    "__STYX_TYPE__": typing.Literal["afni_proc.py"],
+    "__STYXTYPE__": typing.Literal["afni_proc.py"],
     "dsets": list[InputPathType],
     "subj_id": str,
     "out_dir": typing.NotRequired[str | None],

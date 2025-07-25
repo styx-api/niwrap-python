@@ -14,7 +14,7 @@ MRI_ROBUST_TEMPLATE_METADATA = Metadata(
 
 
 MriRobustTemplateParameters = typing.TypedDict('MriRobustTemplateParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_robust_template"],
+    "__STYXTYPE__": typing.Literal["mri_robust_template"],
     "mov_files": list[InputPathType],
     "template_file": str,
     "sat_value": typing.NotRequired[float | None],

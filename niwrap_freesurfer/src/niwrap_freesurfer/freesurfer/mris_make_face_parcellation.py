@@ -14,7 +14,7 @@ MRIS_MAKE_FACE_PARCELLATION_METADATA = Metadata(
 
 
 MrisMakeFaceParcellationParameters = typing.TypedDict('MrisMakeFaceParcellationParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_make_face_parcellation"],
+    "__STYXTYPE__": typing.Literal["mris_make_face_parcellation"],
     "input_surface": InputPathType,
     "ico_file": InputPathType,
     "output_annot": str,

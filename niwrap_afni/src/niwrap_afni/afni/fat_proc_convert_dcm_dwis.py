@@ -14,7 +14,7 @@ FAT_PROC_CONVERT_DCM_DWIS_METADATA = Metadata(
 
 
 FatProcConvertDcmDwisParameters = typing.TypedDict('FatProcConvertDcmDwisParameters', {
-    "__STYX_TYPE__": typing.Literal["fat_proc_convert_dcm_dwis"],
+    "__STYXTYPE__": typing.Literal["fat_proc_convert_dcm_dwis"],
     "dicom_dir": str,
     "output_prefix": str,
     "nifti_files": typing.NotRequired[list[InputPathType] | None],

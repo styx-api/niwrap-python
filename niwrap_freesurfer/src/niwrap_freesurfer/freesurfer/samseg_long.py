@@ -14,7 +14,7 @@ SAMSEG_LONG_METADATA = Metadata(
 
 
 SamsegLongParameters = typing.TypedDict('SamsegLongParameters', {
-    "__STYX_TYPE__": typing.Literal["samseg-long"],
+    "__STYXTYPE__": typing.Literal["samseg-long"],
     "output_dir": str,
     "input_files": list[InputPathType],
     "align_mc": bool,

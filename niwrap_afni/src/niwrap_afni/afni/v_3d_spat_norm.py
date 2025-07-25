@@ -14,7 +14,7 @@ V_3D_SPAT_NORM_METADATA = Metadata(
 
 
 V3dSpatNormParameters = typing.TypedDict('V3dSpatNormParameters', {
-    "__STYX_TYPE__": typing.Literal["3dSpatNorm"],
+    "__STYXTYPE__": typing.Literal["3dSpatNorm"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "orig_space": bool,

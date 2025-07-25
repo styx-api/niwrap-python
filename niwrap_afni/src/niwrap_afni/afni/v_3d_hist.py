@@ -14,7 +14,7 @@ V_3D_HIST_METADATA = Metadata(
 
 
 V3dHistParameters = typing.TypedDict('V3dHistParameters', {
-    "__STYX_TYPE__": typing.Literal["3dHist"],
+    "__STYXTYPE__": typing.Literal["3dHist"],
     "input": InputPathType,
     "dind_subbrick": typing.NotRequired[float | None],
     "mask_dset": typing.NotRequired[InputPathType | None],

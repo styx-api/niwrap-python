@@ -14,7 +14,7 @@ MRIS_INFLATE_METADATA = Metadata(
 
 
 MrisInflateParameters = typing.TypedDict('MrisInflateParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_inflate"],
+    "__STYXTYPE__": typing.Literal["mris_inflate"],
     "input_surface": InputPathType,
     "output_surface": str,
     "max_iterations": typing.NotRequired[float | None],

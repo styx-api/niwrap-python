@@ -14,7 +14,7 @@ CIFTI_VECTOR_OPERATION_METADATA = Metadata(
 
 
 CiftiVectorOperationParameters = typing.TypedDict('CiftiVectorOperationParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-vector-operation"],
+    "__STYXTYPE__": typing.Literal["cifti-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,

@@ -14,7 +14,7 @@ V__FAT_TRACT_COLORIZE_METADATA = Metadata(
 
 
 VFatTractColorizeParameters = typing.TypedDict('VFatTractColorizeParameters', {
-    "__STYX_TYPE__": typing.Literal["@fat_tract_colorize"],
+    "__STYXTYPE__": typing.Literal["@fat_tract_colorize"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "in_tracts": str,

@@ -14,7 +14,7 @@ RECON_ALL_CLINICAL_SH_METADATA = Metadata(
 
 
 ReconAllClinicalShParameters = typing.TypedDict('ReconAllClinicalShParameters', {
-    "__STYX_TYPE__": typing.Literal["recon-all-clinical.sh"],
+    "__STYXTYPE__": typing.Literal["recon-all-clinical.sh"],
     "input_scan": InputPathType,
     "subject_id": str,
     "threads": int,

@@ -14,7 +14,7 @@ LESION_FILLING_METADATA = Metadata(
 
 
 LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
-    "__STYX_TYPE__": typing.Literal["LesionFilling"],
+    "__STYXTYPE__": typing.Literal["LesionFilling"],
     "image_dimension": int,
     "t1_image": InputPathType,
     "lesion_mask": InputPathType,

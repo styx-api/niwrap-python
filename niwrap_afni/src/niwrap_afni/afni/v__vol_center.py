@@ -14,7 +14,7 @@ V__VOL_CENTER_METADATA = Metadata(
 
 
 VVolCenterParameters = typing.TypedDict('VVolCenterParameters', {
-    "__STYX_TYPE__": typing.Literal["@VolCenter"],
+    "__STYXTYPE__": typing.Literal["@VolCenter"],
     "dset": InputPathType,
     "orient": typing.NotRequired[str | None],
 })

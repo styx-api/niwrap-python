@@ -14,7 +14,7 @@ MRIS_REMOVE_NEGATIVE_VERTICES_METADATA = Metadata(
 
 
 MrisRemoveNegativeVerticesParameters = typing.TypedDict('MrisRemoveNegativeVerticesParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_remove_negative_vertices"],
+    "__STYXTYPE__": typing.Literal["mris_remove_negative_vertices"],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,

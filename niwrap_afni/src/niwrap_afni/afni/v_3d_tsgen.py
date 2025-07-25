@@ -14,7 +14,7 @@ V_3D_TSGEN_METADATA = Metadata(
 
 
 V3dTsgenParameters = typing.TypedDict('V3dTsgenParameters', {
-    "__STYX_TYPE__": typing.Literal["3dTSgen"],
+    "__STYXTYPE__": typing.Literal["3dTSgen"],
     "input_file": InputPathType,
     "in_tr_flag": bool,
     "signal_label": str,

@@ -14,7 +14,7 @@ V__AFNI_R_PACKAGE_INSTALL_METADATA = Metadata(
 
 
 VAfniRPackageInstallParameters = typing.TypedDict('VAfniRPackageInstallParameters', {
-    "__STYX_TYPE__": typing.Literal["@afni_R_package_install"],
+    "__STYXTYPE__": typing.Literal["@afni_R_package_install"],
     "afni": bool,
     "shiny": bool,
     "bayes_view": bool,

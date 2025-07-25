@@ -14,7 +14,7 @@ QUICK_ALPHA_VALS_PY_METADATA = Metadata(
 
 
 QuickAlphaValsPyParameters = typing.TypedDict('QuickAlphaValsPyParameters', {
-    "__STYX_TYPE__": typing.Literal["quick.alpha.vals.py"],
+    "__STYXTYPE__": typing.Literal["quick.alpha.vals.py"],
     "niter": typing.NotRequired[int | None],
     "max_file": InputPathType,
 })

@@ -14,7 +14,7 @@ MRI_MI_METADATA = Metadata(
 
 
 MriMiParameters = typing.TypedDict('MriMiParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_mi"],
+    "__STYXTYPE__": typing.Literal["mri_mi"],
     "input_file1": InputPathType,
     "input_file2": InputPathType,
     "bins": typing.NotRequired[str | None],

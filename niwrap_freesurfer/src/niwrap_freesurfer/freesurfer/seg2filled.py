@@ -14,7 +14,7 @@ SEG2FILLED_METADATA = Metadata(
 
 
 Seg2filledParameters = typing.TypedDict('Seg2filledParameters', {
-    "__STYX_TYPE__": typing.Literal["seg2filled"],
+    "__STYXTYPE__": typing.Literal["seg2filled"],
     "seg_file": InputPathType,
     "norm_file": InputPathType,
     "output_file": str,

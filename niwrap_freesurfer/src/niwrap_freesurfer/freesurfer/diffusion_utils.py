@@ -14,7 +14,7 @@ DIFFUSION_UTILS_METADATA = Metadata(
 
 
 DiffusionUtilsParameters = typing.TypedDict('DiffusionUtilsParameters', {
-    "__STYX_TYPE__": typing.Literal["diffusionUtils"],
+    "__STYXTYPE__": typing.Literal["diffusionUtils"],
     "dummy_flag": bool,
 })
 

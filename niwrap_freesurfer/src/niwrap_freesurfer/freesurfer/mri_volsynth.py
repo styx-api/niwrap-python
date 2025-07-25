@@ -14,7 +14,7 @@ MRI_VOLSYNTH_METADATA = Metadata(
 
 
 MriVolsynthParameters = typing.TypedDict('MriVolsynthParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_volsynth"],
+    "__STYXTYPE__": typing.Literal["mri_volsynth"],
     "output_volid": str,
     "template": typing.NotRequired[str | None],
     "nframes": typing.NotRequired[float | None],

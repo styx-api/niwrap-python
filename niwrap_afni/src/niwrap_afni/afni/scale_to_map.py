@@ -14,14 +14,14 @@ SCALE_TO_MAP_METADATA = Metadata(
 
 
 ScaleToMapTraceParameters = typing.TypedDict('ScaleToMapTraceParameters', {
-    "__STYX_TYPE__": typing.Literal["trace"],
+    "__STYXTYPE__": typing.Literal["trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
 ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
-    "__STYX_TYPE__": typing.Literal["ScaleToMap"],
+    "__STYXTYPE__": typing.Literal["ScaleToMap"],
     "input_file": InputPathType,
     "icol": float,
     "vcol": float,

@@ -14,7 +14,7 @@ TILE_IMAGES_METADATA = Metadata(
 
 
 TileImagesParameters = typing.TypedDict('TileImagesParameters', {
-    "__STYX_TYPE__": typing.Literal["TileImages"],
+    "__STYXTYPE__": typing.Literal["TileImages"],
     "image_dimension": int,
     "output_image": str,
     "layout": str,

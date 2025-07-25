@@ -14,7 +14,7 @@ VOLUME_FILL_HOLES_METADATA = Metadata(
 
 
 VolumeFillHolesParameters = typing.TypedDict('VolumeFillHolesParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-fill-holes"],
+    "__STYXTYPE__": typing.Literal["volume-fill-holes"],
     "volume_in": InputPathType,
     "volume_out": str,
 })

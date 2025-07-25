@@ -14,7 +14,7 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
 
 
 VolumeLabelImportParameters = typing.TypedDict('VolumeLabelImportParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-label-import"],
+    "__STYXTYPE__": typing.Literal["volume-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,

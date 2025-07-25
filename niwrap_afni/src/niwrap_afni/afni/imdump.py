@@ -14,7 +14,7 @@ IMDUMP_METADATA = Metadata(
 
 
 ImdumpParameters = typing.TypedDict('ImdumpParameters', {
-    "__STYX_TYPE__": typing.Literal["imdump"],
+    "__STYXTYPE__": typing.Literal["imdump"],
     "input_image": InputPathType,
 })
 

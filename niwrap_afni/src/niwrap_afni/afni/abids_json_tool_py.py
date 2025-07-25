@@ -14,7 +14,7 @@ ABIDS_JSON_TOOL_PY_METADATA = Metadata(
 
 
 AbidsJsonToolPyParameters = typing.TypedDict('AbidsJsonToolPyParameters', {
-    "__STYX_TYPE__": typing.Literal["abids_json_tool.py"],
+    "__STYXTYPE__": typing.Literal["abids_json_tool.py"],
     "input_file": InputPathType,
     "prefix": str,
     "txt2json": bool,

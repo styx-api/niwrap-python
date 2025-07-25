@@ -14,7 +14,7 @@ FIM2_METADATA = Metadata(
 
 
 Fim2Parameters = typing.TypedDict('Fim2Parameters', {
-    "__STYX_TYPE__": typing.Literal["fim2"],
+    "__STYXTYPE__": typing.Literal["fim2"],
     "image_files": list[InputPathType],
     "pcnt": typing.NotRequired[float | None],
     "pcthresh": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ TRACTSTATS2TABLE_METADATA = Metadata(
 
 
 Tractstats2tableParameters = typing.TypedDict('Tractstats2tableParameters', {
-    "__STYX_TYPE__": typing.Literal["tractstats2table"],
+    "__STYXTYPE__": typing.Literal["tractstats2table"],
     "inputs": typing.NotRequired[list[str] | None],
     "load_pathstats_from_file": typing.NotRequired[InputPathType | None],
     "overall": bool,

@@ -14,7 +14,7 @@ LONGMC_METADATA = Metadata(
 
 
 LongmcParameters = typing.TypedDict('LongmcParameters', {
-    "__STYX_TYPE__": typing.Literal["longmc"],
+    "__STYXTYPE__": typing.Literal["longmc"],
     "cross_tp_name": str,
     "base_name": str,
     "conform_to_hires": bool,

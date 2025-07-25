@@ -14,7 +14,7 @@ RBOX_METADATA = Metadata(
 
 
 RboxParameters = typing.TypedDict('RboxParameters', {
-    "__STYX_TYPE__": typing.Literal["rbox"],
+    "__STYXTYPE__": typing.Literal["rbox"],
     "number_points": str,
     "dimension": typing.NotRequired[str | None],
     "unit_cube": bool,

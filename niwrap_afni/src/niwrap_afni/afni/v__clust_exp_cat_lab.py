@@ -14,7 +14,7 @@ V__CLUST_EXP_CAT_LAB_METADATA = Metadata(
 
 
 VClustExpCatLabParameters = typing.TypedDict('VClustExpCatLabParameters', {
-    "__STYX_TYPE__": typing.Literal["@ClustExp_CatLab"],
+    "__STYXTYPE__": typing.Literal["@ClustExp_CatLab"],
     "prefix": str,
     "input_file": InputPathType,
     "help": bool,

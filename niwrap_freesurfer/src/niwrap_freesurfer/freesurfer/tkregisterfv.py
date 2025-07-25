@@ -14,7 +14,7 @@ TKREGISTERFV_METADATA = Metadata(
 
 
 TkregisterfvParameters = typing.TypedDict('TkregisterfvParameters', {
-    "__STYX_TYPE__": typing.Literal["tkregisterfv"],
+    "__STYXTYPE__": typing.Literal["tkregisterfv"],
     "mov": typing.NotRequired[InputPathType | None],
     "targ": typing.NotRequired[InputPathType | None],
     "reg": InputPathType,

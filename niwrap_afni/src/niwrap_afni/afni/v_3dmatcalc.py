@@ -14,7 +14,7 @@ V_3DMATCALC_METADATA = Metadata(
 
 
 V3dmatcalcParameters = typing.TypedDict('V3dmatcalcParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmatcalc"],
+    "__STYXTYPE__": typing.Literal["3dmatcalc"],
     "input_dataset": InputPathType,
     "input_matrix": InputPathType,
     "output_dataset": str,

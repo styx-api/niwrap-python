@@ -14,7 +14,7 @@ FSL_GEN_3_D_METADATA = Metadata(
 
 
 FslGen3DParameters = typing.TypedDict('FslGen3DParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_gen_3D"],
+    "__STYXTYPE__": typing.Literal["fsl_gen_3D"],
     "infile": InputPathType,
     "outfile": InputPathType,
 })

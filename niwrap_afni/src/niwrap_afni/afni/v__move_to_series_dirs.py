@@ -14,7 +14,7 @@ V__MOVE_TO_SERIES_DIRS_METADATA = Metadata(
 
 
 VMoveToSeriesDirsParameters = typing.TypedDict('VMoveToSeriesDirsParameters', {
-    "__STYX_TYPE__": typing.Literal["@move.to.series.dirs"],
+    "__STYXTYPE__": typing.Literal["@move.to.series.dirs"],
     "action": typing.NotRequired[typing.Literal["copy", "move"] | None],
     "dprefix": typing.NotRequired[str | None],
     "tag": typing.NotRequired[str | None],

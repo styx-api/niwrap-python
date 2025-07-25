@@ -14,7 +14,7 @@ SURF2_VOL_COORD_METADATA = Metadata(
 
 
 Surf2VolCoordParameters = typing.TypedDict('Surf2VolCoordParameters', {
-    "__STYX_TYPE__": typing.Literal["Surf2VolCoord"],
+    "__STYXTYPE__": typing.Literal["Surf2VolCoord"],
     "surface": str,
     "grid_vol": InputPathType,
     "grid_subbrick": typing.NotRequired[float | None],

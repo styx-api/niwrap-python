@@ -14,7 +14,7 @@ DIMON_METADATA = Metadata(
 
 
 DimonParameters = typing.TypedDict('DimonParameters', {
-    "__STYX_TYPE__": typing.Literal["Dimon"],
+    "__STYXTYPE__": typing.Literal["Dimon"],
     "infile_prefix": str,
     "infile_pattern": typing.NotRequired[str | None],
     "infile_list": typing.NotRequired[InputPathType | None],

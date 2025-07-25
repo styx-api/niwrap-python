@@ -14,7 +14,7 @@ MRI_COMPUTE_OVERLAP_METADATA = Metadata(
 
 
 MriComputeOverlapParameters = typing.TypedDict('MriComputeOverlapParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compute_overlap"],
+    "__STYXTYPE__": typing.Literal["mri_compute_overlap"],
     "volumes": list[InputPathType],
     "label_numbers": typing.NotRequired[list[str] | None],
     "all_labels": bool,

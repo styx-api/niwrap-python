@@ -14,7 +14,7 @@ UNPACK_IMA1_TCL_METADATA = Metadata(
 
 
 UnpackIma1TclParameters = typing.TypedDict('UnpackIma1TclParameters', {
-    "__STYX_TYPE__": typing.Literal["unpack_ima1.tcl"],
+    "__STYXTYPE__": typing.Literal["unpack_ima1.tcl"],
     "input_directory": str,
     "output_directory": str,
 })

@@ -14,14 +14,14 @@ TCKINFO_METADATA = Metadata(
 
 
 TckinfoConfigParameters = typing.TypedDict('TckinfoConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 TckinfoParameters = typing.TypedDict('TckinfoParameters', {
-    "__STYX_TYPE__": typing.Literal["tckinfo"],
+    "__STYXTYPE__": typing.Literal["tckinfo"],
     "count": bool,
     "info": bool,
     "quiet": bool,

@@ -14,7 +14,7 @@ IMMV_METADATA = Metadata(
 
 
 ImmvParameters = typing.TypedDict('ImmvParameters', {
-    "__STYX_TYPE__": typing.Literal["immv"],
+    "__STYXTYPE__": typing.Literal["immv"],
     "source_files": list[InputPathType],
     "destination": str,
 })

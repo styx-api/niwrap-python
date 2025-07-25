@@ -14,7 +14,7 @@ VOLUME_REORIENT_METADATA = Metadata(
 
 
 VolumeReorientParameters = typing.TypedDict('VolumeReorientParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-reorient"],
+    "__STYXTYPE__": typing.Literal["volume-reorient"],
     "volume": InputPathType,
     "orient_string": str,
     "volume_out": str,

@@ -14,7 +14,7 @@ SLOW_SURF_CLUSTSIM_PY_METADATA = Metadata(
 
 
 SlowSurfClustsimPyParameters = typing.TypedDict('SlowSurfClustsimPyParameters', {
-    "__STYX_TYPE__": typing.Literal["slow_surf_clustsim.py"],
+    "__STYXTYPE__": typing.Literal["slow_surf_clustsim.py"],
     "on_surface": typing.NotRequired[str | None],
     "save_script": typing.NotRequired[str | None],
     "print_script": bool,

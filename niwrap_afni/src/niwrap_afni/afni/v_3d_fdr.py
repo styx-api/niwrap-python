@@ -14,7 +14,7 @@ V_3D_FDR_METADATA = Metadata(
 
 
 V3dFdrParameters = typing.TypedDict('V3dFdrParameters', {
-    "__STYX_TYPE__": typing.Literal["3dFDR"],
+    "__STYXTYPE__": typing.Literal["3dFDR"],
     "input_file": InputPathType,
     "input1d_file": typing.NotRequired[InputPathType | None],
     "mask_file": typing.NotRequired[InputPathType | None],

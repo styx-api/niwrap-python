@@ -14,13 +14,13 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 MetricEstimateFwhmWholeFileParameters = typing.TypedDict('MetricEstimateFwhmWholeFileParameters', {
-    "__STYX_TYPE__": typing.Literal["whole_file"],
+    "__STYXTYPE__": typing.Literal["whole_file"],
     "opt_demean": bool,
 })
 
 
 MetricEstimateFwhmParameters = typing.TypedDict('MetricEstimateFwhmParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-estimate-fwhm"],
+    "__STYXTYPE__": typing.Literal["metric-estimate-fwhm"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],

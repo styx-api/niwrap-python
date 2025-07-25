@@ -14,7 +14,7 @@ TALSEGPROB_METADATA = Metadata(
 
 
 TalsegprobParameters = typing.TypedDict('TalsegprobParameters', {
-    "__STYX_TYPE__": typing.Literal["talsegprob"],
+    "__STYXTYPE__": typing.Literal["talsegprob"],
     "subjects_list": typing.NotRequired[list[str] | None],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "segmentation_number": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ FSL_RIGID_REGISTER_METADATA = Metadata(
 
 
 FslRigidRegisterParameters = typing.TypedDict('FslRigidRegisterParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_rigid_register"],
+    "__STYXTYPE__": typing.Literal["fsl_rigid_register"],
     "refvol": InputPathType,
     "inputvol": InputPathType,
     "outputvol": str,

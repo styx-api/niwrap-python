@@ -14,7 +14,7 @@ MRI_FSLMAT_TO_LTA_METADATA = Metadata(
 
 
 MriFslmatToLtaParameters = typing.TypedDict('MriFslmatToLtaParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_fslmat_to_lta"],
+    "__STYXTYPE__": typing.Literal["mri_fslmat_to_lta"],
     "src_vol": InputPathType,
     "target_vol": InputPathType,
     "fslmat_file": InputPathType,

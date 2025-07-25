@@ -14,7 +14,7 @@ CBLUMWMGYRI_METADATA = Metadata(
 
 
 CblumwmgyriParameters = typing.TypedDict('CblumwmgyriParameters', {
-    "__STYX_TYPE__": typing.Literal["cblumwmgyri"],
+    "__STYXTYPE__": typing.Literal["cblumwmgyri"],
     "subject": str,
     "source_seg": typing.NotRequired[InputPathType | None],
     "n_erodes_dilates": typing.NotRequired[float | None],

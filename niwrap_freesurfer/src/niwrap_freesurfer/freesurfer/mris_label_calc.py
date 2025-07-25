@@ -14,7 +14,7 @@ MRIS_LABEL_CALC_METADATA = Metadata(
 
 
 MrisLabelCalcParameters = typing.TypedDict('MrisLabelCalcParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_label_calc"],
+    "__STYXTYPE__": typing.Literal["mris_label_calc"],
     "command": typing.Literal["union", "intersect", "invert", "erode", "dilate"],
     "input1": InputPathType,
     "input2": InputPathType,

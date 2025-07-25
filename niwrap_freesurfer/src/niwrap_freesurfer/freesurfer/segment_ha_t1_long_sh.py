@@ -14,7 +14,7 @@ SEGMENT_HA_T1_LONG_SH_METADATA = Metadata(
 
 
 SegmentHaT1LongShParameters = typing.TypedDict('SegmentHaT1LongShParameters', {
-    "__STYX_TYPE__": typing.Literal["segmentHA_T1_long.sh"],
+    "__STYXTYPE__": typing.Literal["segmentHA_T1_long.sh"],
     "subject_dir": str,
     "subject_id": str,
 })

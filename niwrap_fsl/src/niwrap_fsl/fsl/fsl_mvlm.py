@@ -14,7 +14,7 @@ FSL_MVLM_METADATA = Metadata(
 
 
 FslMvlmParameters = typing.TypedDict('FslMvlmParameters', {
-    "__STYX_TYPE__": typing.Literal["fsl_mvlm"],
+    "__STYXTYPE__": typing.Literal["fsl_mvlm"],
     "input_file": InputPathType,
     "basename_output_files": str,
     "algorithm": typing.NotRequired[str | None],

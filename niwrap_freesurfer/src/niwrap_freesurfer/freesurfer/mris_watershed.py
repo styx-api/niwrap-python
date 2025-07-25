@@ -14,7 +14,7 @@ MRIS_WATERSHED_METADATA = Metadata(
 
 
 MrisWatershedParameters = typing.TypedDict('MrisWatershedParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_watershed"],
+    "__STYXTYPE__": typing.Literal["mris_watershed"],
     "input_surface": InputPathType,
     "input_gradient_field": InputPathType,
     "output_annotation": str,

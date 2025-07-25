@@ -14,7 +14,7 @@ PTA_METADATA = Metadata(
 
 
 PtaParameters = typing.TypedDict('PtaParameters', {
-    "__STYX_TYPE__": typing.Literal["PTA"],
+    "__STYXTYPE__": typing.Literal["PTA"],
     "prefix": str,
     "input_file": InputPathType,
     "model_formula": str,

@@ -14,7 +14,7 @@ CP_DICOM_METADATA = Metadata(
 
 
 CpDicomParameters = typing.TypedDict('CpDicomParameters', {
-    "__STYX_TYPE__": typing.Literal["cp-dicom"],
+    "__STYXTYPE__": typing.Literal["cp-dicom"],
     "dicom_dir": str,
     "output_dir": str,
     "debug": bool,

@@ -14,7 +14,7 @@ MRI_COMPUTE_VOLUME_INTENSITIES_METADATA = Metadata(
 
 
 MriComputeVolumeIntensitiesParameters = typing.TypedDict('MriComputeVolumeIntensitiesParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_compute_volume_intensities"],
+    "__STYXTYPE__": typing.Literal["mri_compute_volume_intensities"],
     "input_intensity": InputPathType,
     "volume_fraction_stem": str,
     "output_volume": str,

@@ -14,7 +14,7 @@ MRIS_MAP_CUTS_METADATA = Metadata(
 
 
 MrisMapCutsParameters = typing.TypedDict('MrisMapCutsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_map_cuts"],
+    "__STYXTYPE__": typing.Literal["mris_map_cuts"],
     "input_patch": InputPathType,
     "output_patch": str,
 })

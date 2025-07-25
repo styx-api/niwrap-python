@@ -14,7 +14,7 @@ DCMSPLIT_METADATA = Metadata(
 
 
 DcmsplitParameters = typing.TypedDict('DcmsplitParameters', {
-    "__STYX_TYPE__": typing.Literal["dcmsplit"],
+    "__STYXTYPE__": typing.Literal["dcmsplit"],
     "dcm_dir": str,
     "out_dir": str,
     "copy": bool,

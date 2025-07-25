@@ -14,7 +14,7 @@ ANATOMICAL_AVERAGE_METADATA = Metadata(
 
 
 AnatomicalAverageParameters = typing.TypedDict('AnatomicalAverageParameters', {
-    "__STYX_TYPE__": typing.Literal["AnatomicalAverage"],
+    "__STYXTYPE__": typing.Literal["AnatomicalAverage"],
     "output_basename": str,
     "input_images": list[InputPathType],
     "standard_image": typing.NotRequired[InputPathType | None],

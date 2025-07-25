@@ -14,7 +14,7 @@ QBOOT_METADATA = Metadata(
 
 
 QbootParameters = typing.TypedDict('QbootParameters', {
-    "__STYX_TYPE__": typing.Literal["qboot"],
+    "__STYXTYPE__": typing.Literal["qboot"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvecs_file": InputPathType,

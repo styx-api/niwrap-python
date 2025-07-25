@@ -14,7 +14,7 @@ FSLCOMPLEX_METADATA = Metadata(
 
 
 FslcomplexParameters = typing.TypedDict('FslcomplexParameters', {
-    "__STYX_TYPE__": typing.Literal["fslcomplex"],
+    "__STYXTYPE__": typing.Literal["fslcomplex"],
     "input_file": InputPathType,
     "output_file": str,
     "output_type": typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"],

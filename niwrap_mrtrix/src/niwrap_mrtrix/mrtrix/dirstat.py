@@ -14,21 +14,21 @@ DIRSTAT_METADATA = Metadata(
 
 
 DirstatFslgradParameters = typing.TypedDict('DirstatFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DirstatConfigParameters = typing.TypedDict('DirstatConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DirstatParameters = typing.TypedDict('DirstatParameters', {
-    "__STYX_TYPE__": typing.Literal["dirstat"],
+    "__STYXTYPE__": typing.Literal["dirstat"],
     "output": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[float] | None],
     "grad": typing.NotRequired[InputPathType | None],

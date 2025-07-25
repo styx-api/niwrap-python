@@ -14,7 +14,7 @@ DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA = Metadata(
 
 
 DmriExtractSurfaceMeasurementsParameters = typing.TypedDict('DmriExtractSurfaceMeasurementsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_extractSurfaceMeasurements"],
+    "__STYXTYPE__": typing.Literal["dmri_extractSurfaceMeasurements"],
     "streamline_file": InputPathType,
     "lh_surface_file": InputPathType,
     "lh_thickness_overlay": InputPathType,

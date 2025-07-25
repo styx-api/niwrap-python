@@ -14,7 +14,7 @@ V_3D_MULTI_THRESH_METADATA = Metadata(
 
 
 V3dMultiThreshParameters = typing.TypedDict('V3dMultiThreshParameters', {
-    "__STYX_TYPE__": typing.Literal["3dMultiThresh"],
+    "__STYXTYPE__": typing.Literal["3dMultiThresh"],
     "mthresh_file": InputPathType,
     "input_file": InputPathType,
     "index": typing.NotRequired[float | None],

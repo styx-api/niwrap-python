@@ -14,7 +14,7 @@ FOCI_CREATE_METADATA = Metadata(
 
 
 FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
-    "__STYX_TYPE__": typing.Literal["class"],
+    "__STYXTYPE__": typing.Literal["class"],
     "class_name": str,
     "foci_list_file": str,
     "surface": InputPathType,
@@ -22,7 +22,7 @@ FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
 
 
 FociCreateParameters = typing.TypedDict('FociCreateParameters', {
-    "__STYX_TYPE__": typing.Literal["foci-create"],
+    "__STYXTYPE__": typing.Literal["foci-create"],
     "output": str,
     "class": typing.NotRequired[list[FociCreateClassParameters] | None],
 })

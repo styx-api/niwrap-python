@@ -14,7 +14,7 @@ ANTS_REGISTRATION_SY_N_SH_METADATA = Metadata(
 
 
 AntsRegistrationSyNShParameters = typing.TypedDict('AntsRegistrationSyNShParameters', {
-    "__STYX_TYPE__": typing.Literal["antsRegistrationSyN.sh"],
+    "__STYXTYPE__": typing.Literal["antsRegistrationSyN.sh"],
     "image_dimension": typing.Literal[2, 3],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,

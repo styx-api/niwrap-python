@@ -14,7 +14,7 @@ V_3D_STAT_CLUST_METADATA = Metadata(
 
 
 V3dStatClustParameters = typing.TypedDict('V3dStatClustParameters', {
-    "__STYX_TYPE__": typing.Literal["3dStatClust"],
+    "__STYXTYPE__": typing.Literal["3dStatClust"],
     "prefix": typing.NotRequired[str | None],
     "session_dir": typing.NotRequired[str | None],
     "verbose": bool,

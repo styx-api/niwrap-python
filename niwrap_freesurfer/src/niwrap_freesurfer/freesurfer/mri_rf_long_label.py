@@ -14,7 +14,7 @@ MRI_RF_LONG_LABEL_METADATA = Metadata(
 
 
 MriRfLongLabelParameters = typing.TypedDict('MriRfLongLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_rf_long_label"],
+    "__STYXTYPE__": typing.Literal["mri_rf_long_label"],
     "help_flag": typing.NotRequired[str | None],
 })
 

@@ -14,7 +14,7 @@ V_2DCAT_METADATA = Metadata(
 
 
 V2dcatParameters = typing.TypedDict('V2dcatParameters', {
-    "__STYX_TYPE__": typing.Literal["2dcat"],
+    "__STYXTYPE__": typing.Literal["2dcat"],
     "filenames": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
     "scale_pixels": typing.NotRequired[InputPathType | None],

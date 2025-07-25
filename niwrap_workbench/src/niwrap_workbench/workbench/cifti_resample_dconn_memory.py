@@ -14,14 +14,14 @@ CIFTI_RESAMPLE_DCONN_MEMORY_METADATA = Metadata(
 
 
 CiftiResampleDconnMemoryWeightedParameters = typing.TypedDict('CiftiResampleDconnMemoryWeightedParameters', {
-    "__STYX_TYPE__": typing.Literal["weighted"],
+    "__STYXTYPE__": typing.Literal["weighted"],
     "opt_exponent_exponent": typing.NotRequired[float | None],
     "opt_legacy_cutoff": bool,
 })
 
 
 CiftiResampleDconnMemoryVolumePredilateParameters = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParameters', {
-    "__STYX_TYPE__": typing.Literal["volume_predilate"],
+    "__STYXTYPE__": typing.Literal["volume_predilate"],
     "dilate_mm": float,
     "opt_nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParameters | None],
@@ -29,14 +29,14 @@ CiftiResampleDconnMemoryVolumePredilateParameters = typing.TypedDict('CiftiResam
 
 
 CiftiResampleDconnMemoryWeighted1Parameters = typing.TypedDict('CiftiResampleDconnMemoryWeighted1Parameters', {
-    "__STYX_TYPE__": typing.Literal["weighted_1"],
+    "__STYXTYPE__": typing.Literal["weighted_1"],
     "opt_exponent_exponent": typing.NotRequired[float | None],
     "opt_legacy_cutoff": bool,
 })
 
 
 CiftiResampleDconnMemorySurfacePostdilateParameters = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParameters', {
-    "__STYX_TYPE__": typing.Literal["surface_postdilate"],
+    "__STYXTYPE__": typing.Literal["surface_postdilate"],
     "dilate_mm": float,
     "opt_nearest": bool,
     "opt_linear": bool,
@@ -45,42 +45,42 @@ CiftiResampleDconnMemorySurfacePostdilateParameters = typing.TypedDict('CiftiRes
 
 
 CiftiResampleDconnMemoryFlirtParameters = typing.TypedDict('CiftiResampleDconnMemoryFlirtParameters', {
-    "__STYX_TYPE__": typing.Literal["flirt"],
+    "__STYXTYPE__": typing.Literal["flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 CiftiResampleDconnMemoryAffineParameters = typing.TypedDict('CiftiResampleDconnMemoryAffineParameters', {
-    "__STYX_TYPE__": typing.Literal["affine"],
+    "__STYXTYPE__": typing.Literal["affine"],
     "affine_file": str,
     "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParameters | None],
 })
 
 
 CiftiResampleDconnMemoryWarpfieldParameters = typing.TypedDict('CiftiResampleDconnMemoryWarpfieldParameters', {
-    "__STYX_TYPE__": typing.Literal["warpfield"],
+    "__STYXTYPE__": typing.Literal["warpfield"],
     "warpfield": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],
 })
 
 
 CiftiResampleDconnMemoryLeftAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaSurfsParameters', {
-    "__STYX_TYPE__": typing.Literal["left_area_surfs"],
+    "__STYXTYPE__": typing.Literal["left_area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryLeftAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaMetricsParameters', {
-    "__STYX_TYPE__": typing.Literal["left_area_metrics"],
+    "__STYXTYPE__": typing.Literal["left_area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryLeftSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftSpheresParameters', {
-    "__STYX_TYPE__": typing.Literal["left_spheres"],
+    "__STYXTYPE__": typing.Literal["left_spheres"],
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
     "left_area_surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParameters | None],
@@ -89,21 +89,21 @@ CiftiResampleDconnMemoryLeftSpheresParameters = typing.TypedDict('CiftiResampleD
 
 
 CiftiResampleDconnMemoryRightAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryRightAreaSurfsParameters', {
-    "__STYX_TYPE__": typing.Literal["right_area_surfs"],
+    "__STYXTYPE__": typing.Literal["right_area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryRightAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryRightAreaMetricsParameters', {
-    "__STYX_TYPE__": typing.Literal["right_area_metrics"],
+    "__STYXTYPE__": typing.Literal["right_area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryRightSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryRightSpheresParameters', {
-    "__STYX_TYPE__": typing.Literal["right_spheres"],
+    "__STYXTYPE__": typing.Literal["right_spheres"],
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
     "right_area_surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParameters | None],
@@ -112,21 +112,21 @@ CiftiResampleDconnMemoryRightSpheresParameters = typing.TypedDict('CiftiResample
 
 
 CiftiResampleDconnMemoryCerebellumAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaSurfsParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_area_surfs"],
+    "__STYXTYPE__": typing.Literal["cerebellum_area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryCerebellumAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaMetricsParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_area_metrics"],
+    "__STYXTYPE__": typing.Literal["cerebellum_area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryCerebellumSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumSpheresParameters', {
-    "__STYX_TYPE__": typing.Literal["cerebellum_spheres"],
+    "__STYXTYPE__": typing.Literal["cerebellum_spheres"],
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
     "cerebellum_area_surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParameters | None],
@@ -135,7 +135,7 @@ CiftiResampleDconnMemoryCerebellumSpheresParameters = typing.TypedDict('CiftiRes
 
 
 CiftiResampleDconnMemoryParameters = typing.TypedDict('CiftiResampleDconnMemoryParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-resample-dconn-memory"],
+    "__STYXTYPE__": typing.Literal["cifti-resample-dconn-memory"],
     "cifti_in": InputPathType,
     "cifti_template": InputPathType,
     "template_direction": str,

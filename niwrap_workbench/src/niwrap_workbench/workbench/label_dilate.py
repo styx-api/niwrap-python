@@ -14,7 +14,7 @@ LABEL_DILATE_METADATA = Metadata(
 
 
 LabelDilateParameters = typing.TypedDict('LabelDilateParameters', {
-    "__STYX_TYPE__": typing.Literal["label-dilate"],
+    "__STYXTYPE__": typing.Literal["label-dilate"],
     "label": InputPathType,
     "surface": InputPathType,
     "dilate_dist": float,

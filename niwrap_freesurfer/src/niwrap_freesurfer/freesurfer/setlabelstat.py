@@ -14,7 +14,7 @@ SETLABELSTAT_METADATA = Metadata(
 
 
 SetlabelstatParameters = typing.TypedDict('SetlabelstatParameters', {
-    "__STYX_TYPE__": typing.Literal["setlabelstat"],
+    "__STYXTYPE__": typing.Literal["setlabelstat"],
     "inlabelfile": InputPathType,
     "outlabelfile": InputPathType,
     "statval": float,

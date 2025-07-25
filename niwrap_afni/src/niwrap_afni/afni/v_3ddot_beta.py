@@ -14,7 +14,7 @@ V_3DDOT_BETA_METADATA = Metadata(
 
 
 V3ddotBetaParameters = typing.TypedDict('V3ddotBetaParameters', {
-    "__STYX_TYPE__": typing.Literal["3ddot_beta"],
+    "__STYXTYPE__": typing.Literal["3ddot_beta"],
     "input_file": InputPathType,
     "prefix": str,
     "doeta2": bool,

@@ -14,7 +14,7 @@ MRIS_PMAKE_METADATA = Metadata(
 
 
 MrisPmakeParameters = typing.TypedDict('MrisPmakeParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_pmake"],
+    "__STYXTYPE__": typing.Literal["mris_pmake"],
     "options_file": typing.NotRequired[str | None],
     "working_dir": typing.NotRequired[str | None],
     "listen_mode": bool,

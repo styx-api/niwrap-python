@@ -14,7 +14,7 @@ MULTIPLY_IMAGES_METADATA = Metadata(
 
 
 MultiplyImagesParameters = typing.TypedDict('MultiplyImagesParameters', {
-    "__STYX_TYPE__": typing.Literal["MultiplyImages"],
+    "__STYXTYPE__": typing.Literal["MultiplyImages"],
     "dimension": typing.Literal[3, 2],
     "first_input": InputPathType,
     "second_input": typing.NotRequired[InputPathType | None],

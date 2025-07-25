@@ -14,7 +14,7 @@ V_3D_CLIP_LEVEL_METADATA = Metadata(
 
 
 V3dClipLevelParameters = typing.TypedDict('V3dClipLevelParameters', {
-    "__STYX_TYPE__": typing.Literal["3dClipLevel"],
+    "__STYXTYPE__": typing.Literal["3dClipLevel"],
     "dataset": InputPathType,
     "mfrac": typing.NotRequired[float | None],
     "doall": bool,

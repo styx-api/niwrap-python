@@ -14,7 +14,7 @@ BALLOON_METADATA = Metadata(
 
 
 BalloonParameters = typing.TypedDict('BalloonParameters', {
-    "__STYX_TYPE__": typing.Literal["balloon"],
+    "__STYXTYPE__": typing.Literal["balloon"],
     "tr": float,
     "num_scans": int,
     "event_times": InputPathType,

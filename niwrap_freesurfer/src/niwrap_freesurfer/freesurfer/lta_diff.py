@@ -14,7 +14,7 @@ LTA_DIFF_METADATA = Metadata(
 
 
 LtaDiffParameters = typing.TypedDict('LtaDiffParameters', {
-    "__STYX_TYPE__": typing.Literal["lta_diff"],
+    "__STYXTYPE__": typing.Literal["lta_diff"],
     "transform1": InputPathType,
     "transform2": typing.NotRequired[InputPathType | None],
     "dist_type": typing.NotRequired[int | None],

@@ -14,7 +14,7 @@ MRI_GTMSEG_METADATA = Metadata(
 
 
 MriGtmsegParameters = typing.TypedDict('MriGtmsegParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_gtmseg"],
+    "__STYXTYPE__": typing.Literal["mri_gtmseg"],
     "output_volume": str,
     "source_subject": str,
     "internal_usf": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ V_3D_GETROW_METADATA = Metadata(
 
 
 V3dGetrowParameters = typing.TypedDict('V3dGetrowParameters', {
-    "__STYX_TYPE__": typing.Literal["3dGetrow"],
+    "__STYXTYPE__": typing.Literal["3dGetrow"],
     "xrow": typing.NotRequired[list[int] | None],
     "yrow": typing.NotRequired[list[int] | None],
     "zrow": typing.NotRequired[list[int] | None],

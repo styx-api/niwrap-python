@@ -14,7 +14,7 @@ SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
 
 
 SurfaceToSurface3dDistanceParameters = typing.TypedDict('SurfaceToSurface3dDistanceParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-to-surface-3d-distance"],
+    "__STYXTYPE__": typing.Literal["surface-to-surface-3d-distance"],
     "surface_comp": InputPathType,
     "surface_ref": InputPathType,
     "dists_out": str,

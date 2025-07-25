@@ -14,7 +14,7 @@ MRIS_RESCALE_METADATA = Metadata(
 
 
 MrisRescaleParameters = typing.TypedDict('MrisRescaleParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_rescale"],
+    "__STYXTYPE__": typing.Literal["mris_rescale"],
     "input_surface": InputPathType,
     "output_surface": str,
 })

@@ -14,7 +14,7 @@ MAKE_AVERAGE_VOLUME_METADATA = Metadata(
 
 
 MakeAverageVolumeParameters = typing.TypedDict('MakeAverageVolumeParameters', {
-    "__STYX_TYPE__": typing.Literal["make_average_volume"],
+    "__STYXTYPE__": typing.Literal["make_average_volume"],
     "subjects": list[str],
     "fsgd": typing.NotRequired[InputPathType | None],
     "out": typing.NotRequired[str | None],

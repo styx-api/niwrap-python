@@ -14,7 +14,7 @@ MIDTRANS_METADATA = Metadata(
 
 
 MidtransParameters = typing.TypedDict('MidtransParameters', {
-    "__STYX_TYPE__": typing.Literal["midtrans"],
+    "__STYXTYPE__": typing.Literal["midtrans"],
     "transforms": list[InputPathType],
     "output_matrix": typing.NotRequired[str | None],
     "template_image": typing.NotRequired[InputPathType | None],

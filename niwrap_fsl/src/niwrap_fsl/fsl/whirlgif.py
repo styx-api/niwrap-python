@@ -14,7 +14,7 @@ WHIRLGIF_METADATA = Metadata(
 
 
 WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
-    "__STYX_TYPE__": typing.Literal["whirlgif"],
+    "__STYXTYPE__": typing.Literal["whirlgif"],
     "outfile": typing.NotRequired[InputPathType | None],
     "loop_count": typing.NotRequired[int | None],
     "delay_time": typing.NotRequired[int | None],

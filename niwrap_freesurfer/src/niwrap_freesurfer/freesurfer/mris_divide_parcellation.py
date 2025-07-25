@@ -14,7 +14,7 @@ MRIS_DIVIDE_PARCELLATION_METADATA = Metadata(
 
 
 MrisDivideParcellationParameters = typing.TypedDict('MrisDivideParcellationParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_divide_parcellation"],
+    "__STYXTYPE__": typing.Literal["mris_divide_parcellation"],
     "subject": str,
     "hemi": str,
     "sourceannot": InputPathType,

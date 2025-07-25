@@ -14,18 +14,18 @@ ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA = Metadata(
 
 
 AntsApplyTransformsToPointsSingleTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["single_transform"],
+    "__STYXTYPE__": typing.Literal["single_transform"],
 })
 
 
 AntsApplyTransformsToPointsInverseTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParameters', {
-    "__STYX_TYPE__": typing.Literal["inverse_transform"],
+    "__STYXTYPE__": typing.Literal["inverse_transform"],
     "transform_file": InputPathType,
 })
 
 
 AntsApplyTransformsToPointsParameters = typing.TypedDict('AntsApplyTransformsToPointsParameters', {
-    "__STYX_TYPE__": typing.Literal["antsApplyTransformsToPoints"],
+    "__STYXTYPE__": typing.Literal["antsApplyTransformsToPoints"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "precision": typing.NotRequired[typing.Literal[0, 1] | None],
     "forantsr": typing.NotRequired[typing.Literal[0, 1] | None],

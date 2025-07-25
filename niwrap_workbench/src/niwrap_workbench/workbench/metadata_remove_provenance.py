@@ -14,7 +14,7 @@ METADATA_REMOVE_PROVENANCE_METADATA = Metadata(
 
 
 MetadataRemoveProvenanceParameters = typing.TypedDict('MetadataRemoveProvenanceParameters', {
-    "__STYX_TYPE__": typing.Literal["metadata-remove-provenance"],
+    "__STYXTYPE__": typing.Literal["metadata-remove-provenance"],
     "input_file": str,
     "output_file": str,
 })

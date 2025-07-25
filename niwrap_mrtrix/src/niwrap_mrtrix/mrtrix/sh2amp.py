@@ -14,33 +14,33 @@ SH2AMP_METADATA = Metadata(
 
 
 Sh2ampFslgradParameters = typing.TypedDict('Sh2ampFslgradParameters', {
-    "__STYX_TYPE__": typing.Literal["fslgrad"],
+    "__STYXTYPE__": typing.Literal["fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Sh2ampVariousStringParameters = typing.TypedDict('Sh2ampVariousStringParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousString"],
+    "__STYXTYPE__": typing.Literal["VariousString"],
     "obj": str,
 })
 
 
 Sh2ampVariousFileParameters = typing.TypedDict('Sh2ampVariousFileParameters', {
-    "__STYX_TYPE__": typing.Literal["VariousFile"],
+    "__STYXTYPE__": typing.Literal["VariousFile"],
     "obj": InputPathType,
 })
 
 
 Sh2ampConfigParameters = typing.TypedDict('Sh2ampConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2ampParameters = typing.TypedDict('Sh2ampParameters', {
-    "__STYX_TYPE__": typing.Literal["sh2amp"],
+    "__STYXTYPE__": typing.Literal["sh2amp"],
     "nonnegative": bool,
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Sh2ampFslgradParameters | None],

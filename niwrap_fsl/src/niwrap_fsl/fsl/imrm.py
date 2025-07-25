@@ -14,7 +14,7 @@ IMRM_METADATA = Metadata(
 
 
 ImrmParameters = typing.TypedDict('ImrmParameters', {
-    "__STYX_TYPE__": typing.Literal["imrm"],
+    "__STYXTYPE__": typing.Literal["imrm"],
     "images_to_remove": list[str],
 })
 

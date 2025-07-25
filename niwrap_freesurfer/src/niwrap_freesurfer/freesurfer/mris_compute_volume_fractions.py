@@ -14,7 +14,7 @@ MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 
 
 MrisComputeVolumeFractionsParameters = typing.TypedDict('MrisComputeVolumeFractionsParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_compute_volume_fractions"],
+    "__STYXTYPE__": typing.Literal["mris_compute_volume_fractions"],
     "volume_file": InputPathType,
     "surface_file": InputPathType,
     "accuracy": float,

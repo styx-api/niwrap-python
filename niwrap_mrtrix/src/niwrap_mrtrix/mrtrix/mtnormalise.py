@@ -14,21 +14,21 @@ MTNORMALISE_METADATA = Metadata(
 
 
 MtnormaliseConfigParameters = typing.TypedDict('MtnormaliseConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 MtnormaliseInputOutputParameters = typing.TypedDict('MtnormaliseInputOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["input_output"],
+    "__STYXTYPE__": typing.Literal["input_output"],
     "input": InputPathType,
     "output": str,
 })
 
 
 MtnormaliseParameters = typing.TypedDict('MtnormaliseParameters', {
-    "__STYX_TYPE__": typing.Literal["mtnormalise"],
+    "__STYXTYPE__": typing.Literal["mtnormalise"],
     "mask": InputPathType,
     "order": typing.NotRequired[str | None],
     "niter": typing.NotRequired[list[int] | None],

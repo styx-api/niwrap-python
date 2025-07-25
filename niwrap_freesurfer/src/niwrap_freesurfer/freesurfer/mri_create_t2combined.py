@@ -14,7 +14,7 @@ MRI_CREATE_T2COMBINED_METADATA = Metadata(
 
 
 MriCreateT2combinedParameters = typing.TypedDict('MriCreateT2combinedParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_create_t2combined"],
+    "__STYXTYPE__": typing.Literal["mri_create_t2combined"],
     "subjid": str,
     "t1wb": InputPathType,
     "t2upper": InputPathType,

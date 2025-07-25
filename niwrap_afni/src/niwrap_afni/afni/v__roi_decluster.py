@@ -14,7 +14,7 @@ V__ROI_DECLUSTER_METADATA = Metadata(
 
 
 VRoiDeclusterParameters = typing.TypedDict('VRoiDeclusterParameters', {
-    "__STYX_TYPE__": typing.Literal["@ROI_decluster"],
+    "__STYXTYPE__": typing.Literal["@ROI_decluster"],
     "input_dset": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "nvox_thresh": typing.NotRequired[float | None],

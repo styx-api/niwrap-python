@@ -14,7 +14,7 @@ SURF_DIST_METADATA = Metadata(
 
 
 SurfDistParameters = typing.TypedDict('SurfDistParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfDist"],
+    "__STYXTYPE__": typing.Literal["SurfDist"],
     "surface": InputPathType,
     "nodepairs": InputPathType,
     "node_path_do": typing.NotRequired[str | None],

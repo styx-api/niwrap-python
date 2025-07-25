@@ -14,7 +14,7 @@ QUICKSPEC_METADATA = Metadata(
 
 
 QuickspecParameters = typing.TypedDict('QuickspecParameters', {
-    "__STYX_TYPE__": typing.Literal["quickspec"],
+    "__STYXTYPE__": typing.Literal["quickspec"],
     "tn": list[str],
     "tsn": list[str],
     "tsnad": typing.NotRequired[list[str] | None],

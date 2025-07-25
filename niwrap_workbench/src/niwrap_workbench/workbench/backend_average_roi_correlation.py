@@ -14,7 +14,7 @@ BACKEND_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 
 
 BackendAverageRoiCorrelationParameters = typing.TypedDict('BackendAverageRoiCorrelationParameters', {
-    "__STYX_TYPE__": typing.Literal["backend-average-roi-correlation"],
+    "__STYXTYPE__": typing.Literal["backend-average-roi-correlation"],
     "index_list": str,
     "out_file": str,
 })

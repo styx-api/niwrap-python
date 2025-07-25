@@ -14,7 +14,7 @@ SURF_EXTREMA_METADATA = Metadata(
 
 
 SurfExtremaParameters = typing.TypedDict('SurfExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfExtrema"],
+    "__STYXTYPE__": typing.Literal["SurfExtrema"],
     "input": typing.NotRequired[InputPathType | None],
     "hood": typing.NotRequired[float | None],
     "thresh": typing.NotRequired[float | None],

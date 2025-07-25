@@ -14,7 +14,7 @@ CONVERT_DSET_METADATA = Metadata(
 
 
 ConvertDsetParameters = typing.TypedDict('ConvertDsetParameters', {
-    "__STYX_TYPE__": typing.Literal["ConvertDset"],
+    "__STYXTYPE__": typing.Literal["ConvertDset"],
     "output_type": list[typing.Literal["niml_asc", "niml_bi", "1D", "1Dp", "1Dpt", "gii", "gii_asc", "gii_b64", "gii_b64gz", "1D_stderr", "1D_stdout", "niml_stderr", "niml_stdout", "1Dp_stdout", "1Dp_stderr", "1Dpt_stdout", "1Dpt_stderr"]],
     "input_dataset": InputPathType,
     "input_type": typing.NotRequired[typing.Literal["niml", "1D", "dx"] | None],

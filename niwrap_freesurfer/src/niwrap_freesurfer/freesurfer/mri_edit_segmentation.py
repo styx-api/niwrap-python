@@ -14,7 +14,7 @@ MRI_EDIT_SEGMENTATION_METADATA = Metadata(
 
 
 MriEditSegmentationParameters = typing.TypedDict('MriEditSegmentationParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_edit_segmentation"],
+    "__STYXTYPE__": typing.Literal["mri_edit_segmentation"],
     "input_segmentation": InputPathType,
     "t1_volume": InputPathType,
     "output_segmentation": str,

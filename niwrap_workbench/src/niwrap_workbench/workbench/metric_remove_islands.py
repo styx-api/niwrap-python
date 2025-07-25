@@ -14,7 +14,7 @@ METRIC_REMOVE_ISLANDS_METADATA = Metadata(
 
 
 MetricRemoveIslandsParameters = typing.TypedDict('MetricRemoveIslandsParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-remove-islands"],
+    "__STYXTYPE__": typing.Literal["metric-remove-islands"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,

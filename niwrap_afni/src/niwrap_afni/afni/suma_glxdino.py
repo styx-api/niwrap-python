@@ -14,7 +14,7 @@ SUMA_GLXDINO_METADATA = Metadata(
 
 
 SumaGlxdinoParameters = typing.TypedDict('SumaGlxdinoParameters', {
-    "__STYX_TYPE__": typing.Literal["SUMA_glxdino"],
+    "__STYXTYPE__": typing.Literal["SUMA_glxdino"],
     "verbose": bool,
 })
 

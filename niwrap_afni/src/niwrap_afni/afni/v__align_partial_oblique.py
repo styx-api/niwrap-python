@@ -14,7 +14,7 @@ V__ALIGN_PARTIAL_OBLIQUE_METADATA = Metadata(
 
 
 VAlignPartialObliqueParameters = typing.TypedDict('VAlignPartialObliqueParameters', {
-    "__STYX_TYPE__": typing.Literal["@align_partial_oblique"],
+    "__STYXTYPE__": typing.Literal["@align_partial_oblique"],
     "base": InputPathType,
     "input": InputPathType,
     "suffix": typing.NotRequired[str | None],

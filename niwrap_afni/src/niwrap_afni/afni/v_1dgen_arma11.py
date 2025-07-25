@@ -14,7 +14,7 @@ V_1DGEN_ARMA11_METADATA = Metadata(
 
 
 V1dgenArma11Parameters = typing.TypedDict('V1dgenArma11Parameters', {
-    "__STYX_TYPE__": typing.Literal["1dgenARMA11"],
+    "__STYXTYPE__": typing.Literal["1dgenARMA11"],
     "length": typing.NotRequired[float | None],
     "length_alt": typing.NotRequired[float | None],
     "num_series": typing.NotRequired[float | None],

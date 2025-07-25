@@ -14,14 +14,14 @@ FIXELREORIENT_METADATA = Metadata(
 
 
 FixelreorientConfigParameters = typing.TypedDict('FixelreorientConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 FixelreorientParameters = typing.TypedDict('FixelreorientParameters', {
-    "__STYX_TYPE__": typing.Literal["fixelreorient"],
+    "__STYXTYPE__": typing.Literal["fixelreorient"],
     "info": bool,
     "quiet": bool,
     "debug": bool,

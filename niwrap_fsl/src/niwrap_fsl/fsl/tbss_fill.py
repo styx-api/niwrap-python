@@ -14,7 +14,7 @@ TBSS_FILL_METADATA = Metadata(
 
 
 TbssFillParameters = typing.TypedDict('TbssFillParameters', {
-    "__STYX_TYPE__": typing.Literal["tbss_fill"],
+    "__STYXTYPE__": typing.Literal["tbss_fill"],
     "stats_image": InputPathType,
     "threshold": float,
     "mean_fa": InputPathType,

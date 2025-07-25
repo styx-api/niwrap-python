@@ -14,7 +14,7 @@ REGISTER_ELDERLY_SUBJECT_METADATA = Metadata(
 
 
 RegisterElderlySubjectParameters = typing.TypedDict('RegisterElderlySubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["register_elderly_subject"],
+    "__STYXTYPE__": typing.Literal["register_elderly_subject"],
     "sampling_percentage": typing.NotRequired[float | None],
     "output_fsamples": str,
     "output_norm": str,

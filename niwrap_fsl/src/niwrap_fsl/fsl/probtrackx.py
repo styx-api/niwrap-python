@@ -14,7 +14,7 @@ PROBTRACKX_METADATA = Metadata(
 
 
 ProbtrackxParameters = typing.TypedDict('ProbtrackxParameters', {
-    "__STYX_TYPE__": typing.Literal["probtrackx"],
+    "__STYXTYPE__": typing.Literal["probtrackx"],
     "samples": InputPathType,
     "mask": InputPathType,
     "seed": InputPathType,

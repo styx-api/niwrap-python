@@ -14,117 +14,117 @@ ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
 
 
 AntsApplyTransformsWarpedOutputParameters = typing.TypedDict('AntsApplyTransformsWarpedOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["warpedOutput"],
+    "__STYXTYPE__": typing.Literal["warpedOutput"],
     "warpedOutputFileName": str,
 })
 
 
 AntsApplyTransformsCompositeDisplacementFieldOutputParameters = typing.TypedDict('AntsApplyTransformsCompositeDisplacementFieldOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["compositeDisplacementFieldOutput"],
+    "__STYXTYPE__": typing.Literal["compositeDisplacementFieldOutput"],
     "compositeDisplacementField": str,
     "printOutCompositeWarpFile": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
 AntsApplyTransformsGenericAffineTransformOutputParameters = typing.TypedDict('AntsApplyTransformsGenericAffineTransformOutputParameters', {
-    "__STYX_TYPE__": typing.Literal["genericAffineTransformOutput"],
+    "__STYXTYPE__": typing.Literal["genericAffineTransformOutput"],
     "genericAffineTransformFile": str,
     "calculateInverse": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
 AntsApplyTransformsLinearParameters = typing.TypedDict('AntsApplyTransformsLinearParameters', {
-    "__STYX_TYPE__": typing.Literal["linear"],
+    "__STYXTYPE__": typing.Literal["linear"],
 })
 
 
 AntsApplyTransformsNearestNeighborParameters = typing.TypedDict('AntsApplyTransformsNearestNeighborParameters', {
-    "__STYX_TYPE__": typing.Literal["nearestNeighbor"],
+    "__STYXTYPE__": typing.Literal["nearestNeighbor"],
 })
 
 
 AntsApplyTransformsMultiLabelnoparamsParameters = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParameters', {
-    "__STYX_TYPE__": typing.Literal["multiLabelnoparams"],
+    "__STYXTYPE__": typing.Literal["multiLabelnoparams"],
 })
 
 
 AntsApplyTransformsSigmaParameters = typing.TypedDict('AntsApplyTransformsSigmaParameters', {
-    "__STYX_TYPE__": typing.Literal["sigma"],
+    "__STYXTYPE__": typing.Literal["sigma"],
     "sigma": float,
 })
 
 
 AntsApplyTransformsAlphaParameters = typing.TypedDict('AntsApplyTransformsAlphaParameters', {
-    "__STYX_TYPE__": typing.Literal["alpha"],
+    "__STYXTYPE__": typing.Literal["alpha"],
     "alpha": float,
 })
 
 
 AntsApplyTransformsParamParameters = typing.TypedDict('AntsApplyTransformsParamParameters', {
-    "__STYX_TYPE__": typing.Literal["param"],
+    "__STYXTYPE__": typing.Literal["param"],
     "params": list[typing.Union[AntsApplyTransformsSigmaParameters, AntsApplyTransformsAlphaParameters]],
 })
 
 
 AntsApplyTransformsMultiLabelParameters = typing.TypedDict('AntsApplyTransformsMultiLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["multiLabel"],
+    "__STYXTYPE__": typing.Literal["multiLabel"],
     "params": AntsApplyTransformsParamParameters,
 })
 
 
 AntsApplyTransformsGaussianParameters = typing.TypedDict('AntsApplyTransformsGaussianParameters', {
-    "__STYX_TYPE__": typing.Literal["gaussian"],
+    "__STYXTYPE__": typing.Literal["gaussian"],
     "sigma": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
 })
 
 
 AntsApplyTransformsBsplineParameters = typing.TypedDict('AntsApplyTransformsBsplineParameters', {
-    "__STYX_TYPE__": typing.Literal["bspline"],
+    "__STYXTYPE__": typing.Literal["bspline"],
     "order": typing.NotRequired[int | None],
 })
 
 
 AntsApplyTransformsCosineWindowedSincParameters = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParameters', {
-    "__STYX_TYPE__": typing.Literal["cosineWindowedSinc"],
+    "__STYXTYPE__": typing.Literal["cosineWindowedSinc"],
 })
 
 
 AntsApplyTransformsWelchWindowedSincParameters = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParameters', {
-    "__STYX_TYPE__": typing.Literal["welchWindowedSinc"],
+    "__STYXTYPE__": typing.Literal["welchWindowedSinc"],
 })
 
 
 AntsApplyTransformsHammingWindowedSincParameters = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParameters', {
-    "__STYX_TYPE__": typing.Literal["hammingWindowedSinc"],
+    "__STYXTYPE__": typing.Literal["hammingWindowedSinc"],
 })
 
 
 AntsApplyTransformsLanczosWindowedSincParameters = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParameters', {
-    "__STYX_TYPE__": typing.Literal["lanczosWindowedSinc"],
+    "__STYXTYPE__": typing.Literal["lanczosWindowedSinc"],
 })
 
 
 AntsApplyTransformsGenericLabelParameters = typing.TypedDict('AntsApplyTransformsGenericLabelParameters', {
-    "__STYX_TYPE__": typing.Literal["genericLabel"],
+    "__STYXTYPE__": typing.Literal["genericLabel"],
     "interpolator": typing.NotRequired[str | None],
 })
 
 
 AntsApplyTransformsTransformFileNameParameters = typing.TypedDict('AntsApplyTransformsTransformFileNameParameters', {
-    "__STYX_TYPE__": typing.Literal["transformFileName"],
+    "__STYXTYPE__": typing.Literal["transformFileName"],
     "transformFileName": InputPathType,
 })
 
 
 AntsApplyTransformsUseInverseParameters = typing.TypedDict('AntsApplyTransformsUseInverseParameters', {
-    "__STYX_TYPE__": typing.Literal["useInverse"],
+    "__STYXTYPE__": typing.Literal["useInverse"],
     "transformFileName": InputPathType,
 })
 
 
 AntsApplyTransformsParameters = typing.TypedDict('AntsApplyTransformsParameters', {
-    "__STYX_TYPE__": typing.Literal["antsApplyTransforms"],
+    "__STYXTYPE__": typing.Literal["antsApplyTransforms"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image_type": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
     "input_image": typing.NotRequired[InputPathType | None],

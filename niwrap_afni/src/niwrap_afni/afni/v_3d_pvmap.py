@@ -14,7 +14,7 @@ V_3D_PVMAP_METADATA = Metadata(
 
 
 V3dPvmapParameters = typing.TypedDict('V3dPvmapParameters', {
-    "__STYX_TYPE__": typing.Literal["3dPVmap"],
+    "__STYXTYPE__": typing.Literal["3dPVmap"],
     "prefix": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,

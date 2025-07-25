@@ -14,7 +14,7 @@ MAKE_AVERAGE_SUBCORT_METADATA = Metadata(
 
 
 MakeAverageSubcortParameters = typing.TypedDict('MakeAverageSubcortParameters', {
-    "__STYX_TYPE__": typing.Literal["make_average_subcort"],
+    "__STYXTYPE__": typing.Literal["make_average_subcort"],
     "subjects": list[str],
     "output_volume": str,
 })

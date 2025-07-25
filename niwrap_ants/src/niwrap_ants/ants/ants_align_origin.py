@@ -14,7 +14,7 @@ ANTS_ALIGN_ORIGIN_METADATA = Metadata(
 
 
 AntsAlignOriginParameters = typing.TypedDict('AntsAlignOriginParameters', {
-    "__STYX_TYPE__": typing.Literal["antsAlignOrigin"],
+    "__STYXTYPE__": typing.Literal["antsAlignOrigin"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "input": InputPathType,
     "reference_image": InputPathType,

@@ -14,7 +14,7 @@ SURF_INFO_METADATA = Metadata(
 
 
 SurfInfoParameters = typing.TypedDict('SurfInfoParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfInfo"],
+    "__STYXTYPE__": typing.Literal["SurfInfo"],
     "surface": InputPathType,
     "com": bool,
     "debug_level": typing.NotRequired[float | None],

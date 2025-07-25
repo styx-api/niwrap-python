@@ -14,7 +14,7 @@ OPTSEQ2_METADATA = Metadata(
 
 
 Optseq2Parameters = typing.TypedDict('Optseq2Parameters', {
-    "__STYX_TYPE__": typing.Literal["optseq2"],
+    "__STYXTYPE__": typing.Literal["optseq2"],
     "ntp": float,
     "tr": float,
     "tprescan": float,

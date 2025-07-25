@@ -14,7 +14,7 @@ V_3D_AUTOMASK_METADATA = Metadata(
 
 
 V3dAutomaskParameters = typing.TypedDict('V3dAutomaskParameters', {
-    "__STYX_TYPE__": typing.Literal["3dAutomask"],
+    "__STYXTYPE__": typing.Literal["3dAutomask"],
     "prefix": typing.NotRequired[str | None],
     "apply_prefix": typing.NotRequired[str | None],
     "clfrac": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 
 
 MakeAverageSurfaceParameters = typing.TypedDict('MakeAverageSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["make_average_surface"],
+    "__STYXTYPE__": typing.Literal["make_average_surface"],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "average_subject_name": typing.NotRequired[str | None],

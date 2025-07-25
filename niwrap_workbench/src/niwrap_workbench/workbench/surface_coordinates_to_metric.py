@@ -14,7 +14,7 @@ SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
 
 
 SurfaceCoordinatesToMetricParameters = typing.TypedDict('SurfaceCoordinatesToMetricParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-coordinates-to-metric"],
+    "__STYXTYPE__": typing.Literal["surface-coordinates-to-metric"],
     "surface": InputPathType,
     "metric_out": str,
 })

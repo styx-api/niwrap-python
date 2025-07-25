@@ -14,7 +14,7 @@ BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA = Metadata(
 
 
 BuildDesikanKillianyGcsCshParameters = typing.TypedDict('BuildDesikanKillianyGcsCshParameters', {
-    "__STYX_TYPE__": typing.Literal["build_desikan_killiany_gcs.csh"],
+    "__STYXTYPE__": typing.Literal["build_desikan_killiany_gcs.csh"],
     "hemi": str,
 })
 

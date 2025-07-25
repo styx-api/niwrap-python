@@ -14,7 +14,7 @@ V_3D_OVERLAP_METADATA = Metadata(
 
 
 V3dOverlapParameters = typing.TypedDict('V3dOverlapParameters', {
-    "__STYX_TYPE__": typing.Literal["3dOverlap"],
+    "__STYXTYPE__": typing.Literal["3dOverlap"],
     "dataset1": InputPathType,
     "dataset2": list[InputPathType],
     "save_prefix": typing.NotRequired[str | None],

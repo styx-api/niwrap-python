@@ -14,7 +14,7 @@ ISO_SURFACE_METADATA = Metadata(
 
 
 IsoSurfaceParameters = typing.TypedDict('IsoSurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["IsoSurface"],
+    "__STYXTYPE__": typing.Literal["IsoSurface"],
     "input_vol": typing.NotRequired[InputPathType | None],
     "shape_spec": typing.NotRequired[list[str] | None],
     "isorois": bool,

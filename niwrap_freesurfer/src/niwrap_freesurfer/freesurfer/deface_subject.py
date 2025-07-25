@@ -14,7 +14,7 @@ DEFACE_SUBJECT_METADATA = Metadata(
 
 
 DefaceSubjectParameters = typing.TypedDict('DefaceSubjectParameters', {
-    "__STYX_TYPE__": typing.Literal["deface_subject"],
+    "__STYXTYPE__": typing.Literal["deface_subject"],
     "subjects_dir": str,
     "subject_id": str,
     "volume_input": InputPathType,

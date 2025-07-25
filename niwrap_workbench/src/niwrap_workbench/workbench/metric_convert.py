@@ -14,14 +14,14 @@ METRIC_CONVERT_METADATA = Metadata(
 
 
 MetricConvertToNiftiParameters = typing.TypedDict('MetricConvertToNiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["to_nifti"],
+    "__STYXTYPE__": typing.Literal["to_nifti"],
     "metric_in": InputPathType,
     "nifti_out": str,
 })
 
 
 MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParameters', {
-    "__STYX_TYPE__": typing.Literal["from_nifti"],
+    "__STYXTYPE__": typing.Literal["from_nifti"],
     "nifti_in": InputPathType,
     "surface_in": InputPathType,
     "metric_out": str,
@@ -29,7 +29,7 @@ MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParam
 
 
 MetricConvertParameters = typing.TypedDict('MetricConvertParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-convert"],
+    "__STYXTYPE__": typing.Literal["metric-convert"],
     "to_nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
     "from_nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
 })

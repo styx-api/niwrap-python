@@ -14,7 +14,7 @@ V_3DMERGE_METADATA = Metadata(
 
 
 V3dmergeParameters = typing.TypedDict('V3dmergeParameters', {
-    "__STYX_TYPE__": typing.Literal["3dmerge"],
+    "__STYXTYPE__": typing.Literal["3dmerge"],
     "input_files": list[InputPathType],
     "output_file": str,
     "blur_fwhm": typing.NotRequired[float | None],

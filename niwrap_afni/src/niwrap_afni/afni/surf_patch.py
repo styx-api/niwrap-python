@@ -14,7 +14,7 @@ SURF_PATCH_METADATA = Metadata(
 
 
 SurfPatchParameters = typing.TypedDict('SurfPatchParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfPatch"],
+    "__STYXTYPE__": typing.Literal["SurfPatch"],
     "spec_file": InputPathType,
     "surf_A": InputPathType,
     "surf_B": InputPathType,

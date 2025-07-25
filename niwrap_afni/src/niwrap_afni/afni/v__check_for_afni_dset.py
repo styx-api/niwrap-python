@@ -14,7 +14,7 @@ V__CHECK_FOR_AFNI_DSET_METADATA = Metadata(
 
 
 VCheckForAfniDsetParameters = typing.TypedDict('VCheckForAfniDsetParameters', {
-    "__STYX_TYPE__": typing.Literal["@CheckForAfniDset"],
+    "__STYXTYPE__": typing.Literal["@CheckForAfniDset"],
     "dataset_name": str,
 })
 

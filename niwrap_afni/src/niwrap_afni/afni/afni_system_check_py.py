@@ -14,7 +14,7 @@ AFNI_SYSTEM_CHECK_PY_METADATA = Metadata(
 
 
 AfniSystemCheckPyParameters = typing.TypedDict('AfniSystemCheckPyParameters', {
-    "__STYX_TYPE__": typing.Literal["afni_system_check.py"],
+    "__STYXTYPE__": typing.Literal["afni_system_check.py"],
     "check_all": bool,
     "find_prog": typing.NotRequired[str | None],
     "exact": typing.NotRequired[str | None],

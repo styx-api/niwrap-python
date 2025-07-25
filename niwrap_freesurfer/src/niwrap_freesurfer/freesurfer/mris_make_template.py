@@ -14,7 +14,7 @@ MRIS_MAKE_TEMPLATE_METADATA = Metadata(
 
 
 MrisMakeTemplateParameters = typing.TypedDict('MrisMakeTemplateParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_make_template"],
+    "__STYXTYPE__": typing.Literal["mris_make_template"],
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],

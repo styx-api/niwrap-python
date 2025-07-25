@@ -14,14 +14,14 @@ CIFTI_REDUCE_METADATA = Metadata(
 
 
 CiftiReduceExcludeOutliersParameters = typing.TypedDict('CiftiReduceExcludeOutliersParameters', {
-    "__STYX_TYPE__": typing.Literal["exclude_outliers"],
+    "__STYXTYPE__": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 CiftiReduceParameters = typing.TypedDict('CiftiReduceParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-reduce"],
+    "__STYXTYPE__": typing.Literal["cifti-reduce"],
     "cifti_in": InputPathType,
     "operation": str,
     "cifti_out": str,

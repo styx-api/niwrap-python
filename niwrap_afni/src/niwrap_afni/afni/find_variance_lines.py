@@ -14,7 +14,7 @@ FIND_VARIANCE_LINES_METADATA = Metadata(
 
 
 FindVarianceLinesParameters = typing.TypedDict('FindVarianceLinesParameters', {
-    "__STYX_TYPE__": typing.Literal["find_variance_lines"],
+    "__STYXTYPE__": typing.Literal["find_variance_lines"],
     "input_files": list[InputPathType],
     "mask": typing.NotRequired[str | None],
     "min_cvox": typing.NotRequired[int | None],

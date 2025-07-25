@@ -14,7 +14,7 @@ V__PURIFY_1_D_METADATA = Metadata(
 
 
 VPurify1DParameters = typing.TypedDict('VPurify1DParameters', {
-    "__STYX_TYPE__": typing.Literal["@Purify_1D"],
+    "__STYXTYPE__": typing.Literal["@Purify_1D"],
     "sub_brick": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
     "input_files": list[InputPathType],

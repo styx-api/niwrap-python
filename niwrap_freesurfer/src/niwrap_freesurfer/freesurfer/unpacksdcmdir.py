@@ -14,7 +14,7 @@ UNPACKSDCMDIR_METADATA = Metadata(
 
 
 UnpacksdcmdirParameters = typing.TypedDict('UnpacksdcmdirParameters', {
-    "__STYX_TYPE__": typing.Literal["unpacksdcmdir"],
+    "__STYXTYPE__": typing.Literal["unpacksdcmdir"],
     "input_directory": str,
     "output_directory": str,
 })

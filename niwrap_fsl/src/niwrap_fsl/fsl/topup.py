@@ -14,7 +14,7 @@ TOPUP_METADATA = Metadata(
 
 
 TopupParameters = typing.TypedDict('TopupParameters', {
-    "__STYX_TYPE__": typing.Literal["topup"],
+    "__STYXTYPE__": typing.Literal["topup"],
     "imain": InputPathType,
     "datain": InputPathType,
     "out": typing.NotRequired[str | None],

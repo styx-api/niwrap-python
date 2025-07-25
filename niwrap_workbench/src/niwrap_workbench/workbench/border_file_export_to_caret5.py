@@ -14,13 +14,13 @@ BORDER_FILE_EXPORT_TO_CARET5_METADATA = Metadata(
 
 
 BorderFileExportToCaret5SurfaceParameters = typing.TypedDict('BorderFileExportToCaret5SurfaceParameters', {
-    "__STYX_TYPE__": typing.Literal["surface"],
+    "__STYXTYPE__": typing.Literal["surface"],
     "surface_in": InputPathType,
 })
 
 
 BorderFileExportToCaret5Parameters = typing.TypedDict('BorderFileExportToCaret5Parameters', {
-    "__STYX_TYPE__": typing.Literal["border-file-export-to-caret5"],
+    "__STYXTYPE__": typing.Literal["border-file-export-to-caret5"],
     "border_file": str,
     "output_file_prefix": str,
     "surface": typing.NotRequired[list[BorderFileExportToCaret5SurfaceParameters] | None],

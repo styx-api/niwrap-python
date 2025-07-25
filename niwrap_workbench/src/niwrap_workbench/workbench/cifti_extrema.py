@@ -14,14 +14,14 @@ CIFTI_EXTREMA_METADATA = Metadata(
 
 
 CiftiExtremaThresholdParameters = typing.TypedDict('CiftiExtremaThresholdParameters', {
-    "__STYX_TYPE__": typing.Literal["threshold"],
+    "__STYXTYPE__": typing.Literal["threshold"],
     "low": float,
     "high": float,
 })
 
 
 CiftiExtremaParameters = typing.TypedDict('CiftiExtremaParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-extrema"],
+    "__STYXTYPE__": typing.Literal["cifti-extrema"],
     "cifti": InputPathType,
     "surface_distance": float,
     "volume_distance": float,

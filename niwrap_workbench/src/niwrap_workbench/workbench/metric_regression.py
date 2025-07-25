@@ -14,21 +14,21 @@ METRIC_REGRESSION_METADATA = Metadata(
 
 
 MetricRegressionRemoveParameters = typing.TypedDict('MetricRegressionRemoveParameters', {
-    "__STYX_TYPE__": typing.Literal["remove"],
+    "__STYXTYPE__": typing.Literal["remove"],
     "metric": InputPathType,
     "opt_remove_column_column": typing.NotRequired[str | None],
 })
 
 
 MetricRegressionKeepParameters = typing.TypedDict('MetricRegressionKeepParameters', {
-    "__STYX_TYPE__": typing.Literal["keep"],
+    "__STYXTYPE__": typing.Literal["keep"],
     "metric": InputPathType,
     "opt_keep_column_column": typing.NotRequired[str | None],
 })
 
 
 MetricRegressionParameters = typing.TypedDict('MetricRegressionParameters', {
-    "__STYX_TYPE__": typing.Literal["metric-regression"],
+    "__STYXTYPE__": typing.Literal["metric-regression"],
     "metric_in": InputPathType,
     "metric_out": str,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],

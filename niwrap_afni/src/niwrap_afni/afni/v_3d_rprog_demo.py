@@ -14,7 +14,7 @@ V_3D_RPROG_DEMO_METADATA = Metadata(
 
 
 V3dRprogDemoParameters = typing.TypedDict('V3dRprogDemoParameters', {
-    "__STYX_TYPE__": typing.Literal["3dRprogDemo"],
+    "__STYXTYPE__": typing.Literal["3dRprogDemo"],
     "input_dsets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "scale": float,

@@ -14,7 +14,7 @@ V_3DRENAME_METADATA = Metadata(
 
 
 V3drenameParameters = typing.TypedDict('V3drenameParameters', {
-    "__STYX_TYPE__": typing.Literal["3drename"],
+    "__STYXTYPE__": typing.Literal["3drename"],
     "old_prefix": str,
     "new_prefix": str,
 })

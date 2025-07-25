@@ -14,7 +14,7 @@ SURFACE_CURVATURE_METADATA = Metadata(
 
 
 SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
-    "__STYX_TYPE__": typing.Literal["surface-curvature"],
+    "__STYXTYPE__": typing.Literal["surface-curvature"],
     "surface": InputPathType,
     "opt_mean_mean_out": typing.NotRequired[str | None],
     "opt_gauss_gauss_out": typing.NotRequired[str | None],

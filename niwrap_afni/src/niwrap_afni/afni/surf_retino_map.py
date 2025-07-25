@@ -14,7 +14,7 @@ SURF_RETINO_MAP_METADATA = Metadata(
 
 
 SurfRetinoMapParameters = typing.TypedDict('SurfRetinoMapParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfRetinoMap"],
+    "__STYXTYPE__": typing.Literal["SurfRetinoMap"],
     "surface": str,
     "polar": str,
     "eccentricity": str,

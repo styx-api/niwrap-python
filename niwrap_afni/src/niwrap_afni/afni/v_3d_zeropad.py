@@ -14,7 +14,7 @@ V_3D_ZEROPAD_METADATA = Metadata(
 
 
 V3dZeropadParameters = typing.TypedDict('V3dZeropadParameters', {
-    "__STYX_TYPE__": typing.Literal["3dZeropad"],
+    "__STYXTYPE__": typing.Literal["3dZeropad"],
     "dataset": InputPathType,
     "I": typing.NotRequired[float | None],
     "S": typing.NotRequired[float | None],

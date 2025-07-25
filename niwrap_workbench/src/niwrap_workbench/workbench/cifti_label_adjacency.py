@@ -14,7 +14,7 @@ CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
 
 
 CiftiLabelAdjacencyParameters = typing.TypedDict('CiftiLabelAdjacencyParameters', {
-    "__STYX_TYPE__": typing.Literal["cifti-label-adjacency"],
+    "__STYXTYPE__": typing.Literal["cifti-label-adjacency"],
     "label_in": InputPathType,
     "adjacency_out": str,
     "opt_left_surface_surface": typing.NotRequired[InputPathType | None],

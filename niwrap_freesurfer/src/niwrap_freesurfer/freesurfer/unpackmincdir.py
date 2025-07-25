@@ -14,7 +14,7 @@ UNPACKMINCDIR_METADATA = Metadata(
 
 
 UnpackmincdirParameters = typing.TypedDict('UnpackmincdirParameters', {
-    "__STYX_TYPE__": typing.Literal["unpackmincdir"],
+    "__STYXTYPE__": typing.Literal["unpackmincdir"],
     "source_directory": str,
     "target_directory": str,
     "scan_sequence_info": typing.NotRequired[str | None],

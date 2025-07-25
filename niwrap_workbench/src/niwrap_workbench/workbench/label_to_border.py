@@ -14,7 +14,7 @@ LABEL_TO_BORDER_METADATA = Metadata(
 
 
 LabelToBorderParameters = typing.TypedDict('LabelToBorderParameters', {
-    "__STYX_TYPE__": typing.Literal["label-to-border"],
+    "__STYXTYPE__": typing.Literal["label-to-border"],
     "surface": InputPathType,
     "label_in": InputPathType,
     "border_out": str,

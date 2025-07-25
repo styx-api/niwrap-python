@@ -14,7 +14,7 @@ LABEL2SURF_METADATA = Metadata(
 
 
 Label2surfParameters = typing.TypedDict('Label2surfParameters', {
-    "__STYX_TYPE__": typing.Literal["label2surf"],
+    "__STYXTYPE__": typing.Literal["label2surf"],
     "input_surface": InputPathType,
     "output_surface": str,
     "labels": InputPathType,

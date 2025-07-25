@@ -14,7 +14,7 @@ V__MEASURE_IN2OUT_METADATA = Metadata(
 
 
 VMeasureIn2outParameters = typing.TypedDict('VMeasureIn2outParameters', {
-    "__STYX_TYPE__": typing.Literal["@measure_in2out"],
+    "__STYXTYPE__": typing.Literal["@measure_in2out"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": str,

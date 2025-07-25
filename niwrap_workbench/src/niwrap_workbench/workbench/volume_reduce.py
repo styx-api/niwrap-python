@@ -14,14 +14,14 @@ VOLUME_REDUCE_METADATA = Metadata(
 
 
 VolumeReduceExcludeOutliersParameters = typing.TypedDict('VolumeReduceExcludeOutliersParameters', {
-    "__STYX_TYPE__": typing.Literal["exclude_outliers"],
+    "__STYXTYPE__": typing.Literal["exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 VolumeReduceParameters = typing.TypedDict('VolumeReduceParameters', {
-    "__STYX_TYPE__": typing.Literal["volume-reduce"],
+    "__STYXTYPE__": typing.Literal["volume-reduce"],
     "volume_in": InputPathType,
     "operation": str,
     "volume_out": str,

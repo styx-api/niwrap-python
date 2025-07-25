@@ -14,7 +14,7 @@ WMSASEG_METADATA = Metadata(
 
 
 WmsasegParameters = typing.TypedDict('WmsasegParameters', {
-    "__STYX_TYPE__": typing.Literal["wmsaseg"],
+    "__STYXTYPE__": typing.Literal["wmsaseg"],
     "subject": str,
     "source_orig": typing.NotRequired[str | None],
     "source_long": bool,

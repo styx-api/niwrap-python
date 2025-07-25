@@ -14,7 +14,7 @@ BMEDITS2SURF_METADATA = Metadata(
 
 
 Bmedits2surfParameters = typing.TypedDict('Bmedits2surfParameters', {
-    "__STYX_TYPE__": typing.Literal["bmedits2surf"],
+    "__STYXTYPE__": typing.Literal["bmedits2surf"],
     "subject": str,
     "self": bool,
     "overwrite": bool,

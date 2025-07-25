@@ -14,7 +14,7 @@ DICOM_HDR_METADATA = Metadata(
 
 
 DicomHdrParameters = typing.TypedDict('DicomHdrParameters', {
-    "__STYX_TYPE__": typing.Literal["dicom_hdr"],
+    "__STYXTYPE__": typing.Literal["dicom_hdr"],
     "files": list[InputPathType],
     "hex": bool,
     "noname": bool,

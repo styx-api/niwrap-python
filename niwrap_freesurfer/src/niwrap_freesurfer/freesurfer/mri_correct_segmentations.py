@@ -14,7 +14,7 @@ MRI_CORRECT_SEGMENTATIONS_METADATA = Metadata(
 
 
 MriCorrectSegmentationsParameters = typing.TypedDict('MriCorrectSegmentationsParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_correct_segmentations"],
+    "__STYXTYPE__": typing.Literal["mri_correct_segmentations"],
     "input_file_1": InputPathType,
     "input_file_2": InputPathType,
 })

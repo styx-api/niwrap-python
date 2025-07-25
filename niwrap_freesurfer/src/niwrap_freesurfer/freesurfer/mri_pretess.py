@@ -14,7 +14,7 @@ MRI_PRETESS_METADATA = Metadata(
 
 
 MriPretessParameters = typing.TypedDict('MriPretessParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_pretess"],
+    "__STYXTYPE__": typing.Literal["mri_pretess"],
     "filledvol": InputPathType,
     "labelstring": str,
     "normvol": InputPathType,

@@ -14,7 +14,7 @@ DTIGEN_METADATA = Metadata(
 
 
 DtigenParameters = typing.TypedDict('DtigenParameters', {
-    "__STYX_TYPE__": typing.Literal["dtigen"],
+    "__STYXTYPE__": typing.Literal["dtigen"],
     "tensor": InputPathType,
     "s0": InputPathType,
     "output_data": str,

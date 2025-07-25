@@ -14,7 +14,7 @@ V_3D_CONVOLVE_METADATA = Metadata(
 
 
 V3dConvolveParameters = typing.TypedDict('V3dConvolveParameters', {
-    "__STYX_TYPE__": typing.Literal["3dConvolve"],
+    "__STYXTYPE__": typing.Literal["3dConvolve"],
     "infile": InputPathType,
     "outfile": str,
     "options": typing.NotRequired[str | None],

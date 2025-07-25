@@ -14,7 +14,7 @@ SPM_T_TO_B_METADATA = Metadata(
 
 
 SpmTToBParameters = typing.TypedDict('SpmTToBParameters', {
-    "__STYX_TYPE__": typing.Literal["spm_t_to_b"],
+    "__STYXTYPE__": typing.Literal["spm_t_to_b"],
     "spm_stem_format": str,
     "bshort_stem": str,
 })

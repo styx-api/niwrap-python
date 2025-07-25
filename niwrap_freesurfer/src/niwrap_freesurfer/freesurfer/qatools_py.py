@@ -14,7 +14,7 @@ QATOOLS_PY_METADATA = Metadata(
 
 
 QatoolsPyParameters = typing.TypedDict('QatoolsPyParameters', {
-    "__STYX_TYPE__": typing.Literal["qatools.py"],
+    "__STYXTYPE__": typing.Literal["qatools.py"],
     "subjects_dir": str,
     "output_dir": str,
     "subjects": typing.NotRequired[list[str] | None],

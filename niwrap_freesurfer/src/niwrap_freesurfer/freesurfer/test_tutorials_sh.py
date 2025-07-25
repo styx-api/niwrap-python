@@ -14,7 +14,7 @@ TEST_TUTORIALS_SH_METADATA = Metadata(
 
 
 TestTutorialsShParameters = typing.TypedDict('TestTutorialsShParameters', {
-    "__STYX_TYPE__": typing.Literal["test_tutorials.sh"],
+    "__STYXTYPE__": typing.Literal["test_tutorials.sh"],
     "all_tutorials": bool,
     "quick_test": bool,
     "auto_quit_freeview": bool,

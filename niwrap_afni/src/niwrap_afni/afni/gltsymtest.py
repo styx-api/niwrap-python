@@ -14,7 +14,7 @@ GLTSYMTEST_METADATA = Metadata(
 
 
 GltsymtestParameters = typing.TypedDict('GltsymtestParameters', {
-    "__STYX_TYPE__": typing.Literal["GLTsymtest"],
+    "__STYXTYPE__": typing.Literal["GLTsymtest"],
     "badonly": bool,
     "varlist": str,
     "expr": list[str],

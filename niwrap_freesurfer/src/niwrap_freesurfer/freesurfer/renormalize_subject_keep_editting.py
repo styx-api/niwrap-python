@@ -14,7 +14,7 @@ RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
 
 
 RenormalizeSubjectKeepEdittingParameters = typing.TypedDict('RenormalizeSubjectKeepEdittingParameters', {
-    "__STYX_TYPE__": typing.Literal["renormalize_subject_keep_editting"],
+    "__STYXTYPE__": typing.Literal["renormalize_subject_keep_editting"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 

@@ -14,7 +14,7 @@ FSLPSPEC_METADATA = Metadata(
 
 
 FslpspecParameters = typing.TypedDict('FslpspecParameters', {
-    "__STYX_TYPE__": typing.Literal["fslpspec"],
+    "__STYXTYPE__": typing.Literal["fslpspec"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })

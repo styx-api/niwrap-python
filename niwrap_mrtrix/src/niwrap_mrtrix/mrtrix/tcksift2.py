@@ -14,14 +14,14 @@ TCKSIFT2_METADATA = Metadata(
 
 
 Tcksift2ConfigParameters = typing.TypedDict('Tcksift2ConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 Tcksift2Parameters = typing.TypedDict('Tcksift2Parameters', {
-    "__STYX_TYPE__": typing.Literal["tcksift2"],
+    "__STYXTYPE__": typing.Literal["tcksift2"],
     "proc_mask": typing.NotRequired[InputPathType | None],
     "act": typing.NotRequired[InputPathType | None],
     "fd_scale_gm": bool,

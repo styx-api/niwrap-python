@@ -14,7 +14,7 @@ REG_TOOLS_METADATA = Metadata(
 
 
 RegToolsParameters = typing.TypedDict('RegToolsParameters', {
-    "__STYX_TYPE__": typing.Literal["reg_tools"],
+    "__STYXTYPE__": typing.Literal["reg_tools"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "add_value_or_image": typing.NotRequired[str | None],

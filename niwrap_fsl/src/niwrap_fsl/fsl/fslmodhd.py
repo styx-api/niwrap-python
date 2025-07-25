@@ -14,7 +14,7 @@ FSLMODHD_METADATA = Metadata(
 
 
 FslmodhdParameters = typing.TypedDict('FslmodhdParameters', {
-    "__STYX_TYPE__": typing.Literal["fslmodhd"],
+    "__STYXTYPE__": typing.Literal["fslmodhd"],
     "image": InputPathType,
     "keyword": str,
     "value": str,

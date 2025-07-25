@@ -14,7 +14,7 @@ SCENE_FILE_RELOCATE_METADATA = Metadata(
 
 
 SceneFileRelocateParameters = typing.TypedDict('SceneFileRelocateParameters', {
-    "__STYX_TYPE__": typing.Literal["scene-file-relocate"],
+    "__STYXTYPE__": typing.Literal["scene-file-relocate"],
     "input_scene": str,
     "output_scene": str,
 })

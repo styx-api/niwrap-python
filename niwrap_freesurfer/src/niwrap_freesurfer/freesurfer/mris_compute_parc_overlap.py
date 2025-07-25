@@ -14,7 +14,7 @@ MRIS_COMPUTE_PARC_OVERLAP_METADATA = Metadata(
 
 
 MrisComputeParcOverlapParameters = typing.TypedDict('MrisComputeParcOverlapParameters', {
-    "__STYX_TYPE__": typing.Literal["mris_compute_parc_overlap"],
+    "__STYXTYPE__": typing.Literal["mris_compute_parc_overlap"],
     "subject": str,
     "hemi": str,
     "annot1": typing.NotRequired[InputPathType | None],

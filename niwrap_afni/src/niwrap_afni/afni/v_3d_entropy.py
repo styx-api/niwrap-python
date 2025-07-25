@@ -14,7 +14,7 @@ V_3D_ENTROPY_METADATA = Metadata(
 
 
 V3dEntropyParameters = typing.TypedDict('V3dEntropyParameters', {
-    "__STYX_TYPE__": typing.Literal["3dEntropy"],
+    "__STYXTYPE__": typing.Literal["3dEntropy"],
     "zskip": bool,
     "input_dataset": InputPathType,
 })

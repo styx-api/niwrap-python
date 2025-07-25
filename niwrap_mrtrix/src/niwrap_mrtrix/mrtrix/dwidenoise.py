@@ -14,14 +14,14 @@ DWIDENOISE_METADATA = Metadata(
 
 
 DwidenoiseConfigParameters = typing.TypedDict('DwidenoiseConfigParameters', {
-    "__STYX_TYPE__": typing.Literal["config"],
+    "__STYXTYPE__": typing.Literal["config"],
     "key": str,
     "value": str,
 })
 
 
 DwidenoiseParameters = typing.TypedDict('DwidenoiseParameters', {
-    "__STYX_TYPE__": typing.Literal["dwidenoise"],
+    "__STYXTYPE__": typing.Literal["dwidenoise"],
     "mask": typing.NotRequired[InputPathType | None],
     "extent": typing.NotRequired[list[int] | None],
     "noise": typing.NotRequired[str | None],

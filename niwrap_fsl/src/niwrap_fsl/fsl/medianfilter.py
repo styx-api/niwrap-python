@@ -14,7 +14,7 @@ MEDIANFILTER_METADATA = Metadata(
 
 
 MedianfilterParameters = typing.TypedDict('MedianfilterParameters', {
-    "__STYX_TYPE__": typing.Literal["medianfilter"],
+    "__STYXTYPE__": typing.Literal["medianfilter"],
     "infile": InputPathType,
     "outfile": InputPathType,
 })

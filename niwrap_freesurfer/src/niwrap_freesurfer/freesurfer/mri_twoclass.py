@@ -14,7 +14,7 @@ MRI_TWOCLASS_METADATA = Metadata(
 
 
 MriTwoclassParameters = typing.TypedDict('MriTwoclassParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_twoclass"],
+    "__STYXTYPE__": typing.Literal["mri_twoclass"],
     "segmentation_volume": InputPathType,
     "output_subject": str,
     "output_volume": str,

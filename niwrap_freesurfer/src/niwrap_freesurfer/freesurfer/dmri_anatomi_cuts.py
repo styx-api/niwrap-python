@@ -14,7 +14,7 @@ DMRI_ANATOMI_CUTS_METADATA = Metadata(
 
 
 DmriAnatomiCutsParameters = typing.TypedDict('DmriAnatomiCutsParameters', {
-    "__STYX_TYPE__": typing.Literal["dmri_AnatomiCuts"],
+    "__STYXTYPE__": typing.Literal["dmri_AnatomiCuts"],
     "segmentation_file": InputPathType,
     "fiber_file": InputPathType,
     "clusters": float,

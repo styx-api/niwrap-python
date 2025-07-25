@@ -14,7 +14,7 @@ RUN_SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA = Metadata(
 
 
 RunSegmentSubjectT2AutoEstimateAlveusMlShParameters = typing.TypedDict('RunSegmentSubjectT2AutoEstimateAlveusMlShParameters', {
-    "__STYX_TYPE__": typing.Literal["run_segmentSubjectT2_autoEstimateAlveusML.sh"],
+    "__STYXTYPE__": typing.Literal["run_segmentSubjectT2_autoEstimateAlveusML.sh"],
     "deployed_mcr_root": str,
     "arguments": typing.NotRequired[list[str] | None],
 })

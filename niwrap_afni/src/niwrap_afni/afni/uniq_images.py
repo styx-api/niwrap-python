@@ -14,7 +14,7 @@ UNIQ_IMAGES_METADATA = Metadata(
 
 
 UniqImagesParameters = typing.TypedDict('UniqImagesParameters', {
-    "__STYX_TYPE__": typing.Literal["uniq_images"],
+    "__STYXTYPE__": typing.Literal["uniq_images"],
     "input_files": list[InputPathType],
 })
 

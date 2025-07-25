@@ -14,7 +14,7 @@ V_1DEVAL_METADATA = Metadata(
 
 
 V1devalParameters = typing.TypedDict('V1devalParameters', {
-    "__STYX_TYPE__": typing.Literal["1deval"],
+    "__STYXTYPE__": typing.Literal["1deval"],
     "del": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
     "num": typing.NotRequired[float | None],

@@ -14,7 +14,7 @@ BEDPOSTX_GPU_METADATA = Metadata(
 
 
 BedpostxGpuParameters = typing.TypedDict('BedpostxGpuParameters', {
-    "__STYX_TYPE__": typing.Literal["bedpostx_gpu"],
+    "__STYXTYPE__": typing.Literal["bedpostx_gpu"],
     "subject_dir": str,
     "gpu_queue": typing.NotRequired[str | None],
     "num_jobs": typing.NotRequired[float | None],

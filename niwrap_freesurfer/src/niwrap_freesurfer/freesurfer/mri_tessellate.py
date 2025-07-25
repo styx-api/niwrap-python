@@ -14,7 +14,7 @@ MRI_TESSELLATE_METADATA = Metadata(
 
 
 MriTessellateParameters = typing.TypedDict('MriTessellateParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_tessellate"],
+    "__STYXTYPE__": typing.Literal["mri_tessellate"],
     "input_volume": InputPathType,
     "label_value": int,
     "output_surf": str,

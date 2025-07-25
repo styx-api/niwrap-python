@@ -14,7 +14,7 @@ MRI_ROBUST_REGISTER_METADATA = Metadata(
 
 
 MriRobustRegisterParameters = typing.TypedDict('MriRobustRegisterParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_robust_register"],
+    "__STYXTYPE__": typing.Literal["mri_robust_register"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "output_registration": str,

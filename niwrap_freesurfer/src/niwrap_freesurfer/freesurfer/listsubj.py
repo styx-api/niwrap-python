@@ -14,7 +14,7 @@ LISTSUBJ_METADATA = Metadata(
 
 
 ListsubjParameters = typing.TypedDict('ListsubjParameters', {
-    "__STYX_TYPE__": typing.Literal["listsubj"],
+    "__STYXTYPE__": typing.Literal["listsubj"],
     "subject_dir": str,
     "cross": bool,
     "base": bool,

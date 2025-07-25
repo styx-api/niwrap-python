@@ -14,7 +14,7 @@ SURFACE_BASED_SMOOTHING_METADATA = Metadata(
 
 
 SurfaceBasedSmoothingParameters = typing.TypedDict('SurfaceBasedSmoothingParameters', {
-    "__STYX_TYPE__": typing.Literal["SurfaceBasedSmoothing"],
+    "__STYXTYPE__": typing.Literal["SurfaceBasedSmoothing"],
     "image_to_smooth": InputPathType,
     "sigma": float,
     "surface_image": InputPathType,

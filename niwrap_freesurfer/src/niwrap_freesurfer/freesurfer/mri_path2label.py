@@ -14,7 +14,7 @@ MRI_PATH2LABEL_METADATA = Metadata(
 
 
 MriPath2labelParameters = typing.TypedDict('MriPath2labelParameters', {
-    "__STYX_TYPE__": typing.Literal["mri_path2label"],
+    "__STYXTYPE__": typing.Literal["mri_path2label"],
     "input_file": str,
     "output_file": str,
     "single": bool,
