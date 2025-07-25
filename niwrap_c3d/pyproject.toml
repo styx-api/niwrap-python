@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_c3d"
-version = "0.6.1"
+version = "0.6.2"
 description = "NiWrap wrappers for Convert3D."
 license = "LGPL-2.1"
 authors = [{ name = "CMI DAIR", email = "dair@childmind.org" }]

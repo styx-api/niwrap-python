@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_ants"
-version = "0.6.1"
+version = "0.6.2"
 description = "NiWrap wrappers for ANTs."
 license = "LGPL-2.1"
 authors = [{ name = "CMI DAIR", email = "dair@childmind.org" }]
