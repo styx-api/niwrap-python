@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
-    id="84e6b62e3004e9e04e98dfc8830b8f3a73ec6dbe.boutiques",
+    id="5bae5c4751160f7ccaa07fc3078825fcfbfea774.boutiques",
     name="antsApplyTransforms",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -127,7 +127,7 @@ AntsApplyTransformsParameters = typing.TypedDict('AntsApplyTransformsParameters'
     "__STYX_TYPE__": typing.Literal["antsApplyTransforms"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image_type": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
-    "input_image": InputPathType,
+    "input_image": typing.NotRequired[InputPathType | None],
     "reference_image": InputPathType,
     "output": typing.Union[AntsApplyTransformsWarpedOutputParameters, AntsApplyTransformsCompositeDisplacementFieldOutputParameters, AntsApplyTransformsGenericAffineTransformOutputParameters],
     "interpolation": typing.NotRequired[typing.Union[AntsApplyTransformsLinearParameters, AntsApplyTransformsNearestNeighborParameters, AntsApplyTransformsMultiLabelnoparamsParameters, AntsApplyTransformsMultiLabelParameters, AntsApplyTransformsGaussianParameters, AntsApplyTransformsBsplineParameters, AntsApplyTransformsCosineWindowedSincParameters, AntsApplyTransformsWelchWindowedSincParameters, AntsApplyTransformsHammingWindowedSincParameters, AntsApplyTransformsLanczosWindowedSincParameters, AntsApplyTransformsGenericLabelParameters] | None],
@@ -981,11 +981,11 @@ class AntsApplyTransformsOutputs(typing.NamedTuple):
 
 
 def ants_apply_transforms_params(
-    input_image: InputPathType,
     reference_image: InputPathType,
     output: typing.Union[AntsApplyTransformsWarpedOutputParameters, AntsApplyTransformsCompositeDisplacementFieldOutputParameters, AntsApplyTransformsGenericAffineTransformOutputParameters],
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     input_image_type: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
+    input_image: InputPathType | None = None,
     interpolation: typing.Union[AntsApplyTransformsLinearParameters, AntsApplyTransformsNearestNeighborParameters, AntsApplyTransformsMultiLabelnoparamsParameters, AntsApplyTransformsMultiLabelParameters, AntsApplyTransformsGaussianParameters, AntsApplyTransformsBsplineParameters, AntsApplyTransformsCosineWindowedSincParameters, AntsApplyTransformsWelchWindowedSincParameters, AntsApplyTransformsHammingWindowedSincParameters, AntsApplyTransformsLanczosWindowedSincParameters, AntsApplyTransformsGenericLabelParameters] | None = None,
     output_data_type: typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None = None,
     transform: list[typing.Union[AntsApplyTransformsTransformFileNameParameters, AntsApplyTransformsUseInverseParameters]] | None = None,
@@ -998,9 +998,6 @@ def ants_apply_transforms_params(
     Build parameters.
     
     Args:
-        input_image: Currently, the only input objects supported are image\
-            objects. However, the current framework allows for warping of other\
-            objects such as meshes and point sets.
         reference_image: For warping input images, the reference image defines\
             the spacing, origin, size, and direction of the output warped image.
         output: One can either output the warped image or, if the boolean is\
@@ -1016,6 +1013,9 @@ def ants_apply_transforms_params(
             image is a scalar image defined by an additional dimension for the time\
             component whereas a multi-channel image is a vector image with only\
             spatial dimensions. Five-dimensional images are e.g., AFNI stats image.
+        input_image: Currently, the only input objects supported are image\
+            objects. However, the current framework allows for warping of other\
+            objects such as meshes and point sets.
         interpolation: Several interpolation options are available in ITK.\
             These have all been made available.
         output_data_type: Output image data type. This is a direct typecast;\
@@ -1048,7 +1048,6 @@ def ants_apply_transforms_params(
     """
     params = {
         "__STYXTYPE__": "antsApplyTransforms",
-        "input_image": input_image,
         "reference_image": reference_image,
         "output": output,
     }
@@ -1056,6 +1055,8 @@ def ants_apply_transforms_params(
         params["dimensionality"] = dimensionality
     if input_image_type is not None:
         params["input_image_type"] = input_image_type
+    if input_image is not None:
+        params["input_image"] = input_image
     if interpolation is not None:
         params["interpolation"] = interpolation
     if output_data_type is not None:
@@ -1098,10 +1099,11 @@ def ants_apply_transforms_cargs(
             "--input-image-type",
             str(params.get("input_image_type"))
         ])
-    cargs.extend([
-        "--input",
-        execution.input_file(params.get("input_image"))
-    ])
+    if params.get("input_image") is not None:
+        cargs.extend([
+            "--input",
+            execution.input_file(params.get("input_image"))
+        ])
     cargs.extend([
         "--reference-image",
         execution.input_file(params.get("reference_image"))
@@ -1194,11 +1196,11 @@ def ants_apply_transforms_execute(
 
 
 def ants_apply_transforms(
-    input_image: InputPathType,
     reference_image: InputPathType,
     output: typing.Union[AntsApplyTransformsWarpedOutputParameters, AntsApplyTransformsCompositeDisplacementFieldOutputParameters, AntsApplyTransformsGenericAffineTransformOutputParameters],
     dimensionality: typing.Literal[2, 3, 4] | None = None,
     input_image_type: typing.Literal[0, 1, 2, 3, 4, 5] | None = None,
+    input_image: InputPathType | None = None,
     interpolation: typing.Union[AntsApplyTransformsLinearParameters, AntsApplyTransformsNearestNeighborParameters, AntsApplyTransformsMultiLabelnoparamsParameters, AntsApplyTransformsMultiLabelParameters, AntsApplyTransformsGaussianParameters, AntsApplyTransformsBsplineParameters, AntsApplyTransformsCosineWindowedSincParameters, AntsApplyTransformsWelchWindowedSincParameters, AntsApplyTransformsHammingWindowedSincParameters, AntsApplyTransformsLanczosWindowedSincParameters, AntsApplyTransformsGenericLabelParameters] | None = None,
     output_data_type: typing.Literal["char", "uchar", "short", "int", "float", "double", "default"] | None = None,
     transform: list[typing.Union[AntsApplyTransformsTransformFileNameParameters, AntsApplyTransformsUseInverseParameters]] | None = None,
@@ -1217,9 +1219,6 @@ def ants_apply_transforms(
     URL: https://github.com/ANTsX/ANTs
     
     Args:
-        input_image: Currently, the only input objects supported are image\
-            objects. However, the current framework allows for warping of other\
-            objects such as meshes and point sets.
         reference_image: For warping input images, the reference image defines\
             the spacing, origin, size, and direction of the output warped image.
         output: One can either output the warped image or, if the boolean is\
@@ -1235,6 +1234,9 @@ def ants_apply_transforms(
             image is a scalar image defined by an additional dimension for the time\
             component whereas a multi-channel image is a vector image with only\
             spatial dimensions. Five-dimensional images are e.g., AFNI stats image.
+        input_image: Currently, the only input objects supported are image\
+            objects. However, the current framework allows for warping of other\
+            objects such as meshes and point sets.
         interpolation: Several interpolation options are available in ITK.\
             These have all been made available.
         output_data_type: Output image data type. This is a direct typecast;\
