@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 V_3D_WARP_METADATA = Metadata(
-    id="20e7717e6fe44e3192a9a8b3cbb0fc5ec57f7b95.boutiques",
+    id="f905d9db7eb4dc5e4bba6d7a453936b46a2e8f24.boutiques",
     name="3dWarp",
     package="afni",
     container_image_tag="afni/afni_make_build:AFNI_24.2.06",
@@ -15,7 +15,6 @@ V_3D_WARP_METADATA = Metadata(
 
 V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
     "__STYXTYPE__": typing.Literal["3dWarp"],
-    "dataset": str,
     "matvec_in2out": typing.NotRequired[InputPathType | None],
     "matvec_out2in": typing.NotRequired[InputPathType | None],
     "tta2mni": bool,
@@ -37,6 +36,7 @@ V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
     "zpad": typing.NotRequired[float | None],
     "verb": bool,
     "prefix": typing.NotRequired[str | None],
+    "dataset": str,
 })
 
 
@@ -139,7 +139,6 @@ def v_3d_warp_params(
     """
     params = {
         "__STYXTYPE__": "3dWarp",
-        "dataset": dataset,
         "tta2mni": tta2mni,
         "mni2tta": mni2tta,
         "deoblique": deoblique,
@@ -152,6 +151,7 @@ def v_3d_warp_params(
         "wsinc5": wsinc5,
         "fsl_matvec": fsl_matvec,
         "verb": verb,
+        "dataset": dataset,
     }
     if matvec_in2out is not None:
         params["matvec_in2out"] = matvec_in2out
@@ -189,7 +189,6 @@ def v_3d_warp_cargs(
     """
     cargs = []
     cargs.append("3dWarp")
-    cargs.append(params.get("dataset"))
     if params.get("matvec_in2out") is not None:
         cargs.extend([
             "-matvec_in2out",
@@ -259,6 +258,7 @@ def v_3d_warp_cargs(
             "-prefix",
             params.get("prefix")
         ])
+    cargs.append(params.get("dataset"))
     return cargs
 
 
@@ -372,7 +372,6 @@ def v_3d_warp(
     runner = runner or get_global_runner()
     execution = runner.start_execution(V_3D_WARP_METADATA)
     params = v_3d_warp_params(
-        dataset=dataset,
         matvec_in2out=matvec_in2out,
         matvec_out2in=matvec_out2in,
         tta2mni=tta2mni,
@@ -394,6 +393,7 @@ def v_3d_warp(
         zpad=zpad,
         verb=verb,
         prefix=prefix,
+        dataset=dataset,
     )
     return v_3d_warp_execute(params, execution)
 
