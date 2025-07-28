@@ -1,6 +1,6 @@
 [project]
 name = "niwrap_dcm2niix"
-version = "0.6.2"
+version = "0.6.3"
 description = "NiWrap wrappers for dcm2niix."
 license = "LGPL-2.1"
 authors = [{ name = "CMI DAIR", email = "dair@childmind.org" }]
