@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLMATHS_METADATA = Metadata(
-    id="bee6d517966bb652a53c121a65d5ea59827f20a1.boutiques",
+    id="760e17385a7691eaccc3d99ec26b7c4305dfcd41.boutiques",
     name="fslmaths",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -859,7 +859,7 @@ def fslmaths_params(
     input_files: list[InputPathType],
     operations: list[FslmathsOperationParameters],
     output: str,
-    datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = "float",
+    datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     output_datatype: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
 ) -> FslmathsParameters:
     """
@@ -966,7 +966,7 @@ def fslmaths(
     input_files: list[InputPathType],
     operations: list[FslmathsOperationParameters],
     output: str,
-    datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = "float",
+    datatype_internal: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     output_datatype: typing.Literal["char", "short", "int", "float", "double", "input"] | None = None,
     runner: Runner | None = None,
 ) -> FslmathsOutputs:
