@@ -14,7 +14,7 @@ MRI_NLFILTER_METADATA = Metadata(
 
 
 MriNlfilterParameters = typing.TypedDict('MriNlfilterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_nlfilter"],
+    "@type": typing.Literal["freesurfer.mri_nlfilter"],
     "input_image": InputPathType,
     "output_image": str,
     "blur_sigma": typing.NotRequired[float | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_nlfilter": mri_nlfilter_cargs,
+        "freesurfer.mri_nlfilter": mri_nlfilter_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_nlfilter": mri_nlfilter_outputs,
+        "freesurfer.mri_nlfilter": mri_nlfilter_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def mri_nlfilter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_nlfilter",
+        "@type": "freesurfer.mri_nlfilter",
         "input_image": input_image,
         "output_image": output_image,
         "mean_flag": mean_flag,
@@ -292,5 +292,8 @@ __all__ = [
     "MriNlfilterOutputs",
     "MriNlfilterParameters",
     "mri_nlfilter",
+    "mri_nlfilter_cargs",
+    "mri_nlfilter_execute",
+    "mri_nlfilter_outputs",
     "mri_nlfilter_params",
 ]

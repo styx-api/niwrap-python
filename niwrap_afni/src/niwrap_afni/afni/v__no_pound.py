@@ -14,7 +14,7 @@ V__NO_POUND_METADATA = Metadata(
 
 
 VNoPoundParameters = typing.TypedDict('VNoPoundParameters', {
-    "__STYXTYPE__": typing.Literal["@NoPound"],
+    "@type": typing.Literal["afni.@NoPound"],
     "afni_files": list[str],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@NoPound": v__no_pound_cargs,
+        "afni.@NoPound": v__no_pound_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def v__no_pound_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@NoPound",
+        "@type": "afni.@NoPound",
         "afni_files": afni_files,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "VNoPoundParameters",
     "V__NO_POUND_METADATA",
     "v__no_pound",
+    "v__no_pound_cargs",
+    "v__no_pound_execute",
+    "v__no_pound_outputs",
     "v__no_pound_params",
 ]

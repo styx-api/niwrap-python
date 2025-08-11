@@ -14,7 +14,7 @@ GET_LABEL_THICKNESS_METADATA = Metadata(
 
 
 GetLabelThicknessParameters = typing.TypedDict('GetLabelThicknessParameters', {
-    "__STYXTYPE__": typing.Literal["get_label_thickness"],
+    "@type": typing.Literal["freesurfer.get_label_thickness"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "get_label_thickness": get_label_thickness_cargs,
+        "freesurfer.get_label_thickness": get_label_thickness_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def get_label_thickness_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "get_label_thickness",
+        "@type": "freesurfer.get_label_thickness",
         "infile": infile,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "GetLabelThicknessOutputs",
     "GetLabelThicknessParameters",
     "get_label_thickness",
+    "get_label_thickness_cargs",
+    "get_label_thickness_execute",
+    "get_label_thickness_outputs",
     "get_label_thickness_params",
 ]

@@ -14,7 +14,7 @@ FNIRTFILEUTILS_METADATA = Metadata(
 
 
 FnirtfileutilsParameters = typing.TypedDict('FnirtfileutilsParameters', {
-    "__STYXTYPE__": typing.Literal["fnirtfileutils"],
+    "@type": typing.Literal["fsl.fnirtfileutils"],
     "input_coefs": InputPathType,
     "ref_volume": typing.NotRequired[InputPathType | None],
     "out_field": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fnirtfileutils": fnirtfileutils_cargs,
+        "fsl.fnirtfileutils": fnirtfileutils_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fnirtfileutils": fnirtfileutils_outputs,
+        "fsl.fnirtfileutils": fnirtfileutils_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def fnirtfileutils_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fnirtfileutils",
+        "@type": "fsl.fnirtfileutils",
         "input_coefs": input_coefs,
         "with_aff": with_aff,
         "verbose_flag": verbose_flag,
@@ -309,5 +309,8 @@ __all__ = [
     "FnirtfileutilsOutputs",
     "FnirtfileutilsParameters",
     "fnirtfileutils",
+    "fnirtfileutils_cargs",
+    "fnirtfileutils_execute",
+    "fnirtfileutils_outputs",
     "fnirtfileutils_params",
 ]

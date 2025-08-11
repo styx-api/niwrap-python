@@ -14,7 +14,7 @@ V_3D_LOCAL_UNIFIZE_METADATA = Metadata(
 
 
 V3dLocalUnifizeParameters = typing.TypedDict('V3dLocalUnifizeParameters', {
-    "__STYXTYPE__": typing.Literal["3dLocalUnifize"],
+    "@type": typing.Literal["afni.3dLocalUnifize"],
     "input": InputPathType,
     "output": str,
     "working_dir": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLocalUnifize": v_3d_local_unifize_cargs,
+        "afni.3dLocalUnifize": v_3d_local_unifize_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLocalUnifize": v_3d_local_unifize_outputs,
+        "afni.3dLocalUnifize": v_3d_local_unifize_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v_3d_local_unifize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLocalUnifize",
+        "@type": "afni.3dLocalUnifize",
         "input": input_,
         "output": output,
         "echo": echo,
@@ -282,5 +282,8 @@ __all__ = [
     "V3dLocalUnifizeParameters",
     "V_3D_LOCAL_UNIFIZE_METADATA",
     "v_3d_local_unifize",
+    "v_3d_local_unifize_cargs",
+    "v_3d_local_unifize_execute",
+    "v_3d_local_unifize_outputs",
     "v_3d_local_unifize_params",
 ]

@@ -14,7 +14,7 @@ V__SUMA_ACKNOWLEDGE_METADATA = Metadata(
 
 
 VSumaAcknowledgeParameters = typing.TypedDict('VSumaAcknowledgeParameters', {
-    "__STYXTYPE__": typing.Literal["@suma_acknowledge"],
+    "@type": typing.Literal["afni.@suma_acknowledge"],
     "input_file": InputPathType,
     "surface_file": InputPathType,
     "output_prefix": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@suma_acknowledge": v__suma_acknowledge_cargs,
+        "afni.@suma_acknowledge": v__suma_acknowledge_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@suma_acknowledge": v__suma_acknowledge_outputs,
+        "afni.@suma_acknowledge": v__suma_acknowledge_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v__suma_acknowledge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@suma_acknowledge",
+        "@type": "afni.@suma_acknowledge",
         "input_file": input_file,
         "surface_file": surface_file,
         "output_prefix": output_prefix,
@@ -255,5 +255,8 @@ __all__ = [
     "VSumaAcknowledgeParameters",
     "V__SUMA_ACKNOWLEDGE_METADATA",
     "v__suma_acknowledge",
+    "v__suma_acknowledge_cargs",
+    "v__suma_acknowledge_execute",
+    "v__suma_acknowledge_outputs",
     "v__suma_acknowledge_params",
 ]

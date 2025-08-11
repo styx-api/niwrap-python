@@ -14,7 +14,7 @@ RANDOMISE_METADATA = Metadata(
 
 
 RandomiseParameters = typing.TypedDict('RandomiseParameters', {
-    "__STYXTYPE__": typing.Literal["randomise"],
+    "@type": typing.Literal["fsl.randomise"],
     "in_file": InputPathType,
     "base_name": typing.NotRequired[str | None],
     "design_mat": typing.NotRequired[InputPathType | None],
@@ -58,7 +58,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "randomise": randomise_cargs,
+        "fsl.randomise": randomise_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "randomise": randomise_outputs,
+        "fsl.randomise": randomise_outputs,
     }.get(t)
 
 
@@ -172,7 +172,7 @@ def randomise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "randomise",
+        "@type": "fsl.randomise",
         "in_file": in_file,
         "demean": demean,
         "f_only": f_only,
@@ -504,5 +504,8 @@ __all__ = [
     "RandomiseOutputs",
     "RandomiseParameters",
     "randomise",
+    "randomise_cargs",
+    "randomise_execute",
+    "randomise_outputs",
     "randomise_params",
 ]

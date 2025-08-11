@@ -14,7 +14,7 @@ MRI_CC_METADATA = Metadata(
 
 
 MriCcParameters = typing.TypedDict('MriCcParameters', {
-    "__STYXTYPE__": typing.Literal["mri_cc"],
+    "@type": typing.Literal["freesurfer.mri_cc"],
     "subject_name": str,
     "output_file": typing.NotRequired[str | None],
     "aseg_file": typing.NotRequired[InputPathType | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_cc": mri_cc_cargs,
+        "freesurfer.mri_cc": mri_cc_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_cc": mri_cc_outputs,
+        "freesurfer.mri_cc": mri_cc_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def mri_cc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_cc",
+        "@type": "freesurfer.mri_cc",
         "subject_name": subject_name,
         "force_flag": force_flag,
         "include_fornix": include_fornix,
@@ -309,5 +309,8 @@ __all__ = [
     "MriCcOutputs",
     "MriCcParameters",
     "mri_cc",
+    "mri_cc_cargs",
+    "mri_cc_execute",
+    "mri_cc_outputs",
     "mri_cc_params",
 ]

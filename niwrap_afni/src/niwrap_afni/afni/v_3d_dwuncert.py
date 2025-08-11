@@ -14,7 +14,7 @@ V_3D_DWUNCERT_METADATA = Metadata(
 
 
 V3dDwuncertParameters = typing.TypedDict('V3dDwuncertParameters', {
-    "__STYXTYPE__": typing.Literal["3dDWUncert"],
+    "@type": typing.Literal["afni.3dDWUncert"],
     "input_file": InputPathType,
     "input_prefix": str,
     "output_prefix": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDWUncert": v_3d_dwuncert_cargs,
+        "afni.3dDWUncert": v_3d_dwuncert_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDWUncert": v_3d_dwuncert_outputs,
+        "afni.3dDWUncert": v_3d_dwuncert_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def v_3d_dwuncert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDWUncert",
+        "@type": "afni.3dDWUncert",
         "input_file": input_file,
         "input_prefix": input_prefix,
         "output_prefix": output_prefix,
@@ -279,5 +279,8 @@ __all__ = [
     "V3dDwuncertParameters",
     "V_3D_DWUNCERT_METADATA",
     "v_3d_dwuncert",
+    "v_3d_dwuncert_cargs",
+    "v_3d_dwuncert_execute",
+    "v_3d_dwuncert_outputs",
     "v_3d_dwuncert_params",
 ]

@@ -14,7 +14,7 @@ MRIS_VOLSMOOTH_METADATA = Metadata(
 
 
 MrisVolsmoothParameters = typing.TypedDict('MrisVolsmoothParameters', {
-    "__STYXTYPE__": typing.Literal["mris_volsmooth"],
+    "@type": typing.Literal["freesurfer.mris_volsmooth"],
     "input_volume": InputPathType,
     "output_volume": str,
     "registration": InputPathType,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_volsmooth": mris_volsmooth_cargs,
+        "freesurfer.mris_volsmooth": mris_volsmooth_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_volsmooth": mris_volsmooth_outputs,
+        "freesurfer.mris_volsmooth": mris_volsmooth_outputs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def mris_volsmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_volsmooth",
+        "@type": "freesurfer.mris_volsmooth",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "registration": registration,
@@ -335,5 +335,8 @@ __all__ = [
     "MrisVolsmoothOutputs",
     "MrisVolsmoothParameters",
     "mris_volsmooth",
+    "mris_volsmooth_cargs",
+    "mris_volsmooth_execute",
+    "mris_volsmooth_outputs",
     "mris_volsmooth_params",
 ]

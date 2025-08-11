@@ -14,7 +14,7 @@ MRIS_EXTRACT_VALUES_METADATA = Metadata(
 
 
 MrisExtractValuesParameters = typing.TypedDict('MrisExtractValuesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_extract_values"],
+    "@type": typing.Literal["freesurfer.mris_extract_values"],
     "surface": InputPathType,
     "overlay": InputPathType,
     "annotation": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_extract_values": mris_extract_values_cargs,
+        "freesurfer.mris_extract_values": mris_extract_values_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_extract_values": mris_extract_values_outputs,
+        "freesurfer.mris_extract_values": mris_extract_values_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mris_extract_values_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_extract_values",
+        "@type": "freesurfer.mris_extract_values",
         "surface": surface,
         "overlay": overlay,
         "annotation": annotation,
@@ -232,5 +232,8 @@ __all__ = [
     "MrisExtractValuesOutputs",
     "MrisExtractValuesParameters",
     "mris_extract_values",
+    "mris_extract_values_cargs",
+    "mris_extract_values_execute",
+    "mris_extract_values_outputs",
     "mris_extract_values_params",
 ]

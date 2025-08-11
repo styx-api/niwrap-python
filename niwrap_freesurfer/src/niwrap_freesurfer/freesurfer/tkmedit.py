@@ -14,7 +14,7 @@ TKMEDIT_METADATA = Metadata(
 
 
 TkmeditParameters = typing.TypedDict('TkmeditParameters', {
-    "__STYXTYPE__": typing.Literal["tkmedit"],
+    "@type": typing.Literal["freesurfer.tkmedit"],
     "input_volume": InputPathType,
     "options": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tkmedit": tkmedit_cargs,
+        "freesurfer.tkmedit": tkmedit_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def tkmedit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tkmedit",
+        "@type": "freesurfer.tkmedit",
         "input_volume": input_volume,
     }
     if options is not None:
@@ -182,5 +182,8 @@ __all__ = [
     "TkmeditOutputs",
     "TkmeditParameters",
     "tkmedit",
+    "tkmedit_cargs",
+    "tkmedit_execute",
+    "tkmedit_outputs",
     "tkmedit_params",
 ]

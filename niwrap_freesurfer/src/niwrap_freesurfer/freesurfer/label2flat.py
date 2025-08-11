@@ -14,7 +14,7 @@ LABEL2FLAT_METADATA = Metadata(
 
 
 Label2flatParameters = typing.TypedDict('Label2flatParameters', {
-    "__STYXTYPE__": typing.Literal["label2flat"],
+    "@type": typing.Literal["freesurfer.label2flat"],
     "subject_name": str,
     "label_file": InputPathType,
     "patch_file": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label2flat": label2flat_cargs,
+        "freesurfer.label2flat": label2flat_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label2flat": label2flat_outputs,
+        "freesurfer.label2flat": label2flat_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def label2flat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label2flat",
+        "@type": "freesurfer.label2flat",
         "subject_name": subject_name,
         "label_file": label_file,
         "patch_file": patch_file,
@@ -196,5 +196,8 @@ __all__ = [
     "Label2flatOutputs",
     "Label2flatParameters",
     "label2flat",
+    "label2flat_cargs",
+    "label2flat_execute",
+    "label2flat_outputs",
     "label2flat_params",
 ]

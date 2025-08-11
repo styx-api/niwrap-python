@@ -14,7 +14,7 @@ MRIS_AA_SHRINKWRAP_METADATA = Metadata(
 
 
 MrisAaShrinkwrapParameters = typing.TypedDict('MrisAaShrinkwrapParameters', {
-    "__STYXTYPE__": typing.Literal["mris_AA_shrinkwrap"],
+    "@type": typing.Literal["freesurfer.mris_AA_shrinkwrap"],
     "t1_vol": InputPathType,
     "pd_vol": InputPathType,
     "output_dir": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_AA_shrinkwrap": mris_aa_shrinkwrap_cargs,
+        "freesurfer.mris_AA_shrinkwrap": mris_aa_shrinkwrap_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_aa_shrinkwrap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_AA_shrinkwrap",
+        "@type": "freesurfer.mris_AA_shrinkwrap",
         "t1_vol": t1_vol,
         "pd_vol": pd_vol,
         "output_dir": output_dir,
@@ -236,5 +236,8 @@ __all__ = [
     "MrisAaShrinkwrapOutputs",
     "MrisAaShrinkwrapParameters",
     "mris_aa_shrinkwrap",
+    "mris_aa_shrinkwrap_cargs",
+    "mris_aa_shrinkwrap_execute",
+    "mris_aa_shrinkwrap_outputs",
     "mris_aa_shrinkwrap_params",
 ]

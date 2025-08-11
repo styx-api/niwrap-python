@@ -14,7 +14,7 @@ MRIS_WATERSHED_METADATA = Metadata(
 
 
 MrisWatershedParameters = typing.TypedDict('MrisWatershedParameters', {
-    "__STYXTYPE__": typing.Literal["mris_watershed"],
+    "@type": typing.Literal["freesurfer.mris_watershed"],
     "input_surface": InputPathType,
     "input_gradient_field": InputPathType,
     "output_annotation": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_watershed": mris_watershed_cargs,
+        "freesurfer.mris_watershed": mris_watershed_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_watershed": mris_watershed_outputs,
+        "freesurfer.mris_watershed": mris_watershed_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def mris_watershed_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_watershed",
+        "@type": "freesurfer.mris_watershed",
         "input_surface": input_surface,
         "input_gradient_field": input_gradient_field,
         "output_annotation": output_annotation,
@@ -218,5 +218,8 @@ __all__ = [
     "MrisWatershedOutputs",
     "MrisWatershedParameters",
     "mris_watershed",
+    "mris_watershed_cargs",
+    "mris_watershed_execute",
+    "mris_watershed_outputs",
     "mris_watershed_params",
 ]

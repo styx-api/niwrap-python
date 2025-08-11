@@ -14,14 +14,14 @@ WARPINVERT_METADATA = Metadata(
 
 
 WarpinvertConfigParameters = typing.TypedDict('WarpinvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.warpinvert.config"],
     "key": str,
     "value": str,
 })
 
 
 WarpinvertParameters = typing.TypedDict('WarpinvertParameters', {
-    "__STYXTYPE__": typing.Literal["warpinvert"],
+    "@type": typing.Literal["mrtrix.warpinvert"],
     "template": typing.NotRequired[InputPathType | None],
     "displacement": bool,
     "info": bool,
@@ -49,8 +49,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "warpinvert": warpinvert_cargs,
-        "config": warpinvert_config_cargs,
+        "mrtrix.warpinvert": warpinvert_cargs,
+        "mrtrix.warpinvert.config": warpinvert_config_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "warpinvert": warpinvert_outputs,
+        "mrtrix.warpinvert": warpinvert_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def warpinvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.warpinvert.config",
         "key": key,
         "value": value,
     }
@@ -160,7 +160,7 @@ def warpinvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warpinvert",
+        "@type": "mrtrix.warpinvert",
         "displacement": displacement,
         "info": info,
         "quiet": quiet,
@@ -216,7 +216,7 @@ def warpinvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -365,6 +365,10 @@ __all__ = [
     "WarpinvertOutputs",
     "WarpinvertParameters",
     "warpinvert",
+    "warpinvert_cargs",
+    "warpinvert_config_cargs",
     "warpinvert_config_params",
+    "warpinvert_execute",
+    "warpinvert_outputs",
     "warpinvert_params",
 ]

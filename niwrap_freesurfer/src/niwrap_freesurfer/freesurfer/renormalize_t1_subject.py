@@ -14,7 +14,7 @@ RENORMALIZE_T1_SUBJECT_METADATA = Metadata(
 
 
 RenormalizeT1SubjectParameters = typing.TypedDict('RenormalizeT1SubjectParameters', {
-    "__STYXTYPE__": typing.Literal["renormalize_T1_subject"],
+    "@type": typing.Literal["freesurfer.renormalize_T1_subject"],
     "subject_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "renormalize_T1_subject": renormalize_t1_subject_cargs,
+        "freesurfer.renormalize_T1_subject": renormalize_t1_subject_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def renormalize_t1_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "renormalize_T1_subject",
+        "@type": "freesurfer.renormalize_T1_subject",
         "subject_dir": subject_dir,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "RenormalizeT1SubjectOutputs",
     "RenormalizeT1SubjectParameters",
     "renormalize_t1_subject",
+    "renormalize_t1_subject_cargs",
+    "renormalize_t1_subject_execute",
+    "renormalize_t1_subject_outputs",
     "renormalize_t1_subject_params",
 ]

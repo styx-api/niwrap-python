@@ -14,14 +14,14 @@ VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA = Metadata(
 
 
 VolumeWarpfieldAffineRegressionFlirtOutParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionFlirtOutParameters', {
-    "__STYXTYPE__": typing.Literal["flirt_out"],
+    "@type": typing.Literal["workbench.volume-warpfield-affine-regression.flirt_out"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeWarpfieldAffineRegressionParameters = typing.TypedDict('VolumeWarpfieldAffineRegressionParameters', {
-    "__STYXTYPE__": typing.Literal["volume-warpfield-affine-regression"],
+    "@type": typing.Literal["workbench.volume-warpfield-affine-regression"],
     "warpfield": str,
     "affine_out": str,
     "opt_roi_roi_vol": typing.NotRequired[InputPathType | None],
@@ -42,8 +42,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-warpfield-affine-regression": volume_warpfield_affine_regression_cargs,
-        "flirt_out": volume_warpfield_affine_regression_flirt_out_cargs,
+        "workbench.volume-warpfield-affine-regression": volume_warpfield_affine_regression_cargs,
+        "workbench.volume-warpfield-affine-regression.flirt_out": volume_warpfield_affine_regression_flirt_out_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def volume_warpfield_affine_regression_flirt_out_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt_out",
+        "@type": "workbench.volume-warpfield-affine-regression.flirt_out",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -135,7 +135,7 @@ def volume_warpfield_affine_regression_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-warpfield-affine-regression",
+        "@type": "workbench.volume-warpfield-affine-regression",
         "warpfield": warpfield,
         "affine_out": affine_out,
     }
@@ -177,7 +177,7 @@ def volume_warpfield_affine_regression_cargs(
             params.get("opt_fnirt_source_volume")
         ])
     if params.get("flirt_out") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt_out")["__STYXTYPE__"])(params.get("flirt_out"), execution))
+        cargs.extend(dyn_cargs(params.get("flirt_out")["@type"])(params.get("flirt_out"), execution))
     return cargs
 
 
@@ -288,6 +288,10 @@ __all__ = [
     "VolumeWarpfieldAffineRegressionOutputs",
     "VolumeWarpfieldAffineRegressionParameters",
     "volume_warpfield_affine_regression",
+    "volume_warpfield_affine_regression_cargs",
+    "volume_warpfield_affine_regression_execute",
+    "volume_warpfield_affine_regression_flirt_out_cargs",
     "volume_warpfield_affine_regression_flirt_out_params",
+    "volume_warpfield_affine_regression_outputs",
     "volume_warpfield_affine_regression_params",
 ]

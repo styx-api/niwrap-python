@@ -14,7 +14,7 @@ CONCAT_BVARS_METADATA = Metadata(
 
 
 ConcatBvarsParameters = typing.TypedDict('ConcatBvarsParameters', {
-    "__STYXTYPE__": typing.Literal["concat_bvars"],
+    "@type": typing.Literal["fsl.concat_bvars"],
     "output_bvars": str,
     "input_bvars": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "concat_bvars": concat_bvars_cargs,
+        "fsl.concat_bvars": concat_bvars_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "concat_bvars": concat_bvars_outputs,
+        "fsl.concat_bvars": concat_bvars_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def concat_bvars_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "concat_bvars",
+        "@type": "fsl.concat_bvars",
         "output_bvars": output_bvars,
         "input_bvars": input_bvars,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "ConcatBvarsOutputs",
     "ConcatBvarsParameters",
     "concat_bvars",
+    "concat_bvars_cargs",
+    "concat_bvars_execute",
+    "concat_bvars_outputs",
     "concat_bvars_params",
 ]

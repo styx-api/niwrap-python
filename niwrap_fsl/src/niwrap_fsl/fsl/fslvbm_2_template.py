@@ -14,7 +14,7 @@ FSLVBM_2_TEMPLATE_METADATA = Metadata(
 
 
 Fslvbm2TemplateParameters = typing.TypedDict('Fslvbm2TemplateParameters', {
-    "__STYXTYPE__": typing.Literal["fslvbm_2_template"],
+    "@type": typing.Literal["fsl.fslvbm_2_template"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[str | None],
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslvbm_2_template": fslvbm_2_template_cargs,
+        "fsl.fslvbm_2_template": fslvbm_2_template_cargs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def fslvbm_2_template_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslvbm_2_template",
+        "@type": "fsl.fslvbm_2_template",
     }
     if arch is not None:
         params["arch"] = arch
@@ -472,5 +472,8 @@ __all__ = [
     "Fslvbm2TemplateOutputs",
     "Fslvbm2TemplateParameters",
     "fslvbm_2_template",
+    "fslvbm_2_template_cargs",
+    "fslvbm_2_template_execute",
+    "fslvbm_2_template_outputs",
     "fslvbm_2_template_params",
 ]

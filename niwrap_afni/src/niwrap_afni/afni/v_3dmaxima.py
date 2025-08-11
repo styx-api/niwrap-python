@@ -14,7 +14,7 @@ V_3DMAXIMA_METADATA = Metadata(
 
 
 V3dmaximaParameters = typing.TypedDict('V3dmaximaParameters', {
-    "__STYXTYPE__": typing.Literal["3dmaxima"],
+    "@type": typing.Literal["afni.3dmaxima"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "threshold": typing.NotRequired[float | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmaxima": v_3dmaxima_cargs,
+        "afni.3dmaxima": v_3dmaxima_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmaxima": v_3dmaxima_outputs,
+        "afni.3dmaxima": v_3dmaxima_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def v_3dmaxima_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmaxima",
+        "@type": "afni.3dmaxima",
         "input_dataset": input_dataset,
         "input_flag": input_flag,
         "spheres_1_flag": spheres_1_flag,
@@ -369,5 +369,8 @@ __all__ = [
     "V3dmaximaParameters",
     "V_3DMAXIMA_METADATA",
     "v_3dmaxima",
+    "v_3dmaxima_cargs",
+    "v_3dmaxima_execute",
+    "v_3dmaxima_outputs",
     "v_3dmaxima_params",
 ]

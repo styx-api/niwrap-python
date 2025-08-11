@@ -14,7 +14,7 @@ BEDPOSTX_DATACHECK_METADATA = Metadata(
 
 
 BedpostxDatacheckParameters = typing.TypedDict('BedpostxDatacheckParameters', {
-    "__STYXTYPE__": typing.Literal["bedpostx_datacheck"],
+    "@type": typing.Literal["fsl.bedpostx_datacheck"],
     "data_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bedpostx_datacheck": bedpostx_datacheck_cargs,
+        "fsl.bedpostx_datacheck": bedpostx_datacheck_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def bedpostx_datacheck_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bedpostx_datacheck",
+        "@type": "fsl.bedpostx_datacheck",
         "data_dir": data_dir,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "BedpostxDatacheckOutputs",
     "BedpostxDatacheckParameters",
     "bedpostx_datacheck",
+    "bedpostx_datacheck_cargs",
+    "bedpostx_datacheck_execute",
+    "bedpostx_datacheck_outputs",
     "bedpostx_datacheck_params",
 ]

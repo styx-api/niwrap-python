@@ -14,7 +14,7 @@ UNCONFOUND_METADATA = Metadata(
 
 
 UnconfoundParameters = typing.TypedDict('UnconfoundParameters', {
-    "__STYXTYPE__": typing.Literal["unconfound"],
+    "@type": typing.Literal["fsl.unconfound"],
     "in4d": InputPathType,
     "out4d": str,
     "confound_mat": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "unconfound": unconfound_cargs,
+        "fsl.unconfound": unconfound_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "unconfound": unconfound_outputs,
+        "fsl.unconfound": unconfound_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def unconfound_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "unconfound",
+        "@type": "fsl.unconfound",
         "in4d": in4d,
         "out4d": out4d,
         "confound_mat": confound_mat,
@@ -190,5 +190,8 @@ __all__ = [
     "UnconfoundOutputs",
     "UnconfoundParameters",
     "unconfound",
+    "unconfound_cargs",
+    "unconfound_execute",
+    "unconfound_outputs",
     "unconfound_params",
 ]

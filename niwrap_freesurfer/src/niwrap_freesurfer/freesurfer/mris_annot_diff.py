@@ -14,7 +14,7 @@ MRIS_ANNOT_DIFF_METADATA = Metadata(
 
 
 MrisAnnotDiffParameters = typing.TypedDict('MrisAnnotDiffParameters', {
-    "__STYXTYPE__": typing.Literal["mris_annot_diff"],
+    "@type": typing.Literal["freesurfer.mris_annot_diff"],
     "annot1": InputPathType,
     "annot2": InputPathType,
     "diff_ctab": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_annot_diff": mris_annot_diff_cargs,
+        "freesurfer.mris_annot_diff": mris_annot_diff_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mris_annot_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_annot_diff",
+        "@type": "freesurfer.mris_annot_diff",
         "annot1": annot1,
         "annot2": annot2,
         "diff_ctab": diff_ctab,
@@ -194,5 +194,8 @@ __all__ = [
     "MrisAnnotDiffOutputs",
     "MrisAnnotDiffParameters",
     "mris_annot_diff",
+    "mris_annot_diff_cargs",
+    "mris_annot_diff_execute",
+    "mris_annot_diff_outputs",
     "mris_annot_diff_params",
 ]

@@ -14,7 +14,7 @@ V__REORDER_METADATA = Metadata(
 
 
 VReorderParameters = typing.TypedDict('VReorderParameters', {
-    "__STYXTYPE__": typing.Literal["@Reorder"],
+    "@type": typing.Literal["afni.@Reorder"],
     "input_dataset": InputPathType,
     "mapfile": InputPathType,
     "prefix": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Reorder": v__reorder_cargs,
+        "afni.@Reorder": v__reorder_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@Reorder": v__reorder_outputs,
+        "afni.@Reorder": v__reorder_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def v__reorder_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Reorder",
+        "@type": "afni.@Reorder",
         "input_dataset": input_dataset,
         "mapfile": mapfile,
         "prefix": prefix,
@@ -230,5 +230,8 @@ __all__ = [
     "VReorderParameters",
     "V__REORDER_METADATA",
     "v__reorder",
+    "v__reorder_cargs",
+    "v__reorder_execute",
+    "v__reorder_outputs",
     "v__reorder_params",
 ]

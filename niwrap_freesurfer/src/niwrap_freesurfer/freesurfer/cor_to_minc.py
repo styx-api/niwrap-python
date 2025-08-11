@@ -14,7 +14,7 @@ COR_TO_MINC_METADATA = Metadata(
 
 
 CorToMincParameters = typing.TypedDict('CorToMincParameters', {
-    "__STYXTYPE__": typing.Literal["cor_to_minc"],
+    "@type": typing.Literal["freesurfer.cor_to_minc"],
     "cor_directory": str,
     "minc_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cor_to_minc": cor_to_minc_cargs,
+        "freesurfer.cor_to_minc": cor_to_minc_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cor_to_minc": cor_to_minc_outputs,
+        "freesurfer.cor_to_minc": cor_to_minc_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def cor_to_minc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cor_to_minc",
+        "@type": "freesurfer.cor_to_minc",
         "cor_directory": cor_directory,
         "minc_file": minc_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "CorToMincOutputs",
     "CorToMincParameters",
     "cor_to_minc",
+    "cor_to_minc_cargs",
+    "cor_to_minc_execute",
+    "cor_to_minc_outputs",
     "cor_to_minc_params",
 ]

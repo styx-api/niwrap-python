@@ -14,7 +14,7 @@ APPLYXFM4_D_METADATA = Metadata(
 
 
 Applyxfm4DParameters = typing.TypedDict('Applyxfm4DParameters', {
-    "__STYXTYPE__": typing.Literal["applyxfm4D"],
+    "@type": typing.Literal["fsl.applyxfm4D"],
     "input_volume": InputPathType,
     "ref_volume": InputPathType,
     "output_volume": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "applyxfm4D": applyxfm4_d_cargs,
+        "fsl.applyxfm4D": applyxfm4_d_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "applyxfm4D": applyxfm4_d_outputs,
+        "fsl.applyxfm4D": applyxfm4_d_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def applyxfm4_d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "applyxfm4D",
+        "@type": "fsl.applyxfm4D",
         "input_volume": input_volume,
         "ref_volume": ref_volume,
         "output_volume": output_volume,
@@ -244,5 +244,8 @@ __all__ = [
     "Applyxfm4DOutputs",
     "Applyxfm4DParameters",
     "applyxfm4_d",
+    "applyxfm4_d_cargs",
+    "applyxfm4_d_execute",
+    "applyxfm4_d_outputs",
     "applyxfm4_d_params",
 ]

@@ -14,7 +14,7 @@ AFNI_CHECK_OMP_METADATA = Metadata(
 
 
 AfniCheckOmpParameters = typing.TypedDict('AfniCheckOmpParameters', {
-    "__STYXTYPE__": typing.Literal["afni_check_omp"],
+    "@type": typing.Literal["afni.afni_check_omp"],
     "iterations": typing.NotRequired[float | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni_check_omp": afni_check_omp_cargs,
+        "afni.afni_check_omp": afni_check_omp_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def afni_check_omp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afni_check_omp",
+        "@type": "afni.afni_check_omp",
     }
     if iterations is not None:
         params["iterations"] = iterations
@@ -170,5 +170,8 @@ __all__ = [
     "AfniCheckOmpOutputs",
     "AfniCheckOmpParameters",
     "afni_check_omp",
+    "afni_check_omp_cargs",
+    "afni_check_omp_execute",
+    "afni_check_omp_outputs",
     "afni_check_omp_params",
 ]

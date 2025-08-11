@@ -14,14 +14,14 @@ V_3D_CRUISETO_AFNI_METADATA = Metadata(
 
 
 V3dCruisetoAfniTraceParameters = typing.TypedDict('V3dCruisetoAfniTraceParameters', {
-    "__STYXTYPE__": typing.Literal["trace"],
+    "@type": typing.Literal["afni.3dCRUISEtoAFNI.trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
 V3dCruisetoAfniParameters = typing.TypedDict('V3dCruisetoAfniParameters', {
-    "__STYXTYPE__": typing.Literal["3dCRUISEtoAFNI"],
+    "@type": typing.Literal["afni.3dCRUISEtoAFNI"],
     "input": InputPathType,
     "novolreg": bool,
     "noxform": bool,
@@ -46,8 +46,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dCRUISEtoAFNI": v_3d_cruiseto_afni_cargs,
-        "trace": v_3d_cruiseto_afni_trace_cargs,
+        "afni.3dCRUISEtoAFNI": v_3d_cruiseto_afni_cargs,
+        "afni.3dCRUISEtoAFNI.trace": v_3d_cruiseto_afni_trace_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v_3d_cruiseto_afni_trace_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "trace",
+        "@type": "afni.3dCRUISEtoAFNI.trace",
         "trace": trace_,
         "TRACE": trace_2,
     }
@@ -148,7 +148,7 @@ def v_3d_cruiseto_afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dCRUISEtoAFNI",
+        "@type": "afni.3dCRUISEtoAFNI",
         "input": input_,
         "novolreg": novolreg,
         "noxform": noxform,
@@ -193,7 +193,7 @@ def v_3d_cruiseto_afni_cargs(
             params.get("setenv")
         ])
     if params.get("trace") is not None:
-        cargs.extend(dyn_cargs(params.get("trace")["__STYXTYPE__"])(params.get("trace"), execution))
+        cargs.extend(dyn_cargs(params.get("trace")["@type"])(params.get("trace"), execution))
     if params.get("nomall"):
         cargs.append("-nomall")
     if params.get("yesmall"):
@@ -306,6 +306,10 @@ __all__ = [
     "V3dCruisetoAfniTraceParameters",
     "V_3D_CRUISETO_AFNI_METADATA",
     "v_3d_cruiseto_afni",
+    "v_3d_cruiseto_afni_cargs",
+    "v_3d_cruiseto_afni_execute",
+    "v_3d_cruiseto_afni_outputs",
     "v_3d_cruiseto_afni_params",
+    "v_3d_cruiseto_afni_trace_cargs",
     "v_3d_cruiseto_afni_trace_params",
 ]

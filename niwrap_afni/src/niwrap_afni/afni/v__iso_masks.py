@@ -14,7 +14,7 @@ V__ISO_MASKS_METADATA = Metadata(
 
 
 VIsoMasksParameters = typing.TypedDict('VIsoMasksParameters', {
-    "__STYXTYPE__": typing.Literal["@IsoMasks"],
+    "@type": typing.Literal["afni.@IsoMasks"],
     "input_dataset": InputPathType,
     "isovals": typing.NotRequired[list[float] | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@IsoMasks": v__iso_masks_cargs,
+        "afni.@IsoMasks": v__iso_masks_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__iso_masks_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@IsoMasks",
+        "@type": "afni.@IsoMasks",
         "input_dataset": input_dataset,
     }
     if isovals is not None:
@@ -181,5 +181,8 @@ __all__ = [
     "VIsoMasksParameters",
     "V__ISO_MASKS_METADATA",
     "v__iso_masks",
+    "v__iso_masks_cargs",
+    "v__iso_masks_execute",
+    "v__iso_masks_outputs",
     "v__iso_masks_params",
 ]

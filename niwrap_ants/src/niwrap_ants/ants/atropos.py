@@ -14,7 +14,7 @@ ATROPOS_METADATA = Metadata(
 
 
 AtroposParameters = typing.TypedDict('AtroposParameters', {
-    "__STYXTYPE__": typing.Literal["Atropos"],
+    "@type": typing.Literal["ants.Atropos"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "intensity_image": str,
     "bspline": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "Atropos": atropos_cargs,
+        "ants.Atropos": atropos_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "Atropos": atropos_outputs,
+        "ants.Atropos": atropos_outputs,
     }.get(t)
 
 
@@ -154,7 +154,7 @@ def atropos_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "Atropos",
+        "@type": "ants.Atropos",
         "intensity_image": intensity_image,
         "initialization": initialization,
         "mask_image": mask_image,
@@ -455,5 +455,8 @@ __all__ = [
     "AtroposOutputs",
     "AtroposParameters",
     "atropos",
+    "atropos_cargs",
+    "atropos_execute",
+    "atropos_outputs",
     "atropos_params",
 ]

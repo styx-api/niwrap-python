@@ -14,7 +14,7 @@ IREPIFITVOL_METADATA = Metadata(
 
 
 IrepifitvolParameters = typing.TypedDict('IrepifitvolParameters', {
-    "__STYXTYPE__": typing.Literal["irepifitvol"],
+    "@type": typing.Literal["freesurfer.irepifitvol"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "irepifitvol": irepifitvol_cargs,
+        "freesurfer.irepifitvol": irepifitvol_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "irepifitvol": irepifitvol_outputs,
+        "freesurfer.irepifitvol": irepifitvol_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def irepifitvol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "irepifitvol",
+        "@type": "freesurfer.irepifitvol",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "IrepifitvolOutputs",
     "IrepifitvolParameters",
     "irepifitvol",
+    "irepifitvol_cargs",
+    "irepifitvol_execute",
+    "irepifitvol_outputs",
     "irepifitvol_params",
 ]

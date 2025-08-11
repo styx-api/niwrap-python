@@ -14,7 +14,7 @@ V__SUMA_RENUMBER_FS_METADATA = Metadata(
 
 
 VSumaRenumberFsParameters = typing.TypedDict('VSumaRenumberFsParameters', {
-    "__STYXTYPE__": typing.Literal["@SUMA_renumber_FS"],
+    "@type": typing.Literal["afni.@SUMA_renumber_FS"],
     "sumadir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SUMA_renumber_FS": v__suma_renumber_fs_cargs,
+        "afni.@SUMA_renumber_FS": v__suma_renumber_fs_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SUMA_renumber_FS": v__suma_renumber_fs_outputs,
+        "afni.@SUMA_renumber_FS": v__suma_renumber_fs_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def v__suma_renumber_fs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SUMA_renumber_FS",
+        "@type": "afni.@SUMA_renumber_FS",
         "sumadir": sumadir,
     }
     return params
@@ -205,5 +205,8 @@ __all__ = [
     "VSumaRenumberFsParameters",
     "V__SUMA_RENUMBER_FS_METADATA",
     "v__suma_renumber_fs",
+    "v__suma_renumber_fs_cargs",
+    "v__suma_renumber_fs_execute",
+    "v__suma_renumber_fs_outputs",
     "v__suma_renumber_fs_params",
 ]

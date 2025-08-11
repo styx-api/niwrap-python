@@ -14,33 +14,33 @@ SH2AMP_METADATA = Metadata(
 
 
 Sh2ampFslgradParameters = typing.TypedDict('Sh2ampFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.sh2amp.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Sh2ampVariousStringParameters = typing.TypedDict('Sh2ampVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.sh2amp.VariousString"],
     "obj": str,
 })
 
 
 Sh2ampVariousFileParameters = typing.TypedDict('Sh2ampVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.sh2amp.VariousFile"],
     "obj": InputPathType,
 })
 
 
 Sh2ampConfigParameters = typing.TypedDict('Sh2ampConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.sh2amp.config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2ampParameters = typing.TypedDict('Sh2ampParameters', {
-    "__STYXTYPE__": typing.Literal["sh2amp"],
+    "@type": typing.Literal["mrtrix.sh2amp"],
     "nonnegative": bool,
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Sh2ampFslgradParameters | None],
@@ -72,11 +72,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sh2amp": sh2amp_cargs,
-        "fslgrad": sh2amp_fslgrad_cargs,
-        "VariousString": sh2amp_various_string_cargs,
-        "VariousFile": sh2amp_various_file_cargs,
-        "config": sh2amp_config_cargs,
+        "mrtrix.sh2amp": sh2amp_cargs,
+        "mrtrix.sh2amp.fslgrad": sh2amp_fslgrad_cargs,
+        "mrtrix.sh2amp.VariousString": sh2amp_various_string_cargs,
+        "mrtrix.sh2amp.VariousFile": sh2amp_various_file_cargs,
+        "mrtrix.sh2amp.config": sh2amp_config_cargs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sh2amp": sh2amp_outputs,
+        "mrtrix.sh2amp": sh2amp_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def sh2amp_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.sh2amp.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -155,7 +155,7 @@ def sh2amp_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.sh2amp.VariousString",
         "obj": obj,
     }
     return params
@@ -191,7 +191,7 @@ def sh2amp_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.sh2amp.VariousFile",
         "obj": obj,
     }
     return params
@@ -229,7 +229,7 @@ def sh2amp_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.sh2amp.config",
         "key": key,
         "value": value,
     }
@@ -332,7 +332,7 @@ def sh2amp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sh2amp",
+        "@type": "mrtrix.sh2amp",
         "nonnegative": nonnegative,
         "info": info,
         "quiet": quiet,
@@ -382,11 +382,11 @@ def sh2amp_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("strides") is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["__STYXTYPE__"])(params.get("strides"), execution)
+            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
         ])
     if params.get("datatype") is not None:
         cargs.extend([
@@ -407,7 +407,7 @@ def sh2amp_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -632,9 +632,16 @@ __all__ = [
     "Sh2ampVariousFileParameters",
     "Sh2ampVariousStringParameters",
     "sh2amp",
+    "sh2amp_cargs",
+    "sh2amp_config_cargs",
     "sh2amp_config_params",
+    "sh2amp_execute",
+    "sh2amp_fslgrad_cargs",
     "sh2amp_fslgrad_params",
+    "sh2amp_outputs",
     "sh2amp_params",
+    "sh2amp_various_file_cargs",
     "sh2amp_various_file_params",
+    "sh2amp_various_string_cargs",
     "sh2amp_various_string_params",
 ]

@@ -14,14 +14,14 @@ MRDUMP_METADATA = Metadata(
 
 
 MrdumpConfigParameters = typing.TypedDict('MrdumpConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrdump.config"],
     "key": str,
     "value": str,
 })
 
 
 MrdumpParameters = typing.TypedDict('MrdumpParameters', {
-    "__STYXTYPE__": typing.Literal["mrdump"],
+    "@type": typing.Literal["mrtrix.mrdump"],
     "mask": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrdump": mrdump_cargs,
-        "config": mrdump_config_cargs,
+        "mrtrix.mrdump": mrdump_cargs,
+        "mrtrix.mrdump.config": mrdump_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrdump": mrdump_outputs,
+        "mrtrix.mrdump": mrdump_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mrdump_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrdump.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def mrdump_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrdump",
+        "@type": "mrtrix.mrdump",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -211,7 +211,7 @@ def mrdump_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -346,6 +346,10 @@ __all__ = [
     "MrdumpOutputs",
     "MrdumpParameters",
     "mrdump",
+    "mrdump_cargs",
+    "mrdump_config_cargs",
     "mrdump_config_params",
+    "mrdump_execute",
+    "mrdump_outputs",
     "mrdump_params",
 ]

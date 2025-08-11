@@ -14,7 +14,7 @@ V_3DRETROICOR_METADATA = Metadata(
 
 
 V3dretroicorParameters = typing.TypedDict('V3dretroicorParameters', {
-    "__STYXTYPE__": typing.Literal["3dretroicor"],
+    "@type": typing.Literal["afni.3dretroicor"],
     "ignore": typing.NotRequired[float | None],
     "prefix": typing.NotRequired[str | None],
     "card": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dretroicor": v_3dretroicor_cargs,
+        "afni.3dretroicor": v_3dretroicor_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dretroicor": v_3dretroicor_outputs,
+        "afni.3dretroicor": v_3dretroicor_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def v_3dretroicor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dretroicor",
+        "@type": "afni.3dretroicor",
         "dataset": dataset,
     }
     if ignore is not None:
@@ -292,5 +292,8 @@ __all__ = [
     "V3dretroicorParameters",
     "V_3DRETROICOR_METADATA",
     "v_3dretroicor",
+    "v_3dretroicor_cargs",
+    "v_3dretroicor_execute",
+    "v_3dretroicor_outputs",
     "v_3dretroicor_params",
 ]

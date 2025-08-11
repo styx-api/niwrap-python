@@ -14,7 +14,7 @@ V_3D_ZCAT_METADATA = Metadata(
 
 
 V3dZcatParameters = typing.TypedDict('V3dZcatParameters', {
-    "__STYXTYPE__": typing.Literal["3dZcat"],
+    "@type": typing.Literal["afni.3dZcat"],
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "fscale": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dZcat": v_3d_zcat_cargs,
+        "afni.3dZcat": v_3d_zcat_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dZcat": v_3d_zcat_outputs,
+        "afni.3dZcat": v_3d_zcat_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_3d_zcat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dZcat",
+        "@type": "afni.3dZcat",
         "fscale": fscale,
         "nscale": nscale,
         "verb": verb,
@@ -255,5 +255,8 @@ __all__ = [
     "V3dZcatParameters",
     "V_3D_ZCAT_METADATA",
     "v_3d_zcat",
+    "v_3d_zcat_cargs",
+    "v_3d_zcat_execute",
+    "v_3d_zcat_outputs",
     "v_3d_zcat_params",
 ]

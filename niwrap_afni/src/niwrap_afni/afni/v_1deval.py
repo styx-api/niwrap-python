@@ -14,7 +14,7 @@ V_1DEVAL_METADATA = Metadata(
 
 
 V1devalParameters = typing.TypedDict('V1devalParameters', {
-    "__STYXTYPE__": typing.Literal["1deval"],
+    "@type": typing.Literal["afni.1deval"],
     "del": typing.NotRequired[float | None],
     "start": typing.NotRequired[float | None],
     "num": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1deval": v_1deval_cargs,
+        "afni.1deval": v_1deval_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1deval": v_1deval_outputs,
+        "afni.1deval": v_1deval_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def v_1deval_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1deval",
+        "@type": "afni.1deval",
         "1D": v_1_d,
         "expression": expression,
     }
@@ -276,5 +276,8 @@ __all__ = [
     "V1devalParameters",
     "V_1DEVAL_METADATA",
     "v_1deval",
+    "v_1deval_cargs",
+    "v_1deval_execute",
+    "v_1deval_outputs",
     "v_1deval_params",
 ]

@@ -14,7 +14,7 @@ V__SNAPSHOT_VOLREG_METADATA = Metadata(
 
 
 VSnapshotVolregParameters = typing.TypedDict('VSnapshotVolregParameters', {
-    "__STYXTYPE__": typing.Literal["@snapshot_volreg"],
+    "@type": typing.Literal["afni.@snapshot_volreg"],
     "anatdataset": InputPathType,
     "epidataset": InputPathType,
     "jname": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@snapshot_volreg": v__snapshot_volreg_cargs,
+        "afni.@snapshot_volreg": v__snapshot_volreg_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@snapshot_volreg": v__snapshot_volreg_outputs,
+        "afni.@snapshot_volreg": v__snapshot_volreg_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def v__snapshot_volreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@snapshot_volreg",
+        "@type": "afni.@snapshot_volreg",
         "anatdataset": anatdataset,
         "epidataset": epidataset,
     }
@@ -203,5 +203,8 @@ __all__ = [
     "VSnapshotVolregParameters",
     "V__SNAPSHOT_VOLREG_METADATA",
     "v__snapshot_volreg",
+    "v__snapshot_volreg_cargs",
+    "v__snapshot_volreg_execute",
+    "v__snapshot_volreg_outputs",
     "v__snapshot_volreg_params",
 ]

@@ -14,7 +14,7 @@ APQC_MAKE_HTML_METADATA = Metadata(
 
 
 ApqcMakeHtmlParameters = typing.TypedDict('ApqcMakeHtmlParameters', {
-    "__STYXTYPE__": typing.Literal["apqc_make_html"],
+    "@type": typing.Literal["afni.apqc_make_html"],
     "qc_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "apqc_make_html": apqc_make_html_cargs,
+        "afni.apqc_make_html": apqc_make_html_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def apqc_make_html_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "apqc_make_html",
+        "@type": "afni.apqc_make_html",
         "qc_dir": qc_dir,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "ApqcMakeHtmlOutputs",
     "ApqcMakeHtmlParameters",
     "apqc_make_html",
+    "apqc_make_html_cargs",
+    "apqc_make_html_execute",
+    "apqc_make_html_outputs",
     "apqc_make_html_params",
 ]

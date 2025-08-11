@@ -14,7 +14,7 @@ APARC_STATS_ASEG_METADATA = Metadata(
 
 
 AparcStatsAsegParameters = typing.TypedDict('AparcStatsAsegParameters', {
-    "__STYXTYPE__": typing.Literal["aparc_stats_aseg"],
+    "@type": typing.Literal["freesurfer.aparc_stats_aseg"],
     "subject_name": str,
     "gcs_name": str,
     "subject_dir": typing.NotRequired[str | None],
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "aparc_stats_aseg": aparc_stats_aseg_cargs,
+        "freesurfer.aparc_stats_aseg": aparc_stats_aseg_cargs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def aparc_stats_aseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "aparc_stats_aseg",
+        "@type": "freesurfer.aparc_stats_aseg",
         "subject_name": subject_name,
         "gcs_name": gcs_name,
         "lh_flag": lh_flag,
@@ -398,5 +398,8 @@ __all__ = [
     "AparcStatsAsegOutputs",
     "AparcStatsAsegParameters",
     "aparc_stats_aseg",
+    "aparc_stats_aseg_cargs",
+    "aparc_stats_aseg_execute",
+    "aparc_stats_aseg_outputs",
     "aparc_stats_aseg_params",
 ]

@@ -14,7 +14,7 @@ V_3D_WARP_METADATA = Metadata(
 
 
 V3dWarpParameters = typing.TypedDict('V3dWarpParameters', {
-    "__STYXTYPE__": typing.Literal["3dWarp"],
+    "@type": typing.Literal["afni.3dWarp"],
     "matvec_in2out": typing.NotRequired[InputPathType | None],
     "matvec_out2in": typing.NotRequired[InputPathType | None],
     "tta2mni": bool,
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dWarp": v_3d_warp_cargs,
+        "afni.3dWarp": v_3d_warp_cargs,
     }.get(t)
 
 
@@ -138,7 +138,7 @@ def v_3d_warp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dWarp",
+        "@type": "afni.3dWarp",
         "tta2mni": tta2mni,
         "mni2tta": mni2tta,
         "deoblique": deoblique,
@@ -403,5 +403,8 @@ __all__ = [
     "V3dWarpParameters",
     "V_3D_WARP_METADATA",
     "v_3d_warp",
+    "v_3d_warp_cargs",
+    "v_3d_warp_execute",
+    "v_3d_warp_outputs",
     "v_3d_warp_params",
 ]

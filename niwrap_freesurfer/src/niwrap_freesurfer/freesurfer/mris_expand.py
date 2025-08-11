@@ -14,7 +14,7 @@ MRIS_EXPAND_METADATA = Metadata(
 
 
 MrisExpandParameters = typing.TypedDict('MrisExpandParameters', {
-    "__STYXTYPE__": typing.Literal["mris_expand"],
+    "@type": typing.Literal["freesurfer.mris_expand"],
     "input_surface": InputPathType,
     "expansion_distance": float,
     "output_surface": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_expand": mris_expand_cargs,
+        "freesurfer.mris_expand": mris_expand_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_expand": mris_expand_outputs,
+        "freesurfer.mris_expand": mris_expand_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def mris_expand_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_expand",
+        "@type": "freesurfer.mris_expand",
         "input_surface": input_surface,
         "expansion_distance": expansion_distance,
         "output_surface": output_surface,
@@ -240,5 +240,8 @@ __all__ = [
     "MrisExpandOutputs",
     "MrisExpandParameters",
     "mris_expand",
+    "mris_expand_cargs",
+    "mris_expand_execute",
+    "mris_expand_outputs",
     "mris_expand_params",
 ]

@@ -14,13 +14,13 @@ METRIC_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 MetricEstimateFwhmWholeFileParameters = typing.TypedDict('MetricEstimateFwhmWholeFileParameters', {
-    "__STYXTYPE__": typing.Literal["whole_file"],
+    "@type": typing.Literal["workbench.metric-estimate-fwhm.whole_file"],
     "opt_demean": bool,
 })
 
 
 MetricEstimateFwhmParameters = typing.TypedDict('MetricEstimateFwhmParameters', {
-    "__STYXTYPE__": typing.Literal["metric-estimate-fwhm"],
+    "@type": typing.Literal["workbench.metric-estimate-fwhm"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -41,8 +41,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-estimate-fwhm": metric_estimate_fwhm_cargs,
-        "whole_file": metric_estimate_fwhm_whole_file_cargs,
+        "workbench.metric-estimate-fwhm": metric_estimate_fwhm_cargs,
+        "workbench.metric-estimate-fwhm.whole_file": metric_estimate_fwhm_whole_file_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def metric_estimate_fwhm_whole_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "whole_file",
+        "@type": "workbench.metric-estimate-fwhm.whole_file",
         "opt_demean": opt_demean,
     }
     return params
@@ -130,7 +130,7 @@ def metric_estimate_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-estimate-fwhm",
+        "@type": "workbench.metric-estimate-fwhm",
         "surface": surface,
         "metric_in": metric_in,
     }
@@ -172,7 +172,7 @@ def metric_estimate_fwhm_cargs(
             params.get("opt_column_column")
         ])
     if params.get("whole_file") is not None:
-        cargs.extend(dyn_cargs(params.get("whole_file")["__STYXTYPE__"])(params.get("whole_file"), execution))
+        cargs.extend(dyn_cargs(params.get("whole_file")["@type"])(params.get("whole_file"), execution))
     return cargs
 
 
@@ -271,6 +271,10 @@ __all__ = [
     "MetricEstimateFwhmParameters",
     "MetricEstimateFwhmWholeFileParameters",
     "metric_estimate_fwhm",
+    "metric_estimate_fwhm_cargs",
+    "metric_estimate_fwhm_execute",
+    "metric_estimate_fwhm_outputs",
     "metric_estimate_fwhm_params",
+    "metric_estimate_fwhm_whole_file_cargs",
     "metric_estimate_fwhm_whole_file_params",
 ]

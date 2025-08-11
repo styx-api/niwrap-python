@@ -14,7 +14,7 @@ FS_TIME_METADATA = Metadata(
 
 
 FsTimeParameters = typing.TypedDict('FsTimeParameters', {
-    "__STYXTYPE__": typing.Literal["fs_time"],
+    "@type": typing.Literal["freesurfer.fs_time"],
     "output_file": typing.NotRequired[str | None],
     "key": typing.NotRequired[str | None],
     "load_avg": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_time": fs_time_cargs,
+        "freesurfer.fs_time": fs_time_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fs_time": fs_time_outputs,
+        "freesurfer.fs_time": fs_time_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def fs_time_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_time",
+        "@type": "freesurfer.fs_time",
         "load_avg": load_avg,
         "command": command,
     }
@@ -219,5 +219,8 @@ __all__ = [
     "FsTimeOutputs",
     "FsTimeParameters",
     "fs_time",
+    "fs_time_cargs",
+    "fs_time_execute",
+    "fs_time_outputs",
     "fs_time_params",
 ]

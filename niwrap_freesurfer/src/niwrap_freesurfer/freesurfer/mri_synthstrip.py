@@ -14,7 +14,7 @@ MRI_SYNTHSTRIP_METADATA = Metadata(
 
 
 MriSynthstripParameters = typing.TypedDict('MriSynthstripParameters', {
-    "__STYXTYPE__": typing.Literal["mri_synthstrip"],
+    "@type": typing.Literal["freesurfer.mri_synthstrip"],
     "image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_synthstrip": mri_synthstrip_cargs,
+        "freesurfer.mri_synthstrip": mri_synthstrip_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_synthstrip": mri_synthstrip_outputs,
+        "freesurfer.mri_synthstrip": mri_synthstrip_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def mri_synthstrip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_synthstrip",
+        "@type": "freesurfer.mri_synthstrip",
         "image": image,
         "gpu": gpu,
         "exclude_csf": exclude_csf,
@@ -248,5 +248,8 @@ __all__ = [
     "MriSynthstripOutputs",
     "MriSynthstripParameters",
     "mri_synthstrip",
+    "mri_synthstrip_cargs",
+    "mri_synthstrip_execute",
+    "mri_synthstrip_outputs",
     "mri_synthstrip_params",
 ]

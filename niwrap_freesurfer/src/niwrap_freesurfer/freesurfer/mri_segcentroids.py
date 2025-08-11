@@ -14,7 +14,7 @@ MRI_SEGCENTROIDS_METADATA = Metadata(
 
 
 MriSegcentroidsParameters = typing.TypedDict('MriSegcentroidsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_segcentroids"],
+    "@type": typing.Literal["freesurfer.mri_segcentroids"],
     "input_segmentation": InputPathType,
     "output_file": str,
     "pointset_flag": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_segcentroids": mri_segcentroids_cargs,
+        "freesurfer.mri_segcentroids": mri_segcentroids_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_segcentroids": mri_segcentroids_outputs,
+        "freesurfer.mri_segcentroids": mri_segcentroids_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mri_segcentroids_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_segcentroids",
+        "@type": "freesurfer.mri_segcentroids",
         "input_segmentation": input_segmentation,
         "output_file": output_file,
         "pointset_flag": pointset_flag,
@@ -243,5 +243,8 @@ __all__ = [
     "MriSegcentroidsOutputs",
     "MriSegcentroidsParameters",
     "mri_segcentroids",
+    "mri_segcentroids_cargs",
+    "mri_segcentroids_execute",
+    "mri_segcentroids_outputs",
     "mri_segcentroids_params",
 ]

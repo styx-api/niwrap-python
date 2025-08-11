@@ -14,7 +14,7 @@ EXAMINE_XMAT_METADATA = Metadata(
 
 
 ExamineXmatParameters = typing.TypedDict('ExamineXmatParameters', {
-    "__STYXTYPE__": typing.Literal["ExamineXmat"],
+    "@type": typing.Literal["afni.ExamineXmat"],
     "input_file": typing.NotRequired[InputPathType | None],
     "interactive": bool,
     "prefix": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ExamineXmat": examine_xmat_cargs,
+        "afni.ExamineXmat": examine_xmat_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ExamineXmat": examine_xmat_outputs,
+        "afni.ExamineXmat": examine_xmat_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def examine_xmat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ExamineXmat",
+        "@type": "afni.ExamineXmat",
         "interactive": interactive,
         "msg_trace": msg_trace,
     }
@@ -276,5 +276,8 @@ __all__ = [
     "ExamineXmatOutputs",
     "ExamineXmatParameters",
     "examine_xmat",
+    "examine_xmat_cargs",
+    "examine_xmat_execute",
+    "examine_xmat_outputs",
     "examine_xmat_params",
 ]

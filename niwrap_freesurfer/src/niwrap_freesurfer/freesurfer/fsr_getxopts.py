@@ -14,7 +14,7 @@ FSR_GETXOPTS_METADATA = Metadata(
 
 
 FsrGetxoptsParameters = typing.TypedDict('FsrGetxoptsParameters', {
-    "__STYXTYPE__": typing.Literal["fsr-getxopts"],
+    "@type": typing.Literal["freesurfer.fsr-getxopts"],
     "help": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsr-getxopts": fsr_getxopts_cargs,
+        "freesurfer.fsr-getxopts": fsr_getxopts_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def fsr_getxopts_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsr-getxopts",
+        "@type": "freesurfer.fsr-getxopts",
         "help": help_,
     }
     return params
@@ -169,5 +169,8 @@ __all__ = [
     "FsrGetxoptsOutputs",
     "FsrGetxoptsParameters",
     "fsr_getxopts",
+    "fsr_getxopts_cargs",
+    "fsr_getxopts_execute",
+    "fsr_getxopts_outputs",
     "fsr_getxopts_params",
 ]

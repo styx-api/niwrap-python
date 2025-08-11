@@ -14,7 +14,7 @@ SIGNED_DISTANCE_TO_SURFACE_METADATA = Metadata(
 
 
 SignedDistanceToSurfaceParameters = typing.TypedDict('SignedDistanceToSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["signed-distance-to-surface"],
+    "@type": typing.Literal["workbench.signed-distance-to-surface"],
     "surface_comp": InputPathType,
     "surface_ref": InputPathType,
     "metric": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "signed-distance-to-surface": signed_distance_to_surface_cargs,
+        "workbench.signed-distance-to-surface": signed_distance_to_surface_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "signed-distance-to-surface": signed_distance_to_surface_outputs,
+        "workbench.signed-distance-to-surface": signed_distance_to_surface_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def signed_distance_to_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "signed-distance-to-surface",
+        "@type": "workbench.signed-distance-to-surface",
         "surface_comp": surface_comp,
         "surface_ref": surface_ref,
         "metric": metric,
@@ -242,5 +242,8 @@ __all__ = [
     "SignedDistanceToSurfaceOutputs",
     "SignedDistanceToSurfaceParameters",
     "signed_distance_to_surface",
+    "signed_distance_to_surface_cargs",
+    "signed_distance_to_surface_execute",
+    "signed_distance_to_surface_outputs",
     "signed_distance_to_surface_params",
 ]

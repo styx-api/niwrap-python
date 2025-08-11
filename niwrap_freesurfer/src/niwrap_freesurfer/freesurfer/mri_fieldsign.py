@@ -14,7 +14,7 @@ MRI_FIELDSIGN_METADATA = Metadata(
 
 
 MriFieldsignParameters = typing.TypedDict('MriFieldsignParameters', {
-    "__STYXTYPE__": typing.Literal["mri_fieldsign"],
+    "@type": typing.Literal["freesurfer.mri_fieldsign"],
     "fieldsign_file": str,
     "eccen_values": list[float],
     "polar_values": list[float],
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_fieldsign": mri_fieldsign_cargs,
+        "freesurfer.mri_fieldsign": mri_fieldsign_cargs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def mri_fieldsign_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_fieldsign",
+        "@type": "freesurfer.mri_fieldsign",
         "fieldsign_file": fieldsign_file,
         "eccen_values": eccen_values,
         "polar_values": polar_values,
@@ -426,5 +426,8 @@ __all__ = [
     "MriFieldsignOutputs",
     "MriFieldsignParameters",
     "mri_fieldsign",
+    "mri_fieldsign_cargs",
+    "mri_fieldsign_execute",
+    "mri_fieldsign_outputs",
     "mri_fieldsign_params",
 ]

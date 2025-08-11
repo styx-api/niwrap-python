@@ -14,28 +14,28 @@ CIFTI_SMOOTHING_METADATA = Metadata(
 
 
 CiftiSmoothingLeftSurfaceParameters = typing.TypedDict('CiftiSmoothingLeftSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["left_surface"],
+    "@type": typing.Literal["workbench.cifti-smoothing.left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiSmoothingRightSurfaceParameters = typing.TypedDict('CiftiSmoothingRightSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["right_surface"],
+    "@type": typing.Literal["workbench.cifti-smoothing.right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiSmoothingCerebellumSurfaceParameters = typing.TypedDict('CiftiSmoothingCerebellumSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
+    "@type": typing.Literal["workbench.cifti-smoothing.cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiSmoothingParameters = typing.TypedDict('CiftiSmoothingParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-smoothing"],
+    "@type": typing.Literal["workbench.cifti-smoothing"],
     "cifti": InputPathType,
     "surface_kernel": float,
     "volume_kernel": float,
@@ -64,10 +64,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-smoothing": cifti_smoothing_cargs,
-        "left_surface": cifti_smoothing_left_surface_cargs,
-        "right_surface": cifti_smoothing_right_surface_cargs,
-        "cerebellum_surface": cifti_smoothing_cerebellum_surface_cargs,
+        "workbench.cifti-smoothing": cifti_smoothing_cargs,
+        "workbench.cifti-smoothing.left_surface": cifti_smoothing_left_surface_cargs,
+        "workbench.cifti-smoothing.right_surface": cifti_smoothing_right_surface_cargs,
+        "workbench.cifti-smoothing.cerebellum_surface": cifti_smoothing_cerebellum_surface_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-smoothing": cifti_smoothing_outputs,
+        "workbench.cifti-smoothing": cifti_smoothing_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def cifti_smoothing_left_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_surface",
+        "@type": "workbench.cifti-smoothing.left_surface",
         "surface": surface,
     }
     if opt_left_corrected_areas_area_metric is not None:
@@ -151,7 +151,7 @@ def cifti_smoothing_right_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_surface",
+        "@type": "workbench.cifti-smoothing.right_surface",
         "surface": surface,
     }
     if opt_right_corrected_areas_area_metric is not None:
@@ -199,7 +199,7 @@ def cifti_smoothing_cerebellum_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_surface",
+        "@type": "workbench.cifti-smoothing.cerebellum_surface",
         "surface": surface,
     }
     if opt_cerebellum_corrected_areas_area_metric is not None:
@@ -282,7 +282,7 @@ def cifti_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-smoothing",
+        "@type": "workbench.cifti-smoothing",
         "cifti": cifti,
         "surface_kernel": surface_kernel,
         "volume_kernel": volume_kernel,
@@ -328,11 +328,11 @@ def cifti_smoothing_cargs(
     if params.get("opt_fwhm"):
         cargs.append("-fwhm")
     if params.get("left_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("left_surface")["__STYXTYPE__"])(params.get("left_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("left_surface")["@type"])(params.get("left_surface"), execution))
     if params.get("right_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("right_surface")["__STYXTYPE__"])(params.get("right_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("right_surface")["@type"])(params.get("right_surface"), execution))
     if params.get("cerebellum_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["__STYXTYPE__"])(params.get("cerebellum_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["@type"])(params.get("cerebellum_surface"), execution))
     if params.get("opt_cifti_roi_roi_cifti") is not None:
         cargs.extend([
             "-cifti-roi",
@@ -501,8 +501,14 @@ __all__ = [
     "CiftiSmoothingParameters",
     "CiftiSmoothingRightSurfaceParameters",
     "cifti_smoothing",
+    "cifti_smoothing_cargs",
+    "cifti_smoothing_cerebellum_surface_cargs",
     "cifti_smoothing_cerebellum_surface_params",
+    "cifti_smoothing_execute",
+    "cifti_smoothing_left_surface_cargs",
     "cifti_smoothing_left_surface_params",
+    "cifti_smoothing_outputs",
     "cifti_smoothing_params",
+    "cifti_smoothing_right_surface_cargs",
     "cifti_smoothing_right_surface_params",
 ]

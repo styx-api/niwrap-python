@@ -14,7 +14,7 @@ METADATA_STRING_REPLACE_METADATA = Metadata(
 
 
 MetadataStringReplaceParameters = typing.TypedDict('MetadataStringReplaceParameters', {
-    "__STYXTYPE__": typing.Literal["metadata-string-replace"],
+    "@type": typing.Literal["workbench.metadata-string-replace"],
     "input_file": str,
     "find_string": str,
     "replace_string": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metadata-string-replace": metadata_string_replace_cargs,
+        "workbench.metadata-string-replace": metadata_string_replace_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def metadata_string_replace_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metadata-string-replace",
+        "@type": "workbench.metadata-string-replace",
         "input_file": input_file,
         "find_string": find_string,
         "replace_string": replace_string,
@@ -208,5 +208,8 @@ __all__ = [
     "MetadataStringReplaceOutputs",
     "MetadataStringReplaceParameters",
     "metadata_string_replace",
+    "metadata_string_replace_cargs",
+    "metadata_string_replace_execute",
+    "metadata_string_replace_outputs",
     "metadata_string_replace_params",
 ]

@@ -14,7 +14,7 @@ FSLSWAPDIM_EXE_METADATA = Metadata(
 
 
 FslswapdimExeParameters = typing.TypedDict('FslswapdimExeParameters', {
-    "__STYXTYPE__": typing.Literal["fslswapdim_exe"],
+    "@type": typing.Literal["fsl.fslswapdim_exe"],
     "input_file": InputPathType,
     "axis_a": str,
     "axis_b": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslswapdim_exe": fslswapdim_exe_cargs,
+        "fsl.fslswapdim_exe": fslswapdim_exe_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslswapdim_exe": fslswapdim_exe_outputs,
+        "fsl.fslswapdim_exe": fslswapdim_exe_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def fslswapdim_exe_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslswapdim_exe",
+        "@type": "fsl.fslswapdim_exe",
         "input_file": input_file,
         "axis_a": axis_a,
         "axis_b": axis_b,
@@ -219,5 +219,8 @@ __all__ = [
     "FslswapdimExeOutputs",
     "FslswapdimExeParameters",
     "fslswapdim_exe",
+    "fslswapdim_exe_cargs",
+    "fslswapdim_exe_execute",
+    "fslswapdim_exe_outputs",
     "fslswapdim_exe_params",
 ]

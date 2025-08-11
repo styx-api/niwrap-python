@@ -14,7 +14,7 @@ DMRI_PROJECT_END_POINTS_METADATA = Metadata(
 
 
 DmriProjectEndPointsParameters = typing.TypedDict('DmriProjectEndPointsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_projectEndPoints"],
+    "@type": typing.Literal["freesurfer.dmri_projectEndPoints"],
     "streamline_file": InputPathType,
     "left_surface_file": InputPathType,
     "right_surface_file": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_projectEndPoints": dmri_project_end_points_cargs,
+        "freesurfer.dmri_projectEndPoints": dmri_project_end_points_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_projectEndPoints": dmri_project_end_points_outputs,
+        "freesurfer.dmri_projectEndPoints": dmri_project_end_points_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def dmri_project_end_points_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_projectEndPoints",
+        "@type": "freesurfer.dmri_projectEndPoints",
         "streamline_file": streamline_file,
         "left_surface_file": left_surface_file,
         "right_surface_file": right_surface_file,
@@ -239,5 +239,8 @@ __all__ = [
     "DmriProjectEndPointsOutputs",
     "DmriProjectEndPointsParameters",
     "dmri_project_end_points",
+    "dmri_project_end_points_cargs",
+    "dmri_project_end_points_execute",
+    "dmri_project_end_points_outputs",
     "dmri_project_end_points_params",
 ]

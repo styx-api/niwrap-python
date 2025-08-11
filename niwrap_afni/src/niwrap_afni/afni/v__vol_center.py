@@ -14,7 +14,7 @@ V__VOL_CENTER_METADATA = Metadata(
 
 
 VVolCenterParameters = typing.TypedDict('VVolCenterParameters', {
-    "__STYXTYPE__": typing.Literal["@VolCenter"],
+    "@type": typing.Literal["afni.@VolCenter"],
     "dset": InputPathType,
     "orient": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@VolCenter": v__vol_center_cargs,
+        "afni.@VolCenter": v__vol_center_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__vol_center_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@VolCenter",
+        "@type": "afni.@VolCenter",
         "dset": dset,
     }
     if orient is not None:
@@ -184,5 +184,8 @@ __all__ = [
     "VVolCenterParameters",
     "V__VOL_CENTER_METADATA",
     "v__vol_center",
+    "v__vol_center_cargs",
+    "v__vol_center_execute",
+    "v__vol_center_outputs",
     "v__vol_center_params",
 ]

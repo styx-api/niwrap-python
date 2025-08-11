@@ -14,7 +14,7 @@ MRIS_JACOBIAN_METADATA = Metadata(
 
 
 MrisJacobianParameters = typing.TypedDict('MrisJacobianParameters', {
-    "__STYXTYPE__": typing.Literal["mris_jacobian"],
+    "@type": typing.Literal["freesurfer.mris_jacobian"],
     "original_surface": InputPathType,
     "mapped_surface": InputPathType,
     "jacobian_file": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_jacobian": mris_jacobian_cargs,
+        "freesurfer.mris_jacobian": mris_jacobian_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_jacobian": mris_jacobian_outputs,
+        "freesurfer.mris_jacobian": mris_jacobian_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mris_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_jacobian",
+        "@type": "freesurfer.mris_jacobian",
         "original_surface": original_surface,
         "mapped_surface": mapped_surface,
         "jacobian_file": jacobian_file,
@@ -215,5 +215,8 @@ __all__ = [
     "MrisJacobianOutputs",
     "MrisJacobianParameters",
     "mris_jacobian",
+    "mris_jacobian_cargs",
+    "mris_jacobian_execute",
+    "mris_jacobian_outputs",
     "mris_jacobian_params",
 ]

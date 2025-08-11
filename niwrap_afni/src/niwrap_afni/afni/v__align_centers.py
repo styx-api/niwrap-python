@@ -14,7 +14,7 @@ V__ALIGN_CENTERS_METADATA = Metadata(
 
 
 VAlignCentersParameters = typing.TypedDict('VAlignCentersParameters', {
-    "__STYXTYPE__": typing.Literal["@Align_Centers"],
+    "@type": typing.Literal["afni.@Align_Centers"],
     "base": InputPathType,
     "dset": InputPathType,
     "children": typing.NotRequired[list[InputPathType] | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Align_Centers": v__align_centers_cargs,
+        "afni.@Align_Centers": v__align_centers_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@Align_Centers": v__align_centers_outputs,
+        "afni.@Align_Centers": v__align_centers_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def v__align_centers_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Align_Centers",
+        "@type": "afni.@Align_Centers",
         "base": base,
         "dset": dset,
         "echo": echo,
@@ -320,5 +320,8 @@ __all__ = [
     "VAlignCentersParameters",
     "V__ALIGN_CENTERS_METADATA",
     "v__align_centers",
+    "v__align_centers_cargs",
+    "v__align_centers_execute",
+    "v__align_centers_outputs",
     "v__align_centers_params",
 ]

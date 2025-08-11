@@ -14,7 +14,7 @@ V_3D_PVAL_METADATA = Metadata(
 
 
 V3dPvalParameters = typing.TypedDict('V3dPvalParameters', {
-    "__STYXTYPE__": typing.Literal["3dPval"],
+    "@type": typing.Literal["afni.3dPval"],
     "input_dataset": InputPathType,
     "zscore": bool,
     "log2": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dPval": v_3d_pval_cargs,
+        "afni.3dPval": v_3d_pval_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dPval": v_3d_pval_outputs,
+        "afni.3dPval": v_3d_pval_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def v_3d_pval_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dPval",
+        "@type": "afni.3dPval",
         "input_dataset": input_dataset,
         "zscore": zscore,
         "log2": log2,
@@ -228,5 +228,8 @@ __all__ = [
     "V3dPvalParameters",
     "V_3D_PVAL_METADATA",
     "v_3d_pval",
+    "v_3d_pval_cargs",
+    "v_3d_pval_execute",
+    "v_3d_pval_outputs",
     "v_3d_pval_params",
 ]

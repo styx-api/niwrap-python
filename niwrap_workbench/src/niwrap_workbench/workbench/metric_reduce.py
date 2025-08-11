@@ -14,14 +14,14 @@ METRIC_REDUCE_METADATA = Metadata(
 
 
 MetricReduceExcludeOutliersParameters = typing.TypedDict('MetricReduceExcludeOutliersParameters', {
-    "__STYXTYPE__": typing.Literal["exclude_outliers"],
+    "@type": typing.Literal["workbench.metric-reduce.exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 MetricReduceParameters = typing.TypedDict('MetricReduceParameters', {
-    "__STYXTYPE__": typing.Literal["metric-reduce"],
+    "@type": typing.Literal["workbench.metric-reduce"],
     "metric_in": InputPathType,
     "operation": str,
     "metric_out": str,
@@ -42,8 +42,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-reduce": metric_reduce_cargs,
-        "exclude_outliers": metric_reduce_exclude_outliers_cargs,
+        "workbench.metric-reduce": metric_reduce_cargs,
+        "workbench.metric-reduce.exclude_outliers": metric_reduce_exclude_outliers_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-reduce": metric_reduce_outputs,
+        "workbench.metric-reduce": metric_reduce_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def metric_reduce_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "exclude_outliers",
+        "@type": "workbench.metric-reduce.exclude_outliers",
         "sigma_below": sigma_below,
         "sigma_above": sigma_above,
     }
@@ -135,7 +135,7 @@ def metric_reduce_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-reduce",
+        "@type": "workbench.metric-reduce",
         "metric_in": metric_in,
         "operation": operation,
         "metric_out": metric_out,
@@ -166,7 +166,7 @@ def metric_reduce_cargs(
     cargs.append(params.get("operation"))
     cargs.append(params.get("metric_out"))
     if params.get("exclude_outliers") is not None:
-        cargs.extend(dyn_cargs(params.get("exclude_outliers")["__STYXTYPE__"])(params.get("exclude_outliers"), execution))
+        cargs.extend(dyn_cargs(params.get("exclude_outliers")["@type"])(params.get("exclude_outliers"), execution))
     if params.get("opt_only_numeric"):
         cargs.append("-only-numeric")
     return cargs
@@ -304,6 +304,10 @@ __all__ = [
     "MetricReduceOutputs",
     "MetricReduceParameters",
     "metric_reduce",
+    "metric_reduce_cargs",
+    "metric_reduce_exclude_outliers_cargs",
     "metric_reduce_exclude_outliers_params",
+    "metric_reduce_execute",
+    "metric_reduce_outputs",
     "metric_reduce_params",
 ]

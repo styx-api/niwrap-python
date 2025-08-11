@@ -14,7 +14,7 @@ SURFACE_FLIP_NORMALS_METADATA = Metadata(
 
 
 SurfaceFlipNormalsParameters = typing.TypedDict('SurfaceFlipNormalsParameters', {
-    "__STYXTYPE__": typing.Literal["surface-flip-normals"],
+    "@type": typing.Literal["workbench.surface-flip-normals"],
     "surface": InputPathType,
     "surface_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-flip-normals": surface_flip_normals_cargs,
+        "workbench.surface-flip-normals": surface_flip_normals_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-flip-normals": surface_flip_normals_outputs,
+        "workbench.surface-flip-normals": surface_flip_normals_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_flip_normals_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-flip-normals",
+        "@type": "workbench.surface-flip-normals",
         "surface": surface,
         "surface_out": surface_out,
     }
@@ -195,5 +195,8 @@ __all__ = [
     "SurfaceFlipNormalsOutputs",
     "SurfaceFlipNormalsParameters",
     "surface_flip_normals",
+    "surface_flip_normals_cargs",
+    "surface_flip_normals_execute",
+    "surface_flip_normals_outputs",
     "surface_flip_normals_params",
 ]

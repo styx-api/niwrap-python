@@ -14,7 +14,7 @@ MRIS_MULTISCALE_STATS_METADATA = Metadata(
 
 
 MrisMultiscaleStatsParameters = typing.TypedDict('MrisMultiscaleStatsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_multiscale_stats"],
+    "@type": typing.Literal["freesurfer.mris_multiscale_stats"],
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_multiscale_stats": mris_multiscale_stats_cargs,
+        "freesurfer.mris_multiscale_stats": mris_multiscale_stats_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mris_multiscale_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_multiscale_stats",
+        "@type": "freesurfer.mris_multiscale_stats",
         "output_subject": output_subject,
         "hemi": hemi,
         "surf": surf,
@@ -213,5 +213,8 @@ __all__ = [
     "MrisMultiscaleStatsOutputs",
     "MrisMultiscaleStatsParameters",
     "mris_multiscale_stats",
+    "mris_multiscale_stats_cargs",
+    "mris_multiscale_stats_execute",
+    "mris_multiscale_stats_outputs",
     "mris_multiscale_stats_params",
 ]

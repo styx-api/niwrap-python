@@ -14,7 +14,7 @@ V_3D_NWARP_XYZ_METADATA = Metadata(
 
 
 V3dNwarpXyzParameters = typing.TypedDict('V3dNwarpXyzParameters', {
-    "__STYXTYPE__": typing.Literal["3dNwarpXYZ"],
+    "@type": typing.Literal["afni.3dNwarpXYZ"],
     "xyzfile": InputPathType,
     "warp_spec": str,
     "iwarp": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dNwarpXYZ": v_3d_nwarp_xyz_cargs,
+        "afni.3dNwarpXYZ": v_3d_nwarp_xyz_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dNwarpXYZ": v_3d_nwarp_xyz_outputs,
+        "afni.3dNwarpXYZ": v_3d_nwarp_xyz_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v_3d_nwarp_xyz_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dNwarpXYZ",
+        "@type": "afni.3dNwarpXYZ",
         "xyzfile": xyzfile,
         "warp_spec": warp_spec,
         "iwarp": iwarp,
@@ -202,5 +202,8 @@ __all__ = [
     "V3dNwarpXyzParameters",
     "V_3D_NWARP_XYZ_METADATA",
     "v_3d_nwarp_xyz",
+    "v_3d_nwarp_xyz_cargs",
+    "v_3d_nwarp_xyz_execute",
+    "v_3d_nwarp_xyz_outputs",
     "v_3d_nwarp_xyz_params",
 ]

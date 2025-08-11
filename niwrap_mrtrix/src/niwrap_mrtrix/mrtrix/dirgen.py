@@ -14,14 +14,14 @@ DIRGEN_METADATA = Metadata(
 
 
 DirgenConfigParameters = typing.TypedDict('DirgenConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dirgen.config"],
     "key": str,
     "value": str,
 })
 
 
 DirgenParameters = typing.TypedDict('DirgenParameters', {
-    "__STYXTYPE__": typing.Literal["dirgen"],
+    "@type": typing.Literal["mrtrix.dirgen"],
     "power": typing.NotRequired[int | None],
     "niter": typing.NotRequired[int | None],
     "restarts": typing.NotRequired[int | None],
@@ -52,8 +52,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dirgen": dirgen_cargs,
-        "config": dirgen_config_cargs,
+        "mrtrix.dirgen": dirgen_cargs,
+        "mrtrix.dirgen.config": dirgen_config_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dirgen": dirgen_outputs,
+        "mrtrix.dirgen": dirgen_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def dirgen_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dirgen.config",
         "key": key,
         "value": value,
     }
@@ -172,7 +172,7 @@ def dirgen_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dirgen",
+        "@type": "mrtrix.dirgen",
         "unipolar": unipolar,
         "cartesian": cartesian,
         "info": info,
@@ -245,7 +245,7 @@ def dirgen_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -418,6 +418,10 @@ __all__ = [
     "DirgenOutputs",
     "DirgenParameters",
     "dirgen",
+    "dirgen_cargs",
+    "dirgen_config_cargs",
     "dirgen_config_params",
+    "dirgen_execute",
+    "dirgen_outputs",
     "dirgen_params",
 ]

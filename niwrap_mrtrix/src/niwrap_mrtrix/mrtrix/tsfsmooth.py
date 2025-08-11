@@ -14,14 +14,14 @@ TSFSMOOTH_METADATA = Metadata(
 
 
 TsfsmoothConfigParameters = typing.TypedDict('TsfsmoothConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tsfsmooth.config"],
     "key": str,
     "value": str,
 })
 
 
 TsfsmoothParameters = typing.TypedDict('TsfsmoothParameters', {
-    "__STYXTYPE__": typing.Literal["tsfsmooth"],
+    "@type": typing.Literal["mrtrix.tsfsmooth"],
     "stdev": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tsfsmooth": tsfsmooth_cargs,
-        "config": tsfsmooth_config_cargs,
+        "mrtrix.tsfsmooth": tsfsmooth_cargs,
+        "mrtrix.tsfsmooth.config": tsfsmooth_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tsfsmooth": tsfsmooth_outputs,
+        "mrtrix.tsfsmooth": tsfsmooth_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def tsfsmooth_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tsfsmooth.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def tsfsmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tsfsmooth",
+        "@type": "mrtrix.tsfsmooth",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -210,7 +210,7 @@ def tsfsmooth_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -342,6 +342,10 @@ __all__ = [
     "TsfsmoothOutputs",
     "TsfsmoothParameters",
     "tsfsmooth",
+    "tsfsmooth_cargs",
+    "tsfsmooth_config_cargs",
     "tsfsmooth_config_params",
+    "tsfsmooth_execute",
+    "tsfsmooth_outputs",
     "tsfsmooth_params",
 ]

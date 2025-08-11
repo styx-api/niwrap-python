@@ -14,7 +14,7 @@ V_3D_LOCAL_PV_METADATA = Metadata(
 
 
 V3dLocalPvParameters = typing.TypedDict('V3dLocalPvParameters', {
-    "__STYXTYPE__": typing.Literal["3dLocalPV"],
+    "@type": typing.Literal["afni.3dLocalPV"],
     "input_dataset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLocalPV": v_3d_local_pv_cargs,
+        "afni.3dLocalPV": v_3d_local_pv_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLocalPV": v_3d_local_pv_outputs,
+        "afni.3dLocalPV": v_3d_local_pv_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def v_3d_local_pv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLocalPV",
+        "@type": "afni.3dLocalPV",
         "input_dataset": input_dataset,
         "automask": automask,
         "despike": despike,
@@ -314,5 +314,8 @@ __all__ = [
     "V3dLocalPvParameters",
     "V_3D_LOCAL_PV_METADATA",
     "v_3d_local_pv",
+    "v_3d_local_pv_cargs",
+    "v_3d_local_pv_execute",
+    "v_3d_local_pv_outputs",
     "v_3d_local_pv_params",
 ]

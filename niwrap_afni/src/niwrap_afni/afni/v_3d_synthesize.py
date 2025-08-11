@@ -14,7 +14,7 @@ V_3D_SYNTHESIZE_METADATA = Metadata(
 
 
 V3dSynthesizeParameters = typing.TypedDict('V3dSynthesizeParameters', {
-    "__STYXTYPE__": typing.Literal["3dSynthesize"],
+    "@type": typing.Literal["afni.3dSynthesize"],
     "c_bucket": InputPathType,
     "matrix": InputPathType,
     "select": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSynthesize": v_3d_synthesize_cargs,
+        "afni.3dSynthesize": v_3d_synthesize_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def v_3d_synthesize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSynthesize",
+        "@type": "afni.3dSynthesize",
         "c_bucket": c_bucket,
         "matrix": matrix,
         "select": select_,
@@ -247,5 +247,8 @@ __all__ = [
     "V3dSynthesizeParameters",
     "V_3D_SYNTHESIZE_METADATA",
     "v_3d_synthesize",
+    "v_3d_synthesize_cargs",
+    "v_3d_synthesize_execute",
+    "v_3d_synthesize_outputs",
     "v_3d_synthesize_params",
 ]

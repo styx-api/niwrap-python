@@ -14,7 +14,7 @@ V_3D_TCORR1_D_METADATA = Metadata(
 
 
 V3dTcorr1DParameters = typing.TypedDict('V3dTcorr1DParameters', {
-    "__STYXTYPE__": typing.Literal["3dTcorr1D"],
+    "@type": typing.Literal["afni.3dTcorr1D"],
     "ktaub": bool,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTcorr1D": v_3d_tcorr1_d_cargs,
+        "afni.3dTcorr1D": v_3d_tcorr1_d_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTcorr1D": v_3d_tcorr1_d_outputs,
+        "afni.3dTcorr1D": v_3d_tcorr1_d_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def v_3d_tcorr1_d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTcorr1D",
+        "@type": "afni.3dTcorr1D",
         "ktaub": ktaub,
         "pearson": pearson,
         "quadrant": quadrant,
@@ -239,5 +239,8 @@ __all__ = [
     "V3dTcorr1DParameters",
     "V_3D_TCORR1_D_METADATA",
     "v_3d_tcorr1_d",
+    "v_3d_tcorr1_d_cargs",
+    "v_3d_tcorr1_d_execute",
+    "v_3d_tcorr1_d_outputs",
     "v_3d_tcorr1_d_params",
 ]

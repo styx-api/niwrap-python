@@ -14,7 +14,7 @@ FABBER_DWI_METADATA = Metadata(
 
 
 FabberDwiParameters = typing.TypedDict('FabberDwiParameters', {
-    "__STYXTYPE__": typing.Literal["fabber_dwi"],
+    "@type": typing.Literal["fsl.fabber_dwi"],
     "output_dir": str,
     "method": str,
     "model": str,
@@ -66,7 +66,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber_dwi": fabber_dwi_cargs,
+        "fsl.fabber_dwi": fabber_dwi_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber_dwi": fabber_dwi_outputs,
+        "fsl.fabber_dwi": fabber_dwi_outputs,
     }.get(t)
 
 
@@ -201,7 +201,7 @@ def fabber_dwi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber_dwi",
+        "@type": "fsl.fabber_dwi",
         "output_dir": output_dir,
         "method": method,
         "model": model,
@@ -584,5 +584,8 @@ __all__ = [
     "FabberDwiOutputs",
     "FabberDwiParameters",
     "fabber_dwi",
+    "fabber_dwi_cargs",
+    "fabber_dwi_execute",
+    "fabber_dwi_outputs",
     "fabber_dwi_params",
 ]

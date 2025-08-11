@@ -14,7 +14,7 @@ COLUMN_CAT_METADATA = Metadata(
 
 
 ColumnCatParameters = typing.TypedDict('ColumnCatParameters', {
-    "__STYXTYPE__": typing.Literal["column_cat"],
+    "@type": typing.Literal["afni.column_cat"],
     "line_number": typing.NotRequired[float | None],
     "separator_string": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "column_cat": column_cat_cargs,
+        "afni.column_cat": column_cat_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "column_cat": column_cat_outputs,
+        "afni.column_cat": column_cat_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def column_cat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "column_cat",
+        "@type": "afni.column_cat",
         "input_files": input_files,
     }
     if line_number is not None:
@@ -204,5 +204,8 @@ __all__ = [
     "ColumnCatOutputs",
     "ColumnCatParameters",
     "column_cat",
+    "column_cat_cargs",
+    "column_cat_execute",
+    "column_cat_outputs",
     "column_cat_params",
 ]

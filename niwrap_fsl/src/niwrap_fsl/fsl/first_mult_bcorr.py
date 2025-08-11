@@ -14,7 +14,7 @@ FIRST_MULT_BCORR_METADATA = Metadata(
 
 
 FirstMultBcorrParameters = typing.TypedDict('FirstMultBcorrParameters', {
-    "__STYXTYPE__": typing.Literal["first_mult_bcorr"],
+    "@type": typing.Literal["fsl.first_mult_bcorr"],
     "input_image": InputPathType,
     "corrected_4d_labels": InputPathType,
     "uncorrected_4d_labels": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "first_mult_bcorr": first_mult_bcorr_cargs,
+        "fsl.first_mult_bcorr": first_mult_bcorr_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "first_mult_bcorr": first_mult_bcorr_outputs,
+        "fsl.first_mult_bcorr": first_mult_bcorr_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def first_mult_bcorr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "first_mult_bcorr",
+        "@type": "fsl.first_mult_bcorr",
         "input_image": input_image,
         "corrected_4d_labels": corrected_4d_labels,
         "uncorrected_4d_labels": uncorrected_4d_labels,
@@ -232,5 +232,8 @@ __all__ = [
     "FirstMultBcorrOutputs",
     "FirstMultBcorrParameters",
     "first_mult_bcorr",
+    "first_mult_bcorr_cargs",
+    "first_mult_bcorr_execute",
+    "first_mult_bcorr_outputs",
     "first_mult_bcorr_params",
 ]

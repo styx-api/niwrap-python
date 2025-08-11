@@ -14,7 +14,7 @@ V_1DMATCALC_METADATA = Metadata(
 
 
 V1dmatcalcParameters = typing.TypedDict('V1dmatcalcParameters', {
-    "__STYXTYPE__": typing.Literal["1dmatcalc"],
+    "@type": typing.Literal["afni.1dmatcalc"],
     "expression": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dmatcalc": v_1dmatcalc_cargs,
+        "afni.1dmatcalc": v_1dmatcalc_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dmatcalc": v_1dmatcalc_outputs,
+        "afni.1dmatcalc": v_1dmatcalc_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v_1dmatcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dmatcalc",
+        "@type": "afni.1dmatcalc",
     }
     if expression is not None:
         params["expression"] = expression
@@ -176,5 +176,8 @@ __all__ = [
     "V1dmatcalcParameters",
     "V_1DMATCALC_METADATA",
     "v_1dmatcalc",
+    "v_1dmatcalc_cargs",
+    "v_1dmatcalc_execute",
+    "v_1dmatcalc_outputs",
     "v_1dmatcalc_params",
 ]

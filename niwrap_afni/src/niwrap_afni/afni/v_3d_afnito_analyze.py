@@ -14,7 +14,7 @@ V_3D_AFNITO_ANALYZE_METADATA = Metadata(
 
 
 V3dAfnitoAnalyzeParameters = typing.TypedDict('V3dAfnitoAnalyzeParameters', {
-    "__STYXTYPE__": typing.Literal["3dAFNItoANALYZE"],
+    "@type": typing.Literal["afni.3dAFNItoANALYZE"],
     "4d_option": bool,
     "orient_option": typing.NotRequired[str | None],
     "output_name": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAFNItoANALYZE": v_3d_afnito_analyze_cargs,
+        "afni.3dAFNItoANALYZE": v_3d_afnito_analyze_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAFNItoANALYZE": v_3d_afnito_analyze_outputs,
+        "afni.3dAFNItoANALYZE": v_3d_afnito_analyze_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_3d_afnito_analyze_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAFNItoANALYZE",
+        "@type": "afni.3dAFNItoANALYZE",
         "4d_option": v_4d_option,
         "output_name": output_name,
         "afni_dataset": afni_dataset,
@@ -215,5 +215,8 @@ __all__ = [
     "V3dAfnitoAnalyzeParameters",
     "V_3D_AFNITO_ANALYZE_METADATA",
     "v_3d_afnito_analyze",
+    "v_3d_afnito_analyze_cargs",
+    "v_3d_afnito_analyze_execute",
+    "v_3d_afnito_analyze_outputs",
     "v_3d_afnito_analyze_params",
 ]

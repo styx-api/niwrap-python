@@ -14,7 +14,7 @@ SAMP_BIAS_METADATA = Metadata(
 
 
 SampBiasParameters = typing.TypedDict('SampBiasParameters', {
-    "__STYXTYPE__": typing.Literal["SampBias"],
+    "@type": typing.Literal["afni.SampBias"],
     "specfile": InputPathType,
     "surfname": str,
     "plimit": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SampBias": samp_bias_cargs,
+        "afni.SampBias": samp_bias_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SampBias": samp_bias_outputs,
+        "afni.SampBias": samp_bias_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def samp_bias_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SampBias",
+        "@type": "afni.SampBias",
         "specfile": specfile,
         "surfname": surfname,
         "outfile": outfile,
@@ -256,5 +256,8 @@ __all__ = [
     "SampBiasOutputs",
     "SampBiasParameters",
     "samp_bias",
+    "samp_bias_cargs",
+    "samp_bias_execute",
+    "samp_bias_outputs",
     "samp_bias_params",
 ]

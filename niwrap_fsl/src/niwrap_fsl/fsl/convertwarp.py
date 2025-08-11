@@ -14,7 +14,7 @@ CONVERTWARP_METADATA = Metadata(
 
 
 ConvertwarpParameters = typing.TypedDict('ConvertwarpParameters', {
-    "__STYXTYPE__": typing.Literal["convertwarp"],
+    "@type": typing.Literal["fsl.convertwarp"],
     "abswarp": bool,
     "cons_jacobian": bool,
     "jacobian_max": typing.NotRequired[float | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "convertwarp": convertwarp_cargs,
+        "fsl.convertwarp": convertwarp_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "convertwarp": convertwarp_outputs,
+        "fsl.convertwarp": convertwarp_outputs,
     }.get(t)
 
 
@@ -150,7 +150,7 @@ def convertwarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convertwarp",
+        "@type": "fsl.convertwarp",
         "abswarp": abswarp,
         "cons_jacobian": cons_jacobian,
         "out_abswarp": out_abswarp,
@@ -378,5 +378,8 @@ __all__ = [
     "ConvertwarpOutputs",
     "ConvertwarpParameters",
     "convertwarp",
+    "convertwarp_cargs",
+    "convertwarp_execute",
+    "convertwarp_outputs",
     "convertwarp_params",
 ]

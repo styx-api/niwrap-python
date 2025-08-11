@@ -14,7 +14,7 @@ EPI_B0_CORRECT_METADATA = Metadata(
 
 
 EpiB0CorrectParameters = typing.TypedDict('EpiB0CorrectParameters', {
-    "__STYXTYPE__": typing.Literal["epi_b0_correct"],
+    "@type": typing.Literal["afni.epi_b0_correct"],
     "prefix": str,
     "input_freq": InputPathType,
     "input_epi": InputPathType,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "epi_b0_correct": epi_b0_correct_cargs,
+        "afni.epi_b0_correct": epi_b0_correct_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "epi_b0_correct": epi_b0_correct_outputs,
+        "afni.epi_b0_correct": epi_b0_correct_outputs,
     }.get(t)
 
 
@@ -164,7 +164,7 @@ def epi_b0_correct_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "epi_b0_correct",
+        "@type": "afni.epi_b0_correct",
         "prefix": prefix,
         "input_freq": input_freq,
         "input_epi": input_epi,
@@ -481,5 +481,8 @@ __all__ = [
     "EpiB0CorrectOutputs",
     "EpiB0CorrectParameters",
     "epi_b0_correct",
+    "epi_b0_correct_cargs",
+    "epi_b0_correct_execute",
+    "epi_b0_correct_outputs",
     "epi_b0_correct_params",
 ]

@@ -14,7 +14,7 @@ SIGLOSS_METADATA = Metadata(
 
 
 SiglossParameters = typing.TypedDict('SiglossParameters', {
-    "__STYXTYPE__": typing.Literal["sigloss"],
+    "@type": typing.Literal["fsl.sigloss"],
     "input_b0map": InputPathType,
     "output_sigloss": str,
     "input_mask": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sigloss": sigloss_cargs,
+        "fsl.sigloss": sigloss_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def sigloss_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sigloss",
+        "@type": "fsl.sigloss",
         "input_b0map": input_b0map,
         "output_sigloss": output_sigloss,
         "verbose_flag": verbose_flag,
@@ -239,5 +239,8 @@ __all__ = [
     "SiglossOutputs",
     "SiglossParameters",
     "sigloss",
+    "sigloss_cargs",
+    "sigloss_execute",
+    "sigloss_outputs",
     "sigloss_params",
 ]

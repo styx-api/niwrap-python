@@ -14,7 +14,7 @@ V__MEASURE_BB_THICK_METADATA = Metadata(
 
 
 VMeasureBbThickParameters = typing.TypedDict('VMeasureBbThickParameters', {
-    "__STYXTYPE__": typing.Literal["@measure_bb_thick"],
+    "@type": typing.Literal["afni.@measure_bb_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@measure_bb_thick": v__measure_bb_thick_cargs,
+        "afni.@measure_bb_thick": v__measure_bb_thick_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@measure_bb_thick": v__measure_bb_thick_outputs,
+        "afni.@measure_bb_thick": v__measure_bb_thick_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v__measure_bb_thick_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@measure_bb_thick",
+        "@type": "afni.@measure_bb_thick",
         "maskset": maskset,
         "surfset": surfset,
         "keep_temp_files": keep_temp_files,
@@ -348,5 +348,8 @@ __all__ = [
     "VMeasureBbThickParameters",
     "V__MEASURE_BB_THICK_METADATA",
     "v__measure_bb_thick",
+    "v__measure_bb_thick_cargs",
+    "v__measure_bb_thick_execute",
+    "v__measure_bb_thick_outputs",
     "v__measure_bb_thick_params",
 ]

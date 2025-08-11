@@ -14,7 +14,7 @@ XSANATREG_METADATA = Metadata(
 
 
 XsanatregParameters = typing.TypedDict('XsanatregParameters', {
-    "__STYXTYPE__": typing.Literal["xsanatreg"],
+    "@type": typing.Literal["freesurfer.xsanatreg"],
     "src_cordir": str,
     "targ_cordir": str,
     "transform_file": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xsanatreg": xsanatreg_cargs,
+        "freesurfer.xsanatreg": xsanatreg_cargs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def xsanatreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xsanatreg",
+        "@type": "freesurfer.xsanatreg",
         "src_cordir": src_cordir,
         "targ_cordir": targ_cordir,
         "transform_file": transform_file,
@@ -267,5 +267,8 @@ __all__ = [
     "XsanatregOutputs",
     "XsanatregParameters",
     "xsanatreg",
+    "xsanatreg_cargs",
+    "xsanatreg_execute",
+    "xsanatreg_outputs",
     "xsanatreg_params",
 ]

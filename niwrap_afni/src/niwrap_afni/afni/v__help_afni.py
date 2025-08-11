@@ -14,7 +14,7 @@ V__HELP_AFNI_METADATA = Metadata(
 
 
 VHelpAfniParameters = typing.TypedDict('VHelpAfniParameters', {
-    "__STYXTYPE__": typing.Literal["@help.AFNI"],
+    "@type": typing.Literal["afni.@help.AFNI"],
     "match": typing.NotRequired[str | None],
     "lynx": bool,
     "vi": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@help.AFNI": v__help_afni_cargs,
+        "afni.@help.AFNI": v__help_afni_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def v__help_afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@help.AFNI",
+        "@type": "afni.@help.AFNI",
         "lynx": lynx,
         "vi": vi,
         "less": less,
@@ -222,5 +222,8 @@ __all__ = [
     "VHelpAfniParameters",
     "V__HELP_AFNI_METADATA",
     "v__help_afni",
+    "v__help_afni_cargs",
+    "v__help_afni_execute",
+    "v__help_afni_outputs",
     "v__help_afni_params",
 ]

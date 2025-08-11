@@ -14,7 +14,7 @@ V_1D_BPORT_METADATA = Metadata(
 
 
 V1dBportParameters = typing.TypedDict('V1dBportParameters', {
-    "__STYXTYPE__": typing.Literal["1dBport"],
+    "@type": typing.Literal["afni.1dBport"],
     "band": list[float],
     "invert": bool,
     "nozero": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dBport": v_1d_bport_cargs,
+        "afni.1dBport": v_1d_bport_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dBport": v_1d_bport_outputs,
+        "afni.1dBport": v_1d_bport_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def v_1d_bport_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dBport",
+        "@type": "afni.1dBport",
         "band": band,
         "invert": invert,
         "nozero": nozero,
@@ -284,5 +284,8 @@ __all__ = [
     "V1dBportParameters",
     "V_1D_BPORT_METADATA",
     "v_1d_bport",
+    "v_1d_bport_cargs",
+    "v_1d_bport_execute",
+    "v_1d_bport_outputs",
     "v_1d_bport_params",
 ]

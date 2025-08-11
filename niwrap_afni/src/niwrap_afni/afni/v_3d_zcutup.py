@@ -14,7 +14,7 @@ V_3D_ZCUTUP_METADATA = Metadata(
 
 
 V3dZcutupParameters = typing.TypedDict('V3dZcutupParameters', {
-    "__STYXTYPE__": typing.Literal["3dZcutup"],
+    "@type": typing.Literal["afni.3dZcutup"],
     "keep_slices": str,
     "prefix": typing.NotRequired[str | None],
     "dataset": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dZcutup": v_3d_zcutup_cargs,
+        "afni.3dZcutup": v_3d_zcutup_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dZcutup": v_3d_zcutup_outputs,
+        "afni.3dZcutup": v_3d_zcutup_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def v_3d_zcutup_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dZcutup",
+        "@type": "afni.3dZcutup",
         "keep_slices": keep_slices,
         "dataset": dataset,
     }
@@ -205,5 +205,8 @@ __all__ = [
     "V3dZcutupParameters",
     "V_3D_ZCUTUP_METADATA",
     "v_3d_zcutup",
+    "v_3d_zcutup_cargs",
+    "v_3d_zcutup_execute",
+    "v_3d_zcutup_outputs",
     "v_3d_zcutup_params",
 ]

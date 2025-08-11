@@ -14,7 +14,7 @@ MRIS_RESCALE_METADATA = Metadata(
 
 
 MrisRescaleParameters = typing.TypedDict('MrisRescaleParameters', {
-    "__STYXTYPE__": typing.Literal["mris_rescale"],
+    "@type": typing.Literal["freesurfer.mris_rescale"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_rescale": mris_rescale_cargs,
+        "freesurfer.mris_rescale": mris_rescale_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_rescale": mris_rescale_outputs,
+        "freesurfer.mris_rescale": mris_rescale_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_rescale_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_rescale",
+        "@type": "freesurfer.mris_rescale",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MrisRescaleOutputs",
     "MrisRescaleParameters",
     "mris_rescale",
+    "mris_rescale_cargs",
+    "mris_rescale_execute",
+    "mris_rescale_outputs",
     "mris_rescale_params",
 ]

@@ -14,7 +14,7 @@ BORDER_RESAMPLE_METADATA = Metadata(
 
 
 BorderResampleParameters = typing.TypedDict('BorderResampleParameters', {
-    "__STYXTYPE__": typing.Literal["border-resample"],
+    "@type": typing.Literal["workbench.border-resample"],
     "border_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "border-resample": border_resample_cargs,
+        "workbench.border-resample": border_resample_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "border-resample": border_resample_outputs,
+        "workbench.border-resample": border_resample_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def border_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border-resample",
+        "@type": "workbench.border-resample",
         "border_in": border_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -209,5 +209,8 @@ __all__ = [
     "BorderResampleOutputs",
     "BorderResampleParameters",
     "border_resample",
+    "border_resample_cargs",
+    "border_resample_execute",
+    "border_resample_outputs",
     "border_resample_params",
 ]

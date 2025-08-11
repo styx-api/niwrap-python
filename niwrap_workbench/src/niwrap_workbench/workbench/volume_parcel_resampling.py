@@ -14,7 +14,7 @@ VOLUME_PARCEL_RESAMPLING_METADATA = Metadata(
 
 
 VolumeParcelResamplingParameters = typing.TypedDict('VolumeParcelResamplingParameters', {
-    "__STYXTYPE__": typing.Literal["volume-parcel-resampling"],
+    "@type": typing.Literal["workbench.volume-parcel-resampling"],
     "volume_in": InputPathType,
     "cur_parcels": InputPathType,
     "new_parcels": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-parcel-resampling": volume_parcel_resampling_cargs,
+        "workbench.volume-parcel-resampling": volume_parcel_resampling_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-parcel-resampling": volume_parcel_resampling_outputs,
+        "workbench.volume-parcel-resampling": volume_parcel_resampling_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def volume_parcel_resampling_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-parcel-resampling",
+        "@type": "workbench.volume-parcel-resampling",
         "volume_in": volume_in,
         "cur_parcels": cur_parcels,
         "new_parcels": new_parcels,
@@ -262,5 +262,8 @@ __all__ = [
     "VolumeParcelResamplingOutputs",
     "VolumeParcelResamplingParameters",
     "volume_parcel_resampling",
+    "volume_parcel_resampling_cargs",
+    "volume_parcel_resampling_execute",
+    "volume_parcel_resampling_outputs",
     "volume_parcel_resampling_params",
 ]

@@ -14,7 +14,7 @@ V_3D_LRFLIP_METADATA = Metadata(
 
 
 V3dLrflipParameters = typing.TypedDict('V3dLrflipParameters', {
-    "__STYXTYPE__": typing.Literal["3dLRflip"],
+    "@type": typing.Literal["afni.3dLRflip"],
     "flip_lr": bool,
     "flip_ap": bool,
     "flip_is": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLRflip": v_3d_lrflip_cargs,
+        "afni.3dLRflip": v_3d_lrflip_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLRflip": v_3d_lrflip_outputs,
+        "afni.3dLRflip": v_3d_lrflip_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v_3d_lrflip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLRflip",
+        "@type": "afni.3dLRflip",
         "flip_lr": flip_lr,
         "flip_ap": flip_ap,
         "flip_is": flip_is,
@@ -243,5 +243,8 @@ __all__ = [
     "V3dLrflipParameters",
     "V_3D_LRFLIP_METADATA",
     "v_3d_lrflip",
+    "v_3d_lrflip_cargs",
+    "v_3d_lrflip_execute",
+    "v_3d_lrflip_outputs",
     "v_3d_lrflip_params",
 ]

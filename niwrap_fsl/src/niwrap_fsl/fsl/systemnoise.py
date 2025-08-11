@@ -14,7 +14,7 @@ SYSTEMNOISE_METADATA = Metadata(
 
 
 SystemnoiseParameters = typing.TypedDict('SystemnoiseParameters', {
-    "__STYXTYPE__": typing.Literal["systemnoise"],
+    "@type": typing.Literal["fsl.systemnoise"],
     "input_signal": InputPathType,
     "output_signal": str,
     "noise_standard_deviation": float,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "systemnoise": systemnoise_cargs,
+        "fsl.systemnoise": systemnoise_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "systemnoise": systemnoise_outputs,
+        "fsl.systemnoise": systemnoise_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def systemnoise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "systemnoise",
+        "@type": "fsl.systemnoise",
         "input_signal": input_signal,
         "output_signal": output_signal,
         "noise_standard_deviation": noise_standard_deviation,
@@ -230,5 +230,8 @@ __all__ = [
     "SystemnoiseOutputs",
     "SystemnoiseParameters",
     "systemnoise",
+    "systemnoise_cargs",
+    "systemnoise_execute",
+    "systemnoise_outputs",
     "systemnoise_params",
 ]

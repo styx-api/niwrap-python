@@ -14,7 +14,7 @@ V_3DDOT_BETA_METADATA = Metadata(
 
 
 V3ddotBetaParameters = typing.TypedDict('V3ddotBetaParameters', {
-    "__STYXTYPE__": typing.Literal["3ddot_beta"],
+    "@type": typing.Literal["afni.3ddot_beta"],
     "input_file": InputPathType,
     "prefix": str,
     "doeta2": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3ddot_beta": v_3ddot_beta_cargs,
+        "afni.3ddot_beta": v_3ddot_beta_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3ddot_beta": v_3ddot_beta_outputs,
+        "afni.3ddot_beta": v_3ddot_beta_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v_3ddot_beta_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3ddot_beta",
+        "@type": "afni.3ddot_beta",
         "input_file": input_file,
         "prefix": prefix,
         "doeta2": doeta2,
@@ -210,5 +210,8 @@ __all__ = [
     "V3ddotBetaParameters",
     "V_3DDOT_BETA_METADATA",
     "v_3ddot_beta",
+    "v_3ddot_beta_cargs",
+    "v_3ddot_beta_execute",
+    "v_3ddot_beta_outputs",
     "v_3ddot_beta_params",
 ]

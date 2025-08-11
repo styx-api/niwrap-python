@@ -14,14 +14,14 @@ MRHISTOGRAM_METADATA = Metadata(
 
 
 MrhistogramConfigParameters = typing.TypedDict('MrhistogramConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrhistogram.config"],
     "key": str,
     "value": str,
 })
 
 
 MrhistogramParameters = typing.TypedDict('MrhistogramParameters', {
-    "__STYXTYPE__": typing.Literal["mrhistogram"],
+    "@type": typing.Literal["mrtrix.mrhistogram"],
     "bins": typing.NotRequired[int | None],
     "template": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -52,8 +52,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrhistogram": mrhistogram_cargs,
-        "config": mrhistogram_config_cargs,
+        "mrtrix.mrhistogram": mrhistogram_cargs,
+        "mrtrix.mrhistogram.config": mrhistogram_config_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrhistogram": mrhistogram_outputs,
+        "mrtrix.mrhistogram": mrhistogram_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def mrhistogram_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrhistogram.config",
         "key": key,
         "value": value,
     }
@@ -170,7 +170,7 @@ def mrhistogram_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrhistogram",
+        "@type": "mrtrix.mrhistogram",
         "ignorezero": ignorezero,
         "allvolumes": allvolumes,
         "info": info,
@@ -243,7 +243,7 @@ def mrhistogram_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -388,6 +388,10 @@ __all__ = [
     "MrhistogramOutputs",
     "MrhistogramParameters",
     "mrhistogram",
+    "mrhistogram_cargs",
+    "mrhistogram_config_cargs",
     "mrhistogram_config_params",
+    "mrhistogram_execute",
+    "mrhistogram_outputs",
     "mrhistogram_params",
 ]

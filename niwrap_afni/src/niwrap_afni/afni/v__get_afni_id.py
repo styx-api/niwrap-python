@@ -14,7 +14,7 @@ V__GET_AFNI_ID_METADATA = Metadata(
 
 
 VGetAfniIdParameters = typing.TypedDict('VGetAfniIdParameters', {
-    "__STYXTYPE__": typing.Literal["@GetAfniID"],
+    "@type": typing.Literal["afni.@GetAfniID"],
     "dset": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@GetAfniID": v__get_afni_id_cargs,
+        "afni.@GetAfniID": v__get_afni_id_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@GetAfniID": v__get_afni_id_outputs,
+        "afni.@GetAfniID": v__get_afni_id_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__get_afni_id_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@GetAfniID",
+        "@type": "afni.@GetAfniID",
         "dset": dset,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "VGetAfniIdParameters",
     "V__GET_AFNI_ID_METADATA",
     "v__get_afni_id",
+    "v__get_afni_id_cargs",
+    "v__get_afni_id_execute",
+    "v__get_afni_id_outputs",
     "v__get_afni_id_params",
 ]

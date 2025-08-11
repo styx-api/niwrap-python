@@ -14,7 +14,7 @@ BBMASK_METADATA = Metadata(
 
 
 BbmaskParameters = typing.TypedDict('BbmaskParameters', {
-    "__STYXTYPE__": typing.Literal["bbmask"],
+    "@type": typing.Literal["freesurfer.bbmask"],
     "mask": list[InputPathType],
     "src_volumes": typing.NotRequired[list[InputPathType] | None],
     "npad": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bbmask": bbmask_cargs,
+        "freesurfer.bbmask": bbmask_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bbmask": bbmask_outputs,
+        "freesurfer.bbmask": bbmask_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def bbmask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bbmask",
+        "@type": "freesurfer.bbmask",
         "mask": mask,
     }
     if src_volumes is not None:
@@ -256,5 +256,8 @@ __all__ = [
     "BbmaskOutputs",
     "BbmaskParameters",
     "bbmask",
+    "bbmask_cargs",
+    "bbmask_execute",
+    "bbmask_outputs",
     "bbmask_params",
 ]

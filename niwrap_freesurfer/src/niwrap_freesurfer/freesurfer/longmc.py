@@ -14,7 +14,7 @@ LONGMC_METADATA = Metadata(
 
 
 LongmcParameters = typing.TypedDict('LongmcParameters', {
-    "__STYXTYPE__": typing.Literal["longmc"],
+    "@type": typing.Literal["freesurfer.longmc"],
     "cross_tp_name": str,
     "base_name": str,
     "conform_to_hires": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "longmc": longmc_cargs,
+        "freesurfer.longmc": longmc_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def longmc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "longmc",
+        "@type": "freesurfer.longmc",
         "cross_tp_name": cross_tp_name,
         "base_name": base_name,
         "conform_to_hires": conform_to_hires,
@@ -232,5 +232,8 @@ __all__ = [
     "LongmcOutputs",
     "LongmcParameters",
     "longmc",
+    "longmc_cargs",
+    "longmc_execute",
+    "longmc_outputs",
     "longmc_params",
 ]

@@ -14,7 +14,7 @@ CONNECTED_COMPONENTS_METADATA = Metadata(
 
 
 ConnectedComponentsParameters = typing.TypedDict('ConnectedComponentsParameters', {
-    "__STYXTYPE__": typing.Literal["connected_components"],
+    "@type": typing.Literal["freesurfer.connected_components"],
     "input_image": InputPathType,
     "output_image": str,
     "threshold": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "connected_components": connected_components_cargs,
+        "freesurfer.connected_components": connected_components_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "connected_components": connected_components_outputs,
+        "freesurfer.connected_components": connected_components_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def connected_components_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "connected_components",
+        "@type": "freesurfer.connected_components",
         "input_image": input_image,
         "output_image": output_image,
     }
@@ -196,5 +196,8 @@ __all__ = [
     "ConnectedComponentsOutputs",
     "ConnectedComponentsParameters",
     "connected_components",
+    "connected_components_cargs",
+    "connected_components_execute",
+    "connected_components_outputs",
     "connected_components_params",
 ]

@@ -14,7 +14,7 @@ MRI_VOLSYNTH_METADATA = Metadata(
 
 
 MriVolsynthParameters = typing.TypedDict('MriVolsynthParameters', {
-    "__STYXTYPE__": typing.Literal["mri_volsynth"],
+    "@type": typing.Literal["freesurfer.mri_volsynth"],
     "output_volid": str,
     "template": typing.NotRequired[str | None],
     "nframes": typing.NotRequired[float | None],
@@ -73,7 +73,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_volsynth": mri_volsynth_cargs,
+        "freesurfer.mri_volsynth": mri_volsynth_cargs,
     }.get(t)
 
 
@@ -197,7 +197,7 @@ def mri_volsynth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_volsynth",
+        "@type": "freesurfer.mri_volsynth",
         "output_volid": output_volid,
         "offset_flag": offset_flag,
         "offset_mid_flag": offset_mid_flag,
@@ -701,5 +701,8 @@ __all__ = [
     "MriVolsynthOutputs",
     "MriVolsynthParameters",
     "mri_volsynth",
+    "mri_volsynth_cargs",
+    "mri_volsynth_execute",
+    "mri_volsynth_outputs",
     "mri_volsynth_params",
 ]

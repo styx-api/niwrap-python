@@ -14,21 +14,21 @@ VOLUME_EXTREMA_METADATA = Metadata(
 
 
 VolumeExtremaPresmoothParameters = typing.TypedDict('VolumeExtremaPresmoothParameters', {
-    "__STYXTYPE__": typing.Literal["presmooth"],
+    "@type": typing.Literal["workbench.volume-extrema.presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeExtremaThresholdParameters = typing.TypedDict('VolumeExtremaThresholdParameters', {
-    "__STYXTYPE__": typing.Literal["threshold"],
+    "@type": typing.Literal["workbench.volume-extrema.threshold"],
     "low": float,
     "high": float,
 })
 
 
 VolumeExtremaParameters = typing.TypedDict('VolumeExtremaParameters', {
-    "__STYXTYPE__": typing.Literal["volume-extrema"],
+    "@type": typing.Literal["workbench.volume-extrema"],
     "volume_in": InputPathType,
     "distance": float,
     "volume_out": str,
@@ -55,9 +55,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-extrema": volume_extrema_cargs,
-        "presmooth": volume_extrema_presmooth_cargs,
-        "threshold": volume_extrema_threshold_cargs,
+        "workbench.volume-extrema": volume_extrema_cargs,
+        "workbench.volume-extrema.presmooth": volume_extrema_presmooth_cargs,
+        "workbench.volume-extrema.threshold": volume_extrema_threshold_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-extrema": volume_extrema_outputs,
+        "workbench.volume-extrema": volume_extrema_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def volume_extrema_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "presmooth",
+        "@type": "workbench.volume-extrema.presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -134,7 +134,7 @@ def volume_extrema_threshold_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "threshold",
+        "@type": "workbench.volume-extrema.threshold",
         "low": low,
         "high": high,
     }
@@ -208,7 +208,7 @@ def volume_extrema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-extrema",
+        "@type": "workbench.volume-extrema",
         "volume_in": volume_in,
         "distance": distance,
         "volume_out": volume_out,
@@ -248,14 +248,14 @@ def volume_extrema_cargs(
     cargs.append(str(params.get("distance")))
     cargs.append(params.get("volume_out"))
     if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["__STYXTYPE__"])(params.get("presmooth"), execution))
+        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
     if params.get("opt_roi_roi_volume") is not None:
         cargs.extend([
             "-roi",
             execution.input_file(params.get("opt_roi_roi_volume"))
         ])
     if params.get("threshold") is not None:
-        cargs.extend(dyn_cargs(params.get("threshold")["__STYXTYPE__"])(params.get("threshold"), execution))
+        cargs.extend(dyn_cargs(params.get("threshold")["@type"])(params.get("threshold"), execution))
     if params.get("opt_sum_subvols"):
         cargs.append("-sum-subvols")
     if params.get("opt_consolidate_mode"):
@@ -425,7 +425,12 @@ __all__ = [
     "VolumeExtremaPresmoothParameters",
     "VolumeExtremaThresholdParameters",
     "volume_extrema",
+    "volume_extrema_cargs",
+    "volume_extrema_execute",
+    "volume_extrema_outputs",
     "volume_extrema_params",
+    "volume_extrema_presmooth_cargs",
     "volume_extrema_presmooth_params",
+    "volume_extrema_threshold_cargs",
     "volume_extrema_threshold_params",
 ]

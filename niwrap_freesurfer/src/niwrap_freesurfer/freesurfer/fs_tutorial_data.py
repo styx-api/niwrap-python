@@ -14,7 +14,7 @@ FS_TUTORIAL_DATA_METADATA = Metadata(
 
 
 FsTutorialDataParameters = typing.TypedDict('FsTutorialDataParameters', {
-    "__STYXTYPE__": typing.Literal["fs_tutorial_data"],
+    "@type": typing.Literal["freesurfer.fs_tutorial_data"],
     "rsync_options": typing.NotRequired[list[str] | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_tutorial_data": fs_tutorial_data_cargs,
+        "freesurfer.fs_tutorial_data": fs_tutorial_data_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fs_tutorial_data": fs_tutorial_data_outputs,
+        "freesurfer.fs_tutorial_data": fs_tutorial_data_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def fs_tutorial_data_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_tutorial_data",
+        "@type": "freesurfer.fs_tutorial_data",
     }
     if rsync_options is not None:
         params["rsync_options"] = rsync_options
@@ -174,5 +174,8 @@ __all__ = [
     "FsTutorialDataOutputs",
     "FsTutorialDataParameters",
     "fs_tutorial_data",
+    "fs_tutorial_data_cargs",
+    "fs_tutorial_data_execute",
+    "fs_tutorial_data_outputs",
     "fs_tutorial_data_params",
 ]

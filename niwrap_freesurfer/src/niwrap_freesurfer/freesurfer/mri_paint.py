@@ -14,7 +14,7 @@ MRI_PAINT_METADATA = Metadata(
 
 
 MriPaintParameters = typing.TypedDict('MriPaintParameters', {
-    "__STYXTYPE__": typing.Literal["mri_paint"],
+    "@type": typing.Literal["freesurfer.mri_paint"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "registration_file": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_paint": mri_paint_cargs,
+        "freesurfer.mri_paint": mri_paint_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_paint": mri_paint_outputs,
+        "freesurfer.mri_paint": mri_paint_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mri_paint_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_paint",
+        "@type": "freesurfer.mri_paint",
         "input_volume": input_volume,
         "input_surface": input_surface,
         "registration_file": registration_file,
@@ -218,5 +218,8 @@ __all__ = [
     "MriPaintOutputs",
     "MriPaintParameters",
     "mri_paint",
+    "mri_paint_cargs",
+    "mri_paint_execute",
+    "mri_paint_outputs",
     "mri_paint_params",
 ]

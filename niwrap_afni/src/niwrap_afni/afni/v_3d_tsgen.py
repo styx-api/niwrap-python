@@ -14,7 +14,7 @@ V_3D_TSGEN_METADATA = Metadata(
 
 
 V3dTsgenParameters = typing.TypedDict('V3dTsgenParameters', {
-    "__STYXTYPE__": typing.Literal["3dTSgen"],
+    "@type": typing.Literal["afni.3dTSgen"],
     "input_file": InputPathType,
     "in_tr_flag": bool,
     "signal_label": str,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTSgen": v_3d_tsgen_cargs,
+        "afni.3dTSgen": v_3d_tsgen_cargs,
     }.get(t)
 
 
@@ -115,7 +115,7 @@ def v_3d_tsgen_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTSgen",
+        "@type": "afni.3dTSgen",
         "input_file": input_file,
         "in_tr_flag": in_tr_flag,
         "signal_label": signal_label,
@@ -332,5 +332,8 @@ __all__ = [
     "V3dTsgenParameters",
     "V_3D_TSGEN_METADATA",
     "v_3d_tsgen",
+    "v_3d_tsgen_cargs",
+    "v_3d_tsgen_execute",
+    "v_3d_tsgen_outputs",
     "v_3d_tsgen_params",
 ]

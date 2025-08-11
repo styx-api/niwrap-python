@@ -14,7 +14,7 @@ ISANALYZE_METADATA = Metadata(
 
 
 IsanalyzeParameters = typing.TypedDict('IsanalyzeParameters', {
-    "__STYXTYPE__": typing.Literal["isanalyze"],
+    "@type": typing.Literal["freesurfer.isanalyze"],
     "input_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "isanalyze": isanalyze_cargs,
+        "freesurfer.isanalyze": isanalyze_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def isanalyze_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "isanalyze",
+        "@type": "freesurfer.isanalyze",
         "input_file": input_file,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "IsanalyzeOutputs",
     "IsanalyzeParameters",
     "isanalyze",
+    "isanalyze_cargs",
+    "isanalyze_execute",
+    "isanalyze_outputs",
     "isanalyze_params",
 ]

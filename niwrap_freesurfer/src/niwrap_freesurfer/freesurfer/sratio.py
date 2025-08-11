@@ -14,7 +14,7 @@ SRATIO_METADATA = Metadata(
 
 
 SratioParameters = typing.TypedDict('SratioParameters', {
-    "__STYXTYPE__": typing.Literal["sratio"],
+    "@type": typing.Literal["freesurfer.sratio"],
     "value_a": float,
     "value_b": float,
     "abs_flag": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sratio": sratio_cargs,
+        "freesurfer.sratio": sratio_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sratio": sratio_outputs,
+        "freesurfer.sratio": sratio_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def sratio_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sratio",
+        "@type": "freesurfer.sratio",
         "value_a": value_a,
         "value_b": value_b,
         "abs_flag": abs_flag,
@@ -204,5 +204,8 @@ __all__ = [
     "SratioOutputs",
     "SratioParameters",
     "sratio",
+    "sratio_cargs",
+    "sratio_execute",
+    "sratio_outputs",
     "sratio_params",
 ]

@@ -14,7 +14,7 @@ V_3D_AFNITO_RAW_METADATA = Metadata(
 
 
 V3dAfnitoRawParameters = typing.TypedDict('V3dAfnitoRawParameters', {
-    "__STYXTYPE__": typing.Literal["3dAFNItoRaw"],
+    "@type": typing.Literal["afni.3dAFNItoRaw"],
     "output_file": typing.NotRequired[str | None],
     "force_float": bool,
     "dataset": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAFNItoRaw": v_3d_afnito_raw_cargs,
+        "afni.3dAFNItoRaw": v_3d_afnito_raw_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v_3d_afnito_raw_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAFNItoRaw",
+        "@type": "afni.3dAFNItoRaw",
         "force_float": force_float,
         "dataset": dataset,
     }
@@ -198,5 +198,8 @@ __all__ = [
     "V3dAfnitoRawParameters",
     "V_3D_AFNITO_RAW_METADATA",
     "v_3d_afnito_raw",
+    "v_3d_afnito_raw_cargs",
+    "v_3d_afnito_raw_execute",
+    "v_3d_afnito_raw_outputs",
     "v_3d_afnito_raw_params",
 ]

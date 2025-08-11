@@ -14,7 +14,7 @@ VOLUME_MATH_METADATA = Metadata(
 
 
 VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
-    "__STYXTYPE__": typing.Literal["var"],
+    "@type": typing.Literal["workbench.volume-math.var"],
     "name": str,
     "volume": InputPathType,
     "opt_subvolume_subvol": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ VolumeMathVarParameters = typing.TypedDict('VolumeMathVarParameters', {
 
 
 VolumeMathParameters = typing.TypedDict('VolumeMathParameters', {
-    "__STYXTYPE__": typing.Literal["volume-math"],
+    "@type": typing.Literal["workbench.volume-math"],
     "expression": str,
     "volume_out": str,
     "opt_fixnan_replace": typing.NotRequired[float | None],
@@ -43,8 +43,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-math": volume_math_cargs,
-        "var": volume_math_var_cargs,
+        "workbench.volume-math": volume_math_cargs,
+        "workbench.volume-math.var": volume_math_var_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-math": volume_math_outputs,
+        "workbench.volume-math": volume_math_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def volume_math_var_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "var",
+        "@type": "workbench.volume-math.var",
         "name": name,
         "volume": volume,
         "opt_repeat": opt_repeat,
@@ -149,7 +149,7 @@ def volume_math_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-math",
+        "@type": "workbench.volume-math",
         "expression": expression,
         "volume_out": volume_out,
     }
@@ -184,7 +184,7 @@ def volume_math_cargs(
             str(params.get("opt_fixnan_replace"))
         ])
     if params.get("var") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("var")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("var")] for a in c])
     return cargs
 
 
@@ -411,6 +411,10 @@ __all__ = [
     "VolumeMathParameters",
     "VolumeMathVarParameters",
     "volume_math",
+    "volume_math_cargs",
+    "volume_math_execute",
+    "volume_math_outputs",
     "volume_math_params",
+    "volume_math_var_cargs",
     "volume_math_var_params",
 ]

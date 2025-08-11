@@ -14,7 +14,7 @@ V_1DCAT_METADATA = Metadata(
 
 
 V1dcatParameters = typing.TypedDict('V1dcatParameters', {
-    "__STYXTYPE__": typing.Literal["1dcat"],
+    "@type": typing.Literal["afni.1dcat"],
     "input_files": list[InputPathType],
     "tsv_output": bool,
     "csv_output": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dcat": v_1dcat_cargs,
+        "afni.1dcat": v_1dcat_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dcat": v_1dcat_outputs,
+        "afni.1dcat": v_1dcat_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_1dcat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dcat",
+        "@type": "afni.1dcat",
         "input_files": input_files,
         "tsv_output": tsv_output,
         "csv_output": csv_output,
@@ -262,5 +262,8 @@ __all__ = [
     "V1dcatParameters",
     "V_1DCAT_METADATA",
     "v_1dcat",
+    "v_1dcat_cargs",
+    "v_1dcat_execute",
+    "v_1dcat_outputs",
     "v_1dcat_params",
 ]

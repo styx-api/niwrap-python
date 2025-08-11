@@ -14,7 +14,7 @@ V_3D_TSTAT_METADATA = Metadata(
 
 
 V3dTstatParameters = typing.TypedDict('V3dTstatParameters', {
-    "__STYXTYPE__": typing.Literal["3dTstat"],
+    "@type": typing.Literal["afni.3dTstat"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],
@@ -91,7 +91,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTstat": v_3d_tstat_cargs,
+        "afni.3dTstat": v_3d_tstat_cargs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTstat": v_3d_tstat_outputs,
+        "afni.3dTstat": v_3d_tstat_outputs,
     }.get(t)
 
 
@@ -270,7 +270,7 @@ def v_3d_tstat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTstat",
+        "@type": "afni.3dTstat",
         "in_file": in_file,
         "sum": sum_,
         "abssum": abssum,
@@ -777,5 +777,8 @@ __all__ = [
     "V3dTstatParameters",
     "V_3D_TSTAT_METADATA",
     "v_3d_tstat",
+    "v_3d_tstat_cargs",
+    "v_3d_tstat_execute",
+    "v_3d_tstat_outputs",
     "v_3d_tstat_params",
 ]

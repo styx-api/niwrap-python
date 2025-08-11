@@ -14,7 +14,7 @@ V__TO_RAI_METADATA = Metadata(
 
 
 VToRaiParameters = typing.TypedDict('VToRaiParameters', {
-    "__STYXTYPE__": typing.Literal["@ToRAI"],
+    "@type": typing.Literal["afni.@ToRAI"],
     "coordinates": list[float],
     "orientation": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ToRAI": v__to_rai_cargs,
+        "afni.@ToRAI": v__to_rai_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__to_rai_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ToRAI",
+        "@type": "afni.@ToRAI",
         "coordinates": coordinates,
         "orientation": orientation,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "VToRaiParameters",
     "V__TO_RAI_METADATA",
     "v__to_rai",
+    "v__to_rai_cargs",
+    "v__to_rai_execute",
+    "v__to_rai_outputs",
     "v__to_rai_params",
 ]

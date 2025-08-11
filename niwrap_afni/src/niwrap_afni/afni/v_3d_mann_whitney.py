@@ -14,7 +14,7 @@ V_3D_MANN_WHITNEY_METADATA = Metadata(
 
 
 V3dMannWhitneyParameters = typing.TypedDict('V3dMannWhitneyParameters', {
-    "__STYXTYPE__": typing.Literal["3dMannWhitney"],
+    "@type": typing.Literal["afni.3dMannWhitney"],
     "dset1_x": list[str],
     "dset2_y": list[str],
     "output_prefix": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMannWhitney": v_3d_mann_whitney_cargs,
+        "afni.3dMannWhitney": v_3d_mann_whitney_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMannWhitney": v_3d_mann_whitney_outputs,
+        "afni.3dMannWhitney": v_3d_mann_whitney_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def v_3d_mann_whitney_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMannWhitney",
+        "@type": "afni.3dMannWhitney",
         "dset1_x": dset1_x,
         "dset2_y": dset2_y,
         "output_prefix": output_prefix,
@@ -230,5 +230,8 @@ __all__ = [
     "V3dMannWhitneyParameters",
     "V_3D_MANN_WHITNEY_METADATA",
     "v_3d_mann_whitney",
+    "v_3d_mann_whitney_cargs",
+    "v_3d_mann_whitney_execute",
+    "v_3d_mann_whitney_outputs",
     "v_3d_mann_whitney_params",
 ]

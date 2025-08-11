@@ -14,7 +14,7 @@ FSL_ANAT_METADATA = Metadata(
 
 
 FslAnatParameters = typing.TypedDict('FslAnatParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_anat"],
+    "@type": typing.Literal["fsl.fsl_anat"],
     "structural_image": typing.NotRequired[InputPathType | None],
     "existing_anat_dir": typing.NotRequired[str | None],
     "output_dir": typing.NotRequired[str | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_anat": fsl_anat_cargs,
+        "fsl.fsl_anat": fsl_anat_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_anat": fsl_anat_outputs,
+        "fsl.fsl_anat": fsl_anat_outputs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def fsl_anat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_anat",
+        "@type": "fsl.fsl_anat",
         "clobber_flag": clobber_flag,
         "strongbias_flag": strongbias_flag,
         "weakbias_flag": weakbias_flag,
@@ -374,5 +374,8 @@ __all__ = [
     "FslAnatOutputs",
     "FslAnatParameters",
     "fsl_anat",
+    "fsl_anat_cargs",
+    "fsl_anat_execute",
+    "fsl_anat_outputs",
     "fsl_anat_params",
 ]

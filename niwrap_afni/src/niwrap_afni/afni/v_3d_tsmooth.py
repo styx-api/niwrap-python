@@ -14,7 +14,7 @@ V_3D_TSMOOTH_METADATA = Metadata(
 
 
 V3dTsmoothParameters = typing.TypedDict('V3dTsmoothParameters', {
-    "__STYXTYPE__": typing.Literal["3dTsmooth"],
+    "@type": typing.Literal["afni.3dTsmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "datum_type": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTsmooth": v_3d_tsmooth_cargs,
+        "afni.3dTsmooth": v_3d_tsmooth_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTsmooth": v_3d_tsmooth_outputs,
+        "afni.3dTsmooth": v_3d_tsmooth_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def v_3d_tsmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTsmooth",
+        "@type": "afni.3dTsmooth",
         "input_dataset": input_dataset,
         "lin_filter": lin_filter,
         "med_filter": med_filter,
@@ -327,5 +327,8 @@ __all__ = [
     "V3dTsmoothParameters",
     "V_3D_TSMOOTH_METADATA",
     "v_3d_tsmooth",
+    "v_3d_tsmooth_cargs",
+    "v_3d_tsmooth_execute",
+    "v_3d_tsmooth_outputs",
     "v_3d_tsmooth_params",
 ]

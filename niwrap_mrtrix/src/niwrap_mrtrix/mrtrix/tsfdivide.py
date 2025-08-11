@@ -14,14 +14,14 @@ TSFDIVIDE_METADATA = Metadata(
 
 
 TsfdivideConfigParameters = typing.TypedDict('TsfdivideConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tsfdivide.config"],
     "key": str,
     "value": str,
 })
 
 
 TsfdivideParameters = typing.TypedDict('TsfdivideParameters', {
-    "__STYXTYPE__": typing.Literal["tsfdivide"],
+    "@type": typing.Literal["mrtrix.tsfdivide"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tsfdivide": tsfdivide_cargs,
-        "config": tsfdivide_config_cargs,
+        "mrtrix.tsfdivide": tsfdivide_cargs,
+        "mrtrix.tsfdivide.config": tsfdivide_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tsfdivide": tsfdivide_outputs,
+        "mrtrix.tsfdivide": tsfdivide_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def tsfdivide_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tsfdivide.config",
         "key": key,
         "value": value,
     }
@@ -156,7 +156,7 @@ def tsfdivide_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tsfdivide",
+        "@type": "mrtrix.tsfdivide",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -203,7 +203,7 @@ def tsfdivide_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -335,6 +335,10 @@ __all__ = [
     "TsfdivideOutputs",
     "TsfdivideParameters",
     "tsfdivide",
+    "tsfdivide_cargs",
+    "tsfdivide_config_cargs",
     "tsfdivide_config_params",
+    "tsfdivide_execute",
+    "tsfdivide_outputs",
     "tsfdivide_params",
 ]

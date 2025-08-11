@@ -14,7 +14,7 @@ V_3DANISOSMOOTH_METADATA = Metadata(
 
 
 V3danisosmoothParameters = typing.TypedDict('V3danisosmoothParameters', {
-    "__STYXTYPE__": typing.Literal["3danisosmooth"],
+    "@type": typing.Literal["afni.3danisosmooth"],
     "input_dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "iterations": typing.NotRequired[float | None],
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3danisosmooth": v_3danisosmooth_cargs,
+        "afni.3danisosmooth": v_3danisosmooth_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3danisosmooth": v_3danisosmooth_outputs,
+        "afni.3danisosmooth": v_3danisosmooth_outputs,
     }.get(t)
 
 
@@ -158,7 +158,7 @@ def v_3danisosmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3danisosmooth",
+        "@type": "afni.3danisosmooth",
         "input_dataset": input_dataset,
         "2d_flag": v_2d_flag,
         "3d_flag": v_3d_flag,
@@ -432,5 +432,8 @@ __all__ = [
     "V3danisosmoothParameters",
     "V_3DANISOSMOOTH_METADATA",
     "v_3danisosmooth",
+    "v_3danisosmooth_cargs",
+    "v_3danisosmooth_execute",
+    "v_3danisosmooth_outputs",
     "v_3danisosmooth_params",
 ]

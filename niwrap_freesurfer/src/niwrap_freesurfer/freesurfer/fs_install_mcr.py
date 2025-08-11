@@ -14,7 +14,7 @@ FS_INSTALL_MCR_METADATA = Metadata(
 
 
 FsInstallMcrParameters = typing.TypedDict('FsInstallMcrParameters', {
-    "__STYXTYPE__": typing.Literal["fs_install_mcr"],
+    "@type": typing.Literal["freesurfer.fs_install_mcr"],
     "mcr_version": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_install_mcr": fs_install_mcr_cargs,
+        "freesurfer.fs_install_mcr": fs_install_mcr_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def fs_install_mcr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_install_mcr",
+        "@type": "freesurfer.fs_install_mcr",
         "mcr_version": mcr_version,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "FsInstallMcrOutputs",
     "FsInstallMcrParameters",
     "fs_install_mcr",
+    "fs_install_mcr_cargs",
+    "fs_install_mcr_execute",
+    "fs_install_mcr_outputs",
     "fs_install_mcr_params",
 ]

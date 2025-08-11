@@ -14,7 +14,7 @@ FSLADD_METADATA = Metadata(
 
 
 FsladdParameters = typing.TypedDict('FsladdParameters', {
-    "__STYXTYPE__": typing.Literal["fsladd"],
+    "@type": typing.Literal["fsl.fsladd"],
     "output_file": str,
     "mean_flag": bool,
     "scale_flag": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsladd": fsladd_cargs,
+        "fsl.fsladd": fsladd_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsladd": fsladd_outputs,
+        "fsl.fsladd": fsladd_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def fsladd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsladd",
+        "@type": "fsl.fsladd",
         "output_file": output_file,
         "mean_flag": mean_flag,
         "scale_flag": scale_flag,
@@ -198,5 +198,8 @@ __all__ = [
     "FsladdOutputs",
     "FsladdParameters",
     "fsladd",
+    "fsladd_cargs",
+    "fsladd_execute",
+    "fsladd_outputs",
     "fsladd_params",
 ]

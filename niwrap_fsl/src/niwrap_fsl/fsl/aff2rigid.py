@@ -14,7 +14,7 @@ AFF2RIGID_METADATA = Metadata(
 
 
 Aff2rigidParameters = typing.TypedDict('Aff2rigidParameters', {
-    "__STYXTYPE__": typing.Literal["aff2rigid"],
+    "@type": typing.Literal["fsl.aff2rigid"],
     "input_transform": InputPathType,
     "output_transform": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "aff2rigid": aff2rigid_cargs,
+        "fsl.aff2rigid": aff2rigid_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def aff2rigid_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "aff2rigid",
+        "@type": "fsl.aff2rigid",
         "input_transform": input_transform,
         "output_transform": output_transform,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "Aff2rigidOutputs",
     "Aff2rigidParameters",
     "aff2rigid",
+    "aff2rigid_cargs",
+    "aff2rigid_execute",
+    "aff2rigid_outputs",
     "aff2rigid_params",
 ]

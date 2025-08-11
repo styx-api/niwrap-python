@@ -14,7 +14,7 @@ MRI_COMPUTE_CHANGE_MAP_METADATA = Metadata(
 
 
 MriComputeChangeMapParameters = typing.TypedDict('MriComputeChangeMapParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compute_change_map"],
+    "@type": typing.Literal["freesurfer.mri_compute_change_map"],
     "mean_filter": bool,
     "gaussian_sigma": typing.NotRequired[float | None],
     "volume1": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compute_change_map": mri_compute_change_map_cargs,
+        "freesurfer.mri_compute_change_map": mri_compute_change_map_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_compute_change_map": mri_compute_change_map_outputs,
+        "freesurfer.mri_compute_change_map": mri_compute_change_map_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mri_compute_change_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compute_change_map",
+        "@type": "freesurfer.mri_compute_change_map",
         "mean_filter": mean_filter,
         "volume1": volume1,
         "volume2": volume2,
@@ -224,5 +224,8 @@ __all__ = [
     "MriComputeChangeMapOutputs",
     "MriComputeChangeMapParameters",
     "mri_compute_change_map",
+    "mri_compute_change_map_cargs",
+    "mri_compute_change_map_execute",
+    "mri_compute_change_map_outputs",
     "mri_compute_change_map_params",
 ]

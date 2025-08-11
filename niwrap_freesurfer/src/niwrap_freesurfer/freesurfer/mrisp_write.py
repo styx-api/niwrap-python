@@ -14,7 +14,7 @@ MRISP_WRITE_METADATA = Metadata(
 
 
 MrispWriteParameters = typing.TypedDict('MrispWriteParameters', {
-    "__STYXTYPE__": typing.Literal["mrisp_write"],
+    "@type": typing.Literal["freesurfer.mrisp_write"],
     "input_surface": InputPathType,
     "overlay_filename": InputPathType,
     "output_name": str,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrisp_write": mrisp_write_cargs,
+        "freesurfer.mrisp_write": mrisp_write_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrisp_write": mrisp_write_outputs,
+        "freesurfer.mrisp_write": mrisp_write_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def mrisp_write_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrisp_write",
+        "@type": "freesurfer.mrisp_write",
         "input_surface": input_surface,
         "overlay_filename": overlay_filename,
         "output_name": output_name,
@@ -289,5 +289,8 @@ __all__ = [
     "MrispWriteOutputs",
     "MrispWriteParameters",
     "mrisp_write",
+    "mrisp_write_cargs",
+    "mrisp_write_execute",
+    "mrisp_write_outputs",
     "mrisp_write_params",
 ]

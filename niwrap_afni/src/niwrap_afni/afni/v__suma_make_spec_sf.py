@@ -14,7 +14,7 @@ V__SUMA_MAKE_SPEC_SF_METADATA = Metadata(
 
 
 VSumaMakeSpecSfParameters = typing.TypedDict('VSumaMakeSpecSfParameters', {
-    "__STYXTYPE__": typing.Literal["@SUMA_Make_Spec_SF"],
+    "@type": typing.Literal["afni.@SUMA_Make_Spec_SF"],
     "debug_level": typing.NotRequired[int | None],
     "surface_path": typing.NotRequired[str | None],
     "subject_id": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SUMA_Make_Spec_SF": v__suma_make_spec_sf_cargs,
+        "afni.@SUMA_Make_Spec_SF": v__suma_make_spec_sf_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SUMA_Make_Spec_SF": v__suma_make_spec_sf_outputs,
+        "afni.@SUMA_Make_Spec_SF": v__suma_make_spec_sf_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def v__suma_make_spec_sf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SUMA_Make_Spec_SF",
+        "@type": "afni.@SUMA_Make_Spec_SF",
         "subject_id": subject_id,
     }
     if debug_level is not None:
@@ -203,5 +203,8 @@ __all__ = [
     "VSumaMakeSpecSfParameters",
     "V__SUMA_MAKE_SPEC_SF_METADATA",
     "v__suma_make_spec_sf",
+    "v__suma_make_spec_sf_cargs",
+    "v__suma_make_spec_sf_execute",
+    "v__suma_make_spec_sf_outputs",
     "v__suma_make_spec_sf_params",
 ]

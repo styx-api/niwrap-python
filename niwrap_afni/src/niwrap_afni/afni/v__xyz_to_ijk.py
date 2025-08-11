@@ -14,7 +14,7 @@ V__XYZ_TO_IJK_METADATA = Metadata(
 
 
 VXyzToIjkParameters = typing.TypedDict('VXyzToIjkParameters', {
-    "__STYXTYPE__": typing.Literal["@xyz_to_ijk"],
+    "@type": typing.Literal["afni.@xyz_to_ijk"],
     "inset": InputPathType,
     "x_coord": float,
     "y_coord": float,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@xyz_to_ijk": v__xyz_to_ijk_cargs,
+        "afni.@xyz_to_ijk": v__xyz_to_ijk_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@xyz_to_ijk": v__xyz_to_ijk_outputs,
+        "afni.@xyz_to_ijk": v__xyz_to_ijk_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def v__xyz_to_ijk_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@xyz_to_ijk",
+        "@type": "afni.@xyz_to_ijk",
         "inset": inset,
         "x_coord": x_coord,
         "y_coord": y_coord,
@@ -217,5 +217,8 @@ __all__ = [
     "VXyzToIjkParameters",
     "V__XYZ_TO_IJK_METADATA",
     "v__xyz_to_ijk",
+    "v__xyz_to_ijk_cargs",
+    "v__xyz_to_ijk_execute",
+    "v__xyz_to_ijk_outputs",
     "v__xyz_to_ijk_params",
 ]

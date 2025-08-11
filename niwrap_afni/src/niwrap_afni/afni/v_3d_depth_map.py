@@ -14,7 +14,7 @@ V_3D_DEPTH_MAP_METADATA = Metadata(
 
 
 V3dDepthMapParameters = typing.TypedDict('V3dDepthMapParameters', {
-    "__STYXTYPE__": typing.Literal["3dDepthMap"],
+    "@type": typing.Literal["afni.3dDepthMap"],
     "input_dataset": InputPathType,
     "output_prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDepthMap": v_3d_depth_map_cargs,
+        "afni.3dDepthMap": v_3d_depth_map_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDepthMap": v_3d_depth_map_outputs,
+        "afni.3dDepthMap": v_3d_depth_map_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def v_3d_depth_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDepthMap",
+        "@type": "afni.3dDepthMap",
         "input_dataset": input_dataset,
         "output_prefix": output_prefix,
         "dist_squared": dist_squared,
@@ -313,5 +313,8 @@ __all__ = [
     "V3dDepthMapParameters",
     "V_3D_DEPTH_MAP_METADATA",
     "v_3d_depth_map",
+    "v_3d_depth_map_cargs",
+    "v_3d_depth_map_execute",
+    "v_3d_depth_map_outputs",
     "v_3d_depth_map_params",
 ]

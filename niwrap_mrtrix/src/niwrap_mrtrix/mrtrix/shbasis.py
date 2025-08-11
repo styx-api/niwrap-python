@@ -14,14 +14,14 @@ SHBASIS_METADATA = Metadata(
 
 
 ShbasisConfigParameters = typing.TypedDict('ShbasisConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.shbasis.config"],
     "key": str,
     "value": str,
 })
 
 
 ShbasisParameters = typing.TypedDict('ShbasisParameters', {
-    "__STYXTYPE__": typing.Literal["shbasis"],
+    "@type": typing.Literal["mrtrix.shbasis"],
     "convert": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "shbasis": shbasis_cargs,
-        "config": shbasis_config_cargs,
+        "mrtrix.shbasis": shbasis_cargs,
+        "mrtrix.shbasis.config": shbasis_config_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def shbasis_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.shbasis.config",
         "key": key,
         "value": value,
     }
@@ -151,7 +151,7 @@ def shbasis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "shbasis",
+        "@type": "mrtrix.shbasis",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -203,7 +203,7 @@ def shbasis_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -368,6 +368,10 @@ __all__ = [
     "ShbasisOutputs",
     "ShbasisParameters",
     "shbasis",
+    "shbasis_cargs",
+    "shbasis_config_cargs",
     "shbasis_config_params",
+    "shbasis_execute",
+    "shbasis_outputs",
     "shbasis_params",
 ]

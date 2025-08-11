@@ -14,7 +14,7 @@ REMOVE_TALAIRACH_METADATA = Metadata(
 
 
 RemoveTalairachParameters = typing.TypedDict('RemoveTalairachParameters', {
-    "__STYXTYPE__": typing.Literal["remove_talairach"],
+    "@type": typing.Literal["freesurfer.remove_talairach"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "remove_talairach": remove_talairach_cargs,
+        "freesurfer.remove_talairach": remove_talairach_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "remove_talairach": remove_talairach_outputs,
+        "freesurfer.remove_talairach": remove_talairach_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def remove_talairach_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "remove_talairach",
+        "@type": "freesurfer.remove_talairach",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -184,5 +184,8 @@ __all__ = [
     "RemoveTalairachOutputs",
     "RemoveTalairachParameters",
     "remove_talairach",
+    "remove_talairach_cargs",
+    "remove_talairach_execute",
+    "remove_talairach_outputs",
     "remove_talairach_params",
 ]

@@ -14,7 +14,7 @@ MRIS_COMPUTE_LAYER_INTENSITIES_METADATA = Metadata(
 
 
 MrisComputeLayerIntensitiesParameters = typing.TypedDict('MrisComputeLayerIntensitiesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_compute_layer_intensities"],
+    "@type": typing.Literal["freesurfer.mris_compute_layer_intensities"],
     "input_intensity_volume": InputPathType,
     "layer_volume_fractions_file": InputPathType,
     "input_surface": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_compute_layer_intensities": mris_compute_layer_intensities_cargs,
+        "freesurfer.mris_compute_layer_intensities": mris_compute_layer_intensities_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_compute_layer_intensities": mris_compute_layer_intensities_outputs,
+        "freesurfer.mris_compute_layer_intensities": mris_compute_layer_intensities_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_compute_layer_intensities_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_compute_layer_intensities",
+        "@type": "freesurfer.mris_compute_layer_intensities",
         "input_intensity_volume": input_intensity_volume,
         "layer_volume_fractions_file": layer_volume_fractions_file,
         "input_surface": input_surface,
@@ -198,5 +198,8 @@ __all__ = [
     "MrisComputeLayerIntensitiesOutputs",
     "MrisComputeLayerIntensitiesParameters",
     "mris_compute_layer_intensities",
+    "mris_compute_layer_intensities_cargs",
+    "mris_compute_layer_intensities_execute",
+    "mris_compute_layer_intensities_outputs",
     "mris_compute_layer_intensities_params",
 ]

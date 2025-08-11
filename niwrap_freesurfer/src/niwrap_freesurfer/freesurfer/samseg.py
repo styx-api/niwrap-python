@@ -14,7 +14,7 @@ SAMSEG_METADATA = Metadata(
 
 
 SamsegParameters = typing.TypedDict('SamsegParameters', {
-    "__STYXTYPE__": typing.Literal["samseg"],
+    "@type": typing.Literal["freesurfer.samseg"],
     "input_files": list[InputPathType],
     "t1w_files": typing.NotRequired[list[InputPathType] | None],
     "t2w_files": typing.NotRequired[list[InputPathType] | None],
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "samseg": samseg_cargs,
+        "freesurfer.samseg": samseg_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "samseg": samseg_outputs,
+        "freesurfer.samseg": samseg_outputs,
     }.get(t)
 
 
@@ -222,7 +222,7 @@ def samseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "samseg",
+        "@type": "freesurfer.samseg",
         "input_files": input_files,
         "output_directory": output_directory,
         "save_history": save_history,
@@ -691,5 +691,8 @@ __all__ = [
     "SamsegOutputs",
     "SamsegParameters",
     "samseg",
+    "samseg_cargs",
+    "samseg_execute",
+    "samseg_outputs",
     "samseg_params",
 ]

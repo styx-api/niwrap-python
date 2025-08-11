@@ -14,7 +14,7 @@ UNPACKSDCMDIR_METADATA = Metadata(
 
 
 UnpacksdcmdirParameters = typing.TypedDict('UnpacksdcmdirParameters', {
-    "__STYXTYPE__": typing.Literal["unpacksdcmdir"],
+    "@type": typing.Literal["freesurfer.unpacksdcmdir"],
     "input_directory": str,
     "output_directory": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "unpacksdcmdir": unpacksdcmdir_cargs,
+        "freesurfer.unpacksdcmdir": unpacksdcmdir_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "unpacksdcmdir": unpacksdcmdir_outputs,
+        "freesurfer.unpacksdcmdir": unpacksdcmdir_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def unpacksdcmdir_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "unpacksdcmdir",
+        "@type": "freesurfer.unpacksdcmdir",
         "input_directory": input_directory,
         "output_directory": output_directory,
     }
@@ -186,5 +186,8 @@ __all__ = [
     "UnpacksdcmdirOutputs",
     "UnpacksdcmdirParameters",
     "unpacksdcmdir",
+    "unpacksdcmdir_cargs",
+    "unpacksdcmdir_execute",
+    "unpacksdcmdir_outputs",
     "unpacksdcmdir_params",
 ]

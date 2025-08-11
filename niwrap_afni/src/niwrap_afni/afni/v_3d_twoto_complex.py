@@ -14,7 +14,7 @@ V_3D_TWOTO_COMPLEX_METADATA = Metadata(
 
 
 V3dTwotoComplexParameters = typing.TypedDict('V3dTwotoComplexParameters', {
-    "__STYXTYPE__": typing.Literal["3dTwotoComplex"],
+    "@type": typing.Literal["afni.3dTwotoComplex"],
     "dataset1": InputPathType,
     "dataset2": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTwotoComplex": v_3d_twoto_complex_cargs,
+        "afni.3dTwotoComplex": v_3d_twoto_complex_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTwotoComplex": v_3d_twoto_complex_outputs,
+        "afni.3dTwotoComplex": v_3d_twoto_complex_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def v_3d_twoto_complex_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTwotoComplex",
+        "@type": "afni.3dTwotoComplex",
         "dataset1": dataset1,
         "ri": ri,
         "mp": mp,
@@ -237,5 +237,8 @@ __all__ = [
     "V3dTwotoComplexParameters",
     "V_3D_TWOTO_COMPLEX_METADATA",
     "v_3d_twoto_complex",
+    "v_3d_twoto_complex_cargs",
+    "v_3d_twoto_complex_execute",
+    "v_3d_twoto_complex_outputs",
     "v_3d_twoto_complex_params",
 ]

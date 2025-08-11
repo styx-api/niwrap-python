@@ -14,7 +14,7 @@ MRI_PROBEDICOM_METADATA = Metadata(
 
 
 MriProbedicomParameters = typing.TypedDict('MriProbedicomParameters', {
-    "__STYXTYPE__": typing.Literal["mri_probedicom"],
+    "@type": typing.Literal["freesurfer.mri_probedicom"],
     "dicom_file": InputPathType,
     "option1": typing.NotRequired[str | None],
     "option2": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_probedicom": mri_probedicom_cargs,
+        "freesurfer.mri_probedicom": mri_probedicom_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_probedicom": mri_probedicom_outputs,
+        "freesurfer.mri_probedicom": mri_probedicom_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_probedicom_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_probedicom",
+        "@type": "freesurfer.mri_probedicom",
         "dicom_file": dicom_file,
     }
     if option1 is not None:
@@ -198,5 +198,8 @@ __all__ = [
     "MriProbedicomOutputs",
     "MriProbedicomParameters",
     "mri_probedicom",
+    "mri_probedicom_cargs",
+    "mri_probedicom_execute",
+    "mri_probedicom_outputs",
     "mri_probedicom_params",
 ]

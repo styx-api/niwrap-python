@@ -14,7 +14,7 @@ FSL_GEN_3_D_METADATA = Metadata(
 
 
 FslGen3DParameters = typing.TypedDict('FslGen3DParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_gen_3D"],
+    "@type": typing.Literal["fsl.fsl_gen_3D"],
     "infile": InputPathType,
     "outfile": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_gen_3D": fsl_gen_3_d_cargs,
+        "fsl.fsl_gen_3D": fsl_gen_3_d_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_gen_3D": fsl_gen_3_d_outputs,
+        "fsl.fsl_gen_3D": fsl_gen_3_d_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fsl_gen_3_d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_gen_3D",
+        "@type": "fsl.fsl_gen_3D",
         "infile": infile,
         "outfile": outfile,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "FslGen3DOutputs",
     "FslGen3DParameters",
     "fsl_gen_3_d",
+    "fsl_gen_3_d_cargs",
+    "fsl_gen_3_d_execute",
+    "fsl_gen_3_d_outputs",
     "fsl_gen_3_d_params",
 ]

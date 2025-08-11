@@ -14,7 +14,7 @@ UNPACKMINCDIR_METADATA = Metadata(
 
 
 UnpackmincdirParameters = typing.TypedDict('UnpackmincdirParameters', {
-    "__STYXTYPE__": typing.Literal["unpackmincdir"],
+    "@type": typing.Literal["freesurfer.unpackmincdir"],
     "source_directory": str,
     "target_directory": str,
     "scan_sequence_info": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "unpackmincdir": unpackmincdir_cargs,
+        "freesurfer.unpackmincdir": unpackmincdir_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def unpackmincdir_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "unpackmincdir",
+        "@type": "freesurfer.unpackmincdir",
         "source_directory": source_directory,
         "target_directory": target_directory,
         "minc_only": minc_only,
@@ -256,5 +256,8 @@ __all__ = [
     "UnpackmincdirOutputs",
     "UnpackmincdirParameters",
     "unpackmincdir",
+    "unpackmincdir_cargs",
+    "unpackmincdir_execute",
+    "unpackmincdir_outputs",
     "unpackmincdir_params",
 ]

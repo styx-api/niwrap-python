@@ -14,7 +14,7 @@ MRI_WBC_METADATA = Metadata(
 
 
 MriWbcParameters = typing.TypedDict('MriWbcParameters', {
-    "__STYXTYPE__": typing.Literal["mri_wbc"],
+    "@type": typing.Literal["freesurfer.mri_wbc"],
     "functional_volume": InputPathType,
     "volume_mask": typing.NotRequired[InputPathType | None],
     "lh_functional_surface": InputPathType,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_wbc": mri_wbc_cargs,
+        "freesurfer.mri_wbc": mri_wbc_cargs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def mri_wbc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_wbc",
+        "@type": "freesurfer.mri_wbc",
         "functional_volume": functional_volume,
         "lh_functional_surface": lh_functional_surface,
         "lh_surface": lh_surface,
@@ -363,5 +363,8 @@ __all__ = [
     "MriWbcOutputs",
     "MriWbcParameters",
     "mri_wbc",
+    "mri_wbc_cargs",
+    "mri_wbc_execute",
+    "mri_wbc_outputs",
     "mri_wbc_params",
 ]

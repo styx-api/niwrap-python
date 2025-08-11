@@ -14,7 +14,7 @@ GET_AFNI_MODEL_PRF_METADATA = Metadata(
 
 
 GetAfniModelPrfParameters = typing.TypedDict('GetAfniModelPrfParameters', {
-    "__STYXTYPE__": typing.Literal["get_afni_model_PRF"],
+    "@type": typing.Literal["afni.get_afni_model_PRF"],
     "amplitude": float,
     "x_coord": float,
     "y_coord": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "get_afni_model_PRF": get_afni_model_prf_cargs,
+        "afni.get_afni_model_PRF": get_afni_model_prf_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def get_afni_model_prf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "get_afni_model_PRF",
+        "@type": "afni.get_afni_model_PRF",
         "amplitude": amplitude,
         "x_coord": x_coord,
         "y_coord": y_coord,
@@ -192,5 +192,8 @@ __all__ = [
     "GetAfniModelPrfOutputs",
     "GetAfniModelPrfParameters",
     "get_afni_model_prf",
+    "get_afni_model_prf_cargs",
+    "get_afni_model_prf_execute",
+    "get_afni_model_prf_outputs",
     "get_afni_model_prf_params",
 ]

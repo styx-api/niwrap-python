@@ -14,7 +14,7 @@ TEST_TUTORIALS_SH_METADATA = Metadata(
 
 
 TestTutorialsShParameters = typing.TypedDict('TestTutorialsShParameters', {
-    "__STYXTYPE__": typing.Literal["test_tutorials.sh"],
+    "@type": typing.Literal["freesurfer.test_tutorials.sh"],
     "all_tutorials": bool,
     "quick_test": bool,
     "auto_quit_freeview": bool,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "test_tutorials.sh": test_tutorials_sh_cargs,
+        "freesurfer.test_tutorials.sh": test_tutorials_sh_cargs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def test_tutorials_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "test_tutorials.sh",
+        "@type": "freesurfer.test_tutorials.sh",
         "all_tutorials": all_tutorials,
         "quick_test": quick_test,
         "auto_quit_freeview": auto_quit_freeview,
@@ -310,5 +310,8 @@ __all__ = [
     "TestTutorialsShOutputs",
     "TestTutorialsShParameters",
     "test_tutorials_sh",
+    "test_tutorials_sh_cargs",
+    "test_tutorials_sh_execute",
+    "test_tutorials_sh_outputs",
     "test_tutorials_sh_params",
 ]

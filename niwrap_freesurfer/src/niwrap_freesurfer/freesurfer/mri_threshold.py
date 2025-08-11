@@ -14,7 +14,7 @@ MRI_THRESHOLD_METADATA = Metadata(
 
 
 MriThresholdParameters = typing.TypedDict('MriThresholdParameters', {
-    "__STYXTYPE__": typing.Literal["mri_threshold"],
+    "@type": typing.Literal["freesurfer.mri_threshold"],
     "input_vol": InputPathType,
     "threshold": float,
     "output_vol": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_threshold": mri_threshold_cargs,
+        "freesurfer.mri_threshold": mri_threshold_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_threshold": mri_threshold_outputs,
+        "freesurfer.mri_threshold": mri_threshold_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def mri_threshold_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_threshold",
+        "@type": "freesurfer.mri_threshold",
         "input_vol": input_vol,
         "threshold": threshold,
         "output_vol": output_vol,
@@ -225,5 +225,8 @@ __all__ = [
     "MriThresholdOutputs",
     "MriThresholdParameters",
     "mri_threshold",
+    "mri_threshold_cargs",
+    "mri_threshold_execute",
+    "mri_threshold_outputs",
     "mri_threshold_params",
 ]

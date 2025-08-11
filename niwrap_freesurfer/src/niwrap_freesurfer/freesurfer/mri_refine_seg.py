@@ -14,7 +14,7 @@ MRI_REFINE_SEG_METADATA = Metadata(
 
 
 MriRefineSegParameters = typing.TypedDict('MriRefineSegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_refine_seg"],
+    "@type": typing.Literal["freesurfer.mri_refine_seg"],
     "input_segmentation": InputPathType,
     "output_segmentation": str,
     "debug": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_refine_seg": mri_refine_seg_cargs,
+        "freesurfer.mri_refine_seg": mri_refine_seg_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_refine_seg": mri_refine_seg_outputs,
+        "freesurfer.mri_refine_seg": mri_refine_seg_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mri_refine_seg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_refine_seg",
+        "@type": "freesurfer.mri_refine_seg",
         "input_segmentation": input_segmentation,
         "output_segmentation": output_segmentation,
         "debug": debug,
@@ -197,5 +197,8 @@ __all__ = [
     "MriRefineSegOutputs",
     "MriRefineSegParameters",
     "mri_refine_seg",
+    "mri_refine_seg_cargs",
+    "mri_refine_seg_execute",
+    "mri_refine_seg_outputs",
     "mri_refine_seg_params",
 ]

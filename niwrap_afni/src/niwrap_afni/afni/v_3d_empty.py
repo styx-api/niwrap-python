@@ -14,7 +14,7 @@ V_3D_EMPTY_METADATA = Metadata(
 
 
 V3dEmptyParameters = typing.TypedDict('V3dEmptyParameters', {
-    "__STYXTYPE__": typing.Literal["3dEmpty"],
+    "@type": typing.Literal["afni.3dEmpty"],
     "prefix": typing.NotRequired[str | None],
     "geometry": typing.NotRequired[str | None],
     "nxyz": typing.NotRequired[list[float] | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dEmpty": v_3d_empty_cargs,
+        "afni.3dEmpty": v_3d_empty_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dEmpty": v_3d_empty_outputs,
+        "afni.3dEmpty": v_3d_empty_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def v_3d_empty_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dEmpty",
+        "@type": "afni.3dEmpty",
     }
     if prefix is not None:
         params["prefix"] = prefix
@@ -220,5 +220,8 @@ __all__ = [
     "V3dEmptyParameters",
     "V_3D_EMPTY_METADATA",
     "v_3d_empty",
+    "v_3d_empty_cargs",
+    "v_3d_empty_execute",
+    "v_3d_empty_outputs",
     "v_3d_empty_params",
 ]

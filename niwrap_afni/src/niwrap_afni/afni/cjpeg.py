@@ -14,7 +14,7 @@ CJPEG_METADATA = Metadata(
 
 
 CjpegParameters = typing.TypedDict('CjpegParameters', {
-    "__STYXTYPE__": typing.Literal["cjpeg"],
+    "@type": typing.Literal["afni.cjpeg"],
     "quality": typing.NotRequired[float | None],
     "grayscale": bool,
     "optimize": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cjpeg": cjpeg_cargs,
+        "afni.cjpeg": cjpeg_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cjpeg": cjpeg_outputs,
+        "afni.cjpeg": cjpeg_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def cjpeg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cjpeg",
+        "@type": "afni.cjpeg",
         "grayscale": grayscale,
         "optimize": optimize,
         "baseline": baseline,
@@ -229,5 +229,8 @@ __all__ = [
     "CjpegOutputs",
     "CjpegParameters",
     "cjpeg",
+    "cjpeg_cargs",
+    "cjpeg_execute",
+    "cjpeg_outputs",
     "cjpeg_params",
 ]

@@ -14,7 +14,7 @@ V__BUILD_AFNI_XLIB_METADATA = Metadata(
 
 
 VBuildAfniXlibParameters = typing.TypedDict('VBuildAfniXlibParameters', {
-    "__STYXTYPE__": typing.Literal["@build_afni_Xlib"],
+    "@type": typing.Literal["afni.@build_afni_Xlib"],
     "afniX": bool,
     "localinstall": bool,
     "debug_symbols": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@build_afni_Xlib": v__build_afni_xlib_cargs,
+        "afni.@build_afni_Xlib": v__build_afni_xlib_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def v__build_afni_xlib_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@build_afni_Xlib",
+        "@type": "afni.@build_afni_Xlib",
         "afniX": afni_x,
         "localinstall": localinstall,
         "debug_symbols": debug_symbols,
@@ -217,5 +217,8 @@ __all__ = [
     "VBuildAfniXlibParameters",
     "V__BUILD_AFNI_XLIB_METADATA",
     "v__build_afni_xlib",
+    "v__build_afni_xlib_cargs",
+    "v__build_afni_xlib_execute",
+    "v__build_afni_xlib_outputs",
     "v__build_afni_xlib_params",
 ]

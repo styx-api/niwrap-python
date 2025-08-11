@@ -14,7 +14,7 @@ TABLE2MAP_METADATA = Metadata(
 
 
 Table2mapParameters = typing.TypedDict('Table2mapParameters', {
-    "__STYXTYPE__": typing.Literal["table2map"],
+    "@type": typing.Literal["freesurfer.table2map"],
     "input_table": InputPathType,
     "output_map": str,
     "segmentation": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "table2map": table2map_cargs,
+        "freesurfer.table2map": table2map_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def table2map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "table2map",
+        "@type": "freesurfer.table2map",
         "input_table": input_table,
         "output_map": output_map,
     }
@@ -236,5 +236,8 @@ __all__ = [
     "Table2mapOutputs",
     "Table2mapParameters",
     "table2map",
+    "table2map_cargs",
+    "table2map_execute",
+    "table2map_outputs",
     "table2map_params",
 ]

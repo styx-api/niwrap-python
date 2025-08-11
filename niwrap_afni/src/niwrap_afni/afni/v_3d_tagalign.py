@@ -14,7 +14,7 @@ V_3D_TAGALIGN_METADATA = Metadata(
 
 
 V3dTagalignParameters = typing.TypedDict('V3dTagalignParameters', {
-    "__STYXTYPE__": typing.Literal["3dTagalign"],
+    "@type": typing.Literal["afni.3dTagalign"],
     "input_dataset": InputPathType,
     "master_dataset": InputPathType,
     "tagset_file": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTagalign": v_3d_tagalign_cargs,
+        "afni.3dTagalign": v_3d_tagalign_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTagalign": v_3d_tagalign_outputs,
+        "afni.3dTagalign": v_3d_tagalign_outputs,
     }.get(t)
 
 
@@ -128,7 +128,7 @@ def v_3d_tagalign_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTagalign",
+        "@type": "afni.3dTagalign",
         "input_dataset": input_dataset,
         "master_dataset": master_dataset,
         "no_keep_tags": no_keep_tags,
@@ -338,5 +338,8 @@ __all__ = [
     "V3dTagalignParameters",
     "V_3D_TAGALIGN_METADATA",
     "v_3d_tagalign",
+    "v_3d_tagalign_cargs",
+    "v_3d_tagalign_execute",
+    "v_3d_tagalign_outputs",
     "v_3d_tagalign_params",
 ]

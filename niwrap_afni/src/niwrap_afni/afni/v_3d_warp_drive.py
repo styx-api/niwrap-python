@@ -14,7 +14,7 @@ V_3D_WARP_DRIVE_METADATA = Metadata(
 
 
 V3dWarpDriveParameters = typing.TypedDict('V3dWarpDriveParameters', {
-    "__STYXTYPE__": typing.Literal["3dWarpDrive"],
+    "@type": typing.Literal["afni.3dWarpDrive"],
     "dataset": InputPathType,
     "base_dataset": InputPathType,
     "prefix": str,
@@ -66,7 +66,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dWarpDrive": v_3d_warp_drive_cargs,
+        "afni.3dWarpDrive": v_3d_warp_drive_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dWarpDrive": v_3d_warp_drive_outputs,
+        "afni.3dWarpDrive": v_3d_warp_drive_outputs,
     }.get(t)
 
 
@@ -210,7 +210,7 @@ def v_3d_warp_drive_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dWarpDrive",
+        "@type": "afni.3dWarpDrive",
         "dataset": dataset,
         "base_dataset": base_dataset,
         "prefix": prefix,
@@ -592,5 +592,8 @@ __all__ = [
     "V3dWarpDriveParameters",
     "V_3D_WARP_DRIVE_METADATA",
     "v_3d_warp_drive",
+    "v_3d_warp_drive_cargs",
+    "v_3d_warp_drive_execute",
+    "v_3d_warp_drive_outputs",
     "v_3d_warp_drive_params",
 ]

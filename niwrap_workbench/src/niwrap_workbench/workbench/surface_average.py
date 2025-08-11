@@ -14,14 +14,14 @@ SURFACE_AVERAGE_METADATA = Metadata(
 
 
 SurfaceAverageSurfParameters = typing.TypedDict('SurfaceAverageSurfParameters', {
-    "__STYXTYPE__": typing.Literal["surf"],
+    "@type": typing.Literal["workbench.surface-average.surf"],
     "surface": InputPathType,
     "opt_weight_weight": typing.NotRequired[float | None],
 })
 
 
 SurfaceAverageParameters = typing.TypedDict('SurfaceAverageParameters', {
-    "__STYXTYPE__": typing.Literal["surface-average"],
+    "@type": typing.Literal["workbench.surface-average"],
     "surface_out": str,
     "opt_stddev_stddev_metric_out": typing.NotRequired[str | None],
     "opt_uncertainty_uncert_metric_out": typing.NotRequired[str | None],
@@ -41,8 +41,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-average": surface_average_cargs,
-        "surf": surface_average_surf_cargs,
+        "workbench.surface-average": surface_average_cargs,
+        "workbench.surface-average.surf": surface_average_surf_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-average": surface_average_outputs,
+        "workbench.surface-average": surface_average_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def surface_average_surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surf",
+        "@type": "workbench.surface-average.surf",
         "surface": surface,
     }
     if opt_weight_weight is not None:
@@ -144,7 +144,7 @@ def surface_average_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-average",
+        "@type": "workbench.surface-average",
         "surface_out": surface_out,
     }
     if opt_stddev_stddev_metric_out is not None:
@@ -184,7 +184,7 @@ def surface_average_cargs(
             params.get("opt_uncertainty_uncert_metric_out")
         ])
     if params.get("surf") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("surf")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("surf")] for a in c])
     return cargs
 
 
@@ -294,6 +294,10 @@ __all__ = [
     "SurfaceAverageParameters",
     "SurfaceAverageSurfParameters",
     "surface_average",
+    "surface_average_cargs",
+    "surface_average_execute",
+    "surface_average_outputs",
     "surface_average_params",
+    "surface_average_surf_cargs",
     "surface_average_surf_params",
 ]

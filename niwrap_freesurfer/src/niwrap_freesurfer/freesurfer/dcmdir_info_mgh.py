@@ -14,7 +14,7 @@ DCMDIR_INFO_MGH_METADATA = Metadata(
 
 
 DcmdirInfoMghParameters = typing.TypedDict('DcmdirInfoMghParameters', {
-    "__STYXTYPE__": typing.Literal["dcmdir-info-mgh"],
+    "@type": typing.Literal["freesurfer.dcmdir-info-mgh"],
     "dicomdir": str,
     "unpackdir": typing.NotRequired[str | None],
     "version": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcmdir-info-mgh": dcmdir_info_mgh_cargs,
+        "freesurfer.dcmdir-info-mgh": dcmdir_info_mgh_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dcmdir-info-mgh": dcmdir_info_mgh_outputs,
+        "freesurfer.dcmdir-info-mgh": dcmdir_info_mgh_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def dcmdir_info_mgh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcmdir-info-mgh",
+        "@type": "freesurfer.dcmdir-info-mgh",
         "dicomdir": dicomdir,
         "version": version,
         "help": help_,
@@ -215,5 +215,8 @@ __all__ = [
     "DcmdirInfoMghOutputs",
     "DcmdirInfoMghParameters",
     "dcmdir_info_mgh",
+    "dcmdir_info_mgh_cargs",
+    "dcmdir_info_mgh_execute",
+    "dcmdir_info_mgh_outputs",
     "dcmdir_info_mgh_params",
 ]

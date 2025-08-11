@@ -14,7 +14,7 @@ CREATE_LUT_METADATA = Metadata(
 
 
 CreateLutParameters = typing.TypedDict('CreateLutParameters', {
-    "__STYXTYPE__": typing.Literal["create_lut"],
+    "@type": typing.Literal["fsl.create_lut"],
     "output_file_root": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "create_lut": create_lut_cargs,
+        "fsl.create_lut": create_lut_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "create_lut": create_lut_outputs,
+        "fsl.create_lut": create_lut_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def create_lut_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "create_lut",
+        "@type": "fsl.create_lut",
         "output_file_root": output_file_root,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "CreateLutOutputs",
     "CreateLutParameters",
     "create_lut",
+    "create_lut_cargs",
+    "create_lut_execute",
+    "create_lut_outputs",
     "create_lut_params",
 ]

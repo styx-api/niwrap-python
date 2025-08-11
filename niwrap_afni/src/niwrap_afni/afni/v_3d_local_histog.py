@@ -14,7 +14,7 @@ V_3D_LOCAL_HISTOG_METADATA = Metadata(
 
 
 V3dLocalHistogParameters = typing.TypedDict('V3dLocalHistogParameters', {
-    "__STYXTYPE__": typing.Literal["3dLocalHistog"],
+    "@type": typing.Literal["afni.3dLocalHistog"],
     "nbhd_option": typing.NotRequired[str | None],
     "prefix": str,
     "hsave": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLocalHistog": v_3d_local_histog_cargs,
+        "afni.3dLocalHistog": v_3d_local_histog_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLocalHistog": v_3d_local_histog_outputs,
+        "afni.3dLocalHistog": v_3d_local_histog_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def v_3d_local_histog_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLocalHistog",
+        "@type": "afni.3dLocalHistog",
         "prefix": prefix,
         "exc_nonlab": exc_nonlab,
         "probability": probability,
@@ -295,5 +295,8 @@ __all__ = [
     "V3dLocalHistogParameters",
     "V_3D_LOCAL_HISTOG_METADATA",
     "v_3d_local_histog",
+    "v_3d_local_histog_cargs",
+    "v_3d_local_histog_execute",
+    "v_3d_local_histog_outputs",
     "v_3d_local_histog_params",
 ]

@@ -14,7 +14,7 @@ GEMS_COMPUTE_ATLAS_PROBS_METADATA = Metadata(
 
 
 GemsComputeAtlasProbsParameters = typing.TypedDict('GemsComputeAtlasProbsParameters', {
-    "__STYXTYPE__": typing.Literal["gems_compute_atlas_probs"],
+    "@type": typing.Literal["freesurfer.gems_compute_atlas_probs"],
     "subjects_dir": str,
     "mesh_collections": list[str],
     "out_dir": str,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gems_compute_atlas_probs": gems_compute_atlas_probs_cargs,
+        "freesurfer.gems_compute_atlas_probs": gems_compute_atlas_probs_cargs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def gems_compute_atlas_probs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gems_compute_atlas_probs",
+        "@type": "freesurfer.gems_compute_atlas_probs",
         "subjects_dir": subjects_dir,
         "mesh_collections": mesh_collections,
         "out_dir": out_dir,
@@ -342,5 +342,8 @@ __all__ = [
     "GemsComputeAtlasProbsOutputs",
     "GemsComputeAtlasProbsParameters",
     "gems_compute_atlas_probs",
+    "gems_compute_atlas_probs_cargs",
+    "gems_compute_atlas_probs_execute",
+    "gems_compute_atlas_probs_outputs",
     "gems_compute_atlas_probs_params",
 ]

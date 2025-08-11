@@ -14,14 +14,14 @@ TCKTRANSFORM_METADATA = Metadata(
 
 
 TcktransformConfigParameters = typing.TypedDict('TcktransformConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tcktransform.config"],
     "key": str,
     "value": str,
 })
 
 
 TcktransformParameters = typing.TypedDict('TcktransformParameters', {
-    "__STYXTYPE__": typing.Literal["tcktransform"],
+    "@type": typing.Literal["mrtrix.tcktransform"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tcktransform": tcktransform_cargs,
-        "config": tcktransform_config_cargs,
+        "mrtrix.tcktransform": tcktransform_cargs,
+        "mrtrix.tcktransform.config": tcktransform_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tcktransform": tcktransform_outputs,
+        "mrtrix.tcktransform": tcktransform_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def tcktransform_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tcktransform.config",
         "key": key,
         "value": value,
     }
@@ -156,7 +156,7 @@ def tcktransform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tcktransform",
+        "@type": "mrtrix.tcktransform",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -203,7 +203,7 @@ def tcktransform_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -335,6 +335,10 @@ __all__ = [
     "TcktransformOutputs",
     "TcktransformParameters",
     "tcktransform",
+    "tcktransform_cargs",
+    "tcktransform_config_cargs",
     "tcktransform_config_params",
+    "tcktransform_execute",
+    "tcktransform_outputs",
     "tcktransform_params",
 ]

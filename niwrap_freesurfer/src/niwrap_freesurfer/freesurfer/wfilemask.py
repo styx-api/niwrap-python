@@ -14,7 +14,7 @@ WFILEMASK_METADATA = Metadata(
 
 
 WfilemaskParameters = typing.TypedDict('WfilemaskParameters', {
-    "__STYXTYPE__": typing.Literal["wfilemask"],
+    "@type": typing.Literal["freesurfer.wfilemask"],
     "w_file": InputPathType,
     "label_file": InputPathType,
     "output_file": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "wfilemask": wfilemask_cargs,
+        "freesurfer.wfilemask": wfilemask_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "wfilemask": wfilemask_outputs,
+        "freesurfer.wfilemask": wfilemask_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def wfilemask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "wfilemask",
+        "@type": "freesurfer.wfilemask",
         "w_file": w_file,
         "label_file": label_file,
         "output_file": output_file,
@@ -228,5 +228,8 @@ __all__ = [
     "WfilemaskOutputs",
     "WfilemaskParameters",
     "wfilemask",
+    "wfilemask_cargs",
+    "wfilemask_execute",
+    "wfilemask_outputs",
     "wfilemask_params",
 ]

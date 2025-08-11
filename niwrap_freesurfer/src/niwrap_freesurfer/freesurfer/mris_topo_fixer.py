@@ -14,7 +14,7 @@ MRIS_TOPO_FIXER_METADATA = Metadata(
 
 
 MrisTopoFixerParameters = typing.TypedDict('MrisTopoFixerParameters', {
-    "__STYXTYPE__": typing.Literal["mris_topo_fixer"],
+    "@type": typing.Literal["freesurfer.mris_topo_fixer"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_topo_fixer": mris_topo_fixer_cargs,
+        "freesurfer.mris_topo_fixer": mris_topo_fixer_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_topo_fixer": mris_topo_fixer_outputs,
+        "freesurfer.mris_topo_fixer": mris_topo_fixer_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_topo_fixer_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_topo_fixer",
+        "@type": "freesurfer.mris_topo_fixer",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MrisTopoFixerOutputs",
     "MrisTopoFixerParameters",
     "mris_topo_fixer",
+    "mris_topo_fixer_cargs",
+    "mris_topo_fixer_execute",
+    "mris_topo_fixer_outputs",
     "mris_topo_fixer_params",
 ]

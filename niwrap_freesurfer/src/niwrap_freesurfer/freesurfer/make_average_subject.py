@@ -14,7 +14,7 @@ MAKE_AVERAGE_SUBJECT_METADATA = Metadata(
 
 
 MakeAverageSubjectParameters = typing.TypedDict('MakeAverageSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["make_average_subject"],
+    "@type": typing.Literal["freesurfer.make_average_subject"],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "subject_list_file": typing.NotRequired[InputPathType | None],
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_average_subject": make_average_subject_cargs,
+        "freesurfer.make_average_subject": make_average_subject_cargs,
     }.get(t)
 
 
@@ -134,7 +134,7 @@ def make_average_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_average_subject",
+        "@type": "freesurfer.make_average_subject",
         "subjects": subjects,
         "average_subject_name": average_subject_name,
         "no_link": no_link,
@@ -398,5 +398,8 @@ __all__ = [
     "MakeAverageSubjectOutputs",
     "MakeAverageSubjectParameters",
     "make_average_subject",
+    "make_average_subject_cargs",
+    "make_average_subject_execute",
+    "make_average_subject_outputs",
     "make_average_subject_params",
 ]

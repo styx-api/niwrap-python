@@ -14,7 +14,7 @@ V__SUMA_MAKE_SPEC_FS_METADATA = Metadata(
 
 
 VSumaMakeSpecFsParameters = typing.TypedDict('VSumaMakeSpecFsParameters', {
-    "__STYXTYPE__": typing.Literal["@SUMA_Make_Spec_FS"],
+    "@type": typing.Literal["afni.@SUMA_Make_Spec_FS"],
     "subject_id": str,
     "debug": typing.NotRequired[int | None],
     "fs_setup": bool,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SUMA_Make_Spec_FS": v__suma_make_spec_fs_cargs,
+        "afni.@SUMA_Make_Spec_FS": v__suma_make_spec_fs_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SUMA_Make_Spec_FS": v__suma_make_spec_fs_outputs,
+        "afni.@SUMA_Make_Spec_FS": v__suma_make_spec_fs_outputs,
     }.get(t)
 
 
@@ -124,7 +124,7 @@ def v__suma_make_spec_fs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SUMA_Make_Spec_FS",
+        "@type": "afni.@SUMA_Make_Spec_FS",
         "subject_id": subject_id,
         "fs_setup": fs_setup,
         "make_rank_dsets": make_rank_dsets,
@@ -354,5 +354,8 @@ __all__ = [
     "VSumaMakeSpecFsParameters",
     "V__SUMA_MAKE_SPEC_FS_METADATA",
     "v__suma_make_spec_fs",
+    "v__suma_make_spec_fs_cargs",
+    "v__suma_make_spec_fs_execute",
+    "v__suma_make_spec_fs_outputs",
     "v__suma_make_spec_fs_params",
 ]

@@ -14,7 +14,7 @@ SUMA_GLXDINO_METADATA = Metadata(
 
 
 SumaGlxdinoParameters = typing.TypedDict('SumaGlxdinoParameters', {
-    "__STYXTYPE__": typing.Literal["SUMA_glxdino"],
+    "@type": typing.Literal["afni.SUMA_glxdino"],
     "verbose": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SUMA_glxdino": suma_glxdino_cargs,
+        "afni.SUMA_glxdino": suma_glxdino_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def suma_glxdino_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SUMA_glxdino",
+        "@type": "afni.SUMA_glxdino",
         "verbose": verbose,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "SumaGlxdinoOutputs",
     "SumaGlxdinoParameters",
     "suma_glxdino",
+    "suma_glxdino_cargs",
+    "suma_glxdino_execute",
+    "suma_glxdino_outputs",
     "suma_glxdino_params",
 ]

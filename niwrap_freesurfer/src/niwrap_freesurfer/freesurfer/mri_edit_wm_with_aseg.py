@@ -14,7 +14,7 @@ MRI_EDIT_WM_WITH_ASEG_METADATA = Metadata(
 
 
 MriEditWmWithAsegParameters = typing.TypedDict('MriEditWmWithAsegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_edit_wm_with_aseg"],
+    "@type": typing.Literal["freesurfer.mri_edit_wm_with_aseg"],
     "input_wm": InputPathType,
     "input_t1_brain": InputPathType,
     "aseg": InputPathType,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_edit_wm_with_aseg": mri_edit_wm_with_aseg_cargs,
+        "freesurfer.mri_edit_wm_with_aseg": mri_edit_wm_with_aseg_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_edit_wm_with_aseg": mri_edit_wm_with_aseg_outputs,
+        "freesurfer.mri_edit_wm_with_aseg": mri_edit_wm_with_aseg_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def mri_edit_wm_with_aseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_edit_wm_with_aseg",
+        "@type": "freesurfer.mri_edit_wm_with_aseg",
         "input_wm": input_wm,
         "input_t1_brain": input_t1_brain,
         "aseg": aseg,
@@ -308,5 +308,8 @@ __all__ = [
     "MriEditWmWithAsegOutputs",
     "MriEditWmWithAsegParameters",
     "mri_edit_wm_with_aseg",
+    "mri_edit_wm_with_aseg_cargs",
+    "mri_edit_wm_with_aseg_execute",
+    "mri_edit_wm_with_aseg_outputs",
     "mri_edit_wm_with_aseg_params",
 ]

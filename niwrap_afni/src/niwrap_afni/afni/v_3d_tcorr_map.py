@@ -14,7 +14,7 @@ V_3D_TCORR_MAP_METADATA = Metadata(
 
 
 V3dTcorrMapParameters = typing.TypedDict('V3dTcorrMapParameters', {
-    "__STYXTYPE__": typing.Literal["3dTcorrMap"],
+    "@type": typing.Literal["afni.3dTcorrMap"],
     "input": InputPathType,
     "seed": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTcorrMap": v_3d_tcorr_map_cargs,
+        "afni.3dTcorrMap": v_3d_tcorr_map_cargs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v_3d_tcorr_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTcorrMap",
+        "@type": "afni.3dTcorrMap",
         "input": input_,
         "automask": automask,
         "corrmask": corrmask,
@@ -392,5 +392,8 @@ __all__ = [
     "V3dTcorrMapParameters",
     "V_3D_TCORR_MAP_METADATA",
     "v_3d_tcorr_map",
+    "v_3d_tcorr_map_cargs",
+    "v_3d_tcorr_map_execute",
+    "v_3d_tcorr_map_outputs",
     "v_3d_tcorr_map_params",
 ]

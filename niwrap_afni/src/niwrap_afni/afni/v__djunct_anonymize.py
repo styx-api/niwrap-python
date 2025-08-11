@@ -14,7 +14,7 @@ V__DJUNCT_ANONYMIZE_METADATA = Metadata(
 
 
 VDjunctAnonymizeParameters = typing.TypedDict('VDjunctAnonymizeParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_anonymize"],
+    "@type": typing.Literal["afni.@djunct_anonymize"],
     "input": InputPathType,
     "add_note": typing.NotRequired[str | None],
     "copy_to": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_anonymize": v__djunct_anonymize_cargs,
+        "afni.@djunct_anonymize": v__djunct_anonymize_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v__djunct_anonymize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_anonymize",
+        "@type": "afni.@djunct_anonymize",
         "input": input_,
         "overwrite": overwrite,
     }
@@ -203,5 +203,8 @@ __all__ = [
     "VDjunctAnonymizeParameters",
     "V__DJUNCT_ANONYMIZE_METADATA",
     "v__djunct_anonymize",
+    "v__djunct_anonymize_cargs",
+    "v__djunct_anonymize_execute",
+    "v__djunct_anonymize_outputs",
     "v__djunct_anonymize_params",
 ]

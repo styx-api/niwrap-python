@@ -14,7 +14,7 @@ IMAND_METADATA = Metadata(
 
 
 ImandParameters = typing.TypedDict('ImandParameters', {
-    "__STYXTYPE__": typing.Literal["imand"],
+    "@type": typing.Literal["afni.imand"],
     "threshold": typing.NotRequired[float | None],
     "input_images": list[InputPathType],
     "output_image": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imand": imand_cargs,
+        "afni.imand": imand_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imand": imand_outputs,
+        "afni.imand": imand_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def imand_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imand",
+        "@type": "afni.imand",
         "input_images": input_images,
         "output_image": output_image,
     }
@@ -199,5 +199,8 @@ __all__ = [
     "ImandOutputs",
     "ImandParameters",
     "imand",
+    "imand_cargs",
+    "imand_execute",
+    "imand_outputs",
     "imand_params",
 ]

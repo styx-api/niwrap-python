@@ -14,7 +14,7 @@ V__SIMULATE_MOTION_METADATA = Metadata(
 
 
 VSimulateMotionParameters = typing.TypedDict('VSimulateMotionParameters', {
-    "__STYXTYPE__": typing.Literal["@simulate_motion"],
+    "@type": typing.Literal["afni.@simulate_motion"],
     "epi": InputPathType,
     "motion_file": InputPathType,
     "epi_timing": typing.NotRequired[InputPathType | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@simulate_motion": v__simulate_motion_cargs,
+        "afni.@simulate_motion": v__simulate_motion_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@simulate_motion": v__simulate_motion_outputs,
+        "afni.@simulate_motion": v__simulate_motion_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def v__simulate_motion_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@simulate_motion",
+        "@type": "afni.@simulate_motion",
         "epi": epi,
         "motion_file": motion_file,
         "save_workdir": save_workdir,
@@ -346,5 +346,8 @@ __all__ = [
     "VSimulateMotionParameters",
     "V__SIMULATE_MOTION_METADATA",
     "v__simulate_motion",
+    "v__simulate_motion_cargs",
+    "v__simulate_motion_execute",
+    "v__simulate_motion_outputs",
     "v__simulate_motion_params",
 ]

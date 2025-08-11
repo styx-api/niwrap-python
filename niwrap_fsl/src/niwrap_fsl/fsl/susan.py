@@ -14,7 +14,7 @@ SUSAN_METADATA = Metadata(
 
 
 SusanParameters = typing.TypedDict('SusanParameters', {
-    "__STYXTYPE__": typing.Literal["susan"],
+    "@type": typing.Literal["fsl.susan"],
     "input_file": InputPathType,
     "brightness_threshold": float,
     "spatial_size": float,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "susan": susan_cargs,
+        "fsl.susan": susan_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "susan": susan_outputs,
+        "fsl.susan": susan_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def susan_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "susan",
+        "@type": "fsl.susan",
         "input_file": input_file,
         "brightness_threshold": brightness_threshold,
         "spatial_size": spatial_size,
@@ -270,5 +270,8 @@ __all__ = [
     "SusanOutputs",
     "SusanParameters",
     "susan",
+    "susan_cargs",
+    "susan_execute",
+    "susan_outputs",
     "susan_params",
 ]

@@ -14,7 +14,7 @@ MRI_CAL_RENORMALIZE_GCA_METADATA = Metadata(
 
 
 MriCalRenormalizeGcaParameters = typing.TypedDict('MriCalRenormalizeGcaParameters', {
-    "__STYXTYPE__": typing.Literal["mri_cal_renormalize_gca"],
+    "@type": typing.Literal["freesurfer.mri_cal_renormalize_gca"],
     "timepoint_file": InputPathType,
     "in_vol": InputPathType,
     "input_atlas": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_cal_renormalize_gca": mri_cal_renormalize_gca_cargs,
+        "freesurfer.mri_cal_renormalize_gca": mri_cal_renormalize_gca_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_cal_renormalize_gca": mri_cal_renormalize_gca_outputs,
+        "freesurfer.mri_cal_renormalize_gca": mri_cal_renormalize_gca_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_cal_renormalize_gca_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_cal_renormalize_gca",
+        "@type": "freesurfer.mri_cal_renormalize_gca",
         "timepoint_file": timepoint_file,
         "in_vol": in_vol,
         "input_atlas": input_atlas,
@@ -204,5 +204,8 @@ __all__ = [
     "MriCalRenormalizeGcaOutputs",
     "MriCalRenormalizeGcaParameters",
     "mri_cal_renormalize_gca",
+    "mri_cal_renormalize_gca_cargs",
+    "mri_cal_renormalize_gca_execute",
+    "mri_cal_renormalize_gca_outputs",
     "mri_cal_renormalize_gca_params",
 ]

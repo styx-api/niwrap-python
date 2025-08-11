@@ -14,7 +14,7 @@ V__MEASURE_IN2OUT_METADATA = Metadata(
 
 
 VMeasureIn2outParameters = typing.TypedDict('VMeasureIn2outParameters', {
-    "__STYXTYPE__": typing.Literal["@measure_in2out"],
+    "@type": typing.Literal["afni.@measure_in2out"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": str,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@measure_in2out": v__measure_in2out_cargs,
+        "afni.@measure_in2out": v__measure_in2out_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@measure_in2out": v__measure_in2out_outputs,
+        "afni.@measure_in2out": v__measure_in2out_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v__measure_in2out_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@measure_in2out",
+        "@type": "afni.@measure_in2out",
         "maskset": maskset,
         "surfset": surfset,
         "outdir": outdir,
@@ -351,5 +351,8 @@ __all__ = [
     "VMeasureIn2outParameters",
     "V__MEASURE_IN2OUT_METADATA",
     "v__measure_in2out",
+    "v__measure_in2out_cargs",
+    "v__measure_in2out_execute",
+    "v__measure_in2out_outputs",
     "v__measure_in2out_params",
 ]

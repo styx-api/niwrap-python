@@ -14,7 +14,7 @@ GCAPREPONE_METADATA = Metadata(
 
 
 GcapreponeParameters = typing.TypedDict('GcapreponeParameters', {
-    "__STYXTYPE__": typing.Literal["gcaprepone"],
+    "@type": typing.Literal["freesurfer.gcaprepone"],
     "gcadir": str,
     "subject": str,
     "init_subject": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gcaprepone": gcaprepone_cargs,
+        "freesurfer.gcaprepone": gcaprepone_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def gcaprepone_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gcaprepone",
+        "@type": "freesurfer.gcaprepone",
         "gcadir": gcadir,
         "subject": subject,
         "init_subject": init_subject,
@@ -224,5 +224,8 @@ __all__ = [
     "GcapreponeOutputs",
     "GcapreponeParameters",
     "gcaprepone",
+    "gcaprepone_cargs",
+    "gcaprepone_execute",
+    "gcaprepone_outputs",
     "gcaprepone_params",
 ]

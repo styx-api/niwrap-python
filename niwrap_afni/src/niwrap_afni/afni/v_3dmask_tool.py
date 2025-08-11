@@ -14,7 +14,7 @@ V_3DMASK_TOOL_METADATA = Metadata(
 
 
 V3dmaskToolParameters = typing.TypedDict('V3dmaskToolParameters', {
-    "__STYXTYPE__": typing.Literal["3dmask_tool"],
+    "@type": typing.Literal["afni.3dmask_tool"],
     "count": bool,
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
     "dilate_inputs": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmask_tool": v_3dmask_tool_cargs,
+        "afni.3dmask_tool": v_3dmask_tool_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmask_tool": v_3dmask_tool_outputs,
+        "afni.3dmask_tool": v_3dmask_tool_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def v_3dmask_tool_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmask_tool",
+        "@type": "afni.3dmask_tool",
         "count": count,
         "fill_holes": fill_holes,
         "in_file": in_file,
@@ -330,5 +330,8 @@ __all__ = [
     "V3dmaskToolParameters",
     "V_3DMASK_TOOL_METADATA",
     "v_3dmask_tool",
+    "v_3dmask_tool_cargs",
+    "v_3dmask_tool_execute",
+    "v_3dmask_tool_outputs",
     "v_3dmask_tool_params",
 ]

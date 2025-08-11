@@ -14,7 +14,7 @@ MRI_TESSELLATE_METADATA = Metadata(
 
 
 MriTessellateParameters = typing.TypedDict('MriTessellateParameters', {
-    "__STYXTYPE__": typing.Literal["mri_tessellate"],
+    "@type": typing.Literal["freesurfer.mri_tessellate"],
     "input_volume": InputPathType,
     "label_value": int,
     "output_surf": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_tessellate": mri_tessellate_cargs,
+        "freesurfer.mri_tessellate": mri_tessellate_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_tessellate": mri_tessellate_outputs,
+        "freesurfer.mri_tessellate": mri_tessellate_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mri_tessellate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_tessellate",
+        "@type": "freesurfer.mri_tessellate",
         "input_volume": input_volume,
         "label_value": label_value,
         "output_surf": output_surf,
@@ -225,5 +225,8 @@ __all__ = [
     "MriTessellateOutputs",
     "MriTessellateParameters",
     "mri_tessellate",
+    "mri_tessellate_cargs",
+    "mri_tessellate_execute",
+    "mri_tessellate_outputs",
     "mri_tessellate_params",
 ]

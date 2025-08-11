@@ -14,7 +14,7 @@ CIFTI_LABEL_ADJACENCY_METADATA = Metadata(
 
 
 CiftiLabelAdjacencyParameters = typing.TypedDict('CiftiLabelAdjacencyParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-label-adjacency"],
+    "@type": typing.Literal["workbench.cifti-label-adjacency"],
     "label_in": InputPathType,
     "adjacency_out": str,
     "opt_left_surface_surface": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-label-adjacency": cifti_label_adjacency_cargs,
+        "workbench.cifti-label-adjacency": cifti_label_adjacency_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-label-adjacency": cifti_label_adjacency_outputs,
+        "workbench.cifti-label-adjacency": cifti_label_adjacency_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def cifti_label_adjacency_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-label-adjacency",
+        "@type": "workbench.cifti-label-adjacency",
         "label_in": label_in,
         "adjacency_out": adjacency_out,
     }
@@ -236,5 +236,8 @@ __all__ = [
     "CiftiLabelAdjacencyOutputs",
     "CiftiLabelAdjacencyParameters",
     "cifti_label_adjacency",
+    "cifti_label_adjacency_cargs",
+    "cifti_label_adjacency_execute",
+    "cifti_label_adjacency_outputs",
     "cifti_label_adjacency_params",
 ]

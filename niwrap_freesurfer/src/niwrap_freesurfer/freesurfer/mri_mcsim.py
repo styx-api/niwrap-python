@@ -14,7 +14,7 @@ MRI_MCSIM_METADATA = Metadata(
 
 
 MriMcsimParameters = typing.TypedDict('MriMcsimParameters', {
-    "__STYXTYPE__": typing.Literal["mri_mcsim"],
+    "@type": typing.Literal["freesurfer.mri_mcsim"],
     "top_output_dir": str,
     "base_name": str,
     "surface": list[str],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_mcsim": mri_mcsim_cargs,
+        "freesurfer.mri_mcsim": mri_mcsim_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_mcsim": mri_mcsim_outputs,
+        "freesurfer.mri_mcsim": mri_mcsim_outputs,
     }.get(t)
 
 
@@ -146,7 +146,7 @@ def mri_mcsim_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_mcsim",
+        "@type": "freesurfer.mri_mcsim",
         "top_output_dir": top_output_dir,
         "base_name": base_name,
         "surface": surface,
@@ -434,5 +434,8 @@ __all__ = [
     "MriMcsimOutputs",
     "MriMcsimParameters",
     "mri_mcsim",
+    "mri_mcsim_cargs",
+    "mri_mcsim_execute",
+    "mri_mcsim_outputs",
     "mri_mcsim_params",
 ]

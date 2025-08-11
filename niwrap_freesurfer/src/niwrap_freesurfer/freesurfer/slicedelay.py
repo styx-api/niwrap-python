@@ -14,7 +14,7 @@ SLICEDELAY_METADATA = Metadata(
 
 
 SlicedelayParameters = typing.TypedDict('SlicedelayParameters', {
-    "__STYXTYPE__": typing.Literal["slicedelay"],
+    "@type": typing.Literal["freesurfer.slicedelay"],
     "slicedelayfile": str,
     "nslices": float,
     "order": typing.Literal["up", "down", "odd", "even", "siemens"],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slicedelay": slicedelay_cargs,
+        "freesurfer.slicedelay": slicedelay_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "slicedelay": slicedelay_outputs,
+        "freesurfer.slicedelay": slicedelay_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def slicedelay_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slicedelay",
+        "@type": "freesurfer.slicedelay",
         "slicedelayfile": slicedelayfile,
         "nslices": nslices,
         "order": order,
@@ -210,5 +210,8 @@ __all__ = [
     "SlicedelayOutputs",
     "SlicedelayParameters",
     "slicedelay",
+    "slicedelay_cargs",
+    "slicedelay_execute",
+    "slicedelay_outputs",
     "slicedelay_params",
 ]

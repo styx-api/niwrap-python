@@ -14,7 +14,7 @@ VENTFIX_METADATA = Metadata(
 
 
 VentfixParameters = typing.TypedDict('VentfixParameters', {
-    "__STYXTYPE__": typing.Literal["ventfix"],
+    "@type": typing.Literal["freesurfer.ventfix"],
     "subject_dir": str,
     "option1": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ventfix": ventfix_cargs,
+        "freesurfer.ventfix": ventfix_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ventfix": ventfix_outputs,
+        "freesurfer.ventfix": ventfix_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def ventfix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ventfix",
+        "@type": "freesurfer.ventfix",
         "subject_dir": subject_dir,
     }
     if option1 is not None:
@@ -185,5 +185,8 @@ __all__ = [
     "VentfixOutputs",
     "VentfixParameters",
     "ventfix",
+    "ventfix_cargs",
+    "ventfix_execute",
+    "ventfix_outputs",
     "ventfix_params",
 ]

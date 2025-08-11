@@ -14,7 +14,7 @@ MRI_SPH2SURF_METADATA = Metadata(
 
 
 MriSph2surfParameters = typing.TypedDict('MriSph2surfParameters', {
-    "__STYXTYPE__": typing.Literal["mri-sph2surf"],
+    "@type": typing.Literal["freesurfer.mri-sph2surf"],
     "instem": str,
     "outstem": str,
     "hemi": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri-sph2surf": mri_sph2surf_cargs,
+        "freesurfer.mri-sph2surf": mri_sph2surf_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri-sph2surf": mri_sph2surf_outputs,
+        "freesurfer.mri-sph2surf": mri_sph2surf_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def mri_sph2surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri-sph2surf",
+        "@type": "freesurfer.mri-sph2surf",
         "instem": instem,
         "outstem": outstem,
         "hemi": hemi,
@@ -277,5 +277,8 @@ __all__ = [
     "MriSph2surfOutputs",
     "MriSph2surfParameters",
     "mri_sph2surf",
+    "mri_sph2surf_cargs",
+    "mri_sph2surf_execute",
+    "mri_sph2surf_outputs",
     "mri_sph2surf_params",
 ]

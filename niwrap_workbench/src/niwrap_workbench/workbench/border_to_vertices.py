@@ -14,7 +14,7 @@ BORDER_TO_VERTICES_METADATA = Metadata(
 
 
 BorderToVerticesParameters = typing.TypedDict('BorderToVerticesParameters', {
-    "__STYXTYPE__": typing.Literal["border-to-vertices"],
+    "@type": typing.Literal["workbench.border-to-vertices"],
     "surface": InputPathType,
     "border_file": InputPathType,
     "metric_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "border-to-vertices": border_to_vertices_cargs,
+        "workbench.border-to-vertices": border_to_vertices_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "border-to-vertices": border_to_vertices_outputs,
+        "workbench.border-to-vertices": border_to_vertices_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def border_to_vertices_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border-to-vertices",
+        "@type": "workbench.border-to-vertices",
         "surface": surface,
         "border_file": border_file,
         "metric_out": metric_out,
@@ -208,5 +208,8 @@ __all__ = [
     "BorderToVerticesOutputs",
     "BorderToVerticesParameters",
     "border_to_vertices",
+    "border_to_vertices_cargs",
+    "border_to_vertices_execute",
+    "border_to_vertices_outputs",
     "border_to_vertices_params",
 ]

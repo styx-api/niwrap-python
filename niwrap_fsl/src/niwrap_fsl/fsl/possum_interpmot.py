@@ -14,7 +14,7 @@ POSSUM_INTERPMOT_METADATA = Metadata(
 
 
 PossumInterpmotParameters = typing.TypedDict('PossumInterpmotParameters', {
-    "__STYXTYPE__": typing.Literal["possum_interpmot"],
+    "@type": typing.Literal["fsl.possum_interpmot"],
     "motion_type": int,
     "tr": float,
     "tr_slice": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "possum_interpmot": possum_interpmot_cargs,
+        "fsl.possum_interpmot": possum_interpmot_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "possum_interpmot": possum_interpmot_outputs,
+        "fsl.possum_interpmot": possum_interpmot_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def possum_interpmot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "possum_interpmot",
+        "@type": "fsl.possum_interpmot",
         "motion_type": motion_type,
         "tr": tr,
         "tr_slice": tr_slice,
@@ -222,5 +222,8 @@ __all__ = [
     "PossumInterpmotOutputs",
     "PossumInterpmotParameters",
     "possum_interpmot",
+    "possum_interpmot_cargs",
+    "possum_interpmot_execute",
+    "possum_interpmot_outputs",
     "possum_interpmot_params",
 ]

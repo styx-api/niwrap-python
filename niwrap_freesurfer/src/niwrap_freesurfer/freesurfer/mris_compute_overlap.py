@@ -14,7 +14,7 @@ MRIS_COMPUTE_OVERLAP_METADATA = Metadata(
 
 
 MrisComputeOverlapParameters = typing.TypedDict('MrisComputeOverlapParameters', {
-    "__STYXTYPE__": typing.Literal["mris_compute_overlap"],
+    "@type": typing.Literal["freesurfer.mris_compute_overlap"],
     "subject": str,
     "hemi": str,
     "surface": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_compute_overlap": mris_compute_overlap_cargs,
+        "freesurfer.mris_compute_overlap": mris_compute_overlap_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_compute_overlap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_compute_overlap",
+        "@type": "freesurfer.mris_compute_overlap",
         "subject": subject,
         "hemi": hemi,
         "surface": surface,
@@ -235,5 +235,8 @@ __all__ = [
     "MrisComputeOverlapOutputs",
     "MrisComputeOverlapParameters",
     "mris_compute_overlap",
+    "mris_compute_overlap_cargs",
+    "mris_compute_overlap_execute",
+    "mris_compute_overlap_outputs",
     "mris_compute_overlap_params",
 ]

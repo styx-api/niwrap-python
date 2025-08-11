@@ -14,7 +14,7 @@ BRAIN_SKIN_METADATA = Metadata(
 
 
 BrainSkinParameters = typing.TypedDict('BrainSkinParameters', {
-    "__STYXTYPE__": typing.Literal["BrainSkin"],
+    "@type": typing.Literal["afni.BrainSkin"],
     "surface": str,
     "skingrid_volume": InputPathType,
     "prefix": str,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "BrainSkin": brain_skin_cargs,
+        "afni.BrainSkin": brain_skin_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "BrainSkin": brain_skin_outputs,
+        "afni.BrainSkin": brain_skin_outputs,
     }.get(t)
 
 
@@ -138,7 +138,7 @@ def brain_skin_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "BrainSkin",
+        "@type": "afni.BrainSkin",
         "surface": surface,
         "skingrid_volume": skingrid_volume,
         "prefix": prefix,
@@ -369,5 +369,8 @@ __all__ = [
     "BrainSkinOutputs",
     "BrainSkinParameters",
     "brain_skin",
+    "brain_skin_cargs",
+    "brain_skin_execute",
+    "brain_skin_outputs",
     "brain_skin_params",
 ]

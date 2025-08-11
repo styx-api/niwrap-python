@@ -14,7 +14,7 @@ V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA = Metadata(
 
 
 VSurfSmoothHeat07ExamplesParameters = typing.TypedDict('VSurfSmoothHeat07ExamplesParameters', {
-    "__STYXTYPE__": typing.Literal["@SurfSmooth.HEAT_07.examples"],
+    "@type": typing.Literal["afni.@SurfSmooth.HEAT_07.examples"],
     "path_to_suma_demo": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SurfSmooth.HEAT_07.examples": v__surf_smooth_heat_07_examples_cargs,
+        "afni.@SurfSmooth.HEAT_07.examples": v__surf_smooth_heat_07_examples_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def v__surf_smooth_heat_07_examples_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SurfSmooth.HEAT_07.examples",
+        "@type": "afni.@SurfSmooth.HEAT_07.examples",
         "path_to_suma_demo": path_to_suma_demo,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "VSurfSmoothHeat07ExamplesParameters",
     "V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA",
     "v__surf_smooth_heat_07_examples",
+    "v__surf_smooth_heat_07_examples_cargs",
+    "v__surf_smooth_heat_07_examples_execute",
+    "v__surf_smooth_heat_07_examples_outputs",
     "v__surf_smooth_heat_07_examples_params",
 ]

@@ -14,20 +14,20 @@ CIFTI_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 CiftiEstimateFwhmWholeFileParameters = typing.TypedDict('CiftiEstimateFwhmWholeFileParameters', {
-    "__STYXTYPE__": typing.Literal["whole_file"],
+    "@type": typing.Literal["workbench.cifti-estimate-fwhm.whole_file"],
     "opt_demean": bool,
 })
 
 
 CiftiEstimateFwhmSurfaceParameters = typing.TypedDict('CiftiEstimateFwhmSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["surface"],
+    "@type": typing.Literal["workbench.cifti-estimate-fwhm.surface"],
     "structure": str,
     "surface": InputPathType,
 })
 
 
 CiftiEstimateFwhmParameters = typing.TypedDict('CiftiEstimateFwhmParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-estimate-fwhm"],
+    "@type": typing.Literal["workbench.cifti-estimate-fwhm"],
     "cifti": InputPathType,
     "opt_merged_volume": bool,
     "opt_column_column": typing.NotRequired[int | None],
@@ -48,9 +48,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-estimate-fwhm": cifti_estimate_fwhm_cargs,
-        "whole_file": cifti_estimate_fwhm_whole_file_cargs,
-        "surface": cifti_estimate_fwhm_surface_cargs,
+        "workbench.cifti-estimate-fwhm": cifti_estimate_fwhm_cargs,
+        "workbench.cifti-estimate-fwhm.whole_file": cifti_estimate_fwhm_whole_file_cargs,
+        "workbench.cifti-estimate-fwhm.surface": cifti_estimate_fwhm_surface_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def cifti_estimate_fwhm_whole_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "whole_file",
+        "@type": "workbench.cifti-estimate-fwhm.whole_file",
         "opt_demean": opt_demean,
     }
     return params
@@ -121,7 +121,7 @@ def cifti_estimate_fwhm_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface",
+        "@type": "workbench.cifti-estimate-fwhm.surface",
         "structure": structure,
         "surface": surface,
     }
@@ -179,7 +179,7 @@ def cifti_estimate_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-estimate-fwhm",
+        "@type": "workbench.cifti-estimate-fwhm",
         "cifti": cifti,
         "opt_merged_volume": opt_merged_volume,
     }
@@ -217,9 +217,9 @@ def cifti_estimate_fwhm_cargs(
             str(params.get("opt_column_column"))
         ])
     if params.get("whole_file") is not None:
-        cargs.extend(dyn_cargs(params.get("whole_file")["__STYXTYPE__"])(params.get("whole_file"), execution))
+        cargs.extend(dyn_cargs(params.get("whole_file")["@type"])(params.get("whole_file"), execution))
     if params.get("surface") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("surface")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("surface")] for a in c])
     return cargs
 
 
@@ -393,7 +393,12 @@ __all__ = [
     "CiftiEstimateFwhmSurfaceParameters",
     "CiftiEstimateFwhmWholeFileParameters",
     "cifti_estimate_fwhm",
+    "cifti_estimate_fwhm_cargs",
+    "cifti_estimate_fwhm_execute",
+    "cifti_estimate_fwhm_outputs",
     "cifti_estimate_fwhm_params",
+    "cifti_estimate_fwhm_surface_cargs",
     "cifti_estimate_fwhm_surface_params",
+    "cifti_estimate_fwhm_whole_file_cargs",
     "cifti_estimate_fwhm_whole_file_params",
 ]

@@ -14,7 +14,7 @@ RTVIEW_METADATA = Metadata(
 
 
 RtviewParameters = typing.TypedDict('RtviewParameters', {
-    "__STYXTYPE__": typing.Literal["rtview"],
+    "@type": typing.Literal["freesurfer.rtview"],
     "subject": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[str | None],
     "left_hemi": bool,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rtview": rtview_cargs,
+        "freesurfer.rtview": rtview_cargs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def rtview_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rtview",
+        "@type": "freesurfer.rtview",
         "left_hemi": left_hemi,
         "right_hemi": right_hemi,
         "eccen": eccen,
@@ -322,5 +322,8 @@ __all__ = [
     "RtviewOutputs",
     "RtviewParameters",
     "rtview",
+    "rtview_cargs",
+    "rtview_execute",
+    "rtview_outputs",
     "rtview_params",
 ]

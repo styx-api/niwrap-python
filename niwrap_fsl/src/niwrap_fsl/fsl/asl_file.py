@@ -14,7 +14,7 @@ ASL_FILE_METADATA = Metadata(
 
 
 AslFileParameters = typing.TypedDict('AslFileParameters', {
-    "__STYXTYPE__": typing.Literal["asl_file"],
+    "@type": typing.Literal["fsl.asl_file"],
     "datafile": InputPathType,
     "ntis": float,
     "mask": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "asl_file": asl_file_cargs,
+        "fsl.asl_file": asl_file_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "asl_file": asl_file_outputs,
+        "fsl.asl_file": asl_file_outputs,
     }.get(t)
 
 
@@ -164,7 +164,7 @@ def asl_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "asl_file",
+        "@type": "fsl.asl_file",
         "datafile": datafile,
         "ntis": ntis,
         "pairs": pairs,
@@ -494,5 +494,8 @@ __all__ = [
     "AslFileOutputs",
     "AslFileParameters",
     "asl_file",
+    "asl_file_cargs",
+    "asl_file_execute",
+    "asl_file_outputs",
     "asl_file_params",
 ]

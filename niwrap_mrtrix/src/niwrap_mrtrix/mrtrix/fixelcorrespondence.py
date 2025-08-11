@@ -14,14 +14,14 @@ FIXELCORRESPONDENCE_METADATA = Metadata(
 
 
 FixelcorrespondenceConfigParameters = typing.TypedDict('FixelcorrespondenceConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixelcorrespondence.config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcorrespondenceParameters = typing.TypedDict('FixelcorrespondenceParameters', {
-    "__STYXTYPE__": typing.Literal["fixelcorrespondence"],
+    "@type": typing.Literal["mrtrix.fixelcorrespondence"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -50,8 +50,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixelcorrespondence": fixelcorrespondence_cargs,
-        "config": fixelcorrespondence_config_cargs,
+        "mrtrix.fixelcorrespondence": fixelcorrespondence_cargs,
+        "mrtrix.fixelcorrespondence.config": fixelcorrespondence_config_cargs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def fixelcorrespondence_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixelcorrespondence.config",
         "key": key,
         "value": value,
     }
@@ -163,7 +163,7 @@ def fixelcorrespondence_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixelcorrespondence",
+        "@type": "mrtrix.fixelcorrespondence",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -218,7 +218,7 @@ def fixelcorrespondence_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -366,6 +366,10 @@ __all__ = [
     "FixelcorrespondenceOutputs",
     "FixelcorrespondenceParameters",
     "fixelcorrespondence",
+    "fixelcorrespondence_cargs",
+    "fixelcorrespondence_config_cargs",
     "fixelcorrespondence_config_params",
+    "fixelcorrespondence_execute",
+    "fixelcorrespondence_outputs",
     "fixelcorrespondence_params",
 ]

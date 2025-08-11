@@ -14,7 +14,7 @@ BORDER_LENGTH_METADATA = Metadata(
 
 
 BorderLengthParameters = typing.TypedDict('BorderLengthParameters', {
-    "__STYXTYPE__": typing.Literal["border-length"],
+    "@type": typing.Literal["workbench.border-length"],
     "border": InputPathType,
     "surface": InputPathType,
     "opt_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "border-length": border_length_cargs,
+        "workbench.border-length": border_length_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def border_length_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border-length",
+        "@type": "workbench.border-length",
         "border": border,
         "surface": surface,
         "opt_separate_pieces": opt_separate_pieces,
@@ -230,5 +230,8 @@ __all__ = [
     "BorderLengthOutputs",
     "BorderLengthParameters",
     "border_length",
+    "border_length_cargs",
+    "border_length_execute",
+    "border_length_outputs",
     "border_length_params",
 ]

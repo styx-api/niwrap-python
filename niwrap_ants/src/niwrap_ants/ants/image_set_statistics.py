@@ -14,7 +14,7 @@ IMAGE_SET_STATISTICS_METADATA = Metadata(
 
 
 ImageSetStatisticsParameters = typing.TypedDict('ImageSetStatisticsParameters', {
-    "__STYXTYPE__": typing.Literal["ImageSetStatistics"],
+    "@type": typing.Literal["ants.ImageSetStatistics"],
     "image_dimension": int,
     "controls_list": InputPathType,
     "output_image": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ImageSetStatistics": image_set_statistics_cargs,
+        "ants.ImageSetStatistics": image_set_statistics_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ImageSetStatistics": image_set_statistics_outputs,
+        "ants.ImageSetStatistics": image_set_statistics_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def image_set_statistics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ImageSetStatistics",
+        "@type": "ants.ImageSetStatistics",
         "image_dimension": image_dimension,
         "controls_list": controls_list,
         "output_image": output_image,
@@ -249,5 +249,8 @@ __all__ = [
     "ImageSetStatisticsOutputs",
     "ImageSetStatisticsParameters",
     "image_set_statistics",
+    "image_set_statistics_cargs",
+    "image_set_statistics_execute",
+    "image_set_statistics_outputs",
     "image_set_statistics_params",
 ]

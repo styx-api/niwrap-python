@@ -14,7 +14,7 @@ DMRI_VIOLIN_PLOTS_METADATA = Metadata(
 
 
 DmriViolinPlotsParameters = typing.TypedDict('DmriViolinPlotsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_violinPlots"],
+    "@type": typing.Literal["freesurfer.dmri_violinPlots"],
     "input_directory": str,
     "labels": InputPathType,
     "structure": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_violinPlots": dmri_violin_plots_cargs,
+        "freesurfer.dmri_violinPlots": dmri_violin_plots_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dmri_violin_plots_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_violinPlots",
+        "@type": "freesurfer.dmri_violinPlots",
         "input_directory": input_directory,
         "labels": labels,
         "structure": structure,
@@ -193,5 +193,8 @@ __all__ = [
     "DmriViolinPlotsOutputs",
     "DmriViolinPlotsParameters",
     "dmri_violin_plots",
+    "dmri_violin_plots_cargs",
+    "dmri_violin_plots_execute",
+    "dmri_violin_plots_outputs",
     "dmri_violin_plots_params",
 ]

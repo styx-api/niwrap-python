@@ -14,7 +14,7 @@ V_3D_MSS_METADATA = Metadata(
 
 
 V3dMssParameters = typing.TypedDict('V3dMssParameters', {
-    "__STYXTYPE__": typing.Literal["3dMSS"],
+    "@type": typing.Literal["afni.3dMSS"],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "mrr_formula": typing.NotRequired[str | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMSS": v_3d_mss_cargs,
+        "afni.3dMSS": v_3d_mss_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMSS": v_3d_mss_outputs,
+        "afni.3dMSS": v_3d_mss_outputs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def v_3d_mss_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMSS",
+        "@type": "afni.3dMSS",
         "prefix": prefix,
         "data_table": data_table,
         "cio_flag": cio_flag,
@@ -393,5 +393,8 @@ __all__ = [
     "V3dMssParameters",
     "V_3D_MSS_METADATA",
     "v_3d_mss",
+    "v_3d_mss_cargs",
+    "v_3d_mss_execute",
+    "v_3d_mss_outputs",
     "v_3d_mss_params",
 ]

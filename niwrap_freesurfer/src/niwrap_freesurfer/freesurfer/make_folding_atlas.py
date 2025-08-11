@@ -14,7 +14,7 @@ MAKE_FOLDING_ATLAS_METADATA = Metadata(
 
 
 MakeFoldingAtlasParameters = typing.TypedDict('MakeFoldingAtlasParameters', {
-    "__STYXTYPE__": typing.Literal["make_folding_atlas"],
+    "@type": typing.Literal["freesurfer.make_folding_atlas"],
     "subjlistfile": typing.NotRequired[InputPathType | None],
     "fsgdfile": typing.NotRequired[InputPathType | None],
     "subjects": typing.NotRequired[list[str] | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_folding_atlas": make_folding_atlas_cargs,
+        "freesurfer.make_folding_atlas": make_folding_atlas_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_folding_atlas": make_folding_atlas_outputs,
+        "freesurfer.make_folding_atlas": make_folding_atlas_outputs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def make_folding_atlas_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_folding_atlas",
+        "@type": "freesurfer.make_folding_atlas",
         "xhemi": xhemi,
         "no_annot_template": no_annot_template,
         "left_hemisphere": left_hemisphere,
@@ -395,5 +395,8 @@ __all__ = [
     "MakeFoldingAtlasOutputs",
     "MakeFoldingAtlasParameters",
     "make_folding_atlas",
+    "make_folding_atlas_cargs",
+    "make_folding_atlas_execute",
+    "make_folding_atlas_outputs",
     "make_folding_atlas_params",
 ]

@@ -14,7 +14,7 @@ V__SCALE_VOLUME_METADATA = Metadata(
 
 
 VScaleVolumeParameters = typing.TypedDict('VScaleVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["@ScaleVolume"],
+    "@type": typing.Literal["afni.@ScaleVolume"],
     "input_dset": InputPathType,
     "prefix": str,
     "val_clip": typing.NotRequired[list[float] | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ScaleVolume": v__scale_volume_cargs,
+        "afni.@ScaleVolume": v__scale_volume_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ScaleVolume": v__scale_volume_outputs,
+        "afni.@ScaleVolume": v__scale_volume_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v__scale_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ScaleVolume",
+        "@type": "afni.@ScaleVolume",
         "input_dset": input_dset,
         "prefix": prefix,
         "scale_by_mean": scale_by_mean,
@@ -248,5 +248,8 @@ __all__ = [
     "VScaleVolumeParameters",
     "V__SCALE_VOLUME_METADATA",
     "v__scale_volume",
+    "v__scale_volume_cargs",
+    "v__scale_volume_execute",
+    "v__scale_volume_outputs",
     "v__scale_volume_params",
 ]

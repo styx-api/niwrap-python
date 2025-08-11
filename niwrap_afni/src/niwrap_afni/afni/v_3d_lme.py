@@ -14,7 +14,7 @@ V_3D_LME_METADATA = Metadata(
 
 
 V3dLmeParameters = typing.TypedDict('V3dLmeParameters', {
-    "__STYXTYPE__": typing.Literal["3dLME"],
+    "@type": typing.Literal["afni.3dLME"],
     "PREFIX": str,
     "MODEL": str,
     "DATA_TABLE": str,
@@ -60,7 +60,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLME": v_3d_lme_cargs,
+        "afni.3dLME": v_3d_lme_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLME": v_3d_lme_outputs,
+        "afni.3dLME": v_3d_lme_outputs,
     }.get(t)
 
 
@@ -163,7 +163,7 @@ def v_3d_lme_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLME",
+        "@type": "afni.3dLME",
         "PREFIX": prefix,
         "MODEL": model,
         "DATA_TABLE": data_table,
@@ -518,5 +518,8 @@ __all__ = [
     "V3dLmeParameters",
     "V_3D_LME_METADATA",
     "v_3d_lme",
+    "v_3d_lme_cargs",
+    "v_3d_lme_execute",
+    "v_3d_lme_outputs",
     "v_3d_lme_params",
 ]

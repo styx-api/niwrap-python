@@ -14,7 +14,7 @@ ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
 
 
 AntsBrainExtractionShParameters = typing.TypedDict('AntsBrainExtractionShParameters', {
-    "__STYXTYPE__": typing.Literal["antsBrainExtraction.sh"],
+    "@type": typing.Literal["ants.antsBrainExtraction.sh"],
     "image_dimension": int,
     "anatomical_image": InputPathType,
     "template": InputPathType,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsBrainExtraction.sh": ants_brain_extraction_sh_cargs,
+        "ants.antsBrainExtraction.sh": ants_brain_extraction_sh_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsBrainExtraction.sh": ants_brain_extraction_sh_outputs,
+        "ants.antsBrainExtraction.sh": ants_brain_extraction_sh_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def ants_brain_extraction_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsBrainExtraction.sh",
+        "@type": "ants.antsBrainExtraction.sh",
         "image_dimension": image_dimension,
         "anatomical_image": anatomical_image,
         "template": template,
@@ -341,5 +341,8 @@ __all__ = [
     "AntsBrainExtractionShOutputs",
     "AntsBrainExtractionShParameters",
     "ants_brain_extraction_sh",
+    "ants_brain_extraction_sh_cargs",
+    "ants_brain_extraction_sh_execute",
+    "ants_brain_extraction_sh_outputs",
     "ants_brain_extraction_sh_params",
 ]

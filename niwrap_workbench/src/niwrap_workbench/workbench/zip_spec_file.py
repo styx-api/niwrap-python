@@ -14,7 +14,7 @@ ZIP_SPEC_FILE_METADATA = Metadata(
 
 
 ZipSpecFileParameters = typing.TypedDict('ZipSpecFileParameters', {
-    "__STYXTYPE__": typing.Literal["zip-spec-file"],
+    "@type": typing.Literal["workbench.zip-spec-file"],
     "spec_file": str,
     "extract_folder": str,
     "zip_file": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "zip-spec-file": zip_spec_file_cargs,
+        "workbench.zip-spec-file": zip_spec_file_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def zip_spec_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "zip-spec-file",
+        "@type": "workbench.zip-spec-file",
         "spec_file": spec_file,
         "extract_folder": extract_folder,
         "zip_file": zip_file,
@@ -229,5 +229,8 @@ __all__ = [
     "ZipSpecFileOutputs",
     "ZipSpecFileParameters",
     "zip_spec_file",
+    "zip_spec_file_cargs",
+    "zip_spec_file_execute",
+    "zip_spec_file_outputs",
     "zip_spec_file_params",
 ]

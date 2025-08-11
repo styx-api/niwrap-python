@@ -14,7 +14,7 @@ MRIS_PARCELLATE_CONNECTIVITY_METADATA = Metadata(
 
 
 MrisParcellateConnectivityParameters = typing.TypedDict('MrisParcellateConnectivityParameters', {
-    "__STYXTYPE__": typing.Literal["mris_parcellate_connectivity"],
+    "@type": typing.Literal["freesurfer.mris_parcellate_connectivity"],
     "smooth_iterations": typing.NotRequired[float | None],
     "input_surface": InputPathType,
     "input_correlations": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_parcellate_connectivity": mris_parcellate_connectivity_cargs,
+        "freesurfer.mris_parcellate_connectivity": mris_parcellate_connectivity_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_parcellate_connectivity": mris_parcellate_connectivity_outputs,
+        "freesurfer.mris_parcellate_connectivity": mris_parcellate_connectivity_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mris_parcellate_connectivity_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_parcellate_connectivity",
+        "@type": "freesurfer.mris_parcellate_connectivity",
         "input_surface": input_surface,
         "input_correlations": input_correlations,
         "output_parcellation": output_parcellation,
@@ -203,5 +203,8 @@ __all__ = [
     "MrisParcellateConnectivityOutputs",
     "MrisParcellateConnectivityParameters",
     "mris_parcellate_connectivity",
+    "mris_parcellate_connectivity_cargs",
+    "mris_parcellate_connectivity_execute",
+    "mris_parcellate_connectivity_outputs",
     "mris_parcellate_connectivity_params",
 ]

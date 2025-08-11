@@ -14,7 +14,7 @@ V_3D_TSORT_METADATA = Metadata(
 
 
 V3dTsortParameters = typing.TypedDict('V3dTsortParameters', {
-    "__STYXTYPE__": typing.Literal["3dTsort"],
+    "@type": typing.Literal["afni.3dTsort"],
     "input_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "inc": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTsort": v_3d_tsort_cargs,
+        "afni.3dTsort": v_3d_tsort_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTsort": v_3d_tsort_outputs,
+        "afni.3dTsort": v_3d_tsort_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def v_3d_tsort_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTsort",
+        "@type": "afni.3dTsort",
         "input_file": input_file,
         "inc": inc,
         "dec": dec,
@@ -272,5 +272,8 @@ __all__ = [
     "V3dTsortParameters",
     "V_3D_TSORT_METADATA",
     "v_3d_tsort",
+    "v_3d_tsort_cargs",
+    "v_3d_tsort_execute",
+    "v_3d_tsort_outputs",
     "v_3d_tsort_params",
 ]

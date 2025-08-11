@@ -14,7 +14,7 @@ BETSURF_METADATA = Metadata(
 
 
 BetsurfParameters = typing.TypedDict('BetsurfParameters', {
-    "__STYXTYPE__": typing.Literal["betsurf"],
+    "@type": typing.Literal["fsl.betsurf"],
     "t1_image": InputPathType,
     "t2_image": typing.NotRequired[InputPathType | None],
     "bet_mesh": InputPathType,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "betsurf": betsurf_cargs,
+        "fsl.betsurf": betsurf_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "betsurf": betsurf_outputs,
+        "fsl.betsurf": betsurf_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def betsurf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "betsurf",
+        "@type": "fsl.betsurf",
         "t1_image": t1_image,
         "bet_mesh": bet_mesh,
         "t1_to_standard_mat": t1_to_standard_mat,
@@ -283,5 +283,8 @@ __all__ = [
     "BetsurfOutputs",
     "BetsurfParameters",
     "betsurf",
+    "betsurf_cargs",
+    "betsurf_execute",
+    "betsurf_outputs",
     "betsurf_params",
 ]

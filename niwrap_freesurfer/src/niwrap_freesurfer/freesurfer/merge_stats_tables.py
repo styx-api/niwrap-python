@@ -14,7 +14,7 @@ MERGE_STATS_TABLES_METADATA = Metadata(
 
 
 MergeStatsTablesParameters = typing.TypedDict('MergeStatsTablesParameters', {
-    "__STYXTYPE__": typing.Literal["merge_stats_tables"],
+    "@type": typing.Literal["freesurfer.merge_stats_tables"],
     "subjects": typing.NotRequired[list[str] | None],
     "subject": typing.NotRequired[str | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "merge_stats_tables": merge_stats_tables_cargs,
+        "freesurfer.merge_stats_tables": merge_stats_tables_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "merge_stats_tables": merge_stats_tables_outputs,
+        "freesurfer.merge_stats_tables": merge_stats_tables_outputs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def merge_stats_tables_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "merge_stats_tables",
+        "@type": "freesurfer.merge_stats_tables",
         "outputfile": outputfile,
         "meas": meas,
         "common_segs": common_segs,
@@ -349,5 +349,8 @@ __all__ = [
     "MergeStatsTablesOutputs",
     "MergeStatsTablesParameters",
     "merge_stats_tables",
+    "merge_stats_tables_cargs",
+    "merge_stats_tables_execute",
+    "merge_stats_tables_outputs",
     "merge_stats_tables_params",
 ]

@@ -14,7 +14,7 @@ V_3D_EDU_01_SCALE_METADATA = Metadata(
 
 
 V3dEdu01ScaleParameters = typing.TypedDict('V3dEdu01ScaleParameters', {
-    "__STYXTYPE__": typing.Literal["3dEdu_01_scale"],
+    "@type": typing.Literal["afni.3dEdu_01_scale"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mult_factors": typing.NotRequired[list[float] | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dEdu_01_scale": v_3d_edu_01_scale_cargs,
+        "afni.3dEdu_01_scale": v_3d_edu_01_scale_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dEdu_01_scale": v_3d_edu_01_scale_outputs,
+        "afni.3dEdu_01_scale": v_3d_edu_01_scale_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def v_3d_edu_01_scale_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dEdu_01_scale",
+        "@type": "afni.3dEdu_01_scale",
         "input": input_,
         "option_flag": option_flag,
     }
@@ -212,5 +212,8 @@ __all__ = [
     "V3dEdu01ScaleParameters",
     "V_3D_EDU_01_SCALE_METADATA",
     "v_3d_edu_01_scale",
+    "v_3d_edu_01_scale_cargs",
+    "v_3d_edu_01_scale_execute",
+    "v_3d_edu_01_scale_outputs",
     "v_3d_edu_01_scale_params",
 ]

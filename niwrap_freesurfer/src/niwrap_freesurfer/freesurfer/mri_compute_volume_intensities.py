@@ -14,7 +14,7 @@ MRI_COMPUTE_VOLUME_INTENSITIES_METADATA = Metadata(
 
 
 MriComputeVolumeIntensitiesParameters = typing.TypedDict('MriComputeVolumeIntensitiesParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compute_volume_intensities"],
+    "@type": typing.Literal["freesurfer.mri_compute_volume_intensities"],
     "input_intensity": InputPathType,
     "volume_fraction_stem": str,
     "output_volume": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compute_volume_intensities": mri_compute_volume_intensities_cargs,
+        "freesurfer.mri_compute_volume_intensities": mri_compute_volume_intensities_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_compute_volume_intensities": mri_compute_volume_intensities_outputs,
+        "freesurfer.mri_compute_volume_intensities": mri_compute_volume_intensities_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_compute_volume_intensities_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compute_volume_intensities",
+        "@type": "freesurfer.mri_compute_volume_intensities",
         "input_intensity": input_intensity,
         "volume_fraction_stem": volume_fraction_stem,
         "output_volume": output_volume,
@@ -190,5 +190,8 @@ __all__ = [
     "MriComputeVolumeIntensitiesOutputs",
     "MriComputeVolumeIntensitiesParameters",
     "mri_compute_volume_intensities",
+    "mri_compute_volume_intensities_cargs",
+    "mri_compute_volume_intensities_execute",
+    "mri_compute_volume_intensities_outputs",
     "mri_compute_volume_intensities_params",
 ]

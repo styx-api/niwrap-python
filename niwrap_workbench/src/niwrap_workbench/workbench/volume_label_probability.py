@@ -14,7 +14,7 @@ VOLUME_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 VolumeLabelProbabilityParameters = typing.TypedDict('VolumeLabelProbabilityParameters', {
-    "__STYXTYPE__": typing.Literal["volume-label-probability"],
+    "@type": typing.Literal["workbench.volume-label-probability"],
     "label_maps": InputPathType,
     "probability_out": str,
     "opt_exclude_unlabeled": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-label-probability": volume_label_probability_cargs,
+        "workbench.volume-label-probability": volume_label_probability_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-label-probability": volume_label_probability_outputs,
+        "workbench.volume-label-probability": volume_label_probability_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def volume_label_probability_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-label-probability",
+        "@type": "workbench.volume-label-probability",
         "label_maps": label_maps,
         "probability_out": probability_out,
         "opt_exclude_unlabeled": opt_exclude_unlabeled,
@@ -202,5 +202,8 @@ __all__ = [
     "VolumeLabelProbabilityOutputs",
     "VolumeLabelProbabilityParameters",
     "volume_label_probability",
+    "volume_label_probability_cargs",
+    "volume_label_probability_execute",
+    "volume_label_probability_outputs",
     "volume_label_probability_params",
 ]

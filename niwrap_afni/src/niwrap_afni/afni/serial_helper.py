@@ -14,7 +14,7 @@ SERIAL_HELPER_METADATA = Metadata(
 
 
 SerialHelperParameters = typing.TypedDict('SerialHelperParameters', {
-    "__STYXTYPE__": typing.Literal["serial_helper"],
+    "@type": typing.Literal["afni.serial_helper"],
     "serial_port": str,
     "sock_num": typing.NotRequired[float | None],
     "mp_max": typing.NotRequired[float | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "serial_helper": serial_helper_cargs,
+        "afni.serial_helper": serial_helper_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def serial_helper_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "serial_helper",
+        "@type": "afni.serial_helper",
         "serial_port": serial_port,
         "show_times": show_times,
         "help": help_,
@@ -294,5 +294,8 @@ __all__ = [
     "SerialHelperOutputs",
     "SerialHelperParameters",
     "serial_helper",
+    "serial_helper_cargs",
+    "serial_helper_execute",
+    "serial_helper_outputs",
     "serial_helper_params",
 ]

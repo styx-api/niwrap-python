@@ -14,7 +14,7 @@ MRIS_SEGMENTATION_STATS_METADATA = Metadata(
 
 
 MrisSegmentationStatsParameters = typing.TypedDict('MrisSegmentationStatsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_segmentation_stats"],
+    "@type": typing.Literal["freesurfer.mris_segmentation_stats"],
     "overlay_name": str,
     "segmentation_label_name": str,
     "subjects": list[str],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_segmentation_stats": mris_segmentation_stats_cargs,
+        "freesurfer.mris_segmentation_stats": mris_segmentation_stats_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_segmentation_stats": mris_segmentation_stats_outputs,
+        "freesurfer.mris_segmentation_stats": mris_segmentation_stats_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_segmentation_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_segmentation_stats",
+        "@type": "freesurfer.mris_segmentation_stats",
         "overlay_name": overlay_name,
         "segmentation_label_name": segmentation_label_name,
         "subjects": subjects,
@@ -196,5 +196,8 @@ __all__ = [
     "MrisSegmentationStatsOutputs",
     "MrisSegmentationStatsParameters",
     "mris_segmentation_stats",
+    "mris_segmentation_stats_cargs",
+    "mris_segmentation_stats_execute",
+    "mris_segmentation_stats_outputs",
     "mris_segmentation_stats_params",
 ]

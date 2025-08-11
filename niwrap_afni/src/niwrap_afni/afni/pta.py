@@ -14,7 +14,7 @@ PTA_METADATA = Metadata(
 
 
 PtaParameters = typing.TypedDict('PtaParameters', {
-    "__STYXTYPE__": typing.Literal["PTA"],
+    "@type": typing.Literal["afni.PTA"],
     "prefix": str,
     "input_file": InputPathType,
     "model_formula": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "PTA": pta_cargs,
+        "afni.PTA": pta_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "PTA": pta_outputs,
+        "afni.PTA": pta_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def pta_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "PTA",
+        "@type": "afni.PTA",
         "prefix": prefix,
         "input_file": input_file,
         "model_formula": model_formula,
@@ -275,5 +275,8 @@ __all__ = [
     "PtaOutputs",
     "PtaParameters",
     "pta",
+    "pta_cargs",
+    "pta_execute",
+    "pta_outputs",
     "pta_params",
 ]

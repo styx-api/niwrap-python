@@ -14,7 +14,7 @@ DIFFUSION_UTILS_METADATA = Metadata(
 
 
 DiffusionUtilsParameters = typing.TypedDict('DiffusionUtilsParameters', {
-    "__STYXTYPE__": typing.Literal["diffusionUtils"],
+    "@type": typing.Literal["freesurfer.diffusionUtils"],
     "dummy_flag": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "diffusionUtils": diffusion_utils_cargs,
+        "freesurfer.diffusionUtils": diffusion_utils_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def diffusion_utils_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "diffusionUtils",
+        "@type": "freesurfer.diffusionUtils",
         "dummy_flag": dummy_flag,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "DiffusionUtilsOutputs",
     "DiffusionUtilsParameters",
     "diffusion_utils",
+    "diffusion_utils_cargs",
+    "diffusion_utils_execute",
+    "diffusion_utils_outputs",
     "diffusion_utils_params",
 ]

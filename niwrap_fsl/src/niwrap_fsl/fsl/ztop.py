@@ -14,7 +14,7 @@ ZTOP_METADATA = Metadata(
 
 
 ZtopParameters = typing.TypedDict('ZtopParameters', {
-    "__STYXTYPE__": typing.Literal["ztop"],
+    "@type": typing.Literal["fsl.ztop"],
     "z_score": float,
     "tail_flag": bool,
     "grf_flag": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ztop": ztop_cargs,
+        "fsl.ztop": ztop_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def ztop_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ztop",
+        "@type": "fsl.ztop",
         "z_score": z_score,
         "tail_flag": tail_flag,
         "grf_flag": grf_flag,
@@ -198,5 +198,8 @@ __all__ = [
     "ZtopOutputs",
     "ZtopParameters",
     "ztop",
+    "ztop_cargs",
+    "ztop_execute",
+    "ztop_outputs",
     "ztop_params",
 ]

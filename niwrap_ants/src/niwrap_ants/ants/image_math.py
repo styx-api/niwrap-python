@@ -14,7 +14,7 @@ IMAGE_MATH_METADATA = Metadata(
 
 
 ImageMathParameters = typing.TypedDict('ImageMathParameters', {
-    "__STYXTYPE__": typing.Literal["ImageMath"],
+    "@type": typing.Literal["ants.ImageMath"],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
     "operations_and_inputs": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ImageMath": image_math_cargs,
+        "ants.ImageMath": image_math_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ImageMath": image_math_outputs,
+        "ants.ImageMath": image_math_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def image_math_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ImageMath",
+        "@type": "ants.ImageMath",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "operations_and_inputs": operations_and_inputs,
@@ -212,5 +212,8 @@ __all__ = [
     "ImageMathOutputs",
     "ImageMathParameters",
     "image_math",
+    "image_math_cargs",
+    "image_math_execute",
+    "image_math_outputs",
     "image_math_params",
 ]

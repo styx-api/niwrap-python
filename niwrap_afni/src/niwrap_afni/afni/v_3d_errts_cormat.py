@@ -14,7 +14,7 @@ V_3D_ERRTS_CORMAT_METADATA = Metadata(
 
 
 V3dErrtsCormatParameters = typing.TypedDict('V3dErrtsCormatParameters', {
-    "__STYXTYPE__": typing.Literal["3dErrtsCormat"],
+    "@type": typing.Literal["afni.3dErrtsCormat"],
     "dset": InputPathType,
     "concat": typing.NotRequired[str | None],
     "input": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dErrtsCormat": v_3d_errts_cormat_cargs,
+        "afni.3dErrtsCormat": v_3d_errts_cormat_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dErrtsCormat": v_3d_errts_cormat_outputs,
+        "afni.3dErrtsCormat": v_3d_errts_cormat_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def v_3d_errts_cormat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dErrtsCormat",
+        "@type": "afni.3dErrtsCormat",
         "dset": dset,
     }
     if concat is not None:
@@ -239,5 +239,8 @@ __all__ = [
     "V3dErrtsCormatParameters",
     "V_3D_ERRTS_CORMAT_METADATA",
     "v_3d_errts_cormat",
+    "v_3d_errts_cormat_cargs",
+    "v_3d_errts_cormat_execute",
+    "v_3d_errts_cormat_outputs",
     "v_3d_errts_cormat_params",
 ]

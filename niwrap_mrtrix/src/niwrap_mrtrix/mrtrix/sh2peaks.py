@@ -14,21 +14,21 @@ SH2PEAKS_METADATA = Metadata(
 
 
 Sh2peaksDirectionParameters = typing.TypedDict('Sh2peaksDirectionParameters', {
-    "__STYXTYPE__": typing.Literal["direction"],
+    "@type": typing.Literal["mrtrix.sh2peaks.direction"],
     "phi": float,
     "theta": float,
 })
 
 
 Sh2peaksConfigParameters = typing.TypedDict('Sh2peaksConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.sh2peaks.config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2peaksParameters = typing.TypedDict('Sh2peaksParameters', {
-    "__STYXTYPE__": typing.Literal["sh2peaks"],
+    "@type": typing.Literal["mrtrix.sh2peaks"],
     "num": typing.NotRequired[int | None],
     "direction": typing.NotRequired[list[Sh2peaksDirectionParameters] | None],
     "peaks": typing.NotRequired[InputPathType | None],
@@ -61,9 +61,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sh2peaks": sh2peaks_cargs,
-        "direction": sh2peaks_direction_cargs,
-        "config": sh2peaks_config_cargs,
+        "mrtrix.sh2peaks": sh2peaks_cargs,
+        "mrtrix.sh2peaks.direction": sh2peaks_direction_cargs,
+        "mrtrix.sh2peaks.config": sh2peaks_config_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sh2peaks": sh2peaks_outputs,
+        "mrtrix.sh2peaks": sh2peaks_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def sh2peaks_direction_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "direction",
+        "@type": "mrtrix.sh2peaks.direction",
         "phi": phi,
         "theta": theta,
     }
@@ -141,7 +141,7 @@ def sh2peaks_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.sh2peaks.config",
         "key": key,
         "value": value,
     }
@@ -236,7 +236,7 @@ def sh2peaks_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sh2peaks",
+        "@type": "mrtrix.sh2peaks",
         "fast": fast,
         "info": info,
         "quiet": quiet,
@@ -287,7 +287,7 @@ def sh2peaks_cargs(
             str(params.get("num"))
         ])
     if params.get("direction") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("direction")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("direction")] for a in c])
     if params.get("peaks") is not None:
         cargs.extend([
             "-peaks",
@@ -324,7 +324,7 @@ def sh2peaks_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -499,7 +499,12 @@ __all__ = [
     "Sh2peaksOutputs",
     "Sh2peaksParameters",
     "sh2peaks",
+    "sh2peaks_cargs",
+    "sh2peaks_config_cargs",
     "sh2peaks_config_params",
+    "sh2peaks_direction_cargs",
     "sh2peaks_direction_params",
+    "sh2peaks_execute",
+    "sh2peaks_outputs",
     "sh2peaks_params",
 ]

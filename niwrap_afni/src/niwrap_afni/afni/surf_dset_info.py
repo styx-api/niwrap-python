@@ -14,7 +14,7 @@ SURF_DSET_INFO_METADATA = Metadata(
 
 
 SurfDsetInfoParameters = typing.TypedDict('SurfDsetInfoParameters', {
-    "__STYXTYPE__": typing.Literal["SurfDsetInfo"],
+    "@type": typing.Literal["afni.SurfDsetInfo"],
     "input_dsets": list[InputPathType],
     "debug_level": typing.NotRequired[int | None],
     "novolreg": bool,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfDsetInfo": surf_dset_info_cargs,
+        "afni.SurfDsetInfo": surf_dset_info_cargs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def surf_dset_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfDsetInfo",
+        "@type": "afni.SurfDsetInfo",
         "input_dsets": input_dsets,
         "novolreg": novolreg,
         "noxform": noxform,
@@ -351,5 +351,8 @@ __all__ = [
     "SurfDsetInfoOutputs",
     "SurfDsetInfoParameters",
     "surf_dset_info",
+    "surf_dset_info_cargs",
+    "surf_dset_info_execute",
+    "surf_dset_info_outputs",
     "surf_dset_info_params",
 ]

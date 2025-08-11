@@ -14,7 +14,7 @@ MRIS_REGISTER_TO_LABEL_METADATA = Metadata(
 
 
 MrisRegisterToLabelParameters = typing.TypedDict('MrisRegisterToLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mris_register_to_label"],
+    "@type": typing.Literal["freesurfer.mris_register_to_label"],
     "surface": InputPathType,
     "regfile": InputPathType,
     "mri_reg": InputPathType,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_register_to_label": mris_register_to_label_cargs,
+        "freesurfer.mris_register_to_label": mris_register_to_label_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def mris_register_to_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_register_to_label",
+        "@type": "freesurfer.mris_register_to_label",
         "surface": surface,
         "regfile": regfile,
         "mri_reg": mri_reg,
@@ -306,5 +306,8 @@ __all__ = [
     "MrisRegisterToLabelOutputs",
     "MrisRegisterToLabelParameters",
     "mris_register_to_label",
+    "mris_register_to_label_cargs",
+    "mris_register_to_label_execute",
+    "mris_register_to_label_outputs",
     "mris_register_to_label_params",
 ]

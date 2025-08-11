@@ -14,7 +14,7 @@ METRIC_VECTOR_OPERATION_METADATA = Metadata(
 
 
 MetricVectorOperationParameters = typing.TypedDict('MetricVectorOperationParameters', {
-    "__STYXTYPE__": typing.Literal["metric-vector-operation"],
+    "@type": typing.Literal["workbench.metric-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-vector-operation": metric_vector_operation_cargs,
+        "workbench.metric-vector-operation": metric_vector_operation_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-vector-operation": metric_vector_operation_outputs,
+        "workbench.metric-vector-operation": metric_vector_operation_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def metric_vector_operation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-vector-operation",
+        "@type": "workbench.metric-vector-operation",
         "vectors_a": vectors_a,
         "vectors_b": vectors_b,
         "operation": operation,
@@ -261,5 +261,8 @@ __all__ = [
     "MetricVectorOperationOutputs",
     "MetricVectorOperationParameters",
     "metric_vector_operation",
+    "metric_vector_operation_cargs",
+    "metric_vector_operation_execute",
+    "metric_vector_operation_outputs",
     "metric_vector_operation_params",
 ]

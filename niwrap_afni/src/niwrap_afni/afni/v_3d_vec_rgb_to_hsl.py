@@ -14,7 +14,7 @@ V_3D_VEC_RGB_TO_HSL_METADATA = Metadata(
 
 
 V3dVecRgbToHslParameters = typing.TypedDict('V3dVecRgbToHslParameters', {
-    "__STYXTYPE__": typing.Literal["3dVecRGB_to_HSL"],
+    "@type": typing.Literal["afni.3dVecRGB_to_HSL"],
     "prefix": str,
     "in_vec": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dVecRGB_to_HSL": v_3d_vec_rgb_to_hsl_cargs,
+        "afni.3dVecRGB_to_HSL": v_3d_vec_rgb_to_hsl_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dVecRGB_to_HSL": v_3d_vec_rgb_to_hsl_outputs,
+        "afni.3dVecRGB_to_HSL": v_3d_vec_rgb_to_hsl_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v_3d_vec_rgb_to_hsl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dVecRGB_to_HSL",
+        "@type": "afni.3dVecRGB_to_HSL",
         "prefix": prefix,
         "in_vec": in_vec,
     }
@@ -222,5 +222,8 @@ __all__ = [
     "V3dVecRgbToHslParameters",
     "V_3D_VEC_RGB_TO_HSL_METADATA",
     "v_3d_vec_rgb_to_hsl",
+    "v_3d_vec_rgb_to_hsl_cargs",
+    "v_3d_vec_rgb_to_hsl_execute",
+    "v_3d_vec_rgb_to_hsl_outputs",
     "v_3d_vec_rgb_to_hsl_params",
 ]

@@ -14,7 +14,7 @@ MRI_STRIP_NONWHITE_METADATA = Metadata(
 
 
 MriStripNonwhiteParameters = typing.TypedDict('MriStripNonwhiteParameters', {
-    "__STYXTYPE__": typing.Literal["mri_strip_nonwhite"],
+    "@type": typing.Literal["freesurfer.mri_strip_nonwhite"],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "template_volume": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_strip_nonwhite": mri_strip_nonwhite_cargs,
+        "freesurfer.mri_strip_nonwhite": mri_strip_nonwhite_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_strip_nonwhite": mri_strip_nonwhite_outputs,
+        "freesurfer.mri_strip_nonwhite": mri_strip_nonwhite_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mri_strip_nonwhite_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_strip_nonwhite",
+        "@type": "freesurfer.mri_strip_nonwhite",
         "input_volume": input_volume,
         "transform": transform,
         "template_volume": template_volume,
@@ -200,5 +200,8 @@ __all__ = [
     "MriStripNonwhiteOutputs",
     "MriStripNonwhiteParameters",
     "mri_strip_nonwhite",
+    "mri_strip_nonwhite_cargs",
+    "mri_strip_nonwhite_execute",
+    "mri_strip_nonwhite_outputs",
     "mri_strip_nonwhite_params",
 ]

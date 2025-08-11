@@ -14,7 +14,7 @@ MRI_COREG_METADATA = Metadata(
 
 
 MriCoregParameters = typing.TypedDict('MriCoregParameters', {
-    "__STYXTYPE__": typing.Literal["mri_coreg"],
+    "@type": typing.Literal["freesurfer.mri_coreg"],
     "movvol": InputPathType,
     "refvol": InputPathType,
     "reg": str,
@@ -83,7 +83,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_coreg": mri_coreg_cargs,
+        "freesurfer.mri_coreg": mri_coreg_cargs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_coreg": mri_coreg_outputs,
+        "freesurfer.mri_coreg": mri_coreg_outputs,
     }.get(t)
 
 
@@ -246,7 +246,7 @@ def mri_coreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_coreg",
+        "@type": "freesurfer.mri_coreg",
         "movvol": movvol,
         "refvol": refvol,
         "reg": reg,
@@ -809,5 +809,8 @@ __all__ = [
     "MriCoregOutputs",
     "MriCoregParameters",
     "mri_coreg",
+    "mri_coreg_cargs",
+    "mri_coreg_execute",
+    "mri_coreg_outputs",
     "mri_coreg_params",
 ]

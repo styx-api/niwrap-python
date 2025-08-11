@@ -14,7 +14,7 @@ MRI_GCAB_TRAIN_METADATA = Metadata(
 
 
 MriGcabTrainParameters = typing.TypedDict('MriGcabTrainParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gcab_train"],
+    "@type": typing.Literal["freesurfer.mri_gcab_train"],
     "removed_info": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gcab_train": mri_gcab_train_cargs,
+        "freesurfer.mri_gcab_train": mri_gcab_train_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def mri_gcab_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gcab_train",
+        "@type": "freesurfer.mri_gcab_train",
     }
     if removed_info is not None:
         params["removed_info"] = removed_info
@@ -176,5 +176,8 @@ __all__ = [
     "MriGcabTrainOutputs",
     "MriGcabTrainParameters",
     "mri_gcab_train",
+    "mri_gcab_train_cargs",
+    "mri_gcab_train_execute",
+    "mri_gcab_train_outputs",
     "mri_gcab_train_params",
 ]

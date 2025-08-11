@@ -14,7 +14,7 @@ FIBER_DOT_PRODUCTS_METADATA = Metadata(
 
 
 FiberDotProductsParameters = typing.TypedDict('FiberDotProductsParameters', {
-    "__STYXTYPE__": typing.Literal["fiber-dot-products"],
+    "@type": typing.Literal["workbench.fiber-dot-products"],
     "white_surf": InputPathType,
     "fiber_file": InputPathType,
     "max_dist": float,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fiber-dot-products": fiber_dot_products_cargs,
+        "workbench.fiber-dot-products": fiber_dot_products_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fiber-dot-products": fiber_dot_products_outputs,
+        "workbench.fiber-dot-products": fiber_dot_products_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def fiber_dot_products_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fiber-dot-products",
+        "@type": "workbench.fiber-dot-products",
         "white_surf": white_surf,
         "fiber_file": fiber_file,
         "max_dist": max_dist,
@@ -236,5 +236,8 @@ __all__ = [
     "FiberDotProductsOutputs",
     "FiberDotProductsParameters",
     "fiber_dot_products",
+    "fiber_dot_products_cargs",
+    "fiber_dot_products_execute",
+    "fiber_dot_products_outputs",
     "fiber_dot_products_params",
 ]

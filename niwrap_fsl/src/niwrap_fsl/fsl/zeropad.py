@@ -14,7 +14,7 @@ ZEROPAD_METADATA = Metadata(
 
 
 ZeropadParameters = typing.TypedDict('ZeropadParameters', {
-    "__STYXTYPE__": typing.Literal["zeropad"],
+    "@type": typing.Literal["fsl.zeropad"],
     "input_number": str,
     "length": float,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "zeropad": zeropad_cargs,
+        "fsl.zeropad": zeropad_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "zeropad": zeropad_outputs,
+        "fsl.zeropad": zeropad_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def zeropad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "zeropad",
+        "@type": "fsl.zeropad",
         "input_number": input_number,
         "length": length,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "ZeropadOutputs",
     "ZeropadParameters",
     "zeropad",
+    "zeropad_cargs",
+    "zeropad_execute",
+    "zeropad_outputs",
     "zeropad_params",
 ]

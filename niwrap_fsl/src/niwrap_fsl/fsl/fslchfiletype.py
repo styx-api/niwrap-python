@@ -14,7 +14,7 @@ FSLCHFILETYPE_METADATA = Metadata(
 
 
 FslchfiletypeParameters = typing.TypedDict('FslchfiletypeParameters', {
-    "__STYXTYPE__": typing.Literal["fslchfiletype"],
+    "@type": typing.Literal["fsl.fslchfiletype"],
     "filetype": str,
     "filename": InputPathType,
     "filename2": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslchfiletype": fslchfiletype_cargs,
+        "fsl.fslchfiletype": fslchfiletype_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslchfiletype": fslchfiletype_outputs,
+        "fsl.fslchfiletype": fslchfiletype_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def fslchfiletype_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslchfiletype",
+        "@type": "fsl.fslchfiletype",
         "filetype": filetype,
         "filename": filename,
     }
@@ -194,5 +194,8 @@ __all__ = [
     "FslchfiletypeOutputs",
     "FslchfiletypeParameters",
     "fslchfiletype",
+    "fslchfiletype_cargs",
+    "fslchfiletype_execute",
+    "fslchfiletype_outputs",
     "fslchfiletype_params",
 ]

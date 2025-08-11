@@ -14,7 +14,7 @@ MRIS_SMOOTH_INTRACORTICAL_METADATA = Metadata(
 
 
 MrisSmoothIntracorticalParameters = typing.TypedDict('MrisSmoothIntracorticalParameters', {
-    "__STYXTYPE__": typing.Literal["mris_smooth_intracortical"],
+    "@type": typing.Literal["freesurfer.mris_smooth_intracortical"],
     "surf_dir": str,
     "surf_name": str,
     "overlay_dir": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_smooth_intracortical": mris_smooth_intracortical_cargs,
+        "freesurfer.mris_smooth_intracortical": mris_smooth_intracortical_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_smooth_intracortical": mris_smooth_intracortical_outputs,
+        "freesurfer.mris_smooth_intracortical": mris_smooth_intracortical_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def mris_smooth_intracortical_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_smooth_intracortical",
+        "@type": "freesurfer.mris_smooth_intracortical",
         "surf_dir": surf_dir,
         "surf_name": surf_name,
         "overlay_dir": overlay_dir,
@@ -300,5 +300,8 @@ __all__ = [
     "MrisSmoothIntracorticalOutputs",
     "MrisSmoothIntracorticalParameters",
     "mris_smooth_intracortical",
+    "mris_smooth_intracortical_cargs",
+    "mris_smooth_intracortical_execute",
+    "mris_smooth_intracortical_outputs",
     "mris_smooth_intracortical_params",
 ]

@@ -14,7 +14,7 @@ TTOZ_METADATA = Metadata(
 
 
 TtozParameters = typing.TypedDict('TtozParameters', {
-    "__STYXTYPE__": typing.Literal["ttoz"],
+    "@type": typing.Literal["fsl.ttoz"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": int,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ttoz": ttoz_cargs,
+        "fsl.ttoz": ttoz_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ttoz": ttoz_outputs,
+        "fsl.ttoz": ttoz_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def ttoz_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ttoz",
+        "@type": "fsl.ttoz",
         "varsfile": varsfile,
         "cbsfile": cbsfile,
         "dof": dof,
@@ -210,5 +210,8 @@ __all__ = [
     "TtozOutputs",
     "TtozParameters",
     "ttoz",
+    "ttoz_cargs",
+    "ttoz_execute",
+    "ttoz_outputs",
     "ttoz_params",
 ]

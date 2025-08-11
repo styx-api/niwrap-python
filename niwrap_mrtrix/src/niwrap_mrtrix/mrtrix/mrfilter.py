@@ -14,26 +14,26 @@ MRFILTER_METADATA = Metadata(
 
 
 MrfilterVariousStringParameters = typing.TypedDict('MrfilterVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.mrfilter.VariousString"],
     "obj": str,
 })
 
 
 MrfilterVariousFileParameters = typing.TypedDict('MrfilterVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.mrfilter.VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrfilterConfigParameters = typing.TypedDict('MrfilterConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrfilter.config"],
     "key": str,
     "value": str,
 })
 
 
 MrfilterParameters = typing.TypedDict('MrfilterParameters', {
-    "__STYXTYPE__": typing.Literal["mrfilter"],
+    "@type": typing.Literal["mrtrix.mrfilter"],
     "axes": typing.NotRequired[list[int] | None],
     "inverse": bool,
     "magnitude": bool,
@@ -78,10 +78,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrfilter": mrfilter_cargs,
-        "VariousString": mrfilter_various_string_cargs,
-        "VariousFile": mrfilter_various_file_cargs,
-        "config": mrfilter_config_cargs,
+        "mrtrix.mrfilter": mrfilter_cargs,
+        "mrtrix.mrfilter.VariousString": mrfilter_various_string_cargs,
+        "mrtrix.mrfilter.VariousFile": mrfilter_various_file_cargs,
+        "mrtrix.mrfilter.config": mrfilter_config_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrfilter": mrfilter_outputs,
+        "mrtrix.mrfilter": mrfilter_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def mrfilter_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.mrfilter.VariousString",
         "obj": obj,
     }
     return params
@@ -149,7 +149,7 @@ def mrfilter_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.mrfilter.VariousFile",
         "obj": obj,
     }
     return params
@@ -187,7 +187,7 @@ def mrfilter_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrfilter.config",
         "key": key,
         "value": value,
     }
@@ -329,7 +329,7 @@ def mrfilter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrfilter",
+        "@type": "mrtrix.mrfilter",
         "inverse": inverse,
         "magnitude": magnitude,
         "centre_zero": centre_zero,
@@ -466,7 +466,7 @@ def mrfilter_cargs(
     if params.get("strides") is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["__STYXTYPE__"])(params.get("strides"), execution)
+            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
         ])
     if params.get("info"):
         cargs.append("-info")
@@ -482,7 +482,7 @@ def mrfilter_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -709,8 +709,14 @@ __all__ = [
     "MrfilterVariousFileParameters",
     "MrfilterVariousStringParameters",
     "mrfilter",
+    "mrfilter_cargs",
+    "mrfilter_config_cargs",
     "mrfilter_config_params",
+    "mrfilter_execute",
+    "mrfilter_outputs",
     "mrfilter_params",
+    "mrfilter_various_file_cargs",
     "mrfilter_various_file_params",
+    "mrfilter_various_string_cargs",
     "mrfilter_various_string_params",
 ]

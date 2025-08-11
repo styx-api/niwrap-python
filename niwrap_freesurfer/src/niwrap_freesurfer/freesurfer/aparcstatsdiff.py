@@ -14,7 +14,7 @@ APARCSTATSDIFF_METADATA = Metadata(
 
 
 AparcstatsdiffParameters = typing.TypedDict('AparcstatsdiffParameters', {
-    "__STYXTYPE__": typing.Literal["aparcstatsdiff"],
+    "@type": typing.Literal["freesurfer.aparcstatsdiff"],
     "subj1": str,
     "subj2": str,
     "hemi": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "aparcstatsdiff": aparcstatsdiff_cargs,
+        "freesurfer.aparcstatsdiff": aparcstatsdiff_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "aparcstatsdiff": aparcstatsdiff_outputs,
+        "freesurfer.aparcstatsdiff": aparcstatsdiff_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def aparcstatsdiff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "aparcstatsdiff",
+        "@type": "freesurfer.aparcstatsdiff",
         "subj1": subj1,
         "subj2": subj2,
         "hemi": hemi,
@@ -216,5 +216,8 @@ __all__ = [
     "AparcstatsdiffOutputs",
     "AparcstatsdiffParameters",
     "aparcstatsdiff",
+    "aparcstatsdiff_cargs",
+    "aparcstatsdiff_execute",
+    "aparcstatsdiff_outputs",
     "aparcstatsdiff_params",
 ]

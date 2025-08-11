@@ -14,7 +14,7 @@ ORIENT_LAS_METADATA = Metadata(
 
 
 OrientLasParameters = typing.TypedDict('OrientLasParameters', {
-    "__STYXTYPE__": typing.Literal["orientLAS"],
+    "@type": typing.Literal["freesurfer.orientLAS"],
     "input_image": InputPathType,
     "output_image": str,
     "check": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "orientLAS": orient_las_cargs,
+        "freesurfer.orientLAS": orient_las_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "orientLAS": orient_las_outputs,
+        "freesurfer.orientLAS": orient_las_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def orient_las_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "orientLAS",
+        "@type": "freesurfer.orientLAS",
         "input_image": input_image,
         "output_image": output_image,
         "check": check,
@@ -191,5 +191,8 @@ __all__ = [
     "OrientLasOutputs",
     "OrientLasParameters",
     "orient_las",
+    "orient_las_cargs",
+    "orient_las_execute",
+    "orient_las_outputs",
     "orient_las_params",
 ]

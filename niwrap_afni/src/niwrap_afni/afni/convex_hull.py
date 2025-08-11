@@ -14,7 +14,7 @@ CONVEX_HULL_METADATA = Metadata(
 
 
 ConvexHullParameters = typing.TypedDict('ConvexHullParameters', {
-    "__STYXTYPE__": typing.Literal["ConvexHull"],
+    "@type": typing.Literal["afni.ConvexHull"],
     "vol": typing.NotRequired[InputPathType | None],
     "isoval": typing.NotRequired[float | None],
     "isorange": typing.NotRequired[list[float] | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ConvexHull": convex_hull_cargs,
+        "afni.ConvexHull": convex_hull_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ConvexHull": convex_hull_outputs,
+        "afni.ConvexHull": convex_hull_outputs,
     }.get(t)
 
 
@@ -128,7 +128,7 @@ def convex_hull_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ConvexHull",
+        "@type": "afni.ConvexHull",
         "proj_xy": proj_xy,
         "orig_coord": orig_coord,
         "novolreg": novolreg,
@@ -382,5 +382,8 @@ __all__ = [
     "ConvexHullOutputs",
     "ConvexHullParameters",
     "convex_hull",
+    "convex_hull_cargs",
+    "convex_hull_execute",
+    "convex_hull_outputs",
     "convex_hull_params",
 ]

@@ -14,7 +14,7 @@ V_3D_BALL_MATCH_METADATA = Metadata(
 
 
 V3dBallMatchParameters = typing.TypedDict('V3dBallMatchParameters', {
-    "__STYXTYPE__": typing.Literal["3dBallMatch"],
+    "@type": typing.Literal["afni.3dBallMatch"],
     "input_dataset": InputPathType,
     "radius": typing.NotRequired[float | None],
     "dataset_option": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dBallMatch": v_3d_ball_match_cargs,
+        "afni.3dBallMatch": v_3d_ball_match_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dBallMatch": v_3d_ball_match_outputs,
+        "afni.3dBallMatch": v_3d_ball_match_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v_3d_ball_match_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dBallMatch",
+        "@type": "afni.3dBallMatch",
         "input_dataset": input_dataset,
     }
     if radius is not None:
@@ -225,5 +225,8 @@ __all__ = [
     "V3dBallMatchParameters",
     "V_3D_BALL_MATCH_METADATA",
     "v_3d_ball_match",
+    "v_3d_ball_match_cargs",
+    "v_3d_ball_match_execute",
+    "v_3d_ball_match_outputs",
     "v_3d_ball_match_params",
 ]

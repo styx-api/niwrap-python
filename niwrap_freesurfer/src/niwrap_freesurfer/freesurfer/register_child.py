@@ -14,7 +14,7 @@ REGISTER_CHILD_METADATA = Metadata(
 
 
 RegisterChildParameters = typing.TypedDict('RegisterChildParameters', {
-    "__STYXTYPE__": typing.Literal["register_child"],
+    "@type": typing.Literal["freesurfer.register_child"],
     "input_volume": InputPathType,
     "output_directory": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "register_child": register_child_cargs,
+        "freesurfer.register_child": register_child_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "register_child": register_child_outputs,
+        "freesurfer.register_child": register_child_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def register_child_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "register_child",
+        "@type": "freesurfer.register_child",
         "input_volume": input_volume,
         "output_directory": output_directory,
     }
@@ -183,5 +183,8 @@ __all__ = [
     "RegisterChildOutputs",
     "RegisterChildParameters",
     "register_child",
+    "register_child_cargs",
+    "register_child_execute",
+    "register_child_outputs",
     "register_child_params",
 ]

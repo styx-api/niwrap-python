@@ -14,7 +14,7 @@ ALIGN_EPI_ANAT_METADATA = Metadata(
 
 
 AlignEpiAnatParameters = typing.TypedDict('AlignEpiAnatParameters', {
-    "__STYXTYPE__": typing.Literal["align_epi_anat"],
+    "@type": typing.Literal["afni.align_epi_anat"],
     "epi": InputPathType,
     "anat": InputPathType,
     "epi_base": str,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "align_epi_anat": align_epi_anat_cargs,
+        "afni.align_epi_anat": align_epi_anat_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "align_epi_anat": align_epi_anat_outputs,
+        "afni.align_epi_anat": align_epi_anat_outputs,
     }.get(t)
 
 
@@ -126,7 +126,7 @@ def align_epi_anat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "align_epi_anat",
+        "@type": "afni.align_epi_anat",
         "epi": epi,
         "anat": anat,
         "epi_base": epi_base,
@@ -352,5 +352,8 @@ __all__ = [
     "AlignEpiAnatOutputs",
     "AlignEpiAnatParameters",
     "align_epi_anat",
+    "align_epi_anat_cargs",
+    "align_epi_anat_execute",
+    "align_epi_anat_outputs",
     "align_epi_anat_params",
 ]

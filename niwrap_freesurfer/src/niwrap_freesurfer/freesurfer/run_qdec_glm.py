@@ -14,7 +14,7 @@ RUN_QDEC_GLM_METADATA = Metadata(
 
 
 RunQdecGlmParameters = typing.TypedDict('RunQdecGlmParameters', {
-    "__STYXTYPE__": typing.Literal["run-qdec-glm"],
+    "@type": typing.Literal["freesurfer.run-qdec-glm"],
     "qdec_directory": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run-qdec-glm": run_qdec_glm_cargs,
+        "freesurfer.run-qdec-glm": run_qdec_glm_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def run_qdec_glm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run-qdec-glm",
+        "@type": "freesurfer.run-qdec-glm",
         "qdec_directory": qdec_directory,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "RunQdecGlmOutputs",
     "RunQdecGlmParameters",
     "run_qdec_glm",
+    "run_qdec_glm_cargs",
+    "run_qdec_glm_execute",
+    "run_qdec_glm_outputs",
     "run_qdec_glm_params",
 ]

@@ -14,7 +14,7 @@ FIDUCIALS_CORRECTION_METADATA = Metadata(
 
 
 FiducialsCorrectionParameters = typing.TypedDict('FiducialsCorrectionParameters', {
-    "__STYXTYPE__": typing.Literal["fiducials_correction"],
+    "@type": typing.Literal["freesurfer.fiducials_correction"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fiducials_correction": fiducials_correction_cargs,
+        "freesurfer.fiducials_correction": fiducials_correction_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fiducials_correction": fiducials_correction_outputs,
+        "freesurfer.fiducials_correction": fiducials_correction_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def fiducials_correction_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fiducials_correction",
+        "@type": "freesurfer.fiducials_correction",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -186,5 +186,8 @@ __all__ = [
     "FiducialsCorrectionOutputs",
     "FiducialsCorrectionParameters",
     "fiducials_correction",
+    "fiducials_correction_cargs",
+    "fiducials_correction_execute",
+    "fiducials_correction_outputs",
     "fiducials_correction_params",
 ]

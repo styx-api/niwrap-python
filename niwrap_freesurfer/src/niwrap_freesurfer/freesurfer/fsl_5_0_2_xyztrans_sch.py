@@ -14,7 +14,7 @@ FSL_5_0_2_XYZTRANS_SCH_METADATA = Metadata(
 
 
 Fsl502XyztransSchParameters = typing.TypedDict('Fsl502XyztransSchParameters', {
-    "__STYXTYPE__": typing.Literal["fsl.5.0.2.xyztrans.sch"],
+    "@type": typing.Literal["freesurfer.fsl.5.0.2.xyztrans.sch"],
     "term_option": typing.NotRequired[str | None],
     "version_flag": bool,
     "no_scrollback_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl.5.0.2.xyztrans.sch": fsl_5_0_2_xyztrans_sch_cargs,
+        "freesurfer.fsl.5.0.2.xyztrans.sch": fsl_5_0_2_xyztrans_sch_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fsl_5_0_2_xyztrans_sch_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl.5.0.2.xyztrans.sch",
+        "@type": "freesurfer.fsl.5.0.2.xyztrans.sch",
         "version_flag": version_flag,
         "no_scrollback_flag": no_scrollback_flag,
     }
@@ -191,5 +191,8 @@ __all__ = [
     "Fsl502XyztransSchOutputs",
     "Fsl502XyztransSchParameters",
     "fsl_5_0_2_xyztrans_sch",
+    "fsl_5_0_2_xyztrans_sch_cargs",
+    "fsl_5_0_2_xyztrans_sch_execute",
+    "fsl_5_0_2_xyztrans_sch_outputs",
     "fsl_5_0_2_xyztrans_sch_params",
 ]

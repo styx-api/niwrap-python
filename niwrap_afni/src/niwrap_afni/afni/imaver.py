@@ -14,7 +14,7 @@ IMAVER_METADATA = Metadata(
 
 
 ImaverParameters = typing.TypedDict('ImaverParameters', {
-    "__STYXTYPE__": typing.Literal["imaver"],
+    "@type": typing.Literal["afni.imaver"],
     "out_ave": typing.NotRequired[str | None],
     "out_sig": typing.NotRequired[str | None],
     "input_images": list[InputPathType],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imaver": imaver_cargs,
+        "afni.imaver": imaver_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imaver": imaver_outputs,
+        "afni.imaver": imaver_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def imaver_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imaver",
+        "@type": "afni.imaver",
         "input_images": input_images,
     }
     if out_ave is not None:
@@ -197,5 +197,8 @@ __all__ = [
     "ImaverOutputs",
     "ImaverParameters",
     "imaver",
+    "imaver_cargs",
+    "imaver_execute",
+    "imaver_outputs",
     "imaver_params",
 ]

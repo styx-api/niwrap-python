@@ -14,7 +14,7 @@ TBSS_1_PREPROC_METADATA = Metadata(
 
 
 Tbss1PreprocParameters = typing.TypedDict('Tbss1PreprocParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_1_preproc"],
+    "@type": typing.Literal["fsl.tbss_1_preproc"],
     "images": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_1_preproc": tbss_1_preproc_cargs,
+        "fsl.tbss_1_preproc": tbss_1_preproc_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def tbss_1_preproc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_1_preproc",
+        "@type": "fsl.tbss_1_preproc",
         "images": images,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "Tbss1PreprocOutputs",
     "Tbss1PreprocParameters",
     "tbss_1_preproc",
+    "tbss_1_preproc_cargs",
+    "tbss_1_preproc_execute",
+    "tbss_1_preproc_outputs",
     "tbss_1_preproc_params",
 ]

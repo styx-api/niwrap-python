@@ -14,14 +14,14 @@ FIXEL2VOXEL_METADATA = Metadata(
 
 
 Fixel2voxelConfigParameters = typing.TypedDict('Fixel2voxelConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixel2voxel.config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2voxelParameters = typing.TypedDict('Fixel2voxelParameters', {
-    "__STYXTYPE__": typing.Literal["fixel2voxel"],
+    "@type": typing.Literal["mrtrix.fixel2voxel"],
     "number": typing.NotRequired[int | None],
     "fill": typing.NotRequired[float | None],
     "weighted": typing.NotRequired[InputPathType | None],
@@ -51,8 +51,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixel2voxel": fixel2voxel_cargs,
-        "config": fixel2voxel_config_cargs,
+        "mrtrix.fixel2voxel": fixel2voxel_cargs,
+        "mrtrix.fixel2voxel.config": fixel2voxel_config_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixel2voxel": fixel2voxel_outputs,
+        "mrtrix.fixel2voxel": fixel2voxel_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def fixel2voxel_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixel2voxel.config",
         "key": key,
         "value": value,
     }
@@ -170,7 +170,7 @@ def fixel2voxel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixel2voxel",
+        "@type": "mrtrix.fixel2voxel",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -238,7 +238,7 @@ def fixel2voxel_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -432,6 +432,10 @@ __all__ = [
     "Fixel2voxelOutputs",
     "Fixel2voxelParameters",
     "fixel2voxel",
+    "fixel2voxel_cargs",
+    "fixel2voxel_config_cargs",
     "fixel2voxel_config_params",
+    "fixel2voxel_execute",
+    "fixel2voxel_outputs",
     "fixel2voxel_params",
 ]

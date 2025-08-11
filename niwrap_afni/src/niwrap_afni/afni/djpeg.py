@@ -14,7 +14,7 @@ DJPEG_METADATA = Metadata(
 
 
 DjpegParameters = typing.TypedDict('DjpegParameters', {
-    "__STYXTYPE__": typing.Literal["djpeg"],
+    "@type": typing.Literal["afni.djpeg"],
     "input_file": InputPathType,
     "output_file": str,
     "gray": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "djpeg": djpeg_cargs,
+        "afni.djpeg": djpeg_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "djpeg": djpeg_outputs,
+        "afni.djpeg": djpeg_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def djpeg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "djpeg",
+        "@type": "afni.djpeg",
         "input_file": input_file,
         "output_file": output_file,
         "gray": gray,
@@ -229,5 +229,8 @@ __all__ = [
     "DjpegOutputs",
     "DjpegParameters",
     "djpeg",
+    "djpeg_cargs",
+    "djpeg_execute",
+    "djpeg_outputs",
     "djpeg_params",
 ]

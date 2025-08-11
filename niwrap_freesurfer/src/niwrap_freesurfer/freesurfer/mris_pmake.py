@@ -14,7 +14,7 @@ MRIS_PMAKE_METADATA = Metadata(
 
 
 MrisPmakeParameters = typing.TypedDict('MrisPmakeParameters', {
-    "__STYXTYPE__": typing.Literal["mris_pmake"],
+    "@type": typing.Literal["freesurfer.mris_pmake"],
     "options_file": typing.NotRequired[str | None],
     "working_dir": typing.NotRequired[str | None],
     "listen_mode": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_pmake": mris_pmake_cargs,
+        "freesurfer.mris_pmake": mris_pmake_cargs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def mris_pmake_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_pmake",
+        "@type": "freesurfer.mris_pmake",
         "listen_mode": listen_mode,
         "subject": subject,
         "hemisphere": hemisphere,
@@ -323,5 +323,8 @@ __all__ = [
     "MrisPmakeOutputs",
     "MrisPmakeParameters",
     "mris_pmake",
+    "mris_pmake_cargs",
+    "mris_pmake_execute",
+    "mris_pmake_outputs",
     "mris_pmake_params",
 ]

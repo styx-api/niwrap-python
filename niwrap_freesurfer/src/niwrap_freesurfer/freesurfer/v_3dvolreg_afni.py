@@ -14,7 +14,7 @@ V_3DVOLREG_AFNI_METADATA = Metadata(
 
 
 V3dvolregAfniParameters = typing.TypedDict('V3dvolregAfniParameters', {
-    "__STYXTYPE__": typing.Literal["3dvolreg.afni"],
+    "@type": typing.Literal["freesurfer.3dvolreg.afni"],
     "input_file": InputPathType,
     "output_file": str,
     "options": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dvolreg.afni": v_3dvolreg_afni_cargs,
+        "freesurfer.3dvolreg.afni": v_3dvolreg_afni_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dvolreg.afni": v_3dvolreg_afni_outputs,
+        "freesurfer.3dvolreg.afni": v_3dvolreg_afni_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v_3dvolreg_afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dvolreg.afni",
+        "@type": "freesurfer.3dvolreg.afni",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "V3dvolregAfniParameters",
     "V_3DVOLREG_AFNI_METADATA",
     "v_3dvolreg_afni",
+    "v_3dvolreg_afni_cargs",
+    "v_3dvolreg_afni_execute",
+    "v_3dvolreg_afni_outputs",
     "v_3dvolreg_afni_params",
 ]

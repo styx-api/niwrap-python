@@ -14,7 +14,7 @@ SPEC_FILE_RELOCATE_METADATA = Metadata(
 
 
 SpecFileRelocateParameters = typing.TypedDict('SpecFileRelocateParameters', {
-    "__STYXTYPE__": typing.Literal["spec-file-relocate"],
+    "@type": typing.Literal["workbench.spec-file-relocate"],
     "input_spec": str,
     "output_spec": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "spec-file-relocate": spec_file_relocate_cargs,
+        "workbench.spec-file-relocate": spec_file_relocate_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def spec_file_relocate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "spec-file-relocate",
+        "@type": "workbench.spec-file-relocate",
         "input_spec": input_spec,
         "output_spec": output_spec,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "SpecFileRelocateOutputs",
     "SpecFileRelocateParameters",
     "spec_file_relocate",
+    "spec_file_relocate_cargs",
+    "spec_file_relocate_execute",
+    "spec_file_relocate_outputs",
     "spec_file_relocate_params",
 ]

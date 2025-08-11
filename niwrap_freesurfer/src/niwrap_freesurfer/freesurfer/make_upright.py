@@ -14,7 +14,7 @@ MAKE_UPRIGHT_METADATA = Metadata(
 
 
 MakeUprightParameters = typing.TypedDict('MakeUprightParameters', {
-    "__STYXTYPE__": typing.Literal["make_upright"],
+    "@type": typing.Literal["freesurfer.make_upright"],
     "input_image": InputPathType,
     "output_image": str,
     "transformation_map": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_upright": make_upright_cargs,
+        "freesurfer.make_upright": make_upright_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_upright": make_upright_outputs,
+        "freesurfer.make_upright": make_upright_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def make_upright_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_upright",
+        "@type": "freesurfer.make_upright",
         "input_image": input_image,
         "output_image": output_image,
         "transformation_map": transformation_map,
@@ -192,5 +192,8 @@ __all__ = [
     "MakeUprightOutputs",
     "MakeUprightParameters",
     "make_upright",
+    "make_upright_cargs",
+    "make_upright_execute",
+    "make_upright_outputs",
     "make_upright_params",
 ]

@@ -14,7 +14,7 @@ V_3D_MEMA_METADATA = Metadata(
 
 
 V3dMemaParameters = typing.TypedDict('V3dMemaParameters', {
-    "__STYXTYPE__": typing.Literal["3dMEMA"],
+    "@type": typing.Literal["afni.3dMEMA"],
     "prefix": str,
     "jobs": typing.NotRequired[float | None],
     "set": list[str],
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMEMA": v_3d_mema_cargs,
+        "afni.3dMEMA": v_3d_mema_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMEMA": v_3d_mema_outputs,
+        "afni.3dMEMA": v_3d_mema_outputs,
     }.get(t)
 
 
@@ -153,7 +153,7 @@ def v_3d_mema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMEMA",
+        "@type": "afni.3dMEMA",
         "prefix": prefix,
         "set": set_,
         "cio": cio,
@@ -465,5 +465,8 @@ __all__ = [
     "V3dMemaParameters",
     "V_3D_MEMA_METADATA",
     "v_3d_mema",
+    "v_3d_mema_cargs",
+    "v_3d_mema_execute",
+    "v_3d_mema_outputs",
     "v_3d_mema_params",
 ]

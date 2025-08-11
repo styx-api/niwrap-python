@@ -14,7 +14,7 @@ MRI_MAP_CPDAT_METADATA = Metadata(
 
 
 MriMapCpdatParameters = typing.TypedDict('MriMapCpdatParameters', {
-    "__STYXTYPE__": typing.Literal["mri_map_cpdat"],
+    "@type": typing.Literal["freesurfer.mri_map_cpdat"],
     "input_file": InputPathType,
     "output_file": str,
     "lta_file": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_map_cpdat": mri_map_cpdat_cargs,
+        "freesurfer.mri_map_cpdat": mri_map_cpdat_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_map_cpdat": mri_map_cpdat_outputs,
+        "freesurfer.mri_map_cpdat": mri_map_cpdat_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def mri_map_cpdat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_map_cpdat",
+        "@type": "freesurfer.mri_map_cpdat",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -240,5 +240,8 @@ __all__ = [
     "MriMapCpdatOutputs",
     "MriMapCpdatParameters",
     "mri_map_cpdat",
+    "mri_map_cpdat_cargs",
+    "mri_map_cpdat_execute",
+    "mri_map_cpdat_outputs",
     "mri_map_cpdat_params",
 ]

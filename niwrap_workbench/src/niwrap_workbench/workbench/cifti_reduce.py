@@ -14,14 +14,14 @@ CIFTI_REDUCE_METADATA = Metadata(
 
 
 CiftiReduceExcludeOutliersParameters = typing.TypedDict('CiftiReduceExcludeOutliersParameters', {
-    "__STYXTYPE__": typing.Literal["exclude_outliers"],
+    "@type": typing.Literal["workbench.cifti-reduce.exclude_outliers"],
     "sigma_below": float,
     "sigma_above": float,
 })
 
 
 CiftiReduceParameters = typing.TypedDict('CiftiReduceParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-reduce"],
+    "@type": typing.Literal["workbench.cifti-reduce"],
     "cifti_in": InputPathType,
     "operation": str,
     "cifti_out": str,
@@ -43,8 +43,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-reduce": cifti_reduce_cargs,
-        "exclude_outliers": cifti_reduce_exclude_outliers_cargs,
+        "workbench.cifti-reduce": cifti_reduce_cargs,
+        "workbench.cifti-reduce.exclude_outliers": cifti_reduce_exclude_outliers_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-reduce": cifti_reduce_outputs,
+        "workbench.cifti-reduce": cifti_reduce_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def cifti_reduce_exclude_outliers_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "exclude_outliers",
+        "@type": "workbench.cifti-reduce.exclude_outliers",
         "sigma_below": sigma_below,
         "sigma_above": sigma_above,
     }
@@ -139,7 +139,7 @@ def cifti_reduce_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-reduce",
+        "@type": "workbench.cifti-reduce",
         "cifti_in": cifti_in,
         "operation": operation,
         "cifti_out": cifti_out,
@@ -177,7 +177,7 @@ def cifti_reduce_cargs(
             params.get("opt_direction_direction")
         ])
     if params.get("exclude_outliers") is not None:
-        cargs.extend(dyn_cargs(params.get("exclude_outliers")["__STYXTYPE__"])(params.get("exclude_outliers"), execution))
+        cargs.extend(dyn_cargs(params.get("exclude_outliers")["@type"])(params.get("exclude_outliers"), execution))
     if params.get("opt_only_numeric"):
         cargs.append("-only-numeric")
     return cargs
@@ -319,6 +319,10 @@ __all__ = [
     "CiftiReduceOutputs",
     "CiftiReduceParameters",
     "cifti_reduce",
+    "cifti_reduce_cargs",
+    "cifti_reduce_exclude_outliers_cargs",
     "cifti_reduce_exclude_outliers_params",
+    "cifti_reduce_execute",
+    "cifti_reduce_outputs",
     "cifti_reduce_params",
 ]

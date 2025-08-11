@@ -14,7 +14,7 @@ METADATA_REMOVE_PROVENANCE_METADATA = Metadata(
 
 
 MetadataRemoveProvenanceParameters = typing.TypedDict('MetadataRemoveProvenanceParameters', {
-    "__STYXTYPE__": typing.Literal["metadata-remove-provenance"],
+    "@type": typing.Literal["workbench.metadata-remove-provenance"],
     "input_file": str,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metadata-remove-provenance": metadata_remove_provenance_cargs,
+        "workbench.metadata-remove-provenance": metadata_remove_provenance_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def metadata_remove_provenance_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metadata-remove-provenance",
+        "@type": "workbench.metadata-remove-provenance",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -181,5 +181,8 @@ __all__ = [
     "MetadataRemoveProvenanceOutputs",
     "MetadataRemoveProvenanceParameters",
     "metadata_remove_provenance",
+    "metadata_remove_provenance_cargs",
+    "metadata_remove_provenance_execute",
+    "metadata_remove_provenance_outputs",
     "metadata_remove_provenance_params",
 ]

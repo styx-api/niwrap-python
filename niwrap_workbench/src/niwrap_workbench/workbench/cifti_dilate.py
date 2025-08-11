@@ -14,28 +14,28 @@ CIFTI_DILATE_METADATA = Metadata(
 
 
 CiftiDilateLeftSurfaceParameters = typing.TypedDict('CiftiDilateLeftSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["left_surface"],
+    "@type": typing.Literal["workbench.cifti-dilate.left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiDilateRightSurfaceParameters = typing.TypedDict('CiftiDilateRightSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["right_surface"],
+    "@type": typing.Literal["workbench.cifti-dilate.right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiDilateCerebellumSurfaceParameters = typing.TypedDict('CiftiDilateCerebellumSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
+    "@type": typing.Literal["workbench.cifti-dilate.cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiDilateParameters = typing.TypedDict('CiftiDilateParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-dilate"],
+    "@type": typing.Literal["workbench.cifti-dilate"],
     "cifti_in": InputPathType,
     "direction": str,
     "surface_distance": float,
@@ -63,10 +63,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-dilate": cifti_dilate_cargs,
-        "left_surface": cifti_dilate_left_surface_cargs,
-        "right_surface": cifti_dilate_right_surface_cargs,
-        "cerebellum_surface": cifti_dilate_cerebellum_surface_cargs,
+        "workbench.cifti-dilate": cifti_dilate_cargs,
+        "workbench.cifti-dilate.left_surface": cifti_dilate_left_surface_cargs,
+        "workbench.cifti-dilate.right_surface": cifti_dilate_right_surface_cargs,
+        "workbench.cifti-dilate.cerebellum_surface": cifti_dilate_cerebellum_surface_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-dilate": cifti_dilate_outputs,
+        "workbench.cifti-dilate": cifti_dilate_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def cifti_dilate_left_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_surface",
+        "@type": "workbench.cifti-dilate.left_surface",
         "surface": surface,
     }
     if opt_left_corrected_areas_area_metric is not None:
@@ -150,7 +150,7 @@ def cifti_dilate_right_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_surface",
+        "@type": "workbench.cifti-dilate.right_surface",
         "surface": surface,
     }
     if opt_right_corrected_areas_area_metric is not None:
@@ -198,7 +198,7 @@ def cifti_dilate_cerebellum_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_surface",
+        "@type": "workbench.cifti-dilate.cerebellum_surface",
         "surface": surface,
     }
     if opt_cerebellum_corrected_areas_area_metric is not None:
@@ -278,7 +278,7 @@ def cifti_dilate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-dilate",
+        "@type": "workbench.cifti-dilate",
         "cifti_in": cifti_in,
         "direction": direction,
         "surface_distance": surface_distance,
@@ -321,11 +321,11 @@ def cifti_dilate_cargs(
     cargs.append(str(params.get("volume_distance")))
     cargs.append(params.get("cifti_out"))
     if params.get("left_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("left_surface")["__STYXTYPE__"])(params.get("left_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("left_surface")["@type"])(params.get("left_surface"), execution))
     if params.get("right_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("right_surface")["__STYXTYPE__"])(params.get("right_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("right_surface")["@type"])(params.get("right_surface"), execution))
     if params.get("cerebellum_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["__STYXTYPE__"])(params.get("cerebellum_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["@type"])(params.get("cerebellum_surface"), execution))
     if params.get("opt_bad_brainordinate_roi_roi_cifti") is not None:
         cargs.extend([
             "-bad-brainordinate-roi",
@@ -486,8 +486,14 @@ __all__ = [
     "CiftiDilateParameters",
     "CiftiDilateRightSurfaceParameters",
     "cifti_dilate",
+    "cifti_dilate_cargs",
+    "cifti_dilate_cerebellum_surface_cargs",
     "cifti_dilate_cerebellum_surface_params",
+    "cifti_dilate_execute",
+    "cifti_dilate_left_surface_cargs",
     "cifti_dilate_left_surface_params",
+    "cifti_dilate_outputs",
     "cifti_dilate_params",
+    "cifti_dilate_right_surface_cargs",
     "cifti_dilate_right_surface_params",
 ]

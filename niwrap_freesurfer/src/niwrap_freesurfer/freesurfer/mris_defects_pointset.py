@@ -14,7 +14,7 @@ MRIS_DEFECTS_POINTSET_METADATA = Metadata(
 
 
 MrisDefectsPointsetParameters = typing.TypedDict('MrisDefectsPointsetParameters', {
-    "__STYXTYPE__": typing.Literal["mris_defects_pointset"],
+    "@type": typing.Literal["freesurfer.mris_defects_pointset"],
     "surface": InputPathType,
     "defects": InputPathType,
     "out": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_defects_pointset": mris_defects_pointset_cargs,
+        "freesurfer.mris_defects_pointset": mris_defects_pointset_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_defects_pointset": mris_defects_pointset_outputs,
+        "freesurfer.mris_defects_pointset": mris_defects_pointset_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mris_defects_pointset_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_defects_pointset",
+        "@type": "freesurfer.mris_defects_pointset",
         "surface": surface,
         "defects": defects,
         "out": out,
@@ -221,5 +221,8 @@ __all__ = [
     "MrisDefectsPointsetOutputs",
     "MrisDefectsPointsetParameters",
     "mris_defects_pointset",
+    "mris_defects_pointset_cargs",
+    "mris_defects_pointset_execute",
+    "mris_defects_pointset_outputs",
     "mris_defects_pointset_params",
 ]

@@ -14,7 +14,7 @@ TRIDEC_METADATA = Metadata(
 
 
 TridecParameters = typing.TypedDict('TridecParameters', {
-    "__STYXTYPE__": typing.Literal["tridec"],
+    "@type": typing.Literal["freesurfer.tridec"],
     "subject_name": str,
     "fine_file": InputPathType,
     "ico_file": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tridec": tridec_cargs,
+        "freesurfer.tridec": tridec_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tridec": tridec_outputs,
+        "freesurfer.tridec": tridec_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def tridec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tridec",
+        "@type": "freesurfer.tridec",
         "subject_name": subject_name,
         "fine_file": fine_file,
         "ico_file": ico_file,
@@ -196,5 +196,8 @@ __all__ = [
     "TridecOutputs",
     "TridecParameters",
     "tridec",
+    "tridec_cargs",
+    "tridec_execute",
+    "tridec_outputs",
     "tridec_params",
 ]

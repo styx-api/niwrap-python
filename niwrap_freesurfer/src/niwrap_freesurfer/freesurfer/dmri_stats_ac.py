@@ -14,7 +14,7 @@ DMRI_STATS_AC_METADATA = Metadata(
 
 
 DmriStatsAcParameters = typing.TypedDict('DmriStatsAcParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_stats_ac"],
+    "@type": typing.Literal["freesurfer.dmri_stats_ac"],
     "anatomicuts_folder": str,
     "num_clusters": int,
     "correspondence_file": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_stats_ac": dmri_stats_ac_cargs,
+        "freesurfer.dmri_stats_ac": dmri_stats_ac_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_stats_ac": dmri_stats_ac_outputs,
+        "freesurfer.dmri_stats_ac": dmri_stats_ac_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def dmri_stats_ac_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_stats_ac",
+        "@type": "freesurfer.dmri_stats_ac",
         "anatomicuts_folder": anatomicuts_folder,
         "num_clusters": num_clusters,
         "correspondence_file": correspondence_file,
@@ -219,5 +219,8 @@ __all__ = [
     "DmriStatsAcOutputs",
     "DmriStatsAcParameters",
     "dmri_stats_ac",
+    "dmri_stats_ac_cargs",
+    "dmri_stats_ac_execute",
+    "dmri_stats_ac_outputs",
     "dmri_stats_ac_params",
 ]

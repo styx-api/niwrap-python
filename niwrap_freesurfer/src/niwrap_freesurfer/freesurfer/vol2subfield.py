@@ -14,7 +14,7 @@ VOL2SUBFIELD_METADATA = Metadata(
 
 
 Vol2subfieldParameters = typing.TypedDict('Vol2subfieldParameters', {
-    "__STYXTYPE__": typing.Literal["vol2subfield"],
+    "@type": typing.Literal["freesurfer.vol2subfield"],
     "input_volume": InputPathType,
     "subfield_volume": InputPathType,
     "registration_file": InputPathType,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vol2subfield": vol2subfield_cargs,
+        "freesurfer.vol2subfield": vol2subfield_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "vol2subfield": vol2subfield_outputs,
+        "freesurfer.vol2subfield": vol2subfield_outputs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def vol2subfield_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vol2subfield",
+        "@type": "freesurfer.vol2subfield",
         "input_volume": input_volume,
         "subfield_volume": subfield_volume,
         "registration_file": registration_file,
@@ -393,5 +393,8 @@ __all__ = [
     "Vol2subfieldOutputs",
     "Vol2subfieldParameters",
     "vol2subfield",
+    "vol2subfield_cargs",
+    "vol2subfield_execute",
+    "vol2subfield_outputs",
     "vol2subfield_params",
 ]

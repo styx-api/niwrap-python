@@ -14,7 +14,7 @@ MRI_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 
 
 MriComputeVolumeFractionsParameters = typing.TypedDict('MriComputeVolumeFractionsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compute_volume_fractions"],
+    "@type": typing.Literal["freesurfer.mri_compute_volume_fractions"],
     "output_stem": str,
     "registration_file": typing.NotRequired[InputPathType | None],
     "regheader": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compute_volume_fractions": mri_compute_volume_fractions_cargs,
+        "freesurfer.mri_compute_volume_fractions": mri_compute_volume_fractions_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_compute_volume_fractions": mri_compute_volume_fractions_outputs,
+        "freesurfer.mri_compute_volume_fractions": mri_compute_volume_fractions_outputs,
     }.get(t)
 
 
@@ -160,7 +160,7 @@ def mri_compute_volume_fractions_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compute_volume_fractions",
+        "@type": "freesurfer.mri_compute_volume_fractions",
         "output_stem": output_stem,
         "no_aseg": no_aseg,
         "no_fill_csf": no_fill_csf,
@@ -478,5 +478,8 @@ __all__ = [
     "MriComputeVolumeFractionsOutputs",
     "MriComputeVolumeFractionsParameters",
     "mri_compute_volume_fractions",
+    "mri_compute_volume_fractions_cargs",
+    "mri_compute_volume_fractions_execute",
+    "mri_compute_volume_fractions_outputs",
     "mri_compute_volume_fractions_params",
 ]

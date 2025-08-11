@@ -14,7 +14,7 @@ CHECK_RECONS_SH_METADATA = Metadata(
 
 
 CheckReconsShParameters = typing.TypedDict('CheckReconsShParameters', {
-    "__STYXTYPE__": typing.Literal["check_recons.sh"],
+    "@type": typing.Literal["freesurfer.check_recons.sh"],
     "subject_directory": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "check_recons.sh": check_recons_sh_cargs,
+        "freesurfer.check_recons.sh": check_recons_sh_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def check_recons_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "check_recons.sh",
+        "@type": "freesurfer.check_recons.sh",
     }
     if subject_directory is not None:
         params["subject_directory"] = subject_directory
@@ -174,5 +174,8 @@ __all__ = [
     "CheckReconsShOutputs",
     "CheckReconsShParameters",
     "check_recons_sh",
+    "check_recons_sh_cargs",
+    "check_recons_sh_execute",
+    "check_recons_sh_outputs",
     "check_recons_sh_params",
 ]

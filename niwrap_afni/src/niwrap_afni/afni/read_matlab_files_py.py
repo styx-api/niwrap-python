@@ -14,7 +14,7 @@ READ_MATLAB_FILES_PY_METADATA = Metadata(
 
 
 ReadMatlabFilesPyParameters = typing.TypedDict('ReadMatlabFilesPyParameters', {
-    "__STYXTYPE__": typing.Literal["read_matlab_files.py"],
+    "@type": typing.Literal["afni.read_matlab_files.py"],
     "infiles": list[str],
     "prefix": typing.NotRequired[str | None],
     "overwrite": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "read_matlab_files.py": read_matlab_files_py_cargs,
+        "afni.read_matlab_files.py": read_matlab_files_py_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "read_matlab_files.py": read_matlab_files_py_outputs,
+        "afni.read_matlab_files.py": read_matlab_files_py_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def read_matlab_files_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "read_matlab_files.py",
+        "@type": "afni.read_matlab_files.py",
         "infiles": infiles,
         "overwrite": overwrite,
         "help": help_,
@@ -221,5 +221,8 @@ __all__ = [
     "ReadMatlabFilesPyOutputs",
     "ReadMatlabFilesPyParameters",
     "read_matlab_files_py",
+    "read_matlab_files_py_cargs",
+    "read_matlab_files_py_execute",
+    "read_matlab_files_py_outputs",
     "read_matlab_files_py_params",
 ]

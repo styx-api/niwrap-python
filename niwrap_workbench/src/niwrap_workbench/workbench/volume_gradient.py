@@ -14,14 +14,14 @@ VOLUME_GRADIENT_METADATA = Metadata(
 
 
 VolumeGradientPresmoothParameters = typing.TypedDict('VolumeGradientPresmoothParameters', {
-    "__STYXTYPE__": typing.Literal["presmooth"],
+    "@type": typing.Literal["workbench.volume-gradient.presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeGradientParameters = typing.TypedDict('VolumeGradientParameters', {
-    "__STYXTYPE__": typing.Literal["volume-gradient"],
+    "@type": typing.Literal["workbench.volume-gradient"],
     "volume_in": InputPathType,
     "volume_out": str,
     "presmooth": typing.NotRequired[VolumeGradientPresmoothParameters | None],
@@ -43,8 +43,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-gradient": volume_gradient_cargs,
-        "presmooth": volume_gradient_presmooth_cargs,
+        "workbench.volume-gradient": volume_gradient_cargs,
+        "workbench.volume-gradient.presmooth": volume_gradient_presmooth_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-gradient": volume_gradient_outputs,
+        "workbench.volume-gradient": volume_gradient_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def volume_gradient_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "presmooth",
+        "@type": "workbench.volume-gradient.presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -144,7 +144,7 @@ def volume_gradient_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-gradient",
+        "@type": "workbench.volume-gradient",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -178,7 +178,7 @@ def volume_gradient_cargs(
     cargs.append(execution.input_file(params.get("volume_in")))
     cargs.append(params.get("volume_out"))
     if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["__STYXTYPE__"])(params.get("presmooth"), execution))
+        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
     if params.get("opt_roi_roi_volume") is not None:
         cargs.extend([
             "-roi",
@@ -305,6 +305,10 @@ __all__ = [
     "VolumeGradientParameters",
     "VolumeGradientPresmoothParameters",
     "volume_gradient",
+    "volume_gradient_cargs",
+    "volume_gradient_execute",
+    "volume_gradient_outputs",
     "volume_gradient_params",
+    "volume_gradient_presmooth_cargs",
     "volume_gradient_presmooth_params",
 ]

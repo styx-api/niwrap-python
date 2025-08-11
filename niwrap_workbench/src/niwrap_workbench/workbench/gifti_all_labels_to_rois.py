@@ -14,7 +14,7 @@ GIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 GiftiAllLabelsToRoisParameters = typing.TypedDict('GiftiAllLabelsToRoisParameters', {
-    "__STYXTYPE__": typing.Literal["gifti-all-labels-to-rois"],
+    "@type": typing.Literal["workbench.gifti-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "metric_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gifti-all-labels-to-rois": gifti_all_labels_to_rois_cargs,
+        "workbench.gifti-all-labels-to-rois": gifti_all_labels_to_rois_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gifti-all-labels-to-rois": gifti_all_labels_to_rois_outputs,
+        "workbench.gifti-all-labels-to-rois": gifti_all_labels_to_rois_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def gifti_all_labels_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gifti-all-labels-to-rois",
+        "@type": "workbench.gifti-all-labels-to-rois",
         "label_in": label_in,
         "map": map_,
         "metric_out": metric_out,
@@ -197,5 +197,8 @@ __all__ = [
     "GiftiAllLabelsToRoisOutputs",
     "GiftiAllLabelsToRoisParameters",
     "gifti_all_labels_to_rois",
+    "gifti_all_labels_to_rois_cargs",
+    "gifti_all_labels_to_rois_execute",
+    "gifti_all_labels_to_rois_outputs",
     "gifti_all_labels_to_rois_params",
 ]

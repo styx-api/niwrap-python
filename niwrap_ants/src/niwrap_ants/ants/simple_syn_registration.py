@@ -14,7 +14,7 @@ SIMPLE_SYN_REGISTRATION_METADATA = Metadata(
 
 
 SimpleSynRegistrationParameters = typing.TypedDict('SimpleSynRegistrationParameters', {
-    "__STYXTYPE__": typing.Literal["simpleSynRegistration"],
+    "@type": typing.Literal["ants.simpleSynRegistration"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initial_transform": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "simpleSynRegistration": simple_syn_registration_cargs,
+        "ants.simpleSynRegistration": simple_syn_registration_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "simpleSynRegistration": simple_syn_registration_outputs,
+        "ants.simpleSynRegistration": simple_syn_registration_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def simple_syn_registration_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "simpleSynRegistration",
+        "@type": "ants.simpleSynRegistration",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "initial_transform": initial_transform,
@@ -199,5 +199,8 @@ __all__ = [
     "SimpleSynRegistrationOutputs",
     "SimpleSynRegistrationParameters",
     "simple_syn_registration",
+    "simple_syn_registration_cargs",
+    "simple_syn_registration_execute",
+    "simple_syn_registration_outputs",
     "simple_syn_registration_params",
 ]

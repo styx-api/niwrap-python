@@ -14,7 +14,7 @@ GROUPSTATSDIFF_METADATA = Metadata(
 
 
 GroupstatsdiffParameters = typing.TypedDict('GroupstatsdiffParameters', {
-    "__STYXTYPE__": typing.Literal["groupstatsdiff"],
+    "@type": typing.Literal["freesurfer.groupstatsdiff"],
     "group1_dir": str,
     "group2_dir": str,
     "output_dir": str,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "groupstatsdiff": groupstatsdiff_cargs,
+        "freesurfer.groupstatsdiff": groupstatsdiff_cargs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def groupstatsdiff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "groupstatsdiff",
+        "@type": "freesurfer.groupstatsdiff",
         "group1_dir": group1_dir,
         "group2_dir": group2_dir,
         "output_dir": output_dir,
@@ -372,5 +372,8 @@ __all__ = [
     "GroupstatsdiffOutputs",
     "GroupstatsdiffParameters",
     "groupstatsdiff",
+    "groupstatsdiff_cargs",
+    "groupstatsdiff_execute",
+    "groupstatsdiff_outputs",
     "groupstatsdiff_params",
 ]

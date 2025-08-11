@@ -14,7 +14,7 @@ DMRI_NEIGHBORING_REGIONS_METADATA = Metadata(
 
 
 DmriNeighboringRegionsParameters = typing.TypedDict('DmriNeighboringRegionsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_neighboringRegions"],
+    "@type": typing.Literal["freesurfer.dmri_neighboringRegions"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_neighboringRegions": dmri_neighboring_regions_cargs,
+        "freesurfer.dmri_neighboringRegions": dmri_neighboring_regions_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_neighboringRegions": dmri_neighboring_regions_outputs,
+        "freesurfer.dmri_neighboringRegions": dmri_neighboring_regions_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dmri_neighboring_regions_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_neighboringRegions",
+        "@type": "freesurfer.dmri_neighboringRegions",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "DmriNeighboringRegionsOutputs",
     "DmriNeighboringRegionsParameters",
     "dmri_neighboring_regions",
+    "dmri_neighboring_regions_cargs",
+    "dmri_neighboring_regions_execute",
+    "dmri_neighboring_regions_outputs",
     "dmri_neighboring_regions_params",
 ]

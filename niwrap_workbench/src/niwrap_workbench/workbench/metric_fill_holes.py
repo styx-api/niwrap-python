@@ -14,7 +14,7 @@ METRIC_FILL_HOLES_METADATA = Metadata(
 
 
 MetricFillHolesParameters = typing.TypedDict('MetricFillHolesParameters', {
-    "__STYXTYPE__": typing.Literal["metric-fill-holes"],
+    "@type": typing.Literal["workbench.metric-fill-holes"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-fill-holes": metric_fill_holes_cargs,
+        "workbench.metric-fill-holes": metric_fill_holes_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-fill-holes": metric_fill_holes_outputs,
+        "workbench.metric-fill-holes": metric_fill_holes_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def metric_fill_holes_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-fill-holes",
+        "@type": "workbench.metric-fill-holes",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -212,5 +212,8 @@ __all__ = [
     "MetricFillHolesOutputs",
     "MetricFillHolesParameters",
     "metric_fill_holes",
+    "metric_fill_holes_cargs",
+    "metric_fill_holes_execute",
+    "metric_fill_holes_outputs",
     "metric_fill_holes_params",
 ]

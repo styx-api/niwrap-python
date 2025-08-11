@@ -14,7 +14,7 @@ FS_UPDATE_METADATA = Metadata(
 
 
 FsUpdateParameters = typing.TypedDict('FsUpdateParameters', {
-    "__STYXTYPE__": typing.Literal["fs_update"],
+    "@type": typing.Literal["freesurfer.fs_update"],
     "update_path": typing.NotRequired[str | None],
     "help_short": bool,
     "help_medium": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_update": fs_update_cargs,
+        "freesurfer.fs_update": fs_update_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def fs_update_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_update",
+        "@type": "freesurfer.fs_update",
         "help_short": help_short,
         "help_medium": help_medium,
         "help_long": help_long,
@@ -199,5 +199,8 @@ __all__ = [
     "FsUpdateOutputs",
     "FsUpdateParameters",
     "fs_update",
+    "fs_update_cargs",
+    "fs_update_execute",
+    "fs_update_outputs",
     "fs_update_params",
 ]

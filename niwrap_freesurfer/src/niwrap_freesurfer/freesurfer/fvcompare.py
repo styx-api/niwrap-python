@@ -14,7 +14,7 @@ FVCOMPARE_METADATA = Metadata(
 
 
 FvcompareParameters = typing.TypedDict('FvcompareParameters', {
-    "__STYXTYPE__": typing.Literal["fvcompare"],
+    "@type": typing.Literal["freesurfer.fvcompare"],
     "subject1": str,
     "subject2": str,
     "subject_dir1": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fvcompare": fvcompare_cargs,
+        "freesurfer.fvcompare": fvcompare_cargs,
     }.get(t)
 
 
@@ -145,7 +145,7 @@ def fvcompare_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fvcompare",
+        "@type": "freesurfer.fvcompare",
         "subject1": subject1,
         "subject2": subject2,
         "aseg": aseg,
@@ -449,5 +449,8 @@ __all__ = [
     "FvcompareOutputs",
     "FvcompareParameters",
     "fvcompare",
+    "fvcompare_cargs",
+    "fvcompare_execute",
+    "fvcompare_outputs",
     "fvcompare_params",
 ]

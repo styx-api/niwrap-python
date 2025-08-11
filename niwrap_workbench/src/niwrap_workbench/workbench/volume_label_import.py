@@ -14,7 +14,7 @@ VOLUME_LABEL_IMPORT_METADATA = Metadata(
 
 
 VolumeLabelImportParameters = typing.TypedDict('VolumeLabelImportParameters', {
-    "__STYXTYPE__": typing.Literal["volume-label-import"],
+    "@type": typing.Literal["workbench.volume-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-label-import": volume_label_import_cargs,
+        "workbench.volume-label-import": volume_label_import_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-label-import": volume_label_import_outputs,
+        "workbench.volume-label-import": volume_label_import_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def volume_label_import_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-label-import",
+        "@type": "workbench.volume-label-import",
         "input": input_,
         "label_list_file": label_list_file,
         "output": output,
@@ -293,5 +293,8 @@ __all__ = [
     "VolumeLabelImportOutputs",
     "VolumeLabelImportParameters",
     "volume_label_import",
+    "volume_label_import_cargs",
+    "volume_label_import_execute",
+    "volume_label_import_outputs",
     "volume_label_import_params",
 ]

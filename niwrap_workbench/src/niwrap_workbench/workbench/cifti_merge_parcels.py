@@ -14,13 +14,13 @@ CIFTI_MERGE_PARCELS_METADATA = Metadata(
 
 
 CiftiMergeParcelsCiftiParameters = typing.TypedDict('CiftiMergeParcelsCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti"],
+    "@type": typing.Literal["workbench.cifti-merge-parcels.cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiMergeParcelsParameters = typing.TypedDict('CiftiMergeParcelsParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-merge-parcels"],
+    "@type": typing.Literal["workbench.cifti-merge-parcels"],
     "direction": str,
     "cifti_out": str,
     "cifti": typing.NotRequired[list[CiftiMergeParcelsCiftiParameters] | None],
@@ -39,8 +39,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-merge-parcels": cifti_merge_parcels_cargs,
-        "cifti": cifti_merge_parcels_cifti_cargs,
+        "workbench.cifti-merge-parcels": cifti_merge_parcels_cargs,
+        "workbench.cifti-merge-parcels.cifti": cifti_merge_parcels_cifti_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-merge-parcels": cifti_merge_parcels_outputs,
+        "workbench.cifti-merge-parcels": cifti_merge_parcels_outputs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def cifti_merge_parcels_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti",
+        "@type": "workbench.cifti-merge-parcels.cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -123,7 +123,7 @@ def cifti_merge_parcels_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-merge-parcels",
+        "@type": "workbench.cifti-merge-parcels",
         "direction": direction,
         "cifti_out": cifti_out,
     }
@@ -151,7 +151,7 @@ def cifti_merge_parcels_cargs(
     cargs.append(params.get("direction"))
     cargs.append(params.get("cifti_out"))
     if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cifti")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
     return cargs
 
 
@@ -246,6 +246,10 @@ __all__ = [
     "CiftiMergeParcelsOutputs",
     "CiftiMergeParcelsParameters",
     "cifti_merge_parcels",
+    "cifti_merge_parcels_cargs",
+    "cifti_merge_parcels_cifti_cargs",
     "cifti_merge_parcels_cifti_params",
+    "cifti_merge_parcels_execute",
+    "cifti_merge_parcels_outputs",
     "cifti_merge_parcels_params",
 ]

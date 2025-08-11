@@ -14,7 +14,7 @@ V_3D_AUTOMASK_METADATA = Metadata(
 
 
 V3dAutomaskParameters = typing.TypedDict('V3dAutomaskParameters', {
-    "__STYXTYPE__": typing.Literal["3dAutomask"],
+    "@type": typing.Literal["afni.3dAutomask"],
     "prefix": typing.NotRequired[str | None],
     "apply_prefix": typing.NotRequired[str | None],
     "clfrac": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAutomask": v_3d_automask_cargs,
+        "afni.3dAutomask": v_3d_automask_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAutomask": v_3d_automask_outputs,
+        "afni.3dAutomask": v_3d_automask_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v_3d_automask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAutomask",
+        "@type": "afni.3dAutomask",
         "in_file": in_file,
     }
     if prefix is not None:
@@ -254,5 +254,8 @@ __all__ = [
     "V3dAutomaskParameters",
     "V_3D_AUTOMASK_METADATA",
     "v_3d_automask",
+    "v_3d_automask_cargs",
+    "v_3d_automask_execute",
+    "v_3d_automask_outputs",
     "v_3d_automask_params",
 ]

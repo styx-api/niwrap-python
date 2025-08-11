@@ -14,7 +14,7 @@ METRIC_VECTOR_TOWARD_ROI_METADATA = Metadata(
 
 
 MetricVectorTowardRoiParameters = typing.TypedDict('MetricVectorTowardRoiParameters', {
-    "__STYXTYPE__": typing.Literal["metric-vector-toward-roi"],
+    "@type": typing.Literal["workbench.metric-vector-toward-roi"],
     "surface": InputPathType,
     "target_roi": InputPathType,
     "metric_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-vector-toward-roi": metric_vector_toward_roi_cargs,
+        "workbench.metric-vector-toward-roi": metric_vector_toward_roi_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-vector-toward-roi": metric_vector_toward_roi_outputs,
+        "workbench.metric-vector-toward-roi": metric_vector_toward_roi_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def metric_vector_toward_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-vector-toward-roi",
+        "@type": "workbench.metric-vector-toward-roi",
         "surface": surface,
         "target_roi": target_roi,
         "metric_out": metric_out,
@@ -210,5 +210,8 @@ __all__ = [
     "MetricVectorTowardRoiOutputs",
     "MetricVectorTowardRoiParameters",
     "metric_vector_toward_roi",
+    "metric_vector_toward_roi_cargs",
+    "metric_vector_toward_roi_execute",
+    "metric_vector_toward_roi_outputs",
     "metric_vector_toward_roi_params",
 ]

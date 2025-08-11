@@ -14,7 +14,7 @@ SURFACE_INFORMATION_METADATA = Metadata(
 
 
 SurfaceInformationParameters = typing.TypedDict('SurfaceInformationParameters', {
-    "__STYXTYPE__": typing.Literal["surface-information"],
+    "@type": typing.Literal["workbench.surface-information"],
     "surface_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-information": surface_information_cargs,
+        "workbench.surface-information": surface_information_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def surface_information_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-information",
+        "@type": "workbench.surface-information",
         "surface_file": surface_file,
     }
     return params
@@ -175,5 +175,8 @@ __all__ = [
     "SurfaceInformationOutputs",
     "SurfaceInformationParameters",
     "surface_information",
+    "surface_information_cargs",
+    "surface_information_execute",
+    "surface_information_outputs",
     "surface_information_params",
 ]

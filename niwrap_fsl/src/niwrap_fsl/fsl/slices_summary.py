@@ -14,7 +14,7 @@ SLICES_SUMMARY_METADATA = Metadata(
 
 
 SlicesSummaryParameters = typing.TypedDict('SlicesSummaryParameters', {
-    "__STYXTYPE__": typing.Literal["slices_summary"],
+    "@type": typing.Literal["fsl.slices_summary"],
     "4d_input_file": InputPathType,
     "threshold": float,
     "background_image": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slices_summary": slices_summary_cargs,
+        "fsl.slices_summary": slices_summary_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "slices_summary": slices_summary_outputs,
+        "fsl.slices_summary": slices_summary_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def slices_summary_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slices_summary",
+        "@type": "fsl.slices_summary",
         "4d_input_file": v_4d_input_file,
         "threshold": threshold,
         "background_image": background_image,
@@ -256,5 +256,8 @@ __all__ = [
     "SlicesSummaryOutputs",
     "SlicesSummaryParameters",
     "slices_summary",
+    "slices_summary_cargs",
+    "slices_summary_execute",
+    "slices_summary_outputs",
     "slices_summary_params",
 ]

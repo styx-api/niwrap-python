@@ -14,7 +14,7 @@ MRI_HEAD_METADATA = Metadata(
 
 
 MriHeadParameters = typing.TypedDict('MriHeadParameters', {
-    "__STYXTYPE__": typing.Literal["mri_head"],
+    "@type": typing.Literal["freesurfer.mri_head"],
     "identify": bool,
     "read": bool,
     "filename": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_head": mri_head_cargs,
+        "freesurfer.mri_head": mri_head_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_head_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_head",
+        "@type": "freesurfer.mri_head",
         "identify": identify,
         "read": read,
         "help": help_,
@@ -215,5 +215,8 @@ __all__ = [
     "MriHeadOutputs",
     "MriHeadParameters",
     "mri_head",
+    "mri_head_cargs",
+    "mri_head_execute",
+    "mri_head_outputs",
     "mri_head_params",
 ]

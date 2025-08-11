@@ -14,7 +14,7 @@ FSLASCII2IMG_METADATA = Metadata(
 
 
 Fslascii2imgParameters = typing.TypedDict('Fslascii2imgParameters', {
-    "__STYXTYPE__": typing.Literal["fslascii2img"],
+    "@type": typing.Literal["fsl.fslascii2img"],
     "infile": InputPathType,
     "xsize": int,
     "ysize": int,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslascii2img": fslascii2img_cargs,
+        "fsl.fslascii2img": fslascii2img_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslascii2img": fslascii2img_outputs,
+        "fsl.fslascii2img": fslascii2img_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def fslascii2img_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslascii2img",
+        "@type": "fsl.fslascii2img",
         "infile": infile,
         "xsize": xsize,
         "ysize": ysize,
@@ -244,5 +244,8 @@ __all__ = [
     "Fslascii2imgOutputs",
     "Fslascii2imgParameters",
     "fslascii2img",
+    "fslascii2img_cargs",
+    "fslascii2img_execute",
+    "fslascii2img_outputs",
     "fslascii2img_params",
 ]

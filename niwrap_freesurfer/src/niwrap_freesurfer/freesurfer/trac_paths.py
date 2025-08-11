@@ -14,7 +14,7 @@ TRAC_PATHS_METADATA = Metadata(
 
 
 TracPathsParameters = typing.TypedDict('TracPathsParameters', {
-    "__STYXTYPE__": typing.Literal["trac-paths"],
+    "@type": typing.Literal["freesurfer.trac-paths"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "no_log": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "trac-paths": trac_paths_cargs,
+        "freesurfer.trac-paths": trac_paths_cargs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def trac_paths_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "trac-paths",
+        "@type": "freesurfer.trac-paths",
         "dmrirc_file": dmrirc_file,
         "no_log": no_log,
         "no_cmd": no_cmd,
@@ -301,5 +301,8 @@ __all__ = [
     "TracPathsOutputs",
     "TracPathsParameters",
     "trac_paths",
+    "trac_paths_cargs",
+    "trac_paths_execute",
+    "trac_paths_outputs",
     "trac_paths_params",
 ]

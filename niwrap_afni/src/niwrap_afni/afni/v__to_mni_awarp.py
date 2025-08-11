@@ -14,7 +14,7 @@ V__TO_MNI_AWARP_METADATA = Metadata(
 
 
 VToMniAwarpParameters = typing.TypedDict('VToMniAwarpParameters', {
-    "__STYXTYPE__": typing.Literal["@toMNI_Awarp"],
+    "@type": typing.Literal["afni.@toMNI_Awarp"],
     "directory": str,
     "datasets": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@toMNI_Awarp": v__to_mni_awarp_cargs,
+        "afni.@toMNI_Awarp": v__to_mni_awarp_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@toMNI_Awarp": v__to_mni_awarp_outputs,
+        "afni.@toMNI_Awarp": v__to_mni_awarp_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def v__to_mni_awarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@toMNI_Awarp",
+        "@type": "afni.@toMNI_Awarp",
         "directory": directory,
         "datasets": datasets,
     }
@@ -184,5 +184,8 @@ __all__ = [
     "VToMniAwarpParameters",
     "V__TO_MNI_AWARP_METADATA",
     "v__to_mni_awarp",
+    "v__to_mni_awarp_cargs",
+    "v__to_mni_awarp_execute",
+    "v__to_mni_awarp_outputs",
     "v__to_mni_awarp_params",
 ]

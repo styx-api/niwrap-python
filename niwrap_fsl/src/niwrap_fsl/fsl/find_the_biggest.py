@@ -14,7 +14,7 @@ FIND_THE_BIGGEST_METADATA = Metadata(
 
 
 FindTheBiggestParameters = typing.TypedDict('FindTheBiggestParameters', {
-    "__STYXTYPE__": typing.Literal["find_the_biggest"],
+    "@type": typing.Literal["fsl.find_the_biggest"],
     "volumes_surfaces": list[InputPathType],
     "output_index": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "find_the_biggest": find_the_biggest_cargs,
+        "fsl.find_the_biggest": find_the_biggest_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "find_the_biggest": find_the_biggest_outputs,
+        "fsl.find_the_biggest": find_the_biggest_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def find_the_biggest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "find_the_biggest",
+        "@type": "fsl.find_the_biggest",
         "volumes_surfaces": volumes_surfaces,
         "output_index": output_index,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "FindTheBiggestOutputs",
     "FindTheBiggestParameters",
     "find_the_biggest",
+    "find_the_biggest_cargs",
+    "find_the_biggest_execute",
+    "find_the_biggest_outputs",
     "find_the_biggest_params",
 ]

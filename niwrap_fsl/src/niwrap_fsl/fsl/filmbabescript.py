@@ -14,7 +14,7 @@ FILMBABESCRIPT_METADATA = Metadata(
 
 
 FilmbabescriptParameters = typing.TypedDict('FilmbabescriptParameters', {
-    "__STYXTYPE__": typing.Literal["filmbabescript"],
+    "@type": typing.Literal["fsl.filmbabescript"],
     "feat_dir": str,
     "flobs_dir": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "filmbabescript": filmbabescript_cargs,
+        "fsl.filmbabescript": filmbabescript_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def filmbabescript_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "filmbabescript",
+        "@type": "fsl.filmbabescript",
         "feat_dir": feat_dir,
         "flobs_dir": flobs_dir,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "FilmbabescriptOutputs",
     "FilmbabescriptParameters",
     "filmbabescript",
+    "filmbabescript_cargs",
+    "filmbabescript_execute",
+    "filmbabescript_outputs",
     "filmbabescript_params",
 ]

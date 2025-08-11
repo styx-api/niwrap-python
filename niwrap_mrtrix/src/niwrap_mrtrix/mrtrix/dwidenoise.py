@@ -14,14 +14,14 @@ DWIDENOISE_METADATA = Metadata(
 
 
 DwidenoiseConfigParameters = typing.TypedDict('DwidenoiseConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dwidenoise.config"],
     "key": str,
     "value": str,
 })
 
 
 DwidenoiseParameters = typing.TypedDict('DwidenoiseParameters', {
-    "__STYXTYPE__": typing.Literal["dwidenoise"],
+    "@type": typing.Literal["mrtrix.dwidenoise"],
     "mask": typing.NotRequired[InputPathType | None],
     "extent": typing.NotRequired[list[int] | None],
     "noise": typing.NotRequired[str | None],
@@ -52,8 +52,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwidenoise": dwidenoise_cargs,
-        "config": dwidenoise_config_cargs,
+        "mrtrix.dwidenoise": dwidenoise_cargs,
+        "mrtrix.dwidenoise.config": dwidenoise_config_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwidenoise": dwidenoise_outputs,
+        "mrtrix.dwidenoise": dwidenoise_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def dwidenoise_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dwidenoise.config",
         "key": key,
         "value": value,
     }
@@ -183,7 +183,7 @@ def dwidenoise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwidenoise",
+        "@type": "mrtrix.dwidenoise",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -264,7 +264,7 @@ def dwidenoise_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -473,6 +473,10 @@ __all__ = [
     "DwidenoiseOutputs",
     "DwidenoiseParameters",
     "dwidenoise",
+    "dwidenoise_cargs",
+    "dwidenoise_config_cargs",
     "dwidenoise_config_params",
+    "dwidenoise_execute",
+    "dwidenoise_outputs",
     "dwidenoise_params",
 ]

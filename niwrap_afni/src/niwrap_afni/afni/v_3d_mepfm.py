@@ -14,7 +14,7 @@ V_3D_MEPFM_METADATA = Metadata(
 
 
 V3dMepfmParameters = typing.TypedDict('V3dMepfmParameters', {
-    "__STYXTYPE__": typing.Literal["3dMEPFM"],
+    "@type": typing.Literal["afni.3dMEPFM"],
     "input_files": list[str],
     "dbgArgs": bool,
     "mask": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMEPFM": v_3d_mepfm_cargs,
+        "afni.3dMEPFM": v_3d_mepfm_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMEPFM": v_3d_mepfm_outputs,
+        "afni.3dMEPFM": v_3d_mepfm_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def v_3d_mepfm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMEPFM",
+        "@type": "afni.3dMEPFM",
         "input_files": input_files,
         "dbgArgs": dbg_args,
     }
@@ -251,5 +251,8 @@ __all__ = [
     "V3dMepfmParameters",
     "V_3D_MEPFM_METADATA",
     "v_3d_mepfm",
+    "v_3d_mepfm_cargs",
+    "v_3d_mepfm_execute",
+    "v_3d_mepfm_outputs",
     "v_3d_mepfm_params",
 ]

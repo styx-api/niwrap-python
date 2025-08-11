@@ -14,7 +14,7 @@ CHECK_SUBJECT_METADATA = Metadata(
 
 
 CheckSubjectParameters = typing.TypedDict('CheckSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["check_subject"],
+    "@type": typing.Literal["freesurfer.check_subject"],
     "subject_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "check_subject": check_subject_cargs,
+        "freesurfer.check_subject": check_subject_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def check_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "check_subject",
+        "@type": "freesurfer.check_subject",
         "subject_dir": subject_dir,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "CheckSubjectOutputs",
     "CheckSubjectParameters",
     "check_subject",
+    "check_subject_cargs",
+    "check_subject_execute",
+    "check_subject_outputs",
     "check_subject_params",
 ]

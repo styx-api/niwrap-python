@@ -14,7 +14,7 @@ V_1D_CORRELATE_METADATA = Metadata(
 
 
 V1dCorrelateParameters = typing.TypedDict('V1dCorrelateParameters', {
-    "__STYXTYPE__": typing.Literal["1dCorrelate"],
+    "@type": typing.Literal["afni.1dCorrelate"],
     "ktaub": bool,
     "nboot": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dCorrelate": v_1d_correlate_cargs,
+        "afni.1dCorrelate": v_1d_correlate_cargs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v_1d_correlate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dCorrelate",
+        "@type": "afni.1dCorrelate",
         "ktaub": ktaub,
         "block": block,
         "blk": blk,
@@ -252,5 +252,8 @@ __all__ = [
     "V1dCorrelateParameters",
     "V_1D_CORRELATE_METADATA",
     "v_1d_correlate",
+    "v_1d_correlate_cargs",
+    "v_1d_correlate_execute",
+    "v_1d_correlate_outputs",
     "v_1d_correlate_params",
 ]

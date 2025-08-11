@@ -14,7 +14,7 @@ MRIS_DISTANCE_MAP_METADATA = Metadata(
 
 
 MrisDistanceMapParameters = typing.TypedDict('MrisDistanceMapParameters', {
-    "__STYXTYPE__": typing.Literal["mris_distance_map"],
+    "@type": typing.Literal["freesurfer.mris_distance_map"],
     "input_surface_file": InputPathType,
     "output_scalar_field": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_distance_map": mris_distance_map_cargs,
+        "freesurfer.mris_distance_map": mris_distance_map_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_distance_map": mris_distance_map_outputs,
+        "freesurfer.mris_distance_map": mris_distance_map_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_distance_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_distance_map",
+        "@type": "freesurfer.mris_distance_map",
         "input_surface_file": input_surface_file,
         "output_scalar_field": output_scalar_field,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "MrisDistanceMapOutputs",
     "MrisDistanceMapParameters",
     "mris_distance_map",
+    "mris_distance_map_cargs",
+    "mris_distance_map_execute",
+    "mris_distance_map_outputs",
     "mris_distance_map_params",
 ]

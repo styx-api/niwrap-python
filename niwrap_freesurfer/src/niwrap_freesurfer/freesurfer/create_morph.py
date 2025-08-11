@@ -14,7 +14,7 @@ CREATE_MORPH_METADATA = Metadata(
 
 
 CreateMorphParameters = typing.TypedDict('CreateMorphParameters', {
-    "__STYXTYPE__": typing.Literal["createMorph"],
+    "@type": typing.Literal["freesurfer.createMorph"],
     "input_transforms": list[str],
     "output_transform": str,
     "template": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "createMorph": create_morph_cargs,
+        "freesurfer.createMorph": create_morph_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "createMorph": create_morph_outputs,
+        "freesurfer.createMorph": create_morph_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def create_morph_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "createMorph",
+        "@type": "freesurfer.createMorph",
         "input_transforms": input_transforms,
         "output_transform": output_transform,
     }
@@ -229,5 +229,8 @@ __all__ = [
     "CreateMorphOutputs",
     "CreateMorphParameters",
     "create_morph",
+    "create_morph_cargs",
+    "create_morph_execute",
+    "create_morph_outputs",
     "create_morph_params",
 ]

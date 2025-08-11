@@ -14,7 +14,7 @@ GET_AFNI_MODEL_PRF_6_BAD_METADATA = Metadata(
 
 
 GetAfniModelPrf6BadParameters = typing.TypedDict('GetAfniModelPrf6BadParameters', {
-    "__STYXTYPE__": typing.Literal["get_afni_model_PRF_6_BAD"],
+    "@type": typing.Literal["afni.get_afni_model_PRF_6_BAD"],
     "amplitude": float,
     "x_coord": float,
     "y_coord": float,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "get_afni_model_PRF_6_BAD": get_afni_model_prf_6_bad_cargs,
+        "afni.get_afni_model_PRF_6_BAD": get_afni_model_prf_6_bad_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def get_afni_model_prf_6_bad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "get_afni_model_PRF_6_BAD",
+        "@type": "afni.get_afni_model_PRF_6_BAD",
         "amplitude": amplitude,
         "x_coord": x_coord,
         "y_coord": y_coord,
@@ -208,5 +208,8 @@ __all__ = [
     "GetAfniModelPrf6BadOutputs",
     "GetAfniModelPrf6BadParameters",
     "get_afni_model_prf_6_bad",
+    "get_afni_model_prf_6_bad_cargs",
+    "get_afni_model_prf_6_bad_execute",
+    "get_afni_model_prf_6_bad_outputs",
     "get_afni_model_prf_6_bad_params",
 ]

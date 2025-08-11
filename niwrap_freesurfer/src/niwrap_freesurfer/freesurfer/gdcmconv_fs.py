@@ -14,7 +14,7 @@ GDCMCONV_FS_METADATA = Metadata(
 
 
 GdcmconvFsParameters = typing.TypedDict('GdcmconvFsParameters', {
-    "__STYXTYPE__": typing.Literal["gdcmconv.fs"],
+    "@type": typing.Literal["freesurfer.gdcmconv.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "explicit_flag": bool,
@@ -70,7 +70,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gdcmconv.fs": gdcmconv_fs_cargs,
+        "freesurfer.gdcmconv.fs": gdcmconv_fs_cargs,
     }.get(t)
 
 
@@ -191,7 +191,7 @@ def gdcmconv_fs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gdcmconv.fs",
+        "@type": "freesurfer.gdcmconv.fs",
         "input_file": input_file,
         "output_file": output_file,
         "explicit_flag": explicit_flag,
@@ -570,5 +570,8 @@ __all__ = [
     "GdcmconvFsOutputs",
     "GdcmconvFsParameters",
     "gdcmconv_fs",
+    "gdcmconv_fs_cargs",
+    "gdcmconv_fs_execute",
+    "gdcmconv_fs_outputs",
     "gdcmconv_fs_params",
 ]

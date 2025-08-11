@@ -14,14 +14,14 @@ TSFTHRESHOLD_METADATA = Metadata(
 
 
 TsfthresholdConfigParameters = typing.TypedDict('TsfthresholdConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tsfthreshold.config"],
     "key": str,
     "value": str,
 })
 
 
 TsfthresholdParameters = typing.TypedDict('TsfthresholdParameters', {
-    "__STYXTYPE__": typing.Literal["tsfthreshold"],
+    "@type": typing.Literal["mrtrix.tsfthreshold"],
     "invert": bool,
     "info": bool,
     "quiet": bool,
@@ -49,8 +49,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tsfthreshold": tsfthreshold_cargs,
-        "config": tsfthreshold_config_cargs,
+        "mrtrix.tsfthreshold": tsfthreshold_cargs,
+        "mrtrix.tsfthreshold.config": tsfthreshold_config_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tsfthreshold": tsfthreshold_outputs,
+        "mrtrix.tsfthreshold": tsfthreshold_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def tsfthreshold_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tsfthreshold.config",
         "key": key,
         "value": value,
     }
@@ -159,7 +159,7 @@ def tsfthreshold_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tsfthreshold",
+        "@type": "mrtrix.tsfthreshold",
         "invert": invert,
         "info": info,
         "quiet": quiet,
@@ -209,7 +209,7 @@ def tsfthreshold_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -344,6 +344,10 @@ __all__ = [
     "TsfthresholdOutputs",
     "TsfthresholdParameters",
     "tsfthreshold",
+    "tsfthreshold_cargs",
+    "tsfthreshold_config_cargs",
     "tsfthreshold_config_params",
+    "tsfthreshold_execute",
+    "tsfthreshold_outputs",
     "tsfthreshold_params",
 ]

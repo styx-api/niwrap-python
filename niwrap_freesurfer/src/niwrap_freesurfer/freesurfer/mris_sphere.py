@@ -14,7 +14,7 @@ MRIS_SPHERE_METADATA = Metadata(
 
 
 MrisSphereParameters = typing.TypedDict('MrisSphereParameters', {
-    "__STYXTYPE__": typing.Literal["mris_sphere"],
+    "@type": typing.Literal["freesurfer.mris_sphere"],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_sphere": mris_sphere_cargs,
+        "freesurfer.mris_sphere": mris_sphere_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_sphere": mris_sphere_outputs,
+        "freesurfer.mris_sphere": mris_sphere_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mris_sphere_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_sphere",
+        "@type": "freesurfer.mris_sphere",
         "surface_file": surface_file,
         "patch_file": patch_file,
         "output_patch": output_patch,
@@ -188,5 +188,8 @@ __all__ = [
     "MrisSphereOutputs",
     "MrisSphereParameters",
     "mris_sphere",
+    "mris_sphere_cargs",
+    "mris_sphere_execute",
+    "mris_sphere_outputs",
     "mris_sphere_params",
 ]

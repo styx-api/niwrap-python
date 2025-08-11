@@ -14,7 +14,7 @@ FAT_MAT_TABLEIZE_METADATA = Metadata(
 
 
 FatMatTableizeParameters = typing.TypedDict('FatMatTableizeParameters', {
-    "__STYXTYPE__": typing.Literal["fat_mat_tableize"],
+    "@type": typing.Literal["afni.fat_mat_tableize"],
     "input_matrices": list[str],
     "input_csv": typing.NotRequired[InputPathType | None],
     "input_list": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_mat_tableize": fat_mat_tableize_cargs,
+        "afni.fat_mat_tableize": fat_mat_tableize_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_mat_tableize": fat_mat_tableize_outputs,
+        "afni.fat_mat_tableize": fat_mat_tableize_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def fat_mat_tableize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_mat_tableize",
+        "@type": "afni.fat_mat_tableize",
         "input_matrices": input_matrices,
         "output_prefix": output_prefix,
         "version": version,
@@ -288,5 +288,8 @@ __all__ = [
     "FatMatTableizeOutputs",
     "FatMatTableizeParameters",
     "fat_mat_tableize",
+    "fat_mat_tableize_cargs",
+    "fat_mat_tableize_execute",
+    "fat_mat_tableize_outputs",
     "fat_mat_tableize_params",
 ]

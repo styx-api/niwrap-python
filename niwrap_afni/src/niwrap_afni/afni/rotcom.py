@@ -14,7 +14,7 @@ ROTCOM_METADATA = Metadata(
 
 
 RotcomParameters = typing.TypedDict('RotcomParameters', {
-    "__STYXTYPE__": typing.Literal["rotcom"],
+    "@type": typing.Literal["afni.rotcom"],
     "rotate_ashift": str,
     "dataset": typing.NotRequired[InputPathType | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rotcom": rotcom_cargs,
+        "afni.rotcom": rotcom_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "rotcom": rotcom_outputs,
+        "afni.rotcom": rotcom_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def rotcom_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rotcom",
+        "@type": "afni.rotcom",
         "rotate_ashift": rotate_ashift,
     }
     if dataset is not None:
@@ -186,5 +186,8 @@ __all__ = [
     "RotcomOutputs",
     "RotcomParameters",
     "rotcom",
+    "rotcom_cargs",
+    "rotcom_execute",
+    "rotcom_outputs",
     "rotcom_params",
 ]

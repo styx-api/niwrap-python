@@ -14,7 +14,7 @@ LONG_SUBMIT_JOBS_METADATA = Metadata(
 
 
 LongSubmitJobsParameters = typing.TypedDict('LongSubmitJobsParameters', {
-    "__STYXTYPE__": typing.Literal["long_submit_jobs"],
+    "@type": typing.Literal["freesurfer.long_submit_jobs"],
     "qdec": InputPathType,
     "cdir": str,
     "bdir": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_submit_jobs": long_submit_jobs_cargs,
+        "freesurfer.long_submit_jobs": long_submit_jobs_cargs,
     }.get(t)
 
 
@@ -144,7 +144,7 @@ def long_submit_jobs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_submit_jobs",
+        "@type": "freesurfer.long_submit_jobs",
         "qdec": qdec,
         "cdir": cdir,
         "cross": cross,
@@ -455,5 +455,8 @@ __all__ = [
     "LongSubmitJobsOutputs",
     "LongSubmitJobsParameters",
     "long_submit_jobs",
+    "long_submit_jobs_cargs",
+    "long_submit_jobs_execute",
+    "long_submit_jobs_outputs",
     "long_submit_jobs_params",
 ]

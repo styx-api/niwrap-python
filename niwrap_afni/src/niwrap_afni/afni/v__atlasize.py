@@ -14,7 +14,7 @@ V__ATLASIZE_METADATA = Metadata(
 
 
 VAtlasizeParameters = typing.TypedDict('VAtlasizeParameters', {
-    "__STYXTYPE__": typing.Literal["@Atlasize"],
+    "@type": typing.Literal["afni.@Atlasize"],
     "dset": typing.NotRequired[InputPathType | None],
     "space": typing.NotRequired[str | None],
     "lab_file": typing.NotRequired[list[str] | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Atlasize": v__atlasize_cargs,
+        "afni.@Atlasize": v__atlasize_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@Atlasize": v__atlasize_outputs,
+        "afni.@Atlasize": v__atlasize_outputs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def v__atlasize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Atlasize",
+        "@type": "afni.@Atlasize",
         "auto_backup": auto_backup,
         "centers": centers,
         "skip_novoxels": skip_novoxels,
@@ -398,5 +398,8 @@ __all__ = [
     "VAtlasizeParameters",
     "V__ATLASIZE_METADATA",
     "v__atlasize",
+    "v__atlasize_cargs",
+    "v__atlasize_execute",
+    "v__atlasize_outputs",
     "v__atlasize_params",
 ]

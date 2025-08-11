@@ -14,7 +14,7 @@ FS_RUN_FROM_MCR_METADATA = Metadata(
 
 
 FsRunFromMcrParameters = typing.TypedDict('FsRunFromMcrParameters', {
-    "__STYXTYPE__": typing.Literal["fs_run_from_mcr"],
+    "@type": typing.Literal["freesurfer.fs_run_from_mcr"],
     "name": typing.NotRequired[str | None],
     "command": typing.NotRequired[str | None],
     "zeroth_flag": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_run_from_mcr": fs_run_from_mcr_cargs,
+        "freesurfer.fs_run_from_mcr": fs_run_from_mcr_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def fs_run_from_mcr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_run_from_mcr",
+        "@type": "freesurfer.fs_run_from_mcr",
         "zeroth_flag": zeroth_flag,
         "empty_env_flag": empty_env_flag,
     }
@@ -201,5 +201,8 @@ __all__ = [
     "FsRunFromMcrOutputs",
     "FsRunFromMcrParameters",
     "fs_run_from_mcr",
+    "fs_run_from_mcr_cargs",
+    "fs_run_from_mcr_execute",
+    "fs_run_from_mcr_outputs",
     "fs_run_from_mcr_params",
 ]

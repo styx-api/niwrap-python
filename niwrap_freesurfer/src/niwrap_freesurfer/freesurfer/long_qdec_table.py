@@ -14,7 +14,7 @@ LONG_QDEC_TABLE_METADATA = Metadata(
 
 
 LongQdecTableParameters = typing.TypedDict('LongQdecTableParameters', {
-    "__STYXTYPE__": typing.Literal["long_qdec_table"],
+    "@type": typing.Literal["freesurfer.long_qdec_table"],
     "qdec_table": InputPathType,
     "split": typing.NotRequired[str | None],
     "cross_flag": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_qdec_table": long_qdec_table_cargs,
+        "freesurfer.long_qdec_table": long_qdec_table_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "long_qdec_table": long_qdec_table_outputs,
+        "freesurfer.long_qdec_table": long_qdec_table_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def long_qdec_table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_qdec_table",
+        "@type": "freesurfer.long_qdec_table",
         "qdec_table": qdec_table,
         "cross_flag": cross_flag,
     }
@@ -225,5 +225,8 @@ __all__ = [
     "LongQdecTableOutputs",
     "LongQdecTableParameters",
     "long_qdec_table",
+    "long_qdec_table_cargs",
+    "long_qdec_table_execute",
+    "long_qdec_table_outputs",
     "long_qdec_table_params",
 ]

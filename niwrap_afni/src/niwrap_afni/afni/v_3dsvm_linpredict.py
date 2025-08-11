@@ -14,7 +14,7 @@ V_3DSVM_LINPREDICT_METADATA = Metadata(
 
 
 V3dsvmLinpredictParameters = typing.TypedDict('V3dsvmLinpredictParameters', {
-    "__STYXTYPE__": typing.Literal["3dsvm_linpredict"],
+    "@type": typing.Literal["afni.3dsvm_linpredict"],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "weight_vector": InputPathType,
     "input_dataset": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dsvm_linpredict": v_3dsvm_linpredict_cargs,
+        "afni.3dsvm_linpredict": v_3dsvm_linpredict_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dsvm_linpredict": v_3dsvm_linpredict_outputs,
+        "afni.3dsvm_linpredict": v_3dsvm_linpredict_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v_3dsvm_linpredict_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dsvm_linpredict",
+        "@type": "afni.3dsvm_linpredict",
         "weight_vector": weight_vector,
         "input_dataset": input_dataset,
     }
@@ -199,5 +199,8 @@ __all__ = [
     "V3dsvmLinpredictParameters",
     "V_3DSVM_LINPREDICT_METADATA",
     "v_3dsvm_linpredict",
+    "v_3dsvm_linpredict_cargs",
+    "v_3dsvm_linpredict_execute",
+    "v_3dsvm_linpredict_outputs",
     "v_3dsvm_linpredict_params",
 ]

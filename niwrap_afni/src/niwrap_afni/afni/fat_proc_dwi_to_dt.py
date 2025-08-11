@@ -14,7 +14,7 @@ FAT_PROC_DWI_TO_DT_METADATA = Metadata(
 
 
 FatProcDwiToDtParameters = typing.TypedDict('FatProcDwiToDtParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_dwi_to_dt"],
+    "@type": typing.Literal["afni.fat_proc_dwi_to_dt"],
     "in_dwi": InputPathType,
     "in_gradmat": InputPathType,
     "prefix": str,
@@ -59,7 +59,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_dwi_to_dt": fat_proc_dwi_to_dt_cargs,
+        "afni.fat_proc_dwi_to_dt": fat_proc_dwi_to_dt_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_dwi_to_dt": fat_proc_dwi_to_dt_outputs,
+        "afni.fat_proc_dwi_to_dt": fat_proc_dwi_to_dt_outputs,
     }.get(t)
 
 
@@ -173,7 +173,7 @@ def fat_proc_dwi_to_dt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_dwi_to_dt",
+        "@type": "afni.fat_proc_dwi_to_dt",
         "in_dwi": in_dwi,
         "in_gradmat": in_gradmat,
         "prefix": prefix,
@@ -518,5 +518,8 @@ __all__ = [
     "FatProcDwiToDtOutputs",
     "FatProcDwiToDtParameters",
     "fat_proc_dwi_to_dt",
+    "fat_proc_dwi_to_dt_cargs",
+    "fat_proc_dwi_to_dt_execute",
+    "fat_proc_dwi_to_dt_outputs",
     "fat_proc_dwi_to_dt_params",
 ]

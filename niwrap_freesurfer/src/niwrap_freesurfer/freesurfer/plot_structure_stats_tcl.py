@@ -14,7 +14,7 @@ PLOT_STRUCTURE_STATS_TCL_METADATA = Metadata(
 
 
 PlotStructureStatsTclParameters = typing.TypedDict('PlotStructureStatsTclParameters', {
-    "__STYXTYPE__": typing.Literal["plot_structure_stats.tcl"],
+    "@type": typing.Literal["freesurfer.plot_structure_stats.tcl"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "plot_structure_stats.tcl": plot_structure_stats_tcl_cargs,
+        "freesurfer.plot_structure_stats.tcl": plot_structure_stats_tcl_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "plot_structure_stats.tcl": plot_structure_stats_tcl_outputs,
+        "freesurfer.plot_structure_stats.tcl": plot_structure_stats_tcl_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def plot_structure_stats_tcl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "plot_structure_stats.tcl",
+        "@type": "freesurfer.plot_structure_stats.tcl",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "PlotStructureStatsTclOutputs",
     "PlotStructureStatsTclParameters",
     "plot_structure_stats_tcl",
+    "plot_structure_stats_tcl_cargs",
+    "plot_structure_stats_tcl_execute",
+    "plot_structure_stats_tcl_outputs",
     "plot_structure_stats_tcl_params",
 ]

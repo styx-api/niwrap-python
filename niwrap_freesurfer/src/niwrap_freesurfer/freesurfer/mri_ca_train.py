@@ -14,7 +14,7 @@ MRI_CA_TRAIN_METADATA = Metadata(
 
 
 MriCaTrainParameters = typing.TypedDict('MriCaTrainParameters', {
-    "__STYXTYPE__": typing.Literal["mri_ca_train"],
+    "@type": typing.Literal["freesurfer.mri_ca_train"],
     "subjects": list[str],
     "output_gca": str,
     "segmentation": str,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_ca_train": mri_ca_train_cargs,
+        "freesurfer.mri_ca_train": mri_ca_train_cargs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def mri_ca_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_ca_train",
+        "@type": "freesurfer.mri_ca_train",
         "subjects": subjects,
         "output_gca": output_gca,
         "segmentation": segmentation,
@@ -338,5 +338,8 @@ __all__ = [
     "MriCaTrainOutputs",
     "MriCaTrainParameters",
     "mri_ca_train",
+    "mri_ca_train_cargs",
+    "mri_ca_train_execute",
+    "mri_ca_train_outputs",
     "mri_ca_train_params",
 ]

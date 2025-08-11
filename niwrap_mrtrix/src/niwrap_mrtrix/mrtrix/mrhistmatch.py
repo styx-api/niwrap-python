@@ -14,14 +14,14 @@ MRHISTMATCH_METADATA = Metadata(
 
 
 MrhistmatchConfigParameters = typing.TypedDict('MrhistmatchConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrhistmatch.config"],
     "key": str,
     "value": str,
 })
 
 
 MrhistmatchParameters = typing.TypedDict('MrhistmatchParameters', {
-    "__STYXTYPE__": typing.Literal["mrhistmatch"],
+    "@type": typing.Literal["mrtrix.mrhistmatch"],
     "mask_input": typing.NotRequired[InputPathType | None],
     "mask_target": typing.NotRequired[InputPathType | None],
     "bins": typing.NotRequired[int | None],
@@ -52,8 +52,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrhistmatch": mrhistmatch_cargs,
-        "config": mrhistmatch_config_cargs,
+        "mrtrix.mrhistmatch": mrhistmatch_cargs,
+        "mrtrix.mrhistmatch.config": mrhistmatch_config_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrhistmatch": mrhistmatch_outputs,
+        "mrtrix.mrhistmatch": mrhistmatch_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def mrhistmatch_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrhistmatch.config",
         "key": key,
         "value": value,
     }
@@ -171,7 +171,7 @@ def mrhistmatch_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrhistmatch",
+        "@type": "mrtrix.mrhistmatch",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -240,7 +240,7 @@ def mrhistmatch_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -398,6 +398,10 @@ __all__ = [
     "MrhistmatchOutputs",
     "MrhistmatchParameters",
     "mrhistmatch",
+    "mrhistmatch_cargs",
+    "mrhistmatch_config_cargs",
     "mrhistmatch_config_params",
+    "mrhistmatch_execute",
+    "mrhistmatch_outputs",
     "mrhistmatch_params",
 ]

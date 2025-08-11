@@ -14,7 +14,7 @@ METRIC_FIND_CLUSTERS_METADATA = Metadata(
 
 
 MetricFindClustersParameters = typing.TypedDict('MetricFindClustersParameters', {
-    "__STYXTYPE__": typing.Literal["metric-find-clusters"],
+    "@type": typing.Literal["workbench.metric-find-clusters"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "value_threshold": float,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-find-clusters": metric_find_clusters_cargs,
+        "workbench.metric-find-clusters": metric_find_clusters_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-find-clusters": metric_find_clusters_outputs,
+        "workbench.metric-find-clusters": metric_find_clusters_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def metric_find_clusters_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-find-clusters",
+        "@type": "workbench.metric-find-clusters",
         "surface": surface,
         "metric_in": metric_in,
         "value_threshold": value_threshold,
@@ -324,5 +324,8 @@ __all__ = [
     "MetricFindClustersOutputs",
     "MetricFindClustersParameters",
     "metric_find_clusters",
+    "metric_find_clusters_cargs",
+    "metric_find_clusters_execute",
+    "metric_find_clusters_outputs",
     "metric_find_clusters_params",
 ]

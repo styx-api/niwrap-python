@@ -14,7 +14,7 @@ MBA_METADATA = Metadata(
 
 
 MbaParameters = typing.TypedDict('MbaParameters', {
-    "__STYXTYPE__": typing.Literal["MBA"],
+    "@type": typing.Literal["afni.MBA"],
     "prefix": str,
     "chains": typing.NotRequired[int | None],
     "iterations": typing.NotRequired[int | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "MBA": mba_cargs,
+        "afni.MBA": mba_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "MBA": mba_outputs,
+        "afni.MBA": mba_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def mba_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "MBA",
+        "@type": "afni.MBA",
         "prefix": prefix,
         "data_table": data_table,
         "dbgArgs": dbg_args,
@@ -356,5 +356,8 @@ __all__ = [
     "MbaOutputs",
     "MbaParameters",
     "mba",
+    "mba_cargs",
+    "mba_execute",
+    "mba_outputs",
     "mba_params",
 ]

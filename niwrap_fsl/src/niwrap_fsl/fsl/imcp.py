@@ -14,7 +14,7 @@ IMCP_METADATA = Metadata(
 
 
 ImcpParameters = typing.TypedDict('ImcpParameters', {
-    "__STYXTYPE__": typing.Literal["imcp"],
+    "@type": typing.Literal["fsl.imcp"],
     "infiles": list[InputPathType],
     "output_location": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imcp": imcp_cargs,
+        "fsl.imcp": imcp_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imcp": imcp_outputs,
+        "fsl.imcp": imcp_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def imcp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imcp",
+        "@type": "fsl.imcp",
         "infiles": infiles,
         "output_location": output_location,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "ImcpOutputs",
     "ImcpParameters",
     "imcp",
+    "imcp_cargs",
+    "imcp_execute",
+    "imcp_outputs",
     "imcp_params",
 ]

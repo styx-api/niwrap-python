@@ -14,7 +14,7 @@ SFA2FIELDSIGN_METADATA = Metadata(
 
 
 Sfa2fieldsignParameters = typing.TypedDict('Sfa2fieldsignParameters', {
-    "__STYXTYPE__": typing.Literal["sfa2fieldsign"],
+    "@type": typing.Literal["freesurfer.sfa2fieldsign"],
     "sfadir": str,
     "register_dat": str,
     "threshold": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sfa2fieldsign": sfa2fieldsign_cargs,
+        "freesurfer.sfa2fieldsign": sfa2fieldsign_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sfa2fieldsign": sfa2fieldsign_outputs,
+        "freesurfer.sfa2fieldsign": sfa2fieldsign_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def sfa2fieldsign_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sfa2fieldsign",
+        "@type": "freesurfer.sfa2fieldsign",
         "sfadir": sfadir,
         "register_dat": register_dat,
         "occip": occip,
@@ -295,5 +295,8 @@ __all__ = [
     "Sfa2fieldsignOutputs",
     "Sfa2fieldsignParameters",
     "sfa2fieldsign",
+    "sfa2fieldsign_cargs",
+    "sfa2fieldsign_execute",
+    "sfa2fieldsign_outputs",
     "sfa2fieldsign_params",
 ]

@@ -14,7 +14,7 @@ MRI_MS_FITPARMS_METADATA = Metadata(
 
 
 MriMsFitparmsParameters = typing.TypedDict('MriMsFitparmsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_ms_fitparms"],
+    "@type": typing.Literal["freesurfer.mri_ms_fitparms"],
     "volumes": list[InputPathType],
     "output_dir": str,
     "afi_flag": bool,
@@ -66,7 +66,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_ms_fitparms": mri_ms_fitparms_cargs,
+        "freesurfer.mri_ms_fitparms": mri_ms_fitparms_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_ms_fitparms": mri_ms_fitparms_outputs,
+        "freesurfer.mri_ms_fitparms": mri_ms_fitparms_outputs,
     }.get(t)
 
 
@@ -191,7 +191,7 @@ def mri_ms_fitparms_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_ms_fitparms",
+        "@type": "freesurfer.mri_ms_fitparms",
         "volumes": volumes,
         "output_dir": output_dir,
         "afi_flag": afi_flag,
@@ -573,5 +573,8 @@ __all__ = [
     "MriMsFitparmsOutputs",
     "MriMsFitparmsParameters",
     "mri_ms_fitparms",
+    "mri_ms_fitparms_cargs",
+    "mri_ms_fitparms_execute",
+    "mri_ms_fitparms_outputs",
     "mri_ms_fitparms_params",
 ]

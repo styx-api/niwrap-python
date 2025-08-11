@@ -14,7 +14,7 @@ MRI_DISTANCE_TRANSFORM_METADATA = Metadata(
 
 
 MriDistanceTransformParameters = typing.TypedDict('MriDistanceTransformParameters', {
-    "__STYXTYPE__": typing.Literal["mri_distance_transform"],
+    "@type": typing.Literal["freesurfer.mri_distance_transform"],
     "input_volume": InputPathType,
     "label": int,
     "max_distance": int,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_distance_transform": mri_distance_transform_cargs,
+        "freesurfer.mri_distance_transform": mri_distance_transform_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_distance_transform": mri_distance_transform_outputs,
+        "freesurfer.mri_distance_transform": mri_distance_transform_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def mri_distance_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_distance_transform",
+        "@type": "freesurfer.mri_distance_transform",
         "input_volume": input_volume,
         "label": label,
         "max_distance": max_distance,
@@ -208,5 +208,8 @@ __all__ = [
     "MriDistanceTransformOutputs",
     "MriDistanceTransformParameters",
     "mri_distance_transform",
+    "mri_distance_transform_cargs",
+    "mri_distance_transform_execute",
+    "mri_distance_transform_outputs",
     "mri_distance_transform_params",
 ]

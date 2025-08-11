@@ -14,7 +14,7 @@ SURFACE_APPLY_WARPFIELD_METADATA = Metadata(
 
 
 SurfaceApplyWarpfieldParameters = typing.TypedDict('SurfaceApplyWarpfieldParameters', {
-    "__STYXTYPE__": typing.Literal["surface-apply-warpfield"],
+    "@type": typing.Literal["workbench.surface-apply-warpfield"],
     "in_surf": InputPathType,
     "warpfield": str,
     "out_surf": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-apply-warpfield": surface_apply_warpfield_cargs,
+        "workbench.surface-apply-warpfield": surface_apply_warpfield_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-apply-warpfield": surface_apply_warpfield_outputs,
+        "workbench.surface-apply-warpfield": surface_apply_warpfield_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def surface_apply_warpfield_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-apply-warpfield",
+        "@type": "workbench.surface-apply-warpfield",
         "in_surf": in_surf,
         "warpfield": warpfield,
         "out_surf": out_surf,
@@ -220,5 +220,8 @@ __all__ = [
     "SurfaceApplyWarpfieldOutputs",
     "SurfaceApplyWarpfieldParameters",
     "surface_apply_warpfield",
+    "surface_apply_warpfield_cargs",
+    "surface_apply_warpfield_execute",
+    "surface_apply_warpfield_outputs",
     "surface_apply_warpfield_params",
 ]

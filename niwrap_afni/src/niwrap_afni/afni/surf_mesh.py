@@ -14,7 +14,7 @@ SURF_MESH_METADATA = Metadata(
 
 
 SurfMeshParameters = typing.TypedDict('SurfMeshParameters', {
-    "__STYXTYPE__": typing.Literal["SurfMesh"],
+    "@type": typing.Literal["afni.SurfMesh"],
     "input_surface": str,
     "output_surface": str,
     "edge_fraction": float,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfMesh": surf_mesh_cargs,
+        "afni.SurfMesh": surf_mesh_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfMesh": surf_mesh_outputs,
+        "afni.SurfMesh": surf_mesh_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def surf_mesh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfMesh",
+        "@type": "afni.SurfMesh",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "edge_fraction": edge_fraction,
@@ -252,5 +252,8 @@ __all__ = [
     "SurfMeshOutputs",
     "SurfMeshParameters",
     "surf_mesh",
+    "surf_mesh_cargs",
+    "surf_mesh_execute",
+    "surf_mesh_outputs",
     "surf_mesh_params",
 ]

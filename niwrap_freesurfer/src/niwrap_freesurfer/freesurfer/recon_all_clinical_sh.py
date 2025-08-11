@@ -14,7 +14,7 @@ RECON_ALL_CLINICAL_SH_METADATA = Metadata(
 
 
 ReconAllClinicalShParameters = typing.TypedDict('ReconAllClinicalShParameters', {
-    "__STYXTYPE__": typing.Literal["recon-all-clinical.sh"],
+    "@type": typing.Literal["freesurfer.recon-all-clinical.sh"],
     "input_scan": InputPathType,
     "subject_id": str,
     "threads": int,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "recon-all-clinical.sh": recon_all_clinical_sh_cargs,
+        "freesurfer.recon-all-clinical.sh": recon_all_clinical_sh_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def recon_all_clinical_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "recon-all-clinical.sh",
+        "@type": "freesurfer.recon-all-clinical.sh",
         "input_scan": input_scan,
         "subject_id": subject_id,
         "threads": threads,
@@ -198,5 +198,8 @@ __all__ = [
     "ReconAllClinicalShOutputs",
     "ReconAllClinicalShParameters",
     "recon_all_clinical_sh",
+    "recon_all_clinical_sh_cargs",
+    "recon_all_clinical_sh_execute",
+    "recon_all_clinical_sh_outputs",
     "recon_all_clinical_sh_params",
 ]

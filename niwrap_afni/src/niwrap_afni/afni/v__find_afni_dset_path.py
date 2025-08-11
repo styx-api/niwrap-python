@@ -14,7 +14,7 @@ V__FIND_AFNI_DSET_PATH_METADATA = Metadata(
 
 
 VFindAfniDsetPathParameters = typing.TypedDict('VFindAfniDsetPathParameters', {
-    "__STYXTYPE__": typing.Literal["@FindAfniDsetPath"],
+    "@type": typing.Literal["afni.@FindAfniDsetPath"],
     "dsetname": str,
     "append_file": bool,
     "full_path": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@FindAfniDsetPath": v__find_afni_dset_path_cargs,
+        "afni.@FindAfniDsetPath": v__find_afni_dset_path_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v__find_afni_dset_path_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@FindAfniDsetPath",
+        "@type": "afni.@FindAfniDsetPath",
         "dsetname": dsetname,
         "append_file": append_file,
         "full_path": full_path,
@@ -195,5 +195,8 @@ __all__ = [
     "VFindAfniDsetPathParameters",
     "V__FIND_AFNI_DSET_PATH_METADATA",
     "v__find_afni_dset_path",
+    "v__find_afni_dset_path_cargs",
+    "v__find_afni_dset_path_execute",
+    "v__find_afni_dset_path_outputs",
     "v__find_afni_dset_path_params",
 ]

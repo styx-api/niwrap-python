@@ -14,7 +14,7 @@ V_3D_MATCH_METADATA = Metadata(
 
 
 V3dMatchParameters = typing.TypedDict('V3dMatchParameters', {
-    "__STYXTYPE__": typing.Literal["3dMatch"],
+    "@type": typing.Literal["afni.3dMatch"],
     "inset": InputPathType,
     "refset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMatch": v_3d_match_cargs,
+        "afni.3dMatch": v_3d_match_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMatch": v_3d_match_outputs,
+        "afni.3dMatch": v_3d_match_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def v_3d_match_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMatch",
+        "@type": "afni.3dMatch",
         "inset": inset,
         "refset": refset,
         "prefix": prefix,
@@ -296,5 +296,8 @@ __all__ = [
     "V3dMatchParameters",
     "V_3D_MATCH_METADATA",
     "v_3d_match",
+    "v_3d_match_cargs",
+    "v_3d_match_execute",
+    "v_3d_match_outputs",
     "v_3d_match_params",
 ]

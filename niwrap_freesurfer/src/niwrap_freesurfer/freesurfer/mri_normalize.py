@@ -14,7 +14,7 @@ MRI_NORMALIZE_METADATA = Metadata(
 
 
 MriNormalizeParameters = typing.TypedDict('MriNormalizeParameters', {
-    "__STYXTYPE__": typing.Literal["mri_normalize"],
+    "@type": typing.Literal["freesurfer.mri_normalize"],
     "input_vol": InputPathType,
     "output_vol": str,
     "norm_iters": typing.NotRequired[float | None],
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_normalize": mri_normalize_cargs,
+        "freesurfer.mri_normalize": mri_normalize_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_normalize": mri_normalize_outputs,
+        "freesurfer.mri_normalize": mri_normalize_outputs,
     }.get(t)
 
 
@@ -182,7 +182,7 @@ def mri_normalize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_normalize",
+        "@type": "freesurfer.mri_normalize",
         "input_vol": input_vol,
         "output_vol": output_vol,
         "disable_1d": disable_1d,
@@ -579,5 +579,8 @@ __all__ = [
     "MriNormalizeOutputs",
     "MriNormalizeParameters",
     "mri_normalize",
+    "mri_normalize_cargs",
+    "mri_normalize_execute",
+    "mri_normalize_outputs",
     "mri_normalize_params",
 ]

@@ -14,7 +14,7 @@ PRELUDE_METADATA = Metadata(
 
 
 PreludeParameters = typing.TypedDict('PreludeParameters', {
-    "__STYXTYPE__": typing.Literal["prelude"],
+    "@type": typing.Literal["fsl.prelude"],
     "output_unwrap": str,
     "output_unwrap_alias": InputPathType,
     "complex_phase": typing.NotRequired[InputPathType | None],
@@ -60,7 +60,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "prelude": prelude_cargs,
+        "fsl.prelude": prelude_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "prelude": prelude_outputs,
+        "fsl.prelude": prelude_outputs,
     }.get(t)
 
 
@@ -166,7 +166,7 @@ def prelude_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "prelude",
+        "@type": "fsl.prelude",
         "output_unwrap": output_unwrap,
         "output_unwrap_alias": output_unwrap_alias,
         "label_slices": label_slices,
@@ -519,5 +519,8 @@ __all__ = [
     "PreludeOutputs",
     "PreludeParameters",
     "prelude",
+    "prelude_cargs",
+    "prelude_execute",
+    "prelude_outputs",
     "prelude_params",
 ]

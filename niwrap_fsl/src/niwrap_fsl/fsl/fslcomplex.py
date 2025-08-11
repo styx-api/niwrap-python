@@ -14,7 +14,7 @@ FSLCOMPLEX_METADATA = Metadata(
 
 
 FslcomplexParameters = typing.TypedDict('FslcomplexParameters', {
-    "__STYXTYPE__": typing.Literal["fslcomplex"],
+    "@type": typing.Literal["fsl.fslcomplex"],
     "input_file": InputPathType,
     "output_file": str,
     "output_type": typing.Literal["-realabs", "-realphase", "-realpolar", "-realcartesian", "-complex", "-complexpolar", "-complexsplit", "-complexmerge", "-copyonly"],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslcomplex": fslcomplex_cargs,
+        "fsl.fslcomplex": fslcomplex_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslcomplex": fslcomplex_outputs,
+        "fsl.fslcomplex": fslcomplex_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def fslcomplex_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslcomplex",
+        "@type": "fsl.fslcomplex",
         "input_file": input_file,
         "output_file": output_file,
         "output_type": output_type,
@@ -208,5 +208,8 @@ __all__ = [
     "FslcomplexOutputs",
     "FslcomplexParameters",
     "fslcomplex",
+    "fslcomplex_cargs",
+    "fslcomplex_execute",
+    "fslcomplex_outputs",
     "fslcomplex_params",
 ]

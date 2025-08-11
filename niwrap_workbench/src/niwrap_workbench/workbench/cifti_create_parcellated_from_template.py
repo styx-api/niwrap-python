@@ -14,13 +14,13 @@ CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA = Metadata(
 
 
 CiftiCreateParcellatedFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti"],
+    "@type": typing.Literal["workbench.cifti-create-parcellated-from-template.cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiCreateParcellatedFromTemplateParameters = typing.TypedDict('CiftiCreateParcellatedFromTemplateParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-create-parcellated-from-template"],
+    "@type": typing.Literal["workbench.cifti-create-parcellated-from-template"],
     "cifti_template": InputPathType,
     "modify_direction": str,
     "cifti_out": str,
@@ -41,8 +41,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-create-parcellated-from-template": cifti_create_parcellated_from_template_cargs,
-        "cifti": cifti_create_parcellated_from_template_cifti_cargs,
+        "workbench.cifti-create-parcellated-from-template": cifti_create_parcellated_from_template_cargs,
+        "workbench.cifti-create-parcellated-from-template.cifti": cifti_create_parcellated_from_template_cifti_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-create-parcellated-from-template": cifti_create_parcellated_from_template_outputs,
+        "workbench.cifti-create-parcellated-from-template": cifti_create_parcellated_from_template_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def cifti_create_parcellated_from_template_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti",
+        "@type": "workbench.cifti-create-parcellated-from-template.cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -132,7 +132,7 @@ def cifti_create_parcellated_from_template_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-create-parcellated-from-template",
+        "@type": "workbench.cifti-create-parcellated-from-template",
         "cifti_template": cifti_template,
         "modify_direction": modify_direction,
         "cifti_out": cifti_out,
@@ -169,7 +169,7 @@ def cifti_create_parcellated_from_template_cargs(
             str(params.get("opt_fill_value_value"))
         ])
     if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cifti")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
     return cargs
 
 
@@ -275,6 +275,10 @@ __all__ = [
     "CiftiCreateParcellatedFromTemplateOutputs",
     "CiftiCreateParcellatedFromTemplateParameters",
     "cifti_create_parcellated_from_template",
+    "cifti_create_parcellated_from_template_cargs",
+    "cifti_create_parcellated_from_template_cifti_cargs",
     "cifti_create_parcellated_from_template_cifti_params",
+    "cifti_create_parcellated_from_template_execute",
+    "cifti_create_parcellated_from_template_outputs",
     "cifti_create_parcellated_from_template_params",
 ]

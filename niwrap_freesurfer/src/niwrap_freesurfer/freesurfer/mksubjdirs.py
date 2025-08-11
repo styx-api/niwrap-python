@@ -14,7 +14,7 @@ MKSUBJDIRS_METADATA = Metadata(
 
 
 MksubjdirsParameters = typing.TypedDict('MksubjdirsParameters', {
-    "__STYXTYPE__": typing.Literal["mksubjdirs"],
+    "@type": typing.Literal["freesurfer.mksubjdirs"],
     "subj_name": str,
     "mode": typing.NotRequired[str | None],
     "parents": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mksubjdirs": mksubjdirs_cargs,
+        "freesurfer.mksubjdirs": mksubjdirs_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def mksubjdirs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mksubjdirs",
+        "@type": "freesurfer.mksubjdirs",
         "subj_name": subj_name,
         "parents": parents,
         "verbose": verbose,
@@ -228,5 +228,8 @@ __all__ = [
     "MksubjdirsOutputs",
     "MksubjdirsParameters",
     "mksubjdirs",
+    "mksubjdirs_cargs",
+    "mksubjdirs_execute",
+    "mksubjdirs_outputs",
     "mksubjdirs_params",
 ]

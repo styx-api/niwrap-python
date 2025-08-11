@@ -14,7 +14,7 @@ CIFTI_LABEL_PROBABILITY_METADATA = Metadata(
 
 
 CiftiLabelProbabilityParameters = typing.TypedDict('CiftiLabelProbabilityParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-label-probability"],
+    "@type": typing.Literal["workbench.cifti-label-probability"],
     "label_maps": InputPathType,
     "probability_dscalar_out": str,
     "opt_exclude_unlabeled": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-label-probability": cifti_label_probability_cargs,
+        "workbench.cifti-label-probability": cifti_label_probability_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-label-probability": cifti_label_probability_outputs,
+        "workbench.cifti-label-probability": cifti_label_probability_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def cifti_label_probability_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-label-probability",
+        "@type": "workbench.cifti-label-probability",
         "label_maps": label_maps,
         "probability_dscalar_out": probability_dscalar_out,
         "opt_exclude_unlabeled": opt_exclude_unlabeled,
@@ -204,5 +204,8 @@ __all__ = [
     "CiftiLabelProbabilityOutputs",
     "CiftiLabelProbabilityParameters",
     "cifti_label_probability",
+    "cifti_label_probability_cargs",
+    "cifti_label_probability_execute",
+    "cifti_label_probability_outputs",
     "cifti_label_probability_params",
 ]

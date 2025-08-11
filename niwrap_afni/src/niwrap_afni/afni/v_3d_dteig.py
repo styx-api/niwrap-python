@@ -14,7 +14,7 @@ V_3D_DTEIG_METADATA = Metadata(
 
 
 V3dDteigParameters = typing.TypedDict('V3dDteigParameters', {
-    "__STYXTYPE__": typing.Literal["3dDTeig"],
+    "@type": typing.Literal["afni.3dDTeig"],
     "input_dataset": str,
     "prefix": typing.NotRequired[str | None],
     "datum": typing.NotRequired[typing.Literal["byte", "short", "float"] | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDTeig": v_3d_dteig_cargs,
+        "afni.3dDTeig": v_3d_dteig_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDTeig": v_3d_dteig_outputs,
+        "afni.3dDTeig": v_3d_dteig_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v_3d_dteig_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDTeig",
+        "@type": "afni.3dDTeig",
         "input_dataset": input_dataset,
         "sep_dsets": sep_dsets,
         "uddata": uddata,
@@ -232,5 +232,8 @@ __all__ = [
     "V3dDteigParameters",
     "V_3D_DTEIG_METADATA",
     "v_3d_dteig",
+    "v_3d_dteig_cargs",
+    "v_3d_dteig_execute",
+    "v_3d_dteig_outputs",
     "v_3d_dteig_params",
 ]

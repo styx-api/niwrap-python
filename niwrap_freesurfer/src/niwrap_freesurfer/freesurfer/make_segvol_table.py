@@ -14,7 +14,7 @@ MAKE_SEGVOL_TABLE_METADATA = Metadata(
 
 
 MakeSegvolTableParameters = typing.TypedDict('MakeSegvolTableParameters', {
-    "__STYXTYPE__": typing.Literal["make-segvol-table"],
+    "@type": typing.Literal["freesurfer.make-segvol-table"],
     "subjects": list[str],
     "subject_file": InputPathType,
     "outfile": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make-segvol-table": make_segvol_table_cargs,
+        "freesurfer.make-segvol-table": make_segvol_table_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make-segvol-table": make_segvol_table_outputs,
+        "freesurfer.make-segvol-table": make_segvol_table_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def make_segvol_table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make-segvol-table",
+        "@type": "freesurfer.make-segvol-table",
         "subjects": subjects,
         "subject_file": subject_file,
         "outfile": outfile,
@@ -291,5 +291,8 @@ __all__ = [
     "MakeSegvolTableOutputs",
     "MakeSegvolTableParameters",
     "make_segvol_table",
+    "make_segvol_table_cargs",
+    "make_segvol_table_execute",
+    "make_segvol_table_outputs",
     "make_segvol_table_params",
 ]

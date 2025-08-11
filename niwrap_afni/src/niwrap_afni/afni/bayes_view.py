@@ -14,7 +14,7 @@ BAYES_VIEW_METADATA = Metadata(
 
 
 BayesViewParameters = typing.TypedDict('BayesViewParameters', {
-    "__STYXTYPE__": typing.Literal["bayes_view"],
+    "@type": typing.Literal["afni.bayes_view"],
     "input_folder": str,
     "help": bool,
     "shiny_folder": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bayes_view": bayes_view_cargs,
+        "afni.bayes_view": bayes_view_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def bayes_view_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bayes_view",
+        "@type": "afni.bayes_view",
         "input_folder": input_folder,
         "help": help_,
     }
@@ -192,5 +192,8 @@ __all__ = [
     "BayesViewOutputs",
     "BayesViewParameters",
     "bayes_view",
+    "bayes_view_cargs",
+    "bayes_view_execute",
+    "bayes_view_outputs",
     "bayes_view_params",
 ]

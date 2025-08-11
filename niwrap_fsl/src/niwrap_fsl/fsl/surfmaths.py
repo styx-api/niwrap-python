@@ -14,7 +14,7 @@ SURFMATHS_METADATA = Metadata(
 
 
 SurfmathsParameters = typing.TypedDict('SurfmathsParameters', {
-    "__STYXTYPE__": typing.Literal["surfmaths"],
+    "@type": typing.Literal["fsl.surfmaths"],
     "first_input": InputPathType,
     "operations_inputs": typing.NotRequired[list[str] | None],
     "output": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surfmaths": surfmaths_cargs,
+        "fsl.surfmaths": surfmaths_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surfmaths": surfmaths_outputs,
+        "fsl.surfmaths": surfmaths_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def surfmaths_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surfmaths",
+        "@type": "fsl.surfmaths",
         "first_input": first_input,
         "output": output,
     }
@@ -192,5 +192,8 @@ __all__ = [
     "SurfmathsOutputs",
     "SurfmathsParameters",
     "surfmaths",
+    "surfmaths_cargs",
+    "surfmaths_execute",
+    "surfmaths_outputs",
     "surfmaths_params",
 ]

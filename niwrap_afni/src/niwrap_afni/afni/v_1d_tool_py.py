@@ -14,7 +14,7 @@ V_1D_TOOL_PY_METADATA = Metadata(
 
 
 V1dToolPyParameters = typing.TypedDict('V1dToolPyParameters', {
-    "__STYXTYPE__": typing.Literal["1d_tool.py"],
+    "@type": typing.Literal["afni.1d_tool.py"],
     "infile": InputPathType,
     "write": typing.NotRequired[str | None],
     "select_cols": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1d_tool.py": v_1d_tool_py_cargs,
+        "afni.1d_tool.py": v_1d_tool_py_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1d_tool.py": v_1d_tool_py_outputs,
+        "afni.1d_tool.py": v_1d_tool_py_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def v_1d_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1d_tool.py",
+        "@type": "afni.1d_tool.py",
         "infile": infile,
         "show_rows_cols": show_rows_cols,
         "transpose": transpose,
@@ -315,5 +315,8 @@ __all__ = [
     "V1dToolPyParameters",
     "V_1D_TOOL_PY_METADATA",
     "v_1d_tool_py",
+    "v_1d_tool_py_cargs",
+    "v_1d_tool_py_execute",
+    "v_1d_tool_py_outputs",
     "v_1d_tool_py_params",
 ]

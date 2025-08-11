@@ -14,13 +14,13 @@ VOLUME_ESTIMATE_FWHM_METADATA = Metadata(
 
 
 VolumeEstimateFwhmWholeFileParameters = typing.TypedDict('VolumeEstimateFwhmWholeFileParameters', {
-    "__STYXTYPE__": typing.Literal["whole_file"],
+    "@type": typing.Literal["workbench.volume-estimate-fwhm.whole_file"],
     "opt_demean": bool,
 })
 
 
 VolumeEstimateFwhmParameters = typing.TypedDict('VolumeEstimateFwhmParameters', {
-    "__STYXTYPE__": typing.Literal["volume-estimate-fwhm"],
+    "@type": typing.Literal["workbench.volume-estimate-fwhm"],
     "volume": InputPathType,
     "opt_roi_roivol": typing.NotRequired[InputPathType | None],
     "opt_subvolume_subvol": typing.NotRequired[str | None],
@@ -40,8 +40,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-estimate-fwhm": volume_estimate_fwhm_cargs,
-        "whole_file": volume_estimate_fwhm_whole_file_cargs,
+        "workbench.volume-estimate-fwhm": volume_estimate_fwhm_cargs,
+        "workbench.volume-estimate-fwhm.whole_file": volume_estimate_fwhm_whole_file_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def volume_estimate_fwhm_whole_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "whole_file",
+        "@type": "workbench.volume-estimate-fwhm.whole_file",
         "opt_demean": opt_demean,
     }
     return params
@@ -127,7 +127,7 @@ def volume_estimate_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-estimate-fwhm",
+        "@type": "workbench.volume-estimate-fwhm",
         "volume": volume,
     }
     if opt_roi_roivol is not None:
@@ -167,7 +167,7 @@ def volume_estimate_fwhm_cargs(
             params.get("opt_subvolume_subvol")
         ])
     if params.get("whole_file") is not None:
-        cargs.extend(dyn_cargs(params.get("whole_file")["__STYXTYPE__"])(params.get("whole_file"), execution))
+        cargs.extend(dyn_cargs(params.get("whole_file")["@type"])(params.get("whole_file"), execution))
     return cargs
 
 
@@ -267,6 +267,10 @@ __all__ = [
     "VolumeEstimateFwhmParameters",
     "VolumeEstimateFwhmWholeFileParameters",
     "volume_estimate_fwhm",
+    "volume_estimate_fwhm_cargs",
+    "volume_estimate_fwhm_execute",
+    "volume_estimate_fwhm_outputs",
     "volume_estimate_fwhm_params",
+    "volume_estimate_fwhm_whole_file_cargs",
     "volume_estimate_fwhm_whole_file_params",
 ]

@@ -14,7 +14,7 @@ VOLUME_REMOVE_ISLANDS_METADATA = Metadata(
 
 
 VolumeRemoveIslandsParameters = typing.TypedDict('VolumeRemoveIslandsParameters', {
-    "__STYXTYPE__": typing.Literal["volume-remove-islands"],
+    "@type": typing.Literal["workbench.volume-remove-islands"],
     "volume_in": InputPathType,
     "volume_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-remove-islands": volume_remove_islands_cargs,
+        "workbench.volume-remove-islands": volume_remove_islands_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-remove-islands": volume_remove_islands_outputs,
+        "workbench.volume-remove-islands": volume_remove_islands_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def volume_remove_islands_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-remove-islands",
+        "@type": "workbench.volume-remove-islands",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "VolumeRemoveIslandsOutputs",
     "VolumeRemoveIslandsParameters",
     "volume_remove_islands",
+    "volume_remove_islands_cargs",
+    "volume_remove_islands_execute",
+    "volume_remove_islands_outputs",
     "volume_remove_islands_params",
 ]

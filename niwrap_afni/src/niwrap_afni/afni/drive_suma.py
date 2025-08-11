@@ -14,7 +14,7 @@ DRIVE_SUMA_METADATA = Metadata(
 
 
 DriveSumaParameters = typing.TypedDict('DriveSumaParameters', {
-    "__STYXTYPE__": typing.Literal["DriveSuma"],
+    "@type": typing.Literal["afni.DriveSuma"],
     "command": str,
     "surf_label": typing.NotRequired[str | None],
     "surface_file": typing.NotRequired[InputPathType | None],
@@ -61,7 +61,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "DriveSuma": drive_suma_cargs,
+        "afni.DriveSuma": drive_suma_cargs,
     }.get(t)
 
 
@@ -161,7 +161,7 @@ def drive_suma_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "DriveSuma",
+        "@type": "afni.DriveSuma",
         "command": command,
         "save_last": save_last,
         "save_all": save_all,
@@ -516,5 +516,8 @@ __all__ = [
     "DriveSumaOutputs",
     "DriveSumaParameters",
     "drive_suma",
+    "drive_suma_cargs",
+    "drive_suma_execute",
+    "drive_suma_outputs",
     "drive_suma_params",
 ]

@@ -14,7 +14,7 @@ MORPH_ONLY_SUBJECT_RH_METADATA = Metadata(
 
 
 MorphOnlySubjectRhParameters = typing.TypedDict('MorphOnlySubjectRhParameters', {
-    "__STYXTYPE__": typing.Literal["morph_only_subject-rh"],
+    "@type": typing.Literal["freesurfer.morph_only_subject-rh"],
     "subject_dir": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "morph_only_subject-rh": morph_only_subject_rh_cargs,
+        "freesurfer.morph_only_subject-rh": morph_only_subject_rh_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "morph_only_subject-rh": morph_only_subject_rh_outputs,
+        "freesurfer.morph_only_subject-rh": morph_only_subject_rh_outputs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def morph_only_subject_rh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "morph_only_subject-rh",
+        "@type": "freesurfer.morph_only_subject-rh",
         "subject_dir": subject_dir,
     }
     return params
@@ -180,5 +180,8 @@ __all__ = [
     "MorphOnlySubjectRhOutputs",
     "MorphOnlySubjectRhParameters",
     "morph_only_subject_rh",
+    "morph_only_subject_rh_cargs",
+    "morph_only_subject_rh_execute",
+    "morph_only_subject_rh_outputs",
     "morph_only_subject_rh_params",
 ]

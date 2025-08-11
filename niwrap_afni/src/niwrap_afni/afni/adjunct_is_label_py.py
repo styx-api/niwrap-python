@@ -14,7 +14,7 @@ ADJUNCT_IS_LABEL_PY_METADATA = Metadata(
 
 
 AdjunctIsLabelPyParameters = typing.TypedDict('AdjunctIsLabelPyParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_is_label.py"],
+    "@type": typing.Literal["afni.adjunct_is_label.py"],
     "infile": InputPathType,
     "label": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_is_label.py": adjunct_is_label_py_cargs,
+        "afni.adjunct_is_label.py": adjunct_is_label_py_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def adjunct_is_label_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_is_label.py",
+        "@type": "afni.adjunct_is_label.py",
         "infile": infile,
         "label": label,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "AdjunctIsLabelPyOutputs",
     "AdjunctIsLabelPyParameters",
     "adjunct_is_label_py",
+    "adjunct_is_label_py_cargs",
+    "adjunct_is_label_py_execute",
+    "adjunct_is_label_py_outputs",
     "adjunct_is_label_py_params",
 ]

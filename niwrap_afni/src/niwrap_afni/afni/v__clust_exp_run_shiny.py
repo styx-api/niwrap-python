@@ -14,7 +14,7 @@ V__CLUST_EXP_RUN_SHINY_METADATA = Metadata(
 
 
 VClustExpRunShinyParameters = typing.TypedDict('VClustExpRunShinyParameters', {
-    "__STYXTYPE__": typing.Literal["@ClustExp_run_shiny"],
+    "@type": typing.Literal["afni.@ClustExp_run_shiny"],
     "directory": str,
     "help": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ClustExp_run_shiny": v__clust_exp_run_shiny_cargs,
+        "afni.@ClustExp_run_shiny": v__clust_exp_run_shiny_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__clust_exp_run_shiny_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ClustExp_run_shiny",
+        "@type": "afni.@ClustExp_run_shiny",
         "directory": directory,
         "help": help_,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "VClustExpRunShinyParameters",
     "V__CLUST_EXP_RUN_SHINY_METADATA",
     "v__clust_exp_run_shiny",
+    "v__clust_exp_run_shiny_cargs",
+    "v__clust_exp_run_shiny_execute",
+    "v__clust_exp_run_shiny_outputs",
     "v__clust_exp_run_shiny_params",
 ]

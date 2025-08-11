@@ -14,7 +14,7 @@ V_3D_RANKIZER_METADATA = Metadata(
 
 
 V3dRankizerParameters = typing.TypedDict('V3dRankizerParameters', {
-    "__STYXTYPE__": typing.Literal["3dRankizer"],
+    "@type": typing.Literal["afni.3dRankizer"],
     "dataset": InputPathType,
     "base_rank": typing.NotRequired[float | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dRankizer": v_3d_rankizer_cargs,
+        "afni.3dRankizer": v_3d_rankizer_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dRankizer": v_3d_rankizer_outputs,
+        "afni.3dRankizer": v_3d_rankizer_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v_3d_rankizer_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dRankizer",
+        "@type": "afni.3dRankizer",
         "dataset": dataset,
         "prefix": prefix,
         "percentize": percentize,
@@ -237,5 +237,8 @@ __all__ = [
     "V3dRankizerParameters",
     "V_3D_RANKIZER_METADATA",
     "v_3d_rankizer",
+    "v_3d_rankizer_cargs",
+    "v_3d_rankizer_execute",
+    "v_3d_rankizer_outputs",
     "v_3d_rankizer_params",
 ]

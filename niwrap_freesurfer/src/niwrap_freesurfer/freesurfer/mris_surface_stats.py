@@ -14,7 +14,7 @@ MRIS_SURFACE_STATS_METADATA = Metadata(
 
 
 MrisSurfaceStatsParameters = typing.TypedDict('MrisSurfaceStatsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_surface_stats"],
+    "@type": typing.Literal["freesurfer.mris_surface_stats"],
     "nsmooth": typing.NotRequired[float | None],
     "surf_name": InputPathType,
     "mask_name": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_surface_stats": mris_surface_stats_cargs,
+        "freesurfer.mris_surface_stats": mris_surface_stats_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_surface_stats": mris_surface_stats_outputs,
+        "freesurfer.mris_surface_stats": mris_surface_stats_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def mris_surface_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_surface_stats",
+        "@type": "freesurfer.mris_surface_stats",
         "surf_name": surf_name,
         "out_name": out_name,
         "data_files": data_files,
@@ -342,5 +342,8 @@ __all__ = [
     "MrisSurfaceStatsOutputs",
     "MrisSurfaceStatsParameters",
     "mris_surface_stats",
+    "mris_surface_stats_cargs",
+    "mris_surface_stats_execute",
+    "mris_surface_stats_outputs",
     "mris_surface_stats_params",
 ]

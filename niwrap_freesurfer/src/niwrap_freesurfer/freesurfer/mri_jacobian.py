@@ -14,7 +14,7 @@ MRI_JACOBIAN_METADATA = Metadata(
 
 
 MriJacobianParameters = typing.TypedDict('MriJacobianParameters', {
-    "__STYXTYPE__": typing.Literal["mri_jacobian"],
+    "@type": typing.Literal["freesurfer.mri_jacobian"],
     "morph_file": InputPathType,
     "template_vol": InputPathType,
     "output_vol": str,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_jacobian": mri_jacobian_cargs,
+        "freesurfer.mri_jacobian": mri_jacobian_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_jacobian": mri_jacobian_outputs,
+        "freesurfer.mri_jacobian": mri_jacobian_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def mri_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_jacobian",
+        "@type": "freesurfer.mri_jacobian",
         "morph_file": morph_file,
         "template_vol": template_vol,
         "output_vol": output_vol,
@@ -295,5 +295,8 @@ __all__ = [
     "MriJacobianOutputs",
     "MriJacobianParameters",
     "mri_jacobian",
+    "mri_jacobian_cargs",
+    "mri_jacobian_execute",
+    "mri_jacobian_outputs",
     "mri_jacobian_params",
 ]

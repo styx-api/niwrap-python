@@ -14,7 +14,7 @@ MAKEVOL_METADATA = Metadata(
 
 
 MakevolParameters = typing.TypedDict('MakevolParameters', {
-    "__STYXTYPE__": typing.Literal["makevol"],
+    "@type": typing.Literal["freesurfer.makevol"],
     "filename": typing.NotRequired[str | None],
     "width": typing.NotRequired[int | None],
     "height": typing.NotRequired[int | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "makevol": makevol_cargs,
+        "freesurfer.makevol": makevol_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "makevol": makevol_outputs,
+        "freesurfer.makevol": makevol_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def makevol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "makevol",
+        "@type": "freesurfer.makevol",
     }
     if filename is not None:
         params["filename"] = filename
@@ -270,5 +270,8 @@ __all__ = [
     "MakevolOutputs",
     "MakevolParameters",
     "makevol",
+    "makevol_cargs",
+    "makevol_execute",
+    "makevol_outputs",
     "makevol_params",
 ]

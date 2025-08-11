@@ -14,7 +14,7 @@ FSLSTATS_METADATA = Metadata(
 
 
 FslstatsParameters = typing.TypedDict('FslstatsParameters', {
-    "__STYXTYPE__": typing.Literal["fslstats"],
+    "@type": typing.Literal["fsl.fslstats"],
     "input_file": InputPathType,
     "index_mask": typing.NotRequired[InputPathType | None],
     "lower_threshold": typing.NotRequired[float | None],
@@ -58,7 +58,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslstats": fslstats_cargs,
+        "fsl.fslstats": fslstats_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslstats": fslstats_outputs,
+        "fsl.fslstats": fslstats_outputs,
     }.get(t)
 
 
@@ -162,7 +162,7 @@ def fslstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslstats",
+        "@type": "fsl.fslstats",
         "input_file": input_file,
         "robust_intensity_flag": robust_intensity_flag,
         "minmax_intensity_flag": minmax_intensity_flag,
@@ -467,5 +467,8 @@ __all__ = [
     "FslstatsOutputs",
     "FslstatsParameters",
     "fslstats",
+    "fslstats_cargs",
+    "fslstats_execute",
+    "fslstats_outputs",
     "fslstats_params",
 ]

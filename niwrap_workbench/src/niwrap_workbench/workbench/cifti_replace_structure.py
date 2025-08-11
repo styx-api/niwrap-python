@@ -14,28 +14,28 @@ CIFTI_REPLACE_STRUCTURE_METADATA = Metadata(
 
 
 CiftiReplaceStructureVolumeAllParameters = typing.TypedDict('CiftiReplaceStructureVolumeAllParameters', {
-    "__STYXTYPE__": typing.Literal["volume_all"],
+    "@type": typing.Literal["workbench.cifti-replace-structure.volume_all"],
     "volume": InputPathType,
     "opt_from_cropped": bool,
 })
 
 
 CiftiReplaceStructureLabelParameters = typing.TypedDict('CiftiReplaceStructureLabelParameters', {
-    "__STYXTYPE__": typing.Literal["label"],
+    "@type": typing.Literal["workbench.cifti-replace-structure.label"],
     "structure": str,
     "label": InputPathType,
 })
 
 
 CiftiReplaceStructureMetricParameters = typing.TypedDict('CiftiReplaceStructureMetricParameters', {
-    "__STYXTYPE__": typing.Literal["metric"],
+    "@type": typing.Literal["workbench.cifti-replace-structure.metric"],
     "structure": str,
     "metric": InputPathType,
 })
 
 
 CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.cifti-replace-structure.volume"],
     "structure": str,
     "volume": InputPathType,
     "opt_from_cropped": bool,
@@ -43,7 +43,7 @@ CiftiReplaceStructureVolumeParameters = typing.TypedDict('CiftiReplaceStructureV
 
 
 CiftiReplaceStructureParameters = typing.TypedDict('CiftiReplaceStructureParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-replace-structure"],
+    "@type": typing.Literal["workbench.cifti-replace-structure"],
     "cifti": str,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiReplaceStructureVolumeAllParameters | None],
@@ -67,11 +67,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-replace-structure": cifti_replace_structure_cargs,
-        "volume_all": cifti_replace_structure_volume_all_cargs,
-        "label": cifti_replace_structure_label_cargs,
-        "metric": cifti_replace_structure_metric_cargs,
-        "volume": cifti_replace_structure_volume_cargs,
+        "workbench.cifti-replace-structure": cifti_replace_structure_cargs,
+        "workbench.cifti-replace-structure.volume_all": cifti_replace_structure_volume_all_cargs,
+        "workbench.cifti-replace-structure.label": cifti_replace_structure_label_cargs,
+        "workbench.cifti-replace-structure.metric": cifti_replace_structure_metric_cargs,
+        "workbench.cifti-replace-structure.volume": cifti_replace_structure_volume_cargs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def cifti_replace_structure_volume_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume_all",
+        "@type": "workbench.cifti-replace-structure.volume_all",
         "volume": volume,
         "opt_from_cropped": opt_from_cropped,
     }
@@ -146,7 +146,7 @@ def cifti_replace_structure_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label",
+        "@type": "workbench.cifti-replace-structure.label",
         "structure": structure,
         "label": label,
     }
@@ -187,7 +187,7 @@ def cifti_replace_structure_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric",
+        "@type": "workbench.cifti-replace-structure.metric",
         "structure": structure,
         "metric": metric,
     }
@@ -230,7 +230,7 @@ def cifti_replace_structure_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.cifti-replace-structure.volume",
         "structure": structure,
         "volume": volume,
         "opt_from_cropped": opt_from_cropped,
@@ -297,7 +297,7 @@ def cifti_replace_structure_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-replace-structure",
+        "@type": "workbench.cifti-replace-structure",
         "cifti": cifti,
         "direction": direction,
         "opt_discard_unused_labels": opt_discard_unused_labels,
@@ -334,7 +334,7 @@ def cifti_replace_structure_cargs(
     cargs.append(params.get("cifti"))
     cargs.append(params.get("direction"))
     if params.get("volume_all") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_all")["__STYXTYPE__"])(params.get("volume_all"), execution))
+        cargs.extend(dyn_cargs(params.get("volume_all")["@type"])(params.get("volume_all"), execution))
     if params.get("opt_discard_unused_labels"):
         cargs.append("-discard-unused-labels")
     if params.get("opt_label_collision_action") is not None:
@@ -343,11 +343,11 @@ def cifti_replace_structure_cargs(
             params.get("opt_label_collision_action")
         ])
     if params.get("label") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("label")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("label")] for a in c])
     if params.get("metric") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("metric")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("metric")] for a in c])
     if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("volume")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
     return cargs
 
 
@@ -544,9 +544,16 @@ __all__ = [
     "CiftiReplaceStructureVolumeAllParameters",
     "CiftiReplaceStructureVolumeParameters",
     "cifti_replace_structure",
+    "cifti_replace_structure_cargs",
+    "cifti_replace_structure_execute",
+    "cifti_replace_structure_label_cargs",
     "cifti_replace_structure_label_params",
+    "cifti_replace_structure_metric_cargs",
     "cifti_replace_structure_metric_params",
+    "cifti_replace_structure_outputs",
     "cifti_replace_structure_params",
+    "cifti_replace_structure_volume_all_cargs",
     "cifti_replace_structure_volume_all_params",
+    "cifti_replace_structure_volume_cargs",
     "cifti_replace_structure_volume_params",
 ]

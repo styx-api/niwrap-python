@@ -14,7 +14,7 @@ SURFACE_MATCH_METADATA = Metadata(
 
 
 SurfaceMatchParameters = typing.TypedDict('SurfaceMatchParameters', {
-    "__STYXTYPE__": typing.Literal["surface-match"],
+    "@type": typing.Literal["workbench.surface-match"],
     "match_surface_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_surface_name": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-match": surface_match_cargs,
+        "workbench.surface-match": surface_match_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_match_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-match",
+        "@type": "workbench.surface-match",
         "match_surface_file": match_surface_file,
         "input_surface_file": input_surface_file,
         "output_surface_name": output_surface_name,
@@ -191,5 +191,8 @@ __all__ = [
     "SurfaceMatchOutputs",
     "SurfaceMatchParameters",
     "surface_match",
+    "surface_match_cargs",
+    "surface_match_execute",
+    "surface_match_outputs",
     "surface_match_params",
 ]

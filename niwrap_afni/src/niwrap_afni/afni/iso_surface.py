@@ -14,7 +14,7 @@ ISO_SURFACE_METADATA = Metadata(
 
 
 IsoSurfaceParameters = typing.TypedDict('IsoSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["IsoSurface"],
+    "@type": typing.Literal["afni.IsoSurface"],
     "input_vol": typing.NotRequired[InputPathType | None],
     "shape_spec": typing.NotRequired[list[str] | None],
     "isorois": bool,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "IsoSurface": iso_surface_cargs,
+        "afni.IsoSurface": iso_surface_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "IsoSurface": iso_surface_outputs,
+        "afni.IsoSurface": iso_surface_outputs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def iso_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "IsoSurface",
+        "@type": "afni.IsoSurface",
         "isorois": isorois,
         "autocrop": autocrop,
         "novolreg": novolreg,
@@ -340,5 +340,8 @@ __all__ = [
     "IsoSurfaceOutputs",
     "IsoSurfaceParameters",
     "iso_surface",
+    "iso_surface_cargs",
+    "iso_surface_execute",
+    "iso_surface_outputs",
     "iso_surface_params",
 ]

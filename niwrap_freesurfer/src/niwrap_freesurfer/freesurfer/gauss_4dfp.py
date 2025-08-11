@@ -14,7 +14,7 @@ GAUSS_4DFP_METADATA = Metadata(
 
 
 Gauss4dfpParameters = typing.TypedDict('Gauss4dfpParameters', {
-    "__STYXTYPE__": typing.Literal["gauss_4dfp"],
+    "@type": typing.Literal["freesurfer.gauss_4dfp"],
     "input_file": str,
     "f_half": float,
     "output_root": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gauss_4dfp": gauss_4dfp_cargs,
+        "freesurfer.gauss_4dfp": gauss_4dfp_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gauss_4dfp": gauss_4dfp_outputs,
+        "freesurfer.gauss_4dfp": gauss_4dfp_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def gauss_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gauss_4dfp",
+        "@type": "freesurfer.gauss_4dfp",
         "input_file": input_file,
         "f_half": f_half,
         "wrap_flag": wrap_flag,
@@ -227,5 +227,8 @@ __all__ = [
     "Gauss4dfpOutputs",
     "Gauss4dfpParameters",
     "gauss_4dfp",
+    "gauss_4dfp_cargs",
+    "gauss_4dfp_execute",
+    "gauss_4dfp_outputs",
     "gauss_4dfp_params",
 ]

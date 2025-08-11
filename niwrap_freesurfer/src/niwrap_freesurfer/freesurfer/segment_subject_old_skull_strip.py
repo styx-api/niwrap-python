@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA = Metadata(
 
 
 SegmentSubjectOldSkullStripParameters = typing.TypedDict('SegmentSubjectOldSkullStripParameters', {
-    "__STYXTYPE__": typing.Literal["segment_subject_old_skull_strip"],
+    "@type": typing.Literal["freesurfer.segment_subject_old_skull_strip"],
     "input_volume": InputPathType,
     "output_xfm": str,
     "log_file": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segment_subject_old_skull_strip": segment_subject_old_skull_strip_cargs,
+        "freesurfer.segment_subject_old_skull_strip": segment_subject_old_skull_strip_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segment_subject_old_skull_strip": segment_subject_old_skull_strip_outputs,
+        "freesurfer.segment_subject_old_skull_strip": segment_subject_old_skull_strip_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def segment_subject_old_skull_strip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segment_subject_old_skull_strip",
+        "@type": "freesurfer.segment_subject_old_skull_strip",
         "input_volume": input_volume,
         "output_xfm": output_xfm,
         "help_flag": help_flag,
@@ -231,5 +231,8 @@ __all__ = [
     "SegmentSubjectOldSkullStripOutputs",
     "SegmentSubjectOldSkullStripParameters",
     "segment_subject_old_skull_strip",
+    "segment_subject_old_skull_strip_cargs",
+    "segment_subject_old_skull_strip_execute",
+    "segment_subject_old_skull_strip_outputs",
     "segment_subject_old_skull_strip_params",
 ]

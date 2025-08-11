@@ -14,7 +14,7 @@ COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA = Metadata(
 
 
 ComputeInterraterVariabilityCshParameters = typing.TypedDict('ComputeInterraterVariabilityCshParameters', {
-    "__STYXTYPE__": typing.Literal["compute_interrater_variability.csh"],
+    "@type": typing.Literal["freesurfer.compute_interrater_variability.csh"],
     "label_vol1": InputPathType,
     "label_vol2": InputPathType,
     "output_prefix": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "compute_interrater_variability.csh": compute_interrater_variability_csh_cargs,
+        "freesurfer.compute_interrater_variability.csh": compute_interrater_variability_csh_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "compute_interrater_variability.csh": compute_interrater_variability_csh_outputs,
+        "freesurfer.compute_interrater_variability.csh": compute_interrater_variability_csh_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def compute_interrater_variability_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "compute_interrater_variability.csh",
+        "@type": "freesurfer.compute_interrater_variability.csh",
         "label_vol1": label_vol1,
         "label_vol2": label_vol2,
         "output_prefix": output_prefix,
@@ -226,5 +226,8 @@ __all__ = [
     "ComputeInterraterVariabilityCshOutputs",
     "ComputeInterraterVariabilityCshParameters",
     "compute_interrater_variability_csh",
+    "compute_interrater_variability_csh_cargs",
+    "compute_interrater_variability_csh_execute",
+    "compute_interrater_variability_csh_outputs",
     "compute_interrater_variability_csh_params",
 ]

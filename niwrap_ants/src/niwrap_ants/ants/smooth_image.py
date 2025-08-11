@@ -14,7 +14,7 @@ SMOOTH_IMAGE_METADATA = Metadata(
 
 
 SmoothImageParameters = typing.TypedDict('SmoothImageParameters', {
-    "__STYXTYPE__": typing.Literal["SmoothImage"],
+    "@type": typing.Literal["ants.SmoothImage"],
     "image_dimension": int,
     "image_ext": InputPathType,
     "smoothing_sigma": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SmoothImage": smooth_image_cargs,
+        "ants.SmoothImage": smooth_image_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SmoothImage": smooth_image_outputs,
+        "ants.SmoothImage": smooth_image_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def smooth_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SmoothImage",
+        "@type": "ants.SmoothImage",
         "image_dimension": image_dimension,
         "image_ext": image_ext,
         "smoothing_sigma": smoothing_sigma,
@@ -224,5 +224,8 @@ __all__ = [
     "SmoothImageOutputs",
     "SmoothImageParameters",
     "smooth_image",
+    "smooth_image_cargs",
+    "smooth_image_execute",
+    "smooth_image_outputs",
     "smooth_image_params",
 ]

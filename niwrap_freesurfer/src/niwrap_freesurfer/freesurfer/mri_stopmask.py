@@ -14,7 +14,7 @@ MRI_STOPMASK_METADATA = Metadata(
 
 
 MriStopmaskParameters = typing.TypedDict('MriStopmaskParameters', {
-    "__STYXTYPE__": typing.Literal["mri_stopmask"],
+    "@type": typing.Literal["freesurfer.mri_stopmask"],
     "output_mask": str,
     "filled": list[InputPathType],
     "aseg_presurf": InputPathType,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_stopmask": mri_stopmask_cargs,
+        "freesurfer.mri_stopmask": mri_stopmask_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_stopmask": mri_stopmask_outputs,
+        "freesurfer.mri_stopmask": mri_stopmask_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def mri_stopmask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_stopmask",
+        "@type": "freesurfer.mri_stopmask",
         "output_mask": output_mask,
         "filled": filled,
         "aseg_presurf": aseg_presurf,
@@ -302,5 +302,8 @@ __all__ = [
     "MriStopmaskOutputs",
     "MriStopmaskParameters",
     "mri_stopmask",
+    "mri_stopmask_cargs",
+    "mri_stopmask_execute",
+    "mri_stopmask_outputs",
     "mri_stopmask_params",
 ]

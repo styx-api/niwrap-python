@@ -14,7 +14,7 @@ CIFTI_LABEL_IMPORT_METADATA = Metadata(
 
 
 CiftiLabelImportParameters = typing.TypedDict('CiftiLabelImportParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-label-import"],
+    "@type": typing.Literal["workbench.cifti-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-label-import": cifti_label_import_cargs,
+        "workbench.cifti-label-import": cifti_label_import_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-label-import": cifti_label_import_outputs,
+        "workbench.cifti-label-import": cifti_label_import_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def cifti_label_import_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-label-import",
+        "@type": "workbench.cifti-label-import",
         "input": input_,
         "label_list_file": label_list_file,
         "output": output,
@@ -274,5 +274,8 @@ __all__ = [
     "CiftiLabelImportOutputs",
     "CiftiLabelImportParameters",
     "cifti_label_import",
+    "cifti_label_import_cargs",
+    "cifti_label_import_execute",
+    "cifti_label_import_outputs",
     "cifti_label_import_params",
 ]

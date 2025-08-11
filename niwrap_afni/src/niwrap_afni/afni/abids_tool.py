@@ -14,7 +14,7 @@ ABIDS_TOOL_METADATA = Metadata(
 
 
 AbidsToolParameters = typing.TypedDict('AbidsToolParameters', {
-    "__STYXTYPE__": typing.Literal["abids_tool"],
+    "@type": typing.Literal["afni.abids_tool"],
     "input_files": list[InputPathType],
     "tr_match": bool,
     "add_tr": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "abids_tool": abids_tool_cargs,
+        "afni.abids_tool": abids_tool_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def abids_tool_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "abids_tool",
+        "@type": "afni.abids_tool",
         "input_files": input_files,
         "tr_match": tr_match,
         "add_tr": add_tr,
@@ -229,5 +229,8 @@ __all__ = [
     "AbidsToolOutputs",
     "AbidsToolParameters",
     "abids_tool",
+    "abids_tool_cargs",
+    "abids_tool_execute",
+    "abids_tool_outputs",
     "abids_tool_params",
 ]

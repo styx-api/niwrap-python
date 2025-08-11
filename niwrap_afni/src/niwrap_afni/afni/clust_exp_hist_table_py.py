@@ -14,7 +14,7 @@ CLUST_EXP_HIST_TABLE_PY_METADATA = Metadata(
 
 
 ClustExpHistTablePyParameters = typing.TypedDict('ClustExpHistTablePyParameters', {
-    "__STYXTYPE__": typing.Literal["ClustExp_HistTable.py"],
+    "@type": typing.Literal["afni.ClustExp_HistTable.py"],
     "stat_dset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ClustExp_HistTable.py": clust_exp_hist_table_py_cargs,
+        "afni.ClustExp_HistTable.py": clust_exp_hist_table_py_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ClustExp_HistTable.py": clust_exp_hist_table_py_outputs,
+        "afni.ClustExp_HistTable.py": clust_exp_hist_table_py_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def clust_exp_hist_table_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ClustExp_HistTable.py",
+        "@type": "afni.ClustExp_HistTable.py",
         "stat_dset": stat_dset,
         "overwrite": overwrite,
     }
@@ -214,5 +214,8 @@ __all__ = [
     "ClustExpHistTablePyOutputs",
     "ClustExpHistTablePyParameters",
     "clust_exp_hist_table_py",
+    "clust_exp_hist_table_py_cargs",
+    "clust_exp_hist_table_py_execute",
+    "clust_exp_hist_table_py_outputs",
     "clust_exp_hist_table_py_params",
 ]

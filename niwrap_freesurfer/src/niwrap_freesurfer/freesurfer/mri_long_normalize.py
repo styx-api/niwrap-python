@@ -14,7 +14,7 @@ MRI_LONG_NORMALIZE_METADATA = Metadata(
 
 
 MriLongNormalizeParameters = typing.TypedDict('MriLongNormalizeParameters', {
-    "__STYXTYPE__": typing.Literal["mri_long_normalize"],
+    "@type": typing.Literal["freesurfer.mri_long_normalize"],
     "input_vol": InputPathType,
     "base_tp_file": InputPathType,
     "output_vol": str,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_long_normalize": mri_long_normalize_cargs,
+        "freesurfer.mri_long_normalize": mri_long_normalize_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_long_normalize": mri_long_normalize_outputs,
+        "freesurfer.mri_long_normalize": mri_long_normalize_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def mri_long_normalize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_long_normalize",
+        "@type": "freesurfer.mri_long_normalize",
         "input_vol": input_vol,
         "base_tp_file": base_tp_file,
         "output_vol": output_vol,
@@ -286,5 +286,8 @@ __all__ = [
     "MriLongNormalizeOutputs",
     "MriLongNormalizeParameters",
     "mri_long_normalize",
+    "mri_long_normalize_cargs",
+    "mri_long_normalize_execute",
+    "mri_long_normalize_outputs",
     "mri_long_normalize_params",
 ]

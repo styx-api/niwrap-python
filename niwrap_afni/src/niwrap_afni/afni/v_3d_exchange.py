@@ -14,7 +14,7 @@ V_3D_EXCHANGE_METADATA = Metadata(
 
 
 V3dExchangeParameters = typing.TypedDict('V3dExchangeParameters', {
-    "__STYXTYPE__": typing.Literal["3dExchange"],
+    "@type": typing.Literal["afni.3dExchange"],
     "prefix": str,
     "infile": InputPathType,
     "mapfile": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dExchange": v_3d_exchange_cargs,
+        "afni.3dExchange": v_3d_exchange_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dExchange": v_3d_exchange_outputs,
+        "afni.3dExchange": v_3d_exchange_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def v_3d_exchange_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dExchange",
+        "@type": "afni.3dExchange",
         "prefix": prefix,
         "infile": infile,
         "mapfile": mapfile,
@@ -222,5 +222,8 @@ __all__ = [
     "V3dExchangeParameters",
     "V_3D_EXCHANGE_METADATA",
     "v_3d_exchange",
+    "v_3d_exchange_cargs",
+    "v_3d_exchange_execute",
+    "v_3d_exchange_outputs",
     "v_3d_exchange_params",
 ]

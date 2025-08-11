@@ -14,7 +14,7 @@ V__2DWARPER_ALLIN_METADATA = Metadata(
 
 
 V2dwarperAllinParameters = typing.TypedDict('V2dwarperAllinParameters', {
-    "__STYXTYPE__": typing.Literal["@2dwarper.Allin"],
+    "@type": typing.Literal["afni.@2dwarper.Allin"],
     "input_prefix": str,
     "mask_prefix": typing.NotRequired[str | None],
     "output_prefix": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@2dwarper.Allin": v__2dwarper_allin_cargs,
+        "afni.@2dwarper.Allin": v__2dwarper_allin_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@2dwarper.Allin": v__2dwarper_allin_outputs,
+        "afni.@2dwarper.Allin": v__2dwarper_allin_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v__2dwarper_allin_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@2dwarper.Allin",
+        "@type": "afni.@2dwarper.Allin",
         "input_prefix": input_prefix,
     }
     if mask_prefix is not None:
@@ -203,5 +203,8 @@ __all__ = [
     "V2dwarperAllinParameters",
     "V__2DWARPER_ALLIN_METADATA",
     "v__2dwarper_allin",
+    "v__2dwarper_allin_cargs",
+    "v__2dwarper_allin_execute",
+    "v__2dwarper_allin_outputs",
     "v__2dwarper_allin_params",
 ]

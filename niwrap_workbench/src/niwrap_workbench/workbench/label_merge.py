@@ -14,28 +14,28 @@ LABEL_MERGE_METADATA = Metadata(
 
 
 LabelMergeUpToParameters = typing.TypedDict('LabelMergeUpToParameters', {
-    "__STYXTYPE__": typing.Literal["up_to"],
+    "@type": typing.Literal["workbench.label-merge.label.column.up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 LabelMergeColumnParameters = typing.TypedDict('LabelMergeColumnParameters', {
-    "__STYXTYPE__": typing.Literal["column"],
+    "@type": typing.Literal["workbench.label-merge.label.column"],
     "column": str,
     "up_to": typing.NotRequired[LabelMergeUpToParameters | None],
 })
 
 
 LabelMergeLabelParameters = typing.TypedDict('LabelMergeLabelParameters', {
-    "__STYXTYPE__": typing.Literal["label"],
+    "@type": typing.Literal["workbench.label-merge.label"],
     "label_in": InputPathType,
     "column": typing.NotRequired[list[LabelMergeColumnParameters] | None],
 })
 
 
 LabelMergeParameters = typing.TypedDict('LabelMergeParameters', {
-    "__STYXTYPE__": typing.Literal["label-merge"],
+    "@type": typing.Literal["workbench.label-merge"],
     "label_out": str,
     "label": typing.NotRequired[list[LabelMergeLabelParameters] | None],
 })
@@ -53,10 +53,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-merge": label_merge_cargs,
-        "label": label_merge_label_cargs,
-        "column": label_merge_column_cargs,
-        "up_to": label_merge_up_to_cargs,
+        "workbench.label-merge": label_merge_cargs,
+        "workbench.label-merge.label": label_merge_label_cargs,
+        "workbench.label-merge.label.column": label_merge_column_cargs,
+        "workbench.label-merge.label.column.up_to": label_merge_up_to_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-merge": label_merge_outputs,
+        "workbench.label-merge": label_merge_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def label_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "up_to",
+        "@type": "workbench.label-merge.label.column.up_to",
         "last_column": last_column,
         "opt_reverse": opt_reverse,
     }
@@ -132,7 +132,7 @@ def label_merge_column_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "column",
+        "@type": "workbench.label-merge.label.column",
         "column": column,
     }
     if up_to is not None:
@@ -157,7 +157,7 @@ def label_merge_column_cargs(
     cargs.append("-column")
     cargs.append(params.get("column"))
     if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["__STYXTYPE__"])(params.get("up_to"), execution))
+        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
     return cargs
 
 
@@ -175,7 +175,7 @@ def label_merge_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label",
+        "@type": "workbench.label-merge.label",
         "label_in": label_in,
     }
     if column is not None:
@@ -200,7 +200,7 @@ def label_merge_label_cargs(
     cargs.append("-label")
     cargs.append(execution.input_file(params.get("label_in")))
     if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("column")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
     return cargs
 
 
@@ -228,7 +228,7 @@ def label_merge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-merge",
+        "@type": "workbench.label-merge",
         "label_out": label_out,
     }
     if label is not None:
@@ -254,7 +254,7 @@ def label_merge_cargs(
     cargs.append("-label-merge")
     cargs.append(params.get("label_out"))
     if params.get("label") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("label")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("label")] for a in c])
     return cargs
 
 
@@ -358,8 +358,14 @@ __all__ = [
     "LabelMergeParameters",
     "LabelMergeUpToParameters",
     "label_merge",
+    "label_merge_cargs",
+    "label_merge_column_cargs",
     "label_merge_column_params",
+    "label_merge_execute",
+    "label_merge_label_cargs",
     "label_merge_label_params",
+    "label_merge_outputs",
     "label_merge_params",
+    "label_merge_up_to_cargs",
     "label_merge_up_to_params",
 ]

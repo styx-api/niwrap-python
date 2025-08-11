@@ -14,38 +14,38 @@ FIXELCONVERT_METADATA = Metadata(
 
 
 FixelconvertConfigParameters = typing.TypedDict('FixelconvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixelconvert.config"],
     "key": str,
     "value": str,
 })
 
 
 FixelconvertVariousStringParameters = typing.TypedDict('FixelconvertVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.fixelconvert.VariousString"],
     "obj": str,
 })
 
 
 FixelconvertVariousFileParameters = typing.TypedDict('FixelconvertVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.fixelconvert.VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelconvertVariousString1Parameters = typing.TypedDict('FixelconvertVariousString1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousString_1"],
+    "@type": typing.Literal["mrtrix.fixelconvert.VariousString"],
     "obj": str,
 })
 
 
 FixelconvertVariousFile1Parameters = typing.TypedDict('FixelconvertVariousFile1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile_1"],
+    "@type": typing.Literal["mrtrix.fixelconvert.VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelconvertParameters = typing.TypedDict('FixelconvertParameters', {
-    "__STYXTYPE__": typing.Literal["fixelconvert"],
+    "@type": typing.Literal["mrtrix.fixelconvert"],
     "name": typing.NotRequired[str | None],
     "nii": bool,
     "out_size": bool,
@@ -77,12 +77,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixelconvert": fixelconvert_cargs,
-        "config": fixelconvert_config_cargs,
-        "VariousString": fixelconvert_various_string_cargs,
-        "VariousFile": fixelconvert_various_file_cargs,
-        "VariousString_1": fixelconvert_various_string_1_cargs,
-        "VariousFile_1": fixelconvert_various_file_1_cargs,
+        "mrtrix.fixelconvert": fixelconvert_cargs,
+        "mrtrix.fixelconvert.config": fixelconvert_config_cargs,
+        "mrtrix.fixelconvert.VariousString": fixelconvert_various_string_cargs,
+        "mrtrix.fixelconvert.VariousFile": fixelconvert_various_file_cargs,
+        "mrtrix.fixelconvert.VariousString": fixelconvert_various_string_1_cargs,
+        "mrtrix.fixelconvert.VariousFile": fixelconvert_various_file_1_cargs,
     }.get(t)
 
 
@@ -115,7 +115,7 @@ def fixelconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixelconvert.config",
         "key": key,
         "value": value,
     }
@@ -154,7 +154,7 @@ def fixelconvert_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.fixelconvert.VariousString",
         "obj": obj,
     }
     return params
@@ -190,7 +190,7 @@ def fixelconvert_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.fixelconvert.VariousFile",
         "obj": obj,
     }
     return params
@@ -226,7 +226,7 @@ def fixelconvert_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString_1",
+        "@type": "mrtrix.fixelconvert.VariousString",
         "obj": obj,
     }
     return params
@@ -262,7 +262,7 @@ def fixelconvert_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile_1",
+        "@type": "mrtrix.fixelconvert.VariousFile",
         "obj": obj,
     }
     return params
@@ -344,7 +344,7 @@ def fixelconvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixelconvert",
+        "@type": "mrtrix.fixelconvert",
         "nii": nii,
         "out_size": out_size,
         "info": info,
@@ -424,13 +424,13 @@ def fixelconvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
-    cargs.extend(dyn_cargs(params.get("fixel_in")["__STYXTYPE__"])(params.get("fixel_in"), execution))
-    cargs.extend(dyn_cargs(params.get("fixel_out")["__STYXTYPE__"])(params.get("fixel_out"), execution))
+    cargs.extend(dyn_cargs(params.get("fixel_in")["@type"])(params.get("fixel_in"), execution))
+    cargs.extend(dyn_cargs(params.get("fixel_out")["@type"])(params.get("fixel_out"), execution))
     return cargs
 
 
@@ -579,10 +579,18 @@ __all__ = [
     "FixelconvertVariousString1Parameters",
     "FixelconvertVariousStringParameters",
     "fixelconvert",
+    "fixelconvert_cargs",
+    "fixelconvert_config_cargs",
     "fixelconvert_config_params",
+    "fixelconvert_execute",
+    "fixelconvert_outputs",
     "fixelconvert_params",
+    "fixelconvert_various_file_1_cargs",
     "fixelconvert_various_file_1_params",
+    "fixelconvert_various_file_cargs",
     "fixelconvert_various_file_params",
+    "fixelconvert_various_string_1_cargs",
     "fixelconvert_various_string_1_params",
+    "fixelconvert_various_string_cargs",
     "fixelconvert_various_string_params",
 ]

@@ -14,7 +14,7 @@ V_3DSVM_METADATA = Metadata(
 
 
 V3dsvmParameters = typing.TypedDict('V3dsvmParameters', {
-    "__STYXTYPE__": typing.Literal["3dsvm"],
+    "@type": typing.Literal["afni.3dsvm"],
     "train_vol": typing.NotRequired[InputPathType | None],
     "train_labels": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dsvm": v_3dsvm_cargs,
+        "afni.3dsvm": v_3dsvm_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dsvm": v_3dsvm_outputs,
+        "afni.3dsvm": v_3dsvm_outputs,
     }.get(t)
 
 
@@ -169,7 +169,7 @@ def v_3dsvm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dsvm",
+        "@type": "afni.3dsvm",
         "no_model_mask": no_model_mask,
         "model": model,
         "wout": wout,
@@ -514,5 +514,8 @@ __all__ = [
     "V3dsvmParameters",
     "V_3DSVM_METADATA",
     "v_3dsvm",
+    "v_3dsvm_cargs",
+    "v_3dsvm_execute",
+    "v_3dsvm_outputs",
     "v_3dsvm_params",
 ]

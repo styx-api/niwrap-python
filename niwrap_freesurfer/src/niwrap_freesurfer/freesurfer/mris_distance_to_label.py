@@ -14,7 +14,7 @@ MRIS_DISTANCE_TO_LABEL_METADATA = Metadata(
 
 
 MrisDistanceToLabelParameters = typing.TypedDict('MrisDistanceToLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mris_distance_to_label"],
+    "@type": typing.Literal["freesurfer.mris_distance_to_label"],
     "hemisphere": str,
     "subject_1": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_distance_to_label": mris_distance_to_label_cargs,
+        "freesurfer.mris_distance_to_label": mris_distance_to_label_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def mris_distance_to_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_distance_to_label",
+        "@type": "freesurfer.mris_distance_to_label",
         "hemisphere": hemisphere,
         "subject_1": subject_1,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MrisDistanceToLabelOutputs",
     "MrisDistanceToLabelParameters",
     "mris_distance_to_label",
+    "mris_distance_to_label_cargs",
+    "mris_distance_to_label_execute",
+    "mris_distance_to_label_outputs",
     "mris_distance_to_label_params",
 ]

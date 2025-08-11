@@ -14,14 +14,14 @@ CONNECTOME2TCK_METADATA = Metadata(
 
 
 Connectome2tckConfigParameters = typing.TypedDict('Connectome2tckConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.connectome2tck.config"],
     "key": str,
     "value": str,
 })
 
 
 Connectome2tckParameters = typing.TypedDict('Connectome2tckParameters', {
-    "__STYXTYPE__": typing.Literal["connectome2tck"],
+    "@type": typing.Literal["mrtrix.connectome2tck"],
     "nodes": typing.NotRequired[list[int] | None],
     "exclusive": bool,
     "files": typing.NotRequired[str | None],
@@ -56,8 +56,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "connectome2tck": connectome2tck_cargs,
-        "config": connectome2tck_config_cargs,
+        "mrtrix.connectome2tck": connectome2tck_cargs,
+        "mrtrix.connectome2tck.config": connectome2tck_config_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def connectome2tck_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.connectome2tck.config",
         "key": key,
         "value": value,
     }
@@ -191,7 +191,7 @@ def connectome2tck_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "connectome2tck",
+        "@type": "mrtrix.connectome2tck",
         "exclusive": exclusive,
         "keep_unassigned": keep_unassigned,
         "keep_self": keep_self,
@@ -282,7 +282,7 @@ def connectome2tck_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -465,6 +465,10 @@ __all__ = [
     "Connectome2tckOutputs",
     "Connectome2tckParameters",
     "connectome2tck",
+    "connectome2tck_cargs",
+    "connectome2tck_config_cargs",
     "connectome2tck_config_params",
+    "connectome2tck_execute",
+    "connectome2tck_outputs",
     "connectome2tck_params",
 ]

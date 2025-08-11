@@ -14,7 +14,7 @@ UBER_PROC_PY_METADATA = Metadata(
 
 
 UberProcPyParameters = typing.TypedDict('UberProcPyParameters', {
-    "__STYXTYPE__": typing.Literal["uber_proc.py"],
+    "@type": typing.Literal["afni.uber_proc.py"],
     "results_dir": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "uber_proc.py": uber_proc_py_cargs,
+        "afni.uber_proc.py": uber_proc_py_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def uber_proc_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "uber_proc.py",
+        "@type": "afni.uber_proc.py",
     }
     if results_dir is not None:
         params["results_dir"] = results_dir
@@ -172,5 +172,8 @@ __all__ = [
     "UberProcPyOutputs",
     "UberProcPyParameters",
     "uber_proc_py",
+    "uber_proc_py_cargs",
+    "uber_proc_py_execute",
+    "uber_proc_py_outputs",
     "uber_proc_py_params",
 ]

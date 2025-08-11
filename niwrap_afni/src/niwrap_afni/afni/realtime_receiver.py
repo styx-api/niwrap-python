@@ -14,7 +14,7 @@ REALTIME_RECEIVER_METADATA = Metadata(
 
 
 RealtimeReceiverParameters = typing.TypedDict('RealtimeReceiverParameters', {
-    "__STYXTYPE__": typing.Literal["realtime_receiver"],
+    "@type": typing.Literal["afni.realtime_receiver"],
     "show_data": typing.NotRequired[typing.Literal["yes", "no"] | None],
     "write_text_data": typing.NotRequired[str | None],
     "data_choice": typing.NotRequired[typing.Literal["motion", "motion_norm", "all_extras", "diff_ratio"] | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "realtime_receiver": realtime_receiver_cargs,
+        "afni.realtime_receiver": realtime_receiver_cargs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def realtime_receiver_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "realtime_receiver",
+        "@type": "afni.realtime_receiver",
         "show_comm_times": show_comm_times,
         "show_demo_data": show_demo_data,
         "swap": swap,
@@ -306,5 +306,8 @@ __all__ = [
     "RealtimeReceiverOutputs",
     "RealtimeReceiverParameters",
     "realtime_receiver",
+    "realtime_receiver_cargs",
+    "realtime_receiver_execute",
+    "realtime_receiver_outputs",
     "realtime_receiver_params",
 ]

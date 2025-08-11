@@ -14,7 +14,7 @@ WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 
 
 WarpTimeSeriesImageMultiTransformParameters = typing.TypedDict('WarpTimeSeriesImageMultiTransformParameters', {
-    "__STYXTYPE__": typing.Literal["WarpTimeSeriesImageMultiTransform"],
+    "@type": typing.Literal["ants.WarpTimeSeriesImageMultiTransform"],
     "image_dimension": typing.Literal[3, 4],
     "moving_image": InputPathType,
     "output_image": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "WarpTimeSeriesImageMultiTransform": warp_time_series_image_multi_transform_cargs,
+        "ants.WarpTimeSeriesImageMultiTransform": warp_time_series_image_multi_transform_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "WarpTimeSeriesImageMultiTransform": warp_time_series_image_multi_transform_outputs,
+        "ants.WarpTimeSeriesImageMultiTransform": warp_time_series_image_multi_transform_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def warp_time_series_image_multi_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "WarpTimeSeriesImageMultiTransform",
+        "@type": "ants.WarpTimeSeriesImageMultiTransform",
         "image_dimension": image_dimension,
         "moving_image": moving_image,
         "output_image": output_image,
@@ -231,5 +231,8 @@ __all__ = [
     "WarpTimeSeriesImageMultiTransformOutputs",
     "WarpTimeSeriesImageMultiTransformParameters",
     "warp_time_series_image_multi_transform",
+    "warp_time_series_image_multi_transform_cargs",
+    "warp_time_series_image_multi_transform_execute",
+    "warp_time_series_image_multi_transform_outputs",
     "warp_time_series_image_multi_transform_params",
 ]

@@ -14,7 +14,7 @@ MAP_ICOSAHEDRON_METADATA = Metadata(
 
 
 MapIcosahedronParameters = typing.TypedDict('MapIcosahedronParameters', {
-    "__STYXTYPE__": typing.Literal["MapIcosahedron"],
+    "@type": typing.Literal["afni.MapIcosahedron"],
     "spec_file": InputPathType,
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "MapIcosahedron": map_icosahedron_cargs,
+        "afni.MapIcosahedron": map_icosahedron_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def map_icosahedron_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "MapIcosahedron",
+        "@type": "afni.MapIcosahedron",
         "spec_file": spec_file,
         "fix_cut_surfaces": fix_cut_surfaces,
         "verbosity": verbosity,
@@ -292,5 +292,8 @@ __all__ = [
     "MapIcosahedronOutputs",
     "MapIcosahedronParameters",
     "map_icosahedron",
+    "map_icosahedron_cargs",
+    "map_icosahedron_execute",
+    "map_icosahedron_outputs",
     "map_icosahedron_params",
 ]

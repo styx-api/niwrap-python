@@ -14,7 +14,7 @@ ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA = Metadata(
 
 
 AdjunctTortPlotDpAlignParameters = typing.TypedDict('AdjunctTortPlotDpAlignParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_tort_plot_dp_align"],
+    "@type": typing.Literal["afni.adjunct_tort_plot_dp_align"],
     "input_file": InputPathType,
     "output_prefix": str,
     "enorm_max": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_tort_plot_dp_align": adjunct_tort_plot_dp_align_cargs,
+        "afni.adjunct_tort_plot_dp_align": adjunct_tort_plot_dp_align_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "adjunct_tort_plot_dp_align": adjunct_tort_plot_dp_align_outputs,
+        "afni.adjunct_tort_plot_dp_align": adjunct_tort_plot_dp_align_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def adjunct_tort_plot_dp_align_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_tort_plot_dp_align",
+        "@type": "afni.adjunct_tort_plot_dp_align",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "no_svg": no_svg,
@@ -244,5 +244,8 @@ __all__ = [
     "AdjunctTortPlotDpAlignOutputs",
     "AdjunctTortPlotDpAlignParameters",
     "adjunct_tort_plot_dp_align",
+    "adjunct_tort_plot_dp_align_cargs",
+    "adjunct_tort_plot_dp_align_execute",
+    "adjunct_tort_plot_dp_align_outputs",
     "adjunct_tort_plot_dp_align_params",
 ]

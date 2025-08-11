@@ -14,7 +14,7 @@ LPCREGISTER_METADATA = Metadata(
 
 
 LpcregisterParameters = typing.TypedDict('LpcregisterParameters', {
-    "__STYXTYPE__": typing.Literal["lpcregister"],
+    "@type": typing.Literal["freesurfer.lpcregister"],
     "subject_id": str,
     "mov_volume": str,
     "reg_file": str,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "lpcregister": lpcregister_cargs,
+        "freesurfer.lpcregister": lpcregister_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "lpcregister": lpcregister_outputs,
+        "freesurfer.lpcregister": lpcregister_outputs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def lpcregister_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "lpcregister",
+        "@type": "freesurfer.lpcregister",
         "subject_id": subject_id,
         "mov_volume": mov_volume,
         "reg_file": reg_file,
@@ -322,5 +322,8 @@ __all__ = [
     "LpcregisterOutputs",
     "LpcregisterParameters",
     "lpcregister",
+    "lpcregister_cargs",
+    "lpcregister_execute",
+    "lpcregister_outputs",
     "lpcregister_params",
 ]

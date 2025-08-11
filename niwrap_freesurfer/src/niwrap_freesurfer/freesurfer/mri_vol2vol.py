@@ -14,7 +14,7 @@ MRI_VOL2VOL_METADATA = Metadata(
 
 
 MriVol2volParameters = typing.TypedDict('MriVol2volParameters', {
-    "__STYXTYPE__": typing.Literal["mri_vol2vol"],
+    "@type": typing.Literal["freesurfer.mri_vol2vol"],
     "movvol": InputPathType,
     "targvol": InputPathType,
     "outvol": InputPathType,
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_vol2vol": mri_vol2vol_cargs,
+        "freesurfer.mri_vol2vol": mri_vol2vol_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_vol2vol": mri_vol2vol_outputs,
+        "freesurfer.mri_vol2vol": mri_vol2vol_outputs,
     }.get(t)
 
 
@@ -210,7 +210,7 @@ def mri_vol2vol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_vol2vol",
+        "@type": "freesurfer.mri_vol2vol",
         "movvol": movvol,
         "targvol": targvol,
         "outvol": outvol,
@@ -683,5 +683,8 @@ __all__ = [
     "MriVol2volOutputs",
     "MriVol2volParameters",
     "mri_vol2vol",
+    "mri_vol2vol_cargs",
+    "mri_vol2vol_execute",
+    "mri_vol2vol_outputs",
     "mri_vol2vol_params",
 ]

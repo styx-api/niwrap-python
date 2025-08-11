@@ -14,7 +14,7 @@ BORDER_TO_ROIS_METADATA = Metadata(
 
 
 BorderToRoisParameters = typing.TypedDict('BorderToRoisParameters', {
-    "__STYXTYPE__": typing.Literal["border-to-rois"],
+    "@type": typing.Literal["workbench.border-to-rois"],
     "surface": InputPathType,
     "border_file": InputPathType,
     "metric_out": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "border-to-rois": border_to_rois_cargs,
+        "workbench.border-to-rois": border_to_rois_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "border-to-rois": border_to_rois_outputs,
+        "workbench.border-to-rois": border_to_rois_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def border_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border-to-rois",
+        "@type": "workbench.border-to-rois",
         "surface": surface,
         "border_file": border_file,
         "metric_out": metric_out,
@@ -226,5 +226,8 @@ __all__ = [
     "BorderToRoisOutputs",
     "BorderToRoisParameters",
     "border_to_rois",
+    "border_to_rois_cargs",
+    "border_to_rois_execute",
+    "border_to_rois_outputs",
     "border_to_rois_params",
 ]

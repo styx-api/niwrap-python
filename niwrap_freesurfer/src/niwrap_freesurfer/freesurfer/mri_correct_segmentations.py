@@ -14,7 +14,7 @@ MRI_CORRECT_SEGMENTATIONS_METADATA = Metadata(
 
 
 MriCorrectSegmentationsParameters = typing.TypedDict('MriCorrectSegmentationsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_correct_segmentations"],
+    "@type": typing.Literal["freesurfer.mri_correct_segmentations"],
     "input_file_1": InputPathType,
     "input_file_2": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_correct_segmentations": mri_correct_segmentations_cargs,
+        "freesurfer.mri_correct_segmentations": mri_correct_segmentations_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mri_correct_segmentations_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_correct_segmentations",
+        "@type": "freesurfer.mri_correct_segmentations",
         "input_file_1": input_file_1,
         "input_file_2": input_file_2,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "MriCorrectSegmentationsOutputs",
     "MriCorrectSegmentationsParameters",
     "mri_correct_segmentations",
+    "mri_correct_segmentations_cargs",
+    "mri_correct_segmentations_execute",
+    "mri_correct_segmentations_outputs",
     "mri_correct_segmentations_params",
 ]

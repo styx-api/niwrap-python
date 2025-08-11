@@ -14,7 +14,7 @@ MRI_ADD_NEW_TP_METADATA = Metadata(
 
 
 MriAddNewTpParameters = typing.TypedDict('MriAddNewTpParameters', {
-    "__STYXTYPE__": typing.Literal["mri_add_new_tp"],
+    "@type": typing.Literal["freesurfer.mri_add_new_tp"],
     "base_id": str,
     "newtp_id": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_add_new_tp": mri_add_new_tp_cargs,
+        "freesurfer.mri_add_new_tp": mri_add_new_tp_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mri_add_new_tp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_add_new_tp",
+        "@type": "freesurfer.mri_add_new_tp",
         "base_id": base_id,
         "newtp_id": newtp_id,
     }
@@ -178,5 +178,8 @@ __all__ = [
     "MriAddNewTpOutputs",
     "MriAddNewTpParameters",
     "mri_add_new_tp",
+    "mri_add_new_tp_cargs",
+    "mri_add_new_tp_execute",
+    "mri_add_new_tp_outputs",
     "mri_add_new_tp_params",
 ]

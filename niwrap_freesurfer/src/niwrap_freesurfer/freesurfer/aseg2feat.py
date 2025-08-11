@@ -14,7 +14,7 @@ ASEG2FEAT_METADATA = Metadata(
 
 
 Aseg2featParameters = typing.TypedDict('Aseg2featParameters', {
-    "__STYXTYPE__": typing.Literal["aseg2feat"],
+    "@type": typing.Literal["freesurfer.aseg2feat"],
     "feat": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "aseg2feat": aseg2feat_cargs,
+        "freesurfer.aseg2feat": aseg2feat_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "aseg2feat": aseg2feat_outputs,
+        "freesurfer.aseg2feat": aseg2feat_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def aseg2feat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "aseg2feat",
+        "@type": "freesurfer.aseg2feat",
         "feat": feat,
         "aparc_aseg": aparc_aseg,
         "svstats": svstats,
@@ -264,5 +264,8 @@ __all__ = [
     "Aseg2featOutputs",
     "Aseg2featParameters",
     "aseg2feat",
+    "aseg2feat_cargs",
+    "aseg2feat_execute",
+    "aseg2feat_outputs",
     "aseg2feat_params",
 ]

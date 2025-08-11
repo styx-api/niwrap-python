@@ -14,7 +14,7 @@ STIMBAND_METADATA = Metadata(
 
 
 StimbandParameters = typing.TypedDict('StimbandParameters', {
-    "__STYXTYPE__": typing.Literal["stimband"],
+    "@type": typing.Literal["afni.stimband"],
     "verbose_flag": bool,
     "matrixfiles": list[InputPathType],
     "additional_matrixfiles": typing.NotRequired[list[InputPathType] | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "stimband": stimband_cargs,
+        "afni.stimband": stimband_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "stimband": stimband_outputs,
+        "afni.stimband": stimband_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def stimband_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "stimband",
+        "@type": "afni.stimband",
         "verbose_flag": verbose_flag,
         "matrixfiles": matrixfiles,
     }
@@ -244,5 +244,8 @@ __all__ = [
     "StimbandOutputs",
     "StimbandParameters",
     "stimband",
+    "stimband_cargs",
+    "stimband_execute",
+    "stimband_outputs",
     "stimband_params",
 ]

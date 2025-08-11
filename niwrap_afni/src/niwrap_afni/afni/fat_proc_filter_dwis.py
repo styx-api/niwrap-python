@@ -14,7 +14,7 @@ FAT_PROC_FILTER_DWIS_METADATA = Metadata(
 
 
 FatProcFilterDwisParameters = typing.TypedDict('FatProcFilterDwisParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_filter_dwis"],
+    "@type": typing.Literal["afni.fat_proc_filter_dwis"],
     "input_dwi": InputPathType,
     "input_gradient": InputPathType,
     "select_string": str,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_filter_dwis": fat_proc_filter_dwis_cargs,
+        "afni.fat_proc_filter_dwis": fat_proc_filter_dwis_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_filter_dwis": fat_proc_filter_dwis_outputs,
+        "afni.fat_proc_filter_dwis": fat_proc_filter_dwis_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def fat_proc_filter_dwis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_filter_dwis",
+        "@type": "afni.fat_proc_filter_dwis",
         "input_dwi": input_dwi,
         "input_gradient": input_gradient,
         "select_string": select_string,
@@ -317,5 +317,8 @@ __all__ = [
     "FatProcFilterDwisOutputs",
     "FatProcFilterDwisParameters",
     "fat_proc_filter_dwis",
+    "fat_proc_filter_dwis_cargs",
+    "fat_proc_filter_dwis_execute",
+    "fat_proc_filter_dwis_outputs",
     "fat_proc_filter_dwis_params",
 ]

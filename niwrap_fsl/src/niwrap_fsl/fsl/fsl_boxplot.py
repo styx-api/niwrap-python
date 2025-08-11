@@ -14,7 +14,7 @@ FSL_BOXPLOT_METADATA = Metadata(
 
 
 FslBoxplotParameters = typing.TypedDict('FslBoxplotParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_boxplot"],
+    "@type": typing.Literal["fsl.fsl_boxplot"],
     "input_files": list[InputPathType],
     "output_image": str,
     "help_flag": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_boxplot": fsl_boxplot_cargs,
+        "fsl.fsl_boxplot": fsl_boxplot_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_boxplot": fsl_boxplot_outputs,
+        "fsl.fsl_boxplot": fsl_boxplot_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def fsl_boxplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_boxplot",
+        "@type": "fsl.fsl_boxplot",
         "input_files": input_files,
         "output_image": output_image,
         "help_flag": help_flag,
@@ -275,5 +275,8 @@ __all__ = [
     "FslBoxplotOutputs",
     "FslBoxplotParameters",
     "fsl_boxplot",
+    "fsl_boxplot_cargs",
+    "fsl_boxplot_execute",
+    "fsl_boxplot_outputs",
     "fsl_boxplot_params",
 ]

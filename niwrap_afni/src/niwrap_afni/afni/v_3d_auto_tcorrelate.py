@@ -14,7 +14,7 @@ V_3D_AUTO_TCORRELATE_METADATA = Metadata(
 
 
 V3dAutoTcorrelateParameters = typing.TypedDict('V3dAutoTcorrelateParameters', {
-    "__STYXTYPE__": typing.Literal["3dAutoTcorrelate"],
+    "@type": typing.Literal["afni.3dAutoTcorrelate"],
     "input_dataset": InputPathType,
     "pearson": bool,
     "eta2": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAutoTcorrelate": v_3d_auto_tcorrelate_cargs,
+        "afni.3dAutoTcorrelate": v_3d_auto_tcorrelate_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAutoTcorrelate": v_3d_auto_tcorrelate_outputs,
+        "afni.3dAutoTcorrelate": v_3d_auto_tcorrelate_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def v_3d_auto_tcorrelate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAutoTcorrelate",
+        "@type": "afni.3dAutoTcorrelate",
         "input_dataset": input_dataset,
         "pearson": pearson,
         "eta2": eta2,
@@ -310,5 +310,8 @@ __all__ = [
     "V3dAutoTcorrelateParameters",
     "V_3D_AUTO_TCORRELATE_METADATA",
     "v_3d_auto_tcorrelate",
+    "v_3d_auto_tcorrelate_cargs",
+    "v_3d_auto_tcorrelate_execute",
+    "v_3d_auto_tcorrelate_outputs",
     "v_3d_auto_tcorrelate_params",
 ]

@@ -14,7 +14,7 @@ VOLUME_VECTOR_OPERATION_METADATA = Metadata(
 
 
 VolumeVectorOperationParameters = typing.TypedDict('VolumeVectorOperationParameters', {
-    "__STYXTYPE__": typing.Literal["volume-vector-operation"],
+    "@type": typing.Literal["workbench.volume-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-vector-operation": volume_vector_operation_cargs,
+        "workbench.volume-vector-operation": volume_vector_operation_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-vector-operation": volume_vector_operation_outputs,
+        "workbench.volume-vector-operation": volume_vector_operation_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def volume_vector_operation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-vector-operation",
+        "@type": "workbench.volume-vector-operation",
         "vectors_a": vectors_a,
         "vectors_b": vectors_b,
         "operation": operation,
@@ -261,5 +261,8 @@ __all__ = [
     "VolumeVectorOperationOutputs",
     "VolumeVectorOperationParameters",
     "volume_vector_operation",
+    "volume_vector_operation_cargs",
+    "volume_vector_operation_execute",
+    "volume_vector_operation_outputs",
     "volume_vector_operation_params",
 ]

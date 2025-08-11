@@ -14,7 +14,7 @@ SIENA_FLOW2STD_METADATA = Metadata(
 
 
 SienaFlow2stdParameters = typing.TypedDict('SienaFlow2stdParameters', {
-    "__STYXTYPE__": typing.Literal["siena_flow2std"],
+    "@type": typing.Literal["fsl.siena_flow2std"],
     "fileroot1": str,
     "fileroot2": str,
     "sigma": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "siena_flow2std": siena_flow2std_cargs,
+        "fsl.siena_flow2std": siena_flow2std_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def siena_flow2std_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "siena_flow2std",
+        "@type": "fsl.siena_flow2std",
         "fileroot1": fileroot1,
         "fileroot2": fileroot2,
         "debug_flag": debug_flag,
@@ -200,5 +200,8 @@ __all__ = [
     "SienaFlow2stdOutputs",
     "SienaFlow2stdParameters",
     "siena_flow2std",
+    "siena_flow2std_cargs",
+    "siena_flow2std_execute",
+    "siena_flow2std_outputs",
     "siena_flow2std_params",
 ]

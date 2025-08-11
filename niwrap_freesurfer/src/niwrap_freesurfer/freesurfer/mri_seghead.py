@@ -14,7 +14,7 @@ MRI_SEGHEAD_METADATA = Metadata(
 
 
 MriSegheadParameters = typing.TypedDict('MriSegheadParameters', {
-    "__STYXTYPE__": typing.Literal["mri_seghead"],
+    "@type": typing.Literal["freesurfer.mri_seghead"],
     "input_volume": str,
     "output_volume": str,
     "fill_value": typing.NotRequired[float | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_seghead": mri_seghead_cargs,
+        "freesurfer.mri_seghead": mri_seghead_cargs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def mri_seghead_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_seghead",
+        "@type": "freesurfer.mri_seghead",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "signal_behind_head": signal_behind_head,
@@ -347,5 +347,8 @@ __all__ = [
     "MriSegheadOutputs",
     "MriSegheadParameters",
     "mri_seghead",
+    "mri_seghead_cargs",
+    "mri_seghead_execute",
+    "mri_seghead_outputs",
     "mri_seghead_params",
 ]

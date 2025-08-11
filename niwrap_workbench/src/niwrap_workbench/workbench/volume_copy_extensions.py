@@ -14,7 +14,7 @@ VOLUME_COPY_EXTENSIONS_METADATA = Metadata(
 
 
 VolumeCopyExtensionsParameters = typing.TypedDict('VolumeCopyExtensionsParameters', {
-    "__STYXTYPE__": typing.Literal["volume-copy-extensions"],
+    "@type": typing.Literal["workbench.volume-copy-extensions"],
     "data_volume": InputPathType,
     "extension_volume": InputPathType,
     "volume_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-copy-extensions": volume_copy_extensions_cargs,
+        "workbench.volume-copy-extensions": volume_copy_extensions_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-copy-extensions": volume_copy_extensions_outputs,
+        "workbench.volume-copy-extensions": volume_copy_extensions_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def volume_copy_extensions_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-copy-extensions",
+        "@type": "workbench.volume-copy-extensions",
         "data_volume": data_volume,
         "extension_volume": extension_volume,
         "volume_out": volume_out,
@@ -210,5 +210,8 @@ __all__ = [
     "VolumeCopyExtensionsOutputs",
     "VolumeCopyExtensionsParameters",
     "volume_copy_extensions",
+    "volume_copy_extensions_cargs",
+    "volume_copy_extensions_execute",
+    "volume_copy_extensions_outputs",
     "volume_copy_extensions_params",
 ]

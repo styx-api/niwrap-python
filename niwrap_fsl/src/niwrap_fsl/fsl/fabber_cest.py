@@ -14,7 +14,7 @@ FABBER_CEST_METADATA = Metadata(
 
 
 FabberCestParameters = typing.TypedDict('FabberCestParameters', {
-    "__STYXTYPE__": typing.Literal["fabber_cest"],
+    "@type": typing.Literal["fsl.fabber_cest"],
     "output": str,
     "method": str,
     "model": str,
@@ -66,7 +66,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber_cest": fabber_cest_cargs,
+        "fsl.fabber_cest": fabber_cest_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber_cest": fabber_cest_outputs,
+        "fsl.fabber_cest": fabber_cest_outputs,
     }.get(t)
 
 
@@ -206,7 +206,7 @@ def fabber_cest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber_cest",
+        "@type": "fsl.fabber_cest",
         "output": output,
         "method": method,
         "model": model,
@@ -581,5 +581,8 @@ __all__ = [
     "FabberCestOutputs",
     "FabberCestParameters",
     "fabber_cest",
+    "fabber_cest_cargs",
+    "fabber_cest_execute",
+    "fabber_cest_outputs",
     "fabber_cest_params",
 ]

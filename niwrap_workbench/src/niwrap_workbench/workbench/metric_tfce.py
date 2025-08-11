@@ -14,21 +14,21 @@ METRIC_TFCE_METADATA = Metadata(
 
 
 MetricTfcePresmoothParameters = typing.TypedDict('MetricTfcePresmoothParameters', {
-    "__STYXTYPE__": typing.Literal["presmooth"],
+    "@type": typing.Literal["workbench.metric-tfce.presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricTfceParametersParameters = typing.TypedDict('MetricTfceParametersParameters', {
-    "__STYXTYPE__": typing.Literal["parameters"],
+    "@type": typing.Literal["workbench.metric-tfce.parameters"],
     "e": float,
     "h": float,
 })
 
 
 MetricTfceParameters = typing.TypedDict('MetricTfceParameters', {
-    "__STYXTYPE__": typing.Literal["metric-tfce"],
+    "@type": typing.Literal["workbench.metric-tfce"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -52,9 +52,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-tfce": metric_tfce_cargs,
-        "presmooth": metric_tfce_presmooth_cargs,
-        "parameters": metric_tfce_parameters_cargs,
+        "workbench.metric-tfce": metric_tfce_cargs,
+        "workbench.metric-tfce.presmooth": metric_tfce_presmooth_cargs,
+        "workbench.metric-tfce.parameters": metric_tfce_parameters_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-tfce": metric_tfce_outputs,
+        "workbench.metric-tfce": metric_tfce_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def metric_tfce_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "presmooth",
+        "@type": "workbench.metric-tfce.presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -131,7 +131,7 @@ def metric_tfce_parameters_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "parameters",
+        "@type": "workbench.metric-tfce.parameters",
         "e": e,
         "h": h,
     }
@@ -197,7 +197,7 @@ def metric_tfce_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-tfce",
+        "@type": "workbench.metric-tfce",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -235,14 +235,14 @@ def metric_tfce_cargs(
     cargs.append(execution.input_file(params.get("metric_in")))
     cargs.append(params.get("metric_out"))
     if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["__STYXTYPE__"])(params.get("presmooth"), execution))
+        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
     if params.get("opt_roi_roi_metric") is not None:
         cargs.extend([
             "-roi",
             execution.input_file(params.get("opt_roi_roi_metric"))
         ])
     if params.get("parameters") is not None:
-        cargs.extend(dyn_cargs(params.get("parameters")["__STYXTYPE__"])(params.get("parameters"), execution))
+        cargs.extend(dyn_cargs(params.get("parameters")["@type"])(params.get("parameters"), execution))
     if params.get("opt_column_column") is not None:
         cargs.extend([
             "-column",
@@ -406,7 +406,12 @@ __all__ = [
     "MetricTfceParametersParameters",
     "MetricTfcePresmoothParameters",
     "metric_tfce",
+    "metric_tfce_cargs",
+    "metric_tfce_execute",
+    "metric_tfce_outputs",
+    "metric_tfce_parameters_cargs",
     "metric_tfce_parameters_params",
     "metric_tfce_params",
+    "metric_tfce_presmooth_cargs",
     "metric_tfce_presmooth_params",
 ]

@@ -14,7 +14,7 @@ RCA_CONFIG2CSH_METADATA = Metadata(
 
 
 RcaConfig2cshParameters = typing.TypedDict('RcaConfig2cshParameters', {
-    "__STYXTYPE__": typing.Literal["rca-config2csh"],
+    "@type": typing.Literal["freesurfer.rca-config2csh"],
     "configfile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rca-config2csh": rca_config2csh_cargs,
+        "freesurfer.rca-config2csh": rca_config2csh_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def rca_config2csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rca-config2csh",
+        "@type": "freesurfer.rca-config2csh",
         "configfile": configfile,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "RcaConfig2cshOutputs",
     "RcaConfig2cshParameters",
     "rca_config2csh",
+    "rca_config2csh_cargs",
+    "rca_config2csh_execute",
+    "rca_config2csh_outputs",
     "rca_config2csh_params",
 ]

@@ -14,7 +14,7 @@ ANTS_JOINT_TENSOR_FUSION_METADATA = Metadata(
 
 
 AntsJointTensorFusionParameters = typing.TypedDict('AntsJointTensorFusionParameters', {
-    "__STYXTYPE__": typing.Literal["antsJointTensorFusion"],
+    "@type": typing.Literal["ants.antsJointTensorFusion"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "target_image": list[str],
     "atlas_image": list[str],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsJointTensorFusion": ants_joint_tensor_fusion_cargs,
+        "ants.antsJointTensorFusion": ants_joint_tensor_fusion_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsJointTensorFusion": ants_joint_tensor_fusion_outputs,
+        "ants.antsJointTensorFusion": ants_joint_tensor_fusion_outputs,
     }.get(t)
 
 
@@ -141,7 +141,7 @@ def ants_joint_tensor_fusion_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsJointTensorFusion",
+        "@type": "ants.antsJointTensorFusion",
         "target_image": target_image,
         "atlas_image": atlas_image,
         "atlas_segmentation": atlas_segmentation,
@@ -422,5 +422,8 @@ __all__ = [
     "AntsJointTensorFusionOutputs",
     "AntsJointTensorFusionParameters",
     "ants_joint_tensor_fusion",
+    "ants_joint_tensor_fusion_cargs",
+    "ants_joint_tensor_fusion_execute",
+    "ants_joint_tensor_fusion_outputs",
     "ants_joint_tensor_fusion_params",
 ]

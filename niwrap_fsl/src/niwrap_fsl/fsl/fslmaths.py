@@ -14,7 +14,7 @@ FSLMATHS_METADATA = Metadata(
 
 
 FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
-    "__STYXTYPE__": typing.Literal["operation"],
+    "@type": typing.Literal["fsl.fslmaths.operations"],
     "add": typing.NotRequired[float | None],
     "sub": typing.NotRequired[float | None],
     "mul": typing.NotRequired[float | None],
@@ -117,7 +117,7 @@ FslmathsOperationParameters = typing.TypedDict('FslmathsOperationParameters', {
 
 
 FslmathsParameters = typing.TypedDict('FslmathsParameters', {
-    "__STYXTYPE__": typing.Literal["fslmaths"],
+    "@type": typing.Literal["fsl.fslmaths"],
     "datatype_internal": typing.NotRequired[typing.Literal["char", "short", "int", "float", "double", "input"] | None],
     "input_files": list[InputPathType],
     "operations": list[FslmathsOperationParameters],
@@ -138,8 +138,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslmaths": fslmaths_cargs,
-        "operation": fslmaths_operation_cargs,
+        "fsl.fslmaths": fslmaths_cargs,
+        "fsl.fslmaths.operations": fslmaths_operation_cargs,
     }.get(t)
 
 
@@ -155,7 +155,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslmaths": fslmaths_outputs,
+        "fsl.fslmaths": fslmaths_outputs,
     }.get(t)
 
 
@@ -389,7 +389,7 @@ def fslmaths_operation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "operation",
+        "@type": "fsl.fslmaths.operations",
         "save": save,
         "exp": exp,
         "log": log,
@@ -875,7 +875,7 @@ def fslmaths_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslmaths",
+        "@type": "fsl.fslmaths",
         "input_files": input_files,
         "operations": operations,
         "output": output,
@@ -908,7 +908,7 @@ def fslmaths_cargs(
             params.get("datatype_internal")
         ])
     cargs.extend([execution.input_file(f) for f in params.get("input_files")])
-    cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("operations")] for a in c])
+    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("operations")] for a in c])
     cargs.append(params.get("output"))
     if params.get("output_datatype") is not None:
         cargs.extend([
@@ -1005,6 +1005,10 @@ __all__ = [
     "FslmathsOutputs",
     "FslmathsParameters",
     "fslmaths",
+    "fslmaths_cargs",
+    "fslmaths_execute",
+    "fslmaths_operation_cargs",
     "fslmaths_operation_params",
+    "fslmaths_outputs",
     "fslmaths_params",
 ]

@@ -14,40 +14,40 @@ DWI2FOD_METADATA = Metadata(
 
 
 Dwi2fodFslgradParameters = typing.TypedDict('Dwi2fodFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dwi2fod.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2fodVariousStringParameters = typing.TypedDict('Dwi2fodVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.dwi2fod.VariousString"],
     "obj": str,
 })
 
 
 Dwi2fodVariousFileParameters = typing.TypedDict('Dwi2fodVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.dwi2fod.VariousFile"],
     "obj": InputPathType,
 })
 
 
 Dwi2fodConfigParameters = typing.TypedDict('Dwi2fodConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dwi2fod.config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2fodResponseOdfParameters = typing.TypedDict('Dwi2fodResponseOdfParameters', {
-    "__STYXTYPE__": typing.Literal["response_odf"],
+    "@type": typing.Literal["mrtrix.dwi2fod.response_odf"],
     "response": InputPathType,
     "odf": str,
 })
 
 
 Dwi2fodParameters = typing.TypedDict('Dwi2fodParameters', {
-    "__STYXTYPE__": typing.Literal["dwi2fod"],
+    "@type": typing.Literal["mrtrix.dwi2fod"],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2fodFslgradParameters | None],
     "shells": typing.NotRequired[list[float] | None],
@@ -89,12 +89,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwi2fod": dwi2fod_cargs,
-        "fslgrad": dwi2fod_fslgrad_cargs,
-        "VariousString": dwi2fod_various_string_cargs,
-        "VariousFile": dwi2fod_various_file_cargs,
-        "config": dwi2fod_config_cargs,
-        "response_odf": dwi2fod_response_odf_cargs,
+        "mrtrix.dwi2fod": dwi2fod_cargs,
+        "mrtrix.dwi2fod.fslgrad": dwi2fod_fslgrad_cargs,
+        "mrtrix.dwi2fod.VariousString": dwi2fod_various_string_cargs,
+        "mrtrix.dwi2fod.VariousFile": dwi2fod_various_file_cargs,
+        "mrtrix.dwi2fod.config": dwi2fod_config_cargs,
+        "mrtrix.dwi2fod.response_odf": dwi2fod_response_odf_cargs,
     }.get(t)
 
 
@@ -110,8 +110,8 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwi2fod": dwi2fod_outputs,
-        "response_odf": dwi2fod_response_odf_outputs,
+        "mrtrix.dwi2fod": dwi2fod_outputs,
+        "mrtrix.dwi2fod.response_odf": dwi2fod_response_odf_outputs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def dwi2fod_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dwi2fod.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -174,7 +174,7 @@ def dwi2fod_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.dwi2fod.VariousString",
         "obj": obj,
     }
     return params
@@ -210,7 +210,7 @@ def dwi2fod_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.dwi2fod.VariousFile",
         "obj": obj,
     }
     return params
@@ -248,7 +248,7 @@ def dwi2fod_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dwi2fod.config",
         "key": key,
         "value": value,
     }
@@ -299,7 +299,7 @@ def dwi2fod_response_odf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "response_odf",
+        "@type": "mrtrix.dwi2fod.response_odf",
         "response": response,
         "odf": odf,
     }
@@ -466,7 +466,7 @@ def dwi2fod_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwi2fod",
+        "@type": "mrtrix.dwi2fod",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -535,7 +535,7 @@ def dwi2fod_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("shells") is not None:
         cargs.extend([
             "-shells",
@@ -599,7 +599,7 @@ def dwi2fod_cargs(
     if params.get("strides") is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["__STYXTYPE__"])(params.get("strides"), execution)
+            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
         ])
     if params.get("info"):
         cargs.append("-info")
@@ -615,14 +615,14 @@ def dwi2fod_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
     cargs.append(params.get("algorithm"))
     cargs.append(execution.input_file(params.get("dwi")))
-    cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("response_odf")] for a in c])
+    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("response_odf")] for a in c])
     return cargs
 
 
@@ -642,7 +642,7 @@ def dwi2fod_outputs(
     ret = Dwi2fodOutputs(
         root=execution.output_file("."),
         predicted_signal=execution.output_file(params.get("predicted_signal")) if (params.get("predicted_signal") is not None) else None,
-        response_odf=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("response_odf")],
+        response_odf=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("response_odf")],
     )
     return ret
 
@@ -870,10 +870,19 @@ __all__ = [
     "Dwi2fodVariousFileParameters",
     "Dwi2fodVariousStringParameters",
     "dwi2fod",
+    "dwi2fod_cargs",
+    "dwi2fod_config_cargs",
     "dwi2fod_config_params",
+    "dwi2fod_execute",
+    "dwi2fod_fslgrad_cargs",
     "dwi2fod_fslgrad_params",
+    "dwi2fod_outputs",
     "dwi2fod_params",
+    "dwi2fod_response_odf_cargs",
+    "dwi2fod_response_odf_outputs",
     "dwi2fod_response_odf_params",
+    "dwi2fod_various_file_cargs",
     "dwi2fod_various_file_params",
+    "dwi2fod_various_string_cargs",
     "dwi2fod_various_string_params",
 ]

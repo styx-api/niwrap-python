@@ -14,7 +14,7 @@ INIT_USER_DOTFILES_PY_METADATA = Metadata(
 
 
 InitUserDotfilesPyParameters = typing.TypedDict('InitUserDotfilesPyParameters', {
-    "__STYXTYPE__": typing.Literal["init_user_dotfiles.py"],
+    "@type": typing.Literal["afni.init_user_dotfiles.py"],
     "help": bool,
     "help_dotfiles_all": bool,
     "help_dotfiles_mod": bool,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "init_user_dotfiles.py": init_user_dotfiles_py_cargs,
+        "afni.init_user_dotfiles.py": init_user_dotfiles_py_cargs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def init_user_dotfiles_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "init_user_dotfiles.py",
+        "@type": "afni.init_user_dotfiles.py",
         "help": help_,
         "help_dotfiles_all": help_dotfiles_all,
         "help_dotfiles_mod": help_dotfiles_mod,
@@ -349,5 +349,8 @@ __all__ = [
     "InitUserDotfilesPyOutputs",
     "InitUserDotfilesPyParameters",
     "init_user_dotfiles_py",
+    "init_user_dotfiles_py_cargs",
+    "init_user_dotfiles_py_execute",
+    "init_user_dotfiles_py_outputs",
     "init_user_dotfiles_py_params",
 ]

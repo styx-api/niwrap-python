@@ -14,7 +14,7 @@ RUN_FIRST_METADATA = Metadata(
 
 
 RunFirstParameters = typing.TypedDict('RunFirstParameters', {
-    "__STYXTYPE__": typing.Literal["run_first"],
+    "@type": typing.Literal["fsl.run_first"],
     "input_image": InputPathType,
     "transformation_matrix": InputPathType,
     "n_modes": float,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_first": run_first_cargs,
+        "fsl.run_first": run_first_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "run_first": run_first_outputs,
+        "fsl.run_first": run_first_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def run_first_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_first",
+        "@type": "fsl.run_first",
         "input_image": input_image,
         "transformation_matrix": transformation_matrix,
         "n_modes": n_modes,
@@ -269,5 +269,8 @@ __all__ = [
     "RunFirstOutputs",
     "RunFirstParameters",
     "run_first",
+    "run_first_cargs",
+    "run_first_execute",
+    "run_first_outputs",
     "run_first_params",
 ]

@@ -14,7 +14,7 @@ CONVERT_CDIFLIST_TO_GRADS_METADATA = Metadata(
 
 
 ConvertCdiflistToGradsParameters = typing.TypedDict('ConvertCdiflistToGradsParameters', {
-    "__STYXTYPE__": typing.Literal["convert_cdiflist_to_grads"],
+    "@type": typing.Literal["afni.convert_cdiflist_to_grads"],
     "cdiflist": InputPathType,
     "bval_max": float,
     "prefix": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "convert_cdiflist_to_grads": convert_cdiflist_to_grads_cargs,
+        "afni.convert_cdiflist_to_grads": convert_cdiflist_to_grads_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "convert_cdiflist_to_grads": convert_cdiflist_to_grads_outputs,
+        "afni.convert_cdiflist_to_grads": convert_cdiflist_to_grads_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def convert_cdiflist_to_grads_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convert_cdiflist_to_grads",
+        "@type": "afni.convert_cdiflist_to_grads",
         "cdiflist": cdiflist,
         "bval_max": bval_max,
         "prefix": prefix,
@@ -247,5 +247,8 @@ __all__ = [
     "ConvertCdiflistToGradsOutputs",
     "ConvertCdiflistToGradsParameters",
     "convert_cdiflist_to_grads",
+    "convert_cdiflist_to_grads_cargs",
+    "convert_cdiflist_to_grads_execute",
+    "convert_cdiflist_to_grads_outputs",
     "convert_cdiflist_to_grads_params",
 ]

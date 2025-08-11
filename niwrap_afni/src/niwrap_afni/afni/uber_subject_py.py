@@ -14,7 +14,7 @@ UBER_SUBJECT_PY_METADATA = Metadata(
 
 
 UberSubjectPyParameters = typing.TypedDict('UberSubjectPyParameters', {
-    "__STYXTYPE__": typing.Literal["uber_subject.py"],
+    "@type": typing.Literal["afni.uber_subject.py"],
     "qt_opts": typing.NotRequired[str | None],
     "svar": typing.NotRequired[str | None],
     "cvar": typing.NotRequired[str | None],
@@ -73,7 +73,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "uber_subject.py": uber_subject_py_cargs,
+        "afni.uber_subject.py": uber_subject_py_cargs,
     }.get(t)
 
 
@@ -196,7 +196,7 @@ def uber_subject_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "uber_subject.py",
+        "@type": "afni.uber_subject.py",
         "no_gui": no_gui,
         "print_ap_command": print_ap_command,
         "exec_ap_command": exec_ap_command,
@@ -703,5 +703,8 @@ __all__ = [
     "UberSubjectPyOutputs",
     "UberSubjectPyParameters",
     "uber_subject_py",
+    "uber_subject_py_cargs",
+    "uber_subject_py_execute",
+    "uber_subject_py_outputs",
     "uber_subject_py_params",
 ]

@@ -14,7 +14,7 @@ POSSUM_PLOT_METADATA = Metadata(
 
 
 PossumPlotParameters = typing.TypedDict('PossumPlotParameters', {
-    "__STYXTYPE__": typing.Literal["possum_plot"],
+    "@type": typing.Literal["fsl.possum_plot"],
     "input_file": InputPathType,
     "output_basename": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "possum_plot": possum_plot_cargs,
+        "fsl.possum_plot": possum_plot_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "possum_plot": possum_plot_outputs,
+        "fsl.possum_plot": possum_plot_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def possum_plot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "possum_plot",
+        "@type": "fsl.possum_plot",
         "input_file": input_file,
         "output_basename": output_basename,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "PossumPlotOutputs",
     "PossumPlotParameters",
     "possum_plot",
+    "possum_plot_cargs",
+    "possum_plot_execute",
+    "possum_plot_outputs",
     "possum_plot_params",
 ]

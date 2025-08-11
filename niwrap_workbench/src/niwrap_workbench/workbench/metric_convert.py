@@ -14,14 +14,14 @@ METRIC_CONVERT_METADATA = Metadata(
 
 
 MetricConvertToNiftiParameters = typing.TypedDict('MetricConvertToNiftiParameters', {
-    "__STYXTYPE__": typing.Literal["to_nifti"],
+    "@type": typing.Literal["workbench.metric-convert.to_nifti"],
     "metric_in": InputPathType,
     "nifti_out": str,
 })
 
 
 MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParameters', {
-    "__STYXTYPE__": typing.Literal["from_nifti"],
+    "@type": typing.Literal["workbench.metric-convert.from_nifti"],
     "nifti_in": InputPathType,
     "surface_in": InputPathType,
     "metric_out": str,
@@ -29,7 +29,7 @@ MetricConvertFromNiftiParameters = typing.TypedDict('MetricConvertFromNiftiParam
 
 
 MetricConvertParameters = typing.TypedDict('MetricConvertParameters', {
-    "__STYXTYPE__": typing.Literal["metric-convert"],
+    "@type": typing.Literal["workbench.metric-convert"],
     "to_nifti": typing.NotRequired[MetricConvertToNiftiParameters | None],
     "from_nifti": typing.NotRequired[MetricConvertFromNiftiParameters | None],
 })
@@ -47,9 +47,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-convert": metric_convert_cargs,
-        "to_nifti": metric_convert_to_nifti_cargs,
-        "from_nifti": metric_convert_from_nifti_cargs,
+        "workbench.metric-convert": metric_convert_cargs,
+        "workbench.metric-convert.to_nifti": metric_convert_to_nifti_cargs,
+        "workbench.metric-convert.from_nifti": metric_convert_from_nifti_cargs,
     }.get(t)
 
 
@@ -65,9 +65,9 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-convert": metric_convert_outputs,
-        "to_nifti": metric_convert_to_nifti_outputs,
-        "from_nifti": metric_convert_from_nifti_outputs,
+        "workbench.metric-convert": metric_convert_outputs,
+        "workbench.metric-convert.to_nifti": metric_convert_to_nifti_outputs,
+        "workbench.metric-convert.from_nifti": metric_convert_from_nifti_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def metric_convert_to_nifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "to_nifti",
+        "@type": "workbench.metric-convert.to_nifti",
         "metric_in": metric_in,
         "nifti_out": nifti_out,
     }
@@ -168,7 +168,7 @@ def metric_convert_from_nifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "from_nifti",
+        "@type": "workbench.metric-convert.from_nifti",
         "nifti_in": nifti_in,
         "surface_in": surface_in,
         "metric_out": metric_out,
@@ -243,7 +243,7 @@ def metric_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-convert",
+        "@type": "workbench.metric-convert",
     }
     if to_nifti is not None:
         params["to_nifti"] = to_nifti
@@ -269,9 +269,9 @@ def metric_convert_cargs(
     cargs.append("wb_command")
     cargs.append("-metric-convert")
     if params.get("to_nifti") is not None:
-        cargs.extend(dyn_cargs(params.get("to_nifti")["__STYXTYPE__"])(params.get("to_nifti"), execution))
+        cargs.extend(dyn_cargs(params.get("to_nifti")["@type"])(params.get("to_nifti"), execution))
     if params.get("from_nifti") is not None:
-        cargs.extend(dyn_cargs(params.get("from_nifti")["__STYXTYPE__"])(params.get("from_nifti"), execution))
+        cargs.extend(dyn_cargs(params.get("from_nifti")["@type"])(params.get("from_nifti"), execution))
     return cargs
 
 
@@ -290,8 +290,8 @@ def metric_convert_outputs(
     """
     ret = MetricConvertOutputs(
         root=execution.output_file("."),
-        to_nifti=dyn_outputs(params.get("to_nifti")["__STYXTYPE__"])(params.get("to_nifti"), execution) if params.get("to_nifti") else None,
-        from_nifti=dyn_outputs(params.get("from_nifti")["__STYXTYPE__"])(params.get("from_nifti"), execution) if params.get("from_nifti") else None,
+        to_nifti=dyn_outputs(params.get("to_nifti")["@type"])(params.get("to_nifti"), execution) if params.get("to_nifti") else None,
+        from_nifti=dyn_outputs(params.get("from_nifti")["@type"])(params.get("from_nifti"), execution) if params.get("from_nifti") else None,
     )
     return ret
 
@@ -365,7 +365,14 @@ __all__ = [
     "MetricConvertToNiftiOutputs",
     "MetricConvertToNiftiParameters",
     "metric_convert",
+    "metric_convert_cargs",
+    "metric_convert_execute",
+    "metric_convert_from_nifti_cargs",
+    "metric_convert_from_nifti_outputs",
     "metric_convert_from_nifti_params",
+    "metric_convert_outputs",
     "metric_convert_params",
+    "metric_convert_to_nifti_cargs",
+    "metric_convert_to_nifti_outputs",
     "metric_convert_to_nifti_params",
 ]

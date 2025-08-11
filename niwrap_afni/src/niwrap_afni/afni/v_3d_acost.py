@@ -14,7 +14,7 @@ V_3D_ACOST_METADATA = Metadata(
 
 
 V3dAcostParameters = typing.TypedDict('V3dAcostParameters', {
-    "__STYXTYPE__": typing.Literal["3dAcost"],
+    "@type": typing.Literal["afni.3dAcost"],
     "infile": InputPathType,
     "basefile": InputPathType,
     "outfile": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAcost": v_3d_acost_cargs,
+        "afni.3dAcost": v_3d_acost_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAcost": v_3d_acost_outputs,
+        "afni.3dAcost": v_3d_acost_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def v_3d_acost_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAcost",
+        "@type": "afni.3dAcost",
         "infile": infile,
         "basefile": basefile,
         "outfile": outfile,
@@ -206,5 +206,8 @@ __all__ = [
     "V3dAcostParameters",
     "V_3D_ACOST_METADATA",
     "v_3d_acost",
+    "v_3d_acost_cargs",
+    "v_3d_acost_execute",
+    "v_3d_acost_outputs",
     "v_3d_acost_params",
 ]

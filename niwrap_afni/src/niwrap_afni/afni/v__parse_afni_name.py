@@ -14,7 +14,7 @@ V__PARSE_AFNI_NAME_METADATA = Metadata(
 
 
 VParseAfniNameParameters = typing.TypedDict('VParseAfniNameParameters', {
-    "__STYXTYPE__": typing.Literal["@parse_afni_name"],
+    "@type": typing.Literal["afni.@parse_afni_name"],
     "afni_name": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@parse_afni_name": v__parse_afni_name_cargs,
+        "afni.@parse_afni_name": v__parse_afni_name_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@parse_afni_name": v__parse_afni_name_outputs,
+        "afni.@parse_afni_name": v__parse_afni_name_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v__parse_afni_name_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@parse_afni_name",
+        "@type": "afni.@parse_afni_name",
         "afni_name": afni_name,
     }
     return params
@@ -183,5 +183,8 @@ __all__ = [
     "VParseAfniNameParameters",
     "V__PARSE_AFNI_NAME_METADATA",
     "v__parse_afni_name",
+    "v__parse_afni_name_cargs",
+    "v__parse_afni_name_execute",
+    "v__parse_afni_name_outputs",
     "v__parse_afni_name_params",
 ]

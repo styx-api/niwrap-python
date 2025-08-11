@@ -14,7 +14,7 @@ TCALC_METADATA = Metadata(
 
 
 TcalcParameters = typing.TypedDict('TcalcParameters', {
-    "__STYXTYPE__": typing.Literal["tcalc"],
+    "@type": typing.Literal["fsl.tcalc"],
     "input_image": InputPathType,
     "output_image": str,
     "echo_time": typing.NotRequired[float | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tcalc": tcalc_cargs,
+        "fsl.tcalc": tcalc_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tcalc": tcalc_outputs,
+        "fsl.tcalc": tcalc_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def tcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tcalc",
+        "@type": "fsl.tcalc",
         "input_image": input_image,
         "output_image": output_image,
         "save_flag": save_flag,
@@ -350,5 +350,8 @@ __all__ = [
     "TcalcOutputs",
     "TcalcParameters",
     "tcalc",
+    "tcalc_cargs",
+    "tcalc_execute",
+    "tcalc_outputs",
     "tcalc_params",
 ]

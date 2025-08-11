@@ -14,7 +14,7 @@ V_3D_DTTO_DWI_METADATA = Metadata(
 
 
 V3dDttoDwiParameters = typing.TypedDict('V3dDttoDwiParameters', {
-    "__STYXTYPE__": typing.Literal["3dDTtoDWI"],
+    "@type": typing.Literal["afni.3dDTtoDWI"],
     "gradient_file": InputPathType,
     "i0_dataset": InputPathType,
     "dt_dataset": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDTtoDWI": v_3d_dtto_dwi_cargs,
+        "afni.3dDTtoDWI": v_3d_dtto_dwi_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDTtoDWI": v_3d_dtto_dwi_outputs,
+        "afni.3dDTtoDWI": v_3d_dtto_dwi_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def v_3d_dtto_dwi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDTtoDWI",
+        "@type": "afni.3dDTtoDWI",
         "gradient_file": gradient_file,
         "i0_dataset": i0_dataset,
         "dt_dataset": dt_dataset,
@@ -249,5 +249,8 @@ __all__ = [
     "V3dDttoDwiParameters",
     "V_3D_DTTO_DWI_METADATA",
     "v_3d_dtto_dwi",
+    "v_3d_dtto_dwi_cargs",
+    "v_3d_dtto_dwi_execute",
+    "v_3d_dtto_dwi_outputs",
     "v_3d_dtto_dwi_params",
 ]

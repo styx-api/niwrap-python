@@ -14,7 +14,7 @@ PLUGOUT_IJK_METADATA = Metadata(
 
 
 PlugoutIjkParameters = typing.TypedDict('PlugoutIjkParameters', {
-    "__STYXTYPE__": typing.Literal["plugout_ijk"],
+    "@type": typing.Literal["afni.plugout_ijk"],
     "host": typing.NotRequired[str | None],
     "verbose": bool,
     "port": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "plugout_ijk": plugout_ijk_cargs,
+        "afni.plugout_ijk": plugout_ijk_cargs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def plugout_ijk_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "plugout_ijk",
+        "@type": "afni.plugout_ijk",
         "verbose": verbose,
         "max_bloc": max_bloc,
         "max_bloc_quiet": max_bloc_quiet,
@@ -293,5 +293,8 @@ __all__ = [
     "PlugoutIjkOutputs",
     "PlugoutIjkParameters",
     "plugout_ijk",
+    "plugout_ijk_cargs",
+    "plugout_ijk_execute",
+    "plugout_ijk_outputs",
     "plugout_ijk_params",
 ]

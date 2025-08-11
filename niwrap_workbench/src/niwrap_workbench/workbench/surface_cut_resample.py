@@ -14,7 +14,7 @@ SURFACE_CUT_RESAMPLE_METADATA = Metadata(
 
 
 SurfaceCutResampleParameters = typing.TypedDict('SurfaceCutResampleParameters', {
-    "__STYXTYPE__": typing.Literal["surface-cut-resample"],
+    "@type": typing.Literal["workbench.surface-cut-resample"],
     "surface_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-cut-resample": surface_cut_resample_cargs,
+        "workbench.surface-cut-resample": surface_cut_resample_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-cut-resample": surface_cut_resample_outputs,
+        "workbench.surface-cut-resample": surface_cut_resample_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def surface_cut_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-cut-resample",
+        "@type": "workbench.surface-cut-resample",
         "surface_in": surface_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -209,5 +209,8 @@ __all__ = [
     "SurfaceCutResampleOutputs",
     "SurfaceCutResampleParameters",
     "surface_cut_resample",
+    "surface_cut_resample_cargs",
+    "surface_cut_resample_execute",
+    "surface_cut_resample_outputs",
     "surface_cut_resample_params",
 ]

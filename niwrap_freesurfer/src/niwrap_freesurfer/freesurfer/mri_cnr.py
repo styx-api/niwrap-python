@@ -14,7 +14,7 @@ MRI_CNR_METADATA = Metadata(
 
 
 MriCnrParameters = typing.TypedDict('MriCnrParameters', {
-    "__STYXTYPE__": typing.Literal["mri_cnr"],
+    "@type": typing.Literal["freesurfer.mri_cnr"],
     "surf_dir": str,
     "volume_files": list[InputPathType],
     "slope": typing.NotRequired[list[str] | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_cnr": mri_cnr_cargs,
+        "freesurfer.mri_cnr": mri_cnr_cargs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def mri_cnr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_cnr",
+        "@type": "freesurfer.mri_cnr",
         "surf_dir": surf_dir,
         "volume_files": volume_files,
         "print_total_cnr": print_total_cnr,
@@ -252,5 +252,8 @@ __all__ = [
     "MriCnrOutputs",
     "MriCnrParameters",
     "mri_cnr",
+    "mri_cnr_cargs",
+    "mri_cnr_execute",
+    "mri_cnr_outputs",
     "mri_cnr_params",
 ]

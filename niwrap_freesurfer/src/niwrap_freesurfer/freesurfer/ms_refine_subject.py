@@ -14,7 +14,7 @@ MS_REFINE_SUBJECT_METADATA = Metadata(
 
 
 MsRefineSubjectParameters = typing.TypedDict('MsRefineSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["ms_refine_subject"],
+    "@type": typing.Literal["freesurfer.ms_refine_subject"],
     "subjects_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ms_refine_subject": ms_refine_subject_cargs,
+        "freesurfer.ms_refine_subject": ms_refine_subject_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def ms_refine_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ms_refine_subject",
+        "@type": "freesurfer.ms_refine_subject",
         "subjects_dir": subjects_dir,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "MsRefineSubjectOutputs",
     "MsRefineSubjectParameters",
     "ms_refine_subject",
+    "ms_refine_subject_cargs",
+    "ms_refine_subject_execute",
+    "ms_refine_subject_outputs",
     "ms_refine_subject_params",
 ]

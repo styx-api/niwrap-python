@@ -14,7 +14,7 @@ MRIS_REGISTER_TO_VOLUME_METADATA = Metadata(
 
 
 MrisRegisterToVolumeParameters = typing.TypedDict('MrisRegisterToVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["mris_register_to_volume"],
+    "@type": typing.Literal["freesurfer.mris_register_to_volume"],
     "surface": str,
     "pial": str,
     "pial_only": typing.NotRequired[str | None],
@@ -58,7 +58,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_register_to_volume": mris_register_to_volume_cargs,
+        "freesurfer.mris_register_to_volume": mris_register_to_volume_cargs,
     }.get(t)
 
 
@@ -151,7 +151,7 @@ def mris_register_to_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_register_to_volume",
+        "@type": "freesurfer.mris_register_to_volume",
         "surface": surface,
         "pial": pial,
         "reg": reg,
@@ -504,5 +504,8 @@ __all__ = [
     "MrisRegisterToVolumeOutputs",
     "MrisRegisterToVolumeParameters",
     "mris_register_to_volume",
+    "mris_register_to_volume_cargs",
+    "mris_register_to_volume_execute",
+    "mris_register_to_volume_outputs",
     "mris_register_to_volume_params",
 ]

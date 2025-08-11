@@ -14,7 +14,7 @@ TAL_QC_AZS_METADATA = Metadata(
 
 
 TalQcAzsParameters = typing.TypedDict('TalQcAzsParameters', {
-    "__STYXTYPE__": typing.Literal["tal_QC_AZS"],
+    "@type": typing.Literal["freesurfer.tal_QC_AZS"],
     "logfile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tal_QC_AZS": tal_qc_azs_cargs,
+        "freesurfer.tal_QC_AZS": tal_qc_azs_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def tal_qc_azs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tal_QC_AZS",
+        "@type": "freesurfer.tal_QC_AZS",
         "logfile": logfile,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "TalQcAzsOutputs",
     "TalQcAzsParameters",
     "tal_qc_azs",
+    "tal_qc_azs_cargs",
+    "tal_qc_azs_execute",
+    "tal_qc_azs_outputs",
     "tal_qc_azs_params",
 ]

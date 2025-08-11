@@ -14,7 +14,7 @@ LABELS_DISJOINT_METADATA = Metadata(
 
 
 LabelsDisjointParameters = typing.TypedDict('LabelsDisjointParameters', {
-    "__STYXTYPE__": typing.Literal["labels_disjoint"],
+    "@type": typing.Literal["freesurfer.labels_disjoint"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "labels_disjoint": labels_disjoint_cargs,
+        "freesurfer.labels_disjoint": labels_disjoint_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "labels_disjoint": labels_disjoint_outputs,
+        "freesurfer.labels_disjoint": labels_disjoint_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def labels_disjoint_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "labels_disjoint",
+        "@type": "freesurfer.labels_disjoint",
         "label1": label1,
         "label2": label2,
         "outputname": outputname,
@@ -194,5 +194,8 @@ __all__ = [
     "LabelsDisjointOutputs",
     "LabelsDisjointParameters",
     "labels_disjoint",
+    "labels_disjoint_cargs",
+    "labels_disjoint_execute",
+    "labels_disjoint_outputs",
     "labels_disjoint_params",
 ]

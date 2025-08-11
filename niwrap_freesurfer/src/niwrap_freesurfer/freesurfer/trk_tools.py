@@ -14,7 +14,7 @@ TRK_TOOLS_METADATA = Metadata(
 
 
 TrkToolsParameters = typing.TypedDict('TrkToolsParameters', {
-    "__STYXTYPE__": typing.Literal["trk_tools"],
+    "@type": typing.Literal["freesurfer.trk_tools"],
     "reference_image": InputPathType,
     "input_trk": InputPathType,
     "output_trk": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "trk_tools": trk_tools_cargs,
+        "freesurfer.trk_tools": trk_tools_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "trk_tools": trk_tools_outputs,
+        "freesurfer.trk_tools": trk_tools_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def trk_tools_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "trk_tools",
+        "@type": "freesurfer.trk_tools",
         "reference_image": reference_image,
         "input_trk": input_trk,
         "update_header": update_header,
@@ -240,5 +240,8 @@ __all__ = [
     "TrkToolsOutputs",
     "TrkToolsParameters",
     "trk_tools",
+    "trk_tools_cargs",
+    "trk_tools_execute",
+    "trk_tools_outputs",
     "trk_tools_params",
 ]

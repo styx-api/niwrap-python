@@ -14,7 +14,7 @@ V_3D_SLICE_NDICE_METADATA = Metadata(
 
 
 V3dSliceNdiceParameters = typing.TypedDict('V3dSliceNdiceParameters', {
-    "__STYXTYPE__": typing.Literal["3dSliceNDice"],
+    "@type": typing.Literal["afni.3dSliceNDice"],
     "infile_a": InputPathType,
     "infile_b": InputPathType,
     "output_prefix": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSliceNDice": v_3d_slice_ndice_cargs,
+        "afni.3dSliceNDice": v_3d_slice_ndice_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSliceNDice": v_3d_slice_ndice_outputs,
+        "afni.3dSliceNDice": v_3d_slice_ndice_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def v_3d_slice_ndice_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSliceNDice",
+        "@type": "afni.3dSliceNDice",
         "infile_a": infile_a,
         "infile_b": infile_b,
         "output_prefix": output_prefix,
@@ -231,5 +231,8 @@ __all__ = [
     "V3dSliceNdiceParameters",
     "V_3D_SLICE_NDICE_METADATA",
     "v_3d_slice_ndice",
+    "v_3d_slice_ndice_cargs",
+    "v_3d_slice_ndice_execute",
+    "v_3d_slice_ndice_outputs",
     "v_3d_slice_ndice_params",
 ]

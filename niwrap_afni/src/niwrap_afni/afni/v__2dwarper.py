@@ -14,7 +14,7 @@ V__2DWARPER_METADATA = Metadata(
 
 
 V2dwarperParameters = typing.TypedDict('V2dwarperParameters', {
-    "__STYXTYPE__": typing.Literal["@2dwarper"],
+    "@type": typing.Literal["afni.@2dwarper"],
     "input_dataset": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@2dwarper": v__2dwarper_cargs,
+        "afni.@2dwarper": v__2dwarper_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@2dwarper": v__2dwarper_outputs,
+        "afni.@2dwarper": v__2dwarper_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__2dwarper_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@2dwarper",
+        "@type": "afni.@2dwarper",
         "input_dataset": input_dataset,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "V2dwarperParameters",
     "V__2DWARPER_METADATA",
     "v__2dwarper",
+    "v__2dwarper_cargs",
+    "v__2dwarper_execute",
+    "v__2dwarper_outputs",
     "v__2dwarper_params",
 ]

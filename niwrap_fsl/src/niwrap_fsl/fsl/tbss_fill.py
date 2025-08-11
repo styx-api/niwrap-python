@@ -14,7 +14,7 @@ TBSS_FILL_METADATA = Metadata(
 
 
 TbssFillParameters = typing.TypedDict('TbssFillParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_fill"],
+    "@type": typing.Literal["fsl.tbss_fill"],
     "stats_image": InputPathType,
     "threshold": float,
     "mean_fa": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_fill": tbss_fill_cargs,
+        "fsl.tbss_fill": tbss_fill_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tbss_fill": tbss_fill_outputs,
+        "fsl.tbss_fill": tbss_fill_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def tbss_fill_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_fill",
+        "@type": "fsl.tbss_fill",
         "stats_image": stats_image,
         "threshold": threshold,
         "mean_fa": mean_fa,
@@ -205,5 +205,8 @@ __all__ = [
     "TbssFillOutputs",
     "TbssFillParameters",
     "tbss_fill",
+    "tbss_fill_cargs",
+    "tbss_fill_execute",
+    "tbss_fill_outputs",
     "tbss_fill_params",
 ]

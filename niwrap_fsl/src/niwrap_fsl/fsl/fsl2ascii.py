@@ -14,7 +14,7 @@ FSL2ASCII_METADATA = Metadata(
 
 
 Fsl2asciiParameters = typing.TypedDict('Fsl2asciiParameters', {
-    "__STYXTYPE__": typing.Literal["fsl2ascii"],
+    "@type": typing.Literal["fsl.fsl2ascii"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl2ascii": fsl2ascii_cargs,
+        "fsl.fsl2ascii": fsl2ascii_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl2ascii": fsl2ascii_outputs,
+        "fsl.fsl2ascii": fsl2ascii_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fsl2ascii_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl2ascii",
+        "@type": "fsl.fsl2ascii",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "Fsl2asciiOutputs",
     "Fsl2asciiParameters",
     "fsl2ascii",
+    "fsl2ascii_cargs",
+    "fsl2ascii_execute",
+    "fsl2ascii_outputs",
     "fsl2ascii_params",
 ]

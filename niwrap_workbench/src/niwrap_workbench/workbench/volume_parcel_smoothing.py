@@ -14,7 +14,7 @@ VOLUME_PARCEL_SMOOTHING_METADATA = Metadata(
 
 
 VolumeParcelSmoothingParameters = typing.TypedDict('VolumeParcelSmoothingParameters', {
-    "__STYXTYPE__": typing.Literal["volume-parcel-smoothing"],
+    "@type": typing.Literal["workbench.volume-parcel-smoothing"],
     "data_volume": InputPathType,
     "label_volume": InputPathType,
     "kernel": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-parcel-smoothing": volume_parcel_smoothing_cargs,
+        "workbench.volume-parcel-smoothing": volume_parcel_smoothing_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-parcel-smoothing": volume_parcel_smoothing_outputs,
+        "workbench.volume-parcel-smoothing": volume_parcel_smoothing_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def volume_parcel_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-parcel-smoothing",
+        "@type": "workbench.volume-parcel-smoothing",
         "data_volume": data_volume,
         "label_volume": label_volume,
         "kernel": kernel,
@@ -242,5 +242,8 @@ __all__ = [
     "VolumeParcelSmoothingOutputs",
     "VolumeParcelSmoothingParameters",
     "volume_parcel_smoothing",
+    "volume_parcel_smoothing_cargs",
+    "volume_parcel_smoothing_execute",
+    "volume_parcel_smoothing_outputs",
     "volume_parcel_smoothing_params",
 ]

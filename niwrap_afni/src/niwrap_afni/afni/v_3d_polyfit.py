@@ -14,7 +14,7 @@ V_3D_POLYFIT_METADATA = Metadata(
 
 
 V3dPolyfitParameters = typing.TypedDict('V3dPolyfitParameters', {
-    "__STYXTYPE__": typing.Literal["3dPolyfit"],
+    "@type": typing.Literal["afni.3dPolyfit"],
     "input_dataset": InputPathType,
     "poly_order": typing.NotRequired[int | None],
     "blur": typing.NotRequired[float | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dPolyfit": v_3d_polyfit_cargs,
+        "afni.3dPolyfit": v_3d_polyfit_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dPolyfit": v_3d_polyfit_outputs,
+        "afni.3dPolyfit": v_3d_polyfit_outputs,
     }.get(t)
 
 
@@ -126,7 +126,7 @@ def v_3d_polyfit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dPolyfit",
+        "@type": "afni.3dPolyfit",
         "input_dataset": input_dataset,
         "automask": automask,
         "mean_scale": mean_scale,
@@ -353,5 +353,8 @@ __all__ = [
     "V3dPolyfitParameters",
     "V_3D_POLYFIT_METADATA",
     "v_3d_polyfit",
+    "v_3d_polyfit_cargs",
+    "v_3d_polyfit_execute",
+    "v_3d_polyfit_outputs",
     "v_3d_polyfit_params",
 ]

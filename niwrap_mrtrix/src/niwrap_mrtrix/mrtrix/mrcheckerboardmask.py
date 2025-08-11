@@ -14,14 +14,14 @@ MRCHECKERBOARDMASK_METADATA = Metadata(
 
 
 MrcheckerboardmaskConfigParameters = typing.TypedDict('MrcheckerboardmaskConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrcheckerboardmask.config"],
     "key": str,
     "value": str,
 })
 
 
 MrcheckerboardmaskParameters = typing.TypedDict('MrcheckerboardmaskParameters', {
-    "__STYXTYPE__": typing.Literal["mrcheckerboardmask"],
+    "@type": typing.Literal["mrtrix.mrcheckerboardmask"],
     "tiles": typing.NotRequired[int | None],
     "invert": bool,
     "nan": bool,
@@ -50,8 +50,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrcheckerboardmask": mrcheckerboardmask_cargs,
-        "config": mrcheckerboardmask_config_cargs,
+        "mrtrix.mrcheckerboardmask": mrcheckerboardmask_cargs,
+        "mrtrix.mrcheckerboardmask.config": mrcheckerboardmask_config_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrcheckerboardmask": mrcheckerboardmask_outputs,
+        "mrtrix.mrcheckerboardmask": mrcheckerboardmask_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mrcheckerboardmask_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrcheckerboardmask.config",
         "key": key,
         "value": value,
     }
@@ -162,7 +162,7 @@ def mrcheckerboardmask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrcheckerboardmask",
+        "@type": "mrtrix.mrcheckerboardmask",
         "invert": invert,
         "nan": nan,
         "info": info,
@@ -221,7 +221,7 @@ def mrcheckerboardmask_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -358,6 +358,10 @@ __all__ = [
     "MrcheckerboardmaskOutputs",
     "MrcheckerboardmaskParameters",
     "mrcheckerboardmask",
+    "mrcheckerboardmask_cargs",
+    "mrcheckerboardmask_config_cargs",
     "mrcheckerboardmask_config_params",
+    "mrcheckerboardmask_execute",
+    "mrcheckerboardmask_outputs",
     "mrcheckerboardmask_params",
 ]

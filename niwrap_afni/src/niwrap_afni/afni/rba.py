@@ -14,7 +14,7 @@ RBA_METADATA = Metadata(
 
 
 RbaParameters = typing.TypedDict('RbaParameters', {
-    "__STYXTYPE__": typing.Literal["RBA"],
+    "@type": typing.Literal["afni.RBA"],
     "prefix": str,
     "dataTable": InputPathType,
     "chains": typing.NotRequired[float | None],
@@ -56,7 +56,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "RBA": rba_cargs,
+        "afni.RBA": rba_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "RBA": rba_outputs,
+        "afni.RBA": rba_outputs,
     }.get(t)
 
 
@@ -158,7 +158,7 @@ def rba_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "RBA",
+        "@type": "afni.RBA",
         "prefix": prefix,
         "dataTable": data_table,
         "debug": debug,
@@ -504,5 +504,8 @@ __all__ = [
     "RbaOutputs",
     "RbaParameters",
     "rba",
+    "rba_cargs",
+    "rba_execute",
+    "rba_outputs",
     "rba_params",
 ]

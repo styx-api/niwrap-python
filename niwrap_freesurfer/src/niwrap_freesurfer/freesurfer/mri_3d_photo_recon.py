@@ -14,7 +14,7 @@ MRI_3D_PHOTO_RECON_METADATA = Metadata(
 
 
 Mri3dPhotoReconParameters = typing.TypedDict('Mri3dPhotoReconParameters', {
-    "__STYXTYPE__": typing.Literal["mri_3d_photo_recon"],
+    "@type": typing.Literal["freesurfer.mri_3d_photo_recon"],
     "input_photo_dir": list[InputPathType],
     "input_segmentation_dir": list[InputPathType],
     "slice_thickness": float,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_3d_photo_recon": mri_3d_photo_recon_cargs,
+        "freesurfer.mri_3d_photo_recon": mri_3d_photo_recon_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_3d_photo_recon": mri_3d_photo_recon_outputs,
+        "freesurfer.mri_3d_photo_recon": mri_3d_photo_recon_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def mri_3d_photo_recon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_3d_photo_recon",
+        "@type": "freesurfer.mri_3d_photo_recon",
         "input_photo_dir": input_photo_dir,
         "input_segmentation_dir": input_segmentation_dir,
         "slice_thickness": slice_thickness,
@@ -341,5 +341,8 @@ __all__ = [
     "Mri3dPhotoReconOutputs",
     "Mri3dPhotoReconParameters",
     "mri_3d_photo_recon",
+    "mri_3d_photo_recon_cargs",
+    "mri_3d_photo_recon_execute",
+    "mri_3d_photo_recon_outputs",
     "mri_3d_photo_recon_params",
 ]

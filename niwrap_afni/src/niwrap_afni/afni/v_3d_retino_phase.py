@@ -14,7 +14,7 @@ V_3D_RETINO_PHASE_METADATA = Metadata(
 
 
 V3dRetinoPhaseParameters = typing.TypedDict('V3dRetinoPhaseParameters', {
-    "__STYXTYPE__": typing.Literal["3dRetinoPhase"],
+    "@type": typing.Literal["afni.3dRetinoPhase"],
     "prefix": str,
     "dataset": InputPathType,
     "exp": typing.NotRequired[str | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dRetinoPhase": v_3d_retino_phase_cargs,
+        "afni.3dRetinoPhase": v_3d_retino_phase_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dRetinoPhase": v_3d_retino_phase_outputs,
+        "afni.3dRetinoPhase": v_3d_retino_phase_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def v_3d_retino_phase_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dRetinoPhase",
+        "@type": "afni.3dRetinoPhase",
         "prefix": prefix,
         "dataset": dataset,
         "spectra": spectra,
@@ -375,5 +375,8 @@ __all__ = [
     "V3dRetinoPhaseParameters",
     "V_3D_RETINO_PHASE_METADATA",
     "v_3d_retino_phase",
+    "v_3d_retino_phase_cargs",
+    "v_3d_retino_phase_execute",
+    "v_3d_retino_phase_outputs",
     "v_3d_retino_phase_params",
 ]

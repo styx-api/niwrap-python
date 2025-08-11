@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_SC_METADATA = Metadata(
 
 
 SegmentSubjectScParameters = typing.TypedDict('SegmentSubjectScParameters', {
-    "__STYXTYPE__": typing.Literal["segment_subject_sc"],
+    "@type": typing.Literal["freesurfer.segment_subject_sc"],
     "invol": InputPathType,
     "outxfm": InputPathType,
     "log": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segment_subject_sc": segment_subject_sc_cargs,
+        "freesurfer.segment_subject_sc": segment_subject_sc_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segment_subject_sc": segment_subject_sc_outputs,
+        "freesurfer.segment_subject_sc": segment_subject_sc_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def segment_subject_sc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segment_subject_sc",
+        "@type": "freesurfer.segment_subject_sc",
         "invol": invol,
         "outxfm": outxfm,
         "debug": debug,
@@ -210,5 +210,8 @@ __all__ = [
     "SegmentSubjectScOutputs",
     "SegmentSubjectScParameters",
     "segment_subject_sc",
+    "segment_subject_sc_cargs",
+    "segment_subject_sc_execute",
+    "segment_subject_sc_outputs",
     "segment_subject_sc_params",
 ]

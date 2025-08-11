@@ -14,7 +14,7 @@ MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA = Metadata(
 
 
 MriSegmentThalamicNucleiDtiCnnParameters = typing.TypedDict('MriSegmentThalamicNucleiDtiCnnParameters', {
-    "__STYXTYPE__": typing.Literal["mri_segment_thalamic_nuclei_dti_cnn"],
+    "@type": typing.Literal["freesurfer.mri_segment_thalamic_nuclei_dti_cnn"],
     "t1_images": InputPathType,
     "aseg": typing.NotRequired[InputPathType | None],
     "fa": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_segment_thalamic_nuclei_dti_cnn": mri_segment_thalamic_nuclei_dti_cnn_cargs,
+        "freesurfer.mri_segment_thalamic_nuclei_dti_cnn": mri_segment_thalamic_nuclei_dti_cnn_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_segment_thalamic_nuclei_dti_cnn": mri_segment_thalamic_nuclei_dti_cnn_outputs,
+        "freesurfer.mri_segment_thalamic_nuclei_dti_cnn": mri_segment_thalamic_nuclei_dti_cnn_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_segment_thalamic_nuclei_dti_cnn",
+        "@type": "freesurfer.mri_segment_thalamic_nuclei_dti_cnn",
         "t1_images": t1_images,
         "fa": fa,
         "v1": v1,
@@ -294,5 +294,8 @@ __all__ = [
     "MriSegmentThalamicNucleiDtiCnnOutputs",
     "MriSegmentThalamicNucleiDtiCnnParameters",
     "mri_segment_thalamic_nuclei_dti_cnn",
+    "mri_segment_thalamic_nuclei_dti_cnn_cargs",
+    "mri_segment_thalamic_nuclei_dti_cnn_execute",
+    "mri_segment_thalamic_nuclei_dti_cnn_outputs",
     "mri_segment_thalamic_nuclei_dti_cnn_params",
 ]

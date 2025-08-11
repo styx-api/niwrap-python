@@ -14,7 +14,7 @@ INFLATE_SUBJECT_RH_METADATA = Metadata(
 
 
 InflateSubjectRhParameters = typing.TypedDict('InflateSubjectRhParameters', {
-    "__STYXTYPE__": typing.Literal["inflate_subject-rh"],
+    "@type": typing.Literal["freesurfer.inflate_subject-rh"],
     "arguments": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "inflate_subject-rh": inflate_subject_rh_cargs,
+        "freesurfer.inflate_subject-rh": inflate_subject_rh_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def inflate_subject_rh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "inflate_subject-rh",
+        "@type": "freesurfer.inflate_subject-rh",
     }
     if arguments is not None:
         params["arguments"] = arguments
@@ -177,5 +177,8 @@ __all__ = [
     "InflateSubjectRhOutputs",
     "InflateSubjectRhParameters",
     "inflate_subject_rh",
+    "inflate_subject_rh_cargs",
+    "inflate_subject_rh_execute",
+    "inflate_subject_rh_outputs",
     "inflate_subject_rh_params",
 ]

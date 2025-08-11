@@ -14,7 +14,7 @@ V_3D_NORMALITY_TEST_METADATA = Metadata(
 
 
 V3dNormalityTestParameters = typing.TypedDict('V3dNormalityTestParameters', {
-    "__STYXTYPE__": typing.Literal["3dNormalityTest"],
+    "@type": typing.Literal["afni.3dNormalityTest"],
     "input": InputPathType,
     "prefix": str,
     "noexp": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dNormalityTest": v_3d_normality_test_cargs,
+        "afni.3dNormalityTest": v_3d_normality_test_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dNormalityTest": v_3d_normality_test_outputs,
+        "afni.3dNormalityTest": v_3d_normality_test_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def v_3d_normality_test_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dNormalityTest",
+        "@type": "afni.3dNormalityTest",
         "input": input_,
         "prefix": prefix,
         "noexp": noexp,
@@ -205,5 +205,8 @@ __all__ = [
     "V3dNormalityTestParameters",
     "V_3D_NORMALITY_TEST_METADATA",
     "v_3d_normality_test",
+    "v_3d_normality_test_cargs",
+    "v_3d_normality_test_execute",
+    "v_3d_normality_test_outputs",
     "v_3d_normality_test_params",
 ]

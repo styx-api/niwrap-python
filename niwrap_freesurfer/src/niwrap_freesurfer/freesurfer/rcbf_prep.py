@@ -14,7 +14,7 @@ RCBF_PREP_METADATA = Metadata(
 
 
 RcbfPrepParameters = typing.TypedDict('RcbfPrepParameters', {
-    "__STYXTYPE__": typing.Literal["rcbf-prep"],
+    "@type": typing.Literal["freesurfer.rcbf-prep"],
     "outdir": str,
     "rcbfvol": InputPathType,
     "subject": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rcbf-prep": rcbf_prep_cargs,
+        "freesurfer.rcbf-prep": rcbf_prep_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "rcbf-prep": rcbf_prep_outputs,
+        "freesurfer.rcbf-prep": rcbf_prep_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def rcbf_prep_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rcbf-prep",
+        "@type": "freesurfer.rcbf-prep",
         "outdir": outdir,
         "rcbfvol": rcbfvol,
     }
@@ -250,5 +250,8 @@ __all__ = [
     "RcbfPrepOutputs",
     "RcbfPrepParameters",
     "rcbf_prep",
+    "rcbf_prep_cargs",
+    "rcbf_prep_execute",
+    "rcbf_prep_outputs",
     "rcbf_prep_params",
 ]

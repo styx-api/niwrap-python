@@ -14,7 +14,7 @@ DISTANCEMAP_METADATA = Metadata(
 
 
 DistancemapParameters = typing.TypedDict('DistancemapParameters', {
-    "__STYXTYPE__": typing.Literal["distancemap"],
+    "@type": typing.Literal["fsl.distancemap"],
     "input_image": InputPathType,
     "output_image": str,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "distancemap": distancemap_cargs,
+        "fsl.distancemap": distancemap_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "distancemap": distancemap_outputs,
+        "fsl.distancemap": distancemap_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def distancemap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "distancemap",
+        "@type": "fsl.distancemap",
         "input_image": input_image,
         "output_image": output_image,
         "invert_flag": invert_flag,
@@ -292,5 +292,8 @@ __all__ = [
     "DistancemapOutputs",
     "DistancemapParameters",
     "distancemap",
+    "distancemap_cargs",
+    "distancemap_execute",
+    "distancemap_outputs",
     "distancemap_params",
 ]

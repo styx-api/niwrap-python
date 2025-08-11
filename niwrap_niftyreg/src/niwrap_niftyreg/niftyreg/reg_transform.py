@@ -14,7 +14,7 @@ REG_TRANSFORM_METADATA = Metadata(
 
 
 RegTransformParameters = typing.TypedDict('RegTransformParameters', {
-    "__STYXTYPE__": typing.Literal["reg_transform"],
+    "@type": typing.Literal["niftyreg.reg_transform"],
     "reference_image": InputPathType,
     "cpp2def_input": typing.NotRequired[InputPathType | None],
     "cpp2def_output": typing.NotRequired[str | None],
@@ -58,7 +58,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg_transform": reg_transform_cargs,
+        "niftyreg.reg_transform": reg_transform_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg_transform": reg_transform_outputs,
+        "niftyreg.reg_transform": reg_transform_outputs,
     }.get(t)
 
 
@@ -194,7 +194,7 @@ def reg_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg_transform",
+        "@type": "niftyreg.reg_transform",
         "reference_image": reference_image,
     }
     if cpp2def_input is not None:
@@ -544,5 +544,8 @@ __all__ = [
     "RegTransformOutputs",
     "RegTransformParameters",
     "reg_transform",
+    "reg_transform_cargs",
+    "reg_transform_execute",
+    "reg_transform_outputs",
     "reg_transform_params",
 ]

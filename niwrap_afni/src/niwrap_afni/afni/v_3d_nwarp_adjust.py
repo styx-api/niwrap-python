@@ -14,7 +14,7 @@ V_3D_NWARP_ADJUST_METADATA = Metadata(
 
 
 V3dNwarpAdjustParameters = typing.TypedDict('V3dNwarpAdjustParameters', {
-    "__STYXTYPE__": typing.Literal["3dNwarpAdjust"],
+    "@type": typing.Literal["afni.3dNwarpAdjust"],
     "input_warps": list[InputPathType],
     "source_datasets": typing.NotRequired[list[InputPathType] | None],
     "output_prefix": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dNwarpAdjust": v_3d_nwarp_adjust_cargs,
+        "afni.3dNwarpAdjust": v_3d_nwarp_adjust_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dNwarpAdjust": v_3d_nwarp_adjust_outputs,
+        "afni.3dNwarpAdjust": v_3d_nwarp_adjust_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def v_3d_nwarp_adjust_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dNwarpAdjust",
+        "@type": "afni.3dNwarpAdjust",
         "input_warps": input_warps,
     }
     if source_datasets is not None:
@@ -214,5 +214,8 @@ __all__ = [
     "V3dNwarpAdjustParameters",
     "V_3D_NWARP_ADJUST_METADATA",
     "v_3d_nwarp_adjust",
+    "v_3d_nwarp_adjust_cargs",
+    "v_3d_nwarp_adjust_execute",
+    "v_3d_nwarp_adjust_outputs",
     "v_3d_nwarp_adjust_params",
 ]

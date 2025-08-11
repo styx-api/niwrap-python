@@ -14,7 +14,7 @@ BUGR_METADATA = Metadata(
 
 
 BugrParameters = typing.TypedDict('BugrParameters', {
-    "__STYXTYPE__": typing.Literal["bugr"],
+    "@type": typing.Literal["freesurfer.bugr"],
     "subject_name": str,
     "command_line": str,
     "error_message": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bugr": bugr_cargs,
+        "freesurfer.bugr": bugr_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def bugr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bugr",
+        "@type": "freesurfer.bugr",
         "subject_name": subject_name,
         "command_line": command_line,
         "error_message": error_message,
@@ -206,5 +206,8 @@ __all__ = [
     "BugrOutputs",
     "BugrParameters",
     "bugr",
+    "bugr_cargs",
+    "bugr_execute",
+    "bugr_outputs",
     "bugr_params",
 ]

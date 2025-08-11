@@ -14,7 +14,7 @@ SIENA_DIFF_METADATA = Metadata(
 
 
 SienaDiffParameters = typing.TypedDict('SienaDiffParameters', {
-    "__STYXTYPE__": typing.Literal["siena_diff"],
+    "@type": typing.Literal["fsl.siena_diff"],
     "input1_basename": str,
     "input2_basename": str,
     "debug_flag": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "siena_diff": siena_diff_cargs,
+        "fsl.siena_diff": siena_diff_cargs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def siena_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "siena_diff",
+        "@type": "fsl.siena_diff",
         "input1_basename": input1_basename,
         "input2_basename": input2_basename,
         "debug_flag": debug_flag,
@@ -248,5 +248,8 @@ __all__ = [
     "SienaDiffOutputs",
     "SienaDiffParameters",
     "siena_diff",
+    "siena_diff_cargs",
+    "siena_diff_execute",
+    "siena_diff_outputs",
     "siena_diff_params",
 ]

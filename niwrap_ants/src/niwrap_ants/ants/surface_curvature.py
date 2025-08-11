@@ -14,7 +14,7 @@ SURFACE_CURVATURE_METADATA = Metadata(
 
 
 SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
-    "__STYXTYPE__": typing.Literal["SurfaceCurvature"],
+    "@type": typing.Literal["ants.SurfaceCurvature"],
     "filename_in": InputPathType,
     "filename_out": str,
     "sigma": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfaceCurvature": surface_curvature_cargs,
+        "ants.SurfaceCurvature": surface_curvature_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfaceCurvature": surface_curvature_outputs,
+        "ants.SurfaceCurvature": surface_curvature_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def surface_curvature_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfaceCurvature",
+        "@type": "ants.SurfaceCurvature",
         "filename_in": filename_in,
         "filename_out": filename_out,
         "sigma": sigma,
@@ -200,5 +200,8 @@ __all__ = [
     "SurfaceCurvatureOutputs",
     "SurfaceCurvatureParameters",
     "surface_curvature",
+    "surface_curvature_cargs",
+    "surface_curvature_execute",
+    "surface_curvature_outputs",
     "surface_curvature_params",
 ]

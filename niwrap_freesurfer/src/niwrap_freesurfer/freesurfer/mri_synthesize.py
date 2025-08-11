@@ -14,7 +14,7 @@ MRI_SYNTHESIZE_METADATA = Metadata(
 
 
 MriSynthesizeParameters = typing.TypedDict('MriSynthesizeParameters', {
-    "__STYXTYPE__": typing.Literal["mri_synthesize"],
+    "@type": typing.Literal["freesurfer.mri_synthesize"],
     "tr": float,
     "alpha": float,
     "te": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_synthesize": mri_synthesize_cargs,
+        "freesurfer.mri_synthesize": mri_synthesize_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_synthesize": mri_synthesize_outputs,
+        "freesurfer.mri_synthesize": mri_synthesize_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mri_synthesize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_synthesize",
+        "@type": "freesurfer.mri_synthesize",
         "tr": tr,
         "alpha": alpha,
         "te": te,
@@ -225,5 +225,8 @@ __all__ = [
     "MriSynthesizeOutputs",
     "MriSynthesizeParameters",
     "mri_synthesize",
+    "mri_synthesize_cargs",
+    "mri_synthesize_execute",
+    "mri_synthesize_outputs",
     "mri_synthesize_params",
 ]

@@ -14,7 +14,7 @@ SLICETIMER_METADATA = Metadata(
 
 
 SlicetimerParameters = typing.TypedDict('SlicetimerParameters', {
-    "__STYXTYPE__": typing.Literal["slicetimer"],
+    "@type": typing.Literal["fsl.slicetimer"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "verbose_flag": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slicetimer": slicetimer_cargs,
+        "fsl.slicetimer": slicetimer_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "slicetimer": slicetimer_outputs,
+        "fsl.slicetimer": slicetimer_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def slicetimer_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slicetimer",
+        "@type": "fsl.slicetimer",
         "infile": infile,
         "verbose_flag": verbose_flag,
         "down_flag": down_flag,
@@ -286,5 +286,8 @@ __all__ = [
     "SlicetimerOutputs",
     "SlicetimerParameters",
     "slicetimer",
+    "slicetimer_cargs",
+    "slicetimer_execute",
+    "slicetimer_outputs",
     "slicetimer_params",
 ]

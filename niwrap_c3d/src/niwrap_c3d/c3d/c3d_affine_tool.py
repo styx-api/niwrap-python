@@ -14,7 +14,7 @@ C3D_AFFINE_TOOL_METADATA = Metadata(
 
 
 C3dAffineToolParameters = typing.TypedDict('C3dAffineToolParameters', {
-    "__STYXTYPE__": typing.Literal["c3d_affine_tool"],
+    "@type": typing.Literal["c3d.c3d_affine_tool"],
     "transform_file": typing.NotRequired[InputPathType | None],
     "reference_file": typing.NotRequired[InputPathType | None],
     "source_file": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "c3d_affine_tool": c3d_affine_tool_cargs,
+        "c3d.c3d_affine_tool": c3d_affine_tool_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "c3d_affine_tool": c3d_affine_tool_outputs,
+        "c3d.c3d_affine_tool": c3d_affine_tool_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def c3d_affine_tool_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "c3d_affine_tool",
+        "@type": "c3d.c3d_affine_tool",
         "invert": invert,
         "determinant": determinant,
         "multiply": multiply,
@@ -360,5 +360,8 @@ __all__ = [
     "C3dAffineToolOutputs",
     "C3dAffineToolParameters",
     "c3d_affine_tool",
+    "c3d_affine_tool_cargs",
+    "c3d_affine_tool_execute",
+    "c3d_affine_tool_outputs",
     "c3d_affine_tool_params",
 ]

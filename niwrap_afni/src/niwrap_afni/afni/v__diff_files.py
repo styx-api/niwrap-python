@@ -14,7 +14,7 @@ V__DIFF_FILES_METADATA = Metadata(
 
 
 VDiffFilesParameters = typing.TypedDict('VDiffFilesParameters', {
-    "__STYXTYPE__": typing.Literal["@diff.files"],
+    "@type": typing.Literal["afni.@diff.files"],
     "files": list[str],
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@diff.files": v__diff_files_cargs,
+        "afni.@diff.files": v__diff_files_cargs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def v__diff_files_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@diff.files",
+        "@type": "afni.@diff.files",
         "files": files,
         "old_dir": old_dir,
         "ignore_missing": ignore_missing,
@@ -269,5 +269,8 @@ __all__ = [
     "VDiffFilesParameters",
     "V__DIFF_FILES_METADATA",
     "v__diff_files",
+    "v__diff_files_cargs",
+    "v__diff_files_execute",
+    "v__diff_files_outputs",
     "v__diff_files_params",
 ]

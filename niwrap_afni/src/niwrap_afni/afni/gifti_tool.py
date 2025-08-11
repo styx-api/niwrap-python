@@ -14,7 +14,7 @@ GIFTI_TOOL_METADATA = Metadata(
 
 
 GiftiToolParameters = typing.TypedDict('GiftiToolParameters', {
-    "__STYXTYPE__": typing.Literal["gifti_tool"],
+    "@type": typing.Literal["afni.gifti_tool"],
     "infile": InputPathType,
     "new_numda": typing.NotRequired[float | None],
     "new_dtype": typing.NotRequired[str | None],
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gifti_tool": gifti_tool_cargs,
+        "afni.gifti_tool": gifti_tool_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gifti_tool": gifti_tool_outputs,
+        "afni.gifti_tool": gifti_tool_outputs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def gifti_tool_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gifti_tool",
+        "@type": "afni.gifti_tool",
         "infile": infile,
         "write_gifti": write_gifti,
         "mod_add_data": mod_add_data,
@@ -422,5 +422,8 @@ __all__ = [
     "GiftiToolOutputs",
     "GiftiToolParameters",
     "gifti_tool",
+    "gifti_tool_cargs",
+    "gifti_tool_execute",
+    "gifti_tool_outputs",
     "gifti_tool_params",
 ]

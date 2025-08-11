@@ -14,7 +14,7 @@ MAKEROT_METADATA = Metadata(
 
 
 MakerotParameters = typing.TypedDict('MakerotParameters', {
-    "__STYXTYPE__": typing.Literal["makerot"],
+    "@type": typing.Literal["fsl.makerot"],
     "axis": typing.NotRequired[str | None],
     "cov": typing.NotRequired[InputPathType | None],
     "center": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "makerot": makerot_cargs,
+        "fsl.makerot": makerot_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "makerot": makerot_outputs,
+        "fsl.makerot": makerot_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def makerot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "makerot",
+        "@type": "fsl.makerot",
         "verbose_flag": verbose_flag,
         "help_flag": help_flag,
         "theta": theta,
@@ -245,5 +245,8 @@ __all__ = [
     "MakerotOutputs",
     "MakerotParameters",
     "makerot",
+    "makerot_cargs",
+    "makerot_execute",
+    "makerot_outputs",
     "makerot_params",
 ]

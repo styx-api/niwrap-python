@@ -14,7 +14,7 @@ V_3DHISTOG_METADATA = Metadata(
 
 
 V3dhistogParameters = typing.TypedDict('V3dhistogParameters', {
-    "__STYXTYPE__": typing.Literal["3dhistog"],
+    "@type": typing.Literal["afni.3dhistog"],
     "dataset": InputPathType,
     "nbin": typing.NotRequired[float | None],
     "dind": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dhistog": v_3dhistog_cargs,
+        "afni.3dhistog": v_3dhistog_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dhistog": v_3dhistog_outputs,
+        "afni.3dhistog": v_3dhistog_outputs,
     }.get(t)
 
 
@@ -124,7 +124,7 @@ def v_3dhistog_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dhistog",
+        "@type": "afni.3dhistog",
         "dataset": dataset,
         "doall": doall,
         "noempty": noempty,
@@ -361,5 +361,8 @@ __all__ = [
     "V3dhistogParameters",
     "V_3DHISTOG_METADATA",
     "v_3dhistog",
+    "v_3dhistog_cargs",
+    "v_3dhistog_execute",
+    "v_3dhistog_outputs",
     "v_3dhistog_params",
 ]

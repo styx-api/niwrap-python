@@ -14,14 +14,14 @@ AMP2RESPONSE_METADATA = Metadata(
 
 
 Amp2responseConfigParameters = typing.TypedDict('Amp2responseConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.amp2response.config"],
     "key": str,
     "value": str,
 })
 
 
 Amp2responseParameters = typing.TypedDict('Amp2responseParameters', {
-    "__STYXTYPE__": typing.Literal["amp2response"],
+    "@type": typing.Literal["mrtrix.amp2response"],
     "isotropic": bool,
     "noconstraint": bool,
     "directions": typing.NotRequired[InputPathType | None],
@@ -54,8 +54,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "amp2response": amp2response_cargs,
-        "config": amp2response_config_cargs,
+        "mrtrix.amp2response": amp2response_cargs,
+        "mrtrix.amp2response.config": amp2response_config_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "amp2response": amp2response_outputs,
+        "mrtrix.amp2response": amp2response_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def amp2response_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.amp2response.config",
         "key": key,
         "value": value,
     }
@@ -187,7 +187,7 @@ def amp2response_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "amp2response",
+        "@type": "mrtrix.amp2response",
         "isotropic": isotropic,
         "noconstraint": noconstraint,
         "info": info,
@@ -262,7 +262,7 @@ def amp2response_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -448,6 +448,10 @@ __all__ = [
     "Amp2responseOutputs",
     "Amp2responseParameters",
     "amp2response",
+    "amp2response_cargs",
+    "amp2response_config_cargs",
     "amp2response_config_params",
+    "amp2response_execute",
+    "amp2response_outputs",
     "amp2response_params",
 ]

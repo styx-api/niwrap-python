@@ -14,7 +14,7 @@ CIFTI_SEPARATE_METADATA = Metadata(
 
 
 CiftiSeparateVolumeAllParameters = typing.TypedDict('CiftiSeparateVolumeAllParameters', {
-    "__STYXTYPE__": typing.Literal["volume_all"],
+    "@type": typing.Literal["workbench.cifti-separate.volume_all"],
     "volume_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
     "opt_label_label_out": typing.NotRequired[str | None],
@@ -23,7 +23,7 @@ CiftiSeparateVolumeAllParameters = typing.TypedDict('CiftiSeparateVolumeAllParam
 
 
 CiftiSeparateLabelParameters = typing.TypedDict('CiftiSeparateLabelParameters', {
-    "__STYXTYPE__": typing.Literal["label"],
+    "@type": typing.Literal["workbench.cifti-separate.label"],
     "structure": str,
     "label_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -31,7 +31,7 @@ CiftiSeparateLabelParameters = typing.TypedDict('CiftiSeparateLabelParameters', 
 
 
 CiftiSeparateMetricParameters = typing.TypedDict('CiftiSeparateMetricParameters', {
-    "__STYXTYPE__": typing.Literal["metric"],
+    "@type": typing.Literal["workbench.cifti-separate.metric"],
     "structure": str,
     "metric_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ CiftiSeparateMetricParameters = typing.TypedDict('CiftiSeparateMetricParameters'
 
 
 CiftiSeparateVolumeParameters = typing.TypedDict('CiftiSeparateVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.cifti-separate.volume"],
     "structure": str,
     "volume_out": str,
     "opt_roi_roi_out": typing.NotRequired[str | None],
@@ -48,7 +48,7 @@ CiftiSeparateVolumeParameters = typing.TypedDict('CiftiSeparateVolumeParameters'
 
 
 CiftiSeparateParameters = typing.TypedDict('CiftiSeparateParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-separate"],
+    "@type": typing.Literal["workbench.cifti-separate"],
     "cifti_in": InputPathType,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiSeparateVolumeAllParameters | None],
@@ -70,11 +70,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-separate": cifti_separate_cargs,
-        "volume_all": cifti_separate_volume_all_cargs,
-        "label": cifti_separate_label_cargs,
-        "metric": cifti_separate_metric_cargs,
-        "volume": cifti_separate_volume_cargs,
+        "workbench.cifti-separate": cifti_separate_cargs,
+        "workbench.cifti-separate.volume_all": cifti_separate_volume_all_cargs,
+        "workbench.cifti-separate.label": cifti_separate_label_cargs,
+        "workbench.cifti-separate.metric": cifti_separate_metric_cargs,
+        "workbench.cifti-separate.volume": cifti_separate_volume_cargs,
     }.get(t)
 
 
@@ -90,11 +90,11 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-separate": cifti_separate_outputs,
-        "volume_all": cifti_separate_volume_all_outputs,
-        "label": cifti_separate_label_outputs,
-        "metric": cifti_separate_metric_outputs,
-        "volume": cifti_separate_volume_outputs,
+        "workbench.cifti-separate": cifti_separate_outputs,
+        "workbench.cifti-separate.volume_all": cifti_separate_volume_all_outputs,
+        "workbench.cifti-separate.label": cifti_separate_label_outputs,
+        "workbench.cifti-separate.metric": cifti_separate_metric_outputs,
+        "workbench.cifti-separate.volume": cifti_separate_volume_outputs,
     }.get(t)
 
 
@@ -134,7 +134,7 @@ def cifti_separate_volume_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume_all",
+        "@type": "workbench.cifti-separate.volume_all",
         "volume_out": volume_out,
         "opt_crop": opt_crop,
     }
@@ -227,7 +227,7 @@ def cifti_separate_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label",
+        "@type": "workbench.cifti-separate.label",
         "structure": structure,
         "label_out": label_out,
     }
@@ -311,7 +311,7 @@ def cifti_separate_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric",
+        "@type": "workbench.cifti-separate.metric",
         "structure": structure,
         "metric_out": metric_out,
     }
@@ -398,7 +398,7 @@ def cifti_separate_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.cifti-separate.volume",
         "structure": structure,
         "volume_out": volume_out,
         "opt_crop": opt_crop,
@@ -497,7 +497,7 @@ def cifti_separate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-separate",
+        "@type": "workbench.cifti-separate",
         "cifti_in": cifti_in,
         "direction": direction,
     }
@@ -531,13 +531,13 @@ def cifti_separate_cargs(
     cargs.append(execution.input_file(params.get("cifti_in")))
     cargs.append(params.get("direction"))
     if params.get("volume_all") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_all")["__STYXTYPE__"])(params.get("volume_all"), execution))
+        cargs.extend(dyn_cargs(params.get("volume_all")["@type"])(params.get("volume_all"), execution))
     if params.get("label") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("label")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("label")] for a in c])
     if params.get("metric") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("metric")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("metric")] for a in c])
     if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("volume")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
     return cargs
 
 
@@ -556,10 +556,10 @@ def cifti_separate_outputs(
     """
     ret = CiftiSeparateOutputs(
         root=execution.output_file("."),
-        volume_all=dyn_outputs(params.get("volume_all")["__STYXTYPE__"])(params.get("volume_all"), execution) if params.get("volume_all") else None,
-        label=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("label")] if params.get("label") else None,
-        metric=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("metric")] if params.get("metric") else None,
-        volume=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("volume")] if params.get("volume") else None,
+        volume_all=dyn_outputs(params.get("volume_all")["@type"])(params.get("volume_all"), execution) if params.get("volume_all") else None,
+        label=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("label")] if params.get("label") else None,
+        metric=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("metric")] if params.get("metric") else None,
+        volume=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("volume")] if params.get("volume") else None,
     )
     return ret
 
@@ -731,9 +731,20 @@ __all__ = [
     "CiftiSeparateVolumeOutputs",
     "CiftiSeparateVolumeParameters",
     "cifti_separate",
+    "cifti_separate_cargs",
+    "cifti_separate_execute",
+    "cifti_separate_label_cargs",
+    "cifti_separate_label_outputs",
     "cifti_separate_label_params",
+    "cifti_separate_metric_cargs",
+    "cifti_separate_metric_outputs",
     "cifti_separate_metric_params",
+    "cifti_separate_outputs",
     "cifti_separate_params",
+    "cifti_separate_volume_all_cargs",
+    "cifti_separate_volume_all_outputs",
     "cifti_separate_volume_all_params",
+    "cifti_separate_volume_cargs",
+    "cifti_separate_volume_outputs",
     "cifti_separate_volume_params",
 ]

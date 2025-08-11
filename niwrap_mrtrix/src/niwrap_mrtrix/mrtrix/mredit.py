@@ -14,7 +14,7 @@ MREDIT_METADATA = Metadata(
 
 
 MreditPlaneParameters = typing.TypedDict('MreditPlaneParameters', {
-    "__STYXTYPE__": typing.Literal["plane"],
+    "@type": typing.Literal["mrtrix.mredit.plane"],
     "axis": int,
     "coord": list[int],
     "value": float,
@@ -22,7 +22,7 @@ MreditPlaneParameters = typing.TypedDict('MreditPlaneParameters', {
 
 
 MreditSphereParameters = typing.TypedDict('MreditSphereParameters', {
-    "__STYXTYPE__": typing.Literal["sphere"],
+    "@type": typing.Literal["mrtrix.mredit.sphere"],
     "position": list[float],
     "radius": float,
     "value": float,
@@ -30,21 +30,21 @@ MreditSphereParameters = typing.TypedDict('MreditSphereParameters', {
 
 
 MreditVoxelParameters = typing.TypedDict('MreditVoxelParameters', {
-    "__STYXTYPE__": typing.Literal["voxel"],
+    "@type": typing.Literal["mrtrix.mredit.voxel"],
     "position": list[float],
     "value": float,
 })
 
 
 MreditConfigParameters = typing.TypedDict('MreditConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mredit.config"],
     "key": str,
     "value": str,
 })
 
 
 MreditParameters = typing.TypedDict('MreditParameters', {
-    "__STYXTYPE__": typing.Literal["mredit"],
+    "@type": typing.Literal["mrtrix.mredit"],
     "plane": typing.NotRequired[list[MreditPlaneParameters] | None],
     "sphere": typing.NotRequired[list[MreditSphereParameters] | None],
     "voxel": typing.NotRequired[list[MreditVoxelParameters] | None],
@@ -74,11 +74,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mredit": mredit_cargs,
-        "plane": mredit_plane_cargs,
-        "sphere": mredit_sphere_cargs,
-        "voxel": mredit_voxel_cargs,
-        "config": mredit_config_cargs,
+        "mrtrix.mredit": mredit_cargs,
+        "mrtrix.mredit.plane": mredit_plane_cargs,
+        "mrtrix.mredit.sphere": mredit_sphere_cargs,
+        "mrtrix.mredit.voxel": mredit_voxel_cargs,
+        "mrtrix.mredit.config": mredit_config_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mredit": mredit_outputs,
+        "mrtrix.mredit": mredit_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def mredit_plane_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "plane",
+        "@type": "mrtrix.mredit.plane",
         "axis": axis,
         "coord": coord,
         "value": value,
@@ -159,7 +159,7 @@ def mredit_sphere_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sphere",
+        "@type": "mrtrix.mredit.sphere",
         "position": position,
         "radius": radius,
         "value": value,
@@ -202,7 +202,7 @@ def mredit_voxel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "voxel",
+        "@type": "mrtrix.mredit.voxel",
         "position": position,
         "value": value,
     }
@@ -243,7 +243,7 @@ def mredit_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mredit.config",
         "key": key,
         "value": value,
     }
@@ -323,7 +323,7 @@ def mredit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mredit",
+        "@type": "mrtrix.mredit",
         "scanner": scanner,
         "info": info,
         "quiet": quiet,
@@ -364,11 +364,11 @@ def mredit_cargs(
     cargs = []
     cargs.append("mredit")
     if params.get("plane") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("plane")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("plane")] for a in c])
     if params.get("sphere") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("sphere")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sphere")] for a in c])
     if params.get("voxel") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("voxel")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("voxel")] for a in c])
     if params.get("scanner"):
         cargs.append("-scanner")
     if params.get("info"):
@@ -385,7 +385,7 @@ def mredit_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -538,9 +538,16 @@ __all__ = [
     "MreditSphereParameters",
     "MreditVoxelParameters",
     "mredit",
+    "mredit_cargs",
+    "mredit_config_cargs",
     "mredit_config_params",
+    "mredit_execute",
+    "mredit_outputs",
     "mredit_params",
+    "mredit_plane_cargs",
     "mredit_plane_params",
+    "mredit_sphere_cargs",
     "mredit_sphere_params",
+    "mredit_voxel_cargs",
     "mredit_voxel_params",
 ]

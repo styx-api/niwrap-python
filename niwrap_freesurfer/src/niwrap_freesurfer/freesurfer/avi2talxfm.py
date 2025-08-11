@@ -14,7 +14,7 @@ AVI2TALXFM_METADATA = Metadata(
 
 
 Avi2talxfmParameters = typing.TypedDict('Avi2talxfmParameters', {
-    "__STYXTYPE__": typing.Literal["avi2talxfm"],
+    "@type": typing.Literal["freesurfer.avi2talxfm"],
     "input_volume": InputPathType,
     "target_volume": InputPathType,
     "vox2vox_transform": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "avi2talxfm": avi2talxfm_cargs,
+        "freesurfer.avi2talxfm": avi2talxfm_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "avi2talxfm": avi2talxfm_outputs,
+        "freesurfer.avi2talxfm": avi2talxfm_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def avi2talxfm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "avi2talxfm",
+        "@type": "freesurfer.avi2talxfm",
         "input_volume": input_volume,
         "target_volume": target_volume,
         "vox2vox_transform": vox2vox_transform,
@@ -196,5 +196,8 @@ __all__ = [
     "Avi2talxfmOutputs",
     "Avi2talxfmParameters",
     "avi2talxfm",
+    "avi2talxfm_cargs",
+    "avi2talxfm_execute",
+    "avi2talxfm_outputs",
     "avi2talxfm_params",
 ]

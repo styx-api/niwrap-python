@@ -14,7 +14,7 @@ IMCUTUP_METADATA = Metadata(
 
 
 ImcutupParameters = typing.TypedDict('ImcutupParameters', {
-    "__STYXTYPE__": typing.Literal["imcutup"],
+    "@type": typing.Literal["afni.imcutup"],
     "prefix": typing.NotRequired[str | None],
     "xynum": bool,
     "yxnum": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imcutup": imcutup_cargs,
+        "afni.imcutup": imcutup_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imcutup": imcutup_outputs,
+        "afni.imcutup": imcutup_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def imcutup_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imcutup",
+        "@type": "afni.imcutup",
         "xynum": xynum,
         "yxnum": yxnum,
         "xynum_format": xynum_format,
@@ -237,5 +237,8 @@ __all__ = [
     "ImcutupOutputs",
     "ImcutupParameters",
     "imcutup",
+    "imcutup_cargs",
+    "imcutup_execute",
+    "imcutup_outputs",
     "imcutup_params",
 ]

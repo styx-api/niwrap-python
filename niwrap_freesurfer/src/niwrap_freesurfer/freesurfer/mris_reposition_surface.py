@@ -14,7 +14,7 @@ MRIS_REPOSITION_SURFACE_METADATA = Metadata(
 
 
 MrisRepositionSurfaceParameters = typing.TypedDict('MrisRepositionSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["mris_reposition_surface"],
+    "@type": typing.Literal["freesurfer.mris_reposition_surface"],
     "surf": InputPathType,
     "volume": InputPathType,
     "points": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_reposition_surface": mris_reposition_surface_cargs,
+        "freesurfer.mris_reposition_surface": mris_reposition_surface_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_reposition_surface": mris_reposition_surface_outputs,
+        "freesurfer.mris_reposition_surface": mris_reposition_surface_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_reposition_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_reposition_surface",
+        "@type": "freesurfer.mris_reposition_surface",
         "surf": surf,
         "volume": volume,
         "points": points,
@@ -247,5 +247,8 @@ __all__ = [
     "MrisRepositionSurfaceOutputs",
     "MrisRepositionSurfaceParameters",
     "mris_reposition_surface",
+    "mris_reposition_surface_cargs",
+    "mris_reposition_surface_execute",
+    "mris_reposition_surface_outputs",
     "mris_reposition_surface_params",
 ]

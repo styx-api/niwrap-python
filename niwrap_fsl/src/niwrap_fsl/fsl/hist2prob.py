@@ -14,7 +14,7 @@ HIST2PROB_METADATA = Metadata(
 
 
 Hist2probParameters = typing.TypedDict('Hist2probParameters', {
-    "__STYXTYPE__": typing.Literal["hist2prob"],
+    "@type": typing.Literal["fsl.hist2prob"],
     "image": InputPathType,
     "size": int,
     "low_threshold": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "hist2prob": hist2prob_cargs,
+        "fsl.hist2prob": hist2prob_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "hist2prob": hist2prob_outputs,
+        "fsl.hist2prob": hist2prob_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def hist2prob_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "hist2prob",
+        "@type": "fsl.hist2prob",
         "image": image,
         "size": size,
         "low_threshold": low_threshold,
@@ -196,5 +196,8 @@ __all__ = [
     "Hist2probOutputs",
     "Hist2probParameters",
     "hist2prob",
+    "hist2prob_cargs",
+    "hist2prob_execute",
+    "hist2prob_outputs",
     "hist2prob_params",
 ]

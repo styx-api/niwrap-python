@@ -14,7 +14,7 @@ MRIS_FLATTEN_METADATA = Metadata(
 
 
 MrisFlattenParameters = typing.TypedDict('MrisFlattenParameters', {
-    "__STYXTYPE__": typing.Literal["mris_flatten"],
+    "@type": typing.Literal["freesurfer.mris_flatten"],
     "input_patch": InputPathType,
     "output_patch": str,
     "iterations": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_flatten": mris_flatten_cargs,
+        "freesurfer.mris_flatten": mris_flatten_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_flatten": mris_flatten_outputs,
+        "freesurfer.mris_flatten": mris_flatten_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def mris_flatten_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_flatten",
+        "@type": "freesurfer.mris_flatten",
         "input_patch": input_patch,
         "output_patch": output_patch,
         "norand": norand,
@@ -260,5 +260,8 @@ __all__ = [
     "MrisFlattenOutputs",
     "MrisFlattenParameters",
     "mris_flatten",
+    "mris_flatten_cargs",
+    "mris_flatten_execute",
+    "mris_flatten_outputs",
     "mris_flatten_params",
 ]

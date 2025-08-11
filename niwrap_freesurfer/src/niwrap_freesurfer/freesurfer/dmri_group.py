@@ -14,7 +14,7 @@ DMRI_GROUP_METADATA = Metadata(
 
 
 DmriGroupParameters = typing.TypedDict('DmriGroupParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_group"],
+    "@type": typing.Literal["freesurfer.dmri_group"],
     "input_list": InputPathType,
     "reference_volume": InputPathType,
     "output_base": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_group": dmri_group_cargs,
+        "freesurfer.dmri_group": dmri_group_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dmri_group_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_group",
+        "@type": "freesurfer.dmri_group",
         "input_list": input_list,
         "reference_volume": reference_volume,
         "output_base": output_base,
@@ -237,5 +237,8 @@ __all__ = [
     "DmriGroupOutputs",
     "DmriGroupParameters",
     "dmri_group",
+    "dmri_group_cargs",
+    "dmri_group_execute",
+    "dmri_group_outputs",
     "dmri_group_params",
 ]

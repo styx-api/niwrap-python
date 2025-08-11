@@ -14,7 +14,7 @@ OXFORD_ASL_METADATA = Metadata(
 
 
 OxfordAslParameters = typing.TypedDict('OxfordAslParameters', {
-    "__STYXTYPE__": typing.Literal["oxford_asl"],
+    "@type": typing.Literal["fsl.oxford_asl"],
     "asl_data": InputPathType,
     "output_dir_name": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -59,7 +59,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "oxford_asl": oxford_asl_cargs,
+        "fsl.oxford_asl": oxford_asl_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "oxford_asl": oxford_asl_outputs,
+        "fsl.oxford_asl": oxford_asl_outputs,
     }.get(t)
 
 
@@ -160,7 +160,7 @@ def oxford_asl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "oxford_asl",
+        "@type": "fsl.oxford_asl",
         "asl_data": asl_data,
         "output_dir_name": output_dir_name,
         "spatial_smoothing": spatial_smoothing,
@@ -519,5 +519,8 @@ __all__ = [
     "OxfordAslOutputs",
     "OxfordAslParameters",
     "oxford_asl",
+    "oxford_asl_cargs",
+    "oxford_asl_execute",
+    "oxford_asl_outputs",
     "oxford_asl_params",
 ]

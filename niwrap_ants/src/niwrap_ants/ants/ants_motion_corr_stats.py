@@ -14,7 +14,7 @@ ANTS_MOTION_CORR_STATS_METADATA = Metadata(
 
 
 AntsMotionCorrStatsParameters = typing.TypedDict('AntsMotionCorrStatsParameters', {
-    "__STYXTYPE__": typing.Literal["antsMotionCorrStats"],
+    "@type": typing.Literal["ants.antsMotionCorrStats"],
     "mask": InputPathType,
     "moco_params": InputPathType,
     "output": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsMotionCorrStats": ants_motion_corr_stats_cargs,
+        "ants.antsMotionCorrStats": ants_motion_corr_stats_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsMotionCorrStats": ants_motion_corr_stats_outputs,
+        "ants.antsMotionCorrStats": ants_motion_corr_stats_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def ants_motion_corr_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsMotionCorrStats",
+        "@type": "ants.antsMotionCorrStats",
         "mask": mask,
         "moco_params": moco_params,
         "output": output,
@@ -264,5 +264,8 @@ __all__ = [
     "AntsMotionCorrStatsOutputs",
     "AntsMotionCorrStatsParameters",
     "ants_motion_corr_stats",
+    "ants_motion_corr_stats_cargs",
+    "ants_motion_corr_stats_execute",
+    "ants_motion_corr_stats_outputs",
     "ants_motion_corr_stats_params",
 ]

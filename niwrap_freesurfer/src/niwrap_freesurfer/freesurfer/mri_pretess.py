@@ -14,7 +14,7 @@ MRI_PRETESS_METADATA = Metadata(
 
 
 MriPretessParameters = typing.TypedDict('MriPretessParameters', {
-    "__STYXTYPE__": typing.Literal["mri_pretess"],
+    "@type": typing.Literal["freesurfer.mri_pretess"],
     "filledvol": InputPathType,
     "labelstring": str,
     "normvol": InputPathType,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_pretess": mri_pretess_cargs,
+        "freesurfer.mri_pretess": mri_pretess_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_pretess": mri_pretess_outputs,
+        "freesurfer.mri_pretess": mri_pretess_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def mri_pretess_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_pretess",
+        "@type": "freesurfer.mri_pretess",
         "filledvol": filledvol,
         "labelstring": labelstring,
         "normvol": normvol,
@@ -249,5 +249,8 @@ __all__ = [
     "MriPretessOutputs",
     "MriPretessParameters",
     "mri_pretess",
+    "mri_pretess_cargs",
+    "mri_pretess_execute",
+    "mri_pretess_outputs",
     "mri_pretess_params",
 ]

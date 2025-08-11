@@ -14,7 +14,7 @@ V_3D_CONFORMIST_METADATA = Metadata(
 
 
 V3dConformistParameters = typing.TypedDict('V3dConformistParameters', {
-    "__STYXTYPE__": typing.Literal["3dConformist"],
+    "@type": typing.Literal["afni.3dConformist"],
     "input_files": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dConformist": v_3d_conformist_cargs,
+        "afni.3dConformist": v_3d_conformist_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dConformist": v_3d_conformist_outputs,
+        "afni.3dConformist": v_3d_conformist_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v_3d_conformist_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dConformist",
+        "@type": "afni.3dConformist",
         "input_files": input_files,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "V3dConformistParameters",
     "V_3D_CONFORMIST_METADATA",
     "v_3d_conformist",
+    "v_3d_conformist_cargs",
+    "v_3d_conformist_execute",
+    "v_3d_conformist_outputs",
     "v_3d_conformist_params",
 ]

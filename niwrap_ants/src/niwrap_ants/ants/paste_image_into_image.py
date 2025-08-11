@@ -14,7 +14,7 @@ PASTE_IMAGE_INTO_IMAGE_METADATA = Metadata(
 
 
 PasteImageIntoImageParameters = typing.TypedDict('PasteImageIntoImageParameters', {
-    "__STYXTYPE__": typing.Literal["PasteImageIntoImage"],
+    "@type": typing.Literal["ants.PasteImageIntoImage"],
     "image_dimension": int,
     "input_canvas_image": InputPathType,
     "input_image": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "PasteImageIntoImage": paste_image_into_image_cargs,
+        "ants.PasteImageIntoImage": paste_image_into_image_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "PasteImageIntoImage": paste_image_into_image_outputs,
+        "ants.PasteImageIntoImage": paste_image_into_image_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def paste_image_into_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "PasteImageIntoImage",
+        "@type": "ants.PasteImageIntoImage",
         "image_dimension": image_dimension,
         "input_canvas_image": input_canvas_image,
         "input_image": input_image,
@@ -248,5 +248,8 @@ __all__ = [
     "PasteImageIntoImageOutputs",
     "PasteImageIntoImageParameters",
     "paste_image_into_image",
+    "paste_image_into_image_cargs",
+    "paste_image_into_image_execute",
+    "paste_image_into_image_outputs",
     "paste_image_into_image_params",
 ]

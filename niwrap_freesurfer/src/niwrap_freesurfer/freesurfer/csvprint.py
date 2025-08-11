@@ -14,7 +14,7 @@ CSVPRINT_METADATA = Metadata(
 
 
 CsvprintParameters = typing.TypedDict('CsvprintParameters', {
-    "__STYXTYPE__": typing.Literal["csvprint"],
+    "@type": typing.Literal["freesurfer.csvprint"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "csvprint": csvprint_cargs,
+        "freesurfer.csvprint": csvprint_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def csvprint_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "csvprint",
+        "@type": "freesurfer.csvprint",
         "infile": infile,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "CsvprintOutputs",
     "CsvprintParameters",
     "csvprint",
+    "csvprint_cargs",
+    "csvprint_execute",
+    "csvprint_outputs",
     "csvprint_params",
 ]

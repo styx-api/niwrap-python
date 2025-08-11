@@ -14,7 +14,7 @@ FSLCC_METADATA = Metadata(
 
 
 FslccParameters = typing.TypedDict('FslccParameters', {
-    "__STYXTYPE__": typing.Literal["fslcc"],
+    "@type": typing.Literal["fsl.fslcc"],
     "first_input": InputPathType,
     "second_input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslcc": fslcc_cargs,
+        "fsl.fslcc": fslcc_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def fslcc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslcc",
+        "@type": "fsl.fslcc",
         "first_input": first_input,
         "second_input": second_input,
         "noabs_flag": noabs_flag,
@@ -235,5 +235,8 @@ __all__ = [
     "FslccOutputs",
     "FslccParameters",
     "fslcc",
+    "fslcc_cargs",
+    "fslcc_execute",
+    "fslcc_outputs",
     "fslcc_params",
 ]

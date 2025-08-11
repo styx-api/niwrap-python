@@ -14,7 +14,7 @@ BET_METADATA = Metadata(
 
 
 BetParameters = typing.TypedDict('BetParameters', {
-    "__STYXTYPE__": typing.Literal["bet"],
+    "@type": typing.Literal["fsl.bet"],
     "infile": InputPathType,
     "maskfile": str,
     "fractional_intensity": typing.NotRequired[float | None],
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bet": bet_cargs,
+        "fsl.bet": bet_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bet": bet_outputs,
+        "fsl.bet": bet_outputs,
     }.get(t)
 
 
@@ -193,7 +193,7 @@ def bet_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bet",
+        "@type": "fsl.bet",
         "infile": infile,
         "maskfile": maskfile,
         "overlay": overlay,
@@ -477,5 +477,8 @@ __all__ = [
     "BetOutputs",
     "BetParameters",
     "bet",
+    "bet_cargs",
+    "bet_execute",
+    "bet_outputs",
     "bet_params",
 ]

@@ -14,7 +14,7 @@ MRIS_CA_LABEL_METADATA = Metadata(
 
 
 MrisCaLabelParameters = typing.TypedDict('MrisCaLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mris_ca_label"],
+    "@type": typing.Literal["freesurfer.mris_ca_label"],
     "subject": str,
     "hemi": str,
     "canonsurf": InputPathType,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_ca_label": mris_ca_label_cargs,
+        "freesurfer.mris_ca_label": mris_ca_label_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_ca_label": mris_ca_label_outputs,
+        "freesurfer.mris_ca_label": mris_ca_label_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def mris_ca_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_ca_label",
+        "@type": "freesurfer.mris_ca_label",
         "subject": subject,
         "hemi": hemi,
         "canonsurf": canonsurf,
@@ -384,5 +384,8 @@ __all__ = [
     "MrisCaLabelOutputs",
     "MrisCaLabelParameters",
     "mris_ca_label",
+    "mris_ca_label_cargs",
+    "mris_ca_label_execute",
+    "mris_ca_label_outputs",
     "mris_ca_label_params",
 ]

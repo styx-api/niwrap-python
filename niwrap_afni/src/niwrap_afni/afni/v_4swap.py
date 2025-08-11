@@ -14,7 +14,7 @@ V_4SWAP_METADATA = Metadata(
 
 
 V4swapParameters = typing.TypedDict('V4swapParameters', {
-    "__STYXTYPE__": typing.Literal["4swap"],
+    "@type": typing.Literal["afni.4swap"],
     "files": list[InputPathType],
     "quiet": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "4swap": v_4swap_cargs,
+        "afni.4swap": v_4swap_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v_4swap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "4swap",
+        "@type": "afni.4swap",
         "files": files,
         "quiet": quiet,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "V4swapParameters",
     "V_4SWAP_METADATA",
     "v_4swap",
+    "v_4swap_cargs",
+    "v_4swap_execute",
+    "v_4swap_outputs",
     "v_4swap_params",
 ]

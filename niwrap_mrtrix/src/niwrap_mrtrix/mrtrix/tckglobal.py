@@ -14,20 +14,20 @@ TCKGLOBAL_METADATA = Metadata(
 
 
 TckglobalRisoParameters = typing.TypedDict('TckglobalRisoParameters', {
-    "__STYXTYPE__": typing.Literal["riso"],
+    "@type": typing.Literal["mrtrix.tckglobal.riso"],
     "response": InputPathType,
 })
 
 
 TckglobalConfigParameters = typing.TypedDict('TckglobalConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckglobal.config"],
     "key": str,
     "value": str,
 })
 
 
 TckglobalParameters = typing.TypedDict('TckglobalParameters', {
-    "__STYXTYPE__": typing.Literal["tckglobal"],
+    "@type": typing.Literal["mrtrix.tckglobal"],
     "grad": typing.NotRequired[InputPathType | None],
     "mask": typing.NotRequired[InputPathType | None],
     "riso": typing.NotRequired[list[TckglobalRisoParameters] | None],
@@ -75,9 +75,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckglobal": tckglobal_cargs,
-        "riso": tckglobal_riso_cargs,
-        "config": tckglobal_config_cargs,
+        "mrtrix.tckglobal": tckglobal_cargs,
+        "mrtrix.tckglobal.riso": tckglobal_riso_cargs,
+        "mrtrix.tckglobal.config": tckglobal_config_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tckglobal": tckglobal_outputs,
+        "mrtrix.tckglobal": tckglobal_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def tckglobal_riso_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "riso",
+        "@type": "mrtrix.tckglobal.riso",
         "response": response,
     }
     return params
@@ -149,7 +149,7 @@ def tckglobal_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckglobal.config",
         "key": key,
         "value": value,
     }
@@ -306,7 +306,7 @@ def tckglobal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckglobal",
+        "@type": "mrtrix.tckglobal",
         "noapo": noapo,
         "info": info,
         "quiet": quiet,
@@ -391,7 +391,7 @@ def tckglobal_cargs(
             execution.input_file(params.get("mask"))
         ])
     if params.get("riso") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("riso")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("riso")] for a in c])
     if params.get("lmax") is not None:
         cargs.extend([
             "-lmax",
@@ -493,7 +493,7 @@ def tckglobal_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -752,7 +752,12 @@ __all__ = [
     "TckglobalParameters",
     "TckglobalRisoParameters",
     "tckglobal",
+    "tckglobal_cargs",
+    "tckglobal_config_cargs",
     "tckglobal_config_params",
+    "tckglobal_execute",
+    "tckglobal_outputs",
     "tckglobal_params",
+    "tckglobal_riso_cargs",
     "tckglobal_riso_params",
 ]

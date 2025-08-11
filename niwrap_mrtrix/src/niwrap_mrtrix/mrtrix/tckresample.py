@@ -14,7 +14,7 @@ TCKRESAMPLE_METADATA = Metadata(
 
 
 TckresampleLineParameters = typing.TypedDict('TckresampleLineParameters', {
-    "__STYXTYPE__": typing.Literal["line"],
+    "@type": typing.Literal["mrtrix.tckresample.line"],
     "num": int,
     "start": list[float],
     "end": list[float],
@@ -22,7 +22,7 @@ TckresampleLineParameters = typing.TypedDict('TckresampleLineParameters', {
 
 
 TckresampleArcParameters = typing.TypedDict('TckresampleArcParameters', {
-    "__STYXTYPE__": typing.Literal["arc"],
+    "@type": typing.Literal["mrtrix.tckresample.arc"],
     "num": int,
     "start": list[float],
     "mid": list[float],
@@ -31,14 +31,14 @@ TckresampleArcParameters = typing.TypedDict('TckresampleArcParameters', {
 
 
 TckresampleConfigParameters = typing.TypedDict('TckresampleConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckresample.config"],
     "key": str,
     "value": str,
 })
 
 
 TckresampleParameters = typing.TypedDict('TckresampleParameters', {
-    "__STYXTYPE__": typing.Literal["tckresample"],
+    "@type": typing.Literal["mrtrix.tckresample"],
     "upsample": typing.NotRequired[int | None],
     "downsample": typing.NotRequired[int | None],
     "step_size": typing.NotRequired[float | None],
@@ -71,10 +71,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckresample": tckresample_cargs,
-        "line": tckresample_line_cargs,
-        "arc": tckresample_arc_cargs,
-        "config": tckresample_config_cargs,
+        "mrtrix.tckresample": tckresample_cargs,
+        "mrtrix.tckresample.line": tckresample_line_cargs,
+        "mrtrix.tckresample.arc": tckresample_arc_cargs,
+        "mrtrix.tckresample.config": tckresample_config_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tckresample": tckresample_outputs,
+        "mrtrix.tckresample": tckresample_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def tckresample_line_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "line",
+        "@type": "mrtrix.tckresample.line",
         "num": num,
         "start": start,
         "end": end,
@@ -171,7 +171,7 @@ def tckresample_arc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "arc",
+        "@type": "mrtrix.tckresample.arc",
         "num": num,
         "start": start,
         "mid": mid,
@@ -216,7 +216,7 @@ def tckresample_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckresample.config",
         "key": key,
         "value": value,
     }
@@ -308,7 +308,7 @@ def tckresample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckresample",
+        "@type": "mrtrix.tckresample",
         "endpoints": endpoints,
         "info": info,
         "quiet": quiet,
@@ -376,9 +376,9 @@ def tckresample_cargs(
     if params.get("endpoints"):
         cargs.append("-endpoints")
     if params.get("line") is not None:
-        cargs.extend(dyn_cargs(params.get("line")["__STYXTYPE__"])(params.get("line"), execution))
+        cargs.extend(dyn_cargs(params.get("line")["@type"])(params.get("line"), execution))
     if params.get("arc") is not None:
-        cargs.extend(dyn_cargs(params.get("arc")["__STYXTYPE__"])(params.get("arc"), execution))
+        cargs.extend(dyn_cargs(params.get("arc")["@type"])(params.get("arc"), execution))
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -393,7 +393,7 @@ def tckresample_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -573,8 +573,14 @@ __all__ = [
     "TckresampleOutputs",
     "TckresampleParameters",
     "tckresample",
+    "tckresample_arc_cargs",
     "tckresample_arc_params",
+    "tckresample_cargs",
+    "tckresample_config_cargs",
     "tckresample_config_params",
+    "tckresample_execute",
+    "tckresample_line_cargs",
     "tckresample_line_params",
+    "tckresample_outputs",
     "tckresample_params",
 ]

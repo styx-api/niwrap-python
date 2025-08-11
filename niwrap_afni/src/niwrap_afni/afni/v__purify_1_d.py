@@ -14,7 +14,7 @@ V__PURIFY_1_D_METADATA = Metadata(
 
 
 VPurify1DParameters = typing.TypedDict('VPurify1DParameters', {
-    "__STYXTYPE__": typing.Literal["@Purify_1D"],
+    "@type": typing.Literal["afni.@Purify_1D"],
     "sub_brick": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Purify_1D": v__purify_1_d_cargs,
+        "afni.@Purify_1D": v__purify_1_d_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def v__purify_1_d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Purify_1D",
+        "@type": "afni.@Purify_1D",
         "input_files": input_files,
     }
     if sub_brick is not None:
@@ -198,5 +198,8 @@ __all__ = [
     "VPurify1DParameters",
     "V__PURIFY_1_D_METADATA",
     "v__purify_1_d",
+    "v__purify_1_d_cargs",
+    "v__purify_1_d_execute",
+    "v__purify_1_d_outputs",
     "v__purify_1_d_params",
 ]

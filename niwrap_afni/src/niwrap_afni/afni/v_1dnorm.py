@@ -14,7 +14,7 @@ V_1DNORM_METADATA = Metadata(
 
 
 V1dnormParameters = typing.TypedDict('V1dnormParameters', {
-    "__STYXTYPE__": typing.Literal["1dnorm"],
+    "@type": typing.Literal["afni.1dnorm"],
     "infile": InputPathType,
     "outfile": str,
     "norm1": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dnorm": v_1dnorm_cargs,
+        "afni.1dnorm": v_1dnorm_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dnorm": v_1dnorm_outputs,
+        "afni.1dnorm": v_1dnorm_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_1dnorm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dnorm",
+        "@type": "afni.1dnorm",
         "infile": infile,
         "outfile": outfile,
         "norm1": norm1,
@@ -220,5 +220,8 @@ __all__ = [
     "V1dnormParameters",
     "V_1DNORM_METADATA",
     "v_1dnorm",
+    "v_1dnorm_cargs",
+    "v_1dnorm_execute",
+    "v_1dnorm_outputs",
     "v_1dnorm_params",
 ]

@@ -14,7 +14,7 @@ CREATE_TILED_MOSAIC_METADATA = Metadata(
 
 
 CreateTiledMosaicParameters = typing.TypedDict('CreateTiledMosaicParameters', {
-    "__STYXTYPE__": typing.Literal["CreateTiledMosaic"],
+    "@type": typing.Literal["ants.CreateTiledMosaic"],
     "input_image": InputPathType,
     "rgb_image": typing.NotRequired[InputPathType | None],
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "CreateTiledMosaic": create_tiled_mosaic_cargs,
+        "ants.CreateTiledMosaic": create_tiled_mosaic_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "CreateTiledMosaic": create_tiled_mosaic_outputs,
+        "ants.CreateTiledMosaic": create_tiled_mosaic_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def create_tiled_mosaic_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "CreateTiledMosaic",
+        "@type": "ants.CreateTiledMosaic",
         "input_image": input_image,
         "output": output,
     }
@@ -348,5 +348,8 @@ __all__ = [
     "CreateTiledMosaicOutputs",
     "CreateTiledMosaicParameters",
     "create_tiled_mosaic",
+    "create_tiled_mosaic_cargs",
+    "create_tiled_mosaic_execute",
+    "create_tiled_mosaic_outputs",
     "create_tiled_mosaic_params",
 ]

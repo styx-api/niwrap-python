@@ -14,7 +14,7 @@ DMRI_TRK2TRK_METADATA = Metadata(
 
 
 DmriTrk2trkParameters = typing.TypedDict('DmriTrk2trkParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_trk2trk"],
+    "@type": typing.Literal["freesurfer.dmri_trk2trk"],
     "in_trk": list[InputPathType],
     "in_asc": typing.NotRequired[list[InputPathType] | None],
     "in_dir": typing.NotRequired[str | None],
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_trk2trk": dmri_trk2trk_cargs,
+        "freesurfer.dmri_trk2trk": dmri_trk2trk_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_trk2trk": dmri_trk2trk_outputs,
+        "freesurfer.dmri_trk2trk": dmri_trk2trk_outputs,
     }.get(t)
 
 
@@ -161,7 +161,7 @@ def dmri_trk2trk_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_trk2trk",
+        "@type": "freesurfer.dmri_trk2trk",
         "in_trk": in_trk,
         "inv_flag": inv_flag,
         "fill_flag": fill_flag,
@@ -503,5 +503,8 @@ __all__ = [
     "DmriTrk2trkOutputs",
     "DmriTrk2trkParameters",
     "dmri_trk2trk",
+    "dmri_trk2trk_cargs",
+    "dmri_trk2trk_execute",
+    "dmri_trk2trk_outputs",
     "dmri_trk2trk_params",
 ]

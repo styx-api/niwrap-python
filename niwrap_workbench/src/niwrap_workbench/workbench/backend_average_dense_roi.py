@@ -14,7 +14,7 @@ BACKEND_AVERAGE_DENSE_ROI_METADATA = Metadata(
 
 
 BackendAverageDenseRoiParameters = typing.TypedDict('BackendAverageDenseRoiParameters', {
-    "__STYXTYPE__": typing.Literal["backend-average-dense-roi"],
+    "@type": typing.Literal["workbench.backend-average-dense-roi"],
     "index_list": str,
     "out_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "backend-average-dense-roi": backend_average_dense_roi_cargs,
+        "workbench.backend-average-dense-roi": backend_average_dense_roi_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def backend_average_dense_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "backend-average-dense-roi",
+        "@type": "workbench.backend-average-dense-roi",
         "index_list": index_list,
         "out_file": out_file,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "BackendAverageDenseRoiOutputs",
     "BackendAverageDenseRoiParameters",
     "backend_average_dense_roi",
+    "backend_average_dense_roi_cargs",
+    "backend_average_dense_roi_execute",
+    "backend_average_dense_roi_outputs",
     "backend_average_dense_roi_params",
 ]

@@ -14,7 +14,7 @@ TO3D_METADATA = Metadata(
 
 
 To3dParameters = typing.TypedDict('To3dParameters', {
-    "__STYXTYPE__": typing.Literal["to3d"],
+    "@type": typing.Literal["afni.to3d"],
     "input_files": list[InputPathType],
     "type": typing.NotRequired[typing.Literal["spgr", "fse", "epan", "anat", "ct", "spct", "pet", "mra", "bmap", "diff", "omri", "abuc", "fim", "fith", "fico", "fitt", "fift", "fizt", "fict", "fibt", "fibn", "figt", "fipt", "fbuc"] | None],
     "statpar": typing.NotRequired[list[float] | None],
@@ -70,7 +70,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "to3d": to3d_cargs,
+        "afni.to3d": to3d_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "to3d": to3d_outputs,
+        "afni.to3d": to3d_outputs,
     }.get(t)
 
 
@@ -201,7 +201,7 @@ def to3d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "to3d",
+        "@type": "afni.to3d",
         "input_files": input_files,
         "nosave_flag": nosave_flag,
         "nowritebrik_flag": nowritebrik_flag,
@@ -639,5 +639,8 @@ __all__ = [
     "To3dOutputs",
     "To3dParameters",
     "to3d",
+    "to3d_cargs",
+    "to3d_execute",
+    "to3d_outputs",
     "to3d_params",
 ]

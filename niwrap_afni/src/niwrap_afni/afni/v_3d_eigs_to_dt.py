@@ -14,7 +14,7 @@ V_3D_EIGS_TO_DT_METADATA = Metadata(
 
 
 V3dEigsToDtParameters = typing.TypedDict('V3dEigsToDtParameters', {
-    "__STYXTYPE__": typing.Literal["3dEigsToDT"],
+    "@type": typing.Literal["afni.3dEigsToDT"],
     "eig_vals": str,
     "eig_vecs": str,
     "prefix": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dEigsToDT": v_3d_eigs_to_dt_cargs,
+        "afni.3dEigsToDT": v_3d_eigs_to_dt_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dEigsToDT": v_3d_eigs_to_dt_outputs,
+        "afni.3dEigsToDT": v_3d_eigs_to_dt_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_3d_eigs_to_dt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dEigsToDT",
+        "@type": "afni.3dEigsToDT",
         "eig_vals": eig_vals,
         "eig_vecs": eig_vecs,
         "prefix": prefix,
@@ -267,5 +267,8 @@ __all__ = [
     "V3dEigsToDtParameters",
     "V_3D_EIGS_TO_DT_METADATA",
     "v_3d_eigs_to_dt",
+    "v_3d_eigs_to_dt_cargs",
+    "v_3d_eigs_to_dt_execute",
+    "v_3d_eigs_to_dt_outputs",
     "v_3d_eigs_to_dt_params",
 ]

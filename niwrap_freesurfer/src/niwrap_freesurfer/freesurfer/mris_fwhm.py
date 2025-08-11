@@ -14,7 +14,7 @@ MRIS_FWHM_METADATA = Metadata(
 
 
 MrisFwhmParameters = typing.TypedDict('MrisFwhmParameters', {
-    "__STYXTYPE__": typing.Literal["mris_fwhm"],
+    "@type": typing.Literal["freesurfer.mris_fwhm"],
     "input_file": InputPathType,
     "subject": str,
     "hemi": str,
@@ -61,7 +61,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_fwhm": mris_fwhm_cargs,
+        "freesurfer.mris_fwhm": mris_fwhm_cargs,
     }.get(t)
 
 
@@ -163,7 +163,7 @@ def mris_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_fwhm",
+        "@type": "freesurfer.mris_fwhm",
         "input_file": input_file,
         "subject": subject,
         "hemi": hemi,
@@ -517,5 +517,8 @@ __all__ = [
     "MrisFwhmOutputs",
     "MrisFwhmParameters",
     "mris_fwhm",
+    "mris_fwhm_cargs",
+    "mris_fwhm_execute",
+    "mris_fwhm_outputs",
     "mris_fwhm_params",
 ]

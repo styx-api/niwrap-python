@@ -14,7 +14,7 @@ V_3D_RANK_METADATA = Metadata(
 
 
 V3dRankParameters = typing.TypedDict('V3dRankParameters', {
-    "__STYXTYPE__": typing.Literal["3dRank"],
+    "@type": typing.Literal["afni.3dRank"],
     "input_datasets": list[InputPathType],
     "output_prefix": typing.NotRequired[str | None],
     "version_info": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dRank": v_3d_rank_cargs,
+        "afni.3dRank": v_3d_rank_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dRank": v_3d_rank_outputs,
+        "afni.3dRank": v_3d_rank_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_3d_rank_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dRank",
+        "@type": "afni.3dRank",
         "input_datasets": input_datasets,
         "version_info": version_info,
         "help_info": help_info,
@@ -218,5 +218,8 @@ __all__ = [
     "V3dRankParameters",
     "V_3D_RANK_METADATA",
     "v_3d_rank",
+    "v_3d_rank_cargs",
+    "v_3d_rank_execute",
+    "v_3d_rank_outputs",
     "v_3d_rank_params",
 ]

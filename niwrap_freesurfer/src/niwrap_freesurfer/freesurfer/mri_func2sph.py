@@ -14,7 +14,7 @@ MRI_FUNC2SPH_METADATA = Metadata(
 
 
 MriFunc2sphParameters = typing.TypedDict('MriFunc2sphParameters', {
-    "__STYXTYPE__": typing.Literal["mri-func2sph"],
+    "@type": typing.Literal["freesurfer.mri-func2sph"],
     "instem": str,
     "outstem": str,
     "hemisphere": typing.Literal["lh", "rh"],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri-func2sph": mri_func2sph_cargs,
+        "freesurfer.mri-func2sph": mri_func2sph_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mri_func2sph_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri-func2sph",
+        "@type": "freesurfer.mri-func2sph",
         "instem": instem,
         "outstem": outstem,
         "hemisphere": hemisphere,
@@ -256,5 +256,8 @@ __all__ = [
     "MriFunc2sphOutputs",
     "MriFunc2sphParameters",
     "mri_func2sph",
+    "mri_func2sph_cargs",
+    "mri_func2sph_execute",
+    "mri_func2sph_outputs",
     "mri_func2sph_params",
 ]

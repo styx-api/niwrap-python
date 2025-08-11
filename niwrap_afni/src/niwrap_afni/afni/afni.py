@@ -14,7 +14,7 @@ AFNI_METADATA = Metadata(
 
 
 AfniParameters = typing.TypedDict('AfniParameters', {
-    "__STYXTYPE__": typing.Literal["afni"],
+    "@type": typing.Literal["afni.afni"],
     "session_directories": typing.NotRequired[str | None],
     "bysub": typing.NotRequired[list[str] | None],
     "all_dsets": bool,
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni": afni_cargs,
+        "afni.afni": afni_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni": afni_outputs,
+        "afni.afni": afni_outputs,
     }.get(t)
 
 
@@ -146,7 +146,7 @@ def afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afni",
+        "@type": "afni.afni",
         "all_dsets": all_dsets,
         "purge": purge,
         "posfunc": posfunc,
@@ -424,5 +424,8 @@ __all__ = [
     "AfniOutputs",
     "AfniParameters",
     "afni_",
+    "afni_cargs",
+    "afni_execute",
+    "afni_outputs",
     "afni_params",
 ]

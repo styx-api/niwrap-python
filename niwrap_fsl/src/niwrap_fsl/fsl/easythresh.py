@@ -14,7 +14,7 @@ EASYTHRESH_METADATA = Metadata(
 
 
 EasythreshParameters = typing.TypedDict('EasythreshParameters', {
-    "__STYXTYPE__": typing.Literal["easythresh"],
+    "@type": typing.Literal["fsl.easythresh"],
     "raw_zstat_input": InputPathType,
     "brain_mask_input": InputPathType,
     "cluster_z_thresh_input": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "easythresh": easythresh_cargs,
+        "fsl.easythresh": easythresh_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "easythresh": easythresh_outputs,
+        "fsl.easythresh": easythresh_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def easythresh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "easythresh",
+        "@type": "fsl.easythresh",
         "raw_zstat_input": raw_zstat_input,
         "brain_mask_input": brain_mask_input,
         "cluster_z_thresh_input": cluster_z_thresh_input,
@@ -221,5 +221,8 @@ __all__ = [
     "EasythreshOutputs",
     "EasythreshParameters",
     "easythresh",
+    "easythresh_cargs",
+    "easythresh_execute",
+    "easythresh_outputs",
     "easythresh_params",
 ]

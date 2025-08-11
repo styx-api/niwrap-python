@@ -14,35 +14,35 @@ CIFTI_CREATE_DENSE_SCALAR_METADATA = Metadata(
 
 
 CiftiCreateDenseScalarVolumeParameters = typing.TypedDict('CiftiCreateDenseScalarVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.cifti-create-dense-scalar.volume"],
     "volume_data": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateDenseScalarLeftMetricParameters = typing.TypedDict('CiftiCreateDenseScalarLeftMetricParameters', {
-    "__STYXTYPE__": typing.Literal["left_metric"],
+    "@type": typing.Literal["workbench.cifti-create-dense-scalar.left_metric"],
     "metric": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarRightMetricParameters = typing.TypedDict('CiftiCreateDenseScalarRightMetricParameters', {
-    "__STYXTYPE__": typing.Literal["right_metric"],
+    "@type": typing.Literal["workbench.cifti-create-dense-scalar.right_metric"],
     "metric": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseScalarCerebellumMetricParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_metric"],
+    "@type": typing.Literal["workbench.cifti-create-dense-scalar.cerebellum_metric"],
     "metric": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseScalarParameters = typing.TypedDict('CiftiCreateDenseScalarParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-create-dense-scalar"],
+    "@type": typing.Literal["workbench.cifti-create-dense-scalar"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateDenseScalarVolumeParameters | None],
     "left_metric": typing.NotRequired[CiftiCreateDenseScalarLeftMetricParameters | None],
@@ -64,11 +64,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-create-dense-scalar": cifti_create_dense_scalar_cargs,
-        "volume": cifti_create_dense_scalar_volume_cargs,
-        "left_metric": cifti_create_dense_scalar_left_metric_cargs,
-        "right_metric": cifti_create_dense_scalar_right_metric_cargs,
-        "cerebellum_metric": cifti_create_dense_scalar_cerebellum_metric_cargs,
+        "workbench.cifti-create-dense-scalar": cifti_create_dense_scalar_cargs,
+        "workbench.cifti-create-dense-scalar.volume": cifti_create_dense_scalar_volume_cargs,
+        "workbench.cifti-create-dense-scalar.left_metric": cifti_create_dense_scalar_left_metric_cargs,
+        "workbench.cifti-create-dense-scalar.right_metric": cifti_create_dense_scalar_right_metric_cargs,
+        "workbench.cifti-create-dense-scalar.cerebellum_metric": cifti_create_dense_scalar_cerebellum_metric_cargs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-create-dense-scalar": cifti_create_dense_scalar_outputs,
+        "workbench.cifti-create-dense-scalar": cifti_create_dense_scalar_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def cifti_create_dense_scalar_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.cifti-create-dense-scalar.volume",
         "volume_data": volume_data,
         "structure_label_volume": structure_label_volume,
     }
@@ -146,7 +146,7 @@ def cifti_create_dense_scalar_left_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_metric",
+        "@type": "workbench.cifti-create-dense-scalar.left_metric",
         "metric": metric,
     }
     if opt_roi_left_roi_metric is not None:
@@ -193,7 +193,7 @@ def cifti_create_dense_scalar_right_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_metric",
+        "@type": "workbench.cifti-create-dense-scalar.right_metric",
         "metric": metric,
     }
     if opt_roi_right_roi_metric is not None:
@@ -240,7 +240,7 @@ def cifti_create_dense_scalar_cerebellum_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_metric",
+        "@type": "workbench.cifti-create-dense-scalar.cerebellum_metric",
         "metric": metric,
     }
     if opt_roi_cerebellum_roi_metric is not None:
@@ -305,7 +305,7 @@ def cifti_create_dense_scalar_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-create-dense-scalar",
+        "@type": "workbench.cifti-create-dense-scalar",
         "cifti_out": cifti_out,
     }
     if volume is not None:
@@ -339,13 +339,13 @@ def cifti_create_dense_scalar_cargs(
     cargs.append("-cifti-create-dense-scalar")
     cargs.append(params.get("cifti_out"))
     if params.get("volume") is not None:
-        cargs.extend(dyn_cargs(params.get("volume")["__STYXTYPE__"])(params.get("volume"), execution))
+        cargs.extend(dyn_cargs(params.get("volume")["@type"])(params.get("volume"), execution))
     if params.get("left_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("left_metric")["__STYXTYPE__"])(params.get("left_metric"), execution))
+        cargs.extend(dyn_cargs(params.get("left_metric")["@type"])(params.get("left_metric"), execution))
     if params.get("right_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("right_metric")["__STYXTYPE__"])(params.get("right_metric"), execution))
+        cargs.extend(dyn_cargs(params.get("right_metric")["@type"])(params.get("right_metric"), execution))
     if params.get("cerebellum_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_metric")["__STYXTYPE__"])(params.get("cerebellum_metric"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_metric")["@type"])(params.get("cerebellum_metric"), execution))
     if params.get("opt_name_file_file") is not None:
         cargs.extend([
             "-name-file",
@@ -532,9 +532,16 @@ __all__ = [
     "CiftiCreateDenseScalarRightMetricParameters",
     "CiftiCreateDenseScalarVolumeParameters",
     "cifti_create_dense_scalar",
+    "cifti_create_dense_scalar_cargs",
+    "cifti_create_dense_scalar_cerebellum_metric_cargs",
     "cifti_create_dense_scalar_cerebellum_metric_params",
+    "cifti_create_dense_scalar_execute",
+    "cifti_create_dense_scalar_left_metric_cargs",
     "cifti_create_dense_scalar_left_metric_params",
+    "cifti_create_dense_scalar_outputs",
     "cifti_create_dense_scalar_params",
+    "cifti_create_dense_scalar_right_metric_cargs",
     "cifti_create_dense_scalar_right_metric_params",
+    "cifti_create_dense_scalar_volume_cargs",
     "cifti_create_dense_scalar_volume_params",
 ]

@@ -14,7 +14,7 @@ VOLUME_DISTORTION_METADATA = Metadata(
 
 
 VolumeDistortionParameters = typing.TypedDict('VolumeDistortionParameters', {
-    "__STYXTYPE__": typing.Literal["volume-distortion"],
+    "@type": typing.Literal["workbench.volume-distortion"],
     "warpfield": str,
     "volume_out": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-distortion": volume_distortion_cargs,
+        "workbench.volume-distortion": volume_distortion_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-distortion": volume_distortion_outputs,
+        "workbench.volume-distortion": volume_distortion_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def volume_distortion_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-distortion",
+        "@type": "workbench.volume-distortion",
         "warpfield": warpfield,
         "volume_out": volume_out,
         "opt_circular": opt_circular,
@@ -240,5 +240,8 @@ __all__ = [
     "VolumeDistortionOutputs",
     "VolumeDistortionParameters",
     "volume_distortion",
+    "volume_distortion_cargs",
+    "volume_distortion_execute",
+    "volume_distortion_outputs",
     "volume_distortion_params",
 ]

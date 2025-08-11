@@ -14,7 +14,7 @@ TEDANA_WRAPPER_PY_METADATA = Metadata(
 
 
 TedanaWrapperPyParameters = typing.TypedDict('TedanaWrapperPyParameters', {
-    "__STYXTYPE__": typing.Literal["tedana_wrapper.py"],
+    "@type": typing.Literal["afni.tedana_wrapper.py"],
     "input_files": list[InputPathType],
     "echo_times": list[float],
     "mask": InputPathType,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tedana_wrapper.py": tedana_wrapper_py_cargs,
+        "afni.tedana_wrapper.py": tedana_wrapper_py_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tedana_wrapper.py": tedana_wrapper_py_outputs,
+        "afni.tedana_wrapper.py": tedana_wrapper_py_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def tedana_wrapper_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tedana_wrapper.py",
+        "@type": "afni.tedana_wrapper.py",
         "input_files": input_files,
         "echo_times": echo_times,
         "mask": mask,
@@ -320,5 +320,8 @@ __all__ = [
     "TedanaWrapperPyOutputs",
     "TedanaWrapperPyParameters",
     "tedana_wrapper_py",
+    "tedana_wrapper_py_cargs",
+    "tedana_wrapper_py_execute",
+    "tedana_wrapper_py_outputs",
     "tedana_wrapper_py_params",
 ]

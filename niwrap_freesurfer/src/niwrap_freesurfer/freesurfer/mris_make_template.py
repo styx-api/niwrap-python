@@ -14,7 +14,7 @@ MRIS_MAKE_TEMPLATE_METADATA = Metadata(
 
 
 MrisMakeTemplateParameters = typing.TypedDict('MrisMakeTemplateParameters', {
-    "__STYXTYPE__": typing.Literal["mris_make_template"],
+    "@type": typing.Literal["freesurfer.mris_make_template"],
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_make_template": mris_make_template_cargs,
+        "freesurfer.mris_make_template": mris_make_template_cargs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def mris_make_template_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_make_template",
+        "@type": "freesurfer.mris_make_template",
         "hemi": hemi,
         "surface_name": surface_name,
         "subjects": subjects,
@@ -321,5 +321,8 @@ __all__ = [
     "MrisMakeTemplateOutputs",
     "MrisMakeTemplateParameters",
     "mris_make_template",
+    "mris_make_template_cargs",
+    "mris_make_template_execute",
+    "mris_make_template_outputs",
     "mris_make_template_params",
 ]

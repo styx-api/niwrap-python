@@ -14,7 +14,7 @@ V__CHECK_FOR_AFNI_DSET_METADATA = Metadata(
 
 
 VCheckForAfniDsetParameters = typing.TypedDict('VCheckForAfniDsetParameters', {
-    "__STYXTYPE__": typing.Literal["@CheckForAfniDset"],
+    "@type": typing.Literal["afni.@CheckForAfniDset"],
     "dataset_name": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@CheckForAfniDset": v__check_for_afni_dset_cargs,
+        "afni.@CheckForAfniDset": v__check_for_afni_dset_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@CheckForAfniDset": v__check_for_afni_dset_outputs,
+        "afni.@CheckForAfniDset": v__check_for_afni_dset_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__check_for_afni_dset_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@CheckForAfniDset",
+        "@type": "afni.@CheckForAfniDset",
         "dataset_name": dataset_name,
     }
     return params
@@ -174,5 +174,8 @@ __all__ = [
     "VCheckForAfniDsetParameters",
     "V__CHECK_FOR_AFNI_DSET_METADATA",
     "v__check_for_afni_dset",
+    "v__check_for_afni_dset_cargs",
+    "v__check_for_afni_dset_execute",
+    "v__check_for_afni_dset_outputs",
     "v__check_for_afni_dset_params",
 ]

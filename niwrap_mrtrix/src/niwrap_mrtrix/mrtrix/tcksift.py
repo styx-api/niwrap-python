@@ -14,14 +14,14 @@ TCKSIFT_METADATA = Metadata(
 
 
 TcksiftConfigParameters = typing.TypedDict('TcksiftConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tcksift.config"],
     "key": str,
     "value": str,
 })
 
 
 TcksiftParameters = typing.TypedDict('TcksiftParameters', {
-    "__STYXTYPE__": typing.Literal["tcksift"],
+    "@type": typing.Literal["mrtrix.tcksift"],
     "nofilter": bool,
     "output_at_counts": typing.NotRequired[list[int] | None],
     "proc_mask": typing.NotRequired[InputPathType | None],
@@ -64,8 +64,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tcksift": tcksift_cargs,
-        "config": tcksift_config_cargs,
+        "mrtrix.tcksift": tcksift_cargs,
+        "mrtrix.tcksift.config": tcksift_config_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tcksift": tcksift_outputs,
+        "mrtrix.tcksift": tcksift_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def tcksift_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tcksift.config",
         "key": key,
         "value": value,
     }
@@ -237,7 +237,7 @@ def tcksift_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tcksift",
+        "@type": "mrtrix.tcksift",
         "nofilter": nofilter,
         "fd_scale_gm": fd_scale_gm,
         "no_dilate_lut": no_dilate_lut,
@@ -372,7 +372,7 @@ def tcksift_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -587,6 +587,10 @@ __all__ = [
     "TcksiftOutputs",
     "TcksiftParameters",
     "tcksift",
+    "tcksift_cargs",
+    "tcksift_config_cargs",
     "tcksift_config_params",
+    "tcksift_execute",
+    "tcksift_outputs",
     "tcksift_params",
 ]

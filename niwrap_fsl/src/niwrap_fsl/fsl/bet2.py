@@ -14,7 +14,7 @@ BET2_METADATA = Metadata(
 
 
 Bet2Parameters = typing.TypedDict('Bet2Parameters', {
-    "__STYXTYPE__": typing.Literal["bet2"],
+    "@type": typing.Literal["fsl.bet2"],
     "input_fileroot": str,
     "output_fileroot": str,
     "fractional_intensity": typing.NotRequired[float | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bet2": bet2_cargs,
+        "fsl.bet2": bet2_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bet2": bet2_outputs,
+        "fsl.bet2": bet2_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def bet2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bet2",
+        "@type": "fsl.bet2",
         "input_fileroot": input_fileroot,
         "output_fileroot": output_fileroot,
         "outline_flag": outline_flag,
@@ -345,5 +345,8 @@ __all__ = [
     "Bet2Outputs",
     "Bet2Parameters",
     "bet2",
+    "bet2_cargs",
+    "bet2_execute",
+    "bet2_outputs",
     "bet2_params",
 ]

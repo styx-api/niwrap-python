@@ -14,7 +14,7 @@ CHECK_MCR_SH_METADATA = Metadata(
 
 
 CheckMcrShParameters = typing.TypedDict('CheckMcrShParameters', {
-    "__STYXTYPE__": typing.Literal["checkMCR.sh"],
+    "@type": typing.Literal["freesurfer.checkMCR.sh"],
     "help": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "checkMCR.sh": check_mcr_sh_cargs,
+        "freesurfer.checkMCR.sh": check_mcr_sh_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def check_mcr_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "checkMCR.sh",
+        "@type": "freesurfer.checkMCR.sh",
         "help": help_,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "CheckMcrShOutputs",
     "CheckMcrShParameters",
     "check_mcr_sh",
+    "check_mcr_sh_cargs",
+    "check_mcr_sh_execute",
+    "check_mcr_sh_outputs",
     "check_mcr_sh_params",
 ]

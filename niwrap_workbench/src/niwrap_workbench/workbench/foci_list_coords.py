@@ -14,7 +14,7 @@ FOCI_LIST_COORDS_METADATA = Metadata(
 
 
 FociListCoordsParameters = typing.TypedDict('FociListCoordsParameters', {
-    "__STYXTYPE__": typing.Literal["foci-list-coords"],
+    "@type": typing.Literal["workbench.foci-list-coords"],
     "foci_file": InputPathType,
     "coord_file_out": str,
     "opt_names_out_names_file_out": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "foci-list-coords": foci_list_coords_cargs,
+        "workbench.foci-list-coords": foci_list_coords_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def foci_list_coords_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "foci-list-coords",
+        "@type": "workbench.foci-list-coords",
         "foci_file": foci_file,
         "coord_file_out": coord_file_out,
     }
@@ -198,5 +198,8 @@ __all__ = [
     "FociListCoordsOutputs",
     "FociListCoordsParameters",
     "foci_list_coords",
+    "foci_list_coords_cargs",
+    "foci_list_coords_execute",
+    "foci_list_coords_outputs",
     "foci_list_coords_params",
 ]

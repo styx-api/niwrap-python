@@ -14,7 +14,7 @@ MRI_EXTRACT_FCD_FEATURES_METADATA = Metadata(
 
 
 MriExtractFcdFeaturesParameters = typing.TypedDict('MriExtractFcdFeaturesParameters', {
-    "__STYXTYPE__": typing.Literal["mri_extract_fcd_features"],
+    "@type": typing.Literal["freesurfer.mri_extract_fcd_features"],
     "subject": str,
     "hemi": str,
     "output_file": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_extract_fcd_features": mri_extract_fcd_features_cargs,
+        "freesurfer.mri_extract_fcd_features": mri_extract_fcd_features_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mri_extract_fcd_features_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_extract_fcd_features",
+        "@type": "freesurfer.mri_extract_fcd_features",
         "subject": subject,
         "hemi": hemi,
         "output_file": output_file,
@@ -199,5 +199,8 @@ __all__ = [
     "MriExtractFcdFeaturesOutputs",
     "MriExtractFcdFeaturesParameters",
     "mri_extract_fcd_features",
+    "mri_extract_fcd_features_cargs",
+    "mri_extract_fcd_features_execute",
+    "mri_extract_fcd_features_outputs",
     "mri_extract_fcd_features_params",
 ]

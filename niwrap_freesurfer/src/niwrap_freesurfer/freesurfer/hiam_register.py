@@ -14,7 +14,7 @@ HIAM_REGISTER_METADATA = Metadata(
 
 
 HiamRegisterParameters = typing.TypedDict('HiamRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["hiam_register"],
+    "@type": typing.Literal["freesurfer.hiam_register"],
     "input_surface": InputPathType,
     "average_surface": InputPathType,
     "output_surface": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "hiam_register": hiam_register_cargs,
+        "freesurfer.hiam_register": hiam_register_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "hiam_register": hiam_register_outputs,
+        "freesurfer.hiam_register": hiam_register_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def hiam_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "hiam_register",
+        "@type": "freesurfer.hiam_register",
         "input_surface": input_surface,
         "average_surface": average_surface,
         "output_surface": output_surface,
@@ -190,5 +190,8 @@ __all__ = [
     "HiamRegisterOutputs",
     "HiamRegisterParameters",
     "hiam_register",
+    "hiam_register_cargs",
+    "hiam_register_execute",
+    "hiam_register_outputs",
     "hiam_register_params",
 ]

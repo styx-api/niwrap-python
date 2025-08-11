@@ -14,7 +14,7 @@ MRIS_DIVIDE_PARCELLATION_METADATA = Metadata(
 
 
 MrisDivideParcellationParameters = typing.TypedDict('MrisDivideParcellationParameters', {
-    "__STYXTYPE__": typing.Literal["mris_divide_parcellation"],
+    "@type": typing.Literal["freesurfer.mris_divide_parcellation"],
     "subject": str,
     "hemi": str,
     "sourceannot": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_divide_parcellation": mris_divide_parcellation_cargs,
+        "freesurfer.mris_divide_parcellation": mris_divide_parcellation_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_divide_parcellation": mris_divide_parcellation_outputs,
+        "freesurfer.mris_divide_parcellation": mris_divide_parcellation_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mris_divide_parcellation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_divide_parcellation",
+        "@type": "freesurfer.mris_divide_parcellation",
         "subject": subject,
         "hemi": hemi,
         "sourceannot": sourceannot,
@@ -234,5 +234,8 @@ __all__ = [
     "MrisDivideParcellationOutputs",
     "MrisDivideParcellationParameters",
     "mris_divide_parcellation",
+    "mris_divide_parcellation_cargs",
+    "mris_divide_parcellation_execute",
+    "mris_divide_parcellation_outputs",
     "mris_divide_parcellation_params",
 ]

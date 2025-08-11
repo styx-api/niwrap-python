@@ -14,7 +14,7 @@ METRIC_TO_VOLUME_MAPPING_METADATA = Metadata(
 
 
 MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVolumeMappingRibbonConstrainedParameters', {
-    "__STYXTYPE__": typing.Literal["ribbon_constrained"],
+    "@type": typing.Literal["workbench.metric-to-volume-mapping.ribbon_constrained"],
     "inner_surf": InputPathType,
     "outer_surf": InputPathType,
     "opt_voxel_subdiv_subdiv_num": typing.NotRequired[int | None],
@@ -24,7 +24,7 @@ MetricToVolumeMappingRibbonConstrainedParameters = typing.TypedDict('MetricToVol
 
 
 MetricToVolumeMappingParameters = typing.TypedDict('MetricToVolumeMappingParameters', {
-    "__STYXTYPE__": typing.Literal["metric-to-volume-mapping"],
+    "@type": typing.Literal["workbench.metric-to-volume-mapping"],
     "metric": InputPathType,
     "surface": InputPathType,
     "volume_space": InputPathType,
@@ -46,8 +46,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-to-volume-mapping": metric_to_volume_mapping_cargs,
-        "ribbon_constrained": metric_to_volume_mapping_ribbon_constrained_cargs,
+        "workbench.metric-to-volume-mapping": metric_to_volume_mapping_cargs,
+        "workbench.metric-to-volume-mapping.ribbon_constrained": metric_to_volume_mapping_ribbon_constrained_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-to-volume-mapping": metric_to_volume_mapping_outputs,
+        "workbench.metric-to-volume-mapping": metric_to_volume_mapping_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def metric_to_volume_mapping_ribbon_constrained_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ribbon_constrained",
+        "@type": "workbench.metric-to-volume-mapping.ribbon_constrained",
         "inner_surf": inner_surf,
         "outer_surf": outer_surf,
         "opt_greedy": opt_greedy,
@@ -163,7 +163,7 @@ def metric_to_volume_mapping_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-to-volume-mapping",
+        "@type": "workbench.metric-to-volume-mapping",
         "metric": metric,
         "surface": surface,
         "volume_space": volume_space,
@@ -202,7 +202,7 @@ def metric_to_volume_mapping_cargs(
             str(params.get("opt_nearest_vertex_distance"))
         ])
     if params.get("ribbon_constrained") is not None:
-        cargs.extend(dyn_cargs(params.get("ribbon_constrained")["__STYXTYPE__"])(params.get("ribbon_constrained"), execution))
+        cargs.extend(dyn_cargs(params.get("ribbon_constrained")["@type"])(params.get("ribbon_constrained"), execution))
     return cargs
 
 
@@ -314,6 +314,10 @@ __all__ = [
     "MetricToVolumeMappingParameters",
     "MetricToVolumeMappingRibbonConstrainedParameters",
     "metric_to_volume_mapping",
+    "metric_to_volume_mapping_cargs",
+    "metric_to_volume_mapping_execute",
+    "metric_to_volume_mapping_outputs",
     "metric_to_volume_mapping_params",
+    "metric_to_volume_mapping_ribbon_constrained_cargs",
     "metric_to_volume_mapping_ribbon_constrained_params",
 ]

@@ -14,7 +14,7 @@ LONG_STATS_COMBINE_METADATA = Metadata(
 
 
 LongStatsCombineParameters = typing.TypedDict('LongStatsCombineParameters', {
-    "__STYXTYPE__": typing.Literal["long_stats_combine"],
+    "@type": typing.Literal["freesurfer.long_stats_combine"],
     "qdec": InputPathType,
     "stats": str,
     "measure": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_stats_combine": long_stats_combine_cargs,
+        "freesurfer.long_stats_combine": long_stats_combine_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "long_stats_combine": long_stats_combine_outputs,
+        "freesurfer.long_stats_combine": long_stats_combine_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def long_stats_combine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_stats_combine",
+        "@type": "freesurfer.long_stats_combine",
         "qdec": qdec,
         "stats": stats,
         "measure": measure,
@@ -265,5 +265,8 @@ __all__ = [
     "LongStatsCombineOutputs",
     "LongStatsCombineParameters",
     "long_stats_combine",
+    "long_stats_combine_cargs",
+    "long_stats_combine_execute",
+    "long_stats_combine_outputs",
     "long_stats_combine_params",
 ]

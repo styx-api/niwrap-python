@@ -14,7 +14,7 @@ IMMASK_METADATA = Metadata(
 
 
 ImmaskParameters = typing.TypedDict('ImmaskParameters', {
-    "__STYXTYPE__": typing.Literal["immask"],
+    "@type": typing.Literal["afni.immask"],
     "threshold": typing.NotRequired[float | None],
     "mask_image": typing.NotRequired[InputPathType | None],
     "positive_only": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "immask": immask_cargs,
+        "afni.immask": immask_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "immask": immask_outputs,
+        "afni.immask": immask_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def immask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "immask",
+        "@type": "afni.immask",
         "positive_only": positive_only,
         "input_image": input_image,
         "output_image": output_image,
@@ -219,5 +219,8 @@ __all__ = [
     "ImmaskOutputs",
     "ImmaskParameters",
     "immask",
+    "immask_cargs",
+    "immask_execute",
+    "immask_outputs",
     "immask_params",
 ]

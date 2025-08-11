@@ -14,7 +14,7 @@ MSM_METADATA = Metadata(
 
 
 MsmParameters = typing.TypedDict('MsmParameters', {
-    "__STYXTYPE__": typing.Literal["msm"],
+    "@type": typing.Literal["fsl.msm"],
     "inmesh": InputPathType,
     "out": str,
     "refmesh": typing.NotRequired[InputPathType | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "msm": msm_cargs,
+        "fsl.msm": msm_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "msm": msm_outputs,
+        "fsl.msm": msm_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def msm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "msm",
+        "@type": "fsl.msm",
         "inmesh": inmesh,
         "out": out,
         "help": help_,
@@ -382,5 +382,8 @@ __all__ = [
     "MsmOutputs",
     "MsmParameters",
     "msm",
+    "msm_cargs",
+    "msm_execute",
+    "msm_outputs",
     "msm_params",
 ]

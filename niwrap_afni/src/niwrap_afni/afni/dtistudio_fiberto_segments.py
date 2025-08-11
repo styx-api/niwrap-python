@@ -14,7 +14,7 @@ DTISTUDIO_FIBERTO_SEGMENTS_METADATA = Metadata(
 
 
 DtistudioFibertoSegmentsParameters = typing.TypedDict('DtistudioFibertoSegmentsParameters', {
-    "__STYXTYPE__": typing.Literal["DTIStudioFibertoSegments"],
+    "@type": typing.Literal["afni.DTIStudioFibertoSegments"],
     "dataset": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "swap_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "DTIStudioFibertoSegments": dtistudio_fiberto_segments_cargs,
+        "afni.DTIStudioFibertoSegments": dtistudio_fiberto_segments_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "DTIStudioFibertoSegments": dtistudio_fiberto_segments_outputs,
+        "afni.DTIStudioFibertoSegments": dtistudio_fiberto_segments_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def dtistudio_fiberto_segments_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "DTIStudioFibertoSegments",
+        "@type": "afni.DTIStudioFibertoSegments",
         "dataset": dataset,
         "swap_flag": swap_flag,
     }
@@ -194,5 +194,8 @@ __all__ = [
     "DtistudioFibertoSegmentsOutputs",
     "DtistudioFibertoSegmentsParameters",
     "dtistudio_fiberto_segments",
+    "dtistudio_fiberto_segments_cargs",
+    "dtistudio_fiberto_segments_execute",
+    "dtistudio_fiberto_segments_outputs",
     "dtistudio_fiberto_segments_params",
 ]

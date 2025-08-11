@@ -14,7 +14,7 @@ ADD_NOISE_TO_IMAGE_METADATA = Metadata(
 
 
 AddNoiseToImageParameters = typing.TypedDict('AddNoiseToImageParameters', {
-    "__STYXTYPE__": typing.Literal["AddNoiseToImage"],
+    "@type": typing.Literal["ants.AddNoiseToImage"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "noise_model": typing.Literal["AdditiveGaussian", "SaltAndPepper", "Shot", "Speckle"],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "AddNoiseToImage": add_noise_to_image_cargs,
+        "ants.AddNoiseToImage": add_noise_to_image_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "AddNoiseToImage": add_noise_to_image_outputs,
+        "ants.AddNoiseToImage": add_noise_to_image_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def add_noise_to_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "AddNoiseToImage",
+        "@type": "ants.AddNoiseToImage",
         "input_image": input_image,
         "noise_model": noise_model,
         "output": output,
@@ -231,5 +231,8 @@ __all__ = [
     "AddNoiseToImageOutputs",
     "AddNoiseToImageParameters",
     "add_noise_to_image",
+    "add_noise_to_image_cargs",
+    "add_noise_to_image_execute",
+    "add_noise_to_image_outputs",
     "add_noise_to_image_params",
 ]

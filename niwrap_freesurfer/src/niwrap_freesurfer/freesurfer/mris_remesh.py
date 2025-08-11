@@ -14,7 +14,7 @@ MRIS_REMESH_METADATA = Metadata(
 
 
 MrisRemeshParameters = typing.TypedDict('MrisRemeshParameters', {
-    "__STYXTYPE__": typing.Literal["mris_remesh"],
+    "@type": typing.Literal["freesurfer.mris_remesh"],
     "input": InputPathType,
     "output": str,
     "edge_length": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_remesh": mris_remesh_cargs,
+        "freesurfer.mris_remesh": mris_remesh_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_remesh": mris_remesh_outputs,
+        "freesurfer.mris_remesh": mris_remesh_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mris_remesh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_remesh",
+        "@type": "freesurfer.mris_remesh",
         "input": input_,
         "output": output,
         "remesh": remesh,
@@ -251,5 +251,8 @@ __all__ = [
     "MrisRemeshOutputs",
     "MrisRemeshParameters",
     "mris_remesh",
+    "mris_remesh_cargs",
+    "mris_remesh_execute",
+    "mris_remesh_outputs",
     "mris_remesh_params",
 ]

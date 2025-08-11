@@ -14,7 +14,7 @@ MRI_LOG_LIKELIHOOD_METADATA = Metadata(
 
 
 MriLogLikelihoodParameters = typing.TypedDict('MriLogLikelihoodParameters', {
-    "__STYXTYPE__": typing.Literal["mri_log_likelihood"],
+    "@type": typing.Literal["freesurfer.mri_log_likelihood"],
     "input_brain_images": list[InputPathType],
     "atlas_file": InputPathType,
     "transform_file": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_log_likelihood": mri_log_likelihood_cargs,
+        "freesurfer.mri_log_likelihood": mri_log_likelihood_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_log_likelihood_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_log_likelihood",
+        "@type": "freesurfer.mri_log_likelihood",
         "input_brain_images": input_brain_images,
         "atlas_file": atlas_file,
         "transform_file": transform_file,
@@ -184,5 +184,8 @@ __all__ = [
     "MriLogLikelihoodOutputs",
     "MriLogLikelihoodParameters",
     "mri_log_likelihood",
+    "mri_log_likelihood_cargs",
+    "mri_log_likelihood_execute",
+    "mri_log_likelihood_outputs",
     "mri_log_likelihood_params",
 ]

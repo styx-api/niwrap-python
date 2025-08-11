@@ -14,7 +14,7 @@ VOL2SYMSURF_METADATA = Metadata(
 
 
 Vol2symsurfParameters = typing.TypedDict('Vol2symsurfParameters', {
-    "__STYXTYPE__": typing.Literal["vol2symsurf"],
+    "@type": typing.Literal["freesurfer.vol2symsurf"],
     "registration_file": InputPathType,
     "input_volume": InputPathType,
     "fwhm": float,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vol2symsurf": vol2symsurf_cargs,
+        "freesurfer.vol2symsurf": vol2symsurf_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "vol2symsurf": vol2symsurf_outputs,
+        "freesurfer.vol2symsurf": vol2symsurf_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def vol2symsurf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vol2symsurf",
+        "@type": "freesurfer.vol2symsurf",
         "registration_file": registration_file,
         "input_volume": input_volume,
         "fwhm": fwhm,
@@ -265,5 +265,8 @@ __all__ = [
     "Vol2symsurfOutputs",
     "Vol2symsurfParameters",
     "vol2symsurf",
+    "vol2symsurf_cargs",
+    "vol2symsurf_execute",
+    "vol2symsurf_outputs",
     "vol2symsurf_params",
 ]

@@ -14,7 +14,7 @@ FSREALPATH_METADATA = Metadata(
 
 
 FsrealpathParameters = typing.TypedDict('FsrealpathParameters', {
-    "__STYXTYPE__": typing.Literal["fsrealpath"],
+    "@type": typing.Literal["freesurfer.fsrealpath"],
     "path": str,
     "help": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsrealpath": fsrealpath_cargs,
+        "freesurfer.fsrealpath": fsrealpath_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def fsrealpath_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsrealpath",
+        "@type": "freesurfer.fsrealpath",
         "path": path,
         "help": help_,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "FsrealpathOutputs",
     "FsrealpathParameters",
     "fsrealpath",
+    "fsrealpath_cargs",
+    "fsrealpath_execute",
+    "fsrealpath_outputs",
     "fsrealpath_params",
 ]

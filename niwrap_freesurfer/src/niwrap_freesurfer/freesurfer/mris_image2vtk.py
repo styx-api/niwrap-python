@@ -14,7 +14,7 @@ MRIS_IMAGE2VTK_METADATA = Metadata(
 
 
 MrisImage2vtkParameters = typing.TypedDict('MrisImage2vtkParameters', {
-    "__STYXTYPE__": typing.Literal["mris_image2vtk"],
+    "@type": typing.Literal["freesurfer.mris_image2vtk"],
     "input_filename": InputPathType,
     "output_filename": str,
     "lower_threshold": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_image2vtk": mris_image2vtk_cargs,
+        "freesurfer.mris_image2vtk": mris_image2vtk_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_image2vtk": mris_image2vtk_outputs,
+        "freesurfer.mris_image2vtk": mris_image2vtk_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_image2vtk_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_image2vtk",
+        "@type": "freesurfer.mris_image2vtk",
         "input_filename": input_filename,
         "output_filename": output_filename,
         "lower_threshold": lower_threshold,
@@ -220,5 +220,8 @@ __all__ = [
     "MrisImage2vtkOutputs",
     "MrisImage2vtkParameters",
     "mris_image2vtk",
+    "mris_image2vtk_cargs",
+    "mris_image2vtk_execute",
+    "mris_image2vtk_outputs",
     "mris_image2vtk_params",
 ]

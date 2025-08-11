@@ -14,7 +14,7 @@ MRI_CREATE_TESTS_METADATA = Metadata(
 
 
 MriCreateTestsParameters = typing.TypedDict('MriCreateTestsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_create_tests"],
+    "@type": typing.Literal["freesurfer.mri_create_tests"],
     "input_file": InputPathType,
     "out_src": str,
     "out_target": str,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_create_tests": mri_create_tests_cargs,
+        "freesurfer.mri_create_tests": mri_create_tests_cargs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def mri_create_tests_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_create_tests",
+        "@type": "freesurfer.mri_create_tests",
         "input_file": input_file,
         "out_src": out_src,
         "out_target": out_target,
@@ -397,5 +397,8 @@ __all__ = [
     "MriCreateTestsOutputs",
     "MriCreateTestsParameters",
     "mri_create_tests",
+    "mri_create_tests_cargs",
+    "mri_create_tests_execute",
+    "mri_create_tests_outputs",
     "mri_create_tests_params",
 ]

@@ -14,7 +14,7 @@ FSL_HISTOGRAM_METADATA = Metadata(
 
 
 FslHistogramParameters = typing.TypedDict('FslHistogramParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_histogram"],
+    "@type": typing.Literal["fsl.fsl_histogram"],
     "input_file": InputPathType,
     "input_file_duplicate": InputPathType,
     "output_file": str,
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_histogram": fsl_histogram_cargs,
+        "fsl.fsl_histogram": fsl_histogram_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_histogram": fsl_histogram_outputs,
+        "fsl.fsl_histogram": fsl_histogram_outputs,
     }.get(t)
 
 
@@ -149,7 +149,7 @@ def fsl_histogram_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_histogram",
+        "@type": "fsl.fsl_histogram",
         "input_file": input_file,
         "input_file_duplicate": input_file_duplicate,
         "output_file": output_file,
@@ -485,5 +485,8 @@ __all__ = [
     "FslHistogramOutputs",
     "FslHistogramParameters",
     "fsl_histogram",
+    "fsl_histogram_cargs",
+    "fsl_histogram_execute",
+    "fsl_histogram_outputs",
     "fsl_histogram_params",
 ]

@@ -14,13 +14,13 @@ FILE_INFORMATION_METADATA = Metadata(
 
 
 FileInformationOnlyMetadataParameters = typing.TypedDict('FileInformationOnlyMetadataParameters', {
-    "__STYXTYPE__": typing.Literal["only_metadata"],
+    "@type": typing.Literal["workbench.file-information.only_metadata"],
     "opt_key_key": typing.NotRequired[str | None],
 })
 
 
 FileInformationParameters = typing.TypedDict('FileInformationParameters', {
-    "__STYXTYPE__": typing.Literal["file-information"],
+    "@type": typing.Literal["workbench.file-information"],
     "data_file": str,
     "opt_no_map_info": bool,
     "opt_only_step_interval": bool,
@@ -46,8 +46,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "file-information": file_information_cargs,
-        "only_metadata": file_information_only_metadata_cargs,
+        "workbench.file-information": file_information_cargs,
+        "workbench.file-information.only_metadata": file_information_only_metadata_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def file_information_only_metadata_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "only_metadata",
+        "@type": "workbench.file-information.only_metadata",
     }
     if opt_key_key is not None:
         params["opt_key_key"] = opt_key_key
@@ -153,7 +153,7 @@ def file_information_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "file-information",
+        "@type": "workbench.file-information",
         "data_file": data_file,
         "opt_no_map_info": opt_no_map_info,
         "opt_only_step_interval": opt_only_step_interval,
@@ -195,7 +195,7 @@ def file_information_cargs(
     if params.get("opt_only_map_names"):
         cargs.append("-only-map-names")
     if params.get("only_metadata") is not None:
-        cargs.extend(dyn_cargs(params.get("only_metadata")["__STYXTYPE__"])(params.get("only_metadata"), execution))
+        cargs.extend(dyn_cargs(params.get("only_metadata")["@type"])(params.get("only_metadata"), execution))
     if params.get("opt_only_cifti_xml"):
         cargs.append("-only-cifti-xml")
     if params.get("opt_czi"):
@@ -400,6 +400,10 @@ __all__ = [
     "FileInformationOutputs",
     "FileInformationParameters",
     "file_information",
+    "file_information_cargs",
+    "file_information_execute",
+    "file_information_only_metadata_cargs",
     "file_information_only_metadata_params",
+    "file_information_outputs",
     "file_information_params",
 ]

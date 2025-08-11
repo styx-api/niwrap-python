@@ -14,7 +14,7 @@ V_3D_ANHIST_METADATA = Metadata(
 
 
 V3dAnhistParameters = typing.TypedDict('V3dAnhistParameters', {
-    "__STYXTYPE__": typing.Literal["3dAnhist"],
+    "@type": typing.Literal["afni.3dAnhist"],
     "dataset": InputPathType,
     "quiet": bool,
     "dump_histogram": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAnhist": v_3d_anhist_cargs,
+        "afni.3dAnhist": v_3d_anhist_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAnhist": v_3d_anhist_outputs,
+        "afni.3dAnhist": v_3d_anhist_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def v_3d_anhist_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAnhist",
+        "@type": "afni.3dAnhist",
         "dataset": dataset,
         "quiet": quiet,
         "dump_histogram": dump_histogram,
@@ -256,5 +256,8 @@ __all__ = [
     "V3dAnhistParameters",
     "V_3D_ANHIST_METADATA",
     "v_3d_anhist",
+    "v_3d_anhist_cargs",
+    "v_3d_anhist_execute",
+    "v_3d_anhist_outputs",
     "v_3d_anhist_params",
 ]

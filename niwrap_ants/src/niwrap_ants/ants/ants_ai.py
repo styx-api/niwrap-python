@@ -14,7 +14,7 @@ ANTS_AI_METADATA = Metadata(
 
 
 AntsAiParameters = typing.TypedDict('AntsAiParameters', {
-    "__STYXTYPE__": typing.Literal["antsAI"],
+    "@type": typing.Literal["ants.antsAI"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "metric": typing.Literal["Mattes[fixedImage,movingImage]", "GC[fixedImage,movingImage]", "MI[fixedImage,movingImage]"],
     "transform": typing.Literal["Rigid[gradientStep]", "Affine[gradientStep]", "Similarity[gradientStep]", "AlignGeometricCenters", "AlignCentersOfMass"],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsAI": ants_ai_cargs,
+        "ants.antsAI": ants_ai_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsAI": ants_ai_outputs,
+        "ants.antsAI": ants_ai_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def ants_ai_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsAI",
+        "@type": "ants.antsAI",
         "metric": metric,
         "transform": transform,
         "output": output,
@@ -338,5 +338,8 @@ __all__ = [
     "AntsAiOutputs",
     "AntsAiParameters",
     "ants_ai",
+    "ants_ai_cargs",
+    "ants_ai_execute",
+    "ants_ai_outputs",
     "ants_ai_params",
 ]

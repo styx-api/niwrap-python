@@ -14,7 +14,7 @@ RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA = Metadata(
 
 
 RunSegmentSubfieldsT1LongitudinalShParameters = typing.TypedDict('RunSegmentSubfieldsT1LongitudinalShParameters', {
-    "__STYXTYPE__": typing.Literal["run_SegmentSubfieldsT1Longitudinal.sh"],
+    "@type": typing.Literal["freesurfer.run_SegmentSubfieldsT1Longitudinal.sh"],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_SegmentSubfieldsT1Longitudinal.sh": run_segment_subfields_t1_longitudinal_sh_cargs,
+        "freesurfer.run_SegmentSubfieldsT1Longitudinal.sh": run_segment_subfields_t1_longitudinal_sh_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def run_segment_subfields_t1_longitudinal_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_SegmentSubfieldsT1Longitudinal.sh",
+        "@type": "freesurfer.run_SegmentSubfieldsT1Longitudinal.sh",
         "deployed_mcr_root": deployed_mcr_root,
     }
     if additional_args is not None:
@@ -182,5 +182,8 @@ __all__ = [
     "RunSegmentSubfieldsT1LongitudinalShOutputs",
     "RunSegmentSubfieldsT1LongitudinalShParameters",
     "run_segment_subfields_t1_longitudinal_sh",
+    "run_segment_subfields_t1_longitudinal_sh_cargs",
+    "run_segment_subfields_t1_longitudinal_sh_execute",
+    "run_segment_subfields_t1_longitudinal_sh_outputs",
     "run_segment_subfields_t1_longitudinal_sh_params",
 ]

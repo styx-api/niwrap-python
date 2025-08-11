@@ -14,7 +14,7 @@ LABEL2SURF_METADATA = Metadata(
 
 
 Label2surfParameters = typing.TypedDict('Label2surfParameters', {
-    "__STYXTYPE__": typing.Literal["label2surf"],
+    "@type": typing.Literal["fsl.label2surf"],
     "input_surface": InputPathType,
     "output_surface": str,
     "labels": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label2surf": label2surf_cargs,
+        "fsl.label2surf": label2surf_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label2surf": label2surf_outputs,
+        "fsl.label2surf": label2surf_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def label2surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label2surf",
+        "@type": "fsl.label2surf",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "labels": labels,
@@ -215,5 +215,8 @@ __all__ = [
     "Label2surfOutputs",
     "Label2surfParameters",
     "label2surf",
+    "label2surf_cargs",
+    "label2surf_execute",
+    "label2surf_outputs",
     "label2surf_params",
 ]

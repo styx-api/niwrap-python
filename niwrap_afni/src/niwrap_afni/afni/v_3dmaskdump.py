@@ -14,7 +14,7 @@ V_3DMASKDUMP_METADATA = Metadata(
 
 
 V3dmaskdumpParameters = typing.TypedDict('V3dmaskdumpParameters', {
-    "__STYXTYPE__": typing.Literal["3dmaskdump"],
+    "@type": typing.Literal["afni.3dmaskdump"],
     "input_files": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "mask_range": typing.NotRequired[list[str] | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmaskdump": v_3dmaskdump_cargs,
+        "afni.3dmaskdump": v_3dmaskdump_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmaskdump": v_3dmaskdump_outputs,
+        "afni.3dmaskdump": v_3dmaskdump_outputs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def v_3dmaskdump_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmaskdump",
+        "@type": "afni.3dmaskdump",
         "input_files": input_files,
         "output_index": output_index,
         "output_noijk": output_noijk,
@@ -421,5 +421,8 @@ __all__ = [
     "V3dmaskdumpParameters",
     "V_3DMASKDUMP_METADATA",
     "v_3dmaskdump",
+    "v_3dmaskdump_cargs",
+    "v_3dmaskdump_execute",
+    "v_3dmaskdump_outputs",
     "v_3dmaskdump_params",
 ]

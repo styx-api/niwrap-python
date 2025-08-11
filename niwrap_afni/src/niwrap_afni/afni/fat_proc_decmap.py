@@ -14,7 +14,7 @@ FAT_PROC_DECMAP_METADATA = Metadata(
 
 
 FatProcDecmapParameters = typing.TypedDict('FatProcDecmapParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_decmap"],
+    "@type": typing.Literal["afni.fat_proc_decmap"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "prefix": str,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_decmap": fat_proc_decmap_cargs,
+        "afni.fat_proc_decmap": fat_proc_decmap_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_decmap": fat_proc_decmap_outputs,
+        "afni.fat_proc_decmap": fat_proc_decmap_outputs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def fat_proc_decmap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_decmap",
+        "@type": "afni.fat_proc_decmap",
         "in_fa": in_fa,
         "in_v1": in_v1,
         "prefix": prefix,
@@ -317,5 +317,8 @@ __all__ = [
     "FatProcDecmapOutputs",
     "FatProcDecmapParameters",
     "fat_proc_decmap",
+    "fat_proc_decmap_cargs",
+    "fat_proc_decmap_execute",
+    "fat_proc_decmap_outputs",
     "fat_proc_decmap_params",
 ]

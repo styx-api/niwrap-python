@@ -14,7 +14,7 @@ V_3D_PFM_METADATA = Metadata(
 
 
 V3dPfmParameters = typing.TypedDict('V3dPfmParameters', {
-    "__STYXTYPE__": typing.Literal["3dPFM"],
+    "@type": typing.Literal["afni.3dPFM"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "algorithm": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dPFM": v_3d_pfm_cargs,
+        "afni.3dPFM": v_3d_pfm_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dPFM": v_3d_pfm_outputs,
+        "afni.3dPFM": v_3d_pfm_outputs,
     }.get(t)
 
 
@@ -170,7 +170,7 @@ def v_3d_pfm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dPFM",
+        "@type": "afni.3dPFM",
         "input": input_,
     }
     if mask is not None:
@@ -442,5 +442,8 @@ __all__ = [
     "V3dPfmParameters",
     "V_3D_PFM_METADATA",
     "v_3d_pfm",
+    "v_3d_pfm_cargs",
+    "v_3d_pfm_execute",
+    "v_3d_pfm_outputs",
     "v_3d_pfm_params",
 ]

@@ -14,7 +14,7 @@ DCMDRLE_FS_METADATA = Metadata(
 
 
 DcmdrleFsParameters = typing.TypedDict('DcmdrleFsParameters', {
-    "__STYXTYPE__": typing.Literal["dcmdrle.fs"],
+    "@type": typing.Literal["freesurfer.dcmdrle.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcmdrle.fs": dcmdrle_fs_cargs,
+        "freesurfer.dcmdrle.fs": dcmdrle_fs_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dcmdrle.fs": dcmdrle_fs_outputs,
+        "freesurfer.dcmdrle.fs": dcmdrle_fs_outputs,
     }.get(t)
 
 
@@ -167,7 +167,7 @@ def dcmdrle_fs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcmdrle.fs",
+        "@type": "freesurfer.dcmdrle.fs",
         "input_file": input_file,
         "output_file": output_file,
         "help": help_,
@@ -464,5 +464,8 @@ __all__ = [
     "DcmdrleFsOutputs",
     "DcmdrleFsParameters",
     "dcmdrle_fs",
+    "dcmdrle_fs_cargs",
+    "dcmdrle_fs_execute",
+    "dcmdrle_fs_outputs",
     "dcmdrle_fs_params",
 ]

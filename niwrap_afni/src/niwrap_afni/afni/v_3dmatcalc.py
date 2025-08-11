@@ -14,7 +14,7 @@ V_3DMATCALC_METADATA = Metadata(
 
 
 V3dmatcalcParameters = typing.TypedDict('V3dmatcalcParameters', {
-    "__STYXTYPE__": typing.Literal["3dmatcalc"],
+    "@type": typing.Literal["afni.3dmatcalc"],
     "input_dataset": InputPathType,
     "input_matrix": InputPathType,
     "output_dataset": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmatcalc": v_3dmatcalc_cargs,
+        "afni.3dmatcalc": v_3dmatcalc_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmatcalc": v_3dmatcalc_outputs,
+        "afni.3dmatcalc": v_3dmatcalc_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v_3dmatcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmatcalc",
+        "@type": "afni.3dmatcalc",
         "input_dataset": input_dataset,
         "input_matrix": input_matrix,
         "output_dataset": output_dataset,
@@ -217,5 +217,8 @@ __all__ = [
     "V3dmatcalcParameters",
     "V_3DMATCALC_METADATA",
     "v_3dmatcalc",
+    "v_3dmatcalc_cargs",
+    "v_3dmatcalc_execute",
+    "v_3dmatcalc_outputs",
     "v_3dmatcalc_params",
 ]

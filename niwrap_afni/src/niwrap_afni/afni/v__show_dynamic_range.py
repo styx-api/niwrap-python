@@ -14,7 +14,7 @@ V__SHOW_DYNAMIC_RANGE_METADATA = Metadata(
 
 
 VShowDynamicRangeParameters = typing.TypedDict('VShowDynamicRangeParameters', {
-    "__STYXTYPE__": typing.Literal["@ShowDynamicRange"],
+    "@type": typing.Literal["afni.@ShowDynamicRange"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ShowDynamicRange": v__show_dynamic_range_cargs,
+        "afni.@ShowDynamicRange": v__show_dynamic_range_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ShowDynamicRange": v__show_dynamic_range_outputs,
+        "afni.@ShowDynamicRange": v__show_dynamic_range_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def v__show_dynamic_range_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ShowDynamicRange",
+        "@type": "afni.@ShowDynamicRange",
         "infile": infile,
     }
     return params
@@ -179,5 +179,8 @@ __all__ = [
     "VShowDynamicRangeParameters",
     "V__SHOW_DYNAMIC_RANGE_METADATA",
     "v__show_dynamic_range",
+    "v__show_dynamic_range_cargs",
+    "v__show_dynamic_range_execute",
+    "v__show_dynamic_range_outputs",
     "v__show_dynamic_range_params",
 ]

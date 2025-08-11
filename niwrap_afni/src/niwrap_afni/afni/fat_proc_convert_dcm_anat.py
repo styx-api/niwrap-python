@@ -14,7 +14,7 @@ FAT_PROC_CONVERT_DCM_ANAT_METADATA = Metadata(
 
 
 FatProcConvertDcmAnatParameters = typing.TypedDict('FatProcConvertDcmAnatParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_convert_dcm_anat"],
+    "@type": typing.Literal["afni.fat_proc_convert_dcm_anat"],
     "dicom_directory": typing.NotRequired[str | None],
     "nifti_input": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_convert_dcm_anat": fat_proc_convert_dcm_anat_cargs,
+        "afni.fat_proc_convert_dcm_anat": fat_proc_convert_dcm_anat_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_convert_dcm_anat": fat_proc_convert_dcm_anat_outputs,
+        "afni.fat_proc_convert_dcm_anat": fat_proc_convert_dcm_anat_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def fat_proc_convert_dcm_anat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_convert_dcm_anat",
+        "@type": "afni.fat_proc_convert_dcm_anat",
         "prefix": prefix,
         "no_clean": no_clean,
         "reorig_reorient_off": reorig_reorient_off,
@@ -294,5 +294,8 @@ __all__ = [
     "FatProcConvertDcmAnatOutputs",
     "FatProcConvertDcmAnatParameters",
     "fat_proc_convert_dcm_anat",
+    "fat_proc_convert_dcm_anat_cargs",
+    "fat_proc_convert_dcm_anat_execute",
+    "fat_proc_convert_dcm_anat_outputs",
     "fat_proc_convert_dcm_anat_params",
 ]

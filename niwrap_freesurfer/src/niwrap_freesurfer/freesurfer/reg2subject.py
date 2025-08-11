@@ -14,7 +14,7 @@ REG2SUBJECT_METADATA = Metadata(
 
 
 Reg2subjectParameters = typing.TypedDict('Reg2subjectParameters', {
-    "__STYXTYPE__": typing.Literal["reg2subject"],
+    "@type": typing.Literal["freesurfer.reg2subject"],
     "regfile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg2subject": reg2subject_cargs,
+        "freesurfer.reg2subject": reg2subject_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def reg2subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg2subject",
+        "@type": "freesurfer.reg2subject",
         "regfile": regfile,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "Reg2subjectOutputs",
     "Reg2subjectParameters",
     "reg2subject",
+    "reg2subject_cargs",
+    "reg2subject_execute",
+    "reg2subject_outputs",
     "reg2subject_params",
 ]

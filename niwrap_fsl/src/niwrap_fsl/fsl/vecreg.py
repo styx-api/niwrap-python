@@ -14,7 +14,7 @@ VECREG_METADATA = Metadata(
 
 
 VecregParameters = typing.TypedDict('VecregParameters', {
-    "__STYXTYPE__": typing.Literal["vecreg"],
+    "@type": typing.Literal["fsl.vecreg"],
     "input_file": InputPathType,
     "output_file": str,
     "reference_volume": InputPathType,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vecreg": vecreg_cargs,
+        "fsl.vecreg": vecreg_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "vecreg": vecreg_outputs,
+        "fsl.vecreg": vecreg_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def vecreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vecreg",
+        "@type": "fsl.vecreg",
         "input_file": input_file,
         "output_file": output_file,
         "reference_volume": reference_volume,
@@ -301,5 +301,8 @@ __all__ = [
     "VecregOutputs",
     "VecregParameters",
     "vecreg",
+    "vecreg_cargs",
+    "vecreg_execute",
+    "vecreg_outputs",
     "vecreg_params",
 ]

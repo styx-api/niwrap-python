@@ -14,7 +14,7 @@ MRIS_MULTIMODAL_METADATA = Metadata(
 
 
 MrisMultimodalParameters = typing.TypedDict('MrisMultimodalParameters', {
-    "__STYXTYPE__": typing.Literal["mris_multimodal"],
+    "@type": typing.Literal["freesurfer.mris_multimodal"],
     "input_surface": InputPathType,
     "target_surface": InputPathType,
     "output_surface": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_multimodal": mris_multimodal_cargs,
+        "freesurfer.mris_multimodal": mris_multimodal_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_multimodal": mris_multimodal_outputs,
+        "freesurfer.mris_multimodal": mris_multimodal_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def mris_multimodal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_multimodal",
+        "@type": "freesurfer.mris_multimodal",
         "input_surface": input_surface,
         "target_surface": target_surface,
         "output_surface": output_surface,
@@ -275,5 +275,8 @@ __all__ = [
     "MrisMultimodalOutputs",
     "MrisMultimodalParameters",
     "mris_multimodal",
+    "mris_multimodal_cargs",
+    "mris_multimodal_execute",
+    "mris_multimodal_outputs",
     "mris_multimodal_params",
 ]

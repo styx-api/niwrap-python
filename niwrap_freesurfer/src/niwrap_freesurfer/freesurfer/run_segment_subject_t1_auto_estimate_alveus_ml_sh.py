@@ -14,7 +14,7 @@ RUN_SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA = Metadata(
 
 
 RunSegmentSubjectT1AutoEstimateAlveusMlShParameters = typing.TypedDict('RunSegmentSubjectT1AutoEstimateAlveusMlShParameters', {
-    "__STYXTYPE__": typing.Literal["run_segmentSubjectT1_autoEstimateAlveusML.sh"],
+    "@type": typing.Literal["freesurfer.run_segmentSubjectT1_autoEstimateAlveusML.sh"],
     "deployed_mcr_root": str,
     "additional_args": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_segmentSubjectT1_autoEstimateAlveusML.sh": run_segment_subject_t1_auto_estimate_alveus_ml_sh_cargs,
+        "freesurfer.run_segmentSubjectT1_autoEstimateAlveusML.sh": run_segment_subject_t1_auto_estimate_alveus_ml_sh_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_segmentSubjectT1_autoEstimateAlveusML.sh",
+        "@type": "freesurfer.run_segmentSubjectT1_autoEstimateAlveusML.sh",
         "deployed_mcr_root": deployed_mcr_root,
     }
     if additional_args is not None:
@@ -180,5 +180,8 @@ __all__ = [
     "RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs",
     "RunSegmentSubjectT1AutoEstimateAlveusMlShParameters",
     "run_segment_subject_t1_auto_estimate_alveus_ml_sh",
+    "run_segment_subject_t1_auto_estimate_alveus_ml_sh_cargs",
+    "run_segment_subject_t1_auto_estimate_alveus_ml_sh_execute",
+    "run_segment_subject_t1_auto_estimate_alveus_ml_sh_outputs",
     "run_segment_subject_t1_auto_estimate_alveus_ml_sh_params",
 ]

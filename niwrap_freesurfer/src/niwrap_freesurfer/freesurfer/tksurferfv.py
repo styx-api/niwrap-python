@@ -14,7 +14,7 @@ TKSURFERFV_METADATA = Metadata(
 
 
 TksurferfvParameters = typing.TypedDict('TksurferfvParameters', {
-    "__STYXTYPE__": typing.Literal["tksurferfv"],
+    "@type": typing.Literal["freesurfer.tksurferfv"],
     "subject": str,
     "hemi": str,
     "surface": str,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tksurferfv": tksurferfv_cargs,
+        "freesurfer.tksurferfv": tksurferfv_cargs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def tksurferfv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tksurferfv",
+        "@type": "freesurfer.tksurferfv",
         "subject": subject,
         "hemi": hemi,
         "surface": surface,
@@ -261,5 +261,8 @@ __all__ = [
     "TksurferfvOutputs",
     "TksurferfvParameters",
     "tksurferfv",
+    "tksurferfv_cargs",
+    "tksurferfv_execute",
+    "tksurferfv_outputs",
     "tksurferfv_params",
 ]

@@ -14,7 +14,7 @@ POSSUM_MATRIX_METADATA = Metadata(
 
 
 PossumMatrixParameters = typing.TypedDict('PossumMatrixParameters', {
-    "__STYXTYPE__": typing.Literal["possum_matrix"],
+    "@type": typing.Literal["fsl.possum_matrix"],
     "pulse_sequence": str,
     "motion_matrix": str,
     "output_matrix": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "possum_matrix": possum_matrix_cargs,
+        "fsl.possum_matrix": possum_matrix_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "possum_matrix": possum_matrix_outputs,
+        "fsl.possum_matrix": possum_matrix_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def possum_matrix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "possum_matrix",
+        "@type": "fsl.possum_matrix",
         "pulse_sequence": pulse_sequence,
         "motion_matrix": motion_matrix,
         "output_matrix": output_matrix,
@@ -249,5 +249,8 @@ __all__ = [
     "PossumMatrixOutputs",
     "PossumMatrixParameters",
     "possum_matrix",
+    "possum_matrix_cargs",
+    "possum_matrix_execute",
+    "possum_matrix_outputs",
     "possum_matrix_params",
 ]

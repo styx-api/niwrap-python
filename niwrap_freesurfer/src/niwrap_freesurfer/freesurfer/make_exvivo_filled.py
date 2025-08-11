@@ -14,7 +14,7 @@ MAKE_EXVIVO_FILLED_METADATA = Metadata(
 
 
 MakeExvivoFilledParameters = typing.TypedDict('MakeExvivoFilledParameters', {
-    "__STYXTYPE__": typing.Literal["make_exvivo_filled"],
+    "@type": typing.Literal["freesurfer.make_exvivo_filled"],
     "subject_name": str,
     "input_samseg": InputPathType,
     "input_intensity_vol": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_exvivo_filled": make_exvivo_filled_cargs,
+        "freesurfer.make_exvivo_filled": make_exvivo_filled_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def make_exvivo_filled_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_exvivo_filled",
+        "@type": "freesurfer.make_exvivo_filled",
         "subject_name": subject_name,
         "input_samseg": input_samseg,
         "input_intensity_vol": input_intensity_vol,
@@ -192,5 +192,8 @@ __all__ = [
     "MakeExvivoFilledOutputs",
     "MakeExvivoFilledParameters",
     "make_exvivo_filled",
+    "make_exvivo_filled_cargs",
+    "make_exvivo_filled_execute",
+    "make_exvivo_filled_outputs",
     "make_exvivo_filled_params",
 ]

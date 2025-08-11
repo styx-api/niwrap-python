@@ -14,7 +14,7 @@ CONVERT_TRANSFORM_FILE_METADATA = Metadata(
 
 
 ConvertTransformFileParameters = typing.TypedDict('ConvertTransformFileParameters', {
-    "__STYXTYPE__": typing.Literal["ConvertTransformFile"],
+    "@type": typing.Literal["ants.ConvertTransformFile"],
     "dimensions": int,
     "input_transform_file": InputPathType,
     "output_transform_file": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ConvertTransformFile": convert_transform_file_cargs,
+        "ants.ConvertTransformFile": convert_transform_file_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def convert_transform_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ConvertTransformFile",
+        "@type": "ants.ConvertTransformFile",
         "dimensions": dimensions,
         "input_transform_file": input_transform_file,
         "output_transform_file": output_transform_file,
@@ -236,5 +236,8 @@ __all__ = [
     "ConvertTransformFileOutputs",
     "ConvertTransformFileParameters",
     "convert_transform_file",
+    "convert_transform_file_cargs",
+    "convert_transform_file_execute",
+    "convert_transform_file_outputs",
     "convert_transform_file_params",
 ]

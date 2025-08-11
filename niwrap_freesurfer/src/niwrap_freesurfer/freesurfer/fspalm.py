@@ -14,7 +14,7 @@ FSPALM_METADATA = Metadata(
 
 
 FspalmParameters = typing.TypedDict('FspalmParameters', {
-    "__STYXTYPE__": typing.Literal["fspalm"],
+    "@type": typing.Literal["freesurfer.fspalm"],
     "glmdir": str,
     "cft": float,
     "cwp": float,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fspalm": fspalm_cargs,
+        "freesurfer.fspalm": fspalm_cargs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def fspalm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fspalm",
+        "@type": "freesurfer.fspalm",
         "glmdir": glmdir,
         "cft": cft,
         "cwp": cwp,
@@ -306,5 +306,8 @@ __all__ = [
     "FspalmOutputs",
     "FspalmParameters",
     "fspalm",
+    "fspalm_cargs",
+    "fspalm_execute",
+    "fspalm_outputs",
     "fspalm_params",
 ]

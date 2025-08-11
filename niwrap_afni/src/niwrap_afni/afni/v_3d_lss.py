@@ -14,7 +14,7 @@ V_3D_LSS_METADATA = Metadata(
 
 
 V3dLssParameters = typing.TypedDict('V3dLssParameters', {
-    "__STYXTYPE__": typing.Literal["3dLSS"],
+    "@type": typing.Literal["afni.3dLSS"],
     "matrix": InputPathType,
     "input": typing.NotRequired[InputPathType | None],
     "nodata": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLSS": v_3d_lss_cargs,
+        "afni.3dLSS": v_3d_lss_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLSS": v_3d_lss_outputs,
+        "afni.3dLSS": v_3d_lss_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def v_3d_lss_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLSS",
+        "@type": "afni.3dLSS",
         "matrix": matrix,
         "nodata": nodata,
         "automask": automask,
@@ -274,5 +274,8 @@ __all__ = [
     "V3dLssParameters",
     "V_3D_LSS_METADATA",
     "v_3d_lss",
+    "v_3d_lss_cargs",
+    "v_3d_lss_execute",
+    "v_3d_lss_outputs",
     "v_3d_lss_params",
 ]

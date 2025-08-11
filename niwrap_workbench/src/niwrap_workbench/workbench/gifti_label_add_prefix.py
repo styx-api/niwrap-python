@@ -14,7 +14,7 @@ GIFTI_LABEL_ADD_PREFIX_METADATA = Metadata(
 
 
 GiftiLabelAddPrefixParameters = typing.TypedDict('GiftiLabelAddPrefixParameters', {
-    "__STYXTYPE__": typing.Literal["gifti-label-add-prefix"],
+    "@type": typing.Literal["workbench.gifti-label-add-prefix"],
     "label_in": InputPathType,
     "prefix": str,
     "label_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gifti-label-add-prefix": gifti_label_add_prefix_cargs,
+        "workbench.gifti-label-add-prefix": gifti_label_add_prefix_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gifti-label-add-prefix": gifti_label_add_prefix_outputs,
+        "workbench.gifti-label-add-prefix": gifti_label_add_prefix_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def gifti_label_add_prefix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gifti-label-add-prefix",
+        "@type": "workbench.gifti-label-add-prefix",
         "label_in": label_in,
         "prefix": prefix,
         "label_out": label_out,
@@ -193,5 +193,8 @@ __all__ = [
     "GiftiLabelAddPrefixOutputs",
     "GiftiLabelAddPrefixParameters",
     "gifti_label_add_prefix",
+    "gifti_label_add_prefix_cargs",
+    "gifti_label_add_prefix_execute",
+    "gifti_label_add_prefix_outputs",
     "gifti_label_add_prefix_params",
 ]

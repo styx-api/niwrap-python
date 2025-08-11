@@ -14,7 +14,7 @@ FSLORIENT_METADATA = Metadata(
 
 
 FslorientParameters = typing.TypedDict('FslorientParameters', {
-    "__STYXTYPE__": typing.Literal["fslorient"],
+    "@type": typing.Literal["fsl.fslorient"],
     "get_orient": bool,
     "get_sform": bool,
     "get_qform": bool,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslorient": fslorient_cargs,
+        "fsl.fslorient": fslorient_cargs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def fslorient_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslorient",
+        "@type": "fsl.fslorient",
         "get_orient": get_orient,
         "get_sform": get_sform,
         "get_qform": get_qform,
@@ -321,5 +321,8 @@ __all__ = [
     "FslorientOutputs",
     "FslorientParameters",
     "fslorient",
+    "fslorient_cargs",
+    "fslorient_execute",
+    "fslorient_outputs",
     "fslorient_params",
 ]

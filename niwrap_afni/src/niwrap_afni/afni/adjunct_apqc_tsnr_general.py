@@ -14,7 +14,7 @@ ADJUNCT_APQC_TSNR_GENERAL_METADATA = Metadata(
 
 
 AdjunctApqcTsnrGeneralParameters = typing.TypedDict('AdjunctApqcTsnrGeneralParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_apqc_tsnr_general"],
+    "@type": typing.Literal["afni.adjunct_apqc_tsnr_general"],
     "montgap": typing.NotRequired[str | None],
     "montcolor": typing.NotRequired[str | None],
     "montx": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_apqc_tsnr_general": adjunct_apqc_tsnr_general_cargs,
+        "afni.adjunct_apqc_tsnr_general": adjunct_apqc_tsnr_general_cargs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def adjunct_apqc_tsnr_general_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_apqc_tsnr_general",
+        "@type": "afni.adjunct_apqc_tsnr_general",
         "no_cor": no_cor,
         "no_sag": no_sag,
         "no_axi": no_axi,
@@ -443,5 +443,8 @@ __all__ = [
     "AdjunctApqcTsnrGeneralOutputs",
     "AdjunctApqcTsnrGeneralParameters",
     "adjunct_apqc_tsnr_general",
+    "adjunct_apqc_tsnr_general_cargs",
+    "adjunct_apqc_tsnr_general_execute",
+    "adjunct_apqc_tsnr_general_outputs",
     "adjunct_apqc_tsnr_general_params",
 ]

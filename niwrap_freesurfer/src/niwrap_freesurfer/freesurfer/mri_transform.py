@@ -14,7 +14,7 @@ MRI_TRANSFORM_METADATA = Metadata(
 
 
 MriTransformParameters = typing.TypedDict('MriTransformParameters', {
-    "__STYXTYPE__": typing.Literal["mri_transform"],
+    "@type": typing.Literal["freesurfer.mri_transform"],
     "input_volume": InputPathType,
     "lta_file": InputPathType,
     "output_file": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_transform": mri_transform_cargs,
+        "freesurfer.mri_transform": mri_transform_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_transform": mri_transform_outputs,
+        "freesurfer.mri_transform": mri_transform_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_transform",
+        "@type": "freesurfer.mri_transform",
         "input_volume": input_volume,
         "lta_file": lta_file,
         "output_file": output_file,
@@ -210,5 +210,8 @@ __all__ = [
     "MriTransformOutputs",
     "MriTransformParameters",
     "mri_transform",
+    "mri_transform_cargs",
+    "mri_transform_execute",
+    "mri_transform_outputs",
     "mri_transform_params",
 ]

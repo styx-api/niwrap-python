@@ -14,7 +14,7 @@ AP_RUN_SIMPLE_REST_METADATA = Metadata(
 
 
 ApRunSimpleRestParameters = typing.TypedDict('ApRunSimpleRestParameters', {
-    "__STYXTYPE__": typing.Literal["ap_run_simple_rest"],
+    "@type": typing.Literal["afni.ap_run_simple_rest"],
     "anat": typing.NotRequired[InputPathType | None],
     "epi": list[InputPathType],
     "nt_rm": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ap_run_simple_rest": ap_run_simple_rest_cargs,
+        "afni.ap_run_simple_rest": ap_run_simple_rest_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ap_run_simple_rest": ap_run_simple_rest_outputs,
+        "afni.ap_run_simple_rest": ap_run_simple_rest_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def ap_run_simple_rest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ap_run_simple_rest",
+        "@type": "afni.ap_run_simple_rest",
         "epi": epi,
         "run_ap": run_ap,
         "run_proc": run_proc,
@@ -289,5 +289,8 @@ __all__ = [
     "ApRunSimpleRestOutputs",
     "ApRunSimpleRestParameters",
     "ap_run_simple_rest",
+    "ap_run_simple_rest_cargs",
+    "ap_run_simple_rest_execute",
+    "ap_run_simple_rest_outputs",
     "ap_run_simple_rest_params",
 ]

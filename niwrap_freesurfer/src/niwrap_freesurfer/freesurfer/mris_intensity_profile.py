@@ -14,7 +14,7 @@ MRIS_INTENSITY_PROFILE_METADATA = Metadata(
 
 
 MrisIntensityProfileParameters = typing.TypedDict('MrisIntensityProfileParameters', {
-    "__STYXTYPE__": typing.Literal["mris_intensity_profile"],
+    "@type": typing.Literal["freesurfer.mris_intensity_profile"],
     "subject_name": str,
     "hemi": str,
     "volume": InputPathType,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_intensity_profile": mris_intensity_profile_cargs,
+        "freesurfer.mris_intensity_profile": mris_intensity_profile_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_intensity_profile": mris_intensity_profile_outputs,
+        "freesurfer.mris_intensity_profile": mris_intensity_profile_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def mris_intensity_profile_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_intensity_profile",
+        "@type": "freesurfer.mris_intensity_profile",
         "subject_name": subject_name,
         "hemi": hemi,
         "volume": volume,
@@ -329,5 +329,8 @@ __all__ = [
     "MrisIntensityProfileOutputs",
     "MrisIntensityProfileParameters",
     "mris_intensity_profile",
+    "mris_intensity_profile_cargs",
+    "mris_intensity_profile_execute",
+    "mris_intensity_profile_outputs",
     "mris_intensity_profile_params",
 ]

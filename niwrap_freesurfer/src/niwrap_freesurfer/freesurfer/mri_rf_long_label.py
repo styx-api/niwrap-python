@@ -14,7 +14,7 @@ MRI_RF_LONG_LABEL_METADATA = Metadata(
 
 
 MriRfLongLabelParameters = typing.TypedDict('MriRfLongLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mri_rf_long_label"],
+    "@type": typing.Literal["freesurfer.mri_rf_long_label"],
     "help_flag": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_rf_long_label": mri_rf_long_label_cargs,
+        "freesurfer.mri_rf_long_label": mri_rf_long_label_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def mri_rf_long_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_rf_long_label",
+        "@type": "freesurfer.mri_rf_long_label",
     }
     if help_flag is not None:
         params["help_flag"] = help_flag
@@ -170,5 +170,8 @@ __all__ = [
     "MriRfLongLabelOutputs",
     "MriRfLongLabelParameters",
     "mri_rf_long_label",
+    "mri_rf_long_label_cargs",
+    "mri_rf_long_label_execute",
+    "mri_rf_long_label_outputs",
     "mri_rf_long_label_params",
 ]

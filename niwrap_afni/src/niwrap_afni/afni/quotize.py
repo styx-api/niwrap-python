@@ -14,7 +14,7 @@ QUOTIZE_METADATA = Metadata(
 
 
 QuotizeParameters = typing.TypedDict('QuotizeParameters', {
-    "__STYXTYPE__": typing.Literal["quotize"],
+    "@type": typing.Literal["afni.quotize"],
     "name": str,
     "input_file": InputPathType,
     "output_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "quotize": quotize_cargs,
+        "afni.quotize": quotize_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "quotize": quotize_outputs,
+        "afni.quotize": quotize_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def quotize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "quotize",
+        "@type": "afni.quotize",
         "name": name,
         "input_file": input_file,
         "output_file": output_file,
@@ -190,5 +190,8 @@ __all__ = [
     "QuotizeOutputs",
     "QuotizeParameters",
     "quotize",
+    "quotize_cargs",
+    "quotize_execute",
+    "quotize_outputs",
     "quotize_params",
 ]

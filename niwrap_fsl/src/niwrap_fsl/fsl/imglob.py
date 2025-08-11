@@ -14,7 +14,7 @@ IMGLOB_METADATA = Metadata(
 
 
 ImglobParameters = typing.TypedDict('ImglobParameters', {
-    "__STYXTYPE__": typing.Literal["imglob"],
+    "@type": typing.Literal["fsl.imglob"],
     "multiple_extensions": bool,
     "input_list": list[str],
     "single_extension": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imglob": imglob_cargs,
+        "fsl.imglob": imglob_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def imglob_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imglob",
+        "@type": "fsl.imglob",
         "multiple_extensions": multiple_extensions,
         "input_list": input_list,
         "single_extension": single_extension,
@@ -186,5 +186,8 @@ __all__ = [
     "ImglobOutputs",
     "ImglobParameters",
     "imglob",
+    "imglob_cargs",
+    "imglob_execute",
+    "imglob_outputs",
     "imglob_params",
 ]

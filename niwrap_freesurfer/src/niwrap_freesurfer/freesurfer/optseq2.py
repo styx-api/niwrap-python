@@ -14,7 +14,7 @@ OPTSEQ2_METADATA = Metadata(
 
 
 Optseq2Parameters = typing.TypedDict('Optseq2Parameters', {
-    "__STYXTYPE__": typing.Literal["optseq2"],
+    "@type": typing.Literal["freesurfer.optseq2"],
     "ntp": float,
     "tr": float,
     "tprescan": float,
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "optseq2": optseq2_cargs,
+        "freesurfer.optseq2": optseq2_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "optseq2": optseq2_outputs,
+        "freesurfer.optseq2": optseq2_outputs,
     }.get(t)
 
 
@@ -181,7 +181,7 @@ def optseq2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "optseq2",
+        "@type": "freesurfer.optseq2",
         "ntp": ntp,
         "tr": tr,
         "tprescan": tprescan,
@@ -583,5 +583,8 @@ __all__ = [
     "Optseq2Outputs",
     "Optseq2Parameters",
     "optseq2",
+    "optseq2_cargs",
+    "optseq2_execute",
+    "optseq2_outputs",
     "optseq2_params",
 ]

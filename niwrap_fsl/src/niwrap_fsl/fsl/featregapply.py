@@ -14,7 +14,7 @@ FEATREGAPPLY_METADATA = Metadata(
 
 
 FeatregapplyParameters = typing.TypedDict('FeatregapplyParameters', {
-    "__STYXTYPE__": typing.Literal["featregapply"],
+    "@type": typing.Literal["fsl.featregapply"],
     "feat_directory": str,
     "force_flag": bool,
     "cleanup_flag": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "featregapply": featregapply_cargs,
+        "fsl.featregapply": featregapply_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "featregapply": featregapply_outputs,
+        "fsl.featregapply": featregapply_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def featregapply_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "featregapply",
+        "@type": "fsl.featregapply",
         "feat_directory": feat_directory,
         "force_flag": force_flag,
         "cleanup_flag": cleanup_flag,
@@ -250,5 +250,8 @@ __all__ = [
     "FeatregapplyOutputs",
     "FeatregapplyParameters",
     "featregapply",
+    "featregapply_cargs",
+    "featregapply_execute",
+    "featregapply_outputs",
     "featregapply_params",
 ]

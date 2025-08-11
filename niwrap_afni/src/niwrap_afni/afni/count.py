@@ -14,7 +14,7 @@ COUNT_METADATA = Metadata(
 
 
 CountParameters = typing.TypedDict('CountParameters', {
-    "__STYXTYPE__": typing.Literal["count"],
+    "@type": typing.Literal["afni.count"],
     "bot": str,
     "top": str,
     "step": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "count": count_cargs,
+        "afni.count": count_cargs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def count_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "count",
+        "@type": "afni.count",
         "bot": bot,
         "top": top,
         "column": column,
@@ -323,5 +323,8 @@ __all__ = [
     "CountOutputs",
     "CountParameters",
     "count",
+    "count_cargs",
+    "count_execute",
+    "count_outputs",
     "count_params",
 ]

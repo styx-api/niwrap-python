@@ -14,7 +14,7 @@ MRI_HIRES_REGISTER_METADATA = Metadata(
 
 
 MriHiresRegisterParameters = typing.TypedDict('MriHiresRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_hires_register"],
+    "@type": typing.Literal["freesurfer.mri_hires_register"],
     "hires_labeling": InputPathType,
     "input_intensity": InputPathType,
     "input_aseg": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_hires_register": mri_hires_register_cargs,
+        "freesurfer.mri_hires_register": mri_hires_register_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_hires_register": mri_hires_register_outputs,
+        "freesurfer.mri_hires_register": mri_hires_register_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mri_hires_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_hires_register",
+        "@type": "freesurfer.mri_hires_register",
         "hires_labeling": hires_labeling,
         "input_intensity": input_intensity,
         "input_aseg": input_aseg,
@@ -196,5 +196,8 @@ __all__ = [
     "MriHiresRegisterOutputs",
     "MriHiresRegisterParameters",
     "mri_hires_register",
+    "mri_hires_register_cargs",
+    "mri_hires_register_execute",
+    "mri_hires_register_outputs",
     "mri_hires_register_params",
 ]

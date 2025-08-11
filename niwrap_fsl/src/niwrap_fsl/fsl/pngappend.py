@@ -14,7 +14,7 @@ PNGAPPEND_METADATA = Metadata(
 
 
 PngappendParameters = typing.TypedDict('PngappendParameters', {
-    "__STYXTYPE__": typing.Literal["pngappend"],
+    "@type": typing.Literal["fsl.pngappend"],
     "input_files_and_options": list[str],
     "output_file": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pngappend": pngappend_cargs,
+        "fsl.pngappend": pngappend_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def pngappend_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pngappend",
+        "@type": "fsl.pngappend",
         "input_files_and_options": input_files_and_options,
         "output_file": output_file,
     }
@@ -178,5 +178,8 @@ __all__ = [
     "PngappendOutputs",
     "PngappendParameters",
     "pngappend",
+    "pngappend_cargs",
+    "pngappend_execute",
+    "pngappend_outputs",
     "pngappend_params",
 ]

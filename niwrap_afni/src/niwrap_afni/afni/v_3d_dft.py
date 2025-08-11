@@ -14,7 +14,7 @@ V_3D_DFT_METADATA = Metadata(
 
 
 V3dDftParameters = typing.TypedDict('V3dDftParameters', {
-    "__STYXTYPE__": typing.Literal["3dDFT"],
+    "@type": typing.Literal["afni.3dDFT"],
     "infile": InputPathType,
     "prefix": str,
     "abs_output": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDFT": v_3d_dft_cargs,
+        "afni.3dDFT": v_3d_dft_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDFT": v_3d_dft_outputs,
+        "afni.3dDFT": v_3d_dft_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def v_3d_dft_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDFT",
+        "@type": "afni.3dDFT",
         "infile": infile,
         "prefix": prefix,
         "abs_output": abs_output,
@@ -241,5 +241,8 @@ __all__ = [
     "V3dDftParameters",
     "V_3D_DFT_METADATA",
     "v_3d_dft",
+    "v_3d_dft_cargs",
+    "v_3d_dft_execute",
+    "v_3d_dft_outputs",
     "v_3d_dft_params",
 ]

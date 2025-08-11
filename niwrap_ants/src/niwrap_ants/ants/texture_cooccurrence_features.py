@@ -14,7 +14,7 @@ TEXTURE_COOCCURRENCE_FEATURES_METADATA = Metadata(
 
 
 TextureCooccurrenceFeaturesParameters = typing.TypedDict('TextureCooccurrenceFeaturesParameters', {
-    "__STYXTYPE__": typing.Literal["TextureCooccurrenceFeatures"],
+    "@type": typing.Literal["ants.TextureCooccurrenceFeatures"],
     "image_dimension": int,
     "input_image": InputPathType,
     "number_of_bins_per_axis": typing.NotRequired[int | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "TextureCooccurrenceFeatures": texture_cooccurrence_features_cargs,
+        "ants.TextureCooccurrenceFeatures": texture_cooccurrence_features_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "TextureCooccurrenceFeatures": texture_cooccurrence_features_outputs,
+        "ants.TextureCooccurrenceFeatures": texture_cooccurrence_features_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def texture_cooccurrence_features_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "TextureCooccurrenceFeatures",
+        "@type": "ants.TextureCooccurrenceFeatures",
         "image_dimension": image_dimension,
         "input_image": input_image,
     }
@@ -225,5 +225,8 @@ __all__ = [
     "TextureCooccurrenceFeaturesOutputs",
     "TextureCooccurrenceFeaturesParameters",
     "texture_cooccurrence_features",
+    "texture_cooccurrence_features_cargs",
+    "texture_cooccurrence_features_execute",
+    "texture_cooccurrence_features_outputs",
     "texture_cooccurrence_features_params",
 ]

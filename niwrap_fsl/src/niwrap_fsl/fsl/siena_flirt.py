@@ -14,7 +14,7 @@ SIENA_FLIRT_METADATA = Metadata(
 
 
 SienaFlirtParameters = typing.TypedDict('SienaFlirtParameters', {
-    "__STYXTYPE__": typing.Literal["siena_flirt"],
+    "@type": typing.Literal["fsl.siena_flirt"],
     "input1_fileroot": str,
     "input2_fileroot": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "siena_flirt": siena_flirt_cargs,
+        "fsl.siena_flirt": siena_flirt_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "siena_flirt": siena_flirt_outputs,
+        "fsl.siena_flirt": siena_flirt_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def siena_flirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "siena_flirt",
+        "@type": "fsl.siena_flirt",
         "input1_fileroot": input1_fileroot,
         "input2_fileroot": input2_fileroot,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "SienaFlirtOutputs",
     "SienaFlirtParameters",
     "siena_flirt",
+    "siena_flirt_cargs",
+    "siena_flirt_execute",
+    "siena_flirt_outputs",
     "siena_flirt_params",
 ]

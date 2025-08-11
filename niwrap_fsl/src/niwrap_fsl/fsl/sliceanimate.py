@@ -14,7 +14,7 @@ SLICEANIMATE_METADATA = Metadata(
 
 
 SliceanimateParameters = typing.TypedDict('SliceanimateParameters', {
-    "__STYXTYPE__": typing.Literal["sliceanimate"],
+    "@type": typing.Literal["fsl.sliceanimate"],
     "output_file": str,
     "input_files": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sliceanimate": sliceanimate_cargs,
+        "fsl.sliceanimate": sliceanimate_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sliceanimate": sliceanimate_outputs,
+        "fsl.sliceanimate": sliceanimate_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def sliceanimate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sliceanimate",
+        "@type": "fsl.sliceanimate",
         "output_file": output_file,
         "input_files": input_files,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "SliceanimateOutputs",
     "SliceanimateParameters",
     "sliceanimate",
+    "sliceanimate_cargs",
+    "sliceanimate_execute",
+    "sliceanimate_outputs",
     "sliceanimate_params",
 ]

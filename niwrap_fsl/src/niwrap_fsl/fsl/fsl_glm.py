@@ -14,7 +14,7 @@ FSL_GLM_METADATA = Metadata(
 
 
 FslGlmParameters = typing.TypedDict('FslGlmParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_glm"],
+    "@type": typing.Literal["fsl.fsl_glm"],
     "input_file": InputPathType,
     "design_matrix": InputPathType,
     "output_file": typing.NotRequired[str | None],
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_glm": fsl_glm_cargs,
+        "fsl.fsl_glm": fsl_glm_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_glm": fsl_glm_outputs,
+        "fsl.fsl_glm": fsl_glm_outputs,
     }.get(t)
 
 
@@ -174,7 +174,7 @@ def fsl_glm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_glm",
+        "@type": "fsl.fsl_glm",
         "input_file": input_file,
         "design_matrix": design_matrix,
         "design_norm_flag": design_norm_flag,
@@ -506,5 +506,8 @@ __all__ = [
     "FslGlmOutputs",
     "FslGlmParameters",
     "fsl_glm",
+    "fsl_glm_cargs",
+    "fsl_glm_execute",
+    "fsl_glm_outputs",
     "fsl_glm_params",
 ]

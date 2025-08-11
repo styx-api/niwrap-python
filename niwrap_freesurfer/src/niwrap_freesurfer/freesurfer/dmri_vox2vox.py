@@ -14,7 +14,7 @@ DMRI_VOX2VOX_METADATA = Metadata(
 
 
 DmriVox2voxParameters = typing.TypedDict('DmriVox2voxParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_vox2vox"],
+    "@type": typing.Literal["freesurfer.dmri_vox2vox"],
     "input_files": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_files": list[str],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_vox2vox": dmri_vox2vox_cargs,
+        "freesurfer.dmri_vox2vox": dmri_vox2vox_cargs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def dmri_vox2vox_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_vox2vox",
+        "@type": "freesurfer.dmri_vox2vox",
         "input_files": input_files,
         "output_files": output_files,
         "input_reference": input_reference,
@@ -305,5 +305,8 @@ __all__ = [
     "DmriVox2voxOutputs",
     "DmriVox2voxParameters",
     "dmri_vox2vox",
+    "dmri_vox2vox_cargs",
+    "dmri_vox2vox_execute",
+    "dmri_vox2vox_outputs",
     "dmri_vox2vox_params",
 ]

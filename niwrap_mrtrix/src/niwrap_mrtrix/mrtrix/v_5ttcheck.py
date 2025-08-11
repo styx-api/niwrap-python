@@ -14,14 +14,14 @@ V_5TTCHECK_METADATA = Metadata(
 
 
 V5ttcheckConfigParameters = typing.TypedDict('V5ttcheckConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.5ttcheck.config"],
     "key": str,
     "value": str,
 })
 
 
 V5ttcheckParameters = typing.TypedDict('V5ttcheckParameters', {
-    "__STYXTYPE__": typing.Literal["5ttcheck"],
+    "@type": typing.Literal["mrtrix.5ttcheck"],
     "voxels": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "5ttcheck": v_5ttcheck_cargs,
-        "config": v_5ttcheck_config_cargs,
+        "mrtrix.5ttcheck": v_5ttcheck_cargs,
+        "mrtrix.5ttcheck.config": v_5ttcheck_config_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v_5ttcheck_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.5ttcheck.config",
         "key": key,
         "value": value,
     }
@@ -151,7 +151,7 @@ def v_5ttcheck_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "5ttcheck",
+        "@type": "mrtrix.5ttcheck",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -203,7 +203,7 @@ def v_5ttcheck_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -332,6 +332,10 @@ __all__ = [
     "V5ttcheckParameters",
     "V_5TTCHECK_METADATA",
     "v_5ttcheck",
+    "v_5ttcheck_cargs",
+    "v_5ttcheck_config_cargs",
     "v_5ttcheck_config_params",
+    "v_5ttcheck_execute",
+    "v_5ttcheck_outputs",
     "v_5ttcheck_params",
 ]

@@ -14,7 +14,7 @@ TRAC_ALL_METADATA = Metadata(
 
 
 TracAllParameters = typing.TypedDict('TracAllParameters', {
-    "__STYXTYPE__": typing.Literal["trac-all"],
+    "@type": typing.Literal["freesurfer.trac-all"],
     "config_file": typing.NotRequired[InputPathType | None],
     "subject_name": typing.NotRequired[str | None],
     "dicom_file": typing.NotRequired[InputPathType | None],
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "trac-all": trac_all_cargs,
+        "freesurfer.trac-all": trac_all_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "trac-all": trac_all_outputs,
+        "freesurfer.trac-all": trac_all_outputs,
     }.get(t)
 
 
@@ -178,7 +178,7 @@ def trac_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "trac-all",
+        "@type": "freesurfer.trac-all",
         "pre_processing": pre_processing,
         "bedpost": bedpost,
         "pathway_reconstruction": pathway_reconstruction,
@@ -517,5 +517,8 @@ __all__ = [
     "TracAllOutputs",
     "TracAllParameters",
     "trac_all",
+    "trac_all_cargs",
+    "trac_all_execute",
+    "trac_all_outputs",
     "trac_all_params",
 ]

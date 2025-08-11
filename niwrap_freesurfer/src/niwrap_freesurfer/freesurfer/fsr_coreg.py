@@ -14,7 +14,7 @@ FSR_COREG_METADATA = Metadata(
 
 
 FsrCoregParameters = typing.TypedDict('FsrCoregParameters', {
-    "__STYXTYPE__": typing.Literal["fsr-coreg"],
+    "@type": typing.Literal["freesurfer.fsr-coreg"],
     "import_dir": str,
     "reference_mode": str,
     "num_threads": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsr-coreg": fsr_coreg_cargs,
+        "freesurfer.fsr-coreg": fsr_coreg_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsr-coreg": fsr_coreg_outputs,
+        "freesurfer.fsr-coreg": fsr_coreg_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def fsr_coreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsr-coreg",
+        "@type": "freesurfer.fsr-coreg",
         "import_dir": import_dir,
         "reference_mode": reference_mode,
         "force_update": force_update,
@@ -239,5 +239,8 @@ __all__ = [
     "FsrCoregOutputs",
     "FsrCoregParameters",
     "fsr_coreg",
+    "fsr_coreg_cargs",
+    "fsr_coreg_execute",
+    "fsr_coreg_outputs",
     "fsr_coreg_params",
 ]

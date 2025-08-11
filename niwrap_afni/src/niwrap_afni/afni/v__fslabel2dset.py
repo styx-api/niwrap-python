@@ -14,7 +14,7 @@ V__FSLABEL2DSET_METADATA = Metadata(
 
 
 VFslabel2dsetParameters = typing.TypedDict('VFslabel2dsetParameters', {
-    "__STYXTYPE__": typing.Literal["@FSlabel2dset"],
+    "@type": typing.Literal["afni.@FSlabel2dset"],
     "fs_label_file": InputPathType,
     "val": typing.NotRequired[float | None],
     "help": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@FSlabel2dset": v__fslabel2dset_cargs,
+        "afni.@FSlabel2dset": v__fslabel2dset_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v__fslabel2dset_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@FSlabel2dset",
+        "@type": "afni.@FSlabel2dset",
         "fs_label_file": fs_label_file,
         "help": help_,
         "echo": echo,
@@ -213,5 +213,8 @@ __all__ = [
     "VFslabel2dsetParameters",
     "V__FSLABEL2DSET_METADATA",
     "v__fslabel2dset",
+    "v__fslabel2dset_cargs",
+    "v__fslabel2dset_execute",
+    "v__fslabel2dset_outputs",
     "v__fslabel2dset_params",
 ]

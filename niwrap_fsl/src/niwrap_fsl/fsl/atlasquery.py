@@ -14,7 +14,7 @@ ATLASQUERY_METADATA = Metadata(
 
 
 AtlasqueryParameters = typing.TypedDict('AtlasqueryParameters', {
-    "__STYXTYPE__": typing.Literal["atlasquery"],
+    "@type": typing.Literal["fsl.atlasquery"],
     "dumpatlases_flag": bool,
     "atlas": typing.NotRequired[str | None],
     "coord": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "atlasquery": atlasquery_cargs,
+        "fsl.atlasquery": atlasquery_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def atlasquery_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "atlasquery",
+        "@type": "fsl.atlasquery",
         "dumpatlases_flag": dumpatlases_flag,
         "verbose_flag": verbose_flag,
         "help_flag": help_flag,
@@ -226,5 +226,8 @@ __all__ = [
     "AtlasqueryOutputs",
     "AtlasqueryParameters",
     "atlasquery",
+    "atlasquery_cargs",
+    "atlasquery_execute",
+    "atlasquery_outputs",
     "atlasquery_params",
 ]

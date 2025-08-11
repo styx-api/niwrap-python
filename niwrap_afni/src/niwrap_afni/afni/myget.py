@@ -14,7 +14,7 @@ MYGET_METADATA = Metadata(
 
 
 MygetParameters = typing.TypedDict('MygetParameters', {
-    "__STYXTYPE__": typing.Literal["myget"],
+    "@type": typing.Literal["afni.myget"],
     "protocol_version": typing.NotRequired[typing.Literal["-1", "-1.1"] | None],
     "url": str,
     "output_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "myget": myget_cargs,
+        "afni.myget": myget_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "myget": myget_outputs,
+        "afni.myget": myget_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def myget_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "myget",
+        "@type": "afni.myget",
         "url": url,
         "output_file": output_file,
     }
@@ -195,5 +195,8 @@ __all__ = [
     "MygetOutputs",
     "MygetParameters",
     "myget",
+    "myget_cargs",
+    "myget_execute",
+    "myget_outputs",
     "myget_params",
 ]

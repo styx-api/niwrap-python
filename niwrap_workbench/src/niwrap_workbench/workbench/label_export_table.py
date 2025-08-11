@@ -14,7 +14,7 @@ LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 LabelExportTableParameters = typing.TypedDict('LabelExportTableParameters', {
-    "__STYXTYPE__": typing.Literal["label-export-table"],
+    "@type": typing.Literal["workbench.label-export-table"],
     "label_in": InputPathType,
     "table_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-export-table": label_export_table_cargs,
+        "workbench.label-export-table": label_export_table_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def label_export_table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-export-table",
+        "@type": "workbench.label-export-table",
         "label_in": label_in,
         "table_out": table_out,
     }
@@ -183,5 +183,8 @@ __all__ = [
     "LabelExportTableOutputs",
     "LabelExportTableParameters",
     "label_export_table",
+    "label_export_table_cargs",
+    "label_export_table_execute",
+    "label_export_table_outputs",
     "label_export_table_params",
 ]

@@ -14,7 +14,7 @@ SLICESDIR_METADATA = Metadata(
 
 
 SlicesdirParameters = typing.TypedDict('SlicesdirParameters', {
-    "__STYXTYPE__": typing.Literal["slicesdir"],
+    "@type": typing.Literal["fsl.slicesdir"],
     "flag_filelist": bool,
     "outline_image": typing.NotRequired[InputPathType | None],
     "edge_threshold": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slicesdir": slicesdir_cargs,
+        "fsl.slicesdir": slicesdir_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def slicesdir_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slicesdir",
+        "@type": "fsl.slicesdir",
         "flag_filelist": flag_filelist,
         "slice_option": slice_option,
         "filelist": filelist,
@@ -220,5 +220,8 @@ __all__ = [
     "SlicesdirOutputs",
     "SlicesdirParameters",
     "slicesdir",
+    "slicesdir_cargs",
+    "slicesdir_execute",
+    "slicesdir_outputs",
     "slicesdir_params",
 ]

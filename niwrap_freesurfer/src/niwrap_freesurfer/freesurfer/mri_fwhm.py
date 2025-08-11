@@ -14,7 +14,7 @@ MRI_FWHM_METADATA = Metadata(
 
 
 MriFwhmParameters = typing.TypedDict('MriFwhmParameters', {
-    "__STYXTYPE__": typing.Literal["mri_fwhm"],
+    "@type": typing.Literal["freesurfer.mri_fwhm"],
     "inputvol": InputPathType,
     "outputvol": str,
     "save_detrended": bool,
@@ -65,7 +65,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_fwhm": mri_fwhm_cargs,
+        "freesurfer.mri_fwhm": mri_fwhm_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_fwhm": mri_fwhm_outputs,
+        "freesurfer.mri_fwhm": mri_fwhm_outputs,
     }.get(t)
 
 
@@ -189,7 +189,7 @@ def mri_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_fwhm",
+        "@type": "freesurfer.mri_fwhm",
         "inputvol": inputvol,
         "outputvol": outputvol,
         "save_detrended": save_detrended,
@@ -599,5 +599,8 @@ __all__ = [
     "MriFwhmOutputs",
     "MriFwhmParameters",
     "mri_fwhm",
+    "mri_fwhm_cargs",
+    "mri_fwhm_execute",
+    "mri_fwhm_outputs",
     "mri_fwhm_params",
 ]

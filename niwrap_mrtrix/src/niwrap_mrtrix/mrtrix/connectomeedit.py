@@ -14,14 +14,14 @@ CONNECTOMEEDIT_METADATA = Metadata(
 
 
 ConnectomeeditConfigParameters = typing.TypedDict('ConnectomeeditConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.connectomeedit.config"],
     "key": str,
     "value": str,
 })
 
 
 ConnectomeeditParameters = typing.TypedDict('ConnectomeeditParameters', {
-    "__STYXTYPE__": typing.Literal["connectomeedit"],
+    "@type": typing.Literal["mrtrix.connectomeedit"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "connectomeedit": connectomeedit_cargs,
-        "config": connectomeedit_config_cargs,
+        "mrtrix.connectomeedit": connectomeedit_cargs,
+        "mrtrix.connectomeedit.config": connectomeedit_config_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def connectomeedit_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.connectomeedit.config",
         "key": key,
         "value": value,
     }
@@ -154,7 +154,7 @@ def connectomeedit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "connectomeedit",
+        "@type": "mrtrix.connectomeedit",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -201,7 +201,7 @@ def connectomeedit_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -333,6 +333,10 @@ __all__ = [
     "ConnectomeeditOutputs",
     "ConnectomeeditParameters",
     "connectomeedit",
+    "connectomeedit_cargs",
+    "connectomeedit_config_cargs",
     "connectomeedit_config_params",
+    "connectomeedit_execute",
+    "connectomeedit_outputs",
     "connectomeedit_params",
 ]

@@ -14,7 +14,7 @@ BUILD_AFNI_PY_METADATA = Metadata(
 
 
 BuildAfniPyParameters = typing.TypedDict('BuildAfniPyParameters', {
-    "__STYXTYPE__": typing.Literal["build_afni.py"],
+    "@type": typing.Literal["afni.build_afni.py"],
     "build_root": str,
     "clean_root": typing.NotRequired[str | None],
     "git_branch": typing.NotRequired[str | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "build_afni.py": build_afni_py_cargs,
+        "afni.build_afni.py": build_afni_py_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "build_afni.py": build_afni_py_outputs,
+        "afni.build_afni.py": build_afni_py_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def build_afni_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "build_afni.py",
+        "@type": "afni.build_afni.py",
         "build_root": build_root,
         "prep_only": prep_only,
         "help": help_,
@@ -353,5 +353,8 @@ __all__ = [
     "BuildAfniPyOutputs",
     "BuildAfniPyParameters",
     "build_afni_py",
+    "build_afni_py_cargs",
+    "build_afni_py_execute",
+    "build_afni_py_outputs",
     "build_afni_py_params",
 ]

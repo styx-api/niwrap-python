@@ -14,7 +14,7 @@ MRIS_SURFACE_TO_VOL_DISTANCES_METADATA = Metadata(
 
 
 MrisSurfaceToVolDistancesParameters = typing.TypedDict('MrisSurfaceToVolDistancesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_surface_to_vol_distances"],
+    "@type": typing.Literal["freesurfer.mris_surface_to_vol_distances"],
     "average_subject": str,
     "hemisphere": str,
     "subjects": list[str],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_surface_to_vol_distances": mris_surface_to_vol_distances_cargs,
+        "freesurfer.mris_surface_to_vol_distances": mris_surface_to_vol_distances_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_surface_to_vol_distances": mris_surface_to_vol_distances_outputs,
+        "freesurfer.mris_surface_to_vol_distances": mris_surface_to_vol_distances_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_surface_to_vol_distances_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_surface_to_vol_distances",
+        "@type": "freesurfer.mris_surface_to_vol_distances",
         "average_subject": average_subject,
         "hemisphere": hemisphere,
         "subjects": subjects,
@@ -196,5 +196,8 @@ __all__ = [
     "MrisSurfaceToVolDistancesOutputs",
     "MrisSurfaceToVolDistancesParameters",
     "mris_surface_to_vol_distances",
+    "mris_surface_to_vol_distances_cargs",
+    "mris_surface_to_vol_distances_execute",
+    "mris_surface_to_vol_distances_outputs",
     "mris_surface_to_vol_distances_params",
 ]

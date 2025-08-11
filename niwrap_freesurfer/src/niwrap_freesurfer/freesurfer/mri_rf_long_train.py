@@ -14,7 +14,7 @@ MRI_RF_LONG_TRAIN_METADATA = Metadata(
 
 
 MriRfLongTrainParameters = typing.TypedDict('MriRfLongTrainParameters', {
-    "__STYXTYPE__": typing.Literal["mri_rf_long_train"],
+    "@type": typing.Literal["freesurfer.mri_rf_long_train"],
     "seg_dir": str,
     "xform": str,
     "mask": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_rf_long_train": mri_rf_long_train_cargs,
+        "freesurfer.mri_rf_long_train": mri_rf_long_train_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_rf_long_train": mri_rf_long_train_outputs,
+        "freesurfer.mri_rf_long_train": mri_rf_long_train_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def mri_rf_long_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_rf_long_train",
+        "@type": "freesurfer.mri_rf_long_train",
         "seg_dir": seg_dir,
         "xform": xform,
         "check": check,
@@ -267,5 +267,8 @@ __all__ = [
     "MriRfLongTrainOutputs",
     "MriRfLongTrainParameters",
     "mri_rf_long_train",
+    "mri_rf_long_train_cargs",
+    "mri_rf_long_train_execute",
+    "mri_rf_long_train_outputs",
     "mri_rf_long_train_params",
 ]

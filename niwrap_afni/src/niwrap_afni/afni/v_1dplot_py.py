@@ -14,7 +14,7 @@ V_1DPLOT_PY_METADATA = Metadata(
 
 
 V1dplotPyParameters = typing.TypedDict('V1dplotPyParameters', {
-    "__STYXTYPE__": typing.Literal["1dplot.py"],
+    "@type": typing.Literal["afni.1dplot.py"],
     "infiles": list[InputPathType],
     "prefix": str,
     "help": bool,
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dplot.py": v_1dplot_py_cargs,
+        "afni.1dplot.py": v_1dplot_py_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dplot.py": v_1dplot_py_outputs,
+        "afni.1dplot.py": v_1dplot_py_outputs,
     }.get(t)
 
 
@@ -178,7 +178,7 @@ def v_1dplot_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dplot.py",
+        "@type": "afni.1dplot.py",
         "infiles": infiles,
         "prefix": prefix,
         "help": help_,
@@ -574,5 +574,8 @@ __all__ = [
     "V1dplotPyParameters",
     "V_1DPLOT_PY_METADATA",
     "v_1dplot_py",
+    "v_1dplot_py_cargs",
+    "v_1dplot_py_execute",
+    "v_1dplot_py_outputs",
     "v_1dplot_py_params",
 ]

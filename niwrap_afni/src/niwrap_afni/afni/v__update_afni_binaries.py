@@ -14,7 +14,7 @@ V__UPDATE_AFNI_BINARIES_METADATA = Metadata(
 
 
 VUpdateAfniBinariesParameters = typing.TypedDict('VUpdateAfniBinariesParameters', {
-    "__STYXTYPE__": typing.Literal["@update.afni.binaries"],
+    "@type": typing.Literal["afni.@update.afni.binaries"],
     "defaults_flag": bool,
     "help_flag": bool,
     "help_sys_progs_flag": bool,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@update.afni.binaries": v__update_afni_binaries_cargs,
+        "afni.@update.afni.binaries": v__update_afni_binaries_cargs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def v__update_afni_binaries_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@update.afni.binaries",
+        "@type": "afni.@update.afni.binaries",
         "defaults_flag": defaults_flag,
         "help_flag": help_flag,
         "help_sys_progs_flag": help_sys_progs_flag,
@@ -406,5 +406,8 @@ __all__ = [
     "VUpdateAfniBinariesParameters",
     "V__UPDATE_AFNI_BINARIES_METADATA",
     "v__update_afni_binaries",
+    "v__update_afni_binaries_cargs",
+    "v__update_afni_binaries_execute",
+    "v__update_afni_binaries_outputs",
     "v__update_afni_binaries_params",
 ]

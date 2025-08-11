@@ -14,7 +14,7 @@ APPLY_MORPH_METADATA = Metadata(
 
 
 ApplyMorphParameters = typing.TypedDict('ApplyMorphParameters', {
-    "__STYXTYPE__": typing.Literal["applyMorph"],
+    "@type": typing.Literal["freesurfer.applyMorph"],
     "inputs": list[InputPathType],
     "template": InputPathType,
     "transform": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "applyMorph": apply_morph_cargs,
+        "freesurfer.applyMorph": apply_morph_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def apply_morph_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "applyMorph",
+        "@type": "freesurfer.applyMorph",
         "inputs": inputs,
         "template": template,
         "transform": transform,
@@ -216,5 +216,8 @@ __all__ = [
     "ApplyMorphOutputs",
     "ApplyMorphParameters",
     "apply_morph",
+    "apply_morph_cargs",
+    "apply_morph_execute",
+    "apply_morph_outputs",
     "apply_morph_params",
 ]

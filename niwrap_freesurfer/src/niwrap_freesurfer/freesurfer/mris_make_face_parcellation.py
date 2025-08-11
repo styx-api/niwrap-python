@@ -14,7 +14,7 @@ MRIS_MAKE_FACE_PARCELLATION_METADATA = Metadata(
 
 
 MrisMakeFaceParcellationParameters = typing.TypedDict('MrisMakeFaceParcellationParameters', {
-    "__STYXTYPE__": typing.Literal["mris_make_face_parcellation"],
+    "@type": typing.Literal["freesurfer.mris_make_face_parcellation"],
     "input_surface": InputPathType,
     "ico_file": InputPathType,
     "output_annot": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_make_face_parcellation": mris_make_face_parcellation_cargs,
+        "freesurfer.mris_make_face_parcellation": mris_make_face_parcellation_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_make_face_parcellation": mris_make_face_parcellation_outputs,
+        "freesurfer.mris_make_face_parcellation": mris_make_face_parcellation_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_make_face_parcellation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_make_face_parcellation",
+        "@type": "freesurfer.mris_make_face_parcellation",
         "input_surface": input_surface,
         "ico_file": ico_file,
         "output_annot": output_annot,
@@ -201,5 +201,8 @@ __all__ = [
     "MrisMakeFaceParcellationOutputs",
     "MrisMakeFaceParcellationParameters",
     "mris_make_face_parcellation",
+    "mris_make_face_parcellation_cargs",
+    "mris_make_face_parcellation_execute",
+    "mris_make_face_parcellation_outputs",
     "mris_make_face_parcellation_params",
 ]

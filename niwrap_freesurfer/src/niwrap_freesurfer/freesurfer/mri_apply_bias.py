@@ -14,7 +14,7 @@ MRI_APPLY_BIAS_METADATA = Metadata(
 
 
 MriApplyBiasParameters = typing.TypedDict('MriApplyBiasParameters', {
-    "__STYXTYPE__": typing.Literal["mri_apply_bias"],
+    "@type": typing.Literal["freesurfer.mri_apply_bias"],
     "input_volume": InputPathType,
     "bias_volume": InputPathType,
     "output_volume": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_apply_bias": mri_apply_bias_cargs,
+        "freesurfer.mri_apply_bias": mri_apply_bias_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_apply_bias": mri_apply_bias_outputs,
+        "freesurfer.mri_apply_bias": mri_apply_bias_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_apply_bias_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_apply_bias",
+        "@type": "freesurfer.mri_apply_bias",
         "input_volume": input_volume,
         "bias_volume": bias_volume,
         "output_volume": output_volume,
@@ -190,5 +190,8 @@ __all__ = [
     "MriApplyBiasOutputs",
     "MriApplyBiasParameters",
     "mri_apply_bias",
+    "mri_apply_bias_cargs",
+    "mri_apply_bias_execute",
+    "mri_apply_bias_outputs",
     "mri_apply_bias_params",
 ]

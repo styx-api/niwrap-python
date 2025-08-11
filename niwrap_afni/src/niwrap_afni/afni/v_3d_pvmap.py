@@ -14,7 +14,7 @@ V_3D_PVMAP_METADATA = Metadata(
 
 
 V3dPvmapParameters = typing.TypedDict('V3dPvmapParameters', {
-    "__STYXTYPE__": typing.Literal["3dPVmap"],
+    "@type": typing.Literal["afni.3dPVmap"],
     "prefix": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dPVmap": v_3d_pvmap_cargs,
+        "afni.3dPVmap": v_3d_pvmap_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dPVmap": v_3d_pvmap_outputs,
+        "afni.3dPVmap": v_3d_pvmap_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v_3d_pvmap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dPVmap",
+        "@type": "afni.3dPVmap",
         "automask": automask,
         "inputdataset": inputdataset,
     }
@@ -217,5 +217,8 @@ __all__ = [
     "V3dPvmapParameters",
     "V_3D_PVMAP_METADATA",
     "v_3d_pvmap",
+    "v_3d_pvmap_cargs",
+    "v_3d_pvmap_execute",
+    "v_3d_pvmap_outputs",
     "v_3d_pvmap_params",
 ]

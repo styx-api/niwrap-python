@@ -14,7 +14,7 @@ V__ELECTRO_GRID_METADATA = Metadata(
 
 
 VElectroGridParameters = typing.TypedDict('VElectroGridParameters', {
-    "__STYXTYPE__": typing.Literal["@ElectroGrid"],
+    "@type": typing.Literal["afni.@ElectroGrid"],
     "strip": typing.NotRequired[int | None],
     "grid": typing.NotRequired[list[int] | None],
     "prefix": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ElectroGrid": v__electro_grid_cargs,
+        "afni.@ElectroGrid": v__electro_grid_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ElectroGrid": v__electro_grid_outputs,
+        "afni.@ElectroGrid": v__electro_grid_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def v__electro_grid_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ElectroGrid",
+        "@type": "afni.@ElectroGrid",
         "with_markers": with_markers,
         "echo": echo,
     }
@@ -240,5 +240,8 @@ __all__ = [
     "VElectroGridParameters",
     "V__ELECTRO_GRID_METADATA",
     "v__electro_grid",
+    "v__electro_grid_cargs",
+    "v__electro_grid_execute",
+    "v__electro_grid_outputs",
     "v__electro_grid_params",
 ]

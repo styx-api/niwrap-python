@@ -14,7 +14,7 @@ R_PKGS_INSTALL_METADATA = Metadata(
 
 
 RPkgsInstallParameters = typing.TypedDict('RPkgsInstallParameters', {
-    "__STYXTYPE__": typing.Literal["rPkgsInstall"],
+    "@type": typing.Literal["afni.rPkgsInstall"],
     "packages": str,
     "download_site": typing.NotRequired[str | None],
     "check": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rPkgsInstall": r_pkgs_install_cargs,
+        "afni.rPkgsInstall": r_pkgs_install_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "rPkgsInstall": r_pkgs_install_outputs,
+        "afni.rPkgsInstall": r_pkgs_install_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def r_pkgs_install_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rPkgsInstall",
+        "@type": "afni.rPkgsInstall",
         "packages": packages,
         "check": check,
         "update": update_,
@@ -223,5 +223,8 @@ __all__ = [
     "RPkgsInstallParameters",
     "R_PKGS_INSTALL_METADATA",
     "r_pkgs_install",
+    "r_pkgs_install_cargs",
+    "r_pkgs_install_execute",
+    "r_pkgs_install_outputs",
     "r_pkgs_install_params",
 ]

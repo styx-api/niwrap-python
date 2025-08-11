@@ -14,7 +14,7 @@ MRI_FSLMAT_TO_LTA_METADATA = Metadata(
 
 
 MriFslmatToLtaParameters = typing.TypedDict('MriFslmatToLtaParameters', {
-    "__STYXTYPE__": typing.Literal["mri_fslmat_to_lta"],
+    "@type": typing.Literal["freesurfer.mri_fslmat_to_lta"],
     "src_vol": InputPathType,
     "target_vol": InputPathType,
     "fslmat_file": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_fslmat_to_lta": mri_fslmat_to_lta_cargs,
+        "freesurfer.mri_fslmat_to_lta": mri_fslmat_to_lta_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_fslmat_to_lta": mri_fslmat_to_lta_outputs,
+        "freesurfer.mri_fslmat_to_lta": mri_fslmat_to_lta_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mri_fslmat_to_lta_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_fslmat_to_lta",
+        "@type": "freesurfer.mri_fslmat_to_lta",
         "src_vol": src_vol,
         "target_vol": target_vol,
         "fslmat_file": fslmat_file,
@@ -199,5 +199,8 @@ __all__ = [
     "MriFslmatToLtaOutputs",
     "MriFslmatToLtaParameters",
     "mri_fslmat_to_lta",
+    "mri_fslmat_to_lta_cargs",
+    "mri_fslmat_to_lta_execute",
+    "mri_fslmat_to_lta_outputs",
     "mri_fslmat_to_lta_params",
 ]

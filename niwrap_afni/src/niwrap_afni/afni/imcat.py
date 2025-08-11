@@ -14,7 +14,7 @@ IMCAT_METADATA = Metadata(
 
 
 ImcatParameters = typing.TypedDict('ImcatParameters', {
-    "__STYXTYPE__": typing.Literal["imcat"],
+    "@type": typing.Literal["afni.imcat"],
     "input_files": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
     "scale_pixels": typing.NotRequired[InputPathType | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imcat": imcat_cargs,
+        "afni.imcat": imcat_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imcat": imcat_outputs,
+        "afni.imcat": imcat_outputs,
     }.get(t)
 
 
@@ -166,7 +166,7 @@ def imcat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imcat",
+        "@type": "afni.imcat",
         "input_files": input_files,
         "scale_intensity": scale_intensity,
         "rgb_out": rgb_out,
@@ -494,5 +494,8 @@ __all__ = [
     "ImcatOutputs",
     "ImcatParameters",
     "imcat",
+    "imcat_cargs",
+    "imcat_execute",
+    "imcat_outputs",
     "imcat_params",
 ]

@@ -14,7 +14,7 @@ V_3D_SEG_METADATA = Metadata(
 
 
 V3dSegParameters = typing.TypedDict('V3dSegParameters', {
-    "__STYXTYPE__": typing.Literal["3dSeg"],
+    "@type": typing.Literal["afni.3dSeg"],
     "anat": InputPathType,
     "mask": typing.NotRequired[str | None],
     "blur_meth": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSeg": v_3d_seg_cargs,
+        "afni.3dSeg": v_3d_seg_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSeg": v_3d_seg_outputs,
+        "afni.3dSeg": v_3d_seg_outputs,
     }.get(t)
 
 
@@ -141,7 +141,7 @@ def v_3d_seg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSeg",
+        "@type": "afni.3dSeg",
         "anat": anat,
         "overwrite": overwrite,
     }
@@ -433,5 +433,8 @@ __all__ = [
     "V3dSegParameters",
     "V_3D_SEG_METADATA",
     "v_3d_seg",
+    "v_3d_seg_cargs",
+    "v_3d_seg_execute",
+    "v_3d_seg_outputs",
     "v_3d_seg_params",
 ]

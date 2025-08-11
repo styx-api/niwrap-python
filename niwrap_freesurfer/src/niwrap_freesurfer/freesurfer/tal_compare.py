@@ -14,7 +14,7 @@ TAL_COMPARE_METADATA = Metadata(
 
 
 TalCompareParameters = typing.TypedDict('TalCompareParameters', {
-    "__STYXTYPE__": typing.Literal["tal_compare"],
+    "@type": typing.Literal["freesurfer.tal_compare"],
     "ref_file": InputPathType,
     "moving_file": InputPathType,
     "output_file": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tal_compare": tal_compare_cargs,
+        "freesurfer.tal_compare": tal_compare_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tal_compare": tal_compare_outputs,
+        "freesurfer.tal_compare": tal_compare_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def tal_compare_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tal_compare",
+        "@type": "freesurfer.tal_compare",
         "ref_file": ref_file,
         "moving_file": moving_file,
         "output_file": output_file,
@@ -197,5 +197,8 @@ __all__ = [
     "TalCompareOutputs",
     "TalCompareParameters",
     "tal_compare",
+    "tal_compare_cargs",
+    "tal_compare_execute",
+    "tal_compare_outputs",
     "tal_compare_params",
 ]

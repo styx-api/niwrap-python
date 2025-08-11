@@ -14,7 +14,7 @@ MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 
 
 MakeAverageSurfaceParameters = typing.TypedDict('MakeAverageSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["make_average_surface"],
+    "@type": typing.Literal["freesurfer.make_average_surface"],
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "average_subject_name": typing.NotRequired[str | None],
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_average_surface": make_average_surface_cargs,
+        "freesurfer.make_average_surface": make_average_surface_cargs,
     }.get(t)
 
 
@@ -134,7 +134,7 @@ def make_average_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_average_surface",
+        "@type": "freesurfer.make_average_surface",
         "subjects": subjects,
         "left_hemi": left_hemi,
         "right_hemi": right_hemi,
@@ -395,5 +395,8 @@ __all__ = [
     "MakeAverageSurfaceOutputs",
     "MakeAverageSurfaceParameters",
     "make_average_surface",
+    "make_average_surface_cargs",
+    "make_average_surface_execute",
+    "make_average_surface_outputs",
     "make_average_surface_params",
 ]

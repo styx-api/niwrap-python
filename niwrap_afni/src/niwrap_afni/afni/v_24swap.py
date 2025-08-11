@@ -14,7 +14,7 @@ V_24SWAP_METADATA = Metadata(
 
 
 V24swapParameters = typing.TypedDict('V24swapParameters', {
-    "__STYXTYPE__": typing.Literal["24swap"],
+    "@type": typing.Literal["afni.24swap"],
     "quiet": bool,
     "pattern": typing.NotRequired[str | None],
     "input_files": list[InputPathType],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "24swap": v_24swap_cargs,
+        "afni.24swap": v_24swap_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def v_24swap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "24swap",
+        "@type": "afni.24swap",
         "quiet": quiet,
         "input_files": input_files,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "V24swapParameters",
     "V_24SWAP_METADATA",
     "v_24swap",
+    "v_24swap_cargs",
+    "v_24swap_execute",
+    "v_24swap_outputs",
     "v_24swap_params",
 ]

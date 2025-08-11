@@ -14,7 +14,7 @@ V_3D_PAR2_AFNI_METADATA = Metadata(
 
 
 V3dPar2AfniParameters = typing.TypedDict('V3dPar2AfniParameters', {
-    "__STYXTYPE__": typing.Literal["3dPAR2AFNI"],
+    "@type": typing.Literal["afni.3dPAR2AFNI"],
     "input_file": InputPathType,
     "skip_outliers_test": bool,
     "output_nifti": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dPAR2AFNI": v_3d_par2_afni_cargs,
+        "afni.3dPAR2AFNI": v_3d_par2_afni_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dPAR2AFNI": v_3d_par2_afni_outputs,
+        "afni.3dPAR2AFNI": v_3d_par2_afni_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def v_3d_par2_afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dPAR2AFNI",
+        "@type": "afni.3dPAR2AFNI",
         "input_file": input_file,
         "skip_outliers_test": skip_outliers_test,
         "output_nifti": output_nifti,
@@ -271,5 +271,8 @@ __all__ = [
     "V3dPar2AfniParameters",
     "V_3D_PAR2_AFNI_METADATA",
     "v_3d_par2_afni",
+    "v_3d_par2_afni_cargs",
+    "v_3d_par2_afni_execute",
+    "v_3d_par2_afni_outputs",
     "v_3d_par2_afni_params",
 ]

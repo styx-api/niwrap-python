@@ -14,7 +14,7 @@ MRI_GDFGLM_METADATA = Metadata(
 
 
 MriGdfglmParameters = typing.TypedDict('MriGdfglmParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gdfglm"],
+    "@type": typing.Literal["freesurfer.mri_gdfglm"],
     "inputs": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gdfglm": mri_gdfglm_cargs,
+        "freesurfer.mri_gdfglm": mri_gdfglm_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_gdfglm": mri_gdfglm_outputs,
+        "freesurfer.mri_gdfglm": mri_gdfglm_outputs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def mri_gdfglm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gdfglm",
+        "@type": "freesurfer.mri_gdfglm",
     }
     if inputs is not None:
         params["inputs"] = inputs
@@ -177,5 +177,8 @@ __all__ = [
     "MriGdfglmOutputs",
     "MriGdfglmParameters",
     "mri_gdfglm",
+    "mri_gdfglm_cargs",
+    "mri_gdfglm_execute",
+    "mri_gdfglm_outputs",
     "mri_gdfglm_params",
 ]

@@ -14,14 +14,14 @@ WARPCORRECT_METADATA = Metadata(
 
 
 WarpcorrectConfigParameters = typing.TypedDict('WarpcorrectConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.warpcorrect.config"],
     "key": str,
     "value": str,
 })
 
 
 WarpcorrectParameters = typing.TypedDict('WarpcorrectParameters', {
-    "__STYXTYPE__": typing.Literal["warpcorrect"],
+    "@type": typing.Literal["mrtrix.warpcorrect"],
     "marker": typing.NotRequired[list[float] | None],
     "tolerance": typing.NotRequired[float | None],
     "info": bool,
@@ -49,8 +49,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "warpcorrect": warpcorrect_cargs,
-        "config": warpcorrect_config_cargs,
+        "mrtrix.warpcorrect": warpcorrect_cargs,
+        "mrtrix.warpcorrect.config": warpcorrect_config_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "warpcorrect": warpcorrect_outputs,
+        "mrtrix.warpcorrect": warpcorrect_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def warpcorrect_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.warpcorrect.config",
         "key": key,
         "value": value,
     }
@@ -161,7 +161,7 @@ def warpcorrect_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warpcorrect",
+        "@type": "mrtrix.warpcorrect",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -221,7 +221,7 @@ def warpcorrect_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -363,6 +363,10 @@ __all__ = [
     "WarpcorrectOutputs",
     "WarpcorrectParameters",
     "warpcorrect",
+    "warpcorrect_cargs",
+    "warpcorrect_config_cargs",
     "warpcorrect_config_params",
+    "warpcorrect_execute",
+    "warpcorrect_outputs",
     "warpcorrect_params",
 ]

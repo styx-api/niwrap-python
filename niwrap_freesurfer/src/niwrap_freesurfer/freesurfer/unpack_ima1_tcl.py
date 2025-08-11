@@ -14,7 +14,7 @@ UNPACK_IMA1_TCL_METADATA = Metadata(
 
 
 UnpackIma1TclParameters = typing.TypedDict('UnpackIma1TclParameters', {
-    "__STYXTYPE__": typing.Literal["unpack_ima1.tcl"],
+    "@type": typing.Literal["freesurfer.unpack_ima1.tcl"],
     "input_directory": str,
     "output_directory": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "unpack_ima1.tcl": unpack_ima1_tcl_cargs,
+        "freesurfer.unpack_ima1.tcl": unpack_ima1_tcl_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "unpack_ima1.tcl": unpack_ima1_tcl_outputs,
+        "freesurfer.unpack_ima1.tcl": unpack_ima1_tcl_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def unpack_ima1_tcl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "unpack_ima1.tcl",
+        "@type": "freesurfer.unpack_ima1.tcl",
         "input_directory": input_directory,
         "output_directory": output_directory,
     }
@@ -184,5 +184,8 @@ __all__ = [
     "UnpackIma1TclOutputs",
     "UnpackIma1TclParameters",
     "unpack_ima1_tcl",
+    "unpack_ima1_tcl_cargs",
+    "unpack_ima1_tcl_execute",
+    "unpack_ima1_tcl_outputs",
     "unpack_ima1_tcl_params",
 ]

@@ -14,18 +14,18 @@ ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA = Metadata(
 
 
 AntsApplyTransformsToPointsSingleTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsSingleTransformParameters', {
-    "__STYXTYPE__": typing.Literal["single_transform"],
+    "@type": typing.Literal["ants.antsApplyTransformsToPoints.single_transform"],
 })
 
 
 AntsApplyTransformsToPointsInverseTransformParameters = typing.TypedDict('AntsApplyTransformsToPointsInverseTransformParameters', {
-    "__STYXTYPE__": typing.Literal["inverse_transform"],
+    "@type": typing.Literal["ants.antsApplyTransformsToPoints.inverse_transform"],
     "transform_file": InputPathType,
 })
 
 
 AntsApplyTransformsToPointsParameters = typing.TypedDict('AntsApplyTransformsToPointsParameters', {
-    "__STYXTYPE__": typing.Literal["antsApplyTransformsToPoints"],
+    "@type": typing.Literal["ants.antsApplyTransformsToPoints"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "precision": typing.NotRequired[typing.Literal[0, 1] | None],
     "forantsr": typing.NotRequired[typing.Literal[0, 1] | None],
@@ -47,9 +47,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsApplyTransformsToPoints": ants_apply_transforms_to_points_cargs,
-        "single_transform": ants_apply_transforms_to_points_single_transform_cargs,
-        "inverse_transform": ants_apply_transforms_to_points_inverse_transform_cargs,
+        "ants.antsApplyTransformsToPoints": ants_apply_transforms_to_points_cargs,
+        "ants.antsApplyTransformsToPoints.single_transform": ants_apply_transforms_to_points_single_transform_cargs,
+        "ants.antsApplyTransformsToPoints.inverse_transform": ants_apply_transforms_to_points_inverse_transform_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsApplyTransformsToPoints": ants_apply_transforms_to_points_outputs,
+        "ants.antsApplyTransformsToPoints": ants_apply_transforms_to_points_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def ants_apply_transforms_to_points_single_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "single_transform",
+        "@type": "ants.antsApplyTransformsToPoints.single_transform",
     }
     return params
 
@@ -114,7 +114,7 @@ def ants_apply_transforms_to_points_inverse_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "inverse_transform",
+        "@type": "ants.antsApplyTransformsToPoints.inverse_transform",
         "transform_file": transform_file,
     }
     return params
@@ -173,7 +173,7 @@ def ants_apply_transforms_to_points_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsApplyTransformsToPoints",
+        "@type": "ants.antsApplyTransformsToPoints",
         "input": input_,
         "output": output,
     }
@@ -229,7 +229,7 @@ def ants_apply_transforms_to_points_cargs(
     if params.get("transform") is not None:
         cargs.extend([
             "-t",
-            *dyn_cargs(params.get("transform")["__STYXTYPE__"])(params.get("transform"), execution)
+            *dyn_cargs(params.get("transform")["@type"])(params.get("transform"), execution)
         ])
     return cargs
 
@@ -336,7 +336,12 @@ __all__ = [
     "AntsApplyTransformsToPointsParameters",
     "AntsApplyTransformsToPointsSingleTransformParameters",
     "ants_apply_transforms_to_points",
+    "ants_apply_transforms_to_points_cargs",
+    "ants_apply_transforms_to_points_execute",
+    "ants_apply_transforms_to_points_inverse_transform_cargs",
     "ants_apply_transforms_to_points_inverse_transform_params",
+    "ants_apply_transforms_to_points_outputs",
     "ants_apply_transforms_to_points_params",
+    "ants_apply_transforms_to_points_single_transform_cargs",
     "ants_apply_transforms_to_points_single_transform_params",
 ]

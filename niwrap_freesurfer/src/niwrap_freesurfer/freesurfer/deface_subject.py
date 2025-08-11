@@ -14,7 +14,7 @@ DEFACE_SUBJECT_METADATA = Metadata(
 
 
 DefaceSubjectParameters = typing.TypedDict('DefaceSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["deface_subject"],
+    "@type": typing.Literal["freesurfer.deface_subject"],
     "subjects_dir": str,
     "subject_id": str,
     "volume_input": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "deface_subject": deface_subject_cargs,
+        "freesurfer.deface_subject": deface_subject_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "deface_subject": deface_subject_outputs,
+        "freesurfer.deface_subject": deface_subject_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def deface_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "deface_subject",
+        "@type": "freesurfer.deface_subject",
         "subjects_dir": subjects_dir,
         "subject_id": subject_id,
         "volume_input": volume_input,
@@ -208,5 +208,8 @@ __all__ = [
     "DefaceSubjectOutputs",
     "DefaceSubjectParameters",
     "deface_subject",
+    "deface_subject_cargs",
+    "deface_subject_execute",
+    "deface_subject_outputs",
     "deface_subject_params",
 ]

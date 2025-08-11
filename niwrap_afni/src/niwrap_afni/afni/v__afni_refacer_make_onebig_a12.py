@@ -14,7 +14,7 @@ V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA = Metadata(
 
 
 VAfniRefacerMakeOnebigA12Parameters = typing.TypedDict('VAfniRefacerMakeOnebigA12Parameters', {
-    "__STYXTYPE__": typing.Literal["@afni_refacer_make_onebigA12"],
+    "@type": typing.Literal["afni.@afni_refacer_make_onebigA12"],
     "t1w_dataset": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@afni_refacer_make_onebigA12": v__afni_refacer_make_onebig_a12_cargs,
+        "afni.@afni_refacer_make_onebigA12": v__afni_refacer_make_onebig_a12_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@afni_refacer_make_onebigA12": v__afni_refacer_make_onebig_a12_outputs,
+        "afni.@afni_refacer_make_onebigA12": v__afni_refacer_make_onebig_a12_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__afni_refacer_make_onebig_a12_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@afni_refacer_make_onebigA12",
+        "@type": "afni.@afni_refacer_make_onebigA12",
         "t1w_dataset": t1w_dataset,
     }
     return params
@@ -174,5 +174,8 @@ __all__ = [
     "VAfniRefacerMakeOnebigA12Parameters",
     "V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA",
     "v__afni_refacer_make_onebig_a12",
+    "v__afni_refacer_make_onebig_a12_cargs",
+    "v__afni_refacer_make_onebig_a12_execute",
+    "v__afni_refacer_make_onebig_a12_outputs",
     "v__afni_refacer_make_onebig_a12_params",
 ]

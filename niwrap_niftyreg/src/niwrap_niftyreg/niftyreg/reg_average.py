@@ -14,7 +14,7 @@ REG_AVERAGE_METADATA = Metadata(
 
 
 RegAverageParameters = typing.TypedDict('RegAverageParameters', {
-    "__STYXTYPE__": typing.Literal["reg_average"],
+    "@type": typing.Literal["niftyreg.reg_average"],
     "output_file": str,
     "input_files": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg_average": reg_average_cargs,
+        "niftyreg.reg_average": reg_average_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg_average": reg_average_outputs,
+        "niftyreg.reg_average": reg_average_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def reg_average_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg_average",
+        "@type": "niftyreg.reg_average",
         "output_file": output_file,
         "input_files": input_files,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "RegAverageOutputs",
     "RegAverageParameters",
     "reg_average",
+    "reg_average_cargs",
+    "reg_average_execute",
+    "reg_average_outputs",
     "reg_average_params",
 ]

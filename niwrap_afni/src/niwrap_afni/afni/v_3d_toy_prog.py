@@ -14,7 +14,7 @@ V_3D_TOY_PROG_METADATA = Metadata(
 
 
 V3dToyProgParameters = typing.TypedDict('V3dToyProgParameters', {
-    "__STYXTYPE__": typing.Literal["3dToyProg"],
+    "@type": typing.Literal["afni.3dToyProg"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dToyProg": v_3d_toy_prog_cargs,
+        "afni.3dToyProg": v_3d_toy_prog_cargs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def v_3d_toy_prog_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dToyProg",
+        "@type": "afni.3dToyProg",
         "input_dataset": input_dataset,
         "mini_help": mini_help,
         "help": help_,
@@ -322,5 +322,8 @@ __all__ = [
     "V3dToyProgParameters",
     "V_3D_TOY_PROG_METADATA",
     "v_3d_toy_prog",
+    "v_3d_toy_prog_cargs",
+    "v_3d_toy_prog_execute",
+    "v_3d_toy_prog_outputs",
     "v_3d_toy_prog_params",
 ]

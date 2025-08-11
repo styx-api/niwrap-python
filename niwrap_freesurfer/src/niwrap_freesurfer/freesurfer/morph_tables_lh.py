@@ -14,7 +14,7 @@ MORPH_TABLES_LH_METADATA = Metadata(
 
 
 MorphTablesLhParameters = typing.TypedDict('MorphTablesLhParameters', {
-    "__STYXTYPE__": typing.Literal["morph_tables-lh"],
+    "@type": typing.Literal["freesurfer.morph_tables-lh"],
     "input_file": InputPathType,
     "some_flag": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "morph_tables-lh": morph_tables_lh_cargs,
+        "freesurfer.morph_tables-lh": morph_tables_lh_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "morph_tables-lh": morph_tables_lh_outputs,
+        "freesurfer.morph_tables-lh": morph_tables_lh_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def morph_tables_lh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "morph_tables-lh",
+        "@type": "freesurfer.morph_tables-lh",
         "input_file": input_file,
         "some_flag": some_flag,
     }
@@ -186,5 +186,8 @@ __all__ = [
     "MorphTablesLhOutputs",
     "MorphTablesLhParameters",
     "morph_tables_lh",
+    "morph_tables_lh_cargs",
+    "morph_tables_lh_execute",
+    "morph_tables_lh_outputs",
     "morph_tables_lh_params",
 ]

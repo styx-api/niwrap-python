@@ -14,7 +14,7 @@ FILM_GLS_METADATA = Metadata(
 
 
 FilmGlsParameters = typing.TypedDict('FilmGlsParameters', {
-    "__STYXTYPE__": typing.Literal["film_gls"],
+    "@type": typing.Literal["fsl.film_gls"],
     "infile": InputPathType,
     "ac_flag": bool,
     "threshold": typing.NotRequired[float | None],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "film_gls": film_gls_cargs,
+        "fsl.film_gls": film_gls_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "film_gls": film_gls_outputs,
+        "fsl.film_gls": film_gls_outputs,
     }.get(t)
 
 
@@ -156,7 +156,7 @@ def film_gls_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "film_gls",
+        "@type": "fsl.film_gls",
         "infile": infile,
         "ac_flag": ac_flag,
         "ar_flag": ar_flag,
@@ -462,5 +462,8 @@ __all__ = [
     "FilmGlsOutputs",
     "FilmGlsParameters",
     "film_gls",
+    "film_gls_cargs",
+    "film_gls_execute",
+    "film_gls_outputs",
     "film_gls_params",
 ]

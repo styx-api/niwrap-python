@@ -14,7 +14,7 @@ MRI_HISTO_EQ_METADATA = Metadata(
 
 
 MriHistoEqParameters = typing.TypedDict('MriHistoEqParameters', {
-    "__STYXTYPE__": typing.Literal["mri_histo_eq"],
+    "@type": typing.Literal["freesurfer.mri_histo_eq"],
     "input_volume_1": InputPathType,
     "input_volume_2": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_histo_eq": mri_histo_eq_cargs,
+        "freesurfer.mri_histo_eq": mri_histo_eq_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mri_histo_eq_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_histo_eq",
+        "@type": "freesurfer.mri_histo_eq",
         "input_volume_1": input_volume_1,
         "input_volume_2": input_volume_2,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "MriHistoEqOutputs",
     "MriHistoEqParameters",
     "mri_histo_eq",
+    "mri_histo_eq_cargs",
+    "mri_histo_eq_execute",
+    "mri_histo_eq_outputs",
     "mri_histo_eq_params",
 ]

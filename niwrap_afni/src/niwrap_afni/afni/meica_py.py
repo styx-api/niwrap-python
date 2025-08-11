@@ -14,7 +14,7 @@ MEICA_PY_METADATA = Metadata(
 
 
 MeicaPyParameters = typing.TypedDict('MeicaPyParameters', {
-    "__STYXTYPE__": typing.Literal["meica.py"],
+    "@type": typing.Literal["afni.meica.py"],
     "infile": InputPathType,
     "echo_times": str,
     "affine": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "meica.py": meica_py_cargs,
+        "afni.meica.py": meica_py_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "meica.py": meica_py_outputs,
+        "afni.meica.py": meica_py_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def meica_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "meica.py",
+        "@type": "afni.meica.py",
         "infile": infile,
         "echo_times": echo_times,
         "affine": affine,
@@ -255,5 +255,8 @@ __all__ = [
     "MeicaPyOutputs",
     "MeicaPyParameters",
     "meica_py",
+    "meica_py_cargs",
+    "meica_py_execute",
+    "meica_py_outputs",
     "meica_py_params",
 ]

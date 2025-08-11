@@ -14,7 +14,7 @@ MRIS_ANATOMICAL_STATS_METADATA = Metadata(
 
 
 MrisAnatomicalStatsParameters = typing.TypedDict('MrisAnatomicalStatsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_anatomical_stats"],
+    "@type": typing.Literal["freesurfer.mris_anatomical_stats"],
     "subjectname": str,
     "hemisphere": str,
     "surfacename": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_anatomical_stats": mris_anatomical_stats_cargs,
+        "freesurfer.mris_anatomical_stats": mris_anatomical_stats_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_anatomical_stats": mris_anatomical_stats_outputs,
+        "freesurfer.mris_anatomical_stats": mris_anatomical_stats_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def mris_anatomical_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_anatomical_stats",
+        "@type": "freesurfer.mris_anatomical_stats",
         "subjectname": subjectname,
         "hemisphere": hemisphere,
         "tabular_output": tabular_output,
@@ -333,5 +333,8 @@ __all__ = [
     "MrisAnatomicalStatsOutputs",
     "MrisAnatomicalStatsParameters",
     "mris_anatomical_stats",
+    "mris_anatomical_stats_cargs",
+    "mris_anatomical_stats_execute",
+    "mris_anatomical_stats_outputs",
     "mris_anatomical_stats_params",
 ]

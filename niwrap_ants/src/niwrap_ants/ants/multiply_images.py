@@ -14,7 +14,7 @@ MULTIPLY_IMAGES_METADATA = Metadata(
 
 
 MultiplyImagesParameters = typing.TypedDict('MultiplyImagesParameters', {
-    "__STYXTYPE__": typing.Literal["MultiplyImages"],
+    "@type": typing.Literal["ants.MultiplyImages"],
     "dimension": typing.Literal[3, 2],
     "first_input": InputPathType,
     "second_input": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "MultiplyImages": multiply_images_cargs,
+        "ants.MultiplyImages": multiply_images_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "MultiplyImages": multiply_images_outputs,
+        "ants.MultiplyImages": multiply_images_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def multiply_images_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "MultiplyImages",
+        "@type": "ants.MultiplyImages",
         "dimension": dimension,
         "first_input": first_input,
         "output_product_image": output_product_image,
@@ -228,5 +228,8 @@ __all__ = [
     "MultiplyImagesOutputs",
     "MultiplyImagesParameters",
     "multiply_images",
+    "multiply_images_cargs",
+    "multiply_images_execute",
+    "multiply_images_outputs",
     "multiply_images_params",
 ]

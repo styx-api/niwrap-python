@@ -14,7 +14,7 @@ V__DEBLANK_FILE_NAMES_METADATA = Metadata(
 
 
 VDeblankFileNamesParameters = typing.TypedDict('VDeblankFileNamesParameters', {
-    "__STYXTYPE__": typing.Literal["@DeblankFileNames"],
+    "@type": typing.Literal["afni.@DeblankFileNames"],
     "move": bool,
     "nobrac": bool,
     "demo_set": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@DeblankFileNames": v__deblank_file_names_cargs,
+        "afni.@DeblankFileNames": v__deblank_file_names_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v__deblank_file_names_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@DeblankFileNames",
+        "@type": "afni.@DeblankFileNames",
         "move": move,
         "nobrac": nobrac,
         "demo_set": demo_set,
@@ -217,5 +217,8 @@ __all__ = [
     "VDeblankFileNamesParameters",
     "V__DEBLANK_FILE_NAMES_METADATA",
     "v__deblank_file_names",
+    "v__deblank_file_names_cargs",
+    "v__deblank_file_names_execute",
+    "v__deblank_file_names_outputs",
     "v__deblank_file_names_params",
 ]

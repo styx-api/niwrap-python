@@ -14,14 +14,14 @@ PEAKS2FIXEL_METADATA = Metadata(
 
 
 Peaks2fixelConfigParameters = typing.TypedDict('Peaks2fixelConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.peaks2fixel.config"],
     "key": str,
     "value": str,
 })
 
 
 Peaks2fixelParameters = typing.TypedDict('Peaks2fixelParameters', {
-    "__STYXTYPE__": typing.Literal["peaks2fixel"],
+    "@type": typing.Literal["mrtrix.peaks2fixel"],
     "dataname": typing.NotRequired[str | None],
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "peaks2fixel": peaks2fixel_cargs,
-        "config": peaks2fixel_config_cargs,
+        "mrtrix.peaks2fixel": peaks2fixel_cargs,
+        "mrtrix.peaks2fixel.config": peaks2fixel_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "peaks2fixel": peaks2fixel_outputs,
+        "mrtrix.peaks2fixel": peaks2fixel_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def peaks2fixel_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.peaks2fixel.config",
         "key": key,
         "value": value,
     }
@@ -158,7 +158,7 @@ def peaks2fixel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "peaks2fixel",
+        "@type": "mrtrix.peaks2fixel",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -211,7 +211,7 @@ def peaks2fixel_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -344,6 +344,10 @@ __all__ = [
     "Peaks2fixelOutputs",
     "Peaks2fixelParameters",
     "peaks2fixel",
+    "peaks2fixel_cargs",
+    "peaks2fixel_config_cargs",
     "peaks2fixel_config_params",
+    "peaks2fixel_execute",
+    "peaks2fixel_outputs",
     "peaks2fixel_params",
 ]

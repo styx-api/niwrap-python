@@ -14,7 +14,7 @@ APSEARCH_METADATA = Metadata(
 
 
 ApsearchParameters = typing.TypedDict('ApsearchParameters', {
-    "__STYXTYPE__": typing.Literal["apsearch"],
+    "@type": typing.Literal["afni.apsearch"],
     "search_term": str,
     "file_output": typing.NotRequired[str | None],
     "verbose": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "apsearch": apsearch_cargs,
+        "afni.apsearch": apsearch_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "apsearch": apsearch_outputs,
+        "afni.apsearch": apsearch_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def apsearch_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "apsearch",
+        "@type": "afni.apsearch",
         "search_term": search_term,
         "verbose": verbose,
     }
@@ -191,5 +191,8 @@ __all__ = [
     "ApsearchOutputs",
     "ApsearchParameters",
     "apsearch",
+    "apsearch_cargs",
+    "apsearch_execute",
+    "apsearch_outputs",
     "apsearch_params",
 ]

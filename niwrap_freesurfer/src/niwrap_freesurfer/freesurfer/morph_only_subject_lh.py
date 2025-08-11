@@ -14,7 +14,7 @@ MORPH_ONLY_SUBJECT_LH_METADATA = Metadata(
 
 
 MorphOnlySubjectLhParameters = typing.TypedDict('MorphOnlySubjectLhParameters', {
-    "__STYXTYPE__": typing.Literal["morph_only_subject-lh"],
+    "@type": typing.Literal["freesurfer.morph_only_subject-lh"],
     "subject_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "morph_only_subject-lh": morph_only_subject_lh_cargs,
+        "freesurfer.morph_only_subject-lh": morph_only_subject_lh_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "morph_only_subject-lh": morph_only_subject_lh_outputs,
+        "freesurfer.morph_only_subject-lh": morph_only_subject_lh_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def morph_only_subject_lh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "morph_only_subject-lh",
+        "@type": "freesurfer.morph_only_subject-lh",
         "subject_dir": subject_dir,
     }
     return params
@@ -175,5 +175,8 @@ __all__ = [
     "MorphOnlySubjectLhOutputs",
     "MorphOnlySubjectLhParameters",
     "morph_only_subject_lh",
+    "morph_only_subject_lh_cargs",
+    "morph_only_subject_lh_execute",
+    "morph_only_subject_lh_outputs",
     "morph_only_subject_lh_params",
 ]

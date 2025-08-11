@@ -14,14 +14,14 @@ MRMETRIC_METADATA = Metadata(
 
 
 MrmetricConfigParameters = typing.TypedDict('MrmetricConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrmetric.config"],
     "key": str,
     "value": str,
 })
 
 
 MrmetricParameters = typing.TypedDict('MrmetricParameters', {
-    "__STYXTYPE__": typing.Literal["mrmetric"],
+    "@type": typing.Literal["mrtrix.mrmetric"],
     "space": typing.NotRequired[str | None],
     "interp": typing.NotRequired[str | None],
     "metric": typing.NotRequired[str | None],
@@ -54,8 +54,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrmetric": mrmetric_cargs,
-        "config": mrmetric_config_cargs,
+        "mrtrix.mrmetric": mrmetric_cargs,
+        "mrtrix.mrmetric.config": mrmetric_config_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mrmetric_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrmetric.config",
         "key": key,
         "value": value,
     }
@@ -178,7 +178,7 @@ def mrmetric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrmetric",
+        "@type": "mrtrix.mrmetric",
         "nonormalisation": nonormalisation,
         "overlap": overlap,
         "info": info,
@@ -265,7 +265,7 @@ def mrmetric_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -420,6 +420,10 @@ __all__ = [
     "MrmetricOutputs",
     "MrmetricParameters",
     "mrmetric",
+    "mrmetric_cargs",
+    "mrmetric_config_cargs",
     "mrmetric_config_params",
+    "mrmetric_execute",
+    "mrmetric_outputs",
     "mrmetric_params",
 ]

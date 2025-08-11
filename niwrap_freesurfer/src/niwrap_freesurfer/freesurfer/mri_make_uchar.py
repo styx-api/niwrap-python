@@ -14,7 +14,7 @@ MRI_MAKE_UCHAR_METADATA = Metadata(
 
 
 MriMakeUcharParameters = typing.TypedDict('MriMakeUcharParameters', {
-    "__STYXTYPE__": typing.Literal["mri_make_uchar"],
+    "@type": typing.Literal["freesurfer.mri_make_uchar"],
     "input_volume": InputPathType,
     "talairach_xform": InputPathType,
     "output_volume": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_make_uchar": mri_make_uchar_cargs,
+        "freesurfer.mri_make_uchar": mri_make_uchar_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_make_uchar": mri_make_uchar_outputs,
+        "freesurfer.mri_make_uchar": mri_make_uchar_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def mri_make_uchar_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_make_uchar",
+        "@type": "freesurfer.mri_make_uchar",
         "input_volume": input_volume,
         "talairach_xform": talairach_xform,
         "output_volume": output_volume,
@@ -257,5 +257,8 @@ __all__ = [
     "MriMakeUcharOutputs",
     "MriMakeUcharParameters",
     "mri_make_uchar",
+    "mri_make_uchar_cargs",
+    "mri_make_uchar_execute",
+    "mri_make_uchar_outputs",
     "mri_make_uchar_params",
 ]

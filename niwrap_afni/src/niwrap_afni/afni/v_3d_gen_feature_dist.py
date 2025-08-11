@@ -14,7 +14,7 @@ V_3D_GEN_FEATURE_DIST_METADATA = Metadata(
 
 
 V3dGenFeatureDistParameters = typing.TypedDict('V3dGenFeatureDistParameters', {
-    "__STYXTYPE__": typing.Literal["3dGenFeatureDist"],
+    "@type": typing.Literal["afni.3dGenFeatureDist"],
     "features_string": str,
     "class_string": str,
     "prefix": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dGenFeatureDist": v_3d_gen_feature_dist_cargs,
+        "afni.3dGenFeatureDist": v_3d_gen_feature_dist_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dGenFeatureDist": v_3d_gen_feature_dist_outputs,
+        "afni.3dGenFeatureDist": v_3d_gen_feature_dist_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def v_3d_gen_feature_dist_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dGenFeatureDist",
+        "@type": "afni.3dGenFeatureDist",
         "features_string": features_string,
         "class_string": class_string,
         "overwrite": overwrite,
@@ -310,5 +310,8 @@ __all__ = [
     "V3dGenFeatureDistParameters",
     "V_3D_GEN_FEATURE_DIST_METADATA",
     "v_3d_gen_feature_dist",
+    "v_3d_gen_feature_dist_cargs",
+    "v_3d_gen_feature_dist_execute",
+    "v_3d_gen_feature_dist_outputs",
     "v_3d_gen_feature_dist_params",
 ]

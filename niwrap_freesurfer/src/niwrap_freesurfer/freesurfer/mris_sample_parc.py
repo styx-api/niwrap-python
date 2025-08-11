@@ -14,7 +14,7 @@ MRIS_SAMPLE_PARC_METADATA = Metadata(
 
 
 MrisSampleParcParameters = typing.TypedDict('MrisSampleParcParameters', {
-    "__STYXTYPE__": typing.Literal["mris_sample_parc"],
+    "@type": typing.Literal["freesurfer.mris_sample_parc"],
     "subject_name": str,
     "hemisphere": str,
     "parc_name": str,
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_sample_parc": mris_sample_parc_cargs,
+        "freesurfer.mris_sample_parc": mris_sample_parc_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_sample_parc": mris_sample_parc_outputs,
+        "freesurfer.mris_sample_parc": mris_sample_parc_outputs,
     }.get(t)
 
 
@@ -144,7 +144,7 @@ def mris_sample_parc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_sample_parc",
+        "@type": "freesurfer.mris_sample_parc",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "parc_name": parc_name,
@@ -445,5 +445,8 @@ __all__ = [
     "MrisSampleParcOutputs",
     "MrisSampleParcParameters",
     "mris_sample_parc",
+    "mris_sample_parc_cargs",
+    "mris_sample_parc_execute",
+    "mris_sample_parc_outputs",
     "mris_sample_parc_params",
 ]

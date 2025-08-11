@@ -14,7 +14,7 @@ LABEL_TO_BORDER_METADATA = Metadata(
 
 
 LabelToBorderParameters = typing.TypedDict('LabelToBorderParameters', {
-    "__STYXTYPE__": typing.Literal["label-to-border"],
+    "@type": typing.Literal["workbench.label-to-border"],
     "surface": InputPathType,
     "label_in": InputPathType,
     "border_out": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-to-border": label_to_border_cargs,
+        "workbench.label-to-border": label_to_border_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-to-border": label_to_border_outputs,
+        "workbench.label-to-border": label_to_border_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def label_to_border_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-to-border",
+        "@type": "workbench.label-to-border",
         "surface": surface,
         "label_in": label_in,
         "border_out": border_out,
@@ -227,5 +227,8 @@ __all__ = [
     "LabelToBorderOutputs",
     "LabelToBorderParameters",
     "label_to_border",
+    "label_to_border_cargs",
+    "label_to_border_execute",
+    "label_to_border_outputs",
     "label_to_border_params",
 ]

@@ -14,7 +14,7 @@ MRIS_MS_REFINE_METADATA = Metadata(
 
 
 MrisMsRefineParameters = typing.TypedDict('MrisMsRefineParameters', {
-    "__STYXTYPE__": typing.Literal["mris_ms_refine"],
+    "@type": typing.Literal["freesurfer.mris_ms_refine"],
     "subject_name": str,
     "hemisphere": str,
     "xform": InputPathType,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_ms_refine": mris_ms_refine_cargs,
+        "freesurfer.mris_ms_refine": mris_ms_refine_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_ms_refine": mris_ms_refine_outputs,
+        "freesurfer.mris_ms_refine": mris_ms_refine_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def mris_ms_refine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_ms_refine",
+        "@type": "freesurfer.mris_ms_refine",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "xform": xform,
@@ -265,5 +265,8 @@ __all__ = [
     "MrisMsRefineOutputs",
     "MrisMsRefineParameters",
     "mris_ms_refine",
+    "mris_ms_refine_cargs",
+    "mris_ms_refine_execute",
+    "mris_ms_refine_outputs",
     "mris_ms_refine_params",
 ]

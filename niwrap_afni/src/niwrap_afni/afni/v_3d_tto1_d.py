@@ -14,7 +14,7 @@ V_3D_TTO1_D_METADATA = Metadata(
 
 
 V3dTto1DParameters = typing.TypedDict('V3dTto1DParameters', {
-    "__STYXTYPE__": typing.Literal["3dTto1D"],
+    "@type": typing.Literal["afni.3dTto1D"],
     "input_dataset": InputPathType,
     "method": str,
     "automask": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTto1D": v_3d_tto1_d_cargs,
+        "afni.3dTto1D": v_3d_tto1_d_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTto1D": v_3d_tto1_d_outputs,
+        "afni.3dTto1D": v_3d_tto1_d_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v_3d_tto1_d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTto1D",
+        "@type": "afni.3dTto1D",
         "input_dataset": input_dataset,
         "method": method,
         "automask": automask,
@@ -242,5 +242,8 @@ __all__ = [
     "V3dTto1DParameters",
     "V_3D_TTO1_D_METADATA",
     "v_3d_tto1_d",
+    "v_3d_tto1_d_cargs",
+    "v_3d_tto1_d_execute",
+    "v_3d_tto1_d_outputs",
     "v_3d_tto1_d_params",
 ]

@@ -14,7 +14,7 @@ MRI_EXTRACT_LARGEST_CC_METADATA = Metadata(
 
 
 MriExtractLargestCcParameters = typing.TypedDict('MriExtractLargestCcParameters', {
-    "__STYXTYPE__": typing.Literal["mri_extract_largest_CC"],
+    "@type": typing.Literal["freesurfer.mri_extract_largest_CC"],
     "input_volume": InputPathType,
     "output_volume": str,
     "threshold": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_extract_largest_CC": mri_extract_largest_cc_cargs,
+        "freesurfer.mri_extract_largest_CC": mri_extract_largest_cc_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_extract_largest_CC": mri_extract_largest_cc_outputs,
+        "freesurfer.mri_extract_largest_CC": mri_extract_largest_cc_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def mri_extract_largest_cc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_extract_largest_CC",
+        "@type": "freesurfer.mri_extract_largest_CC",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "largest_cc_in_bg": largest_cc_in_bg,
@@ -245,5 +245,8 @@ __all__ = [
     "MriExtractLargestCcOutputs",
     "MriExtractLargestCcParameters",
     "mri_extract_largest_cc",
+    "mri_extract_largest_cc_cargs",
+    "mri_extract_largest_cc_execute",
+    "mri_extract_largest_cc_outputs",
     "mri_extract_largest_cc_params",
 ]

@@ -14,7 +14,7 @@ V_1DDOT_METADATA = Metadata(
 
 
 V1ddotParameters = typing.TypedDict('V1ddotParameters', {
-    "__STYXTYPE__": typing.Literal["1ddot"],
+    "@type": typing.Literal["afni.1ddot"],
     "one_flag": bool,
     "dem_flag": bool,
     "cov_flag": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1ddot": v_1ddot_cargs,
+        "afni.1ddot": v_1ddot_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1ddot": v_1ddot_outputs,
+        "afni.1ddot": v_1ddot_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def v_1ddot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1ddot",
+        "@type": "afni.1ddot",
         "one_flag": one_flag,
         "dem_flag": dem_flag,
         "cov_flag": cov_flag,
@@ -246,5 +246,8 @@ __all__ = [
     "V1ddotParameters",
     "V_1DDOT_METADATA",
     "v_1ddot",
+    "v_1ddot_cargs",
+    "v_1ddot_execute",
+    "v_1ddot_outputs",
     "v_1ddot_params",
 ]

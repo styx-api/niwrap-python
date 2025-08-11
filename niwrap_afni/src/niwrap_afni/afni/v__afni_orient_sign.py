@@ -14,7 +14,7 @@ V__AFNI_ORIENT_SIGN_METADATA = Metadata(
 
 
 VAfniOrientSignParameters = typing.TypedDict('VAfniOrientSignParameters', {
-    "__STYXTYPE__": typing.Literal["@AfniOrientSign"],
+    "@type": typing.Literal["afni.@AfniOrientSign"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@AfniOrientSign": v__afni_orient_sign_cargs,
+        "afni.@AfniOrientSign": v__afni_orient_sign_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@AfniOrientSign": v__afni_orient_sign_outputs,
+        "afni.@AfniOrientSign": v__afni_orient_sign_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__afni_orient_sign_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@AfniOrientSign",
+        "@type": "afni.@AfniOrientSign",
         "infile": infile,
     }
     return params
@@ -175,5 +175,8 @@ __all__ = [
     "VAfniOrientSignParameters",
     "V__AFNI_ORIENT_SIGN_METADATA",
     "v__afni_orient_sign",
+    "v__afni_orient_sign_cargs",
+    "v__afni_orient_sign_execute",
+    "v__afni_orient_sign_outputs",
     "v__afni_orient_sign_params",
 ]

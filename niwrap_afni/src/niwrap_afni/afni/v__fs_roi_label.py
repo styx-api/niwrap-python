@@ -14,7 +14,7 @@ V__FS_ROI_LABEL_METADATA = Metadata(
 
 
 VFsRoiLabelParameters = typing.TypedDict('VFsRoiLabelParameters', {
-    "__STYXTYPE__": typing.Literal["@FS_roi_label"],
+    "@type": typing.Literal["afni.@FS_roi_label"],
     "label_int": typing.NotRequired[float | None],
     "lab_flag": typing.NotRequired[float | None],
     "rank_int": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@FS_roi_label": v__fs_roi_label_cargs,
+        "afni.@FS_roi_label": v__fs_roi_label_cargs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def v__fs_roi_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@FS_roi_label",
+        "@type": "afni.@FS_roi_label",
     }
     if label_int is not None:
         params["label_int"] = label_int
@@ -286,5 +286,8 @@ __all__ = [
     "VFsRoiLabelParameters",
     "V__FS_ROI_LABEL_METADATA",
     "v__fs_roi_label",
+    "v__fs_roi_label_cargs",
+    "v__fs_roi_label_execute",
+    "v__fs_roi_label_outputs",
     "v__fs_roi_label_params",
 ]

@@ -14,7 +14,7 @@ MRIS_MORPH_STATS_METADATA = Metadata(
 
 
 MrisMorphStatsParameters = typing.TypedDict('MrisMorphStatsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_morph_stats"],
+    "@type": typing.Literal["freesurfer.mris_morph_stats"],
     "subject_name": str,
     "hemisphere": typing.Literal["lh", "rh"],
     "morphed_surface": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_morph_stats": mris_morph_stats_cargs,
+        "freesurfer.mris_morph_stats": mris_morph_stats_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_morph_stats": mris_morph_stats_outputs,
+        "freesurfer.mris_morph_stats": mris_morph_stats_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mris_morph_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_morph_stats",
+        "@type": "freesurfer.mris_morph_stats",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "morphed_surface": morphed_surface,
@@ -200,5 +200,8 @@ __all__ = [
     "MrisMorphStatsOutputs",
     "MrisMorphStatsParameters",
     "mris_morph_stats",
+    "mris_morph_stats_cargs",
+    "mris_morph_stats_execute",
+    "mris_morph_stats_outputs",
     "mris_morph_stats_params",
 ]

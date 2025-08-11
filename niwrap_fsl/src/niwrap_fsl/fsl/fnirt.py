@@ -14,7 +14,7 @@ FNIRT_METADATA = Metadata(
 
 
 FnirtParameters = typing.TypedDict('FnirtParameters', {
-    "__STYXTYPE__": typing.Literal["fnirt"],
+    "@type": typing.Literal["fsl.fnirt"],
     "affine_file": typing.NotRequired[InputPathType | None],
     "config_file": typing.NotRequired[typing.Literal["T1_2_MNI152_2mm", "FA_2_FMRIB58_1mm"] | None],
     "field_file": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fnirt": fnirt_cargs,
+        "fsl.fnirt": fnirt_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fnirt": fnirt_outputs,
+        "fsl.fnirt": fnirt_outputs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def fnirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fnirt",
+        "@type": "fsl.fnirt",
         "in_file": in_file,
         "ref_file": ref_file,
     }
@@ -295,5 +295,8 @@ __all__ = [
     "FnirtOutputs",
     "FnirtParameters",
     "fnirt",
+    "fnirt_cargs",
+    "fnirt_execute",
+    "fnirt_outputs",
     "fnirt_params",
 ]

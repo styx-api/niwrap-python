@@ -14,7 +14,7 @@ TFIM_METADATA = Metadata(
 
 
 TfimParameters = typing.TypedDict('TfimParameters', {
-    "__STYXTYPE__": typing.Literal["tfim"],
+    "@type": typing.Literal["afni.tfim"],
     "prefix": typing.NotRequired[str | None],
     "pthresh": typing.NotRequired[float | None],
     "eqcorr": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tfim": tfim_cargs,
+        "afni.tfim": tfim_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tfim": tfim_outputs,
+        "afni.tfim": tfim_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def tfim_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tfim",
+        "@type": "afni.tfim",
         "paired": paired,
         "set1_images": set1_images,
         "set2_images": set2_images,
@@ -263,5 +263,8 @@ __all__ = [
     "TfimOutputs",
     "TfimParameters",
     "tfim",
+    "tfim_cargs",
+    "tfim_execute",
+    "tfim_outputs",
     "tfim_params",
 ]

@@ -14,7 +14,7 @@ LABEL_ELDERLY_SUBJECT_METADATA = Metadata(
 
 
 LabelElderlySubjectParameters = typing.TypedDict('LabelElderlySubjectParameters', {
-    "__STYXTYPE__": typing.Literal["label_elderly_subject"],
+    "@type": typing.Literal["freesurfer.label_elderly_subject"],
     "norm_volume": InputPathType,
     "transform_lta": InputPathType,
     "classifier_array": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label_elderly_subject": label_elderly_subject_cargs,
+        "freesurfer.label_elderly_subject": label_elderly_subject_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label_elderly_subject": label_elderly_subject_outputs,
+        "freesurfer.label_elderly_subject": label_elderly_subject_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def label_elderly_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label_elderly_subject",
+        "@type": "freesurfer.label_elderly_subject",
         "norm_volume": norm_volume,
         "transform_lta": transform_lta,
         "aseg_volume": aseg_volume,
@@ -200,5 +200,8 @@ __all__ = [
     "LabelElderlySubjectOutputs",
     "LabelElderlySubjectParameters",
     "label_elderly_subject",
+    "label_elderly_subject_cargs",
+    "label_elderly_subject_execute",
+    "label_elderly_subject_outputs",
     "label_elderly_subject_params",
 ]

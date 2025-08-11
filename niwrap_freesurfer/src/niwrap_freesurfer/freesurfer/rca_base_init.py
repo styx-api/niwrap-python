@@ -14,7 +14,7 @@ RCA_BASE_INIT_METADATA = Metadata(
 
 
 RcaBaseInitParameters = typing.TypedDict('RcaBaseInitParameters', {
-    "__STYXTYPE__": typing.Literal["rca-base-init"],
+    "@type": typing.Literal["freesurfer.rca-base-init"],
     "log_file": typing.NotRequired[str | None],
     "status_file": typing.NotRequired[str | None],
     "cmd_file": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rca-base-init": rca_base_init_cargs,
+        "freesurfer.rca-base-init": rca_base_init_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def rca_base_init_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rca-base-init",
+        "@type": "freesurfer.rca-base-init",
     }
     if log_file is not None:
         params["log_file"] = log_file
@@ -193,5 +193,8 @@ __all__ = [
     "RcaBaseInitOutputs",
     "RcaBaseInitParameters",
     "rca_base_init",
+    "rca_base_init_cargs",
+    "rca_base_init_execute",
+    "rca_base_init_outputs",
     "rca_base_init_params",
 ]

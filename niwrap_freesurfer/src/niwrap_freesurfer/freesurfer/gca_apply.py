@@ -14,7 +14,7 @@ GCA_APPLY_METADATA = Metadata(
 
 
 GcaApplyParameters = typing.TypedDict('GcaApplyParameters', {
-    "__STYXTYPE__": typing.Literal["gca-apply"],
+    "@type": typing.Literal["freesurfer.gca-apply"],
     "gcafile": InputPathType,
     "subject": str,
     "nthreads": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gca-apply": gca_apply_cargs,
+        "freesurfer.gca-apply": gca_apply_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gca-apply": gca_apply_outputs,
+        "freesurfer.gca-apply": gca_apply_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def gca_apply_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gca-apply",
+        "@type": "freesurfer.gca-apply",
         "gcafile": gcafile,
         "subject": subject,
         "no_segstats": no_segstats,
@@ -390,5 +390,8 @@ __all__ = [
     "GcaApplyOutputs",
     "GcaApplyParameters",
     "gca_apply",
+    "gca_apply_cargs",
+    "gca_apply_execute",
+    "gca_apply_outputs",
     "gca_apply_params",
 ]

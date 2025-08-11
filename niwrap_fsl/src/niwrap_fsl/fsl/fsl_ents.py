@@ -14,7 +14,7 @@ FSL_ENTS_METADATA = Metadata(
 
 
 FslEntsParameters = typing.TypedDict('FslEntsParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_ents"],
+    "@type": typing.Literal["fsl.fsl_ents"],
     "icadir": str,
     "components": list[str],
     "outfile": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_ents": fsl_ents_cargs,
+        "fsl.fsl_ents": fsl_ents_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_ents": fsl_ents_outputs,
+        "fsl.fsl_ents": fsl_ents_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def fsl_ents_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_ents",
+        "@type": "fsl.fsl_ents",
         "icadir": icadir,
         "components": components,
         "overwrite": overwrite,
@@ -217,5 +217,8 @@ __all__ = [
     "FslEntsOutputs",
     "FslEntsParameters",
     "fsl_ents",
+    "fsl_ents_cargs",
+    "fsl_ents_execute",
+    "fsl_ents_outputs",
     "fsl_ents_params",
 ]

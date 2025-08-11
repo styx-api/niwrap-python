@@ -14,7 +14,7 @@ MRI_MI_METADATA = Metadata(
 
 
 MriMiParameters = typing.TypedDict('MriMiParameters', {
-    "__STYXTYPE__": typing.Literal["mri_mi"],
+    "@type": typing.Literal["freesurfer.mri_mi"],
     "input_file1": InputPathType,
     "input_file2": InputPathType,
     "bins": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_mi": mri_mi_cargs,
+        "freesurfer.mri_mi": mri_mi_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mri_mi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_mi",
+        "@type": "freesurfer.mri_mi",
         "input_file1": input_file1,
         "input_file2": input_file2,
         "silent": silent,
@@ -200,5 +200,8 @@ __all__ = [
     "MriMiOutputs",
     "MriMiParameters",
     "mri_mi",
+    "mri_mi_cargs",
+    "mri_mi_execute",
+    "mri_mi_outputs",
     "mri_mi_params",
 ]

@@ -14,7 +14,7 @@ SURF_CLUST_METADATA = Metadata(
 
 
 SurfClustParameters = typing.TypedDict('SurfClustParameters', {
-    "__STYXTYPE__": typing.Literal["SurfClust"],
+    "@type": typing.Literal["afni.SurfClust"],
     "specfile": typing.NotRequired[InputPathType | None],
     "input_surface": typing.NotRequired[str | None],
     "input_surf_name": typing.NotRequired[InputPathType | None],
@@ -69,7 +69,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfClust": surf_clust_cargs,
+        "afni.SurfClust": surf_clust_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfClust": surf_clust_outputs,
+        "afni.SurfClust": surf_clust_outputs,
     }.get(t)
 
 
@@ -204,7 +204,7 @@ def surf_clust_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfClust",
+        "@type": "afni.SurfClust",
         "input_dataset": input_dataset,
         "rmm": rmm,
         "out_clusterdset": out_clusterdset,
@@ -607,5 +607,8 @@ __all__ = [
     "SurfClustOutputs",
     "SurfClustParameters",
     "surf_clust",
+    "surf_clust_cargs",
+    "surf_clust_execute",
+    "surf_clust_outputs",
     "surf_clust_params",
 ]

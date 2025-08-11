@@ -14,7 +14,7 @@ MRI_SURF2VOL_METADATA = Metadata(
 
 
 MriSurf2volParameters = typing.TypedDict('MriSurf2volParameters', {
-    "__STYXTYPE__": typing.Literal["mri_surf2vol"],
+    "@type": typing.Literal["freesurfer.mri_surf2vol"],
     "surface_overlay": typing.NotRequired[list[str] | None],
     "ltafile": typing.NotRequired[InputPathType | None],
     "outfile": str,
@@ -59,7 +59,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_surf2vol": mri_surf2vol_cargs,
+        "freesurfer.mri_surf2vol": mri_surf2vol_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_surf2vol": mri_surf2vol_outputs,
+        "freesurfer.mri_surf2vol": mri_surf2vol_outputs,
     }.get(t)
 
 
@@ -160,7 +160,7 @@ def mri_surf2vol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_surf2vol",
+        "@type": "freesurfer.mri_surf2vol",
         "outfile": outfile,
         "mkmask": mkmask,
         "fill_ribbon": fill_ribbon,
@@ -520,5 +520,8 @@ __all__ = [
     "MriSurf2volOutputs",
     "MriSurf2volParameters",
     "mri_surf2vol",
+    "mri_surf2vol_cargs",
+    "mri_surf2vol_execute",
+    "mri_surf2vol_outputs",
     "mri_surf2vol_params",
 ]

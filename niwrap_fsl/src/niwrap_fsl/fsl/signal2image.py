@@ -14,7 +14,7 @@ SIGNAL2IMAGE_METADATA = Metadata(
 
 
 Signal2imageParameters = typing.TypedDict('Signal2imageParameters', {
-    "__STYXTYPE__": typing.Literal["signal2image"],
+    "@type": typing.Literal["fsl.signal2image"],
     "pulse_sequence": InputPathType,
     "input_signal": typing.NotRequired[InputPathType | None],
     "output_image": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "signal2image": signal2image_cargs,
+        "fsl.signal2image": signal2image_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "signal2image": signal2image_outputs,
+        "fsl.signal2image": signal2image_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def signal2image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "signal2image",
+        "@type": "fsl.signal2image",
         "pulse_sequence": pulse_sequence,
         "abs_flag": abs_flag,
         "homodyne_flag": homodyne_flag,
@@ -314,5 +314,8 @@ __all__ = [
     "Signal2imageOutputs",
     "Signal2imageParameters",
     "signal2image",
+    "signal2image_cargs",
+    "signal2image_execute",
+    "signal2image_outputs",
     "signal2image_params",
 ]

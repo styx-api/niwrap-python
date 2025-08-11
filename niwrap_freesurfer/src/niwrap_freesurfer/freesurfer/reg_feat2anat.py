@@ -14,7 +14,7 @@ REG_FEAT2ANAT_METADATA = Metadata(
 
 
 RegFeat2anatParameters = typing.TypedDict('RegFeat2anatParameters', {
-    "__STYXTYPE__": typing.Literal["reg-feat2anat"],
+    "@type": typing.Literal["freesurfer.reg-feat2anat"],
     "feat_dir": str,
     "subject_id": str,
     "overwrite_exf2std": bool,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg-feat2anat": reg_feat2anat_cargs,
+        "freesurfer.reg-feat2anat": reg_feat2anat_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg-feat2anat": reg_feat2anat_outputs,
+        "freesurfer.reg-feat2anat": reg_feat2anat_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def reg_feat2anat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg-feat2anat",
+        "@type": "freesurfer.reg-feat2anat",
         "feat_dir": feat_dir,
         "subject_id": subject_id,
         "overwrite_exf2std": overwrite_exf2std,
@@ -363,5 +363,8 @@ __all__ = [
     "RegFeat2anatOutputs",
     "RegFeat2anatParameters",
     "reg_feat2anat",
+    "reg_feat2anat_cargs",
+    "reg_feat2anat_execute",
+    "reg_feat2anat_outputs",
     "reg_feat2anat_params",
 ]

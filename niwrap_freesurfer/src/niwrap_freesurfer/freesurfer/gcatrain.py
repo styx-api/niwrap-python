@@ -14,7 +14,7 @@ GCATRAIN_METADATA = Metadata(
 
 
 GcatrainParameters = typing.TypedDict('GcatrainParameters', {
-    "__STYXTYPE__": typing.Literal["gcatrain"],
+    "@type": typing.Literal["freesurfer.gcatrain"],
     "gcadir": str,
     "subjectlistfile": InputPathType,
     "init_subject_transform": list[str],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gcatrain": gcatrain_cargs,
+        "freesurfer.gcatrain": gcatrain_cargs,
     }.get(t)
 
 
@@ -125,7 +125,7 @@ def gcatrain_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gcatrain",
+        "@type": "freesurfer.gcatrain",
         "gcadir": gcadir,
         "subjectlistfile": subjectlistfile,
         "init_subject_transform": init_subject_transform,
@@ -363,5 +363,8 @@ __all__ = [
     "GcatrainOutputs",
     "GcatrainParameters",
     "gcatrain",
+    "gcatrain_cargs",
+    "gcatrain_execute",
+    "gcatrain_outputs",
     "gcatrain_params",
 ]

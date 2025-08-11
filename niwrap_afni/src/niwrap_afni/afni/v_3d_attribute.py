@@ -14,7 +14,7 @@ V_3D_ATTRIBUTE_METADATA = Metadata(
 
 
 V3dAttributeParameters = typing.TypedDict('V3dAttributeParameters', {
-    "__STYXTYPE__": typing.Literal["3dAttribute"],
+    "@type": typing.Literal["afni.3dAttribute"],
     "all": bool,
     "name": bool,
     "center": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAttribute": v_3d_attribute_cargs,
+        "afni.3dAttribute": v_3d_attribute_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAttribute": v_3d_attribute_outputs,
+        "afni.3dAttribute": v_3d_attribute_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v_3d_attribute_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAttribute",
+        "@type": "afni.3dAttribute",
         "all": all_,
         "name": name,
         "center": center,
@@ -244,5 +244,8 @@ __all__ = [
     "V3dAttributeParameters",
     "V_3D_ATTRIBUTE_METADATA",
     "v_3d_attribute",
+    "v_3d_attribute_cargs",
+    "v_3d_attribute_execute",
+    "v_3d_attribute_outputs",
     "v_3d_attribute_params",
 ]

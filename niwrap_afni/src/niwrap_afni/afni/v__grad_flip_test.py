@@ -14,7 +14,7 @@ V__GRAD_FLIP_TEST_METADATA = Metadata(
 
 
 VGradFlipTestParameters = typing.TypedDict('VGradFlipTestParameters', {
-    "__STYXTYPE__": typing.Literal["@GradFlipTest"],
+    "@type": typing.Literal["afni.@GradFlipTest"],
     "dwi": InputPathType,
     "grad_row_vec": typing.NotRequired[InputPathType | None],
     "grad_col_vec": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@GradFlipTest": v__grad_flip_test_cargs,
+        "afni.@GradFlipTest": v__grad_flip_test_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@GradFlipTest": v__grad_flip_test_outputs,
+        "afni.@GradFlipTest": v__grad_flip_test_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def v__grad_flip_test_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@GradFlipTest",
+        "@type": "afni.@GradFlipTest",
         "dwi": dwi,
         "scale_out_1000": scale_out_1000,
         "do_clean": do_clean,
@@ -351,5 +351,8 @@ __all__ = [
     "VGradFlipTestParameters",
     "V__GRAD_FLIP_TEST_METADATA",
     "v__grad_flip_test",
+    "v__grad_flip_test_cargs",
+    "v__grad_flip_test_execute",
+    "v__grad_flip_test_outputs",
     "v__grad_flip_test_params",
 ]

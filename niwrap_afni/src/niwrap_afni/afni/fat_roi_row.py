@@ -14,7 +14,7 @@ FAT_ROI_ROW_METADATA = Metadata(
 
 
 FatRoiRowParameters = typing.TypedDict('FatRoiRowParameters', {
-    "__STYXTYPE__": typing.Literal["fat_roi_row"],
+    "@type": typing.Literal["afni.fat_roi_row"],
     "roi": str,
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_roi_row": fat_roi_row_cargs,
+        "afni.fat_roi_row": fat_roi_row_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_roi_row": fat_roi_row_outputs,
+        "afni.fat_roi_row": fat_roi_row_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def fat_roi_row_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_roi_row",
+        "@type": "afni.fat_roi_row",
         "roi": roi,
         "extern_labs_no": extern_labs_no,
     }
@@ -226,5 +226,8 @@ __all__ = [
     "FatRoiRowOutputs",
     "FatRoiRowParameters",
     "fat_roi_row",
+    "fat_roi_row_cargs",
+    "fat_roi_row_execute",
+    "fat_roi_row_outputs",
     "fat_roi_row_params",
 ]

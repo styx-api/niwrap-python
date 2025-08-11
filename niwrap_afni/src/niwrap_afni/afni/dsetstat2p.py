@@ -14,7 +14,7 @@ DSETSTAT2P_METADATA = Metadata(
 
 
 Dsetstat2pParameters = typing.TypedDict('Dsetstat2pParameters', {
-    "__STYXTYPE__": typing.Literal["dsetstat2p"],
+    "@type": typing.Literal["afni.dsetstat2p"],
     "dataset": str,
     "statval": float,
     "bisided": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dsetstat2p": dsetstat2p_cargs,
+        "afni.dsetstat2p": dsetstat2p_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dsetstat2p": dsetstat2p_outputs,
+        "afni.dsetstat2p": dsetstat2p_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def dsetstat2p_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dsetstat2p",
+        "@type": "afni.dsetstat2p",
         "dataset": dataset,
         "statval": statval,
         "bisided": bisided,
@@ -232,5 +232,8 @@ __all__ = [
     "Dsetstat2pOutputs",
     "Dsetstat2pParameters",
     "dsetstat2p",
+    "dsetstat2p_cargs",
+    "dsetstat2p_execute",
+    "dsetstat2p_outputs",
     "dsetstat2p_params",
 ]

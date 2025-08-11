@@ -14,7 +14,7 @@ V_1D_RPLOT_METADATA = Metadata(
 
 
 V1dRplotParameters = typing.TypedDict('V1dRplotParameters', {
-    "__STYXTYPE__": typing.Literal["1dRplot"],
+    "@type": typing.Literal["afni.1dRplot"],
     "input_file": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "save_size": typing.NotRequired[list[float] | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dRplot": v_1d_rplot_cargs,
+        "afni.1dRplot": v_1d_rplot_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dRplot": v_1d_rplot_outputs,
+        "afni.1dRplot": v_1d_rplot_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def v_1d_rplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dRplot",
+        "@type": "afni.1dRplot",
         "input_file": input_file,
         "legend_show": legend_show,
         "save_plot": save_plot,
@@ -405,5 +405,8 @@ __all__ = [
     "V1dRplotParameters",
     "V_1D_RPLOT_METADATA",
     "v_1d_rplot",
+    "v_1d_rplot_cargs",
+    "v_1d_rplot_execute",
+    "v_1d_rplot_outputs",
     "v_1d_rplot_params",
 ]

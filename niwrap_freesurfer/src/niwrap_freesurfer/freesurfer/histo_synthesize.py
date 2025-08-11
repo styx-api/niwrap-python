@@ -14,7 +14,7 @@ HISTO_SYNTHESIZE_METADATA = Metadata(
 
 
 HistoSynthesizeParameters = typing.TypedDict('HistoSynthesizeParameters', {
-    "__STYXTYPE__": typing.Literal["histo_synthesize"],
+    "@type": typing.Literal["freesurfer.histo_synthesize"],
     "mri_volume": InputPathType,
     "histo_volume": InputPathType,
     "synthetic_histo": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "histo_synthesize": histo_synthesize_cargs,
+        "freesurfer.histo_synthesize": histo_synthesize_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "histo_synthesize": histo_synthesize_outputs,
+        "freesurfer.histo_synthesize": histo_synthesize_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def histo_synthesize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "histo_synthesize",
+        "@type": "freesurfer.histo_synthesize",
         "mri_volume": mri_volume,
         "histo_volume": histo_volume,
         "synthetic_histo": synthetic_histo,
@@ -188,5 +188,8 @@ __all__ = [
     "HistoSynthesizeOutputs",
     "HistoSynthesizeParameters",
     "histo_synthesize",
+    "histo_synthesize_cargs",
+    "histo_synthesize_execute",
+    "histo_synthesize_outputs",
     "histo_synthesize_params",
 ]

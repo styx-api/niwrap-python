@@ -14,7 +14,7 @@ REINFLATE_SUBJECT_METADATA = Metadata(
 
 
 ReinflateSubjectParameters = typing.TypedDict('ReinflateSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["reinflate_subject"],
+    "@type": typing.Literal["freesurfer.reinflate_subject"],
     "args": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reinflate_subject": reinflate_subject_cargs,
+        "freesurfer.reinflate_subject": reinflate_subject_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def reinflate_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reinflate_subject",
+        "@type": "freesurfer.reinflate_subject",
     }
     if args is not None:
         params["args"] = args
@@ -170,5 +170,8 @@ __all__ = [
     "ReinflateSubjectOutputs",
     "ReinflateSubjectParameters",
     "reinflate_subject",
+    "reinflate_subject_cargs",
+    "reinflate_subject_execute",
+    "reinflate_subject_outputs",
     "reinflate_subject_params",
 ]

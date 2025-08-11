@@ -14,7 +14,7 @@ MRIS_THICKNESS_METADATA = Metadata(
 
 
 MrisThicknessParameters = typing.TypedDict('MrisThicknessParameters', {
-    "__STYXTYPE__": typing.Literal["mris_thickness"],
+    "@type": typing.Literal["freesurfer.mris_thickness"],
     "subject_name": str,
     "hemi": str,
     "thickness_file": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_thickness": mris_thickness_cargs,
+        "freesurfer.mris_thickness": mris_thickness_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_thickness": mris_thickness_outputs,
+        "freesurfer.mris_thickness": mris_thickness_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def mris_thickness_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_thickness",
+        "@type": "freesurfer.mris_thickness",
         "subject_name": subject_name,
         "hemi": hemi,
         "thickness_file": thickness_file,
@@ -244,5 +244,8 @@ __all__ = [
     "MrisThicknessOutputs",
     "MrisThicknessParameters",
     "mris_thickness",
+    "mris_thickness_cargs",
+    "mris_thickness_execute",
+    "mris_thickness_outputs",
     "mris_thickness_params",
 ]

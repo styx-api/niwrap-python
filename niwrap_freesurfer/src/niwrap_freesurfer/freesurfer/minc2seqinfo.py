@@ -14,7 +14,7 @@ MINC2SEQINFO_METADATA = Metadata(
 
 
 Minc2seqinfoParameters = typing.TypedDict('Minc2seqinfoParameters', {
-    "__STYXTYPE__": typing.Literal["minc2seqinfo"],
+    "@type": typing.Literal["freesurfer.minc2seqinfo"],
     "mincfile": InputPathType,
     "seqinfofile": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "minc2seqinfo": minc2seqinfo_cargs,
+        "freesurfer.minc2seqinfo": minc2seqinfo_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "minc2seqinfo": minc2seqinfo_outputs,
+        "freesurfer.minc2seqinfo": minc2seqinfo_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def minc2seqinfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "minc2seqinfo",
+        "@type": "freesurfer.minc2seqinfo",
         "mincfile": mincfile,
         "seqinfofile": seqinfofile,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "Minc2seqinfoOutputs",
     "Minc2seqinfoParameters",
     "minc2seqinfo",
+    "minc2seqinfo_cargs",
+    "minc2seqinfo_execute",
+    "minc2seqinfo_outputs",
     "minc2seqinfo_params",
 ]

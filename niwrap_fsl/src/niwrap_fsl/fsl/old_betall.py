@@ -14,7 +14,7 @@ OLD_BETALL_METADATA = Metadata(
 
 
 OldBetallParameters = typing.TypedDict('OldBetallParameters', {
-    "__STYXTYPE__": typing.Literal["old_betall"],
+    "@type": typing.Literal["fsl.old_betall"],
     "t1_filerout": str,
     "t2_filerout": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "old_betall": old_betall_cargs,
+        "fsl.old_betall": old_betall_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "old_betall": old_betall_outputs,
+        "fsl.old_betall": old_betall_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def old_betall_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "old_betall",
+        "@type": "fsl.old_betall",
         "t1_filerout": t1_filerout,
         "t2_filerout": t2_filerout,
     }
@@ -183,5 +183,8 @@ __all__ = [
     "OldBetallOutputs",
     "OldBetallParameters",
     "old_betall",
+    "old_betall_cargs",
+    "old_betall_execute",
+    "old_betall_outputs",
     "old_betall_params",
 ]

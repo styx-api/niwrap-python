@@ -14,7 +14,7 @@ V_3D_ALLINEATE_METADATA = Metadata(
 
 
 V3dAllineateParameters = typing.TypedDict('V3dAllineateParameters', {
-    "__STYXTYPE__": typing.Literal["3dAllineate"],
+    "@type": typing.Literal["afni.3dAllineate"],
     "source": InputPathType,
     "base": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAllineate": v_3d_allineate_cargs,
+        "afni.3dAllineate": v_3d_allineate_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAllineate": v_3d_allineate_outputs,
+        "afni.3dAllineate": v_3d_allineate_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def v_3d_allineate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAllineate",
+        "@type": "afni.3dAllineate",
         "source": source,
         "prefix": prefix,
         "nopad": nopad,
@@ -346,5 +346,8 @@ __all__ = [
     "V3dAllineateParameters",
     "V_3D_ALLINEATE_METADATA",
     "v_3d_allineate",
+    "v_3d_allineate_cargs",
+    "v_3d_allineate_execute",
+    "v_3d_allineate_outputs",
     "v_3d_allineate_params",
 ]

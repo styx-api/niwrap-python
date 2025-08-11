@@ -14,7 +14,7 @@ V__AFNI_R_PACKAGE_INSTALL_METADATA = Metadata(
 
 
 VAfniRPackageInstallParameters = typing.TypedDict('VAfniRPackageInstallParameters', {
-    "__STYXTYPE__": typing.Literal["@afni_R_package_install"],
+    "@type": typing.Literal["afni.@afni_R_package_install"],
     "afni": bool,
     "shiny": bool,
     "bayes_view": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@afni_R_package_install": v__afni_r_package_install_cargs,
+        "afni.@afni_R_package_install": v__afni_r_package_install_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@afni_R_package_install": v__afni_r_package_install_outputs,
+        "afni.@afni_R_package_install": v__afni_r_package_install_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v__afni_r_package_install_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@afni_R_package_install",
+        "@type": "afni.@afni_R_package_install",
         "afni": afni,
         "shiny": shiny,
         "bayes_view": bayes_view,
@@ -237,5 +237,8 @@ __all__ = [
     "VAfniRPackageInstallParameters",
     "V__AFNI_R_PACKAGE_INSTALL_METADATA",
     "v__afni_r_package_install",
+    "v__afni_r_package_install_cargs",
+    "v__afni_r_package_install_execute",
+    "v__afni_r_package_install_outputs",
     "v__afni_r_package_install_params",
 ]

@@ -14,7 +14,7 @@ REGDAT2XFM_METADATA = Metadata(
 
 
 Regdat2xfmParameters = typing.TypedDict('Regdat2xfmParameters', {
-    "__STYXTYPE__": typing.Literal["regdat2xfm"],
+    "@type": typing.Literal["freesurfer.regdat2xfm"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "regdat2xfm": regdat2xfm_cargs,
+        "freesurfer.regdat2xfm": regdat2xfm_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def regdat2xfm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "regdat2xfm",
+        "@type": "freesurfer.regdat2xfm",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "Regdat2xfmOutputs",
     "Regdat2xfmParameters",
     "regdat2xfm",
+    "regdat2xfm_cargs",
+    "regdat2xfm_execute",
+    "regdat2xfm_outputs",
     "regdat2xfm_params",
 ]

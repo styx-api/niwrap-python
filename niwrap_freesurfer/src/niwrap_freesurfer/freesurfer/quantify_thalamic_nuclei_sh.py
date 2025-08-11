@@ -14,7 +14,7 @@ QUANTIFY_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 
 
 QuantifyThalamicNucleiShParameters = typing.TypedDict('QuantifyThalamicNucleiShParameters', {
-    "__STYXTYPE__": typing.Literal["quantifyThalamicNuclei.sh"],
+    "@type": typing.Literal["freesurfer.quantifyThalamicNuclei.sh"],
     "output_file": str,
     "analysis_id": str,
     "subjects_directory": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "quantifyThalamicNuclei.sh": quantify_thalamic_nuclei_sh_cargs,
+        "freesurfer.quantifyThalamicNuclei.sh": quantify_thalamic_nuclei_sh_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "quantifyThalamicNuclei.sh": quantify_thalamic_nuclei_sh_outputs,
+        "freesurfer.quantifyThalamicNuclei.sh": quantify_thalamic_nuclei_sh_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def quantify_thalamic_nuclei_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "quantifyThalamicNuclei.sh",
+        "@type": "freesurfer.quantifyThalamicNuclei.sh",
         "output_file": output_file,
         "analysis_id": analysis_id,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "QuantifyThalamicNucleiShOutputs",
     "QuantifyThalamicNucleiShParameters",
     "quantify_thalamic_nuclei_sh",
+    "quantify_thalamic_nuclei_sh_cargs",
+    "quantify_thalamic_nuclei_sh_execute",
+    "quantify_thalamic_nuclei_sh_outputs",
     "quantify_thalamic_nuclei_sh_params",
 ]

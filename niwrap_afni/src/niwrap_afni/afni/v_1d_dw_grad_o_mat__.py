@@ -14,7 +14,7 @@ V_1D_DW_GRAD_O_MAT___METADATA = Metadata(
 
 
 V1dDwGradOMatParameters = typing.TypedDict('V1dDwGradOMatParameters', {
-    "__STYXTYPE__": typing.Literal["1dDW_Grad_o_Mat++"],
+    "@type": typing.Literal["afni.1dDW_Grad_o_Mat++"],
     "in_row_vec": InputPathType,
     "in_col_vec": InputPathType,
     "in_col_matA": InputPathType,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dDW_Grad_o_Mat++": v_1d_dw_grad_o_mat___cargs,
+        "afni.1dDW_Grad_o_Mat++": v_1d_dw_grad_o_mat___cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dDW_Grad_o_Mat++": v_1d_dw_grad_o_mat___outputs,
+        "afni.1dDW_Grad_o_Mat++": v_1d_dw_grad_o_mat___outputs,
     }.get(t)
 
 
@@ -151,7 +151,7 @@ def v_1d_dw_grad_o_mat___params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dDW_Grad_o_Mat++",
+        "@type": "afni.1dDW_Grad_o_Mat++",
         "in_row_vec": in_row_vec,
         "in_col_vec": in_col_vec,
         "in_col_matA": in_col_mat_a,
@@ -425,5 +425,8 @@ __all__ = [
     "V1dDwGradOMatParameters",
     "V_1D_DW_GRAD_O_MAT___METADATA",
     "v_1d_dw_grad_o_mat__",
+    "v_1d_dw_grad_o_mat___cargs",
+    "v_1d_dw_grad_o_mat___execute",
+    "v_1d_dw_grad_o_mat___outputs",
     "v_1d_dw_grad_o_mat___params",
 ]

@@ -14,14 +14,14 @@ SH2POWER_METADATA = Metadata(
 
 
 Sh2powerConfigParameters = typing.TypedDict('Sh2powerConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.sh2power.config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2powerParameters = typing.TypedDict('Sh2powerParameters', {
-    "__STYXTYPE__": typing.Literal["sh2power"],
+    "@type": typing.Literal["mrtrix.sh2power"],
     "spectrum": bool,
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sh2power": sh2power_cargs,
-        "config": sh2power_config_cargs,
+        "mrtrix.sh2power": sh2power_cargs,
+        "mrtrix.sh2power.config": sh2power_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sh2power": sh2power_outputs,
+        "mrtrix.sh2power": sh2power_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def sh2power_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.sh2power.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def sh2power_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sh2power",
+        "@type": "mrtrix.sh2power",
         "spectrum": spectrum,
         "info": info,
         "quiet": quiet,
@@ -206,7 +206,7 @@ def sh2power_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -348,6 +348,10 @@ __all__ = [
     "Sh2powerOutputs",
     "Sh2powerParameters",
     "sh2power",
+    "sh2power_cargs",
+    "sh2power_config_cargs",
     "sh2power_config_params",
+    "sh2power_execute",
+    "sh2power_outputs",
     "sh2power_params",
 ]

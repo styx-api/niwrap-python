@@ -14,7 +14,7 @@ MRI_MARK_TEMPORAL_LOBE_METADATA = Metadata(
 
 
 MriMarkTemporalLobeParameters = typing.TypedDict('MriMarkTemporalLobeParameters', {
-    "__STYXTYPE__": typing.Literal["mri_mark_temporal_lobe"],
+    "@type": typing.Literal["freesurfer.mri_mark_temporal_lobe"],
     "spacing": typing.NotRequired[str | None],
     "use_gradient": bool,
     "subjects": list[InputPathType],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_mark_temporal_lobe": mri_mark_temporal_lobe_cargs,
+        "freesurfer.mri_mark_temporal_lobe": mri_mark_temporal_lobe_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_mark_temporal_lobe": mri_mark_temporal_lobe_outputs,
+        "freesurfer.mri_mark_temporal_lobe": mri_mark_temporal_lobe_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mri_mark_temporal_lobe_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_mark_temporal_lobe",
+        "@type": "freesurfer.mri_mark_temporal_lobe",
         "use_gradient": use_gradient,
         "subjects": subjects,
         "output_file": output_file,
@@ -200,5 +200,8 @@ __all__ = [
     "MriMarkTemporalLobeOutputs",
     "MriMarkTemporalLobeParameters",
     "mri_mark_temporal_lobe",
+    "mri_mark_temporal_lobe_cargs",
+    "mri_mark_temporal_lobe_execute",
+    "mri_mark_temporal_lobe_outputs",
     "mri_mark_temporal_lobe_params",
 ]

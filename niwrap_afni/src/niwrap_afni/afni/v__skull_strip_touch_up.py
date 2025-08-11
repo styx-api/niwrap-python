@@ -14,7 +14,7 @@ V__SKULL_STRIP_TOUCH_UP_METADATA = Metadata(
 
 
 VSkullStripTouchUpParameters = typing.TypedDict('VSkullStripTouchUpParameters', {
-    "__STYXTYPE__": typing.Literal["@SkullStrip_TouchUp"],
+    "@type": typing.Literal["afni.@SkullStrip_TouchUp"],
     "prefix": str,
     "brain_dataset": InputPathType,
     "head_dataset": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SkullStrip_TouchUp": v__skull_strip_touch_up_cargs,
+        "afni.@SkullStrip_TouchUp": v__skull_strip_touch_up_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SkullStrip_TouchUp": v__skull_strip_touch_up_outputs,
+        "afni.@SkullStrip_TouchUp": v__skull_strip_touch_up_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v__skull_strip_touch_up_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SkullStrip_TouchUp",
+        "@type": "afni.@SkullStrip_TouchUp",
         "prefix": prefix,
         "brain_dataset": brain_dataset,
         "head_dataset": head_dataset,
@@ -229,5 +229,8 @@ __all__ = [
     "VSkullStripTouchUpParameters",
     "V__SKULL_STRIP_TOUCH_UP_METADATA",
     "v__skull_strip_touch_up",
+    "v__skull_strip_touch_up_cargs",
+    "v__skull_strip_touch_up_execute",
+    "v__skull_strip_touch_up_outputs",
     "v__skull_strip_touch_up_params",
 ]

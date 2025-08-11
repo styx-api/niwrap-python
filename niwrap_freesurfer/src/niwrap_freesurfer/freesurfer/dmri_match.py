@@ -14,7 +14,7 @@ DMRI_MATCH_METADATA = Metadata(
 
 
 DmriMatchParameters = typing.TypedDict('DmriMatchParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_match"],
+    "@type": typing.Literal["freesurfer.dmri_match"],
     "parcellation1": InputPathType,
     "parcellation2": InputPathType,
     "num_clusters": float,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_match": dmri_match_cargs,
+        "freesurfer.dmri_match": dmri_match_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_match": dmri_match_outputs,
+        "freesurfer.dmri_match": dmri_match_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def dmri_match_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_match",
+        "@type": "freesurfer.dmri_match",
         "parcellation1": parcellation1,
         "parcellation2": parcellation2,
         "num_clusters": num_clusters,
@@ -280,5 +280,8 @@ __all__ = [
     "DmriMatchOutputs",
     "DmriMatchParameters",
     "dmri_match",
+    "dmri_match_cargs",
+    "dmri_match_execute",
+    "dmri_match_outputs",
     "dmri_match_params",
 ]

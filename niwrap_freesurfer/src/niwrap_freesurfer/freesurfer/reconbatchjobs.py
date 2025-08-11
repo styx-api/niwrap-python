@@ -14,7 +14,7 @@ RECONBATCHJOBS_METADATA = Metadata(
 
 
 ReconbatchjobsParameters = typing.TypedDict('ReconbatchjobsParameters', {
-    "__STYXTYPE__": typing.Literal["reconbatchjobs"],
+    "@type": typing.Literal["freesurfer.reconbatchjobs"],
     "logfile": str,
     "cmdfiles": list[str],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reconbatchjobs": reconbatchjobs_cargs,
+        "freesurfer.reconbatchjobs": reconbatchjobs_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def reconbatchjobs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reconbatchjobs",
+        "@type": "freesurfer.reconbatchjobs",
         "logfile": logfile,
         "cmdfiles": cmdfiles,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "ReconbatchjobsOutputs",
     "ReconbatchjobsParameters",
     "reconbatchjobs",
+    "reconbatchjobs_cargs",
+    "reconbatchjobs_execute",
+    "reconbatchjobs_outputs",
     "reconbatchjobs_params",
 ]

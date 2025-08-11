@@ -14,14 +14,14 @@ FIXELREORIENT_METADATA = Metadata(
 
 
 FixelreorientConfigParameters = typing.TypedDict('FixelreorientConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixelreorient.config"],
     "key": str,
     "value": str,
 })
 
 
 FixelreorientParameters = typing.TypedDict('FixelreorientParameters', {
-    "__STYXTYPE__": typing.Literal["fixelreorient"],
+    "@type": typing.Literal["mrtrix.fixelreorient"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixelreorient": fixelreorient_cargs,
-        "config": fixelreorient_config_cargs,
+        "mrtrix.fixelreorient": fixelreorient_cargs,
+        "mrtrix.fixelreorient.config": fixelreorient_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixelreorient": fixelreorient_outputs,
+        "mrtrix.fixelreorient": fixelreorient_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def fixelreorient_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixelreorient.config",
         "key": key,
         "value": value,
     }
@@ -166,7 +166,7 @@ def fixelreorient_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixelreorient",
+        "@type": "mrtrix.fixelreorient",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -213,7 +213,7 @@ def fixelreorient_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -356,6 +356,10 @@ __all__ = [
     "FixelreorientOutputs",
     "FixelreorientParameters",
     "fixelreorient",
+    "fixelreorient_cargs",
+    "fixelreorient_config_cargs",
     "fixelreorient_config_params",
+    "fixelreorient_execute",
+    "fixelreorient_outputs",
     "fixelreorient_params",
 ]

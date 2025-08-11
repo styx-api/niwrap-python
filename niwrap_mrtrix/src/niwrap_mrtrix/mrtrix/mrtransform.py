@@ -14,40 +14,40 @@ MRTRANSFORM_METADATA = Metadata(
 
 
 MrtransformFslgradParameters = typing.TypedDict('MrtransformFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.mrtransform.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrtransformExportGradFslParameters = typing.TypedDict('MrtransformExportGradFslParameters', {
-    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
+    "@type": typing.Literal["mrtrix.mrtransform.export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrtransformVariousStringParameters = typing.TypedDict('MrtransformVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.mrtransform.VariousString"],
     "obj": str,
 })
 
 
 MrtransformVariousFileParameters = typing.TypedDict('MrtransformVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.mrtransform.VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrtransformConfigParameters = typing.TypedDict('MrtransformConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrtransform.config"],
     "key": str,
     "value": str,
 })
 
 
 MrtransformParameters = typing.TypedDict('MrtransformParameters', {
-    "__STYXTYPE__": typing.Literal["mrtransform"],
+    "@type": typing.Literal["mrtrix.mrtransform"],
     "linear": typing.NotRequired[InputPathType | None],
     "flip": typing.NotRequired[list[int] | None],
     "inverse": bool,
@@ -97,12 +97,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrtransform": mrtransform_cargs,
-        "fslgrad": mrtransform_fslgrad_cargs,
-        "export_grad_fsl": mrtransform_export_grad_fsl_cargs,
-        "VariousString": mrtransform_various_string_cargs,
-        "VariousFile": mrtransform_various_file_cargs,
-        "config": mrtransform_config_cargs,
+        "mrtrix.mrtransform": mrtransform_cargs,
+        "mrtrix.mrtransform.fslgrad": mrtransform_fslgrad_cargs,
+        "mrtrix.mrtransform.export_grad_fsl": mrtransform_export_grad_fsl_cargs,
+        "mrtrix.mrtransform.VariousString": mrtransform_various_string_cargs,
+        "mrtrix.mrtransform.VariousFile": mrtransform_various_file_cargs,
+        "mrtrix.mrtransform.config": mrtransform_config_cargs,
     }.get(t)
 
 
@@ -118,8 +118,8 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrtransform": mrtransform_outputs,
-        "export_grad_fsl": mrtransform_export_grad_fsl_outputs,
+        "mrtrix.mrtransform": mrtransform_outputs,
+        "mrtrix.mrtransform.export_grad_fsl": mrtransform_export_grad_fsl_outputs,
     }.get(t)
 
 
@@ -143,7 +143,7 @@ def mrtransform_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.mrtransform.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -200,7 +200,7 @@ def mrtransform_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "export_grad_fsl",
+        "@type": "mrtrix.mrtransform.export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -260,7 +260,7 @@ def mrtransform_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.mrtransform.VariousString",
         "obj": obj,
     }
     return params
@@ -296,7 +296,7 @@ def mrtransform_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.mrtransform.VariousFile",
         "obj": obj,
     }
     return params
@@ -334,7 +334,7 @@ def mrtransform_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrtransform.config",
         "key": key,
         "value": value,
     }
@@ -526,7 +526,7 @@ def mrtransform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrtransform",
+        "@type": "mrtrix.mrtransform",
         "inverse": inverse,
         "half": half,
         "identity": identity,
@@ -674,14 +674,14 @@ def mrtransform_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("export_grad_mrtrix") is not None:
         cargs.extend([
             "-export_grad_mrtrix",
             params.get("export_grad_mrtrix")
         ])
     if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution))
+        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
     if params.get("datatype") is not None:
         cargs.extend([
             "-datatype",
@@ -690,7 +690,7 @@ def mrtransform_cargs(
     if params.get("strides") is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["__STYXTYPE__"])(params.get("strides"), execution)
+            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
         ])
     if params.get("nan"):
         cargs.append("-nan")
@@ -710,7 +710,7 @@ def mrtransform_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -737,7 +737,7 @@ def mrtransform_outputs(
         root=execution.output_file("."),
         output=execution.output_file(params.get("output")),
         export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
     )
     return ret
 
@@ -1052,10 +1052,19 @@ __all__ = [
     "MrtransformVariousFileParameters",
     "MrtransformVariousStringParameters",
     "mrtransform",
+    "mrtransform_cargs",
+    "mrtransform_config_cargs",
     "mrtransform_config_params",
+    "mrtransform_execute",
+    "mrtransform_export_grad_fsl_cargs",
+    "mrtransform_export_grad_fsl_outputs",
     "mrtransform_export_grad_fsl_params",
+    "mrtransform_fslgrad_cargs",
     "mrtransform_fslgrad_params",
+    "mrtransform_outputs",
     "mrtransform_params",
+    "mrtransform_various_file_cargs",
     "mrtransform_various_file_params",
+    "mrtransform_various_string_cargs",
     "mrtransform_various_string_params",
 ]

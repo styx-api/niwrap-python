@@ -14,7 +14,7 @@ BROWSE_MINC_HEADER_TCL_METADATA = Metadata(
 
 
 BrowseMincHeaderTclParameters = typing.TypedDict('BrowseMincHeaderTclParameters', {
-    "__STYXTYPE__": typing.Literal["browse-minc-header.tcl"],
+    "@type": typing.Literal["freesurfer.browse-minc-header.tcl"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "browse-minc-header.tcl": browse_minc_header_tcl_cargs,
+        "freesurfer.browse-minc-header.tcl": browse_minc_header_tcl_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def browse_minc_header_tcl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "browse-minc-header.tcl",
+        "@type": "freesurfer.browse-minc-header.tcl",
         "infile": infile,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "BrowseMincHeaderTclOutputs",
     "BrowseMincHeaderTclParameters",
     "browse_minc_header_tcl",
+    "browse_minc_header_tcl_cargs",
+    "browse_minc_header_tcl_execute",
+    "browse_minc_header_tcl_outputs",
     "browse_minc_header_tcl_params",
 ]

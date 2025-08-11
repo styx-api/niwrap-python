@@ -14,7 +14,7 @@ V_3DCALC_METADATA = Metadata(
 
 
 V3dcalcParameters = typing.TypedDict('V3dcalcParameters', {
-    "__STYXTYPE__": typing.Literal["3dcalc"],
+    "@type": typing.Literal["afni.3dcalc"],
     "in_file_a": InputPathType,
     "in_file_b": typing.NotRequired[InputPathType | None],
     "in_file_c": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dcalc": v_3dcalc_cargs,
+        "afni.3dcalc": v_3dcalc_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dcalc": v_3dcalc_outputs,
+        "afni.3dcalc": v_3dcalc_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def v_3dcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dcalc",
+        "@type": "afni.3dcalc",
         "in_file_a": in_file_a,
         "overwrite": overwrite,
         "expr": expr,
@@ -274,5 +274,8 @@ __all__ = [
     "V3dcalcParameters",
     "V_3DCALC_METADATA",
     "v_3dcalc",
+    "v_3dcalc_cargs",
+    "v_3dcalc_execute",
+    "v_3dcalc_outputs",
     "v_3dcalc_params",
 ]

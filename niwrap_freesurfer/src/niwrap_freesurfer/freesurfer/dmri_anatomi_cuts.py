@@ -14,7 +14,7 @@ DMRI_ANATOMI_CUTS_METADATA = Metadata(
 
 
 DmriAnatomiCutsParameters = typing.TypedDict('DmriAnatomiCutsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_AnatomiCuts"],
+    "@type": typing.Literal["freesurfer.dmri_AnatomiCuts"],
     "segmentation_file": InputPathType,
     "fiber_file": InputPathType,
     "clusters": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_AnatomiCuts": dmri_anatomi_cuts_cargs,
+        "freesurfer.dmri_AnatomiCuts": dmri_anatomi_cuts_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_AnatomiCuts": dmri_anatomi_cuts_outputs,
+        "freesurfer.dmri_AnatomiCuts": dmri_anatomi_cuts_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def dmri_anatomi_cuts_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_AnatomiCuts",
+        "@type": "freesurfer.dmri_AnatomiCuts",
         "segmentation_file": segmentation_file,
         "fiber_file": fiber_file,
         "clusters": clusters,
@@ -243,5 +243,8 @@ __all__ = [
     "DmriAnatomiCutsOutputs",
     "DmriAnatomiCutsParameters",
     "dmri_anatomi_cuts",
+    "dmri_anatomi_cuts_cargs",
+    "dmri_anatomi_cuts_execute",
+    "dmri_anatomi_cuts_outputs",
     "dmri_anatomi_cuts_params",
 ]

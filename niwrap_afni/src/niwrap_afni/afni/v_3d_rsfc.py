@@ -14,7 +14,7 @@ V_3D_RSFC_METADATA = Metadata(
 
 
 V3dRsfcParameters = typing.TypedDict('V3dRsfcParameters', {
-    "__STYXTYPE__": typing.Literal["3dRSFC"],
+    "@type": typing.Literal["afni.3dRSFC"],
     "fbot": float,
     "ftop": float,
     "input_dataset": InputPathType,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dRSFC": v_3d_rsfc_cargs,
+        "afni.3dRSFC": v_3d_rsfc_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dRSFC": v_3d_rsfc_outputs,
+        "afni.3dRSFC": v_3d_rsfc_outputs,
     }.get(t)
 
 
@@ -147,7 +147,7 @@ def v_3d_rsfc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dRSFC",
+        "@type": "afni.3dRSFC",
         "fbot": fbot,
         "ftop": ftop,
         "input_dataset": input_dataset,
@@ -428,5 +428,8 @@ __all__ = [
     "V3dRsfcParameters",
     "V_3D_RSFC_METADATA",
     "v_3d_rsfc",
+    "v_3d_rsfc_cargs",
+    "v_3d_rsfc_execute",
+    "v_3d_rsfc_outputs",
     "v_3d_rsfc_params",
 ]

@@ -14,7 +14,7 @@ V_3D_WINSOR_METADATA = Metadata(
 
 
 V3dWinsorParameters = typing.TypedDict('V3dWinsorParameters', {
-    "__STYXTYPE__": typing.Literal["3dWinsor"],
+    "@type": typing.Literal["afni.3dWinsor"],
     "irad": typing.NotRequired[float | None],
     "cbot": typing.NotRequired[float | None],
     "ctop": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dWinsor": v_3d_winsor_cargs,
+        "afni.3dWinsor": v_3d_winsor_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dWinsor": v_3d_winsor_outputs,
+        "afni.3dWinsor": v_3d_winsor_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v_3d_winsor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dWinsor",
+        "@type": "afni.3dWinsor",
         "keepzero": keepzero,
         "dataset": dataset,
     }
@@ -283,5 +283,8 @@ __all__ = [
     "V3dWinsorParameters",
     "V_3D_WINSOR_METADATA",
     "v_3d_winsor",
+    "v_3d_winsor_cargs",
+    "v_3d_winsor_execute",
+    "v_3d_winsor_outputs",
     "v_3d_winsor_params",
 ]

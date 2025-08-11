@@ -14,7 +14,7 @@ V_3DTO_XDATASET_METADATA = Metadata(
 
 
 V3dtoXdatasetParameters = typing.TypedDict('V3dtoXdatasetParameters', {
-    "__STYXTYPE__": typing.Literal["3dtoXdataset"],
+    "@type": typing.Literal["afni.3dtoXdataset"],
     "prefix": str,
     "mask": InputPathType,
     "input_files": list[InputPathType],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dtoXdataset": v_3dto_xdataset_cargs,
+        "afni.3dtoXdataset": v_3dto_xdataset_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dtoXdataset": v_3dto_xdataset_outputs,
+        "afni.3dtoXdataset": v_3dto_xdataset_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v_3dto_xdataset_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dtoXdataset",
+        "@type": "afni.3dtoXdataset",
         "prefix": prefix,
         "mask": mask,
         "input_files": input_files,
@@ -191,5 +191,8 @@ __all__ = [
     "V3dtoXdatasetParameters",
     "V_3DTO_XDATASET_METADATA",
     "v_3dto_xdataset",
+    "v_3dto_xdataset_cargs",
+    "v_3dto_xdataset_execute",
+    "v_3dto_xdataset_outputs",
     "v_3dto_xdataset_params",
 ]

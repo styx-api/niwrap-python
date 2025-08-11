@@ -14,7 +14,7 @@ RETRO_TS_PY_METADATA = Metadata(
 
 
 RetroTsPyParameters = typing.TypedDict('RetroTsPyParameters', {
-    "__STYXTYPE__": typing.Literal["RetroTS.py"],
+    "@type": typing.Literal["afni.RetroTS.py"],
     "resp_file": typing.NotRequired[InputPathType | None],
     "card_file": typing.NotRequired[InputPathType | None],
     "phys_fs": typing.NotRequired[float | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "RetroTS.py": retro_ts_py_cargs,
+        "afni.RetroTS.py": retro_ts_py_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "RetroTS.py": retro_ts_py_outputs,
+        "afni.RetroTS.py": retro_ts_py_outputs,
     }.get(t)
 
 
@@ -153,7 +153,7 @@ def retro_ts_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "RetroTS.py",
+        "@type": "afni.RetroTS.py",
         "num_slices": num_slices,
         "volume_tr": volume_tr,
         "rvt_out": rvt_out,
@@ -473,5 +473,8 @@ __all__ = [
     "RetroTsPyOutputs",
     "RetroTsPyParameters",
     "retro_ts_py",
+    "retro_ts_py_cargs",
+    "retro_ts_py_execute",
+    "retro_ts_py_outputs",
     "retro_ts_py_params",
 ]

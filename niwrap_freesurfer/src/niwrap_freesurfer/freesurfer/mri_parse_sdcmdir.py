@@ -14,7 +14,7 @@ MRI_PARSE_SDCMDIR_METADATA = Metadata(
 
 
 MriParseSdcmdirParameters = typing.TypedDict('MriParseSdcmdirParameters', {
-    "__STYXTYPE__": typing.Literal["mri_parse_sdcmdir"],
+    "@type": typing.Literal["freesurfer.mri_parse_sdcmdir"],
     "sdicomdir": str,
     "outfile": typing.NotRequired[str | None],
     "sortbyrun": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_parse_sdcmdir": mri_parse_sdcmdir_cargs,
+        "freesurfer.mri_parse_sdcmdir": mri_parse_sdcmdir_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mri_parse_sdcmdir_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_parse_sdcmdir",
+        "@type": "freesurfer.mri_parse_sdcmdir",
         "sdicomdir": sdicomdir,
         "sortbyrun": sortbyrun,
         "summarize": summarize,
@@ -215,5 +215,8 @@ __all__ = [
     "MriParseSdcmdirOutputs",
     "MriParseSdcmdirParameters",
     "mri_parse_sdcmdir",
+    "mri_parse_sdcmdir_cargs",
+    "mri_parse_sdcmdir_execute",
+    "mri_parse_sdcmdir_outputs",
     "mri_parse_sdcmdir_params",
 ]

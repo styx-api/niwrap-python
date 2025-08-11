@@ -14,7 +14,7 @@ LABEL_MASK_METADATA = Metadata(
 
 
 LabelMaskParameters = typing.TypedDict('LabelMaskParameters', {
-    "__STYXTYPE__": typing.Literal["label-mask"],
+    "@type": typing.Literal["workbench.label-mask"],
     "label": InputPathType,
     "mask": InputPathType,
     "label_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-mask": label_mask_cargs,
+        "workbench.label-mask": label_mask_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-mask": label_mask_outputs,
+        "workbench.label-mask": label_mask_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def label_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-mask",
+        "@type": "workbench.label-mask",
         "label": label,
         "mask": mask,
         "label_out": label_out,
@@ -212,5 +212,8 @@ __all__ = [
     "LabelMaskOutputs",
     "LabelMaskParameters",
     "label_mask",
+    "label_mask_cargs",
+    "label_mask_execute",
+    "label_mask_outputs",
     "label_mask_params",
 ]

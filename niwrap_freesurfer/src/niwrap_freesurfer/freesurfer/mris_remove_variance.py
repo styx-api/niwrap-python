@@ -14,7 +14,7 @@ MRIS_REMOVE_VARIANCE_METADATA = Metadata(
 
 
 MrisRemoveVarianceParameters = typing.TypedDict('MrisRemoveVarianceParameters', {
-    "__STYXTYPE__": typing.Literal["mris_remove_variance"],
+    "@type": typing.Literal["freesurfer.mris_remove_variance"],
     "input_surface_file": InputPathType,
     "curvature_file": InputPathType,
     "curvature_file_to_remove": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_remove_variance": mris_remove_variance_cargs,
+        "freesurfer.mris_remove_variance": mris_remove_variance_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_remove_variance": mris_remove_variance_outputs,
+        "freesurfer.mris_remove_variance": mris_remove_variance_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mris_remove_variance_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_remove_variance",
+        "@type": "freesurfer.mris_remove_variance",
         "input_surface_file": input_surface_file,
         "curvature_file": curvature_file,
         "curvature_file_to_remove": curvature_file_to_remove,
@@ -200,5 +200,8 @@ __all__ = [
     "MrisRemoveVarianceOutputs",
     "MrisRemoveVarianceParameters",
     "mris_remove_variance",
+    "mris_remove_variance_cargs",
+    "mris_remove_variance_execute",
+    "mris_remove_variance_outputs",
     "mris_remove_variance_params",
 ]

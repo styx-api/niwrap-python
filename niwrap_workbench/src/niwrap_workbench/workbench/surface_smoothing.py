@@ -14,7 +14,7 @@ SURFACE_SMOOTHING_METADATA = Metadata(
 
 
 SurfaceSmoothingParameters = typing.TypedDict('SurfaceSmoothingParameters', {
-    "__STYXTYPE__": typing.Literal["surface-smoothing"],
+    "@type": typing.Literal["workbench.surface-smoothing"],
     "surface_in": InputPathType,
     "smoothing_strength": float,
     "smoothing_iterations": int,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-smoothing": surface_smoothing_cargs,
+        "workbench.surface-smoothing": surface_smoothing_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-smoothing": surface_smoothing_outputs,
+        "workbench.surface-smoothing": surface_smoothing_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def surface_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-smoothing",
+        "@type": "workbench.surface-smoothing",
         "surface_in": surface_in,
         "smoothing_strength": smoothing_strength,
         "smoothing_iterations": smoothing_iterations,
@@ -203,5 +203,8 @@ __all__ = [
     "SurfaceSmoothingOutputs",
     "SurfaceSmoothingParameters",
     "surface_smoothing",
+    "surface_smoothing_cargs",
+    "surface_smoothing_execute",
+    "surface_smoothing_outputs",
     "surface_smoothing_params",
 ]

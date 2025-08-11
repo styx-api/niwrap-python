@@ -14,7 +14,7 @@ FSL_PREPARE_FIELDMAP_METADATA = Metadata(
 
 
 FslPrepareFieldmapParameters = typing.TypedDict('FslPrepareFieldmapParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_prepare_fieldmap"],
+    "@type": typing.Literal["fsl.fsl_prepare_fieldmap"],
     "scanner": str,
     "phase_image": InputPathType,
     "magnitude_image": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_prepare_fieldmap": fsl_prepare_fieldmap_cargs,
+        "fsl.fsl_prepare_fieldmap": fsl_prepare_fieldmap_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_prepare_fieldmap": fsl_prepare_fieldmap_outputs,
+        "fsl.fsl_prepare_fieldmap": fsl_prepare_fieldmap_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def fsl_prepare_fieldmap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_prepare_fieldmap",
+        "@type": "fsl.fsl_prepare_fieldmap",
         "scanner": scanner,
         "phase_image": phase_image,
         "magnitude_image": magnitude_image,
@@ -217,5 +217,8 @@ __all__ = [
     "FslPrepareFieldmapOutputs",
     "FslPrepareFieldmapParameters",
     "fsl_prepare_fieldmap",
+    "fsl_prepare_fieldmap_cargs",
+    "fsl_prepare_fieldmap_execute",
+    "fsl_prepare_fieldmap_outputs",
     "fsl_prepare_fieldmap_params",
 ]

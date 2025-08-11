@@ -14,7 +14,7 @@ IMCALC_METADATA = Metadata(
 
 
 ImcalcParameters = typing.TypedDict('ImcalcParameters', {
-    "__STYXTYPE__": typing.Literal["imcalc"],
+    "@type": typing.Literal["afni.imcalc"],
     "datum_type": typing.NotRequired[str | None],
     "image_inputs": typing.NotRequired[list[InputPathType] | None],
     "expression": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imcalc": imcalc_cargs,
+        "afni.imcalc": imcalc_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imcalc": imcalc_outputs,
+        "afni.imcalc": imcalc_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def imcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imcalc",
+        "@type": "afni.imcalc",
         "expression": expression,
     }
     if datum_type is not None:
@@ -231,5 +231,8 @@ __all__ = [
     "ImcalcOutputs",
     "ImcalcParameters",
     "imcalc",
+    "imcalc_cargs",
+    "imcalc_execute",
+    "imcalc_outputs",
     "imcalc_params",
 ]

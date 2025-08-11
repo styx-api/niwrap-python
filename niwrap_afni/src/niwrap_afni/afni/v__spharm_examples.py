@@ -14,7 +14,7 @@ V__SPHARM_EXAMPLES_METADATA = Metadata(
 
 
 VSpharmExamplesParameters = typing.TypedDict('VSpharmExamplesParameters', {
-    "__STYXTYPE__": typing.Literal["@Spharm.examples"],
+    "@type": typing.Literal["afni.@Spharm.examples"],
     "help_web": bool,
     "help_web_alias": bool,
     "help_view": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Spharm.examples": v__spharm_examples_cargs,
+        "afni.@Spharm.examples": v__spharm_examples_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v__spharm_examples_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Spharm.examples",
+        "@type": "afni.@Spharm.examples",
         "help_web": help_web,
         "help_web_alias": help_web_alias,
         "help_view": help_view,
@@ -222,5 +222,8 @@ __all__ = [
     "VSpharmExamplesParameters",
     "V__SPHARM_EXAMPLES_METADATA",
     "v__spharm_examples",
+    "v__spharm_examples_cargs",
+    "v__spharm_examples_execute",
+    "v__spharm_examples_outputs",
     "v__spharm_examples_params",
 ]

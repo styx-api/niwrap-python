@@ -14,7 +14,7 @@ ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA = Metadata(
 
 
 AntsMotionCorrDiffusionDirectionParameters = typing.TypedDict('AntsMotionCorrDiffusionDirectionParameters', {
-    "__STYXTYPE__": typing.Literal["antsMotionCorrDiffusionDirection"],
+    "@type": typing.Literal["ants.antsMotionCorrDiffusionDirection"],
     "scheme": InputPathType,
     "bvec": InputPathType,
     "physical": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsMotionCorrDiffusionDirection": ants_motion_corr_diffusion_direction_cargs,
+        "ants.antsMotionCorrDiffusionDirection": ants_motion_corr_diffusion_direction_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsMotionCorrDiffusionDirection": ants_motion_corr_diffusion_direction_outputs,
+        "ants.antsMotionCorrDiffusionDirection": ants_motion_corr_diffusion_direction_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def ants_motion_corr_diffusion_direction_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsMotionCorrDiffusionDirection",
+        "@type": "ants.antsMotionCorrDiffusionDirection",
         "scheme": scheme,
         "bvec": bvec,
         "physical": physical,
@@ -219,5 +219,8 @@ __all__ = [
     "AntsMotionCorrDiffusionDirectionOutputs",
     "AntsMotionCorrDiffusionDirectionParameters",
     "ants_motion_corr_diffusion_direction",
+    "ants_motion_corr_diffusion_direction_cargs",
+    "ants_motion_corr_diffusion_direction_execute",
+    "ants_motion_corr_diffusion_direction_outputs",
     "ants_motion_corr_diffusion_direction_params",
 ]

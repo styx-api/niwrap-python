@@ -14,7 +14,7 @@ SBTIV_METADATA = Metadata(
 
 
 SbtivParameters = typing.TypedDict('SbtivParameters', {
-    "__STYXTYPE__": typing.Literal["sbtiv"],
+    "@type": typing.Literal["freesurfer.sbtiv"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "labels_file": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sbtiv": sbtiv_cargs,
+        "freesurfer.sbtiv": sbtiv_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sbtiv": sbtiv_outputs,
+        "freesurfer.sbtiv": sbtiv_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def sbtiv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sbtiv",
+        "@type": "freesurfer.sbtiv",
         "input_file": input_file,
     }
     if output_file is not None:
@@ -202,5 +202,8 @@ __all__ = [
     "SbtivOutputs",
     "SbtivParameters",
     "sbtiv",
+    "sbtiv_cargs",
+    "sbtiv_execute",
+    "sbtiv_outputs",
     "sbtiv_params",
 ]

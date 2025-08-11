@@ -14,7 +14,7 @@ V__FLOAT_FIX_METADATA = Metadata(
 
 
 VFloatFixParameters = typing.TypedDict('VFloatFixParameters', {
-    "__STYXTYPE__": typing.Literal["@float_fix"],
+    "@type": typing.Literal["afni.@float_fix"],
     "input_files": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@float_fix": v__float_fix_cargs,
+        "afni.@float_fix": v__float_fix_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def v__float_fix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@float_fix",
+        "@type": "afni.@float_fix",
         "input_files": input_files,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "VFloatFixParameters",
     "V__FLOAT_FIX_METADATA",
     "v__float_fix",
+    "v__float_fix_cargs",
+    "v__float_fix_execute",
+    "v__float_fix_outputs",
     "v__float_fix_params",
 ]

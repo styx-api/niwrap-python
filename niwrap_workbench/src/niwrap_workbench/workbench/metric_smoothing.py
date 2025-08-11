@@ -14,14 +14,14 @@ METRIC_SMOOTHING_METADATA = Metadata(
 
 
 MetricSmoothingRoiParameters = typing.TypedDict('MetricSmoothingRoiParameters', {
-    "__STYXTYPE__": typing.Literal["roi"],
+    "@type": typing.Literal["workbench.metric-smoothing.roi"],
     "roi_metric": InputPathType,
     "opt_match_columns": bool,
 })
 
 
 MetricSmoothingParameters = typing.TypedDict('MetricSmoothingParameters', {
-    "__STYXTYPE__": typing.Literal["metric-smoothing"],
+    "@type": typing.Literal["workbench.metric-smoothing"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "smoothing_kernel": float,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-smoothing": metric_smoothing_cargs,
-        "roi": metric_smoothing_roi_cargs,
+        "workbench.metric-smoothing": metric_smoothing_cargs,
+        "workbench.metric-smoothing.roi": metric_smoothing_roi_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-smoothing": metric_smoothing_outputs,
+        "workbench.metric-smoothing": metric_smoothing_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def metric_smoothing_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "roi",
+        "@type": "workbench.metric-smoothing.roi",
         "roi_metric": roi_metric,
         "opt_match_columns": opt_match_columns,
     }
@@ -156,7 +156,7 @@ def metric_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-smoothing",
+        "@type": "workbench.metric-smoothing",
         "surface": surface,
         "metric_in": metric_in,
         "smoothing_kernel": smoothing_kernel,
@@ -198,7 +198,7 @@ def metric_smoothing_cargs(
     if params.get("opt_fwhm"):
         cargs.append("-fwhm")
     if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["__STYXTYPE__"])(params.get("roi"), execution))
+        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
     if params.get("opt_fix_zeros"):
         cargs.append("-fix-zeros")
     if params.get("opt_column_column") is not None:
@@ -414,6 +414,10 @@ __all__ = [
     "MetricSmoothingParameters",
     "MetricSmoothingRoiParameters",
     "metric_smoothing",
+    "metric_smoothing_cargs",
+    "metric_smoothing_execute",
+    "metric_smoothing_outputs",
     "metric_smoothing_params",
+    "metric_smoothing_roi_cargs",
     "metric_smoothing_roi_params",
 ]

@@ -14,7 +14,7 @@ XFMROT_METADATA = Metadata(
 
 
 XfmrotParameters = typing.TypedDict('XfmrotParameters', {
-    "__STYXTYPE__": typing.Literal["xfmrot"],
+    "@type": typing.Literal["freesurfer.xfmrot"],
     "transform_file": InputPathType,
     "input_vector_file": InputPathType,
     "output_vector_file": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xfmrot": xfmrot_cargs,
+        "freesurfer.xfmrot": xfmrot_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "xfmrot": xfmrot_outputs,
+        "freesurfer.xfmrot": xfmrot_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def xfmrot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xfmrot",
+        "@type": "freesurfer.xfmrot",
         "transform_file": transform_file,
         "input_vector_file": input_vector_file,
     }
@@ -198,5 +198,8 @@ __all__ = [
     "XfmrotOutputs",
     "XfmrotParameters",
     "xfmrot",
+    "xfmrot_cargs",
+    "xfmrot_execute",
+    "xfmrot_outputs",
     "xfmrot_params",
 ]

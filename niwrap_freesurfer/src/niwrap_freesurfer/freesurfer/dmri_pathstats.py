@@ -14,7 +14,7 @@ DMRI_PATHSTATS_METADATA = Metadata(
 
 
 DmriPathstatsParameters = typing.TypedDict('DmriPathstatsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_pathstats"],
+    "@type": typing.Literal["freesurfer.dmri_pathstats"],
     "intrk": InputPathType,
     "rois": typing.NotRequired[list[InputPathType] | None],
     "intrc": InputPathType,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_pathstats": dmri_pathstats_cargs,
+        "freesurfer.dmri_pathstats": dmri_pathstats_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_pathstats": dmri_pathstats_outputs,
+        "freesurfer.dmri_pathstats": dmri_pathstats_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def dmri_pathstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_pathstats",
+        "@type": "freesurfer.dmri_pathstats",
         "intrk": intrk,
         "intrc": intrc,
         "debug": debug,
@@ -403,5 +403,8 @@ __all__ = [
     "DmriPathstatsOutputs",
     "DmriPathstatsParameters",
     "dmri_pathstats",
+    "dmri_pathstats_cargs",
+    "dmri_pathstats_execute",
+    "dmri_pathstats_outputs",
     "dmri_pathstats_params",
 ]

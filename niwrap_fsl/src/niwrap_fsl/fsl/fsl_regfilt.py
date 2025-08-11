@@ -14,7 +14,7 @@ FSL_REGFILT_METADATA = Metadata(
 
 
 FslRegfiltParameters = typing.TypedDict('FslRegfiltParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_regfilt"],
+    "@type": typing.Literal["fsl.fsl_regfilt"],
     "infile": InputPathType,
     "designfile": InputPathType,
     "outfile": str,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_regfilt": fsl_regfilt_cargs,
+        "fsl.fsl_regfilt": fsl_regfilt_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_regfilt": fsl_regfilt_outputs,
+        "fsl.fsl_regfilt": fsl_regfilt_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def fsl_regfilt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_regfilt",
+        "@type": "fsl.fsl_regfilt",
         "infile": infile,
         "designfile": designfile,
         "outfile": outfile,
@@ -378,5 +378,8 @@ __all__ = [
     "FslRegfiltOutputs",
     "FslRegfiltParameters",
     "fsl_regfilt",
+    "fsl_regfilt_cargs",
+    "fsl_regfilt_execute",
+    "fsl_regfilt_outputs",
     "fsl_regfilt_params",
 ]

@@ -14,7 +14,7 @@ FILE_CONVERT_METADATA = Metadata(
 
 
 FileConvertBorderVersionConvertParameters = typing.TypedDict('FileConvertBorderVersionConvertParameters', {
-    "__STYXTYPE__": typing.Literal["border_version_convert"],
+    "@type": typing.Literal["workbench.file-convert.border_version_convert"],
     "border_in": InputPathType,
     "out_version": int,
     "border_out": str,
@@ -23,7 +23,7 @@ FileConvertBorderVersionConvertParameters = typing.TypedDict('FileConvertBorderV
 
 
 FileConvertNiftiVersionConvertParameters = typing.TypedDict('FileConvertNiftiVersionConvertParameters', {
-    "__STYXTYPE__": typing.Literal["nifti_version_convert"],
+    "@type": typing.Literal["workbench.file-convert.nifti_version_convert"],
     "input": str,
     "version": int,
     "output": str,
@@ -31,7 +31,7 @@ FileConvertNiftiVersionConvertParameters = typing.TypedDict('FileConvertNiftiVer
 
 
 FileConvertCiftiVersionConvertParameters = typing.TypedDict('FileConvertCiftiVersionConvertParameters', {
-    "__STYXTYPE__": typing.Literal["cifti_version_convert"],
+    "@type": typing.Literal["workbench.file-convert.cifti_version_convert"],
     "cifti_in": InputPathType,
     "version": str,
     "cifti_out": str,
@@ -39,7 +39,7 @@ FileConvertCiftiVersionConvertParameters = typing.TypedDict('FileConvertCiftiVer
 
 
 FileConvertParameters = typing.TypedDict('FileConvertParameters', {
-    "__STYXTYPE__": typing.Literal["file-convert"],
+    "@type": typing.Literal["workbench.file-convert"],
     "border_version_convert": typing.NotRequired[FileConvertBorderVersionConvertParameters | None],
     "nifti_version_convert": typing.NotRequired[FileConvertNiftiVersionConvertParameters | None],
     "cifti_version_convert": typing.NotRequired[FileConvertCiftiVersionConvertParameters | None],
@@ -58,10 +58,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "file-convert": file_convert_cargs,
-        "border_version_convert": file_convert_border_version_convert_cargs,
-        "nifti_version_convert": file_convert_nifti_version_convert_cargs,
-        "cifti_version_convert": file_convert_cifti_version_convert_cargs,
+        "workbench.file-convert": file_convert_cargs,
+        "workbench.file-convert.border_version_convert": file_convert_border_version_convert_cargs,
+        "workbench.file-convert.nifti_version_convert": file_convert_nifti_version_convert_cargs,
+        "workbench.file-convert.cifti_version_convert": file_convert_cifti_version_convert_cargs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def file_convert_border_version_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border_version_convert",
+        "@type": "workbench.file-convert.border_version_convert",
         "border_in": border_in,
         "out_version": out_version,
         "border_out": border_out,
@@ -152,7 +152,7 @@ def file_convert_nifti_version_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nifti_version_convert",
+        "@type": "workbench.file-convert.nifti_version_convert",
         "input": input_,
         "version": version,
         "output": output,
@@ -197,7 +197,7 @@ def file_convert_cifti_version_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti_version_convert",
+        "@type": "workbench.file-convert.cifti_version_convert",
         "cifti_in": cifti_in,
         "version": version,
         "cifti_out": cifti_out,
@@ -250,7 +250,7 @@ def file_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "file-convert",
+        "@type": "workbench.file-convert",
     }
     if border_version_convert is not None:
         params["border_version_convert"] = border_version_convert
@@ -278,11 +278,11 @@ def file_convert_cargs(
     cargs.append("wb_command")
     cargs.append("-file-convert")
     if params.get("border_version_convert") is not None:
-        cargs.extend(dyn_cargs(params.get("border_version_convert")["__STYXTYPE__"])(params.get("border_version_convert"), execution))
+        cargs.extend(dyn_cargs(params.get("border_version_convert")["@type"])(params.get("border_version_convert"), execution))
     if params.get("nifti_version_convert") is not None:
-        cargs.extend(dyn_cargs(params.get("nifti_version_convert")["__STYXTYPE__"])(params.get("nifti_version_convert"), execution))
+        cargs.extend(dyn_cargs(params.get("nifti_version_convert")["@type"])(params.get("nifti_version_convert"), execution))
     if params.get("cifti_version_convert") is not None:
-        cargs.extend(dyn_cargs(params.get("cifti_version_convert")["__STYXTYPE__"])(params.get("cifti_version_convert"), execution))
+        cargs.extend(dyn_cargs(params.get("cifti_version_convert")["@type"])(params.get("cifti_version_convert"), execution))
     return cargs
 
 
@@ -372,8 +372,14 @@ __all__ = [
     "FileConvertOutputs",
     "FileConvertParameters",
     "file_convert",
+    "file_convert_border_version_convert_cargs",
     "file_convert_border_version_convert_params",
+    "file_convert_cargs",
+    "file_convert_cifti_version_convert_cargs",
     "file_convert_cifti_version_convert_params",
+    "file_convert_execute",
+    "file_convert_nifti_version_convert_cargs",
     "file_convert_nifti_version_convert_params",
+    "file_convert_outputs",
     "file_convert_params",
 ]

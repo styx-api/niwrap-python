@@ -14,7 +14,7 @@ MRIS_PROFILE_CLUSTERING_METADATA = Metadata(
 
 
 MrisProfileClusteringParameters = typing.TypedDict('MrisProfileClusteringParameters', {
-    "__STYXTYPE__": typing.Literal["mris_profileClustering"],
+    "@type": typing.Literal["freesurfer.mris_profileClustering"],
     "input_file": InputPathType,
     "output_file": str,
     "other_options": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_profileClustering": mris_profile_clustering_cargs,
+        "freesurfer.mris_profileClustering": mris_profile_clustering_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_profileClustering": mris_profile_clustering_outputs,
+        "freesurfer.mris_profileClustering": mris_profile_clustering_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mris_profile_clustering_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_profileClustering",
+        "@type": "freesurfer.mris_profileClustering",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "MrisProfileClusteringOutputs",
     "MrisProfileClusteringParameters",
     "mris_profile_clustering",
+    "mris_profile_clustering_cargs",
+    "mris_profile_clustering_execute",
+    "mris_profile_clustering_outputs",
     "mris_profile_clustering_params",
 ]

@@ -14,7 +14,7 @@ V_3D_LOMB_SCARGLE_METADATA = Metadata(
 
 
 V3dLombScargleParameters = typing.TypedDict('V3dLombScargleParameters', {
-    "__STYXTYPE__": typing.Literal["3dLombScargle"],
+    "@type": typing.Literal["afni.3dLombScargle"],
     "prefix": str,
     "inset": InputPathType,
     "censor_1d": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLombScargle": v_3d_lomb_scargle_cargs,
+        "afni.3dLombScargle": v_3d_lomb_scargle_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLombScargle": v_3d_lomb_scargle_outputs,
+        "afni.3dLombScargle": v_3d_lomb_scargle_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def v_3d_lomb_scargle_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLombScargle",
+        "@type": "afni.3dLombScargle",
         "prefix": prefix,
         "inset": inset,
         "out_pow_spec": out_pow_spec,
@@ -303,5 +303,8 @@ __all__ = [
     "V3dLombScargleParameters",
     "V_3D_LOMB_SCARGLE_METADATA",
     "v_3d_lomb_scargle",
+    "v_3d_lomb_scargle_cargs",
+    "v_3d_lomb_scargle_execute",
+    "v_3d_lomb_scargle_outputs",
     "v_3d_lomb_scargle_params",
 ]

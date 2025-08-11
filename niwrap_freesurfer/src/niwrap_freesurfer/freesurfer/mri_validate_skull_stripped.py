@@ -14,7 +14,7 @@ MRI_VALIDATE_SKULL_STRIPPED_METADATA = Metadata(
 
 
 MriValidateSkullStrippedParameters = typing.TypedDict('MriValidateSkullStrippedParameters', {
-    "__STYXTYPE__": typing.Literal["mri_validate_skull_stripped"],
+    "@type": typing.Literal["freesurfer.mri_validate_skull_stripped"],
     "mri_reference": InputPathType,
     "mri_test": InputPathType,
     "weight": float,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_validate_skull_stripped": mri_validate_skull_stripped_cargs,
+        "freesurfer.mri_validate_skull_stripped": mri_validate_skull_stripped_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_validate_skull_stripped_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_validate_skull_stripped",
+        "@type": "freesurfer.mri_validate_skull_stripped",
         "mri_reference": mri_reference,
         "mri_test": mri_test,
         "weight": weight,
@@ -184,5 +184,8 @@ __all__ = [
     "MriValidateSkullStrippedOutputs",
     "MriValidateSkullStrippedParameters",
     "mri_validate_skull_stripped",
+    "mri_validate_skull_stripped_cargs",
+    "mri_validate_skull_stripped_execute",
+    "mri_validate_skull_stripped_outputs",
     "mri_validate_skull_stripped_params",
 ]

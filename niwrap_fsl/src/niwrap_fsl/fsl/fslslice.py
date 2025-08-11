@@ -14,7 +14,7 @@ FSLSLICE_METADATA = Metadata(
 
 
 FslsliceParameters = typing.TypedDict('FslsliceParameters', {
-    "__STYXTYPE__": typing.Literal["fslslice"],
+    "@type": typing.Literal["fsl.fslslice"],
     "volume": InputPathType,
     "output_basename": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslslice": fslslice_cargs,
+        "fsl.fslslice": fslslice_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslslice": fslslice_outputs,
+        "fsl.fslslice": fslslice_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fslslice_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslslice",
+        "@type": "fsl.fslslice",
         "volume": volume,
     }
     if output_basename is not None:
@@ -182,5 +182,8 @@ __all__ = [
     "FslsliceOutputs",
     "FslsliceParameters",
     "fslslice",
+    "fslslice_cargs",
+    "fslslice_execute",
+    "fslslice_outputs",
     "fslslice_params",
 ]

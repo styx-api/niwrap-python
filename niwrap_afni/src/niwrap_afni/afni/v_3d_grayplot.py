@@ -14,7 +14,7 @@ V_3D_GRAYPLOT_METADATA = Metadata(
 
 
 V3dGrayplotParameters = typing.TypedDict('V3dGrayplotParameters', {
-    "__STYXTYPE__": typing.Literal["3dGrayplot"],
+    "@type": typing.Literal["afni.3dGrayplot"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "prefix": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dGrayplot": v_3d_grayplot_cargs,
+        "afni.3dGrayplot": v_3d_grayplot_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dGrayplot": v_3d_grayplot_outputs,
+        "afni.3dGrayplot": v_3d_grayplot_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def v_3d_grayplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dGrayplot",
+        "@type": "afni.3dGrayplot",
         "input": input_,
         "resample_old": resample_old,
         "pvorder": pvorder,
@@ -339,5 +339,8 @@ __all__ = [
     "V3dGrayplotParameters",
     "V_3D_GRAYPLOT_METADATA",
     "v_3d_grayplot",
+    "v_3d_grayplot_cargs",
+    "v_3d_grayplot_execute",
+    "v_3d_grayplot_outputs",
     "v_3d_grayplot_params",
 ]

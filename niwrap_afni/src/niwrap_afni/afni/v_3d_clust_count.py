@@ -14,7 +14,7 @@ V_3D_CLUST_COUNT_METADATA = Metadata(
 
 
 V3dClustCountParameters = typing.TypedDict('V3dClustCountParameters', {
-    "__STYXTYPE__": typing.Literal["3dClustCount"],
+    "@type": typing.Literal["afni.3dClustCount"],
     "datasets": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "final": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dClustCount": v_3d_clust_count_cargs,
+        "afni.3dClustCount": v_3d_clust_count_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dClustCount": v_3d_clust_count_outputs,
+        "afni.3dClustCount": v_3d_clust_count_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def v_3d_clust_count_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dClustCount",
+        "@type": "afni.3dClustCount",
         "datasets": datasets,
         "final": final,
         "quiet": quiet,
@@ -225,5 +225,8 @@ __all__ = [
     "V3dClustCountParameters",
     "V_3D_CLUST_COUNT_METADATA",
     "v_3d_clust_count",
+    "v_3d_clust_count_cargs",
+    "v_3d_clust_count_execute",
+    "v_3d_clust_count_outputs",
     "v_3d_clust_count_params",
 ]

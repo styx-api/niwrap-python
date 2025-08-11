@@ -14,7 +14,7 @@ POST_RECON_ALL_METADATA = Metadata(
 
 
 PostReconAllParameters = typing.TypedDict('PostReconAllParameters', {
-    "__STYXTYPE__": typing.Literal["post-recon-all"],
+    "@type": typing.Literal["freesurfer.post-recon-all"],
     "subject": str,
     "subfields": bool,
     "no_subfields": bool,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "post-recon-all": post_recon_all_cargs,
+        "freesurfer.post-recon-all": post_recon_all_cargs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def post_recon_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "post-recon-all",
+        "@type": "freesurfer.post-recon-all",
         "subject": subject,
         "subfields": subfields,
         "no_subfields": no_subfields,
@@ -346,5 +346,8 @@ __all__ = [
     "PostReconAllOutputs",
     "PostReconAllParameters",
     "post_recon_all",
+    "post_recon_all_cargs",
+    "post_recon_all_execute",
+    "post_recon_all_outputs",
     "post_recon_all_params",
 ]

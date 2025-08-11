@@ -14,7 +14,7 @@ CREATE_DTICOHORT_METADATA = Metadata(
 
 
 CreateDticohortParameters = typing.TypedDict('CreateDticohortParameters', {
-    "__STYXTYPE__": typing.Literal["CreateDTICohort"],
+    "@type": typing.Literal["ants.CreateDTICohort"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "dti_atlas": InputPathType,
     "label_mask_image": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "CreateDTICohort": create_dticohort_cargs,
+        "ants.CreateDTICohort": create_dticohort_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "CreateDTICohort": create_dticohort_outputs,
+        "ants.CreateDTICohort": create_dticohort_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def create_dticohort_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "CreateDTICohort",
+        "@type": "ants.CreateDTICohort",
         "dti_atlas": dti_atlas,
         "dwi_parameters": dwi_parameters,
         "output": output,
@@ -305,5 +305,8 @@ __all__ = [
     "CreateDticohortOutputs",
     "CreateDticohortParameters",
     "create_dticohort",
+    "create_dticohort_cargs",
+    "create_dticohort_execute",
+    "create_dticohort_outputs",
     "create_dticohort_params",
 ]

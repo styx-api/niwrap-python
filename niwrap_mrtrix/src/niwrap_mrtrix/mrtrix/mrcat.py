@@ -14,14 +14,14 @@ MRCAT_METADATA = Metadata(
 
 
 MrcatConfigParameters = typing.TypedDict('MrcatConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrcat.config"],
     "key": str,
     "value": str,
 })
 
 
 MrcatParameters = typing.TypedDict('MrcatParameters', {
-    "__STYXTYPE__": typing.Literal["mrcat"],
+    "@type": typing.Literal["mrtrix.mrcat"],
     "axis": typing.NotRequired[int | None],
     "datatype": typing.NotRequired[str | None],
     "info": bool,
@@ -50,8 +50,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrcat": mrcat_cargs,
-        "config": mrcat_config_cargs,
+        "mrtrix.mrcat": mrcat_cargs,
+        "mrtrix.mrcat.config": mrcat_config_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrcat": mrcat_outputs,
+        "mrtrix.mrcat": mrcat_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mrcat_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrcat.config",
         "key": key,
         "value": value,
     }
@@ -170,7 +170,7 @@ def mrcat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrcat",
+        "@type": "mrtrix.mrcat",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -231,7 +231,7 @@ def mrcat_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -377,6 +377,10 @@ __all__ = [
     "MrcatOutputs",
     "MrcatParameters",
     "mrcat",
+    "mrcat_cargs",
+    "mrcat_config_cargs",
     "mrcat_config_params",
+    "mrcat_execute",
+    "mrcat_outputs",
     "mrcat_params",
 ]

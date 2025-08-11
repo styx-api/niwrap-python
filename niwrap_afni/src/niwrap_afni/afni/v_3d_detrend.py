@@ -14,7 +14,7 @@ V_3D_DETREND_METADATA = Metadata(
 
 
 V3dDetrendParameters = typing.TypedDict('V3dDetrendParameters', {
-    "__STYXTYPE__": typing.Literal["3dDetrend"],
+    "@type": typing.Literal["afni.3dDetrend"],
     "in_file": InputPathType,
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDetrend": v_3d_detrend_cargs,
+        "afni.3dDetrend": v_3d_detrend_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDetrend": v_3d_detrend_outputs,
+        "afni.3dDetrend": v_3d_detrend_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def v_3d_detrend_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDetrend",
+        "@type": "afni.3dDetrend",
         "in_file": in_file,
     }
     if outputtype is not None:
@@ -187,5 +187,8 @@ __all__ = [
     "V3dDetrendParameters",
     "V_3D_DETREND_METADATA",
     "v_3d_detrend",
+    "v_3d_detrend_cargs",
+    "v_3d_detrend_execute",
+    "v_3d_detrend_outputs",
     "v_3d_detrend_params",
 ]

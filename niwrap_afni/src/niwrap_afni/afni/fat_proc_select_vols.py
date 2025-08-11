@@ -14,7 +14,7 @@ FAT_PROC_SELECT_VOLS_METADATA = Metadata(
 
 
 FatProcSelectVolsParameters = typing.TypedDict('FatProcSelectVolsParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_select_vols"],
+    "@type": typing.Literal["afni.fat_proc_select_vols"],
     "dwi_input": InputPathType,
     "img_input": InputPathType,
     "prefix": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_select_vols": fat_proc_select_vols_cargs,
+        "afni.fat_proc_select_vols": fat_proc_select_vols_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_select_vols": fat_proc_select_vols_outputs,
+        "afni.fat_proc_select_vols": fat_proc_select_vols_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def fat_proc_select_vols_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_select_vols",
+        "@type": "afni.fat_proc_select_vols",
         "dwi_input": dwi_input,
         "img_input": img_input,
         "prefix": prefix,
@@ -262,5 +262,8 @@ __all__ = [
     "FatProcSelectVolsOutputs",
     "FatProcSelectVolsParameters",
     "fat_proc_select_vols",
+    "fat_proc_select_vols_cargs",
+    "fat_proc_select_vols_execute",
+    "fat_proc_select_vols_outputs",
     "fat_proc_select_vols_params",
 ]

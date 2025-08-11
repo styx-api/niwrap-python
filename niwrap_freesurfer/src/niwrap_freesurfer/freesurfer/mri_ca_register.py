@@ -14,7 +14,7 @@ MRI_CA_REGISTER_METADATA = Metadata(
 
 
 MriCaRegisterParameters = typing.TypedDict('MriCaRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_ca_register"],
+    "@type": typing.Literal["freesurfer.mri_ca_register"],
     "input_volume": InputPathType,
     "template": InputPathType,
     "output_volume": str,
@@ -69,7 +69,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_ca_register": mri_ca_register_cargs,
+        "freesurfer.mri_ca_register": mri_ca_register_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_ca_register": mri_ca_register_outputs,
+        "freesurfer.mri_ca_register": mri_ca_register_outputs,
     }.get(t)
 
 
@@ -188,7 +188,7 @@ def mri_ca_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_ca_register",
+        "@type": "freesurfer.mri_ca_register",
         "input_volume": input_volume,
         "template": template,
         "output_volume": output_volume,
@@ -612,5 +612,8 @@ __all__ = [
     "MriCaRegisterOutputs",
     "MriCaRegisterParameters",
     "mri_ca_register",
+    "mri_ca_register_cargs",
+    "mri_ca_register_execute",
+    "mri_ca_register_outputs",
     "mri_ca_register_params",
 ]

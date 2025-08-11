@@ -14,7 +14,7 @@ V_2SWAP_METADATA = Metadata(
 
 
 V2swapParameters = typing.TypedDict('V2swapParameters', {
-    "__STYXTYPE__": typing.Literal["2swap"],
+    "@type": typing.Literal["afni.2swap"],
     "quiet": bool,
     "input_files": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "2swap": v_2swap_cargs,
+        "afni.2swap": v_2swap_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v_2swap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "2swap",
+        "@type": "afni.2swap",
         "quiet": quiet,
         "input_files": input_files,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "V2swapParameters",
     "V_2SWAP_METADATA",
     "v_2swap",
+    "v_2swap_cargs",
+    "v_2swap_execute",
+    "v_2swap_outputs",
     "v_2swap_params",
 ]

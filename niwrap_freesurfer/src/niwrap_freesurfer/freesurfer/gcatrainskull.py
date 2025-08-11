@@ -14,7 +14,7 @@ GCATRAINSKULL_METADATA = Metadata(
 
 
 GcatrainskullParameters = typing.TypedDict('GcatrainskullParameters', {
-    "__STYXTYPE__": typing.Literal["gcatrainskull"],
+    "@type": typing.Literal["freesurfer.gcatrainskull"],
     "gcatrain_dir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gcatrainskull": gcatrainskull_cargs,
+        "freesurfer.gcatrainskull": gcatrainskull_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def gcatrainskull_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gcatrainskull",
+        "@type": "freesurfer.gcatrainskull",
         "gcatrain_dir": gcatrain_dir,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "GcatrainskullOutputs",
     "GcatrainskullParameters",
     "gcatrainskull",
+    "gcatrainskull_cargs",
+    "gcatrainskull_execute",
+    "gcatrainskull_outputs",
     "gcatrainskull_params",
 ]

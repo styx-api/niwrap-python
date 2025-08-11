@@ -14,7 +14,7 @@ MRI_CREATE_T2COMBINED_METADATA = Metadata(
 
 
 MriCreateT2combinedParameters = typing.TypedDict('MriCreateT2combinedParameters', {
-    "__STYXTYPE__": typing.Literal["mri_create_t2combined"],
+    "@type": typing.Literal["freesurfer.mri_create_t2combined"],
     "subjid": str,
     "t1wb": InputPathType,
     "t2upper": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_create_t2combined": mri_create_t2combined_cargs,
+        "freesurfer.mri_create_t2combined": mri_create_t2combined_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_create_t2combined": mri_create_t2combined_outputs,
+        "freesurfer.mri_create_t2combined": mri_create_t2combined_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def mri_create_t2combined_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_create_t2combined",
+        "@type": "freesurfer.mri_create_t2combined",
         "subjid": subjid,
         "t1wb": t1wb,
         "t2upper": t2upper,
@@ -230,5 +230,8 @@ __all__ = [
     "MriCreateT2combinedOutputs",
     "MriCreateT2combinedParameters",
     "mri_create_t2combined",
+    "mri_create_t2combined_cargs",
+    "mri_create_t2combined_execute",
+    "mri_create_t2combined_outputs",
     "mri_create_t2combined_params",
 ]

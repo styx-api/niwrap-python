@@ -14,7 +14,7 @@ FSL_SUB_MGH_METADATA = Metadata(
 
 
 FslSubMghParameters = typing.TypedDict('FslSubMghParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_sub_mgh"],
+    "@type": typing.Literal["freesurfer.fsl_sub_mgh"],
     "estimated_time": typing.NotRequired[int | None],
     "queue_name": typing.NotRequired[str | None],
     "architecture": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_sub_mgh": fsl_sub_mgh_cargs,
+        "freesurfer.fsl_sub_mgh": fsl_sub_mgh_cargs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def fsl_sub_mgh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_sub_mgh",
+        "@type": "freesurfer.fsl_sub_mgh",
         "flags_in_scripts": flags_in_scripts,
         "verbose": verbose,
     }
@@ -331,5 +331,8 @@ __all__ = [
     "FslSubMghOutputs",
     "FslSubMghParameters",
     "fsl_sub_mgh",
+    "fsl_sub_mgh_cargs",
+    "fsl_sub_mgh_execute",
+    "fsl_sub_mgh_outputs",
     "fsl_sub_mgh_params",
 ]

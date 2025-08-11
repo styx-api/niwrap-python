@@ -14,7 +14,7 @@ REBASE_TENSOR_IMAGE_METADATA = Metadata(
 
 
 RebaseTensorImageParameters = typing.TypedDict('RebaseTensorImageParameters', {
-    "__STYXTYPE__": typing.Literal["RebaseTensorImage"],
+    "@type": typing.Literal["ants.RebaseTensorImage"],
     "dimension": int,
     "infile": InputPathType,
     "outfile": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "RebaseTensorImage": rebase_tensor_image_cargs,
+        "ants.RebaseTensorImage": rebase_tensor_image_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "RebaseTensorImage": rebase_tensor_image_outputs,
+        "ants.RebaseTensorImage": rebase_tensor_image_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def rebase_tensor_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "RebaseTensorImage",
+        "@type": "ants.RebaseTensorImage",
         "dimension": dimension,
         "infile": infile,
         "outfile": outfile,
@@ -208,5 +208,8 @@ __all__ = [
     "RebaseTensorImageOutputs",
     "RebaseTensorImageParameters",
     "rebase_tensor_image",
+    "rebase_tensor_image_cargs",
+    "rebase_tensor_image_execute",
+    "rebase_tensor_image_outputs",
     "rebase_tensor_image_params",
 ]

@@ -14,21 +14,21 @@ LABEL_RESAMPLE_METADATA = Metadata(
 
 
 LabelResampleAreaSurfsParameters = typing.TypedDict('LabelResampleAreaSurfsParameters', {
-    "__STYXTYPE__": typing.Literal["area_surfs"],
+    "@type": typing.Literal["workbench.label-resample.area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 LabelResampleAreaMetricsParameters = typing.TypedDict('LabelResampleAreaMetricsParameters', {
-    "__STYXTYPE__": typing.Literal["area_metrics"],
+    "@type": typing.Literal["workbench.label-resample.area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 LabelResampleParameters = typing.TypedDict('LabelResampleParameters', {
-    "__STYXTYPE__": typing.Literal["label-resample"],
+    "@type": typing.Literal["workbench.label-resample"],
     "label_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -55,9 +55,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-resample": label_resample_cargs,
-        "area_surfs": label_resample_area_surfs_cargs,
-        "area_metrics": label_resample_area_metrics_cargs,
+        "workbench.label-resample": label_resample_cargs,
+        "workbench.label-resample.area_surfs": label_resample_area_surfs_cargs,
+        "workbench.label-resample.area_metrics": label_resample_area_metrics_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-resample": label_resample_outputs,
+        "workbench.label-resample": label_resample_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def label_resample_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "area_surfs",
+        "@type": "workbench.label-resample.area_surfs",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -132,7 +132,7 @@ def label_resample_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "area_metrics",
+        "@type": "workbench.label-resample.area_metrics",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -210,7 +210,7 @@ def label_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-resample",
+        "@type": "workbench.label-resample",
         "label_in": label_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -252,9 +252,9 @@ def label_resample_cargs(
     cargs.append(params.get("method"))
     cargs.append(params.get("label_out"))
     if params.get("area_surfs") is not None:
-        cargs.extend(dyn_cargs(params.get("area_surfs")["__STYXTYPE__"])(params.get("area_surfs"), execution))
+        cargs.extend(dyn_cargs(params.get("area_surfs")["@type"])(params.get("area_surfs"), execution))
     if params.get("area_metrics") is not None:
-        cargs.extend(dyn_cargs(params.get("area_metrics")["__STYXTYPE__"])(params.get("area_metrics"), execution))
+        cargs.extend(dyn_cargs(params.get("area_metrics")["@type"])(params.get("area_metrics"), execution))
     if params.get("opt_current_roi_roi_metric") is not None:
         cargs.extend([
             "-current-roi",
@@ -429,7 +429,12 @@ __all__ = [
     "LabelResampleOutputs",
     "LabelResampleParameters",
     "label_resample",
+    "label_resample_area_metrics_cargs",
     "label_resample_area_metrics_params",
+    "label_resample_area_surfs_cargs",
     "label_resample_area_surfs_params",
+    "label_resample_cargs",
+    "label_resample_execute",
+    "label_resample_outputs",
     "label_resample_params",
 ]

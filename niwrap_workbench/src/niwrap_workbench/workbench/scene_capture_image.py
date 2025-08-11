@@ -14,35 +14,35 @@ SCENE_CAPTURE_IMAGE_METADATA = Metadata(
 
 
 SceneCaptureImageSizeWidthHeightParameters = typing.TypedDict('SceneCaptureImageSizeWidthHeightParameters', {
-    "__STYXTYPE__": typing.Literal["size_width_height"],
+    "@type": typing.Literal["workbench.scene-capture-image.size_width_height"],
     "width": float,
     "height": float,
 })
 
 
 SceneCaptureImageResolutionParameters = typing.TypedDict('SceneCaptureImageResolutionParameters', {
-    "__STYXTYPE__": typing.Literal["resolution"],
+    "@type": typing.Literal["workbench.scene-capture-image.resolution"],
     "number_of_pixels": float,
     "units_name": str,
 })
 
 
 SceneCaptureImageSetMapYokeParameters = typing.TypedDict('SceneCaptureImageSetMapYokeParameters', {
-    "__STYXTYPE__": typing.Literal["set_map_yoke"],
+    "@type": typing.Literal["workbench.scene-capture-image.set_map_yoke"],
     "map_yoking_roman_numeral": str,
     "map_undex": int,
 })
 
 
 SceneCaptureImageConnDbLoginParameters = typing.TypedDict('SceneCaptureImageConnDbLoginParameters', {
-    "__STYXTYPE__": typing.Literal["conn_db_login"],
+    "@type": typing.Literal["workbench.scene-capture-image.conn_db_login"],
     "username": str,
     "password": str,
 })
 
 
 SceneCaptureImageParameters = typing.TypedDict('SceneCaptureImageParameters', {
-    "__STYXTYPE__": typing.Literal["scene-capture-image"],
+    "@type": typing.Literal["workbench.scene-capture-image"],
     "scene_file": str,
     "scene_name_or_number": str,
     "image_file_name": str,
@@ -75,11 +75,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "scene-capture-image": scene_capture_image_cargs,
-        "size_width_height": scene_capture_image_size_width_height_cargs,
-        "resolution": scene_capture_image_resolution_cargs,
-        "set_map_yoke": scene_capture_image_set_map_yoke_cargs,
-        "conn_db_login": scene_capture_image_conn_db_login_cargs,
+        "workbench.scene-capture-image": scene_capture_image_cargs,
+        "workbench.scene-capture-image.size_width_height": scene_capture_image_size_width_height_cargs,
+        "workbench.scene-capture-image.resolution": scene_capture_image_resolution_cargs,
+        "workbench.scene-capture-image.set_map_yoke": scene_capture_image_set_map_yoke_cargs,
+        "workbench.scene-capture-image.conn_db_login": scene_capture_image_conn_db_login_cargs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def scene_capture_image_size_width_height_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "size_width_height",
+        "@type": "workbench.scene-capture-image.size_width_height",
         "width": width,
         "height": height,
     }
@@ -157,7 +157,7 @@ def scene_capture_image_resolution_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "resolution",
+        "@type": "workbench.scene-capture-image.resolution",
         "number_of_pixels": number_of_pixels,
         "units_name": units_name,
     }
@@ -199,7 +199,7 @@ def scene_capture_image_set_map_yoke_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "set_map_yoke",
+        "@type": "workbench.scene-capture-image.set_map_yoke",
         "map_yoking_roman_numeral": map_yoking_roman_numeral,
         "map_undex": map_undex,
     }
@@ -240,7 +240,7 @@ def scene_capture_image_conn_db_login_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "conn_db_login",
+        "@type": "workbench.scene-capture-image.conn_db_login",
         "username": username,
         "password": password,
     }
@@ -349,7 +349,7 @@ def scene_capture_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "scene-capture-image",
+        "@type": "workbench.scene-capture-image",
         "scene_file": scene_file,
         "scene_name_or_number": scene_name_or_number,
         "image_file_name": image_file_name,
@@ -404,7 +404,7 @@ def scene_capture_image_cargs(
     if params.get("opt_size_capture"):
         cargs.append("-size-capture")
     if params.get("size_width_height") is not None:
-        cargs.extend(dyn_cargs(params.get("size_width_height")["__STYXTYPE__"])(params.get("size_width_height"), execution))
+        cargs.extend(dyn_cargs(params.get("size_width_height")["@type"])(params.get("size_width_height"), execution))
     if params.get("opt_size_width_width") is not None:
         cargs.extend([
             "-size-width",
@@ -421,7 +421,7 @@ def scene_capture_image_cargs(
             params.get("opt_units_units")
         ])
     if params.get("resolution") is not None:
-        cargs.extend(dyn_cargs(params.get("resolution")["__STYXTYPE__"])(params.get("resolution"), execution))
+        cargs.extend(dyn_cargs(params.get("resolution")["@type"])(params.get("resolution"), execution))
     if params.get("opt_margin_size") is not None:
         cargs.extend([
             "-margin",
@@ -430,9 +430,9 @@ def scene_capture_image_cargs(
     if params.get("opt_no_scene_colors"):
         cargs.append("-no-scene-colors")
     if params.get("set_map_yoke") is not None:
-        cargs.extend(dyn_cargs(params.get("set_map_yoke")["__STYXTYPE__"])(params.get("set_map_yoke"), execution))
+        cargs.extend(dyn_cargs(params.get("set_map_yoke")["@type"])(params.get("set_map_yoke"), execution))
     if params.get("conn_db_login") is not None:
-        cargs.extend(dyn_cargs(params.get("conn_db_login")["__STYXTYPE__"])(params.get("conn_db_login"), execution))
+        cargs.extend(dyn_cargs(params.get("conn_db_login")["@type"])(params.get("conn_db_login"), execution))
     if params.get("opt_show_capture_settings"):
         cargs.append("-show-capture-settings")
     if params.get("opt_renderer_renderer") is not None:
@@ -706,9 +706,16 @@ __all__ = [
     "SceneCaptureImageSetMapYokeParameters",
     "SceneCaptureImageSizeWidthHeightParameters",
     "scene_capture_image",
+    "scene_capture_image_cargs",
+    "scene_capture_image_conn_db_login_cargs",
     "scene_capture_image_conn_db_login_params",
+    "scene_capture_image_execute",
+    "scene_capture_image_outputs",
     "scene_capture_image_params",
+    "scene_capture_image_resolution_cargs",
     "scene_capture_image_resolution_params",
+    "scene_capture_image_set_map_yoke_cargs",
     "scene_capture_image_set_map_yoke_params",
+    "scene_capture_image_size_width_height_cargs",
     "scene_capture_image_size_width_height_params",
 ]

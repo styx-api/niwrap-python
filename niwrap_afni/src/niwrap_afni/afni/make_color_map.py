@@ -14,7 +14,7 @@ MAKE_COLOR_MAP_METADATA = Metadata(
 
 
 MakeColorMapParameters = typing.TypedDict('MakeColorMapParameters', {
-    "__STYXTYPE__": typing.Literal["MakeColorMap"],
+    "@type": typing.Literal["afni.MakeColorMap"],
     "fiducials_ncol": typing.NotRequired[InputPathType | None],
     "fiducials": typing.NotRequired[InputPathType | None],
     "num_colors": typing.NotRequired[float | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "MakeColorMap": make_color_map_cargs,
+        "afni.MakeColorMap": make_color_map_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "MakeColorMap": make_color_map_outputs,
+        "afni.MakeColorMap": make_color_map_outputs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def make_color_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "MakeColorMap",
+        "@type": "afni.MakeColorMap",
         "flipupdown": flipupdown,
         "skip_last": skip_last,
         "show_fscolut": show_fscolut,
@@ -413,5 +413,8 @@ __all__ = [
     "MakeColorMapOutputs",
     "MakeColorMapParameters",
     "make_color_map",
+    "make_color_map_cargs",
+    "make_color_map_execute",
+    "make_color_map_outputs",
     "make_color_map_params",
 ]

@@ -14,7 +14,7 @@ TRACTSTATS2TABLE_METADATA = Metadata(
 
 
 Tractstats2tableParameters = typing.TypedDict('Tractstats2tableParameters', {
-    "__STYXTYPE__": typing.Literal["tractstats2table"],
+    "@type": typing.Literal["freesurfer.tractstats2table"],
     "inputs": typing.NotRequired[list[str] | None],
     "load_pathstats_from_file": typing.NotRequired[InputPathType | None],
     "overall": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tractstats2table": tractstats2table_cargs,
+        "freesurfer.tractstats2table": tractstats2table_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tractstats2table": tractstats2table_outputs,
+        "freesurfer.tractstats2table": tractstats2table_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def tractstats2table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tractstats2table",
+        "@type": "freesurfer.tractstats2table",
         "overall": overall,
         "byvoxel": byvoxel,
         "tablefile": tablefile,
@@ -273,5 +273,8 @@ __all__ = [
     "Tractstats2tableOutputs",
     "Tractstats2tableParameters",
     "tractstats2table",
+    "tractstats2table_cargs",
+    "tractstats2table_execute",
+    "tractstats2table_outputs",
     "tractstats2table_params",
 ]

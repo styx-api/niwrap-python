@@ -14,7 +14,7 @@ V_1DSOUND_METADATA = Metadata(
 
 
 V1dsoundParameters = typing.TypedDict('V1dsoundParameters', {
-    "__STYXTYPE__": typing.Literal["1dsound"],
+    "@type": typing.Literal["afni.1dsound"],
     "tsfile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "encoding_16PCM": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dsound": v_1dsound_cargs,
+        "afni.1dsound": v_1dsound_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dsound": v_1dsound_outputs,
+        "afni.1dsound": v_1dsound_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def v_1dsound_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dsound",
+        "@type": "afni.1dsound",
         "tsfile": tsfile,
         "encoding_16PCM": encoding_16_pcm,
         "encoding_8PCM": encoding_8_pcm,
@@ -288,5 +288,8 @@ __all__ = [
     "V1dsoundParameters",
     "V_1DSOUND_METADATA",
     "v_1dsound",
+    "v_1dsound_cargs",
+    "v_1dsound_execute",
+    "v_1dsound_outputs",
     "v_1dsound_params",
 ]

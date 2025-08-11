@@ -14,7 +14,7 @@ FLIRT_AVERAGE_METADATA = Metadata(
 
 
 FlirtAverageParameters = typing.TypedDict('FlirtAverageParameters', {
-    "__STYXTYPE__": typing.Literal["flirt_average"],
+    "@type": typing.Literal["fsl.flirt_average"],
     "ninputs": int,
     "input1": InputPathType,
     "input2": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "flirt_average": flirt_average_cargs,
+        "fsl.flirt_average": flirt_average_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "flirt_average": flirt_average_outputs,
+        "fsl.flirt_average": flirt_average_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def flirt_average_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt_average",
+        "@type": "fsl.flirt_average",
         "ninputs": ninputs,
         "input1": input1,
         "input2": input2,
@@ -229,5 +229,8 @@ __all__ = [
     "FlirtAverageOutputs",
     "FlirtAverageParameters",
     "flirt_average",
+    "flirt_average_cargs",
+    "flirt_average_execute",
+    "flirt_average_outputs",
     "flirt_average_params",
 ]

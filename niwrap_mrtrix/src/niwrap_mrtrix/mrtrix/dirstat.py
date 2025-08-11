@@ -14,21 +14,21 @@ DIRSTAT_METADATA = Metadata(
 
 
 DirstatFslgradParameters = typing.TypedDict('DirstatFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dirstat.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DirstatConfigParameters = typing.TypedDict('DirstatConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dirstat.config"],
     "key": str,
     "value": str,
 })
 
 
 DirstatParameters = typing.TypedDict('DirstatParameters', {
-    "__STYXTYPE__": typing.Literal["dirstat"],
+    "@type": typing.Literal["mrtrix.dirstat"],
     "output": typing.NotRequired[str | None],
     "shells": typing.NotRequired[list[float] | None],
     "grad": typing.NotRequired[InputPathType | None],
@@ -57,9 +57,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dirstat": dirstat_cargs,
-        "fslgrad": dirstat_fslgrad_cargs,
-        "config": dirstat_config_cargs,
+        "mrtrix.dirstat": dirstat_cargs,
+        "mrtrix.dirstat.fslgrad": dirstat_fslgrad_cargs,
+        "mrtrix.dirstat.config": dirstat_config_cargs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def dirstat_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dirstat.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -139,7 +139,7 @@ def dirstat_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dirstat.config",
         "key": key,
         "value": value,
     }
@@ -233,7 +233,7 @@ def dirstat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dirstat",
+        "@type": "mrtrix.dirstat",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -288,7 +288,7 @@ def dirstat_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -303,7 +303,7 @@ def dirstat_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -524,7 +524,12 @@ __all__ = [
     "DirstatOutputs",
     "DirstatParameters",
     "dirstat",
+    "dirstat_cargs",
+    "dirstat_config_cargs",
     "dirstat_config_params",
+    "dirstat_execute",
+    "dirstat_fslgrad_cargs",
     "dirstat_fslgrad_params",
+    "dirstat_outputs",
     "dirstat_params",
 ]

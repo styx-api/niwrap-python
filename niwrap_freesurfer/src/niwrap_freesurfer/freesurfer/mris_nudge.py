@@ -14,7 +14,7 @@ MRIS_NUDGE_METADATA = Metadata(
 
 
 MrisNudgeParameters = typing.TypedDict('MrisNudgeParameters', {
-    "__STYXTYPE__": typing.Literal["mris_nudge"],
+    "@type": typing.Literal["freesurfer.mris_nudge"],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "vertex": int,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_nudge": mris_nudge_cargs,
+        "freesurfer.mris_nudge": mris_nudge_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_nudge": mris_nudge_outputs,
+        "freesurfer.mris_nudge": mris_nudge_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mris_nudge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_nudge",
+        "@type": "freesurfer.mris_nudge",
         "input_surface": input_surface,
         "input_volume": input_volume,
         "vertex": vertex,
@@ -204,5 +204,8 @@ __all__ = [
     "MrisNudgeOutputs",
     "MrisNudgeParameters",
     "mris_nudge",
+    "mris_nudge_cargs",
+    "mris_nudge_execute",
+    "mris_nudge_outputs",
     "mris_nudge_params",
 ]

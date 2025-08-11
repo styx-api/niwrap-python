@@ -14,7 +14,7 @@ POINTFLIRT_METADATA = Metadata(
 
 
 PointflirtParameters = typing.TypedDict('PointflirtParameters', {
-    "__STYXTYPE__": typing.Literal["pointflirt"],
+    "@type": typing.Literal["fsl.pointflirt"],
     "invol_coords": InputPathType,
     "refvol_coords": InputPathType,
     "out_matrix": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pointflirt": pointflirt_cargs,
+        "fsl.pointflirt": pointflirt_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "pointflirt": pointflirt_outputs,
+        "fsl.pointflirt": pointflirt_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def pointflirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pointflirt",
+        "@type": "fsl.pointflirt",
         "invol_coords": invol_coords,
         "refvol_coords": refvol_coords,
         "use_vox": use_vox,
@@ -245,5 +245,8 @@ __all__ = [
     "PointflirtOutputs",
     "PointflirtParameters",
     "pointflirt",
+    "pointflirt_cargs",
+    "pointflirt_execute",
+    "pointflirt_outputs",
     "pointflirt_params",
 ]

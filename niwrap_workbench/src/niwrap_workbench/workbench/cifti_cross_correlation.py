@@ -14,7 +14,7 @@ CIFTI_CROSS_CORRELATION_METADATA = Metadata(
 
 
 CiftiCrossCorrelationParameters = typing.TypedDict('CiftiCrossCorrelationParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-cross-correlation"],
+    "@type": typing.Literal["workbench.cifti-cross-correlation"],
     "cifti_a": InputPathType,
     "cifti_b": InputPathType,
     "cifti_out": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-cross-correlation": cifti_cross_correlation_cargs,
+        "workbench.cifti-cross-correlation": cifti_cross_correlation_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-cross-correlation": cifti_cross_correlation_outputs,
+        "workbench.cifti-cross-correlation": cifti_cross_correlation_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def cifti_cross_correlation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-cross-correlation",
+        "@type": "workbench.cifti-cross-correlation",
         "cifti_a": cifti_a,
         "cifti_b": cifti_b,
         "cifti_out": cifti_out,
@@ -248,5 +248,8 @@ __all__ = [
     "CiftiCrossCorrelationOutputs",
     "CiftiCrossCorrelationParameters",
     "cifti_cross_correlation",
+    "cifti_cross_correlation_cargs",
+    "cifti_cross_correlation_execute",
+    "cifti_cross_correlation_outputs",
     "cifti_cross_correlation_params",
 ]

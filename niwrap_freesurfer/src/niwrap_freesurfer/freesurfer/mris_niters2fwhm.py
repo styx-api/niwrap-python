@@ -14,7 +14,7 @@ MRIS_NITERS2FWHM_METADATA = Metadata(
 
 
 MrisNiters2fwhmParameters = typing.TypedDict('MrisNiters2fwhmParameters', {
-    "__STYXTYPE__": typing.Literal["mris_niters2fwhm"],
+    "@type": typing.Literal["freesurfer.mris_niters2fwhm"],
     "subject": str,
     "hemi": str,
     "surf": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_niters2fwhm": mris_niters2fwhm_cargs,
+        "freesurfer.mris_niters2fwhm": mris_niters2fwhm_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def mris_niters2fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_niters2fwhm",
+        "@type": "freesurfer.mris_niters2fwhm",
         "subject": subject,
         "hemi": hemi,
         "surf": surf,
@@ -251,5 +251,8 @@ __all__ = [
     "MrisNiters2fwhmOutputs",
     "MrisNiters2fwhmParameters",
     "mris_niters2fwhm",
+    "mris_niters2fwhm_cargs",
+    "mris_niters2fwhm_execute",
+    "mris_niters2fwhm_outputs",
     "mris_niters2fwhm_params",
 ]

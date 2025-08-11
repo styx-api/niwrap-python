@@ -14,7 +14,7 @@ MRI_SCLIMBIC_SEG_METADATA = Metadata(
 
 
 MriSclimbicSegParameters = typing.TypedDict('MriSclimbicSegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_sclimbic_seg"],
+    "@type": typing.Literal["freesurfer.mri_sclimbic_seg"],
     "input_file": str,
     "output_file": str,
     "subjects": typing.NotRequired[list[str] | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_sclimbic_seg": mri_sclimbic_seg_cargs,
+        "freesurfer.mri_sclimbic_seg": mri_sclimbic_seg_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_sclimbic_seg": mri_sclimbic_seg_outputs,
+        "freesurfer.mri_sclimbic_seg": mri_sclimbic_seg_outputs,
     }.get(t)
 
 
@@ -154,7 +154,7 @@ def mri_sclimbic_seg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_sclimbic_seg",
+        "@type": "freesurfer.mri_sclimbic_seg",
         "input_file": input_file,
         "output_file": output_file,
         "conform": conform,
@@ -459,5 +459,8 @@ __all__ = [
     "MriSclimbicSegOutputs",
     "MriSclimbicSegParameters",
     "mri_sclimbic_seg",
+    "mri_sclimbic_seg_cargs",
+    "mri_sclimbic_seg_execute",
+    "mri_sclimbic_seg_outputs",
     "mri_sclimbic_seg_params",
 ]

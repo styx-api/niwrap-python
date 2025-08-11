@@ -14,7 +14,7 @@ MRI_DEFACE_METADATA = Metadata(
 
 
 MriDefaceParameters = typing.TypedDict('MriDefaceParameters', {
-    "__STYXTYPE__": typing.Literal["mri_deface"],
+    "@type": typing.Literal["freesurfer.mri_deface"],
     "input_volume": InputPathType,
     "brain_template": InputPathType,
     "face_template": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_deface": mri_deface_cargs,
+        "freesurfer.mri_deface": mri_deface_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_deface": mri_deface_outputs,
+        "freesurfer.mri_deface": mri_deface_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mri_deface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_deface",
+        "@type": "freesurfer.mri_deface",
         "input_volume": input_volume,
         "brain_template": brain_template,
         "face_template": face_template,
@@ -198,5 +198,8 @@ __all__ = [
     "MriDefaceOutputs",
     "MriDefaceParameters",
     "mri_deface",
+    "mri_deface_cargs",
+    "mri_deface_execute",
+    "mri_deface_outputs",
     "mri_deface_params",
 ]

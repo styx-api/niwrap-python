@@ -14,7 +14,7 @@ SURFACE_NORMALS_METADATA = Metadata(
 
 
 SurfaceNormalsParameters = typing.TypedDict('SurfaceNormalsParameters', {
-    "__STYXTYPE__": typing.Literal["surface-normals"],
+    "@type": typing.Literal["workbench.surface-normals"],
     "surface": InputPathType,
     "metric_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-normals": surface_normals_cargs,
+        "workbench.surface-normals": surface_normals_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-normals": surface_normals_outputs,
+        "workbench.surface-normals": surface_normals_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_normals_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-normals",
+        "@type": "workbench.surface-normals",
         "surface": surface,
         "metric_out": metric_out,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "SurfaceNormalsOutputs",
     "SurfaceNormalsParameters",
     "surface_normals",
+    "surface_normals_cargs",
+    "surface_normals_execute",
+    "surface_normals_outputs",
     "surface_normals_params",
 ]

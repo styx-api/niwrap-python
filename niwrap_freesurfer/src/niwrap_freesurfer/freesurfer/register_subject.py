@@ -14,7 +14,7 @@ REGISTER_SUBJECT_METADATA = Metadata(
 
 
 RegisterSubjectParameters = typing.TypedDict('RegisterSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["register_subject"],
+    "@type": typing.Literal["freesurfer.register_subject"],
     "input_volume": typing.NotRequired[InputPathType | None],
     "mask_volume": typing.NotRequired[InputPathType | None],
     "control_points": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "register_subject": register_subject_cargs,
+        "freesurfer.register_subject": register_subject_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "register_subject": register_subject_outputs,
+        "freesurfer.register_subject": register_subject_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def register_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "register_subject",
+        "@type": "freesurfer.register_subject",
     }
     if input_volume is not None:
         params["input_volume"] = input_volume
@@ -229,5 +229,8 @@ __all__ = [
     "RegisterSubjectOutputs",
     "RegisterSubjectParameters",
     "register_subject",
+    "register_subject_cargs",
+    "register_subject_execute",
+    "register_subject_outputs",
     "register_subject_params",
 ]

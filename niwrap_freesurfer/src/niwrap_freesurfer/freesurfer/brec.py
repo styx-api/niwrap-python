@@ -14,7 +14,7 @@ BREC_METADATA = Metadata(
 
 
 BrecParameters = typing.TypedDict('BrecParameters', {
-    "__STYXTYPE__": typing.Literal["brec"],
+    "@type": typing.Literal["freesurfer.brec"],
     "my_file": str,
     "depth_limit": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "brec": brec_cargs,
+        "freesurfer.brec": brec_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def brec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "brec",
+        "@type": "freesurfer.brec",
         "my_file": my_file,
         "depth_limit": depth_limit,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "BrecOutputs",
     "BrecParameters",
     "brec",
+    "brec_cargs",
+    "brec_execute",
+    "brec_outputs",
     "brec_params",
 ]

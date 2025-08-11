@@ -14,7 +14,7 @@ NEURO_DECONVOLVE_PY_METADATA = Metadata(
 
 
 NeuroDeconvolvePyParameters = typing.TypedDict('NeuroDeconvolvePyParameters', {
-    "__STYXTYPE__": typing.Literal["neuro_deconvolve.py"],
+    "@type": typing.Literal["afni.neuro_deconvolve.py"],
     "input_file": InputPathType,
     "prefix": str,
     "script": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "neuro_deconvolve.py": neuro_deconvolve_py_cargs,
+        "afni.neuro_deconvolve.py": neuro_deconvolve_py_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "neuro_deconvolve.py": neuro_deconvolve_py_outputs,
+        "afni.neuro_deconvolve.py": neuro_deconvolve_py_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def neuro_deconvolve_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neuro_deconvolve.py",
+        "@type": "afni.neuro_deconvolve.py",
         "input_file": input_file,
         "prefix": prefix,
         "script": script,
@@ -287,5 +287,8 @@ __all__ = [
     "NeuroDeconvolvePyOutputs",
     "NeuroDeconvolvePyParameters",
     "neuro_deconvolve_py",
+    "neuro_deconvolve_py_cargs",
+    "neuro_deconvolve_py_execute",
+    "neuro_deconvolve_py_outputs",
     "neuro_deconvolve_py_params",
 ]

@@ -14,7 +14,7 @@ APAS2ASEG_METADATA = Metadata(
 
 
 Apas2asegParameters = typing.TypedDict('Apas2asegParameters', {
-    "__STYXTYPE__": typing.Literal["apas2aseg"],
+    "@type": typing.Literal["freesurfer.apas2aseg"],
     "subject": typing.NotRequired[str | None],
     "input_aparc_aseg": typing.NotRequired[InputPathType | None],
     "output_seg": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "apas2aseg": apas2aseg_cargs,
+        "freesurfer.apas2aseg": apas2aseg_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "apas2aseg": apas2aseg_outputs,
+        "freesurfer.apas2aseg": apas2aseg_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def apas2aseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "apas2aseg",
+        "@type": "freesurfer.apas2aseg",
     }
     if subject is not None:
         params["subject"] = subject
@@ -207,5 +207,8 @@ __all__ = [
     "Apas2asegOutputs",
     "Apas2asegParameters",
     "apas2aseg",
+    "apas2aseg_cargs",
+    "apas2aseg_execute",
+    "apas2aseg_outputs",
     "apas2aseg_params",
 ]

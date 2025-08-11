@@ -14,7 +14,7 @@ MRI_CVS_REGISTER_METADATA = Metadata(
 
 
 MriCvsRegisterParameters = typing.TypedDict('MriCvsRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_cvs_register"],
+    "@type": typing.Literal["freesurfer.mri_cvs_register"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "templatedir": typing.NotRequired[str | None],
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_cvs_register": mri_cvs_register_cargs,
+        "freesurfer.mri_cvs_register": mri_cvs_register_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_cvs_register": mri_cvs_register_outputs,
+        "freesurfer.mri_cvs_register": mri_cvs_register_outputs,
     }.get(t)
 
 
@@ -177,7 +177,7 @@ def mri_cvs_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_cvs_register",
+        "@type": "freesurfer.mri_cvs_register",
         "mov_subjid": mov_subjid,
         "mni_flag": mni_flag,
         "step1_flag": step1_flag,
@@ -476,5 +476,8 @@ __all__ = [
     "MriCvsRegisterOutputs",
     "MriCvsRegisterParameters",
     "mri_cvs_register",
+    "mri_cvs_register_cargs",
+    "mri_cvs_register_execute",
+    "mri_cvs_register_outputs",
     "mri_cvs_register_params",
 ]

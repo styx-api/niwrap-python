@@ -14,7 +14,7 @@ AFNI_OPEN_METADATA = Metadata(
 
 
 AfniOpenParameters = typing.TypedDict('AfniOpenParameters', {
-    "__STYXTYPE__": typing.Literal["afni_open"],
+    "@type": typing.Literal["afni.afni_open"],
     "files": list[InputPathType],
     "method": typing.NotRequired[str | None],
     "editor": bool,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni_open": afni_open_cargs,
+        "afni.afni_open": afni_open_cargs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def afni_open_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afni_open",
+        "@type": "afni.afni_open",
         "files": files,
         "editor": editor,
         "downloader": downloader,
@@ -300,5 +300,8 @@ __all__ = [
     "AfniOpenOutputs",
     "AfniOpenParameters",
     "afni_open",
+    "afni_open_cargs",
+    "afni_open_execute",
+    "afni_open_outputs",
     "afni_open_params",
 ]

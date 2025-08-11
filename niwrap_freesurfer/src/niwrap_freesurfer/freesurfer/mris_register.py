@@ -14,7 +14,7 @@ MRIS_REGISTER_METADATA = Metadata(
 
 
 MrisRegisterParameters = typing.TypedDict('MrisRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["mris_register"],
+    "@type": typing.Literal["freesurfer.mris_register"],
     "surf_fname": InputPathType,
     "target": InputPathType,
     "out_fname": str,
@@ -93,7 +93,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_register": mris_register_cargs,
+        "freesurfer.mris_register": mris_register_cargs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_register": mris_register_outputs,
+        "freesurfer.mris_register": mris_register_outputs,
     }.get(t)
 
 
@@ -271,7 +271,7 @@ def mris_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_register",
+        "@type": "freesurfer.mris_register",
         "surf_fname": surf_fname,
         "target": target,
         "out_fname": out_fname,
@@ -923,5 +923,8 @@ __all__ = [
     "MrisRegisterOutputs",
     "MrisRegisterParameters",
     "mris_register",
+    "mris_register_cargs",
+    "mris_register_execute",
+    "mris_register_outputs",
     "mris_register_params",
 ]

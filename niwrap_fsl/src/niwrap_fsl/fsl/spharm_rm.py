@@ -14,7 +14,7 @@ SPHARM_RM_METADATA = Metadata(
 
 
 SpharmRmParameters = typing.TypedDict('SpharmRmParameters', {
-    "__STYXTYPE__": typing.Literal["spharm_rm"],
+    "@type": typing.Literal["fsl.spharm_rm"],
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "spharm_rm": spharm_rm_cargs,
+        "fsl.spharm_rm": spharm_rm_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "spharm_rm": spharm_rm_outputs,
+        "fsl.spharm_rm": spharm_rm_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def spharm_rm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "spharm_rm",
+        "@type": "fsl.spharm_rm",
         "input_file": input_file,
         "output_file": output_file,
         "verbose_flag": verbose_flag,
@@ -223,5 +223,8 @@ __all__ = [
     "SpharmRmOutputs",
     "SpharmRmParameters",
     "spharm_rm",
+    "spharm_rm_cargs",
+    "spharm_rm_execute",
+    "spharm_rm_outputs",
     "spharm_rm_params",
 ]

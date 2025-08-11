@@ -14,7 +14,7 @@ INFLATE_SUBJECT_METADATA = Metadata(
 
 
 InflateSubjectParameters = typing.TypedDict('InflateSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["inflate_subject"],
+    "@type": typing.Literal["freesurfer.inflate_subject"],
     "args": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "inflate_subject": inflate_subject_cargs,
+        "freesurfer.inflate_subject": inflate_subject_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "inflate_subject": inflate_subject_outputs,
+        "freesurfer.inflate_subject": inflate_subject_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def inflate_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "inflate_subject",
+        "@type": "freesurfer.inflate_subject",
     }
     if args is not None:
         params["args"] = args
@@ -174,5 +174,8 @@ __all__ = [
     "InflateSubjectOutputs",
     "InflateSubjectParameters",
     "inflate_subject",
+    "inflate_subject_cargs",
+    "inflate_subject_execute",
+    "inflate_subject_outputs",
     "inflate_subject_params",
 ]

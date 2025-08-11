@@ -14,7 +14,7 @@ V_3D_TQUAL_METADATA = Metadata(
 
 
 V3dTqualParameters = typing.TypedDict('V3dTqualParameters', {
-    "__STYXTYPE__": typing.Literal["3dTqual"],
+    "@type": typing.Literal["afni.3dTqual"],
     "dataset": InputPathType,
     "spearman": bool,
     "quadrant": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTqual": v_3d_tqual_cargs,
+        "afni.3dTqual": v_3d_tqual_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTqual": v_3d_tqual_outputs,
+        "afni.3dTqual": v_3d_tqual_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def v_3d_tqual_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTqual",
+        "@type": "afni.3dTqual",
         "dataset": dataset,
         "spearman": spearman,
         "quadrant": quadrant,
@@ -257,5 +257,8 @@ __all__ = [
     "V3dTqualParameters",
     "V_3D_TQUAL_METADATA",
     "v_3d_tqual",
+    "v_3d_tqual_cargs",
+    "v_3d_tqual_execute",
+    "v_3d_tqual_outputs",
     "v_3d_tqual_params",
 ]

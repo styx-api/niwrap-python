@@ -14,7 +14,7 @@ MRI_EASYREG_METADATA = Metadata(
 
 
 MriEasyregParameters = typing.TypedDict('MriEasyregParameters', {
-    "__STYXTYPE__": typing.Literal["mri_easyreg"],
+    "@type": typing.Literal["freesurfer.mri_easyreg"],
     "reference_image": InputPathType,
     "reference_segmentation": typing.NotRequired[InputPathType | None],
     "floating_image": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_easyreg": mri_easyreg_cargs,
+        "freesurfer.mri_easyreg": mri_easyreg_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_easyreg": mri_easyreg_outputs,
+        "freesurfer.mri_easyreg": mri_easyreg_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def mri_easyreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_easyreg",
+        "@type": "freesurfer.mri_easyreg",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "affine_only": affine_only,
@@ -303,5 +303,8 @@ __all__ = [
     "MriEasyregOutputs",
     "MriEasyregParameters",
     "mri_easyreg",
+    "mri_easyreg_cargs",
+    "mri_easyreg_execute",
+    "mri_easyreg_outputs",
     "mri_easyreg_params",
 ]

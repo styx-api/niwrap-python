@@ -14,7 +14,7 @@ V__ROI_MODAL_GROW_METADATA = Metadata(
 
 
 VRoiModalGrowParameters = typing.TypedDict('VRoiModalGrowParameters', {
-    "__STYXTYPE__": typing.Literal["@ROI_modal_grow"],
+    "@type": typing.Literal["afni.@ROI_modal_grow"],
     "input_dset": InputPathType,
     "niters": float,
     "outdir": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ROI_modal_grow": v__roi_modal_grow_cargs,
+        "afni.@ROI_modal_grow": v__roi_modal_grow_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ROI_modal_grow": v__roi_modal_grow_outputs,
+        "afni.@ROI_modal_grow": v__roi_modal_grow_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v__roi_modal_grow_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ROI_modal_grow",
+        "@type": "afni.@ROI_modal_grow",
         "input_dset": input_dset,
         "niters": niters,
     }
@@ -252,5 +252,8 @@ __all__ = [
     "VRoiModalGrowParameters",
     "V__ROI_MODAL_GROW_METADATA",
     "v__roi_modal_grow",
+    "v__roi_modal_grow_cargs",
+    "v__roi_modal_grow_execute",
+    "v__roi_modal_grow_outputs",
     "v__roi_modal_grow_params",
 ]

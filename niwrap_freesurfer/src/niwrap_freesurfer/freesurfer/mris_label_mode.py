@@ -14,7 +14,7 @@ MRIS_LABEL_MODE_METADATA = Metadata(
 
 
 MrisLabelModeParameters = typing.TypedDict('MrisLabelModeParameters', {
-    "__STYXTYPE__": typing.Literal["mris_label_mode"],
+    "@type": typing.Literal["freesurfer.mris_label_mode"],
     "input_curv_file": InputPathType,
     "hemi": str,
     "surface": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_label_mode": mris_label_mode_cargs,
+        "freesurfer.mris_label_mode": mris_label_mode_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_label_mode_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_label_mode",
+        "@type": "freesurfer.mris_label_mode",
         "input_curv_file": input_curv_file,
         "hemi": hemi,
         "surface": surface,
@@ -232,5 +232,8 @@ __all__ = [
     "MrisLabelModeOutputs",
     "MrisLabelModeParameters",
     "mris_label_mode",
+    "mris_label_mode_cargs",
+    "mris_label_mode_execute",
+    "mris_label_mode_outputs",
     "mris_label_mode_params",
 ]

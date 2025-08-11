@@ -14,7 +14,7 @@ MRI_RIBBON_METADATA = Metadata(
 
 
 MriRibbonParameters = typing.TypedDict('MriRibbonParameters', {
-    "__STYXTYPE__": typing.Literal["mri_ribbon"],
+    "@type": typing.Literal["freesurfer.mri_ribbon"],
     "label_file": typing.NotRequired[InputPathType | None],
     "inner_surface": InputPathType,
     "outer_surface": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_ribbon": mri_ribbon_cargs,
+        "freesurfer.mri_ribbon": mri_ribbon_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_ribbon": mri_ribbon_outputs,
+        "freesurfer.mri_ribbon": mri_ribbon_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_ribbon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_ribbon",
+        "@type": "freesurfer.mri_ribbon",
         "inner_surface": inner_surface,
         "outer_surface": outer_surface,
         "input_volume": input_volume,
@@ -209,5 +209,8 @@ __all__ = [
     "MriRibbonOutputs",
     "MriRibbonParameters",
     "mri_ribbon",
+    "mri_ribbon_cargs",
+    "mri_ribbon_execute",
+    "mri_ribbon_outputs",
     "mri_ribbon_params",
 ]

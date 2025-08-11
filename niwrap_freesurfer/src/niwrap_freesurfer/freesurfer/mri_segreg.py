@@ -14,7 +14,7 @@ MRI_SEGREG_METADATA = Metadata(
 
 
 MriSegregParameters = typing.TypedDict('MriSegregParameters', {
-    "__STYXTYPE__": typing.Literal["mri_segreg"],
+    "@type": typing.Literal["freesurfer.mri_segreg"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_segreg": mri_segreg_cargs,
+        "freesurfer.mri_segreg": mri_segreg_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_segreg": mri_segreg_outputs,
+        "freesurfer.mri_segreg": mri_segreg_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def mri_segreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_segreg",
+        "@type": "freesurfer.mri_segreg",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "MriSegregOutputs",
     "MriSegregParameters",
     "mri_segreg",
+    "mri_segreg_cargs",
+    "mri_segreg_execute",
+    "mri_segreg_outputs",
     "mri_segreg_params",
 ]

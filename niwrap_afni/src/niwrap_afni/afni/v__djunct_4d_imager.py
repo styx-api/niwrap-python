@@ -14,7 +14,7 @@ V__DJUNCT_4D_IMAGER_METADATA = Metadata(
 
 
 VDjunct4dImagerParameters = typing.TypedDict('VDjunct4dImagerParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_4d_imager"],
+    "@type": typing.Literal["afni.@djunct_4d_imager"],
     "inset": InputPathType,
     "prefix": str,
     "do_movie": typing.NotRequired[typing.Literal["MPEG", "AGIF"] | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_4d_imager": v__djunct_4d_imager_cargs,
+        "afni.@djunct_4d_imager": v__djunct_4d_imager_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@djunct_4d_imager": v__djunct_4d_imager_outputs,
+        "afni.@djunct_4d_imager": v__djunct_4d_imager_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def v__djunct_4d_imager_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_4d_imager",
+        "@type": "afni.@djunct_4d_imager",
         "inset": inset,
         "prefix": prefix,
         "no_clean": no_clean,
@@ -221,5 +221,8 @@ __all__ = [
     "VDjunct4dImagerParameters",
     "V__DJUNCT_4D_IMAGER_METADATA",
     "v__djunct_4d_imager",
+    "v__djunct_4d_imager_cargs",
+    "v__djunct_4d_imager_execute",
+    "v__djunct_4d_imager_outputs",
     "v__djunct_4d_imager_params",
 ]

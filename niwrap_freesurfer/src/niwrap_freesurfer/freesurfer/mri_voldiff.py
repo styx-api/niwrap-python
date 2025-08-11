@@ -14,7 +14,7 @@ MRI_VOLDIFF_METADATA = Metadata(
 
 
 MriVoldiffParameters = typing.TypedDict('MriVoldiffParameters', {
-    "__STYXTYPE__": typing.Literal["mri_voldiff"],
+    "@type": typing.Literal["freesurfer.mri_voldiff"],
     "volume1": InputPathType,
     "volume2": InputPathType,
     "vox2ras_thresh": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_voldiff": mri_voldiff_cargs,
+        "freesurfer.mri_voldiff": mri_voldiff_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def mri_voldiff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_voldiff",
+        "@type": "freesurfer.mri_voldiff",
         "volume1": volume1,
         "volume2": volume2,
         "allow_precision": allow_precision,
@@ -255,5 +255,8 @@ __all__ = [
     "MriVoldiffOutputs",
     "MriVoldiffParameters",
     "mri_voldiff",
+    "mri_voldiff_cargs",
+    "mri_voldiff_execute",
+    "mri_voldiff_outputs",
     "mri_voldiff_params",
 ]

@@ -14,7 +14,7 @@ MRI_MORPHOLOGY_METADATA = Metadata(
 
 
 MriMorphologyParameters = typing.TypedDict('MriMorphologyParameters', {
-    "__STYXTYPE__": typing.Literal["mri_morphology"],
+    "@type": typing.Literal["freesurfer.mri_morphology"],
     "input_volume": InputPathType,
     "operation": typing.Literal["open", "close", "dilate", "erode", "mode", "fill_holes", "erode_bottom", "dilate_thresh", "erode_thresh"],
     "number_iter": int,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_morphology": mri_morphology_cargs,
+        "freesurfer.mri_morphology": mri_morphology_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_morphology": mri_morphology_outputs,
+        "freesurfer.mri_morphology": mri_morphology_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def mri_morphology_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_morphology",
+        "@type": "freesurfer.mri_morphology",
         "input_volume": input_volume,
         "operation": operation,
         "number_iter": number_iter,
@@ -217,5 +217,8 @@ __all__ = [
     "MriMorphologyOutputs",
     "MriMorphologyParameters",
     "mri_morphology",
+    "mri_morphology_cargs",
+    "mri_morphology_execute",
+    "mri_morphology_outputs",
     "mri_morphology_params",
 ]

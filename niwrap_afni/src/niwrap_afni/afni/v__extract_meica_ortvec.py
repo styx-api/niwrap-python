@@ -14,7 +14,7 @@ V__EXTRACT_MEICA_ORTVEC_METADATA = Metadata(
 
 
 VExtractMeicaOrtvecParameters = typing.TypedDict('VExtractMeicaOrtvecParameters', {
-    "__STYXTYPE__": typing.Literal["@extract_meica_ortvec"],
+    "@type": typing.Literal["afni.@extract_meica_ortvec"],
     "prefix": str,
     "meica_dir": typing.NotRequired[str | None],
     "reject_ignored": typing.NotRequired[int | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@extract_meica_ortvec": v__extract_meica_ortvec_cargs,
+        "afni.@extract_meica_ortvec": v__extract_meica_ortvec_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@extract_meica_ortvec": v__extract_meica_ortvec_outputs,
+        "afni.@extract_meica_ortvec": v__extract_meica_ortvec_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v__extract_meica_ortvec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@extract_meica_ortvec",
+        "@type": "afni.@extract_meica_ortvec",
         "prefix": prefix,
     }
     if meica_dir is not None:
@@ -244,5 +244,8 @@ __all__ = [
     "VExtractMeicaOrtvecParameters",
     "V__EXTRACT_MEICA_ORTVEC_METADATA",
     "v__extract_meica_ortvec",
+    "v__extract_meica_ortvec_cargs",
+    "v__extract_meica_ortvec_execute",
+    "v__extract_meica_ortvec_outputs",
     "v__extract_meica_ortvec_params",
 ]

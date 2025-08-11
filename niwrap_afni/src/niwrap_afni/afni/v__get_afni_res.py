@@ -14,7 +14,7 @@ V__GET_AFNI_RES_METADATA = Metadata(
 
 
 VGetAfniResParameters = typing.TypedDict('VGetAfniResParameters', {
-    "__STYXTYPE__": typing.Literal["@GetAfniRes"],
+    "@type": typing.Literal["afni.@GetAfniRes"],
     "output_type": typing.NotRequired[typing.Literal["-min", "-max", "-mean"] | None],
     "input_dataset": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@GetAfniRes": v__get_afni_res_cargs,
+        "afni.@GetAfniRes": v__get_afni_res_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__get_afni_res_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@GetAfniRes",
+        "@type": "afni.@GetAfniRes",
         "input_dataset": input_dataset,
     }
     if output_type is not None:
@@ -180,5 +180,8 @@ __all__ = [
     "VGetAfniResParameters",
     "V__GET_AFNI_RES_METADATA",
     "v__get_afni_res",
+    "v__get_afni_res_cargs",
+    "v__get_afni_res_execute",
+    "v__get_afni_res_outputs",
     "v__get_afni_res_params",
 ]

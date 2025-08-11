@@ -14,7 +14,7 @@ MRIS_MAKE_SURFACES_METADATA = Metadata(
 
 
 MrisMakeSurfacesParameters = typing.TypedDict('MrisMakeSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_make_surfaces"],
+    "@type": typing.Literal["freesurfer.mris_make_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "white": typing.NotRequired[str | None],
@@ -83,7 +83,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_make_surfaces": mris_make_surfaces_cargs,
+        "freesurfer.mris_make_surfaces": mris_make_surfaces_cargs,
     }.get(t)
 
 
@@ -244,7 +244,7 @@ def mris_make_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_make_surfaces",
+        "@type": "freesurfer.mris_make_surfaces",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "whiteonly": whiteonly,
@@ -835,5 +835,8 @@ __all__ = [
     "MrisMakeSurfacesOutputs",
     "MrisMakeSurfacesParameters",
     "mris_make_surfaces",
+    "mris_make_surfaces_cargs",
+    "mris_make_surfaces_execute",
+    "mris_make_surfaces_outputs",
     "mris_make_surfaces_params",
 ]

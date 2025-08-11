@@ -14,7 +14,7 @@ CONVERT_SURFACE_METADATA = Metadata(
 
 
 ConvertSurfaceParameters = typing.TypedDict('ConvertSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["ConvertSurface"],
+    "@type": typing.Literal["afni.ConvertSurface"],
     "input_surface": str,
     "output_surface": str,
     "surface_volume": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ConvertSurface": convert_surface_cargs,
+        "afni.ConvertSurface": convert_surface_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ConvertSurface": convert_surface_outputs,
+        "afni.ConvertSurface": convert_surface_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def convert_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ConvertSurface",
+        "@type": "afni.ConvertSurface",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "transform_tlrc": transform_tlrc,
@@ -280,5 +280,8 @@ __all__ = [
     "ConvertSurfaceOutputs",
     "ConvertSurfaceParameters",
     "convert_surface",
+    "convert_surface_cargs",
+    "convert_surface_execute",
+    "convert_surface_outputs",
     "convert_surface_params",
 ]

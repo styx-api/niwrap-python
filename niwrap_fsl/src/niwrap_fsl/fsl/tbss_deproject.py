@@ -14,7 +14,7 @@ TBSS_DEPROJECT_METADATA = Metadata(
 
 
 TbssDeprojectParameters = typing.TypedDict('TbssDeprojectParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_deproject"],
+    "@type": typing.Literal["fsl.tbss_deproject"],
     "skeleton_space_input_image": InputPathType,
     "final_space_option": int,
     "index_image_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_deproject": tbss_deproject_cargs,
+        "fsl.tbss_deproject": tbss_deproject_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tbss_deproject": tbss_deproject_outputs,
+        "fsl.tbss_deproject": tbss_deproject_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def tbss_deproject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_deproject",
+        "@type": "fsl.tbss_deproject",
         "skeleton_space_input_image": skeleton_space_input_image,
         "final_space_option": final_space_option,
         "index_image_flag": index_image_flag,
@@ -196,5 +196,8 @@ __all__ = [
     "TbssDeprojectOutputs",
     "TbssDeprojectParameters",
     "tbss_deproject",
+    "tbss_deproject_cargs",
+    "tbss_deproject_execute",
+    "tbss_deproject_outputs",
     "tbss_deproject_params",
 ]

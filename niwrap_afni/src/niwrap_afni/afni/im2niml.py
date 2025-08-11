@@ -14,7 +14,7 @@ IM2NIML_METADATA = Metadata(
 
 
 Im2nimlParameters = typing.TypedDict('Im2nimlParameters', {
-    "__STYXTYPE__": typing.Literal["im2niml"],
+    "@type": typing.Literal["afni.im2niml"],
     "input_files": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "im2niml": im2niml_cargs,
+        "afni.im2niml": im2niml_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "im2niml": im2niml_outputs,
+        "afni.im2niml": im2niml_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def im2niml_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "im2niml",
+        "@type": "afni.im2niml",
         "input_files": input_files,
     }
     return params
@@ -174,5 +174,8 @@ __all__ = [
     "Im2nimlOutputs",
     "Im2nimlParameters",
     "im2niml",
+    "im2niml_cargs",
+    "im2niml_execute",
+    "im2niml_outputs",
     "im2niml_params",
 ]

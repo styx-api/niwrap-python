@@ -14,7 +14,7 @@ CIFTI_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 CiftiAllLabelsToRoisParameters = typing.TypedDict('CiftiAllLabelsToRoisParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-all-labels-to-rois"],
+    "@type": typing.Literal["workbench.cifti-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "cifti_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-all-labels-to-rois": cifti_all_labels_to_rois_cargs,
+        "workbench.cifti-all-labels-to-rois": cifti_all_labels_to_rois_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-all-labels-to-rois": cifti_all_labels_to_rois_outputs,
+        "workbench.cifti-all-labels-to-rois": cifti_all_labels_to_rois_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def cifti_all_labels_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-all-labels-to-rois",
+        "@type": "workbench.cifti-all-labels-to-rois",
         "label_in": label_in,
         "map": map_,
         "cifti_out": cifti_out,
@@ -203,5 +203,8 @@ __all__ = [
     "CiftiAllLabelsToRoisOutputs",
     "CiftiAllLabelsToRoisParameters",
     "cifti_all_labels_to_rois",
+    "cifti_all_labels_to_rois_cargs",
+    "cifti_all_labels_to_rois_execute",
+    "cifti_all_labels_to_rois_outputs",
     "cifti_all_labels_to_rois_params",
 ]

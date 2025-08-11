@@ -14,7 +14,7 @@ V__MAKE_PLUG_DIFF_METADATA = Metadata(
 
 
 VMakePlugDiffParameters = typing.TypedDict('VMakePlugDiffParameters', {
-    "__STYXTYPE__": typing.Literal["@make_plug_diff"],
+    "@type": typing.Literal["afni.@make_plug_diff"],
     "vtk_dir": str,
     "xm_dir": str,
     "afni_src_dir": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@make_plug_diff": v__make_plug_diff_cargs,
+        "afni.@make_plug_diff": v__make_plug_diff_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def v__make_plug_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@make_plug_diff",
+        "@type": "afni.@make_plug_diff",
         "vtk_dir": vtk_dir,
         "xm_dir": xm_dir,
         "afni_src_dir": afni_src_dir,
@@ -233,5 +233,8 @@ __all__ = [
     "VMakePlugDiffParameters",
     "V__MAKE_PLUG_DIFF_METADATA",
     "v__make_plug_diff",
+    "v__make_plug_diff_cargs",
+    "v__make_plug_diff_execute",
+    "v__make_plug_diff_outputs",
     "v__make_plug_diff_params",
 ]

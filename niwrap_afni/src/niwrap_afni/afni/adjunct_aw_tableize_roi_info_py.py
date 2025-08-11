@@ -14,7 +14,7 @@ ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA = Metadata(
 
 
 AdjunctAwTableizeRoiInfoPyParameters = typing.TypedDict('AdjunctAwTableizeRoiInfoPyParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_aw_tableize_roi_info.py"],
+    "@type": typing.Literal["afni.adjunct_aw_tableize_roi_info.py"],
     "output_file": str,
     "warped_atlas": InputPathType,
     "warped_mask": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_aw_tableize_roi_info.py": adjunct_aw_tableize_roi_info_py_cargs,
+        "afni.adjunct_aw_tableize_roi_info.py": adjunct_aw_tableize_roi_info_py_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "adjunct_aw_tableize_roi_info.py": adjunct_aw_tableize_roi_info_py_outputs,
+        "afni.adjunct_aw_tableize_roi_info.py": adjunct_aw_tableize_roi_info_py_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def adjunct_aw_tableize_roi_info_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_aw_tableize_roi_info.py",
+        "@type": "afni.adjunct_aw_tableize_roi_info.py",
         "output_file": output_file,
         "warped_atlas": warped_atlas,
         "warped_mask": warped_mask,
@@ -220,5 +220,8 @@ __all__ = [
     "AdjunctAwTableizeRoiInfoPyOutputs",
     "AdjunctAwTableizeRoiInfoPyParameters",
     "adjunct_aw_tableize_roi_info_py",
+    "adjunct_aw_tableize_roi_info_py_cargs",
+    "adjunct_aw_tableize_roi_info_py_execute",
+    "adjunct_aw_tableize_roi_info_py_outputs",
     "adjunct_aw_tableize_roi_info_py_params",
 ]

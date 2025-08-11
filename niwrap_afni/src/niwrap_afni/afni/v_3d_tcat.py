@@ -14,7 +14,7 @@ V_3D_TCAT_METADATA = Metadata(
 
 
 V3dTcatParameters = typing.TypedDict('V3dTcatParameters', {
-    "__STYXTYPE__": typing.Literal["3dTcat"],
+    "@type": typing.Literal["afni.3dTcat"],
     "rlt": typing.NotRequired[typing.Literal["", "+", "++"] | None],
     "in_files": InputPathType,
     "out_file": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTcat": v_3d_tcat_cargs,
+        "afni.3dTcat": v_3d_tcat_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTcat": v_3d_tcat_outputs,
+        "afni.3dTcat": v_3d_tcat_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v_3d_tcat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTcat",
+        "@type": "afni.3dTcat",
         "in_files": in_files,
         "verbose": verbose,
     }
@@ -238,5 +238,8 @@ __all__ = [
     "V3dTcatParameters",
     "V_3D_TCAT_METADATA",
     "v_3d_tcat",
+    "v_3d_tcat_cargs",
+    "v_3d_tcat_execute",
+    "v_3d_tcat_outputs",
     "v_3d_tcat_params",
 ]

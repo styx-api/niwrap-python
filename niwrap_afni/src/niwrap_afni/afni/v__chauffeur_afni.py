@@ -14,7 +14,7 @@ V__CHAUFFEUR_AFNI_METADATA = Metadata(
 
 
 VChauffeurAfniParameters = typing.TypedDict('VChauffeurAfniParameters', {
-    "__STYXTYPE__": typing.Literal["@chauffeur_afni"],
+    "@type": typing.Literal["afni.@chauffeur_afni"],
     "ulay": InputPathType,
     "olay": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@chauffeur_afni": v__chauffeur_afni_cargs,
+        "afni.@chauffeur_afni": v__chauffeur_afni_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@chauffeur_afni": v__chauffeur_afni_outputs,
+        "afni.@chauffeur_afni": v__chauffeur_afni_outputs,
     }.get(t)
 
 
@@ -132,7 +132,7 @@ def v__chauffeur_afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@chauffeur_afni",
+        "@type": "afni.@chauffeur_afni",
         "ulay": ulay,
         "prefix": prefix,
         "mode_4D": mode_4_d,
@@ -382,5 +382,8 @@ __all__ = [
     "VChauffeurAfniParameters",
     "V__CHAUFFEUR_AFNI_METADATA",
     "v__chauffeur_afni",
+    "v__chauffeur_afni_cargs",
+    "v__chauffeur_afni_execute",
+    "v__chauffeur_afni_outputs",
     "v__chauffeur_afni_params",
 ]

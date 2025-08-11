@@ -14,7 +14,7 @@ V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA = Metadata(
 
 
 VDjunct4dSlicesTo3dVolParameters = typing.TypedDict('VDjunct4dSlicesTo3dVolParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_4d_slices_to_3d_vol"],
+    "@type": typing.Literal["afni.@djunct_4d_slices_to_3d_vol"],
     "do_something": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_4d_slices_to_3d_vol": v__djunct_4d_slices_to_3d_vol_cargs,
+        "afni.@djunct_4d_slices_to_3d_vol": v__djunct_4d_slices_to_3d_vol_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@djunct_4d_slices_to_3d_vol": v__djunct_4d_slices_to_3d_vol_outputs,
+        "afni.@djunct_4d_slices_to_3d_vol": v__djunct_4d_slices_to_3d_vol_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__djunct_4d_slices_to_3d_vol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_4d_slices_to_3d_vol",
+        "@type": "afni.@djunct_4d_slices_to_3d_vol",
         "do_something": do_something,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "VDjunct4dSlicesTo3dVolParameters",
     "V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA",
     "v__djunct_4d_slices_to_3d_vol",
+    "v__djunct_4d_slices_to_3d_vol_cargs",
+    "v__djunct_4d_slices_to_3d_vol_execute",
+    "v__djunct_4d_slices_to_3d_vol_outputs",
     "v__djunct_4d_slices_to_3d_vol_params",
 ]

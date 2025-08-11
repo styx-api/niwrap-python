@@ -14,7 +14,7 @@ V_3D_ANOVA_METADATA = Metadata(
 
 
 V3dAnovaParameters = typing.TypedDict('V3dAnovaParameters', {
-    "__STYXTYPE__": typing.Literal["3dANOVA"],
+    "@type": typing.Literal["afni.3dANOVA"],
     "levels": int,
     "datasets": list[str],
     "voxel": typing.NotRequired[int | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dANOVA": v_3d_anova_cargs,
+        "afni.3dANOVA": v_3d_anova_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dANOVA": v_3d_anova_outputs,
+        "afni.3dANOVA": v_3d_anova_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def v_3d_anova_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dANOVA",
+        "@type": "afni.3dANOVA",
         "levels": levels,
         "datasets": datasets,
         "diskspace": diskspace,
@@ -355,5 +355,8 @@ __all__ = [
     "V3dAnovaParameters",
     "V_3D_ANOVA_METADATA",
     "v_3d_anova",
+    "v_3d_anova_cargs",
+    "v_3d_anova_execute",
+    "v_3d_anova_outputs",
     "v_3d_anova_params",
 ]

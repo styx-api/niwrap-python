@@ -14,7 +14,7 @@ MRI_EXTRACT_LABEL_METADATA = Metadata(
 
 
 MriExtractLabelParameters = typing.TypedDict('MriExtractLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mri_extract_label"],
+    "@type": typing.Literal["freesurfer.mri_extract_label"],
     "input_volume": InputPathType,
     "labels": list[str],
     "output_name": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_extract_label": mri_extract_label_cargs,
+        "freesurfer.mri_extract_label": mri_extract_label_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_extract_label": mri_extract_label_outputs,
+        "freesurfer.mri_extract_label": mri_extract_label_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def mri_extract_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_extract_label",
+        "@type": "freesurfer.mri_extract_label",
         "input_volume": input_volume,
         "labels": labels,
         "output_name": output_name,
@@ -253,5 +253,8 @@ __all__ = [
     "MriExtractLabelOutputs",
     "MriExtractLabelParameters",
     "mri_extract_label",
+    "mri_extract_label_cargs",
+    "mri_extract_label_execute",
+    "mri_extract_label_outputs",
     "mri_extract_label_params",
 ]

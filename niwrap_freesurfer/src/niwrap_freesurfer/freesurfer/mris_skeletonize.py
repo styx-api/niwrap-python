@@ -14,7 +14,7 @@ MRIS_SKELETONIZE_METADATA = Metadata(
 
 
 MrisSkeletonizeParameters = typing.TypedDict('MrisSkeletonizeParameters', {
-    "__STYXTYPE__": typing.Literal["mris_skeletonize"],
+    "@type": typing.Literal["freesurfer.mris_skeletonize"],
     "surface": str,
     "surfvals": str,
     "mask": str,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_skeletonize": mris_skeletonize_cargs,
+        "freesurfer.mris_skeletonize": mris_skeletonize_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_skeletonize": mris_skeletonize_outputs,
+        "freesurfer.mris_skeletonize": mris_skeletonize_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def mris_skeletonize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_skeletonize",
+        "@type": "freesurfer.mris_skeletonize",
         "surface": surface,
         "surfvals": surfvals,
         "mask": mask,
@@ -349,5 +349,8 @@ __all__ = [
     "MrisSkeletonizeOutputs",
     "MrisSkeletonizeParameters",
     "mris_skeletonize",
+    "mris_skeletonize_cargs",
+    "mris_skeletonize_execute",
+    "mris_skeletonize_outputs",
     "mris_skeletonize_params",
 ]

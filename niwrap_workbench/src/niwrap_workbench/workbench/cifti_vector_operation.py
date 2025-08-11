@@ -14,7 +14,7 @@ CIFTI_VECTOR_OPERATION_METADATA = Metadata(
 
 
 CiftiVectorOperationParameters = typing.TypedDict('CiftiVectorOperationParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-vector-operation"],
+    "@type": typing.Literal["workbench.cifti-vector-operation"],
     "vectors_a": InputPathType,
     "vectors_b": InputPathType,
     "operation": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-vector-operation": cifti_vector_operation_cargs,
+        "workbench.cifti-vector-operation": cifti_vector_operation_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-vector-operation": cifti_vector_operation_outputs,
+        "workbench.cifti-vector-operation": cifti_vector_operation_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def cifti_vector_operation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-vector-operation",
+        "@type": "workbench.cifti-vector-operation",
         "vectors_a": vectors_a,
         "vectors_b": vectors_b,
         "operation": operation,
@@ -261,5 +261,8 @@ __all__ = [
     "CiftiVectorOperationOutputs",
     "CiftiVectorOperationParameters",
     "cifti_vector_operation",
+    "cifti_vector_operation_cargs",
+    "cifti_vector_operation_execute",
+    "cifti_vector_operation_outputs",
     "cifti_vector_operation_params",
 ]

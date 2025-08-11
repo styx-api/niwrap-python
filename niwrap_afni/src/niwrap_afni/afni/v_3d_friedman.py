@@ -14,7 +14,7 @@ V_3D_FRIEDMAN_METADATA = Metadata(
 
 
 V3dFriedmanParameters = typing.TypedDict('V3dFriedmanParameters', {
-    "__STYXTYPE__": typing.Literal["3dFriedman"],
+    "@type": typing.Literal["afni.3dFriedman"],
     "levels": int,
     "datasets": list[InputPathType],
     "workmem": typing.NotRequired[int | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dFriedman": v_3d_friedman_cargs,
+        "afni.3dFriedman": v_3d_friedman_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dFriedman": v_3d_friedman_outputs,
+        "afni.3dFriedman": v_3d_friedman_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def v_3d_friedman_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dFriedman",
+        "@type": "afni.3dFriedman",
         "levels": levels,
         "datasets": datasets,
         "output_prefix": output_prefix,
@@ -222,5 +222,8 @@ __all__ = [
     "V3dFriedmanParameters",
     "V_3D_FRIEDMAN_METADATA",
     "v_3d_friedman",
+    "v_3d_friedman_cargs",
+    "v_3d_friedman_execute",
+    "v_3d_friedman_outputs",
     "v_3d_friedman_params",
 ]

@@ -14,7 +14,7 @@ QDELAUNAY_METADATA = Metadata(
 
 
 QdelaunayParameters = typing.TypedDict('QdelaunayParameters', {
-    "__STYXTYPE__": typing.Literal["qdelaunay"],
+    "@type": typing.Literal["afni.qdelaunay"],
     "input_file": InputPathType,
     "furthest_site": bool,
     "triangulated_output": bool,
@@ -63,7 +63,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "qdelaunay": qdelaunay_cargs,
+        "afni.qdelaunay": qdelaunay_cargs,
     }.get(t)
 
 
@@ -171,7 +171,7 @@ def qdelaunay_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "qdelaunay",
+        "@type": "afni.qdelaunay",
         "input_file": input_file,
         "furthest_site": furthest_site,
         "triangulated_output": triangulated_output,
@@ -530,5 +530,8 @@ __all__ = [
     "QdelaunayOutputs",
     "QdelaunayParameters",
     "qdelaunay",
+    "qdelaunay_cargs",
+    "qdelaunay_execute",
+    "qdelaunay_outputs",
     "qdelaunay_params",
 ]

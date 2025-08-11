@@ -14,7 +14,7 @@ LESION_FILLING_METADATA = Metadata(
 
 
 LesionFillingParameters = typing.TypedDict('LesionFillingParameters', {
-    "__STYXTYPE__": typing.Literal["LesionFilling"],
+    "@type": typing.Literal["ants.LesionFilling"],
     "image_dimension": int,
     "t1_image": InputPathType,
     "lesion_mask": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "LesionFilling": lesion_filling_cargs,
+        "ants.LesionFilling": lesion_filling_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "LesionFilling": lesion_filling_outputs,
+        "ants.LesionFilling": lesion_filling_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def lesion_filling_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "LesionFilling",
+        "@type": "ants.LesionFilling",
         "image_dimension": image_dimension,
         "t1_image": t1_image,
         "lesion_mask": lesion_mask,
@@ -196,5 +196,8 @@ __all__ = [
     "LesionFillingOutputs",
     "LesionFillingParameters",
     "lesion_filling",
+    "lesion_filling_cargs",
+    "lesion_filling_execute",
+    "lesion_filling_outputs",
     "lesion_filling_params",
 ]

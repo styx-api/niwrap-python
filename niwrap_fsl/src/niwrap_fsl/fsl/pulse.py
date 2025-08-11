@@ -14,7 +14,7 @@ PULSE_METADATA = Metadata(
 
 
 PulseParameters = typing.TypedDict('PulseParameters', {
-    "__STYXTYPE__": typing.Literal["pulse"],
+    "@type": typing.Literal["fsl.pulse"],
     "input_file": InputPathType,
     "output_base": str,
     "seq": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pulse": pulse_cargs,
+        "fsl.pulse": pulse_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "pulse": pulse_outputs,
+        "fsl.pulse": pulse_outputs,
     }.get(t)
 
 
@@ -153,7 +153,7 @@ def pulse_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pulse",
+        "@type": "fsl.pulse",
         "input_file": input_file,
         "output_base": output_base,
         "verbose_flag": verbose_flag,
@@ -493,5 +493,8 @@ __all__ = [
     "PulseOutputs",
     "PulseParameters",
     "pulse",
+    "pulse_cargs",
+    "pulse_execute",
+    "pulse_outputs",
     "pulse_params",
 ]

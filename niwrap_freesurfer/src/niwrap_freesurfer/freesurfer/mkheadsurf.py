@@ -14,7 +14,7 @@ MKHEADSURF_METADATA = Metadata(
 
 
 MkheadsurfParameters = typing.TypedDict('MkheadsurfParameters', {
-    "__STYXTYPE__": typing.Literal["mkheadsurf"],
+    "@type": typing.Literal["freesurfer.mkheadsurf"],
     "input_vol": InputPathType,
     "output_vol": str,
     "output_surf": str,
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mkheadsurf": mkheadsurf_cargs,
+        "freesurfer.mkheadsurf": mkheadsurf_cargs,
     }.get(t)
 
 
@@ -149,7 +149,7 @@ def mkheadsurf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mkheadsurf",
+        "@type": "freesurfer.mkheadsurf",
         "input_vol": input_vol,
         "output_vol": output_vol,
         "output_surf": output_surf,
@@ -487,5 +487,8 @@ __all__ = [
     "MkheadsurfOutputs",
     "MkheadsurfParameters",
     "mkheadsurf",
+    "mkheadsurf_cargs",
+    "mkheadsurf_execute",
+    "mkheadsurf_outputs",
     "mkheadsurf_params",
 ]

@@ -14,7 +14,7 @@ V__GET_AFNI_VIEW_METADATA = Metadata(
 
 
 VGetAfniViewParameters = typing.TypedDict('VGetAfniViewParameters', {
-    "__STYXTYPE__": typing.Literal["@GetAfniView"],
+    "@type": typing.Literal["afni.@GetAfniView"],
     "dataset_name": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@GetAfniView": v__get_afni_view_cargs,
+        "afni.@GetAfniView": v__get_afni_view_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@GetAfniView": v__get_afni_view_outputs,
+        "afni.@GetAfniView": v__get_afni_view_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__get_afni_view_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@GetAfniView",
+        "@type": "afni.@GetAfniView",
         "dataset_name": dataset_name,
     }
     return params
@@ -174,5 +174,8 @@ __all__ = [
     "VGetAfniViewParameters",
     "V__GET_AFNI_VIEW_METADATA",
     "v__get_afni_view",
+    "v__get_afni_view_cargs",
+    "v__get_afni_view_execute",
+    "v__get_afni_view_outputs",
     "v__get_afni_view_params",
 ]

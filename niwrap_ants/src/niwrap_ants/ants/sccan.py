@@ -14,7 +14,7 @@ SCCAN_METADATA = Metadata(
 
 
 SccanParameters = typing.TypedDict('SccanParameters', {
-    "__STYXTYPE__": typing.Literal["sccan"],
+    "@type": typing.Literal["ants.sccan"],
     "output": typing.NotRequired[str | None],
     "n_permutations": typing.NotRequired[int | None],
     "smoother": typing.NotRequired[int | None],
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sccan": sccan_cargs,
+        "ants.sccan": sccan_cargs,
     }.get(t)
 
 
@@ -158,7 +158,7 @@ def sccan_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sccan",
+        "@type": "ants.sccan",
     }
     if output is not None:
         params["output"] = output
@@ -533,5 +533,8 @@ __all__ = [
     "SccanOutputs",
     "SccanParameters",
     "sccan",
+    "sccan_cargs",
+    "sccan_execute",
+    "sccan_outputs",
     "sccan_params",
 ]

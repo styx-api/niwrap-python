@@ -14,7 +14,7 @@ V_3D_CONVOLVE_METADATA = Metadata(
 
 
 V3dConvolveParameters = typing.TypedDict('V3dConvolveParameters', {
-    "__STYXTYPE__": typing.Literal["3dConvolve"],
+    "@type": typing.Literal["afni.3dConvolve"],
     "infile": InputPathType,
     "outfile": str,
     "options": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dConvolve": v_3d_convolve_cargs,
+        "afni.3dConvolve": v_3d_convolve_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dConvolve": v_3d_convolve_outputs,
+        "afni.3dConvolve": v_3d_convolve_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v_3d_convolve_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dConvolve",
+        "@type": "afni.3dConvolve",
         "infile": infile,
         "outfile": outfile,
     }
@@ -193,5 +193,8 @@ __all__ = [
     "V3dConvolveParameters",
     "V_3D_CONVOLVE_METADATA",
     "v_3d_convolve",
+    "v_3d_convolve_cargs",
+    "v_3d_convolve_execute",
+    "v_3d_convolve_outputs",
     "v_3d_convolve_params",
 ]

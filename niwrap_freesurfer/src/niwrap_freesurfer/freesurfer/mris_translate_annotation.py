@@ -14,7 +14,7 @@ MRIS_TRANSLATE_ANNOTATION_METADATA = Metadata(
 
 
 MrisTranslateAnnotationParameters = typing.TypedDict('MrisTranslateAnnotationParameters', {
-    "__STYXTYPE__": typing.Literal["mris_translate_annotation"],
+    "@type": typing.Literal["freesurfer.mris_translate_annotation"],
     "subject": str,
     "hemi": str,
     "in_annot": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_translate_annotation": mris_translate_annotation_cargs,
+        "freesurfer.mris_translate_annotation": mris_translate_annotation_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_translate_annotation": mris_translate_annotation_outputs,
+        "freesurfer.mris_translate_annotation": mris_translate_annotation_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mris_translate_annotation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_translate_annotation",
+        "@type": "freesurfer.mris_translate_annotation",
         "subject": subject,
         "hemi": hemi,
         "in_annot": in_annot,
@@ -204,5 +204,8 @@ __all__ = [
     "MrisTranslateAnnotationOutputs",
     "MrisTranslateAnnotationParameters",
     "mris_translate_annotation",
+    "mris_translate_annotation_cargs",
+    "mris_translate_annotation_execute",
+    "mris_translate_annotation_outputs",
     "mris_translate_annotation_params",
 ]

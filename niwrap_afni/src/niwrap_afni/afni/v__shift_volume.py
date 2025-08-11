@@ -14,7 +14,7 @@ V__SHIFT_VOLUME_METADATA = Metadata(
 
 
 VShiftVolumeParameters = typing.TypedDict('VShiftVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["@Shift_Volume"],
+    "@type": typing.Literal["afni.@Shift_Volume"],
     "rai_shift_vector": typing.NotRequired[list[float] | None],
     "mni_anat_to_mni": bool,
     "mni_to_mni_anat": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Shift_Volume": v__shift_volume_cargs,
+        "afni.@Shift_Volume": v__shift_volume_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@Shift_Volume": v__shift_volume_outputs,
+        "afni.@Shift_Volume": v__shift_volume_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v__shift_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Shift_Volume",
+        "@type": "afni.@Shift_Volume",
         "mni_anat_to_mni": mni_anat_to_mni,
         "mni_to_mni_anat": mni_to_mni_anat,
         "dset": dset,
@@ -236,5 +236,8 @@ __all__ = [
     "VShiftVolumeParameters",
     "V__SHIFT_VOLUME_METADATA",
     "v__shift_volume",
+    "v__shift_volume_cargs",
+    "v__shift_volume_execute",
+    "v__shift_volume_outputs",
     "v__shift_volume_params",
 ]

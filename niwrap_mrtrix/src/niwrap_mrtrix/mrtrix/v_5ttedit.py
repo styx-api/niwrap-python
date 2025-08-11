@@ -14,14 +14,14 @@ V_5TTEDIT_METADATA = Metadata(
 
 
 V5tteditConfigParameters = typing.TypedDict('V5tteditConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.5ttedit.config"],
     "key": str,
     "value": str,
 })
 
 
 V5tteditParameters = typing.TypedDict('V5tteditParameters', {
-    "__STYXTYPE__": typing.Literal["5ttedit"],
+    "@type": typing.Literal["mrtrix.5ttedit"],
     "cgm": typing.NotRequired[InputPathType | None],
     "sgm": typing.NotRequired[InputPathType | None],
     "wm": typing.NotRequired[InputPathType | None],
@@ -53,8 +53,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "5ttedit": v_5ttedit_cargs,
-        "config": v_5ttedit_config_cargs,
+        "mrtrix.5ttedit": v_5ttedit_cargs,
+        "mrtrix.5ttedit.config": v_5ttedit_config_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "5ttedit": v_5ttedit_outputs,
+        "mrtrix.5ttedit": v_5ttedit_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def v_5ttedit_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.5ttedit.config",
         "key": key,
         "value": value,
     }
@@ -175,7 +175,7 @@ def v_5ttedit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "5ttedit",
+        "@type": "mrtrix.5ttedit",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -263,7 +263,7 @@ def v_5ttedit_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -415,6 +415,10 @@ __all__ = [
     "V5tteditParameters",
     "V_5TTEDIT_METADATA",
     "v_5ttedit",
+    "v_5ttedit_cargs",
+    "v_5ttedit_config_cargs",
     "v_5ttedit_config_params",
+    "v_5ttedit_execute",
+    "v_5ttedit_outputs",
     "v_5ttedit_params",
 ]

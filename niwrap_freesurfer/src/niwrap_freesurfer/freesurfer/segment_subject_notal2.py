@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_NOTAL2_METADATA = Metadata(
 
 
 SegmentSubjectNotal2Parameters = typing.TypedDict('SegmentSubjectNotal2Parameters', {
-    "__STYXTYPE__": typing.Literal["segment_subject_notal2"],
+    "@type": typing.Literal["freesurfer.segment_subject_notal2"],
     "license_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segment_subject_notal2": segment_subject_notal2_cargs,
+        "freesurfer.segment_subject_notal2": segment_subject_notal2_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segment_subject_notal2": segment_subject_notal2_outputs,
+        "freesurfer.segment_subject_notal2": segment_subject_notal2_outputs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def segment_subject_notal2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segment_subject_notal2",
+        "@type": "freesurfer.segment_subject_notal2",
         "license_file": license_file,
     }
     return params
@@ -179,5 +179,8 @@ __all__ = [
     "SegmentSubjectNotal2Outputs",
     "SegmentSubjectNotal2Parameters",
     "segment_subject_notal2",
+    "segment_subject_notal2_cargs",
+    "segment_subject_notal2_execute",
+    "segment_subject_notal2_outputs",
     "segment_subject_notal2_params",
 ]

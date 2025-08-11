@@ -14,7 +14,7 @@ V_1D_APAR2MAT_METADATA = Metadata(
 
 
 V1dApar2matParameters = typing.TypedDict('V1dApar2matParameters', {
-    "__STYXTYPE__": typing.Literal["1dApar2mat"],
+    "@type": typing.Literal["afni.1dApar2mat"],
     "x_shift": float,
     "y_shift": float,
     "z_shift": float,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dApar2mat": v_1d_apar2mat_cargs,
+        "afni.1dApar2mat": v_1d_apar2mat_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v_1d_apar2mat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dApar2mat",
+        "@type": "afni.1dApar2mat",
         "x_shift": x_shift,
         "y_shift": y_shift,
         "z_shift": z_shift,
@@ -258,5 +258,8 @@ __all__ = [
     "V1dApar2matParameters",
     "V_1D_APAR2MAT_METADATA",
     "v_1d_apar2mat",
+    "v_1d_apar2mat_cargs",
+    "v_1d_apar2mat_execute",
+    "v_1d_apar2mat_outputs",
     "v_1d_apar2mat_params",
 ]

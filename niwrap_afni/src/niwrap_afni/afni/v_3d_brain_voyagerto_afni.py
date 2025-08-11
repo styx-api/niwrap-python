@@ -14,7 +14,7 @@ V_3D_BRAIN_VOYAGERTO_AFNI_METADATA = Metadata(
 
 
 V3dBrainVoyagertoAfniParameters = typing.TypedDict('V3dBrainVoyagertoAfniParameters', {
-    "__STYXTYPE__": typing.Literal["3dBRAIN_VOYAGERtoAFNI"],
+    "@type": typing.Literal["afni.3dBRAIN_VOYAGERtoAFNI"],
     "input_file": InputPathType,
     "force_byte_swap": bool,
     "brainvoyager_qx": bool,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dBRAIN_VOYAGERtoAFNI": v_3d_brain_voyagerto_afni_cargs,
+        "afni.3dBRAIN_VOYAGERtoAFNI": v_3d_brain_voyagerto_afni_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dBRAIN_VOYAGERtoAFNI": v_3d_brain_voyagerto_afni_outputs,
+        "afni.3dBRAIN_VOYAGERtoAFNI": v_3d_brain_voyagerto_afni_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def v_3d_brain_voyagerto_afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dBRAIN_VOYAGERtoAFNI",
+        "@type": "afni.3dBRAIN_VOYAGERtoAFNI",
         "input_file": input_file,
         "force_byte_swap": force_byte_swap,
         "brainvoyager_qx": brainvoyager_qx,
@@ -309,5 +309,8 @@ __all__ = [
     "V3dBrainVoyagertoAfniParameters",
     "V_3D_BRAIN_VOYAGERTO_AFNI_METADATA",
     "v_3d_brain_voyagerto_afni",
+    "v_3d_brain_voyagerto_afni_cargs",
+    "v_3d_brain_voyagerto_afni_execute",
+    "v_3d_brain_voyagerto_afni_outputs",
     "v_3d_brain_voyagerto_afni_params",
 ]

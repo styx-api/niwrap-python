@@ -14,7 +14,7 @@ SWI_PROCESS_METADATA = Metadata(
 
 
 SwiProcessParameters = typing.TypedDict('SwiProcessParameters', {
-    "__STYXTYPE__": typing.Literal["swi_process"],
+    "@type": typing.Literal["freesurfer.swi_process"],
     "magnitude_image": InputPathType,
     "phase_image": InputPathType,
     "swi_output": str,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "swi_process": swi_process_cargs,
+        "freesurfer.swi_process": swi_process_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "swi_process": swi_process_outputs,
+        "freesurfer.swi_process": swi_process_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def swi_process_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "swi_process",
+        "@type": "freesurfer.swi_process",
         "magnitude_image": magnitude_image,
         "phase_image": phase_image,
         "swi_output": swi_output,
@@ -316,5 +316,8 @@ __all__ = [
     "SwiProcessOutputs",
     "SwiProcessParameters",
     "swi_process",
+    "swi_process_cargs",
+    "swi_process_execute",
+    "swi_process_outputs",
     "swi_process_params",
 ]

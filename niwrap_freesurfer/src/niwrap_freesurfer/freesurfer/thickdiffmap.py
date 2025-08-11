@@ -14,7 +14,7 @@ THICKDIFFMAP_METADATA = Metadata(
 
 
 ThickdiffmapParameters = typing.TypedDict('ThickdiffmapParameters', {
-    "__STYXTYPE__": typing.Literal["thickdiffmap"],
+    "@type": typing.Literal["freesurfer.thickdiffmap"],
     "subjscan1": InputPathType,
     "subjscan2": InputPathType,
     "commonsubj": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "thickdiffmap": thickdiffmap_cargs,
+        "freesurfer.thickdiffmap": thickdiffmap_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def thickdiffmap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "thickdiffmap",
+        "@type": "freesurfer.thickdiffmap",
         "subjscan1": subjscan1,
         "subjscan2": subjscan2,
         "commonsubj": commonsubj,
@@ -202,5 +202,8 @@ __all__ = [
     "ThickdiffmapOutputs",
     "ThickdiffmapParameters",
     "thickdiffmap",
+    "thickdiffmap_cargs",
+    "thickdiffmap_execute",
+    "thickdiffmap_outputs",
     "thickdiffmap_params",
 ]

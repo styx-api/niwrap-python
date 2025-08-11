@@ -14,7 +14,7 @@ V_1D_MARRY_METADATA = Metadata(
 
 
 V1dMarryParameters = typing.TypedDict('V1dMarryParameters', {
-    "__STYXTYPE__": typing.Literal["1dMarry"],
+    "@type": typing.Literal["afni.1dMarry"],
     "sep": typing.NotRequired[str | None],
     "divorce": bool,
     "files": list[InputPathType],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dMarry": v_1d_marry_cargs,
+        "afni.1dMarry": v_1d_marry_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dMarry": v_1d_marry_outputs,
+        "afni.1dMarry": v_1d_marry_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v_1d_marry_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dMarry",
+        "@type": "afni.1dMarry",
         "divorce": divorce,
         "files": files,
     }
@@ -209,5 +209,8 @@ __all__ = [
     "V1dMarryParameters",
     "V_1D_MARRY_METADATA",
     "v_1d_marry",
+    "v_1d_marry_cargs",
+    "v_1d_marry_execute",
+    "v_1d_marry_outputs",
     "v_1d_marry_params",
 ]

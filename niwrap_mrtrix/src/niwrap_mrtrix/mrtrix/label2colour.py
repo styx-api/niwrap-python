@@ -14,14 +14,14 @@ LABEL2COLOUR_METADATA = Metadata(
 
 
 Label2colourConfigParameters = typing.TypedDict('Label2colourConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.label2colour.config"],
     "key": str,
     "value": str,
 })
 
 
 Label2colourParameters = typing.TypedDict('Label2colourParameters', {
-    "__STYXTYPE__": typing.Literal["label2colour"],
+    "@type": typing.Literal["mrtrix.label2colour"],
     "lut": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label2colour": label2colour_cargs,
-        "config": label2colour_config_cargs,
+        "mrtrix.label2colour": label2colour_cargs,
+        "mrtrix.label2colour.config": label2colour_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label2colour": label2colour_outputs,
+        "mrtrix.label2colour": label2colour_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def label2colour_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.label2colour.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def label2colour_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label2colour",
+        "@type": "mrtrix.label2colour",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -210,7 +210,7 @@ def label2colour_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -346,6 +346,10 @@ __all__ = [
     "Label2colourOutputs",
     "Label2colourParameters",
     "label2colour",
+    "label2colour_cargs",
+    "label2colour_config_cargs",
     "label2colour_config_params",
+    "label2colour_execute",
+    "label2colour_outputs",
     "label2colour_params",
 ]

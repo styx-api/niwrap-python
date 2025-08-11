@@ -14,28 +14,28 @@ CIFTI_FALSE_CORRELATION_METADATA = Metadata(
 
 
 CiftiFalseCorrelationLeftSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationLeftSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["left_surface"],
+    "@type": typing.Literal["workbench.cifti-false-correlation.left_surface"],
     "surface": InputPathType,
     "opt_dump_text_text_out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationRightSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationRightSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["right_surface"],
+    "@type": typing.Literal["workbench.cifti-false-correlation.right_surface"],
     "surface": InputPathType,
     "opt_dump_text_text_out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationCerebellumSurfaceParameters = typing.TypedDict('CiftiFalseCorrelationCerebellumSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
+    "@type": typing.Literal["workbench.cifti-false-correlation.cerebellum_surface"],
     "surface": InputPathType,
     "opt_dump_text_text_out": typing.NotRequired[str | None],
 })
 
 
 CiftiFalseCorrelationParameters = typing.TypedDict('CiftiFalseCorrelationParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-false-correlation"],
+    "@type": typing.Literal["workbench.cifti-false-correlation"],
     "cifti_in": InputPathType,
     "3d_dist": float,
     "geo_outer": float,
@@ -59,10 +59,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-false-correlation": cifti_false_correlation_cargs,
-        "left_surface": cifti_false_correlation_left_surface_cargs,
-        "right_surface": cifti_false_correlation_right_surface_cargs,
-        "cerebellum_surface": cifti_false_correlation_cerebellum_surface_cargs,
+        "workbench.cifti-false-correlation": cifti_false_correlation_cargs,
+        "workbench.cifti-false-correlation.left_surface": cifti_false_correlation_left_surface_cargs,
+        "workbench.cifti-false-correlation.right_surface": cifti_false_correlation_right_surface_cargs,
+        "workbench.cifti-false-correlation.cerebellum_surface": cifti_false_correlation_cerebellum_surface_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-false-correlation": cifti_false_correlation_outputs,
+        "workbench.cifti-false-correlation": cifti_false_correlation_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def cifti_false_correlation_left_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_surface",
+        "@type": "workbench.cifti-false-correlation.left_surface",
         "surface": surface,
     }
     if opt_dump_text_text_out is not None:
@@ -144,7 +144,7 @@ def cifti_false_correlation_right_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_surface",
+        "@type": "workbench.cifti-false-correlation.right_surface",
         "surface": surface,
     }
     if opt_dump_text_text_out is not None:
@@ -191,7 +191,7 @@ def cifti_false_correlation_cerebellum_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_surface",
+        "@type": "workbench.cifti-false-correlation.cerebellum_surface",
         "surface": surface,
     }
     if opt_dump_text_text_out is not None:
@@ -259,7 +259,7 @@ def cifti_false_correlation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-false-correlation",
+        "@type": "workbench.cifti-false-correlation",
         "cifti_in": cifti_in,
         "3d_dist": v_3d_dist,
         "geo_outer": geo_outer,
@@ -297,11 +297,11 @@ def cifti_false_correlation_cargs(
     cargs.append(str(params.get("geo_inner")))
     cargs.append(params.get("cifti_out"))
     if params.get("left_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("left_surface")["__STYXTYPE__"])(params.get("left_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("left_surface")["@type"])(params.get("left_surface"), execution))
     if params.get("right_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("right_surface")["__STYXTYPE__"])(params.get("right_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("right_surface")["@type"])(params.get("right_surface"), execution))
     if params.get("cerebellum_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["__STYXTYPE__"])(params.get("cerebellum_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["@type"])(params.get("cerebellum_surface"), execution))
     return cargs
 
 
@@ -417,8 +417,14 @@ __all__ = [
     "CiftiFalseCorrelationParameters",
     "CiftiFalseCorrelationRightSurfaceParameters",
     "cifti_false_correlation",
+    "cifti_false_correlation_cargs",
+    "cifti_false_correlation_cerebellum_surface_cargs",
     "cifti_false_correlation_cerebellum_surface_params",
+    "cifti_false_correlation_execute",
+    "cifti_false_correlation_left_surface_cargs",
     "cifti_false_correlation_left_surface_params",
+    "cifti_false_correlation_outputs",
     "cifti_false_correlation_params",
+    "cifti_false_correlation_right_surface_cargs",
     "cifti_false_correlation_right_surface_params",
 ]

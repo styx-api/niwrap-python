@@ -14,7 +14,7 @@ V_1D_SEM_METADATA = Metadata(
 
 
 V1dSemParameters = typing.TypedDict('V1dSemParameters', {
-    "__STYXTYPE__": typing.Literal["1dSEM"],
+    "@type": typing.Literal["afni.1dSEM"],
     "theta": InputPathType,
     "correlation_matrix": InputPathType,
     "residual_variance": InputPathType,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dSEM": v_1d_sem_cargs,
+        "afni.1dSEM": v_1d_sem_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dSEM": v_1d_sem_outputs,
+        "afni.1dSEM": v_1d_sem_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v_1d_sem_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dSEM",
+        "@type": "afni.1dSEM",
         "theta": theta,
         "correlation_matrix": correlation_matrix,
         "residual_variance": residual_variance,
@@ -366,5 +366,8 @@ __all__ = [
     "V1dSemParameters",
     "V_1D_SEM_METADATA",
     "v_1d_sem",
+    "v_1d_sem_cargs",
+    "v_1d_sem_execute",
+    "v_1d_sem_outputs",
     "v_1d_sem_params",
 ]

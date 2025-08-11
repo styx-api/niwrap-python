@@ -14,7 +14,7 @@ FSL_SCHURPROD_METADATA = Metadata(
 
 
 FslSchurprodParameters = typing.TypedDict('FslSchurprodParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_schurprod"],
+    "@type": typing.Literal["fsl.fsl_schurprod"],
     "input_file": InputPathType,
     "design_file": InputPathType,
     "output_file": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_schurprod": fsl_schurprod_cargs,
+        "fsl.fsl_schurprod": fsl_schurprod_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_schurprod": fsl_schurprod_outputs,
+        "fsl.fsl_schurprod": fsl_schurprod_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def fsl_schurprod_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_schurprod",
+        "@type": "fsl.fsl_schurprod",
         "input_file": input_file,
         "design_file": design_file,
         "output_file": output_file,
@@ -254,5 +254,8 @@ __all__ = [
     "FslSchurprodOutputs",
     "FslSchurprodParameters",
     "fsl_schurprod",
+    "fsl_schurprod_cargs",
+    "fsl_schurprod_execute",
+    "fsl_schurprod_outputs",
     "fsl_schurprod_params",
 ]

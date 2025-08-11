@@ -14,14 +14,14 @@ TCKINFO_METADATA = Metadata(
 
 
 TckinfoConfigParameters = typing.TypedDict('TckinfoConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckinfo.config"],
     "key": str,
     "value": str,
 })
 
 
 TckinfoParameters = typing.TypedDict('TckinfoParameters', {
-    "__STYXTYPE__": typing.Literal["tckinfo"],
+    "@type": typing.Literal["mrtrix.tckinfo"],
     "count": bool,
     "info": bool,
     "quiet": bool,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckinfo": tckinfo_cargs,
-        "config": tckinfo_config_cargs,
+        "mrtrix.tckinfo": tckinfo_cargs,
+        "mrtrix.tckinfo.config": tckinfo_config_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def tckinfo_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckinfo.config",
         "key": key,
         "value": value,
     }
@@ -150,7 +150,7 @@ def tckinfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckinfo",
+        "@type": "mrtrix.tckinfo",
         "count": count,
         "info": info,
         "quiet": quiet,
@@ -198,7 +198,7 @@ def tckinfo_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -324,6 +324,10 @@ __all__ = [
     "TckinfoOutputs",
     "TckinfoParameters",
     "tckinfo",
+    "tckinfo_cargs",
+    "tckinfo_config_cargs",
     "tckinfo_config_params",
+    "tckinfo_execute",
+    "tckinfo_outputs",
     "tckinfo_params",
 ]

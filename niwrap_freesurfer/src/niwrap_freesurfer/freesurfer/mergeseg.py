@@ -14,7 +14,7 @@ MERGESEG_METADATA = Metadata(
 
 
 MergesegParameters = typing.TypedDict('MergesegParameters', {
-    "__STYXTYPE__": typing.Literal["mergeseg"],
+    "@type": typing.Literal["freesurfer.mergeseg"],
     "src_seg": InputPathType,
     "merge_seg": InputPathType,
     "out_seg": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mergeseg": mergeseg_cargs,
+        "freesurfer.mergeseg": mergeseg_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mergeseg": mergeseg_outputs,
+        "freesurfer.mergeseg": mergeseg_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def mergeseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mergeseg",
+        "@type": "freesurfer.mergeseg",
         "src_seg": src_seg,
         "merge_seg": merge_seg,
         "out_seg": out_seg,
@@ -249,5 +249,8 @@ __all__ = [
     "MergesegOutputs",
     "MergesegParameters",
     "mergeseg",
+    "mergeseg_cargs",
+    "mergeseg_execute",
+    "mergeseg_outputs",
     "mergeseg_params",
 ]

@@ -14,7 +14,7 @@ GCAINIT_METADATA = Metadata(
 
 
 GcainitParameters = typing.TypedDict('GcainitParameters', {
-    "__STYXTYPE__": typing.Literal["gcainit"],
+    "@type": typing.Literal["freesurfer.gcainit"],
     "gcadir": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gcainit": gcainit_cargs,
+        "freesurfer.gcainit": gcainit_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def gcainit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gcainit",
+        "@type": "freesurfer.gcainit",
         "gcadir": gcadir,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "GcainitOutputs",
     "GcainitParameters",
     "gcainit",
+    "gcainit_cargs",
+    "gcainit_execute",
+    "gcainit_outputs",
     "gcainit_params",
 ]

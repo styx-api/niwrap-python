@@ -14,7 +14,7 @@ V__SCRIPT_CHECK_METADATA = Metadata(
 
 
 VScriptCheckParameters = typing.TypedDict('VScriptCheckParameters', {
-    "__STYXTYPE__": typing.Literal["@ScriptCheck"],
+    "@type": typing.Literal["afni.@ScriptCheck"],
     "clean": bool,
     "suffix": typing.NotRequired[str | None],
     "scripts": list[InputPathType],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ScriptCheck": v__script_check_cargs,
+        "afni.@ScriptCheck": v__script_check_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ScriptCheck": v__script_check_outputs,
+        "afni.@ScriptCheck": v__script_check_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v__script_check_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ScriptCheck",
+        "@type": "afni.@ScriptCheck",
         "clean": clean,
         "scripts": scripts,
     }
@@ -197,5 +197,8 @@ __all__ = [
     "VScriptCheckParameters",
     "V__SCRIPT_CHECK_METADATA",
     "v__script_check",
+    "v__script_check_cargs",
+    "v__script_check_execute",
+    "v__script_check_outputs",
     "v__script_check_params",
 ]

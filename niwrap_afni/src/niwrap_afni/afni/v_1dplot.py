@@ -14,28 +14,28 @@ V_1DPLOT_METADATA = Metadata(
 
 
 V1dplotNolineParameters = typing.TypedDict('V1dplotNolineParameters', {
-    "__STYXTYPE__": typing.Literal["noline"],
+    "@type": typing.Literal["afni.1dplot.noline"],
     "noline": bool,
     "NOLINE": bool,
 })
 
 
 V1dplotThickParameters = typing.TypedDict('V1dplotThickParameters', {
-    "__STYXTYPE__": typing.Literal["thick"],
+    "@type": typing.Literal["afni.1dplot.thick"],
     "thick": bool,
     "THICK": bool,
 })
 
 
 V1dplotRboxParameters = typing.TypedDict('V1dplotRboxParameters', {
-    "__STYXTYPE__": typing.Literal["rbox"],
+    "@type": typing.Literal["afni.1dplot.rbox"],
     "rbox": typing.NotRequired[str | None],
     "Rbox": typing.NotRequired[str | None],
 })
 
 
 V1dplotParameters = typing.TypedDict('V1dplotParameters', {
-    "__STYXTYPE__": typing.Literal["1dplot"],
+    "@type": typing.Literal["afni.1dplot"],
     "tsfiles": list[InputPathType],
     "install": bool,
     "sep": bool,
@@ -102,10 +102,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dplot": v_1dplot_cargs,
-        "noline": v_1dplot_noline_cargs,
-        "thick": v_1dplot_thick_cargs,
-        "rbox": v_1dplot_rbox_cargs,
+        "afni.1dplot": v_1dplot_cargs,
+        "afni.1dplot.noline": v_1dplot_noline_cargs,
+        "afni.1dplot.thick": v_1dplot_thick_cargs,
+        "afni.1dplot.rbox": v_1dplot_rbox_cargs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def v_1dplot_noline_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "noline",
+        "@type": "afni.1dplot.noline",
         "noline": noline,
         "NOLINE": noline_,
     }
@@ -181,7 +181,7 @@ def v_1dplot_thick_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "thick",
+        "@type": "afni.1dplot.thick",
         "thick": thick,
         "THICK": thick_,
     }
@@ -223,7 +223,7 @@ def v_1dplot_rbox_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rbox",
+        "@type": "afni.1dplot.rbox",
     }
     if rbox is not None:
         params["rbox"] = rbox
@@ -399,7 +399,7 @@ def v_1dplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dplot",
+        "@type": "afni.1dplot",
         "tsfiles": tsfiles,
         "install": install,
         "sep": sep,
@@ -515,7 +515,7 @@ def v_1dplot_cargs(
     if params.get("sepscl"):
         cargs.append("-sepscl")
     if params.get("noline") is not None:
-        cargs.extend(dyn_cargs(params.get("noline")["__STYXTYPE__"])(params.get("noline"), execution))
+        cargs.extend(dyn_cargs(params.get("noline")["@type"])(params.get("noline"), execution))
     if params.get("box"):
         cargs.append("-box")
     if params.get("hist"):
@@ -664,7 +664,7 @@ def v_1dplot_cargs(
     if params.get("volreg"):
         cargs.append("-volreg")
     if params.get("thick") is not None:
-        cargs.extend(dyn_cargs(params.get("thick")["__STYXTYPE__"])(params.get("thick"), execution))
+        cargs.extend(dyn_cargs(params.get("thick")["@type"])(params.get("thick"), execution))
     if params.get("dashed") is not None:
         cargs.extend([
             "-dashed",
@@ -696,7 +696,7 @@ def v_1dplot_cargs(
             execution.input_file(params.get("concat"))
         ])
     if params.get("rbox") is not None:
-        cargs.extend(dyn_cargs(params.get("rbox")["__STYXTYPE__"])(params.get("rbox"), execution))
+        cargs.extend(dyn_cargs(params.get("rbox")["@type"])(params.get("rbox"), execution))
     if params.get("line") is not None:
         cargs.extend([
             "-line",
@@ -953,8 +953,14 @@ __all__ = [
     "V1dplotThickParameters",
     "V_1DPLOT_METADATA",
     "v_1dplot",
+    "v_1dplot_cargs",
+    "v_1dplot_execute",
+    "v_1dplot_noline_cargs",
     "v_1dplot_noline_params",
+    "v_1dplot_outputs",
     "v_1dplot_params",
+    "v_1dplot_rbox_cargs",
     "v_1dplot_rbox_params",
+    "v_1dplot_thick_cargs",
     "v_1dplot_thick_params",
 ]

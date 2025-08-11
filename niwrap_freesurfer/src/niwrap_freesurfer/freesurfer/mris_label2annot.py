@@ -14,7 +14,7 @@ MRIS_LABEL2ANNOT_METADATA = Metadata(
 
 
 MrisLabel2annotParameters = typing.TypedDict('MrisLabel2annotParameters', {
-    "__STYXTYPE__": typing.Literal["mris_label2annot"],
+    "@type": typing.Literal["freesurfer.mris_label2annot"],
     "subject": str,
     "hemi": str,
     "ctabfile": InputPathType,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_label2annot": mris_label2annot_cargs,
+        "freesurfer.mris_label2annot": mris_label2annot_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_label2annot": mris_label2annot_outputs,
+        "freesurfer.mris_label2annot": mris_label2annot_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def mris_label2annot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_label2annot",
+        "@type": "freesurfer.mris_label2annot",
         "subject": subject,
         "hemi": hemi,
         "ctabfile": ctabfile,
@@ -326,5 +326,8 @@ __all__ = [
     "MrisLabel2annotOutputs",
     "MrisLabel2annotParameters",
     "mris_label2annot",
+    "mris_label2annot_cargs",
+    "mris_label2annot_execute",
+    "mris_label2annot_outputs",
     "mris_label2annot_params",
 ]

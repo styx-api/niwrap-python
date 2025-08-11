@@ -14,7 +14,7 @@ AFNI_HISTORY_METADATA = Metadata(
 
 
 AfniHistoryParameters = typing.TypedDict('AfniHistoryParameters', {
-    "__STYXTYPE__": typing.Literal["afni_history"],
+    "@type": typing.Literal["afni.afni_history"],
     "verb_level": typing.NotRequired[int | None],
     "check_date": typing.NotRequired[str | None],
     "help": bool,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni_history": afni_history_cargs,
+        "afni.afni_history": afni_history_cargs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def afni_history_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afni_history",
+        "@type": "afni.afni_history",
         "help": help_,
         "history": history,
         "list_authors": list_authors,
@@ -409,5 +409,8 @@ __all__ = [
     "AfniHistoryOutputs",
     "AfniHistoryParameters",
     "afni_history",
+    "afni_history_cargs",
+    "afni_history_execute",
+    "afni_history_outputs",
     "afni_history_params",
 ]

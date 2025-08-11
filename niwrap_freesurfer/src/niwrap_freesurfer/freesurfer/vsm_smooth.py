@@ -14,7 +14,7 @@ VSM_SMOOTH_METADATA = Metadata(
 
 
 VsmSmoothParameters = typing.TypedDict('VsmSmoothParameters', {
-    "__STYXTYPE__": typing.Literal["vsm-smooth"],
+    "@type": typing.Literal["freesurfer.vsm-smooth"],
     "input_file": InputPathType,
     "output_file": str,
     "fwhm_value": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vsm-smooth": vsm_smooth_cargs,
+        "freesurfer.vsm-smooth": vsm_smooth_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "vsm-smooth": vsm_smooth_outputs,
+        "freesurfer.vsm-smooth": vsm_smooth_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def vsm_smooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vsm-smooth",
+        "@type": "freesurfer.vsm-smooth",
         "input_file": input_file,
         "output_file": output_file,
         "fwhm_value": fwhm_value,
@@ -220,5 +220,8 @@ __all__ = [
     "VsmSmoothOutputs",
     "VsmSmoothParameters",
     "vsm_smooth",
+    "vsm_smooth_cargs",
+    "vsm_smooth_execute",
+    "vsm_smooth_outputs",
     "vsm_smooth_params",
 ]

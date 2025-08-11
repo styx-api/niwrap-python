@@ -14,7 +14,7 @@ DCM2NIIX_METADATA = Metadata(
 
 
 Dcm2niixParameters = typing.TypedDict('Dcm2niixParameters', {
-    "__STYXTYPE__": typing.Literal["dcm2niix"],
+    "@type": typing.Literal["dcm2niix.dcm2niix"],
     "compression_level": typing.NotRequired[float | None],
     "adjacent": typing.NotRequired[typing.Literal["y", "n"] | None],
     "bids": typing.NotRequired[typing.Literal["y", "n", "o"] | None],
@@ -59,7 +59,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcm2niix": dcm2niix_cargs,
+        "dcm2niix.dcm2niix": dcm2niix_cargs,
     }.get(t)
 
 
@@ -170,7 +170,7 @@ def dcm2niix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcm2niix",
+        "@type": "dcm2niix.dcm2niix",
         "update_check": update_check,
         "ignore_trigger": ignore_trigger,
         "terse": terse,
@@ -543,5 +543,8 @@ __all__ = [
     "Dcm2niixOutputs",
     "Dcm2niixParameters",
     "dcm2niix_",
+    "dcm2niix_cargs",
+    "dcm2niix_execute",
+    "dcm2niix_outputs",
     "dcm2niix_params",
 ]

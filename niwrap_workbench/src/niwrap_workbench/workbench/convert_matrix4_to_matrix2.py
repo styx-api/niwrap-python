@@ -14,7 +14,7 @@ CONVERT_MATRIX4_TO_MATRIX2_METADATA = Metadata(
 
 
 ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMatrix4ToMatrix2IndividualFibersParameters', {
-    "__STYXTYPE__": typing.Literal["individual_fibers"],
+    "@type": typing.Literal["workbench.convert-matrix4-to-matrix2.individual_fibers"],
     "fiber_1": str,
     "fiber_2": str,
     "fiber_3": str,
@@ -22,7 +22,7 @@ ConvertMatrix4ToMatrix2IndividualFibersParameters = typing.TypedDict('ConvertMat
 
 
 ConvertMatrix4ToMatrix2Parameters = typing.TypedDict('ConvertMatrix4ToMatrix2Parameters', {
-    "__STYXTYPE__": typing.Literal["convert-matrix4-to-matrix2"],
+    "@type": typing.Literal["workbench.convert-matrix4-to-matrix2"],
     "matrix4_wbsparse": str,
     "counts_out": str,
     "opt_distances_distance_out": typing.NotRequired[str | None],
@@ -42,8 +42,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "convert-matrix4-to-matrix2": convert_matrix4_to_matrix2_cargs,
-        "individual_fibers": convert_matrix4_to_matrix2_individual_fibers_cargs,
+        "workbench.convert-matrix4-to-matrix2": convert_matrix4_to_matrix2_cargs,
+        "workbench.convert-matrix4-to-matrix2.individual_fibers": convert_matrix4_to_matrix2_individual_fibers_cargs,
     }.get(t)
 
 
@@ -59,8 +59,8 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "convert-matrix4-to-matrix2": convert_matrix4_to_matrix2_outputs,
-        "individual_fibers": convert_matrix4_to_matrix2_individual_fibers_outputs,
+        "workbench.convert-matrix4-to-matrix2": convert_matrix4_to_matrix2_outputs,
+        "workbench.convert-matrix4-to-matrix2.individual_fibers": convert_matrix4_to_matrix2_individual_fibers_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def convert_matrix4_to_matrix2_individual_fibers_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "individual_fibers",
+        "@type": "workbench.convert-matrix4-to-matrix2.individual_fibers",
         "fiber_1": fiber_1,
         "fiber_2": fiber_2,
         "fiber_3": fiber_3,
@@ -178,7 +178,7 @@ def convert_matrix4_to_matrix2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convert-matrix4-to-matrix2",
+        "@type": "workbench.convert-matrix4-to-matrix2",
         "matrix4_wbsparse": matrix4_wbsparse,
         "counts_out": counts_out,
     }
@@ -213,7 +213,7 @@ def convert_matrix4_to_matrix2_cargs(
             params.get("opt_distances_distance_out")
         ])
     if params.get("individual_fibers") is not None:
-        cargs.extend(dyn_cargs(params.get("individual_fibers")["__STYXTYPE__"])(params.get("individual_fibers"), execution))
+        cargs.extend(dyn_cargs(params.get("individual_fibers")["@type"])(params.get("individual_fibers"), execution))
     return cargs
 
 
@@ -234,7 +234,7 @@ def convert_matrix4_to_matrix2_outputs(
         root=execution.output_file("."),
         counts_out=execution.output_file(params.get("counts_out")),
         opt_distances_distance_out=execution.output_file(params.get("opt_distances_distance_out")) if (params.get("opt_distances_distance_out") is not None) else None,
-        individual_fibers=dyn_outputs(params.get("individual_fibers")["__STYXTYPE__"])(params.get("individual_fibers"), execution) if params.get("individual_fibers") else None,
+        individual_fibers=dyn_outputs(params.get("individual_fibers")["@type"])(params.get("individual_fibers"), execution) if params.get("individual_fibers") else None,
     )
     return ret
 
@@ -317,6 +317,11 @@ __all__ = [
     "ConvertMatrix4ToMatrix2Outputs",
     "ConvertMatrix4ToMatrix2Parameters",
     "convert_matrix4_to_matrix2",
+    "convert_matrix4_to_matrix2_cargs",
+    "convert_matrix4_to_matrix2_execute",
+    "convert_matrix4_to_matrix2_individual_fibers_cargs",
+    "convert_matrix4_to_matrix2_individual_fibers_outputs",
     "convert_matrix4_to_matrix2_individual_fibers_params",
+    "convert_matrix4_to_matrix2_outputs",
     "convert_matrix4_to_matrix2_params",
 ]

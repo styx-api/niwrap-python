@@ -14,7 +14,7 @@ MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA = Metadata(
 
 
 MrisMultimodalSurfacePlacementParameters = typing.TypedDict('MrisMultimodalSurfacePlacementParameters', {
-    "__STYXTYPE__": typing.Literal["mris_multimodal_surface_placement"],
+    "@type": typing.Literal["freesurfer.mris_multimodal_surface_placement"],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
     "sphere_surface": InputPathType,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_multimodal_surface_placement": mris_multimodal_surface_placement_cargs,
+        "freesurfer.mris_multimodal_surface_placement": mris_multimodal_surface_placement_cargs,
     }.get(t)
 
 
@@ -115,7 +115,7 @@ def mris_multimodal_surface_placement_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_multimodal_surface_placement",
+        "@type": "freesurfer.mris_multimodal_surface_placement",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "sphere_surface": sphere_surface,
@@ -336,5 +336,8 @@ __all__ = [
     "MrisMultimodalSurfacePlacementOutputs",
     "MrisMultimodalSurfacePlacementParameters",
     "mris_multimodal_surface_placement",
+    "mris_multimodal_surface_placement_cargs",
+    "mris_multimodal_surface_placement_execute",
+    "mris_multimodal_surface_placement_outputs",
     "mris_multimodal_surface_placement_params",
 ]

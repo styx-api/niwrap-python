@@ -14,7 +14,7 @@ MRI_MAPS2CSD_METADATA = Metadata(
 
 
 MriMaps2csdParameters = typing.TypedDict('MriMaps2csdParameters', {
-    "__STYXTYPE__": typing.Literal["mri_maps2csd"],
+    "@type": typing.Literal["freesurfer.mri_maps2csd"],
     "input_files": list[str],
     "csd_file": typing.NotRequired[str | None],
     "pdf_file": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_maps2csd": mri_maps2csd_cargs,
+        "freesurfer.mri_maps2csd": mri_maps2csd_cargs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def mri_maps2csd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_maps2csd",
+        "@type": "freesurfer.mri_maps2csd",
         "input_files": input_files,
         "debug": debug,
         "checkopts": checkopts,
@@ -292,5 +292,8 @@ __all__ = [
     "MriMaps2csdOutputs",
     "MriMaps2csdParameters",
     "mri_maps2csd",
+    "mri_maps2csd_cargs",
+    "mri_maps2csd_execute",
+    "mri_maps2csd_outputs",
     "mri_maps2csd_params",
 ]

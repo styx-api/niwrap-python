@@ -14,7 +14,7 @@ ADJUNCT_CALC_MONT_DIMS_PY_METADATA = Metadata(
 
 
 AdjunctCalcMontDimsPyParameters = typing.TypedDict('AdjunctCalcMontDimsPyParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_calc_mont_dims.py"],
+    "@type": typing.Literal["afni.adjunct_calc_mont_dims.py"],
     "help": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_calc_mont_dims.py": adjunct_calc_mont_dims_py_cargs,
+        "afni.adjunct_calc_mont_dims.py": adjunct_calc_mont_dims_py_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def adjunct_calc_mont_dims_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_calc_mont_dims.py",
+        "@type": "afni.adjunct_calc_mont_dims.py",
         "help": help_,
     }
     return params
@@ -169,5 +169,8 @@ __all__ = [
     "AdjunctCalcMontDimsPyOutputs",
     "AdjunctCalcMontDimsPyParameters",
     "adjunct_calc_mont_dims_py",
+    "adjunct_calc_mont_dims_py_cargs",
+    "adjunct_calc_mont_dims_py_execute",
+    "adjunct_calc_mont_dims_py_outputs",
     "adjunct_calc_mont_dims_py_params",
 ]

@@ -14,7 +14,7 @@ TOKENS_METADATA = Metadata(
 
 
 TokensParameters = typing.TypedDict('TokensParameters', {
-    "__STYXTYPE__": typing.Literal["tokens"],
+    "@type": typing.Literal["afni.tokens"],
     "infile": typing.NotRequired[InputPathType | None],
     "extra_char": typing.NotRequired[list[str] | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tokens": tokens_cargs,
+        "afni.tokens": tokens_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def tokens_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tokens",
+        "@type": "afni.tokens",
     }
     if infile is not None:
         params["infile"] = infile
@@ -188,5 +188,8 @@ __all__ = [
     "TokensOutputs",
     "TokensParameters",
     "tokens",
+    "tokens_cargs",
+    "tokens_execute",
+    "tokens_outputs",
     "tokens_params",
 ]

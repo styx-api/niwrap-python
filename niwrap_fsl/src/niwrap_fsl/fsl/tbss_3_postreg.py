@@ -14,7 +14,7 @@ TBSS_3_POSTREG_METADATA = Metadata(
 
 
 Tbss3PostregParameters = typing.TypedDict('Tbss3PostregParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_3_postreg"],
+    "@type": typing.Literal["fsl.tbss_3_postreg"],
     "derive_mean_from_study": bool,
     "use_fmrib58": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_3_postreg": tbss_3_postreg_cargs,
+        "fsl.tbss_3_postreg": tbss_3_postreg_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def tbss_3_postreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_3_postreg",
+        "@type": "fsl.tbss_3_postreg",
         "derive_mean_from_study": derive_mean_from_study,
         "use_fmrib58": use_fmrib58,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "Tbss3PostregOutputs",
     "Tbss3PostregParameters",
     "tbss_3_postreg",
+    "tbss_3_postreg_cargs",
+    "tbss_3_postreg_execute",
+    "tbss_3_postreg_outputs",
     "tbss_3_postreg_params",
 ]

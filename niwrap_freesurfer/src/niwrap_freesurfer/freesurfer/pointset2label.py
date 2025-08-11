@@ -14,7 +14,7 @@ POINTSET2LABEL_METADATA = Metadata(
 
 
 Pointset2labelParameters = typing.TypedDict('Pointset2labelParameters', {
-    "__STYXTYPE__": typing.Literal["pointset2label"],
+    "@type": typing.Literal["freesurfer.pointset2label"],
     "waypoint_file": InputPathType,
     "input_volume": InputPathType,
     "label_value": float,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pointset2label": pointset2label_cargs,
+        "freesurfer.pointset2label": pointset2label_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "pointset2label": pointset2label_outputs,
+        "freesurfer.pointset2label": pointset2label_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def pointset2label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pointset2label",
+        "@type": "freesurfer.pointset2label",
         "waypoint_file": waypoint_file,
         "input_volume": input_volume,
         "label_value": label_value,
@@ -205,5 +205,8 @@ __all__ = [
     "Pointset2labelOutputs",
     "Pointset2labelParameters",
     "pointset2label",
+    "pointset2label_cargs",
+    "pointset2label_execute",
+    "pointset2label_outputs",
     "pointset2label_params",
 ]

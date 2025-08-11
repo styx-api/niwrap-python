@@ -14,7 +14,7 @@ PLUGOUT_TTA_METADATA = Metadata(
 
 
 PlugoutTtaParameters = typing.TypedDict('PlugoutTtaParameters', {
-    "__STYXTYPE__": typing.Literal["plugout_tta"],
+    "@type": typing.Literal["afni.plugout_tta"],
     "host": typing.NotRequired[str | None],
     "port": typing.NotRequired[int | None],
     "verbose": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "plugout_tta": plugout_tta_cargs,
+        "afni.plugout_tta": plugout_tta_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def plugout_tta_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "plugout_tta",
+        "@type": "afni.plugout_tta",
         "verbose": verbose,
         "max_port_bloc": max_port_bloc,
         "max_port_bloc_quiet": max_port_bloc_quiet,
@@ -286,5 +286,8 @@ __all__ = [
     "PlugoutTtaOutputs",
     "PlugoutTtaParameters",
     "plugout_tta",
+    "plugout_tta_cargs",
+    "plugout_tta_execute",
+    "plugout_tta_outputs",
     "plugout_tta_params",
 ]

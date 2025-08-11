@@ -14,7 +14,7 @@ FSLREGISTER_METADATA = Metadata(
 
 
 FslregisterParameters = typing.TypedDict('FslregisterParameters', {
-    "__STYXTYPE__": typing.Literal["fslregister"],
+    "@type": typing.Literal["freesurfer.fslregister"],
     "subjid": str,
     "mov_vol": str,
     "reg_file": str,
@@ -60,7 +60,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslregister": fslregister_cargs,
+        "freesurfer.fslregister": fslregister_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslregister": fslregister_outputs,
+        "freesurfer.fslregister": fslregister_outputs,
     }.get(t)
 
 
@@ -169,7 +169,7 @@ def fslregister_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslregister",
+        "@type": "freesurfer.fslregister",
         "subjid": subjid,
         "mov_vol": mov_vol,
         "reg_file": reg_file,
@@ -516,5 +516,8 @@ __all__ = [
     "FslregisterOutputs",
     "FslregisterParameters",
     "fslregister",
+    "fslregister_cargs",
+    "fslregister_execute",
+    "fslregister_outputs",
     "fslregister_params",
 ]

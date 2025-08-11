@@ -14,7 +14,7 @@ FSLFFT_METADATA = Metadata(
 
 
 FslfftParameters = typing.TypedDict('FslfftParameters', {
-    "__STYXTYPE__": typing.Literal["fslfft"],
+    "@type": typing.Literal["fsl.fslfft"],
     "input_volume": InputPathType,
     "output_volume": str,
     "inverse_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslfft": fslfft_cargs,
+        "fsl.fslfft": fslfft_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslfft": fslfft_outputs,
+        "fsl.fslfft": fslfft_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def fslfft_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslfft",
+        "@type": "fsl.fslfft",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "inverse_flag": inverse_flag,
@@ -191,5 +191,8 @@ __all__ = [
     "FslfftOutputs",
     "FslfftParameters",
     "fslfft",
+    "fslfft_cargs",
+    "fslfft_execute",
+    "fslfft_outputs",
     "fslfft_params",
 ]

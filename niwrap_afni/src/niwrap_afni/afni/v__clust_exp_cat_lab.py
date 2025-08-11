@@ -14,7 +14,7 @@ V__CLUST_EXP_CAT_LAB_METADATA = Metadata(
 
 
 VClustExpCatLabParameters = typing.TypedDict('VClustExpCatLabParameters', {
-    "__STYXTYPE__": typing.Literal["@ClustExp_CatLab"],
+    "@type": typing.Literal["afni.@ClustExp_CatLab"],
     "prefix": str,
     "input_file": InputPathType,
     "help": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ClustExp_CatLab": v__clust_exp_cat_lab_cargs,
+        "afni.@ClustExp_CatLab": v__clust_exp_cat_lab_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ClustExp_CatLab": v__clust_exp_cat_lab_outputs,
+        "afni.@ClustExp_CatLab": v__clust_exp_cat_lab_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def v__clust_exp_cat_lab_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ClustExp_CatLab",
+        "@type": "afni.@ClustExp_CatLab",
         "prefix": prefix,
         "input_file": input_file,
         "help": help_,
@@ -197,5 +197,8 @@ __all__ = [
     "VClustExpCatLabParameters",
     "V__CLUST_EXP_CAT_LAB_METADATA",
     "v__clust_exp_cat_lab",
+    "v__clust_exp_cat_lab_cargs",
+    "v__clust_exp_cat_lab_execute",
+    "v__clust_exp_cat_lab_outputs",
     "v__clust_exp_cat_lab_params",
 ]

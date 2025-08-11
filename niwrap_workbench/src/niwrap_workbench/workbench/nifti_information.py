@@ -14,19 +14,19 @@ NIFTI_INFORMATION_METADATA = Metadata(
 
 
 NiftiInformationPrintHeaderParameters = typing.TypedDict('NiftiInformationPrintHeaderParameters', {
-    "__STYXTYPE__": typing.Literal["print_header"],
+    "@type": typing.Literal["workbench.nifti-information.print_header"],
     "opt_allow_truncated": bool,
 })
 
 
 NiftiInformationPrintXmlParameters = typing.TypedDict('NiftiInformationPrintXmlParameters', {
-    "__STYXTYPE__": typing.Literal["print_xml"],
+    "@type": typing.Literal["workbench.nifti-information.print_xml"],
     "opt_version_version": typing.NotRequired[str | None],
 })
 
 
 NiftiInformationParameters = typing.TypedDict('NiftiInformationParameters', {
-    "__STYXTYPE__": typing.Literal["nifti-information"],
+    "@type": typing.Literal["workbench.nifti-information"],
     "nifti_file": str,
     "print_header": typing.NotRequired[NiftiInformationPrintHeaderParameters | None],
     "opt_print_matrix": bool,
@@ -46,9 +46,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "nifti-information": nifti_information_cargs,
-        "print_header": nifti_information_print_header_cargs,
-        "print_xml": nifti_information_print_xml_cargs,
+        "workbench.nifti-information": nifti_information_cargs,
+        "workbench.nifti-information.print_header": nifti_information_print_header_cargs,
+        "workbench.nifti-information.print_xml": nifti_information_print_xml_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def nifti_information_print_header_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "print_header",
+        "@type": "workbench.nifti-information.print_header",
         "opt_allow_truncated": opt_allow_truncated,
     }
     return params
@@ -118,7 +118,7 @@ def nifti_information_print_xml_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "print_xml",
+        "@type": "workbench.nifti-information.print_xml",
     }
     if opt_version_version is not None:
         params["opt_version_version"] = opt_version_version
@@ -174,7 +174,7 @@ def nifti_information_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nifti-information",
+        "@type": "workbench.nifti-information",
         "nifti_file": nifti_file,
         "opt_print_matrix": opt_print_matrix,
     }
@@ -203,11 +203,11 @@ def nifti_information_cargs(
     cargs.append("-nifti-information")
     cargs.append(params.get("nifti_file"))
     if params.get("print_header") is not None:
-        cargs.extend(dyn_cargs(params.get("print_header")["__STYXTYPE__"])(params.get("print_header"), execution))
+        cargs.extend(dyn_cargs(params.get("print_header")["@type"])(params.get("print_header"), execution))
     if params.get("opt_print_matrix"):
         cargs.append("-print-matrix")
     if params.get("print_xml") is not None:
-        cargs.extend(dyn_cargs(params.get("print_xml")["__STYXTYPE__"])(params.get("print_xml"), execution))
+        cargs.extend(dyn_cargs(params.get("print_xml")["@type"])(params.get("print_xml"), execution))
     return cargs
 
 
@@ -299,7 +299,12 @@ __all__ = [
     "NiftiInformationPrintHeaderParameters",
     "NiftiInformationPrintXmlParameters",
     "nifti_information",
+    "nifti_information_cargs",
+    "nifti_information_execute",
+    "nifti_information_outputs",
     "nifti_information_params",
+    "nifti_information_print_header_cargs",
     "nifti_information_print_header_params",
+    "nifti_information_print_xml_cargs",
     "nifti_information_print_xml_params",
 ]

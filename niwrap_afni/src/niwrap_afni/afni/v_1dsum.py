@@ -14,7 +14,7 @@ V_1DSUM_METADATA = Metadata(
 
 
 V1dsumParameters = typing.TypedDict('V1dsumParameters', {
-    "__STYXTYPE__": typing.Literal["1dsum"],
+    "@type": typing.Literal["afni.1dsum"],
     "input_files": list[InputPathType],
     "ignore_rows": typing.NotRequired[float | None],
     "use_rows": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dsum": v_1dsum_cargs,
+        "afni.1dsum": v_1dsum_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dsum": v_1dsum_outputs,
+        "afni.1dsum": v_1dsum_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def v_1dsum_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dsum",
+        "@type": "afni.1dsum",
         "input_files": input_files,
         "mean_flag": mean_flag,
         "nocomment_flag": nocomment_flag,
@@ -231,5 +231,8 @@ __all__ = [
     "V1dsumParameters",
     "V_1DSUM_METADATA",
     "v_1dsum",
+    "v_1dsum_cargs",
+    "v_1dsum_execute",
+    "v_1dsum_outputs",
     "v_1dsum_params",
 ]

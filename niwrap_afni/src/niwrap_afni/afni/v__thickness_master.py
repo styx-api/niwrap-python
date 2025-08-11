@@ -14,7 +14,7 @@ V__THICKNESS_MASTER_METADATA = Metadata(
 
 
 VThicknessMasterParameters = typing.TypedDict('VThicknessMasterParameters', {
-    "__STYXTYPE__": typing.Literal["@thickness_master"],
+    "@type": typing.Literal["afni.@thickness_master"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@thickness_master": v__thickness_master_cargs,
+        "afni.@thickness_master": v__thickness_master_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@thickness_master": v__thickness_master_outputs,
+        "afni.@thickness_master": v__thickness_master_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def v__thickness_master_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@thickness_master",
+        "@type": "afni.@thickness_master",
         "maskset": maskset,
         "surfset": surfset,
     }
@@ -209,5 +209,8 @@ __all__ = [
     "VThicknessMasterParameters",
     "V__THICKNESS_MASTER_METADATA",
     "v__thickness_master",
+    "v__thickness_master_cargs",
+    "v__thickness_master_execute",
+    "v__thickness_master_outputs",
     "v__thickness_master_params",
 ]

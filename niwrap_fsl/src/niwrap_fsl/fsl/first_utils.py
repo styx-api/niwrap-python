@@ -14,7 +14,7 @@ FIRST_UTILS_METADATA = Metadata(
 
 
 FirstUtilsParameters = typing.TypedDict('FirstUtilsParameters', {
-    "__STYXTYPE__": typing.Literal["first_utils"],
+    "@type": typing.Literal["fsl.first_utils"],
     "input_file": InputPathType,
     "output_name": str,
     "norm_factors": typing.NotRequired[InputPathType | None],
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "first_utils": first_utils_cargs,
+        "fsl.first_utils": first_utils_cargs,
     }.get(t)
 
 
@@ -165,7 +165,7 @@ def first_utils_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "first_utils",
+        "@type": "fsl.first_utils",
         "input_file": input_file,
         "output_name": output_name,
         "use_scale": use_scale,
@@ -496,5 +496,8 @@ __all__ = [
     "FirstUtilsOutputs",
     "FirstUtilsParameters",
     "first_utils",
+    "first_utils_cargs",
+    "first_utils_execute",
+    "first_utils_outputs",
     "first_utils_params",
 ]

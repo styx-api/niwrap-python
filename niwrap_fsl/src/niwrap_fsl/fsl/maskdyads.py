@@ -14,7 +14,7 @@ MASKDYADS_METADATA = Metadata(
 
 
 MaskdyadsParameters = typing.TypedDict('MaskdyadsParameters', {
-    "__STYXTYPE__": typing.Literal["maskdyads"],
+    "@type": typing.Literal["fsl.maskdyads"],
     "dyads": InputPathType,
     "fsamples": InputPathType,
     "threshold": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "maskdyads": maskdyads_cargs,
+        "fsl.maskdyads": maskdyads_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def maskdyads_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "maskdyads",
+        "@type": "fsl.maskdyads",
         "dyads": dyads,
         "fsamples": fsamples,
     }
@@ -189,5 +189,8 @@ __all__ = [
     "MaskdyadsOutputs",
     "MaskdyadsParameters",
     "maskdyads",
+    "maskdyads_cargs",
+    "maskdyads_execute",
+    "maskdyads_outputs",
     "maskdyads_params",
 ]

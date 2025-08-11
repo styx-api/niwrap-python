@@ -14,7 +14,7 @@ MRI_COMPUTE_BIAS_METADATA = Metadata(
 
 
 MriComputeBiasParameters = typing.TypedDict('MriComputeBiasParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compute_bias"],
+    "@type": typing.Literal["freesurfer.mri_compute_bias"],
     "subjects": list[str],
     "output_volume": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compute_bias": mri_compute_bias_cargs,
+        "freesurfer.mri_compute_bias": mri_compute_bias_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_compute_bias": mri_compute_bias_outputs,
+        "freesurfer.mri_compute_bias": mri_compute_bias_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_compute_bias_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compute_bias",
+        "@type": "freesurfer.mri_compute_bias",
         "subjects": subjects,
         "output_volume": output_volume,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "MriComputeBiasOutputs",
     "MriComputeBiasParameters",
     "mri_compute_bias",
+    "mri_compute_bias_cargs",
+    "mri_compute_bias_execute",
+    "mri_compute_bias_outputs",
     "mri_compute_bias_params",
 ]

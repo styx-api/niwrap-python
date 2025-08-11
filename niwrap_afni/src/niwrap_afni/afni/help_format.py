@@ -14,7 +14,7 @@ HELP_FORMAT_METADATA = Metadata(
 
 
 HelpFormatParameters = typing.TypedDict('HelpFormatParameters', {
-    "__STYXTYPE__": typing.Literal["help_format"],
+    "@type": typing.Literal["afni.help_format"],
     "stdin": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "help_format": help_format_cargs,
+        "afni.help_format": help_format_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "help_format": help_format_outputs,
+        "afni.help_format": help_format_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def help_format_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "help_format",
+        "@type": "afni.help_format",
         "stdin": stdin,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "HelpFormatOutputs",
     "HelpFormatParameters",
     "help_format",
+    "help_format_cargs",
+    "help_format_execute",
+    "help_format_outputs",
     "help_format_params",
 ]

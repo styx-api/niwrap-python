@@ -14,7 +14,7 @@ SEGMENT_BS_SH_METADATA = Metadata(
 
 
 SegmentBsShParameters = typing.TypedDict('SegmentBsShParameters', {
-    "__STYXTYPE__": typing.Literal["segmentBS.sh"],
+    "@type": typing.Literal["freesurfer.segmentBS.sh"],
     "matlab_runtime": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segmentBS.sh": segment_bs_sh_cargs,
+        "freesurfer.segmentBS.sh": segment_bs_sh_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def segment_bs_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segmentBS.sh",
+        "@type": "freesurfer.segmentBS.sh",
     }
     if matlab_runtime is not None:
         params["matlab_runtime"] = matlab_runtime
@@ -172,5 +172,8 @@ __all__ = [
     "SegmentBsShOutputs",
     "SegmentBsShParameters",
     "segment_bs_sh",
+    "segment_bs_sh_cargs",
+    "segment_bs_sh_execute",
+    "segment_bs_sh_outputs",
     "segment_bs_sh_params",
 ]

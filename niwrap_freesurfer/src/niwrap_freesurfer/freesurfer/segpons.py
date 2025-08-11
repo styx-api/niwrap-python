@@ -14,7 +14,7 @@ SEGPONS_METADATA = Metadata(
 
 
 SegponsParameters = typing.TypedDict('SegponsParameters', {
-    "__STYXTYPE__": typing.Literal["segpons"],
+    "@type": typing.Literal["freesurfer.segpons"],
     "subject": str,
     "aseg": bool,
     "apas": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segpons": segpons_cargs,
+        "freesurfer.segpons": segpons_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segpons": segpons_outputs,
+        "freesurfer.segpons": segpons_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def segpons_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segpons",
+        "@type": "freesurfer.segpons",
         "subject": subject,
         "aseg": aseg,
         "apas": apas,
@@ -228,5 +228,8 @@ __all__ = [
     "SegponsOutputs",
     "SegponsParameters",
     "segpons",
+    "segpons_cargs",
+    "segpons_execute",
+    "segpons_outputs",
     "segpons_params",
 ]

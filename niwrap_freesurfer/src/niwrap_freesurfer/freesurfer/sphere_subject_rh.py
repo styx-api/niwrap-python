@@ -14,7 +14,7 @@ SPHERE_SUBJECT_RH_METADATA = Metadata(
 
 
 SphereSubjectRhParameters = typing.TypedDict('SphereSubjectRhParameters', {
-    "__STYXTYPE__": typing.Literal["sphere_subject-rh"],
+    "@type": typing.Literal["freesurfer.sphere_subject-rh"],
     "license_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sphere_subject-rh": sphere_subject_rh_cargs,
+        "freesurfer.sphere_subject-rh": sphere_subject_rh_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def sphere_subject_rh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sphere_subject-rh",
+        "@type": "freesurfer.sphere_subject-rh",
         "license_file": license_file,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "SphereSubjectRhOutputs",
     "SphereSubjectRhParameters",
     "sphere_subject_rh",
+    "sphere_subject_rh_cargs",
+    "sphere_subject_rh_execute",
+    "sphere_subject_rh_outputs",
     "sphere_subject_rh_params",
 ]

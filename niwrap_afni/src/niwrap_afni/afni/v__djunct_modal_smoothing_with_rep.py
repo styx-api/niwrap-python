@@ -14,7 +14,7 @@ V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA = Metadata(
 
 
 VDjunctModalSmoothingWithRepParameters = typing.TypedDict('VDjunctModalSmoothingWithRepParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_modal_smoothing_with_rep"],
+    "@type": typing.Literal["afni.@djunct_modal_smoothing_with_rep"],
     "input_file": InputPathType,
     "output_prefix": str,
     "modesmooth": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_modal_smoothing_with_rep": v__djunct_modal_smoothing_with_rep_cargs,
+        "afni.@djunct_modal_smoothing_with_rep": v__djunct_modal_smoothing_with_rep_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@djunct_modal_smoothing_with_rep": v__djunct_modal_smoothing_with_rep_outputs,
+        "afni.@djunct_modal_smoothing_with_rep": v__djunct_modal_smoothing_with_rep_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def v__djunct_modal_smoothing_with_rep_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_modal_smoothing_with_rep",
+        "@type": "afni.@djunct_modal_smoothing_with_rep",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "help_view": help_view,
@@ -245,5 +245,8 @@ __all__ = [
     "VDjunctModalSmoothingWithRepParameters",
     "V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA",
     "v__djunct_modal_smoothing_with_rep",
+    "v__djunct_modal_smoothing_with_rep_cargs",
+    "v__djunct_modal_smoothing_with_rep_execute",
+    "v__djunct_modal_smoothing_with_rep_outputs",
     "v__djunct_modal_smoothing_with_rep_params",
 ]

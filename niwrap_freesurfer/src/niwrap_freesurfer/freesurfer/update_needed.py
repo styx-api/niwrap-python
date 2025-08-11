@@ -14,7 +14,7 @@ UPDATE_NEEDED_METADATA = Metadata(
 
 
 UpdateNeededParameters = typing.TypedDict('UpdateNeededParameters', {
-    "__STYXTYPE__": typing.Literal["UpdateNeeded"],
+    "@type": typing.Literal["freesurfer.UpdateNeeded"],
     "target_file": InputPathType,
     "source_file": InputPathType,
     "additional_source_files": typing.NotRequired[list[InputPathType] | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "UpdateNeeded": update_needed_cargs,
+        "freesurfer.UpdateNeeded": update_needed_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def update_needed_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "UpdateNeeded",
+        "@type": "freesurfer.UpdateNeeded",
         "target_file": target_file,
         "source_file": source_file,
     }
@@ -188,5 +188,8 @@ __all__ = [
     "UpdateNeededOutputs",
     "UpdateNeededParameters",
     "update_needed",
+    "update_needed_cargs",
+    "update_needed_execute",
+    "update_needed_outputs",
     "update_needed_params",
 ]

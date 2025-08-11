@@ -14,7 +14,7 @@ CIFTI_EXPORT_DENSE_MAPPING_METADATA = Metadata(
 
 
 CiftiExportDenseMappingVolumeAllParameters = typing.TypedDict('CiftiExportDenseMappingVolumeAllParameters', {
-    "__STYXTYPE__": typing.Literal["volume_all"],
+    "@type": typing.Literal["workbench.cifti-export-dense-mapping.volume_all"],
     "text_out": str,
     "opt_no_cifti_index": bool,
     "opt_structure": bool,
@@ -22,7 +22,7 @@ CiftiExportDenseMappingVolumeAllParameters = typing.TypedDict('CiftiExportDenseM
 
 
 CiftiExportDenseMappingSurfaceParameters = typing.TypedDict('CiftiExportDenseMappingSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["surface"],
+    "@type": typing.Literal["workbench.cifti-export-dense-mapping.surface"],
     "structure": str,
     "text_out": str,
     "opt_no_cifti_index": bool,
@@ -30,7 +30,7 @@ CiftiExportDenseMappingSurfaceParameters = typing.TypedDict('CiftiExportDenseMap
 
 
 CiftiExportDenseMappingVolumeParameters = typing.TypedDict('CiftiExportDenseMappingVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.cifti-export-dense-mapping.volume"],
     "structure": str,
     "text_out": str,
     "opt_no_cifti_index": bool,
@@ -38,7 +38,7 @@ CiftiExportDenseMappingVolumeParameters = typing.TypedDict('CiftiExportDenseMapp
 
 
 CiftiExportDenseMappingParameters = typing.TypedDict('CiftiExportDenseMappingParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-export-dense-mapping"],
+    "@type": typing.Literal["workbench.cifti-export-dense-mapping"],
     "cifti": InputPathType,
     "direction": str,
     "volume_all": typing.NotRequired[CiftiExportDenseMappingVolumeAllParameters | None],
@@ -59,10 +59,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-export-dense-mapping": cifti_export_dense_mapping_cargs,
-        "volume_all": cifti_export_dense_mapping_volume_all_cargs,
-        "surface": cifti_export_dense_mapping_surface_cargs,
-        "volume": cifti_export_dense_mapping_volume_cargs,
+        "workbench.cifti-export-dense-mapping": cifti_export_dense_mapping_cargs,
+        "workbench.cifti-export-dense-mapping.volume_all": cifti_export_dense_mapping_volume_all_cargs,
+        "workbench.cifti-export-dense-mapping.surface": cifti_export_dense_mapping_surface_cargs,
+        "workbench.cifti-export-dense-mapping.volume": cifti_export_dense_mapping_volume_cargs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def cifti_export_dense_mapping_volume_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume_all",
+        "@type": "workbench.cifti-export-dense-mapping.volume_all",
         "text_out": text_out,
         "opt_no_cifti_index": opt_no_cifti_index,
         "opt_structure": opt_structure,
@@ -145,7 +145,7 @@ def cifti_export_dense_mapping_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface",
+        "@type": "workbench.cifti-export-dense-mapping.surface",
         "structure": structure,
         "text_out": text_out,
         "opt_no_cifti_index": opt_no_cifti_index,
@@ -191,7 +191,7 @@ def cifti_export_dense_mapping_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.cifti-export-dense-mapping.volume",
         "structure": structure,
         "text_out": text_out,
         "opt_no_cifti_index": opt_no_cifti_index,
@@ -249,7 +249,7 @@ def cifti_export_dense_mapping_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-export-dense-mapping",
+        "@type": "workbench.cifti-export-dense-mapping",
         "cifti": cifti,
         "direction": direction,
     }
@@ -281,11 +281,11 @@ def cifti_export_dense_mapping_cargs(
     cargs.append(execution.input_file(params.get("cifti")))
     cargs.append(params.get("direction"))
     if params.get("volume_all") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_all")["__STYXTYPE__"])(params.get("volume_all"), execution))
+        cargs.extend(dyn_cargs(params.get("volume_all")["@type"])(params.get("volume_all"), execution))
     if params.get("surface") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("surface")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("surface")] for a in c])
     if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("volume")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
     return cargs
 
 
@@ -469,8 +469,14 @@ __all__ = [
     "CiftiExportDenseMappingVolumeAllParameters",
     "CiftiExportDenseMappingVolumeParameters",
     "cifti_export_dense_mapping",
+    "cifti_export_dense_mapping_cargs",
+    "cifti_export_dense_mapping_execute",
+    "cifti_export_dense_mapping_outputs",
     "cifti_export_dense_mapping_params",
+    "cifti_export_dense_mapping_surface_cargs",
     "cifti_export_dense_mapping_surface_params",
+    "cifti_export_dense_mapping_volume_all_cargs",
     "cifti_export_dense_mapping_volume_all_params",
+    "cifti_export_dense_mapping_volume_cargs",
     "cifti_export_dense_mapping_volume_params",
 ]

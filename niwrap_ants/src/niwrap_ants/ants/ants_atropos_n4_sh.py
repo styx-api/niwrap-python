@@ -14,14 +14,14 @@ ANTS_ATROPOS_N4_SH_METADATA = Metadata(
 
 
 AntsAtroposN4ShSegmentationPriorsParameters = typing.TypedDict('AntsAtroposN4ShSegmentationPriorsParameters', {
-    "__STYXTYPE__": typing.Literal["segmentation_priors"],
+    "@type": typing.Literal["ants.antsAtroposN4.sh.segmentation_priors"],
     "segmentation_priors_pattern": typing.NotRequired[str | None],
     "segmentation_priors_folder": typing.NotRequired[InputPathType | None],
 })
 
 
 AntsAtroposN4ShParameters = typing.TypedDict('AntsAtroposN4ShParameters', {
-    "__STYXTYPE__": typing.Literal["antsAtroposN4.sh"],
+    "@type": typing.Literal["ants.antsAtroposN4.sh"],
     "image_dimension": typing.Literal[2, 3],
     "input_image": InputPathType,
     "mask_image": InputPathType,
@@ -60,8 +60,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsAtroposN4.sh": ants_atropos_n4_sh_cargs,
-        "segmentation_priors": ants_atropos_n4_sh_segmentation_priors_cargs,
+        "ants.antsAtroposN4.sh": ants_atropos_n4_sh_cargs,
+        "ants.antsAtroposN4.sh.segmentation_priors": ants_atropos_n4_sh_segmentation_priors_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsAtroposN4.sh": ants_atropos_n4_sh_outputs,
+        "ants.antsAtroposN4.sh": ants_atropos_n4_sh_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def ants_atropos_n4_sh_segmentation_priors_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segmentation_priors",
+        "@type": "ants.antsAtroposN4.sh.segmentation_priors",
     }
     if segmentation_priors_pattern is not None:
         params["segmentation_priors_pattern"] = segmentation_priors_pattern
@@ -234,7 +234,7 @@ def ants_atropos_n4_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsAtroposN4.sh",
+        "@type": "ants.antsAtroposN4.sh",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "mask_image": mask_image,
@@ -326,7 +326,7 @@ def ants_atropos_n4_sh_cargs(
         ])
     cargs.extend([
         "-p",
-        *dyn_cargs(params.get("segmentation_priors")["__STYXTYPE__"])(params.get("segmentation_priors"), execution)
+        *dyn_cargs(params.get("segmentation_priors")["@type"])(params.get("segmentation_priors"), execution)
     ])
     if params.get("mrf") is not None:
         cargs.extend([
@@ -589,6 +589,10 @@ __all__ = [
     "AntsAtroposN4ShParameters",
     "AntsAtroposN4ShSegmentationPriorsParameters",
     "ants_atropos_n4_sh",
+    "ants_atropos_n4_sh_cargs",
+    "ants_atropos_n4_sh_execute",
+    "ants_atropos_n4_sh_outputs",
     "ants_atropos_n4_sh_params",
+    "ants_atropos_n4_sh_segmentation_priors_cargs",
     "ants_atropos_n4_sh_segmentation_priors_params",
 ]

@@ -14,7 +14,7 @@ FREEVIEW_METADATA = Metadata(
 
 
 FreeviewParameters = typing.TypedDict('FreeviewParameters', {
-    "__STYXTYPE__": typing.Literal["freeview"],
+    "@type": typing.Literal["freesurfer.freeview"],
     "args": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "freeview": freeview_cargs,
+        "freesurfer.freeview": freeview_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def freeview_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "freeview",
+        "@type": "freesurfer.freeview",
     }
     if args is not None:
         params["args"] = args
@@ -170,5 +170,8 @@ __all__ = [
     "FreeviewOutputs",
     "FreeviewParameters",
     "freeview",
+    "freeview_cargs",
+    "freeview_execute",
+    "freeview_outputs",
     "freeview_params",
 ]

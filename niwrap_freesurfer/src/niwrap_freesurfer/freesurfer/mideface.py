@@ -14,7 +14,7 @@ MIDEFACE_METADATA = Metadata(
 
 
 MidefaceParameters = typing.TypedDict('MidefaceParameters', {
-    "__STYXTYPE__": typing.Literal["mideface"],
+    "@type": typing.Literal["freesurfer.mideface"],
     "input_volume": InputPathType,
     "output_volume": str,
     "facemask": typing.NotRequired[InputPathType | None],
@@ -60,7 +60,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mideface": mideface_cargs,
+        "freesurfer.mideface": mideface_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mideface": mideface_outputs,
+        "freesurfer.mideface": mideface_outputs,
     }.get(t)
 
 
@@ -162,7 +162,7 @@ def mideface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mideface",
+        "@type": "freesurfer.mideface",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "samseg_fast": samseg_fast,
@@ -517,5 +517,8 @@ __all__ = [
     "MidefaceOutputs",
     "MidefaceParameters",
     "mideface",
+    "mideface_cargs",
+    "mideface_execute",
+    "mideface_outputs",
     "mideface_params",
 ]

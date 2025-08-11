@@ -14,14 +14,14 @@ MRDEGIBBS_METADATA = Metadata(
 
 
 MrdegibbsConfigParameters = typing.TypedDict('MrdegibbsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrdegibbs.config"],
     "key": str,
     "value": str,
 })
 
 
 MrdegibbsParameters = typing.TypedDict('MrdegibbsParameters', {
-    "__STYXTYPE__": typing.Literal["mrdegibbs"],
+    "@type": typing.Literal["mrtrix.mrdegibbs"],
     "axes": typing.NotRequired[list[int] | None],
     "nshifts": typing.NotRequired[int | None],
     "minW": typing.NotRequired[int | None],
@@ -52,8 +52,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrdegibbs": mrdegibbs_cargs,
-        "config": mrdegibbs_config_cargs,
+        "mrtrix.mrdegibbs": mrdegibbs_cargs,
+        "mrtrix.mrdegibbs.config": mrdegibbs_config_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrdegibbs": mrdegibbs_outputs,
+        "mrtrix.mrdegibbs": mrdegibbs_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def mrdegibbs_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrdegibbs.config",
         "key": key,
         "value": value,
     }
@@ -173,7 +173,7 @@ def mrdegibbs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrdegibbs",
+        "@type": "mrtrix.mrdegibbs",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -254,7 +254,7 @@ def mrdegibbs_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -438,6 +438,10 @@ __all__ = [
     "MrdegibbsOutputs",
     "MrdegibbsParameters",
     "mrdegibbs",
+    "mrdegibbs_cargs",
+    "mrdegibbs_config_cargs",
     "mrdegibbs_config_params",
+    "mrdegibbs_execute",
+    "mrdegibbs_outputs",
     "mrdegibbs_params",
 ]

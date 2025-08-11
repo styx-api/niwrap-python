@@ -14,33 +14,33 @@ EXTRACT_REGION_FROM_IMAGE_METADATA = Metadata(
 
 
 ExtractRegionFromImageRegionMinMaxIndexParameters = typing.TypedDict('ExtractRegionFromImageRegionMinMaxIndexParameters', {
-    "__STYXTYPE__": typing.Literal["region_min_max_index"],
+    "@type": typing.Literal["ants.ExtractRegionFromImage.region_min_max_index"],
     "min_index": str,
     "max_index": str,
 })
 
 
 ExtractRegionFromImageRegionLabelParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelParameters', {
-    "__STYXTYPE__": typing.Literal["region_label"],
+    "@type": typing.Literal["ants.ExtractRegionFromImage.region_label"],
     "label": str,
 })
 
 
 ExtractRegionFromImageRegionDomainImageParameters = typing.TypedDict('ExtractRegionFromImageRegionDomainImageParameters', {
-    "__STYXTYPE__": typing.Literal["region_domain_image"],
+    "@type": typing.Literal["ants.ExtractRegionFromImage.region_domain_image"],
     "domain_image": InputPathType,
 })
 
 
 ExtractRegionFromImageRegionLabelWithImageParameters = typing.TypedDict('ExtractRegionFromImageRegionLabelWithImageParameters', {
-    "__STYXTYPE__": typing.Literal["region_label_with_image"],
+    "@type": typing.Literal["ants.ExtractRegionFromImage.region_label_with_image"],
     "label": str,
     "label_image": InputPathType,
 })
 
 
 ExtractRegionFromImageParameters = typing.TypedDict('ExtractRegionFromImageParameters', {
-    "__STYXTYPE__": typing.Literal["ExtractRegionFromImage"],
+    "@type": typing.Literal["ants.ExtractRegionFromImage"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -60,11 +60,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ExtractRegionFromImage": extract_region_from_image_cargs,
-        "region_min_max_index": extract_region_from_image_region_min_max_index_cargs,
-        "region_label": extract_region_from_image_region_label_cargs,
-        "region_domain_image": extract_region_from_image_region_domain_image_cargs,
-        "region_label_with_image": extract_region_from_image_region_label_with_image_cargs,
+        "ants.ExtractRegionFromImage": extract_region_from_image_cargs,
+        "ants.ExtractRegionFromImage.region_min_max_index": extract_region_from_image_region_min_max_index_cargs,
+        "ants.ExtractRegionFromImage.region_label": extract_region_from_image_region_label_cargs,
+        "ants.ExtractRegionFromImage.region_domain_image": extract_region_from_image_region_domain_image_cargs,
+        "ants.ExtractRegionFromImage.region_label_with_image": extract_region_from_image_region_label_with_image_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ExtractRegionFromImage": extract_region_from_image_outputs,
+        "ants.ExtractRegionFromImage": extract_region_from_image_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def extract_region_from_image_region_min_max_index_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "region_min_max_index",
+        "@type": "ants.ExtractRegionFromImage.region_min_max_index",
         "min_index": min_index,
         "max_index": max_index,
     }
@@ -137,7 +137,7 @@ def extract_region_from_image_region_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "region_label",
+        "@type": "ants.ExtractRegionFromImage.region_label",
         "label": label,
     }
     return params
@@ -174,7 +174,7 @@ def extract_region_from_image_region_domain_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "region_domain_image",
+        "@type": "ants.ExtractRegionFromImage.region_domain_image",
         "domain_image": domain_image,
     }
     return params
@@ -212,7 +212,7 @@ def extract_region_from_image_region_label_with_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "region_label_with_image",
+        "@type": "ants.ExtractRegionFromImage.region_label_with_image",
         "label": label,
         "label_image": label_image,
     }
@@ -270,7 +270,7 @@ def extract_region_from_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ExtractRegionFromImage",
+        "@type": "ants.ExtractRegionFromImage",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -297,7 +297,7 @@ def extract_region_from_image_cargs(
     cargs.append(str(params.get("image_dimension")))
     cargs.append(execution.input_file(params.get("input_image")))
     cargs.append(params.get("output_image"))
-    cargs.extend(dyn_cargs(params.get("region_specification")["__STYXTYPE__"])(params.get("region_specification"), execution))
+    cargs.extend(dyn_cargs(params.get("region_specification")["@type"])(params.get("region_specification"), execution))
     return cargs
 
 
@@ -393,9 +393,16 @@ __all__ = [
     "ExtractRegionFromImageRegionLabelWithImageParameters",
     "ExtractRegionFromImageRegionMinMaxIndexParameters",
     "extract_region_from_image",
+    "extract_region_from_image_cargs",
+    "extract_region_from_image_execute",
+    "extract_region_from_image_outputs",
     "extract_region_from_image_params",
+    "extract_region_from_image_region_domain_image_cargs",
     "extract_region_from_image_region_domain_image_params",
+    "extract_region_from_image_region_label_cargs",
     "extract_region_from_image_region_label_params",
+    "extract_region_from_image_region_label_with_image_cargs",
     "extract_region_from_image_region_label_with_image_params",
+    "extract_region_from_image_region_min_max_index_cargs",
     "extract_region_from_image_region_min_max_index_params",
 ]

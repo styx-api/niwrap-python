@@ -14,7 +14,7 @@ AFNI_BATCH_R_METADATA = Metadata(
 
 
 AfniBatchRParameters = typing.TypedDict('AfniBatchRParameters', {
-    "__STYXTYPE__": typing.Literal["AFNI_Batch_R"],
+    "@type": typing.Literal["afni.AFNI_Batch_R"],
     "no_restore": bool,
     "save_workspace": bool,
     "no_readline": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "AFNI_Batch_R": afni_batch_r_cargs,
+        "afni.AFNI_Batch_R": afni_batch_r_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def afni_batch_r_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "AFNI_Batch_R",
+        "@type": "afni.AFNI_Batch_R",
         "no_restore": no_restore,
         "save_workspace": save_workspace,
         "no_readline": no_readline,
@@ -210,5 +210,8 @@ __all__ = [
     "AfniBatchROutputs",
     "AfniBatchRParameters",
     "afni_batch_r",
+    "afni_batch_r_cargs",
+    "afni_batch_r_execute",
+    "afni_batch_r_outputs",
     "afni_batch_r_params",
 ]

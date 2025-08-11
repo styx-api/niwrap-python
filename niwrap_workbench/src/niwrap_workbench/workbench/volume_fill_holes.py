@@ -14,7 +14,7 @@ VOLUME_FILL_HOLES_METADATA = Metadata(
 
 
 VolumeFillHolesParameters = typing.TypedDict('VolumeFillHolesParameters', {
-    "__STYXTYPE__": typing.Literal["volume-fill-holes"],
+    "@type": typing.Literal["workbench.volume-fill-holes"],
     "volume_in": InputPathType,
     "volume_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-fill-holes": volume_fill_holes_cargs,
+        "workbench.volume-fill-holes": volume_fill_holes_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-fill-holes": volume_fill_holes_outputs,
+        "workbench.volume-fill-holes": volume_fill_holes_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def volume_fill_holes_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-fill-holes",
+        "@type": "workbench.volume-fill-holes",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "VolumeFillHolesOutputs",
     "VolumeFillHolesParameters",
     "volume_fill_holes",
+    "volume_fill_holes_cargs",
+    "volume_fill_holes_execute",
+    "volume_fill_holes_outputs",
     "volume_fill_holes_params",
 ]

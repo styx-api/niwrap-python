@@ -14,14 +14,14 @@ TSFINFO_METADATA = Metadata(
 
 
 TsfinfoConfigParameters = typing.TypedDict('TsfinfoConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tsfinfo.config"],
     "key": str,
     "value": str,
 })
 
 
 TsfinfoParameters = typing.TypedDict('TsfinfoParameters', {
-    "__STYXTYPE__": typing.Literal["tsfinfo"],
+    "@type": typing.Literal["mrtrix.tsfinfo"],
     "count": bool,
     "ascii": typing.NotRequired[str | None],
     "info": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tsfinfo": tsfinfo_cargs,
-        "config": tsfinfo_config_cargs,
+        "mrtrix.tsfinfo": tsfinfo_cargs,
+        "mrtrix.tsfinfo.config": tsfinfo_config_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def tsfinfo_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tsfinfo.config",
         "key": key,
         "value": value,
     }
@@ -154,7 +154,7 @@ def tsfinfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tsfinfo",
+        "@type": "mrtrix.tsfinfo",
         "count": count,
         "info": info,
         "quiet": quiet,
@@ -209,7 +209,7 @@ def tsfinfo_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -339,6 +339,10 @@ __all__ = [
     "TsfinfoOutputs",
     "TsfinfoParameters",
     "tsfinfo",
+    "tsfinfo_cargs",
+    "tsfinfo_config_cargs",
     "tsfinfo_config_params",
+    "tsfinfo_execute",
+    "tsfinfo_outputs",
     "tsfinfo_params",
 ]

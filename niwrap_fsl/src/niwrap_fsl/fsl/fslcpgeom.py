@@ -14,7 +14,7 @@ FSLCPGEOM_METADATA = Metadata(
 
 
 FslcpgeomParameters = typing.TypedDict('FslcpgeomParameters', {
-    "__STYXTYPE__": typing.Literal["fslcpgeom"],
+    "@type": typing.Literal["fsl.fslcpgeom"],
     "source_file": InputPathType,
     "destination_file": InputPathType,
     "dimensions_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslcpgeom": fslcpgeom_cargs,
+        "fsl.fslcpgeom": fslcpgeom_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fslcpgeom_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslcpgeom",
+        "@type": "fsl.fslcpgeom",
         "source_file": source_file,
         "destination_file": destination_file,
         "dimensions_flag": dimensions_flag,
@@ -185,5 +185,8 @@ __all__ = [
     "FslcpgeomOutputs",
     "FslcpgeomParameters",
     "fslcpgeom",
+    "fslcpgeom_cargs",
+    "fslcpgeom_execute",
+    "fslcpgeom_outputs",
     "fslcpgeom_params",
 ]

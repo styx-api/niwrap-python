@@ -14,7 +14,7 @@ ANTS_JOINT_LABEL_FUSION_SH_METADATA = Metadata(
 
 
 AntsJointLabelFusionShParameters = typing.TypedDict('AntsJointLabelFusionShParameters', {
-    "__STYXTYPE__": typing.Literal["antsJointLabelFusion.sh"],
+    "@type": typing.Literal["ants.antsJointLabelFusion.sh"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "output": typing.NotRequired[str | None],
     "atlas_image_mrf": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsJointLabelFusion.sh": ants_joint_label_fusion_sh_cargs,
+        "ants.antsJointLabelFusion.sh": ants_joint_label_fusion_sh_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsJointLabelFusion.sh": ants_joint_label_fusion_sh_outputs,
+        "ants.antsJointLabelFusion.sh": ants_joint_label_fusion_sh_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def ants_joint_label_fusion_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsJointLabelFusion.sh",
+        "@type": "ants.antsJointLabelFusion.sh",
         "target_image": target_image,
         "mask_image": mask_image,
     }
@@ -324,5 +324,8 @@ __all__ = [
     "AntsJointLabelFusionShOutputs",
     "AntsJointLabelFusionShParameters",
     "ants_joint_label_fusion_sh",
+    "ants_joint_label_fusion_sh_cargs",
+    "ants_joint_label_fusion_sh_execute",
+    "ants_joint_label_fusion_sh_outputs",
     "ants_joint_label_fusion_sh_params",
 ]

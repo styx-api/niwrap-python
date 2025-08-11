@@ -14,7 +14,7 @@ ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA = Metadata(
 
 
 AntsIntermodalityIntrasubjectShParameters = typing.TypedDict('AntsIntermodalityIntrasubjectShParameters', {
-    "__STYXTYPE__": typing.Literal["antsIntermodalityIntrasubject.sh"],
+    "@type": typing.Literal["ants.antsIntermodalityIntrasubject.sh"],
     "dimension": int,
     "anatomical_t1_image": InputPathType,
     "anatomical_reference_image": typing.NotRequired[InputPathType | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsIntermodalityIntrasubject.sh": ants_intermodality_intrasubject_sh_cargs,
+        "ants.antsIntermodalityIntrasubject.sh": ants_intermodality_intrasubject_sh_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsIntermodalityIntrasubject.sh": ants_intermodality_intrasubject_sh_outputs,
+        "ants.antsIntermodalityIntrasubject.sh": ants_intermodality_intrasubject_sh_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def ants_intermodality_intrasubject_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsIntermodalityIntrasubject.sh",
+        "@type": "ants.antsIntermodalityIntrasubject.sh",
         "dimension": dimension,
         "anatomical_t1_image": anatomical_t1_image,
         "scalar_image_to_match": scalar_image_to_match,
@@ -324,5 +324,8 @@ __all__ = [
     "AntsIntermodalityIntrasubjectShOutputs",
     "AntsIntermodalityIntrasubjectShParameters",
     "ants_intermodality_intrasubject_sh",
+    "ants_intermodality_intrasubject_sh_cargs",
+    "ants_intermodality_intrasubject_sh_execute",
+    "ants_intermodality_intrasubject_sh_outputs",
     "ants_intermodality_intrasubject_sh_params",
 ]

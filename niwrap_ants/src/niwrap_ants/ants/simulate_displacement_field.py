@@ -14,20 +14,20 @@ SIMULATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 SimulateDisplacementFieldBsplineOptionsParameters = typing.TypedDict('SimulateDisplacementFieldBsplineOptionsParameters', {
-    "__STYXTYPE__": typing.Literal["bspline_options"],
+    "@type": typing.Literal["ants.SimulateDisplacementField.bspline_options"],
     "number_of_fitting_levels": typing.NotRequired[int | None],
     "number_of_control_points": typing.NotRequired[int | None],
 })
 
 
 SimulateDisplacementFieldExponentialOptionsParameters = typing.TypedDict('SimulateDisplacementFieldExponentialOptionsParameters', {
-    "__STYXTYPE__": typing.Literal["exponential_options"],
+    "@type": typing.Literal["ants.SimulateDisplacementField.exponential_options"],
     "smoothing_standard_deviation": typing.NotRequired[float | None],
 })
 
 
 SimulateDisplacementFieldParameters = typing.TypedDict('SimulateDisplacementFieldParameters', {
-    "__STYXTYPE__": typing.Literal["SimulateDisplacementField"],
+    "@type": typing.Literal["ants.SimulateDisplacementField"],
     "image_dimension": int,
     "displacement_field_type": typing.Literal["BSpline", "Exponential"],
     "domain_image": InputPathType,
@@ -51,9 +51,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SimulateDisplacementField": simulate_displacement_field_cargs,
-        "bspline_options": simulate_displacement_field_bspline_options_cargs,
-        "exponential_options": simulate_displacement_field_exponential_options_cargs,
+        "ants.SimulateDisplacementField": simulate_displacement_field_cargs,
+        "ants.SimulateDisplacementField.bspline_options": simulate_displacement_field_bspline_options_cargs,
+        "ants.SimulateDisplacementField.exponential_options": simulate_displacement_field_exponential_options_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SimulateDisplacementField": simulate_displacement_field_outputs,
+        "ants.SimulateDisplacementField": simulate_displacement_field_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def simulate_displacement_field_bspline_options_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bspline_options",
+        "@type": "ants.SimulateDisplacementField.bspline_options",
     }
     if number_of_fitting_levels is not None:
         params["number_of_fitting_levels"] = number_of_fitting_levels
@@ -130,7 +130,7 @@ def simulate_displacement_field_exponential_options_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "exponential_options",
+        "@type": "ants.SimulateDisplacementField.exponential_options",
     }
     if smoothing_standard_deviation is not None:
         params["smoothing_standard_deviation"] = smoothing_standard_deviation
@@ -196,7 +196,7 @@ def simulate_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SimulateDisplacementField",
+        "@type": "ants.SimulateDisplacementField",
         "image_dimension": image_dimension,
         "displacement_field_type": displacement_field_type,
         "domain_image": domain_image,
@@ -239,7 +239,7 @@ def simulate_displacement_field_cargs(
     if params.get("enforce_stationary_boundary") is not None:
         cargs.append(str(params.get("enforce_stationary_boundary")))
     if params.get("displacement_specific_options") is not None:
-        cargs.extend(dyn_cargs(params.get("displacement_specific_options")["__STYXTYPE__"])(params.get("displacement_specific_options"), execution))
+        cargs.extend(dyn_cargs(params.get("displacement_specific_options")["@type"])(params.get("displacement_specific_options"), execution))
     return cargs
 
 
@@ -346,7 +346,12 @@ __all__ = [
     "SimulateDisplacementFieldOutputs",
     "SimulateDisplacementFieldParameters",
     "simulate_displacement_field",
+    "simulate_displacement_field_bspline_options_cargs",
     "simulate_displacement_field_bspline_options_params",
+    "simulate_displacement_field_cargs",
+    "simulate_displacement_field_execute",
+    "simulate_displacement_field_exponential_options_cargs",
     "simulate_displacement_field_exponential_options_params",
+    "simulate_displacement_field_outputs",
     "simulate_displacement_field_params",
 ]

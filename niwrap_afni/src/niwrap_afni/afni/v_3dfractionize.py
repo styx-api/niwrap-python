@@ -14,7 +14,7 @@ V_3DFRACTIONIZE_METADATA = Metadata(
 
 
 V3dfractionizeParameters = typing.TypedDict('V3dfractionizeParameters', {
-    "__STYXTYPE__": typing.Literal["3dfractionize"],
+    "@type": typing.Literal["afni.3dfractionize"],
     "template": InputPathType,
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dfractionize": v_3dfractionize_cargs,
+        "afni.3dfractionize": v_3dfractionize_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dfractionize": v_3dfractionize_outputs,
+        "afni.3dfractionize": v_3dfractionize_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def v_3dfractionize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dfractionize",
+        "@type": "afni.3dfractionize",
         "template": template,
         "input": input_,
         "preserve": preserve,
@@ -257,5 +257,8 @@ __all__ = [
     "V3dfractionizeParameters",
     "V_3DFRACTIONIZE_METADATA",
     "v_3dfractionize",
+    "v_3dfractionize_cargs",
+    "v_3dfractionize_execute",
+    "v_3dfractionize_outputs",
     "v_3dfractionize_params",
 ]

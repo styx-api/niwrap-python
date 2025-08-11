@@ -14,7 +14,7 @@ FATCAT_MATPLOT_METADATA = Metadata(
 
 
 FatcatMatplotParameters = typing.TypedDict('FatcatMatplotParameters', {
-    "__STYXTYPE__": typing.Literal["FATCAT_matplot"],
+    "@type": typing.Literal["afni.FATCAT_matplot"],
     "directory": str,
     "shiny_folder": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "FATCAT_matplot": fatcat_matplot_cargs,
+        "afni.FATCAT_matplot": fatcat_matplot_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def fatcat_matplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "FATCAT_matplot",
+        "@type": "afni.FATCAT_matplot",
         "directory": directory,
         "shiny_folder": shiny_folder,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "FatcatMatplotOutputs",
     "FatcatMatplotParameters",
     "fatcat_matplot",
+    "fatcat_matplot_cargs",
+    "fatcat_matplot_execute",
+    "fatcat_matplot_outputs",
     "fatcat_matplot_params",
 ]

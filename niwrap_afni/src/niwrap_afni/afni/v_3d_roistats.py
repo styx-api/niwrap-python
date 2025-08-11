@@ -14,7 +14,7 @@ V_3D_ROISTATS_METADATA = Metadata(
 
 
 V3dRoistatsParameters = typing.TypedDict('V3dRoistatsParameters', {
-    "__STYXTYPE__": typing.Literal["3dROIstats"],
+    "@type": typing.Literal["afni.3dROIstats"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "debug": bool,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dROIstats": v_3d_roistats_cargs,
+        "afni.3dROIstats": v_3d_roistats_cargs,
     }.get(t)
 
 
@@ -146,7 +146,7 @@ def v_3d_roistats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dROIstats",
+        "@type": "afni.3dROIstats",
         "in_file": in_file,
         "debug": debug,
         "format1D": format1_d,
@@ -374,5 +374,8 @@ __all__ = [
     "V3dRoistatsParameters",
     "V_3D_ROISTATS_METADATA",
     "v_3d_roistats",
+    "v_3d_roistats_cargs",
+    "v_3d_roistats_execute",
+    "v_3d_roistats_outputs",
     "v_3d_roistats_params",
 ]

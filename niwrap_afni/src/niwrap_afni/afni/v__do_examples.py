@@ -14,7 +14,7 @@ V__DO_EXAMPLES_METADATA = Metadata(
 
 
 VDoExamplesParameters = typing.TypedDict('VDoExamplesParameters', {
-    "__STYXTYPE__": typing.Literal["@DO.examples"],
+    "@type": typing.Literal["afni.@DO.examples"],
     "auto_test": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@DO.examples": v__do_examples_cargs,
+        "afni.@DO.examples": v__do_examples_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@DO.examples": v__do_examples_outputs,
+        "afni.@DO.examples": v__do_examples_outputs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def v__do_examples_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@DO.examples",
+        "@type": "afni.@DO.examples",
         "auto_test": auto_test,
     }
     return params
@@ -177,5 +177,8 @@ __all__ = [
     "VDoExamplesParameters",
     "V__DO_EXAMPLES_METADATA",
     "v__do_examples",
+    "v__do_examples_cargs",
+    "v__do_examples_execute",
+    "v__do_examples_outputs",
     "v__do_examples_params",
 ]

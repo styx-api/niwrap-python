@@ -14,7 +14,7 @@ CONVERT_XFM_METADATA = Metadata(
 
 
 ConvertXfmParameters = typing.TypedDict('ConvertXfmParameters', {
-    "__STYXTYPE__": typing.Literal["convert_xfm"],
+    "@type": typing.Literal["fsl.convert_xfm"],
     "out_file": typing.NotRequired[str | None],
     "invert_xfm": bool,
     "concat_xfm": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "convert_xfm": convert_xfm_cargs,
+        "fsl.convert_xfm": convert_xfm_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "convert_xfm": convert_xfm_outputs,
+        "fsl.convert_xfm": convert_xfm_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def convert_xfm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convert_xfm",
+        "@type": "fsl.convert_xfm",
         "invert_xfm": invert_xfm,
         "in_file": in_file,
     }
@@ -226,5 +226,8 @@ __all__ = [
     "ConvertXfmOutputs",
     "ConvertXfmParameters",
     "convert_xfm",
+    "convert_xfm_cargs",
+    "convert_xfm_execute",
+    "convert_xfm_outputs",
     "convert_xfm_params",
 ]

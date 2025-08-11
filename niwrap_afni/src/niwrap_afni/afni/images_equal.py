@@ -14,7 +14,7 @@ IMAGES_EQUAL_METADATA = Metadata(
 
 
 ImagesEqualParameters = typing.TypedDict('ImagesEqualParameters', {
-    "__STYXTYPE__": typing.Literal["images_equal"],
+    "@type": typing.Literal["afni.images_equal"],
     "file_a": InputPathType,
     "file_b": InputPathType,
     "all_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "images_equal": images_equal_cargs,
+        "afni.images_equal": images_equal_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "images_equal": images_equal_outputs,
+        "afni.images_equal": images_equal_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def images_equal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "images_equal",
+        "@type": "afni.images_equal",
         "file_a": file_a,
         "file_b": file_b,
         "all_flag": all_flag,
@@ -191,5 +191,8 @@ __all__ = [
     "ImagesEqualOutputs",
     "ImagesEqualParameters",
     "images_equal",
+    "images_equal_cargs",
+    "images_equal_execute",
+    "images_equal_outputs",
     "images_equal_params",
 ]

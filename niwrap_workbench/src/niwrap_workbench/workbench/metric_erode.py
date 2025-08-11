@@ -14,7 +14,7 @@ METRIC_ERODE_METADATA = Metadata(
 
 
 MetricErodeParameters = typing.TypedDict('MetricErodeParameters', {
-    "__STYXTYPE__": typing.Literal["metric-erode"],
+    "@type": typing.Literal["workbench.metric-erode"],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-erode": metric_erode_cargs,
+        "workbench.metric-erode": metric_erode_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-erode": metric_erode_outputs,
+        "workbench.metric-erode": metric_erode_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def metric_erode_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-erode",
+        "@type": "workbench.metric-erode",
         "metric": metric,
         "surface": surface,
         "distance": distance,
@@ -258,5 +258,8 @@ __all__ = [
     "MetricErodeOutputs",
     "MetricErodeParameters",
     "metric_erode",
+    "metric_erode_cargs",
+    "metric_erode_execute",
+    "metric_erode_outputs",
     "metric_erode_params",
 ]

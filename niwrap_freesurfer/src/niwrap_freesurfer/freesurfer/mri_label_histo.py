@@ -14,7 +14,7 @@ MRI_LABEL_HISTO_METADATA = Metadata(
 
 
 MriLabelHistoParameters = typing.TypedDict('MriLabelHistoParameters', {
-    "__STYXTYPE__": typing.Literal["mri_label_histo"],
+    "@type": typing.Literal["freesurfer.mri_label_histo"],
     "t1_volume": InputPathType,
     "labeled_volume": InputPathType,
     "label": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_label_histo": mri_label_histo_cargs,
+        "freesurfer.mri_label_histo": mri_label_histo_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_label_histo": mri_label_histo_outputs,
+        "freesurfer.mri_label_histo": mri_label_histo_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mri_label_histo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_label_histo",
+        "@type": "freesurfer.mri_label_histo",
         "t1_volume": t1_volume,
         "labeled_volume": labeled_volume,
         "label": label,
@@ -196,5 +196,8 @@ __all__ = [
     "MriLabelHistoOutputs",
     "MriLabelHistoParameters",
     "mri_label_histo",
+    "mri_label_histo_cargs",
+    "mri_label_histo_execute",
+    "mri_label_histo_outputs",
     "mri_label_histo_params",
 ]

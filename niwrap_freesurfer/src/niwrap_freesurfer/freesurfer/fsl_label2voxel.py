@@ -14,7 +14,7 @@ FSL_LABEL2VOXEL_METADATA = Metadata(
 
 
 FslLabel2voxelParameters = typing.TypedDict('FslLabel2voxelParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_label2voxel"],
+    "@type": typing.Literal["freesurfer.fsl_label2voxel"],
     "label_value": float,
     "labeled_volume": InputPathType,
     "src_volume": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_label2voxel": fsl_label2voxel_cargs,
+        "freesurfer.fsl_label2voxel": fsl_label2voxel_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_label2voxel": fsl_label2voxel_outputs,
+        "freesurfer.fsl_label2voxel": fsl_label2voxel_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def fsl_label2voxel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_label2voxel",
+        "@type": "freesurfer.fsl_label2voxel",
         "label_value": label_value,
         "labeled_volume": labeled_volume,
         "src_volume": src_volume,
@@ -196,5 +196,8 @@ __all__ = [
     "FslLabel2voxelOutputs",
     "FslLabel2voxelParameters",
     "fsl_label2voxel",
+    "fsl_label2voxel_cargs",
+    "fsl_label2voxel_execute",
+    "fsl_label2voxel_outputs",
     "fsl_label2voxel_params",
 ]

@@ -14,7 +14,7 @@ MRI_FDR_METADATA = Metadata(
 
 
 MriFdrParameters = typing.TypedDict('MriFdrParameters', {
-    "__STYXTYPE__": typing.Literal["mri_fdr"],
+    "@type": typing.Literal["freesurfer.mri_fdr"],
     "input_files": list[str],
     "fdr_value": float,
     "default_frame": typing.NotRequired[int | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_fdr": mri_fdr_cargs,
+        "freesurfer.mri_fdr": mri_fdr_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_fdr": mri_fdr_outputs,
+        "freesurfer.mri_fdr": mri_fdr_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def mri_fdr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_fdr",
+        "@type": "freesurfer.mri_fdr",
         "input_files": input_files,
         "fdr_value": fdr_value,
         "positive_only": positive_only,
@@ -271,5 +271,8 @@ __all__ = [
     "MriFdrOutputs",
     "MriFdrParameters",
     "mri_fdr",
+    "mri_fdr_cargs",
+    "mri_fdr_execute",
+    "mri_fdr_outputs",
     "mri_fdr_params",
 ]

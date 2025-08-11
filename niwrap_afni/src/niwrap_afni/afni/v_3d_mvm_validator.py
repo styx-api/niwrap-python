@@ -14,7 +14,7 @@ V_3D_MVM_VALIDATOR_METADATA = Metadata(
 
 
 V3dMvmValidatorParameters = typing.TypedDict('V3dMvmValidatorParameters', {
-    "__STYXTYPE__": typing.Literal["3dMVM_validator"],
+    "@type": typing.Literal["afni.3dMVM_validator"],
     "datatable": InputPathType,
     "shinyfolder": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMVM_validator": v_3d_mvm_validator_cargs,
+        "afni.3dMVM_validator": v_3d_mvm_validator_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMVM_validator": v_3d_mvm_validator_outputs,
+        "afni.3dMVM_validator": v_3d_mvm_validator_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def v_3d_mvm_validator_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMVM_validator",
+        "@type": "afni.3dMVM_validator",
         "datatable": datatable,
     }
     if shinyfolder is not None:
@@ -187,5 +187,8 @@ __all__ = [
     "V3dMvmValidatorParameters",
     "V_3D_MVM_VALIDATOR_METADATA",
     "v_3d_mvm_validator",
+    "v_3d_mvm_validator_cargs",
+    "v_3d_mvm_validator_execute",
+    "v_3d_mvm_validator_outputs",
     "v_3d_mvm_validator_params",
 ]

@@ -14,7 +14,7 @@ MRIS_FIND_FLAT_REGIONS_METADATA = Metadata(
 
 
 MrisFindFlatRegionsParameters = typing.TypedDict('MrisFindFlatRegionsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_find_flat_regions"],
+    "@type": typing.Literal["freesurfer.mris_find_flat_regions"],
     "surface": InputPathType,
     "wfile": str,
     "threshold": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_find_flat_regions": mris_find_flat_regions_cargs,
+        "freesurfer.mris_find_flat_regions": mris_find_flat_regions_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_find_flat_regions": mris_find_flat_regions_outputs,
+        "freesurfer.mris_find_flat_regions": mris_find_flat_regions_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mris_find_flat_regions_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_find_flat_regions",
+        "@type": "freesurfer.mris_find_flat_regions",
         "surface": surface,
         "wfile": wfile,
     }
@@ -196,5 +196,8 @@ __all__ = [
     "MrisFindFlatRegionsOutputs",
     "MrisFindFlatRegionsParameters",
     "mris_find_flat_regions",
+    "mris_find_flat_regions_cargs",
+    "mris_find_flat_regions_execute",
+    "mris_find_flat_regions_outputs",
     "mris_find_flat_regions_params",
 ]

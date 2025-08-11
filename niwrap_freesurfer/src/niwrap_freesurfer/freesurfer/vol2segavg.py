@@ -14,7 +14,7 @@ VOL2SEGAVG_METADATA = Metadata(
 
 
 Vol2segavgParameters = typing.TypedDict('Vol2segavgParameters', {
-    "__STYXTYPE__": typing.Literal["vol2segavg"],
+    "@type": typing.Literal["freesurfer.vol2segavg"],
     "output_file": str,
     "input_volume": InputPathType,
     "registration": str,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vol2segavg": vol2segavg_cargs,
+        "freesurfer.vol2segavg": vol2segavg_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "vol2segavg": vol2segavg_outputs,
+        "freesurfer.vol2segavg": vol2segavg_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def vol2segavg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vol2segavg",
+        "@type": "freesurfer.vol2segavg",
         "output_file": output_file,
         "input_volume": input_volume,
         "registration": registration,
@@ -331,5 +331,8 @@ __all__ = [
     "Vol2segavgOutputs",
     "Vol2segavgParameters",
     "vol2segavg",
+    "vol2segavg_cargs",
+    "vol2segavg_execute",
+    "vol2segavg_outputs",
     "vol2segavg_params",
 ]

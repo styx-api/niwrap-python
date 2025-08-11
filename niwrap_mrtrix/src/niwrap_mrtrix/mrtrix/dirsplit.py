@@ -14,14 +14,14 @@ DIRSPLIT_METADATA = Metadata(
 
 
 DirsplitConfigParameters = typing.TypedDict('DirsplitConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dirsplit.config"],
     "key": str,
     "value": str,
 })
 
 
 DirsplitParameters = typing.TypedDict('DirsplitParameters', {
-    "__STYXTYPE__": typing.Literal["dirsplit"],
+    "@type": typing.Literal["mrtrix.dirsplit"],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
     "info": bool,
@@ -49,8 +49,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dirsplit": dirsplit_cargs,
-        "config": dirsplit_config_cargs,
+        "mrtrix.dirsplit": dirsplit_cargs,
+        "mrtrix.dirsplit.config": dirsplit_config_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dirsplit": dirsplit_outputs,
+        "mrtrix.dirsplit": dirsplit_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def dirsplit_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dirsplit.config",
         "key": key,
         "value": value,
     }
@@ -160,7 +160,7 @@ def dirsplit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dirsplit",
+        "@type": "mrtrix.dirsplit",
         "cartesian": cartesian,
         "info": info,
         "quiet": quiet,
@@ -216,7 +216,7 @@ def dirsplit_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -353,6 +353,10 @@ __all__ = [
     "DirsplitOutputs",
     "DirsplitParameters",
     "dirsplit",
+    "dirsplit_cargs",
+    "dirsplit_config_cargs",
     "dirsplit_config_params",
+    "dirsplit_execute",
+    "dirsplit_outputs",
     "dirsplit_params",
 ]

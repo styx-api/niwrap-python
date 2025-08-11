@@ -14,7 +14,7 @@ MRI_SBBR_METADATA = Metadata(
 
 
 MriSbbrParameters = typing.TypedDict('MriSbbrParameters', {
-    "__STYXTYPE__": typing.Literal["mri_sbbr"],
+    "@type": typing.Literal["freesurfer.mri_sbbr"],
     "template_volume": InputPathType,
     "surface_file": InputPathType,
     "init_reg_file": InputPathType,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_sbbr": mri_sbbr_cargs,
+        "freesurfer.mri_sbbr": mri_sbbr_cargs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def mri_sbbr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_sbbr",
+        "@type": "freesurfer.mri_sbbr",
         "template_volume": template_volume,
         "surface_file": surface_file,
         "init_reg_file": init_reg_file,
@@ -448,5 +448,8 @@ __all__ = [
     "MriSbbrOutputs",
     "MriSbbrParameters",
     "mri_sbbr",
+    "mri_sbbr_cargs",
+    "mri_sbbr_execute",
+    "mri_sbbr_outputs",
     "mri_sbbr_params",
 ]

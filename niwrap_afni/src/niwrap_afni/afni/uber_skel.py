@@ -14,7 +14,7 @@ UBER_SKEL_METADATA = Metadata(
 
 
 UberSkelParameters = typing.TypedDict('UberSkelParameters', {
-    "__STYXTYPE__": typing.Literal["uber_skel"],
+    "@type": typing.Literal["afni.uber_skel"],
     "qt_options": typing.NotRequired[str | None],
     "no_gui_flag": bool,
     "print_script": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "uber_skel": uber_skel_cargs,
+        "afni.uber_skel": uber_skel_cargs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def uber_skel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "uber_skel",
+        "@type": "afni.uber_skel",
         "no_gui_flag": no_gui_flag,
         "print_script": print_script,
         "help_howto_program": help_howto_program,
@@ -273,5 +273,8 @@ __all__ = [
     "UberSkelOutputs",
     "UberSkelParameters",
     "uber_skel",
+    "uber_skel_cargs",
+    "uber_skel_execute",
+    "uber_skel_outputs",
     "uber_skel_params",
 ]

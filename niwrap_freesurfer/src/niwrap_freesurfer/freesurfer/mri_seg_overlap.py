@@ -14,7 +14,7 @@ MRI_SEG_OVERLAP_METADATA = Metadata(
 
 
 MriSegOverlapParameters = typing.TypedDict('MriSegOverlapParameters', {
-    "__STYXTYPE__": typing.Literal["mri_seg_overlap"],
+    "@type": typing.Literal["freesurfer.mri_seg_overlap"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "out_file": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_seg_overlap": mri_seg_overlap_cargs,
+        "freesurfer.mri_seg_overlap": mri_seg_overlap_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_seg_overlap": mri_seg_overlap_outputs,
+        "freesurfer.mri_seg_overlap": mri_seg_overlap_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def mri_seg_overlap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_seg_overlap",
+        "@type": "freesurfer.mri_seg_overlap",
         "vol1": vol1,
         "vol2": vol2,
         "no_names_flag": no_names_flag,
@@ -278,5 +278,8 @@ __all__ = [
     "MriSegOverlapOutputs",
     "MriSegOverlapParameters",
     "mri_seg_overlap",
+    "mri_seg_overlap_cargs",
+    "mri_seg_overlap_execute",
+    "mri_seg_overlap_outputs",
     "mri_seg_overlap_params",
 ]

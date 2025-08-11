@@ -14,7 +14,7 @@ V_1D_FLAG_MOTION_METADATA = Metadata(
 
 
 V1dFlagMotionParameters = typing.TypedDict('V1dFlagMotionParameters', {
-    "__STYXTYPE__": typing.Literal["1dFlagMotion"],
+    "@type": typing.Literal["afni.1dFlagMotion"],
     "input_motion_file": InputPathType,
     "max_translation": typing.NotRequired[float | None],
     "max_rotation": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dFlagMotion": v_1d_flag_motion_cargs,
+        "afni.1dFlagMotion": v_1d_flag_motion_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dFlagMotion": v_1d_flag_motion_outputs,
+        "afni.1dFlagMotion": v_1d_flag_motion_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def v_1d_flag_motion_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dFlagMotion",
+        "@type": "afni.1dFlagMotion",
         "input_motion_file": input_motion_file,
     }
     if max_translation is not None:
@@ -208,5 +208,8 @@ __all__ = [
     "V1dFlagMotionParameters",
     "V_1D_FLAG_MOTION_METADATA",
     "v_1d_flag_motion",
+    "v_1d_flag_motion_cargs",
+    "v_1d_flag_motion_execute",
+    "v_1d_flag_motion_outputs",
     "v_1d_flag_motion_params",
 ]

@@ -14,7 +14,7 @@ SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA = Metadata(
 
 
 SegmentSubfieldsT1LongitudinalParameters = typing.TypedDict('SegmentSubfieldsT1LongitudinalParameters', {
-    "__STYXTYPE__": typing.Literal["SegmentSubfieldsT1Longitudinal"],
+    "@type": typing.Literal["freesurfer.SegmentSubfieldsT1Longitudinal"],
     "subject_id": str,
     "input_image": InputPathType,
     "output_dir": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SegmentSubfieldsT1Longitudinal": segment_subfields_t1_longitudinal_cargs,
+        "freesurfer.SegmentSubfieldsT1Longitudinal": segment_subfields_t1_longitudinal_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SegmentSubfieldsT1Longitudinal": segment_subfields_t1_longitudinal_outputs,
+        "freesurfer.SegmentSubfieldsT1Longitudinal": segment_subfields_t1_longitudinal_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def segment_subfields_t1_longitudinal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SegmentSubfieldsT1Longitudinal",
+        "@type": "freesurfer.SegmentSubfieldsT1Longitudinal",
         "subject_id": subject_id,
         "input_image": input_image,
         "output_dir": output_dir,
@@ -188,5 +188,8 @@ __all__ = [
     "SegmentSubfieldsT1LongitudinalOutputs",
     "SegmentSubfieldsT1LongitudinalParameters",
     "segment_subfields_t1_longitudinal",
+    "segment_subfields_t1_longitudinal_cargs",
+    "segment_subfields_t1_longitudinal_execute",
+    "segment_subfields_t1_longitudinal_outputs",
     "segment_subfields_t1_longitudinal_params",
 ]

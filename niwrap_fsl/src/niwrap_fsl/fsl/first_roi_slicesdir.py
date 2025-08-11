@@ -14,7 +14,7 @@ FIRST_ROI_SLICESDIR_METADATA = Metadata(
 
 
 FirstRoiSlicesdirParameters = typing.TypedDict('FirstRoiSlicesdirParameters', {
-    "__STYXTYPE__": typing.Literal["first_roi_slicesdir"],
+    "@type": typing.Literal["fsl.first_roi_slicesdir"],
     "input_t1_images": str,
     "input_label_images": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "first_roi_slicesdir": first_roi_slicesdir_cargs,
+        "fsl.first_roi_slicesdir": first_roi_slicesdir_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "first_roi_slicesdir": first_roi_slicesdir_outputs,
+        "fsl.first_roi_slicesdir": first_roi_slicesdir_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def first_roi_slicesdir_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "first_roi_slicesdir",
+        "@type": "fsl.first_roi_slicesdir",
         "input_t1_images": input_t1_images,
         "input_label_images": input_label_images,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "FirstRoiSlicesdirOutputs",
     "FirstRoiSlicesdirParameters",
     "first_roi_slicesdir",
+    "first_roi_slicesdir_cargs",
+    "first_roi_slicesdir_execute",
+    "first_roi_slicesdir_outputs",
     "first_roi_slicesdir_params",
 ]

@@ -14,7 +14,7 @@ ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA = Metadata(
 
 
 AdjunctMakeScriptAndRstPyParameters = typing.TypedDict('AdjunctMakeScriptAndRstPyParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_make_script_and_rst.py"],
+    "@type": typing.Literal["afni.adjunct_make_script_and_rst.py"],
     "input_script": InputPathType,
     "prefix_rst": str,
     "prefix_script": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_make_script_and_rst.py": adjunct_make_script_and_rst_py_cargs,
+        "afni.adjunct_make_script_and_rst.py": adjunct_make_script_and_rst_py_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "adjunct_make_script_and_rst.py": adjunct_make_script_and_rst_py_outputs,
+        "afni.adjunct_make_script_and_rst.py": adjunct_make_script_and_rst_py_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def adjunct_make_script_and_rst_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_make_script_and_rst.py",
+        "@type": "afni.adjunct_make_script_and_rst.py",
         "input_script": input_script,
         "prefix_rst": prefix_rst,
         "prefix_script": prefix_script,
@@ -233,5 +233,8 @@ __all__ = [
     "AdjunctMakeScriptAndRstPyOutputs",
     "AdjunctMakeScriptAndRstPyParameters",
     "adjunct_make_script_and_rst_py",
+    "adjunct_make_script_and_rst_py_cargs",
+    "adjunct_make_script_and_rst_py_execute",
+    "adjunct_make_script_and_rst_py_outputs",
     "adjunct_make_script_and_rst_py_params",
 ]

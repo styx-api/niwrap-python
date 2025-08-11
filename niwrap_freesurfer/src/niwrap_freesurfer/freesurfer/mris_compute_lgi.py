@@ -14,7 +14,7 @@ MRIS_COMPUTE_LGI_METADATA = Metadata(
 
 
 MrisComputeLgiParameters = typing.TypedDict('MrisComputeLgiParameters', {
-    "__STYXTYPE__": typing.Literal["mris_compute_lgi"],
+    "@type": typing.Literal["freesurfer.mris_compute_lgi"],
     "input_surface": InputPathType,
     "close_sphere_size": typing.NotRequired[float | None],
     "smooth_iters": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_compute_lgi": mris_compute_lgi_cargs,
+        "freesurfer.mris_compute_lgi": mris_compute_lgi_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_compute_lgi": mris_compute_lgi_outputs,
+        "freesurfer.mris_compute_lgi": mris_compute_lgi_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_compute_lgi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_compute_lgi",
+        "@type": "freesurfer.mris_compute_lgi",
         "input_surface": input_surface,
         "echo": echo,
         "dontrun": dontrun,
@@ -240,5 +240,8 @@ __all__ = [
     "MrisComputeLgiOutputs",
     "MrisComputeLgiParameters",
     "mris_compute_lgi",
+    "mris_compute_lgi_cargs",
+    "mris_compute_lgi_execute",
+    "mris_compute_lgi_outputs",
     "mris_compute_lgi_params",
 ]

@@ -14,14 +14,14 @@ COMPUTE_LABEL_VOLUMES_CSH_METADATA = Metadata(
 
 
 ComputeLabelVolumesCshLabelLParameters = typing.TypedDict('ComputeLabelVolumesCshLabelLParameters', {
-    "__STYXTYPE__": typing.Literal["label_L"],
+    "@type": typing.Literal["freesurfer.compute_label_volumes.csh.label_L"],
     "upper_L": typing.NotRequired[str | None],
     "lower_L": typing.NotRequired[str | None],
 })
 
 
 ComputeLabelVolumesCshParameters = typing.TypedDict('ComputeLabelVolumesCshParameters', {
-    "__STYXTYPE__": typing.Literal["compute_label_volumes.csh"],
+    "@type": typing.Literal["freesurfer.compute_label_volumes.csh"],
     "label_vol": InputPathType,
     "output_file": str,
     "label_L": typing.NotRequired[ComputeLabelVolumesCshLabelLParameters | None],
@@ -42,8 +42,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "compute_label_volumes.csh": compute_label_volumes_csh_cargs,
-        "label_L": compute_label_volumes_csh_label_l_cargs,
+        "freesurfer.compute_label_volumes.csh": compute_label_volumes_csh_cargs,
+        "freesurfer.compute_label_volumes.csh.label_L": compute_label_volumes_csh_label_l_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "compute_label_volumes.csh": compute_label_volumes_csh_outputs,
+        "freesurfer.compute_label_volumes.csh": compute_label_volumes_csh_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def compute_label_volumes_csh_label_l_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label_L",
+        "@type": "freesurfer.compute_label_volumes.csh.label_L",
     }
     if upper_l is not None:
         params["upper_L"] = upper_l
@@ -143,7 +143,7 @@ def compute_label_volumes_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "compute_label_volumes.csh",
+        "@type": "freesurfer.compute_label_volumes.csh",
         "label_vol": label_vol,
         "output_file": output_file,
         "version": version,
@@ -178,7 +178,7 @@ def compute_label_volumes_csh_cargs(
         params.get("output_file")
     ])
     if params.get("label_L") is not None:
-        cargs.extend(dyn_cargs(params.get("label_L")["__STYXTYPE__"])(params.get("label_L"), execution))
+        cargs.extend(dyn_cargs(params.get("label_L")["@type"])(params.get("label_L"), execution))
     if params.get("version"):
         cargs.append("--version")
     if params.get("help"):
@@ -275,6 +275,10 @@ __all__ = [
     "ComputeLabelVolumesCshOutputs",
     "ComputeLabelVolumesCshParameters",
     "compute_label_volumes_csh",
+    "compute_label_volumes_csh_cargs",
+    "compute_label_volumes_csh_execute",
+    "compute_label_volumes_csh_label_l_cargs",
     "compute_label_volumes_csh_label_l_params",
+    "compute_label_volumes_csh_outputs",
     "compute_label_volumes_csh_params",
 ]

@@ -14,21 +14,21 @@ VOLUME_TO_SURFACE_MAPPING_METADATA = Metadata(
 
 
 VolumeToSurfaceMappingVolumeRoiParameters = typing.TypedDict('VolumeToSurfaceMappingVolumeRoiParameters', {
-    "__STYXTYPE__": typing.Literal["volume_roi"],
+    "@type": typing.Literal["workbench.volume-to-surface-mapping.ribbon_constrained.volume_roi"],
     "roi_volume": InputPathType,
     "opt_weighted": bool,
 })
 
 
 VolumeToSurfaceMappingOutputWeightsParameters = typing.TypedDict('VolumeToSurfaceMappingOutputWeightsParameters', {
-    "__STYXTYPE__": typing.Literal["output_weights"],
+    "@type": typing.Literal["workbench.volume-to-surface-mapping.ribbon_constrained.output_weights"],
     "vertex": int,
     "weights_out": str,
 })
 
 
 VolumeToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeToSurfaceMappingRibbonConstrainedParameters', {
-    "__STYXTYPE__": typing.Literal["ribbon_constrained"],
+    "@type": typing.Literal["workbench.volume-to-surface-mapping.ribbon_constrained"],
     "inner_surf": InputPathType,
     "outer_surf": InputPathType,
     "volume_roi": typing.NotRequired[VolumeToSurfaceMappingVolumeRoiParameters | None],
@@ -43,7 +43,7 @@ VolumeToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeToSu
 
 
 VolumeToSurfaceMappingMyelinStyleParameters = typing.TypedDict('VolumeToSurfaceMappingMyelinStyleParameters', {
-    "__STYXTYPE__": typing.Literal["myelin_style"],
+    "@type": typing.Literal["workbench.volume-to-surface-mapping.myelin_style"],
     "ribbon_roi": InputPathType,
     "thickness": InputPathType,
     "sigma": float,
@@ -52,7 +52,7 @@ VolumeToSurfaceMappingMyelinStyleParameters = typing.TypedDict('VolumeToSurfaceM
 
 
 VolumeToSurfaceMappingParameters = typing.TypedDict('VolumeToSurfaceMappingParameters', {
-    "__STYXTYPE__": typing.Literal["volume-to-surface-mapping"],
+    "@type": typing.Literal["workbench.volume-to-surface-mapping"],
     "volume": InputPathType,
     "surface": InputPathType,
     "metric_out": str,
@@ -77,11 +77,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-to-surface-mapping": volume_to_surface_mapping_cargs,
-        "ribbon_constrained": volume_to_surface_mapping_ribbon_constrained_cargs,
-        "volume_roi": volume_to_surface_mapping_volume_roi_cargs,
-        "output_weights": volume_to_surface_mapping_output_weights_cargs,
-        "myelin_style": volume_to_surface_mapping_myelin_style_cargs,
+        "workbench.volume-to-surface-mapping": volume_to_surface_mapping_cargs,
+        "workbench.volume-to-surface-mapping.ribbon_constrained": volume_to_surface_mapping_ribbon_constrained_cargs,
+        "workbench.volume-to-surface-mapping.ribbon_constrained.volume_roi": volume_to_surface_mapping_volume_roi_cargs,
+        "workbench.volume-to-surface-mapping.ribbon_constrained.output_weights": volume_to_surface_mapping_output_weights_cargs,
+        "workbench.volume-to-surface-mapping.myelin_style": volume_to_surface_mapping_myelin_style_cargs,
     }.get(t)
 
 
@@ -97,9 +97,9 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-to-surface-mapping": volume_to_surface_mapping_outputs,
-        "ribbon_constrained": volume_to_surface_mapping_ribbon_constrained_outputs,
-        "output_weights": volume_to_surface_mapping_output_weights_outputs,
+        "workbench.volume-to-surface-mapping": volume_to_surface_mapping_outputs,
+        "workbench.volume-to-surface-mapping.ribbon_constrained": volume_to_surface_mapping_ribbon_constrained_outputs,
+        "workbench.volume-to-surface-mapping.ribbon_constrained.output_weights": volume_to_surface_mapping_output_weights_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def volume_to_surface_mapping_volume_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume_roi",
+        "@type": "workbench.volume-to-surface-mapping.ribbon_constrained.volume_roi",
         "roi_volume": roi_volume,
         "opt_weighted": opt_weighted,
     }
@@ -169,7 +169,7 @@ def volume_to_surface_mapping_output_weights_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "output_weights",
+        "@type": "workbench.volume-to-surface-mapping.ribbon_constrained.output_weights",
         "vertex": vertex,
         "weights_out": weights_out,
     }
@@ -263,7 +263,7 @@ def volume_to_surface_mapping_ribbon_constrained_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ribbon_constrained",
+        "@type": "workbench.volume-to-surface-mapping.ribbon_constrained",
         "inner_surf": inner_surf,
         "outer_surf": outer_surf,
         "opt_thin_columns": opt_thin_columns,
@@ -303,7 +303,7 @@ def volume_to_surface_mapping_ribbon_constrained_cargs(
     cargs.append(execution.input_file(params.get("inner_surf")))
     cargs.append(execution.input_file(params.get("outer_surf")))
     if params.get("volume_roi") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_roi")["__STYXTYPE__"])(params.get("volume_roi"), execution))
+        cargs.extend(dyn_cargs(params.get("volume_roi")["@type"])(params.get("volume_roi"), execution))
     if params.get("opt_voxel_subdiv_subdiv_num") is not None:
         cargs.extend([
             "-voxel-subdiv",
@@ -327,7 +327,7 @@ def volume_to_surface_mapping_ribbon_constrained_cargs(
             params.get("opt_bad_vertices_out_roi_out")
         ])
     if params.get("output_weights") is not None:
-        cargs.extend(dyn_cargs(params.get("output_weights")["__STYXTYPE__"])(params.get("output_weights"), execution))
+        cargs.extend(dyn_cargs(params.get("output_weights")["@type"])(params.get("output_weights"), execution))
     if params.get("opt_output_weights_text_text_out") is not None:
         cargs.extend([
             "-output-weights-text",
@@ -351,7 +351,7 @@ def volume_to_surface_mapping_ribbon_constrained_outputs(
     """
     ret = VolumeToSurfaceMappingRibbonConstrainedOutputs(
         root=execution.output_file("."),
-        output_weights=dyn_outputs(params.get("output_weights")["__STYXTYPE__"])(params.get("output_weights"), execution) if params.get("output_weights") else None,
+        output_weights=dyn_outputs(params.get("output_weights")["@type"])(params.get("output_weights"), execution) if params.get("output_weights") else None,
     )
     return ret
 
@@ -375,7 +375,7 @@ def volume_to_surface_mapping_myelin_style_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "myelin_style",
+        "@type": "workbench.volume-to-surface-mapping.myelin_style",
         "ribbon_roi": ribbon_roi,
         "thickness": thickness,
         "sigma": sigma,
@@ -448,7 +448,7 @@ def volume_to_surface_mapping_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-to-surface-mapping",
+        "@type": "workbench.volume-to-surface-mapping",
         "volume": volume,
         "surface": surface,
         "metric_out": metric_out,
@@ -491,9 +491,9 @@ def volume_to_surface_mapping_cargs(
     if params.get("opt_cubic"):
         cargs.append("-cubic")
     if params.get("ribbon_constrained") is not None:
-        cargs.extend(dyn_cargs(params.get("ribbon_constrained")["__STYXTYPE__"])(params.get("ribbon_constrained"), execution))
+        cargs.extend(dyn_cargs(params.get("ribbon_constrained")["@type"])(params.get("ribbon_constrained"), execution))
     if params.get("myelin_style") is not None:
-        cargs.extend(dyn_cargs(params.get("myelin_style")["__STYXTYPE__"])(params.get("myelin_style"), execution))
+        cargs.extend(dyn_cargs(params.get("myelin_style")["@type"])(params.get("myelin_style"), execution))
     if params.get("opt_subvol_select_subvol") is not None:
         cargs.extend([
             "-subvol-select",
@@ -518,7 +518,7 @@ def volume_to_surface_mapping_outputs(
     ret = VolumeToSurfaceMappingOutputs(
         root=execution.output_file("."),
         metric_out=execution.output_file(params.get("metric_out")),
-        ribbon_constrained=dyn_outputs(params.get("ribbon_constrained")["__STYXTYPE__"])(params.get("ribbon_constrained"), execution) if params.get("ribbon_constrained") else None,
+        ribbon_constrained=dyn_outputs(params.get("ribbon_constrained")["@type"])(params.get("ribbon_constrained"), execution) if params.get("ribbon_constrained") else None,
     )
     return ret
 
@@ -684,9 +684,18 @@ __all__ = [
     "VolumeToSurfaceMappingRibbonConstrainedParameters",
     "VolumeToSurfaceMappingVolumeRoiParameters",
     "volume_to_surface_mapping",
+    "volume_to_surface_mapping_cargs",
+    "volume_to_surface_mapping_execute",
+    "volume_to_surface_mapping_myelin_style_cargs",
     "volume_to_surface_mapping_myelin_style_params",
+    "volume_to_surface_mapping_output_weights_cargs",
+    "volume_to_surface_mapping_output_weights_outputs",
     "volume_to_surface_mapping_output_weights_params",
+    "volume_to_surface_mapping_outputs",
     "volume_to_surface_mapping_params",
+    "volume_to_surface_mapping_ribbon_constrained_cargs",
+    "volume_to_surface_mapping_ribbon_constrained_outputs",
     "volume_to_surface_mapping_ribbon_constrained_params",
+    "volume_to_surface_mapping_volume_roi_cargs",
     "volume_to_surface_mapping_volume_roi_params",
 ]

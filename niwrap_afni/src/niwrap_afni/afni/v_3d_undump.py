@@ -14,7 +14,7 @@ V_3D_UNDUMP_METADATA = Metadata(
 
 
 V3dUndumpParameters = typing.TypedDict('V3dUndumpParameters', {
-    "__STYXTYPE__": typing.Literal["3dUndump"],
+    "@type": typing.Literal["afni.3dUndump"],
     "input_files": list[InputPathType],
     "prefix": typing.NotRequired[str | None],
     "master": typing.NotRequired[InputPathType | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dUndump": v_3d_undump_cargs,
+        "afni.3dUndump": v_3d_undump_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dUndump": v_3d_undump_outputs,
+        "afni.3dUndump": v_3d_undump_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v_3d_undump_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dUndump",
+        "@type": "afni.3dUndump",
         "input_files": input_files,
         "ijk": ijk,
         "xyz": xyz,
@@ -371,5 +371,8 @@ __all__ = [
     "V3dUndumpParameters",
     "V_3D_UNDUMP_METADATA",
     "v_3d_undump",
+    "v_3d_undump_cargs",
+    "v_3d_undump_execute",
+    "v_3d_undump_outputs",
     "v_3d_undump_params",
 ]

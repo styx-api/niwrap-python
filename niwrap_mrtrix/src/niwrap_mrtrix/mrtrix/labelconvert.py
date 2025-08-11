@@ -14,14 +14,14 @@ LABELCONVERT_METADATA = Metadata(
 
 
 LabelconvertConfigParameters = typing.TypedDict('LabelconvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.labelconvert.config"],
     "key": str,
     "value": str,
 })
 
 
 LabelconvertParameters = typing.TypedDict('LabelconvertParameters', {
-    "__STYXTYPE__": typing.Literal["labelconvert"],
+    "@type": typing.Literal["mrtrix.labelconvert"],
     "spine": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -50,8 +50,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "labelconvert": labelconvert_cargs,
-        "config": labelconvert_config_cargs,
+        "mrtrix.labelconvert": labelconvert_cargs,
+        "mrtrix.labelconvert.config": labelconvert_config_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "labelconvert": labelconvert_outputs,
+        "mrtrix.labelconvert": labelconvert_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def labelconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.labelconvert.config",
         "key": key,
         "value": value,
     }
@@ -164,7 +164,7 @@ def labelconvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "labelconvert",
+        "@type": "mrtrix.labelconvert",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -219,7 +219,7 @@ def labelconvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -372,6 +372,10 @@ __all__ = [
     "LabelconvertOutputs",
     "LabelconvertParameters",
     "labelconvert",
+    "labelconvert_cargs",
+    "labelconvert_config_cargs",
     "labelconvert_config_params",
+    "labelconvert_execute",
+    "labelconvert_outputs",
     "labelconvert_params",
 ]

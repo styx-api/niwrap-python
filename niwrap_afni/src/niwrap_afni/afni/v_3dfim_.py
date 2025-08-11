@@ -14,7 +14,7 @@ V_3DFIM__METADATA = Metadata(
 
 
 V3dfimParameters = typing.TypedDict('V3dfimParameters', {
-    "__STYXTYPE__": typing.Literal["3dfim+"],
+    "@type": typing.Literal["afni.3dfim+"],
     "infile": InputPathType,
     "input1dfile": typing.NotRequired[InputPathType | None],
     "maskfile": typing.NotRequired[InputPathType | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dfim+": v_3dfim__cargs,
+        "afni.3dfim+": v_3dfim__cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dfim+": v_3dfim__outputs,
+        "afni.3dfim+": v_3dfim__outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def v_3dfim__params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dfim+",
+        "@type": "afni.3dfim+",
         "infile": infile,
         "ideal_file": ideal_file,
     }
@@ -346,5 +346,8 @@ __all__ = [
     "V3dfimParameters",
     "V_3DFIM__METADATA",
     "v_3dfim_",
+    "v_3dfim__cargs",
+    "v_3dfim__execute",
+    "v_3dfim__outputs",
     "v_3dfim__params",
 ]

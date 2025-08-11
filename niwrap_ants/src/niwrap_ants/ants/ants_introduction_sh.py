@@ -14,7 +14,7 @@ ANTS_INTRODUCTION_SH_METADATA = Metadata(
 
 
 AntsIntroductionShParameters = typing.TypedDict('AntsIntroductionShParameters', {
-    "__STYXTYPE__": typing.Literal["antsIntroduction.sh"],
+    "@type": typing.Literal["ants.antsIntroduction.sh"],
     "image_dimension": typing.Literal[2, 3],
     "reference_image": InputPathType,
     "input_image": InputPathType,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsIntroduction.sh": ants_introduction_sh_cargs,
+        "ants.antsIntroduction.sh": ants_introduction_sh_cargs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def ants_introduction_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsIntroduction.sh",
+        "@type": "ants.antsIntroduction.sh",
         "image_dimension": image_dimension,
         "reference_image": reference_image,
         "input_image": input_image,
@@ -305,5 +305,8 @@ __all__ = [
     "AntsIntroductionShOutputs",
     "AntsIntroductionShParameters",
     "ants_introduction_sh",
+    "ants_introduction_sh_cargs",
+    "ants_introduction_sh_execute",
+    "ants_introduction_sh_outputs",
     "ants_introduction_sh_params",
 ]

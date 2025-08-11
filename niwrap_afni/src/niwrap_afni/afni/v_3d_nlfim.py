@@ -14,7 +14,7 @@ V_3D_NLFIM_METADATA = Metadata(
 
 
 V3dNlfimParameters = typing.TypedDict('V3dNlfimParameters', {
-    "__STYXTYPE__": typing.Literal["3dNLfim"],
+    "@type": typing.Literal["afni.3dNLfim"],
     "input_file": InputPathType,
     "signal_model": str,
     "noise_model": str,
@@ -67,7 +67,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dNLfim": v_3d_nlfim_cargs,
+        "afni.3dNLfim": v_3d_nlfim_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dNLfim": v_3d_nlfim_outputs,
+        "afni.3dNLfim": v_3d_nlfim_outputs,
     }.get(t)
 
 
@@ -227,7 +227,7 @@ def v_3d_nlfim_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dNLfim",
+        "@type": "afni.3dNLfim",
         "input_file": input_file,
         "signal_model": signal_model,
         "noise_model": noise_model,
@@ -694,5 +694,8 @@ __all__ = [
     "V3dNlfimParameters",
     "V_3D_NLFIM_METADATA",
     "v_3d_nlfim",
+    "v_3d_nlfim_cargs",
+    "v_3d_nlfim_execute",
+    "v_3d_nlfim_outputs",
     "v_3d_nlfim_params",
 ]

@@ -14,7 +14,7 @@ AIV_METADATA = Metadata(
 
 
 AivParameters = typing.TypedDict('AivParameters', {
-    "__STYXTYPE__": typing.Literal["aiv"],
+    "@type": typing.Literal["afni.aiv"],
     "verbose": bool,
     "quiet": bool,
     "title": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "aiv": aiv_cargs,
+        "afni.aiv": aiv_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def aiv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "aiv",
+        "@type": "afni.aiv",
         "verbose": verbose,
         "quiet": quiet,
         "input_images": input_images,
@@ -227,5 +227,8 @@ __all__ = [
     "AivOutputs",
     "AivParameters",
     "aiv",
+    "aiv_cargs",
+    "aiv_execute",
+    "aiv_outputs",
     "aiv_params",
 ]

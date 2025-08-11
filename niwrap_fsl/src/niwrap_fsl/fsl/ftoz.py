@@ -14,7 +14,7 @@ FTOZ_METADATA = Metadata(
 
 
 FtozParameters = typing.TypedDict('FtozParameters', {
-    "__STYXTYPE__": typing.Literal["ftoz"],
+    "@type": typing.Literal["fsl.ftoz"],
     "input_file": InputPathType,
     "dof1": float,
     "dof2": float,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ftoz": ftoz_cargs,
+        "fsl.ftoz": ftoz_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ftoz": ftoz_outputs,
+        "fsl.ftoz": ftoz_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def ftoz_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ftoz",
+        "@type": "fsl.ftoz",
         "input_file": input_file,
         "dof1": dof1,
         "dof2": dof2,
@@ -210,5 +210,8 @@ __all__ = [
     "FtozOutputs",
     "FtozParameters",
     "ftoz",
+    "ftoz_cargs",
+    "ftoz_execute",
+    "ftoz_outputs",
     "ftoz_params",
 ]

@@ -14,7 +14,7 @@ FSLANIMATE_METADATA = Metadata(
 
 
 FslanimateParameters = typing.TypedDict('FslanimateParameters', {
-    "__STYXTYPE__": typing.Literal["fslanimate"],
+    "@type": typing.Literal["fsl.fslanimate"],
     "input_file": InputPathType,
     "output_file": str,
     "tmp_dir": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslanimate": fslanimate_cargs,
+        "fsl.fslanimate": fslanimate_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslanimate": fslanimate_outputs,
+        "fsl.fslanimate": fslanimate_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def fslanimate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslanimate",
+        "@type": "fsl.fslanimate",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "FslanimateOutputs",
     "FslanimateParameters",
     "fslanimate",
+    "fslanimate_cargs",
+    "fslanimate_execute",
+    "fslanimate_outputs",
     "fslanimate_params",
 ]

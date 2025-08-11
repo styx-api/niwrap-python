@@ -14,7 +14,7 @@ MAP_ALL_LABELS_LH_METADATA = Metadata(
 
 
 MapAllLabelsLhParameters = typing.TypedDict('MapAllLabelsLhParameters', {
-    "__STYXTYPE__": typing.Literal["map_all_labels-lh"],
+    "@type": typing.Literal["freesurfer.map_all_labels-lh"],
     "which": str,
     "fname": str,
     "hemi": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "map_all_labels-lh": map_all_labels_lh_cargs,
+        "freesurfer.map_all_labels-lh": map_all_labels_lh_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "map_all_labels-lh": map_all_labels_lh_outputs,
+        "freesurfer.map_all_labels-lh": map_all_labels_lh_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def map_all_labels_lh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "map_all_labels-lh",
+        "@type": "freesurfer.map_all_labels-lh",
         "which": which,
         "fname": fname,
         "hemi": hemi,
@@ -217,5 +217,8 @@ __all__ = [
     "MapAllLabelsLhOutputs",
     "MapAllLabelsLhParameters",
     "map_all_labels_lh",
+    "map_all_labels_lh_cargs",
+    "map_all_labels_lh_execute",
+    "map_all_labels_lh_outputs",
     "map_all_labels_lh_params",
 ]

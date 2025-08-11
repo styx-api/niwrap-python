@@ -14,7 +14,7 @@ V_3_DROIMAKER_METADATA = Metadata(
 
 
 V3DroimakerParameters = typing.TypedDict('V3DroimakerParameters', {
-    "__STYXTYPE__": typing.Literal["3DROIMaker"],
+    "@type": typing.Literal["afni.3DROIMaker"],
     "inset": InputPathType,
     "thresh": float,
     "prefix": str,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3DROIMaker": v_3_droimaker_cargs,
+        "afni.3DROIMaker": v_3_droimaker_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3DROIMaker": v_3_droimaker_outputs,
+        "afni.3DROIMaker": v_3_droimaker_outputs,
     }.get(t)
 
 
@@ -150,7 +150,7 @@ def v_3_droimaker_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3DROIMaker",
+        "@type": "afni.3DROIMaker",
         "inset": inset,
         "thresh": thresh,
         "prefix": prefix,
@@ -430,5 +430,8 @@ __all__ = [
     "V3DroimakerParameters",
     "V_3_DROIMAKER_METADATA",
     "v_3_droimaker",
+    "v_3_droimaker_cargs",
+    "v_3_droimaker_execute",
+    "v_3_droimaker_outputs",
     "v_3_droimaker_params",
 ]

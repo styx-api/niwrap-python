@@ -14,7 +14,7 @@ V__SUMA_ALIGN_TO_EXPERIMENT_METADATA = Metadata(
 
 
 VSumaAlignToExperimentParameters = typing.TypedDict('VSumaAlignToExperimentParameters', {
-    "__STYXTYPE__": typing.Literal["@SUMA_AlignToExperiment"],
+    "@type": typing.Literal["afni.@SUMA_AlignToExperiment"],
     "exp_anat": InputPathType,
     "surf_anat": InputPathType,
     "dxyz": typing.NotRequired[float | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SUMA_AlignToExperiment": v__suma_align_to_experiment_cargs,
+        "afni.@SUMA_AlignToExperiment": v__suma_align_to_experiment_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SUMA_AlignToExperiment": v__suma_align_to_experiment_outputs,
+        "afni.@SUMA_AlignToExperiment": v__suma_align_to_experiment_outputs,
     }.get(t)
 
 
@@ -143,7 +143,7 @@ def v__suma_align_to_experiment_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SUMA_AlignToExperiment",
+        "@type": "afni.@SUMA_AlignToExperiment",
         "exp_anat": exp_anat,
         "surf_anat": surf_anat,
         "wd": wd,
@@ -417,5 +417,8 @@ __all__ = [
     "VSumaAlignToExperimentParameters",
     "V__SUMA_ALIGN_TO_EXPERIMENT_METADATA",
     "v__suma_align_to_experiment",
+    "v__suma_align_to_experiment_cargs",
+    "v__suma_align_to_experiment_execute",
+    "v__suma_align_to_experiment_outputs",
     "v__suma_align_to_experiment_params",
 ]

@@ -14,7 +14,7 @@ MRI_DIST_SURF_LABEL_METADATA = Metadata(
 
 
 MriDistSurfLabelParameters = typing.TypedDict('MriDistSurfLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mri_dist_surf_label"],
+    "@type": typing.Literal["freesurfer.mri_dist_surf_label"],
     "surface": InputPathType,
     "label_file": InputPathType,
     "output": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_dist_surf_label": mri_dist_surf_label_cargs,
+        "freesurfer.mri_dist_surf_label": mri_dist_surf_label_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_dist_surf_label": mri_dist_surf_label_outputs,
+        "freesurfer.mri_dist_surf_label": mri_dist_surf_label_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_dist_surf_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_dist_surf_label",
+        "@type": "freesurfer.mri_dist_surf_label",
         "surface": surface,
         "label_file": label_file,
         "output": output,
@@ -188,5 +188,8 @@ __all__ = [
     "MriDistSurfLabelOutputs",
     "MriDistSurfLabelParameters",
     "mri_dist_surf_label",
+    "mri_dist_surf_label_cargs",
+    "mri_dist_surf_label_execute",
+    "mri_dist_surf_label_outputs",
     "mri_dist_surf_label_params",
 ]

@@ -14,7 +14,7 @@ V__TIME_DIFF_METADATA = Metadata(
 
 
 VTimeDiffParameters = typing.TypedDict('VTimeDiffParameters', {
-    "__STYXTYPE__": typing.Literal["@TimeDiff"],
+    "@type": typing.Literal["afni.@TimeDiff"],
     "file1": InputPathType,
     "file2": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@TimeDiff": v__time_diff_cargs,
+        "afni.@TimeDiff": v__time_diff_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__time_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@TimeDiff",
+        "@type": "afni.@TimeDiff",
         "file1": file1,
         "file2": file2,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "VTimeDiffParameters",
     "V__TIME_DIFF_METADATA",
     "v__time_diff",
+    "v__time_diff_cargs",
+    "v__time_diff_execute",
+    "v__time_diff_outputs",
     "v__time_diff_params",
 ]

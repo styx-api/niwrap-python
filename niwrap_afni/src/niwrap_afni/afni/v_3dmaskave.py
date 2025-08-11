@@ -14,7 +14,7 @@ V_3DMASKAVE_METADATA = Metadata(
 
 
 V3dmaskaveParameters = typing.TypedDict('V3dmaskaveParameters', {
-    "__STYXTYPE__": typing.Literal["3dmaskave"],
+    "@type": typing.Literal["afni.3dmaskave"],
     "in_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "num_threads": typing.NotRequired[int | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmaskave": v_3dmaskave_cargs,
+        "afni.3dmaskave": v_3dmaskave_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmaskave": v_3dmaskave_outputs,
+        "afni.3dmaskave": v_3dmaskave_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def v_3dmaskave_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmaskave",
+        "@type": "afni.3dmaskave",
         "in_file": in_file,
         "quiet": quiet,
     }
@@ -219,5 +219,8 @@ __all__ = [
     "V3dmaskaveParameters",
     "V_3DMASKAVE_METADATA",
     "v_3dmaskave",
+    "v_3dmaskave_cargs",
+    "v_3dmaskave_execute",
+    "v_3dmaskave_outputs",
     "v_3dmaskave_params",
 ]

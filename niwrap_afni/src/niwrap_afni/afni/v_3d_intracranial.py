@@ -14,7 +14,7 @@ V_3D_INTRACRANIAL_METADATA = Metadata(
 
 
 V3dIntracranialParameters = typing.TypedDict('V3dIntracranialParameters', {
-    "__STYXTYPE__": typing.Literal["3dIntracranial"],
+    "@type": typing.Literal["afni.3dIntracranial"],
     "infile": InputPathType,
     "prefix": str,
     "min_val": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dIntracranial": v_3d_intracranial_cargs,
+        "afni.3dIntracranial": v_3d_intracranial_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dIntracranial": v_3d_intracranial_outputs,
+        "afni.3dIntracranial": v_3d_intracranial_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def v_3d_intracranial_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dIntracranial",
+        "@type": "afni.3dIntracranial",
         "infile": infile,
         "prefix": prefix,
         "no_smooth": no_smooth,
@@ -271,5 +271,8 @@ __all__ = [
     "V3dIntracranialParameters",
     "V_3D_INTRACRANIAL_METADATA",
     "v_3d_intracranial",
+    "v_3d_intracranial_cargs",
+    "v_3d_intracranial_execute",
+    "v_3d_intracranial_outputs",
     "v_3d_intracranial_params",
 ]

@@ -14,7 +14,7 @@ V_3D_AUTOBOX_METADATA = Metadata(
 
 
 V3dAutoboxParameters = typing.TypedDict('V3dAutoboxParameters', {
-    "__STYXTYPE__": typing.Literal["3dAutobox"],
+    "@type": typing.Literal["afni.3dAutobox"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "alt_input": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAutobox": v_3d_autobox_cargs,
+        "afni.3dAutobox": v_3d_autobox_cargs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def v_3d_autobox_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAutobox",
+        "@type": "afni.3dAutobox",
         "input": input_,
         "noclust": noclust,
         "extent": extent,
@@ -331,5 +331,8 @@ __all__ = [
     "V3dAutoboxParameters",
     "V_3D_AUTOBOX_METADATA",
     "v_3d_autobox",
+    "v_3d_autobox_cargs",
+    "v_3d_autobox_execute",
+    "v_3d_autobox_outputs",
     "v_3d_autobox_params",
 ]

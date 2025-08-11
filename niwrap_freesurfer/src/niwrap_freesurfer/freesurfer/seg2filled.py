@@ -14,7 +14,7 @@ SEG2FILLED_METADATA = Metadata(
 
 
 Seg2filledParameters = typing.TypedDict('Seg2filledParameters', {
-    "__STYXTYPE__": typing.Literal["seg2filled"],
+    "@type": typing.Literal["freesurfer.seg2filled"],
     "seg_file": InputPathType,
     "norm_file": InputPathType,
     "output_file": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "seg2filled": seg2filled_cargs,
+        "freesurfer.seg2filled": seg2filled_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "seg2filled": seg2filled_outputs,
+        "freesurfer.seg2filled": seg2filled_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def seg2filled_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "seg2filled",
+        "@type": "freesurfer.seg2filled",
         "seg_file": seg_file,
         "norm_file": norm_file,
         "output_file": output_file,
@@ -245,5 +245,8 @@ __all__ = [
     "Seg2filledOutputs",
     "Seg2filledParameters",
     "seg2filled",
+    "seg2filled_cargs",
+    "seg2filled_execute",
+    "seg2filled_outputs",
     "seg2filled_params",
 ]

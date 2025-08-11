@@ -14,7 +14,7 @@ ANATOMI_CUTS_UTILS_METADATA = Metadata(
 
 
 AnatomiCutsUtilsParameters = typing.TypedDict('AnatomiCutsUtilsParameters', {
-    "__STYXTYPE__": typing.Literal["anatomiCutsUtils"],
+    "@type": typing.Literal["freesurfer.anatomiCutsUtils"],
     "modules": typing.NotRequired[list[str] | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "anatomiCutsUtils": anatomi_cuts_utils_cargs,
+        "freesurfer.anatomiCutsUtils": anatomi_cuts_utils_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def anatomi_cuts_utils_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "anatomiCutsUtils",
+        "@type": "freesurfer.anatomiCutsUtils",
     }
     if modules is not None:
         params["modules"] = modules
@@ -172,5 +172,8 @@ __all__ = [
     "AnatomiCutsUtilsOutputs",
     "AnatomiCutsUtilsParameters",
     "anatomi_cuts_utils",
+    "anatomi_cuts_utils_cargs",
+    "anatomi_cuts_utils_execute",
+    "anatomi_cuts_utils_outputs",
     "anatomi_cuts_utils_params",
 ]

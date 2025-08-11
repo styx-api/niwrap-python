@@ -14,7 +14,7 @@ FROM3D_METADATA = Metadata(
 
 
 From3dParameters = typing.TypedDict('From3dParameters', {
-    "__STYXTYPE__": typing.Literal["from3d"],
+    "@type": typing.Literal["afni.from3d"],
     "verbose": bool,
     "nsize": bool,
     "raw": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "from3d": from3d_cargs,
+        "afni.from3d": from3d_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "from3d": from3d_outputs,
+        "afni.from3d": from3d_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def from3d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "from3d",
+        "@type": "afni.from3d",
         "verbose": verbose,
         "nsize": nsize,
         "raw": raw,
@@ -288,5 +288,8 @@ __all__ = [
     "From3dOutputs",
     "From3dParameters",
     "from3d",
+    "from3d_cargs",
+    "from3d_execute",
+    "from3d_outputs",
     "from3d_params",
 ]

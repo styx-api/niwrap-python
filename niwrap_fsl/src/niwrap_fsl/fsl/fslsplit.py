@@ -14,7 +14,7 @@ FSLSPLIT_METADATA = Metadata(
 
 
 FslsplitParameters = typing.TypedDict('FslsplitParameters', {
-    "__STYXTYPE__": typing.Literal["fslsplit"],
+    "@type": typing.Literal["fsl.fslsplit"],
     "infile": InputPathType,
     "output_basename": typing.NotRequired[str | None],
     "separation_x": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslsplit": fslsplit_cargs,
+        "fsl.fslsplit": fslsplit_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslsplit": fslsplit_outputs,
+        "fsl.fslsplit": fslsplit_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def fslsplit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslsplit",
+        "@type": "fsl.fslsplit",
         "infile": infile,
         "separation_x": separation_x,
         "separation_y": separation_y,
@@ -218,5 +218,8 @@ __all__ = [
     "FslsplitOutputs",
     "FslsplitParameters",
     "fslsplit",
+    "fslsplit_cargs",
+    "fslsplit_execute",
+    "fslsplit_outputs",
     "fslsplit_params",
 ]

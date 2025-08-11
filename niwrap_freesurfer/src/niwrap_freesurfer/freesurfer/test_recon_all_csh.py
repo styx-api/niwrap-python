@@ -14,7 +14,7 @@ TEST_RECON_ALL_CSH_METADATA = Metadata(
 
 
 TestReconAllCshParameters = typing.TypedDict('TestReconAllCshParameters', {
-    "__STYXTYPE__": typing.Literal["test_recon-all.csh"],
+    "@type": typing.Literal["freesurfer.test_recon-all.csh"],
     "reference_subj_source_dir": typing.NotRequired[str | None],
     "reference_subjid": typing.NotRequired[str | None],
     "test_subject_dest_dir": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "test_recon-all.csh": test_recon_all_csh_cargs,
+        "freesurfer.test_recon-all.csh": test_recon_all_csh_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "test_recon-all.csh": test_recon_all_csh_outputs,
+        "freesurfer.test_recon-all.csh": test_recon_all_csh_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def test_recon_all_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "test_recon-all.csh",
+        "@type": "freesurfer.test_recon-all.csh",
         "norecon": norecon,
     }
     if reference_subj_source_dir is not None:
@@ -262,5 +262,8 @@ __all__ = [
     "TestReconAllCshOutputs",
     "TestReconAllCshParameters",
     "test_recon_all_csh",
+    "test_recon_all_csh_cargs",
+    "test_recon_all_csh_execute",
+    "test_recon_all_csh_outputs",
     "test_recon_all_csh_params",
 ]

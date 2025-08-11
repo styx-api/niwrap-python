@@ -14,7 +14,7 @@ BACKEND_AVERAGE_ROI_CORRELATION_METADATA = Metadata(
 
 
 BackendAverageRoiCorrelationParameters = typing.TypedDict('BackendAverageRoiCorrelationParameters', {
-    "__STYXTYPE__": typing.Literal["backend-average-roi-correlation"],
+    "@type": typing.Literal["workbench.backend-average-roi-correlation"],
     "index_list": str,
     "out_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "backend-average-roi-correlation": backend_average_roi_correlation_cargs,
+        "workbench.backend-average-roi-correlation": backend_average_roi_correlation_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def backend_average_roi_correlation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "backend-average-roi-correlation",
+        "@type": "workbench.backend-average-roi-correlation",
         "index_list": index_list,
         "out_file": out_file,
     }
@@ -189,5 +189,8 @@ __all__ = [
     "BackendAverageRoiCorrelationOutputs",
     "BackendAverageRoiCorrelationParameters",
     "backend_average_roi_correlation",
+    "backend_average_roi_correlation_cargs",
+    "backend_average_roi_correlation_execute",
+    "backend_average_roi_correlation_outputs",
     "backend_average_roi_correlation_params",
 ]

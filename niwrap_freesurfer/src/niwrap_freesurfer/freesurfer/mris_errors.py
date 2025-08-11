@@ -14,7 +14,7 @@ MRIS_ERRORS_METADATA = Metadata(
 
 
 MrisErrorsParameters = typing.TypedDict('MrisErrorsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_errors"],
+    "@type": typing.Literal["freesurfer.mris_errors"],
     "input_image_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_errors": mris_errors_cargs,
+        "freesurfer.mris_errors": mris_errors_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def mris_errors_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_errors",
+        "@type": "freesurfer.mris_errors",
         "input_image_file": input_image_file,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "MrisErrorsOutputs",
     "MrisErrorsParameters",
     "mris_errors",
+    "mris_errors_cargs",
+    "mris_errors_execute",
+    "mris_errors_outputs",
     "mris_errors_params",
 ]

@@ -14,7 +14,7 @@ V_3D_OVERLAP_METADATA = Metadata(
 
 
 V3dOverlapParameters = typing.TypedDict('V3dOverlapParameters', {
-    "__STYXTYPE__": typing.Literal["3dOverlap"],
+    "@type": typing.Literal["afni.3dOverlap"],
     "dataset1": InputPathType,
     "dataset2": list[InputPathType],
     "save_prefix": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dOverlap": v_3d_overlap_cargs,
+        "afni.3dOverlap": v_3d_overlap_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dOverlap": v_3d_overlap_outputs,
+        "afni.3dOverlap": v_3d_overlap_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v_3d_overlap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dOverlap",
+        "@type": "afni.3dOverlap",
         "dataset1": dataset1,
         "dataset2": dataset2,
     }
@@ -198,5 +198,8 @@ __all__ = [
     "V3dOverlapParameters",
     "V_3D_OVERLAP_METADATA",
     "v_3d_overlap",
+    "v_3d_overlap_cargs",
+    "v_3d_overlap_execute",
+    "v_3d_overlap_outputs",
     "v_3d_overlap_params",
 ]

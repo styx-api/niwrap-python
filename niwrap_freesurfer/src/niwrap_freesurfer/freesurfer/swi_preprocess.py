@@ -14,7 +14,7 @@ SWI_PREPROCESS_METADATA = Metadata(
 
 
 SwiPreprocessParameters = typing.TypedDict('SwiPreprocessParameters', {
-    "__STYXTYPE__": typing.Literal["swi_preprocess"],
+    "@type": typing.Literal["freesurfer.swi_preprocess"],
     "scanner": typing.Literal["ge", "siemens", "philips"],
     "ge_file": typing.NotRequired[InputPathType | None],
     "philips_file": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "swi_preprocess": swi_preprocess_cargs,
+        "freesurfer.swi_preprocess": swi_preprocess_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "swi_preprocess": swi_preprocess_outputs,
+        "freesurfer.swi_preprocess": swi_preprocess_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def swi_preprocess_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "swi_preprocess",
+        "@type": "freesurfer.swi_preprocess",
         "scanner": scanner,
         "out_magnitude": out_magnitude,
         "out_phase": out_phase,
@@ -266,5 +266,8 @@ __all__ = [
     "SwiPreprocessOutputs",
     "SwiPreprocessParameters",
     "swi_preprocess",
+    "swi_preprocess_cargs",
+    "swi_preprocess_execute",
+    "swi_preprocess_outputs",
     "swi_preprocess_params",
 ]

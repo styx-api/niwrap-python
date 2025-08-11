@@ -14,7 +14,7 @@ V_3D_LOCAL_SVD_METADATA = Metadata(
 
 
 V3dLocalSvdParameters = typing.TypedDict('V3dLocalSvdParameters', {
-    "__STYXTYPE__": typing.Literal["3dLocalSVD"],
+    "@type": typing.Literal["afni.3dLocalSVD"],
     "auto_mask": bool,
     "input_file": InputPathType,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLocalSVD": v_3d_local_svd_cargs,
+        "afni.3dLocalSVD": v_3d_local_svd_cargs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v_3d_local_svd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLocalSVD",
+        "@type": "afni.3dLocalSVD",
         "auto_mask": auto_mask,
         "input_file": input_file,
         "output_file": output_file,
@@ -254,5 +254,8 @@ __all__ = [
     "V3dLocalSvdParameters",
     "V_3D_LOCAL_SVD_METADATA",
     "v_3d_local_svd",
+    "v_3d_local_svd_cargs",
+    "v_3d_local_svd_execute",
+    "v_3d_local_svd_outputs",
     "v_3d_local_svd_params",
 ]

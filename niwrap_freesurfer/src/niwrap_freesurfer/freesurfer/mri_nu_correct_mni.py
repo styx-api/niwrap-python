@@ -14,7 +14,7 @@ MRI_NU_CORRECT_MNI_METADATA = Metadata(
 
 
 MriNuCorrectMniParameters = typing.TypedDict('MriNuCorrectMniParameters', {
-    "__STYXTYPE__": typing.Literal["mri_nu_correct.mni"],
+    "@type": typing.Literal["freesurfer.mri_nu_correct.mni"],
     "input_volume": InputPathType,
     "output_volume": str,
     "iterations": float,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_nu_correct.mni": mri_nu_correct_mni_cargs,
+        "freesurfer.mri_nu_correct.mni": mri_nu_correct_mni_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_nu_correct.mni": mri_nu_correct_mni_outputs,
+        "freesurfer.mri_nu_correct.mni": mri_nu_correct_mni_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def mri_nu_correct_mni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_nu_correct.mni",
+        "@type": "freesurfer.mri_nu_correct.mni",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "iterations": iterations,
@@ -315,5 +315,8 @@ __all__ = [
     "MriNuCorrectMniOutputs",
     "MriNuCorrectMniParameters",
     "mri_nu_correct_mni",
+    "mri_nu_correct_mni_cargs",
+    "mri_nu_correct_mni_execute",
+    "mri_nu_correct_mni_outputs",
     "mri_nu_correct_mni_params",
 ]

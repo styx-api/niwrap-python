@@ -14,7 +14,7 @@ QHULL_METADATA = Metadata(
 
 
 QhullParameters = typing.TypedDict('QhullParameters', {
-    "__STYXTYPE__": typing.Literal["qhull"],
+    "@type": typing.Literal["afni.qhull"],
     "input_coords": str,
     "delaunay": bool,
     "furthest_delaunay": bool,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "qhull": qhull_cargs,
+        "afni.qhull": qhull_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "qhull": qhull_outputs,
+        "afni.qhull": qhull_outputs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def qhull_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "qhull",
+        "@type": "afni.qhull",
         "input_coords": input_coords,
         "delaunay": delaunay,
         "furthest_delaunay": furthest_delaunay,
@@ -372,5 +372,8 @@ __all__ = [
     "QhullOutputs",
     "QhullParameters",
     "qhull",
+    "qhull_cargs",
+    "qhull_execute",
+    "qhull_outputs",
     "qhull_params",
 ]

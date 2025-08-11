@@ -14,7 +14,7 @@ PROMPT_USER_METADATA = Metadata(
 
 
 PromptUserParameters = typing.TypedDict('PromptUserParameters', {
-    "__STYXTYPE__": typing.Literal["prompt_user"],
+    "@type": typing.Literal["afni.prompt_user"],
     "pause_message": str,
     "timeout": typing.NotRequired[float | None],
     "timeout_alias": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "prompt_user": prompt_user_cargs,
+        "afni.prompt_user": prompt_user_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def prompt_user_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "prompt_user",
+        "@type": "afni.prompt_user",
         "pause_message": pause_message,
     }
     if timeout is not None:
@@ -201,5 +201,8 @@ __all__ = [
     "PromptUserOutputs",
     "PromptUserParameters",
     "prompt_user",
+    "prompt_user_cargs",
+    "prompt_user_execute",
+    "prompt_user_outputs",
     "prompt_user_params",
 ]

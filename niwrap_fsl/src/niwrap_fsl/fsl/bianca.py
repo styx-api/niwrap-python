@@ -14,7 +14,7 @@ BIANCA_METADATA = Metadata(
 
 
 BiancaParameters = typing.TypedDict('BiancaParameters', {
-    "__STYXTYPE__": typing.Literal["bianca"],
+    "@type": typing.Literal["fsl.bianca"],
     "master_file": InputPathType,
     "label_feature_num": float,
     "brain_mask_feature_num": float,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bianca": bianca_cargs,
+        "fsl.bianca": bianca_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bianca": bianca_outputs,
+        "fsl.bianca": bianca_outputs,
     }.get(t)
 
 
@@ -134,7 +134,7 @@ def bianca_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bianca",
+        "@type": "fsl.bianca",
         "master_file": master_file,
         "label_feature_num": label_feature_num,
         "brain_mask_feature_num": brain_mask_feature_num,
@@ -353,5 +353,8 @@ __all__ = [
     "BiancaOutputs",
     "BiancaParameters",
     "bianca",
+    "bianca_cargs",
+    "bianca_execute",
+    "bianca_outputs",
     "bianca_params",
 ]

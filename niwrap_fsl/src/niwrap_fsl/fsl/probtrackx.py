@@ -14,7 +14,7 @@ PROBTRACKX_METADATA = Metadata(
 
 
 ProbtrackxParameters = typing.TypedDict('ProbtrackxParameters', {
-    "__STYXTYPE__": typing.Literal["probtrackx"],
+    "@type": typing.Literal["fsl.probtrackx"],
     "samples": InputPathType,
     "mask": InputPathType,
     "seed": InputPathType,
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "probtrackx": probtrackx_cargs,
+        "fsl.probtrackx": probtrackx_cargs,
     }.get(t)
 
 
@@ -186,7 +186,7 @@ def probtrackx_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "probtrackx",
+        "@type": "fsl.probtrackx",
         "samples": samples,
         "mask": mask,
         "seed": seed,
@@ -588,5 +588,8 @@ __all__ = [
     "ProbtrackxOutputs",
     "ProbtrackxParameters",
     "probtrackx",
+    "probtrackx_cargs",
+    "probtrackx_execute",
+    "probtrackx_outputs",
     "probtrackx_params",
 ]

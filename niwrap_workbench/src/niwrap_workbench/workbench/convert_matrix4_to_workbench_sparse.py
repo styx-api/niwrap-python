@@ -14,14 +14,14 @@ CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA = Metadata(
 
 
 ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters', {
-    "__STYXTYPE__": typing.Literal["volume_seeds"],
+    "@type": typing.Literal["workbench.convert-matrix4-to-workbench-sparse.volume_seeds"],
     "cifti_template": InputPathType,
     "direction": str,
 })
 
 
 ConvertMatrix4ToWorkbenchSparseParameters = typing.TypedDict('ConvertMatrix4ToWorkbenchSparseParameters', {
-    "__STYXTYPE__": typing.Literal["convert-matrix4-to-workbench-sparse"],
+    "@type": typing.Literal["workbench.convert-matrix4-to-workbench-sparse"],
     "matrix4_1": str,
     "matrix4_2": str,
     "matrix4_3": str,
@@ -45,8 +45,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "convert-matrix4-to-workbench-sparse": convert_matrix4_to_workbench_sparse_cargs,
-        "volume_seeds": convert_matrix4_to_workbench_sparse_volume_seeds_cargs,
+        "workbench.convert-matrix4-to-workbench-sparse": convert_matrix4_to_workbench_sparse_cargs,
+        "workbench.convert-matrix4-to-workbench-sparse.volume_seeds": convert_matrix4_to_workbench_sparse_volume_seeds_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def convert_matrix4_to_workbench_sparse_volume_seeds_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume_seeds",
+        "@type": "workbench.convert-matrix4-to-workbench-sparse.volume_seeds",
         "cifti_template": cifti_template,
         "direction": direction,
     }
@@ -144,7 +144,7 @@ def convert_matrix4_to_workbench_sparse_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convert-matrix4-to-workbench-sparse",
+        "@type": "workbench.convert-matrix4-to-workbench-sparse",
         "matrix4_1": matrix4_1,
         "matrix4_2": matrix4_2,
         "matrix4_3": matrix4_3,
@@ -187,7 +187,7 @@ def convert_matrix4_to_workbench_sparse_cargs(
             execution.input_file(params.get("opt_surface_seeds_seed_roi"))
         ])
     if params.get("volume_seeds") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_seeds")["__STYXTYPE__"])(params.get("volume_seeds"), execution))
+        cargs.extend(dyn_cargs(params.get("volume_seeds")["@type"])(params.get("volume_seeds"), execution))
     return cargs
 
 
@@ -295,6 +295,10 @@ __all__ = [
     "ConvertMatrix4ToWorkbenchSparseParameters",
     "ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters",
     "convert_matrix4_to_workbench_sparse",
+    "convert_matrix4_to_workbench_sparse_cargs",
+    "convert_matrix4_to_workbench_sparse_execute",
+    "convert_matrix4_to_workbench_sparse_outputs",
     "convert_matrix4_to_workbench_sparse_params",
+    "convert_matrix4_to_workbench_sparse_volume_seeds_cargs",
     "convert_matrix4_to_workbench_sparse_volume_seeds_params",
 ]

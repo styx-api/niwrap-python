@@ -14,7 +14,7 @@ IMLN_METADATA = Metadata(
 
 
 ImlnParameters = typing.TypedDict('ImlnParameters', {
-    "__STYXTYPE__": typing.Literal["imln"],
+    "@type": typing.Literal["fsl.imln"],
     "input_file": InputPathType,
     "link_name": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imln": imln_cargs,
+        "fsl.imln": imln_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imln": imln_outputs,
+        "fsl.imln": imln_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def imln_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imln",
+        "@type": "fsl.imln",
         "input_file": input_file,
         "link_name": link_name,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "ImlnOutputs",
     "ImlnParameters",
     "imln",
+    "imln_cargs",
+    "imln_execute",
+    "imln_outputs",
     "imln_params",
 ]

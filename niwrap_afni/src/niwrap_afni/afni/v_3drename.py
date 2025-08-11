@@ -14,7 +14,7 @@ V_3DRENAME_METADATA = Metadata(
 
 
 V3drenameParameters = typing.TypedDict('V3drenameParameters', {
-    "__STYXTYPE__": typing.Literal["3drename"],
+    "@type": typing.Literal["afni.3drename"],
     "old_prefix": str,
     "new_prefix": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3drename": v_3drename_cargs,
+        "afni.3drename": v_3drename_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v_3drename_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3drename",
+        "@type": "afni.3drename",
         "old_prefix": old_prefix,
         "new_prefix": new_prefix,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "V3drenameParameters",
     "V_3DRENAME_METADATA",
     "v_3drename",
+    "v_3drename_cargs",
+    "v_3drename_execute",
+    "v_3drename_outputs",
     "v_3drename_params",
 ]

@@ -14,7 +14,7 @@ SURFACE_FLIP_LR_METADATA = Metadata(
 
 
 SurfaceFlipLrParameters = typing.TypedDict('SurfaceFlipLrParameters', {
-    "__STYXTYPE__": typing.Literal["surface-flip-lr"],
+    "@type": typing.Literal["workbench.surface-flip-lr"],
     "surface": InputPathType,
     "surface_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-flip-lr": surface_flip_lr_cargs,
+        "workbench.surface-flip-lr": surface_flip_lr_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-flip-lr": surface_flip_lr_outputs,
+        "workbench.surface-flip-lr": surface_flip_lr_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_flip_lr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-flip-lr",
+        "@type": "workbench.surface-flip-lr",
         "surface": surface,
         "surface_out": surface_out,
     }
@@ -193,5 +193,8 @@ __all__ = [
     "SurfaceFlipLrOutputs",
     "SurfaceFlipLrParameters",
     "surface_flip_lr",
+    "surface_flip_lr_cargs",
+    "surface_flip_lr_execute",
+    "surface_flip_lr_outputs",
     "surface_flip_lr_params",
 ]

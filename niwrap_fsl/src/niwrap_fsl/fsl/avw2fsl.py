@@ -14,7 +14,7 @@ AVW2FSL_METADATA = Metadata(
 
 
 Avw2fslParameters = typing.TypedDict('Avw2fslParameters', {
-    "__STYXTYPE__": typing.Literal["avw2fsl"],
+    "@type": typing.Literal["fsl.avw2fsl"],
     "source": list[str],
     "destination": str,
     "archive": bool,
@@ -66,7 +66,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "avw2fsl": avw2fsl_cargs,
+        "fsl.avw2fsl": avw2fsl_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "avw2fsl": avw2fsl_outputs,
+        "fsl.avw2fsl": avw2fsl_outputs,
     }.get(t)
 
 
@@ -187,7 +187,7 @@ def avw2fsl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "avw2fsl",
+        "@type": "fsl.avw2fsl",
         "source": source,
         "destination": destination,
         "archive": archive,
@@ -512,5 +512,8 @@ __all__ = [
     "Avw2fslOutputs",
     "Avw2fslParameters",
     "avw2fsl",
+    "avw2fsl_cargs",
+    "avw2fsl_execute",
+    "avw2fsl_outputs",
     "avw2fsl_params",
 ]

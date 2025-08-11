@@ -14,7 +14,7 @@ REGISTER_SUBJECT_FLASH_METADATA = Metadata(
 
 
 RegisterSubjectFlashParameters = typing.TypedDict('RegisterSubjectFlashParameters', {
-    "__STYXTYPE__": typing.Literal["register_subject_flash"],
+    "@type": typing.Literal["freesurfer.register_subject_flash"],
     "input_volumes": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "register_subject_flash": register_subject_flash_cargs,
+        "freesurfer.register_subject_flash": register_subject_flash_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "register_subject_flash": register_subject_flash_outputs,
+        "freesurfer.register_subject_flash": register_subject_flash_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def register_subject_flash_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "register_subject_flash",
+        "@type": "freesurfer.register_subject_flash",
         "input_volumes": input_volumes,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "RegisterSubjectFlashOutputs",
     "RegisterSubjectFlashParameters",
     "register_subject_flash",
+    "register_subject_flash_cargs",
+    "register_subject_flash_execute",
+    "register_subject_flash_outputs",
     "register_subject_flash_params",
 ]

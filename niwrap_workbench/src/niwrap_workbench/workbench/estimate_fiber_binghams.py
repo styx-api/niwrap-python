@@ -14,7 +14,7 @@ ESTIMATE_FIBER_BINGHAMS_METADATA = Metadata(
 
 
 EstimateFiberBinghamsParameters = typing.TypedDict('EstimateFiberBinghamsParameters', {
-    "__STYXTYPE__": typing.Literal["estimate-fiber-binghams"],
+    "@type": typing.Literal["workbench.estimate-fiber-binghams"],
     "merged_f1samples": InputPathType,
     "merged_th1samples": InputPathType,
     "merged_ph1samples": InputPathType,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "estimate-fiber-binghams": estimate_fiber_binghams_cargs,
+        "workbench.estimate-fiber-binghams": estimate_fiber_binghams_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "estimate-fiber-binghams": estimate_fiber_binghams_outputs,
+        "workbench.estimate-fiber-binghams": estimate_fiber_binghams_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def estimate_fiber_binghams_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "estimate-fiber-binghams",
+        "@type": "workbench.estimate-fiber-binghams",
         "merged_f1samples": merged_f1samples,
         "merged_th1samples": merged_th1samples,
         "merged_ph1samples": merged_ph1samples,
@@ -331,5 +331,8 @@ __all__ = [
     "EstimateFiberBinghamsOutputs",
     "EstimateFiberBinghamsParameters",
     "estimate_fiber_binghams",
+    "estimate_fiber_binghams_cargs",
+    "estimate_fiber_binghams_execute",
+    "estimate_fiber_binghams_outputs",
     "estimate_fiber_binghams_params",
 ]

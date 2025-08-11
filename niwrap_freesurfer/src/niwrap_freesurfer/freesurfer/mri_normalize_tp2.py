@@ -14,7 +14,7 @@ MRI_NORMALIZE_TP2_METADATA = Metadata(
 
 
 MriNormalizeTp2Parameters = typing.TypedDict('MriNormalizeTp2Parameters', {
-    "__STYXTYPE__": typing.Literal["mri_normalize_tp2"],
+    "@type": typing.Literal["freesurfer.mri_normalize_tp2"],
     "input_vol": InputPathType,
     "normalized_vol": str,
     "t1_volume": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_normalize_tp2": mri_normalize_tp2_cargs,
+        "freesurfer.mri_normalize_tp2": mri_normalize_tp2_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_normalize_tp2": mri_normalize_tp2_outputs,
+        "freesurfer.mri_normalize_tp2": mri_normalize_tp2_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def mri_normalize_tp2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_normalize_tp2",
+        "@type": "freesurfer.mri_normalize_tp2",
         "input_vol": input_vol,
         "normalized_vol": normalized_vol,
         "invert_flag": invert_flag,
@@ -293,5 +293,8 @@ __all__ = [
     "MriNormalizeTp2Outputs",
     "MriNormalizeTp2Parameters",
     "mri_normalize_tp2",
+    "mri_normalize_tp2_cargs",
+    "mri_normalize_tp2_execute",
+    "mri_normalize_tp2_outputs",
     "mri_normalize_tp2_params",
 ]

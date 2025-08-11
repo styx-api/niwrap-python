@@ -14,7 +14,7 @@ EDDY_QUAD_METADATA = Metadata(
 
 
 EddyQuadParameters = typing.TypedDict('EddyQuadParameters', {
-    "__STYXTYPE__": typing.Literal["eddy_quad"],
+    "@type": typing.Literal["fsl.eddy_quad"],
     "eddyBase": str,
     "eddyIndex": InputPathType,
     "eddyParams": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy_quad": eddy_quad_cargs,
+        "fsl.eddy_quad": eddy_quad_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy_quad": eddy_quad_outputs,
+        "fsl.eddy_quad": eddy_quad_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def eddy_quad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy_quad",
+        "@type": "fsl.eddy_quad",
         "eddyBase": eddy_base,
         "eddyIndex": eddy_index,
         "eddyParams": eddy_params,
@@ -281,5 +281,8 @@ __all__ = [
     "EddyQuadOutputs",
     "EddyQuadParameters",
     "eddy_quad",
+    "eddy_quad_cargs",
+    "eddy_quad_execute",
+    "eddy_quad_outputs",
     "eddy_quad_params",
 ]

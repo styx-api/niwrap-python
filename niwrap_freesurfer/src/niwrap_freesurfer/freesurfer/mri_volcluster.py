@@ -14,7 +14,7 @@ MRI_VOLCLUSTER_METADATA = Metadata(
 
 
 MriVolclusterParameters = typing.TypedDict('MriVolclusterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_volcluster"],
+    "@type": typing.Literal["freesurfer.mri_volcluster"],
     "input_file": InputPathType,
     "summary_file": typing.NotRequired[str | None],
     "output_volid": typing.NotRequired[str | None],
@@ -78,7 +78,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_volcluster": mri_volcluster_cargs,
+        "freesurfer.mri_volcluster": mri_volcluster_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_volcluster": mri_volcluster_outputs,
+        "freesurfer.mri_volcluster": mri_volcluster_outputs,
     }.get(t)
 
 
@@ -221,7 +221,7 @@ def mri_volcluster_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_volcluster",
+        "@type": "freesurfer.mri_volcluster",
         "input_file": input_file,
         "no_adjust_flag": no_adjust_flag,
         "mni152reg_flag": mni152reg_flag,
@@ -761,5 +761,8 @@ __all__ = [
     "MriVolclusterOutputs",
     "MriVolclusterParameters",
     "mri_volcluster",
+    "mri_volcluster_cargs",
+    "mri_volcluster_execute",
+    "mri_volcluster_outputs",
     "mri_volcluster_params",
 ]

@@ -14,20 +14,20 @@ MRSTATS_METADATA = Metadata(
 
 
 MrstatsOutputParameters = typing.TypedDict('MrstatsOutputParameters', {
-    "__STYXTYPE__": typing.Literal["output"],
+    "@type": typing.Literal["mrtrix.mrstats.output"],
     "field": str,
 })
 
 
 MrstatsConfigParameters = typing.TypedDict('MrstatsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrstats.config"],
     "key": str,
     "value": str,
 })
 
 
 MrstatsParameters = typing.TypedDict('MrstatsParameters', {
-    "__STYXTYPE__": typing.Literal["mrstats"],
+    "@type": typing.Literal["mrtrix.mrstats"],
     "output": typing.NotRequired[list[MrstatsOutputParameters] | None],
     "mask": typing.NotRequired[InputPathType | None],
     "ignorezero": bool,
@@ -56,9 +56,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrstats": mrstats_cargs,
-        "output": mrstats_output_cargs,
-        "config": mrstats_config_cargs,
+        "mrtrix.mrstats": mrstats_cargs,
+        "mrtrix.mrstats.output": mrstats_output_cargs,
+        "mrtrix.mrstats.config": mrstats_config_cargs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def mrstats_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "output",
+        "@type": "mrtrix.mrstats.output",
         "field": field,
     }
     return params
@@ -134,7 +134,7 @@ def mrstats_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrstats.config",
         "key": key,
         "value": value,
     }
@@ -216,7 +216,7 @@ def mrstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrstats",
+        "@type": "mrtrix.mrstats",
         "ignorezero": ignorezero,
         "allvolumes": allvolumes,
         "info": info,
@@ -254,7 +254,7 @@ def mrstats_cargs(
     cargs = []
     cargs.append("mrstats")
     if params.get("output") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("output")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("output")] for a in c])
     if params.get("mask") is not None:
         cargs.extend([
             "-mask",
@@ -278,7 +278,7 @@ def mrstats_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -421,7 +421,12 @@ __all__ = [
     "MrstatsOutputs",
     "MrstatsParameters",
     "mrstats",
+    "mrstats_cargs",
+    "mrstats_config_cargs",
     "mrstats_config_params",
+    "mrstats_execute",
+    "mrstats_output_cargs",
     "mrstats_output_params",
+    "mrstats_outputs",
     "mrstats_params",
 ]

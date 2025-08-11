@@ -14,7 +14,7 @@ MRI_GCUT_METADATA = Metadata(
 
 
 MriGcutParameters = typing.TypedDict('MriGcutParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gcut"],
+    "@type": typing.Literal["freesurfer.mri_gcut"],
     "wmmask_110": bool,
     "mult_file": typing.NotRequired[InputPathType | None],
     "threshold_value": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gcut": mri_gcut_cargs,
+        "freesurfer.mri_gcut": mri_gcut_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_gcut": mri_gcut_outputs,
+        "freesurfer.mri_gcut": mri_gcut_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def mri_gcut_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gcut",
+        "@type": "freesurfer.mri_gcut",
         "wmmask_110": wmmask_110,
         "infile": infile,
         "outfile": outfile,
@@ -223,5 +223,8 @@ __all__ = [
     "MriGcutOutputs",
     "MriGcutParameters",
     "mri_gcut",
+    "mri_gcut_cargs",
+    "mri_gcut_execute",
+    "mri_gcut_outputs",
     "mri_gcut_params",
 ]

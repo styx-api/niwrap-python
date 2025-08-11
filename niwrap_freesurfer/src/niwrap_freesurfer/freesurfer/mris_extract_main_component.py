@@ -14,7 +14,7 @@ MRIS_EXTRACT_MAIN_COMPONENT_METADATA = Metadata(
 
 
 MrisExtractMainComponentParameters = typing.TypedDict('MrisExtractMainComponentParameters', {
-    "__STYXTYPE__": typing.Literal["mris_extract_main_component"],
+    "@type": typing.Literal["freesurfer.mris_extract_main_component"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_extract_main_component": mris_extract_main_component_cargs,
+        "freesurfer.mris_extract_main_component": mris_extract_main_component_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_extract_main_component": mris_extract_main_component_outputs,
+        "freesurfer.mris_extract_main_component": mris_extract_main_component_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_extract_main_component_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_extract_main_component",
+        "@type": "freesurfer.mris_extract_main_component",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MrisExtractMainComponentOutputs",
     "MrisExtractMainComponentParameters",
     "mris_extract_main_component",
+    "mris_extract_main_component_cargs",
+    "mris_extract_main_component_execute",
+    "mris_extract_main_component_outputs",
     "mris_extract_main_component_params",
 ]

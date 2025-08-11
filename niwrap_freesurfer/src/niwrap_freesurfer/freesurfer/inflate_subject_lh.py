@@ -14,7 +14,7 @@ INFLATE_SUBJECT_LH_METADATA = Metadata(
 
 
 InflateSubjectLhParameters = typing.TypedDict('InflateSubjectLhParameters', {
-    "__STYXTYPE__": typing.Literal["inflate_subject-lh"],
+    "@type": typing.Literal["freesurfer.inflate_subject-lh"],
     "input_folder": str,
     "hostname_flag": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "inflate_subject-lh": inflate_subject_lh_cargs,
+        "freesurfer.inflate_subject-lh": inflate_subject_lh_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def inflate_subject_lh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "inflate_subject-lh",
+        "@type": "freesurfer.inflate_subject-lh",
         "input_folder": input_folder,
         "hostname_flag": hostname_flag,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "InflateSubjectLhOutputs",
     "InflateSubjectLhParameters",
     "inflate_subject_lh",
+    "inflate_subject_lh_cargs",
+    "inflate_subject_lh_execute",
+    "inflate_subject_lh_outputs",
     "inflate_subject_lh_params",
 ]

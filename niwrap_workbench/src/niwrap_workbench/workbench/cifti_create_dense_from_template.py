@@ -14,7 +14,7 @@ CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA = Metadata(
 
 
 CiftiCreateDenseFromTemplateSeriesParameters = typing.TypedDict('CiftiCreateDenseFromTemplateSeriesParameters', {
-    "__STYXTYPE__": typing.Literal["series"],
+    "@type": typing.Literal["workbench.cifti-create-dense-from-template.series"],
     "step": float,
     "start": float,
     "opt_unit_unit": typing.NotRequired[str | None],
@@ -22,34 +22,34 @@ CiftiCreateDenseFromTemplateSeriesParameters = typing.TypedDict('CiftiCreateDens
 
 
 CiftiCreateDenseFromTemplateVolumeAllParameters = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeAllParameters', {
-    "__STYXTYPE__": typing.Literal["volume_all"],
+    "@type": typing.Literal["workbench.cifti-create-dense-from-template.volume_all"],
     "volume_in": InputPathType,
     "opt_from_cropped": bool,
 })
 
 
 CiftiCreateDenseFromTemplateCiftiParameters = typing.TypedDict('CiftiCreateDenseFromTemplateCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti"],
+    "@type": typing.Literal["workbench.cifti-create-dense-from-template.cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiCreateDenseFromTemplateMetricParameters = typing.TypedDict('CiftiCreateDenseFromTemplateMetricParameters', {
-    "__STYXTYPE__": typing.Literal["metric"],
+    "@type": typing.Literal["workbench.cifti-create-dense-from-template.metric"],
     "structure": str,
     "metric_in": InputPathType,
 })
 
 
 CiftiCreateDenseFromTemplateLabelParameters = typing.TypedDict('CiftiCreateDenseFromTemplateLabelParameters', {
-    "__STYXTYPE__": typing.Literal["label"],
+    "@type": typing.Literal["workbench.cifti-create-dense-from-template.label"],
     "structure": str,
     "label_in": InputPathType,
 })
 
 
 CiftiCreateDenseFromTemplateVolumeParameters = typing.TypedDict('CiftiCreateDenseFromTemplateVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.cifti-create-dense-from-template.volume"],
     "structure": str,
     "volume_in": InputPathType,
     "opt_from_cropped": bool,
@@ -57,7 +57,7 @@ CiftiCreateDenseFromTemplateVolumeParameters = typing.TypedDict('CiftiCreateDens
 
 
 CiftiCreateDenseFromTemplateParameters = typing.TypedDict('CiftiCreateDenseFromTemplateParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-create-dense-from-template"],
+    "@type": typing.Literal["workbench.cifti-create-dense-from-template"],
     "template_cifti": InputPathType,
     "cifti_out": str,
     "series": typing.NotRequired[CiftiCreateDenseFromTemplateSeriesParameters | None],
@@ -82,13 +82,13 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-create-dense-from-template": cifti_create_dense_from_template_cargs,
-        "series": cifti_create_dense_from_template_series_cargs,
-        "volume_all": cifti_create_dense_from_template_volume_all_cargs,
-        "cifti": cifti_create_dense_from_template_cifti_cargs,
-        "metric": cifti_create_dense_from_template_metric_cargs,
-        "label": cifti_create_dense_from_template_label_cargs,
-        "volume": cifti_create_dense_from_template_volume_cargs,
+        "workbench.cifti-create-dense-from-template": cifti_create_dense_from_template_cargs,
+        "workbench.cifti-create-dense-from-template.series": cifti_create_dense_from_template_series_cargs,
+        "workbench.cifti-create-dense-from-template.volume_all": cifti_create_dense_from_template_volume_all_cargs,
+        "workbench.cifti-create-dense-from-template.cifti": cifti_create_dense_from_template_cifti_cargs,
+        "workbench.cifti-create-dense-from-template.metric": cifti_create_dense_from_template_metric_cargs,
+        "workbench.cifti-create-dense-from-template.label": cifti_create_dense_from_template_label_cargs,
+        "workbench.cifti-create-dense-from-template.volume": cifti_create_dense_from_template_volume_cargs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-create-dense-from-template": cifti_create_dense_from_template_outputs,
+        "workbench.cifti-create-dense-from-template": cifti_create_dense_from_template_outputs,
     }.get(t)
 
 
@@ -124,7 +124,7 @@ def cifti_create_dense_from_template_series_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "series",
+        "@type": "workbench.cifti-create-dense-from-template.series",
         "step": step,
         "start": start,
     }
@@ -173,7 +173,7 @@ def cifti_create_dense_from_template_volume_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume_all",
+        "@type": "workbench.cifti-create-dense-from-template.volume_all",
         "volume_in": volume_in,
         "opt_from_cropped": opt_from_cropped,
     }
@@ -213,7 +213,7 @@ def cifti_create_dense_from_template_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti",
+        "@type": "workbench.cifti-create-dense-from-template.cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -252,7 +252,7 @@ def cifti_create_dense_from_template_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric",
+        "@type": "workbench.cifti-create-dense-from-template.metric",
         "structure": structure,
         "metric_in": metric_in,
     }
@@ -293,7 +293,7 @@ def cifti_create_dense_from_template_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label",
+        "@type": "workbench.cifti-create-dense-from-template.label",
         "structure": structure,
         "label_in": label_in,
     }
@@ -337,7 +337,7 @@ def cifti_create_dense_from_template_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.cifti-create-dense-from-template.volume",
         "structure": structure,
         "volume_in": volume_in,
         "opt_from_cropped": opt_from_cropped,
@@ -407,7 +407,7 @@ def cifti_create_dense_from_template_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-create-dense-from-template",
+        "@type": "workbench.cifti-create-dense-from-template",
         "template_cifti": template_cifti,
         "cifti_out": cifti_out,
     }
@@ -447,22 +447,22 @@ def cifti_create_dense_from_template_cargs(
     cargs.append(execution.input_file(params.get("template_cifti")))
     cargs.append(params.get("cifti_out"))
     if params.get("series") is not None:
-        cargs.extend(dyn_cargs(params.get("series")["__STYXTYPE__"])(params.get("series"), execution))
+        cargs.extend(dyn_cargs(params.get("series")["@type"])(params.get("series"), execution))
     if params.get("volume_all") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_all")["__STYXTYPE__"])(params.get("volume_all"), execution))
+        cargs.extend(dyn_cargs(params.get("volume_all")["@type"])(params.get("volume_all"), execution))
     if params.get("opt_label_collision_action") is not None:
         cargs.extend([
             "-label-collision",
             params.get("opt_label_collision_action")
         ])
     if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cifti")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
     if params.get("metric") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("metric")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("metric")] for a in c])
     if params.get("label") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("label")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("label")] for a in c])
     if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("volume")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
     return cargs
 
 
@@ -686,11 +686,20 @@ __all__ = [
     "CiftiCreateDenseFromTemplateVolumeAllParameters",
     "CiftiCreateDenseFromTemplateVolumeParameters",
     "cifti_create_dense_from_template",
+    "cifti_create_dense_from_template_cargs",
+    "cifti_create_dense_from_template_cifti_cargs",
     "cifti_create_dense_from_template_cifti_params",
+    "cifti_create_dense_from_template_execute",
+    "cifti_create_dense_from_template_label_cargs",
     "cifti_create_dense_from_template_label_params",
+    "cifti_create_dense_from_template_metric_cargs",
     "cifti_create_dense_from_template_metric_params",
+    "cifti_create_dense_from_template_outputs",
     "cifti_create_dense_from_template_params",
+    "cifti_create_dense_from_template_series_cargs",
     "cifti_create_dense_from_template_series_params",
+    "cifti_create_dense_from_template_volume_all_cargs",
     "cifti_create_dense_from_template_volume_all_params",
+    "cifti_create_dense_from_template_volume_cargs",
     "cifti_create_dense_from_template_volume_params",
 ]

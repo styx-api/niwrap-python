@@ -14,7 +14,7 @@ V__ANIMAL_WARPER_METADATA = Metadata(
 
 
 VAnimalWarperParameters = typing.TypedDict('VAnimalWarperParameters', {
-    "__STYXTYPE__": typing.Literal["@animal_warper"],
+    "@type": typing.Literal["afni.@animal_warper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
     "output_dir": str,
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@animal_warper": v__animal_warper_cargs,
+        "afni.@animal_warper": v__animal_warper_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@animal_warper": v__animal_warper_outputs,
+        "afni.@animal_warper": v__animal_warper_outputs,
     }.get(t)
 
 
@@ -193,7 +193,7 @@ def v__animal_warper_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@animal_warper",
+        "@type": "afni.@animal_warper",
         "input_file": input_file,
         "base_template": base_template,
         "output_dir": output_dir,
@@ -598,5 +598,8 @@ __all__ = [
     "VAnimalWarperParameters",
     "V__ANIMAL_WARPER_METADATA",
     "v__animal_warper",
+    "v__animal_warper_cargs",
+    "v__animal_warper_execute",
+    "v__animal_warper_outputs",
     "v__animal_warper_params",
 ]

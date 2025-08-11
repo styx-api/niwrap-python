@@ -14,7 +14,7 @@ COMPARE_SURFACES_METADATA = Metadata(
 
 
 CompareSurfacesParameters = typing.TypedDict('CompareSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["CompareSurfaces"],
+    "@type": typing.Literal["afni.CompareSurfaces"],
     "spec_file": InputPathType,
     "hemisphere": typing.Literal["L", "R"],
     "volume_parent_1": InputPathType,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "CompareSurfaces": compare_surfaces_cargs,
+        "afni.CompareSurfaces": compare_surfaces_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "CompareSurfaces": compare_surfaces_outputs,
+        "afni.CompareSurfaces": compare_surfaces_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def compare_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "CompareSurfaces",
+        "@type": "afni.CompareSurfaces",
         "spec_file": spec_file,
         "hemisphere": hemisphere,
         "volume_parent_1": volume_parent_1,
@@ -340,5 +340,8 @@ __all__ = [
     "CompareSurfacesOutputs",
     "CompareSurfacesParameters",
     "compare_surfaces",
+    "compare_surfaces_cargs",
+    "compare_surfaces_execute",
+    "compare_surfaces_outputs",
     "compare_surfaces_params",
 ]

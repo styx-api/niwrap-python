@@ -14,7 +14,7 @@ WARP2METRIC_METADATA = Metadata(
 
 
 Warp2metricFcParameters = typing.TypedDict('Warp2metricFcParameters', {
-    "__STYXTYPE__": typing.Literal["fc"],
+    "@type": typing.Literal["mrtrix.warp2metric.fc"],
     "template_fixel_directory": InputPathType,
     "output_fixel_directory": str,
     "output_fixel_data": str,
@@ -22,14 +22,14 @@ Warp2metricFcParameters = typing.TypedDict('Warp2metricFcParameters', {
 
 
 Warp2metricConfigParameters = typing.TypedDict('Warp2metricConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.warp2metric.config"],
     "key": str,
     "value": str,
 })
 
 
 Warp2metricParameters = typing.TypedDict('Warp2metricParameters', {
-    "__STYXTYPE__": typing.Literal["warp2metric"],
+    "@type": typing.Literal["mrtrix.warp2metric"],
     "fc": typing.NotRequired[Warp2metricFcParameters | None],
     "jmat": typing.NotRequired[str | None],
     "jdet": typing.NotRequired[str | None],
@@ -57,9 +57,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "warp2metric": warp2metric_cargs,
-        "fc": warp2metric_fc_cargs,
-        "config": warp2metric_config_cargs,
+        "mrtrix.warp2metric": warp2metric_cargs,
+        "mrtrix.warp2metric.fc": warp2metric_fc_cargs,
+        "mrtrix.warp2metric.config": warp2metric_config_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "warp2metric": warp2metric_outputs,
+        "mrtrix.warp2metric": warp2metric_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def warp2metric_fc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fc",
+        "@type": "mrtrix.warp2metric.fc",
         "template_fixel_directory": template_fixel_directory,
         "output_fixel_directory": output_fixel_directory,
         "output_fixel_data": output_fixel_data,
@@ -150,7 +150,7 @@ def warp2metric_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.warp2metric.config",
         "key": key,
         "value": value,
     }
@@ -234,7 +234,7 @@ def warp2metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warp2metric",
+        "@type": "mrtrix.warp2metric",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -272,7 +272,7 @@ def warp2metric_cargs(
     cargs = []
     cargs.append("warp2metric")
     if params.get("fc") is not None:
-        cargs.extend(dyn_cargs(params.get("fc")["__STYXTYPE__"])(params.get("fc"), execution))
+        cargs.extend(dyn_cargs(params.get("fc")["@type"])(params.get("fc"), execution))
     if params.get("jmat") is not None:
         cargs.extend([
             "-jmat",
@@ -297,7 +297,7 @@ def warp2metric_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -443,7 +443,12 @@ __all__ = [
     "Warp2metricOutputs",
     "Warp2metricParameters",
     "warp2metric",
+    "warp2metric_cargs",
+    "warp2metric_config_cargs",
     "warp2metric_config_params",
+    "warp2metric_execute",
+    "warp2metric_fc_cargs",
     "warp2metric_fc_params",
+    "warp2metric_outputs",
     "warp2metric_params",
 ]

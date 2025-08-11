@@ -14,7 +14,7 @@ ANALYZE_TRACE_METADATA = Metadata(
 
 
 AnalyzeTraceParameters = typing.TypedDict('AnalyzeTraceParameters', {
-    "__STYXTYPE__": typing.Literal["AnalyzeTrace"],
+    "@type": typing.Literal["afni.AnalyzeTrace"],
     "tracefile": InputPathType,
     "max_func_lines": typing.NotRequired[int | None],
     "suma_c": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "AnalyzeTrace": analyze_trace_cargs,
+        "afni.AnalyzeTrace": analyze_trace_cargs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def analyze_trace_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "AnalyzeTrace",
+        "@type": "afni.AnalyzeTrace",
         "tracefile": tracefile,
         "novolreg": novolreg,
         "noxform": noxform,
@@ -288,5 +288,8 @@ __all__ = [
     "AnalyzeTraceOutputs",
     "AnalyzeTraceParameters",
     "analyze_trace",
+    "analyze_trace_cargs",
+    "analyze_trace_execute",
+    "analyze_trace_outputs",
     "analyze_trace_params",
 ]

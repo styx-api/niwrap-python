@@ -14,7 +14,7 @@ LABEL2PATCH_METADATA = Metadata(
 
 
 Label2patchParameters = typing.TypedDict('Label2patchParameters', {
-    "__STYXTYPE__": typing.Literal["label2patch"],
+    "@type": typing.Literal["freesurfer.label2patch"],
     "subject_name": str,
     "hemisphere": str,
     "label_file": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label2patch": label2patch_cargs,
+        "freesurfer.label2patch": label2patch_cargs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def label2patch_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label2patch",
+        "@type": "freesurfer.label2patch",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "label_file": label_file,
@@ -270,5 +270,8 @@ __all__ = [
     "Label2patchOutputs",
     "Label2patchParameters",
     "label2patch",
+    "label2patch_cargs",
+    "label2patch_execute",
+    "label2patch_outputs",
     "label2patch_params",
 ]

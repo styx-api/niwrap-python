@@ -14,7 +14,7 @@ XCORR_METADATA = Metadata(
 
 
 XcorrParameters = typing.TypedDict('XcorrParameters', {
-    "__STYXTYPE__": typing.Literal["xcorr"],
+    "@type": typing.Literal["freesurfer.xcorr"],
     "input1": InputPathType,
     "input2": InputPathType,
     "output": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xcorr": xcorr_cargs,
+        "freesurfer.xcorr": xcorr_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "xcorr": xcorr_outputs,
+        "freesurfer.xcorr": xcorr_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def xcorr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xcorr",
+        "@type": "freesurfer.xcorr",
         "input1": input1,
         "input2": input2,
         "output": output,
@@ -235,5 +235,8 @@ __all__ = [
     "XcorrOutputs",
     "XcorrParameters",
     "xcorr",
+    "xcorr_cargs",
+    "xcorr_execute",
+    "xcorr_outputs",
     "xcorr_params",
 ]

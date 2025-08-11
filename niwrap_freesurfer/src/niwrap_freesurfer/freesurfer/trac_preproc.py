@@ -14,7 +14,7 @@ TRAC_PREPROC_METADATA = Metadata(
 
 
 TracPreprocParameters = typing.TypedDict('TracPreprocParameters', {
-    "__STYXTYPE__": typing.Literal["trac-preproc"],
+    "@type": typing.Literal["freesurfer.trac-preproc"],
     "dmrirc_file": InputPathType,
     "log_file": typing.NotRequired[str | None],
     "nolog": bool,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "trac-preproc": trac_preproc_cargs,
+        "freesurfer.trac-preproc": trac_preproc_cargs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def trac_preproc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "trac-preproc",
+        "@type": "freesurfer.trac-preproc",
         "dmrirc_file": dmrirc_file,
         "nolog": nolog,
         "nocmd": nocmd,
@@ -288,5 +288,8 @@ __all__ = [
     "TracPreprocOutputs",
     "TracPreprocParameters",
     "trac_preproc",
+    "trac_preproc_cargs",
+    "trac_preproc_execute",
+    "trac_preproc_outputs",
     "trac_preproc_params",
 ]

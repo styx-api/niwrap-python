@@ -14,7 +14,7 @@ V__QUIET_TALKERS_METADATA = Metadata(
 
 
 VQuietTalkersParameters = typing.TypedDict('VQuietTalkersParameters', {
-    "__STYXTYPE__": typing.Literal["@Quiet_Talkers"],
+    "@type": typing.Literal["afni.@Quiet_Talkers"],
     "sudo": bool,
     "prog": typing.NotRequired[list[str] | None],
     "npb_val": typing.NotRequired[list[float] | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Quiet_Talkers": v__quiet_talkers_cargs,
+        "afni.@Quiet_Talkers": v__quiet_talkers_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def v__quiet_talkers_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Quiet_Talkers",
+        "@type": "afni.@Quiet_Talkers",
         "sudo": sudo,
         "no_npb": no_npb,
         "list": list_,
@@ -252,5 +252,8 @@ __all__ = [
     "VQuietTalkersParameters",
     "V__QUIET_TALKERS_METADATA",
     "v__quiet_talkers",
+    "v__quiet_talkers_cargs",
+    "v__quiet_talkers_execute",
+    "v__quiet_talkers_outputs",
     "v__quiet_talkers_params",
 ]

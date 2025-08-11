@@ -14,7 +14,7 @@ V_3D_CLIP_LEVEL_METADATA = Metadata(
 
 
 V3dClipLevelParameters = typing.TypedDict('V3dClipLevelParameters', {
-    "__STYXTYPE__": typing.Literal["3dClipLevel"],
+    "@type": typing.Literal["afni.3dClipLevel"],
     "dataset": InputPathType,
     "mfrac": typing.NotRequired[float | None],
     "doall": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dClipLevel": v_3d_clip_level_cargs,
+        "afni.3dClipLevel": v_3d_clip_level_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def v_3d_clip_level_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dClipLevel",
+        "@type": "afni.3dClipLevel",
         "dataset": dataset,
         "doall": doall,
     }
@@ -207,5 +207,8 @@ __all__ = [
     "V3dClipLevelParameters",
     "V_3D_CLIP_LEVEL_METADATA",
     "v_3d_clip_level",
+    "v_3d_clip_level_cargs",
+    "v_3d_clip_level_execute",
+    "v_3d_clip_level_outputs",
     "v_3d_clip_level_params",
 ]

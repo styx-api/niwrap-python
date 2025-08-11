@@ -14,7 +14,7 @@ V__1D_DIFF_MAG_METADATA = Metadata(
 
 
 V1dDiffMagParameters = typing.TypedDict('V1dDiffMagParameters', {
-    "__STYXTYPE__": typing.Literal["@1dDiffMag"],
+    "@type": typing.Literal["afni.@1dDiffMag"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@1dDiffMag": v__1d_diff_mag_cargs,
+        "afni.@1dDiffMag": v__1d_diff_mag_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@1dDiffMag": v__1d_diff_mag_outputs,
+        "afni.@1dDiffMag": v__1d_diff_mag_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__1d_diff_mag_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@1dDiffMag",
+        "@type": "afni.@1dDiffMag",
         "infile": infile,
     }
     return params
@@ -174,5 +174,8 @@ __all__ = [
     "V1dDiffMagParameters",
     "V__1D_DIFF_MAG_METADATA",
     "v__1d_diff_mag",
+    "v__1d_diff_mag_cargs",
+    "v__1d_diff_mag_execute",
+    "v__1d_diff_mag_outputs",
     "v__1d_diff_mag_params",
 ]

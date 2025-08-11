@@ -14,7 +14,7 @@ V__NP_METADATA = Metadata(
 
 
 VNpParameters = typing.TypedDict('VNpParameters', {
-    "__STYXTYPE__": typing.Literal["@np"],
+    "@type": typing.Literal["afni.@np"],
     "prefix": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@np": v__np_cargs,
+        "afni.@np": v__np_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@np": v__np_outputs,
+        "afni.@np": v__np_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__np_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@np",
+        "@type": "afni.@np",
         "prefix": prefix,
     }
     return params
@@ -176,5 +176,8 @@ __all__ = [
     "VNpParameters",
     "V__NP_METADATA",
     "v__np",
+    "v__np_cargs",
+    "v__np_execute",
+    "v__np_outputs",
     "v__np_params",
 ]

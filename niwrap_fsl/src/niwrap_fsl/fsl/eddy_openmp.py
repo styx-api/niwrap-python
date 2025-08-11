@@ -14,7 +14,7 @@ EDDY_OPENMP_METADATA = Metadata(
 
 
 EddyOpenmpParameters = typing.TypedDict('EddyOpenmpParameters', {
-    "__STYXTYPE__": typing.Literal["eddy_openmp"],
+    "@type": typing.Literal["fsl.eddy_openmp"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy_openmp": eddy_openmp_cargs,
+        "fsl.eddy_openmp": eddy_openmp_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy_openmp": eddy_openmp_outputs,
+        "fsl.eddy_openmp": eddy_openmp_outputs,
     }.get(t)
 
 
@@ -260,7 +260,7 @@ def eddy_openmp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy_openmp",
+        "@type": "fsl.eddy_openmp",
         "imain": imain,
         "mask": mask,
         "index": index,
@@ -674,5 +674,8 @@ __all__ = [
     "EddyOpenmpOutputs",
     "EddyOpenmpParameters",
     "eddy_openmp",
+    "eddy_openmp_cargs",
+    "eddy_openmp_execute",
+    "eddy_openmp_outputs",
     "eddy_openmp_params",
 ]

@@ -14,7 +14,7 @@ SETLABELSTAT_METADATA = Metadata(
 
 
 SetlabelstatParameters = typing.TypedDict('SetlabelstatParameters', {
-    "__STYXTYPE__": typing.Literal["setlabelstat"],
+    "@type": typing.Literal["freesurfer.setlabelstat"],
     "inlabelfile": InputPathType,
     "outlabelfile": InputPathType,
     "statval": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "setlabelstat": setlabelstat_cargs,
+        "freesurfer.setlabelstat": setlabelstat_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "setlabelstat": setlabelstat_outputs,
+        "freesurfer.setlabelstat": setlabelstat_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def setlabelstat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "setlabelstat",
+        "@type": "freesurfer.setlabelstat",
         "inlabelfile": inlabelfile,
         "outlabelfile": outlabelfile,
         "statval": statval,
@@ -208,5 +208,8 @@ __all__ = [
     "SetlabelstatOutputs",
     "SetlabelstatParameters",
     "setlabelstat",
+    "setlabelstat_cargs",
+    "setlabelstat_execute",
+    "setlabelstat_outputs",
     "setlabelstat_params",
 ]

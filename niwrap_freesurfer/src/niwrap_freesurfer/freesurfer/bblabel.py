@@ -14,7 +14,7 @@ BBLABEL_METADATA = Metadata(
 
 
 BblabelParameters = typing.TypedDict('BblabelParameters', {
-    "__STYXTYPE__": typing.Literal["bblabel"],
+    "@type": typing.Literal["freesurfer.bblabel"],
     "labelfile": InputPathType,
     "xmin": typing.NotRequired[float | None],
     "xmax": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bblabel": bblabel_cargs,
+        "freesurfer.bblabel": bblabel_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bblabel": bblabel_outputs,
+        "freesurfer.bblabel": bblabel_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def bblabel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bblabel",
+        "@type": "freesurfer.bblabel",
         "labelfile": labelfile,
         "outlabelfile": outlabelfile,
         "debug": debug,
@@ -288,5 +288,8 @@ __all__ = [
     "BblabelOutputs",
     "BblabelParameters",
     "bblabel",
+    "bblabel_cargs",
+    "bblabel_execute",
+    "bblabel_outputs",
     "bblabel_params",
 ]

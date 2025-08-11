@@ -14,7 +14,7 @@ XHEMI_TAL_METADATA = Metadata(
 
 
 XhemiTalParameters = typing.TypedDict('XhemiTalParameters', {
-    "__STYXTYPE__": typing.Literal["xhemi-tal"],
+    "@type": typing.Literal["freesurfer.xhemi-tal"],
     "subject": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xhemi-tal": xhemi_tal_cargs,
+        "freesurfer.xhemi-tal": xhemi_tal_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def xhemi_tal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xhemi-tal",
+        "@type": "freesurfer.xhemi-tal",
         "subject": subject,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "XhemiTalOutputs",
     "XhemiTalParameters",
     "xhemi_tal",
+    "xhemi_tal_cargs",
+    "xhemi_tal_execute",
+    "xhemi_tal_outputs",
     "xhemi_tal_params",
 ]

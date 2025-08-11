@@ -14,14 +14,14 @@ ANNOTATION_RESAMPLE_METADATA = Metadata(
 
 
 AnnotationResampleSurfacePairParameters = typing.TypedDict('AnnotationResampleSurfacePairParameters', {
-    "__STYXTYPE__": typing.Literal["surface_pair"],
+    "@type": typing.Literal["workbench.annotation-resample.surface_pair"],
     "source_surface": InputPathType,
     "target_surface": InputPathType,
 })
 
 
 AnnotationResampleParameters = typing.TypedDict('AnnotationResampleParameters', {
-    "__STYXTYPE__": typing.Literal["annotation-resample"],
+    "@type": typing.Literal["workbench.annotation-resample"],
     "annotation_in": InputPathType,
     "annotation_out": str,
     "surface_pair": typing.NotRequired[list[AnnotationResampleSurfacePairParameters] | None],
@@ -40,8 +40,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "annotation-resample": annotation_resample_cargs,
-        "surface_pair": annotation_resample_surface_pair_cargs,
+        "workbench.annotation-resample": annotation_resample_cargs,
+        "workbench.annotation-resample.surface_pair": annotation_resample_surface_pair_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def annotation_resample_surface_pair_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface_pair",
+        "@type": "workbench.annotation-resample.surface_pair",
         "source_surface": source_surface,
         "target_surface": target_surface,
     }
@@ -128,7 +128,7 @@ def annotation_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "annotation-resample",
+        "@type": "workbench.annotation-resample",
         "annotation_in": annotation_in,
         "annotation_out": annotation_out,
     }
@@ -156,7 +156,7 @@ def annotation_resample_cargs(
     cargs.append(execution.input_file(params.get("annotation_in")))
     cargs.append(params.get("annotation_out"))
     if params.get("surface_pair") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("surface_pair")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("surface_pair")] for a in c])
     return cargs
 
 
@@ -253,6 +253,10 @@ __all__ = [
     "AnnotationResampleParameters",
     "AnnotationResampleSurfacePairParameters",
     "annotation_resample",
+    "annotation_resample_cargs",
+    "annotation_resample_execute",
+    "annotation_resample_outputs",
     "annotation_resample_params",
+    "annotation_resample_surface_pair_cargs",
     "annotation_resample_surface_pair_params",
 ]

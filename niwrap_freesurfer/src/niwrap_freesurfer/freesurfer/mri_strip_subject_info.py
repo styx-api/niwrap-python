@@ -14,7 +14,7 @@ MRI_STRIP_SUBJECT_INFO_METADATA = Metadata(
 
 
 MriStripSubjectInfoParameters = typing.TypedDict('MriStripSubjectInfoParameters', {
-    "__STYXTYPE__": typing.Literal["mri_strip_subject_info"],
+    "@type": typing.Literal["freesurfer.mri_strip_subject_info"],
     "input_files": list[InputPathType],
     "output_directory": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_strip_subject_info": mri_strip_subject_info_cargs,
+        "freesurfer.mri_strip_subject_info": mri_strip_subject_info_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mri_strip_subject_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_strip_subject_info",
+        "@type": "freesurfer.mri_strip_subject_info",
         "input_files": input_files,
         "output_directory": output_directory,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "MriStripSubjectInfoOutputs",
     "MriStripSubjectInfoParameters",
     "mri_strip_subject_info",
+    "mri_strip_subject_info_cargs",
+    "mri_strip_subject_info_execute",
+    "mri_strip_subject_info_outputs",
     "mri_strip_subject_info_params",
 ]

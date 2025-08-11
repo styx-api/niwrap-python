@@ -14,7 +14,7 @@ SEGMENT_SUBREGIONS_METADATA = Metadata(
 
 
 SegmentSubregionsParameters = typing.TypedDict('SegmentSubregionsParameters', {
-    "__STYXTYPE__": typing.Literal["segment_subregions"],
+    "@type": typing.Literal["freesurfer.segment_subregions"],
     "structure": str,
     "cross": typing.NotRequired[str | None],
     "long_base": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segment_subregions": segment_subregions_cargs,
+        "freesurfer.segment_subregions": segment_subregions_cargs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def segment_subregions_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segment_subregions",
+        "@type": "freesurfer.segment_subregions",
         "structure": structure,
         "debug": debug,
     }
@@ -280,5 +280,8 @@ __all__ = [
     "SegmentSubregionsOutputs",
     "SegmentSubregionsParameters",
     "segment_subregions",
+    "segment_subregions_cargs",
+    "segment_subregions_execute",
+    "segment_subregions_outputs",
     "segment_subregions_params",
 ]

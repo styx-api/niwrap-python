@@ -14,7 +14,7 @@ XHEMIREG_METADATA = Metadata(
 
 
 XhemiregParameters = typing.TypedDict('XhemiregParameters', {
-    "__STYXTYPE__": typing.Literal["xhemireg"],
+    "@type": typing.Literal["freesurfer.xhemireg"],
     "subject": str,
     "output_dir": typing.NotRequired[str | None],
     "map_lh": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xhemireg": xhemireg_cargs,
+        "freesurfer.xhemireg": xhemireg_cargs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def xhemireg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xhemireg",
+        "@type": "freesurfer.xhemireg",
         "subject": subject,
         "map_lh": map_lh,
         "map_rh": map_rh,
@@ -293,5 +293,8 @@ __all__ = [
     "XhemiregOutputs",
     "XhemiregParameters",
     "xhemireg",
+    "xhemireg_cargs",
+    "xhemireg_execute",
+    "xhemireg_outputs",
     "xhemireg_params",
 ]

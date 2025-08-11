@@ -14,7 +14,7 @@ V__AFNI_REFACER_MAKE_MASTER_METADATA = Metadata(
 
 
 VAfniRefacerMakeMasterParameters = typing.TypedDict('VAfniRefacerMakeMasterParameters', {
-    "__STYXTYPE__": typing.Literal["@afni_refacer_make_master"],
+    "@type": typing.Literal["afni.@afni_refacer_make_master"],
     "input_datasets": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@afni_refacer_make_master": v__afni_refacer_make_master_cargs,
+        "afni.@afni_refacer_make_master": v__afni_refacer_make_master_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@afni_refacer_make_master": v__afni_refacer_make_master_outputs,
+        "afni.@afni_refacer_make_master": v__afni_refacer_make_master_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__afni_refacer_make_master_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@afni_refacer_make_master",
+        "@type": "afni.@afni_refacer_make_master",
         "input_datasets": input_datasets,
     }
     return params
@@ -176,5 +176,8 @@ __all__ = [
     "VAfniRefacerMakeMasterParameters",
     "V__AFNI_REFACER_MAKE_MASTER_METADATA",
     "v__afni_refacer_make_master",
+    "v__afni_refacer_make_master_cargs",
+    "v__afni_refacer_make_master_execute",
+    "v__afni_refacer_make_master_outputs",
     "v__afni_refacer_make_master_params",
 ]

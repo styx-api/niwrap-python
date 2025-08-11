@@ -14,7 +14,7 @@ SAMSEG2RECON_METADATA = Metadata(
 
 
 Samseg2reconParameters = typing.TypedDict('Samseg2reconParameters', {
-    "__STYXTYPE__": typing.Literal["samseg2recon"],
+    "@type": typing.Literal["freesurfer.samseg2recon"],
     "subject": str,
     "samseg_dir": typing.NotRequired[str | None],
     "no_cc": bool,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "samseg2recon": samseg2recon_cargs,
+        "freesurfer.samseg2recon": samseg2recon_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "samseg2recon": samseg2recon_outputs,
+        "freesurfer.samseg2recon": samseg2recon_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def samseg2recon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "samseg2recon",
+        "@type": "freesurfer.samseg2recon",
         "subject": subject,
         "no_cc": no_cc,
         "fill": fill,
@@ -299,5 +299,8 @@ __all__ = [
     "Samseg2reconOutputs",
     "Samseg2reconParameters",
     "samseg2recon",
+    "samseg2recon_cargs",
+    "samseg2recon_execute",
+    "samseg2recon_outputs",
     "samseg2recon_params",
 ]

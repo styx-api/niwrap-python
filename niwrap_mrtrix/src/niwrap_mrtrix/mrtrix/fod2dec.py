@@ -14,14 +14,14 @@ FOD2DEC_METADATA = Metadata(
 
 
 Fod2decConfigParameters = typing.TypedDict('Fod2decConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fod2dec.config"],
     "key": str,
     "value": str,
 })
 
 
 Fod2decParameters = typing.TypedDict('Fod2decParameters', {
-    "__STYXTYPE__": typing.Literal["fod2dec"],
+    "@type": typing.Literal["mrtrix.fod2dec"],
     "mask": typing.NotRequired[InputPathType | None],
     "contrast": typing.NotRequired[InputPathType | None],
     "lum": bool,
@@ -54,8 +54,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fod2dec": fod2dec_cargs,
-        "config": fod2dec_config_cargs,
+        "mrtrix.fod2dec": fod2dec_cargs,
+        "mrtrix.fod2dec.config": fod2dec_config_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fod2dec": fod2dec_outputs,
+        "mrtrix.fod2dec": fod2dec_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def fod2dec_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fod2dec.config",
         "key": key,
         "value": value,
     }
@@ -191,7 +191,7 @@ def fod2dec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fod2dec",
+        "@type": "mrtrix.fod2dec",
         "lum": lum,
         "no_weight": no_weight,
         "info": info,
@@ -278,7 +278,7 @@ def fod2dec_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -464,6 +464,10 @@ __all__ = [
     "Fod2decOutputs",
     "Fod2decParameters",
     "fod2dec",
+    "fod2dec_cargs",
+    "fod2dec_config_cargs",
     "fod2dec_config_params",
+    "fod2dec_execute",
+    "fod2dec_outputs",
     "fod2dec_params",
 ]

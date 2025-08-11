@@ -14,14 +14,14 @@ VOLUME_STATS_METADATA = Metadata(
 
 
 VolumeStatsRoiParameters = typing.TypedDict('VolumeStatsRoiParameters', {
-    "__STYXTYPE__": typing.Literal["roi"],
+    "@type": typing.Literal["workbench.volume-stats.roi"],
     "roi_volume": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 VolumeStatsParameters = typing.TypedDict('VolumeStatsParameters', {
-    "__STYXTYPE__": typing.Literal["volume-stats"],
+    "@type": typing.Literal["workbench.volume-stats"],
     "volume_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],
@@ -43,8 +43,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-stats": volume_stats_cargs,
-        "roi": volume_stats_roi_cargs,
+        "workbench.volume-stats": volume_stats_cargs,
+        "workbench.volume-stats.roi": volume_stats_roi_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def volume_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "roi",
+        "@type": "workbench.volume-stats.roi",
         "roi_volume": roi_volume,
         "opt_match_maps": opt_match_maps,
     }
@@ -139,7 +139,7 @@ def volume_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-stats",
+        "@type": "workbench.volume-stats",
         "volume_in": volume_in,
         "opt_show_map_name": opt_show_map_name,
     }
@@ -187,7 +187,7 @@ def volume_stats_cargs(
             params.get("opt_subvolume_subvolume")
         ])
     if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["__STYXTYPE__"])(params.get("roi"), execution))
+        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
     if params.get("opt_show_map_name"):
         cargs.append("-show-map-name")
     return cargs
@@ -339,6 +339,10 @@ __all__ = [
     "VolumeStatsParameters",
     "VolumeStatsRoiParameters",
     "volume_stats",
+    "volume_stats_cargs",
+    "volume_stats_execute",
+    "volume_stats_outputs",
     "volume_stats_params",
+    "volume_stats_roi_cargs",
     "volume_stats_roi_params",
 ]

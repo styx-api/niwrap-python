@@ -14,7 +14,7 @@ V_2D_IM_REG_METADATA = Metadata(
 
 
 V2dImRegParameters = typing.TypedDict('V2dImRegParameters', {
-    "__STYXTYPE__": typing.Literal["2dImReg"],
+    "@type": typing.Literal["afni.2dImReg"],
     "input_file": InputPathType,
     "base_file": typing.NotRequired[InputPathType | None],
     "base": typing.NotRequired[float | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "2dImReg": v_2d_im_reg_cargs,
+        "afni.2dImReg": v_2d_im_reg_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "2dImReg": v_2d_im_reg_outputs,
+        "afni.2dImReg": v_2d_im_reg_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def v_2d_im_reg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "2dImReg",
+        "@type": "afni.2dImReg",
         "input_file": input_file,
         "nofine": nofine,
         "prefix": prefix,
@@ -308,5 +308,8 @@ __all__ = [
     "V2dImRegParameters",
     "V_2D_IM_REG_METADATA",
     "v_2d_im_reg",
+    "v_2d_im_reg_cargs",
+    "v_2d_im_reg_execute",
+    "v_2d_im_reg_outputs",
     "v_2d_im_reg_params",
 ]

@@ -14,7 +14,7 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 
 
 AntsuseLandmarkImagesToGetAffineTransformParameters = typing.TypedDict('AntsuseLandmarkImagesToGetAffineTransformParameters', {
-    "__STYXTYPE__": typing.Literal["ANTSUseLandmarkImagesToGetAffineTransform"],
+    "@type": typing.Literal["ants.ANTSUseLandmarkImagesToGetAffineTransform"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "transform_type": typing.Literal["rigid", "affine"],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ANTSUseLandmarkImagesToGetAffineTransform": antsuse_landmark_images_to_get_affine_transform_cargs,
+        "ants.ANTSUseLandmarkImagesToGetAffineTransform": antsuse_landmark_images_to_get_affine_transform_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ANTSUseLandmarkImagesToGetAffineTransform": antsuse_landmark_images_to_get_affine_transform_outputs,
+        "ants.ANTSUseLandmarkImagesToGetAffineTransform": antsuse_landmark_images_to_get_affine_transform_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def antsuse_landmark_images_to_get_affine_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ANTSUseLandmarkImagesToGetAffineTransform",
+        "@type": "ants.ANTSUseLandmarkImagesToGetAffineTransform",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "transform_type": transform_type,
@@ -210,5 +210,8 @@ __all__ = [
     "AntsuseLandmarkImagesToGetAffineTransformOutputs",
     "AntsuseLandmarkImagesToGetAffineTransformParameters",
     "antsuse_landmark_images_to_get_affine_transform",
+    "antsuse_landmark_images_to_get_affine_transform_cargs",
+    "antsuse_landmark_images_to_get_affine_transform_execute",
+    "antsuse_landmark_images_to_get_affine_transform_outputs",
     "antsuse_landmark_images_to_get_affine_transform_params",
 ]

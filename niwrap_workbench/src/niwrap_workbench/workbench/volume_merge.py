@@ -14,28 +14,28 @@ VOLUME_MERGE_METADATA = Metadata(
 
 
 VolumeMergeUpToParameters = typing.TypedDict('VolumeMergeUpToParameters', {
-    "__STYXTYPE__": typing.Literal["up_to"],
+    "@type": typing.Literal["workbench.volume-merge.volume.subvolume.up_to"],
     "last_subvol": str,
     "opt_reverse": bool,
 })
 
 
 VolumeMergeSubvolumeParameters = typing.TypedDict('VolumeMergeSubvolumeParameters', {
-    "__STYXTYPE__": typing.Literal["subvolume"],
+    "@type": typing.Literal["workbench.volume-merge.volume.subvolume"],
     "subvol": str,
     "up_to": typing.NotRequired[VolumeMergeUpToParameters | None],
 })
 
 
 VolumeMergeVolumeParameters = typing.TypedDict('VolumeMergeVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.volume-merge.volume"],
     "volume_in": InputPathType,
     "subvolume": typing.NotRequired[list[VolumeMergeSubvolumeParameters] | None],
 })
 
 
 VolumeMergeParameters = typing.TypedDict('VolumeMergeParameters', {
-    "__STYXTYPE__": typing.Literal["volume-merge"],
+    "@type": typing.Literal["workbench.volume-merge"],
     "volume_out": str,
     "volume": typing.NotRequired[list[VolumeMergeVolumeParameters] | None],
 })
@@ -53,10 +53,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-merge": volume_merge_cargs,
-        "volume": volume_merge_volume_cargs,
-        "subvolume": volume_merge_subvolume_cargs,
-        "up_to": volume_merge_up_to_cargs,
+        "workbench.volume-merge": volume_merge_cargs,
+        "workbench.volume-merge.volume": volume_merge_volume_cargs,
+        "workbench.volume-merge.volume.subvolume": volume_merge_subvolume_cargs,
+        "workbench.volume-merge.volume.subvolume.up_to": volume_merge_up_to_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-merge": volume_merge_outputs,
+        "workbench.volume-merge": volume_merge_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def volume_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "up_to",
+        "@type": "workbench.volume-merge.volume.subvolume.up_to",
         "last_subvol": last_subvol,
         "opt_reverse": opt_reverse,
     }
@@ -132,7 +132,7 @@ def volume_merge_subvolume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "subvolume",
+        "@type": "workbench.volume-merge.volume.subvolume",
         "subvol": subvol,
     }
     if up_to is not None:
@@ -157,7 +157,7 @@ def volume_merge_subvolume_cargs(
     cargs.append("-subvolume")
     cargs.append(params.get("subvol"))
     if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["__STYXTYPE__"])(params.get("up_to"), execution))
+        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
     return cargs
 
 
@@ -175,7 +175,7 @@ def volume_merge_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.volume-merge.volume",
         "volume_in": volume_in,
     }
     if subvolume is not None:
@@ -200,7 +200,7 @@ def volume_merge_volume_cargs(
     cargs.append("-volume")
     cargs.append(execution.input_file(params.get("volume_in")))
     if params.get("subvolume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("subvolume")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("subvolume")] for a in c])
     return cargs
 
 
@@ -228,7 +228,7 @@ def volume_merge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-merge",
+        "@type": "workbench.volume-merge",
         "volume_out": volume_out,
     }
     if volume is not None:
@@ -254,7 +254,7 @@ def volume_merge_cargs(
     cargs.append("-volume-merge")
     cargs.append(params.get("volume_out"))
     if params.get("volume") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("volume")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("volume")] for a in c])
     return cargs
 
 
@@ -358,8 +358,14 @@ __all__ = [
     "VolumeMergeUpToParameters",
     "VolumeMergeVolumeParameters",
     "volume_merge",
+    "volume_merge_cargs",
+    "volume_merge_execute",
+    "volume_merge_outputs",
     "volume_merge_params",
+    "volume_merge_subvolume_cargs",
     "volume_merge_subvolume_params",
+    "volume_merge_up_to_cargs",
     "volume_merge_up_to_params",
+    "volume_merge_volume_cargs",
     "volume_merge_volume_params",
 ]

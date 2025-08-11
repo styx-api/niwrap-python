@@ -14,7 +14,7 @@ V_3DRESAMPLE_METADATA = Metadata(
 
 
 V3dresampleParameters = typing.TypedDict('V3dresampleParameters', {
-    "__STYXTYPE__": typing.Literal["3dresample"],
+    "@type": typing.Literal["afni.3dresample"],
     "in_file": InputPathType,
     "master": typing.NotRequired[InputPathType | None],
     "orientation": typing.NotRequired[typing.Literal["AIL", "AIR", "ASL", "ASR", "PIL", "PIR", "PSL", "PSR", "ALI", "ALS", "ARI", "ARS", "PLI", "PLS", "PRI", "PRS", "IAL", "IAR", "IPL", "IPR", "SAL", "SAR", "SPL", "SPR", "ILA", "ILP", "IRA", "IRP", "SLA", "SLP", "SRA", "SRP", "LAI", "LAS", "LPI", "LPS", "RAI", "RAS", "RPI", "RPS", "LIA", "LIP", "LSA", "LSP", "RIA", "RIP", "RSA", "RSP"] | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dresample": v_3dresample_cargs,
+        "afni.3dresample": v_3dresample_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dresample": v_3dresample_outputs,
+        "afni.3dresample": v_3dresample_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def v_3dresample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dresample",
+        "@type": "afni.3dresample",
         "in_file": in_file,
         "prefix": prefix,
     }
@@ -252,5 +252,8 @@ __all__ = [
     "V3dresampleParameters",
     "V_3DRESAMPLE_METADATA",
     "v_3dresample",
+    "v_3dresample_cargs",
+    "v_3dresample_execute",
+    "v_3dresample_outputs",
     "v_3dresample_params",
 ]

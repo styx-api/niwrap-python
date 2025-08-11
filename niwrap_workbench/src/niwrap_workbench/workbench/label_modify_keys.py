@@ -14,7 +14,7 @@ LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 LabelModifyKeysParameters = typing.TypedDict('LabelModifyKeysParameters', {
-    "__STYXTYPE__": typing.Literal["label-modify-keys"],
+    "@type": typing.Literal["workbench.label-modify-keys"],
     "label_in": InputPathType,
     "remap_file": str,
     "label_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-modify-keys": label_modify_keys_cargs,
+        "workbench.label-modify-keys": label_modify_keys_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-modify-keys": label_modify_keys_outputs,
+        "workbench.label-modify-keys": label_modify_keys_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def label_modify_keys_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-modify-keys",
+        "@type": "workbench.label-modify-keys",
         "label_in": label_in,
         "remap_file": remap_file,
         "label_out": label_out,
@@ -232,5 +232,8 @@ __all__ = [
     "LabelModifyKeysOutputs",
     "LabelModifyKeysParameters",
     "label_modify_keys",
+    "label_modify_keys_cargs",
+    "label_modify_keys_execute",
+    "label_modify_keys_outputs",
     "label_modify_keys_params",
 ]

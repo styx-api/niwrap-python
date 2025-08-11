@@ -14,7 +14,7 @@ CIFTI_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 CiftiLabelModifyKeysParameters = typing.TypedDict('CiftiLabelModifyKeysParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-label-modify-keys"],
+    "@type": typing.Literal["workbench.cifti-label-modify-keys"],
     "cifti_in": InputPathType,
     "remap_file": str,
     "cifti_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-label-modify-keys": cifti_label_modify_keys_cargs,
+        "workbench.cifti-label-modify-keys": cifti_label_modify_keys_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-label-modify-keys": cifti_label_modify_keys_outputs,
+        "workbench.cifti-label-modify-keys": cifti_label_modify_keys_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def cifti_label_modify_keys_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-label-modify-keys",
+        "@type": "workbench.cifti-label-modify-keys",
         "cifti_in": cifti_in,
         "remap_file": remap_file,
         "cifti_out": cifti_out,
@@ -232,5 +232,8 @@ __all__ = [
     "CiftiLabelModifyKeysOutputs",
     "CiftiLabelModifyKeysParameters",
     "cifti_label_modify_keys",
+    "cifti_label_modify_keys_cargs",
+    "cifti_label_modify_keys_execute",
+    "cifti_label_modify_keys_outputs",
     "cifti_label_modify_keys_params",
 ]

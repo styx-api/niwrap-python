@@ -14,7 +14,7 @@ ANTS_REGISTRATION_SY_NQUICK_SH_METADATA = Metadata(
 
 
 AntsRegistrationSyNquickShParameters = typing.TypedDict('AntsRegistrationSyNquickShParameters', {
-    "__STYXTYPE__": typing.Literal["antsRegistrationSyNQuick.sh"],
+    "@type": typing.Literal["ants.antsRegistrationSyNQuick.sh"],
     "dimensionality": typing.Literal[2, 3],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsRegistrationSyNQuick.sh": ants_registration_sy_nquick_sh_cargs,
+        "ants.antsRegistrationSyNQuick.sh": ants_registration_sy_nquick_sh_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsRegistrationSyNQuick.sh": ants_registration_sy_nquick_sh_outputs,
+        "ants.antsRegistrationSyNQuick.sh": ants_registration_sy_nquick_sh_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def ants_registration_sy_nquick_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsRegistrationSyNQuick.sh",
+        "@type": "ants.antsRegistrationSyNQuick.sh",
         "dimensionality": dimensionality,
         "fixed_image": fixed_image,
         "moving_image": moving_image,
@@ -231,5 +231,8 @@ __all__ = [
     "AntsRegistrationSyNquickShOutputs",
     "AntsRegistrationSyNquickShParameters",
     "ants_registration_sy_nquick_sh",
+    "ants_registration_sy_nquick_sh_cargs",
+    "ants_registration_sy_nquick_sh_execute",
+    "ants_registration_sy_nquick_sh_outputs",
     "ants_registration_sy_nquick_sh_params",
 ]

@@ -14,7 +14,7 @@ V_3D_TFILTER_METADATA = Metadata(
 
 
 V3dTfilterParameters = typing.TypedDict('V3dTfilterParameters', {
-    "__STYXTYPE__": typing.Literal["3dTfilter"],
+    "@type": typing.Literal["afni.3dTfilter"],
     "inputdataset": InputPathType,
     "outputdataset": str,
     "filters": list[str],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTfilter": v_3d_tfilter_cargs,
+        "afni.3dTfilter": v_3d_tfilter_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTfilter": v_3d_tfilter_outputs,
+        "afni.3dTfilter": v_3d_tfilter_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v_3d_tfilter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTfilter",
+        "@type": "afni.3dTfilter",
         "inputdataset": inputdataset,
         "outputdataset": outputdataset,
         "filters": filters,
@@ -199,5 +199,8 @@ __all__ = [
     "V3dTfilterParameters",
     "V_3D_TFILTER_METADATA",
     "v_3d_tfilter",
+    "v_3d_tfilter_cargs",
+    "v_3d_tfilter_execute",
+    "v_3d_tfilter_outputs",
     "v_3d_tfilter_params",
 ]

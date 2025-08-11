@@ -14,7 +14,7 @@ DCMEDIT_METADATA = Metadata(
 
 
 DcmeditTagParameters = typing.TypedDict('DcmeditTagParameters', {
-    "__STYXTYPE__": typing.Literal["tag"],
+    "@type": typing.Literal["mrtrix.dcmedit.tag"],
     "group": str,
     "element": str,
     "newvalue": str,
@@ -22,14 +22,14 @@ DcmeditTagParameters = typing.TypedDict('DcmeditTagParameters', {
 
 
 DcmeditConfigParameters = typing.TypedDict('DcmeditConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dcmedit.config"],
     "key": str,
     "value": str,
 })
 
 
 DcmeditParameters = typing.TypedDict('DcmeditParameters', {
-    "__STYXTYPE__": typing.Literal["dcmedit"],
+    "@type": typing.Literal["mrtrix.dcmedit"],
     "anonymise": bool,
     "id": typing.NotRequired[str | None],
     "tag": typing.NotRequired[list[DcmeditTagParameters] | None],
@@ -57,9 +57,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcmedit": dcmedit_cargs,
-        "tag": dcmedit_tag_cargs,
-        "config": dcmedit_config_cargs,
+        "mrtrix.dcmedit": dcmedit_cargs,
+        "mrtrix.dcmedit.tag": dcmedit_tag_cargs,
+        "mrtrix.dcmedit.config": dcmedit_config_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def dcmedit_tag_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tag",
+        "@type": "mrtrix.dcmedit.tag",
         "group": group,
         "element": element,
         "newvalue": newvalue,
@@ -137,7 +137,7 @@ def dcmedit_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dcmedit.config",
         "key": key,
         "value": value,
     }
@@ -221,7 +221,7 @@ def dcmedit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcmedit",
+        "@type": "mrtrix.dcmedit",
         "anonymise": anonymise,
         "info": info,
         "quiet": quiet,
@@ -265,7 +265,7 @@ def dcmedit_cargs(
             params.get("id")
         ])
     if params.get("tag") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("tag")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tag")] for a in c])
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -280,7 +280,7 @@ def dcmedit_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -434,7 +434,12 @@ __all__ = [
     "DcmeditParameters",
     "DcmeditTagParameters",
     "dcmedit",
+    "dcmedit_cargs",
+    "dcmedit_config_cargs",
     "dcmedit_config_params",
+    "dcmedit_execute",
+    "dcmedit_outputs",
     "dcmedit_params",
+    "dcmedit_tag_cargs",
     "dcmedit_tag_params",
 ]

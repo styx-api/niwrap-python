@@ -14,14 +14,14 @@ SURFACE_APPLY_AFFINE_METADATA = Metadata(
 
 
 SurfaceApplyAffineFlirtParameters = typing.TypedDict('SurfaceApplyAffineFlirtParameters', {
-    "__STYXTYPE__": typing.Literal["flirt"],
+    "@type": typing.Literal["workbench.surface-apply-affine.flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 SurfaceApplyAffineParameters = typing.TypedDict('SurfaceApplyAffineParameters', {
-    "__STYXTYPE__": typing.Literal["surface-apply-affine"],
+    "@type": typing.Literal["workbench.surface-apply-affine"],
     "in_surf": InputPathType,
     "affine": str,
     "out_surf": str,
@@ -41,8 +41,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-apply-affine": surface_apply_affine_cargs,
-        "flirt": surface_apply_affine_flirt_cargs,
+        "workbench.surface-apply-affine": surface_apply_affine_cargs,
+        "workbench.surface-apply-affine.flirt": surface_apply_affine_flirt_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-apply-affine": surface_apply_affine_outputs,
+        "workbench.surface-apply-affine": surface_apply_affine_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_apply_affine_flirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt",
+        "@type": "workbench.surface-apply-affine.flirt",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -131,7 +131,7 @@ def surface_apply_affine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-apply-affine",
+        "@type": "workbench.surface-apply-affine",
         "in_surf": in_surf,
         "affine": affine,
         "out_surf": out_surf,
@@ -161,7 +161,7 @@ def surface_apply_affine_cargs(
     cargs.append(params.get("affine"))
     cargs.append(params.get("out_surf"))
     if params.get("flirt") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt")["__STYXTYPE__"])(params.get("flirt"), execution))
+        cargs.extend(dyn_cargs(params.get("flirt")["@type"])(params.get("flirt"), execution))
     return cargs
 
 
@@ -261,6 +261,10 @@ __all__ = [
     "SurfaceApplyAffineOutputs",
     "SurfaceApplyAffineParameters",
     "surface_apply_affine",
+    "surface_apply_affine_cargs",
+    "surface_apply_affine_execute",
+    "surface_apply_affine_flirt_cargs",
     "surface_apply_affine_flirt_params",
+    "surface_apply_affine_outputs",
     "surface_apply_affine_params",
 ]

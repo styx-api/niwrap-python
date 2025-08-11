@@ -14,7 +14,7 @@ TRR_METADATA = Metadata(
 
 
 TrrParameters = typing.TypedDict('TrrParameters', {
-    "__STYXTYPE__": typing.Literal["TRR"],
+    "@type": typing.Literal["afni.TRR"],
     "prefix": str,
     "chains": typing.NotRequired[float | None],
     "iterations": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "TRR": trr_cargs,
+        "afni.TRR": trr_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "TRR": trr_outputs,
+        "afni.TRR": trr_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def trr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "TRR",
+        "@type": "afni.TRR",
         "prefix": prefix,
         "response_var": response_var,
         "subject_var": subject_var,
@@ -401,5 +401,8 @@ __all__ = [
     "TrrOutputs",
     "TrrParameters",
     "trr",
+    "trr_cargs",
+    "trr_execute",
+    "trr_outputs",
     "trr_params",
 ]

@@ -14,7 +14,7 @@ V_3DMASK_SVD_METADATA = Metadata(
 
 
 V3dmaskSvdParameters = typing.TypedDict('V3dmaskSvdParameters', {
-    "__STYXTYPE__": typing.Literal["3dmaskSVD"],
+    "@type": typing.Literal["afni.3dmaskSVD"],
     "input_dataset": InputPathType,
     "vnorm": bool,
     "sval": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmaskSVD": v_3dmask_svd_cargs,
+        "afni.3dmaskSVD": v_3dmask_svd_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmaskSVD": v_3dmask_svd_outputs,
+        "afni.3dmaskSVD": v_3dmask_svd_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def v_3dmask_svd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmaskSVD",
+        "@type": "afni.3dmaskSVD",
         "input_dataset": input_dataset,
         "vnorm": vnorm,
         "automask": automask,
@@ -272,5 +272,8 @@ __all__ = [
     "V3dmaskSvdParameters",
     "V_3DMASK_SVD_METADATA",
     "v_3dmask_svd",
+    "v_3dmask_svd_cargs",
+    "v_3dmask_svd_execute",
+    "v_3dmask_svd_outputs",
     "v_3dmask_svd_params",
 ]

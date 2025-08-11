@@ -14,7 +14,7 @@ V_3D_QWARP_METADATA = Metadata(
 
 
 V3dQwarpParameters = typing.TypedDict('V3dQwarpParameters', {
-    "__STYXTYPE__": typing.Literal["3dQwarp"],
+    "@type": typing.Literal["afni.3dQwarp"],
     "base_dataset": InputPathType,
     "source_dataset": InputPathType,
     "prefix": str,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dQwarp": v_3d_qwarp_cargs,
+        "afni.3dQwarp": v_3d_qwarp_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dQwarp": v_3d_qwarp_outputs,
+        "afni.3dQwarp": v_3d_qwarp_outputs,
     }.get(t)
 
 
@@ -134,7 +134,7 @@ def v_3d_qwarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dQwarp",
+        "@type": "afni.3dQwarp",
         "base_dataset": base_dataset,
         "source_dataset": source_dataset,
         "prefix": prefix,
@@ -355,5 +355,8 @@ __all__ = [
     "V3dQwarpParameters",
     "V_3D_QWARP_METADATA",
     "v_3d_qwarp",
+    "v_3d_qwarp_cargs",
+    "v_3d_qwarp_execute",
+    "v_3d_qwarp_outputs",
     "v_3d_qwarp_params",
 ]

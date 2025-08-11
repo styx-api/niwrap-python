@@ -14,21 +14,21 @@ GREEDY_METADATA = Metadata(
 
 
 GreedyInputImagesParameters = typing.TypedDict('GreedyInputImagesParameters', {
-    "__STYXTYPE__": typing.Literal["input_images"],
+    "@type": typing.Literal["greedy.greedy.input_images"],
     "fixed": InputPathType,
     "moving": InputPathType,
 })
 
 
 GreedyInvertParameters = typing.TypedDict('GreedyInvertParameters', {
-    "__STYXTYPE__": typing.Literal["invert"],
+    "@type": typing.Literal["greedy.greedy.invert"],
     "inwarp": InputPathType,
     "outwarp": str,
 })
 
 
 GreedyRootParameters = typing.TypedDict('GreedyRootParameters', {
-    "__STYXTYPE__": typing.Literal["root"],
+    "@type": typing.Literal["greedy.greedy.root"],
     "inwarp": InputPathType,
     "outwarp": str,
     "n": int,
@@ -36,28 +36,28 @@ GreedyRootParameters = typing.TypedDict('GreedyRootParameters', {
 
 
 GreedyJacobianParameters = typing.TypedDict('GreedyJacobianParameters', {
-    "__STYXTYPE__": typing.Literal["jacobian"],
+    "@type": typing.Literal["greedy.greedy.jacobian"],
     "inwarp": InputPathType,
     "outjac": str,
 })
 
 
 GreedyMetricParameters = typing.TypedDict('GreedyMetricParameters', {
-    "__STYXTYPE__": typing.Literal["metric"],
+    "@type": typing.Literal["greedy.greedy.metric"],
     "metric_type": typing.Literal["SSD", "MI", "NMI", "NCC", "MAHAL"],
     "metric_param": typing.NotRequired[float | None],
 })
 
 
 GreedyTjrParameters = typing.TypedDict('GreedyTjrParameters', {
-    "__STYXTYPE__": typing.Literal["tjr"],
+    "@type": typing.Literal["greedy.greedy.tjr"],
     "mesh": InputPathType,
     "weight": float,
 })
 
 
 GreedySearchParameters = typing.TypedDict('GreedySearchParameters', {
-    "__STYXTYPE__": typing.Literal["search"],
+    "@type": typing.Literal["greedy.greedy.search"],
     "n": int,
     "rot": str,
     "tran": float,
@@ -65,28 +65,28 @@ GreedySearchParameters = typing.TypedDict('GreedySearchParameters', {
 
 
 GreedyResliceMovingImageParameters = typing.TypedDict('GreedyResliceMovingImageParameters', {
-    "__STYXTYPE__": typing.Literal["reslice_moving_image"],
+    "@type": typing.Literal["greedy.greedy.reslice_moving_image"],
     "moving": InputPathType,
     "output": str,
 })
 
 
 GreedyResliceSurfaceParameters = typing.TypedDict('GreedyResliceSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["reslice_surface"],
+    "@type": typing.Literal["greedy.greedy.reslice_surface"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
 GreedyResliceSimplexJacobianParameters = typing.TypedDict('GreedyResliceSimplexJacobianParameters', {
-    "__STYXTYPE__": typing.Literal["reslice_simplex_jacobian"],
+    "@type": typing.Literal["greedy.greedy.reslice_simplex_jacobian"],
     "inmesh": InputPathType,
     "outmesh": str,
 })
 
 
 GreedyParameters = typing.TypedDict('GreedyParameters', {
-    "__STYXTYPE__": typing.Literal["greedy"],
+    "@type": typing.Literal["greedy.greedy"],
     "dimensions": int,
     "input_images": typing.NotRequired[GreedyInputImagesParameters | None],
     "output": typing.NotRequired[str | None],
@@ -174,17 +174,17 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "greedy": greedy_cargs,
-        "input_images": greedy_input_images_cargs,
-        "invert": greedy_invert_cargs,
-        "root": greedy_root_cargs,
-        "jacobian": greedy_jacobian_cargs,
-        "metric": greedy_metric_cargs,
-        "tjr": greedy_tjr_cargs,
-        "search": greedy_search_cargs,
-        "reslice_moving_image": greedy_reslice_moving_image_cargs,
-        "reslice_surface": greedy_reslice_surface_cargs,
-        "reslice_simplex_jacobian": greedy_reslice_simplex_jacobian_cargs,
+        "greedy.greedy": greedy_cargs,
+        "greedy.greedy.input_images": greedy_input_images_cargs,
+        "greedy.greedy.invert": greedy_invert_cargs,
+        "greedy.greedy.root": greedy_root_cargs,
+        "greedy.greedy.jacobian": greedy_jacobian_cargs,
+        "greedy.greedy.metric": greedy_metric_cargs,
+        "greedy.greedy.tjr": greedy_tjr_cargs,
+        "greedy.greedy.search": greedy_search_cargs,
+        "greedy.greedy.reslice_moving_image": greedy_reslice_moving_image_cargs,
+        "greedy.greedy.reslice_surface": greedy_reslice_surface_cargs,
+        "greedy.greedy.reslice_simplex_jacobian": greedy_reslice_simplex_jacobian_cargs,
     }.get(t)
 
 
@@ -200,13 +200,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "greedy": greedy_outputs,
-        "invert": greedy_invert_outputs,
-        "root": greedy_root_outputs,
-        "jacobian": greedy_jacobian_outputs,
-        "reslice_moving_image": greedy_reslice_moving_image_outputs,
-        "reslice_surface": greedy_reslice_surface_outputs,
-        "reslice_simplex_jacobian": greedy_reslice_simplex_jacobian_outputs,
+        "greedy.greedy": greedy_outputs,
+        "greedy.greedy.invert": greedy_invert_outputs,
+        "greedy.greedy.root": greedy_root_outputs,
+        "greedy.greedy.jacobian": greedy_jacobian_outputs,
+        "greedy.greedy.reslice_moving_image": greedy_reslice_moving_image_outputs,
+        "greedy.greedy.reslice_surface": greedy_reslice_surface_outputs,
+        "greedy.greedy.reslice_simplex_jacobian": greedy_reslice_simplex_jacobian_outputs,
     }.get(t)
 
 
@@ -224,7 +224,7 @@ def greedy_input_images_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "input_images",
+        "@type": "greedy.greedy.input_images",
         "fixed": fixed,
         "moving": moving,
     }
@@ -274,7 +274,7 @@ def greedy_invert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "invert",
+        "@type": "greedy.greedy.invert",
         "inwarp": inwarp,
         "outwarp": outwarp,
     }
@@ -346,7 +346,7 @@ def greedy_root_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "root",
+        "@type": "greedy.greedy.root",
         "inwarp": inwarp,
         "outwarp": outwarp,
         "n": n,
@@ -418,7 +418,7 @@ def greedy_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "jacobian",
+        "@type": "greedy.greedy.jacobian",
         "inwarp": inwarp,
         "outjac": outjac,
     }
@@ -478,7 +478,7 @@ def greedy_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric",
+        "@type": "greedy.greedy.metric",
         "metric_type": metric_type,
     }
     if metric_param is not None:
@@ -520,7 +520,7 @@ def greedy_tjr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tjr",
+        "@type": "greedy.greedy.tjr",
         "mesh": mesh,
         "weight": weight,
     }
@@ -563,7 +563,7 @@ def greedy_search_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "search",
+        "@type": "greedy.greedy.search",
         "n": n,
         "rot": rot,
         "tran": tran,
@@ -615,7 +615,7 @@ def greedy_reslice_moving_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reslice_moving_image",
+        "@type": "greedy.greedy.reslice_moving_image",
         "moving": moving,
         "output": output,
     }
@@ -685,7 +685,7 @@ def greedy_reslice_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reslice_surface",
+        "@type": "greedy.greedy.reslice_surface",
         "inmesh": inmesh,
         "outmesh": outmesh,
     }
@@ -755,7 +755,7 @@ def greedy_reslice_simplex_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reslice_simplex_jacobian",
+        "@type": "greedy.greedy.reslice_simplex_jacobian",
         "inmesh": inmesh,
         "outmesh": outmesh,
     }
@@ -1009,7 +1009,7 @@ def greedy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "greedy",
+        "@type": "greedy.greedy",
         "dimensions": dimensions,
         "affine": affine,
         "metric_mode": metric_mode,
@@ -1160,7 +1160,7 @@ def greedy_cargs(
     if params.get("input_images") is not None:
         cargs.extend([
             "-i",
-            *dyn_cargs(params.get("input_images")["__STYXTYPE__"])(params.get("input_images"), execution)
+            *dyn_cargs(params.get("input_images")["@type"])(params.get("input_images"), execution)
         ])
     if params.get("output") is not None:
         cargs.extend([
@@ -1187,17 +1187,17 @@ def greedy_cargs(
     if params.get("invert") is not None:
         cargs.extend([
             "-iw",
-            *dyn_cargs(params.get("invert")["__STYXTYPE__"])(params.get("invert"), execution)
+            *dyn_cargs(params.get("invert")["@type"])(params.get("invert"), execution)
         ])
     if params.get("root") is not None:
         cargs.extend([
             "-root",
-            *dyn_cargs(params.get("root")["__STYXTYPE__"])(params.get("root"), execution)
+            *dyn_cargs(params.get("root")["@type"])(params.get("root"), execution)
         ])
     if params.get("jacobian") is not None:
         cargs.extend([
             "-jac",
-            *dyn_cargs(params.get("jacobian")["__STYXTYPE__"])(params.get("jacobian"), execution)
+            *dyn_cargs(params.get("jacobian")["@type"])(params.get("jacobian"), execution)
         ])
     if params.get("metric_mode"):
         cargs.append("-metric")
@@ -1211,7 +1211,7 @@ def greedy_cargs(
     if params.get("metric") is not None:
         cargs.extend([
             "-m",
-            *dyn_cargs(params.get("metric")["__STYXTYPE__"])(params.get("metric"), execution)
+            *dyn_cargs(params.get("metric")["@type"])(params.get("metric"), execution)
         ])
     if params.get("step_size") is not None:
         cargs.extend([
@@ -1316,7 +1316,7 @@ def greedy_cargs(
     if params.get("tjr") is not None:
         cargs.extend([
             "-tjr",
-            *dyn_cargs(params.get("tjr")["__STYXTYPE__"])(params.get("tjr"), execution)
+            *dyn_cargs(params.get("tjr")["@type"])(params.get("tjr"), execution)
         ])
     if params.get("wr") is not None:
         cargs.extend([
@@ -1357,7 +1357,7 @@ def greedy_cargs(
     if params.get("search") is not None:
         cargs.extend([
             "-search",
-            *dyn_cargs(params.get("search")["__STYXTYPE__"])(params.get("search"), execution)
+            *dyn_cargs(params.get("search")["@type"])(params.get("search"), execution)
         ])
     if params.get("det") is not None:
         cargs.extend([
@@ -1374,12 +1374,12 @@ def greedy_cargs(
     if params.get("reslice_moving_image") is not None:
         cargs.extend([
             "-rm",
-            *dyn_cargs(params.get("reslice_moving_image")["__STYXTYPE__"])(params.get("reslice_moving_image"), execution)
+            *dyn_cargs(params.get("reslice_moving_image")["@type"])(params.get("reslice_moving_image"), execution)
         ])
     if params.get("reslice_surface") is not None:
         cargs.extend([
             "-rs",
-            *dyn_cargs(params.get("reslice_surface")["__STYXTYPE__"])(params.get("reslice_surface"), execution)
+            *dyn_cargs(params.get("reslice_surface")["@type"])(params.get("reslice_surface"), execution)
         ])
     if params.get("interpolation") is not None:
         cargs.extend([
@@ -1409,7 +1409,7 @@ def greedy_cargs(
     if params.get("reslice_simplex_jacobian") is not None:
         cargs.extend([
             "-rsj",
-            *dyn_cargs(params.get("reslice_simplex_jacobian")["__STYXTYPE__"])(params.get("reslice_simplex_jacobian"), execution)
+            *dyn_cargs(params.get("reslice_simplex_jacobian")["@type"])(params.get("reslice_simplex_jacobian"), execution)
         ])
     if params.get("reslice_mask") is not None:
         cargs.extend([
@@ -1474,12 +1474,12 @@ def greedy_outputs(
     ret = GreedyOutputs(
         root=execution.output_file("."),
         output_file=execution.output_file(params.get("output")) if (params.get("output") is not None) else None,
-        invert=dyn_outputs(params.get("invert")["__STYXTYPE__"])(params.get("invert"), execution) if params.get("invert") else None,
-        root_=dyn_outputs(params.get("root")["__STYXTYPE__"])(params.get("root"), execution) if params.get("root") else None,
-        jacobian=dyn_outputs(params.get("jacobian")["__STYXTYPE__"])(params.get("jacobian"), execution) if params.get("jacobian") else None,
-        reslice_moving_image=dyn_outputs(params.get("reslice_moving_image")["__STYXTYPE__"])(params.get("reslice_moving_image"), execution) if params.get("reslice_moving_image") else None,
-        reslice_surface=dyn_outputs(params.get("reslice_surface")["__STYXTYPE__"])(params.get("reslice_surface"), execution) if params.get("reslice_surface") else None,
-        reslice_simplex_jacobian=dyn_outputs(params.get("reslice_simplex_jacobian")["__STYXTYPE__"])(params.get("reslice_simplex_jacobian"), execution) if params.get("reslice_simplex_jacobian") else None,
+        invert=dyn_outputs(params.get("invert")["@type"])(params.get("invert"), execution) if params.get("invert") else None,
+        root_=dyn_outputs(params.get("root")["@type"])(params.get("root"), execution) if params.get("root") else None,
+        jacobian=dyn_outputs(params.get("jacobian")["@type"])(params.get("jacobian"), execution) if params.get("jacobian") else None,
+        reslice_moving_image=dyn_outputs(params.get("reslice_moving_image")["@type"])(params.get("reslice_moving_image"), execution) if params.get("reslice_moving_image") else None,
+        reslice_surface=dyn_outputs(params.get("reslice_surface")["@type"])(params.get("reslice_surface"), execution) if params.get("reslice_surface") else None,
+        reslice_simplex_jacobian=dyn_outputs(params.get("reslice_simplex_jacobian")["@type"])(params.get("reslice_simplex_jacobian"), execution) if params.get("reslice_simplex_jacobian") else None,
     )
     return ret
 
@@ -1799,15 +1799,34 @@ __all__ = [
     "GreedySearchParameters",
     "GreedyTjrParameters",
     "greedy_",
+    "greedy_cargs",
+    "greedy_execute",
+    "greedy_input_images_cargs",
     "greedy_input_images_params",
+    "greedy_invert_cargs",
+    "greedy_invert_outputs",
     "greedy_invert_params",
+    "greedy_jacobian_cargs",
+    "greedy_jacobian_outputs",
     "greedy_jacobian_params",
+    "greedy_metric_cargs",
     "greedy_metric_params",
+    "greedy_outputs",
     "greedy_params",
+    "greedy_reslice_moving_image_cargs",
+    "greedy_reslice_moving_image_outputs",
     "greedy_reslice_moving_image_params",
+    "greedy_reslice_simplex_jacobian_cargs",
+    "greedy_reslice_simplex_jacobian_outputs",
     "greedy_reslice_simplex_jacobian_params",
+    "greedy_reslice_surface_cargs",
+    "greedy_reslice_surface_outputs",
     "greedy_reslice_surface_params",
+    "greedy_root_cargs",
+    "greedy_root_outputs",
     "greedy_root_params",
+    "greedy_search_cargs",
     "greedy_search_params",
+    "greedy_tjr_cargs",
     "greedy_tjr_params",
 ]

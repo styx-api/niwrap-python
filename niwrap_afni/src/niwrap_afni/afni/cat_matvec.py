@@ -14,7 +14,7 @@ CAT_MATVEC_METADATA = Metadata(
 
 
 CatMatvecParameters = typing.TypedDict('CatMatvecParameters', {
-    "__STYXTYPE__": typing.Literal["cat_matvec"],
+    "@type": typing.Literal["afni.cat_matvec"],
     "matrix_format": bool,
     "oneline_format": bool,
     "four_by_four_format": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cat_matvec": cat_matvec_cargs,
+        "afni.cat_matvec": cat_matvec_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def cat_matvec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cat_matvec",
+        "@type": "afni.cat_matvec",
         "matrix_format": matrix_format,
         "oneline_format": oneline_format,
         "four_by_four_format": four_by_four_format,
@@ -203,5 +203,8 @@ __all__ = [
     "CatMatvecOutputs",
     "CatMatvecParameters",
     "cat_matvec",
+    "cat_matvec_cargs",
+    "cat_matvec_execute",
+    "cat_matvec_outputs",
     "cat_matvec_params",
 ]

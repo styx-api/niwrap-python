@@ -14,7 +14,7 @@ UNPACKIMADIR2_METADATA = Metadata(
 
 
 Unpackimadir2Parameters = typing.TypedDict('Unpackimadir2Parameters', {
-    "__STYXTYPE__": typing.Literal["unpackimadir2"],
+    "@type": typing.Literal["freesurfer.unpackimadir2"],
     "directory": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "unpackimadir2": unpackimadir2_cargs,
+        "freesurfer.unpackimadir2": unpackimadir2_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def unpackimadir2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "unpackimadir2",
+        "@type": "freesurfer.unpackimadir2",
         "directory": directory,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "Unpackimadir2Outputs",
     "Unpackimadir2Parameters",
     "unpackimadir2",
+    "unpackimadir2_cargs",
+    "unpackimadir2_execute",
+    "unpackimadir2_outputs",
     "unpackimadir2_params",
 ]

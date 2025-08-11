@@ -14,7 +14,7 @@ V_3D_LOCAL_ACF_METADATA = Metadata(
 
 
 V3dLocalAcfParameters = typing.TypedDict('V3dLocalAcfParameters', {
-    "__STYXTYPE__": typing.Literal["3dLocalACF"],
+    "@type": typing.Literal["afni.3dLocalACF"],
     "prefix": str,
     "input_file": InputPathType,
     "neighborhood": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLocalACF": v_3d_local_acf_cargs,
+        "afni.3dLocalACF": v_3d_local_acf_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLocalACF": v_3d_local_acf_outputs,
+        "afni.3dLocalACF": v_3d_local_acf_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def v_3d_local_acf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLocalACF",
+        "@type": "afni.3dLocalACF",
         "prefix": prefix,
         "input_file": input_file,
         "auto_mask": auto_mask,
@@ -220,5 +220,8 @@ __all__ = [
     "V3dLocalAcfParameters",
     "V_3D_LOCAL_ACF_METADATA",
     "v_3d_local_acf",
+    "v_3d_local_acf_cargs",
+    "v_3d_local_acf_execute",
+    "v_3d_local_acf_outputs",
     "v_3d_local_acf_params",
 ]

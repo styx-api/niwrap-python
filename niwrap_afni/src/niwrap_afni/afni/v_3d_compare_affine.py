@@ -14,7 +14,7 @@ V_3D_COMPARE_AFFINE_METADATA = Metadata(
 
 
 V3dCompareAffineParameters = typing.TypedDict('V3dCompareAffineParameters', {
-    "__STYXTYPE__": typing.Literal["3dCompareAffine"],
+    "@type": typing.Literal["afni.3dCompareAffine"],
     "mask": typing.NotRequired[str | None],
     "dset": typing.NotRequired[InputPathType | None],
     "affine": typing.NotRequired[list[str] | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dCompareAffine": v_3d_compare_affine_cargs,
+        "afni.3dCompareAffine": v_3d_compare_affine_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dCompareAffine": v_3d_compare_affine_outputs,
+        "afni.3dCompareAffine": v_3d_compare_affine_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v_3d_compare_affine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dCompareAffine",
+        "@type": "afni.3dCompareAffine",
     }
     if mask is not None:
         params["mask"] = mask
@@ -211,5 +211,8 @@ __all__ = [
     "V3dCompareAffineParameters",
     "V_3D_COMPARE_AFFINE_METADATA",
     "v_3d_compare_affine",
+    "v_3d_compare_affine_cargs",
+    "v_3d_compare_affine_execute",
+    "v_3d_compare_affine_outputs",
     "v_3d_compare_affine_params",
 ]

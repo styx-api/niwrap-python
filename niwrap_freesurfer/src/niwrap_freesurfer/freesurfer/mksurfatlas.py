@@ -14,7 +14,7 @@ MKSURFATLAS_METADATA = Metadata(
 
 
 MksurfatlasParameters = typing.TypedDict('MksurfatlasParameters', {
-    "__STYXTYPE__": typing.Literal["mksurfatlas"],
+    "@type": typing.Literal["freesurfer.mksurfatlas"],
     "atlas": str,
     "hemi": str,
     "subjects": list[str],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mksurfatlas": mksurfatlas_cargs,
+        "freesurfer.mksurfatlas": mksurfatlas_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mksurfatlas": mksurfatlas_outputs,
+        "freesurfer.mksurfatlas": mksurfatlas_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def mksurfatlas_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mksurfatlas",
+        "@type": "freesurfer.mksurfatlas",
         "atlas": atlas,
         "hemi": hemi,
         "subjects": subjects,
@@ -267,5 +267,8 @@ __all__ = [
     "MksurfatlasOutputs",
     "MksurfatlasParameters",
     "mksurfatlas",
+    "mksurfatlas_cargs",
+    "mksurfatlas_execute",
+    "mksurfatlas_outputs",
     "mksurfatlas_params",
 ]

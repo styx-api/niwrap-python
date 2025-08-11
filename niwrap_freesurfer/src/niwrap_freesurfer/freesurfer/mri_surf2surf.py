@@ -14,7 +14,7 @@ MRI_SURF2SURF_METADATA = Metadata(
 
 
 MriSurf2surfParameters = typing.TypedDict('MriSurf2surfParameters', {
-    "__STYXTYPE__": typing.Literal["mri_surf2surf"],
+    "@type": typing.Literal["freesurfer.mri_surf2surf"],
     "src_subject": str,
     "sval_path": typing.NotRequired[InputPathType | None],
     "sval_xyz": typing.NotRequired[str | None],
@@ -86,7 +86,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_surf2surf": mri_surf2surf_cargs,
+        "freesurfer.mri_surf2surf": mri_surf2surf_cargs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_surf2surf": mri_surf2surf_outputs,
+        "freesurfer.mri_surf2surf": mri_surf2surf_outputs,
     }.get(t)
 
 
@@ -245,7 +245,7 @@ def mri_surf2surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_surf2surf",
+        "@type": "freesurfer.mri_surf2surf",
         "src_subject": src_subject,
         "trg_subject": trg_subject,
         "dual_hemi": dual_hemi,
@@ -853,5 +853,8 @@ __all__ = [
     "MriSurf2surfOutputs",
     "MriSurf2surfParameters",
     "mri_surf2surf",
+    "mri_surf2surf_cargs",
+    "mri_surf2surf_execute",
+    "mri_surf2surf_outputs",
     "mri_surf2surf_params",
 ]

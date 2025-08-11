@@ -14,7 +14,7 @@ V_3DINFILL_METADATA = Metadata(
 
 
 V3dinfillParameters = typing.TypedDict('V3dinfillParameters', {
-    "__STYXTYPE__": typing.Literal["3dinfill"],
+    "@type": typing.Literal["afni.3dinfill"],
     "input": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "niter": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dinfill": v_3dinfill_cargs,
+        "afni.3dinfill": v_3dinfill_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dinfill": v_3dinfill_outputs,
+        "afni.3dinfill": v_3dinfill_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v_3dinfill_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dinfill",
+        "@type": "afni.3dinfill",
         "input": input_,
     }
     if prefix is not None:
@@ -298,5 +298,8 @@ __all__ = [
     "V3dinfillParameters",
     "V_3DINFILL_METADATA",
     "v_3dinfill",
+    "v_3dinfill_cargs",
+    "v_3dinfill_execute",
+    "v_3dinfill_outputs",
     "v_3dinfill_params",
 ]

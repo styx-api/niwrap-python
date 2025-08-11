@@ -14,14 +14,14 @@ FABBER_METADATA = Metadata(
 
 
 FabberOptfileParameters = typing.TypedDict('FabberOptfileParameters', {
-    "__STYXTYPE__": typing.Literal["optfile"],
+    "@type": typing.Literal["fsl.fabber.optfile"],
     "optfile_short": typing.NotRequired[InputPathType | None],
     "optfile_long": typing.NotRequired[InputPathType | None],
 })
 
 
 FabberParameters = typing.TypedDict('FabberParameters', {
-    "__STYXTYPE__": typing.Literal["fabber"],
+    "@type": typing.Literal["fsl.fabber"],
     "output": str,
     "method": str,
     "model": str,
@@ -73,8 +73,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber": fabber_cargs,
-        "optfile": fabber_optfile_cargs,
+        "fsl.fabber": fabber_cargs,
+        "fsl.fabber.optfile": fabber_optfile_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber": fabber_outputs,
+        "fsl.fabber": fabber_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def fabber_optfile_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "optfile",
+        "@type": "fsl.fabber.optfile",
     }
     if optfile_short is not None:
         params["optfile_short"] = optfile_short
@@ -280,7 +280,7 @@ def fabber_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber",
+        "@type": "fsl.fabber",
         "output": output,
         "method": method,
         "model": model,
@@ -417,7 +417,7 @@ def fabber_cargs(
     if params.get("debug"):
         cargs.append("--debug")
     if params.get("optfile") is not None:
-        cargs.extend(dyn_cargs(params.get("optfile")["__STYXTYPE__"])(params.get("optfile"), execution))
+        cargs.extend(dyn_cargs(params.get("optfile")["@type"])(params.get("optfile"), execution))
     if params.get("save_model_fit"):
         cargs.append("--save-model-fit")
     if params.get("save_residuals"):
@@ -671,6 +671,10 @@ __all__ = [
     "FabberOutputs",
     "FabberParameters",
     "fabber",
+    "fabber_cargs",
+    "fabber_execute",
+    "fabber_optfile_cargs",
     "fabber_optfile_params",
+    "fabber_outputs",
     "fabber_params",
 ]

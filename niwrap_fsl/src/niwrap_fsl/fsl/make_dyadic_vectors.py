@@ -14,7 +14,7 @@ MAKE_DYADIC_VECTORS_METADATA = Metadata(
 
 
 MakeDyadicVectorsParameters = typing.TypedDict('MakeDyadicVectorsParameters', {
-    "__STYXTYPE__": typing.Literal["make_dyadic_vectors"],
+    "@type": typing.Literal["fsl.make_dyadic_vectors"],
     "theta_vol": InputPathType,
     "phi_vol": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_dyadic_vectors": make_dyadic_vectors_cargs,
+        "fsl.make_dyadic_vectors": make_dyadic_vectors_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_dyadic_vectors": make_dyadic_vectors_outputs,
+        "fsl.make_dyadic_vectors": make_dyadic_vectors_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def make_dyadic_vectors_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_dyadic_vectors",
+        "@type": "fsl.make_dyadic_vectors",
         "theta_vol": theta_vol,
         "phi_vol": phi_vol,
         "output": output,
@@ -210,5 +210,8 @@ __all__ = [
     "MakeDyadicVectorsOutputs",
     "MakeDyadicVectorsParameters",
     "make_dyadic_vectors",
+    "make_dyadic_vectors_cargs",
+    "make_dyadic_vectors_execute",
+    "make_dyadic_vectors_outputs",
     "make_dyadic_vectors_params",
 ]

@@ -14,7 +14,7 @@ MRI_MERGELABELS_METADATA = Metadata(
 
 
 MriMergelabelsParameters = typing.TypedDict('MriMergelabelsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_mergelabels"],
+    "@type": typing.Literal["freesurfer.mri_mergelabels"],
     "input_labels": list[InputPathType],
     "output_label": str,
     "input_directory": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_mergelabels": mri_mergelabels_cargs,
+        "freesurfer.mri_mergelabels": mri_mergelabels_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_mergelabels": mri_mergelabels_outputs,
+        "freesurfer.mri_mergelabels": mri_mergelabels_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_mergelabels_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_mergelabels",
+        "@type": "freesurfer.mri_mergelabels",
         "input_labels": input_labels,
         "output_label": output_label,
     }
@@ -199,5 +199,8 @@ __all__ = [
     "MriMergelabelsOutputs",
     "MriMergelabelsParameters",
     "mri_mergelabels",
+    "mri_mergelabels_cargs",
+    "mri_mergelabels_execute",
+    "mri_mergelabels_outputs",
     "mri_mergelabels_params",
 ]

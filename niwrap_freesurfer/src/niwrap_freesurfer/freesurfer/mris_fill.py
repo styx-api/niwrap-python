@@ -14,7 +14,7 @@ MRIS_FILL_METADATA = Metadata(
 
 
 MrisFillParameters = typing.TypedDict('MrisFillParameters', {
-    "__STYXTYPE__": typing.Literal["mris_fill"],
+    "@type": typing.Literal["freesurfer.mris_fill"],
     "resolution": typing.NotRequired[float | None],
     "conform": bool,
     "input_surface": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_fill": mris_fill_cargs,
+        "freesurfer.mris_fill": mris_fill_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_fill": mris_fill_outputs,
+        "freesurfer.mris_fill": mris_fill_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mris_fill_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_fill",
+        "@type": "freesurfer.mris_fill",
         "conform": conform,
         "input_surface": input_surface,
         "output_volume": output_volume,
@@ -206,5 +206,8 @@ __all__ = [
     "MrisFillOutputs",
     "MrisFillParameters",
     "mris_fill",
+    "mris_fill_cargs",
+    "mris_fill_execute",
+    "mris_fill_outputs",
     "mris_fill_params",
 ]

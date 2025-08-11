@@ -14,7 +14,7 @@ V_3D_REG_ANA_METADATA = Metadata(
 
 
 V3dRegAnaParameters = typing.TypedDict('V3dRegAnaParameters', {
-    "__STYXTYPE__": typing.Literal["3dRegAna"],
+    "@type": typing.Literal["afni.3dRegAna"],
     "rows": float,
     "cols": float,
     "xydata": list[str],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dRegAna": v_3d_reg_ana_cargs,
+        "afni.3dRegAna": v_3d_reg_ana_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dRegAna": v_3d_reg_ana_outputs,
+        "afni.3dRegAna": v_3d_reg_ana_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v_3d_reg_ana_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dRegAna",
+        "@type": "afni.3dRegAna",
         "rows": rows,
         "cols": cols,
         "xydata": xydata,
@@ -373,5 +373,8 @@ __all__ = [
     "V3dRegAnaParameters",
     "V_3D_REG_ANA_METADATA",
     "v_3d_reg_ana",
+    "v_3d_reg_ana_cargs",
+    "v_3d_reg_ana_execute",
+    "v_3d_reg_ana_outputs",
     "v_3d_reg_ana_params",
 ]

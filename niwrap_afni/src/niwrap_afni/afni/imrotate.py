@@ -14,7 +14,7 @@ IMROTATE_METADATA = Metadata(
 
 
 ImrotateParameters = typing.TypedDict('ImrotateParameters', {
-    "__STYXTYPE__": typing.Literal["imrotate"],
+    "@type": typing.Literal["afni.imrotate"],
     "linear_interpolation": bool,
     "fourier_interpolation": bool,
     "dx": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imrotate": imrotate_cargs,
+        "afni.imrotate": imrotate_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imrotate": imrotate_outputs,
+        "afni.imrotate": imrotate_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def imrotate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imrotate",
+        "@type": "afni.imrotate",
         "linear_interpolation": linear_interpolation,
         "fourier_interpolation": fourier_interpolation,
         "dx": dx,
@@ -222,5 +222,8 @@ __all__ = [
     "ImrotateOutputs",
     "ImrotateParameters",
     "imrotate",
+    "imrotate_cargs",
+    "imrotate_execute",
+    "imrotate_outputs",
     "imrotate_params",
 ]

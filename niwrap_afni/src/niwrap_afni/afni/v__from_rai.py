@@ -14,7 +14,7 @@ V__FROM_RAI_METADATA = Metadata(
 
 
 VFromRaiParameters = typing.TypedDict('VFromRaiParameters', {
-    "__STYXTYPE__": typing.Literal["@FromRAI"],
+    "@type": typing.Literal["afni.@FromRAI"],
     "rai_coordinates": list[float],
     "orientation": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@FromRAI": v__from_rai_cargs,
+        "afni.@FromRAI": v__from_rai_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__from_rai_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@FromRAI",
+        "@type": "afni.@FromRAI",
         "rai_coordinates": rai_coordinates,
         "orientation": orientation,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "VFromRaiParameters",
     "V__FROM_RAI_METADATA",
     "v__from_rai",
+    "v__from_rai_cargs",
+    "v__from_rai_execute",
+    "v__from_rai_outputs",
     "v__from_rai_params",
 ]

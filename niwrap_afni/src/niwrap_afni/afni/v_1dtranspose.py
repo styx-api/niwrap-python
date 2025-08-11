@@ -14,7 +14,7 @@ V_1DTRANSPOSE_METADATA = Metadata(
 
 
 V1dtransposeParameters = typing.TypedDict('V1dtransposeParameters', {
-    "__STYXTYPE__": typing.Literal["1dtranspose"],
+    "@type": typing.Literal["afni.1dtranspose"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dtranspose": v_1dtranspose_cargs,
+        "afni.1dtranspose": v_1dtranspose_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dtranspose": v_1dtranspose_outputs,
+        "afni.1dtranspose": v_1dtranspose_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def v_1dtranspose_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dtranspose",
+        "@type": "afni.1dtranspose",
         "infile": infile,
     }
     if outfile is not None:
@@ -184,5 +184,8 @@ __all__ = [
     "V1dtransposeParameters",
     "V_1DTRANSPOSE_METADATA",
     "v_1dtranspose",
+    "v_1dtranspose_cargs",
+    "v_1dtranspose_execute",
+    "v_1dtranspose_outputs",
     "v_1dtranspose_params",
 ]

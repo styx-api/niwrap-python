@@ -14,7 +14,7 @@ V_3D_LFCD_METADATA = Metadata(
 
 
 V3dLfcdParameters = typing.TypedDict('V3dLfcdParameters', {
-    "__STYXTYPE__": typing.Literal["3dLFCD"],
+    "@type": typing.Literal["afni.3dLFCD"],
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLFCD": v_3d_lfcd_cargs,
+        "afni.3dLFCD": v_3d_lfcd_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLFCD": v_3d_lfcd_outputs,
+        "afni.3dLFCD": v_3d_lfcd_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def v_3d_lfcd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLFCD",
+        "@type": "afni.3dLFCD",
         "in_file": in_file,
         "autoclip": autoclip,
         "automask": automask,
@@ -264,5 +264,8 @@ __all__ = [
     "V3dLfcdParameters",
     "V_3D_LFCD_METADATA",
     "v_3d_lfcd",
+    "v_3d_lfcd_cargs",
+    "v_3d_lfcd_execute",
+    "v_3d_lfcd_outputs",
     "v_3d_lfcd_params",
 ]

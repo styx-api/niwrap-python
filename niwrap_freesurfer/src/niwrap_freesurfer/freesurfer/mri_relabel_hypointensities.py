@@ -14,7 +14,7 @@ MRI_RELABEL_HYPOINTENSITIES_METADATA = Metadata(
 
 
 MriRelabelHypointensitiesParameters = typing.TypedDict('MriRelabelHypointensitiesParameters', {
-    "__STYXTYPE__": typing.Literal["mri_relabel_hypointensities"],
+    "@type": typing.Literal["freesurfer.mri_relabel_hypointensities"],
     "input_aseg": InputPathType,
     "surface_directory": str,
     "output_aseg": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_relabel_hypointensities": mri_relabel_hypointensities_cargs,
+        "freesurfer.mri_relabel_hypointensities": mri_relabel_hypointensities_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_relabel_hypointensities": mri_relabel_hypointensities_outputs,
+        "freesurfer.mri_relabel_hypointensities": mri_relabel_hypointensities_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_relabel_hypointensities_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_relabel_hypointensities",
+        "@type": "freesurfer.mri_relabel_hypointensities",
         "input_aseg": input_aseg,
         "surface_directory": surface_directory,
         "output_aseg": output_aseg,
@@ -188,5 +188,8 @@ __all__ = [
     "MriRelabelHypointensitiesOutputs",
     "MriRelabelHypointensitiesParameters",
     "mri_relabel_hypointensities",
+    "mri_relabel_hypointensities_cargs",
+    "mri_relabel_hypointensities_execute",
+    "mri_relabel_hypointensities_outputs",
     "mri_relabel_hypointensities_params",
 ]

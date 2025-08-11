@@ -14,20 +14,20 @@ ANTS_REGISTRATION_METADATA = Metadata(
 
 
 AntsRegistrationInitialMovingTransformParameters = typing.TypedDict('AntsRegistrationInitialMovingTransformParameters', {
-    "__STYXTYPE__": typing.Literal["initial_moving_transform"],
+    "@type": typing.Literal["ants.antsRegistration.initial_moving_transform"],
     "initial_moving_transform": InputPathType,
 })
 
 
 AntsRegistrationInitialMovingTransformUseInverseParameters = typing.TypedDict('AntsRegistrationInitialMovingTransformUseInverseParameters', {
-    "__STYXTYPE__": typing.Literal["initial_moving_transform_use_inverse"],
+    "@type": typing.Literal["ants.antsRegistration.initial_moving_transform_use_inverse"],
     "initial_moving_transform": InputPathType,
     "use_inverse": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
 AntsRegistrationInitialMovingTransformInitializationFeatureParameters = typing.TypedDict('AntsRegistrationInitialMovingTransformInitializationFeatureParameters', {
-    "__STYXTYPE__": typing.Literal["initial_moving_transform_initialization_feature"],
+    "@type": typing.Literal["ants.antsRegistration.initial_moving_transform_initialization_feature"],
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
     "initialization_feature": typing.Literal[0, 1, 2],
@@ -35,44 +35,44 @@ AntsRegistrationInitialMovingTransformInitializationFeatureParameters = typing.T
 
 
 AntsRegistrationTransformRigidParameters = typing.TypedDict('AntsRegistrationTransformRigidParameters', {
-    "__STYXTYPE__": typing.Literal["transform_rigid"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_rigid"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformAffineParameters = typing.TypedDict('AntsRegistrationTransformAffineParameters', {
-    "__STYXTYPE__": typing.Literal["transform_affine"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_affine"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformCompositeAffineParameters = typing.TypedDict('AntsRegistrationTransformCompositeAffineParameters', {
-    "__STYXTYPE__": typing.Literal["transform_composite_affine"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_composite_affine"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformSimilarityParameters = typing.TypedDict('AntsRegistrationTransformSimilarityParameters', {
-    "__STYXTYPE__": typing.Literal["transform_similarity"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_similarity"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformTranslationParameters = typing.TypedDict('AntsRegistrationTransformTranslationParameters', {
-    "__STYXTYPE__": typing.Literal["transform_translation"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_translation"],
     "gradient_step": float,
 })
 
 
 AntsRegistrationTransformBsplineParameters = typing.TypedDict('AntsRegistrationTransformBsplineParameters', {
-    "__STYXTYPE__": typing.Literal["transform_bspline"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline"],
     "gradient_step": float,
     "mesh_size_at_base_level": float,
 })
 
 
 AntsRegistrationTransformGaussianDisplacementFieldParameters = typing.TypedDict('AntsRegistrationTransformGaussianDisplacementFieldParameters', {
-    "__STYXTYPE__": typing.Literal["transform_gaussian_displacement_field"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_gaussian_displacement_field"],
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
@@ -80,7 +80,7 @@ AntsRegistrationTransformGaussianDisplacementFieldParameters = typing.TypedDict(
 
 
 AntsRegistrationTransformBsplineDisplacementFieldParameters = typing.TypedDict('AntsRegistrationTransformBsplineDisplacementFieldParameters', {
-    "__STYXTYPE__": typing.Literal["transform_bspline_displacement_field"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline_displacement_field"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -89,7 +89,7 @@ AntsRegistrationTransformBsplineDisplacementFieldParameters = typing.TypedDict('
 
 
 AntsRegistrationTransformTimeVaryingVelocityFieldParameters = typing.TypedDict('AntsRegistrationTransformTimeVaryingVelocityFieldParameters', {
-    "__STYXTYPE__": typing.Literal["transform_time_varying_velocity_field"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_time_varying_velocity_field"],
     "gradient_step": float,
     "number_of_time_indices": float,
     "update_field_variance_in_voxel_space": float,
@@ -100,7 +100,7 @@ AntsRegistrationTransformTimeVaryingVelocityFieldParameters = typing.TypedDict('
 
 
 AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters = typing.TypedDict('AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters', {
-    "__STYXTYPE__": typing.Literal["transform_time_varying_bspline_velocity_field"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_time_varying_bspline_velocity_field"],
     "gradient_step": float,
     "velocity_field_mesh_size": float,
     "number_of_time_point_samples": typing.NotRequired[float | None],
@@ -109,7 +109,7 @@ AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters = typing.Type
 
 
 AntsRegistrationTransformSynParameters = typing.TypedDict('AntsRegistrationTransformSynParameters', {
-    "__STYXTYPE__": typing.Literal["transform_syn"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_syn"],
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "total_field_variance_in_voxel_space": float,
@@ -117,7 +117,7 @@ AntsRegistrationTransformSynParameters = typing.TypedDict('AntsRegistrationTrans
 
 
 AntsRegistrationTransformBsplineSynParameters = typing.TypedDict('AntsRegistrationTransformBsplineSynParameters', {
-    "__STYXTYPE__": typing.Literal["transform_bspline_syn"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline_syn"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "total_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -126,7 +126,7 @@ AntsRegistrationTransformBsplineSynParameters = typing.TypedDict('AntsRegistrati
 
 
 AntsRegistrationTransformExponentialParameters = typing.TypedDict('AntsRegistrationTransformExponentialParameters', {
-    "__STYXTYPE__": typing.Literal["transform_exponential"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_exponential"],
     "gradient_step": float,
     "update_field_variance_in_voxel_space": float,
     "velocity_field_variance_in_voxel_space": float,
@@ -135,7 +135,7 @@ AntsRegistrationTransformExponentialParameters = typing.TypedDict('AntsRegistrat
 
 
 AntsRegistrationTransformBsplineExponentialParameters = typing.TypedDict('AntsRegistrationTransformBsplineExponentialParameters', {
-    "__STYXTYPE__": typing.Literal["transform_bspline_exponential"],
+    "@type": typing.Literal["ants.antsRegistration.stages.transform_bspline_exponential"],
     "gradient_step": float,
     "update_field_mesh_size_at_base_level": float,
     "velocity_field_mesh_size_at_base_level": typing.NotRequired[float | None],
@@ -145,7 +145,7 @@ AntsRegistrationTransformBsplineExponentialParameters = typing.TypedDict('AntsRe
 
 
 AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters = typing.TypedDict('AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters', {
-    "__STYXTYPE__": typing.Literal["metric_ants_neighbourhood_cross_correlation"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_ants_neighbourhood_cross_correlation"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -157,7 +157,7 @@ AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters = typing.Typed
 
 
 AntsRegistrationMetricMutualInformationParameters = typing.TypedDict('AntsRegistrationMetricMutualInformationParameters', {
-    "__STYXTYPE__": typing.Literal["metric_mutual_information"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_mutual_information"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -169,7 +169,7 @@ AntsRegistrationMetricMutualInformationParameters = typing.TypedDict('AntsRegist
 
 
 AntsRegistrationMetricMattesParameters = typing.TypedDict('AntsRegistrationMetricMattesParameters', {
-    "__STYXTYPE__": typing.Literal["metric_mattes"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_mattes"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -181,7 +181,7 @@ AntsRegistrationMetricMattesParameters = typing.TypedDict('AntsRegistrationMetri
 
 
 AntsRegistrationMetricMeanSquaresParameters = typing.TypedDict('AntsRegistrationMetricMeanSquaresParameters', {
-    "__STYXTYPE__": typing.Literal["metric_mean_squares"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_mean_squares"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -193,7 +193,7 @@ AntsRegistrationMetricMeanSquaresParameters = typing.TypedDict('AntsRegistration
 
 
 AntsRegistrationMetricDemonsParameters = typing.TypedDict('AntsRegistrationMetricDemonsParameters', {
-    "__STYXTYPE__": typing.Literal["metric_demons"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_demons"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -205,7 +205,7 @@ AntsRegistrationMetricDemonsParameters = typing.TypedDict('AntsRegistrationMetri
 
 
 AntsRegistrationMetricGlobalCorrelationParameters = typing.TypedDict('AntsRegistrationMetricGlobalCorrelationParameters', {
-    "__STYXTYPE__": typing.Literal["metric_global_correlation"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_global_correlation"],
     "fixed_image": str,
     "moving_image": str,
     "metric_weight": float,
@@ -217,7 +217,7 @@ AntsRegistrationMetricGlobalCorrelationParameters = typing.TypedDict('AntsRegist
 
 
 AntsRegistrationMetricEuclideanIcpParameters = typing.TypedDict('AntsRegistrationMetricEuclideanIcpParameters', {
-    "__STYXTYPE__": typing.Literal["metric_euclidean_icp"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_euclidean_icp"],
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
@@ -227,7 +227,7 @@ AntsRegistrationMetricEuclideanIcpParameters = typing.TypedDict('AntsRegistratio
 
 
 AntsRegistrationMetricPointSetExpectationParameters = typing.TypedDict('AntsRegistrationMetricPointSetExpectationParameters', {
-    "__STYXTYPE__": typing.Literal["metric_point_set_expectation"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_point_set_expectation"],
     "metric_weight": float,
     "point_set_sigma": typing.NotRequired[float | None],
     "sampling_percentage": typing.NotRequired[float | None],
@@ -235,7 +235,7 @@ AntsRegistrationMetricPointSetExpectationParameters = typing.TypedDict('AntsRegi
 
 
 AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters = typing.TypedDict('AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters', {
-    "__STYXTYPE__": typing.Literal["metric_jensen_havrda_charvet_tsallis"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_jensen_havrda_charvet_tsallis"],
     "fixed_point_set": str,
     "moving_point_set": str,
     "metric_weight": float,
@@ -247,12 +247,12 @@ AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters = typing.TypedDict('A
 
 
 AntsRegistrationMetricIgdmParameters = typing.TypedDict('AntsRegistrationMetricIgdmParameters', {
-    "__STYXTYPE__": typing.Literal["metric_igdm"],
+    "@type": typing.Literal["ants.antsRegistration.stages.metric_igdm"],
 })
 
 
 AntsRegistrationConvergenceParameters = typing.TypedDict('AntsRegistrationConvergenceParameters', {
-    "__STYXTYPE__": typing.Literal["convergence"],
+    "@type": typing.Literal["ants.antsRegistration.stages.convergence"],
     "convergence": str,
     "convergence_threshold": float,
     "convergence_window_size": int,
@@ -260,7 +260,7 @@ AntsRegistrationConvergenceParameters = typing.TypedDict('AntsRegistrationConver
 
 
 AntsRegistrationStageParameters = typing.TypedDict('AntsRegistrationStageParameters', {
-    "__STYXTYPE__": typing.Literal["stage"],
+    "@type": typing.Literal["ants.antsRegistration.stages"],
     "transform": typing.Union[AntsRegistrationTransformRigidParameters, AntsRegistrationTransformAffineParameters, AntsRegistrationTransformCompositeAffineParameters, AntsRegistrationTransformSimilarityParameters, AntsRegistrationTransformTranslationParameters, AntsRegistrationTransformBsplineParameters, AntsRegistrationTransformGaussianDisplacementFieldParameters, AntsRegistrationTransformBsplineDisplacementFieldParameters, AntsRegistrationTransformTimeVaryingVelocityFieldParameters, AntsRegistrationTransformTimeVaryingBsplineVelocityFieldParameters, AntsRegistrationTransformSynParameters, AntsRegistrationTransformBsplineSynParameters, AntsRegistrationTransformExponentialParameters, AntsRegistrationTransformBsplineExponentialParameters],
     "metric": typing.Union[AntsRegistrationMetricAntsNeighbourhoodCrossCorrelationParameters, AntsRegistrationMetricMutualInformationParameters, AntsRegistrationMetricMattesParameters, AntsRegistrationMetricMeanSquaresParameters, AntsRegistrationMetricDemonsParameters, AntsRegistrationMetricGlobalCorrelationParameters, AntsRegistrationMetricEuclideanIcpParameters, AntsRegistrationMetricPointSetExpectationParameters, AntsRegistrationMetricJensenHavrdaCharvetTsallisParameters, AntsRegistrationMetricIgdmParameters],
     "convergence": AntsRegistrationConvergenceParameters,
@@ -271,21 +271,21 @@ AntsRegistrationStageParameters = typing.TypedDict('AntsRegistrationStageParamet
 
 
 AntsRegistrationWinsorizeImageIntensitiesParameters = typing.TypedDict('AntsRegistrationWinsorizeImageIntensitiesParameters', {
-    "__STYXTYPE__": typing.Literal["winsorize_image_intensities"],
+    "@type": typing.Literal["ants.antsRegistration.winsorize_image_intensities"],
     "lower_quantile": float,
     "upper_quantile": float,
 })
 
 
 AntsRegistrationMasksParameters = typing.TypedDict('AntsRegistrationMasksParameters', {
-    "__STYXTYPE__": typing.Literal["masks"],
+    "@type": typing.Literal["ants.antsRegistration.masks"],
     "fixed_mask": typing.NotRequired[str | None],
     "moving_mask": typing.NotRequired[str | None],
 })
 
 
 AntsRegistrationParameters = typing.TypedDict('AntsRegistrationParameters', {
-    "__STYXTYPE__": typing.Literal["antsRegistration"],
+    "@type": typing.Literal["ants.antsRegistration"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "output": typing.NotRequired[str | None],
     "save_state": typing.NotRequired[str | None],
@@ -321,38 +321,38 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsRegistration": ants_registration_cargs,
-        "initial_moving_transform": ants_registration_initial_moving_transform_cargs,
-        "initial_moving_transform_use_inverse": ants_registration_initial_moving_transform_use_inverse_cargs,
-        "initial_moving_transform_initialization_feature": ants_registration_initial_moving_transform_initialization_feature_cargs,
-        "stage": ants_registration_stage_cargs,
-        "transform_rigid": ants_registration_transform_rigid_cargs,
-        "transform_affine": ants_registration_transform_affine_cargs,
-        "transform_composite_affine": ants_registration_transform_composite_affine_cargs,
-        "transform_similarity": ants_registration_transform_similarity_cargs,
-        "transform_translation": ants_registration_transform_translation_cargs,
-        "transform_bspline": ants_registration_transform_bspline_cargs,
-        "transform_gaussian_displacement_field": ants_registration_transform_gaussian_displacement_field_cargs,
-        "transform_bspline_displacement_field": ants_registration_transform_bspline_displacement_field_cargs,
-        "transform_time_varying_velocity_field": ants_registration_transform_time_varying_velocity_field_cargs,
-        "transform_time_varying_bspline_velocity_field": ants_registration_transform_time_varying_bspline_velocity_field_cargs,
-        "transform_syn": ants_registration_transform_syn_cargs,
-        "transform_bspline_syn": ants_registration_transform_bspline_syn_cargs,
-        "transform_exponential": ants_registration_transform_exponential_cargs,
-        "transform_bspline_exponential": ants_registration_transform_bspline_exponential_cargs,
-        "metric_ants_neighbourhood_cross_correlation": ants_registration_metric_ants_neighbourhood_cross_correlation_cargs,
-        "metric_mutual_information": ants_registration_metric_mutual_information_cargs,
-        "metric_mattes": ants_registration_metric_mattes_cargs,
-        "metric_mean_squares": ants_registration_metric_mean_squares_cargs,
-        "metric_demons": ants_registration_metric_demons_cargs,
-        "metric_global_correlation": ants_registration_metric_global_correlation_cargs,
-        "metric_euclidean_icp": ants_registration_metric_euclidean_icp_cargs,
-        "metric_point_set_expectation": ants_registration_metric_point_set_expectation_cargs,
-        "metric_jensen_havrda_charvet_tsallis": ants_registration_metric_jensen_havrda_charvet_tsallis_cargs,
-        "metric_igdm": ants_registration_metric_igdm_cargs,
-        "convergence": ants_registration_convergence_cargs,
-        "winsorize_image_intensities": ants_registration_winsorize_image_intensities_cargs,
-        "masks": ants_registration_masks_cargs,
+        "ants.antsRegistration": ants_registration_cargs,
+        "ants.antsRegistration.initial_moving_transform": ants_registration_initial_moving_transform_cargs,
+        "ants.antsRegistration.initial_moving_transform_use_inverse": ants_registration_initial_moving_transform_use_inverse_cargs,
+        "ants.antsRegistration.initial_moving_transform_initialization_feature": ants_registration_initial_moving_transform_initialization_feature_cargs,
+        "ants.antsRegistration.stages": ants_registration_stage_cargs,
+        "ants.antsRegistration.stages.transform_rigid": ants_registration_transform_rigid_cargs,
+        "ants.antsRegistration.stages.transform_affine": ants_registration_transform_affine_cargs,
+        "ants.antsRegistration.stages.transform_composite_affine": ants_registration_transform_composite_affine_cargs,
+        "ants.antsRegistration.stages.transform_similarity": ants_registration_transform_similarity_cargs,
+        "ants.antsRegistration.stages.transform_translation": ants_registration_transform_translation_cargs,
+        "ants.antsRegistration.stages.transform_bspline": ants_registration_transform_bspline_cargs,
+        "ants.antsRegistration.stages.transform_gaussian_displacement_field": ants_registration_transform_gaussian_displacement_field_cargs,
+        "ants.antsRegistration.stages.transform_bspline_displacement_field": ants_registration_transform_bspline_displacement_field_cargs,
+        "ants.antsRegistration.stages.transform_time_varying_velocity_field": ants_registration_transform_time_varying_velocity_field_cargs,
+        "ants.antsRegistration.stages.transform_time_varying_bspline_velocity_field": ants_registration_transform_time_varying_bspline_velocity_field_cargs,
+        "ants.antsRegistration.stages.transform_syn": ants_registration_transform_syn_cargs,
+        "ants.antsRegistration.stages.transform_bspline_syn": ants_registration_transform_bspline_syn_cargs,
+        "ants.antsRegistration.stages.transform_exponential": ants_registration_transform_exponential_cargs,
+        "ants.antsRegistration.stages.transform_bspline_exponential": ants_registration_transform_bspline_exponential_cargs,
+        "ants.antsRegistration.stages.metric_ants_neighbourhood_cross_correlation": ants_registration_metric_ants_neighbourhood_cross_correlation_cargs,
+        "ants.antsRegistration.stages.metric_mutual_information": ants_registration_metric_mutual_information_cargs,
+        "ants.antsRegistration.stages.metric_mattes": ants_registration_metric_mattes_cargs,
+        "ants.antsRegistration.stages.metric_mean_squares": ants_registration_metric_mean_squares_cargs,
+        "ants.antsRegistration.stages.metric_demons": ants_registration_metric_demons_cargs,
+        "ants.antsRegistration.stages.metric_global_correlation": ants_registration_metric_global_correlation_cargs,
+        "ants.antsRegistration.stages.metric_euclidean_icp": ants_registration_metric_euclidean_icp_cargs,
+        "ants.antsRegistration.stages.metric_point_set_expectation": ants_registration_metric_point_set_expectation_cargs,
+        "ants.antsRegistration.stages.metric_jensen_havrda_charvet_tsallis": ants_registration_metric_jensen_havrda_charvet_tsallis_cargs,
+        "ants.antsRegistration.stages.metric_igdm": ants_registration_metric_igdm_cargs,
+        "ants.antsRegistration.stages.convergence": ants_registration_convergence_cargs,
+        "ants.antsRegistration.winsorize_image_intensities": ants_registration_winsorize_image_intensities_cargs,
+        "ants.antsRegistration.masks": ants_registration_masks_cargs,
     }.get(t)
 
 
@@ -368,7 +368,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsRegistration": ants_registration_outputs,
+        "ants.antsRegistration": ants_registration_outputs,
     }.get(t)
 
 
@@ -384,7 +384,7 @@ def ants_registration_initial_moving_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "initial_moving_transform",
+        "@type": "ants.antsRegistration.initial_moving_transform",
         "initial_moving_transform": initial_moving_transform,
     }
     return params
@@ -422,7 +422,7 @@ def ants_registration_initial_moving_transform_use_inverse_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "initial_moving_transform_use_inverse",
+        "@type": "ants.antsRegistration.initial_moving_transform_use_inverse",
         "initial_moving_transform": initial_moving_transform,
     }
     if use_inverse is not None:
@@ -466,7 +466,7 @@ def ants_registration_initial_moving_transform_initialization_feature_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "initial_moving_transform_initialization_feature",
+        "@type": "ants.antsRegistration.initial_moving_transform_initialization_feature",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "initialization_feature": initialization_feature,
@@ -504,7 +504,7 @@ def ants_registration_transform_rigid_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_rigid",
+        "@type": "ants.antsRegistration.stages.transform_rigid",
         "gradient_step": gradient_step,
     }
     return params
@@ -540,7 +540,7 @@ def ants_registration_transform_affine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_affine",
+        "@type": "ants.antsRegistration.stages.transform_affine",
         "gradient_step": gradient_step,
     }
     return params
@@ -576,7 +576,7 @@ def ants_registration_transform_composite_affine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_composite_affine",
+        "@type": "ants.antsRegistration.stages.transform_composite_affine",
         "gradient_step": gradient_step,
     }
     return params
@@ -612,7 +612,7 @@ def ants_registration_transform_similarity_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_similarity",
+        "@type": "ants.antsRegistration.stages.transform_similarity",
         "gradient_step": gradient_step,
     }
     return params
@@ -648,7 +648,7 @@ def ants_registration_transform_translation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_translation",
+        "@type": "ants.antsRegistration.stages.transform_translation",
         "gradient_step": gradient_step,
     }
     return params
@@ -686,7 +686,7 @@ def ants_registration_transform_bspline_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_bspline",
+        "@type": "ants.antsRegistration.stages.transform_bspline",
         "gradient_step": gradient_step,
         "mesh_size_at_base_level": mesh_size_at_base_level,
     }
@@ -727,7 +727,7 @@ def ants_registration_transform_gaussian_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_gaussian_displacement_field",
+        "@type": "ants.antsRegistration.stages.transform_gaussian_displacement_field",
         "gradient_step": gradient_step,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
         "total_field_variance_in_voxel_space": total_field_variance_in_voxel_space,
@@ -771,7 +771,7 @@ def ants_registration_transform_bspline_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_bspline_displacement_field",
+        "@type": "ants.antsRegistration.stages.transform_bspline_displacement_field",
         "gradient_step": gradient_step,
         "update_field_mesh_size_at_base_level": update_field_mesh_size_at_base_level,
     }
@@ -823,7 +823,7 @@ def ants_registration_transform_time_varying_velocity_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_time_varying_velocity_field",
+        "@type": "ants.antsRegistration.stages.transform_time_varying_velocity_field",
         "gradient_step": gradient_step,
         "number_of_time_indices": number_of_time_indices,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
@@ -870,7 +870,7 @@ def ants_registration_transform_time_varying_bspline_velocity_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_time_varying_bspline_velocity_field",
+        "@type": "ants.antsRegistration.stages.transform_time_varying_bspline_velocity_field",
         "gradient_step": gradient_step,
         "velocity_field_mesh_size": velocity_field_mesh_size,
     }
@@ -916,7 +916,7 @@ def ants_registration_transform_syn_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_syn",
+        "@type": "ants.antsRegistration.stages.transform_syn",
         "gradient_step": gradient_step,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
         "total_field_variance_in_voxel_space": total_field_variance_in_voxel_space,
@@ -960,7 +960,7 @@ def ants_registration_transform_bspline_syn_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_bspline_syn",
+        "@type": "ants.antsRegistration.stages.transform_bspline_syn",
         "gradient_step": gradient_step,
         "update_field_mesh_size_at_base_level": update_field_mesh_size_at_base_level,
     }
@@ -1008,7 +1008,7 @@ def ants_registration_transform_exponential_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_exponential",
+        "@type": "ants.antsRegistration.stages.transform_exponential",
         "gradient_step": gradient_step,
         "update_field_variance_in_voxel_space": update_field_variance_in_voxel_space,
         "velocity_field_variance_in_voxel_space": velocity_field_variance_in_voxel_space,
@@ -1055,7 +1055,7 @@ def ants_registration_transform_bspline_exponential_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform_bspline_exponential",
+        "@type": "ants.antsRegistration.stages.transform_bspline_exponential",
         "gradient_step": gradient_step,
         "update_field_mesh_size_at_base_level": update_field_mesh_size_at_base_level,
     }
@@ -1111,7 +1111,7 @@ def ants_registration_metric_ants_neighbourhood_cross_correlation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_ants_neighbourhood_cross_correlation",
+        "@type": "ants.antsRegistration.stages.metric_ants_neighbourhood_cross_correlation",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1170,7 +1170,7 @@ def ants_registration_metric_mutual_information_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_mutual_information",
+        "@type": "ants.antsRegistration.stages.metric_mutual_information",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1229,7 +1229,7 @@ def ants_registration_metric_mattes_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_mattes",
+        "@type": "ants.antsRegistration.stages.metric_mattes",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1288,7 +1288,7 @@ def ants_registration_metric_mean_squares_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_mean_squares",
+        "@type": "ants.antsRegistration.stages.metric_mean_squares",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1347,7 +1347,7 @@ def ants_registration_metric_demons_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_demons",
+        "@type": "ants.antsRegistration.stages.metric_demons",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1406,7 +1406,7 @@ def ants_registration_metric_global_correlation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_global_correlation",
+        "@type": "ants.antsRegistration.stages.metric_global_correlation",
         "fixed_image": fixed_image,
         "moving_image": moving_image,
         "metric_weight": metric_weight,
@@ -1461,7 +1461,7 @@ def ants_registration_metric_euclidean_icp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_euclidean_icp",
+        "@type": "ants.antsRegistration.stages.metric_euclidean_icp",
         "fixed_point_set": fixed_point_set,
         "moving_point_set": moving_point_set,
         "metric_weight": metric_weight,
@@ -1508,7 +1508,7 @@ def ants_registration_metric_point_set_expectation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_point_set_expectation",
+        "@type": "ants.antsRegistration.stages.metric_point_set_expectation",
         "metric_weight": metric_weight,
     }
     if point_set_sigma is not None:
@@ -1561,7 +1561,7 @@ def ants_registration_metric_jensen_havrda_charvet_tsallis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_jensen_havrda_charvet_tsallis",
+        "@type": "ants.antsRegistration.stages.metric_jensen_havrda_charvet_tsallis",
         "fixed_point_set": fixed_point_set,
         "moving_point_set": moving_point_set,
         "metric_weight": metric_weight,
@@ -1606,7 +1606,7 @@ def ants_registration_metric_igdm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric_igdm",
+        "@type": "ants.antsRegistration.stages.metric_igdm",
     }
     return params
 
@@ -1645,7 +1645,7 @@ def ants_registration_convergence_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convergence",
+        "@type": "ants.antsRegistration.stages.convergence",
         "convergence": convergence,
         "convergence_threshold": convergence_threshold,
         "convergence_window_size": convergence_window_size,
@@ -1719,7 +1719,7 @@ def ants_registration_stage_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "stage",
+        "@type": "ants.antsRegistration.stages",
         "transform": transform,
         "metric": metric,
         "convergence": convergence,
@@ -1747,15 +1747,15 @@ def ants_registration_stage_cargs(
     cargs = []
     cargs.extend([
         "--transform",
-        *dyn_cargs(params.get("transform")["__STYXTYPE__"])(params.get("transform"), execution)
+        *dyn_cargs(params.get("transform")["@type"])(params.get("transform"), execution)
     ])
     cargs.extend([
         "--metric",
-        *dyn_cargs(params.get("metric")["__STYXTYPE__"])(params.get("metric"), execution)
+        *dyn_cargs(params.get("metric")["@type"])(params.get("metric"), execution)
     ])
     cargs.extend([
         "--convergence",
-        *dyn_cargs(params.get("convergence")["__STYXTYPE__"])(params.get("convergence"), execution)
+        *dyn_cargs(params.get("convergence")["@type"])(params.get("convergence"), execution)
     ])
     cargs.extend([
         "--smoothing-sigmas",
@@ -1787,7 +1787,7 @@ def ants_registration_winsorize_image_intensities_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "winsorize_image_intensities",
+        "@type": "ants.antsRegistration.winsorize_image_intensities",
         "lower_quantile": lower_quantile,
         "upper_quantile": upper_quantile,
     }
@@ -1826,7 +1826,7 @@ def ants_registration_masks_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "masks",
+        "@type": "ants.antsRegistration.masks",
     }
     if fixed_mask is not None:
         params["fixed_mask"] = fixed_mask
@@ -2009,7 +2009,7 @@ def ants_registration_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsRegistration",
+        "@type": "ants.antsRegistration",
         "stages": stages,
     }
     if dimensionality is not None:
@@ -2131,18 +2131,18 @@ def ants_registration_cargs(
     if params.get("initial_moving_transform") is not None:
         cargs.extend([
             "--initial-moving-transform",
-            *dyn_cargs(params.get("initial_moving_transform")["__STYXTYPE__"])(params.get("initial_moving_transform"), execution)
+            *dyn_cargs(params.get("initial_moving_transform")["@type"])(params.get("initial_moving_transform"), execution)
         ])
-    cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("stages")] for a in c])
+    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("stages")] for a in c])
     if params.get("winsorize_image_intensities") is not None:
         cargs.extend([
             "--winsorize-image-intensities",
-            *dyn_cargs(params.get("winsorize_image_intensities")["__STYXTYPE__"])(params.get("winsorize_image_intensities"), execution)
+            *dyn_cargs(params.get("winsorize_image_intensities")["@type"])(params.get("winsorize_image_intensities"), execution)
         ])
     if params.get("masks") is not None:
         cargs.extend([
             "--masks",
-            *dyn_cargs(params.get("masks")["__STYXTYPE__"])(params.get("masks"), execution)
+            *dyn_cargs(params.get("masks")["@type"])(params.get("masks"), execution)
         ])
     if params.get("minc") is not None:
         cargs.extend([
@@ -2430,36 +2430,70 @@ __all__ = [
     "AntsRegistrationTransformTranslationParameters",
     "AntsRegistrationWinsorizeImageIntensitiesParameters",
     "ants_registration",
+    "ants_registration_cargs",
+    "ants_registration_convergence_cargs",
     "ants_registration_convergence_params",
+    "ants_registration_execute",
+    "ants_registration_initial_moving_transform_cargs",
+    "ants_registration_initial_moving_transform_initialization_feature_cargs",
     "ants_registration_initial_moving_transform_initialization_feature_params",
     "ants_registration_initial_moving_transform_params",
+    "ants_registration_initial_moving_transform_use_inverse_cargs",
     "ants_registration_initial_moving_transform_use_inverse_params",
+    "ants_registration_masks_cargs",
     "ants_registration_masks_params",
+    "ants_registration_metric_ants_neighbourhood_cross_correlation_cargs",
     "ants_registration_metric_ants_neighbourhood_cross_correlation_params",
+    "ants_registration_metric_demons_cargs",
     "ants_registration_metric_demons_params",
+    "ants_registration_metric_euclidean_icp_cargs",
     "ants_registration_metric_euclidean_icp_params",
+    "ants_registration_metric_global_correlation_cargs",
     "ants_registration_metric_global_correlation_params",
+    "ants_registration_metric_igdm_cargs",
     "ants_registration_metric_igdm_params",
+    "ants_registration_metric_jensen_havrda_charvet_tsallis_cargs",
     "ants_registration_metric_jensen_havrda_charvet_tsallis_params",
+    "ants_registration_metric_mattes_cargs",
     "ants_registration_metric_mattes_params",
+    "ants_registration_metric_mean_squares_cargs",
     "ants_registration_metric_mean_squares_params",
+    "ants_registration_metric_mutual_information_cargs",
     "ants_registration_metric_mutual_information_params",
+    "ants_registration_metric_point_set_expectation_cargs",
     "ants_registration_metric_point_set_expectation_params",
+    "ants_registration_outputs",
     "ants_registration_params",
+    "ants_registration_stage_cargs",
     "ants_registration_stage_params",
+    "ants_registration_transform_affine_cargs",
     "ants_registration_transform_affine_params",
+    "ants_registration_transform_bspline_cargs",
+    "ants_registration_transform_bspline_displacement_field_cargs",
     "ants_registration_transform_bspline_displacement_field_params",
+    "ants_registration_transform_bspline_exponential_cargs",
     "ants_registration_transform_bspline_exponential_params",
     "ants_registration_transform_bspline_params",
+    "ants_registration_transform_bspline_syn_cargs",
     "ants_registration_transform_bspline_syn_params",
+    "ants_registration_transform_composite_affine_cargs",
     "ants_registration_transform_composite_affine_params",
+    "ants_registration_transform_exponential_cargs",
     "ants_registration_transform_exponential_params",
+    "ants_registration_transform_gaussian_displacement_field_cargs",
     "ants_registration_transform_gaussian_displacement_field_params",
+    "ants_registration_transform_rigid_cargs",
     "ants_registration_transform_rigid_params",
+    "ants_registration_transform_similarity_cargs",
     "ants_registration_transform_similarity_params",
+    "ants_registration_transform_syn_cargs",
     "ants_registration_transform_syn_params",
+    "ants_registration_transform_time_varying_bspline_velocity_field_cargs",
     "ants_registration_transform_time_varying_bspline_velocity_field_params",
+    "ants_registration_transform_time_varying_velocity_field_cargs",
     "ants_registration_transform_time_varying_velocity_field_params",
+    "ants_registration_transform_translation_cargs",
     "ants_registration_transform_translation_params",
+    "ants_registration_winsorize_image_intensities_cargs",
     "ants_registration_winsorize_image_intensities_params",
 ]

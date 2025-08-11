@@ -14,7 +14,7 @@ MRI_MAKE_BEM_SURFACES_METADATA = Metadata(
 
 
 MriMakeBemSurfacesParameters = typing.TypedDict('MriMakeBemSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["mri_make_bem_surfaces"],
+    "@type": typing.Literal["freesurfer.mri_make_bem_surfaces"],
     "name": str,
     "mfile": typing.NotRequired[InputPathType | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_make_bem_surfaces": mri_make_bem_surfaces_cargs,
+        "freesurfer.mri_make_bem_surfaces": mri_make_bem_surfaces_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_make_bem_surfaces": mri_make_bem_surfaces_outputs,
+        "freesurfer.mri_make_bem_surfaces": mri_make_bem_surfaces_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def mri_make_bem_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_make_bem_surfaces",
+        "@type": "freesurfer.mri_make_bem_surfaces",
         "name": name,
     }
     if mfile is not None:
@@ -185,5 +185,8 @@ __all__ = [
     "MriMakeBemSurfacesOutputs",
     "MriMakeBemSurfacesParameters",
     "mri_make_bem_surfaces",
+    "mri_make_bem_surfaces_cargs",
+    "mri_make_bem_surfaces_execute",
+    "mri_make_bem_surfaces_outputs",
     "mri_make_bem_surfaces_params",
 ]

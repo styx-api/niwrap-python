@@ -14,20 +14,20 @@ DENOISE_IMAGE_METADATA = Metadata(
 
 
 DenoiseImageCorrectedOutputParameters = typing.TypedDict('DenoiseImageCorrectedOutputParameters', {
-    "__STYXTYPE__": typing.Literal["correctedOutput"],
+    "@type": typing.Literal["ants.DenoiseImage.correctedOutput"],
     "correctedOutputFileName": str,
 })
 
 
 DenoiseImageCorrectedOutputNoiseParameters = typing.TypedDict('DenoiseImageCorrectedOutputNoiseParameters', {
-    "__STYXTYPE__": typing.Literal["correctedOutputNoise"],
+    "@type": typing.Literal["ants.DenoiseImage.correctedOutputNoise"],
     "correctedOutputFileName": str,
     "noiseFile": typing.NotRequired[str | None],
 })
 
 
 DenoiseImageParameters = typing.TypedDict('DenoiseImageParameters', {
-    "__STYXTYPE__": typing.Literal["DenoiseImage"],
+    "@type": typing.Literal["ants.DenoiseImage"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "noise_model": typing.NotRequired[typing.Literal["Gaussian", "Rician"] | None],
     "shrink_factor": typing.NotRequired[int | None],
@@ -52,9 +52,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "DenoiseImage": denoise_image_cargs,
-        "correctedOutput": denoise_image_corrected_output_cargs,
-        "correctedOutputNoise": denoise_image_corrected_output_noise_cargs,
+        "ants.DenoiseImage": denoise_image_cargs,
+        "ants.DenoiseImage.correctedOutput": denoise_image_corrected_output_cargs,
+        "ants.DenoiseImage.correctedOutputNoise": denoise_image_corrected_output_noise_cargs,
     }.get(t)
 
 
@@ -70,9 +70,9 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "DenoiseImage": denoise_image_outputs,
-        "correctedOutput": denoise_image_corrected_output_outputs,
-        "correctedOutputNoise": denoise_image_corrected_output_noise_outputs,
+        "ants.DenoiseImage": denoise_image_outputs,
+        "ants.DenoiseImage.correctedOutput": denoise_image_corrected_output_outputs,
+        "ants.DenoiseImage.correctedOutputNoise": denoise_image_corrected_output_noise_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def denoise_image_corrected_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "correctedOutput",
+        "@type": "ants.DenoiseImage.correctedOutput",
         "correctedOutputFileName": corrected_output_file_name,
     }
     return params
@@ -168,7 +168,7 @@ def denoise_image_corrected_output_noise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "correctedOutputNoise",
+        "@type": "ants.DenoiseImage.correctedOutputNoise",
         "correctedOutputFileName": corrected_output_file_name,
     }
     if noise_file is not None:
@@ -266,7 +266,7 @@ def denoise_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "DenoiseImage",
+        "@type": "ants.DenoiseImage",
         "input_image": input_image,
         "output": output,
     }
@@ -343,7 +343,7 @@ def denoise_image_cargs(
     ])
     cargs.extend([
         "--output",
-        *dyn_cargs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution)
+        *dyn_cargs(params.get("output")["@type"])(params.get("output"), execution)
     ])
     return cargs
 
@@ -363,7 +363,7 @@ def denoise_image_outputs(
     """
     ret = DenoiseImageOutputs(
         root=execution.output_file("."),
-        output=dyn_outputs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution),
+        output=dyn_outputs(params.get("output")["@type"])(params.get("output"), execution),
     )
     return ret
 
@@ -467,7 +467,14 @@ __all__ = [
     "DenoiseImageOutputs",
     "DenoiseImageParameters",
     "denoise_image",
+    "denoise_image_cargs",
+    "denoise_image_corrected_output_cargs",
+    "denoise_image_corrected_output_noise_cargs",
+    "denoise_image_corrected_output_noise_outputs",
     "denoise_image_corrected_output_noise_params",
+    "denoise_image_corrected_output_outputs",
     "denoise_image_corrected_output_params",
+    "denoise_image_execute",
+    "denoise_image_outputs",
     "denoise_image_params",
 ]

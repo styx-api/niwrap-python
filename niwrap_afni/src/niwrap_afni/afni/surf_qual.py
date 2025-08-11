@@ -14,7 +14,7 @@ SURF_QUAL_METADATA = Metadata(
 
 
 SurfQualParameters = typing.TypedDict('SurfQualParameters', {
-    "__STYXTYPE__": typing.Literal["SurfQual"],
+    "@type": typing.Literal["afni.SurfQual"],
     "spec_file": InputPathType,
     "surface_a": list[InputPathType],
     "sphere_flag": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfQual": surf_qual_cargs,
+        "afni.SurfQual": surf_qual_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfQual": surf_qual_outputs,
+        "afni.SurfQual": surf_qual_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def surf_qual_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfQual",
+        "@type": "afni.SurfQual",
         "spec_file": spec_file,
         "surface_a": surface_a,
         "sphere_flag": sphere_flag,
@@ -246,5 +246,8 @@ __all__ = [
     "SurfQualOutputs",
     "SurfQualParameters",
     "surf_qual",
+    "surf_qual_cargs",
+    "surf_qual_execute",
+    "surf_qual_outputs",
     "surf_qual_params",
 ]

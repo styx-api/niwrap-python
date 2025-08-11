@@ -14,7 +14,7 @@ MRIS_BA_SEGMENT_METADATA = Metadata(
 
 
 MrisBaSegmentParameters = typing.TypedDict('MrisBaSegmentParameters', {
-    "__STYXTYPE__": typing.Literal["mris_BA_segment"],
+    "@type": typing.Literal["freesurfer.mris_BA_segment"],
     "surface": InputPathType,
     "profiles": InputPathType,
     "prior_label": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_BA_segment": mris_ba_segment_cargs,
+        "freesurfer.mris_BA_segment": mris_ba_segment_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_BA_segment": mris_ba_segment_outputs,
+        "freesurfer.mris_BA_segment": mris_ba_segment_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_ba_segment_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_BA_segment",
+        "@type": "freesurfer.mris_BA_segment",
         "surface": surface,
         "profiles": profiles,
         "prior_label": prior_label,
@@ -198,5 +198,8 @@ __all__ = [
     "MrisBaSegmentOutputs",
     "MrisBaSegmentParameters",
     "mris_ba_segment",
+    "mris_ba_segment_cargs",
+    "mris_ba_segment_execute",
+    "mris_ba_segment_outputs",
     "mris_ba_segment_params",
 ]

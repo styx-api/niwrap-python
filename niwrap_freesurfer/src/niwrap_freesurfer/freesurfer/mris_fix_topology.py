@@ -14,7 +14,7 @@ MRIS_FIX_TOPOLOGY_METADATA = Metadata(
 
 
 MrisFixTopologyParameters = typing.TypedDict('MrisFixTopologyParameters', {
-    "__STYXTYPE__": typing.Literal["mris_fix_topology"],
+    "@type": typing.Literal["freesurfer.mris_fix_topology"],
     "subject_name": str,
     "hemisphere": str,
     "orig_name": typing.NotRequired[str | None],
@@ -56,7 +56,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_fix_topology": mris_fix_topology_cargs,
+        "freesurfer.mris_fix_topology": mris_fix_topology_cargs,
     }.get(t)
 
 
@@ -145,7 +145,7 @@ def mris_fix_topology_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_fix_topology",
+        "@type": "freesurfer.mris_fix_topology",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "write_fixed_inflated": write_fixed_inflated,
@@ -442,5 +442,8 @@ __all__ = [
     "MrisFixTopologyOutputs",
     "MrisFixTopologyParameters",
     "mris_fix_topology",
+    "mris_fix_topology_cargs",
+    "mris_fix_topology_execute",
+    "mris_fix_topology_outputs",
     "mris_fix_topology_params",
 ]

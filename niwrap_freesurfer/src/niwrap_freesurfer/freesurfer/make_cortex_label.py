@@ -14,7 +14,7 @@ MAKE_CORTEX_LABEL_METADATA = Metadata(
 
 
 MakeCortexLabelParameters = typing.TypedDict('MakeCortexLabelParameters', {
-    "__STYXTYPE__": typing.Literal["make_cortex_label"],
+    "@type": typing.Literal["freesurfer.make_cortex_label"],
     "subject": str,
     "hemi": typing.NotRequired[str | None],
     "use_a2009s": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_cortex_label": make_cortex_label_cargs,
+        "freesurfer.make_cortex_label": make_cortex_label_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_cortex_label": make_cortex_label_outputs,
+        "freesurfer.make_cortex_label": make_cortex_label_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def make_cortex_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_cortex_label",
+        "@type": "freesurfer.make_cortex_label",
         "subject": subject,
         "use_a2009s": use_a2009s,
     }
@@ -214,5 +214,8 @@ __all__ = [
     "MakeCortexLabelOutputs",
     "MakeCortexLabelParameters",
     "make_cortex_label",
+    "make_cortex_label_cargs",
+    "make_cortex_label_execute",
+    "make_cortex_label_outputs",
     "make_cortex_label_params",
 ]

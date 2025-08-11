@@ -14,7 +14,7 @@ SIENA_CAL_METADATA = Metadata(
 
 
 SienaCalParameters = typing.TypedDict('SienaCalParameters', {
-    "__STYXTYPE__": typing.Literal["siena_cal"],
+    "@type": typing.Literal["fsl.siena_cal"],
     "input1_file": InputPathType,
     "input2_file": InputPathType,
     "scale": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "siena_cal": siena_cal_cargs,
+        "fsl.siena_cal": siena_cal_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "siena_cal": siena_cal_outputs,
+        "fsl.siena_cal": siena_cal_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def siena_cal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "siena_cal",
+        "@type": "fsl.siena_cal",
         "input1_file": input1_file,
         "input2_file": input2_file,
         "scale": scale,
@@ -200,5 +200,8 @@ __all__ = [
     "SienaCalOutputs",
     "SienaCalParameters",
     "siena_cal",
+    "siena_cal_cargs",
+    "siena_cal_execute",
+    "siena_cal_outputs",
     "siena_cal_params",
 ]

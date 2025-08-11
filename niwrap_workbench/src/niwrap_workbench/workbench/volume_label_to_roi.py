@@ -14,7 +14,7 @@ VOLUME_LABEL_TO_ROI_METADATA = Metadata(
 
 
 VolumeLabelToRoiParameters = typing.TypedDict('VolumeLabelToRoiParameters', {
-    "__STYXTYPE__": typing.Literal["volume-label-to-roi"],
+    "@type": typing.Literal["workbench.volume-label-to-roi"],
     "label_in": InputPathType,
     "volume_out": str,
     "opt_name_label_name": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-label-to-roi": volume_label_to_roi_cargs,
+        "workbench.volume-label-to-roi": volume_label_to_roi_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-label-to-roi": volume_label_to_roi_outputs,
+        "workbench.volume-label-to-roi": volume_label_to_roi_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def volume_label_to_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-label-to-roi",
+        "@type": "workbench.volume-label-to-roi",
         "label_in": label_in,
         "volume_out": volume_out,
     }
@@ -234,5 +234,8 @@ __all__ = [
     "VolumeLabelToRoiOutputs",
     "VolumeLabelToRoiParameters",
     "volume_label_to_roi",
+    "volume_label_to_roi_cargs",
+    "volume_label_to_roi_execute",
+    "volume_label_to_roi_outputs",
     "volume_label_to_roi_params",
 ]

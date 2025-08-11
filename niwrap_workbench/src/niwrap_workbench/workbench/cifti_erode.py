@@ -14,28 +14,28 @@ CIFTI_ERODE_METADATA = Metadata(
 
 
 CiftiErodeLeftSurfaceParameters = typing.TypedDict('CiftiErodeLeftSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["left_surface"],
+    "@type": typing.Literal["workbench.cifti-erode.left_surface"],
     "surface": InputPathType,
     "opt_left_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeRightSurfaceParameters = typing.TypedDict('CiftiErodeRightSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["right_surface"],
+    "@type": typing.Literal["workbench.cifti-erode.right_surface"],
     "surface": InputPathType,
     "opt_right_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeCerebellumSurfaceParameters = typing.TypedDict('CiftiErodeCerebellumSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_surface"],
+    "@type": typing.Literal["workbench.cifti-erode.cerebellum_surface"],
     "surface": InputPathType,
     "opt_cerebellum_corrected_areas_area_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiErodeParameters = typing.TypedDict('CiftiErodeParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-erode"],
+    "@type": typing.Literal["workbench.cifti-erode"],
     "cifti_in": InputPathType,
     "direction": str,
     "surface_distance": float,
@@ -60,10 +60,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-erode": cifti_erode_cargs,
-        "left_surface": cifti_erode_left_surface_cargs,
-        "right_surface": cifti_erode_right_surface_cargs,
-        "cerebellum_surface": cifti_erode_cerebellum_surface_cargs,
+        "workbench.cifti-erode": cifti_erode_cargs,
+        "workbench.cifti-erode.left_surface": cifti_erode_left_surface_cargs,
+        "workbench.cifti-erode.right_surface": cifti_erode_right_surface_cargs,
+        "workbench.cifti-erode.cerebellum_surface": cifti_erode_cerebellum_surface_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-erode": cifti_erode_outputs,
+        "workbench.cifti-erode": cifti_erode_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def cifti_erode_left_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_surface",
+        "@type": "workbench.cifti-erode.left_surface",
         "surface": surface,
     }
     if opt_left_corrected_areas_area_metric is not None:
@@ -147,7 +147,7 @@ def cifti_erode_right_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_surface",
+        "@type": "workbench.cifti-erode.right_surface",
         "surface": surface,
     }
     if opt_right_corrected_areas_area_metric is not None:
@@ -195,7 +195,7 @@ def cifti_erode_cerebellum_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_surface",
+        "@type": "workbench.cifti-erode.cerebellum_surface",
         "surface": surface,
     }
     if opt_cerebellum_corrected_areas_area_metric is not None:
@@ -266,7 +266,7 @@ def cifti_erode_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-erode",
+        "@type": "workbench.cifti-erode",
         "cifti_in": cifti_in,
         "direction": direction,
         "surface_distance": surface_distance,
@@ -305,11 +305,11 @@ def cifti_erode_cargs(
     cargs.append(str(params.get("volume_distance")))
     cargs.append(params.get("cifti_out"))
     if params.get("left_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("left_surface")["__STYXTYPE__"])(params.get("left_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("left_surface")["@type"])(params.get("left_surface"), execution))
     if params.get("right_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("right_surface")["__STYXTYPE__"])(params.get("right_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("right_surface")["@type"])(params.get("right_surface"), execution))
     if params.get("cerebellum_surface") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["__STYXTYPE__"])(params.get("cerebellum_surface"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_surface")["@type"])(params.get("cerebellum_surface"), execution))
     if params.get("opt_merged_volume"):
         cargs.append("-merged-volume")
     return cargs
@@ -435,8 +435,14 @@ __all__ = [
     "CiftiErodeParameters",
     "CiftiErodeRightSurfaceParameters",
     "cifti_erode",
+    "cifti_erode_cargs",
+    "cifti_erode_cerebellum_surface_cargs",
     "cifti_erode_cerebellum_surface_params",
+    "cifti_erode_execute",
+    "cifti_erode_left_surface_cargs",
     "cifti_erode_left_surface_params",
+    "cifti_erode_outputs",
     "cifti_erode_params",
+    "cifti_erode_right_surface_cargs",
     "cifti_erode_right_surface_params",
 ]

@@ -14,7 +14,7 @@ NSIZE_METADATA = Metadata(
 
 
 NsizeParameters = typing.TypedDict('NsizeParameters', {
-    "__STYXTYPE__": typing.Literal["nsize"],
+    "@type": typing.Literal["afni.nsize"],
     "image_in": InputPathType,
     "image_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "nsize": nsize_cargs,
+        "afni.nsize": nsize_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "nsize": nsize_outputs,
+        "afni.nsize": nsize_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def nsize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nsize",
+        "@type": "afni.nsize",
         "image_in": image_in,
         "image_out": image_out,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "NsizeOutputs",
     "NsizeParameters",
     "nsize",
+    "nsize_cargs",
+    "nsize_execute",
+    "nsize_outputs",
     "nsize_params",
 ]

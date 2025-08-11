@@ -14,7 +14,7 @@ DCMSPLIT_METADATA = Metadata(
 
 
 DcmsplitParameters = typing.TypedDict('DcmsplitParameters', {
-    "__STYXTYPE__": typing.Literal["dcmsplit"],
+    "@type": typing.Literal["freesurfer.dcmsplit"],
     "dcm_dir": str,
     "out_dir": str,
     "copy": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcmsplit": dcmsplit_cargs,
+        "freesurfer.dcmsplit": dcmsplit_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def dcmsplit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcmsplit",
+        "@type": "freesurfer.dcmsplit",
         "dcm_dir": dcm_dir,
         "out_dir": out_dir,
         "copy": copy_,
@@ -258,5 +258,8 @@ __all__ = [
     "DcmsplitOutputs",
     "DcmsplitParameters",
     "dcmsplit",
+    "dcmsplit_cargs",
+    "dcmsplit_execute",
+    "dcmsplit_outputs",
     "dcmsplit_params",
 ]

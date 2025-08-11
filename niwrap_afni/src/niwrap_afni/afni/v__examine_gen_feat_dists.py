@@ -14,7 +14,7 @@ V__EXAMINE_GEN_FEAT_DISTS_METADATA = Metadata(
 
 
 VExamineGenFeatDistsParameters = typing.TypedDict('VExamineGenFeatDistsParameters', {
-    "__STYXTYPE__": typing.Literal["@ExamineGenFeatDists"],
+    "@type": typing.Literal["afni.@ExamineGenFeatDists"],
     "features_dir": str,
     "wildcards": typing.NotRequired[list[str] | None],
     "output_suffix": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ExamineGenFeatDists": v__examine_gen_feat_dists_cargs,
+        "afni.@ExamineGenFeatDists": v__examine_gen_feat_dists_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def v__examine_gen_feat_dists_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ExamineGenFeatDists",
+        "@type": "afni.@ExamineGenFeatDists",
         "features_dir": features_dir,
         "echo": echo,
         "help": help_,
@@ -273,5 +273,8 @@ __all__ = [
     "VExamineGenFeatDistsParameters",
     "V__EXAMINE_GEN_FEAT_DISTS_METADATA",
     "v__examine_gen_feat_dists",
+    "v__examine_gen_feat_dists_cargs",
+    "v__examine_gen_feat_dists_execute",
+    "v__examine_gen_feat_dists_outputs",
     "v__examine_gen_feat_dists_params",
 ]

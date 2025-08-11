@@ -14,7 +14,7 @@ MRIS_SURF2VTK_METADATA = Metadata(
 
 
 MrisSurf2vtkParameters = typing.TypedDict('MrisSurf2vtkParameters', {
-    "__STYXTYPE__": typing.Literal["mris_surf2vtk"],
+    "@type": typing.Literal["freesurfer.mris_surf2vtk"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_surf2vtk": mris_surf2vtk_cargs,
+        "freesurfer.mris_surf2vtk": mris_surf2vtk_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_surf2vtk": mris_surf2vtk_outputs,
+        "freesurfer.mris_surf2vtk": mris_surf2vtk_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_surf2vtk_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_surf2vtk",
+        "@type": "freesurfer.mris_surf2vtk",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -186,5 +186,8 @@ __all__ = [
     "MrisSurf2vtkOutputs",
     "MrisSurf2vtkParameters",
     "mris_surf2vtk",
+    "mris_surf2vtk_cargs",
+    "mris_surf2vtk_execute",
+    "mris_surf2vtk_outputs",
     "mris_surf2vtk_params",
 ]

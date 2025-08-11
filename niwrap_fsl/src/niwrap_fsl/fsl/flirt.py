@@ -14,7 +14,7 @@ FLIRT_METADATA = Metadata(
 
 
 FlirtParameters = typing.TypedDict('FlirtParameters', {
-    "__STYXTYPE__": typing.Literal["flirt"],
+    "@type": typing.Literal["fsl.flirt"],
     "in_file": InputPathType,
     "reference": InputPathType,
     "out_file": str,
@@ -75,7 +75,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "flirt": flirt_cargs,
+        "fsl.flirt": flirt_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "flirt": flirt_outputs,
+        "fsl.flirt": flirt_outputs,
     }.get(t)
 
 
@@ -214,7 +214,7 @@ def flirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt",
+        "@type": "fsl.flirt",
         "in_file": in_file,
         "reference": reference,
         "out_file": out_file,
@@ -726,5 +726,8 @@ __all__ = [
     "FlirtOutputs",
     "FlirtParameters",
     "flirt",
+    "flirt_cargs",
+    "flirt_execute",
+    "flirt_outputs",
     "flirt_params",
 ]

@@ -14,7 +14,7 @@ CIFTI_TRANSPOSE_METADATA = Metadata(
 
 
 CiftiTransposeParameters = typing.TypedDict('CiftiTransposeParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-transpose"],
+    "@type": typing.Literal["workbench.cifti-transpose"],
     "cifti_in": InputPathType,
     "cifti_out": str,
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-transpose": cifti_transpose_cargs,
+        "workbench.cifti-transpose": cifti_transpose_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-transpose": cifti_transpose_outputs,
+        "workbench.cifti-transpose": cifti_transpose_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def cifti_transpose_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-transpose",
+        "@type": "workbench.cifti-transpose",
         "cifti_in": cifti_in,
         "cifti_out": cifti_out,
     }
@@ -202,5 +202,8 @@ __all__ = [
     "CiftiTransposeOutputs",
     "CiftiTransposeParameters",
     "cifti_transpose",
+    "cifti_transpose_cargs",
+    "cifti_transpose_execute",
+    "cifti_transpose_outputs",
     "cifti_transpose_params",
 ]

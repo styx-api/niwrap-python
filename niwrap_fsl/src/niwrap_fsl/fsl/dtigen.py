@@ -14,7 +14,7 @@ DTIGEN_METADATA = Metadata(
 
 
 DtigenParameters = typing.TypedDict('DtigenParameters', {
-    "__STYXTYPE__": typing.Literal["dtigen"],
+    "@type": typing.Literal["fsl.dtigen"],
     "tensor": InputPathType,
     "s0": InputPathType,
     "output_data": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dtigen": dtigen_cargs,
+        "fsl.dtigen": dtigen_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dtigen": dtigen_outputs,
+        "fsl.dtigen": dtigen_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def dtigen_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dtigen",
+        "@type": "fsl.dtigen",
         "tensor": tensor,
         "s0": s0,
         "output_data": output_data,
@@ -255,5 +255,8 @@ __all__ = [
     "DtigenOutputs",
     "DtigenParameters",
     "dtigen",
+    "dtigen_cargs",
+    "dtigen_execute",
+    "dtigen_outputs",
     "dtigen_params",
 ]

@@ -14,7 +14,7 @@ V__GRAYPLOT_METADATA = Metadata(
 
 
 VGrayplotParameters = typing.TypedDict('VGrayplotParameters', {
-    "__STYXTYPE__": typing.Literal["@grayplot"],
+    "@type": typing.Literal["afni.@grayplot"],
     "dirname": str,
     "pvorder": bool,
     "peelorder": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@grayplot": v__grayplot_cargs,
+        "afni.@grayplot": v__grayplot_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@grayplot": v__grayplot_outputs,
+        "afni.@grayplot": v__grayplot_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def v__grayplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@grayplot",
+        "@type": "afni.@grayplot",
         "dirname": dirname,
         "pvorder": pvorder,
         "peelorder": peelorder,
@@ -218,5 +218,8 @@ __all__ = [
     "VGrayplotParameters",
     "V__GRAYPLOT_METADATA",
     "v__grayplot",
+    "v__grayplot_cargs",
+    "v__grayplot_execute",
+    "v__grayplot_outputs",
     "v__grayplot_params",
 ]

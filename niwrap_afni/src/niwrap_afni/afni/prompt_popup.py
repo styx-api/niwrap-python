@@ -14,7 +14,7 @@ PROMPT_POPUP_METADATA = Metadata(
 
 
 PromptPopupParameters = typing.TypedDict('PromptPopupParameters', {
-    "__STYXTYPE__": typing.Literal["prompt_popup"],
+    "@type": typing.Literal["afni.prompt_popup"],
     "message": str,
     "message_pause": typing.NotRequired[str | None],
     "buttons": typing.NotRequired[list[str] | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "prompt_popup": prompt_popup_cargs,
+        "afni.prompt_popup": prompt_popup_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def prompt_popup_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "prompt_popup",
+        "@type": "afni.prompt_popup",
         "message": message,
     }
     if message_pause is not None:
@@ -246,5 +246,8 @@ __all__ = [
     "PromptPopupOutputs",
     "PromptPopupParameters",
     "prompt_popup",
+    "prompt_popup_cargs",
+    "prompt_popup_execute",
+    "prompt_popup_outputs",
     "prompt_popup_params",
 ]

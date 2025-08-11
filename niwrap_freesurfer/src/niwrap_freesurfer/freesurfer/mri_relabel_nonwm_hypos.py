@@ -14,7 +14,7 @@ MRI_RELABEL_NONWM_HYPOS_METADATA = Metadata(
 
 
 MriRelabelNonwmHyposParameters = typing.TypedDict('MriRelabelNonwmHyposParameters', {
-    "__STYXTYPE__": typing.Literal["mri_relabel_nonwm_hypos"],
+    "@type": typing.Literal["freesurfer.mri_relabel_nonwm_hypos"],
     "inputseg": InputPathType,
     "outputseg": str,
     "segments": typing.NotRequired[list[str] | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_relabel_nonwm_hypos": mri_relabel_nonwm_hypos_cargs,
+        "freesurfer.mri_relabel_nonwm_hypos": mri_relabel_nonwm_hypos_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_relabel_nonwm_hypos": mri_relabel_nonwm_hypos_outputs,
+        "freesurfer.mri_relabel_nonwm_hypos": mri_relabel_nonwm_hypos_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def mri_relabel_nonwm_hypos_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_relabel_nonwm_hypos",
+        "@type": "freesurfer.mri_relabel_nonwm_hypos",
         "inputseg": inputseg,
         "outputseg": outputseg,
         "seg_default": seg_default,
@@ -230,5 +230,8 @@ __all__ = [
     "MriRelabelNonwmHyposOutputs",
     "MriRelabelNonwmHyposParameters",
     "mri_relabel_nonwm_hypos",
+    "mri_relabel_nonwm_hypos_cargs",
+    "mri_relabel_nonwm_hypos_execute",
+    "mri_relabel_nonwm_hypos_outputs",
     "mri_relabel_nonwm_hypos_params",
 ]

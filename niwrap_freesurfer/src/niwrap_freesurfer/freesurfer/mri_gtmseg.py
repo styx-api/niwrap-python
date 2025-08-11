@@ -14,7 +14,7 @@ MRI_GTMSEG_METADATA = Metadata(
 
 
 MriGtmsegParameters = typing.TypedDict('MriGtmsegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gtmseg"],
+    "@type": typing.Literal["freesurfer.mri_gtmseg"],
     "output_volume": str,
     "source_subject": str,
     "internal_usf": typing.NotRequired[float | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gtmseg": mri_gtmseg_cargs,
+        "freesurfer.mri_gtmseg": mri_gtmseg_cargs,
     }.get(t)
 
 
@@ -134,7 +134,7 @@ def mri_gtmseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gtmseg",
+        "@type": "freesurfer.mri_gtmseg",
         "output_volume": output_volume,
         "source_subject": source_subject,
         "subseg_wm": subseg_wm,
@@ -397,5 +397,8 @@ __all__ = [
     "MriGtmsegOutputs",
     "MriGtmsegParameters",
     "mri_gtmseg",
+    "mri_gtmseg_cargs",
+    "mri_gtmseg_execute",
+    "mri_gtmseg_outputs",
     "mri_gtmseg_params",
 ]

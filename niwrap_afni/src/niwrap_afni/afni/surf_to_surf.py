@@ -14,7 +14,7 @@ SURF_TO_SURF_METADATA = Metadata(
 
 
 SurfToSurfParameters = typing.TypedDict('SurfToSurfParameters', {
-    "__STYXTYPE__": typing.Literal["SurfToSurf"],
+    "@type": typing.Literal["afni.SurfToSurf"],
     "input_surface_1": InputPathType,
     "input_surface_2": InputPathType,
     "surface_volume": typing.NotRequired[InputPathType | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfToSurf": surf_to_surf_cargs,
+        "afni.SurfToSurf": surf_to_surf_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfToSurf": surf_to_surf_outputs,
+        "afni.SurfToSurf": surf_to_surf_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def surf_to_surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfToSurf",
+        "@type": "afni.SurfToSurf",
         "input_surface_1": input_surface_1,
         "input_surface_2": input_surface_2,
         "make_consistent": make_consistent,
@@ -323,5 +323,8 @@ __all__ = [
     "SurfToSurfOutputs",
     "SurfToSurfParameters",
     "surf_to_surf",
+    "surf_to_surf_cargs",
+    "surf_to_surf_execute",
+    "surf_to_surf_outputs",
     "surf_to_surf_params",
 ]

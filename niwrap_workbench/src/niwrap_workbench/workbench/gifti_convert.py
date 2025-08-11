@@ -14,7 +14,7 @@ GIFTI_CONVERT_METADATA = Metadata(
 
 
 GiftiConvertParameters = typing.TypedDict('GiftiConvertParameters', {
-    "__STYXTYPE__": typing.Literal["gifti-convert"],
+    "@type": typing.Literal["workbench.gifti-convert"],
     "gifti_encoding": str,
     "input_gifti_file": str,
     "output_gifti_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gifti-convert": gifti_convert_cargs,
+        "workbench.gifti-convert": gifti_convert_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def gifti_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gifti-convert",
+        "@type": "workbench.gifti-convert",
         "gifti_encoding": gifti_encoding,
         "input_gifti_file": input_gifti_file,
         "output_gifti_file": output_gifti_file,
@@ -199,5 +199,8 @@ __all__ = [
     "GiftiConvertOutputs",
     "GiftiConvertParameters",
     "gifti_convert",
+    "gifti_convert_cargs",
+    "gifti_convert_execute",
+    "gifti_convert_outputs",
     "gifti_convert_params",
 ]

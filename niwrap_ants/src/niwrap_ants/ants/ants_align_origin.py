@@ -14,7 +14,7 @@ ANTS_ALIGN_ORIGIN_METADATA = Metadata(
 
 
 AntsAlignOriginParameters = typing.TypedDict('AntsAlignOriginParameters', {
-    "__STYXTYPE__": typing.Literal["antsAlignOrigin"],
+    "@type": typing.Literal["ants.antsAlignOrigin"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "input": InputPathType,
     "reference_image": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsAlignOrigin": ants_align_origin_cargs,
+        "ants.antsAlignOrigin": ants_align_origin_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsAlignOrigin": ants_align_origin_outputs,
+        "ants.antsAlignOrigin": ants_align_origin_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def ants_align_origin_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsAlignOrigin",
+        "@type": "ants.antsAlignOrigin",
         "input": input_,
         "reference_image": reference_image,
         "output": output,
@@ -226,5 +226,8 @@ __all__ = [
     "AntsAlignOriginOutputs",
     "AntsAlignOriginParameters",
     "ants_align_origin",
+    "ants_align_origin_cargs",
+    "ants_align_origin_execute",
+    "ants_align_origin_outputs",
     "ants_align_origin_params",
 ]

@@ -14,7 +14,7 @@ V__NOISY_SKULL_STRIP_METADATA = Metadata(
 
 
 VNoisySkullStripParameters = typing.TypedDict('VNoisySkullStripParameters', {
-    "__STYXTYPE__": typing.Literal["@NoisySkullStrip"],
+    "@type": typing.Literal["afni.@NoisySkullStrip"],
     "input_file": InputPathType,
     "keep_tmp": bool,
     "3dskullstrip_opts": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@NoisySkullStrip": v__noisy_skull_strip_cargs,
+        "afni.@NoisySkullStrip": v__noisy_skull_strip_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@NoisySkullStrip": v__noisy_skull_strip_outputs,
+        "afni.@NoisySkullStrip": v__noisy_skull_strip_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v__noisy_skull_strip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@NoisySkullStrip",
+        "@type": "afni.@NoisySkullStrip",
         "input_file": input_file,
         "keep_tmp": keep_tmp,
     }
@@ -208,5 +208,8 @@ __all__ = [
     "VNoisySkullStripParameters",
     "V__NOISY_SKULL_STRIP_METADATA",
     "v__noisy_skull_strip",
+    "v__noisy_skull_strip_cargs",
+    "v__noisy_skull_strip_execute",
+    "v__noisy_skull_strip_outputs",
     "v__noisy_skull_strip_params",
 ]

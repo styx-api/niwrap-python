@@ -14,7 +14,7 @@ V_3D_DEGREE_CENTRALITY_METADATA = Metadata(
 
 
 V3dDegreeCentralityParameters = typing.TypedDict('V3dDegreeCentralityParameters', {
-    "__STYXTYPE__": typing.Literal["3dDegreeCentrality"],
+    "@type": typing.Literal["afni.3dDegreeCentrality"],
     "autoclip": bool,
     "automask": bool,
     "in_file": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDegreeCentrality": v_3d_degree_centrality_cargs,
+        "afni.3dDegreeCentrality": v_3d_degree_centrality_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDegreeCentrality": v_3d_degree_centrality_outputs,
+        "afni.3dDegreeCentrality": v_3d_degree_centrality_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def v_3d_degree_centrality_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDegreeCentrality",
+        "@type": "afni.3dDegreeCentrality",
         "autoclip": autoclip,
         "automask": automask,
         "in_file": in_file,
@@ -266,5 +266,8 @@ __all__ = [
     "V3dDegreeCentralityParameters",
     "V_3D_DEGREE_CENTRALITY_METADATA",
     "v_3d_degree_centrality",
+    "v_3d_degree_centrality_cargs",
+    "v_3d_degree_centrality_execute",
+    "v_3d_degree_centrality_outputs",
     "v_3d_degree_centrality_params",
 ]

@@ -14,7 +14,7 @@ PLUGOUT_DRIVE_METADATA = Metadata(
 
 
 PlugoutDriveParameters = typing.TypedDict('PlugoutDriveParameters', {
-    "__STYXTYPE__": typing.Literal["plugout_drive"],
+    "@type": typing.Literal["afni.plugout_drive"],
     "host": typing.NotRequired[str | None],
     "shm": bool,
     "verbose": bool,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "plugout_drive": plugout_drive_cargs,
+        "afni.plugout_drive": plugout_drive_cargs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def plugout_drive_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "plugout_drive",
+        "@type": "afni.plugout_drive",
         "shm": shm,
         "verbose": verbose,
         "quit": quit_,
@@ -347,5 +347,8 @@ __all__ = [
     "PlugoutDriveOutputs",
     "PlugoutDriveParameters",
     "plugout_drive",
+    "plugout_drive_cargs",
+    "plugout_drive_execute",
+    "plugout_drive_outputs",
     "plugout_drive_params",
 ]

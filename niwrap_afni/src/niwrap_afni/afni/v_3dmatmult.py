@@ -14,7 +14,7 @@ V_3DMATMULT_METADATA = Metadata(
 
 
 V3dmatmultParameters = typing.TypedDict('V3dmatmultParameters', {
-    "__STYXTYPE__": typing.Literal["3dmatmult"],
+    "@type": typing.Literal["afni.3dmatmult"],
     "inputA": InputPathType,
     "inputB": InputPathType,
     "prefix": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmatmult": v_3dmatmult_cargs,
+        "afni.3dmatmult": v_3dmatmult_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmatmult": v_3dmatmult_outputs,
+        "afni.3dmatmult": v_3dmatmult_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def v_3dmatmult_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmatmult",
+        "@type": "afni.3dmatmult",
         "inputA": input_a,
         "inputB": input_b,
         "prefix": prefix,
@@ -223,5 +223,8 @@ __all__ = [
     "V3dmatmultParameters",
     "V_3DMATMULT_METADATA",
     "v_3dmatmult",
+    "v_3dmatmult_cargs",
+    "v_3dmatmult_execute",
+    "v_3dmatmult_outputs",
     "v_3dmatmult_params",
 ]

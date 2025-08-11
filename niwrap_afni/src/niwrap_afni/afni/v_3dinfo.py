@@ -14,7 +14,7 @@ V_3DINFO_METADATA = Metadata(
 
 
 V3dinfoParameters = typing.TypedDict('V3dinfoParameters', {
-    "__STYXTYPE__": typing.Literal["3dinfo"],
+    "@type": typing.Literal["afni.3dinfo"],
     "orient": bool,
     "Lextent": bool,
     "Rextent": bool,
@@ -143,7 +143,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dinfo": v_3dinfo_cargs,
+        "afni.3dinfo": v_3dinfo_cargs,
     }.get(t)
 
 
@@ -440,7 +440,7 @@ def v_3dinfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dinfo",
+        "@type": "afni.3dinfo",
         "orient": orient,
         "Lextent": lextent,
         "Rextent": rextent,
@@ -1267,5 +1267,8 @@ __all__ = [
     "V3dinfoParameters",
     "V_3DINFO_METADATA",
     "v_3dinfo",
+    "v_3dinfo_cargs",
+    "v_3dinfo_execute",
+    "v_3dinfo_outputs",
     "v_3dinfo_params",
 ]

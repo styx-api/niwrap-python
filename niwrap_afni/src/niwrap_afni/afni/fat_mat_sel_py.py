@@ -14,7 +14,7 @@ FAT_MAT_SEL_PY_METADATA = Metadata(
 
 
 FatMatSelPyParameters = typing.TypedDict('FatMatSelPyParameters', {
-    "__STYXTYPE__": typing.Literal["fat_mat_sel.py"],
+    "@type": typing.Literal["afni.fat_mat_sel.py"],
     "parameters": str,
     "matr_in": typing.NotRequired[str | None],
     "list_match": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_mat_sel.py": fat_mat_sel_py_cargs,
+        "afni.fat_mat_sel.py": fat_mat_sel_py_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_mat_sel.py": fat_mat_sel_py_outputs,
+        "afni.fat_mat_sel.py": fat_mat_sel_py_outputs,
     }.get(t)
 
 
@@ -157,7 +157,7 @@ def fat_mat_sel_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_mat_sel.py",
+        "@type": "afni.fat_mat_sel.py",
         "parameters": parameters,
         "out_ind_matr": out_ind_matr,
         "out_ind_1ddset": out_ind_1ddset,
@@ -465,5 +465,8 @@ __all__ = [
     "FatMatSelPyOutputs",
     "FatMatSelPyParameters",
     "fat_mat_sel_py",
+    "fat_mat_sel_py_cargs",
+    "fat_mat_sel_py_execute",
+    "fat_mat_sel_py_outputs",
     "fat_mat_sel_py_params",
 ]

@@ -14,7 +14,7 @@ AFNI_RUN_R_METADATA = Metadata(
 
 
 AfniRunRParameters = typing.TypedDict('AfniRunRParameters', {
-    "__STYXTYPE__": typing.Literal["afni_run_R"],
+    "@type": typing.Literal["afni.afni_run_R"],
     "r_script": InputPathType,
     "r_args": list[str],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni_run_R": afni_run_r_cargs,
+        "afni.afni_run_R": afni_run_r_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def afni_run_r_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afni_run_R",
+        "@type": "afni.afni_run_R",
         "r_script": r_script,
         "r_args": r_args,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "AfniRunROutputs",
     "AfniRunRParameters",
     "afni_run_r",
+    "afni_run_r_cargs",
+    "afni_run_r_execute",
+    "afni_run_r_outputs",
     "afni_run_r_params",
 ]

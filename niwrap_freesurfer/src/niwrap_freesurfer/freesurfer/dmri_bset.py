@@ -14,7 +14,7 @@ DMRI_BSET_METADATA = Metadata(
 
 
 DmriBsetParameters = typing.TypedDict('DmriBsetParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_bset"],
+    "@type": typing.Literal["freesurfer.dmri_bset"],
     "input_dwi": InputPathType,
     "output_dwi": str,
     "b_values": typing.NotRequired[list[float] | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_bset": dmri_bset_cargs,
+        "freesurfer.dmri_bset": dmri_bset_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_bset": dmri_bset_outputs,
+        "freesurfer.dmri_bset": dmri_bset_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def dmri_bset_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_bset",
+        "@type": "freesurfer.dmri_bset",
         "input_dwi": input_dwi,
         "output_dwi": output_dwi,
         "bsort": bsort,
@@ -298,5 +298,8 @@ __all__ = [
     "DmriBsetOutputs",
     "DmriBsetParameters",
     "dmri_bset",
+    "dmri_bset_cargs",
+    "dmri_bset_execute",
+    "dmri_bset_outputs",
     "dmri_bset_params",
 ]

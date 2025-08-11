@@ -14,7 +14,7 @@ SURFACE_GENERATE_INFLATED_METADATA = Metadata(
 
 
 SurfaceGenerateInflatedParameters = typing.TypedDict('SurfaceGenerateInflatedParameters', {
-    "__STYXTYPE__": typing.Literal["surface-generate-inflated"],
+    "@type": typing.Literal["workbench.surface-generate-inflated"],
     "anatomical_surface_in": InputPathType,
     "inflated_surface_out": str,
     "very_inflated_surface_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-generate-inflated": surface_generate_inflated_cargs,
+        "workbench.surface-generate-inflated": surface_generate_inflated_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-generate-inflated": surface_generate_inflated_outputs,
+        "workbench.surface-generate-inflated": surface_generate_inflated_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def surface_generate_inflated_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-generate-inflated",
+        "@type": "workbench.surface-generate-inflated",
         "anatomical_surface_in": anatomical_surface_in,
         "inflated_surface_out": inflated_surface_out,
         "very_inflated_surface_out": very_inflated_surface_out,
@@ -219,5 +219,8 @@ __all__ = [
     "SurfaceGenerateInflatedOutputs",
     "SurfaceGenerateInflatedParameters",
     "surface_generate_inflated",
+    "surface_generate_inflated_cargs",
+    "surface_generate_inflated_execute",
+    "surface_generate_inflated_outputs",
     "surface_generate_inflated_params",
 ]

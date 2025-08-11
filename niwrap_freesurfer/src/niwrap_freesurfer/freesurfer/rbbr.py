@@ -14,7 +14,7 @@ RBBR_METADATA = Metadata(
 
 
 RbbrParameters = typing.TypedDict('RbbrParameters', {
-    "__STYXTYPE__": typing.Literal["rbbr"],
+    "@type": typing.Literal["freesurfer.rbbr"],
     "subject": typing.NotRequired[str | None],
     "moving_image": str,
     "t1_contrast": bool,
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rbbr": rbbr_cargs,
+        "freesurfer.rbbr": rbbr_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "rbbr": rbbr_outputs,
+        "freesurfer.rbbr": rbbr_outputs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def rbbr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rbbr",
+        "@type": "freesurfer.rbbr",
         "moving_image": moving_image,
         "t1_contrast": t1_contrast,
         "t2_contrast": t2_contrast,
@@ -414,5 +414,8 @@ __all__ = [
     "RbbrOutputs",
     "RbbrParameters",
     "rbbr",
+    "rbbr_cargs",
+    "rbbr_execute",
+    "rbbr_outputs",
     "rbbr_params",
 ]

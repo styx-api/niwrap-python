@@ -14,7 +14,7 @@ BIANCA_OVERLAP_MEASURES_METADATA = Metadata(
 
 
 BiancaOverlapMeasuresParameters = typing.TypedDict('BiancaOverlapMeasuresParameters', {
-    "__STYXTYPE__": typing.Literal["bianca_overlap_measures"],
+    "@type": typing.Literal["fsl.bianca_overlap_measures"],
     "lesion_mask": InputPathType,
     "manual_mask": InputPathType,
     "output_dir": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bianca_overlap_measures": bianca_overlap_measures_cargs,
+        "fsl.bianca_overlap_measures": bianca_overlap_measures_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bianca_overlap_measures": bianca_overlap_measures_outputs,
+        "fsl.bianca_overlap_measures": bianca_overlap_measures_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def bianca_overlap_measures_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bianca_overlap_measures",
+        "@type": "fsl.bianca_overlap_measures",
         "lesion_mask": lesion_mask,
         "manual_mask": manual_mask,
         "output_dir": output_dir,
@@ -209,5 +209,8 @@ __all__ = [
     "BiancaOverlapMeasuresOutputs",
     "BiancaOverlapMeasuresParameters",
     "bianca_overlap_measures",
+    "bianca_overlap_measures_cargs",
+    "bianca_overlap_measures_execute",
+    "bianca_overlap_measures_outputs",
     "bianca_overlap_measures_params",
 ]

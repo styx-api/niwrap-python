@@ -14,7 +14,7 @@ RUN_MESH_UTILS_METADATA = Metadata(
 
 
 RunMeshUtilsParameters = typing.TypedDict('RunMeshUtilsParameters', {
-    "__STYXTYPE__": typing.Literal["run_mesh_utils"],
+    "@type": typing.Literal["fsl.run_mesh_utils"],
     "base_mesh": InputPathType,
     "output_image": str,
     "input_image": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_mesh_utils": run_mesh_utils_cargs,
+        "fsl.run_mesh_utils": run_mesh_utils_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "run_mesh_utils": run_mesh_utils_outputs,
+        "fsl.run_mesh_utils": run_mesh_utils_outputs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def run_mesh_utils_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_mesh_utils",
+        "@type": "fsl.run_mesh_utils",
         "base_mesh": base_mesh,
         "output_image": output_image,
         "do_uncentre_model": do_uncentre_model,
@@ -346,5 +346,8 @@ __all__ = [
     "RunMeshUtilsOutputs",
     "RunMeshUtilsParameters",
     "run_mesh_utils",
+    "run_mesh_utils_cargs",
+    "run_mesh_utils_execute",
+    "run_mesh_utils_outputs",
     "run_mesh_utils_params",
 ]

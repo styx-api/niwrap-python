@@ -14,7 +14,7 @@ GIFTI_LABEL_TO_ROI_METADATA = Metadata(
 
 
 GiftiLabelToRoiParameters = typing.TypedDict('GiftiLabelToRoiParameters', {
-    "__STYXTYPE__": typing.Literal["gifti-label-to-roi"],
+    "@type": typing.Literal["workbench.gifti-label-to-roi"],
     "label_in": InputPathType,
     "metric_out": str,
     "opt_name_label_name": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gifti-label-to-roi": gifti_label_to_roi_cargs,
+        "workbench.gifti-label-to-roi": gifti_label_to_roi_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gifti-label-to-roi": gifti_label_to_roi_outputs,
+        "workbench.gifti-label-to-roi": gifti_label_to_roi_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def gifti_label_to_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gifti-label-to-roi",
+        "@type": "workbench.gifti-label-to-roi",
         "label_in": label_in,
         "metric_out": metric_out,
     }
@@ -234,5 +234,8 @@ __all__ = [
     "GiftiLabelToRoiOutputs",
     "GiftiLabelToRoiParameters",
     "gifti_label_to_roi",
+    "gifti_label_to_roi_cargs",
+    "gifti_label_to_roi_execute",
+    "gifti_label_to_roi_outputs",
     "gifti_label_to_roi_params",
 ]

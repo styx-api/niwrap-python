@@ -14,117 +14,117 @@ ANTS_APPLY_TRANSFORMS_METADATA = Metadata(
 
 
 AntsApplyTransformsWarpedOutputParameters = typing.TypedDict('AntsApplyTransformsWarpedOutputParameters', {
-    "__STYXTYPE__": typing.Literal["warpedOutput"],
+    "@type": typing.Literal["ants.antsApplyTransforms.warpedOutput"],
     "warpedOutputFileName": str,
 })
 
 
 AntsApplyTransformsCompositeDisplacementFieldOutputParameters = typing.TypedDict('AntsApplyTransformsCompositeDisplacementFieldOutputParameters', {
-    "__STYXTYPE__": typing.Literal["compositeDisplacementFieldOutput"],
+    "@type": typing.Literal["ants.antsApplyTransforms.compositeDisplacementFieldOutput"],
     "compositeDisplacementField": str,
     "printOutCompositeWarpFile": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
 AntsApplyTransformsGenericAffineTransformOutputParameters = typing.TypedDict('AntsApplyTransformsGenericAffineTransformOutputParameters', {
-    "__STYXTYPE__": typing.Literal["genericAffineTransformOutput"],
+    "@type": typing.Literal["ants.antsApplyTransforms.genericAffineTransformOutput"],
     "genericAffineTransformFile": str,
     "calculateInverse": typing.NotRequired[typing.Literal[0, 1] | None],
 })
 
 
 AntsApplyTransformsLinearParameters = typing.TypedDict('AntsApplyTransformsLinearParameters', {
-    "__STYXTYPE__": typing.Literal["linear"],
+    "@type": typing.Literal["ants.antsApplyTransforms.linear"],
 })
 
 
 AntsApplyTransformsNearestNeighborParameters = typing.TypedDict('AntsApplyTransformsNearestNeighborParameters', {
-    "__STYXTYPE__": typing.Literal["nearestNeighbor"],
+    "@type": typing.Literal["ants.antsApplyTransforms.nearestNeighbor"],
 })
 
 
 AntsApplyTransformsMultiLabelnoparamsParameters = typing.TypedDict('AntsApplyTransformsMultiLabelnoparamsParameters', {
-    "__STYXTYPE__": typing.Literal["multiLabelnoparams"],
+    "@type": typing.Literal["ants.antsApplyTransforms.multiLabelnoparams"],
 })
 
 
 AntsApplyTransformsSigmaParameters = typing.TypedDict('AntsApplyTransformsSigmaParameters', {
-    "__STYXTYPE__": typing.Literal["sigma"],
+    "@type": typing.Literal["ants.antsApplyTransforms.multiLabel.params.sigma"],
     "sigma": float,
 })
 
 
 AntsApplyTransformsAlphaParameters = typing.TypedDict('AntsApplyTransformsAlphaParameters', {
-    "__STYXTYPE__": typing.Literal["alpha"],
+    "@type": typing.Literal["ants.antsApplyTransforms.multiLabel.params.alpha"],
     "alpha": float,
 })
 
 
 AntsApplyTransformsParamParameters = typing.TypedDict('AntsApplyTransformsParamParameters', {
-    "__STYXTYPE__": typing.Literal["param"],
+    "@type": typing.Literal["ants.antsApplyTransforms.multiLabel.params"],
     "params": list[typing.Union[AntsApplyTransformsSigmaParameters, AntsApplyTransformsAlphaParameters]],
 })
 
 
 AntsApplyTransformsMultiLabelParameters = typing.TypedDict('AntsApplyTransformsMultiLabelParameters', {
-    "__STYXTYPE__": typing.Literal["multiLabel"],
+    "@type": typing.Literal["ants.antsApplyTransforms.multiLabel"],
     "params": AntsApplyTransformsParamParameters,
 })
 
 
 AntsApplyTransformsGaussianParameters = typing.TypedDict('AntsApplyTransformsGaussianParameters', {
-    "__STYXTYPE__": typing.Literal["gaussian"],
+    "@type": typing.Literal["ants.antsApplyTransforms.gaussian"],
     "sigma": typing.NotRequired[float | None],
     "alpha": typing.NotRequired[float | None],
 })
 
 
 AntsApplyTransformsBsplineParameters = typing.TypedDict('AntsApplyTransformsBsplineParameters', {
-    "__STYXTYPE__": typing.Literal["bspline"],
+    "@type": typing.Literal["ants.antsApplyTransforms.bspline"],
     "order": typing.NotRequired[int | None],
 })
 
 
 AntsApplyTransformsCosineWindowedSincParameters = typing.TypedDict('AntsApplyTransformsCosineWindowedSincParameters', {
-    "__STYXTYPE__": typing.Literal["cosineWindowedSinc"],
+    "@type": typing.Literal["ants.antsApplyTransforms.cosineWindowedSinc"],
 })
 
 
 AntsApplyTransformsWelchWindowedSincParameters = typing.TypedDict('AntsApplyTransformsWelchWindowedSincParameters', {
-    "__STYXTYPE__": typing.Literal["welchWindowedSinc"],
+    "@type": typing.Literal["ants.antsApplyTransforms.welchWindowedSinc"],
 })
 
 
 AntsApplyTransformsHammingWindowedSincParameters = typing.TypedDict('AntsApplyTransformsHammingWindowedSincParameters', {
-    "__STYXTYPE__": typing.Literal["hammingWindowedSinc"],
+    "@type": typing.Literal["ants.antsApplyTransforms.hammingWindowedSinc"],
 })
 
 
 AntsApplyTransformsLanczosWindowedSincParameters = typing.TypedDict('AntsApplyTransformsLanczosWindowedSincParameters', {
-    "__STYXTYPE__": typing.Literal["lanczosWindowedSinc"],
+    "@type": typing.Literal["ants.antsApplyTransforms.lanczosWindowedSinc"],
 })
 
 
 AntsApplyTransformsGenericLabelParameters = typing.TypedDict('AntsApplyTransformsGenericLabelParameters', {
-    "__STYXTYPE__": typing.Literal["genericLabel"],
+    "@type": typing.Literal["ants.antsApplyTransforms.genericLabel"],
     "interpolator": typing.NotRequired[str | None],
 })
 
 
 AntsApplyTransformsTransformFileNameParameters = typing.TypedDict('AntsApplyTransformsTransformFileNameParameters', {
-    "__STYXTYPE__": typing.Literal["transformFileName"],
+    "@type": typing.Literal["ants.antsApplyTransforms.transformFileName"],
     "transformFileName": InputPathType,
 })
 
 
 AntsApplyTransformsUseInverseParameters = typing.TypedDict('AntsApplyTransformsUseInverseParameters', {
-    "__STYXTYPE__": typing.Literal["useInverse"],
+    "@type": typing.Literal["ants.antsApplyTransforms.useInverse"],
     "transformFileName": InputPathType,
 })
 
 
 AntsApplyTransformsParameters = typing.TypedDict('AntsApplyTransformsParameters', {
-    "__STYXTYPE__": typing.Literal["antsApplyTransforms"],
+    "@type": typing.Literal["ants.antsApplyTransforms"],
     "dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image_type": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4, 5] | None],
     "input_image": typing.NotRequired[InputPathType | None],
@@ -152,26 +152,26 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsApplyTransforms": ants_apply_transforms_cargs,
-        "warpedOutput": ants_apply_transforms_warped_output_cargs,
-        "compositeDisplacementFieldOutput": ants_apply_transforms_composite_displacement_field_output_cargs,
-        "genericAffineTransformOutput": ants_apply_transforms_generic_affine_transform_output_cargs,
-        "linear": ants_apply_transforms_linear_cargs,
-        "nearestNeighbor": ants_apply_transforms_nearest_neighbor_cargs,
-        "multiLabelnoparams": ants_apply_transforms_multi_labelnoparams_cargs,
-        "multiLabel": ants_apply_transforms_multi_label_cargs,
-        "param": ants_apply_transforms_param_cargs,
-        "sigma": ants_apply_transforms_sigma_cargs,
-        "alpha": ants_apply_transforms_alpha_cargs,
-        "gaussian": ants_apply_transforms_gaussian_cargs,
-        "bspline": ants_apply_transforms_bspline_cargs,
-        "cosineWindowedSinc": ants_apply_transforms_cosine_windowed_sinc_cargs,
-        "welchWindowedSinc": ants_apply_transforms_welch_windowed_sinc_cargs,
-        "hammingWindowedSinc": ants_apply_transforms_hamming_windowed_sinc_cargs,
-        "lanczosWindowedSinc": ants_apply_transforms_lanczos_windowed_sinc_cargs,
-        "genericLabel": ants_apply_transforms_generic_label_cargs,
-        "transformFileName": ants_apply_transforms_transform_file_name_cargs,
-        "useInverse": ants_apply_transforms_use_inverse_cargs,
+        "ants.antsApplyTransforms": ants_apply_transforms_cargs,
+        "ants.antsApplyTransforms.warpedOutput": ants_apply_transforms_warped_output_cargs,
+        "ants.antsApplyTransforms.compositeDisplacementFieldOutput": ants_apply_transforms_composite_displacement_field_output_cargs,
+        "ants.antsApplyTransforms.genericAffineTransformOutput": ants_apply_transforms_generic_affine_transform_output_cargs,
+        "ants.antsApplyTransforms.linear": ants_apply_transforms_linear_cargs,
+        "ants.antsApplyTransforms.nearestNeighbor": ants_apply_transforms_nearest_neighbor_cargs,
+        "ants.antsApplyTransforms.multiLabelnoparams": ants_apply_transforms_multi_labelnoparams_cargs,
+        "ants.antsApplyTransforms.multiLabel": ants_apply_transforms_multi_label_cargs,
+        "ants.antsApplyTransforms.multiLabel.params": ants_apply_transforms_param_cargs,
+        "ants.antsApplyTransforms.multiLabel.params.sigma": ants_apply_transforms_sigma_cargs,
+        "ants.antsApplyTransforms.multiLabel.params.alpha": ants_apply_transforms_alpha_cargs,
+        "ants.antsApplyTransforms.gaussian": ants_apply_transforms_gaussian_cargs,
+        "ants.antsApplyTransforms.bspline": ants_apply_transforms_bspline_cargs,
+        "ants.antsApplyTransforms.cosineWindowedSinc": ants_apply_transforms_cosine_windowed_sinc_cargs,
+        "ants.antsApplyTransforms.welchWindowedSinc": ants_apply_transforms_welch_windowed_sinc_cargs,
+        "ants.antsApplyTransforms.hammingWindowedSinc": ants_apply_transforms_hamming_windowed_sinc_cargs,
+        "ants.antsApplyTransforms.lanczosWindowedSinc": ants_apply_transforms_lanczos_windowed_sinc_cargs,
+        "ants.antsApplyTransforms.genericLabel": ants_apply_transforms_generic_label_cargs,
+        "ants.antsApplyTransforms.transformFileName": ants_apply_transforms_transform_file_name_cargs,
+        "ants.antsApplyTransforms.useInverse": ants_apply_transforms_use_inverse_cargs,
     }.get(t)
 
 
@@ -187,10 +187,10 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsApplyTransforms": ants_apply_transforms_outputs,
-        "warpedOutput": ants_apply_transforms_warped_output_outputs,
-        "compositeDisplacementFieldOutput": ants_apply_transforms_composite_displacement_field_output_outputs,
-        "genericAffineTransformOutput": ants_apply_transforms_generic_affine_transform_output_outputs,
+        "ants.antsApplyTransforms": ants_apply_transforms_outputs,
+        "ants.antsApplyTransforms.warpedOutput": ants_apply_transforms_warped_output_outputs,
+        "ants.antsApplyTransforms.compositeDisplacementFieldOutput": ants_apply_transforms_composite_displacement_field_output_outputs,
+        "ants.antsApplyTransforms.genericAffineTransformOutput": ants_apply_transforms_generic_affine_transform_output_outputs,
     }.get(t)
 
 
@@ -216,7 +216,7 @@ def ants_apply_transforms_warped_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warpedOutput",
+        "@type": "ants.antsApplyTransforms.warpedOutput",
         "warpedOutputFileName": warped_output_file_name,
     }
     return params
@@ -285,7 +285,7 @@ def ants_apply_transforms_composite_displacement_field_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "compositeDisplacementFieldOutput",
+        "@type": "ants.antsApplyTransforms.compositeDisplacementFieldOutput",
         "compositeDisplacementField": composite_displacement_field,
     }
     if print_out_composite_warp_file is not None:
@@ -356,7 +356,7 @@ def ants_apply_transforms_generic_affine_transform_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "genericAffineTransformOutput",
+        "@type": "ants.antsApplyTransforms.genericAffineTransformOutput",
         "genericAffineTransformFile": generic_affine_transform_file,
     }
     if calculate_inverse is not None:
@@ -413,7 +413,7 @@ def ants_apply_transforms_linear_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "linear",
+        "@type": "ants.antsApplyTransforms.linear",
     }
     return params
 
@@ -446,7 +446,7 @@ def ants_apply_transforms_nearest_neighbor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nearestNeighbor",
+        "@type": "ants.antsApplyTransforms.nearestNeighbor",
     }
     return params
 
@@ -479,7 +479,7 @@ def ants_apply_transforms_multi_labelnoparams_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "multiLabelnoparams",
+        "@type": "ants.antsApplyTransforms.multiLabelnoparams",
     }
     return params
 
@@ -514,7 +514,7 @@ def ants_apply_transforms_sigma_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sigma",
+        "@type": "ants.antsApplyTransforms.multiLabel.params.sigma",
         "sigma": sigma,
     }
     return params
@@ -550,7 +550,7 @@ def ants_apply_transforms_alpha_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "alpha",
+        "@type": "ants.antsApplyTransforms.multiLabel.params.alpha",
         "alpha": alpha,
     }
     return params
@@ -586,7 +586,7 @@ def ants_apply_transforms_param_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "param",
+        "@type": "ants.antsApplyTransforms.multiLabel.params",
         "params": params_,
     }
     return params
@@ -606,7 +606,7 @@ def ants_apply_transforms_param_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("[" + ",".join([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("params")] for a in c]) + "]")
+    cargs.append("[" + ",".join([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("params")] for a in c]) + "]")
     return cargs
 
 
@@ -622,7 +622,7 @@ def ants_apply_transforms_multi_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "multiLabel",
+        "@type": "ants.antsApplyTransforms.multiLabel",
         "params": params_,
     }
     return params
@@ -642,7 +642,7 @@ def ants_apply_transforms_multi_label_cargs(
         Command-line arguments.
     """
     cargs = []
-    cargs.append("MultiLabel" + "".join(dyn_cargs(params.get("params")["__STYXTYPE__"])(params.get("params"), execution)))
+    cargs.append("MultiLabel" + "".join(dyn_cargs(params.get("params")["@type"])(params.get("params"), execution)))
     return cargs
 
 
@@ -660,7 +660,7 @@ def ants_apply_transforms_gaussian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gaussian",
+        "@type": "ants.antsApplyTransforms.gaussian",
     }
     if sigma is not None:
         params["sigma"] = sigma
@@ -700,7 +700,7 @@ def ants_apply_transforms_bspline_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bspline",
+        "@type": "ants.antsApplyTransforms.bspline",
     }
     if order is not None:
         params["order"] = order
@@ -736,7 +736,7 @@ def ants_apply_transforms_cosine_windowed_sinc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cosineWindowedSinc",
+        "@type": "ants.antsApplyTransforms.cosineWindowedSinc",
     }
     return params
 
@@ -769,7 +769,7 @@ def ants_apply_transforms_welch_windowed_sinc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "welchWindowedSinc",
+        "@type": "ants.antsApplyTransforms.welchWindowedSinc",
     }
     return params
 
@@ -802,7 +802,7 @@ def ants_apply_transforms_hamming_windowed_sinc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "hammingWindowedSinc",
+        "@type": "ants.antsApplyTransforms.hammingWindowedSinc",
     }
     return params
 
@@ -835,7 +835,7 @@ def ants_apply_transforms_lanczos_windowed_sinc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "lanczosWindowedSinc",
+        "@type": "ants.antsApplyTransforms.lanczosWindowedSinc",
     }
     return params
 
@@ -870,7 +870,7 @@ def ants_apply_transforms_generic_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "genericLabel",
+        "@type": "ants.antsApplyTransforms.genericLabel",
     }
     if interpolator is not None:
         params["interpolator"] = interpolator
@@ -908,7 +908,7 @@ def ants_apply_transforms_transform_file_name_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transformFileName",
+        "@type": "ants.antsApplyTransforms.transformFileName",
         "transformFileName": transform_file_name,
     }
     return params
@@ -944,7 +944,7 @@ def ants_apply_transforms_use_inverse_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "useInverse",
+        "@type": "ants.antsApplyTransforms.useInverse",
         "transformFileName": transform_file_name,
     }
     return params
@@ -1047,7 +1047,7 @@ def ants_apply_transforms_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsApplyTransforms",
+        "@type": "ants.antsApplyTransforms",
         "reference_image": reference_image,
         "output": output,
     }
@@ -1110,12 +1110,12 @@ def ants_apply_transforms_cargs(
     ])
     cargs.extend([
         "--output",
-        *dyn_cargs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution)
+        *dyn_cargs(params.get("output")["@type"])(params.get("output"), execution)
     ])
     if params.get("interpolation") is not None:
         cargs.extend([
             "--interpolation",
-            *dyn_cargs(params.get("interpolation")["__STYXTYPE__"])(params.get("interpolation"), execution)
+            *dyn_cargs(params.get("interpolation")["@type"])(params.get("interpolation"), execution)
         ])
     if params.get("output_data_type") is not None:
         cargs.extend([
@@ -1125,7 +1125,7 @@ def ants_apply_transforms_cargs(
     if params.get("transform") is not None:
         cargs.extend([
             "--transform",
-            *[a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("transform")] for a in c]
+            *[a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("transform")] for a in c]
         ])
     if params.get("default_value") is not None:
         cargs.extend([
@@ -1165,7 +1165,7 @@ def ants_apply_transforms_outputs(
     """
     ret = AntsApplyTransformsOutputs(
         root=execution.output_file("."),
-        output=dyn_outputs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution),
+        output=dyn_outputs(params.get("output")["@type"])(params.get("output"), execution),
     )
     return ret
 
@@ -1314,24 +1314,49 @@ __all__ = [
     "AntsApplyTransformsWarpedOutputParameters",
     "AntsApplyTransformsWelchWindowedSincParameters",
     "ants_apply_transforms",
+    "ants_apply_transforms_alpha_cargs",
     "ants_apply_transforms_alpha_params",
+    "ants_apply_transforms_bspline_cargs",
     "ants_apply_transforms_bspline_params",
+    "ants_apply_transforms_cargs",
+    "ants_apply_transforms_composite_displacement_field_output_cargs",
+    "ants_apply_transforms_composite_displacement_field_output_outputs",
     "ants_apply_transforms_composite_displacement_field_output_params",
+    "ants_apply_transforms_cosine_windowed_sinc_cargs",
     "ants_apply_transforms_cosine_windowed_sinc_params",
+    "ants_apply_transforms_execute",
+    "ants_apply_transforms_gaussian_cargs",
     "ants_apply_transforms_gaussian_params",
+    "ants_apply_transforms_generic_affine_transform_output_cargs",
+    "ants_apply_transforms_generic_affine_transform_output_outputs",
     "ants_apply_transforms_generic_affine_transform_output_params",
+    "ants_apply_transforms_generic_label_cargs",
     "ants_apply_transforms_generic_label_params",
+    "ants_apply_transforms_hamming_windowed_sinc_cargs",
     "ants_apply_transforms_hamming_windowed_sinc_params",
+    "ants_apply_transforms_lanczos_windowed_sinc_cargs",
     "ants_apply_transforms_lanczos_windowed_sinc_params",
+    "ants_apply_transforms_linear_cargs",
     "ants_apply_transforms_linear_params",
+    "ants_apply_transforms_multi_label_cargs",
     "ants_apply_transforms_multi_label_params",
+    "ants_apply_transforms_multi_labelnoparams_cargs",
     "ants_apply_transforms_multi_labelnoparams_params",
+    "ants_apply_transforms_nearest_neighbor_cargs",
     "ants_apply_transforms_nearest_neighbor_params",
+    "ants_apply_transforms_outputs",
+    "ants_apply_transforms_param_cargs",
     "ants_apply_transforms_param_params",
     "ants_apply_transforms_params",
+    "ants_apply_transforms_sigma_cargs",
     "ants_apply_transforms_sigma_params",
+    "ants_apply_transforms_transform_file_name_cargs",
     "ants_apply_transforms_transform_file_name_params",
+    "ants_apply_transforms_use_inverse_cargs",
     "ants_apply_transforms_use_inverse_params",
+    "ants_apply_transforms_warped_output_cargs",
+    "ants_apply_transforms_warped_output_outputs",
     "ants_apply_transforms_warped_output_params",
+    "ants_apply_transforms_welch_windowed_sinc_cargs",
     "ants_apply_transforms_welch_windowed_sinc_params",
 ]

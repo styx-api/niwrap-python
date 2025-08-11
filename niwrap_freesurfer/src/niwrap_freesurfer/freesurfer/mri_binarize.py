@@ -14,7 +14,7 @@ MRI_BINARIZE_METADATA = Metadata(
 
 
 MriBinarizeParameters = typing.TypedDict('MriBinarizeParameters', {
-    "__STYXTYPE__": typing.Literal["mri_binarize"],
+    "@type": typing.Literal["freesurfer.mri_binarize"],
     "input_volume": InputPathType,
     "output_volume": str,
     "min_threshold": typing.NotRequired[float | None],
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_binarize": mri_binarize_cargs,
+        "freesurfer.mri_binarize": mri_binarize_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_binarize": mri_binarize_outputs,
+        "freesurfer.mri_binarize": mri_binarize_outputs,
     }.get(t)
 
 
@@ -176,7 +176,7 @@ def mri_binarize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_binarize",
+        "@type": "freesurfer.mri_binarize",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "ctx_wm_flag": ctx_wm_flag,
@@ -556,5 +556,8 @@ __all__ = [
     "MriBinarizeOutputs",
     "MriBinarizeParameters",
     "mri_binarize",
+    "mri_binarize_cargs",
+    "mri_binarize_execute",
+    "mri_binarize_outputs",
     "mri_binarize_params",
 ]

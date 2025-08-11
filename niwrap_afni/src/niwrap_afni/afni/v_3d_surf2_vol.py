@@ -14,7 +14,7 @@ V_3D_SURF2_VOL_METADATA = Metadata(
 
 
 V3dSurf2VolParameters = typing.TypedDict('V3dSurf2VolParameters', {
-    "__STYXTYPE__": typing.Literal["3dSurf2Vol"],
+    "@type": typing.Literal["afni.3dSurf2Vol"],
     "spec": InputPathType,
     "surface_volume": InputPathType,
     "surf_a": str,
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSurf2Vol": v_3d_surf2_vol_cargs,
+        "afni.3dSurf2Vol": v_3d_surf2_vol_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSurf2Vol": v_3d_surf2_vol_outputs,
+        "afni.3dSurf2Vol": v_3d_surf2_vol_outputs,
     }.get(t)
 
 
@@ -145,7 +145,7 @@ def v_3d_surf2_vol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSurf2Vol",
+        "@type": "afni.3dSurf2Vol",
         "spec": spec,
         "surface_volume": surface_volume,
         "surf_a": surf_a,
@@ -465,5 +465,8 @@ __all__ = [
     "V3dSurf2VolParameters",
     "V_3D_SURF2_VOL_METADATA",
     "v_3d_surf2_vol",
+    "v_3d_surf2_vol_cargs",
+    "v_3d_surf2_vol_execute",
+    "v_3d_surf2_vol_outputs",
     "v_3d_surf2_vol_params",
 ]

@@ -14,7 +14,7 @@ OVERLAY_METADATA = Metadata(
 
 
 OverlayParameters = typing.TypedDict('OverlayParameters', {
-    "__STYXTYPE__": typing.Literal["overlay"],
+    "@type": typing.Literal["fsl.overlay"],
     "auto_thresh_bg": bool,
     "background_image": InputPathType,
     "bg_thresh": list[float],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "overlay": overlay_cargs,
+        "fsl.overlay": overlay_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "overlay": overlay_outputs,
+        "fsl.overlay": overlay_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def overlay_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "overlay",
+        "@type": "fsl.overlay",
         "auto_thresh_bg": auto_thresh_bg,
         "background_image": background_image,
         "bg_thresh": bg_thresh,
@@ -283,5 +283,8 @@ __all__ = [
     "OverlayOutputs",
     "OverlayParameters",
     "overlay",
+    "overlay_cargs",
+    "overlay_execute",
+    "overlay_outputs",
     "overlay_params",
 ]

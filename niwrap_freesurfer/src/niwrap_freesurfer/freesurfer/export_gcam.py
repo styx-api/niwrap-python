@@ -14,7 +14,7 @@ EXPORT_GCAM_METADATA = Metadata(
 
 
 ExportGcamParameters = typing.TypedDict('ExportGcamParameters', {
-    "__STYXTYPE__": typing.Literal["exportGcam"],
+    "@type": typing.Literal["freesurfer.exportGcam"],
     "fixed": InputPathType,
     "moving": InputPathType,
     "morph": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "exportGcam": export_gcam_cargs,
+        "freesurfer.exportGcam": export_gcam_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "exportGcam": export_gcam_outputs,
+        "freesurfer.exportGcam": export_gcam_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def export_gcam_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "exportGcam",
+        "@type": "freesurfer.exportGcam",
         "fixed": fixed,
         "moving": moving,
         "morph": morph,
@@ -262,5 +262,8 @@ __all__ = [
     "ExportGcamOutputs",
     "ExportGcamParameters",
     "export_gcam",
+    "export_gcam_cargs",
+    "export_gcam_execute",
+    "export_gcam_outputs",
     "export_gcam_params",
 ]

@@ -14,7 +14,7 @@ V_1D_UPSAMPLE_METADATA = Metadata(
 
 
 V1dUpsampleParameters = typing.TypedDict('V1dUpsampleParameters', {
-    "__STYXTYPE__": typing.Literal["1dUpsample"],
+    "@type": typing.Literal["afni.1dUpsample"],
     "upsample_factor": float,
     "input_file": InputPathType,
     "linear_interpolation": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dUpsample": v_1d_upsample_cargs,
+        "afni.1dUpsample": v_1d_upsample_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dUpsample": v_1d_upsample_outputs,
+        "afni.1dUpsample": v_1d_upsample_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def v_1d_upsample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dUpsample",
+        "@type": "afni.1dUpsample",
         "upsample_factor": upsample_factor,
         "input_file": input_file,
         "linear_interpolation": linear_interpolation,
@@ -191,5 +191,8 @@ __all__ = [
     "V1dUpsampleParameters",
     "V_1D_UPSAMPLE_METADATA",
     "v_1d_upsample",
+    "v_1d_upsample_cargs",
+    "v_1d_upsample_execute",
+    "v_1d_upsample_outputs",
     "v_1d_upsample_params",
 ]

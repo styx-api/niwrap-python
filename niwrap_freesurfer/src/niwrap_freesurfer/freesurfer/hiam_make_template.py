@@ -14,7 +14,7 @@ HIAM_MAKE_TEMPLATE_METADATA = Metadata(
 
 
 HiamMakeTemplateParameters = typing.TypedDict('HiamMakeTemplateParameters', {
-    "__STYXTYPE__": typing.Literal["hiam_make_template"],
+    "@type": typing.Literal["freesurfer.hiam_make_template"],
     "hemi": str,
     "surface_name": str,
     "subjects": list[str],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "hiam_make_template": hiam_make_template_cargs,
+        "freesurfer.hiam_make_template": hiam_make_template_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def hiam_make_template_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "hiam_make_template",
+        "@type": "freesurfer.hiam_make_template",
         "hemi": hemi,
         "surface_name": surface_name,
         "subjects": subjects,
@@ -192,5 +192,8 @@ __all__ = [
     "HiamMakeTemplateOutputs",
     "HiamMakeTemplateParameters",
     "hiam_make_template",
+    "hiam_make_template_cargs",
+    "hiam_make_template_execute",
+    "hiam_make_template_outputs",
     "hiam_make_template_params",
 ]

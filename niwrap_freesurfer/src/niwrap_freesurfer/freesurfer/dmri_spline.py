@@ -14,7 +14,7 @@ DMRI_SPLINE_METADATA = Metadata(
 
 
 DmriSplineParameters = typing.TypedDict('DmriSplineParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_spline"],
+    "@type": typing.Literal["freesurfer.dmri_spline"],
     "control_points_file": InputPathType,
     "mask_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_spline": dmri_spline_cargs,
+        "freesurfer.dmri_spline": dmri_spline_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_spline": dmri_spline_outputs,
+        "freesurfer.dmri_spline": dmri_spline_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def dmri_spline_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_spline",
+        "@type": "freesurfer.dmri_spline",
         "control_points_file": control_points_file,
         "mask_volume": mask_volume,
         "show_points": show_points,
@@ -270,5 +270,8 @@ __all__ = [
     "DmriSplineOutputs",
     "DmriSplineParameters",
     "dmri_spline",
+    "dmri_spline_cargs",
+    "dmri_spline_execute",
+    "dmri_spline_outputs",
     "dmri_spline_params",
 ]

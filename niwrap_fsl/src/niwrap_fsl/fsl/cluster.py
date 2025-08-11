@@ -14,7 +14,7 @@ CLUSTER_METADATA = Metadata(
 
 
 ClusterParameters = typing.TypedDict('ClusterParameters', {
-    "__STYXTYPE__": typing.Literal["cluster"],
+    "@type": typing.Literal["fsl.cluster"],
     "connectivity": typing.NotRequired[int | None],
     "cope_file": typing.NotRequired[InputPathType | None],
     "dlh": typing.NotRequired[float | None],
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cluster": cluster_cargs,
+        "fsl.cluster": cluster_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cluster": cluster_outputs,
+        "fsl.cluster": cluster_outputs,
     }.get(t)
 
 
@@ -195,7 +195,7 @@ def cluster_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cluster",
+        "@type": "fsl.cluster",
         "find_min": find_min,
         "fractional": fractional,
         "in_file": in_file,
@@ -518,5 +518,8 @@ __all__ = [
     "ClusterOutputs",
     "ClusterParameters",
     "cluster",
+    "cluster_cargs",
+    "cluster_execute",
+    "cluster_outputs",
     "cluster_params",
 ]

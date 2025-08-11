@@ -14,7 +14,7 @@ CIFTI_ROI_AVERAGE_METADATA = Metadata(
 
 
 CiftiRoiAverageParameters = typing.TypedDict('CiftiRoiAverageParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-roi-average"],
+    "@type": typing.Literal["workbench.cifti-roi-average"],
     "cifti_in": InputPathType,
     "text_out": str,
     "opt_cifti_roi_roi_cifti": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-roi-average": cifti_roi_average_cargs,
+        "workbench.cifti-roi-average": cifti_roi_average_cargs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def cifti_roi_average_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-roi-average",
+        "@type": "workbench.cifti-roi-average",
         "cifti_in": cifti_in,
         "text_out": text_out,
     }
@@ -260,5 +260,8 @@ __all__ = [
     "CiftiRoiAverageOutputs",
     "CiftiRoiAverageParameters",
     "cifti_roi_average",
+    "cifti_roi_average_cargs",
+    "cifti_roi_average_execute",
+    "cifti_roi_average_outputs",
     "cifti_roi_average_params",
 ]

@@ -14,7 +14,7 @@ MRIS_GRADIENT_METADATA = Metadata(
 
 
 MrisGradientParameters = typing.TypedDict('MrisGradientParameters', {
-    "__STYXTYPE__": typing.Literal["mris_gradient"],
+    "@type": typing.Literal["freesurfer.mris_gradient"],
     "input_surface": InputPathType,
     "input_vector_field": InputPathType,
     "output_gradient_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_gradient": mris_gradient_cargs,
+        "freesurfer.mris_gradient": mris_gradient_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_gradient": mris_gradient_outputs,
+        "freesurfer.mris_gradient": mris_gradient_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mris_gradient_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_gradient",
+        "@type": "freesurfer.mris_gradient",
         "input_surface": input_surface,
         "input_vector_field": input_vector_field,
         "output_gradient_file": output_gradient_file,
@@ -192,5 +192,8 @@ __all__ = [
     "MrisGradientOutputs",
     "MrisGradientParameters",
     "mris_gradient",
+    "mris_gradient_cargs",
+    "mris_gradient_execute",
+    "mris_gradient_outputs",
     "mris_gradient_params",
 ]

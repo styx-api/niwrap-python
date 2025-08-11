@@ -14,7 +14,7 @@ DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA = Metadata(
 
 
 DmriExtractSurfaceMeasurementsParameters = typing.TypedDict('DmriExtractSurfaceMeasurementsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_extractSurfaceMeasurements"],
+    "@type": typing.Literal["freesurfer.dmri_extractSurfaceMeasurements"],
     "streamline_file": InputPathType,
     "lh_surface_file": InputPathType,
     "lh_thickness_overlay": InputPathType,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_extractSurfaceMeasurements": dmri_extract_surface_measurements_cargs,
+        "freesurfer.dmri_extractSurfaceMeasurements": dmri_extract_surface_measurements_cargs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def dmri_extract_surface_measurements_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_extractSurfaceMeasurements",
+        "@type": "freesurfer.dmri_extractSurfaceMeasurements",
         "streamline_file": streamline_file,
         "lh_surface_file": lh_surface_file,
         "lh_thickness_overlay": lh_thickness_overlay,
@@ -317,5 +317,8 @@ __all__ = [
     "DmriExtractSurfaceMeasurementsOutputs",
     "DmriExtractSurfaceMeasurementsParameters",
     "dmri_extract_surface_measurements",
+    "dmri_extract_surface_measurements_cargs",
+    "dmri_extract_surface_measurements_execute",
+    "dmri_extract_surface_measurements_outputs",
     "dmri_extract_surface_measurements_params",
 ]

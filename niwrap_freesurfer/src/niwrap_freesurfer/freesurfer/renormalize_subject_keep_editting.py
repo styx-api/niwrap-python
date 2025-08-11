@@ -14,7 +14,7 @@ RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA = Metadata(
 
 
 RenormalizeSubjectKeepEdittingParameters = typing.TypedDict('RenormalizeSubjectKeepEdittingParameters', {
-    "__STYXTYPE__": typing.Literal["renormalize_subject_keep_editting"],
+    "@type": typing.Literal["freesurfer.renormalize_subject_keep_editting"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "renormalize_subject_keep_editting": renormalize_subject_keep_editting_cargs,
+        "freesurfer.renormalize_subject_keep_editting": renormalize_subject_keep_editting_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "renormalize_subject_keep_editting": renormalize_subject_keep_editting_outputs,
+        "freesurfer.renormalize_subject_keep_editting": renormalize_subject_keep_editting_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def renormalize_subject_keep_editting_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "renormalize_subject_keep_editting",
+        "@type": "freesurfer.renormalize_subject_keep_editting",
     }
     if placeholder_input is not None:
         params["placeholder_input"] = placeholder_input
@@ -178,5 +178,8 @@ __all__ = [
     "RenormalizeSubjectKeepEdittingOutputs",
     "RenormalizeSubjectKeepEdittingParameters",
     "renormalize_subject_keep_editting",
+    "renormalize_subject_keep_editting_cargs",
+    "renormalize_subject_keep_editting_execute",
+    "renormalize_subject_keep_editting_outputs",
     "renormalize_subject_keep_editting_params",
 ]

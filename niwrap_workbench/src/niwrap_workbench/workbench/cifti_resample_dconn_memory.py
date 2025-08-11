@@ -14,14 +14,14 @@ CIFTI_RESAMPLE_DCONN_MEMORY_METADATA = Metadata(
 
 
 CiftiResampleDconnMemoryWeightedParameters = typing.TypedDict('CiftiResampleDconnMemoryWeightedParameters', {
-    "__STYXTYPE__": typing.Literal["weighted"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.volume_predilate.weighted"],
     "opt_exponent_exponent": typing.NotRequired[float | None],
     "opt_legacy_cutoff": bool,
 })
 
 
 CiftiResampleDconnMemoryVolumePredilateParameters = typing.TypedDict('CiftiResampleDconnMemoryVolumePredilateParameters', {
-    "__STYXTYPE__": typing.Literal["volume_predilate"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.volume_predilate"],
     "dilate_mm": float,
     "opt_nearest": bool,
     "weighted": typing.NotRequired[CiftiResampleDconnMemoryWeightedParameters | None],
@@ -29,14 +29,14 @@ CiftiResampleDconnMemoryVolumePredilateParameters = typing.TypedDict('CiftiResam
 
 
 CiftiResampleDconnMemoryWeighted1Parameters = typing.TypedDict('CiftiResampleDconnMemoryWeighted1Parameters', {
-    "__STYXTYPE__": typing.Literal["weighted_1"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.surface_postdilate.weighted"],
     "opt_exponent_exponent": typing.NotRequired[float | None],
     "opt_legacy_cutoff": bool,
 })
 
 
 CiftiResampleDconnMemorySurfacePostdilateParameters = typing.TypedDict('CiftiResampleDconnMemorySurfacePostdilateParameters', {
-    "__STYXTYPE__": typing.Literal["surface_postdilate"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.surface_postdilate"],
     "dilate_mm": float,
     "opt_nearest": bool,
     "opt_linear": bool,
@@ -45,42 +45,42 @@ CiftiResampleDconnMemorySurfacePostdilateParameters = typing.TypedDict('CiftiRes
 
 
 CiftiResampleDconnMemoryFlirtParameters = typing.TypedDict('CiftiResampleDconnMemoryFlirtParameters', {
-    "__STYXTYPE__": typing.Literal["flirt"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.affine.flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 CiftiResampleDconnMemoryAffineParameters = typing.TypedDict('CiftiResampleDconnMemoryAffineParameters', {
-    "__STYXTYPE__": typing.Literal["affine"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.affine"],
     "affine_file": str,
     "flirt": typing.NotRequired[CiftiResampleDconnMemoryFlirtParameters | None],
 })
 
 
 CiftiResampleDconnMemoryWarpfieldParameters = typing.TypedDict('CiftiResampleDconnMemoryWarpfieldParameters', {
-    "__STYXTYPE__": typing.Literal["warpfield"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.warpfield"],
     "warpfield": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],
 })
 
 
 CiftiResampleDconnMemoryLeftAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaSurfsParameters', {
-    "__STYXTYPE__": typing.Literal["left_area_surfs"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.left_spheres.left_area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryLeftAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftAreaMetricsParameters', {
-    "__STYXTYPE__": typing.Literal["left_area_metrics"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.left_spheres.left_area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryLeftSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryLeftSpheresParameters', {
-    "__STYXTYPE__": typing.Literal["left_spheres"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.left_spheres"],
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
     "left_area_surfs": typing.NotRequired[CiftiResampleDconnMemoryLeftAreaSurfsParameters | None],
@@ -89,21 +89,21 @@ CiftiResampleDconnMemoryLeftSpheresParameters = typing.TypedDict('CiftiResampleD
 
 
 CiftiResampleDconnMemoryRightAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryRightAreaSurfsParameters', {
-    "__STYXTYPE__": typing.Literal["right_area_surfs"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.right_spheres.right_area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryRightAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryRightAreaMetricsParameters', {
-    "__STYXTYPE__": typing.Literal["right_area_metrics"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.right_spheres.right_area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryRightSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryRightSpheresParameters', {
-    "__STYXTYPE__": typing.Literal["right_spheres"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.right_spheres"],
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
     "right_area_surfs": typing.NotRequired[CiftiResampleDconnMemoryRightAreaSurfsParameters | None],
@@ -112,21 +112,21 @@ CiftiResampleDconnMemoryRightSpheresParameters = typing.TypedDict('CiftiResample
 
 
 CiftiResampleDconnMemoryCerebellumAreaSurfsParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaSurfsParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_area_surfs"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.cerebellum_spheres.cerebellum_area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryCerebellumAreaMetricsParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumAreaMetricsParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_area_metrics"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.cerebellum_spheres.cerebellum_area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 CiftiResampleDconnMemoryCerebellumSpheresParameters = typing.TypedDict('CiftiResampleDconnMemoryCerebellumSpheresParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_spheres"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory.cerebellum_spheres"],
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
     "cerebellum_area_surfs": typing.NotRequired[CiftiResampleDconnMemoryCerebellumAreaSurfsParameters | None],
@@ -135,7 +135,7 @@ CiftiResampleDconnMemoryCerebellumSpheresParameters = typing.TypedDict('CiftiRes
 
 
 CiftiResampleDconnMemoryParameters = typing.TypedDict('CiftiResampleDconnMemoryParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-resample-dconn-memory"],
+    "@type": typing.Literal["workbench.cifti-resample-dconn-memory"],
     "cifti_in": InputPathType,
     "cifti_template": InputPathType,
     "template_direction": str,
@@ -165,23 +165,23 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-resample-dconn-memory": cifti_resample_dconn_memory_cargs,
-        "volume_predilate": cifti_resample_dconn_memory_volume_predilate_cargs,
-        "weighted": cifti_resample_dconn_memory_weighted_cargs,
-        "surface_postdilate": cifti_resample_dconn_memory_surface_postdilate_cargs,
-        "weighted_1": cifti_resample_dconn_memory_weighted_1_cargs,
-        "affine": cifti_resample_dconn_memory_affine_cargs,
-        "flirt": cifti_resample_dconn_memory_flirt_cargs,
-        "warpfield": cifti_resample_dconn_memory_warpfield_cargs,
-        "left_spheres": cifti_resample_dconn_memory_left_spheres_cargs,
-        "left_area_surfs": cifti_resample_dconn_memory_left_area_surfs_cargs,
-        "left_area_metrics": cifti_resample_dconn_memory_left_area_metrics_cargs,
-        "right_spheres": cifti_resample_dconn_memory_right_spheres_cargs,
-        "right_area_surfs": cifti_resample_dconn_memory_right_area_surfs_cargs,
-        "right_area_metrics": cifti_resample_dconn_memory_right_area_metrics_cargs,
-        "cerebellum_spheres": cifti_resample_dconn_memory_cerebellum_spheres_cargs,
-        "cerebellum_area_surfs": cifti_resample_dconn_memory_cerebellum_area_surfs_cargs,
-        "cerebellum_area_metrics": cifti_resample_dconn_memory_cerebellum_area_metrics_cargs,
+        "workbench.cifti-resample-dconn-memory": cifti_resample_dconn_memory_cargs,
+        "workbench.cifti-resample-dconn-memory.volume_predilate": cifti_resample_dconn_memory_volume_predilate_cargs,
+        "workbench.cifti-resample-dconn-memory.volume_predilate.weighted": cifti_resample_dconn_memory_weighted_cargs,
+        "workbench.cifti-resample-dconn-memory.surface_postdilate": cifti_resample_dconn_memory_surface_postdilate_cargs,
+        "workbench.cifti-resample-dconn-memory.surface_postdilate.weighted": cifti_resample_dconn_memory_weighted_1_cargs,
+        "workbench.cifti-resample-dconn-memory.affine": cifti_resample_dconn_memory_affine_cargs,
+        "workbench.cifti-resample-dconn-memory.affine.flirt": cifti_resample_dconn_memory_flirt_cargs,
+        "workbench.cifti-resample-dconn-memory.warpfield": cifti_resample_dconn_memory_warpfield_cargs,
+        "workbench.cifti-resample-dconn-memory.left_spheres": cifti_resample_dconn_memory_left_spheres_cargs,
+        "workbench.cifti-resample-dconn-memory.left_spheres.left_area_surfs": cifti_resample_dconn_memory_left_area_surfs_cargs,
+        "workbench.cifti-resample-dconn-memory.left_spheres.left_area_metrics": cifti_resample_dconn_memory_left_area_metrics_cargs,
+        "workbench.cifti-resample-dconn-memory.right_spheres": cifti_resample_dconn_memory_right_spheres_cargs,
+        "workbench.cifti-resample-dconn-memory.right_spheres.right_area_surfs": cifti_resample_dconn_memory_right_area_surfs_cargs,
+        "workbench.cifti-resample-dconn-memory.right_spheres.right_area_metrics": cifti_resample_dconn_memory_right_area_metrics_cargs,
+        "workbench.cifti-resample-dconn-memory.cerebellum_spheres": cifti_resample_dconn_memory_cerebellum_spheres_cargs,
+        "workbench.cifti-resample-dconn-memory.cerebellum_spheres.cerebellum_area_surfs": cifti_resample_dconn_memory_cerebellum_area_surfs_cargs,
+        "workbench.cifti-resample-dconn-memory.cerebellum_spheres.cerebellum_area_metrics": cifti_resample_dconn_memory_cerebellum_area_metrics_cargs,
     }.get(t)
 
 
@@ -197,7 +197,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-resample-dconn-memory": cifti_resample_dconn_memory_outputs,
+        "workbench.cifti-resample-dconn-memory": cifti_resample_dconn_memory_outputs,
     }.get(t)
 
 
@@ -217,7 +217,7 @@ def cifti_resample_dconn_memory_weighted_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "weighted",
+        "@type": "workbench.cifti-resample-dconn-memory.volume_predilate.weighted",
         "opt_legacy_cutoff": opt_legacy_cutoff,
     }
     if opt_exponent_exponent is not None:
@@ -266,7 +266,7 @@ def cifti_resample_dconn_memory_volume_predilate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume_predilate",
+        "@type": "workbench.cifti-resample-dconn-memory.volume_predilate",
         "dilate_mm": dilate_mm,
         "opt_nearest": opt_nearest,
     }
@@ -294,7 +294,7 @@ def cifti_resample_dconn_memory_volume_predilate_cargs(
     if params.get("opt_nearest"):
         cargs.append("-nearest")
     if params.get("weighted") is not None:
-        cargs.extend(dyn_cargs(params.get("weighted")["__STYXTYPE__"])(params.get("weighted"), execution))
+        cargs.extend(dyn_cargs(params.get("weighted")["@type"])(params.get("weighted"), execution))
     return cargs
 
 
@@ -314,7 +314,7 @@ def cifti_resample_dconn_memory_weighted_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "weighted_1",
+        "@type": "workbench.cifti-resample-dconn-memory.surface_postdilate.weighted",
         "opt_legacy_cutoff": opt_legacy_cutoff,
     }
     if opt_exponent_exponent is not None:
@@ -365,7 +365,7 @@ def cifti_resample_dconn_memory_surface_postdilate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface_postdilate",
+        "@type": "workbench.cifti-resample-dconn-memory.surface_postdilate",
         "dilate_mm": dilate_mm,
         "opt_nearest": opt_nearest,
         "opt_linear": opt_linear,
@@ -396,7 +396,7 @@ def cifti_resample_dconn_memory_surface_postdilate_cargs(
     if params.get("opt_linear"):
         cargs.append("-linear")
     if params.get("weighted") is not None:
-        cargs.extend(dyn_cargs(params.get("weighted")["__STYXTYPE__"])(params.get("weighted"), execution))
+        cargs.extend(dyn_cargs(params.get("weighted")["@type"])(params.get("weighted"), execution))
     return cargs
 
 
@@ -414,7 +414,7 @@ def cifti_resample_dconn_memory_flirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt",
+        "@type": "workbench.cifti-resample-dconn-memory.affine.flirt",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -455,7 +455,7 @@ def cifti_resample_dconn_memory_affine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "affine",
+        "@type": "workbench.cifti-resample-dconn-memory.affine",
         "affine_file": affine_file,
     }
     if flirt is not None:
@@ -480,7 +480,7 @@ def cifti_resample_dconn_memory_affine_cargs(
     cargs.append("-affine")
     cargs.append(params.get("affine_file"))
     if params.get("flirt") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt")["__STYXTYPE__"])(params.get("flirt"), execution))
+        cargs.extend(dyn_cargs(params.get("flirt")["@type"])(params.get("flirt"), execution))
     return cargs
 
 
@@ -499,7 +499,7 @@ def cifti_resample_dconn_memory_warpfield_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warpfield",
+        "@type": "workbench.cifti-resample-dconn-memory.warpfield",
         "warpfield": warpfield,
     }
     if opt_fnirt_source_volume is not None:
@@ -545,7 +545,7 @@ def cifti_resample_dconn_memory_left_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_area_surfs",
+        "@type": "workbench.cifti-resample-dconn-memory.left_spheres.left_area_surfs",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -586,7 +586,7 @@ def cifti_resample_dconn_memory_left_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_area_metrics",
+        "@type": "workbench.cifti-resample-dconn-memory.left_spheres.left_area_metrics",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -634,7 +634,7 @@ def cifti_resample_dconn_memory_left_spheres_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_spheres",
+        "@type": "workbench.cifti-resample-dconn-memory.left_spheres",
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
     }
@@ -663,9 +663,9 @@ def cifti_resample_dconn_memory_left_spheres_cargs(
     cargs.append(execution.input_file(params.get("current_sphere")))
     cargs.append(execution.input_file(params.get("new_sphere")))
     if params.get("left_area_surfs") is not None:
-        cargs.extend(dyn_cargs(params.get("left_area_surfs")["__STYXTYPE__"])(params.get("left_area_surfs"), execution))
+        cargs.extend(dyn_cargs(params.get("left_area_surfs")["@type"])(params.get("left_area_surfs"), execution))
     if params.get("left_area_metrics") is not None:
-        cargs.extend(dyn_cargs(params.get("left_area_metrics")["__STYXTYPE__"])(params.get("left_area_metrics"), execution))
+        cargs.extend(dyn_cargs(params.get("left_area_metrics")["@type"])(params.get("left_area_metrics"), execution))
     return cargs
 
 
@@ -683,7 +683,7 @@ def cifti_resample_dconn_memory_right_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_area_surfs",
+        "@type": "workbench.cifti-resample-dconn-memory.right_spheres.right_area_surfs",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -724,7 +724,7 @@ def cifti_resample_dconn_memory_right_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_area_metrics",
+        "@type": "workbench.cifti-resample-dconn-memory.right_spheres.right_area_metrics",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -773,7 +773,7 @@ def cifti_resample_dconn_memory_right_spheres_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_spheres",
+        "@type": "workbench.cifti-resample-dconn-memory.right_spheres",
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
     }
@@ -802,9 +802,9 @@ def cifti_resample_dconn_memory_right_spheres_cargs(
     cargs.append(execution.input_file(params.get("current_sphere")))
     cargs.append(execution.input_file(params.get("new_sphere")))
     if params.get("right_area_surfs") is not None:
-        cargs.extend(dyn_cargs(params.get("right_area_surfs")["__STYXTYPE__"])(params.get("right_area_surfs"), execution))
+        cargs.extend(dyn_cargs(params.get("right_area_surfs")["@type"])(params.get("right_area_surfs"), execution))
     if params.get("right_area_metrics") is not None:
-        cargs.extend(dyn_cargs(params.get("right_area_metrics")["__STYXTYPE__"])(params.get("right_area_metrics"), execution))
+        cargs.extend(dyn_cargs(params.get("right_area_metrics")["@type"])(params.get("right_area_metrics"), execution))
     return cargs
 
 
@@ -823,7 +823,7 @@ def cifti_resample_dconn_memory_cerebellum_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_area_surfs",
+        "@type": "workbench.cifti-resample-dconn-memory.cerebellum_spheres.cerebellum_area_surfs",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -864,7 +864,7 @@ def cifti_resample_dconn_memory_cerebellum_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_area_metrics",
+        "@type": "workbench.cifti-resample-dconn-memory.cerebellum_spheres.cerebellum_area_metrics",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -913,7 +913,7 @@ def cifti_resample_dconn_memory_cerebellum_spheres_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_spheres",
+        "@type": "workbench.cifti-resample-dconn-memory.cerebellum_spheres",
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
     }
@@ -942,9 +942,9 @@ def cifti_resample_dconn_memory_cerebellum_spheres_cargs(
     cargs.append(execution.input_file(params.get("current_sphere")))
     cargs.append(execution.input_file(params.get("new_sphere")))
     if params.get("cerebellum_area_surfs") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_area_surfs")["__STYXTYPE__"])(params.get("cerebellum_area_surfs"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_area_surfs")["@type"])(params.get("cerebellum_area_surfs"), execution))
     if params.get("cerebellum_area_metrics") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_area_metrics")["__STYXTYPE__"])(params.get("cerebellum_area_metrics"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_area_metrics")["@type"])(params.get("cerebellum_area_metrics"), execution))
     return cargs
 
 
@@ -998,7 +998,7 @@ def cifti_resample_dconn_memory_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-resample-dconn-memory",
+        "@type": "workbench.cifti-resample-dconn-memory",
         "cifti_in": cifti_in,
         "cifti_template": cifti_template,
         "template_direction": template_direction,
@@ -1049,19 +1049,19 @@ def cifti_resample_dconn_memory_cargs(
     if params.get("opt_surface_largest"):
         cargs.append("-surface-largest")
     if params.get("volume_predilate") is not None:
-        cargs.extend(dyn_cargs(params.get("volume_predilate")["__STYXTYPE__"])(params.get("volume_predilate"), execution))
+        cargs.extend(dyn_cargs(params.get("volume_predilate")["@type"])(params.get("volume_predilate"), execution))
     if params.get("surface_postdilate") is not None:
-        cargs.extend(dyn_cargs(params.get("surface_postdilate")["__STYXTYPE__"])(params.get("surface_postdilate"), execution))
+        cargs.extend(dyn_cargs(params.get("surface_postdilate")["@type"])(params.get("surface_postdilate"), execution))
     if params.get("affine") is not None:
-        cargs.extend(dyn_cargs(params.get("affine")["__STYXTYPE__"])(params.get("affine"), execution))
+        cargs.extend(dyn_cargs(params.get("affine")["@type"])(params.get("affine"), execution))
     if params.get("warpfield") is not None:
-        cargs.extend(dyn_cargs(params.get("warpfield")["__STYXTYPE__"])(params.get("warpfield"), execution))
+        cargs.extend(dyn_cargs(params.get("warpfield")["@type"])(params.get("warpfield"), execution))
     if params.get("left_spheres") is not None:
-        cargs.extend(dyn_cargs(params.get("left_spheres")["__STYXTYPE__"])(params.get("left_spheres"), execution))
+        cargs.extend(dyn_cargs(params.get("left_spheres")["@type"])(params.get("left_spheres"), execution))
     if params.get("right_spheres") is not None:
-        cargs.extend(dyn_cargs(params.get("right_spheres")["__STYXTYPE__"])(params.get("right_spheres"), execution))
+        cargs.extend(dyn_cargs(params.get("right_spheres")["@type"])(params.get("right_spheres"), execution))
     if params.get("cerebellum_spheres") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_spheres")["__STYXTYPE__"])(params.get("cerebellum_spheres"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_spheres")["@type"])(params.get("cerebellum_spheres"), execution))
     return cargs
 
 
@@ -1254,21 +1254,40 @@ __all__ = [
     "CiftiResampleDconnMemoryWeighted1Parameters",
     "CiftiResampleDconnMemoryWeightedParameters",
     "cifti_resample_dconn_memory",
+    "cifti_resample_dconn_memory_affine_cargs",
     "cifti_resample_dconn_memory_affine_params",
+    "cifti_resample_dconn_memory_cargs",
+    "cifti_resample_dconn_memory_cerebellum_area_metrics_cargs",
     "cifti_resample_dconn_memory_cerebellum_area_metrics_params",
+    "cifti_resample_dconn_memory_cerebellum_area_surfs_cargs",
     "cifti_resample_dconn_memory_cerebellum_area_surfs_params",
+    "cifti_resample_dconn_memory_cerebellum_spheres_cargs",
     "cifti_resample_dconn_memory_cerebellum_spheres_params",
+    "cifti_resample_dconn_memory_execute",
+    "cifti_resample_dconn_memory_flirt_cargs",
     "cifti_resample_dconn_memory_flirt_params",
+    "cifti_resample_dconn_memory_left_area_metrics_cargs",
     "cifti_resample_dconn_memory_left_area_metrics_params",
+    "cifti_resample_dconn_memory_left_area_surfs_cargs",
     "cifti_resample_dconn_memory_left_area_surfs_params",
+    "cifti_resample_dconn_memory_left_spheres_cargs",
     "cifti_resample_dconn_memory_left_spheres_params",
+    "cifti_resample_dconn_memory_outputs",
     "cifti_resample_dconn_memory_params",
+    "cifti_resample_dconn_memory_right_area_metrics_cargs",
     "cifti_resample_dconn_memory_right_area_metrics_params",
+    "cifti_resample_dconn_memory_right_area_surfs_cargs",
     "cifti_resample_dconn_memory_right_area_surfs_params",
+    "cifti_resample_dconn_memory_right_spheres_cargs",
     "cifti_resample_dconn_memory_right_spheres_params",
+    "cifti_resample_dconn_memory_surface_postdilate_cargs",
     "cifti_resample_dconn_memory_surface_postdilate_params",
+    "cifti_resample_dconn_memory_volume_predilate_cargs",
     "cifti_resample_dconn_memory_volume_predilate_params",
+    "cifti_resample_dconn_memory_warpfield_cargs",
     "cifti_resample_dconn_memory_warpfield_params",
+    "cifti_resample_dconn_memory_weighted_1_cargs",
     "cifti_resample_dconn_memory_weighted_1_params",
+    "cifti_resample_dconn_memory_weighted_cargs",
     "cifti_resample_dconn_memory_weighted_params",
 ]

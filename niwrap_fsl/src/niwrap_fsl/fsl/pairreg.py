@@ -14,7 +14,7 @@ PAIRREG_METADATA = Metadata(
 
 
 PairregParameters = typing.TypedDict('PairregParameters', {
-    "__STYXTYPE__": typing.Literal["pairreg"],
+    "@type": typing.Literal["fsl.pairreg"],
     "brain1": InputPathType,
     "brain2": InputPathType,
     "skull1": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pairreg": pairreg_cargs,
+        "fsl.pairreg": pairreg_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "pairreg": pairreg_outputs,
+        "fsl.pairreg": pairreg_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def pairreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pairreg",
+        "@type": "fsl.pairreg",
         "brain1": brain1,
         "brain2": brain2,
         "skull1": skull1,
@@ -214,5 +214,8 @@ __all__ = [
     "PairregOutputs",
     "PairregParameters",
     "pairreg",
+    "pairreg_cargs",
+    "pairreg_execute",
+    "pairreg_outputs",
     "pairreg_params",
 ]

@@ -14,7 +14,7 @@ FAT_PROC_CONNEC_VIS_METADATA = Metadata(
 
 
 FatProcConnecVisParameters = typing.TypedDict('FatProcConnecVisParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_connec_vis"],
+    "@type": typing.Literal["afni.fat_proc_connec_vis"],
     "in_rois": str,
     "prefix": str,
     "prefix_file": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_connec_vis": fat_proc_connec_vis_cargs,
+        "afni.fat_proc_connec_vis": fat_proc_connec_vis_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_connec_vis": fat_proc_connec_vis_outputs,
+        "afni.fat_proc_connec_vis": fat_proc_connec_vis_outputs,
     }.get(t)
 
 
@@ -132,7 +132,7 @@ def fat_proc_connec_vis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_connec_vis",
+        "@type": "afni.fat_proc_connec_vis",
         "in_rois": in_rois,
         "prefix": prefix,
         "trackid_no_or": trackid_no_or,
@@ -342,5 +342,8 @@ __all__ = [
     "FatProcConnecVisOutputs",
     "FatProcConnecVisParameters",
     "fat_proc_connec_vis",
+    "fat_proc_connec_vis_cargs",
+    "fat_proc_connec_vis_execute",
+    "fat_proc_connec_vis_outputs",
     "fat_proc_connec_vis_params",
 ]

@@ -14,7 +14,7 @@ V_3DPC_METADATA = Metadata(
 
 
 V3dpcParameters = typing.TypedDict('V3dpcParameters', {
-    "__STYXTYPE__": typing.Literal["3dpc"],
+    "@type": typing.Literal["afni.3dpc"],
     "datasets": list[InputPathType],
     "dmean": bool,
     "vmean": bool,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dpc": v_3dpc_cargs,
+        "afni.3dpc": v_3dpc_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dpc": v_3dpc_outputs,
+        "afni.3dpc": v_3dpc_outputs,
     }.get(t)
 
 
@@ -126,7 +126,7 @@ def v_3dpc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dpc",
+        "@type": "afni.3dpc",
         "datasets": datasets,
         "dmean": dmean,
         "vmean": vmean,
@@ -336,5 +336,8 @@ __all__ = [
     "V3dpcParameters",
     "V_3DPC_METADATA",
     "v_3dpc",
+    "v_3dpc_cargs",
+    "v_3dpc_execute",
+    "v_3dpc_outputs",
     "v_3dpc_params",
 ]

@@ -14,7 +14,7 @@ MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA = Metadata(
 
 
 MriEditSegmentationWithSurfacesParameters = typing.TypedDict('MriEditSegmentationWithSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["mri_edit_segmentation_with_surfaces"],
+    "@type": typing.Literal["freesurfer.mri_edit_segmentation_with_surfaces"],
     "aseg_name": InputPathType,
     "surface_dir": str,
     "norm_volume": InputPathType,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_edit_segmentation_with_surfaces": mri_edit_segmentation_with_surfaces_cargs,
+        "freesurfer.mri_edit_segmentation_with_surfaces": mri_edit_segmentation_with_surfaces_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_edit_segmentation_with_surfaces": mri_edit_segmentation_with_surfaces_outputs,
+        "freesurfer.mri_edit_segmentation_with_surfaces": mri_edit_segmentation_with_surfaces_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def mri_edit_segmentation_with_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_edit_segmentation_with_surfaces",
+        "@type": "freesurfer.mri_edit_segmentation_with_surfaces",
         "aseg_name": aseg_name,
         "surface_dir": surface_dir,
         "norm_volume": norm_volume,
@@ -263,5 +263,8 @@ __all__ = [
     "MriEditSegmentationWithSurfacesOutputs",
     "MriEditSegmentationWithSurfacesParameters",
     "mri_edit_segmentation_with_surfaces",
+    "mri_edit_segmentation_with_surfaces_cargs",
+    "mri_edit_segmentation_with_surfaces_execute",
+    "mri_edit_segmentation_with_surfaces_outputs",
     "mri_edit_segmentation_with_surfaces_params",
 ]

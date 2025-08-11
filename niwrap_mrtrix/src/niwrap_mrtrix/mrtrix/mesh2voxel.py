@@ -14,14 +14,14 @@ MESH2VOXEL_METADATA = Metadata(
 
 
 Mesh2voxelConfigParameters = typing.TypedDict('Mesh2voxelConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mesh2voxel.config"],
     "key": str,
     "value": str,
 })
 
 
 Mesh2voxelParameters = typing.TypedDict('Mesh2voxelParameters', {
-    "__STYXTYPE__": typing.Literal["mesh2voxel"],
+    "@type": typing.Literal["mrtrix.mesh2voxel"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mesh2voxel": mesh2voxel_cargs,
-        "config": mesh2voxel_config_cargs,
+        "mrtrix.mesh2voxel": mesh2voxel_cargs,
+        "mrtrix.mesh2voxel.config": mesh2voxel_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mesh2voxel": mesh2voxel_outputs,
+        "mrtrix.mesh2voxel": mesh2voxel_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mesh2voxel_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mesh2voxel.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def mesh2voxel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mesh2voxel",
+        "@type": "mrtrix.mesh2voxel",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -204,7 +204,7 @@ def mesh2voxel_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -343,6 +343,10 @@ __all__ = [
     "Mesh2voxelOutputs",
     "Mesh2voxelParameters",
     "mesh2voxel",
+    "mesh2voxel_cargs",
+    "mesh2voxel_config_cargs",
     "mesh2voxel_config_params",
+    "mesh2voxel_execute",
+    "mesh2voxel_outputs",
     "mesh2voxel_params",
 ]

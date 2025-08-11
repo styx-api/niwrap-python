@@ -14,7 +14,7 @@ REGISTER_ELDERLY_SUBJECT_METADATA = Metadata(
 
 
 RegisterElderlySubjectParameters = typing.TypedDict('RegisterElderlySubjectParameters', {
-    "__STYXTYPE__": typing.Literal["register_elderly_subject"],
+    "@type": typing.Literal["freesurfer.register_elderly_subject"],
     "sampling_percentage": typing.NotRequired[float | None],
     "output_fsamples": str,
     "output_norm": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "register_elderly_subject": register_elderly_subject_cargs,
+        "freesurfer.register_elderly_subject": register_elderly_subject_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "register_elderly_subject": register_elderly_subject_outputs,
+        "freesurfer.register_elderly_subject": register_elderly_subject_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def register_elderly_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "register_elderly_subject",
+        "@type": "freesurfer.register_elderly_subject",
         "output_fsamples": output_fsamples,
         "output_norm": output_norm,
         "input_volume": input_volume,
@@ -230,5 +230,8 @@ __all__ = [
     "RegisterElderlySubjectOutputs",
     "RegisterElderlySubjectParameters",
     "register_elderly_subject",
+    "register_elderly_subject_cargs",
+    "register_elderly_subject_execute",
+    "register_elderly_subject_outputs",
     "register_elderly_subject_params",
 ]

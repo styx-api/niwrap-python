@@ -14,7 +14,7 @@ KELLY_KAPOWSKI_METADATA = Metadata(
 
 
 KellyKapowskiParameters = typing.TypedDict('KellyKapowskiParameters', {
-    "__STYXTYPE__": typing.Literal["KellyKapowski"],
+    "@type": typing.Literal["ants.KellyKapowski"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3] | None],
     "segmentation_image": typing.NotRequired[InputPathType | None],
     "gray_matter_probability_image": typing.NotRequired[InputPathType | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "KellyKapowski": kelly_kapowski_cargs,
+        "ants.KellyKapowski": kelly_kapowski_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "KellyKapowski": kelly_kapowski_outputs,
+        "ants.KellyKapowski": kelly_kapowski_outputs,
     }.get(t)
 
 
@@ -151,7 +151,7 @@ def kelly_kapowski_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "KellyKapowski",
+        "@type": "ants.KellyKapowski",
         "output": output,
     }
     if image_dimensionality is not None:
@@ -454,5 +454,8 @@ __all__ = [
     "KellyKapowskiOutputs",
     "KellyKapowskiParameters",
     "kelly_kapowski",
+    "kelly_kapowski_cargs",
+    "kelly_kapowski_execute",
+    "kelly_kapowski_outputs",
     "kelly_kapowski_params",
 ]

@@ -14,7 +14,7 @@ MRI_SYNTHSR_METADATA = Metadata(
 
 
 MriSynthsrParameters = typing.TypedDict('MriSynthsrParameters', {
-    "__STYXTYPE__": typing.Literal["mri_synthsr"],
+    "@type": typing.Literal["freesurfer.mri_synthsr"],
     "input": str,
     "output": str,
     "ct": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_synthsr": mri_synthsr_cargs,
+        "freesurfer.mri_synthsr": mri_synthsr_cargs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def mri_synthsr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_synthsr",
+        "@type": "freesurfer.mri_synthsr",
         "input": input_,
         "output": output,
         "ct": ct,
@@ -268,5 +268,8 @@ __all__ = [
     "MriSynthsrOutputs",
     "MriSynthsrParameters",
     "mri_synthsr",
+    "mri_synthsr_cargs",
+    "mri_synthsr_execute",
+    "mri_synthsr_outputs",
     "mri_synthsr_params",
 ]

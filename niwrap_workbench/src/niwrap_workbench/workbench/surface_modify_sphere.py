@@ -14,7 +14,7 @@ SURFACE_MODIFY_SPHERE_METADATA = Metadata(
 
 
 SurfaceModifySphereParameters = typing.TypedDict('SurfaceModifySphereParameters', {
-    "__STYXTYPE__": typing.Literal["surface-modify-sphere"],
+    "@type": typing.Literal["workbench.surface-modify-sphere"],
     "sphere_in": InputPathType,
     "radius": float,
     "sphere_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-modify-sphere": surface_modify_sphere_cargs,
+        "workbench.surface-modify-sphere": surface_modify_sphere_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-modify-sphere": surface_modify_sphere_outputs,
+        "workbench.surface-modify-sphere": surface_modify_sphere_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def surface_modify_sphere_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-modify-sphere",
+        "@type": "workbench.surface-modify-sphere",
         "sphere_in": sphere_in,
         "radius": radius,
         "sphere_out": sphere_out,
@@ -216,5 +216,8 @@ __all__ = [
     "SurfaceModifySphereOutputs",
     "SurfaceModifySphereParameters",
     "surface_modify_sphere",
+    "surface_modify_sphere_cargs",
+    "surface_modify_sphere_execute",
+    "surface_modify_sphere_outputs",
     "surface_modify_sphere_params",
 ]

@@ -14,7 +14,7 @@ V__COMPUTE_OC_WEIGHTS_METADATA = Metadata(
 
 
 VComputeOcWeightsParameters = typing.TypedDict('VComputeOcWeightsParameters', {
-    "__STYXTYPE__": typing.Literal["@compute_OC_weights"],
+    "@type": typing.Literal["afni.@compute_OC_weights"],
     "echo_times": typing.NotRequired[str | None],
     "echo_times_file": typing.NotRequired[InputPathType | None],
     "echo_dsets": list[str],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@compute_OC_weights": v__compute_oc_weights_cargs,
+        "afni.@compute_OC_weights": v__compute_oc_weights_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@compute_OC_weights": v__compute_oc_weights_outputs,
+        "afni.@compute_OC_weights": v__compute_oc_weights_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def v__compute_oc_weights_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@compute_OC_weights",
+        "@type": "afni.@compute_OC_weights",
         "echo_dsets": echo_dsets,
         "verbosity": verbosity,
     }
@@ -298,5 +298,8 @@ __all__ = [
     "VComputeOcWeightsParameters",
     "V__COMPUTE_OC_WEIGHTS_METADATA",
     "v__compute_oc_weights",
+    "v__compute_oc_weights_cargs",
+    "v__compute_oc_weights_execute",
+    "v__compute_oc_weights_outputs",
     "v__compute_oc_weights_params",
 ]

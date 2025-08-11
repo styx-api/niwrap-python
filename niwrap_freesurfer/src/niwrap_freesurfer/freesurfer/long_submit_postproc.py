@@ -14,7 +14,7 @@ LONG_SUBMIT_POSTPROC_METADATA = Metadata(
 
 
 LongSubmitPostprocParameters = typing.TypedDict('LongSubmitPostprocParameters', {
-    "__STYXTYPE__": typing.Literal["long_submit_postproc"],
+    "@type": typing.Literal["freesurfer.long_submit_postproc"],
     "qdec": InputPathType,
     "prog": str,
     "flags": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_submit_postproc": long_submit_postproc_cargs,
+        "freesurfer.long_submit_postproc": long_submit_postproc_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def long_submit_postproc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_submit_postproc",
+        "@type": "freesurfer.long_submit_postproc",
         "qdec": qdec,
         "prog": prog,
         "simulate": simulate,
@@ -258,5 +258,8 @@ __all__ = [
     "LongSubmitPostprocOutputs",
     "LongSubmitPostprocParameters",
     "long_submit_postproc",
+    "long_submit_postproc_cargs",
+    "long_submit_postproc_execute",
+    "long_submit_postproc_outputs",
     "long_submit_postproc_params",
 ]

@@ -14,14 +14,14 @@ LABEL2MESH_METADATA = Metadata(
 
 
 Label2meshConfigParameters = typing.TypedDict('Label2meshConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.label2mesh.config"],
     "key": str,
     "value": str,
 })
 
 
 Label2meshParameters = typing.TypedDict('Label2meshParameters', {
-    "__STYXTYPE__": typing.Literal["label2mesh"],
+    "@type": typing.Literal["mrtrix.label2mesh"],
     "blocky": bool,
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label2mesh": label2mesh_cargs,
-        "config": label2mesh_config_cargs,
+        "mrtrix.label2mesh": label2mesh_cargs,
+        "mrtrix.label2mesh.config": label2mesh_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label2mesh": label2mesh_outputs,
+        "mrtrix.label2mesh": label2mesh_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def label2mesh_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.label2mesh.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def label2mesh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label2mesh",
+        "@type": "mrtrix.label2mesh",
         "blocky": blocky,
         "info": info,
         "quiet": quiet,
@@ -206,7 +206,7 @@ def label2mesh_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -338,6 +338,10 @@ __all__ = [
     "Label2meshOutputs",
     "Label2meshParameters",
     "label2mesh",
+    "label2mesh_cargs",
+    "label2mesh_config_cargs",
     "label2mesh_config_params",
+    "label2mesh_execute",
+    "label2mesh_outputs",
     "label2mesh_params",
 ]

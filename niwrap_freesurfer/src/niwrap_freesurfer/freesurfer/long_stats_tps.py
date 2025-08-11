@@ -14,7 +14,7 @@ LONG_STATS_TPS_METADATA = Metadata(
 
 
 LongStatsTpsParameters = typing.TypedDict('LongStatsTpsParameters', {
-    "__STYXTYPE__": typing.Literal["long_stats_tps"],
+    "@type": typing.Literal["freesurfer.long_stats_tps"],
     "qdec_table": InputPathType,
     "stats_file": str,
     "measure": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_stats_tps": long_stats_tps_cargs,
+        "freesurfer.long_stats_tps": long_stats_tps_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "long_stats_tps": long_stats_tps_outputs,
+        "freesurfer.long_stats_tps": long_stats_tps_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def long_stats_tps_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_stats_tps",
+        "@type": "freesurfer.long_stats_tps",
         "qdec_table": qdec_table,
         "stats_file": stats_file,
         "measure": measure,
@@ -254,5 +254,8 @@ __all__ = [
     "LongStatsTpsOutputs",
     "LongStatsTpsParameters",
     "long_stats_tps",
+    "long_stats_tps_cargs",
+    "long_stats_tps_execute",
+    "long_stats_tps_outputs",
     "long_stats_tps_params",
 ]

@@ -14,14 +14,14 @@ WARPINIT_METADATA = Metadata(
 
 
 WarpinitConfigParameters = typing.TypedDict('WarpinitConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.warpinit.config"],
     "key": str,
     "value": str,
 })
 
 
 WarpinitParameters = typing.TypedDict('WarpinitParameters', {
-    "__STYXTYPE__": typing.Literal["warpinit"],
+    "@type": typing.Literal["mrtrix.warpinit"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "warpinit": warpinit_cargs,
-        "config": warpinit_config_cargs,
+        "mrtrix.warpinit": warpinit_cargs,
+        "mrtrix.warpinit.config": warpinit_config_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "warpinit": warpinit_outputs,
+        "mrtrix.warpinit": warpinit_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def warpinit_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.warpinit.config",
         "key": key,
         "value": value,
     }
@@ -153,7 +153,7 @@ def warpinit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warpinit",
+        "@type": "mrtrix.warpinit",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -199,7 +199,7 @@ def warpinit_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -351,6 +351,10 @@ __all__ = [
     "WarpinitOutputs",
     "WarpinitParameters",
     "warpinit",
+    "warpinit_cargs",
+    "warpinit_config_cargs",
     "warpinit_config_params",
+    "warpinit_execute",
+    "warpinit_outputs",
     "warpinit_params",
 ]

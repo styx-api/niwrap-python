@@ -14,14 +14,14 @@ VOXEL2FIXEL_METADATA = Metadata(
 
 
 Voxel2fixelConfigParameters = typing.TypedDict('Voxel2fixelConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.voxel2fixel.config"],
     "key": str,
     "value": str,
 })
 
 
 Voxel2fixelParameters = typing.TypedDict('Voxel2fixelParameters', {
-    "__STYXTYPE__": typing.Literal["voxel2fixel"],
+    "@type": typing.Literal["mrtrix.voxel2fixel"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -49,8 +49,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "voxel2fixel": voxel2fixel_cargs,
-        "config": voxel2fixel_config_cargs,
+        "mrtrix.voxel2fixel": voxel2fixel_cargs,
+        "mrtrix.voxel2fixel.config": voxel2fixel_config_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def voxel2fixel_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.voxel2fixel.config",
         "key": key,
         "value": value,
     }
@@ -158,7 +158,7 @@ def voxel2fixel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "voxel2fixel",
+        "@type": "mrtrix.voxel2fixel",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -206,7 +206,7 @@ def voxel2fixel_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -345,6 +345,10 @@ __all__ = [
     "Voxel2fixelOutputs",
     "Voxel2fixelParameters",
     "voxel2fixel",
+    "voxel2fixel_cargs",
+    "voxel2fixel_config_cargs",
     "voxel2fixel_config_params",
+    "voxel2fixel_execute",
+    "voxel2fixel_outputs",
     "voxel2fixel_params",
 ]

@@ -14,7 +14,7 @@ V_3D_TPROJECT_METADATA = Metadata(
 
 
 V3dTprojectParameters = typing.TypedDict('V3dTprojectParameters', {
-    "__STYXTYPE__": typing.Literal["3dTproject"],
+    "@type": typing.Literal["afni.3dTproject"],
     "TR": typing.NotRequired[float | None],
     "automask": bool,
     "bandpass": typing.NotRequired[list[float] | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTproject": v_3d_tproject_cargs,
+        "afni.3dTproject": v_3d_tproject_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTproject": v_3d_tproject_outputs,
+        "afni.3dTproject": v_3d_tproject_outputs,
     }.get(t)
 
 
@@ -168,7 +168,7 @@ def v_3d_tproject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTproject",
+        "@type": "afni.3dTproject",
         "automask": automask,
         "in_file": in_file,
         "noblock": noblock,
@@ -471,5 +471,8 @@ __all__ = [
     "V3dTprojectParameters",
     "V_3D_TPROJECT_METADATA",
     "v_3d_tproject",
+    "v_3d_tproject_cargs",
+    "v_3d_tproject_execute",
+    "v_3d_tproject_outputs",
     "v_3d_tproject_params",
 ]

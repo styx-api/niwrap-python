@@ -14,7 +14,7 @@ WPNG_METADATA = Metadata(
 
 
 WpngParameters = typing.TypedDict('WpngParameters', {
-    "__STYXTYPE__": typing.Literal["wpng"],
+    "@type": typing.Literal["fsl.wpng"],
     "input_file": typing.NotRequired[InputPathType | None],
     "gamma": typing.NotRequired[float | None],
     "bgcolor": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "wpng": wpng_cargs,
+        "fsl.wpng": wpng_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "wpng": wpng_outputs,
+        "fsl.wpng": wpng_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def wpng_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "wpng",
+        "@type": "fsl.wpng",
         "text_flag": text_flag,
         "time_flag": time_flag,
         "interlace_flag": interlace_flag,
@@ -241,5 +241,8 @@ __all__ = [
     "WpngOutputs",
     "WpngParameters",
     "wpng",
+    "wpng_cargs",
+    "wpng_execute",
+    "wpng_outputs",
     "wpng_params",
 ]

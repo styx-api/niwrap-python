@@ -14,7 +14,7 @@ MRIS2RGB_METADATA = Metadata(
 
 
 Mris2rgbParameters = typing.TypedDict('Mris2rgbParameters', {
-    "__STYXTYPE__": typing.Literal["mris2rgb"],
+    "@type": typing.Literal["freesurfer.mris2rgb"],
     "library_path": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris2rgb": mris2rgb_cargs,
+        "freesurfer.mris2rgb": mris2rgb_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def mris2rgb_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris2rgb",
+        "@type": "freesurfer.mris2rgb",
         "library_path": library_path,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "Mris2rgbOutputs",
     "Mris2rgbParameters",
     "mris2rgb",
+    "mris2rgb_cargs",
+    "mris2rgb_execute",
+    "mris2rgb_outputs",
     "mris2rgb_params",
 ]

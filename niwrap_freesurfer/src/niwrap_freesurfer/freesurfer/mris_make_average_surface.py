@@ -14,7 +14,7 @@ MRIS_MAKE_AVERAGE_SURFACE_METADATA = Metadata(
 
 
 MrisMakeAverageSurfaceParameters = typing.TypedDict('MrisMakeAverageSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["mris_make_average_surface"],
+    "@type": typing.Literal["freesurfer.mris_make_average_surface"],
     "hemi": str,
     "outsurfname": str,
     "cansurfname": str,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_make_average_surface": mris_make_average_surface_cargs,
+        "freesurfer.mris_make_average_surface": mris_make_average_surface_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_make_average_surface": mris_make_average_surface_outputs,
+        "freesurfer.mris_make_average_surface": mris_make_average_surface_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def mris_make_average_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_make_average_surface",
+        "@type": "freesurfer.mris_make_average_surface",
         "hemi": hemi,
         "outsurfname": outsurfname,
         "cansurfname": cansurfname,
@@ -332,5 +332,8 @@ __all__ = [
     "MrisMakeAverageSurfaceOutputs",
     "MrisMakeAverageSurfaceParameters",
     "mris_make_average_surface",
+    "mris_make_average_surface_cargs",
+    "mris_make_average_surface_execute",
+    "mris_make_average_surface_outputs",
     "mris_make_average_surface_params",
 ]

@@ -14,35 +14,35 @@ CIFTI_PALETTE_METADATA = Metadata(
 
 
 CiftiPalettePosPercentParameters = typing.TypedDict('CiftiPalettePosPercentParameters', {
-    "__STYXTYPE__": typing.Literal["pos_percent"],
+    "@type": typing.Literal["workbench.cifti-palette.pos_percent"],
     "pos_min__": float,
     "pos_max__": float,
 })
 
 
 CiftiPaletteNegPercentParameters = typing.TypedDict('CiftiPaletteNegPercentParameters', {
-    "__STYXTYPE__": typing.Literal["neg_percent"],
+    "@type": typing.Literal["workbench.cifti-palette.neg_percent"],
     "neg_min__": float,
     "neg_max__": float,
 })
 
 
 CiftiPalettePosUserParameters = typing.TypedDict('CiftiPalettePosUserParameters', {
-    "__STYXTYPE__": typing.Literal["pos_user"],
+    "@type": typing.Literal["workbench.cifti-palette.pos_user"],
     "pos_min_user": float,
     "pos_max_user": float,
 })
 
 
 CiftiPaletteNegUserParameters = typing.TypedDict('CiftiPaletteNegUserParameters', {
-    "__STYXTYPE__": typing.Literal["neg_user"],
+    "@type": typing.Literal["workbench.cifti-palette.neg_user"],
     "neg_min_user": float,
     "neg_max_user": float,
 })
 
 
 CiftiPaletteThresholdingParameters = typing.TypedDict('CiftiPaletteThresholdingParameters', {
-    "__STYXTYPE__": typing.Literal["thresholding"],
+    "@type": typing.Literal["workbench.cifti-palette.thresholding"],
     "type": str,
     "test": str,
     "min": float,
@@ -51,7 +51,7 @@ CiftiPaletteThresholdingParameters = typing.TypedDict('CiftiPaletteThresholdingP
 
 
 CiftiPaletteParameters = typing.TypedDict('CiftiPaletteParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-palette"],
+    "@type": typing.Literal["workbench.cifti-palette"],
     "cifti_in": InputPathType,
     "mode": str,
     "cifti_out": str,
@@ -82,12 +82,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-palette": cifti_palette_cargs,
-        "pos_percent": cifti_palette_pos_percent_cargs,
-        "neg_percent": cifti_palette_neg_percent_cargs,
-        "pos_user": cifti_palette_pos_user_cargs,
-        "neg_user": cifti_palette_neg_user_cargs,
-        "thresholding": cifti_palette_thresholding_cargs,
+        "workbench.cifti-palette": cifti_palette_cargs,
+        "workbench.cifti-palette.pos_percent": cifti_palette_pos_percent_cargs,
+        "workbench.cifti-palette.neg_percent": cifti_palette_neg_percent_cargs,
+        "workbench.cifti-palette.pos_user": cifti_palette_pos_user_cargs,
+        "workbench.cifti-palette.neg_user": cifti_palette_neg_user_cargs,
+        "workbench.cifti-palette.thresholding": cifti_palette_thresholding_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-palette": cifti_palette_outputs,
+        "workbench.cifti-palette": cifti_palette_outputs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def cifti_palette_pos_percent_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pos_percent",
+        "@type": "workbench.cifti-palette.pos_percent",
         "pos_min__": pos_min__,
         "pos_max__": pos_max__,
     }
@@ -162,7 +162,7 @@ def cifti_palette_neg_percent_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neg_percent",
+        "@type": "workbench.cifti-palette.neg_percent",
         "neg_min__": neg_min__,
         "neg_max__": neg_max__,
     }
@@ -203,7 +203,7 @@ def cifti_palette_pos_user_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pos_user",
+        "@type": "workbench.cifti-palette.pos_user",
         "pos_min_user": pos_min_user,
         "pos_max_user": pos_max_user,
     }
@@ -244,7 +244,7 @@ def cifti_palette_neg_user_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neg_user",
+        "@type": "workbench.cifti-palette.neg_user",
         "neg_min_user": neg_min_user,
         "neg_max_user": neg_max_user,
     }
@@ -289,7 +289,7 @@ def cifti_palette_thresholding_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "thresholding",
+        "@type": "workbench.cifti-palette.thresholding",
         "type": type_,
         "test": test,
         "min": min_,
@@ -375,7 +375,7 @@ def cifti_palette_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-palette",
+        "@type": "workbench.cifti-palette",
         "cifti_in": cifti_in,
         "mode": mode,
         "cifti_out": cifti_out,
@@ -432,13 +432,13 @@ def cifti_palette_cargs(
             params.get("opt_column_column")
         ])
     if params.get("pos_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_percent")["__STYXTYPE__"])(params.get("pos_percent"), execution))
+        cargs.extend(dyn_cargs(params.get("pos_percent")["@type"])(params.get("pos_percent"), execution))
     if params.get("neg_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_percent")["__STYXTYPE__"])(params.get("neg_percent"), execution))
+        cargs.extend(dyn_cargs(params.get("neg_percent")["@type"])(params.get("neg_percent"), execution))
     if params.get("pos_user") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_user")["__STYXTYPE__"])(params.get("pos_user"), execution))
+        cargs.extend(dyn_cargs(params.get("pos_user")["@type"])(params.get("pos_user"), execution))
     if params.get("neg_user") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_user")["__STYXTYPE__"])(params.get("neg_user"), execution))
+        cargs.extend(dyn_cargs(params.get("neg_user")["@type"])(params.get("neg_user"), execution))
     if params.get("opt_interpolate_interpolate") is not None:
         cargs.extend([
             "-interpolate",
@@ -465,7 +465,7 @@ def cifti_palette_cargs(
             params.get("opt_palette_name_name")
         ])
     if params.get("thresholding") is not None:
-        cargs.extend(dyn_cargs(params.get("thresholding")["__STYXTYPE__"])(params.get("thresholding"), execution))
+        cargs.extend(dyn_cargs(params.get("thresholding")["@type"])(params.get("thresholding"), execution))
     if params.get("opt_inversion_type") is not None:
         cargs.extend([
             "-inversion",
@@ -754,10 +754,18 @@ __all__ = [
     "CiftiPalettePosUserParameters",
     "CiftiPaletteThresholdingParameters",
     "cifti_palette",
+    "cifti_palette_cargs",
+    "cifti_palette_execute",
+    "cifti_palette_neg_percent_cargs",
     "cifti_palette_neg_percent_params",
+    "cifti_palette_neg_user_cargs",
     "cifti_palette_neg_user_params",
+    "cifti_palette_outputs",
     "cifti_palette_params",
+    "cifti_palette_pos_percent_cargs",
     "cifti_palette_pos_percent_params",
+    "cifti_palette_pos_user_cargs",
     "cifti_palette_pos_user_params",
+    "cifti_palette_thresholding_cargs",
     "cifti_palette_thresholding_params",
 ]

@@ -14,7 +14,7 @@ SLOW_SURF_CLUSTSIM_PY_METADATA = Metadata(
 
 
 SlowSurfClustsimPyParameters = typing.TypedDict('SlowSurfClustsimPyParameters', {
-    "__STYXTYPE__": typing.Literal["slow_surf_clustsim.py"],
+    "@type": typing.Literal["afni.slow_surf_clustsim.py"],
     "on_surface": typing.NotRequired[str | None],
     "save_script": typing.NotRequired[str | None],
     "print_script": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slow_surf_clustsim.py": slow_surf_clustsim_py_cargs,
+        "afni.slow_surf_clustsim.py": slow_surf_clustsim_py_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def slow_surf_clustsim_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slow_surf_clustsim.py",
+        "@type": "afni.slow_surf_clustsim.py",
         "print_script": print_script,
         "help": help_,
         "hist": hist,
@@ -281,5 +281,8 @@ __all__ = [
     "SlowSurfClustsimPyOutputs",
     "SlowSurfClustsimPyParameters",
     "slow_surf_clustsim_py",
+    "slow_surf_clustsim_py_cargs",
+    "slow_surf_clustsim_py_execute",
+    "slow_surf_clustsim_py_outputs",
     "slow_surf_clustsim_py_params",
 ]

@@ -14,7 +14,7 @@ SPEC_FILE_MERGE_METADATA = Metadata(
 
 
 SpecFileMergeParameters = typing.TypedDict('SpecFileMergeParameters', {
-    "__STYXTYPE__": typing.Literal["spec-file-merge"],
+    "@type": typing.Literal["workbench.spec-file-merge"],
     "spec_1": str,
     "spec_2": str,
     "out_spec": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "spec-file-merge": spec_file_merge_cargs,
+        "workbench.spec-file-merge": spec_file_merge_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def spec_file_merge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "spec-file-merge",
+        "@type": "workbench.spec-file-merge",
         "spec_1": spec_1,
         "spec_2": spec_2,
         "out_spec": out_spec,
@@ -191,5 +191,8 @@ __all__ = [
     "SpecFileMergeOutputs",
     "SpecFileMergeParameters",
     "spec_file_merge",
+    "spec_file_merge_cargs",
+    "spec_file_merge_execute",
+    "spec_file_merge_outputs",
     "spec_file_merge_params",
 ]

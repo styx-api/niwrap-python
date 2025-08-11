@@ -14,7 +14,7 @@ HISTO_REGISTER_BLOCK_METADATA = Metadata(
 
 
 HistoRegisterBlockParameters = typing.TypedDict('HistoRegisterBlockParameters', {
-    "__STYXTYPE__": typing.Literal["histo_register_block"],
+    "@type": typing.Literal["freesurfer.histo_register_block"],
     "seg_time1": InputPathType,
     "seg_time2": InputPathType,
     "transform1": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "histo_register_block": histo_register_block_cargs,
+        "freesurfer.histo_register_block": histo_register_block_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "histo_register_block": histo_register_block_outputs,
+        "freesurfer.histo_register_block": histo_register_block_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def histo_register_block_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "histo_register_block",
+        "@type": "freesurfer.histo_register_block",
         "seg_time1": seg_time1,
         "seg_time2": seg_time2,
         "transform1": transform1,
@@ -226,5 +226,8 @@ __all__ = [
     "HistoRegisterBlockOutputs",
     "HistoRegisterBlockParameters",
     "histo_register_block",
+    "histo_register_block_cargs",
+    "histo_register_block_execute",
+    "histo_register_block_outputs",
     "histo_register_block_params",
 ]

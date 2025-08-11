@@ -14,7 +14,7 @@ V_3DTTEST___METADATA = Metadata(
 
 
 V3dttestParameters = typing.TypedDict('V3dttestParameters', {
-    "__STYXTYPE__": typing.Literal["3dttest++"],
+    "@type": typing.Literal["afni.3dttest++"],
     "setA": list[str],
     "setB": typing.NotRequired[list[str] | None],
     "setA_long": typing.NotRequired[list[str] | None],
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dttest++": v_3dttest___cargs,
+        "afni.3dttest++": v_3dttest___cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dttest++": v_3dttest___outputs,
+        "afni.3dttest++": v_3dttest___outputs,
     }.get(t)
 
 
@@ -146,7 +146,7 @@ def v_3dttest___params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dttest++",
+        "@type": "afni.3dttest++",
         "setA": set_a,
         "paired": paired,
         "unpooled": unpooled,
@@ -440,5 +440,8 @@ __all__ = [
     "V3dttestParameters",
     "V_3DTTEST___METADATA",
     "v_3dttest__",
+    "v_3dttest___cargs",
+    "v_3dttest___execute",
+    "v_3dttest___outputs",
     "v_3dttest___params",
 ]

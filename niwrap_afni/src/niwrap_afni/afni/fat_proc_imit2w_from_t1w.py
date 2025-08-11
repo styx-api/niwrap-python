@@ -14,7 +14,7 @@ FAT_PROC_IMIT2W_FROM_T1W_METADATA = Metadata(
 
 
 FatProcImit2wFromT1wParameters = typing.TypedDict('FatProcImit2wFromT1wParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_imit2w_from_t1w"],
+    "@type": typing.Literal["afni.fat_proc_imit2w_from_t1w"],
     "t1_file": InputPathType,
     "prefix": str,
     "workdir": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_imit2w_from_t1w": fat_proc_imit2w_from_t1w_cargs,
+        "afni.fat_proc_imit2w_from_t1w": fat_proc_imit2w_from_t1w_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_imit2w_from_t1w": fat_proc_imit2w_from_t1w_outputs,
+        "afni.fat_proc_imit2w_from_t1w": fat_proc_imit2w_from_t1w_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def fat_proc_imit2w_from_t1w_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_imit2w_from_t1w",
+        "@type": "afni.fat_proc_imit2w_from_t1w",
         "t1_file": t1_file,
         "prefix": prefix,
         "no_clean": no_clean,
@@ -279,5 +279,8 @@ __all__ = [
     "FatProcImit2wFromT1wOutputs",
     "FatProcImit2wFromT1wParameters",
     "fat_proc_imit2w_from_t1w",
+    "fat_proc_imit2w_from_t1w_cargs",
+    "fat_proc_imit2w_from_t1w_execute",
+    "fat_proc_imit2w_from_t1w_outputs",
     "fat_proc_imit2w_from_t1w_params",
 ]

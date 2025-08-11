@@ -14,7 +14,7 @@ MRI_BRAIN_VOLUME_METADATA = Metadata(
 
 
 MriBrainVolumeParameters = typing.TypedDict('MriBrainVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["mri_brain_volume"],
+    "@type": typing.Literal["freesurfer.mri_brain_volume"],
     "input_file": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "force_param": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_brain_volume": mri_brain_volume_cargs,
+        "freesurfer.mri_brain_volume": mri_brain_volume_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_brain_volume": mri_brain_volume_outputs,
+        "freesurfer.mri_brain_volume": mri_brain_volume_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mri_brain_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_brain_volume",
+        "@type": "freesurfer.mri_brain_volume",
         "input_file": input_file,
         "version": version,
     }
@@ -204,5 +204,8 @@ __all__ = [
     "MriBrainVolumeOutputs",
     "MriBrainVolumeParameters",
     "mri_brain_volume",
+    "mri_brain_volume_cargs",
+    "mri_brain_volume_execute",
+    "mri_brain_volume_outputs",
     "mri_brain_volume_params",
 ]

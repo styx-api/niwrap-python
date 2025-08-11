@@ -14,7 +14,7 @@ REREGISTER_SUBJECT_MIXED_METADATA = Metadata(
 
 
 ReregisterSubjectMixedParameters = typing.TypedDict('ReregisterSubjectMixedParameters', {
-    "__STYXTYPE__": typing.Literal["reregister_subject_mixed"],
+    "@type": typing.Literal["freesurfer.reregister_subject_mixed"],
     "input_volume": InputPathType,
     "output_directory": str,
     "threads": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reregister_subject_mixed": reregister_subject_mixed_cargs,
+        "freesurfer.reregister_subject_mixed": reregister_subject_mixed_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reregister_subject_mixed": reregister_subject_mixed_outputs,
+        "freesurfer.reregister_subject_mixed": reregister_subject_mixed_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def reregister_subject_mixed_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reregister_subject_mixed",
+        "@type": "freesurfer.reregister_subject_mixed",
         "input_volume": input_volume,
         "output_directory": output_directory,
     }
@@ -198,5 +198,8 @@ __all__ = [
     "ReregisterSubjectMixedOutputs",
     "ReregisterSubjectMixedParameters",
     "reregister_subject_mixed",
+    "reregister_subject_mixed_cargs",
+    "reregister_subject_mixed_execute",
+    "reregister_subject_mixed_outputs",
     "reregister_subject_mixed_params",
 ]

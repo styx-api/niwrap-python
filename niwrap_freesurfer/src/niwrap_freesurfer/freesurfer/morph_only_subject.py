@@ -14,7 +14,7 @@ MORPH_ONLY_SUBJECT_METADATA = Metadata(
 
 
 MorphOnlySubjectParameters = typing.TypedDict('MorphOnlySubjectParameters', {
-    "__STYXTYPE__": typing.Literal["morph_only_subject"],
+    "@type": typing.Literal["freesurfer.morph_only_subject"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "morph_only_subject": morph_only_subject_cargs,
+        "freesurfer.morph_only_subject": morph_only_subject_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def morph_only_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "morph_only_subject",
+        "@type": "freesurfer.morph_only_subject",
     }
     if placeholder_input is not None:
         params["placeholder_input"] = placeholder_input
@@ -174,5 +174,8 @@ __all__ = [
     "MorphOnlySubjectOutputs",
     "MorphOnlySubjectParameters",
     "morph_only_subject",
+    "morph_only_subject_cargs",
+    "morph_only_subject_execute",
+    "morph_only_subject_outputs",
     "morph_only_subject_params",
 ]

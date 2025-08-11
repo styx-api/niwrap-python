@@ -14,7 +14,7 @@ GEN_SS_REVIEW_TABLE_PY_METADATA = Metadata(
 
 
 GenSsReviewTablePyParameters = typing.TypedDict('GenSsReviewTablePyParameters', {
-    "__STYXTYPE__": typing.Literal["gen_ss_review_table.py"],
+    "@type": typing.Literal["afni.gen_ss_review_table.py"],
     "infiles": list[InputPathType],
     "write_table": typing.NotRequired[InputPathType | None],
     "write_outliers": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gen_ss_review_table.py": gen_ss_review_table_py_cargs,
+        "afni.gen_ss_review_table.py": gen_ss_review_table_py_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gen_ss_review_table.py": gen_ss_review_table_py_outputs,
+        "afni.gen_ss_review_table.py": gen_ss_review_table_py_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def gen_ss_review_table_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gen_ss_review_table.py",
+        "@type": "afni.gen_ss_review_table.py",
         "infiles": infiles,
         "overwrite": overwrite,
         "empty_is_outlier": empty_is_outlier,
@@ -320,5 +320,8 @@ __all__ = [
     "GenSsReviewTablePyOutputs",
     "GenSsReviewTablePyParameters",
     "gen_ss_review_table_py",
+    "gen_ss_review_table_py_cargs",
+    "gen_ss_review_table_py_execute",
+    "gen_ss_review_table_py_outputs",
     "gen_ss_review_table_py_params",
 ]

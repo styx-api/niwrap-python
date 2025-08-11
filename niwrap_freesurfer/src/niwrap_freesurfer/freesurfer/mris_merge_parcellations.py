@@ -14,7 +14,7 @@ MRIS_MERGE_PARCELLATIONS_METADATA = Metadata(
 
 
 MrisMergeParcellationsParameters = typing.TypedDict('MrisMergeParcellationsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_merge_parcellations"],
+    "@type": typing.Literal["freesurfer.mris_merge_parcellations"],
     "surface": InputPathType,
     "label1": InputPathType,
     "label2": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_merge_parcellations": mris_merge_parcellations_cargs,
+        "freesurfer.mris_merge_parcellations": mris_merge_parcellations_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mris_merge_parcellations_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_merge_parcellations",
+        "@type": "freesurfer.mris_merge_parcellations",
         "surface": surface,
         "label1": label1,
         "label2": label2,
@@ -197,5 +197,8 @@ __all__ = [
     "MrisMergeParcellationsOutputs",
     "MrisMergeParcellationsParameters",
     "mris_merge_parcellations",
+    "mris_merge_parcellations_cargs",
+    "mris_merge_parcellations_execute",
+    "mris_merge_parcellations_outputs",
     "mris_merge_parcellations_params",
 ]

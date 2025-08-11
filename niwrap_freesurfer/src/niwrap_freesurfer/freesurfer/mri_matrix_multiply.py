@@ -14,7 +14,7 @@ MRI_MATRIX_MULTIPLY_METADATA = Metadata(
 
 
 MriMatrixMultiplyParameters = typing.TypedDict('MriMatrixMultiplyParameters', {
-    "__STYXTYPE__": typing.Literal["mri_matrix_multiply"],
+    "@type": typing.Literal["freesurfer.mri_matrix_multiply"],
     "input_matrices": list[InputPathType],
     "inverted_input_matrices": typing.NotRequired[list[InputPathType] | None],
     "output_matrix": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_matrix_multiply": mri_matrix_multiply_cargs,
+        "freesurfer.mri_matrix_multiply": mri_matrix_multiply_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_matrix_multiply": mri_matrix_multiply_outputs,
+        "freesurfer.mri_matrix_multiply": mri_matrix_multiply_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mri_matrix_multiply_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_matrix_multiply",
+        "@type": "freesurfer.mri_matrix_multiply",
         "input_matrices": input_matrices,
         "output_matrix": output_matrix,
         "verbose": verbose,
@@ -241,5 +241,8 @@ __all__ = [
     "MriMatrixMultiplyOutputs",
     "MriMatrixMultiplyParameters",
     "mri_matrix_multiply",
+    "mri_matrix_multiply_cargs",
+    "mri_matrix_multiply_execute",
+    "mri_matrix_multiply_outputs",
     "mri_matrix_multiply_params",
 ]

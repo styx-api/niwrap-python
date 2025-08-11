@@ -14,7 +14,7 @@ V_3D_EXTRACT_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dExtractGroupInCorrParameters = typing.TypedDict('V3dExtractGroupInCorrParameters', {
-    "__STYXTYPE__": typing.Literal["3dExtractGroupInCorr"],
+    "@type": typing.Literal["afni.3dExtractGroupInCorr"],
     "group_in_corr_file": InputPathType,
     "prefix": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dExtractGroupInCorr": v_3d_extract_group_in_corr_cargs,
+        "afni.3dExtractGroupInCorr": v_3d_extract_group_in_corr_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dExtractGroupInCorr": v_3d_extract_group_in_corr_outputs,
+        "afni.3dExtractGroupInCorr": v_3d_extract_group_in_corr_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def v_3d_extract_group_in_corr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dExtractGroupInCorr",
+        "@type": "afni.3dExtractGroupInCorr",
         "group_in_corr_file": group_in_corr_file,
     }
     if prefix is not None:
@@ -191,5 +191,8 @@ __all__ = [
     "V3dExtractGroupInCorrParameters",
     "V_3D_EXTRACT_GROUP_IN_CORR_METADATA",
     "v_3d_extract_group_in_corr",
+    "v_3d_extract_group_in_corr_cargs",
+    "v_3d_extract_group_in_corr_execute",
+    "v_3d_extract_group_in_corr_outputs",
     "v_3d_extract_group_in_corr_params",
 ]

@@ -14,7 +14,7 @@ MRI_GTMPVC_METADATA = Metadata(
 
 
 MriGtmpvcParameters = typing.TypedDict('MriGtmpvcParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gtmpvc"],
+    "@type": typing.Literal["freesurfer.mri_gtmpvc"],
     "input_volume": InputPathType,
     "frame": typing.NotRequired[float | None],
     "psf": float,
@@ -92,7 +92,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gtmpvc": mri_gtmpvc_cargs,
+        "freesurfer.mri_gtmpvc": mri_gtmpvc_cargs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_gtmpvc": mri_gtmpvc_outputs,
+        "freesurfer.mri_gtmpvc": mri_gtmpvc_outputs,
     }.get(t)
 
 
@@ -287,7 +287,7 @@ def mri_gtmpvc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gtmpvc",
+        "@type": "freesurfer.mri_gtmpvc",
         "input_volume": input_volume,
         "psf": psf,
         "segmentation": segmentation,
@@ -875,5 +875,8 @@ __all__ = [
     "MriGtmpvcOutputs",
     "MriGtmpvcParameters",
     "mri_gtmpvc",
+    "mri_gtmpvc_cargs",
+    "mri_gtmpvc_execute",
+    "mri_gtmpvc_outputs",
     "mri_gtmpvc_params",
 ]

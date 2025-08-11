@@ -14,7 +14,7 @@ FDRVAL_METADATA = Metadata(
 
 
 FdrvalParameters = typing.TypedDict('FdrvalParameters', {
-    "__STYXTYPE__": typing.Literal["fdrval"],
+    "@type": typing.Literal["afni.fdrval"],
     "dset": InputPathType,
     "sub": float,
     "val_list": list[float],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fdrval": fdrval_cargs,
+        "afni.fdrval": fdrval_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fdrval": fdrval_outputs,
+        "afni.fdrval": fdrval_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def fdrval_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fdrval",
+        "@type": "afni.fdrval",
         "dset": dset,
         "sub": sub,
         "val_list": val_list,
@@ -237,5 +237,8 @@ __all__ = [
     "FdrvalOutputs",
     "FdrvalParameters",
     "fdrval",
+    "fdrval_cargs",
+    "fdrval_execute",
+    "fdrval_outputs",
     "fdrval_params",
 ]

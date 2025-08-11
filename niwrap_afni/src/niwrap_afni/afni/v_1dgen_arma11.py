@@ -14,7 +14,7 @@ V_1DGEN_ARMA11_METADATA = Metadata(
 
 
 V1dgenArma11Parameters = typing.TypedDict('V1dgenArma11Parameters', {
-    "__STYXTYPE__": typing.Literal["1dgenARMA11"],
+    "@type": typing.Literal["afni.1dgenARMA11"],
     "length": typing.NotRequired[float | None],
     "length_alt": typing.NotRequired[float | None],
     "num_series": typing.NotRequired[float | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dgenARMA11": v_1dgen_arma11_cargs,
+        "afni.1dgenARMA11": v_1dgen_arma11_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dgenARMA11": v_1dgen_arma11_outputs,
+        "afni.1dgenARMA11": v_1dgen_arma11_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def v_1dgen_arma11_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dgenARMA11",
+        "@type": "afni.1dgenARMA11",
         "normalize": normalize,
     }
     if length is not None:
@@ -330,5 +330,8 @@ __all__ = [
     "V1dgenArma11Parameters",
     "V_1DGEN_ARMA11_METADATA",
     "v_1dgen_arma11",
+    "v_1dgen_arma11_cargs",
+    "v_1dgen_arma11_execute",
+    "v_1dgen_arma11_outputs",
     "v_1dgen_arma11_params",
 ]

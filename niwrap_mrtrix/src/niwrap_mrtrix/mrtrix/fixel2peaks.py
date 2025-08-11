@@ -14,26 +14,26 @@ FIXEL2PEAKS_METADATA = Metadata(
 
 
 Fixel2peaksConfigParameters = typing.TypedDict('Fixel2peaksConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixel2peaks.config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2peaksVariousStringParameters = typing.TypedDict('Fixel2peaksVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.fixel2peaks.VariousString"],
     "obj": str,
 })
 
 
 Fixel2peaksVariousFileParameters = typing.TypedDict('Fixel2peaksVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.fixel2peaks.VariousFile"],
     "obj": InputPathType,
 })
 
 
 Fixel2peaksParameters = typing.TypedDict('Fixel2peaksParameters', {
-    "__STYXTYPE__": typing.Literal["fixel2peaks"],
+    "@type": typing.Literal["mrtrix.fixel2peaks"],
     "number": typing.NotRequired[int | None],
     "nan": bool,
     "info": bool,
@@ -61,10 +61,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixel2peaks": fixel2peaks_cargs,
-        "config": fixel2peaks_config_cargs,
-        "VariousString": fixel2peaks_various_string_cargs,
-        "VariousFile": fixel2peaks_various_file_cargs,
+        "mrtrix.fixel2peaks": fixel2peaks_cargs,
+        "mrtrix.fixel2peaks.config": fixel2peaks_config_cargs,
+        "mrtrix.fixel2peaks.VariousString": fixel2peaks_various_string_cargs,
+        "mrtrix.fixel2peaks.VariousFile": fixel2peaks_various_file_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixel2peaks": fixel2peaks_outputs,
+        "mrtrix.fixel2peaks": fixel2peaks_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def fixel2peaks_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixel2peaks.config",
         "key": key,
         "value": value,
     }
@@ -137,7 +137,7 @@ def fixel2peaks_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.fixel2peaks.VariousString",
         "obj": obj,
     }
     return params
@@ -173,7 +173,7 @@ def fixel2peaks_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.fixel2peaks.VariousFile",
         "obj": obj,
     }
     return params
@@ -246,7 +246,7 @@ def fixel2peaks_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixel2peaks",
+        "@type": "mrtrix.fixel2peaks",
         "nan": nan,
         "info": info,
         "quiet": quiet,
@@ -302,12 +302,12 @@ def fixel2peaks_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
-    cargs.extend(dyn_cargs(params.get("in")["__STYXTYPE__"])(params.get("in"), execution))
+    cargs.extend(dyn_cargs(params.get("in")["@type"])(params.get("in"), execution))
     cargs.append(params.get("out"))
     return cargs
 
@@ -445,8 +445,14 @@ __all__ = [
     "Fixel2peaksVariousFileParameters",
     "Fixel2peaksVariousStringParameters",
     "fixel2peaks",
+    "fixel2peaks_cargs",
+    "fixel2peaks_config_cargs",
     "fixel2peaks_config_params",
+    "fixel2peaks_execute",
+    "fixel2peaks_outputs",
     "fixel2peaks_params",
+    "fixel2peaks_various_file_cargs",
     "fixel2peaks_various_file_params",
+    "fixel2peaks_various_string_cargs",
     "fixel2peaks_various_string_params",
 ]

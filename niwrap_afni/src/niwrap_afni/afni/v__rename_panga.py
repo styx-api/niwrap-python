@@ -14,7 +14,7 @@ V__RENAME_PANGA_METADATA = Metadata(
 
 
 VRenamePangaParameters = typing.TypedDict('VRenamePangaParameters', {
-    "__STYXTYPE__": typing.Literal["@RenamePanga"],
+    "@type": typing.Literal["afni.@RenamePanga"],
     "dir_number": str,
     "first_image_number": str,
     "num_slices": float,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@RenamePanga": v__rename_panga_cargs,
+        "afni.@RenamePanga": v__rename_panga_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@RenamePanga": v__rename_panga_outputs,
+        "afni.@RenamePanga": v__rename_panga_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def v__rename_panga_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@RenamePanga",
+        "@type": "afni.@RenamePanga",
         "dir_number": dir_number,
         "first_image_number": first_image_number,
         "num_slices": num_slices,
@@ -275,5 +275,8 @@ __all__ = [
     "VRenamePangaParameters",
     "V__RENAME_PANGA_METADATA",
     "v__rename_panga",
+    "v__rename_panga_cargs",
+    "v__rename_panga_execute",
+    "v__rename_panga_outputs",
     "v__rename_panga_params",
 ]

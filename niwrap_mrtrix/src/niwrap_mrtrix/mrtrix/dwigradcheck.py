@@ -14,21 +14,21 @@ DWIGRADCHECK_METADATA = Metadata(
 
 
 DwigradcheckFslgradParameters = typing.TypedDict('DwigradcheckFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dwigradcheck.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DwigradcheckExportGradFslParameters = typing.TypedDict('DwigradcheckExportGradFslParameters', {
-    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
+    "@type": typing.Literal["mrtrix.dwigradcheck.export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 DwigradcheckParameters = typing.TypedDict('DwigradcheckParameters', {
-    "__STYXTYPE__": typing.Literal["dwigradcheck"],
+    "@type": typing.Literal["mrtrix.dwigradcheck"],
     "input_image": InputPathType,
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[DwigradcheckFslgradParameters | None],
@@ -62,9 +62,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwigradcheck": dwigradcheck_cargs,
-        "fslgrad": dwigradcheck_fslgrad_cargs,
-        "export_grad_fsl": dwigradcheck_export_grad_fsl_cargs,
+        "mrtrix.dwigradcheck": dwigradcheck_cargs,
+        "mrtrix.dwigradcheck.fslgrad": dwigradcheck_fslgrad_cargs,
+        "mrtrix.dwigradcheck.export_grad_fsl": dwigradcheck_export_grad_fsl_cargs,
     }.get(t)
 
 
@@ -80,8 +80,8 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwigradcheck": dwigradcheck_outputs,
-        "export_grad_fsl": dwigradcheck_export_grad_fsl_outputs,
+        "mrtrix.dwigradcheck": dwigradcheck_outputs,
+        "mrtrix.dwigradcheck.export_grad_fsl": dwigradcheck_export_grad_fsl_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def dwigradcheck_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dwigradcheck.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -162,7 +162,7 @@ def dwigradcheck_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "export_grad_fsl",
+        "@type": "mrtrix.dwigradcheck.export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -279,7 +279,7 @@ def dwigradcheck_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwigradcheck",
+        "@type": "mrtrix.dwigradcheck",
         "input_image": input_image,
         "nocleanup": nocleanup,
         "info": info,
@@ -334,7 +334,7 @@ def dwigradcheck_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("mask_image") is not None:
         cargs.extend([
             "-mask",
@@ -351,7 +351,7 @@ def dwigradcheck_cargs(
             params.get("export_grad_mrtrix")
         ])
     if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution))
+        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
     if params.get("nocleanup"):
         cargs.append("-nocleanup")
     if params.get("scratch_dir") is not None:
@@ -406,7 +406,7 @@ def dwigradcheck_outputs(
         root=execution.output_file("."),
         export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
         export_grad_fsl=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
-        export_grad_fsl_=dyn_outputs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        export_grad_fsl_=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
     )
     return ret
 
@@ -528,7 +528,13 @@ __all__ = [
     "DwigradcheckOutputs",
     "DwigradcheckParameters",
     "dwigradcheck",
+    "dwigradcheck_cargs",
+    "dwigradcheck_execute",
+    "dwigradcheck_export_grad_fsl_cargs",
+    "dwigradcheck_export_grad_fsl_outputs",
     "dwigradcheck_export_grad_fsl_params",
+    "dwigradcheck_fslgrad_cargs",
     "dwigradcheck_fslgrad_params",
+    "dwigradcheck_outputs",
     "dwigradcheck_params",
 ]

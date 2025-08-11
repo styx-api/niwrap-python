@@ -14,7 +14,7 @@ DMRI_SAVE_HISTOGRAMS_METADATA = Metadata(
 
 
 DmriSaveHistogramsParameters = typing.TypedDict('DmriSaveHistogramsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_saveHistograms"],
+    "@type": typing.Literal["freesurfer.dmri_saveHistograms"],
     "parcellation": InputPathType,
     "number_of_bundles": float,
     "vtk_bundle_list": list[InputPathType],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_saveHistograms": dmri_save_histograms_cargs,
+        "freesurfer.dmri_saveHistograms": dmri_save_histograms_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_saveHistograms": dmri_save_histograms_outputs,
+        "freesurfer.dmri_saveHistograms": dmri_save_histograms_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def dmri_save_histograms_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_saveHistograms",
+        "@type": "freesurfer.dmri_saveHistograms",
         "parcellation": parcellation,
         "number_of_bundles": number_of_bundles,
         "vtk_bundle_list": vtk_bundle_list,
@@ -214,5 +214,8 @@ __all__ = [
     "DmriSaveHistogramsOutputs",
     "DmriSaveHistogramsParameters",
     "dmri_save_histograms",
+    "dmri_save_histograms_cargs",
+    "dmri_save_histograms_execute",
+    "dmri_save_histograms_outputs",
     "dmri_save_histograms_params",
 ]

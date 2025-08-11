@@ -14,7 +14,7 @@ MRIS_EXVIVO_SURFACES_METADATA = Metadata(
 
 
 MrisExvivoSurfacesParameters = typing.TypedDict('MrisExvivoSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_exvivo_surfaces"],
+    "@type": typing.Literal["freesurfer.mris_exvivo_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_exvivo_surfaces": mris_exvivo_surfaces_cargs,
+        "freesurfer.mris_exvivo_surfaces": mris_exvivo_surfaces_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_exvivo_surfaces": mris_exvivo_surfaces_outputs,
+        "freesurfer.mris_exvivo_surfaces": mris_exvivo_surfaces_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def mris_exvivo_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_exvivo_surfaces",
+        "@type": "freesurfer.mris_exvivo_surfaces",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "omit_self_intersection": omit_self_intersection,
@@ -252,5 +252,8 @@ __all__ = [
     "MrisExvivoSurfacesOutputs",
     "MrisExvivoSurfacesParameters",
     "mris_exvivo_surfaces",
+    "mris_exvivo_surfaces_cargs",
+    "mris_exvivo_surfaces_execute",
+    "mris_exvivo_surfaces_outputs",
     "mris_exvivo_surfaces_params",
 ]

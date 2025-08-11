@@ -14,7 +14,7 @@ ASEGSTATSDIFF_METADATA = Metadata(
 
 
 AsegstatsdiffParameters = typing.TypedDict('AsegstatsdiffParameters', {
-    "__STYXTYPE__": typing.Literal["asegstatsdiff"],
+    "@type": typing.Literal["freesurfer.asegstatsdiff"],
     "subject1": str,
     "subject2": str,
     "outdir": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "asegstatsdiff": asegstatsdiff_cargs,
+        "freesurfer.asegstatsdiff": asegstatsdiff_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "asegstatsdiff": asegstatsdiff_outputs,
+        "freesurfer.asegstatsdiff": asegstatsdiff_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def asegstatsdiff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "asegstatsdiff",
+        "@type": "freesurfer.asegstatsdiff",
         "subject1": subject1,
         "subject2": subject2,
     }
@@ -193,5 +193,8 @@ __all__ = [
     "AsegstatsdiffOutputs",
     "AsegstatsdiffParameters",
     "asegstatsdiff",
+    "asegstatsdiff_cargs",
+    "asegstatsdiff_execute",
+    "asegstatsdiff_outputs",
     "asegstatsdiff_params",
 ]

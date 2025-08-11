@@ -14,7 +14,7 @@ CHECK_FEAT_METADATA = Metadata(
 
 
 CheckFeatParameters = typing.TypedDict('CheckFeatParameters', {
-    "__STYXTYPE__": typing.Literal["checkFEAT"],
+    "@type": typing.Literal["fsl.checkFEAT"],
     "report_file": InputPathType,
     "report_log_file": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "checkFEAT": check_feat_cargs,
+        "fsl.checkFEAT": check_feat_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "checkFEAT": check_feat_outputs,
+        "fsl.checkFEAT": check_feat_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def check_feat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "checkFEAT",
+        "@type": "fsl.checkFEAT",
         "report_file": report_file,
         "report_log_file": report_log_file,
     }
@@ -183,5 +183,8 @@ __all__ = [
     "CheckFeatOutputs",
     "CheckFeatParameters",
     "check_feat",
+    "check_feat_cargs",
+    "check_feat_execute",
+    "check_feat_outputs",
     "check_feat_params",
 ]

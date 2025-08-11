@@ -14,7 +14,7 @@ MRIS_REMOVE_NEGATIVE_VERTICES_METADATA = Metadata(
 
 
 MrisRemoveNegativeVerticesParameters = typing.TypedDict('MrisRemoveNegativeVerticesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_remove_negative_vertices"],
+    "@type": typing.Literal["freesurfer.mris_remove_negative_vertices"],
     "surface_file": InputPathType,
     "patch_file": InputPathType,
     "output_patch": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_remove_negative_vertices": mris_remove_negative_vertices_cargs,
+        "freesurfer.mris_remove_negative_vertices": mris_remove_negative_vertices_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_remove_negative_vertices": mris_remove_negative_vertices_outputs,
+        "freesurfer.mris_remove_negative_vertices": mris_remove_negative_vertices_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mris_remove_negative_vertices_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_remove_negative_vertices",
+        "@type": "freesurfer.mris_remove_negative_vertices",
         "surface_file": surface_file,
         "patch_file": patch_file,
         "output_patch": output_patch,
@@ -188,5 +188,8 @@ __all__ = [
     "MrisRemoveNegativeVerticesOutputs",
     "MrisRemoveNegativeVerticesParameters",
     "mris_remove_negative_vertices",
+    "mris_remove_negative_vertices_cargs",
+    "mris_remove_negative_vertices_execute",
+    "mris_remove_negative_vertices_outputs",
     "mris_remove_negative_vertices_params",
 ]

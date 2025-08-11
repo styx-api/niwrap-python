@@ -14,7 +14,7 @@ SURFACE_METRICS_METADATA = Metadata(
 
 
 SurfaceMetricsParameters = typing.TypedDict('SurfaceMetricsParameters', {
-    "__STYXTYPE__": typing.Literal["SurfaceMetrics"],
+    "@type": typing.Literal["afni.SurfaceMetrics"],
     "volume": bool,
     "convexity": bool,
     "closest_node": typing.NotRequired[InputPathType | None],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfaceMetrics": surface_metrics_cargs,
+        "afni.SurfaceMetrics": surface_metrics_cargs,
     }.get(t)
 
 
@@ -138,7 +138,7 @@ def surface_metrics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfaceMetrics",
+        "@type": "afni.SurfaceMetrics",
         "volume": volume,
         "convexity": convexity,
         "area": area,
@@ -389,5 +389,8 @@ __all__ = [
     "SurfaceMetricsOutputs",
     "SurfaceMetricsParameters",
     "surface_metrics",
+    "surface_metrics_cargs",
+    "surface_metrics_execute",
+    "surface_metrics_outputs",
     "surface_metrics_params",
 ]

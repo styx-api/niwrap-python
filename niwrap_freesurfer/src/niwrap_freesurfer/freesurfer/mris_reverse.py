@@ -14,7 +14,7 @@ MRIS_REVERSE_METADATA = Metadata(
 
 
 MrisReverseParameters = typing.TypedDict('MrisReverseParameters', {
-    "__STYXTYPE__": typing.Literal["mris_reverse"],
+    "@type": typing.Literal["freesurfer.mris_reverse"],
     "input_surface": InputPathType,
     "output_surface": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_reverse": mris_reverse_cargs,
+        "freesurfer.mris_reverse": mris_reverse_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_reverse": mris_reverse_outputs,
+        "freesurfer.mris_reverse": mris_reverse_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_reverse_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_reverse",
+        "@type": "freesurfer.mris_reverse",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MrisReverseOutputs",
     "MrisReverseParameters",
     "mris_reverse",
+    "mris_reverse_cargs",
+    "mris_reverse_execute",
+    "mris_reverse_outputs",
     "mris_reverse_params",
 ]

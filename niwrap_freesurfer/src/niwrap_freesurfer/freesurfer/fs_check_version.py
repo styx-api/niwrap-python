@@ -14,7 +14,7 @@ FS_CHECK_VERSION_METADATA = Metadata(
 
 
 FsCheckVersionParameters = typing.TypedDict('FsCheckVersionParameters', {
-    "__STYXTYPE__": typing.Literal["fs-check-version"],
+    "@type": typing.Literal["freesurfer.fs-check-version"],
     "subjects_dir": str,
     "outfile": str,
     "subject": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs-check-version": fs_check_version_cargs,
+        "freesurfer.fs-check-version": fs_check_version_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fs-check-version": fs_check_version_outputs,
+        "freesurfer.fs-check-version": fs_check_version_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def fs_check_version_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs-check-version",
+        "@type": "freesurfer.fs-check-version",
         "subjects_dir": subjects_dir,
         "outfile": outfile,
         "require_match": require_match,
@@ -237,5 +237,8 @@ __all__ = [
     "FsCheckVersionOutputs",
     "FsCheckVersionParameters",
     "fs_check_version",
+    "fs_check_version_cargs",
+    "fs_check_version_execute",
+    "fs_check_version_outputs",
     "fs_check_version_params",
 ]

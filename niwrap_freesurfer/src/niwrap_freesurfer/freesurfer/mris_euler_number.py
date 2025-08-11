@@ -14,7 +14,7 @@ MRIS_EULER_NUMBER_METADATA = Metadata(
 
 
 MrisEulerNumberParameters = typing.TypedDict('MrisEulerNumberParameters', {
-    "__STYXTYPE__": typing.Literal["mris_euler_number"],
+    "@type": typing.Literal["freesurfer.mris_euler_number"],
     "input_surface": InputPathType,
     "output_file": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_euler_number": mris_euler_number_cargs,
+        "freesurfer.mris_euler_number": mris_euler_number_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_euler_number": mris_euler_number_outputs,
+        "freesurfer.mris_euler_number": mris_euler_number_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_euler_number_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_euler_number",
+        "@type": "freesurfer.mris_euler_number",
         "input_surface": input_surface,
     }
     if output_file is not None:
@@ -185,5 +185,8 @@ __all__ = [
     "MrisEulerNumberOutputs",
     "MrisEulerNumberParameters",
     "mris_euler_number",
+    "mris_euler_number_cargs",
+    "mris_euler_number_execute",
+    "mris_euler_number_outputs",
     "mris_euler_number_params",
 ]

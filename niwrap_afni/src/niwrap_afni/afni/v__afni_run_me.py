@@ -14,7 +14,7 @@ V__AFNI_RUN_ME_METADATA = Metadata(
 
 
 VAfniRunMeParameters = typing.TypedDict('VAfniRunMeParameters', {
-    "__STYXTYPE__": typing.Literal["@afni.run.me"],
+    "@type": typing.Literal["afni.@afni.run.me"],
     "go": bool,
     "curl": bool,
     "help": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@afni.run.me": v__afni_run_me_cargs,
+        "afni.@afni.run.me": v__afni_run_me_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def v__afni_run_me_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@afni.run.me",
+        "@type": "afni.@afni.run.me",
         "go": go,
         "curl": curl,
         "help": help_,
@@ -187,5 +187,8 @@ __all__ = [
     "VAfniRunMeParameters",
     "V__AFNI_RUN_ME_METADATA",
     "v__afni_run_me",
+    "v__afni_run_me_cargs",
+    "v__afni_run_me_execute",
+    "v__afni_run_me_outputs",
     "v__afni_run_me_params",
 ]

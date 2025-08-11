@@ -14,21 +14,21 @@ DWI2ADC_METADATA = Metadata(
 
 
 Dwi2adcFslgradParameters = typing.TypedDict('Dwi2adcFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dwi2adc.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2adcConfigParameters = typing.TypedDict('Dwi2adcConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dwi2adc.config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2adcParameters = typing.TypedDict('Dwi2adcParameters', {
-    "__STYXTYPE__": typing.Literal["dwi2adc"],
+    "@type": typing.Literal["mrtrix.dwi2adc"],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2adcFslgradParameters | None],
     "info": bool,
@@ -56,9 +56,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwi2adc": dwi2adc_cargs,
-        "fslgrad": dwi2adc_fslgrad_cargs,
-        "config": dwi2adc_config_cargs,
+        "mrtrix.dwi2adc": dwi2adc_cargs,
+        "mrtrix.dwi2adc.fslgrad": dwi2adc_fslgrad_cargs,
+        "mrtrix.dwi2adc.config": dwi2adc_config_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwi2adc": dwi2adc_outputs,
+        "mrtrix.dwi2adc": dwi2adc_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def dwi2adc_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dwi2adc.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -139,7 +139,7 @@ def dwi2adc_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dwi2adc.config",
         "key": key,
         "value": value,
     }
@@ -222,7 +222,7 @@ def dwi2adc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwi2adc",
+        "@type": "mrtrix.dwi2adc",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -264,7 +264,7 @@ def dwi2adc_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -279,7 +279,7 @@ def dwi2adc_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -422,7 +422,12 @@ __all__ = [
     "Dwi2adcOutputs",
     "Dwi2adcParameters",
     "dwi2adc",
+    "dwi2adc_cargs",
+    "dwi2adc_config_cargs",
     "dwi2adc_config_params",
+    "dwi2adc_execute",
+    "dwi2adc_fslgrad_cargs",
     "dwi2adc_fslgrad_params",
+    "dwi2adc_outputs",
     "dwi2adc_params",
 ]

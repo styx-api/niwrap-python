@@ -14,20 +14,20 @@ VOLUME_DILATE_METADATA = Metadata(
 
 
 VolumeDilatePresmoothParameters = typing.TypedDict('VolumeDilatePresmoothParameters', {
-    "__STYXTYPE__": typing.Literal["presmooth"],
+    "@type": typing.Literal["workbench.volume-dilate.grad_extrapolate.presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 VolumeDilateGradExtrapolateParameters = typing.TypedDict('VolumeDilateGradExtrapolateParameters', {
-    "__STYXTYPE__": typing.Literal["grad_extrapolate"],
+    "@type": typing.Literal["workbench.volume-dilate.grad_extrapolate"],
     "presmooth": typing.NotRequired[VolumeDilatePresmoothParameters | None],
 })
 
 
 VolumeDilateParameters = typing.TypedDict('VolumeDilateParameters', {
-    "__STYXTYPE__": typing.Literal["volume-dilate"],
+    "@type": typing.Literal["workbench.volume-dilate"],
     "volume": InputPathType,
     "distance": float,
     "method": str,
@@ -53,9 +53,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-dilate": volume_dilate_cargs,
-        "grad_extrapolate": volume_dilate_grad_extrapolate_cargs,
-        "presmooth": volume_dilate_presmooth_cargs,
+        "workbench.volume-dilate": volume_dilate_cargs,
+        "workbench.volume-dilate.grad_extrapolate": volume_dilate_grad_extrapolate_cargs,
+        "workbench.volume-dilate.grad_extrapolate.presmooth": volume_dilate_presmooth_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-dilate": volume_dilate_outputs,
+        "workbench.volume-dilate": volume_dilate_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def volume_dilate_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "presmooth",
+        "@type": "workbench.volume-dilate.grad_extrapolate.presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -131,7 +131,7 @@ def volume_dilate_grad_extrapolate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "grad_extrapolate",
+        "@type": "workbench.volume-dilate.grad_extrapolate",
     }
     if presmooth is not None:
         params["presmooth"] = presmooth
@@ -154,7 +154,7 @@ def volume_dilate_grad_extrapolate_cargs(
     cargs = []
     cargs.append("-grad-extrapolate")
     if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["__STYXTYPE__"])(params.get("presmooth"), execution))
+        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
     return cargs
 
 
@@ -206,7 +206,7 @@ def volume_dilate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-dilate",
+        "@type": "workbench.volume-dilate",
         "volume": volume,
         "distance": distance,
         "method": method,
@@ -269,7 +269,7 @@ def volume_dilate_cargs(
     if params.get("opt_legacy_cutoff"):
         cargs.append("-legacy-cutoff")
     if params.get("grad_extrapolate") is not None:
-        cargs.extend(dyn_cargs(params.get("grad_extrapolate")["__STYXTYPE__"])(params.get("grad_extrapolate"), execution))
+        cargs.extend(dyn_cargs(params.get("grad_extrapolate")["@type"])(params.get("grad_extrapolate"), execution))
     return cargs
 
 
@@ -420,7 +420,12 @@ __all__ = [
     "VolumeDilateParameters",
     "VolumeDilatePresmoothParameters",
     "volume_dilate",
+    "volume_dilate_cargs",
+    "volume_dilate_execute",
+    "volume_dilate_grad_extrapolate_cargs",
     "volume_dilate_grad_extrapolate_params",
+    "volume_dilate_outputs",
     "volume_dilate_params",
+    "volume_dilate_presmooth_cargs",
     "volume_dilate_presmooth_params",
 ]

@@ -14,41 +14,41 @@ MRINFO_METADATA = Metadata(
 
 
 MrinfoPropertyParameters = typing.TypedDict('MrinfoPropertyParameters', {
-    "__STYXTYPE__": typing.Literal["property"],
+    "@type": typing.Literal["mrtrix.mrinfo.property"],
     "key": str,
 })
 
 
 MrinfoFslgradParameters = typing.TypedDict('MrinfoFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.mrinfo.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrinfoExportGradFslParameters = typing.TypedDict('MrinfoExportGradFslParameters', {
-    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
+    "@type": typing.Literal["mrtrix.mrinfo.export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrinfoExportPeEddyParameters = typing.TypedDict('MrinfoExportPeEddyParameters', {
-    "__STYXTYPE__": typing.Literal["export_pe_eddy"],
+    "@type": typing.Literal["mrtrix.mrinfo.export_pe_eddy"],
     "config": str,
     "indices": str,
 })
 
 
 MrinfoConfigParameters = typing.TypedDict('MrinfoConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrinfo.config"],
     "key": str,
     "value": str,
 })
 
 
 MrinfoParameters = typing.TypedDict('MrinfoParameters', {
-    "__STYXTYPE__": typing.Literal["mrinfo"],
+    "@type": typing.Literal["mrtrix.mrinfo"],
     "all": bool,
     "name": bool,
     "format": bool,
@@ -100,12 +100,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrinfo": mrinfo_cargs,
-        "property": mrinfo_property_cargs,
-        "fslgrad": mrinfo_fslgrad_cargs,
-        "export_grad_fsl": mrinfo_export_grad_fsl_cargs,
-        "export_pe_eddy": mrinfo_export_pe_eddy_cargs,
-        "config": mrinfo_config_cargs,
+        "mrtrix.mrinfo": mrinfo_cargs,
+        "mrtrix.mrinfo.property": mrinfo_property_cargs,
+        "mrtrix.mrinfo.fslgrad": mrinfo_fslgrad_cargs,
+        "mrtrix.mrinfo.export_grad_fsl": mrinfo_export_grad_fsl_cargs,
+        "mrtrix.mrinfo.export_pe_eddy": mrinfo_export_pe_eddy_cargs,
+        "mrtrix.mrinfo.config": mrinfo_config_cargs,
     }.get(t)
 
 
@@ -121,9 +121,9 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrinfo": mrinfo_outputs,
-        "export_grad_fsl": mrinfo_export_grad_fsl_outputs,
-        "export_pe_eddy": mrinfo_export_pe_eddy_outputs,
+        "mrtrix.mrinfo": mrinfo_outputs,
+        "mrtrix.mrinfo.export_grad_fsl": mrinfo_export_grad_fsl_outputs,
+        "mrtrix.mrinfo.export_pe_eddy": mrinfo_export_pe_eddy_outputs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def mrinfo_property_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "property",
+        "@type": "mrtrix.mrinfo.property",
         "key": key,
     }
     return params
@@ -185,7 +185,7 @@ def mrinfo_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.mrinfo.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -242,7 +242,7 @@ def mrinfo_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "export_grad_fsl",
+        "@type": "mrtrix.mrinfo.export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -320,7 +320,7 @@ def mrinfo_export_pe_eddy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "export_pe_eddy",
+        "@type": "mrtrix.mrinfo.export_pe_eddy",
         "config": config,
         "indices": indices,
     }
@@ -382,7 +382,7 @@ def mrinfo_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrinfo.config",
         "key": key,
         "value": value,
     }
@@ -532,7 +532,7 @@ def mrinfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrinfo",
+        "@type": "mrtrix.mrinfo",
         "all": all_,
         "name": name,
         "format": format_,
@@ -623,7 +623,7 @@ def mrinfo_cargs(
     if params.get("transform"):
         cargs.append("-transform")
     if params.get("property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("property")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("property")] for a in c])
     if params.get("json_keyval") is not None:
         cargs.extend([
             "-json_keyval",
@@ -640,7 +640,7 @@ def mrinfo_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("bvalue_scaling") is not None:
         cargs.extend([
             "-bvalue_scaling",
@@ -652,7 +652,7 @@ def mrinfo_cargs(
             params.get("export_grad_mrtrix")
         ])
     if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution))
+        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
     if params.get("dwgrad"):
         cargs.append("-dwgrad")
     if params.get("shell_bvalues"):
@@ -667,7 +667,7 @@ def mrinfo_cargs(
             params.get("export_pe_table")
         ])
     if params.get("export_pe_eddy") is not None:
-        cargs.extend(dyn_cargs(params.get("export_pe_eddy")["__STYXTYPE__"])(params.get("export_pe_eddy"), execution))
+        cargs.extend(dyn_cargs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution))
     if params.get("petable"):
         cargs.append("-petable")
     if params.get("nodelete"):
@@ -686,7 +686,7 @@ def mrinfo_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -714,8 +714,8 @@ def mrinfo_outputs(
         json_all=execution.output_file(params.get("json_all")) if (params.get("json_all") is not None) else None,
         export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
         export_pe_table=execution.output_file(params.get("export_pe_table")) if (params.get("export_pe_table") is not None) else None,
-        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
-        export_pe_eddy=dyn_outputs(params.get("export_pe_eddy")["__STYXTYPE__"])(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
+        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        export_pe_eddy=dyn_outputs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
     )
     return ret
 
@@ -981,10 +981,20 @@ __all__ = [
     "MrinfoParameters",
     "MrinfoPropertyParameters",
     "mrinfo",
+    "mrinfo_cargs",
+    "mrinfo_config_cargs",
     "mrinfo_config_params",
+    "mrinfo_execute",
+    "mrinfo_export_grad_fsl_cargs",
+    "mrinfo_export_grad_fsl_outputs",
     "mrinfo_export_grad_fsl_params",
+    "mrinfo_export_pe_eddy_cargs",
+    "mrinfo_export_pe_eddy_outputs",
     "mrinfo_export_pe_eddy_params",
+    "mrinfo_fslgrad_cargs",
     "mrinfo_fslgrad_params",
+    "mrinfo_outputs",
     "mrinfo_params",
+    "mrinfo_property_cargs",
     "mrinfo_property_params",
 ]

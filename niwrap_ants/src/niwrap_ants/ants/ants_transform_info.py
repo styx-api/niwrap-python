@@ -14,7 +14,7 @@ ANTS_TRANSFORM_INFO_METADATA = Metadata(
 
 
 AntsTransformInfoParameters = typing.TypedDict('AntsTransformInfoParameters', {
-    "__STYXTYPE__": typing.Literal["antsTransformInfo"],
+    "@type": typing.Literal["ants.antsTransformInfo"],
     "transform_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsTransformInfo": ants_transform_info_cargs,
+        "ants.antsTransformInfo": ants_transform_info_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsTransformInfo": ants_transform_info_outputs,
+        "ants.antsTransformInfo": ants_transform_info_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def ants_transform_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsTransformInfo",
+        "@type": "ants.antsTransformInfo",
         "transform_file": transform_file,
     }
     return params
@@ -177,5 +177,8 @@ __all__ = [
     "AntsTransformInfoOutputs",
     "AntsTransformInfoParameters",
     "ants_transform_info",
+    "ants_transform_info_cargs",
+    "ants_transform_info_execute",
+    "ants_transform_info_outputs",
     "ants_transform_info_params",
 ]

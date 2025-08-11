@@ -14,7 +14,7 @@ TOPUP_METADATA = Metadata(
 
 
 TopupParameters = typing.TypedDict('TopupParameters', {
-    "__STYXTYPE__": typing.Literal["topup"],
+    "@type": typing.Literal["fsl.topup"],
     "imain": InputPathType,
     "datain": InputPathType,
     "out": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "topup": topup_cargs,
+        "fsl.topup": topup_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "topup": topup_outputs,
+        "fsl.topup": topup_outputs,
     }.get(t)
 
 
@@ -157,7 +157,7 @@ def topup_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "topup",
+        "@type": "fsl.topup",
         "imain": imain,
         "datain": datain,
         "ssqlambda": ssqlambda,
@@ -419,5 +419,8 @@ __all__ = [
     "TopupOutputs",
     "TopupParameters",
     "topup",
+    "topup_cargs",
+    "topup_execute",
+    "topup_outputs",
     "topup_params",
 ]

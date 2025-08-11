@@ -14,7 +14,7 @@ MM_METADATA = Metadata(
 
 
 MmParameters = typing.TypedDict('MmParameters', {
-    "__STYXTYPE__": typing.Literal["mm"],
+    "@type": typing.Literal["fsl.mm"],
     "spatial_data_file": InputPathType,
     "mask_file": InputPathType,
     "verbose_flag": bool,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mm": mm_cargs,
+        "fsl.mm": mm_cargs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def mm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mm",
+        "@type": "fsl.mm",
         "spatial_data_file": spatial_data_file,
         "mask_file": mask_file,
         "verbose_flag": verbose_flag,
@@ -359,5 +359,8 @@ __all__ = [
     "MmOutputs",
     "MmParameters",
     "mm",
+    "mm_cargs",
+    "mm_execute",
+    "mm_outputs",
     "mm_params",
 ]

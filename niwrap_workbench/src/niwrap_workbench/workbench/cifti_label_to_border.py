@@ -14,14 +14,14 @@ CIFTI_LABEL_TO_BORDER_METADATA = Metadata(
 
 
 CiftiLabelToBorderBorderParameters = typing.TypedDict('CiftiLabelToBorderBorderParameters', {
-    "__STYXTYPE__": typing.Literal["border"],
+    "@type": typing.Literal["workbench.cifti-label-to-border.border"],
     "surface": InputPathType,
     "border_out": str,
 })
 
 
 CiftiLabelToBorderParameters = typing.TypedDict('CiftiLabelToBorderParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-label-to-border"],
+    "@type": typing.Literal["workbench.cifti-label-to-border"],
     "cifti_in": InputPathType,
     "opt_placement_fraction": typing.NotRequired[float | None],
     "opt_column_column": typing.NotRequired[str | None],
@@ -41,8 +41,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-label-to-border": cifti_label_to_border_cargs,
-        "border": cifti_label_to_border_border_cargs,
+        "workbench.cifti-label-to-border": cifti_label_to_border_cargs,
+        "workbench.cifti-label-to-border.border": cifti_label_to_border_border_cargs,
     }.get(t)
 
 
@@ -58,8 +58,8 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-label-to-border": cifti_label_to_border_outputs,
-        "border": cifti_label_to_border_border_outputs,
+        "workbench.cifti-label-to-border": cifti_label_to_border_outputs,
+        "workbench.cifti-label-to-border.border": cifti_label_to_border_border_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def cifti_label_to_border_border_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border",
+        "@type": "workbench.cifti-label-to-border.border",
         "surface": surface,
         "border_out": border_out,
     }
@@ -164,7 +164,7 @@ def cifti_label_to_border_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-label-to-border",
+        "@type": "workbench.cifti-label-to-border",
         "cifti_in": cifti_in,
     }
     if opt_placement_fraction is not None:
@@ -204,7 +204,7 @@ def cifti_label_to_border_cargs(
             params.get("opt_column_column")
         ])
     if params.get("border") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("border")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("border")] for a in c])
     return cargs
 
 
@@ -223,7 +223,7 @@ def cifti_label_to_border_outputs(
     """
     ret = CiftiLabelToBorderOutputs(
         root=execution.output_file("."),
-        border=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("border")] if params.get("border") else None,
+        border=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("border")] if params.get("border") else None,
     )
     return ret
 
@@ -302,6 +302,11 @@ __all__ = [
     "CiftiLabelToBorderOutputs",
     "CiftiLabelToBorderParameters",
     "cifti_label_to_border",
+    "cifti_label_to_border_border_cargs",
+    "cifti_label_to_border_border_outputs",
     "cifti_label_to_border_border_params",
+    "cifti_label_to_border_cargs",
+    "cifti_label_to_border_execute",
+    "cifti_label_to_border_outputs",
     "cifti_label_to_border_params",
 ]

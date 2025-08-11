@@ -14,7 +14,7 @@ FABBER_T1_METADATA = Metadata(
 
 
 FabberT1Parameters = typing.TypedDict('FabberT1Parameters', {
-    "__STYXTYPE__": typing.Literal["fabber_t1"],
+    "@type": typing.Literal["fsl.fabber_t1"],
     "output": str,
     "method": str,
     "model": str,
@@ -60,7 +60,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber_t1": fabber_t1_cargs,
+        "fsl.fabber_t1": fabber_t1_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber_t1": fabber_t1_outputs,
+        "fsl.fabber_t1": fabber_t1_outputs,
     }.get(t)
 
 
@@ -194,7 +194,7 @@ def fabber_t1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber_t1",
+        "@type": "fsl.fabber_t1",
         "output": output,
         "method": method,
         "model": model,
@@ -540,5 +540,8 @@ __all__ = [
     "FabberT1Outputs",
     "FabberT1Parameters",
     "fabber_t1",
+    "fabber_t1_cargs",
+    "fabber_t1_execute",
+    "fabber_t1_outputs",
     "fabber_t1_params",
 ]

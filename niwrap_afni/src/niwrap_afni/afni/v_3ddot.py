@@ -14,7 +14,7 @@ V_3DDOT_METADATA = Metadata(
 
 
 V3ddotParameters = typing.TypedDict('V3ddotParameters', {
-    "__STYXTYPE__": typing.Literal["3ddot"],
+    "@type": typing.Literal["afni.3ddot"],
     "input_datasets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "mrange": typing.NotRequired[list[float] | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3ddot": v_3ddot_cargs,
+        "afni.3ddot": v_3ddot_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3ddot": v_3ddot_outputs,
+        "afni.3ddot": v_3ddot_outputs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def v_3ddot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3ddot",
+        "@type": "afni.3ddot",
         "input_datasets": input_datasets,
         "demean": demean,
         "docor": docor,
@@ -318,5 +318,8 @@ __all__ = [
     "V3ddotParameters",
     "V_3DDOT_METADATA",
     "v_3ddot",
+    "v_3ddot_cargs",
+    "v_3ddot_execute",
+    "v_3ddot_outputs",
     "v_3ddot_params",
 ]

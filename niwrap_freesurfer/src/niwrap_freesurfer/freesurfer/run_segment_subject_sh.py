@@ -14,7 +14,7 @@ RUN_SEGMENT_SUBJECT_SH_METADATA = Metadata(
 
 
 RunSegmentSubjectShParameters = typing.TypedDict('RunSegmentSubjectShParameters', {
-    "__STYXTYPE__": typing.Literal["run_SegmentSubject.sh"],
+    "@type": typing.Literal["freesurfer.run_SegmentSubject.sh"],
     "deployedMCRroot": str,
     "arguments": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_SegmentSubject.sh": run_segment_subject_sh_cargs,
+        "freesurfer.run_SegmentSubject.sh": run_segment_subject_sh_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "run_SegmentSubject.sh": run_segment_subject_sh_outputs,
+        "freesurfer.run_SegmentSubject.sh": run_segment_subject_sh_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def run_segment_subject_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_SegmentSubject.sh",
+        "@type": "freesurfer.run_SegmentSubject.sh",
         "deployedMCRroot": deployed_mcrroot,
     }
     if arguments is not None:
@@ -186,5 +186,8 @@ __all__ = [
     "RunSegmentSubjectShOutputs",
     "RunSegmentSubjectShParameters",
     "run_segment_subject_sh",
+    "run_segment_subject_sh_cargs",
+    "run_segment_subject_sh_execute",
+    "run_segment_subject_sh_outputs",
     "run_segment_subject_sh_params",
 ]

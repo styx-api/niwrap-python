@@ -14,7 +14,7 @@ FSLNVOLS_METADATA = Metadata(
 
 
 FslnvolsParameters = typing.TypedDict('FslnvolsParameters', {
-    "__STYXTYPE__": typing.Literal["fslnvols"],
+    "@type": typing.Literal["fsl.fslnvols"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslnvols": fslnvols_cargs,
+        "fsl.fslnvols": fslnvols_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def fslnvols_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslnvols",
+        "@type": "fsl.fslnvols",
         "infile": infile,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "FslnvolsOutputs",
     "FslnvolsParameters",
     "fslnvols",
+    "fslnvols_cargs",
+    "fslnvols_execute",
+    "fslnvols_outputs",
     "fslnvols_params",
 ]

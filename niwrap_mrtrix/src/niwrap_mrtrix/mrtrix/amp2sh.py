@@ -14,33 +14,33 @@ AMP2SH_METADATA = Metadata(
 
 
 Amp2shFslgradParameters = typing.TypedDict('Amp2shFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.amp2sh.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Amp2shVariousStringParameters = typing.TypedDict('Amp2shVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.amp2sh.VariousString"],
     "obj": str,
 })
 
 
 Amp2shVariousFileParameters = typing.TypedDict('Amp2shVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.amp2sh.VariousFile"],
     "obj": InputPathType,
 })
 
 
 Amp2shConfigParameters = typing.TypedDict('Amp2shConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.amp2sh.config"],
     "key": str,
     "value": str,
 })
 
 
 Amp2shParameters = typing.TypedDict('Amp2shParameters', {
-    "__STYXTYPE__": typing.Literal["amp2sh"],
+    "@type": typing.Literal["mrtrix.amp2sh"],
     "lmax": typing.NotRequired[int | None],
     "normalise": bool,
     "directions": typing.NotRequired[InputPathType | None],
@@ -74,11 +74,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "amp2sh": amp2sh_cargs,
-        "fslgrad": amp2sh_fslgrad_cargs,
-        "VariousString": amp2sh_various_string_cargs,
-        "VariousFile": amp2sh_various_file_cargs,
-        "config": amp2sh_config_cargs,
+        "mrtrix.amp2sh": amp2sh_cargs,
+        "mrtrix.amp2sh.fslgrad": amp2sh_fslgrad_cargs,
+        "mrtrix.amp2sh.VariousString": amp2sh_various_string_cargs,
+        "mrtrix.amp2sh.VariousFile": amp2sh_various_file_cargs,
+        "mrtrix.amp2sh.config": amp2sh_config_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "amp2sh": amp2sh_outputs,
+        "mrtrix.amp2sh": amp2sh_outputs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def amp2sh_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.amp2sh.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -157,7 +157,7 @@ def amp2sh_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.amp2sh.VariousString",
         "obj": obj,
     }
     return params
@@ -193,7 +193,7 @@ def amp2sh_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.amp2sh.VariousFile",
         "obj": obj,
     }
     return params
@@ -231,7 +231,7 @@ def amp2sh_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.amp2sh.config",
         "key": key,
         "value": value,
     }
@@ -344,7 +344,7 @@ def amp2sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "amp2sh",
+        "@type": "mrtrix.amp2sh",
         "normalise": normalise,
         "info": info,
         "quiet": quiet,
@@ -414,7 +414,7 @@ def amp2sh_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("shells") is not None:
         cargs.extend([
             "-shells",
@@ -423,7 +423,7 @@ def amp2sh_cargs(
     if params.get("strides") is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["__STYXTYPE__"])(params.get("strides"), execution)
+            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
         ])
     if params.get("info"):
         cargs.append("-info")
@@ -439,7 +439,7 @@ def amp2sh_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -648,9 +648,16 @@ __all__ = [
     "Amp2shVariousFileParameters",
     "Amp2shVariousStringParameters",
     "amp2sh",
+    "amp2sh_cargs",
+    "amp2sh_config_cargs",
     "amp2sh_config_params",
+    "amp2sh_execute",
+    "amp2sh_fslgrad_cargs",
     "amp2sh_fslgrad_params",
+    "amp2sh_outputs",
     "amp2sh_params",
+    "amp2sh_various_file_cargs",
     "amp2sh_various_file_params",
+    "amp2sh_various_string_cargs",
     "amp2sh_various_string_params",
 ]

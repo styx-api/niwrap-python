@@ -14,42 +14,42 @@ VOLUME_RESAMPLE_METADATA = Metadata(
 
 
 VolumeResampleFlirtParameters = typing.TypedDict('VolumeResampleFlirtParameters', {
-    "__STYXTYPE__": typing.Literal["flirt"],
+    "@type": typing.Literal["workbench.volume-resample.affine.flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeResampleAffineParameters = typing.TypedDict('VolumeResampleAffineParameters', {
-    "__STYXTYPE__": typing.Literal["affine"],
+    "@type": typing.Literal["workbench.volume-resample.affine"],
     "affine": str,
     "flirt": typing.NotRequired[VolumeResampleFlirtParameters | None],
 })
 
 
 VolumeResampleFlirt1Parameters = typing.TypedDict('VolumeResampleFlirt1Parameters', {
-    "__STYXTYPE__": typing.Literal["flirt_1"],
+    "@type": typing.Literal["workbench.volume-resample.affine_series.flirt"],
     "source_volume": str,
     "target_volume": str,
 })
 
 
 VolumeResampleAffineSeriesParameters = typing.TypedDict('VolumeResampleAffineSeriesParameters', {
-    "__STYXTYPE__": typing.Literal["affine_series"],
+    "@type": typing.Literal["workbench.volume-resample.affine_series"],
     "affine_series": str,
     "flirt": typing.NotRequired[VolumeResampleFlirt1Parameters | None],
 })
 
 
 VolumeResampleWarpParameters = typing.TypedDict('VolumeResampleWarpParameters', {
-    "__STYXTYPE__": typing.Literal["warp"],
+    "@type": typing.Literal["workbench.volume-resample.warp"],
     "warpfield": str,
     "opt_fnirt_source_volume": typing.NotRequired[str | None],
 })
 
 
 VolumeResampleParameters = typing.TypedDict('VolumeResampleParameters', {
-    "__STYXTYPE__": typing.Literal["volume-resample"],
+    "@type": typing.Literal["workbench.volume-resample"],
     "volume_in": InputPathType,
     "volume_space": str,
     "method": str,
@@ -72,12 +72,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-resample": volume_resample_cargs,
-        "affine": volume_resample_affine_cargs,
-        "flirt": volume_resample_flirt_cargs,
-        "affine_series": volume_resample_affine_series_cargs,
-        "flirt_1": volume_resample_flirt_1_cargs,
-        "warp": volume_resample_warp_cargs,
+        "workbench.volume-resample": volume_resample_cargs,
+        "workbench.volume-resample.affine": volume_resample_affine_cargs,
+        "workbench.volume-resample.affine.flirt": volume_resample_flirt_cargs,
+        "workbench.volume-resample.affine_series": volume_resample_affine_series_cargs,
+        "workbench.volume-resample.affine_series.flirt": volume_resample_flirt_1_cargs,
+        "workbench.volume-resample.warp": volume_resample_warp_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-resample": volume_resample_outputs,
+        "workbench.volume-resample": volume_resample_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def volume_resample_flirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt",
+        "@type": "workbench.volume-resample.affine.flirt",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -152,7 +152,7 @@ def volume_resample_affine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "affine",
+        "@type": "workbench.volume-resample.affine",
         "affine": affine,
     }
     if flirt is not None:
@@ -177,7 +177,7 @@ def volume_resample_affine_cargs(
     cargs.append("-affine")
     cargs.append(params.get("affine"))
     if params.get("flirt") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt")["__STYXTYPE__"])(params.get("flirt"), execution))
+        cargs.extend(dyn_cargs(params.get("flirt")["@type"])(params.get("flirt"), execution))
     return cargs
 
 
@@ -195,7 +195,7 @@ def volume_resample_flirt_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt_1",
+        "@type": "workbench.volume-resample.affine_series.flirt",
         "source_volume": source_volume,
         "target_volume": target_volume,
     }
@@ -237,7 +237,7 @@ def volume_resample_affine_series_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "affine_series",
+        "@type": "workbench.volume-resample.affine_series",
         "affine_series": affine_series,
     }
     if flirt is not None:
@@ -262,7 +262,7 @@ def volume_resample_affine_series_cargs(
     cargs.append("-affine-series")
     cargs.append(params.get("affine_series"))
     if params.get("flirt") is not None:
-        cargs.extend(dyn_cargs(params.get("flirt")["__STYXTYPE__"])(params.get("flirt"), execution))
+        cargs.extend(dyn_cargs(params.get("flirt")["@type"])(params.get("flirt"), execution))
     return cargs
 
 
@@ -281,7 +281,7 @@ def volume_resample_warp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warp",
+        "@type": "workbench.volume-resample.warp",
         "warpfield": warpfield,
     }
     if opt_fnirt_source_volume is not None:
@@ -347,7 +347,7 @@ def volume_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-resample",
+        "@type": "workbench.volume-resample",
         "volume_in": volume_in,
         "volume_space": volume_space,
         "method": method,
@@ -383,11 +383,11 @@ def volume_resample_cargs(
     cargs.append(params.get("method"))
     cargs.append(params.get("volume_out"))
     if params.get("affine") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("affine")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("affine")] for a in c])
     if params.get("affine_series") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("affine_series")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("affine_series")] for a in c])
     if params.get("warp") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("warp")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("warp")] for a in c])
     return cargs
 
 
@@ -512,10 +512,18 @@ __all__ = [
     "VolumeResampleParameters",
     "VolumeResampleWarpParameters",
     "volume_resample",
+    "volume_resample_affine_cargs",
     "volume_resample_affine_params",
+    "volume_resample_affine_series_cargs",
     "volume_resample_affine_series_params",
+    "volume_resample_cargs",
+    "volume_resample_execute",
+    "volume_resample_flirt_1_cargs",
     "volume_resample_flirt_1_params",
+    "volume_resample_flirt_cargs",
     "volume_resample_flirt_params",
+    "volume_resample_outputs",
     "volume_resample_params",
+    "volume_resample_warp_cargs",
     "volume_resample_warp_params",
 ]

@@ -14,7 +14,7 @@ V_3D_BRICK_STAT_METADATA = Metadata(
 
 
 V3dBrickStatParameters = typing.TypedDict('V3dBrickStatParameters', {
-    "__STYXTYPE__": typing.Literal["3dBrickStat"],
+    "@type": typing.Literal["afni.3dBrickStat"],
     "dataset": str,
     "quick": bool,
     "slow": bool,
@@ -60,7 +60,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dBrickStat": v_3d_brick_stat_cargs,
+        "afni.3dBrickStat": v_3d_brick_stat_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dBrickStat": v_3d_brick_stat_outputs,
+        "afni.3dBrickStat": v_3d_brick_stat_outputs,
     }.get(t)
 
 
@@ -163,7 +163,7 @@ def v_3d_brick_stat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dBrickStat",
+        "@type": "afni.3dBrickStat",
         "dataset": dataset,
         "quick": quick,
         "slow": slow,
@@ -459,5 +459,8 @@ __all__ = [
     "V3dBrickStatParameters",
     "V_3D_BRICK_STAT_METADATA",
     "v_3d_brick_stat",
+    "v_3d_brick_stat_cargs",
+    "v_3d_brick_stat_execute",
+    "v_3d_brick_stat_outputs",
     "v_3d_brick_stat_params",
 ]

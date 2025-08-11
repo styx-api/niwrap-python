@@ -14,7 +14,7 @@ SURF_MEASURES_METADATA = Metadata(
 
 
 SurfMeasuresParameters = typing.TypedDict('SurfMeasuresParameters', {
-    "__STYXTYPE__": typing.Literal["SurfMeasures"],
+    "@type": typing.Literal["afni.SurfMeasures"],
     "spec_file": InputPathType,
     "surf_A": str,
     "surf_B": typing.NotRequired[str | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfMeasures": surf_measures_cargs,
+        "afni.SurfMeasures": surf_measures_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfMeasures": surf_measures_outputs,
+        "afni.SurfMeasures": surf_measures_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def surf_measures_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfMeasures",
+        "@type": "afni.SurfMeasures",
         "spec_file": spec_file,
         "surf_A": surf_a,
         "out_dset": out_dset,
@@ -369,5 +369,8 @@ __all__ = [
     "SurfMeasuresOutputs",
     "SurfMeasuresParameters",
     "surf_measures",
+    "surf_measures_cargs",
+    "surf_measures_execute",
+    "surf_measures_outputs",
     "surf_measures_params",
 ]

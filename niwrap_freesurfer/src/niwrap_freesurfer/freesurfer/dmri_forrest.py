@@ -14,7 +14,7 @@ DMRI_FORREST_METADATA = Metadata(
 
 
 DmriForrestParameters = typing.TypedDict('DmriForrestParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_forrest"],
+    "@type": typing.Literal["freesurfer.dmri_forrest"],
     "test_dir": str,
     "train_file": InputPathType,
     "mask_file": InputPathType,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_forrest": dmri_forrest_cargs,
+        "freesurfer.dmri_forrest": dmri_forrest_cargs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def dmri_forrest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_forrest",
+        "@type": "freesurfer.dmri_forrest",
         "test_dir": test_dir,
         "train_file": train_file,
         "mask_file": mask_file,
@@ -261,5 +261,8 @@ __all__ = [
     "DmriForrestOutputs",
     "DmriForrestParameters",
     "dmri_forrest",
+    "dmri_forrest_cargs",
+    "dmri_forrest_execute",
+    "dmri_forrest_outputs",
     "dmri_forrest_params",
 ]

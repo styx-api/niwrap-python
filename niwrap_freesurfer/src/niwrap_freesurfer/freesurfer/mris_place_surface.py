@@ -14,7 +14,7 @@ MRIS_PLACE_SURFACE_METADATA = Metadata(
 
 
 MrisPlaceSurfaceParameters = typing.TypedDict('MrisPlaceSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["mris_place_surface"],
+    "@type": typing.Literal["freesurfer.mris_place_surface"],
     "output_surface": str,
     "input_surface": str,
     "autodetect_gray_white_stats": str,
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_place_surface": mris_place_surface_cargs,
+        "freesurfer.mris_place_surface": mris_place_surface_cargs,
     }.get(t)
 
 
@@ -222,7 +222,7 @@ def mris_place_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_place_surface",
+        "@type": "freesurfer.mris_place_surface",
         "output_surface": output_surface,
         "input_surface": input_surface,
         "autodetect_gray_white_stats": autodetect_gray_white_stats,
@@ -708,5 +708,8 @@ __all__ = [
     "MrisPlaceSurfaceOutputs",
     "MrisPlaceSurfaceParameters",
     "mris_place_surface",
+    "mris_place_surface_cargs",
+    "mris_place_surface_execute",
+    "mris_place_surface_outputs",
     "mris_place_surface_params",
 ]

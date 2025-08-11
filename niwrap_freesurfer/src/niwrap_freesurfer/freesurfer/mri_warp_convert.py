@@ -14,7 +14,7 @@ MRI_WARP_CONVERT_METADATA = Metadata(
 
 
 MriWarpConvertParameters = typing.TypedDict('MriWarpConvertParameters', {
-    "__STYXTYPE__": typing.Literal["mri_warp_convert"],
+    "@type": typing.Literal["freesurfer.mri_warp_convert"],
     "inm3z": typing.NotRequired[InputPathType | None],
     "infsl": typing.NotRequired[InputPathType | None],
     "inlps": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_warp_convert": mri_warp_convert_cargs,
+        "freesurfer.mri_warp_convert": mri_warp_convert_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_warp_convert": mri_warp_convert_outputs,
+        "freesurfer.mri_warp_convert": mri_warp_convert_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def mri_warp_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_warp_convert",
+        "@type": "freesurfer.mri_warp_convert",
         "downsample": downsample,
     }
     if inm3z is not None:
@@ -342,5 +342,8 @@ __all__ = [
     "MriWarpConvertOutputs",
     "MriWarpConvertParameters",
     "mri_warp_convert",
+    "mri_warp_convert_cargs",
+    "mri_warp_convert_execute",
+    "mri_warp_convert_outputs",
     "mri_warp_convert_params",
 ]

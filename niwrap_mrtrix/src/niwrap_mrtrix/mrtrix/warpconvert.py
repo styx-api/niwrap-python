@@ -14,14 +14,14 @@ WARPCONVERT_METADATA = Metadata(
 
 
 WarpconvertConfigParameters = typing.TypedDict('WarpconvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.warpconvert.config"],
     "key": str,
     "value": str,
 })
 
 
 WarpconvertParameters = typing.TypedDict('WarpconvertParameters', {
-    "__STYXTYPE__": typing.Literal["warpconvert"],
+    "@type": typing.Literal["mrtrix.warpconvert"],
     "template": typing.NotRequired[InputPathType | None],
     "midway_space": bool,
     "from": typing.NotRequired[int | None],
@@ -51,8 +51,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "warpconvert": warpconvert_cargs,
-        "config": warpconvert_config_cargs,
+        "mrtrix.warpconvert": warpconvert_cargs,
+        "mrtrix.warpconvert.config": warpconvert_config_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "warpconvert": warpconvert_outputs,
+        "mrtrix.warpconvert": warpconvert_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def warpconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.warpconvert.config",
         "key": key,
         "value": value,
     }
@@ -178,7 +178,7 @@ def warpconvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "warpconvert",
+        "@type": "mrtrix.warpconvert",
         "midway_space": midway_space,
         "info": info,
         "quiet": quiet,
@@ -242,7 +242,7 @@ def warpconvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -406,6 +406,10 @@ __all__ = [
     "WarpconvertOutputs",
     "WarpconvertParameters",
     "warpconvert",
+    "warpconvert_cargs",
+    "warpconvert_config_cargs",
     "warpconvert_config_params",
+    "warpconvert_execute",
+    "warpconvert_outputs",
     "warpconvert_params",
 ]

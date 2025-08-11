@@ -14,14 +14,14 @@ AFDCONNECTIVITY_METADATA = Metadata(
 
 
 AfdconnectivityConfigParameters = typing.TypedDict('AfdconnectivityConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.afdconnectivity.config"],
     "key": str,
     "value": str,
 })
 
 
 AfdconnectivityParameters = typing.TypedDict('AfdconnectivityParameters', {
-    "__STYXTYPE__": typing.Literal["afdconnectivity"],
+    "@type": typing.Literal["mrtrix.afdconnectivity"],
     "wbft": typing.NotRequired[InputPathType | None],
     "afd_map": typing.NotRequired[str | None],
     "all_fixels": bool,
@@ -50,8 +50,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afdconnectivity": afdconnectivity_cargs,
-        "config": afdconnectivity_config_cargs,
+        "mrtrix.afdconnectivity": afdconnectivity_cargs,
+        "mrtrix.afdconnectivity.config": afdconnectivity_config_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afdconnectivity": afdconnectivity_outputs,
+        "mrtrix.afdconnectivity": afdconnectivity_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def afdconnectivity_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.afdconnectivity.config",
         "key": key,
         "value": value,
     }
@@ -170,7 +170,7 @@ def afdconnectivity_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afdconnectivity",
+        "@type": "mrtrix.afdconnectivity",
         "all_fixels": all_fixels,
         "info": info,
         "quiet": quiet,
@@ -233,7 +233,7 @@ def afdconnectivity_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -440,6 +440,10 @@ __all__ = [
     "AfdconnectivityOutputs",
     "AfdconnectivityParameters",
     "afdconnectivity",
+    "afdconnectivity_cargs",
+    "afdconnectivity_config_cargs",
     "afdconnectivity_config_params",
+    "afdconnectivity_execute",
+    "afdconnectivity_outputs",
     "afdconnectivity_params",
 ]

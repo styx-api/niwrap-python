@@ -14,21 +14,21 @@ METRIC_RESAMPLE_METADATA = Metadata(
 
 
 MetricResampleAreaSurfsParameters = typing.TypedDict('MetricResampleAreaSurfsParameters', {
-    "__STYXTYPE__": typing.Literal["area_surfs"],
+    "@type": typing.Literal["workbench.metric-resample.area_surfs"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 MetricResampleAreaMetricsParameters = typing.TypedDict('MetricResampleAreaMetricsParameters', {
-    "__STYXTYPE__": typing.Literal["area_metrics"],
+    "@type": typing.Literal["workbench.metric-resample.area_metrics"],
     "current_area": InputPathType,
     "new_area": InputPathType,
 })
 
 
 MetricResampleParameters = typing.TypedDict('MetricResampleParameters', {
-    "__STYXTYPE__": typing.Literal["metric-resample"],
+    "@type": typing.Literal["workbench.metric-resample"],
     "metric_in": InputPathType,
     "current_sphere": InputPathType,
     "new_sphere": InputPathType,
@@ -55,9 +55,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-resample": metric_resample_cargs,
-        "area_surfs": metric_resample_area_surfs_cargs,
-        "area_metrics": metric_resample_area_metrics_cargs,
+        "workbench.metric-resample": metric_resample_cargs,
+        "workbench.metric-resample.area_surfs": metric_resample_area_surfs_cargs,
+        "workbench.metric-resample.area_metrics": metric_resample_area_metrics_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-resample": metric_resample_outputs,
+        "workbench.metric-resample": metric_resample_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def metric_resample_area_surfs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "area_surfs",
+        "@type": "workbench.metric-resample.area_surfs",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -132,7 +132,7 @@ def metric_resample_area_metrics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "area_metrics",
+        "@type": "workbench.metric-resample.area_metrics",
         "current_area": current_area,
         "new_area": new_area,
     }
@@ -210,7 +210,7 @@ def metric_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-resample",
+        "@type": "workbench.metric-resample",
         "metric_in": metric_in,
         "current_sphere": current_sphere,
         "new_sphere": new_sphere,
@@ -252,9 +252,9 @@ def metric_resample_cargs(
     cargs.append(params.get("method"))
     cargs.append(params.get("metric_out"))
     if params.get("area_surfs") is not None:
-        cargs.extend(dyn_cargs(params.get("area_surfs")["__STYXTYPE__"])(params.get("area_surfs"), execution))
+        cargs.extend(dyn_cargs(params.get("area_surfs")["@type"])(params.get("area_surfs"), execution))
     if params.get("area_metrics") is not None:
-        cargs.extend(dyn_cargs(params.get("area_metrics")["__STYXTYPE__"])(params.get("area_metrics"), execution))
+        cargs.extend(dyn_cargs(params.get("area_metrics")["@type"])(params.get("area_metrics"), execution))
     if params.get("opt_current_roi_roi_metric") is not None:
         cargs.extend([
             "-current-roi",
@@ -433,7 +433,12 @@ __all__ = [
     "MetricResampleOutputs",
     "MetricResampleParameters",
     "metric_resample",
+    "metric_resample_area_metrics_cargs",
     "metric_resample_area_metrics_params",
+    "metric_resample_area_surfs_cargs",
     "metric_resample_area_surfs_params",
+    "metric_resample_cargs",
+    "metric_resample_execute",
+    "metric_resample_outputs",
     "metric_resample_params",
 ]

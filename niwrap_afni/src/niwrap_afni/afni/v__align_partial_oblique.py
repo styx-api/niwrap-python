@@ -14,7 +14,7 @@ V__ALIGN_PARTIAL_OBLIQUE_METADATA = Metadata(
 
 
 VAlignPartialObliqueParameters = typing.TypedDict('VAlignPartialObliqueParameters', {
-    "__STYXTYPE__": typing.Literal["@align_partial_oblique"],
+    "@type": typing.Literal["afni.@align_partial_oblique"],
     "base": InputPathType,
     "input": InputPathType,
     "suffix": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@align_partial_oblique": v__align_partial_oblique_cargs,
+        "afni.@align_partial_oblique": v__align_partial_oblique_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@align_partial_oblique": v__align_partial_oblique_outputs,
+        "afni.@align_partial_oblique": v__align_partial_oblique_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def v__align_partial_oblique_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@align_partial_oblique",
+        "@type": "afni.@align_partial_oblique",
         "base": base,
         "input": input_,
         "keep_tmp": keep_tmp,
@@ -281,5 +281,8 @@ __all__ = [
     "VAlignPartialObliqueParameters",
     "V__ALIGN_PARTIAL_OBLIQUE_METADATA",
     "v__align_partial_oblique",
+    "v__align_partial_oblique_cargs",
+    "v__align_partial_oblique_execute",
+    "v__align_partial_oblique_outputs",
     "v__align_partial_oblique_params",
 ]

@@ -14,7 +14,7 @@ BBREGISTER_METADATA = Metadata(
 
 
 BbregisterParameters = typing.TypedDict('BbregisterParameters', {
-    "__STYXTYPE__": typing.Literal["bbregister"],
+    "@type": typing.Literal["freesurfer.bbregister"],
     "subject": str,
     "moveable_volume": InputPathType,
     "reg_file": str,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bbregister": bbregister_cargs,
+        "freesurfer.bbregister": bbregister_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bbregister": bbregister_outputs,
+        "freesurfer.bbregister": bbregister_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def bbregister_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bbregister",
+        "@type": "freesurfer.bbregister",
         "subject": subject,
         "moveable_volume": moveable_volume,
         "reg_file": reg_file,
@@ -357,5 +357,8 @@ __all__ = [
     "BbregisterOutputs",
     "BbregisterParameters",
     "bbregister",
+    "bbregister_cargs",
+    "bbregister_execute",
+    "bbregister_outputs",
     "bbregister_params",
 ]

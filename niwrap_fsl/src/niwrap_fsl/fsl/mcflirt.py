@@ -14,7 +14,7 @@ MCFLIRT_METADATA = Metadata(
 
 
 McflirtParameters = typing.TypedDict('McflirtParameters', {
-    "__STYXTYPE__": typing.Literal["mcflirt"],
+    "@type": typing.Literal["fsl.mcflirt"],
     "in_file": InputPathType,
     "bins": typing.NotRequired[int | None],
     "cost": typing.NotRequired[typing.Literal["mutualinfo", "woods", "corratio", "normcorr", "normmi", "leastsquares"] | None],
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mcflirt": mcflirt_cargs,
+        "fsl.mcflirt": mcflirt_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mcflirt": mcflirt_outputs,
+        "fsl.mcflirt": mcflirt_outputs,
     }.get(t)
 
 
@@ -152,7 +152,7 @@ def mcflirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mcflirt",
+        "@type": "fsl.mcflirt",
         "in_file": in_file,
         "mean_vol": mean_vol,
         "save_mats": save_mats,
@@ -434,5 +434,8 @@ __all__ = [
     "McflirtOutputs",
     "McflirtParameters",
     "mcflirt",
+    "mcflirt_cargs",
+    "mcflirt_execute",
+    "mcflirt_outputs",
     "mcflirt_params",
 ]

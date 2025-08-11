@@ -14,7 +14,7 @@ TKREGISTER2_CMDL_METADATA = Metadata(
 
 
 Tkregister2CmdlParameters = typing.TypedDict('Tkregister2CmdlParameters', {
-    "__STYXTYPE__": typing.Literal["tkregister2_cmdl"],
+    "@type": typing.Literal["freesurfer.tkregister2_cmdl"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "fstarg_flag": bool,
@@ -90,7 +90,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tkregister2_cmdl": tkregister2_cmdl_cargs,
+        "freesurfer.tkregister2_cmdl": tkregister2_cmdl_cargs,
     }.get(t)
 
 
@@ -249,7 +249,7 @@ def tkregister2_cmdl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tkregister2_cmdl",
+        "@type": "freesurfer.tkregister2_cmdl",
         "movable_volume": movable_volume,
         "target_volume": target_volume,
         "fstarg_flag": fstarg_flag,
@@ -860,5 +860,8 @@ __all__ = [
     "Tkregister2CmdlOutputs",
     "Tkregister2CmdlParameters",
     "tkregister2_cmdl",
+    "tkregister2_cmdl_cargs",
+    "tkregister2_cmdl_execute",
+    "tkregister2_cmdl_outputs",
     "tkregister2_cmdl_params",
 ]

@@ -14,7 +14,7 @@ SET_STRUCTURE_METADATA = Metadata(
 
 
 SetStructureParameters = typing.TypedDict('SetStructureParameters', {
-    "__STYXTYPE__": typing.Literal["set-structure"],
+    "@type": typing.Literal["workbench.set-structure"],
     "data_file": str,
     "structure": str,
     "opt_surface_type_type": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "set-structure": set_structure_cargs,
+        "workbench.set-structure": set_structure_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def set_structure_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "set-structure",
+        "@type": "workbench.set-structure",
         "data_file": data_file,
         "structure": structure,
     }
@@ -325,5 +325,8 @@ __all__ = [
     "SetStructureOutputs",
     "SetStructureParameters",
     "set_structure",
+    "set_structure_cargs",
+    "set_structure_execute",
+    "set_structure_outputs",
     "set_structure_params",
 ]

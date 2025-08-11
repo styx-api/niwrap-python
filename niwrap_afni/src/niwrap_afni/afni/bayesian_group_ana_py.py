@@ -14,7 +14,7 @@ BAYESIAN_GROUP_ANA_PY_METADATA = Metadata(
 
 
 BayesianGroupAnaPyParameters = typing.TypedDict('BayesianGroupAnaPyParameters', {
-    "__STYXTYPE__": typing.Literal["BayesianGroupAna.py"],
+    "@type": typing.Literal["afni.BayesianGroupAna.py"],
     "dataTable": InputPathType,
     "y_variable": str,
     "prefix": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "BayesianGroupAna.py": bayesian_group_ana_py_cargs,
+        "afni.BayesianGroupAna.py": bayesian_group_ana_py_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "BayesianGroupAna.py": bayesian_group_ana_py_outputs,
+        "afni.BayesianGroupAna.py": bayesian_group_ana_py_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def bayesian_group_ana_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "BayesianGroupAna.py",
+        "@type": "afni.BayesianGroupAna.py",
         "dataTable": data_table,
         "y_variable": y_variable,
         "no_center": no_center,
@@ -338,5 +338,8 @@ __all__ = [
     "BayesianGroupAnaPyOutputs",
     "BayesianGroupAnaPyParameters",
     "bayesian_group_ana_py",
+    "bayesian_group_ana_py_cargs",
+    "bayesian_group_ana_py_execute",
+    "bayesian_group_ana_py_outputs",
     "bayesian_group_ana_py_params",
 ]

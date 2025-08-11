@@ -14,7 +14,7 @@ UN_WARP_EPI_PY_METADATA = Metadata(
 
 
 UnWarpEpiPyParameters = typing.TypedDict('UnWarpEpiPyParameters', {
-    "__STYXTYPE__": typing.Literal["unWarpEPI.py"],
+    "@type": typing.Literal["afni.unWarpEPI.py"],
     "forward": InputPathType,
     "reverse": InputPathType,
     "anat4warp": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "unWarpEPI.py": un_warp_epi_py_cargs,
+        "afni.unWarpEPI.py": un_warp_epi_py_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def un_warp_epi_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "unWarpEPI.py",
+        "@type": "afni.unWarpEPI.py",
         "forward": forward,
         "reverse": reverse,
         "anat4warp": anat4warp,
@@ -228,5 +228,8 @@ __all__ = [
     "UnWarpEpiPyOutputs",
     "UnWarpEpiPyParameters",
     "un_warp_epi_py",
+    "un_warp_epi_py_cargs",
+    "un_warp_epi_py_execute",
+    "un_warp_epi_py_outputs",
     "un_warp_epi_py_params",
 ]

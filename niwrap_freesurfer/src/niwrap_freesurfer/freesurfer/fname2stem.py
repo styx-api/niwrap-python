@@ -14,7 +14,7 @@ FNAME2STEM_METADATA = Metadata(
 
 
 Fname2stemParameters = typing.TypedDict('Fname2stemParameters', {
-    "__STYXTYPE__": typing.Literal["fname2stem"],
+    "@type": typing.Literal["freesurfer.fname2stem"],
     "filename": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fname2stem": fname2stem_cargs,
+        "freesurfer.fname2stem": fname2stem_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def fname2stem_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fname2stem",
+        "@type": "freesurfer.fname2stem",
         "filename": filename,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "Fname2stemOutputs",
     "Fname2stemParameters",
     "fname2stem",
+    "fname2stem_cargs",
+    "fname2stem_execute",
+    "fname2stem_outputs",
     "fname2stem_params",
 ]

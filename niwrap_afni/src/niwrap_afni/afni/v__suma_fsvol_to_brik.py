@@ -14,7 +14,7 @@ V__SUMA_FSVOL_TO_BRIK_METADATA = Metadata(
 
 
 VSumaFsvolToBrikParameters = typing.TypedDict('VSumaFsvolToBrikParameters', {
-    "__STYXTYPE__": typing.Literal["@SUMA_FSvolToBRIK"],
+    "@type": typing.Literal["afni.@SUMA_FSvolToBRIK"],
     "fs_vol_data": InputPathType,
     "prefix": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SUMA_FSvolToBRIK": v__suma_fsvol_to_brik_cargs,
+        "afni.@SUMA_FSvolToBRIK": v__suma_fsvol_to_brik_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SUMA_FSvolToBRIK": v__suma_fsvol_to_brik_outputs,
+        "afni.@SUMA_FSvolToBRIK": v__suma_fsvol_to_brik_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v__suma_fsvol_to_brik_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SUMA_FSvolToBRIK",
+        "@type": "afni.@SUMA_FSvolToBRIK",
         "fs_vol_data": fs_vol_data,
         "prefix": prefix,
     }
@@ -185,5 +185,8 @@ __all__ = [
     "VSumaFsvolToBrikParameters",
     "V__SUMA_FSVOL_TO_BRIK_METADATA",
     "v__suma_fsvol_to_brik",
+    "v__suma_fsvol_to_brik_cargs",
+    "v__suma_fsvol_to_brik_execute",
+    "v__suma_fsvol_to_brik_outputs",
     "v__suma_fsvol_to_brik_params",
 ]

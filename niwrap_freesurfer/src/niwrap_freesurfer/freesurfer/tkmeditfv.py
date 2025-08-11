@@ -14,7 +14,7 @@ TKMEDITFV_METADATA = Metadata(
 
 
 TkmeditfvParameters = typing.TypedDict('TkmeditfvParameters', {
-    "__STYXTYPE__": typing.Literal["tkmeditfv"],
+    "@type": typing.Literal["freesurfer.tkmeditfv"],
     "subject": typing.NotRequired[str | None],
     "mainvol": InputPathType,
     "aux_volume": typing.NotRequired[InputPathType | None],
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tkmeditfv": tkmeditfv_cargs,
+        "freesurfer.tkmeditfv": tkmeditfv_cargs,
     }.get(t)
 
 
@@ -164,7 +164,7 @@ def tkmeditfv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tkmeditfv",
+        "@type": "freesurfer.tkmeditfv",
         "mainvol": mainvol,
         "load_white": load_white,
         "load_pial": load_pial,
@@ -504,5 +504,8 @@ __all__ = [
     "TkmeditfvOutputs",
     "TkmeditfvParameters",
     "tkmeditfv",
+    "tkmeditfv_cargs",
+    "tkmeditfv_execute",
+    "tkmeditfv_outputs",
     "tkmeditfv_params",
 ]

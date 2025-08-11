@@ -14,7 +14,7 @@ GEN_SS_REVIEW_SCRIPTS_METADATA = Metadata(
 
 
 GenSsReviewScriptsParameters = typing.TypedDict('GenSsReviewScriptsParameters', {
-    "__STYXTYPE__": typing.Literal["gen_ss_review_scripts"],
+    "@type": typing.Literal["afni.gen_ss_review_scripts"],
     "subject_id": typing.NotRequired[str | None],
     "rm_trs": typing.NotRequired[float | None],
     "num_stim": typing.NotRequired[float | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gen_ss_review_scripts": gen_ss_review_scripts_cargs,
+        "afni.gen_ss_review_scripts": gen_ss_review_scripts_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gen_ss_review_scripts": gen_ss_review_scripts_outputs,
+        "afni.gen_ss_review_scripts": gen_ss_review_scripts_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def gen_ss_review_scripts_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gen_ss_review_scripts",
+        "@type": "afni.gen_ss_review_scripts",
     }
     if subject_id is not None:
         params["subject_id"] = subject_id
@@ -417,5 +417,8 @@ __all__ = [
     "GenSsReviewScriptsOutputs",
     "GenSsReviewScriptsParameters",
     "gen_ss_review_scripts",
+    "gen_ss_review_scripts_cargs",
+    "gen_ss_review_scripts_execute",
+    "gen_ss_review_scripts_outputs",
     "gen_ss_review_scripts_params",
 ]

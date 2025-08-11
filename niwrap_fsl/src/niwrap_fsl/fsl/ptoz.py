@@ -14,7 +14,7 @@ PTOZ_METADATA = Metadata(
 
 
 PtozParameters = typing.TypedDict('PtozParameters', {
-    "__STYXTYPE__": typing.Literal["ptoz"],
+    "@type": typing.Literal["fsl.ptoz"],
     "p_value": float,
     "tail_flag": bool,
     "grf_flag": typing.NotRequired[float | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ptoz": ptoz_cargs,
+        "fsl.ptoz": ptoz_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def ptoz_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ptoz",
+        "@type": "fsl.ptoz",
         "p_value": p_value,
         "tail_flag": tail_flag,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "PtozOutputs",
     "PtozParameters",
     "ptoz",
+    "ptoz_cargs",
+    "ptoz_execute",
+    "ptoz_outputs",
     "ptoz_params",
 ]

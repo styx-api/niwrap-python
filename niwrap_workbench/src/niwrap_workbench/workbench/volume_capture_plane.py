@@ -14,7 +14,7 @@ VOLUME_CAPTURE_PLANE_METADATA = Metadata(
 
 
 VolumeCapturePlaneParameters = typing.TypedDict('VolumeCapturePlaneParameters', {
-    "__STYXTYPE__": typing.Literal["volume-capture-plane"],
+    "@type": typing.Literal["workbench.volume-capture-plane"],
     "volume": InputPathType,
     "subvolume": str,
     "interp": str,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-capture-plane": volume_capture_plane_cargs,
+        "workbench.volume-capture-plane": volume_capture_plane_cargs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def volume_capture_plane_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-capture-plane",
+        "@type": "workbench.volume-capture-plane",
         "volume": volume,
         "subvolume": subvolume,
         "interp": interp,
@@ -317,5 +317,8 @@ __all__ = [
     "VolumeCapturePlaneOutputs",
     "VolumeCapturePlaneParameters",
     "volume_capture_plane",
+    "volume_capture_plane_cargs",
+    "volume_capture_plane_execute",
+    "volume_capture_plane_outputs",
     "volume_capture_plane_params",
 ]

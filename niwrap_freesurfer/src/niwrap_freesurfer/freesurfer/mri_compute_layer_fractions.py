@@ -14,7 +14,7 @@ MRI_COMPUTE_LAYER_FRACTIONS_METADATA = Metadata(
 
 
 MriComputeLayerFractionsParameters = typing.TypedDict('MriComputeLayerFractionsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compute_layer_fractions"],
+    "@type": typing.Literal["freesurfer.mri_compute_layer_fractions"],
     "reg_file": InputPathType,
     "input_volume": InputPathType,
     "output_stem": str,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compute_layer_fractions": mri_compute_layer_fractions_cargs,
+        "freesurfer.mri_compute_layer_fractions": mri_compute_layer_fractions_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_compute_layer_fractions": mri_compute_layer_fractions_outputs,
+        "freesurfer.mri_compute_layer_fractions": mri_compute_layer_fractions_outputs,
     }.get(t)
 
 
@@ -115,7 +115,7 @@ def mri_compute_layer_fractions_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compute_layer_fractions",
+        "@type": "freesurfer.mri_compute_layer_fractions",
         "reg_file": reg_file,
         "input_volume": input_volume,
         "output_stem": output_stem,
@@ -320,5 +320,8 @@ __all__ = [
     "MriComputeLayerFractionsOutputs",
     "MriComputeLayerFractionsParameters",
     "mri_compute_layer_fractions",
+    "mri_compute_layer_fractions_cargs",
+    "mri_compute_layer_fractions_execute",
+    "mri_compute_layer_fractions_outputs",
     "mri_compute_layer_fractions_params",
 ]

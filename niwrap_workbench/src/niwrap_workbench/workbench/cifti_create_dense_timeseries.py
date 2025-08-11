@@ -14,35 +14,35 @@ CIFTI_CREATE_DENSE_TIMESERIES_METADATA = Metadata(
 
 
 CiftiCreateDenseTimeseriesVolumeParameters = typing.TypedDict('CiftiCreateDenseTimeseriesVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.volume"],
     "volume_data": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateDenseTimeseriesLeftMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesLeftMetricParameters', {
-    "__STYXTYPE__": typing.Literal["left_metric"],
+    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.left_metric"],
     "metric": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesRightMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesRightMetricParameters', {
-    "__STYXTYPE__": typing.Literal["right_metric"],
+    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.right_metric"],
     "metric": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesCerebellumMetricParameters = typing.TypedDict('CiftiCreateDenseTimeseriesCerebellumMetricParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_metric"],
+    "@type": typing.Literal["workbench.cifti-create-dense-timeseries.cerebellum_metric"],
     "metric": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateDenseTimeseriesParameters = typing.TypedDict('CiftiCreateDenseTimeseriesParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-create-dense-timeseries"],
+    "@type": typing.Literal["workbench.cifti-create-dense-timeseries"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateDenseTimeseriesVolumeParameters | None],
     "left_metric": typing.NotRequired[CiftiCreateDenseTimeseriesLeftMetricParameters | None],
@@ -66,11 +66,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-create-dense-timeseries": cifti_create_dense_timeseries_cargs,
-        "volume": cifti_create_dense_timeseries_volume_cargs,
-        "left_metric": cifti_create_dense_timeseries_left_metric_cargs,
-        "right_metric": cifti_create_dense_timeseries_right_metric_cargs,
-        "cerebellum_metric": cifti_create_dense_timeseries_cerebellum_metric_cargs,
+        "workbench.cifti-create-dense-timeseries": cifti_create_dense_timeseries_cargs,
+        "workbench.cifti-create-dense-timeseries.volume": cifti_create_dense_timeseries_volume_cargs,
+        "workbench.cifti-create-dense-timeseries.left_metric": cifti_create_dense_timeseries_left_metric_cargs,
+        "workbench.cifti-create-dense-timeseries.right_metric": cifti_create_dense_timeseries_right_metric_cargs,
+        "workbench.cifti-create-dense-timeseries.cerebellum_metric": cifti_create_dense_timeseries_cerebellum_metric_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-create-dense-timeseries": cifti_create_dense_timeseries_outputs,
+        "workbench.cifti-create-dense-timeseries": cifti_create_dense_timeseries_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def cifti_create_dense_timeseries_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.cifti-create-dense-timeseries.volume",
         "volume_data": volume_data,
         "structure_label_volume": structure_label_volume,
     }
@@ -148,7 +148,7 @@ def cifti_create_dense_timeseries_left_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_metric",
+        "@type": "workbench.cifti-create-dense-timeseries.left_metric",
         "metric": metric,
     }
     if opt_roi_left_roi_metric is not None:
@@ -195,7 +195,7 @@ def cifti_create_dense_timeseries_right_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_metric",
+        "@type": "workbench.cifti-create-dense-timeseries.right_metric",
         "metric": metric,
     }
     if opt_roi_right_roi_metric is not None:
@@ -242,7 +242,7 @@ def cifti_create_dense_timeseries_cerebellum_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_metric",
+        "@type": "workbench.cifti-create-dense-timeseries.cerebellum_metric",
         "metric": metric,
     }
     if opt_roi_cerebellum_roi_metric is not None:
@@ -313,7 +313,7 @@ def cifti_create_dense_timeseries_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-create-dense-timeseries",
+        "@type": "workbench.cifti-create-dense-timeseries",
         "cifti_out": cifti_out,
     }
     if volume is not None:
@@ -351,13 +351,13 @@ def cifti_create_dense_timeseries_cargs(
     cargs.append("-cifti-create-dense-timeseries")
     cargs.append(params.get("cifti_out"))
     if params.get("volume") is not None:
-        cargs.extend(dyn_cargs(params.get("volume")["__STYXTYPE__"])(params.get("volume"), execution))
+        cargs.extend(dyn_cargs(params.get("volume")["@type"])(params.get("volume"), execution))
     if params.get("left_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("left_metric")["__STYXTYPE__"])(params.get("left_metric"), execution))
+        cargs.extend(dyn_cargs(params.get("left_metric")["@type"])(params.get("left_metric"), execution))
     if params.get("right_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("right_metric")["__STYXTYPE__"])(params.get("right_metric"), execution))
+        cargs.extend(dyn_cargs(params.get("right_metric")["@type"])(params.get("right_metric"), execution))
     if params.get("cerebellum_metric") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_metric")["__STYXTYPE__"])(params.get("cerebellum_metric"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_metric")["@type"])(params.get("cerebellum_metric"), execution))
     if params.get("opt_timestep_interval") is not None:
         cargs.extend([
             "-timestep",
@@ -576,9 +576,16 @@ __all__ = [
     "CiftiCreateDenseTimeseriesRightMetricParameters",
     "CiftiCreateDenseTimeseriesVolumeParameters",
     "cifti_create_dense_timeseries",
+    "cifti_create_dense_timeseries_cargs",
+    "cifti_create_dense_timeseries_cerebellum_metric_cargs",
     "cifti_create_dense_timeseries_cerebellum_metric_params",
+    "cifti_create_dense_timeseries_execute",
+    "cifti_create_dense_timeseries_left_metric_cargs",
     "cifti_create_dense_timeseries_left_metric_params",
+    "cifti_create_dense_timeseries_outputs",
     "cifti_create_dense_timeseries_params",
+    "cifti_create_dense_timeseries_right_metric_cargs",
     "cifti_create_dense_timeseries_right_metric_params",
+    "cifti_create_dense_timeseries_volume_cargs",
     "cifti_create_dense_timeseries_volume_params",
 ]

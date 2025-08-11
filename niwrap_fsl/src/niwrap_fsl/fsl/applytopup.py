@@ -14,7 +14,7 @@ APPLYTOPUP_METADATA = Metadata(
 
 
 ApplytopupParameters = typing.TypedDict('ApplytopupParameters', {
-    "__STYXTYPE__": typing.Literal["applytopup"],
+    "@type": typing.Literal["fsl.applytopup"],
     "imain": list[InputPathType],
     "datain": InputPathType,
     "inindex": list[str],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "applytopup": applytopup_cargs,
+        "fsl.applytopup": applytopup_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "applytopup": applytopup_outputs,
+        "fsl.applytopup": applytopup_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def applytopup_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "applytopup",
+        "@type": "fsl.applytopup",
         "imain": imain,
         "datain": datain,
         "inindex": inindex,
@@ -249,5 +249,8 @@ __all__ = [
     "ApplytopupOutputs",
     "ApplytopupParameters",
     "applytopup",
+    "applytopup_cargs",
+    "applytopup_execute",
+    "applytopup_outputs",
     "applytopup_params",
 ]

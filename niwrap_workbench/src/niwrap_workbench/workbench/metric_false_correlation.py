@@ -14,7 +14,7 @@ METRIC_FALSE_CORRELATION_METADATA = Metadata(
 
 
 MetricFalseCorrelationParameters = typing.TypedDict('MetricFalseCorrelationParameters', {
-    "__STYXTYPE__": typing.Literal["metric-false-correlation"],
+    "@type": typing.Literal["workbench.metric-false-correlation"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "3d_dist": float,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-false-correlation": metric_false_correlation_cargs,
+        "workbench.metric-false-correlation": metric_false_correlation_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-false-correlation": metric_false_correlation_outputs,
+        "workbench.metric-false-correlation": metric_false_correlation_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def metric_false_correlation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-false-correlation",
+        "@type": "workbench.metric-false-correlation",
         "surface": surface,
         "metric_in": metric_in,
         "3d_dist": v_3d_dist,
@@ -257,5 +257,8 @@ __all__ = [
     "MetricFalseCorrelationOutputs",
     "MetricFalseCorrelationParameters",
     "metric_false_correlation",
+    "metric_false_correlation_cargs",
+    "metric_false_correlation_execute",
+    "metric_false_correlation_outputs",
     "metric_false_correlation_params",
 ]

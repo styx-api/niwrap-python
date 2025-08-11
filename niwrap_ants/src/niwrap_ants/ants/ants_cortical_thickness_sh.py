@@ -14,7 +14,7 @@ ANTS_CORTICAL_THICKNESS_SH_METADATA = Metadata(
 
 
 AntsCorticalThicknessShParameters = typing.TypedDict('AntsCorticalThicknessShParameters', {
-    "__STYXTYPE__": typing.Literal["antsCorticalThickness.sh"],
+    "@type": typing.Literal["ants.antsCorticalThickness.sh"],
     "image_dimension": typing.Literal[2, 3],
     "anatomical_image": InputPathType,
     "brain_template": InputPathType,
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsCorticalThickness.sh": ants_cortical_thickness_sh_cargs,
+        "ants.antsCorticalThickness.sh": ants_cortical_thickness_sh_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsCorticalThickness.sh": ants_cortical_thickness_sh_outputs,
+        "ants.antsCorticalThickness.sh": ants_cortical_thickness_sh_outputs,
     }.get(t)
 
 
@@ -174,7 +174,7 @@ def ants_cortical_thickness_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsCorticalThickness.sh",
+        "@type": "ants.antsCorticalThickness.sh",
         "image_dimension": image_dimension,
         "anatomical_image": anatomical_image,
         "brain_template": brain_template,
@@ -536,5 +536,8 @@ __all__ = [
     "AntsCorticalThicknessShOutputs",
     "AntsCorticalThicknessShParameters",
     "ants_cortical_thickness_sh",
+    "ants_cortical_thickness_sh_cargs",
+    "ants_cortical_thickness_sh_execute",
+    "ants_cortical_thickness_sh_outputs",
     "ants_cortical_thickness_sh_params",
 ]

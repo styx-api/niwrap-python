@@ -14,7 +14,7 @@ V_2DCAT_METADATA = Metadata(
 
 
 V2dcatParameters = typing.TypedDict('V2dcatParameters', {
-    "__STYXTYPE__": typing.Literal["2dcat"],
+    "@type": typing.Literal["afni.2dcat"],
     "filenames": list[InputPathType],
     "scale_image": typing.NotRequired[InputPathType | None],
     "scale_pixels": typing.NotRequired[InputPathType | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "2dcat": v_2dcat_cargs,
+        "afni.2dcat": v_2dcat_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "2dcat": v_2dcat_outputs,
+        "afni.2dcat": v_2dcat_outputs,
     }.get(t)
 
 
@@ -166,7 +166,7 @@ def v_2dcat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "2dcat",
+        "@type": "afni.2dcat",
         "filenames": filenames,
         "scale_intensity": scale_intensity,
         "rgb_out": rgb_out,
@@ -492,5 +492,8 @@ __all__ = [
     "V2dcatParameters",
     "V_2DCAT_METADATA",
     "v_2dcat",
+    "v_2dcat_cargs",
+    "v_2dcat_execute",
+    "v_2dcat_outputs",
     "v_2dcat_params",
 ]

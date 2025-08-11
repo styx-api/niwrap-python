@@ -14,7 +14,7 @@ VOLUME_REORIENT_METADATA = Metadata(
 
 
 VolumeReorientParameters = typing.TypedDict('VolumeReorientParameters', {
-    "__STYXTYPE__": typing.Literal["volume-reorient"],
+    "@type": typing.Literal["workbench.volume-reorient"],
     "volume": InputPathType,
     "orient_string": str,
     "volume_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-reorient": volume_reorient_cargs,
+        "workbench.volume-reorient": volume_reorient_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def volume_reorient_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-reorient",
+        "@type": "workbench.volume-reorient",
         "volume": volume,
         "orient_string": orient_string,
         "volume_out": volume_out,
@@ -209,5 +209,8 @@ __all__ = [
     "VolumeReorientOutputs",
     "VolumeReorientParameters",
     "volume_reorient",
+    "volume_reorient_cargs",
+    "volume_reorient_execute",
+    "volume_reorient_outputs",
     "volume_reorient_params",
 ]

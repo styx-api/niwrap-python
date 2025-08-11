@@ -14,7 +14,7 @@ SURFREG_METADATA = Metadata(
 
 
 SurfregParameters = typing.TypedDict('SurfregParameters', {
-    "__STYXTYPE__": typing.Literal["surfreg"],
+    "@type": typing.Literal["freesurfer.surfreg"],
     "subject": str,
     "target": str,
     "cross_hemi": bool,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surfreg": surfreg_cargs,
+        "freesurfer.surfreg": surfreg_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surfreg": surfreg_outputs,
+        "freesurfer.surfreg": surfreg_outputs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def surfreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surfreg",
+        "@type": "freesurfer.surfreg",
         "subject": subject,
         "target": target,
         "cross_hemi": cross_hemi,
@@ -334,5 +334,8 @@ __all__ = [
     "SurfregOutputs",
     "SurfregParameters",
     "surfreg",
+    "surfreg_cargs",
+    "surfreg_execute",
+    "surfreg_outputs",
     "surfreg_params",
 ]

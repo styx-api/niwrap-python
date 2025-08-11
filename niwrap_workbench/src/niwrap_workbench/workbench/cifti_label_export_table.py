@@ -14,7 +14,7 @@ CIFTI_LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 CiftiLabelExportTableParameters = typing.TypedDict('CiftiLabelExportTableParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-label-export-table"],
+    "@type": typing.Literal["workbench.cifti-label-export-table"],
     "label_in": InputPathType,
     "map": str,
     "table_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-label-export-table": cifti_label_export_table_cargs,
+        "workbench.cifti-label-export-table": cifti_label_export_table_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def cifti_label_export_table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-label-export-table",
+        "@type": "workbench.cifti-label-export-table",
         "label_in": label_in,
         "map": map_,
         "table_out": table_out,
@@ -191,5 +191,8 @@ __all__ = [
     "CiftiLabelExportTableOutputs",
     "CiftiLabelExportTableParameters",
     "cifti_label_export_table",
+    "cifti_label_export_table_cargs",
+    "cifti_label_export_table_execute",
+    "cifti_label_export_table_outputs",
     "cifti_label_export_table_params",
 ]

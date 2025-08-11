@@ -14,21 +14,21 @@ METRIC_REGRESSION_METADATA = Metadata(
 
 
 MetricRegressionRemoveParameters = typing.TypedDict('MetricRegressionRemoveParameters', {
-    "__STYXTYPE__": typing.Literal["remove"],
+    "@type": typing.Literal["workbench.metric-regression.remove"],
     "metric": InputPathType,
     "opt_remove_column_column": typing.NotRequired[str | None],
 })
 
 
 MetricRegressionKeepParameters = typing.TypedDict('MetricRegressionKeepParameters', {
-    "__STYXTYPE__": typing.Literal["keep"],
+    "@type": typing.Literal["workbench.metric-regression.keep"],
     "metric": InputPathType,
     "opt_keep_column_column": typing.NotRequired[str | None],
 })
 
 
 MetricRegressionParameters = typing.TypedDict('MetricRegressionParameters', {
-    "__STYXTYPE__": typing.Literal["metric-regression"],
+    "@type": typing.Literal["workbench.metric-regression"],
     "metric_in": InputPathType,
     "metric_out": str,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -50,9 +50,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-regression": metric_regression_cargs,
-        "remove": metric_regression_remove_cargs,
-        "keep": metric_regression_keep_cargs,
+        "workbench.metric-regression": metric_regression_cargs,
+        "workbench.metric-regression.remove": metric_regression_remove_cargs,
+        "workbench.metric-regression.keep": metric_regression_keep_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-regression": metric_regression_outputs,
+        "workbench.metric-regression": metric_regression_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def metric_regression_remove_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "remove",
+        "@type": "workbench.metric-regression.remove",
         "metric": metric,
     }
     if opt_remove_column_column is not None:
@@ -134,7 +134,7 @@ def metric_regression_keep_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "keep",
+        "@type": "workbench.metric-regression.keep",
         "metric": metric,
     }
     if opt_keep_column_column is not None:
@@ -200,7 +200,7 @@ def metric_regression_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-regression",
+        "@type": "workbench.metric-regression",
         "metric_in": metric_in,
         "metric_out": metric_out,
     }
@@ -244,9 +244,9 @@ def metric_regression_cargs(
             params.get("opt_column_column")
         ])
     if params.get("remove") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("remove")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("remove")] for a in c])
     if params.get("keep") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("keep")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("keep")] for a in c])
     return cargs
 
 
@@ -355,7 +355,12 @@ __all__ = [
     "MetricRegressionParameters",
     "MetricRegressionRemoveParameters",
     "metric_regression",
+    "metric_regression_cargs",
+    "metric_regression_execute",
+    "metric_regression_keep_cargs",
     "metric_regression_keep_params",
+    "metric_regression_outputs",
     "metric_regression_params",
+    "metric_regression_remove_cargs",
     "metric_regression_remove_params",
 ]

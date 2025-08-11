@@ -14,7 +14,7 @@ SWAP_VOXELWISE_METADATA = Metadata(
 
 
 SwapVoxelwiseParameters = typing.TypedDict('SwapVoxelwiseParameters', {
-    "__STYXTYPE__": typing.Literal["swap_voxelwise"],
+    "@type": typing.Literal["fsl.swap_voxelwise"],
     "vectors_file_list": InputPathType,
     "scalars_file_list": typing.NotRequired[InputPathType | None],
     "mask": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "swap_voxelwise": swap_voxelwise_cargs,
+        "fsl.swap_voxelwise": swap_voxelwise_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "swap_voxelwise": swap_voxelwise_outputs,
+        "fsl.swap_voxelwise": swap_voxelwise_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def swap_voxelwise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "swap_voxelwise",
+        "@type": "fsl.swap_voxelwise",
         "vectors_file_list": vectors_file_list,
         "mask": mask,
         "verbose_flag": verbose_flag,
@@ -264,5 +264,8 @@ __all__ = [
     "SwapVoxelwiseOutputs",
     "SwapVoxelwiseParameters",
     "swap_voxelwise",
+    "swap_voxelwise_cargs",
+    "swap_voxelwise_execute",
+    "swap_voxelwise_outputs",
     "swap_voxelwise_params",
 ]

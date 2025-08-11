@@ -14,7 +14,7 @@ VOLUME_LABEL_MODIFY_KEYS_METADATA = Metadata(
 
 
 VolumeLabelModifyKeysParameters = typing.TypedDict('VolumeLabelModifyKeysParameters', {
-    "__STYXTYPE__": typing.Literal["volume-label-modify-keys"],
+    "@type": typing.Literal["workbench.volume-label-modify-keys"],
     "volume_in": InputPathType,
     "remap_file": str,
     "volume_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-label-modify-keys": volume_label_modify_keys_cargs,
+        "workbench.volume-label-modify-keys": volume_label_modify_keys_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-label-modify-keys": volume_label_modify_keys_outputs,
+        "workbench.volume-label-modify-keys": volume_label_modify_keys_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def volume_label_modify_keys_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-label-modify-keys",
+        "@type": "workbench.volume-label-modify-keys",
         "volume_in": volume_in,
         "remap_file": remap_file,
         "volume_out": volume_out,
@@ -232,5 +232,8 @@ __all__ = [
     "VolumeLabelModifyKeysOutputs",
     "VolumeLabelModifyKeysParameters",
     "volume_label_modify_keys",
+    "volume_label_modify_keys_cargs",
+    "volume_label_modify_keys_execute",
+    "volume_label_modify_keys_outputs",
     "volume_label_modify_keys_params",
 ]

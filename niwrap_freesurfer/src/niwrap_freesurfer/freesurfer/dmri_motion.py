@@ -14,7 +14,7 @@ DMRI_MOTION_METADATA = Metadata(
 
 
 DmriMotionParameters = typing.TypedDict('DmriMotionParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_motion"],
+    "@type": typing.Literal["freesurfer.dmri_motion"],
     "outfile": InputPathType,
     "outf": typing.NotRequired[InputPathType | None],
     "mat": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_motion": dmri_motion_cargs,
+        "freesurfer.dmri_motion": dmri_motion_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_motion": dmri_motion_outputs,
+        "freesurfer.dmri_motion": dmri_motion_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def dmri_motion_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_motion",
+        "@type": "freesurfer.dmri_motion",
         "outfile": outfile,
         "debug": debug,
         "checkopts": checkopts,
@@ -292,5 +292,8 @@ __all__ = [
     "DmriMotionOutputs",
     "DmriMotionParameters",
     "dmri_motion",
+    "dmri_motion_cargs",
+    "dmri_motion_execute",
+    "dmri_motion_outputs",
     "dmri_motion_params",
 ]

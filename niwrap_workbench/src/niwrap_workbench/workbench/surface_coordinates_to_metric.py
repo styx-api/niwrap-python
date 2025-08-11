@@ -14,7 +14,7 @@ SURFACE_COORDINATES_TO_METRIC_METADATA = Metadata(
 
 
 SurfaceCoordinatesToMetricParameters = typing.TypedDict('SurfaceCoordinatesToMetricParameters', {
-    "__STYXTYPE__": typing.Literal["surface-coordinates-to-metric"],
+    "@type": typing.Literal["workbench.surface-coordinates-to-metric"],
     "surface": InputPathType,
     "metric_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-coordinates-to-metric": surface_coordinates_to_metric_cargs,
+        "workbench.surface-coordinates-to-metric": surface_coordinates_to_metric_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-coordinates-to-metric": surface_coordinates_to_metric_outputs,
+        "workbench.surface-coordinates-to-metric": surface_coordinates_to_metric_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_coordinates_to_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-coordinates-to-metric",
+        "@type": "workbench.surface-coordinates-to-metric",
         "surface": surface,
         "metric_out": metric_out,
     }
@@ -185,5 +185,8 @@ __all__ = [
     "SurfaceCoordinatesToMetricOutputs",
     "SurfaceCoordinatesToMetricParameters",
     "surface_coordinates_to_metric",
+    "surface_coordinates_to_metric_cargs",
+    "surface_coordinates_to_metric_execute",
+    "surface_coordinates_to_metric_outputs",
     "surface_coordinates_to_metric_params",
 ]

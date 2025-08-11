@@ -14,7 +14,7 @@ V__T1SCALE_METADATA = Metadata(
 
 
 VT1scaleParameters = typing.TypedDict('VT1scaleParameters', {
-    "__STYXTYPE__": typing.Literal["@T1scale"],
+    "@type": typing.Literal["afni.@T1scale"],
     "t1_volume": InputPathType,
     "pd_volume": typing.NotRequired[InputPathType | None],
     "output_directory": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@T1scale": v__t1scale_cargs,
+        "afni.@T1scale": v__t1scale_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@T1scale": v__t1scale_outputs,
+        "afni.@T1scale": v__t1scale_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def v__t1scale_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@T1scale",
+        "@type": "afni.@T1scale",
         "t1_volume": t1_volume,
         "align": align,
         "head_mask": head_mask,
@@ -324,5 +324,8 @@ __all__ = [
     "VT1scaleParameters",
     "V__T1SCALE_METADATA",
     "v__t1scale",
+    "v__t1scale_cargs",
+    "v__t1scale_execute",
+    "v__t1scale_outputs",
     "v__t1scale_params",
 ]

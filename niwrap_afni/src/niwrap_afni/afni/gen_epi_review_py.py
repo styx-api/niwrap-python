@@ -14,7 +14,7 @@ GEN_EPI_REVIEW_PY_METADATA = Metadata(
 
 
 GenEpiReviewPyParameters = typing.TypedDict('GenEpiReviewPyParameters', {
-    "__STYXTYPE__": typing.Literal["gen_epi_review.py"],
+    "@type": typing.Literal["afni.gen_epi_review.py"],
     "datasets": list[str],
     "script_name": typing.NotRequired[str | None],
     "windows": typing.NotRequired[list[str] | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gen_epi_review.py": gen_epi_review_py_cargs,
+        "afni.gen_epi_review.py": gen_epi_review_py_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def gen_epi_review_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gen_epi_review.py",
+        "@type": "afni.gen_epi_review.py",
         "datasets": datasets,
     }
     if script_name is not None:
@@ -288,5 +288,8 @@ __all__ = [
     "GenEpiReviewPyOutputs",
     "GenEpiReviewPyParameters",
     "gen_epi_review_py",
+    "gen_epi_review_py_cargs",
+    "gen_epi_review_py_execute",
+    "gen_epi_review_py_outputs",
     "gen_epi_review_py_params",
 ]

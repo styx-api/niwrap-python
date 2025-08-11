@@ -14,7 +14,7 @@ FAT_MVM_SCRIPTER_PY_METADATA = Metadata(
 
 
 FatMvmScripterPyParameters = typing.TypedDict('FatMvmScripterPyParameters', {
-    "__STYXTYPE__": typing.Literal["fat_mvm_scripter.py"],
+    "@type": typing.Literal["afni.fat_mvm_scripter.py"],
     "prefix": str,
     "table": InputPathType,
     "log": InputPathType,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_mvm_scripter.py": fat_mvm_scripter_py_cargs,
+        "afni.fat_mvm_scripter.py": fat_mvm_scripter_py_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_mvm_scripter.py": fat_mvm_scripter_py_outputs,
+        "afni.fat_mvm_scripter.py": fat_mvm_scripter_py_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def fat_mvm_scripter_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_mvm_scripter.py",
+        "@type": "afni.fat_mvm_scripter.py",
         "prefix": prefix,
         "table": table,
         "log": log,
@@ -349,5 +349,8 @@ __all__ = [
     "FatMvmScripterPyOutputs",
     "FatMvmScripterPyParameters",
     "fat_mvm_scripter_py",
+    "fat_mvm_scripter_py_cargs",
+    "fat_mvm_scripter_py_execute",
+    "fat_mvm_scripter_py_outputs",
     "fat_mvm_scripter_py_params",
 ]

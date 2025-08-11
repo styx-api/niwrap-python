@@ -14,7 +14,7 @@ V_3DNEWID_METADATA = Metadata(
 
 
 V3dnewidParameters = typing.TypedDict('V3dnewidParameters', {
-    "__STYXTYPE__": typing.Literal["3dnewid"],
+    "@type": typing.Literal["afni.3dnewid"],
     "datasets": list[InputPathType],
     "fun": typing.NotRequired[float | None],
     "fun11": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dnewid": v_3dnewid_cargs,
+        "afni.3dnewid": v_3dnewid_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_3dnewid_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dnewid",
+        "@type": "afni.3dnewid",
         "datasets": datasets,
         "fun11": fun11,
         "int": int_,
@@ -235,5 +235,8 @@ __all__ = [
     "V3dnewidParameters",
     "V_3DNEWID_METADATA",
     "v_3dnewid",
+    "v_3dnewid_cargs",
+    "v_3dnewid_execute",
+    "v_3dnewid_outputs",
     "v_3dnewid_params",
 ]

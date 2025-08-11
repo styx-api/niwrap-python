@@ -14,7 +14,7 @@ MRI_HAUSDORFF_DIST_METADATA = Metadata(
 
 
 MriHausdorffDistParameters = typing.TypedDict('MriHausdorffDistParameters', {
-    "__STYXTYPE__": typing.Literal["mri_hausdorff_dist"],
+    "@type": typing.Literal["freesurfer.mri_hausdorff_dist"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_text_file": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_hausdorff_dist": mri_hausdorff_dist_cargs,
+        "freesurfer.mri_hausdorff_dist": mri_hausdorff_dist_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_hausdorff_dist": mri_hausdorff_dist_outputs,
+        "freesurfer.mri_hausdorff_dist": mri_hausdorff_dist_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def mri_hausdorff_dist_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_hausdorff_dist",
+        "@type": "freesurfer.mri_hausdorff_dist",
         "vol1": vol1,
         "vol2": vol2,
         "output_text_file": output_text_file,
@@ -252,5 +252,8 @@ __all__ = [
     "MriHausdorffDistOutputs",
     "MriHausdorffDistParameters",
     "mri_hausdorff_dist",
+    "mri_hausdorff_dist_cargs",
+    "mri_hausdorff_dist_execute",
+    "mri_hausdorff_dist_outputs",
     "mri_hausdorff_dist_params",
 ]

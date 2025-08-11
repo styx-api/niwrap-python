@@ -14,7 +14,7 @@ V_3D_RPROG_DEMO_METADATA = Metadata(
 
 
 V3dRprogDemoParameters = typing.TypedDict('V3dRprogDemoParameters', {
-    "__STYXTYPE__": typing.Literal["3dRprogDemo"],
+    "@type": typing.Literal["afni.3dRprogDemo"],
     "input_dsets": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
     "scale": float,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dRprogDemo": v_3d_rprog_demo_cargs,
+        "afni.3dRprogDemo": v_3d_rprog_demo_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dRprogDemo": v_3d_rprog_demo_outputs,
+        "afni.3dRprogDemo": v_3d_rprog_demo_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def v_3d_rprog_demo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dRprogDemo",
+        "@type": "afni.3dRprogDemo",
         "input_dsets": input_dsets,
         "scale": scale,
         "prefix": prefix,
@@ -278,5 +278,8 @@ __all__ = [
     "V3dRprogDemoParameters",
     "V_3D_RPROG_DEMO_METADATA",
     "v_3d_rprog_demo",
+    "v_3d_rprog_demo_cargs",
+    "v_3d_rprog_demo_execute",
+    "v_3d_rprog_demo_outputs",
     "v_3d_rprog_demo_params",
 ]

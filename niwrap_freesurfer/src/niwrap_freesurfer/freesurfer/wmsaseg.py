@@ -14,7 +14,7 @@ WMSASEG_METADATA = Metadata(
 
 
 WmsasegParameters = typing.TypedDict('WmsasegParameters', {
-    "__STYXTYPE__": typing.Literal["wmsaseg"],
+    "@type": typing.Literal["freesurfer.wmsaseg"],
     "subject": str,
     "source_orig": typing.NotRequired[str | None],
     "source_long": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "wmsaseg": wmsaseg_cargs,
+        "freesurfer.wmsaseg": wmsaseg_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "wmsaseg": wmsaseg_outputs,
+        "freesurfer.wmsaseg": wmsaseg_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def wmsaseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "wmsaseg",
+        "@type": "freesurfer.wmsaseg",
         "subject": subject,
         "source_long": source_long,
         "no_reg": no_reg,
@@ -280,5 +280,8 @@ __all__ = [
     "WmsasegOutputs",
     "WmsasegParameters",
     "wmsaseg",
+    "wmsaseg_cargs",
+    "wmsaseg_execute",
+    "wmsaseg_outputs",
     "wmsaseg_params",
 ]

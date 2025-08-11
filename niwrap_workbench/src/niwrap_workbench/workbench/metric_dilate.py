@@ -14,7 +14,7 @@ METRIC_DILATE_METADATA = Metadata(
 
 
 MetricDilateParameters = typing.TypedDict('MetricDilateParameters', {
-    "__STYXTYPE__": typing.Literal["metric-dilate"],
+    "@type": typing.Literal["workbench.metric-dilate"],
     "metric": InputPathType,
     "surface": InputPathType,
     "distance": float,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-dilate": metric_dilate_cargs,
+        "workbench.metric-dilate": metric_dilate_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-dilate": metric_dilate_outputs,
+        "workbench.metric-dilate": metric_dilate_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def metric_dilate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-dilate",
+        "@type": "workbench.metric-dilate",
         "metric": metric,
         "surface": surface,
         "distance": distance,
@@ -347,5 +347,8 @@ __all__ = [
     "MetricDilateOutputs",
     "MetricDilateParameters",
     "metric_dilate",
+    "metric_dilate_cargs",
+    "metric_dilate_execute",
+    "metric_dilate_outputs",
     "metric_dilate_params",
 ]

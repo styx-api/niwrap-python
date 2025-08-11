@@ -14,7 +14,7 @@ ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA = Metadata(
 
 
 AntsLandmarkBasedTransformInitializerParameters = typing.TypedDict('AntsLandmarkBasedTransformInitializerParameters', {
-    "__STYXTYPE__": typing.Literal["antsLandmarkBasedTransformInitializer"],
+    "@type": typing.Literal["ants.antsLandmarkBasedTransformInitializer"],
     "dimension": int,
     "fixed_image": InputPathType,
     "moving_image": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsLandmarkBasedTransformInitializer": ants_landmark_based_transform_initializer_cargs,
+        "ants.antsLandmarkBasedTransformInitializer": ants_landmark_based_transform_initializer_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsLandmarkBasedTransformInitializer": ants_landmark_based_transform_initializer_outputs,
+        "ants.antsLandmarkBasedTransformInitializer": ants_landmark_based_transform_initializer_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def ants_landmark_based_transform_initializer_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsLandmarkBasedTransformInitializer",
+        "@type": "ants.antsLandmarkBasedTransformInitializer",
         "dimension": dimension,
         "fixed_image": fixed_image,
         "moving_image": moving_image,
@@ -268,5 +268,8 @@ __all__ = [
     "AntsLandmarkBasedTransformInitializerOutputs",
     "AntsLandmarkBasedTransformInitializerParameters",
     "ants_landmark_based_transform_initializer",
+    "ants_landmark_based_transform_initializer_cargs",
+    "ants_landmark_based_transform_initializer_execute",
+    "ants_landmark_based_transform_initializer_outputs",
     "ants_landmark_based_transform_initializer_params",
 ]

@@ -14,7 +14,7 @@ FSLINTERLEAVE_METADATA = Metadata(
 
 
 FslinterleaveParameters = typing.TypedDict('FslinterleaveParameters', {
-    "__STYXTYPE__": typing.Literal["fslinterleave"],
+    "@type": typing.Literal["fsl.fslinterleave"],
     "infile1": InputPathType,
     "infile2": InputPathType,
     "outfile": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslinterleave": fslinterleave_cargs,
+        "fsl.fslinterleave": fslinterleave_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslinterleave": fslinterleave_outputs,
+        "fsl.fslinterleave": fslinterleave_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def fslinterleave_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslinterleave",
+        "@type": "fsl.fslinterleave",
         "infile1": infile1,
         "infile2": infile2,
         "outfile": outfile,
@@ -197,5 +197,8 @@ __all__ = [
     "FslinterleaveOutputs",
     "FslinterleaveParameters",
     "fslinterleave",
+    "fslinterleave_cargs",
+    "fslinterleave_execute",
+    "fslinterleave_outputs",
     "fslinterleave_params",
 ]

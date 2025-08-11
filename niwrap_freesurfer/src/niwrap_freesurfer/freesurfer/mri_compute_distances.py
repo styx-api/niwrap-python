@@ -14,7 +14,7 @@ MRI_COMPUTE_DISTANCES_METADATA = Metadata(
 
 
 MriComputeDistancesParameters = typing.TypedDict('MriComputeDistancesParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compute_distances"],
+    "@type": typing.Literal["freesurfer.mri_compute_distances"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compute_distances": mri_compute_distances_cargs,
+        "freesurfer.mri_compute_distances": mri_compute_distances_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_compute_distances": mri_compute_distances_outputs,
+        "freesurfer.mri_compute_distances": mri_compute_distances_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mri_compute_distances_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compute_distances",
+        "@type": "freesurfer.mri_compute_distances",
         "source": source,
         "target": target,
         "output_xform": output_xform,
@@ -190,5 +190,8 @@ __all__ = [
     "MriComputeDistancesOutputs",
     "MriComputeDistancesParameters",
     "mri_compute_distances",
+    "mri_compute_distances_cargs",
+    "mri_compute_distances_execute",
+    "mri_compute_distances_outputs",
     "mri_compute_distances_params",
 ]

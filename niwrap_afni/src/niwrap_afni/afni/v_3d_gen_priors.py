@@ -14,7 +14,7 @@ V_3D_GEN_PRIORS_METADATA = Metadata(
 
 
 V3dGenPriorsParameters = typing.TypedDict('V3dGenPriorsParameters', {
-    "__STYXTYPE__": typing.Literal["3dGenPriors"],
+    "@type": typing.Literal["afni.3dGenPriors"],
     "sigs": InputPathType,
     "tdist": InputPathType,
     "cprefix": str,
@@ -56,7 +56,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dGenPriors": v_3d_gen_priors_cargs,
+        "afni.3dGenPriors": v_3d_gen_priors_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dGenPriors": v_3d_gen_priors_outputs,
+        "afni.3dGenPriors": v_3d_gen_priors_outputs,
     }.get(t)
 
 
@@ -155,7 +155,7 @@ def v_3d_gen_priors_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dGenPriors",
+        "@type": "afni.3dGenPriors",
         "sigs": sigs,
         "tdist": tdist,
         "cprefix": cprefix,
@@ -483,5 +483,8 @@ __all__ = [
     "V3dGenPriorsParameters",
     "V_3D_GEN_PRIORS_METADATA",
     "v_3d_gen_priors",
+    "v_3d_gen_priors_cargs",
+    "v_3d_gen_priors_execute",
+    "v_3d_gen_priors_outputs",
     "v_3d_gen_priors_params",
 ]

@@ -14,7 +14,7 @@ QUICK_ALPHA_VALS_PY_METADATA = Metadata(
 
 
 QuickAlphaValsPyParameters = typing.TypedDict('QuickAlphaValsPyParameters', {
-    "__STYXTYPE__": typing.Literal["quick.alpha.vals.py"],
+    "@type": typing.Literal["afni.quick.alpha.vals.py"],
     "niter": typing.NotRequired[int | None],
     "max_file": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "quick.alpha.vals.py": quick_alpha_vals_py_cargs,
+        "afni.quick.alpha.vals.py": quick_alpha_vals_py_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "quick.alpha.vals.py": quick_alpha_vals_py_outputs,
+        "afni.quick.alpha.vals.py": quick_alpha_vals_py_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def quick_alpha_vals_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "quick.alpha.vals.py",
+        "@type": "afni.quick.alpha.vals.py",
         "max_file": max_file,
     }
     if niter is not None:
@@ -185,5 +185,8 @@ __all__ = [
     "QuickAlphaValsPyOutputs",
     "QuickAlphaValsPyParameters",
     "quick_alpha_vals_py",
+    "quick_alpha_vals_py_cargs",
+    "quick_alpha_vals_py_execute",
+    "quick_alpha_vals_py_outputs",
     "quick_alpha_vals_py_params",
 ]

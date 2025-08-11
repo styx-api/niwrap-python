@@ -14,7 +14,7 @@ MRI_REDUCE_METADATA = Metadata(
 
 
 MriReduceParameters = typing.TypedDict('MriReduceParameters', {
-    "__STYXTYPE__": typing.Literal["mri_reduce"],
+    "@type": typing.Literal["freesurfer.mri_reduce"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_reduce": mri_reduce_cargs,
+        "freesurfer.mri_reduce": mri_reduce_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_reduce": mri_reduce_outputs,
+        "freesurfer.mri_reduce": mri_reduce_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_reduce_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_reduce",
+        "@type": "freesurfer.mri_reduce",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MriReduceOutputs",
     "MriReduceParameters",
     "mri_reduce",
+    "mri_reduce_cargs",
+    "mri_reduce_execute",
+    "mri_reduce_outputs",
     "mri_reduce_params",
 ]

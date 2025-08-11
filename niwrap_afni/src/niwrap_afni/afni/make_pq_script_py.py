@@ -14,7 +14,7 @@ MAKE_PQ_SCRIPT_PY_METADATA = Metadata(
 
 
 MakePqScriptPyParameters = typing.TypedDict('MakePqScriptPyParameters', {
-    "__STYXTYPE__": typing.Literal["make_pq_script.py"],
+    "@type": typing.Literal["afni.make_pq_script.py"],
     "dataset": InputPathType,
     "brick_index": float,
     "mask": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_pq_script.py": make_pq_script_py_cargs,
+        "afni.make_pq_script.py": make_pq_script_py_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_pq_script.py": make_pq_script_py_outputs,
+        "afni.make_pq_script.py": make_pq_script_py_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def make_pq_script_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_pq_script.py",
+        "@type": "afni.make_pq_script.py",
         "dataset": dataset,
         "brick_index": brick_index,
         "mask": mask,
@@ -196,5 +196,8 @@ __all__ = [
     "MakePqScriptPyOutputs",
     "MakePqScriptPyParameters",
     "make_pq_script_py",
+    "make_pq_script_py_cargs",
+    "make_pq_script_py_execute",
+    "make_pq_script_py_outputs",
     "make_pq_script_py_params",
 ]

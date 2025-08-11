@@ -14,7 +14,7 @@ CONF2HIRES_METADATA = Metadata(
 
 
 Conf2hiresParameters = typing.TypedDict('Conf2hiresParameters', {
-    "__STYXTYPE__": typing.Literal["conf2hires"],
+    "@type": typing.Literal["freesurfer.conf2hires"],
     "subject": str,
     "t2": bool,
     "no_t2": bool,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "conf2hires": conf2hires_cargs,
+        "freesurfer.conf2hires": conf2hires_cargs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def conf2hires_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "conf2hires",
+        "@type": "freesurfer.conf2hires",
         "subject": subject,
         "t2": t2,
         "no_t2": no_t2,
@@ -383,5 +383,8 @@ __all__ = [
     "Conf2hiresOutputs",
     "Conf2hiresParameters",
     "conf2hires",
+    "conf2hires_cargs",
+    "conf2hires_execute",
+    "conf2hires_outputs",
     "conf2hires_params",
 ]

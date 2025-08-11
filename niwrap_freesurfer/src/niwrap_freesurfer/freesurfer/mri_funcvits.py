@@ -14,7 +14,7 @@ MRI_FUNCVITS_METADATA = Metadata(
 
 
 MriFuncvitsParameters = typing.TypedDict('MriFuncvitsParameters', {
-    "__STYXTYPE__": typing.Literal["mri-funcvits"],
+    "@type": typing.Literal["freesurfer.mri-funcvits"],
     "stem": str,
     "outdir": str,
     "reg": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri-funcvits": mri_funcvits_cargs,
+        "freesurfer.mri-funcvits": mri_funcvits_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def mri_funcvits_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri-funcvits",
+        "@type": "freesurfer.mri-funcvits",
         "stem": stem,
         "outdir": outdir,
         "noforce": noforce,
@@ -308,5 +308,8 @@ __all__ = [
     "MriFuncvitsOutputs",
     "MriFuncvitsParameters",
     "mri_funcvits",
+    "mri_funcvits_cargs",
+    "mri_funcvits_execute",
+    "mri_funcvits_outputs",
     "mri_funcvits_params",
 ]

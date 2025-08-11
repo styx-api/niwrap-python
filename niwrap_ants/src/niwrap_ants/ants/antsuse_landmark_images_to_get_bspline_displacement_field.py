@@ -14,7 +14,7 @@ ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters = typing.TypedDict('AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters', {
-    "__STYXTYPE__": typing.Literal["ANTSUseLandmarkImagesToGetBSplineDisplacementField"],
+    "@type": typing.Literal["ants.ANTSUseLandmarkImagesToGetBSplineDisplacementField"],
     "fixed_image_with_labeled_landmarks": InputPathType,
     "moving_image_with_labeled_landmarks": InputPathType,
     "output_displacement_field": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ANTSUseLandmarkImagesToGetBSplineDisplacementField": antsuse_landmark_images_to_get_bspline_displacement_field_cargs,
+        "ants.ANTSUseLandmarkImagesToGetBSplineDisplacementField": antsuse_landmark_images_to_get_bspline_displacement_field_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ANTSUseLandmarkImagesToGetBSplineDisplacementField": antsuse_landmark_images_to_get_bspline_displacement_field_outputs,
+        "ants.ANTSUseLandmarkImagesToGetBSplineDisplacementField": antsuse_landmark_images_to_get_bspline_displacement_field_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ANTSUseLandmarkImagesToGetBSplineDisplacementField",
+        "@type": "ants.ANTSUseLandmarkImagesToGetBSplineDisplacementField",
         "fixed_image_with_labeled_landmarks": fixed_image_with_labeled_landmarks,
         "moving_image_with_labeled_landmarks": moving_image_with_labeled_landmarks,
         "output_displacement_field": output_displacement_field,
@@ -258,5 +258,8 @@ __all__ = [
     "AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs",
     "AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters",
     "antsuse_landmark_images_to_get_bspline_displacement_field",
+    "antsuse_landmark_images_to_get_bspline_displacement_field_cargs",
+    "antsuse_landmark_images_to_get_bspline_displacement_field_execute",
+    "antsuse_landmark_images_to_get_bspline_displacement_field_outputs",
     "antsuse_landmark_images_to_get_bspline_displacement_field_params",
 ]

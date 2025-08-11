@@ -14,7 +14,7 @@ SURFACE_AFFINE_REGRESSION_METADATA = Metadata(
 
 
 SurfaceAffineRegressionParameters = typing.TypedDict('SurfaceAffineRegressionParameters', {
-    "__STYXTYPE__": typing.Literal["surface-affine-regression"],
+    "@type": typing.Literal["workbench.surface-affine-regression"],
     "source": InputPathType,
     "target": InputPathType,
     "affine_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-affine-regression": surface_affine_regression_cargs,
+        "workbench.surface-affine-regression": surface_affine_regression_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_affine_regression_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-affine-regression",
+        "@type": "workbench.surface-affine-regression",
         "source": source,
         "target": target,
         "affine_out": affine_out,
@@ -197,5 +197,8 @@ __all__ = [
     "SurfaceAffineRegressionOutputs",
     "SurfaceAffineRegressionParameters",
     "surface_affine_regression",
+    "surface_affine_regression_cargs",
+    "surface_affine_regression_execute",
+    "surface_affine_regression_outputs",
     "surface_affine_regression_params",
 ]

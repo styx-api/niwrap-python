@@ -14,7 +14,7 @@ ASEGSTATS2TABLE_METADATA = Metadata(
 
 
 Asegstats2tableParameters = typing.TypedDict('Asegstats2tableParameters', {
-    "__STYXTYPE__": typing.Literal["asegstats2table"],
+    "@type": typing.Literal["freesurfer.asegstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "inputs": typing.NotRequired[list[str] | None],
     "tablefile": str,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "asegstats2table": asegstats2table_cargs,
+        "freesurfer.asegstats2table": asegstats2table_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "asegstats2table": asegstats2table_outputs,
+        "freesurfer.asegstats2table": asegstats2table_outputs,
     }.get(t)
 
 
@@ -152,7 +152,7 @@ def asegstats2table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "asegstats2table",
+        "@type": "freesurfer.asegstats2table",
         "tablefile": tablefile,
         "write_etiv": write_etiv,
         "debug": debug,
@@ -464,5 +464,8 @@ __all__ = [
     "Asegstats2tableOutputs",
     "Asegstats2tableParameters",
     "asegstats2table",
+    "asegstats2table_cargs",
+    "asegstats2table_execute",
+    "asegstats2table_outputs",
     "asegstats2table_params",
 ]

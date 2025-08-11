@@ -14,7 +14,7 @@ V_3D_SKULL_STRIP_METADATA = Metadata(
 
 
 V3dSkullStripParameters = typing.TypedDict('V3dSkullStripParameters', {
-    "__STYXTYPE__": typing.Literal["3dSkullStrip"],
+    "@type": typing.Literal["afni.3dSkullStrip"],
     "in_file": InputPathType,
     "num_threads": typing.NotRequired[int | None],
     "outputtype": typing.NotRequired[typing.Literal["NIFTI", "AFNI", "NIFTI_GZ"] | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSkullStrip": v_3d_skull_strip_cargs,
+        "afni.3dSkullStrip": v_3d_skull_strip_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSkullStrip": v_3d_skull_strip_outputs,
+        "afni.3dSkullStrip": v_3d_skull_strip_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v_3d_skull_strip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSkullStrip",
+        "@type": "afni.3dSkullStrip",
         "in_file": in_file,
     }
     if num_threads is not None:
@@ -200,5 +200,8 @@ __all__ = [
     "V3dSkullStripParameters",
     "V_3D_SKULL_STRIP_METADATA",
     "v_3d_skull_strip",
+    "v_3d_skull_strip_cargs",
+    "v_3d_skull_strip_execute",
+    "v_3d_skull_strip_outputs",
     "v_3d_skull_strip_params",
 ]

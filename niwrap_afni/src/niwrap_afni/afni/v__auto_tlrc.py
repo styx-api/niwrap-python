@@ -14,7 +14,7 @@ V__AUTO_TLRC_METADATA = Metadata(
 
 
 VAutoTlrcParameters = typing.TypedDict('VAutoTlrcParameters', {
-    "__STYXTYPE__": typing.Literal["@auto_tlrc"],
+    "@type": typing.Literal["afni.@auto_tlrc"],
     "base_template": InputPathType,
     "input_anat": InputPathType,
     "no_ss": bool,
@@ -69,7 +69,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@auto_tlrc": v__auto_tlrc_cargs,
+        "afni.@auto_tlrc": v__auto_tlrc_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@auto_tlrc": v__auto_tlrc_outputs,
+        "afni.@auto_tlrc": v__auto_tlrc_outputs,
     }.get(t)
 
 
@@ -213,7 +213,7 @@ def v__auto_tlrc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@auto_tlrc",
+        "@type": "afni.@auto_tlrc",
         "base_template": base_template,
         "input_anat": input_anat,
         "no_ss": no_ss,
@@ -638,5 +638,8 @@ __all__ = [
     "VAutoTlrcParameters",
     "V__AUTO_TLRC_METADATA",
     "v__auto_tlrc",
+    "v__auto_tlrc_cargs",
+    "v__auto_tlrc_execute",
+    "v__auto_tlrc_outputs",
     "v__auto_tlrc_params",
 ]

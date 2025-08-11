@@ -14,28 +14,28 @@ TIME_SCCAN_METADATA = Metadata(
 
 
 TimeSccanTimeseriesimageToMatrixParameters = typing.TypedDict('TimeSccanTimeseriesimageToMatrixParameters', {
-    "__STYXTYPE__": typing.Literal["timeseriesimage_to_matrix"],
+    "@type": typing.Literal["ants.TimeSCCAN.timeseriesimage_to_matrix"],
     "timeseries_image": InputPathType,
     "mask_image": InputPathType,
 })
 
 
 TimeSccanNetworkSccaParameters = typing.TypedDict('TimeSccanNetworkSccaParameters', {
-    "__STYXTYPE__": typing.Literal["network_scca"],
+    "@type": typing.Literal["ants.TimeSCCAN.network_scca"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
 TimeSccanNetworkRegionAveragingParameters = typing.TypedDict('TimeSccanNetworkRegionAveragingParameters', {
-    "__STYXTYPE__": typing.Literal["network_region_averaging"],
+    "@type": typing.Literal["ants.TimeSCCAN.network_region_averaging"],
     "time_matrix": InputPathType,
     "label_matrix": InputPathType,
 })
 
 
 TimeSccanParameters = typing.TypedDict('TimeSccanParameters', {
-    "__STYXTYPE__": typing.Literal["TimeSCCAN"],
+    "@type": typing.Literal["ants.TimeSCCAN"],
     "output": str,
     "number_consecutive_labels": typing.NotRequired[int | None],
     "minimum_region_size": typing.NotRequired[int | None],
@@ -65,10 +65,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "TimeSCCAN": time_sccan_cargs,
-        "timeseriesimage_to_matrix": time_sccan_timeseriesimage_to_matrix_cargs,
-        "network_scca": time_sccan_network_scca_cargs,
-        "network_region_averaging": time_sccan_network_region_averaging_cargs,
+        "ants.TimeSCCAN": time_sccan_cargs,
+        "ants.TimeSCCAN.timeseriesimage_to_matrix": time_sccan_timeseriesimage_to_matrix_cargs,
+        "ants.TimeSCCAN.network_scca": time_sccan_network_scca_cargs,
+        "ants.TimeSCCAN.network_region_averaging": time_sccan_network_region_averaging_cargs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "TimeSCCAN": time_sccan_outputs,
+        "ants.TimeSCCAN": time_sccan_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def time_sccan_timeseriesimage_to_matrix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "timeseriesimage_to_matrix",
+        "@type": "ants.TimeSCCAN.timeseriesimage_to_matrix",
         "timeseries_image": timeseries_image,
         "mask_image": mask_image,
     }
@@ -141,7 +141,7 @@ def time_sccan_network_scca_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "network_scca",
+        "@type": "ants.TimeSCCAN.network_scca",
         "time_matrix": time_matrix,
         "label_matrix": label_matrix,
     }
@@ -180,7 +180,7 @@ def time_sccan_network_region_averaging_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "network_region_averaging",
+        "@type": "ants.TimeSCCAN.network_region_averaging",
         "time_matrix": time_matrix,
         "label_matrix": label_matrix,
     }
@@ -262,7 +262,7 @@ def time_sccan_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "TimeSCCAN",
+        "@type": "ants.TimeSCCAN",
         "output": output,
     }
     if number_consecutive_labels is not None:
@@ -366,7 +366,7 @@ def time_sccan_cargs(
     if params.get("timeseriesimage_to_matrix") is not None:
         cargs.extend([
             "--timeseriesimage-to-matrix",
-            *dyn_cargs(params.get("timeseriesimage_to_matrix")["__STYXTYPE__"])(params.get("timeseriesimage_to_matrix"), execution)
+            *dyn_cargs(params.get("timeseriesimage_to_matrix")["@type"])(params.get("timeseriesimage_to_matrix"), execution)
         ])
     if params.get("labelsimage_to_matrix") is not None:
         cargs.extend([
@@ -376,7 +376,7 @@ def time_sccan_cargs(
     if params.get("network") is not None:
         cargs.extend([
             "--network",
-            *dyn_cargs(params.get("network")["__STYXTYPE__"])(params.get("network"), execution)
+            *dyn_cargs(params.get("network")["@type"])(params.get("network"), execution)
         ])
     return cargs
 
@@ -506,8 +506,14 @@ __all__ = [
     "TimeSccanParameters",
     "TimeSccanTimeseriesimageToMatrixParameters",
     "time_sccan",
+    "time_sccan_cargs",
+    "time_sccan_execute",
+    "time_sccan_network_region_averaging_cargs",
     "time_sccan_network_region_averaging_params",
+    "time_sccan_network_scca_cargs",
     "time_sccan_network_scca_params",
+    "time_sccan_outputs",
     "time_sccan_params",
+    "time_sccan_timeseriesimage_to_matrix_cargs",
     "time_sccan_timeseriesimage_to_matrix_params",
 ]

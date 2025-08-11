@@ -14,7 +14,7 @@ V_3D_FWHMX_METADATA = Metadata(
 
 
 V3dFwhmxParameters = typing.TypedDict('V3dFwhmxParameters', {
-    "__STYXTYPE__": typing.Literal["3dFWHMx"],
+    "@type": typing.Literal["afni.3dFWHMx"],
     "mask": typing.NotRequired[InputPathType | None],
     "automask": bool,
     "demed": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dFWHMx": v_3d_fwhmx_cargs,
+        "afni.3dFWHMx": v_3d_fwhmx_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dFWHMx": v_3d_fwhmx_outputs,
+        "afni.3dFWHMx": v_3d_fwhmx_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def v_3d_fwhmx_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dFWHMx",
+        "@type": "afni.3dFWHMx",
         "automask": automask,
         "demed": demed,
         "unif": unif,
@@ -317,5 +317,8 @@ __all__ = [
     "V3dFwhmxParameters",
     "V_3D_FWHMX_METADATA",
     "v_3d_fwhmx",
+    "v_3d_fwhmx_cargs",
+    "v_3d_fwhmx_execute",
+    "v_3d_fwhmx_outputs",
     "v_3d_fwhmx_params",
 ]

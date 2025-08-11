@@ -14,7 +14,7 @@ TALAIRACH_AVI_METADATA = Metadata(
 
 
 TalairachAviParameters = typing.TypedDict('TalairachAviParameters', {
-    "__STYXTYPE__": typing.Literal["talairach_avi"],
+    "@type": typing.Literal["freesurfer.talairach_avi"],
     "input_file": InputPathType,
     "output_xfm": str,
     "atlas": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "talairach_avi": talairach_avi_cargs,
+        "freesurfer.talairach_avi": talairach_avi_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "talairach_avi": talairach_avi_outputs,
+        "freesurfer.talairach_avi": talairach_avi_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def talairach_avi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "talairach_avi",
+        "@type": "freesurfer.talairach_avi",
         "input_file": input_file,
         "output_xfm": output_xfm,
         "debug": debug,
@@ -223,5 +223,8 @@ __all__ = [
     "TalairachAviOutputs",
     "TalairachAviParameters",
     "talairach_avi",
+    "talairach_avi_cargs",
+    "talairach_avi_execute",
+    "talairach_avi_outputs",
     "talairach_avi_params",
 ]

@@ -14,7 +14,7 @@ RUN_FASTSURFER_SH_METADATA = Metadata(
 
 
 RunFastsurferShParameters = typing.TypedDict('RunFastsurferShParameters', {
-    "__STYXTYPE__": typing.Literal["run_fastsurfer.sh"],
+    "@type": typing.Literal["fastsurfer.run_fastsurfer.sh"],
     "sid": str,
     "subjects_dir": str,
     "t1_input": InputPathType,
@@ -65,7 +65,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_fastsurfer.sh": run_fastsurfer_sh_cargs,
+        "fastsurfer.run_fastsurfer.sh": run_fastsurfer_sh_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "run_fastsurfer.sh": run_fastsurfer_sh_outputs,
+        "fastsurfer.run_fastsurfer.sh": run_fastsurfer_sh_outputs,
     }.get(t)
 
 
@@ -186,7 +186,7 @@ def run_fastsurfer_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_fastsurfer.sh",
+        "@type": "fastsurfer.run_fastsurfer.sh",
         "sid": sid,
         "subjects_dir": subjects_dir,
         "t1_input": t1_input,
@@ -557,5 +557,8 @@ __all__ = [
     "RunFastsurferShOutputs",
     "RunFastsurferShParameters",
     "run_fastsurfer_sh",
+    "run_fastsurfer_sh_cargs",
+    "run_fastsurfer_sh_execute",
+    "run_fastsurfer_sh_outputs",
     "run_fastsurfer_sh_params",
 ]

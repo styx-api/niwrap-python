@@ -14,7 +14,7 @@ REG_MNI305_2MM_METADATA = Metadata(
 
 
 RegMni3052mmParameters = typing.TypedDict('RegMni3052mmParameters', {
-    "__STYXTYPE__": typing.Literal["reg-mni305.2mm"],
+    "@type": typing.Literal["freesurfer.reg-mni305.2mm"],
     "subject_id": str,
     "regfile": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg-mni305.2mm": reg_mni305_2mm_cargs,
+        "freesurfer.reg-mni305.2mm": reg_mni305_2mm_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg-mni305.2mm": reg_mni305_2mm_outputs,
+        "freesurfer.reg-mni305.2mm": reg_mni305_2mm_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def reg_mni305_2mm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg-mni305.2mm",
+        "@type": "freesurfer.reg-mni305.2mm",
         "subject_id": subject_id,
         "regfile": regfile,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "RegMni3052mmOutputs",
     "RegMni3052mmParameters",
     "reg_mni305_2mm",
+    "reg_mni305_2mm_cargs",
+    "reg_mni305_2mm_execute",
+    "reg_mni305_2mm_outputs",
     "reg_mni305_2mm_params",
 ]

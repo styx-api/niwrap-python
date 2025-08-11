@@ -14,7 +14,7 @@ SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA = Metadata(
 
 
 SurfaceGeodesicDistanceAllToAllParameters = typing.TypedDict('SurfaceGeodesicDistanceAllToAllParameters', {
-    "__STYXTYPE__": typing.Literal["surface-geodesic-distance-all-to-all"],
+    "@type": typing.Literal["workbench.surface-geodesic-distance-all-to-all"],
     "surface": InputPathType,
     "cifti_out": str,
     "opt_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-geodesic-distance-all-to-all": surface_geodesic_distance_all_to_all_cargs,
+        "workbench.surface-geodesic-distance-all-to-all": surface_geodesic_distance_all_to_all_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-geodesic-distance-all-to-all": surface_geodesic_distance_all_to_all_outputs,
+        "workbench.surface-geodesic-distance-all-to-all": surface_geodesic_distance_all_to_all_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def surface_geodesic_distance_all_to_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-geodesic-distance-all-to-all",
+        "@type": "workbench.surface-geodesic-distance-all-to-all",
         "surface": surface,
         "cifti_out": cifti_out,
         "opt_naive": opt_naive,
@@ -277,5 +277,8 @@ __all__ = [
     "SurfaceGeodesicDistanceAllToAllOutputs",
     "SurfaceGeodesicDistanceAllToAllParameters",
     "surface_geodesic_distance_all_to_all",
+    "surface_geodesic_distance_all_to_all_cargs",
+    "surface_geodesic_distance_all_to_all_execute",
+    "surface_geodesic_distance_all_to_all_outputs",
     "surface_geodesic_distance_all_to_all_params",
 ]

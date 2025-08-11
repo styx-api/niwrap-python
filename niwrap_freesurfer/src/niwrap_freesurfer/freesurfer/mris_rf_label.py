@@ -14,7 +14,7 @@ MRIS_RF_LABEL_METADATA = Metadata(
 
 
 MrisRfLabelParameters = typing.TypedDict('MrisRfLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mris_rf_label"],
+    "@type": typing.Literal["freesurfer.mris_rf_label"],
     "subject": str,
     "rf_classifier": str,
     "output_name": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_rf_label": mris_rf_label_cargs,
+        "freesurfer.mris_rf_label": mris_rf_label_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_rf_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_rf_label",
+        "@type": "freesurfer.mris_rf_label",
         "subject": subject,
         "rf_classifier": rf_classifier,
         "output_name": output_name,
@@ -210,5 +210,8 @@ __all__ = [
     "MrisRfLabelOutputs",
     "MrisRfLabelParameters",
     "mris_rf_label",
+    "mris_rf_label_cargs",
+    "mris_rf_label_execute",
+    "mris_rf_label_outputs",
     "mris_rf_label_params",
 ]

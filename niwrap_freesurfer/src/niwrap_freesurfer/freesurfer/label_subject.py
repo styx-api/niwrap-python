@@ -14,7 +14,7 @@ LABEL_SUBJECT_METADATA = Metadata(
 
 
 LabelSubjectParameters = typing.TypedDict('LabelSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["label_subject"],
+    "@type": typing.Literal["freesurfer.label_subject"],
     "nu_file": typing.NotRequired[InputPathType | None],
     "orig_dir": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label_subject": label_subject_cargs,
+        "freesurfer.label_subject": label_subject_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label_subject": label_subject_outputs,
+        "freesurfer.label_subject": label_subject_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def label_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label_subject",
+        "@type": "freesurfer.label_subject",
     }
     if nu_file is not None:
         params["nu_file"] = nu_file
@@ -186,5 +186,8 @@ __all__ = [
     "LabelSubjectOutputs",
     "LabelSubjectParameters",
     "label_subject",
+    "label_subject_cargs",
+    "label_subject_execute",
+    "label_subject_outputs",
     "label_subject_params",
 ]

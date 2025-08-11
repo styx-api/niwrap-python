@@ -14,7 +14,7 @@ V_3D_NOTES_METADATA = Metadata(
 
 
 V3dNotesParameters = typing.TypedDict('V3dNotesParameters', {
-    "__STYXTYPE__": typing.Literal["3dNotes"],
+    "@type": typing.Literal["afni.3dNotes"],
     "add_note": typing.NotRequired[str | None],
     "append_history": typing.NotRequired[str | None],
     "replace_history": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dNotes": v_3d_notes_cargs,
+        "afni.3dNotes": v_3d_notes_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_3d_notes_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dNotes",
+        "@type": "afni.3dNotes",
         "print_notes": print_notes,
         "help": help_,
         "dataset": dataset,
@@ -242,5 +242,8 @@ __all__ = [
     "V3dNotesParameters",
     "V_3D_NOTES_METADATA",
     "v_3d_notes",
+    "v_3d_notes_cargs",
+    "v_3d_notes_execute",
+    "v_3d_notes_outputs",
     "v_3d_notes_params",
 ]

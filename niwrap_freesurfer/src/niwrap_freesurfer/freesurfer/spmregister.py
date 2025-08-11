@@ -14,7 +14,7 @@ SPMREGISTER_METADATA = Metadata(
 
 
 SpmregisterParameters = typing.TypedDict('SpmregisterParameters', {
-    "__STYXTYPE__": typing.Literal["spmregister"],
+    "@type": typing.Literal["freesurfer.spmregister"],
     "subjid": str,
     "mov": str,
     "reg": str,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "spmregister": spmregister_cargs,
+        "freesurfer.spmregister": spmregister_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "spmregister": spmregister_outputs,
+        "freesurfer.spmregister": spmregister_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def spmregister_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "spmregister",
+        "@type": "freesurfer.spmregister",
         "subjid": subjid,
         "mov": mov,
         "reg": reg,
@@ -320,5 +320,8 @@ __all__ = [
     "SpmregisterOutputs",
     "SpmregisterParameters",
     "spmregister",
+    "spmregister_cargs",
+    "spmregister_execute",
+    "spmregister_outputs",
     "spmregister_params",
 ]

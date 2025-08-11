@@ -14,7 +14,7 @@ V_3D_MASK_TO_ASCII_METADATA = Metadata(
 
 
 V3dMaskToAsciiParameters = typing.TypedDict('V3dMaskToAsciiParameters', {
-    "__STYXTYPE__": typing.Literal["3dMaskToASCII"],
+    "@type": typing.Literal["afni.3dMaskToASCII"],
     "tobin_flag": bool,
     "dataset": InputPathType,
     "outputfile": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMaskToASCII": v_3d_mask_to_ascii_cargs,
+        "afni.3dMaskToASCII": v_3d_mask_to_ascii_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMaskToASCII": v_3d_mask_to_ascii_outputs,
+        "afni.3dMaskToASCII": v_3d_mask_to_ascii_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v_3d_mask_to_ascii_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMaskToASCII",
+        "@type": "afni.3dMaskToASCII",
         "tobin_flag": tobin_flag,
         "dataset": dataset,
         "outputfile": outputfile,
@@ -193,5 +193,8 @@ __all__ = [
     "V3dMaskToAsciiParameters",
     "V_3D_MASK_TO_ASCII_METADATA",
     "v_3d_mask_to_ascii",
+    "v_3d_mask_to_ascii_cargs",
+    "v_3d_mask_to_ascii_execute",
+    "v_3d_mask_to_ascii_outputs",
     "v_3d_mask_to_ascii_params",
 ]

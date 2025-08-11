@@ -14,7 +14,7 @@ PRINT_UNIQUE_LABELS_CSH_METADATA = Metadata(
 
 
 PrintUniqueLabelsCshParameters = typing.TypedDict('PrintUniqueLabelsCshParameters', {
-    "__STYXTYPE__": typing.Literal["print_unique_labels.csh"],
+    "@type": typing.Literal["freesurfer.print_unique_labels.csh"],
     "label_volume": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "list_only": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "print_unique_labels.csh": print_unique_labels_csh_cargs,
+        "freesurfer.print_unique_labels.csh": print_unique_labels_csh_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "print_unique_labels.csh": print_unique_labels_csh_outputs,
+        "freesurfer.print_unique_labels.csh": print_unique_labels_csh_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def print_unique_labels_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "print_unique_labels.csh",
+        "@type": "freesurfer.print_unique_labels.csh",
         "label_volume": label_volume,
         "list_only": list_only,
         "version": version,
@@ -215,5 +215,8 @@ __all__ = [
     "PrintUniqueLabelsCshOutputs",
     "PrintUniqueLabelsCshParameters",
     "print_unique_labels_csh",
+    "print_unique_labels_csh_cargs",
+    "print_unique_labels_csh_execute",
+    "print_unique_labels_csh_outputs",
     "print_unique_labels_csh_params",
 ]

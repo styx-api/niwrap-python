@@ -14,28 +14,28 @@ METRIC_MERGE_METADATA = Metadata(
 
 
 MetricMergeUpToParameters = typing.TypedDict('MetricMergeUpToParameters', {
-    "__STYXTYPE__": typing.Literal["up_to"],
+    "@type": typing.Literal["workbench.metric-merge.metric.column.up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 MetricMergeColumnParameters = typing.TypedDict('MetricMergeColumnParameters', {
-    "__STYXTYPE__": typing.Literal["column"],
+    "@type": typing.Literal["workbench.metric-merge.metric.column"],
     "column": str,
     "up_to": typing.NotRequired[MetricMergeUpToParameters | None],
 })
 
 
 MetricMergeMetricParameters = typing.TypedDict('MetricMergeMetricParameters', {
-    "__STYXTYPE__": typing.Literal["metric"],
+    "@type": typing.Literal["workbench.metric-merge.metric"],
     "metric_in": InputPathType,
     "column": typing.NotRequired[list[MetricMergeColumnParameters] | None],
 })
 
 
 MetricMergeParameters = typing.TypedDict('MetricMergeParameters', {
-    "__STYXTYPE__": typing.Literal["metric-merge"],
+    "@type": typing.Literal["workbench.metric-merge"],
     "metric_out": str,
     "metric": typing.NotRequired[list[MetricMergeMetricParameters] | None],
 })
@@ -53,10 +53,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-merge": metric_merge_cargs,
-        "metric": metric_merge_metric_cargs,
-        "column": metric_merge_column_cargs,
-        "up_to": metric_merge_up_to_cargs,
+        "workbench.metric-merge": metric_merge_cargs,
+        "workbench.metric-merge.metric": metric_merge_metric_cargs,
+        "workbench.metric-merge.metric.column": metric_merge_column_cargs,
+        "workbench.metric-merge.metric.column.up_to": metric_merge_up_to_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-merge": metric_merge_outputs,
+        "workbench.metric-merge": metric_merge_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def metric_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "up_to",
+        "@type": "workbench.metric-merge.metric.column.up_to",
         "last_column": last_column,
         "opt_reverse": opt_reverse,
     }
@@ -132,7 +132,7 @@ def metric_merge_column_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "column",
+        "@type": "workbench.metric-merge.metric.column",
         "column": column,
     }
     if up_to is not None:
@@ -157,7 +157,7 @@ def metric_merge_column_cargs(
     cargs.append("-column")
     cargs.append(params.get("column"))
     if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["__STYXTYPE__"])(params.get("up_to"), execution))
+        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
     return cargs
 
 
@@ -175,7 +175,7 @@ def metric_merge_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric",
+        "@type": "workbench.metric-merge.metric",
         "metric_in": metric_in,
     }
     if column is not None:
@@ -200,7 +200,7 @@ def metric_merge_metric_cargs(
     cargs.append("-metric")
     cargs.append(execution.input_file(params.get("metric_in")))
     if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("column")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
     return cargs
 
 
@@ -228,7 +228,7 @@ def metric_merge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-merge",
+        "@type": "workbench.metric-merge",
         "metric_out": metric_out,
     }
     if metric is not None:
@@ -254,7 +254,7 @@ def metric_merge_cargs(
     cargs.append("-metric-merge")
     cargs.append(params.get("metric_out"))
     if params.get("metric") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("metric")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("metric")] for a in c])
     return cargs
 
 
@@ -358,8 +358,14 @@ __all__ = [
     "MetricMergeParameters",
     "MetricMergeUpToParameters",
     "metric_merge",
+    "metric_merge_cargs",
+    "metric_merge_column_cargs",
     "metric_merge_column_params",
+    "metric_merge_execute",
+    "metric_merge_metric_cargs",
     "metric_merge_metric_params",
+    "metric_merge_outputs",
     "metric_merge_params",
+    "metric_merge_up_to_cargs",
     "metric_merge_up_to_params",
 ]

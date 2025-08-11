@@ -14,7 +14,7 @@ VNO_MATCH_CHECK_METADATA = Metadata(
 
 
 VnoMatchCheckParameters = typing.TypedDict('VnoMatchCheckParameters', {
-    "__STYXTYPE__": typing.Literal["vno_match_check"],
+    "@type": typing.Literal["freesurfer.vno_match_check"],
     "subjid": str,
     "debug": bool,
     "right_hemi": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vno_match_check": vno_match_check_cargs,
+        "freesurfer.vno_match_check": vno_match_check_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def vno_match_check_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vno_match_check",
+        "@type": "freesurfer.vno_match_check",
         "subjid": subjid,
         "debug": debug,
         "right_hemi": right_hemi,
@@ -197,5 +197,8 @@ __all__ = [
     "VnoMatchCheckOutputs",
     "VnoMatchCheckParameters",
     "vno_match_check",
+    "vno_match_check_cargs",
+    "vno_match_check_execute",
+    "vno_match_check_outputs",
     "vno_match_check_params",
 ]

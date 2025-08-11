@@ -14,7 +14,7 @@ METRIC_LABEL_IMPORT_METADATA = Metadata(
 
 
 MetricLabelImportParameters = typing.TypedDict('MetricLabelImportParameters', {
-    "__STYXTYPE__": typing.Literal["metric-label-import"],
+    "@type": typing.Literal["workbench.metric-label-import"],
     "input": InputPathType,
     "label_list_file": str,
     "output": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-label-import": metric_label_import_cargs,
+        "workbench.metric-label-import": metric_label_import_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-label-import": metric_label_import_outputs,
+        "workbench.metric-label-import": metric_label_import_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def metric_label_import_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-label-import",
+        "@type": "workbench.metric-label-import",
         "input": input_,
         "label_list_file": label_list_file,
         "output": output,
@@ -289,5 +289,8 @@ __all__ = [
     "MetricLabelImportOutputs",
     "MetricLabelImportParameters",
     "metric_label_import",
+    "metric_label_import_cargs",
+    "metric_label_import_execute",
+    "metric_label_import_outputs",
     "metric_label_import_params",
 ]

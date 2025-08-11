@@ -14,7 +14,7 @@ FAT_PROC_AXIALIZE_ANAT_METADATA = Metadata(
 
 
 FatProcAxializeAnatParameters = typing.TypedDict('FatProcAxializeAnatParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_axialize_anat"],
+    "@type": typing.Literal["afni.fat_proc_axialize_anat"],
     "in_file": InputPathType,
     "ref_file": InputPathType,
     "prefix": str,
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_axialize_anat": fat_proc_axialize_anat_cargs,
+        "afni.fat_proc_axialize_anat": fat_proc_axialize_anat_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_axialize_anat": fat_proc_axialize_anat_outputs,
+        "afni.fat_proc_axialize_anat": fat_proc_axialize_anat_outputs,
     }.get(t)
 
 
@@ -146,7 +146,7 @@ def fat_proc_axialize_anat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_axialize_anat",
+        "@type": "afni.fat_proc_axialize_anat",
         "in_file": in_file,
         "ref_file": ref_file,
         "prefix": prefix,
@@ -411,5 +411,8 @@ __all__ = [
     "FatProcAxializeAnatOutputs",
     "FatProcAxializeAnatParameters",
     "fat_proc_axialize_anat",
+    "fat_proc_axialize_anat_cargs",
+    "fat_proc_axialize_anat_execute",
+    "fat_proc_axialize_anat_outputs",
     "fat_proc_axialize_anat_params",
 ]

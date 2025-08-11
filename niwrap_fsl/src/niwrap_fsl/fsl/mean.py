@@ -14,7 +14,7 @@ MEAN_METADATA = Metadata(
 
 
 MeanParameters = typing.TypedDict('MeanParameters', {
-    "__STYXTYPE__": typing.Literal["mean"],
+    "@type": typing.Literal["fsl.mean"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "verbose_flag": bool,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mean": mean_cargs,
+        "fsl.mean": mean_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mean": mean_outputs,
+        "fsl.mean": mean_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def mean_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mean",
+        "@type": "fsl.mean",
         "datafile": datafile,
         "maskfile": maskfile,
         "verbose_flag": verbose_flag,
@@ -395,5 +395,8 @@ __all__ = [
     "MeanOutputs",
     "MeanParameters",
     "mean",
+    "mean_cargs",
+    "mean_execute",
+    "mean_outputs",
     "mean_params",
 ]

@@ -14,7 +14,7 @@ SPHARM_RECO_METADATA = Metadata(
 
 
 SpharmRecoParameters = typing.TypedDict('SpharmRecoParameters', {
-    "__STYXTYPE__": typing.Literal["SpharmReco"],
+    "@type": typing.Literal["afni.SpharmReco"],
     "input_surface": str,
     "decomposition_order": float,
     "bases_prefix": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SpharmReco": spharm_reco_cargs,
+        "afni.SpharmReco": spharm_reco_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def spharm_reco_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SpharmReco",
+        "@type": "afni.SpharmReco",
         "input_surface": input_surface,
         "decomposition_order": decomposition_order,
         "bases_prefix": bases_prefix,
@@ -270,5 +270,8 @@ __all__ = [
     "SpharmRecoOutputs",
     "SpharmRecoParameters",
     "spharm_reco",
+    "spharm_reco_cargs",
+    "spharm_reco_execute",
+    "spharm_reco_outputs",
     "spharm_reco_params",
 ]

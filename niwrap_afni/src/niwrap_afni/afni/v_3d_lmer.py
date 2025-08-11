@@ -14,7 +14,7 @@ V_3D_LMER_METADATA = Metadata(
 
 
 V3dLmerParameters = typing.TypedDict('V3dLmerParameters', {
-    "__STYXTYPE__": typing.Literal["3dLMEr"],
+    "@type": typing.Literal["afni.3dLMEr"],
     "bound_lower": typing.NotRequired[float | None],
     "bound_upper": typing.NotRequired[float | None],
     "cio": bool,
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLMEr": v_3d_lmer_cargs,
+        "afni.3dLMEr": v_3d_lmer_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLMEr": v_3d_lmer_outputs,
+        "afni.3dLMEr": v_3d_lmer_outputs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def v_3d_lmer_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLMEr",
+        "@type": "afni.3dLMEr",
         "cio": cio,
         "data_table": data_table,
         "debug_args": debug_args,
@@ -421,5 +421,8 @@ __all__ = [
     "V3dLmerParameters",
     "V_3D_LMER_METADATA",
     "v_3d_lmer",
+    "v_3d_lmer_cargs",
+    "v_3d_lmer_execute",
+    "v_3d_lmer_outputs",
     "v_3d_lmer_params",
 ]

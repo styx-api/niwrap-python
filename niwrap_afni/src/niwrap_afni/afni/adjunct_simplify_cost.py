@@ -14,7 +14,7 @@ ADJUNCT_SIMPLIFY_COST_METADATA = Metadata(
 
 
 AdjunctSimplifyCostParameters = typing.TypedDict('AdjunctSimplifyCostParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_simplify_cost"],
+    "@type": typing.Literal["afni.adjunct_simplify_cost"],
     "cost_function": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_simplify_cost": adjunct_simplify_cost_cargs,
+        "afni.adjunct_simplify_cost": adjunct_simplify_cost_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def adjunct_simplify_cost_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_simplify_cost",
+        "@type": "afni.adjunct_simplify_cost",
         "cost_function": cost_function,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "AdjunctSimplifyCostOutputs",
     "AdjunctSimplifyCostParameters",
     "adjunct_simplify_cost",
+    "adjunct_simplify_cost_cargs",
+    "adjunct_simplify_cost_execute",
+    "adjunct_simplify_cost_outputs",
     "adjunct_simplify_cost_params",
 ]

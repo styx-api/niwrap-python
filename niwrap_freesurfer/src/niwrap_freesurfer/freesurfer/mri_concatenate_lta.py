@@ -14,7 +14,7 @@ MRI_CONCATENATE_LTA_METADATA = Metadata(
 
 
 MriConcatenateLtaParameters = typing.TypedDict('MriConcatenateLtaParameters', {
-    "__STYXTYPE__": typing.Literal["mri_concatenate_lta"],
+    "@type": typing.Literal["freesurfer.mri_concatenate_lta"],
     "lta_1": InputPathType,
     "lta_2": InputPathType,
     "lta_final": str,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_concatenate_lta": mri_concatenate_lta_cargs,
+        "freesurfer.mri_concatenate_lta": mri_concatenate_lta_cargs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def mri_concatenate_lta_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_concatenate_lta",
+        "@type": "freesurfer.mri_concatenate_lta",
         "lta_1": lta_1,
         "lta_2": lta_2,
         "lta_final": lta_final,
@@ -287,5 +287,8 @@ __all__ = [
     "MriConcatenateLtaOutputs",
     "MriConcatenateLtaParameters",
     "mri_concatenate_lta",
+    "mri_concatenate_lta_cargs",
+    "mri_concatenate_lta_execute",
+    "mri_concatenate_lta_outputs",
     "mri_concatenate_lta_params",
 ]

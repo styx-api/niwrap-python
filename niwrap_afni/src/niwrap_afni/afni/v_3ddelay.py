@@ -14,7 +14,7 @@ V_3DDELAY_METADATA = Metadata(
 
 
 V3ddelayParameters = typing.TypedDict('V3ddelayParameters', {
-    "__STYXTYPE__": typing.Literal["3ddelay"],
+    "@type": typing.Literal["afni.3ddelay"],
     "input_file": InputPathType,
     "reference_file": InputPathType,
     "sampling_freq": float,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3ddelay": v_3ddelay_cargs,
+        "afni.3ddelay": v_3ddelay_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3ddelay": v_3ddelay_outputs,
+        "afni.3ddelay": v_3ddelay_outputs,
     }.get(t)
 
 
@@ -153,7 +153,7 @@ def v_3ddelay_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3ddelay",
+        "@type": "afni.3ddelay",
         "input_file": input_file,
         "reference_file": reference_file,
         "sampling_freq": sampling_freq,
@@ -439,5 +439,8 @@ __all__ = [
     "V3ddelayParameters",
     "V_3DDELAY_METADATA",
     "v_3ddelay",
+    "v_3ddelay_cargs",
+    "v_3ddelay_execute",
+    "v_3ddelay_outputs",
     "v_3ddelay_params",
 ]

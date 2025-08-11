@@ -14,7 +14,7 @@ MRI_GLMFIT_SIM_METADATA = Metadata(
 
 
 MriGlmfitSimParameters = typing.TypedDict('MriGlmfitSimParameters', {
-    "__STYXTYPE__": typing.Literal["mri_glmfit-sim"],
+    "@type": typing.Literal["freesurfer.mri_glmfit-sim"],
     "glmdir": str,
     "cwp": typing.NotRequired[float | None],
     "mczsim": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_glmfit-sim": mri_glmfit_sim_cargs,
+        "freesurfer.mri_glmfit-sim": mri_glmfit_sim_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_glmfit-sim": mri_glmfit_sim_outputs,
+        "freesurfer.mri_glmfit-sim": mri_glmfit_sim_outputs,
     }.get(t)
 
 
@@ -177,7 +177,7 @@ def mri_glmfit_sim_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_glmfit-sim",
+        "@type": "freesurfer.mri_glmfit-sim",
         "glmdir": glmdir,
         "perm_resid": perm_resid,
         "perm_signflip": perm_signflip,
@@ -533,5 +533,8 @@ __all__ = [
     "MriGlmfitSimOutputs",
     "MriGlmfitSimParameters",
     "mri_glmfit_sim",
+    "mri_glmfit_sim_cargs",
+    "mri_glmfit_sim_execute",
+    "mri_glmfit_sim_outputs",
     "mri_glmfit_sim_params",
 ]

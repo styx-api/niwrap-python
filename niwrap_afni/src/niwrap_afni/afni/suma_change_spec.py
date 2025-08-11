@@ -14,7 +14,7 @@ SUMA_CHANGE_SPEC_METADATA = Metadata(
 
 
 SumaChangeSpecParameters = typing.TypedDict('SumaChangeSpecParameters', {
-    "__STYXTYPE__": typing.Literal["suma_change_spec"],
+    "@type": typing.Literal["afni.suma_change_spec"],
     "input": InputPathType,
     "state": str,
     "domainparent": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "suma_change_spec": suma_change_spec_cargs,
+        "afni.suma_change_spec": suma_change_spec_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "suma_change_spec": suma_change_spec_outputs,
+        "afni.suma_change_spec": suma_change_spec_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def suma_change_spec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "suma_change_spec",
+        "@type": "afni.suma_change_spec",
         "input": input_,
         "state": state,
         "remove": remove,
@@ -221,5 +221,8 @@ __all__ = [
     "SumaChangeSpecOutputs",
     "SumaChangeSpecParameters",
     "suma_change_spec",
+    "suma_change_spec_cargs",
+    "suma_change_spec_execute",
+    "suma_change_spec_outputs",
     "suma_change_spec_params",
 ]

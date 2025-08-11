@@ -14,7 +14,7 @@ MP_DIFFPOW_METADATA = Metadata(
 
 
 MpDiffpowParameters = typing.TypedDict('MpDiffpowParameters', {
-    "__STYXTYPE__": typing.Literal["mp_diffpow"],
+    "@type": typing.Literal["fsl.mp_diffpow"],
     "reg_file": InputPathType,
     "diff_reg_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mp_diffpow": mp_diffpow_cargs,
+        "fsl.mp_diffpow": mp_diffpow_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mp_diffpow": mp_diffpow_outputs,
+        "fsl.mp_diffpow": mp_diffpow_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mp_diffpow_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mp_diffpow",
+        "@type": "fsl.mp_diffpow",
         "reg_file": reg_file,
         "diff_reg_file": diff_reg_file,
     }
@@ -189,5 +189,8 @@ __all__ = [
     "MpDiffpowOutputs",
     "MpDiffpowParameters",
     "mp_diffpow",
+    "mp_diffpow_cargs",
+    "mp_diffpow_execute",
+    "mp_diffpow_outputs",
     "mp_diffpow_params",
 ]

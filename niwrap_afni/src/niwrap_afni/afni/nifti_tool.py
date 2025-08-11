@@ -14,7 +14,7 @@ NIFTI_TOOL_METADATA = Metadata(
 
 
 NiftiToolParameters = typing.TypedDict('NiftiToolParameters', {
-    "__STYXTYPE__": typing.Literal["nifti_tool"],
+    "@type": typing.Literal["afni.nifti_tool"],
     "action": str,
     "input_files": typing.NotRequired[list[InputPathType] | None],
     "field": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "nifti_tool": nifti_tool_cargs,
+        "afni.nifti_tool": nifti_tool_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "nifti_tool": nifti_tool_outputs,
+        "afni.nifti_tool": nifti_tool_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def nifti_tool_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nifti_tool",
+        "@type": "afni.nifti_tool",
         "action": action,
         "overwrite": overwrite,
         "convert_verify": convert_verify,
@@ -307,5 +307,8 @@ __all__ = [
     "NiftiToolOutputs",
     "NiftiToolParameters",
     "nifti_tool",
+    "nifti_tool_cargs",
+    "nifti_tool_execute",
+    "nifti_tool_outputs",
     "nifti_tool_params",
 ]

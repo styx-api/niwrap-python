@@ -14,7 +14,7 @@ NON_LOCAL_SUPER_RESOLUTION_METADATA = Metadata(
 
 
 NonLocalSuperResolutionParameters = typing.TypedDict('NonLocalSuperResolutionParameters', {
-    "__STYXTYPE__": typing.Literal["NonLocalSuperResolution"],
+    "@type": typing.Literal["ants.NonLocalSuperResolution"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "interpolated_image": typing.NotRequired[InputPathType | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "NonLocalSuperResolution": non_local_super_resolution_cargs,
+        "ants.NonLocalSuperResolution": non_local_super_resolution_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "NonLocalSuperResolution": non_local_super_resolution_outputs,
+        "ants.NonLocalSuperResolution": non_local_super_resolution_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def non_local_super_resolution_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "NonLocalSuperResolution",
+        "@type": "ants.NonLocalSuperResolution",
         "input_image": input_image,
         "output": output,
     }
@@ -332,5 +332,8 @@ __all__ = [
     "NonLocalSuperResolutionOutputs",
     "NonLocalSuperResolutionParameters",
     "non_local_super_resolution",
+    "non_local_super_resolution_cargs",
+    "non_local_super_resolution_execute",
+    "non_local_super_resolution_outputs",
     "non_local_super_resolution_params",
 ]

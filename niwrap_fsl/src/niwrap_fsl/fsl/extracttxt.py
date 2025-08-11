@@ -14,7 +14,7 @@ EXTRACTTXT_METADATA = Metadata(
 
 
 ExtracttxtParameters = typing.TypedDict('ExtracttxtParameters', {
-    "__STYXTYPE__": typing.Literal["extracttxt"],
+    "@type": typing.Literal["fsl.extracttxt"],
     "search_word": str,
     "file": InputPathType,
     "num_trailing_lines": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "extracttxt": extracttxt_cargs,
+        "fsl.extracttxt": extracttxt_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "extracttxt": extracttxt_outputs,
+        "fsl.extracttxt": extracttxt_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def extracttxt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "extracttxt",
+        "@type": "fsl.extracttxt",
         "search_word": search_word,
         "file": file,
     }
@@ -202,5 +202,8 @@ __all__ = [
     "ExtracttxtOutputs",
     "ExtracttxtParameters",
     "extracttxt",
+    "extracttxt_cargs",
+    "extracttxt_execute",
+    "extracttxt_outputs",
     "extracttxt_params",
 ]

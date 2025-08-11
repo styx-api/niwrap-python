@@ -14,7 +14,7 @@ WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA = Metadata(
 
 
 WarpTensorImageMultiTransformParameters = typing.TypedDict('WarpTensorImageMultiTransformParameters', {
-    "__STYXTYPE__": typing.Literal["WarpTensorImageMultiTransform"],
+    "@type": typing.Literal["ants.WarpTensorImageMultiTransform"],
     "image_dimension": int,
     "moving_image": InputPathType,
     "output_image": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "WarpTensorImageMultiTransform": warp_tensor_image_multi_transform_cargs,
+        "ants.WarpTensorImageMultiTransform": warp_tensor_image_multi_transform_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "WarpTensorImageMultiTransform": warp_tensor_image_multi_transform_outputs,
+        "ants.WarpTensorImageMultiTransform": warp_tensor_image_multi_transform_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def warp_tensor_image_multi_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "WarpTensorImageMultiTransform",
+        "@type": "ants.WarpTensorImageMultiTransform",
         "image_dimension": image_dimension,
         "moving_image": moving_image,
         "output_image": output_image,
@@ -280,5 +280,8 @@ __all__ = [
     "WarpTensorImageMultiTransformOutputs",
     "WarpTensorImageMultiTransformParameters",
     "warp_tensor_image_multi_transform",
+    "warp_tensor_image_multi_transform_cargs",
+    "warp_tensor_image_multi_transform_execute",
+    "warp_tensor_image_multi_transform_outputs",
     "warp_tensor_image_multi_transform_params",
 ]

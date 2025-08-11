@@ -14,7 +14,7 @@ NMOVIE_QT_METADATA = Metadata(
 
 
 NmovieQtParameters = typing.TypedDict('NmovieQtParameters', {
-    "__STYXTYPE__": typing.Literal["nmovie_qt"],
+    "@type": typing.Literal["freesurfer.nmovie_qt"],
     "images": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "nmovie_qt": nmovie_qt_cargs,
+        "freesurfer.nmovie_qt": nmovie_qt_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def nmovie_qt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nmovie_qt",
+        "@type": "freesurfer.nmovie_qt",
         "images": images,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "NmovieQtOutputs",
     "NmovieQtParameters",
     "nmovie_qt",
+    "nmovie_qt_cargs",
+    "nmovie_qt_execute",
+    "nmovie_qt_outputs",
     "nmovie_qt_params",
 ]

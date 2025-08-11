@@ -14,7 +14,7 @@ ADJUNCT_SELECT_STR_PY_METADATA = Metadata(
 
 
 AdjunctSelectStrPyParameters = typing.TypedDict('AdjunctSelectStrPyParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_select_str.py"],
+    "@type": typing.Literal["afni.adjunct_select_str.py"],
     "input_file": InputPathType,
     "num_bricks": float,
     "output_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_select_str.py": adjunct_select_str_py_cargs,
+        "afni.adjunct_select_str.py": adjunct_select_str_py_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def adjunct_select_str_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_select_str.py",
+        "@type": "afni.adjunct_select_str.py",
         "input_file": input_file,
         "num_bricks": num_bricks,
         "output_file": output_file,
@@ -184,5 +184,8 @@ __all__ = [
     "AdjunctSelectStrPyOutputs",
     "AdjunctSelectStrPyParameters",
     "adjunct_select_str_py",
+    "adjunct_select_str_py_cargs",
+    "adjunct_select_str_py_execute",
+    "adjunct_select_str_py_outputs",
     "adjunct_select_str_py_params",
 ]

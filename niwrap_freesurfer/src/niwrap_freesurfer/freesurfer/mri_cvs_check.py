@@ -14,7 +14,7 @@ MRI_CVS_CHECK_METADATA = Metadata(
 
 
 MriCvsCheckParameters = typing.TypedDict('MriCvsCheckParameters', {
-    "__STYXTYPE__": typing.Literal["mri_cvs_check"],
+    "@type": typing.Literal["freesurfer.mri_cvs_check"],
     "mov_subjid": str,
     "template_subjid": typing.NotRequired[str | None],
     "hemi": typing.NotRequired[typing.Literal["lh", "rh"] | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_cvs_check": mri_cvs_check_cargs,
+        "freesurfer.mri_cvs_check": mri_cvs_check_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_cvs_check_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_cvs_check",
+        "@type": "freesurfer.mri_cvs_check",
         "mov_subjid": mov_subjid,
         "help": help_,
         "version": version,
@@ -221,5 +221,8 @@ __all__ = [
     "MriCvsCheckOutputs",
     "MriCvsCheckParameters",
     "mri_cvs_check",
+    "mri_cvs_check_cargs",
+    "mri_cvs_check_execute",
+    "mri_cvs_check_outputs",
     "mri_cvs_check_params",
 ]

@@ -14,21 +14,21 @@ V_3D_ANOVA3_METADATA = Metadata(
 
 
 V3dAnova3OutfileAbcontrParameters = typing.TypedDict('V3dAnova3OutfileAbcontrParameters', {
-    "__STYXTYPE__": typing.Literal["outfile_abcontr"],
+    "@type": typing.Literal["afni.3dANOVA3.outfile_abcontr"],
     "outfile_abcontr": typing.NotRequired[str | None],
     "outfile_Abcontr": typing.NotRequired[str | None],
 })
 
 
 V3dAnova3OutfileAbcontr1Parameters = typing.TypedDict('V3dAnova3OutfileAbcontr1Parameters', {
-    "__STYXTYPE__": typing.Literal["outfile_abcontr_1"],
+    "@type": typing.Literal["afni.3dANOVA3.outfile_abdiff"],
     "outfile_abdiff": typing.NotRequired[str | None],
     "outfile_Abdiff": typing.NotRequired[str | None],
 })
 
 
 V3dAnova3Parameters = typing.TypedDict('V3dAnova3Parameters', {
-    "__STYXTYPE__": typing.Literal["3dANOVA3"],
+    "@type": typing.Literal["afni.3dANOVA3"],
     "type": int,
     "alevels": int,
     "blevels": int,
@@ -75,9 +75,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dANOVA3": v_3d_anova3_cargs,
-        "outfile_abcontr": v_3d_anova3_outfile_abcontr_cargs,
-        "outfile_abcontr_1": v_3d_anova3_outfile_abcontr_1_cargs,
+        "afni.3dANOVA3": v_3d_anova3_cargs,
+        "afni.3dANOVA3.outfile_abcontr": v_3d_anova3_outfile_abcontr_cargs,
+        "afni.3dANOVA3.outfile_abdiff": v_3d_anova3_outfile_abcontr_1_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dANOVA3": v_3d_anova3_outputs,
+        "afni.3dANOVA3": v_3d_anova3_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def v_3d_anova3_outfile_abcontr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "outfile_abcontr",
+        "@type": "afni.3dANOVA3.outfile_abcontr",
     }
     if outfile_abcontr is not None:
         params["outfile_abcontr"] = outfile_abcontr
@@ -165,7 +165,7 @@ def v_3d_anova3_outfile_abcontr_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "outfile_abcontr_1",
+        "@type": "afni.3dANOVA3.outfile_abdiff",
     }
     if outfile_abdiff is not None:
         params["outfile_abdiff"] = outfile_abdiff
@@ -311,7 +311,7 @@ def v_3d_anova3_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dANOVA3",
+        "@type": "afni.3dANOVA3",
         "type": type_,
         "alevels": alevels,
         "blevels": blevels,
@@ -510,9 +510,9 @@ def v_3d_anova3_cargs(
             params.get("outfile_ccontr")
         ])
     if params.get("outfile_abcontr") is not None:
-        cargs.extend(dyn_cargs(params.get("outfile_abcontr")["__STYXTYPE__"])(params.get("outfile_abcontr"), execution))
+        cargs.extend(dyn_cargs(params.get("outfile_abcontr")["@type"])(params.get("outfile_abcontr"), execution))
     if params.get("outfile_abdiff") is not None:
-        cargs.extend(dyn_cargs(params.get("outfile_abdiff")["__STYXTYPE__"])(params.get("outfile_abdiff"), execution))
+        cargs.extend(dyn_cargs(params.get("outfile_abdiff")["@type"])(params.get("outfile_abdiff"), execution))
     if params.get("outfile_abmean") is not None:
         cargs.extend([
             "-abmean",
@@ -717,7 +717,12 @@ __all__ = [
     "V3dAnova3Parameters",
     "V_3D_ANOVA3_METADATA",
     "v_3d_anova3",
+    "v_3d_anova3_cargs",
+    "v_3d_anova3_execute",
+    "v_3d_anova3_outfile_abcontr_1_cargs",
     "v_3d_anova3_outfile_abcontr_1_params",
+    "v_3d_anova3_outfile_abcontr_cargs",
     "v_3d_anova3_outfile_abcontr_params",
+    "v_3d_anova3_outputs",
     "v_3d_anova3_params",
 ]

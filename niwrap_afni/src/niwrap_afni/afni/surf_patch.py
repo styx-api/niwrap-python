@@ -14,7 +14,7 @@ SURF_PATCH_METADATA = Metadata(
 
 
 SurfPatchParameters = typing.TypedDict('SurfPatchParameters', {
-    "__STYXTYPE__": typing.Literal["SurfPatch"],
+    "@type": typing.Literal["afni.SurfPatch"],
     "spec_file": InputPathType,
     "surf_A": InputPathType,
     "surf_B": InputPathType,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfPatch": surf_patch_cargs,
+        "afni.SurfPatch": surf_patch_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfPatch": surf_patch_outputs,
+        "afni.SurfPatch": surf_patch_outputs,
     }.get(t)
 
 
@@ -148,7 +148,7 @@ def surf_patch_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfPatch",
+        "@type": "afni.SurfPatch",
         "spec_file": spec_file,
         "surf_A": surf_a,
         "surf_B": surf_b,
@@ -408,5 +408,8 @@ __all__ = [
     "SurfPatchOutputs",
     "SurfPatchParameters",
     "surf_patch",
+    "surf_patch_cargs",
+    "surf_patch_execute",
+    "surf_patch_outputs",
     "surf_patch_params",
 ]

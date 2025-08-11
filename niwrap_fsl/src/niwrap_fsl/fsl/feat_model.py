@@ -14,7 +14,7 @@ FEAT_MODEL_METADATA = Metadata(
 
 
 FeatModelParameters = typing.TypedDict('FeatModelParameters', {
-    "__STYXTYPE__": typing.Literal["feat_model"],
+    "@type": typing.Literal["fsl.feat_model"],
     "design_name_root": str,
     "confound_matrix": typing.NotRequired[InputPathType | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "feat_model": feat_model_cargs,
+        "fsl.feat_model": feat_model_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def feat_model_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "feat_model",
+        "@type": "fsl.feat_model",
         "design_name_root": design_name_root,
     }
     if confound_matrix is not None:
@@ -178,5 +178,8 @@ __all__ = [
     "FeatModelOutputs",
     "FeatModelParameters",
     "feat_model",
+    "feat_model_cargs",
+    "feat_model_execute",
+    "feat_model_outputs",
     "feat_model_params",
 ]

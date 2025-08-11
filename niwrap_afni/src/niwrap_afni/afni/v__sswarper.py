@@ -14,7 +14,7 @@ V__SSWARPER_METADATA = Metadata(
 
 
 VSswarperParameters = typing.TypedDict('VSswarperParameters', {
-    "__STYXTYPE__": typing.Literal["@SSwarper"],
+    "@type": typing.Literal["afni.@SSwarper"],
     "input_file": InputPathType,
     "base_template": InputPathType,
     "subject_id": str,
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SSwarper": v__sswarper_cargs,
+        "afni.@SSwarper": v__sswarper_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SSwarper": v__sswarper_outputs,
+        "afni.@SSwarper": v__sswarper_outputs,
     }.get(t)
 
 
@@ -176,7 +176,7 @@ def v__sswarper_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SSwarper",
+        "@type": "afni.@SSwarper",
         "input_file": input_file,
         "base_template": base_template,
         "subject_id": subject_id,
@@ -461,5 +461,8 @@ __all__ = [
     "VSswarperParameters",
     "V__SSWARPER_METADATA",
     "v__sswarper",
+    "v__sswarper_cargs",
+    "v__sswarper_execute",
+    "v__sswarper_outputs",
     "v__sswarper_params",
 ]

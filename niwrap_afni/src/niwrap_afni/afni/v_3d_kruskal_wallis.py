@@ -14,7 +14,7 @@ V_3D_KRUSKAL_WALLIS_METADATA = Metadata(
 
 
 V3dKruskalWallisParameters = typing.TypedDict('V3dKruskalWallisParameters', {
-    "__STYXTYPE__": typing.Literal["3dKruskalWallis"],
+    "@type": typing.Literal["afni.3dKruskalWallis"],
     "levels": int,
     "datasets": list[str],
     "workmem": typing.NotRequired[int | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dKruskalWallis": v_3d_kruskal_wallis_cargs,
+        "afni.3dKruskalWallis": v_3d_kruskal_wallis_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dKruskalWallis": v_3d_kruskal_wallis_outputs,
+        "afni.3dKruskalWallis": v_3d_kruskal_wallis_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def v_3d_kruskal_wallis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dKruskalWallis",
+        "@type": "afni.3dKruskalWallis",
         "levels": levels,
         "datasets": datasets,
         "output": output,
@@ -227,5 +227,8 @@ __all__ = [
     "V3dKruskalWallisParameters",
     "V_3D_KRUSKAL_WALLIS_METADATA",
     "v_3d_kruskal_wallis",
+    "v_3d_kruskal_wallis_cargs",
+    "v_3d_kruskal_wallis_execute",
+    "v_3d_kruskal_wallis_outputs",
     "v_3d_kruskal_wallis_params",
 ]

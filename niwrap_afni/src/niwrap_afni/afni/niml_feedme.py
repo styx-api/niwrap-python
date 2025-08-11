@@ -14,7 +14,7 @@ NIML_FEEDME_METADATA = Metadata(
 
 
 NimlFeedmeParameters = typing.TypedDict('NimlFeedmeParameters', {
-    "__STYXTYPE__": typing.Literal["niml_feedme"],
+    "@type": typing.Literal["afni.niml_feedme"],
     "host": typing.NotRequired[str | None],
     "interval": typing.NotRequired[float | None],
     "verbose": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "niml_feedme": niml_feedme_cargs,
+        "afni.niml_feedme": niml_feedme_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def niml_feedme_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "niml_feedme",
+        "@type": "afni.niml_feedme",
         "verbose": verbose,
         "accum": accum,
         "dataset": dataset,
@@ -256,5 +256,8 @@ __all__ = [
     "NimlFeedmeOutputs",
     "NimlFeedmeParameters",
     "niml_feedme",
+    "niml_feedme_cargs",
+    "niml_feedme_execute",
+    "niml_feedme_outputs",
     "niml_feedme_params",
 ]

@@ -14,7 +14,7 @@ PARC_ATLAS_JACKKNIFE_TEST_METADATA = Metadata(
 
 
 ParcAtlasJackknifeTestParameters = typing.TypedDict('ParcAtlasJackknifeTestParameters', {
-    "__STYXTYPE__": typing.Literal["parc_atlas_jackknife_test"],
+    "@type": typing.Literal["freesurfer.parc_atlas_jackknife_test"],
     "register": bool,
     "reg_dist": typing.NotRequired[str | None],
     "reg_append": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "parc_atlas_jackknife_test": parc_atlas_jackknife_test_cargs,
+        "freesurfer.parc_atlas_jackknife_test": parc_atlas_jackknife_test_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "parc_atlas_jackknife_test": parc_atlas_jackknife_test_outputs,
+        "freesurfer.parc_atlas_jackknife_test": parc_atlas_jackknife_test_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def parc_atlas_jackknife_test_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "parc_atlas_jackknife_test",
+        "@type": "freesurfer.parc_atlas_jackknife_test",
         "register": register,
         "train": train,
         "classify": classify,
@@ -296,5 +296,8 @@ __all__ = [
     "ParcAtlasJackknifeTestOutputs",
     "ParcAtlasJackknifeTestParameters",
     "parc_atlas_jackknife_test",
+    "parc_atlas_jackknife_test_cargs",
+    "parc_atlas_jackknife_test_execute",
+    "parc_atlas_jackknife_test_outputs",
     "parc_atlas_jackknife_test_params",
 ]

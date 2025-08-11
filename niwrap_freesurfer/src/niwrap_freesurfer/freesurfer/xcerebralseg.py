@@ -14,7 +14,7 @@ XCEREBRALSEG_METADATA = Metadata(
 
 
 XcerebralsegParameters = typing.TypedDict('XcerebralsegParameters', {
-    "__STYXTYPE__": typing.Literal["xcerebralseg"],
+    "@type": typing.Literal["freesurfer.xcerebralseg"],
     "subject": str,
     "output_volume": typing.NotRequired[str | None],
     "atlas": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xcerebralseg": xcerebralseg_cargs,
+        "freesurfer.xcerebralseg": xcerebralseg_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "xcerebralseg": xcerebralseg_outputs,
+        "freesurfer.xcerebralseg": xcerebralseg_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def xcerebralseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xcerebralseg",
+        "@type": "freesurfer.xcerebralseg",
         "subject": subject,
         "no_stats": no_stats,
         "no_pons": no_pons,
@@ -288,5 +288,8 @@ __all__ = [
     "XcerebralsegOutputs",
     "XcerebralsegParameters",
     "xcerebralseg",
+    "xcerebralseg_cargs",
+    "xcerebralseg_execute",
+    "xcerebralseg_outputs",
     "xcerebralseg_params",
 ]

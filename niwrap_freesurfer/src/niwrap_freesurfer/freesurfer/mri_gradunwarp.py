@@ -14,7 +14,7 @@ MRI_GRADUNWARP_METADATA = Metadata(
 
 
 MriGradunwarpParameters = typing.TypedDict('MriGradunwarpParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gradunwarp"],
+    "@type": typing.Literal["freesurfer.mri_gradunwarp"],
     "gradient_coeff": typing.NotRequired[InputPathType | None],
     "load_transtbl": typing.NotRequired[InputPathType | None],
     "input_file": InputPathType,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gradunwarp": mri_gradunwarp_cargs,
+        "freesurfer.mri_gradunwarp": mri_gradunwarp_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_gradunwarp": mri_gradunwarp_outputs,
+        "freesurfer.mri_gradunwarp": mri_gradunwarp_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def mri_gradunwarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gradunwarp",
+        "@type": "freesurfer.mri_gradunwarp",
         "input_file": input_file,
         "save_transtbl_only": save_transtbl_only,
         "checkopts": checkopts,
@@ -300,5 +300,8 @@ __all__ = [
     "MriGradunwarpOutputs",
     "MriGradunwarpParameters",
     "mri_gradunwarp",
+    "mri_gradunwarp_cargs",
+    "mri_gradunwarp_execute",
+    "mri_gradunwarp_outputs",
     "mri_gradunwarp_params",
 ]

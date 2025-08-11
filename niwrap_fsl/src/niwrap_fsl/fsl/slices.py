@@ -14,7 +14,7 @@ SLICES_METADATA = Metadata(
 
 
 SlicesParameters = typing.TypedDict('SlicesParameters', {
-    "__STYXTYPE__": typing.Literal["slices"],
+    "@type": typing.Literal["fsl.slices"],
     "primary_input": InputPathType,
     "secondary_input": typing.NotRequired[InputPathType | None],
     "scale_factor": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slices": slices_cargs,
+        "fsl.slices": slices_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def slices_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slices",
+        "@type": "fsl.slices",
         "primary_input": primary_input,
     }
     if secondary_input is not None:
@@ -221,5 +221,8 @@ __all__ = [
     "SlicesOutputs",
     "SlicesParameters",
     "slices",
+    "slices_cargs",
+    "slices_execute",
+    "slices_outputs",
     "slices_params",
 ]

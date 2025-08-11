@@ -14,7 +14,7 @@ MAKE_BIANCA_MASK_METADATA = Metadata(
 
 
 MakeBiancaMaskParameters = typing.TypedDict('MakeBiancaMaskParameters', {
-    "__STYXTYPE__": typing.Literal["make_bianca_mask"],
+    "@type": typing.Literal["fsl.make_bianca_mask"],
     "input_image": InputPathType,
     "output_image": str,
     "overlay_flag": bool,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_bianca_mask": make_bianca_mask_cargs,
+        "fsl.make_bianca_mask": make_bianca_mask_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_bianca_mask": make_bianca_mask_outputs,
+        "fsl.make_bianca_mask": make_bianca_mask_outputs,
     }.get(t)
 
 
@@ -145,7 +145,7 @@ def make_bianca_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_bianca_mask",
+        "@type": "fsl.make_bianca_mask",
         "input_image": input_image,
         "output_image": output_image,
         "overlay_flag": overlay_flag,
@@ -395,5 +395,8 @@ __all__ = [
     "MakeBiancaMaskOutputs",
     "MakeBiancaMaskParameters",
     "make_bianca_mask",
+    "make_bianca_mask_cargs",
+    "make_bianca_mask_execute",
+    "make_bianca_mask_outputs",
     "make_bianca_mask_params",
 ]

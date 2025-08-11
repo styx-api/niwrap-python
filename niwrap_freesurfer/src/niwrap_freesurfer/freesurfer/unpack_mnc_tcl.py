@@ -14,7 +14,7 @@ UNPACK_MNC_TCL_METADATA = Metadata(
 
 
 UnpackMncTclParameters = typing.TypedDict('UnpackMncTclParameters', {
-    "__STYXTYPE__": typing.Literal["unpack_mnc.tcl"],
+    "@type": typing.Literal["freesurfer.unpack_mnc.tcl"],
     "verbose": bool,
     "output_dir": typing.NotRequired[str | None],
     "input_file": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "unpack_mnc.tcl": unpack_mnc_tcl_cargs,
+        "freesurfer.unpack_mnc.tcl": unpack_mnc_tcl_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "unpack_mnc.tcl": unpack_mnc_tcl_outputs,
+        "freesurfer.unpack_mnc.tcl": unpack_mnc_tcl_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def unpack_mnc_tcl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "unpack_mnc.tcl",
+        "@type": "freesurfer.unpack_mnc.tcl",
         "verbose": verbose,
     }
     if output_dir is not None:
@@ -199,5 +199,8 @@ __all__ = [
     "UnpackMncTclOutputs",
     "UnpackMncTclParameters",
     "unpack_mnc_tcl",
+    "unpack_mnc_tcl_cargs",
+    "unpack_mnc_tcl_execute",
+    "unpack_mnc_tcl_outputs",
     "unpack_mnc_tcl_params",
 ]

@@ -14,7 +14,7 @@ RCA_FIX_ENTO_METADATA = Metadata(
 
 
 RcaFixEntoParameters = typing.TypedDict('RcaFixEntoParameters', {
-    "__STYXTYPE__": typing.Literal["rca-fix-ento"],
+    "@type": typing.Literal["freesurfer.rca-fix-ento"],
     "subject": str,
     "threads": typing.NotRequired[float | None],
     "submit": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rca-fix-ento": rca_fix_ento_cargs,
+        "freesurfer.rca-fix-ento": rca_fix_ento_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "rca-fix-ento": rca_fix_ento_outputs,
+        "freesurfer.rca-fix-ento": rca_fix_ento_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def rca_fix_ento_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rca-fix-ento",
+        "@type": "freesurfer.rca-fix-ento",
         "subject": subject,
         "submit": submit,
         "brain_mask": brain_mask,
@@ -231,5 +231,8 @@ __all__ = [
     "RcaFixEntoOutputs",
     "RcaFixEntoParameters",
     "rca_fix_ento",
+    "rca_fix_ento_cargs",
+    "rca_fix_ento_execute",
+    "rca_fix_ento_outputs",
     "rca_fix_ento_params",
 ]

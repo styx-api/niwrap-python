@@ -14,7 +14,7 @@ ISOLATE_LABELS_CSH_METADATA = Metadata(
 
 
 IsolateLabelsCshParameters = typing.TypedDict('IsolateLabelsCshParameters', {
-    "__STYXTYPE__": typing.Literal["isolate_labels.csh"],
+    "@type": typing.Literal["freesurfer.isolate_labels.csh"],
     "label_volume": InputPathType,
     "output_prefix": str,
     "label_option": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "isolate_labels.csh": isolate_labels_csh_cargs,
+        "freesurfer.isolate_labels.csh": isolate_labels_csh_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def isolate_labels_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "isolate_labels.csh",
+        "@type": "freesurfer.isolate_labels.csh",
         "label_volume": label_volume,
         "output_prefix": output_prefix,
         "version": version,
@@ -241,5 +241,8 @@ __all__ = [
     "IsolateLabelsCshOutputs",
     "IsolateLabelsCshParameters",
     "isolate_labels_csh",
+    "isolate_labels_csh_cargs",
+    "isolate_labels_csh_execute",
+    "isolate_labels_csh_outputs",
     "isolate_labels_csh_params",
 ]

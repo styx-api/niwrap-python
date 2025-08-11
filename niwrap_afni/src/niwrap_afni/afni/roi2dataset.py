@@ -14,7 +14,7 @@ ROI2DATASET_METADATA = Metadata(
 
 
 Roi2datasetParameters = typing.TypedDict('Roi2datasetParameters', {
-    "__STYXTYPE__": typing.Literal["ROI2dataset"],
+    "@type": typing.Literal["afni.ROI2dataset"],
     "prefix": str,
     "input_rois": list[InputPathType],
     "keep_separate": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ROI2dataset": roi2dataset_cargs,
+        "afni.ROI2dataset": roi2dataset_cargs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def roi2dataset_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ROI2dataset",
+        "@type": "afni.ROI2dataset",
         "prefix": prefix,
         "input_rois": input_rois,
         "keep_separate": keep_separate,
@@ -306,5 +306,8 @@ __all__ = [
     "Roi2datasetOutputs",
     "Roi2datasetParameters",
     "roi2dataset",
+    "roi2dataset_cargs",
+    "roi2dataset_execute",
+    "roi2dataset_outputs",
     "roi2dataset_params",
 ]

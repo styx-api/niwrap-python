@@ -14,7 +14,7 @@ CCALC_METADATA = Metadata(
 
 
 CcalcParameters = typing.TypedDict('CcalcParameters', {
-    "__STYXTYPE__": typing.Literal["ccalc"],
+    "@type": typing.Literal["afni.ccalc"],
     "format": typing.NotRequired[str | None],
     "expr": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ccalc": ccalc_cargs,
+        "afni.ccalc": ccalc_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def ccalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ccalc",
+        "@type": "afni.ccalc",
         "expr": expr,
     }
     if format_ is not None:
@@ -188,5 +188,8 @@ __all__ = [
     "CcalcOutputs",
     "CcalcParameters",
     "ccalc",
+    "ccalc_cargs",
+    "ccalc_execute",
+    "ccalc_outputs",
     "ccalc_params",
 ]

@@ -14,7 +14,7 @@ RESAMPLE_IMAGE_METADATA = Metadata(
 
 
 ResampleImageParameters = typing.TypedDict('ResampleImageParameters', {
-    "__STYXTYPE__": typing.Literal["ResampleImage"],
+    "@type": typing.Literal["ants.ResampleImage"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ResampleImage": resample_image_cargs,
+        "ants.ResampleImage": resample_image_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ResampleImage": resample_image_outputs,
+        "ants.ResampleImage": resample_image_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def resample_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ResampleImage",
+        "@type": "ants.ResampleImage",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -226,5 +226,8 @@ __all__ = [
     "ResampleImageOutputs",
     "ResampleImageParameters",
     "resample_image",
+    "resample_image_cargs",
+    "resample_image_execute",
+    "resample_image_outputs",
     "resample_image_params",
 ]

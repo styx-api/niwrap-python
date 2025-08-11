@@ -14,7 +14,7 @@ MRIS_APPLY_REG_METADATA = Metadata(
 
 
 MrisApplyRegParameters = typing.TypedDict('MrisApplyRegParameters', {
-    "__STYXTYPE__": typing.Literal["mris_apply_reg"],
+    "@type": typing.Literal["freesurfer.mris_apply_reg"],
     "src_input": InputPathType,
     "trg_output": str,
     "streg_pair": str,
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_apply_reg": mris_apply_reg_cargs,
+        "freesurfer.mris_apply_reg": mris_apply_reg_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_apply_reg": mris_apply_reg_outputs,
+        "freesurfer.mris_apply_reg": mris_apply_reg_outputs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def mris_apply_reg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_apply_reg",
+        "@type": "freesurfer.mris_apply_reg",
         "src_input": src_input,
         "trg_output": trg_output,
         "streg_pair": streg_pair,
@@ -425,5 +425,8 @@ __all__ = [
     "MrisApplyRegOutputs",
     "MrisApplyRegParameters",
     "mris_apply_reg",
+    "mris_apply_reg_cargs",
+    "mris_apply_reg_execute",
+    "mris_apply_reg_outputs",
     "mris_apply_reg_params",
 ]

@@ -14,7 +14,7 @@ NICAT_METADATA = Metadata(
 
 
 NicatParameters = typing.TypedDict('NicatParameters', {
-    "__STYXTYPE__": typing.Literal["nicat"],
+    "@type": typing.Literal["afni.nicat"],
     "stream_spec": str,
     "reopen": typing.NotRequired[str | None],
     "copy_stream": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "nicat": nicat_cargs,
+        "afni.nicat": nicat_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def nicat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nicat",
+        "@type": "afni.nicat",
         "stream_spec": stream_spec,
         "copy_stream": copy_stream,
         "read_only": read_only,
@@ -203,5 +203,8 @@ __all__ = [
     "NicatOutputs",
     "NicatParameters",
     "nicat",
+    "nicat_cargs",
+    "nicat_execute",
+    "nicat_outputs",
     "nicat_params",
 ]

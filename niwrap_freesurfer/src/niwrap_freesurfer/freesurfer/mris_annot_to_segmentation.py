@@ -14,7 +14,7 @@ MRIS_ANNOT_TO_SEGMENTATION_METADATA = Metadata(
 
 
 MrisAnnotToSegmentationParameters = typing.TypedDict('MrisAnnotToSegmentationParameters', {
-    "__STYXTYPE__": typing.Literal["mris_annot_to_segmentation"],
+    "@type": typing.Literal["freesurfer.mris_annot_to_segmentation"],
     "subject_name": str,
     "hemi": str,
     "surface": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_annot_to_segmentation": mris_annot_to_segmentation_cargs,
+        "freesurfer.mris_annot_to_segmentation": mris_annot_to_segmentation_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_annot_to_segmentation": mris_annot_to_segmentation_outputs,
+        "freesurfer.mris_annot_to_segmentation": mris_annot_to_segmentation_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mris_annot_to_segmentation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_annot_to_segmentation",
+        "@type": "freesurfer.mris_annot_to_segmentation",
         "subject_name": subject_name,
         "hemi": hemi,
         "surface": surface,
@@ -212,5 +212,8 @@ __all__ = [
     "MrisAnnotToSegmentationOutputs",
     "MrisAnnotToSegmentationParameters",
     "mris_annot_to_segmentation",
+    "mris_annot_to_segmentation_cargs",
+    "mris_annot_to_segmentation_execute",
+    "mris_annot_to_segmentation_outputs",
     "mris_annot_to_segmentation_params",
 ]

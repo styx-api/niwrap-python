@@ -14,20 +14,20 @@ METRIC_WEIGHTED_STATS_METADATA = Metadata(
 
 
 MetricWeightedStatsRoiParameters = typing.TypedDict('MetricWeightedStatsRoiParameters', {
-    "__STYXTYPE__": typing.Literal["roi"],
+    "@type": typing.Literal["workbench.metric-weighted-stats.roi"],
     "roi_metric": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 MetricWeightedStatsStdevParameters = typing.TypedDict('MetricWeightedStatsStdevParameters', {
-    "__STYXTYPE__": typing.Literal["stdev"],
+    "@type": typing.Literal["workbench.metric-weighted-stats.stdev"],
     "opt_sample": bool,
 })
 
 
 MetricWeightedStatsParameters = typing.TypedDict('MetricWeightedStatsParameters', {
-    "__STYXTYPE__": typing.Literal["metric-weighted-stats"],
+    "@type": typing.Literal["workbench.metric-weighted-stats"],
     "metric_in": InputPathType,
     "opt_area_surface_area_surface": typing.NotRequired[InputPathType | None],
     "opt_weight_metric_weight_metric": typing.NotRequired[InputPathType | None],
@@ -53,9 +53,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-weighted-stats": metric_weighted_stats_cargs,
-        "roi": metric_weighted_stats_roi_cargs,
-        "stdev": metric_weighted_stats_stdev_cargs,
+        "workbench.metric-weighted-stats": metric_weighted_stats_cargs,
+        "workbench.metric-weighted-stats.roi": metric_weighted_stats_roi_cargs,
+        "workbench.metric-weighted-stats.stdev": metric_weighted_stats_stdev_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def metric_weighted_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "roi",
+        "@type": "workbench.metric-weighted-stats.roi",
         "roi_metric": roi_metric,
         "opt_match_maps": opt_match_maps,
     }
@@ -129,7 +129,7 @@ def metric_weighted_stats_stdev_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "stdev",
+        "@type": "workbench.metric-weighted-stats.stdev",
         "opt_sample": opt_sample,
     }
     return params
@@ -197,7 +197,7 @@ def metric_weighted_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-weighted-stats",
+        "@type": "workbench.metric-weighted-stats",
         "metric_in": metric_in,
         "opt_mean": opt_mean,
         "opt_sum": opt_sum,
@@ -251,11 +251,11 @@ def metric_weighted_stats_cargs(
             params.get("opt_column_column")
         ])
     if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["__STYXTYPE__"])(params.get("roi"), execution))
+        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
     if params.get("opt_mean"):
         cargs.append("-mean")
     if params.get("stdev") is not None:
-        cargs.extend(dyn_cargs(params.get("stdev")["__STYXTYPE__"])(params.get("stdev"), execution))
+        cargs.extend(dyn_cargs(params.get("stdev")["@type"])(params.get("stdev"), execution))
     if params.get("opt_percentile_percent") is not None:
         cargs.extend([
             "-percentile",
@@ -402,7 +402,12 @@ __all__ = [
     "MetricWeightedStatsRoiParameters",
     "MetricWeightedStatsStdevParameters",
     "metric_weighted_stats",
+    "metric_weighted_stats_cargs",
+    "metric_weighted_stats_execute",
+    "metric_weighted_stats_outputs",
     "metric_weighted_stats_params",
+    "metric_weighted_stats_roi_cargs",
     "metric_weighted_stats_roi_params",
+    "metric_weighted_stats_stdev_cargs",
     "metric_weighted_stats_stdev_params",
 ]

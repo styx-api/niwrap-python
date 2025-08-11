@@ -14,7 +14,7 @@ MRI_TOPOLOGYCORRECTION_METADATA = Metadata(
 
 
 MriTopologycorrectionParameters = typing.TypedDict('MriTopologycorrectionParameters', {
-    "__STYXTYPE__": typing.Literal["mri_topologycorrection"],
+    "@type": typing.Literal["freesurfer.mri_topologycorrection"],
     "input_orig_file": InputPathType,
     "input_segmented_file": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_topologycorrection": mri_topologycorrection_cargs,
+        "freesurfer.mri_topologycorrection": mri_topologycorrection_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_topologycorrection": mri_topologycorrection_outputs,
+        "freesurfer.mri_topologycorrection": mri_topologycorrection_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_topologycorrection_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_topologycorrection",
+        "@type": "freesurfer.mri_topologycorrection",
         "input_orig_file": input_orig_file,
         "input_segmented_file": input_segmented_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MriTopologycorrectionOutputs",
     "MriTopologycorrectionParameters",
     "mri_topologycorrection",
+    "mri_topologycorrection_cargs",
+    "mri_topologycorrection_execute",
+    "mri_topologycorrection_outputs",
     "mri_topologycorrection_params",
 ]

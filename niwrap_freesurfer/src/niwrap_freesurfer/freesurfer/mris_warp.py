@@ -14,7 +14,7 @@ MRIS_WARP_METADATA = Metadata(
 
 
 MrisWarpParameters = typing.TypedDict('MrisWarpParameters', {
-    "__STYXTYPE__": typing.Literal["mris_warp"],
+    "@type": typing.Literal["freesurfer.mris_warp"],
     "deformvol": typing.NotRequired[str | None],
     "m3z": typing.NotRequired[str | None],
     "regfile": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_warp": mris_warp_cargs,
+        "freesurfer.mris_warp": mris_warp_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_warp": mris_warp_outputs,
+        "freesurfer.mris_warp": mris_warp_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def mris_warp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_warp",
+        "@type": "freesurfer.mris_warp",
         "abs": abs_,
         "help": help_,
         "version": version,
@@ -258,5 +258,8 @@ __all__ = [
     "MrisWarpOutputs",
     "MrisWarpParameters",
     "mris_warp",
+    "mris_warp_cargs",
+    "mris_warp_execute",
+    "mris_warp_outputs",
     "mris_warp_params",
 ]

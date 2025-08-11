@@ -14,7 +14,7 @@ MRIS_REFINE_SURFACES_METADATA = Metadata(
 
 
 MrisRefineSurfacesParameters = typing.TypedDict('MrisRefineSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_refine_surfaces"],
+    "@type": typing.Literal["freesurfer.mris_refine_surfaces"],
     "subject_name": str,
     "hemi": str,
     "hires_volume": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_refine_surfaces": mris_refine_surfaces_cargs,
+        "freesurfer.mris_refine_surfaces": mris_refine_surfaces_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_refine_surfaces": mris_refine_surfaces_outputs,
+        "freesurfer.mris_refine_surfaces": mris_refine_surfaces_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def mris_refine_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_refine_surfaces",
+        "@type": "freesurfer.mris_refine_surfaces",
         "subject_name": subject_name,
         "hemi": hemi,
         "hires_volume": hires_volume,
@@ -246,5 +246,8 @@ __all__ = [
     "MrisRefineSurfacesOutputs",
     "MrisRefineSurfacesParameters",
     "mris_refine_surfaces",
+    "mris_refine_surfaces_cargs",
+    "mris_refine_surfaces_execute",
+    "mris_refine_surfaces_outputs",
     "mris_refine_surfaces_params",
 ]

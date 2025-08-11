@@ -14,7 +14,7 @@ MRIS_THICKNESS_DIFF_METADATA = Metadata(
 
 
 MrisThicknessDiffParameters = typing.TypedDict('MrisThicknessDiffParameters', {
-    "__STYXTYPE__": typing.Literal["mris_thickness_diff"],
+    "@type": typing.Literal["freesurfer.mris_thickness_diff"],
     "src_type": typing.NotRequired[str | None],
     "trg_type": typing.NotRequired[str | None],
     "out_file": str,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_thickness_diff": mris_thickness_diff_cargs,
+        "freesurfer.mris_thickness_diff": mris_thickness_diff_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_thickness_diff": mris_thickness_diff_outputs,
+        "freesurfer.mris_thickness_diff": mris_thickness_diff_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def mris_thickness_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_thickness_diff",
+        "@type": "freesurfer.mris_thickness_diff",
         "out_file": out_file,
         "register": register,
         "invert": invert,
@@ -322,5 +322,8 @@ __all__ = [
     "MrisThicknessDiffOutputs",
     "MrisThicknessDiffParameters",
     "mris_thickness_diff",
+    "mris_thickness_diff_cargs",
+    "mris_thickness_diff_execute",
+    "mris_thickness_diff_outputs",
     "mris_thickness_diff_params",
 ]

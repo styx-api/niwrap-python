@@ -14,7 +14,7 @@ RUN_MRIS_PREPROC_METADATA = Metadata(
 
 
 RunMrisPreprocParameters = typing.TypedDict('RunMrisPreprocParameters', {
-    "__STYXTYPE__": typing.Literal["run_mris_preproc"],
+    "@type": typing.Literal["freesurfer.run_mris_preproc"],
     "qdec_table": InputPathType,
     "target_average": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_mris_preproc": run_mris_preproc_cargs,
+        "freesurfer.run_mris_preproc": run_mris_preproc_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def run_mris_preproc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_mris_preproc",
+        "@type": "freesurfer.run_mris_preproc",
         "qdec_table": qdec_table,
     }
     if target_average is not None:
@@ -180,5 +180,8 @@ __all__ = [
     "RunMrisPreprocOutputs",
     "RunMrisPreprocParameters",
     "run_mris_preproc",
+    "run_mris_preproc_cargs",
+    "run_mris_preproc_execute",
+    "run_mris_preproc_outputs",
     "run_mris_preproc_params",
 ]

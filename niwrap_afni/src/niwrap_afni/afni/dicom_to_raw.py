@@ -14,7 +14,7 @@ DICOM_TO_RAW_METADATA = Metadata(
 
 
 DicomToRawParameters = typing.TypedDict('DicomToRawParameters', {
-    "__STYXTYPE__": typing.Literal["dicom_to_raw"],
+    "@type": typing.Literal["afni.dicom_to_raw"],
     "input_dicom": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dicom_to_raw": dicom_to_raw_cargs,
+        "afni.dicom_to_raw": dicom_to_raw_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dicom_to_raw": dicom_to_raw_outputs,
+        "afni.dicom_to_raw": dicom_to_raw_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dicom_to_raw_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dicom_to_raw",
+        "@type": "afni.dicom_to_raw",
         "input_dicom": input_dicom,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "DicomToRawOutputs",
     "DicomToRawParameters",
     "dicom_to_raw",
+    "dicom_to_raw_cargs",
+    "dicom_to_raw_execute",
+    "dicom_to_raw_outputs",
     "dicom_to_raw_params",
 ]

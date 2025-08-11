@@ -14,7 +14,7 @@ ANATOMICAL_AVERAGE_METADATA = Metadata(
 
 
 AnatomicalAverageParameters = typing.TypedDict('AnatomicalAverageParameters', {
-    "__STYXTYPE__": typing.Literal["AnatomicalAverage"],
+    "@type": typing.Literal["fsl.AnatomicalAverage"],
     "output_basename": str,
     "input_images": list[InputPathType],
     "standard_image": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "AnatomicalAverage": anatomical_average_cargs,
+        "fsl.AnatomicalAverage": anatomical_average_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "AnatomicalAverage": anatomical_average_outputs,
+        "fsl.AnatomicalAverage": anatomical_average_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def anatomical_average_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "AnatomicalAverage",
+        "@type": "fsl.AnatomicalAverage",
         "output_basename": output_basename,
         "input_images": input_images,
         "no_crop_flag": no_crop_flag,
@@ -266,5 +266,8 @@ __all__ = [
     "AnatomicalAverageOutputs",
     "AnatomicalAverageParameters",
     "anatomical_average",
+    "anatomical_average_cargs",
+    "anatomical_average_execute",
+    "anatomical_average_outputs",
     "anatomical_average_params",
 ]

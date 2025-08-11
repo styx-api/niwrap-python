@@ -14,7 +14,7 @@ MRI_GCA_AMBIGUOUS_METADATA = Metadata(
 
 
 MriGcaAmbiguousParameters = typing.TypedDict('MriGcaAmbiguousParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gca_ambiguous"],
+    "@type": typing.Literal["freesurfer.mri_gca_ambiguous"],
     "gca_file": InputPathType,
     "output_volume": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gca_ambiguous": mri_gca_ambiguous_cargs,
+        "freesurfer.mri_gca_ambiguous": mri_gca_ambiguous_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_gca_ambiguous": mri_gca_ambiguous_outputs,
+        "freesurfer.mri_gca_ambiguous": mri_gca_ambiguous_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_gca_ambiguous_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gca_ambiguous",
+        "@type": "freesurfer.mri_gca_ambiguous",
         "gca_file": gca_file,
         "output_volume": output_volume,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "MriGcaAmbiguousOutputs",
     "MriGcaAmbiguousParameters",
     "mri_gca_ambiguous",
+    "mri_gca_ambiguous_cargs",
+    "mri_gca_ambiguous_execute",
+    "mri_gca_ambiguous_outputs",
     "mri_gca_ambiguous_params",
 ]

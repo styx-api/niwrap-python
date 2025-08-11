@@ -14,7 +14,7 @@ V_3D_ZREGRID_METADATA = Metadata(
 
 
 V3dZregridParameters = typing.TypedDict('V3dZregridParameters', {
-    "__STYXTYPE__": typing.Literal["3dZregrid"],
+    "@type": typing.Literal["afni.3dZregrid"],
     "z_thickness": typing.NotRequired[float | None],
     "slice_count": typing.NotRequired[float | None],
     "z_size": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dZregrid": v_3d_zregrid_cargs,
+        "afni.3dZregrid": v_3d_zregrid_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dZregrid": v_3d_zregrid_outputs,
+        "afni.3dZregrid": v_3d_zregrid_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def v_3d_zregrid_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dZregrid",
+        "@type": "afni.3dZregrid",
         "infile": infile,
         "verbose": verbose,
     }
@@ -238,5 +238,8 @@ __all__ = [
     "V3dZregridParameters",
     "V_3D_ZREGRID_METADATA",
     "v_3d_zregrid",
+    "v_3d_zregrid_cargs",
+    "v_3d_zregrid_execute",
+    "v_3d_zregrid_outputs",
     "v_3d_zregrid_params",
 ]

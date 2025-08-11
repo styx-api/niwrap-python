@@ -14,7 +14,7 @@ DICOM_RENAME_METADATA = Metadata(
 
 
 DicomRenameParameters = typing.TypedDict('DicomRenameParameters', {
-    "__STYXTYPE__": typing.Literal["dicom-rename"],
+    "@type": typing.Literal["freesurfer.dicom-rename"],
     "input_files": list[InputPathType],
     "output_base": str,
     "version": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dicom-rename": dicom_rename_cargs,
+        "freesurfer.dicom-rename": dicom_rename_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dicom-rename": dicom_rename_outputs,
+        "freesurfer.dicom-rename": dicom_rename_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dicom_rename_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dicom-rename",
+        "@type": "freesurfer.dicom-rename",
         "input_files": input_files,
         "output_base": output_base,
         "version": version,
@@ -206,5 +206,8 @@ __all__ = [
     "DicomRenameOutputs",
     "DicomRenameParameters",
     "dicom_rename",
+    "dicom_rename_cargs",
+    "dicom_rename_execute",
+    "dicom_rename_outputs",
     "dicom_rename_params",
 ]

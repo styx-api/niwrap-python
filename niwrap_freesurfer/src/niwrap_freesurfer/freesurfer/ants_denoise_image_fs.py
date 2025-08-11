@@ -14,7 +14,7 @@ ANTS_DENOISE_IMAGE_FS_METADATA = Metadata(
 
 
 AntsDenoiseImageFsParameters = typing.TypedDict('AntsDenoiseImageFsParameters', {
-    "__STYXTYPE__": typing.Literal["AntsDenoiseImageFs"],
+    "@type": typing.Literal["freesurfer.AntsDenoiseImageFs"],
     "input_image": InputPathType,
     "output_image": str,
     "rician_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "AntsDenoiseImageFs": ants_denoise_image_fs_cargs,
+        "freesurfer.AntsDenoiseImageFs": ants_denoise_image_fs_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "AntsDenoiseImageFs": ants_denoise_image_fs_outputs,
+        "freesurfer.AntsDenoiseImageFs": ants_denoise_image_fs_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def ants_denoise_image_fs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "AntsDenoiseImageFs",
+        "@type": "freesurfer.AntsDenoiseImageFs",
         "input_image": input_image,
         "output_image": output_image,
         "rician_flag": rician_flag,
@@ -197,5 +197,8 @@ __all__ = [
     "AntsDenoiseImageFsOutputs",
     "AntsDenoiseImageFsParameters",
     "ants_denoise_image_fs",
+    "ants_denoise_image_fs_cargs",
+    "ants_denoise_image_fs_execute",
+    "ants_denoise_image_fs_outputs",
     "ants_denoise_image_fs_params",
 ]

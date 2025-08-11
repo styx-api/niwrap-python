@@ -14,7 +14,7 @@ ROBUSTFOV_METADATA = Metadata(
 
 
 RobustfovParameters = typing.TypedDict('RobustfovParameters', {
-    "__STYXTYPE__": typing.Literal["robustfov"],
+    "@type": typing.Literal["fsl.robustfov"],
     "input_file": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "brain_size": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "robustfov": robustfov_cargs,
+        "fsl.robustfov": robustfov_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "robustfov": robustfov_outputs,
+        "fsl.robustfov": robustfov_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def robustfov_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "robustfov",
+        "@type": "fsl.robustfov",
         "input_file": input_file,
         "debug_flag": debug_flag,
         "verbose_flag": verbose_flag,
@@ -235,5 +235,8 @@ __all__ = [
     "RobustfovOutputs",
     "RobustfovParameters",
     "robustfov",
+    "robustfov_cargs",
+    "robustfov_execute",
+    "robustfov_outputs",
     "robustfov_params",
 ]

@@ -14,7 +14,7 @@ SWAP_SUBJECTWISE_METADATA = Metadata(
 
 
 SwapSubjectwiseParameters = typing.TypedDict('SwapSubjectwiseParameters', {
-    "__STYXTYPE__": typing.Literal["swap_subjectwise"],
+    "@type": typing.Literal["fsl.swap_subjectwise"],
     "dyads": InputPathType,
     "fmean": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "swap_subjectwise": swap_subjectwise_cargs,
+        "fsl.swap_subjectwise": swap_subjectwise_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def swap_subjectwise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "swap_subjectwise",
+        "@type": "fsl.swap_subjectwise",
         "dyads": dyads,
         "fmean": fmean,
         "averageonly_flag": averageonly_flag,
@@ -241,5 +241,8 @@ __all__ = [
     "SwapSubjectwiseOutputs",
     "SwapSubjectwiseParameters",
     "swap_subjectwise",
+    "swap_subjectwise_cargs",
+    "swap_subjectwise_execute",
+    "swap_subjectwise_outputs",
     "swap_subjectwise_params",
 ]

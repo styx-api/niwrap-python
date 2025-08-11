@@ -14,7 +14,7 @@ MRI_WATERSHED_METADATA = Metadata(
 
 
 MriWatershedParameters = typing.TypedDict('MriWatershedParameters', {
-    "__STYXTYPE__": typing.Literal["mri_watershed"],
+    "@type": typing.Literal["freesurfer.mri_watershed"],
     "input_volume": InputPathType,
     "output_volume": str,
     "weight": typing.NotRequired[float | None],
@@ -61,7 +61,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_watershed": mri_watershed_cargs,
+        "freesurfer.mri_watershed": mri_watershed_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_watershed": mri_watershed_outputs,
+        "freesurfer.mri_watershed": mri_watershed_outputs,
     }.get(t)
 
 
@@ -170,7 +170,7 @@ def mri_watershed_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_watershed",
+        "@type": "freesurfer.mri_watershed",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "no_wta_flag": no_wta_flag,
@@ -508,5 +508,8 @@ __all__ = [
     "MriWatershedOutputs",
     "MriWatershedParameters",
     "mri_watershed",
+    "mri_watershed_cargs",
+    "mri_watershed_execute",
+    "mri_watershed_outputs",
     "mri_watershed_params",
 ]

@@ -14,7 +14,7 @@ SURFACE_BASED_SMOOTHING_METADATA = Metadata(
 
 
 SurfaceBasedSmoothingParameters = typing.TypedDict('SurfaceBasedSmoothingParameters', {
-    "__STYXTYPE__": typing.Literal["SurfaceBasedSmoothing"],
+    "@type": typing.Literal["ants.SurfaceBasedSmoothing"],
     "image_to_smooth": InputPathType,
     "sigma": float,
     "surface_image": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfaceBasedSmoothing": surface_based_smoothing_cargs,
+        "ants.SurfaceBasedSmoothing": surface_based_smoothing_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfaceBasedSmoothing": surface_based_smoothing_outputs,
+        "ants.SurfaceBasedSmoothing": surface_based_smoothing_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def surface_based_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfaceBasedSmoothing",
+        "@type": "ants.SurfaceBasedSmoothing",
         "image_to_smooth": image_to_smooth,
         "sigma": sigma,
         "surface_image": surface_image,
@@ -210,5 +210,8 @@ __all__ = [
     "SurfaceBasedSmoothingOutputs",
     "SurfaceBasedSmoothingParameters",
     "surface_based_smoothing",
+    "surface_based_smoothing_cargs",
+    "surface_based_smoothing_execute",
+    "surface_based_smoothing_outputs",
     "surface_based_smoothing_params",
 ]

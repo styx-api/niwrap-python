@@ -14,7 +14,7 @@ MRI_EDIT_SEGMENTATION_METADATA = Metadata(
 
 
 MriEditSegmentationParameters = typing.TypedDict('MriEditSegmentationParameters', {
-    "__STYXTYPE__": typing.Literal["mri_edit_segmentation"],
+    "@type": typing.Literal["freesurfer.mri_edit_segmentation"],
     "input_segmentation": InputPathType,
     "t1_volume": InputPathType,
     "output_segmentation": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_edit_segmentation": mri_edit_segmentation_cargs,
+        "freesurfer.mri_edit_segmentation": mri_edit_segmentation_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_edit_segmentation": mri_edit_segmentation_outputs,
+        "freesurfer.mri_edit_segmentation": mri_edit_segmentation_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_edit_segmentation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_edit_segmentation",
+        "@type": "freesurfer.mri_edit_segmentation",
         "input_segmentation": input_segmentation,
         "t1_volume": t1_volume,
         "output_segmentation": output_segmentation,
@@ -188,5 +188,8 @@ __all__ = [
     "MriEditSegmentationOutputs",
     "MriEditSegmentationParameters",
     "mri_edit_segmentation",
+    "mri_edit_segmentation_cargs",
+    "mri_edit_segmentation_execute",
+    "mri_edit_segmentation_outputs",
     "mri_edit_segmentation_params",
 ]

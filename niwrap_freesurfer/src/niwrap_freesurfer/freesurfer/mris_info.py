@@ -14,7 +14,7 @@ MRIS_INFO_METADATA = Metadata(
 
 
 MrisInfoParameters = typing.TypedDict('MrisInfoParameters', {
-    "__STYXTYPE__": typing.Literal["mris_info"],
+    "@type": typing.Literal["freesurfer.mris_info"],
     "surfacefile": InputPathType,
     "outfile": typing.NotRequired[InputPathType | None],
     "subject_hemi_surfname": typing.NotRequired[str | None],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_info": mris_info_cargs,
+        "freesurfer.mris_info": mris_info_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_info": mris_info_outputs,
+        "freesurfer.mris_info": mris_info_outputs,
     }.get(t)
 
 
@@ -146,7 +146,7 @@ def mris_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_info",
+        "@type": "freesurfer.mris_info",
         "surfacefile": surfacefile,
         "talairach_xfm_flag": talairach_xfm_flag,
         "rescale_flag": rescale_flag,
@@ -439,5 +439,8 @@ __all__ = [
     "MrisInfoOutputs",
     "MrisInfoParameters",
     "mris_info",
+    "mris_info_cargs",
+    "mris_info_execute",
+    "mris_info_outputs",
     "mris_info_params",
 ]

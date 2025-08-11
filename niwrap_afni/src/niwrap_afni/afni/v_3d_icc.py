@@ -14,7 +14,7 @@ V_3D_ICC_METADATA = Metadata(
 
 
 V3dIccParameters = typing.TypedDict('V3dIccParameters', {
-    "__STYXTYPE__": typing.Literal["3dICC"],
+    "@type": typing.Literal["afni.3dICC"],
     "model": str,
     "prefix": str,
     "mask": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dICC": v_3d_icc_cargs,
+        "afni.3dICC": v_3d_icc_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dICC": v_3d_icc_outputs,
+        "afni.3dICC": v_3d_icc_outputs,
     }.get(t)
 
 
@@ -129,7 +129,7 @@ def v_3d_icc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dICC",
+        "@type": "afni.3dICC",
         "model": model,
         "prefix": prefix,
         "data_table": data_table,
@@ -359,5 +359,8 @@ __all__ = [
     "V3dIccParameters",
     "V_3D_ICC_METADATA",
     "v_3d_icc",
+    "v_3d_icc_cargs",
+    "v_3d_icc_execute",
+    "v_3d_icc_outputs",
     "v_3d_icc_params",
 ]

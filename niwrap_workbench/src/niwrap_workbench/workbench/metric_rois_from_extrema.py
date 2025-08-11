@@ -14,7 +14,7 @@ METRIC_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 MetricRoisFromExtremaParameters = typing.TypedDict('MetricRoisFromExtremaParameters', {
-    "__STYXTYPE__": typing.Literal["metric-rois-from-extrema"],
+    "@type": typing.Literal["workbench.metric-rois-from-extrema"],
     "surface": InputPathType,
     "metric": InputPathType,
     "limit": float,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-rois-from-extrema": metric_rois_from_extrema_cargs,
+        "workbench.metric-rois-from-extrema": metric_rois_from_extrema_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-rois-from-extrema": metric_rois_from_extrema_outputs,
+        "workbench.metric-rois-from-extrema": metric_rois_from_extrema_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def metric_rois_from_extrema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-rois-from-extrema",
+        "@type": "workbench.metric-rois-from-extrema",
         "surface": surface,
         "metric": metric,
         "limit": limit,
@@ -275,5 +275,8 @@ __all__ = [
     "MetricRoisFromExtremaOutputs",
     "MetricRoisFromExtremaParameters",
     "metric_rois_from_extrema",
+    "metric_rois_from_extrema_cargs",
+    "metric_rois_from_extrema_execute",
+    "metric_rois_from_extrema_outputs",
     "metric_rois_from_extrema_params",
 ]

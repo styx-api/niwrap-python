@@ -14,7 +14,7 @@ PARSE_FS_LT_LOG_PY_METADATA = Metadata(
 
 
 ParseFsLtLogPyParameters = typing.TypedDict('ParseFsLtLogPyParameters', {
-    "__STYXTYPE__": typing.Literal["parse_fs_lt_log.py"],
+    "@type": typing.Literal["afni.parse_fs_lt_log.py"],
     "logfile": InputPathType,
     "labels": list[str],
     "show_orig": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "parse_fs_lt_log.py": parse_fs_lt_log_py_cargs,
+        "afni.parse_fs_lt_log.py": parse_fs_lt_log_py_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def parse_fs_lt_log_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "parse_fs_lt_log.py",
+        "@type": "afni.parse_fs_lt_log.py",
         "logfile": logfile,
         "labels": labels,
         "show_orig": show_orig,
@@ -213,5 +213,8 @@ __all__ = [
     "ParseFsLtLogPyOutputs",
     "ParseFsLtLogPyParameters",
     "parse_fs_lt_log_py",
+    "parse_fs_lt_log_py_cargs",
+    "parse_fs_lt_log_py_execute",
+    "parse_fs_lt_log_py_outputs",
     "parse_fs_lt_log_py_params",
 ]

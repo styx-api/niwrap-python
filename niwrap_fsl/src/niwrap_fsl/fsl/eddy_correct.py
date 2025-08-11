@@ -14,7 +14,7 @@ EDDY_CORRECT_METADATA = Metadata(
 
 
 EddyCorrectParameters = typing.TypedDict('EddyCorrectParameters', {
-    "__STYXTYPE__": typing.Literal["eddy_correct"],
+    "@type": typing.Literal["fsl.eddy_correct"],
     "4d_input": InputPathType,
     "4d_output": str,
     "reference_no": int,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy_correct": eddy_correct_cargs,
+        "fsl.eddy_correct": eddy_correct_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy_correct": eddy_correct_outputs,
+        "fsl.eddy_correct": eddy_correct_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def eddy_correct_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy_correct",
+        "@type": "fsl.eddy_correct",
         "4d_input": v_4d_input,
         "4d_output": v_4d_output,
         "reference_no": reference_no,
@@ -197,5 +197,8 @@ __all__ = [
     "EddyCorrectOutputs",
     "EddyCorrectParameters",
     "eddy_correct",
+    "eddy_correct_cargs",
+    "eddy_correct_execute",
+    "eddy_correct_outputs",
     "eddy_correct_params",
 ]

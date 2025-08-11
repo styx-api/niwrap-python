@@ -14,7 +14,7 @@ MRIS_DEFORM_METADATA = Metadata(
 
 
 MrisDeformParameters = typing.TypedDict('MrisDeformParameters', {
-    "__STYXTYPE__": typing.Literal["mris_deform"],
+    "@type": typing.Literal["freesurfer.mris_deform"],
     "input_surface": InputPathType,
     "input_volume": InputPathType,
     "xform": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_deform": mris_deform_cargs,
+        "freesurfer.mris_deform": mris_deform_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_deform": mris_deform_outputs,
+        "freesurfer.mris_deform": mris_deform_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_deform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_deform",
+        "@type": "freesurfer.mris_deform",
         "input_surface": input_surface,
         "input_volume": input_volume,
         "xform": xform,
@@ -198,5 +198,8 @@ __all__ = [
     "MrisDeformOutputs",
     "MrisDeformParameters",
     "mris_deform",
+    "mris_deform_cargs",
+    "mris_deform_execute",
+    "mris_deform_outputs",
     "mris_deform_params",
 ]

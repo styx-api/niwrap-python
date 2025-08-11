@@ -14,20 +14,20 @@ MRCLUSTERSTATS_METADATA = Metadata(
 
 
 MrclusterstatsColumnParameters = typing.TypedDict('MrclusterstatsColumnParameters', {
-    "__STYXTYPE__": typing.Literal["column"],
+    "@type": typing.Literal["mrtrix.mrclusterstats.column"],
     "path": InputPathType,
 })
 
 
 MrclusterstatsConfigParameters = typing.TypedDict('MrclusterstatsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrclusterstats.config"],
     "key": str,
     "value": str,
 })
 
 
 MrclusterstatsParameters = typing.TypedDict('MrclusterstatsParameters', {
-    "__STYXTYPE__": typing.Literal["mrclusterstats"],
+    "@type": typing.Literal["mrtrix.mrclusterstats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],
@@ -76,9 +76,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrclusterstats": mrclusterstats_cargs,
-        "column": mrclusterstats_column_cargs,
-        "config": mrclusterstats_config_cargs,
+        "mrtrix.mrclusterstats": mrclusterstats_cargs,
+        "mrtrix.mrclusterstats.column": mrclusterstats_column_cargs,
+        "mrtrix.mrclusterstats.config": mrclusterstats_config_cargs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def mrclusterstats_column_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "column",
+        "@type": "mrtrix.mrclusterstats.column",
         "path": path,
     }
     return params
@@ -151,7 +151,7 @@ def mrclusterstats_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrclusterstats.config",
         "key": key,
         "value": value,
     }
@@ -298,7 +298,7 @@ def mrclusterstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrclusterstats",
+        "@type": "mrtrix.mrclusterstats",
         "notest": notest,
         "strong": strong,
         "nonstationarity": nonstationarity,
@@ -442,7 +442,7 @@ def mrclusterstats_cargs(
     if params.get("fonly"):
         cargs.append("-fonly")
     if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("column")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
     if params.get("threshold") is not None:
         cargs.extend([
             "-threshold",
@@ -464,7 +464,7 @@ def mrclusterstats_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -730,7 +730,12 @@ __all__ = [
     "MrclusterstatsOutputs",
     "MrclusterstatsParameters",
     "mrclusterstats",
+    "mrclusterstats_cargs",
+    "mrclusterstats_column_cargs",
     "mrclusterstats_column_params",
+    "mrclusterstats_config_cargs",
     "mrclusterstats_config_params",
+    "mrclusterstats_execute",
+    "mrclusterstats_outputs",
     "mrclusterstats_params",
 ]

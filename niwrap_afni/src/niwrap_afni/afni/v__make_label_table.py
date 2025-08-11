@@ -14,7 +14,7 @@ V__MAKE_LABEL_TABLE_METADATA = Metadata(
 
 
 VMakeLabelTableParameters = typing.TypedDict('VMakeLabelTableParameters', {
-    "__STYXTYPE__": typing.Literal["@MakeLabelTable"],
+    "@type": typing.Literal["afni.@MakeLabelTable"],
     "labeltable": str,
     "atlas_pointlist": typing.NotRequired[str | None],
     "lab_r": typing.NotRequired[list[str] | None],
@@ -65,7 +65,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@MakeLabelTable": v__make_label_table_cargs,
+        "afni.@MakeLabelTable": v__make_label_table_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@MakeLabelTable": v__make_label_table_outputs,
+        "afni.@MakeLabelTable": v__make_label_table_outputs,
     }.get(t)
 
 
@@ -186,7 +186,7 @@ def v__make_label_table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@MakeLabelTable",
+        "@type": "afni.@MakeLabelTable",
         "labeltable": labeltable,
         "centers": centers,
         "skip_novoxels": skip_novoxels,
@@ -596,5 +596,8 @@ __all__ = [
     "VMakeLabelTableParameters",
     "V__MAKE_LABEL_TABLE_METADATA",
     "v__make_label_table",
+    "v__make_label_table_cargs",
+    "v__make_label_table_execute",
+    "v__make_label_table_outputs",
     "v__make_label_table_params",
 ]

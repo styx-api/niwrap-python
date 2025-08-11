@@ -14,7 +14,7 @@ TALAIRACH_MGH_METADATA = Metadata(
 
 
 TalairachMghParameters = typing.TypedDict('TalairachMghParameters', {
-    "__STYXTYPE__": typing.Literal["talairach_mgh"],
+    "@type": typing.Literal["freesurfer.talairach_mgh"],
     "input_volume": InputPathType,
     "output_volume": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "talairach_mgh": talairach_mgh_cargs,
+        "freesurfer.talairach_mgh": talairach_mgh_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "talairach_mgh": talairach_mgh_outputs,
+        "freesurfer.talairach_mgh": talairach_mgh_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def talairach_mgh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "talairach_mgh",
+        "@type": "freesurfer.talairach_mgh",
         "input_volume": input_volume,
         "output_volume": output_volume,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "TalairachMghOutputs",
     "TalairachMghParameters",
     "talairach_mgh",
+    "talairach_mgh_cargs",
+    "talairach_mgh_execute",
+    "talairach_mgh_outputs",
     "talairach_mgh_params",
 ]

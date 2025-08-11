@@ -14,7 +14,7 @@ FSLVBM_3_PROC_METADATA = Metadata(
 
 
 Fslvbm3ProcParameters = typing.TypedDict('Fslvbm3ProcParameters', {
-    "__STYXTYPE__": typing.Literal["fslvbm_3_proc"],
+    "@type": typing.Literal["fsl.fslvbm_3_proc"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[str | None],
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslvbm_3_proc": fslvbm_3_proc_cargs,
+        "fsl.fslvbm_3_proc": fslvbm_3_proc_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslvbm_3_proc": fslvbm_3_proc_outputs,
+        "fsl.fslvbm_3_proc": fslvbm_3_proc_outputs,
     }.get(t)
 
 
@@ -166,7 +166,7 @@ def fslvbm_3_proc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslvbm_3_proc",
+        "@type": "fsl.fslvbm_3_proc",
         "coprocessor_class_strict": coprocessor_class_strict,
         "not_requeueable": not_requeueable,
         "keep_jobscript": keep_jobscript,
@@ -548,5 +548,8 @@ __all__ = [
     "Fslvbm3ProcOutputs",
     "Fslvbm3ProcParameters",
     "fslvbm_3_proc",
+    "fslvbm_3_proc_cargs",
+    "fslvbm_3_proc_execute",
+    "fslvbm_3_proc_outputs",
     "fslvbm_3_proc_params",
 ]

@@ -14,7 +14,7 @@ CCOPS_METADATA = Metadata(
 
 
 CcopsParameters = typing.TypedDict('CcopsParameters', {
-    "__STYXTYPE__": typing.Literal["ccops"],
+    "@type": typing.Literal["fsl.ccops"],
     "basename": str,
     "infile": typing.NotRequired[InputPathType | None],
     "tract_dir": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ccops": ccops_cargs,
+        "fsl.ccops": ccops_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ccops": ccops_outputs,
+        "fsl.ccops": ccops_outputs,
     }.get(t)
 
 
@@ -115,7 +115,7 @@ def ccops_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ccops",
+        "@type": "fsl.ccops",
         "basename": basename,
         "reorder_seedspace": reorder_seedspace,
         "reorder_tractspace": reorder_tractspace,
@@ -334,5 +334,8 @@ __all__ = [
     "CcopsOutputs",
     "CcopsParameters",
     "ccops",
+    "ccops_cargs",
+    "ccops_execute",
+    "ccops_outputs",
     "ccops_params",
 ]

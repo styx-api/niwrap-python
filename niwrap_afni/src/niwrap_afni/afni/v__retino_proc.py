@@ -14,7 +14,7 @@ V__RETINO_PROC_METADATA = Metadata(
 
 
 VRetinoProcParameters = typing.TypedDict('VRetinoProcParameters', {
-    "__STYXTYPE__": typing.Literal["@RetinoProc"],
+    "@type": typing.Literal["afni.@RetinoProc"],
     "ccw": typing.NotRequired[list[InputPathType] | None],
     "clw": typing.NotRequired[list[InputPathType] | None],
     "exp": typing.NotRequired[list[InputPathType] | None],
@@ -70,7 +70,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@RetinoProc": v__retino_proc_cargs,
+        "afni.@RetinoProc": v__retino_proc_cargs,
     }.get(t)
 
 
@@ -192,7 +192,7 @@ def v__retino_proc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@RetinoProc",
+        "@type": "afni.@RetinoProc",
         "phase": phase,
         "delay": delay,
         "tr": tr,
@@ -666,5 +666,8 @@ __all__ = [
     "VRetinoProcParameters",
     "V__RETINO_PROC_METADATA",
     "v__retino_proc",
+    "v__retino_proc_cargs",
+    "v__retino_proc_execute",
+    "v__retino_proc_outputs",
     "v__retino_proc_params",
 ]

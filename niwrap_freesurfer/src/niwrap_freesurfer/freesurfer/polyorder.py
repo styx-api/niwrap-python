@@ -14,7 +14,7 @@ POLYORDER_METADATA = Metadata(
 
 
 PolyorderParameters = typing.TypedDict('PolyorderParameters', {
-    "__STYXTYPE__": typing.Literal["polyorder"],
+    "@type": typing.Literal["freesurfer.polyorder"],
     "ntp": float,
     "tr": float,
     "cutoff": float,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "polyorder": polyorder_cargs,
+        "freesurfer.polyorder": polyorder_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def polyorder_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "polyorder",
+        "@type": "freesurfer.polyorder",
         "ntp": ntp,
         "tr": tr,
         "cutoff": cutoff,
@@ -195,5 +195,8 @@ __all__ = [
     "PolyorderOutputs",
     "PolyorderParameters",
     "polyorder",
+    "polyorder_cargs",
+    "polyorder_execute",
+    "polyorder_outputs",
     "polyorder_params",
 ]

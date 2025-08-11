@@ -14,7 +14,7 @@ FS_TEMP_FILE_METADATA = Metadata(
 
 
 FsTempFileParameters = typing.TypedDict('FsTempFileParameters', {
-    "__STYXTYPE__": typing.Literal["fs_temp_file"],
+    "@type": typing.Literal["freesurfer.fs_temp_file"],
     "base_dir": typing.NotRequired[str | None],
     "base_dir_alt": typing.NotRequired[str | None],
     "suffix": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_temp_file": fs_temp_file_cargs,
+        "freesurfer.fs_temp_file": fs_temp_file_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def fs_temp_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_temp_file",
+        "@type": "freesurfer.fs_temp_file",
         "scratch": scratch,
         "help": help_,
         "help_alt": help_alt,
@@ -243,5 +243,8 @@ __all__ = [
     "FsTempFileOutputs",
     "FsTempFileParameters",
     "fs_temp_file",
+    "fs_temp_file_cargs",
+    "fs_temp_file_execute",
+    "fs_temp_file_outputs",
     "fs_temp_file_params",
 ]

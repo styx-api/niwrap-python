@@ -14,7 +14,7 @@ FAST_METADATA = Metadata(
 
 
 FastParameters = typing.TypedDict('FastParameters', {
-    "__STYXTYPE__": typing.Literal["fast"],
+    "@type": typing.Literal["fsl.fast"],
     "number_classes": typing.NotRequired[int | None],
     "bias_iters": typing.NotRequired[int | None],
     "bias_lowpass": typing.NotRequired[float | None],
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fast": fast_cargs,
+        "fsl.fast": fast_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fast": fast_outputs,
+        "fsl.fast": fast_outputs,
     }.get(t)
 
 
@@ -150,7 +150,7 @@ def fast_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fast",
+        "@type": "fsl.fast",
         "segments": segments,
         "output_biasfield": output_biasfield,
         "output_biascorrected": output_biascorrected,
@@ -457,5 +457,8 @@ __all__ = [
     "FastOutputs",
     "FastParameters",
     "fast",
+    "fast_cargs",
+    "fast_execute",
+    "fast_outputs",
     "fast_params",
 ]

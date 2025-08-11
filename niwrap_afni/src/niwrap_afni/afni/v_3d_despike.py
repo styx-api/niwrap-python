@@ -14,7 +14,7 @@ V_3D_DESPIKE_METADATA = Metadata(
 
 
 V3dDespikeParameters = typing.TypedDict('V3dDespikeParameters', {
-    "__STYXTYPE__": typing.Literal["3dDespike"],
+    "@type": typing.Literal["afni.3dDespike"],
     "prefix": typing.NotRequired[str | None],
     "in_file": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDespike": v_3d_despike_cargs,
+        "afni.3dDespike": v_3d_despike_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDespike": v_3d_despike_outputs,
+        "afni.3dDespike": v_3d_despike_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def v_3d_despike_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDespike",
+        "@type": "afni.3dDespike",
         "in_file": in_file,
     }
     if prefix is not None:
@@ -187,5 +187,8 @@ __all__ = [
     "V3dDespikeParameters",
     "V_3D_DESPIKE_METADATA",
     "v_3d_despike",
+    "v_3d_despike_cargs",
+    "v_3d_despike_execute",
+    "v_3d_despike_outputs",
     "v_3d_despike_params",
 ]

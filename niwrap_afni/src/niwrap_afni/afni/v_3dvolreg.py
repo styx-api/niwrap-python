@@ -14,7 +14,7 @@ V_3DVOLREG_METADATA = Metadata(
 
 
 V3dvolregParameters = typing.TypedDict('V3dvolregParameters', {
-    "__STYXTYPE__": typing.Literal["3dvolreg"],
+    "@type": typing.Literal["afni.3dvolreg"],
     "copyorigin": bool,
     "twopass": bool,
     "Fourier": bool,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dvolreg": v_3dvolreg_cargs,
+        "afni.3dvolreg": v_3dvolreg_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dvolreg": v_3dvolreg_outputs,
+        "afni.3dvolreg": v_3dvolreg_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def v_3dvolreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dvolreg",
+        "@type": "afni.3dvolreg",
         "copyorigin": copyorigin,
         "twopass": twopass,
         "Fourier": fourier,
@@ -356,5 +356,8 @@ __all__ = [
     "V3dvolregParameters",
     "V_3DVOLREG_METADATA",
     "v_3dvolreg",
+    "v_3dvolreg_cargs",
+    "v_3dvolreg_execute",
+    "v_3dvolreg_outputs",
     "v_3dvolreg_params",
 ]

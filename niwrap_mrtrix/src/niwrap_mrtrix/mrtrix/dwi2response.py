@@ -14,7 +14,7 @@ DWI2RESPONSE_METADATA = Metadata(
 
 
 Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParameters', {
-    "__STYXTYPE__": typing.Literal["dhollander"],
+    "@type": typing.Literal["mrtrix.dwi2response.dhollander"],
     "input": InputPathType,
     "out_sfwm": str,
     "out_gm": str,
@@ -29,7 +29,7 @@ Dwi2responseDhollanderParameters = typing.TypedDict('Dwi2responseDhollanderParam
 
 
 Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
-    "__STYXTYPE__": typing.Literal["fa"],
+    "@type": typing.Literal["mrtrix.dwi2response.fa"],
     "input": InputPathType,
     "output": str,
     "erode": typing.NotRequired[int | None],
@@ -39,7 +39,7 @@ Dwi2responseFaParameters = typing.TypedDict('Dwi2responseFaParameters', {
 
 
 Dwi2responseManualParameters = typing.TypedDict('Dwi2responseManualParameters', {
-    "__STYXTYPE__": typing.Literal["manual"],
+    "@type": typing.Literal["mrtrix.dwi2response.manual"],
     "input": InputPathType,
     "in_voxels": InputPathType,
     "output": str,
@@ -48,7 +48,7 @@ Dwi2responseManualParameters = typing.TypedDict('Dwi2responseManualParameters', 
 
 
 Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters', {
-    "__STYXTYPE__": typing.Literal["msmt_5tt"],
+    "@type": typing.Literal["mrtrix.dwi2response.msmt_5tt"],
     "input": InputPathType,
     "in_5tt": InputPathType,
     "out_wm": str,
@@ -63,7 +63,7 @@ Dwi2responseMsmt5ttParameters = typing.TypedDict('Dwi2responseMsmt5ttParameters'
 
 
 Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
-    "__STYXTYPE__": typing.Literal["tax"],
+    "@type": typing.Literal["mrtrix.dwi2response.tax"],
     "input": InputPathType,
     "output": str,
     "peak_ratio": typing.NotRequired[float | None],
@@ -73,7 +73,7 @@ Dwi2responseTaxParameters = typing.TypedDict('Dwi2responseTaxParameters', {
 
 
 Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameters', {
-    "__STYXTYPE__": typing.Literal["tournier"],
+    "@type": typing.Literal["mrtrix.dwi2response.tournier"],
     "input": InputPathType,
     "output": str,
     "number": typing.NotRequired[int | None],
@@ -84,21 +84,21 @@ Dwi2responseTournierParameters = typing.TypedDict('Dwi2responseTournierParameter
 
 
 Dwi2responseFslgradParameters = typing.TypedDict('Dwi2responseFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dwi2response.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2responseConfigParameters = typing.TypedDict('Dwi2responseConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dwi2response.config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2responseParameters = typing.TypedDict('Dwi2responseParameters', {
-    "__STYXTYPE__": typing.Literal["dwi2response"],
+    "@type": typing.Literal["mrtrix.dwi2response"],
     "algorithm": typing.Union[Dwi2responseDhollanderParameters, Dwi2responseFaParameters, Dwi2responseManualParameters, Dwi2responseMsmt5ttParameters, Dwi2responseTaxParameters, Dwi2responseTournierParameters],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2responseFslgradParameters | None],
@@ -132,15 +132,15 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwi2response": dwi2response_cargs,
-        "dhollander": dwi2response_dhollander_cargs,
-        "fa": dwi2response_fa_cargs,
-        "manual": dwi2response_manual_cargs,
-        "msmt_5tt": dwi2response_msmt_5tt_cargs,
-        "tax": dwi2response_tax_cargs,
-        "tournier": dwi2response_tournier_cargs,
-        "fslgrad": dwi2response_fslgrad_cargs,
-        "config": dwi2response_config_cargs,
+        "mrtrix.dwi2response": dwi2response_cargs,
+        "mrtrix.dwi2response.dhollander": dwi2response_dhollander_cargs,
+        "mrtrix.dwi2response.fa": dwi2response_fa_cargs,
+        "mrtrix.dwi2response.manual": dwi2response_manual_cargs,
+        "mrtrix.dwi2response.msmt_5tt": dwi2response_msmt_5tt_cargs,
+        "mrtrix.dwi2response.tax": dwi2response_tax_cargs,
+        "mrtrix.dwi2response.tournier": dwi2response_tournier_cargs,
+        "mrtrix.dwi2response.fslgrad": dwi2response_fslgrad_cargs,
+        "mrtrix.dwi2response.config": dwi2response_config_cargs,
     }.get(t)
 
 
@@ -156,13 +156,13 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwi2response": dwi2response_outputs,
-        "dhollander": dwi2response_dhollander_outputs,
-        "fa": dwi2response_fa_outputs,
-        "manual": dwi2response_manual_outputs,
-        "msmt_5tt": dwi2response_msmt_5tt_outputs,
-        "tax": dwi2response_tax_outputs,
-        "tournier": dwi2response_tournier_outputs,
+        "mrtrix.dwi2response": dwi2response_outputs,
+        "mrtrix.dwi2response.dhollander": dwi2response_dhollander_outputs,
+        "mrtrix.dwi2response.fa": dwi2response_fa_outputs,
+        "mrtrix.dwi2response.manual": dwi2response_manual_outputs,
+        "mrtrix.dwi2response.msmt_5tt": dwi2response_msmt_5tt_outputs,
+        "mrtrix.dwi2response.tax": dwi2response_tax_outputs,
+        "mrtrix.dwi2response.tournier": dwi2response_tournier_outputs,
     }.get(t)
 
 
@@ -216,7 +216,7 @@ def dwi2response_dhollander_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dhollander",
+        "@type": "mrtrix.dwi2response.dhollander",
         "input": input_,
         "out_sfwm": out_sfwm,
         "out_gm": out_gm,
@@ -343,7 +343,7 @@ def dwi2response_fa_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fa",
+        "@type": "mrtrix.dwi2response.fa",
         "input": input_,
         "output": output,
     }
@@ -440,7 +440,7 @@ def dwi2response_manual_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "manual",
+        "@type": "mrtrix.dwi2response.manual",
         "input": input_,
         "in_voxels": in_voxels,
         "output": output,
@@ -546,7 +546,7 @@ def dwi2response_msmt_5tt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "msmt_5tt",
+        "@type": "mrtrix.dwi2response.msmt_5tt",
         "input": input_,
         "in_5tt": in_5tt,
         "out_wm": out_wm,
@@ -667,7 +667,7 @@ def dwi2response_tax_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tax",
+        "@type": "mrtrix.dwi2response.tax",
         "input": input_,
         "output": output,
     }
@@ -770,7 +770,7 @@ def dwi2response_tournier_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tournier",
+        "@type": "mrtrix.dwi2response.tournier",
         "input": input_,
         "output": output,
     }
@@ -865,7 +865,7 @@ def dwi2response_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dwi2response.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -906,7 +906,7 @@ def dwi2response_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dwi2response.config",
         "key": key,
         "value": value,
     }
@@ -1006,7 +1006,7 @@ def dwi2response_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwi2response",
+        "@type": "mrtrix.dwi2response",
         "algorithm": algorithm,
         "nocleanup": nocleanup,
         "info": info,
@@ -1054,14 +1054,14 @@ def dwi2response_cargs(
     """
     cargs = []
     cargs.append("dwi2response")
-    cargs.extend(dyn_cargs(params.get("algorithm")["__STYXTYPE__"])(params.get("algorithm"), execution))
+    cargs.extend(dyn_cargs(params.get("algorithm")["@type"])(params.get("algorithm"), execution))
     if params.get("grad") is not None:
         cargs.extend([
             "-grad",
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("mask") is not None:
         cargs.extend([
             "-mask",
@@ -1108,7 +1108,7 @@ def dwi2response_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -1131,7 +1131,7 @@ def dwi2response_outputs(
     """
     ret = Dwi2responseOutputs(
         root=execution.output_file("."),
-        algorithm=dyn_outputs(params.get("algorithm")["__STYXTYPE__"])(params.get("algorithm"), execution),
+        algorithm=dyn_outputs(params.get("algorithm")["@type"])(params.get("algorithm"), execution),
     )
     return ret
 
@@ -1283,13 +1283,30 @@ __all__ = [
     "Dwi2responseTournierOutputs",
     "Dwi2responseTournierParameters",
     "dwi2response",
+    "dwi2response_cargs",
+    "dwi2response_config_cargs",
     "dwi2response_config_params",
+    "dwi2response_dhollander_cargs",
+    "dwi2response_dhollander_outputs",
     "dwi2response_dhollander_params",
+    "dwi2response_execute",
+    "dwi2response_fa_cargs",
+    "dwi2response_fa_outputs",
     "dwi2response_fa_params",
+    "dwi2response_fslgrad_cargs",
     "dwi2response_fslgrad_params",
+    "dwi2response_manual_cargs",
+    "dwi2response_manual_outputs",
     "dwi2response_manual_params",
+    "dwi2response_msmt_5tt_cargs",
+    "dwi2response_msmt_5tt_outputs",
     "dwi2response_msmt_5tt_params",
+    "dwi2response_outputs",
     "dwi2response_params",
+    "dwi2response_tax_cargs",
+    "dwi2response_tax_outputs",
     "dwi2response_tax_params",
+    "dwi2response_tournier_cargs",
+    "dwi2response_tournier_outputs",
     "dwi2response_tournier_params",
 ]

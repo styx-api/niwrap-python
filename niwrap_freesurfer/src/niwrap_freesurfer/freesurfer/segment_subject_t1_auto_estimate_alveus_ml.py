@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA = Metadata(
 
 
 SegmentSubjectT1AutoEstimateAlveusMlParameters = typing.TypedDict('SegmentSubjectT1AutoEstimateAlveusMlParameters', {
-    "__STYXTYPE__": typing.Literal["segmentSubjectT1_autoEstimateAlveusML"],
+    "@type": typing.Literal["freesurfer.segmentSubjectT1_autoEstimateAlveusML"],
     "t1_file": InputPathType,
     "output_folder": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segmentSubjectT1_autoEstimateAlveusML": segment_subject_t1_auto_estimate_alveus_ml_cargs,
+        "freesurfer.segmentSubjectT1_autoEstimateAlveusML": segment_subject_t1_auto_estimate_alveus_ml_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segmentSubjectT1_autoEstimateAlveusML": segment_subject_t1_auto_estimate_alveus_ml_outputs,
+        "freesurfer.segmentSubjectT1_autoEstimateAlveusML": segment_subject_t1_auto_estimate_alveus_ml_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segmentSubjectT1_autoEstimateAlveusML",
+        "@type": "freesurfer.segmentSubjectT1_autoEstimateAlveusML",
         "t1_file": t1_file,
         "output_folder": output_folder,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "SegmentSubjectT1AutoEstimateAlveusMlOutputs",
     "SegmentSubjectT1AutoEstimateAlveusMlParameters",
     "segment_subject_t1_auto_estimate_alveus_ml",
+    "segment_subject_t1_auto_estimate_alveus_ml_cargs",
+    "segment_subject_t1_auto_estimate_alveus_ml_execute",
+    "segment_subject_t1_auto_estimate_alveus_ml_outputs",
     "segment_subject_t1_auto_estimate_alveus_ml_params",
 ]

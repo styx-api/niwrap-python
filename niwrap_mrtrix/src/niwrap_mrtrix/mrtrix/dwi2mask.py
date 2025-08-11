@@ -14,21 +14,21 @@ DWI2MASK_METADATA = Metadata(
 
 
 Dwi2maskFslgradParameters = typing.TypedDict('Dwi2maskFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dwi2mask.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2maskConfigParameters = typing.TypedDict('Dwi2maskConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dwi2mask.config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2maskParameters = typing.TypedDict('Dwi2maskParameters', {
-    "__STYXTYPE__": typing.Literal["dwi2mask"],
+    "@type": typing.Literal["mrtrix.dwi2mask"],
     "clean_scale": typing.NotRequired[int | None],
     "grad": typing.NotRequired[InputPathType | None],
     "fslgrad": typing.NotRequired[Dwi2maskFslgradParameters | None],
@@ -57,9 +57,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwi2mask": dwi2mask_cargs,
-        "fslgrad": dwi2mask_fslgrad_cargs,
-        "config": dwi2mask_config_cargs,
+        "mrtrix.dwi2mask": dwi2mask_cargs,
+        "mrtrix.dwi2mask.fslgrad": dwi2mask_fslgrad_cargs,
+        "mrtrix.dwi2mask.config": dwi2mask_config_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwi2mask": dwi2mask_outputs,
+        "mrtrix.dwi2mask": dwi2mask_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def dwi2mask_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dwi2mask.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -140,7 +140,7 @@ def dwi2mask_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dwi2mask.config",
         "key": key,
         "value": value,
     }
@@ -228,7 +228,7 @@ def dwi2mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwi2mask",
+        "@type": "mrtrix.dwi2mask",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -277,7 +277,7 @@ def dwi2mask_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -292,7 +292,7 @@ def dwi2mask_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -457,7 +457,12 @@ __all__ = [
     "Dwi2maskOutputs",
     "Dwi2maskParameters",
     "dwi2mask",
+    "dwi2mask_cargs",
+    "dwi2mask_config_cargs",
     "dwi2mask_config_params",
+    "dwi2mask_execute",
+    "dwi2mask_fslgrad_cargs",
     "dwi2mask_fslgrad_params",
+    "dwi2mask_outputs",
     "dwi2mask_params",
 ]

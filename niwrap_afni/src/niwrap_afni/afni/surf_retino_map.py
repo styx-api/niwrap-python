@@ -14,7 +14,7 @@ SURF_RETINO_MAP_METADATA = Metadata(
 
 
 SurfRetinoMapParameters = typing.TypedDict('SurfRetinoMapParameters', {
-    "__STYXTYPE__": typing.Literal["SurfRetinoMap"],
+    "@type": typing.Literal["afni.SurfRetinoMap"],
     "surface": str,
     "polar": str,
     "eccentricity": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfRetinoMap": surf_retino_map_cargs,
+        "afni.SurfRetinoMap": surf_retino_map_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfRetinoMap": surf_retino_map_outputs,
+        "afni.SurfRetinoMap": surf_retino_map_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def surf_retino_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfRetinoMap",
+        "@type": "afni.SurfRetinoMap",
         "surface": surface,
         "polar": polar,
         "eccentricity": eccentricity,
@@ -221,5 +221,8 @@ __all__ = [
     "SurfRetinoMapOutputs",
     "SurfRetinoMapParameters",
     "surf_retino_map",
+    "surf_retino_map_cargs",
+    "surf_retino_map_execute",
+    "surf_retino_map_outputs",
     "surf_retino_map_params",
 ]

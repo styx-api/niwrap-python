@@ -14,7 +14,7 @@ FEAT_METADATA = Metadata(
 
 
 FeatParameters = typing.TypedDict('FeatParameters', {
-    "__STYXTYPE__": typing.Literal["feat"],
+    "@type": typing.Literal["fsl.feat"],
     "design_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "feat": feat_cargs,
+        "fsl.feat": feat_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "feat": feat_outputs,
+        "fsl.feat": feat_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def feat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "feat",
+        "@type": "fsl.feat",
         "design_file": design_file,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "FeatOutputs",
     "FeatParameters",
     "feat",
+    "feat_cargs",
+    "feat_execute",
+    "feat_outputs",
     "feat_params",
 ]

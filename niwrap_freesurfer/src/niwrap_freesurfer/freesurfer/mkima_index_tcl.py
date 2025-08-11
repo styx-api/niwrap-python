@@ -14,7 +14,7 @@ MKIMA_INDEX_TCL_METADATA = Metadata(
 
 
 MkimaIndexTclParameters = typing.TypedDict('MkimaIndexTclParameters', {
-    "__STYXTYPE__": typing.Literal["mkima_index.tcl"],
+    "@type": typing.Literal["freesurfer.mkima_index.tcl"],
     "input_file": InputPathType,
     "output_flag": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mkima_index.tcl": mkima_index_tcl_cargs,
+        "freesurfer.mkima_index.tcl": mkima_index_tcl_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mkima_index.tcl": mkima_index_tcl_outputs,
+        "freesurfer.mkima_index.tcl": mkima_index_tcl_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mkima_index_tcl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mkima_index.tcl",
+        "@type": "freesurfer.mkima_index.tcl",
         "input_file": input_file,
         "output_flag": output_flag,
     }
@@ -181,5 +181,8 @@ __all__ = [
     "MkimaIndexTclOutputs",
     "MkimaIndexTclParameters",
     "mkima_index_tcl",
+    "mkima_index_tcl_cargs",
+    "mkima_index_tcl_execute",
+    "mkima_index_tcl_outputs",
     "mkima_index_tcl_params",
 ]

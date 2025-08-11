@@ -14,7 +14,7 @@ MRI_INFO_METADATA = Metadata(
 
 
 MriInfoParameters = typing.TypedDict('MriInfoParameters', {
-    "__STYXTYPE__": typing.Literal["mri_info"],
+    "@type": typing.Literal["freesurfer.mri_info"],
     "input1": InputPathType,
     "input2": typing.NotRequired[InputPathType | None],
     "conformed": bool,
@@ -82,7 +82,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_info": mri_info_cargs,
+        "freesurfer.mri_info": mri_info_cargs,
     }.get(t)
 
 
@@ -224,7 +224,7 @@ def mri_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_info",
+        "@type": "freesurfer.mri_info",
         "input1": input1,
         "conformed": conformed,
         "conformed_to_min": conformed_to_min,
@@ -642,5 +642,8 @@ __all__ = [
     "MriInfoOutputs",
     "MriInfoParameters",
     "mri_info",
+    "mri_info_cargs",
+    "mri_info_execute",
+    "mri_info_outputs",
     "mri_info_params",
 ]

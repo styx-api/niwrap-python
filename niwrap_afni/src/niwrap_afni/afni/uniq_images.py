@@ -14,7 +14,7 @@ UNIQ_IMAGES_METADATA = Metadata(
 
 
 UniqImagesParameters = typing.TypedDict('UniqImagesParameters', {
-    "__STYXTYPE__": typing.Literal["uniq_images"],
+    "@type": typing.Literal["afni.uniq_images"],
     "input_files": list[InputPathType],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "uniq_images": uniq_images_cargs,
+        "afni.uniq_images": uniq_images_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "uniq_images": uniq_images_outputs,
+        "afni.uniq_images": uniq_images_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def uniq_images_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "uniq_images",
+        "@type": "afni.uniq_images",
         "input_files": input_files,
     }
     return params
@@ -176,5 +176,8 @@ __all__ = [
     "UniqImagesOutputs",
     "UniqImagesParameters",
     "uniq_images",
+    "uniq_images_cargs",
+    "uniq_images_execute",
+    "uniq_images_outputs",
     "uniq_images_params",
 ]

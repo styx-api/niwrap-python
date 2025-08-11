@@ -14,7 +14,7 @@ V_3D_MEDIAN_FILTER_METADATA = Metadata(
 
 
 V3dMedianFilterParameters = typing.TypedDict('V3dMedianFilterParameters', {
-    "__STYXTYPE__": typing.Literal["3dMedianFilter"],
+    "@type": typing.Literal["afni.3dMedianFilter"],
     "irad": typing.NotRequired[float | None],
     "iter": typing.NotRequired[float | None],
     "verbose": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMedianFilter": v_3d_median_filter_cargs,
+        "afni.3dMedianFilter": v_3d_median_filter_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMedianFilter": v_3d_median_filter_outputs,
+        "afni.3dMedianFilter": v_3d_median_filter_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_3d_median_filter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMedianFilter",
+        "@type": "afni.3dMedianFilter",
         "verbose": verbose,
         "automask": automask,
         "dataset": dataset,
@@ -234,5 +234,8 @@ __all__ = [
     "V3dMedianFilterParameters",
     "V_3D_MEDIAN_FILTER_METADATA",
     "v_3d_median_filter",
+    "v_3d_median_filter_cargs",
+    "v_3d_median_filter_execute",
+    "v_3d_median_filter_outputs",
     "v_3d_median_filter_params",
 ]

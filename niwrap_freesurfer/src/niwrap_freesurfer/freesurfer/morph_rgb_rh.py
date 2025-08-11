@@ -14,7 +14,7 @@ MORPH_RGB_RH_METADATA = Metadata(
 
 
 MorphRgbRhParameters = typing.TypedDict('MorphRgbRhParameters', {
-    "__STYXTYPE__": typing.Literal["morph_rgb-rh"],
+    "@type": typing.Literal["freesurfer.morph_rgb-rh"],
     "subject_id": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "morph_rgb-rh": morph_rgb_rh_cargs,
+        "freesurfer.morph_rgb-rh": morph_rgb_rh_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def morph_rgb_rh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "morph_rgb-rh",
+        "@type": "freesurfer.morph_rgb-rh",
         "subject_id": subject_id,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "MorphRgbRhOutputs",
     "MorphRgbRhParameters",
     "morph_rgb_rh",
+    "morph_rgb_rh_cargs",
+    "morph_rgb_rh_execute",
+    "morph_rgb_rh_outputs",
     "morph_rgb_rh_params",
 ]

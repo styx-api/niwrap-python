@@ -14,7 +14,7 @@ DMRI_GROUP_BY_ENDPOINTS_METADATA = Metadata(
 
 
 DmriGroupByEndpointsParameters = typing.TypedDict('DmriGroupByEndpointsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_groupByEndpoints"],
+    "@type": typing.Literal["freesurfer.dmri_groupByEndpoints"],
     "streamline_file": InputPathType,
     "image_file": InputPathType,
     "output_directory": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_groupByEndpoints": dmri_group_by_endpoints_cargs,
+        "freesurfer.dmri_groupByEndpoints": dmri_group_by_endpoints_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dmri_group_by_endpoints_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_groupByEndpoints",
+        "@type": "freesurfer.dmri_groupByEndpoints",
         "streamline_file": streamline_file,
         "image_file": image_file,
         "output_directory": output_directory,
@@ -193,5 +193,8 @@ __all__ = [
     "DmriGroupByEndpointsOutputs",
     "DmriGroupByEndpointsParameters",
     "dmri_group_by_endpoints",
+    "dmri_group_by_endpoints_cargs",
+    "dmri_group_by_endpoints_execute",
+    "dmri_group_by_endpoints_outputs",
     "dmri_group_by_endpoints_params",
 ]

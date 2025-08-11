@@ -14,7 +14,7 @@ V_1DSVD_METADATA = Metadata(
 
 
 V1dsvdParameters = typing.TypedDict('V1dsvdParameters', {
-    "__STYXTYPE__": typing.Literal["1dsvd"],
+    "@type": typing.Literal["afni.1dsvd"],
     "one": bool,
     "vmean": bool,
     "vnorm": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dsvd": v_1dsvd_cargs,
+        "afni.1dsvd": v_1dsvd_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dsvd": v_1dsvd_outputs,
+        "afni.1dsvd": v_1dsvd_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v_1dsvd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dsvd",
+        "@type": "afni.1dsvd",
         "one": one,
         "vmean": vmean,
         "vnorm": vnorm,
@@ -268,5 +268,8 @@ __all__ = [
     "V1dsvdParameters",
     "V_1DSVD_METADATA",
     "v_1dsvd",
+    "v_1dsvd_cargs",
+    "v_1dsvd_execute",
+    "v_1dsvd_outputs",
     "v_1dsvd_params",
 ]

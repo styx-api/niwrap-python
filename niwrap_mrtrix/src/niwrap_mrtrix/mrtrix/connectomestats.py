@@ -14,20 +14,20 @@ CONNECTOMESTATS_METADATA = Metadata(
 
 
 ConnectomestatsColumnParameters = typing.TypedDict('ConnectomestatsColumnParameters', {
-    "__STYXTYPE__": typing.Literal["column"],
+    "@type": typing.Literal["mrtrix.connectomestats.column"],
     "path": InputPathType,
 })
 
 
 ConnectomestatsConfigParameters = typing.TypedDict('ConnectomestatsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.connectomestats.config"],
     "key": str,
     "value": str,
 })
 
 
 ConnectomestatsParameters = typing.TypedDict('ConnectomestatsParameters', {
-    "__STYXTYPE__": typing.Literal["connectomestats"],
+    "@type": typing.Literal["mrtrix.connectomestats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],
@@ -75,9 +75,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "connectomestats": connectomestats_cargs,
-        "column": connectomestats_column_cargs,
-        "config": connectomestats_config_cargs,
+        "mrtrix.connectomestats": connectomestats_cargs,
+        "mrtrix.connectomestats.column": connectomestats_column_cargs,
+        "mrtrix.connectomestats.config": connectomestats_config_cargs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def connectomestats_column_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "column",
+        "@type": "mrtrix.connectomestats.column",
         "path": path,
     }
     return params
@@ -150,7 +150,7 @@ def connectomestats_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.connectomestats.config",
         "key": key,
         "value": value,
     }
@@ -294,7 +294,7 @@ def connectomestats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "connectomestats",
+        "@type": "mrtrix.connectomestats",
         "notest": notest,
         "strong": strong,
         "nonstationarity": nonstationarity,
@@ -437,7 +437,7 @@ def connectomestats_cargs(
     if params.get("fonly"):
         cargs.append("-fonly")
     if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("column")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
     if params.get("threshold") is not None:
         cargs.extend([
             "-threshold",
@@ -457,7 +457,7 @@ def connectomestats_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -761,7 +761,12 @@ __all__ = [
     "ConnectomestatsOutputs",
     "ConnectomestatsParameters",
     "connectomestats",
+    "connectomestats_cargs",
+    "connectomestats_column_cargs",
     "connectomestats_column_params",
+    "connectomestats_config_cargs",
     "connectomestats_config_params",
+    "connectomestats_execute",
+    "connectomestats_outputs",
     "connectomestats_params",
 ]

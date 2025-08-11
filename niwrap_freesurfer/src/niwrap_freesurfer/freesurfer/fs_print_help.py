@@ -14,7 +14,7 @@ FS_PRINT_HELP_METADATA = Metadata(
 
 
 FsPrintHelpParameters = typing.TypedDict('FsPrintHelpParameters', {
-    "__STYXTYPE__": typing.Literal["fsPrintHelp"],
+    "@type": typing.Literal["freesurfer.fsPrintHelp"],
     "arguments": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsPrintHelp": fs_print_help_cargs,
+        "freesurfer.fsPrintHelp": fs_print_help_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def fs_print_help_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsPrintHelp",
+        "@type": "freesurfer.fsPrintHelp",
     }
     if arguments is not None:
         params["arguments"] = arguments
@@ -172,5 +172,8 @@ __all__ = [
     "FsPrintHelpOutputs",
     "FsPrintHelpParameters",
     "fs_print_help",
+    "fs_print_help_cargs",
+    "fs_print_help_execute",
+    "fs_print_help_outputs",
     "fs_print_help_params",
 ]

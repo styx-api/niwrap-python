@@ -14,7 +14,7 @@ WM_ANAT_SNR_METADATA = Metadata(
 
 
 WmAnatSnrParameters = typing.TypedDict('WmAnatSnrParameters', {
-    "__STYXTYPE__": typing.Literal["wm-anat-snr"],
+    "@type": typing.Literal["freesurfer.wm-anat-snr"],
     "subject": str,
     "output_file": str,
     "force": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "wm-anat-snr": wm_anat_snr_cargs,
+        "freesurfer.wm-anat-snr": wm_anat_snr_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "wm-anat-snr": wm_anat_snr_outputs,
+        "freesurfer.wm-anat-snr": wm_anat_snr_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def wm_anat_snr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "wm-anat-snr",
+        "@type": "freesurfer.wm-anat-snr",
         "subject": subject,
         "output_file": output_file,
         "force": force,
@@ -241,5 +241,8 @@ __all__ = [
     "WmAnatSnrOutputs",
     "WmAnatSnrParameters",
     "wm_anat_snr",
+    "wm_anat_snr_cargs",
+    "wm_anat_snr_execute",
+    "wm_anat_snr_outputs",
     "wm_anat_snr_params",
 ]

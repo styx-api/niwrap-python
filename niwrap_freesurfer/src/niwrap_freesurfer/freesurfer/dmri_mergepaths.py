@@ -14,7 +14,7 @@ DMRI_MERGEPATHS_METADATA = Metadata(
 
 
 DmriMergepathsParameters = typing.TypedDict('DmriMergepathsParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_mergepaths"],
+    "@type": typing.Literal["freesurfer.dmri_mergepaths"],
     "input_volumes": list[InputPathType],
     "input_directory": typing.NotRequired[str | None],
     "output_volume": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_mergepaths": dmri_mergepaths_cargs,
+        "freesurfer.dmri_mergepaths": dmri_mergepaths_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def dmri_mergepaths_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_mergepaths",
+        "@type": "freesurfer.dmri_mergepaths",
         "input_volumes": input_volumes,
         "output_volume": output_volume,
         "color_table": color_table,
@@ -234,5 +234,8 @@ __all__ = [
     "DmriMergepathsOutputs",
     "DmriMergepathsParameters",
     "dmri_mergepaths",
+    "dmri_mergepaths_cargs",
+    "dmri_mergepaths_execute",
+    "dmri_mergepaths_outputs",
     "dmri_mergepaths_params",
 ]

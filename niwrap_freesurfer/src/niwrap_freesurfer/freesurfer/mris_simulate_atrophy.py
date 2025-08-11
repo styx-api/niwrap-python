@@ -14,7 +14,7 @@ MRIS_SIMULATE_ATROPHY_METADATA = Metadata(
 
 
 MrisSimulateAtrophyParameters = typing.TypedDict('MrisSimulateAtrophyParameters', {
-    "__STYXTYPE__": typing.Literal["mris_simulate_atrophy"],
+    "@type": typing.Literal["freesurfer.mris_simulate_atrophy"],
     "subject": str,
     "hemi": str,
     "label": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_simulate_atrophy": mris_simulate_atrophy_cargs,
+        "freesurfer.mris_simulate_atrophy": mris_simulate_atrophy_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_simulate_atrophy": mris_simulate_atrophy_outputs,
+        "freesurfer.mris_simulate_atrophy": mris_simulate_atrophy_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_simulate_atrophy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_simulate_atrophy",
+        "@type": "freesurfer.mris_simulate_atrophy",
         "subject": subject,
         "hemi": hemi,
         "label": label,
@@ -230,5 +230,8 @@ __all__ = [
     "MrisSimulateAtrophyOutputs",
     "MrisSimulateAtrophyParameters",
     "mris_simulate_atrophy",
+    "mris_simulate_atrophy_cargs",
+    "mris_simulate_atrophy_execute",
+    "mris_simulate_atrophy_outputs",
     "mris_simulate_atrophy_params",
 ]

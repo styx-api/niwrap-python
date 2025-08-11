@@ -14,7 +14,7 @@ INVWARP_METADATA = Metadata(
 
 
 InvwarpParameters = typing.TypedDict('InvwarpParameters', {
-    "__STYXTYPE__": typing.Literal["invwarp"],
+    "@type": typing.Literal["fsl.invwarp"],
     "warp": InputPathType,
     "out_img": str,
     "ref_img": InputPathType,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "invwarp": invwarp_cargs,
+        "fsl.invwarp": invwarp_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "invwarp": invwarp_outputs,
+        "fsl.invwarp": invwarp_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def invwarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "invwarp",
+        "@type": "fsl.invwarp",
         "warp": warp,
         "out_img": out_img,
         "ref_img": ref_img,
@@ -253,5 +253,8 @@ __all__ = [
     "InvwarpOutputs",
     "InvwarpParameters",
     "invwarp",
+    "invwarp_cargs",
+    "invwarp_execute",
+    "invwarp_outputs",
     "invwarp_params",
 ]

@@ -14,7 +14,7 @@ SURF_LOCALSTAT_METADATA = Metadata(
 
 
 SurfLocalstatParameters = typing.TypedDict('SurfLocalstatParameters', {
-    "__STYXTYPE__": typing.Literal["SurfLocalstat"],
+    "@type": typing.Literal["afni.SurfLocalstat"],
     "hood": typing.NotRequired[float | None],
     "nbhd_rad": typing.NotRequired[float | None],
     "prefix": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfLocalstat": surf_localstat_cargs,
+        "afni.SurfLocalstat": surf_localstat_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfLocalstat": surf_localstat_outputs,
+        "afni.SurfLocalstat": surf_localstat_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def surf_localstat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfLocalstat",
+        "@type": "afni.SurfLocalstat",
         "prefix": prefix,
         "stat": stat_,
         "input_dataset": input_dataset,
@@ -238,5 +238,8 @@ __all__ = [
     "SurfLocalstatOutputs",
     "SurfLocalstatParameters",
     "surf_localstat",
+    "surf_localstat_cargs",
+    "surf_localstat_execute",
+    "surf_localstat_outputs",
     "surf_localstat_params",
 ]

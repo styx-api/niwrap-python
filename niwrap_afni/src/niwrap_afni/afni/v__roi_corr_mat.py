@@ -14,7 +14,7 @@ V__ROI_CORR_MAT_METADATA = Metadata(
 
 
 VRoiCorrMatParameters = typing.TypedDict('VRoiCorrMatParameters', {
-    "__STYXTYPE__": typing.Literal["@ROI_Corr_Mat"],
+    "@type": typing.Literal["afni.@ROI_Corr_Mat"],
     "ts_vol": InputPathType,
     "roi_vol": InputPathType,
     "prefix": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ROI_Corr_Mat": v__roi_corr_mat_cargs,
+        "afni.@ROI_Corr_Mat": v__roi_corr_mat_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ROI_Corr_Mat": v__roi_corr_mat_outputs,
+        "afni.@ROI_Corr_Mat": v__roi_corr_mat_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v__roi_corr_mat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ROI_Corr_Mat",
+        "@type": "afni.@ROI_Corr_Mat",
         "ts_vol": ts_vol,
         "roi_vol": roi_vol,
         "prefix": prefix,
@@ -273,5 +273,8 @@ __all__ = [
     "VRoiCorrMatParameters",
     "V__ROI_CORR_MAT_METADATA",
     "v__roi_corr_mat",
+    "v__roi_corr_mat_cargs",
+    "v__roi_corr_mat_execute",
+    "v__roi_corr_mat_outputs",
     "v__roi_corr_mat_params",
 ]

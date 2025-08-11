@@ -14,7 +14,7 @@ SMOOTHEST_METADATA = Metadata(
 
 
 SmoothestParameters = typing.TypedDict('SmoothestParameters', {
-    "__STYXTYPE__": typing.Literal["smoothest"],
+    "@type": typing.Literal["fsl.smoothest"],
     "dof": typing.NotRequired[float | None],
     "residual_fit_image": typing.NotRequired[InputPathType | None],
     "zstat_image": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "smoothest": smoothest_cargs,
+        "fsl.smoothest": smoothest_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def smoothest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "smoothest",
+        "@type": "fsl.smoothest",
         "mask": mask,
         "verbose_flag": verbose_flag,
     }
@@ -219,5 +219,8 @@ __all__ = [
     "SmoothestOutputs",
     "SmoothestParameters",
     "smoothest",
+    "smoothest_cargs",
+    "smoothest_execute",
+    "smoothest_outputs",
     "smoothest_params",
 ]

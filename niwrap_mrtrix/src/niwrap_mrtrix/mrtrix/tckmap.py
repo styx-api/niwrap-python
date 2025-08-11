@@ -14,26 +14,26 @@ TCKMAP_METADATA = Metadata(
 
 
 TckmapVariousStringParameters = typing.TypedDict('TckmapVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.tckmap.VariousString"],
     "obj": str,
 })
 
 
 TckmapVariousFileParameters = typing.TypedDict('TckmapVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.tckmap.VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckmapConfigParameters = typing.TypedDict('TckmapConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckmap.config"],
     "key": str,
     "value": str,
 })
 
 
 TckmapParameters = typing.TypedDict('TckmapParameters', {
-    "__STYXTYPE__": typing.Literal["tckmap"],
+    "@type": typing.Literal["mrtrix.tckmap"],
     "template": typing.NotRequired[InputPathType | None],
     "vox": typing.NotRequired[list[float] | None],
     "datatype": typing.NotRequired[str | None],
@@ -77,10 +77,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckmap": tckmap_cargs,
-        "VariousString": tckmap_various_string_cargs,
-        "VariousFile": tckmap_various_file_cargs,
-        "config": tckmap_config_cargs,
+        "mrtrix.tckmap": tckmap_cargs,
+        "mrtrix.tckmap.VariousString": tckmap_various_string_cargs,
+        "mrtrix.tckmap.VariousFile": tckmap_various_file_cargs,
+        "mrtrix.tckmap.config": tckmap_config_cargs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tckmap": tckmap_outputs,
+        "mrtrix.tckmap": tckmap_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def tckmap_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.tckmap.VariousString",
         "obj": obj,
     }
     return params
@@ -148,7 +148,7 @@ def tckmap_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.tckmap.VariousFile",
         "obj": obj,
     }
     return params
@@ -186,7 +186,7 @@ def tckmap_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckmap.config",
         "key": key,
         "value": value,
     }
@@ -326,7 +326,7 @@ def tckmap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckmap",
+        "@type": "mrtrix.tckmap",
         "dec": dec,
         "map_zero": map_zero,
         "backtrack": backtrack,
@@ -409,7 +409,7 @@ def tckmap_cargs(
     if params.get("dixel") is not None:
         cargs.extend([
             "-dixel",
-            *dyn_cargs(params.get("dixel")["__STYXTYPE__"])(params.get("dixel"), execution)
+            *dyn_cargs(params.get("dixel")["@type"])(params.get("dixel"), execution)
         ])
     if params.get("tod") is not None:
         cargs.extend([
@@ -478,7 +478,7 @@ def tckmap_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -765,8 +765,14 @@ __all__ = [
     "TckmapVariousFileParameters",
     "TckmapVariousStringParameters",
     "tckmap",
+    "tckmap_cargs",
+    "tckmap_config_cargs",
     "tckmap_config_params",
+    "tckmap_execute",
+    "tckmap_outputs",
     "tckmap_params",
+    "tckmap_various_file_cargs",
     "tckmap_various_file_params",
+    "tckmap_various_string_cargs",
     "tckmap_various_string_params",
 ]

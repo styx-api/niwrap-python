@@ -14,7 +14,7 @@ JKGCATRAIN_METADATA = Metadata(
 
 
 JkgcatrainParameters = typing.TypedDict('JkgcatrainParameters', {
-    "__STYXTYPE__": typing.Literal["jkgcatrain"],
+    "@type": typing.Literal["freesurfer.jkgcatrain"],
     "gca_directory": str,
     "iteration_number": typing.NotRequired[float | None],
     "num_threads": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "jkgcatrain": jkgcatrain_cargs,
+        "freesurfer.jkgcatrain": jkgcatrain_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def jkgcatrain_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "jkgcatrain",
+        "@type": "freesurfer.jkgcatrain",
         "gca_directory": gca_directory,
         "no_submit": no_submit,
         "mail_flag": mail_flag,
@@ -215,5 +215,8 @@ __all__ = [
     "JkgcatrainOutputs",
     "JkgcatrainParameters",
     "jkgcatrain",
+    "jkgcatrain_cargs",
+    "jkgcatrain_execute",
+    "jkgcatrain_outputs",
     "jkgcatrain_params",
 ]

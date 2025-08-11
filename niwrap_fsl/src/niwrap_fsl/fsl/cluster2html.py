@@ -14,7 +14,7 @@ CLUSTER2HTML_METADATA = Metadata(
 
 
 Cluster2htmlParameters = typing.TypedDict('Cluster2htmlParameters', {
-    "__STYXTYPE__": typing.Literal["cluster2html"],
+    "@type": typing.Literal["fsl.cluster2html"],
     "featdir": str,
     "inroot": str,
     "std_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cluster2html": cluster2html_cargs,
+        "fsl.cluster2html": cluster2html_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def cluster2html_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cluster2html",
+        "@type": "fsl.cluster2html",
         "featdir": featdir,
         "inroot": inroot,
         "std_flag": std_flag,
@@ -187,5 +187,8 @@ __all__ = [
     "Cluster2htmlOutputs",
     "Cluster2htmlParameters",
     "cluster2html",
+    "cluster2html_cargs",
+    "cluster2html_execute",
+    "cluster2html_outputs",
     "cluster2html_params",
 ]

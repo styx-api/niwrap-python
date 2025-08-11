@@ -14,7 +14,7 @@ ADJUNCT_SUMA_FS_ROI_INFO_METADATA = Metadata(
 
 
 AdjunctSumaFsRoiInfoParameters = typing.TypedDict('AdjunctSumaFsRoiInfoParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_suma_fs_roi_info"],
+    "@type": typing.Literal["afni.adjunct_suma_fs_roi_info"],
     "subject_id": str,
     "suma_directory": str,
     "help": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_suma_fs_roi_info": adjunct_suma_fs_roi_info_cargs,
+        "afni.adjunct_suma_fs_roi_info": adjunct_suma_fs_roi_info_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "adjunct_suma_fs_roi_info": adjunct_suma_fs_roi_info_outputs,
+        "afni.adjunct_suma_fs_roi_info": adjunct_suma_fs_roi_info_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def adjunct_suma_fs_roi_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_suma_fs_roi_info",
+        "@type": "afni.adjunct_suma_fs_roi_info",
         "subject_id": subject_id,
         "suma_directory": suma_directory,
         "help": help_,
@@ -224,5 +224,8 @@ __all__ = [
     "AdjunctSumaFsRoiInfoOutputs",
     "AdjunctSumaFsRoiInfoParameters",
     "adjunct_suma_fs_roi_info",
+    "adjunct_suma_fs_roi_info_cargs",
+    "adjunct_suma_fs_roi_info_execute",
+    "adjunct_suma_fs_roi_info_outputs",
     "adjunct_suma_fs_roi_info_params",
 ]

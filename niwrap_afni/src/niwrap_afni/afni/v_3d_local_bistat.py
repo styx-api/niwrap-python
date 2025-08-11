@@ -14,7 +14,7 @@ V_3D_LOCAL_BISTAT_METADATA = Metadata(
 
 
 V3dLocalBistatParameters = typing.TypedDict('V3dLocalBistatParameters', {
-    "__STYXTYPE__": typing.Literal["3dLocalBistat"],
+    "@type": typing.Literal["afni.3dLocalBistat"],
     "nbhd": str,
     "stats": list[str],
     "mask": typing.NotRequired[InputPathType | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLocalBistat": v_3d_local_bistat_cargs,
+        "afni.3dLocalBistat": v_3d_local_bistat_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLocalBistat": v_3d_local_bistat_outputs,
+        "afni.3dLocalBistat": v_3d_local_bistat_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def v_3d_local_bistat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLocalBistat",
+        "@type": "afni.3dLocalBistat",
         "nbhd": nbhd,
         "stats": stats,
         "automask": automask,
@@ -321,5 +321,8 @@ __all__ = [
     "V3dLocalBistatParameters",
     "V_3D_LOCAL_BISTAT_METADATA",
     "v_3d_local_bistat",
+    "v_3d_local_bistat_cargs",
+    "v_3d_local_bistat_execute",
+    "v_3d_local_bistat_outputs",
     "v_3d_local_bistat_params",
 ]

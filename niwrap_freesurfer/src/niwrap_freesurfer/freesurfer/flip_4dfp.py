@@ -14,7 +14,7 @@ FLIP_4DFP_METADATA = Metadata(
 
 
 Flip4dfpParameters = typing.TypedDict('Flip4dfpParameters', {
-    "__STYXTYPE__": typing.Literal["flip_4dfp"],
+    "@type": typing.Literal["freesurfer.flip_4dfp"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "flip_x": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "flip_4dfp": flip_4dfp_cargs,
+        "freesurfer.flip_4dfp": flip_4dfp_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "flip_4dfp": flip_4dfp_outputs,
+        "freesurfer.flip_4dfp": flip_4dfp_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def flip_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flip_4dfp",
+        "@type": "freesurfer.flip_4dfp",
         "input_image": input_image,
         "flip_x": flip_x,
         "flip_y": flip_y,
@@ -226,5 +226,8 @@ __all__ = [
     "Flip4dfpOutputs",
     "Flip4dfpParameters",
     "flip_4dfp",
+    "flip_4dfp_cargs",
+    "flip_4dfp_execute",
+    "flip_4dfp_outputs",
     "flip_4dfp_params",
 ]

@@ -14,7 +14,7 @@ MRI_COMPUTE_OVERLAP_METADATA = Metadata(
 
 
 MriComputeOverlapParameters = typing.TypedDict('MriComputeOverlapParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compute_overlap"],
+    "@type": typing.Literal["freesurfer.mri_compute_overlap"],
     "volumes": list[InputPathType],
     "label_numbers": typing.NotRequired[list[str] | None],
     "all_labels": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compute_overlap": mri_compute_overlap_cargs,
+        "freesurfer.mri_compute_overlap": mri_compute_overlap_cargs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def mri_compute_overlap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compute_overlap",
+        "@type": "freesurfer.mri_compute_overlap",
         "volumes": volumes,
         "all_labels": all_labels,
         "show_label": show_label,
@@ -281,5 +281,8 @@ __all__ = [
     "MriComputeOverlapOutputs",
     "MriComputeOverlapParameters",
     "mri_compute_overlap",
+    "mri_compute_overlap_cargs",
+    "mri_compute_overlap_execute",
+    "mri_compute_overlap_outputs",
     "mri_compute_overlap_params",
 ]

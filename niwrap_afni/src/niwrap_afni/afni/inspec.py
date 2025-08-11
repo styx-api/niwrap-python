@@ -14,7 +14,7 @@ INSPEC_METADATA = Metadata(
 
 
 InspecParameters = typing.TypedDict('InspecParameters', {
-    "__STYXTYPE__": typing.Literal["inspec"],
+    "@type": typing.Literal["afni.inspec"],
     "specfile": InputPathType,
     "newspecname": typing.NotRequired[str | None],
     "detail": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "inspec": inspec_cargs,
+        "afni.inspec": inspec_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def inspec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "inspec",
+        "@type": "afni.inspec",
         "specfile": specfile,
         "help": help_,
     }
@@ -251,5 +251,8 @@ __all__ = [
     "InspecOutputs",
     "InspecParameters",
     "inspec",
+    "inspec_cargs",
+    "inspec_execute",
+    "inspec_outputs",
     "inspec_params",
 ]

@@ -14,7 +14,7 @@ V_3D_DECONVOLVE_METADATA = Metadata(
 
 
 V3dDeconvolveParameters = typing.TypedDict('V3dDeconvolveParameters', {
-    "__STYXTYPE__": typing.Literal["3dDeconvolve"],
+    "@type": typing.Literal["afni.3dDeconvolve"],
     "input_dataset": InputPathType,
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "num_stimts": typing.NotRequired[int | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDeconvolve": v_3d_deconvolve_cargs,
+        "afni.3dDeconvolve": v_3d_deconvolve_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDeconvolve": v_3d_deconvolve_outputs,
+        "afni.3dDeconvolve": v_3d_deconvolve_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def v_3d_deconvolve_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDeconvolve",
+        "@type": "afni.3dDeconvolve",
         "input_dataset": input_dataset,
         "stim_base": stim_base,
         "fout": fout,
@@ -367,5 +367,8 @@ __all__ = [
     "V3dDeconvolveParameters",
     "V_3D_DECONVOLVE_METADATA",
     "v_3d_deconvolve",
+    "v_3d_deconvolve_cargs",
+    "v_3d_deconvolve_execute",
+    "v_3d_deconvolve_outputs",
     "v_3d_deconvolve_params",
 ]

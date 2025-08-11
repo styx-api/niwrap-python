@@ -14,7 +14,7 @@ FAT_MVM_PREP_METADATA = Metadata(
 
 
 FatMvmPrepParameters = typing.TypedDict('FatMvmPrepParameters', {
-    "__STYXTYPE__": typing.Literal["fat_mvm_prep"],
+    "@type": typing.Literal["afni.fat_mvm_prep"],
     "prefix": str,
     "csv_file": InputPathType,
     "matrix_files": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_mvm_prep": fat_mvm_prep_cargs,
+        "afni.fat_mvm_prep": fat_mvm_prep_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_mvm_prep": fat_mvm_prep_outputs,
+        "afni.fat_mvm_prep": fat_mvm_prep_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def fat_mvm_prep_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_mvm_prep",
+        "@type": "afni.fat_mvm_prep",
         "prefix": prefix,
         "csv_file": csv_file,
         "unionize_rois": unionize_rois,
@@ -252,5 +252,8 @@ __all__ = [
     "FatMvmPrepOutputs",
     "FatMvmPrepParameters",
     "fat_mvm_prep",
+    "fat_mvm_prep_cargs",
+    "fat_mvm_prep_execute",
+    "fat_mvm_prep_outputs",
     "fat_mvm_prep_params",
 ]

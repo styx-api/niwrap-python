@@ -14,7 +14,7 @@ VOLUME_ALL_LABELS_TO_ROIS_METADATA = Metadata(
 
 
 VolumeAllLabelsToRoisParameters = typing.TypedDict('VolumeAllLabelsToRoisParameters', {
-    "__STYXTYPE__": typing.Literal["volume-all-labels-to-rois"],
+    "@type": typing.Literal["workbench.volume-all-labels-to-rois"],
     "label_in": InputPathType,
     "map": str,
     "volume_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-all-labels-to-rois": volume_all_labels_to_rois_cargs,
+        "workbench.volume-all-labels-to-rois": volume_all_labels_to_rois_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-all-labels-to-rois": volume_all_labels_to_rois_outputs,
+        "workbench.volume-all-labels-to-rois": volume_all_labels_to_rois_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def volume_all_labels_to_rois_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-all-labels-to-rois",
+        "@type": "workbench.volume-all-labels-to-rois",
         "label_in": label_in,
         "map": map_,
         "volume_out": volume_out,
@@ -197,5 +197,8 @@ __all__ = [
     "VolumeAllLabelsToRoisOutputs",
     "VolumeAllLabelsToRoisParameters",
     "volume_all_labels_to_rois",
+    "volume_all_labels_to_rois_cargs",
+    "volume_all_labels_to_rois_execute",
+    "volume_all_labels_to_rois_outputs",
     "volume_all_labels_to_rois_params",
 ]

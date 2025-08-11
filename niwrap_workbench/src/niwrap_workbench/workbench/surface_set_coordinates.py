@@ -14,7 +14,7 @@ SURFACE_SET_COORDINATES_METADATA = Metadata(
 
 
 SurfaceSetCoordinatesParameters = typing.TypedDict('SurfaceSetCoordinatesParameters', {
-    "__STYXTYPE__": typing.Literal["surface-set-coordinates"],
+    "@type": typing.Literal["workbench.surface-set-coordinates"],
     "surface_in": InputPathType,
     "coord_metric": InputPathType,
     "surface_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-set-coordinates": surface_set_coordinates_cargs,
+        "workbench.surface-set-coordinates": surface_set_coordinates_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-set-coordinates": surface_set_coordinates_outputs,
+        "workbench.surface-set-coordinates": surface_set_coordinates_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def surface_set_coordinates_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-set-coordinates",
+        "@type": "workbench.surface-set-coordinates",
         "surface_in": surface_in,
         "coord_metric": coord_metric,
         "surface_out": surface_out,
@@ -201,5 +201,8 @@ __all__ = [
     "SurfaceSetCoordinatesOutputs",
     "SurfaceSetCoordinatesParameters",
     "surface_set_coordinates",
+    "surface_set_coordinates_cargs",
+    "surface_set_coordinates_execute",
+    "surface_set_coordinates_outputs",
     "surface_set_coordinates_params",
 ]

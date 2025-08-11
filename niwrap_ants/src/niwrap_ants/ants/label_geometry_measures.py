@@ -14,7 +14,7 @@ LABEL_GEOMETRY_MEASURES_METADATA = Metadata(
 
 
 LabelGeometryMeasuresParameters = typing.TypedDict('LabelGeometryMeasuresParameters', {
-    "__STYXTYPE__": typing.Literal["LabelGeometryMeasures"],
+    "@type": typing.Literal["ants.LabelGeometryMeasures"],
     "image_dimension": int,
     "label_image": InputPathType,
     "intensity_image": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "LabelGeometryMeasures": label_geometry_measures_cargs,
+        "ants.LabelGeometryMeasures": label_geometry_measures_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "LabelGeometryMeasures": label_geometry_measures_outputs,
+        "ants.LabelGeometryMeasures": label_geometry_measures_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def label_geometry_measures_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "LabelGeometryMeasures",
+        "@type": "ants.LabelGeometryMeasures",
         "image_dimension": image_dimension,
         "label_image": label_image,
     }
@@ -208,5 +208,8 @@ __all__ = [
     "LabelGeometryMeasuresOutputs",
     "LabelGeometryMeasuresParameters",
     "label_geometry_measures",
+    "label_geometry_measures_cargs",
+    "label_geometry_measures_execute",
+    "label_geometry_measures_outputs",
     "label_geometry_measures_params",
 ]

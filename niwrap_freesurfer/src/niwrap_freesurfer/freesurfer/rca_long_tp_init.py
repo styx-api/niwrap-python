@@ -14,7 +14,7 @@ RCA_LONG_TP_INIT_METADATA = Metadata(
 
 
 RcaLongTpInitParameters = typing.TypedDict('RcaLongTpInitParameters', {
-    "__STYXTYPE__": typing.Literal["rca-long-tp-init"],
+    "@type": typing.Literal["freesurfer.rca-long-tp-init"],
     "timepoint": str,
     "base": str,
     "use_long_base_ctrl_vol": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rca-long-tp-init": rca_long_tp_init_cargs,
+        "freesurfer.rca-long-tp-init": rca_long_tp_init_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def rca_long_tp_init_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rca-long-tp-init",
+        "@type": "freesurfer.rca-long-tp-init",
         "timepoint": timepoint,
         "base": base,
         "use_long_base_ctrl_vol": use_long_base_ctrl_vol,
@@ -227,5 +227,8 @@ __all__ = [
     "RcaLongTpInitOutputs",
     "RcaLongTpInitParameters",
     "rca_long_tp_init",
+    "rca_long_tp_init_cargs",
+    "rca_long_tp_init_execute",
+    "rca_long_tp_init_outputs",
     "rca_long_tp_init_params",
 ]

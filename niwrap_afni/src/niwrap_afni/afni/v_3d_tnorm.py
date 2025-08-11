@@ -14,7 +14,7 @@ V_3D_TNORM_METADATA = Metadata(
 
 
 V3dTnormParameters = typing.TypedDict('V3dTnormParameters', {
-    "__STYXTYPE__": typing.Literal["3dTnorm"],
+    "@type": typing.Literal["afni.3dTnorm"],
     "prefix": typing.NotRequired[str | None],
     "norm2": bool,
     "normR": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTnorm": v_3d_tnorm_cargs,
+        "afni.3dTnorm": v_3d_tnorm_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTnorm": v_3d_tnorm_outputs,
+        "afni.3dTnorm": v_3d_tnorm_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def v_3d_tnorm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTnorm",
+        "@type": "afni.3dTnorm",
         "norm2": norm2,
         "normR": norm_r,
         "norm1": norm1,
@@ -243,5 +243,8 @@ __all__ = [
     "V3dTnormParameters",
     "V_3D_TNORM_METADATA",
     "v_3d_tnorm",
+    "v_3d_tnorm_cargs",
+    "v_3d_tnorm_execute",
+    "v_3d_tnorm_outputs",
     "v_3d_tnorm_params",
 ]

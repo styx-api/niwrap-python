@@ -14,20 +14,20 @@ SURFACE_DISTORTION_METADATA = Metadata(
 
 
 SurfaceDistortionSmoothParameters = typing.TypedDict('SurfaceDistortionSmoothParameters', {
-    "__STYXTYPE__": typing.Literal["smooth"],
+    "@type": typing.Literal["workbench.surface-distortion.smooth"],
     "sigma": float,
     "opt_fwhm": bool,
 })
 
 
 SurfaceDistortionLocalAffineMethodParameters = typing.TypedDict('SurfaceDistortionLocalAffineMethodParameters', {
-    "__STYXTYPE__": typing.Literal["local_affine_method"],
+    "@type": typing.Literal["workbench.surface-distortion.local_affine_method"],
     "opt_log2": bool,
 })
 
 
 SurfaceDistortionParameters = typing.TypedDict('SurfaceDistortionParameters', {
-    "__STYXTYPE__": typing.Literal["surface-distortion"],
+    "@type": typing.Literal["workbench.surface-distortion"],
     "surface_reference": InputPathType,
     "surface_distorted": InputPathType,
     "metric_out": str,
@@ -50,9 +50,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-distortion": surface_distortion_cargs,
-        "smooth": surface_distortion_smooth_cargs,
-        "local_affine_method": surface_distortion_local_affine_method_cargs,
+        "workbench.surface-distortion": surface_distortion_cargs,
+        "workbench.surface-distortion.smooth": surface_distortion_smooth_cargs,
+        "workbench.surface-distortion.local_affine_method": surface_distortion_local_affine_method_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-distortion": surface_distortion_outputs,
+        "workbench.surface-distortion": surface_distortion_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def surface_distortion_smooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "smooth",
+        "@type": "workbench.surface-distortion.smooth",
         "sigma": sigma,
         "opt_fwhm": opt_fwhm,
     }
@@ -126,7 +126,7 @@ def surface_distortion_local_affine_method_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "local_affine_method",
+        "@type": "workbench.surface-distortion.local_affine_method",
         "opt_log2": opt_log2,
     }
     return params
@@ -187,7 +187,7 @@ def surface_distortion_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-distortion",
+        "@type": "workbench.surface-distortion",
         "surface_reference": surface_reference,
         "surface_distorted": surface_distorted,
         "metric_out": metric_out,
@@ -221,13 +221,13 @@ def surface_distortion_cargs(
     cargs.append(execution.input_file(params.get("surface_distorted")))
     cargs.append(params.get("metric_out"))
     if params.get("smooth") is not None:
-        cargs.extend(dyn_cargs(params.get("smooth")["__STYXTYPE__"])(params.get("smooth"), execution))
+        cargs.extend(dyn_cargs(params.get("smooth")["@type"])(params.get("smooth"), execution))
     if params.get("opt_caret5_method"):
         cargs.append("-caret5-method")
     if params.get("opt_edge_method"):
         cargs.append("-edge-method")
     if params.get("local_affine_method") is not None:
-        cargs.extend(dyn_cargs(params.get("local_affine_method")["__STYXTYPE__"])(params.get("local_affine_method"), execution))
+        cargs.extend(dyn_cargs(params.get("local_affine_method")["@type"])(params.get("local_affine_method"), execution))
     return cargs
 
 
@@ -366,7 +366,12 @@ __all__ = [
     "SurfaceDistortionParameters",
     "SurfaceDistortionSmoothParameters",
     "surface_distortion",
+    "surface_distortion_cargs",
+    "surface_distortion_execute",
+    "surface_distortion_local_affine_method_cargs",
     "surface_distortion_local_affine_method_params",
+    "surface_distortion_outputs",
     "surface_distortion_params",
+    "surface_distortion_smooth_cargs",
     "surface_distortion_smooth_params",
 ]

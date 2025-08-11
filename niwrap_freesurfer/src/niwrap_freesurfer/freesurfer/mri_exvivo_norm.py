@@ -14,7 +14,7 @@ MRI_EXVIVO_NORM_METADATA = Metadata(
 
 
 MriExvivoNormParameters = typing.TypedDict('MriExvivoNormParameters', {
-    "__STYXTYPE__": typing.Literal["mri_exvivo_norm"],
+    "@type": typing.Literal["freesurfer.mri_exvivo_norm"],
     "input_volume": InputPathType,
     "output_volume": str,
     "hemi": str,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_exvivo_norm": mri_exvivo_norm_cargs,
+        "freesurfer.mri_exvivo_norm": mri_exvivo_norm_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_exvivo_norm": mri_exvivo_norm_outputs,
+        "freesurfer.mri_exvivo_norm": mri_exvivo_norm_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def mri_exvivo_norm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_exvivo_norm",
+        "@type": "freesurfer.mri_exvivo_norm",
         "input_volume": input_volume,
         "output_volume": output_volume,
         "hemi": hemi,
@@ -341,5 +341,8 @@ __all__ = [
     "MriExvivoNormOutputs",
     "MriExvivoNormParameters",
     "mri_exvivo_norm",
+    "mri_exvivo_norm_cargs",
+    "mri_exvivo_norm_execute",
+    "mri_exvivo_norm_outputs",
     "mri_exvivo_norm_params",
 ]

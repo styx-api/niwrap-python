@@ -14,7 +14,7 @@ SCENE_FILE_RELOCATE_METADATA = Metadata(
 
 
 SceneFileRelocateParameters = typing.TypedDict('SceneFileRelocateParameters', {
-    "__STYXTYPE__": typing.Literal["scene-file-relocate"],
+    "@type": typing.Literal["workbench.scene-file-relocate"],
     "input_scene": str,
     "output_scene": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "scene-file-relocate": scene_file_relocate_cargs,
+        "workbench.scene-file-relocate": scene_file_relocate_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def scene_file_relocate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "scene-file-relocate",
+        "@type": "workbench.scene-file-relocate",
         "input_scene": input_scene,
         "output_scene": output_scene,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "SceneFileRelocateOutputs",
     "SceneFileRelocateParameters",
     "scene_file_relocate",
+    "scene_file_relocate_cargs",
+    "scene_file_relocate_execute",
+    "scene_file_relocate_outputs",
     "scene_file_relocate_params",
 ]

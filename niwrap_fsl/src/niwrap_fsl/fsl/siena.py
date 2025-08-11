@@ -14,7 +14,7 @@ SIENA_METADATA = Metadata(
 
 
 SienaParameters = typing.TypedDict('SienaParameters', {
-    "__STYXTYPE__": typing.Literal["siena"],
+    "@type": typing.Literal["fsl.siena"],
     "input1": InputPathType,
     "input2": InputPathType,
     "output_dir": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "siena": siena_cargs,
+        "fsl.siena": siena_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "siena": siena_outputs,
+        "fsl.siena": siena_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def siena_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "siena",
+        "@type": "fsl.siena",
         "input1": input1,
         "input2": input2,
         "debug_flag": debug_flag,
@@ -320,5 +320,8 @@ __all__ = [
     "SienaOutputs",
     "SienaParameters",
     "siena",
+    "siena_cargs",
+    "siena_execute",
+    "siena_outputs",
     "siena_params",
 ]

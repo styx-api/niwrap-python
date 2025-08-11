@@ -14,7 +14,7 @@ SUPER_RESOLUTION_METADATA = Metadata(
 
 
 SuperResolutionParameters = typing.TypedDict('SuperResolutionParameters', {
-    "__STYXTYPE__": typing.Literal["SuperResolution"],
+    "@type": typing.Literal["ants.SuperResolution"],
     "image_dimension": int,
     "output_image": str,
     "domain_image": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SuperResolution": super_resolution_cargs,
+        "ants.SuperResolution": super_resolution_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SuperResolution": super_resolution_outputs,
+        "ants.SuperResolution": super_resolution_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def super_resolution_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SuperResolution",
+        "@type": "ants.SuperResolution",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "domain_image": domain_image,
@@ -234,5 +234,8 @@ __all__ = [
     "SuperResolutionOutputs",
     "SuperResolutionParameters",
     "super_resolution",
+    "super_resolution_cargs",
+    "super_resolution_execute",
+    "super_resolution_outputs",
     "super_resolution_params",
 ]

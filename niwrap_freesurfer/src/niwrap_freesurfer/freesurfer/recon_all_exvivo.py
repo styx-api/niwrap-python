@@ -14,7 +14,7 @@ RECON_ALL_EXVIVO_METADATA = Metadata(
 
 
 ReconAllExvivoParameters = typing.TypedDict('ReconAllExvivoParameters', {
-    "__STYXTYPE__": typing.Literal["recon-all-exvivo"],
+    "@type": typing.Literal["freesurfer.recon-all-exvivo"],
     "subject_id": str,
     "hemisphere": typing.NotRequired[str | None],
     "nocerebellum": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "recon-all-exvivo": recon_all_exvivo_cargs,
+        "freesurfer.recon-all-exvivo": recon_all_exvivo_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def recon_all_exvivo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "recon-all-exvivo",
+        "@type": "freesurfer.recon-all-exvivo",
         "subject_id": subject_id,
         "nocerebellum": nocerebellum,
     }
@@ -193,5 +193,8 @@ __all__ = [
     "ReconAllExvivoOutputs",
     "ReconAllExvivoParameters",
     "recon_all_exvivo",
+    "recon_all_exvivo_cargs",
+    "recon_all_exvivo_execute",
+    "recon_all_exvivo_outputs",
     "recon_all_exvivo_params",
 ]

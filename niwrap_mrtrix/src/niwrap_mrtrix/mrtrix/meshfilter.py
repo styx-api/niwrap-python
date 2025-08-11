@@ -14,14 +14,14 @@ MESHFILTER_METADATA = Metadata(
 
 
 MeshfilterConfigParameters = typing.TypedDict('MeshfilterConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.meshfilter.config"],
     "key": str,
     "value": str,
 })
 
 
 MeshfilterParameters = typing.TypedDict('MeshfilterParameters', {
-    "__STYXTYPE__": typing.Literal["meshfilter"],
+    "@type": typing.Literal["mrtrix.meshfilter"],
     "smooth_spatial": typing.NotRequired[float | None],
     "smooth_influence": typing.NotRequired[float | None],
     "info": bool,
@@ -50,8 +50,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "meshfilter": meshfilter_cargs,
-        "config": meshfilter_config_cargs,
+        "mrtrix.meshfilter": meshfilter_cargs,
+        "mrtrix.meshfilter.config": meshfilter_config_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "meshfilter": meshfilter_outputs,
+        "mrtrix.meshfilter": meshfilter_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def meshfilter_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.meshfilter.config",
         "key": key,
         "value": value,
     }
@@ -162,7 +162,7 @@ def meshfilter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "meshfilter",
+        "@type": "mrtrix.meshfilter",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -223,7 +223,7 @@ def meshfilter_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -365,6 +365,10 @@ __all__ = [
     "MeshfilterOutputs",
     "MeshfilterParameters",
     "meshfilter",
+    "meshfilter_cargs",
+    "meshfilter_config_cargs",
     "meshfilter_config_params",
+    "meshfilter_execute",
+    "meshfilter_outputs",
     "meshfilter_params",
 ]

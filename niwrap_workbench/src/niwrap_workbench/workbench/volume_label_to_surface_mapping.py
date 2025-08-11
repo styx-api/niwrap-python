@@ -14,7 +14,7 @@ VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA = Metadata(
 
 
 VolumeLabelToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('VolumeLabelToSurfaceMappingRibbonConstrainedParameters', {
-    "__STYXTYPE__": typing.Literal["ribbon_constrained"],
+    "@type": typing.Literal["workbench.volume-label-to-surface-mapping.ribbon_constrained"],
     "inner_surf": InputPathType,
     "outer_surf": InputPathType,
     "opt_volume_roi_roi_volume": typing.NotRequired[InputPathType | None],
@@ -24,7 +24,7 @@ VolumeLabelToSurfaceMappingRibbonConstrainedParameters = typing.TypedDict('Volum
 
 
 VolumeLabelToSurfaceMappingParameters = typing.TypedDict('VolumeLabelToSurfaceMappingParameters', {
-    "__STYXTYPE__": typing.Literal["volume-label-to-surface-mapping"],
+    "@type": typing.Literal["workbench.volume-label-to-surface-mapping"],
     "volume": InputPathType,
     "surface": InputPathType,
     "label_out": str,
@@ -45,8 +45,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-label-to-surface-mapping": volume_label_to_surface_mapping_cargs,
-        "ribbon_constrained": volume_label_to_surface_mapping_ribbon_constrained_cargs,
+        "workbench.volume-label-to-surface-mapping": volume_label_to_surface_mapping_cargs,
+        "workbench.volume-label-to-surface-mapping.ribbon_constrained": volume_label_to_surface_mapping_ribbon_constrained_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-label-to-surface-mapping": volume_label_to_surface_mapping_outputs,
+        "workbench.volume-label-to-surface-mapping": volume_label_to_surface_mapping_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def volume_label_to_surface_mapping_ribbon_constrained_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ribbon_constrained",
+        "@type": "workbench.volume-label-to-surface-mapping.ribbon_constrained",
         "inner_surf": inner_surf,
         "outer_surf": outer_surf,
         "opt_thin_columns": opt_thin_columns,
@@ -162,7 +162,7 @@ def volume_label_to_surface_mapping_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-label-to-surface-mapping",
+        "@type": "workbench.volume-label-to-surface-mapping",
         "volume": volume,
         "surface": surface,
         "label_out": label_out,
@@ -194,7 +194,7 @@ def volume_label_to_surface_mapping_cargs(
     cargs.append(execution.input_file(params.get("surface")))
     cargs.append(params.get("label_out"))
     if params.get("ribbon_constrained") is not None:
-        cargs.extend(dyn_cargs(params.get("ribbon_constrained")["__STYXTYPE__"])(params.get("ribbon_constrained"), execution))
+        cargs.extend(dyn_cargs(params.get("ribbon_constrained")["@type"])(params.get("ribbon_constrained"), execution))
     if params.get("opt_subvol_select_subvol") is not None:
         cargs.extend([
             "-subvol-select",
@@ -325,6 +325,10 @@ __all__ = [
     "VolumeLabelToSurfaceMappingParameters",
     "VolumeLabelToSurfaceMappingRibbonConstrainedParameters",
     "volume_label_to_surface_mapping",
+    "volume_label_to_surface_mapping_cargs",
+    "volume_label_to_surface_mapping_execute",
+    "volume_label_to_surface_mapping_outputs",
     "volume_label_to_surface_mapping_params",
+    "volume_label_to_surface_mapping_ribbon_constrained_cargs",
     "volume_label_to_surface_mapping_ribbon_constrained_params",
 ]

@@ -14,7 +14,7 @@ ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA = Metadata(
 
 
 AntsuseDeformationFieldToGetAffineTransformParameters = typing.TypedDict('AntsuseDeformationFieldToGetAffineTransformParameters', {
-    "__STYXTYPE__": typing.Literal["ANTSUseDeformationFieldToGetAffineTransform"],
+    "@type": typing.Literal["ants.ANTSUseDeformationFieldToGetAffineTransform"],
     "deformation_field": InputPathType,
     "load_ratio": float,
     "transform_type": typing.Literal["rigid", "affine"],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ANTSUseDeformationFieldToGetAffineTransform": antsuse_deformation_field_to_get_affine_transform_cargs,
+        "ants.ANTSUseDeformationFieldToGetAffineTransform": antsuse_deformation_field_to_get_affine_transform_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ANTSUseDeformationFieldToGetAffineTransform": antsuse_deformation_field_to_get_affine_transform_outputs,
+        "ants.ANTSUseDeformationFieldToGetAffineTransform": antsuse_deformation_field_to_get_affine_transform_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def antsuse_deformation_field_to_get_affine_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ANTSUseDeformationFieldToGetAffineTransform",
+        "@type": "ants.ANTSUseDeformationFieldToGetAffineTransform",
         "deformation_field": deformation_field,
         "load_ratio": load_ratio,
         "transform_type": transform_type,
@@ -220,5 +220,8 @@ __all__ = [
     "AntsuseDeformationFieldToGetAffineTransformOutputs",
     "AntsuseDeformationFieldToGetAffineTransformParameters",
     "antsuse_deformation_field_to_get_affine_transform",
+    "antsuse_deformation_field_to_get_affine_transform_cargs",
+    "antsuse_deformation_field_to_get_affine_transform_execute",
+    "antsuse_deformation_field_to_get_affine_transform_outputs",
     "antsuse_deformation_field_to_get_affine_transform_params",
 ]

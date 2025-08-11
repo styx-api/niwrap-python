@@ -14,7 +14,7 @@ MRI_DIFF_METADATA = Metadata(
 
 
 MriDiffParameters = typing.TypedDict('MriDiffParameters', {
-    "__STYXTYPE__": typing.Literal["mri_diff"],
+    "@type": typing.Literal["freesurfer.mri_diff"],
     "vol1file": InputPathType,
     "vol2file": InputPathType,
     "resolution_check": bool,
@@ -61,7 +61,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_diff": mri_diff_cargs,
+        "freesurfer.mri_diff": mri_diff_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_diff": mri_diff_outputs,
+        "freesurfer.mri_diff": mri_diff_outputs,
     }.get(t)
 
 
@@ -174,7 +174,7 @@ def mri_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_diff",
+        "@type": "freesurfer.mri_diff",
         "vol1file": vol1file,
         "vol2file": vol2file,
         "resolution_check": resolution_check,
@@ -495,5 +495,8 @@ __all__ = [
     "MriDiffOutputs",
     "MriDiffParameters",
     "mri_diff",
+    "mri_diff_cargs",
+    "mri_diff_execute",
+    "mri_diff_outputs",
     "mri_diff_params",
 ]

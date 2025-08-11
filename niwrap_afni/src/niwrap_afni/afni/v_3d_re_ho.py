@@ -14,7 +14,7 @@ V_3D_RE_HO_METADATA = Metadata(
 
 
 V3dReHoParameters = typing.TypedDict('V3dReHoParameters', {
-    "__STYXTYPE__": typing.Literal["3dReHo"],
+    "@type": typing.Literal["afni.3dReHo"],
     "prefix": str,
     "inset": InputPathType,
     "nneigh": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dReHo": v_3d_re_ho_cargs,
+        "afni.3dReHo": v_3d_re_ho_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dReHo": v_3d_re_ho_outputs,
+        "afni.3dReHo": v_3d_re_ho_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v_3d_re_ho_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dReHo",
+        "@type": "afni.3dReHo",
         "prefix": prefix,
         "inset": inset,
         "chi_sq": chi_sq,
@@ -372,5 +372,8 @@ __all__ = [
     "V3dReHoParameters",
     "V_3D_RE_HO_METADATA",
     "v_3d_re_ho",
+    "v_3d_re_ho_cargs",
+    "v_3d_re_ho_execute",
+    "v_3d_re_ho_outputs",
     "v_3d_re_ho_params",
 ]

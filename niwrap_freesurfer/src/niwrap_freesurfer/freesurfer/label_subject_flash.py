@@ -14,7 +14,7 @@ LABEL_SUBJECT_FLASH_METADATA = Metadata(
 
 
 LabelSubjectFlashParameters = typing.TypedDict('LabelSubjectFlashParameters', {
-    "__STYXTYPE__": typing.Literal["label_subject_flash"],
+    "@type": typing.Literal["freesurfer.label_subject_flash"],
     "tissue_params": InputPathType,
     "norm_volume": InputPathType,
     "transform_file": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label_subject_flash": label_subject_flash_cargs,
+        "freesurfer.label_subject_flash": label_subject_flash_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label_subject_flash": label_subject_flash_outputs,
+        "freesurfer.label_subject_flash": label_subject_flash_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def label_subject_flash_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label_subject_flash",
+        "@type": "freesurfer.label_subject_flash",
         "tissue_params": tissue_params,
         "norm_volume": norm_volume,
         "transform_file": transform_file,
@@ -209,5 +209,8 @@ __all__ = [
     "LabelSubjectFlashOutputs",
     "LabelSubjectFlashParameters",
     "label_subject_flash",
+    "label_subject_flash_cargs",
+    "label_subject_flash_execute",
+    "label_subject_flash_outputs",
     "label_subject_flash_params",
 ]

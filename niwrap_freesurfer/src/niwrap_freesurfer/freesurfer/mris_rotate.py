@@ -14,7 +14,7 @@ MRIS_ROTATE_METADATA = Metadata(
 
 
 MrisRotateParameters = typing.TypedDict('MrisRotateParameters', {
-    "__STYXTYPE__": typing.Literal["mris_rotate"],
+    "@type": typing.Literal["freesurfer.mris_rotate"],
     "input_surface": InputPathType,
     "alpha_deg": float,
     "beta_deg": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_rotate": mris_rotate_cargs,
+        "freesurfer.mris_rotate": mris_rotate_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_rotate": mris_rotate_outputs,
+        "freesurfer.mris_rotate": mris_rotate_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mris_rotate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_rotate",
+        "@type": "freesurfer.mris_rotate",
         "input_surface": input_surface,
         "alpha_deg": alpha_deg,
         "beta_deg": beta_deg,
@@ -228,5 +228,8 @@ __all__ = [
     "MrisRotateOutputs",
     "MrisRotateParameters",
     "mris_rotate",
+    "mris_rotate_cargs",
+    "mris_rotate_execute",
+    "mris_rotate_outputs",
     "mris_rotate_params",
 ]

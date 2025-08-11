@@ -14,7 +14,7 @@ CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA = Metadata(
 
 
 CiftiParcelMappingToLabelParameters = typing.TypedDict('CiftiParcelMappingToLabelParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-parcel-mapping-to-label"],
+    "@type": typing.Literal["workbench.cifti-parcel-mapping-to-label"],
     "cifti_in": InputPathType,
     "direction": str,
     "template_cifti": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-parcel-mapping-to-label": cifti_parcel_mapping_to_label_cargs,
+        "workbench.cifti-parcel-mapping-to-label": cifti_parcel_mapping_to_label_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-parcel-mapping-to-label": cifti_parcel_mapping_to_label_outputs,
+        "workbench.cifti-parcel-mapping-to-label": cifti_parcel_mapping_to_label_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def cifti_parcel_mapping_to_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-parcel-mapping-to-label",
+        "@type": "workbench.cifti-parcel-mapping-to-label",
         "cifti_in": cifti_in,
         "direction": direction,
         "template_cifti": template_cifti,
@@ -211,5 +211,8 @@ __all__ = [
     "CiftiParcelMappingToLabelOutputs",
     "CiftiParcelMappingToLabelParameters",
     "cifti_parcel_mapping_to_label",
+    "cifti_parcel_mapping_to_label_cargs",
+    "cifti_parcel_mapping_to_label_execute",
+    "cifti_parcel_mapping_to_label_outputs",
     "cifti_parcel_mapping_to_label_params",
 ]

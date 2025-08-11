@@ -14,14 +14,14 @@ FIXELCONNECTIVITY_METADATA = Metadata(
 
 
 FixelconnectivityConfigParameters = typing.TypedDict('FixelconnectivityConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixelconnectivity.config"],
     "key": str,
     "value": str,
 })
 
 
 FixelconnectivityParameters = typing.TypedDict('FixelconnectivityParameters', {
-    "__STYXTYPE__": typing.Literal["fixelconnectivity"],
+    "@type": typing.Literal["mrtrix.fixelconnectivity"],
     "threshold": typing.NotRequired[float | None],
     "angle": typing.NotRequired[float | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -51,8 +51,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixelconnectivity": fixelconnectivity_cargs,
-        "config": fixelconnectivity_config_cargs,
+        "mrtrix.fixelconnectivity": fixelconnectivity_cargs,
+        "mrtrix.fixelconnectivity.config": fixelconnectivity_config_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixelconnectivity": fixelconnectivity_outputs,
+        "mrtrix.fixelconnectivity": fixelconnectivity_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def fixelconnectivity_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixelconnectivity.config",
         "key": key,
         "value": value,
     }
@@ -169,7 +169,7 @@ def fixelconnectivity_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixelconnectivity",
+        "@type": "mrtrix.fixelconnectivity",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -237,7 +237,7 @@ def fixelconnectivity_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -386,6 +386,10 @@ __all__ = [
     "FixelconnectivityOutputs",
     "FixelconnectivityParameters",
     "fixelconnectivity",
+    "fixelconnectivity_cargs",
+    "fixelconnectivity_config_cargs",
     "fixelconnectivity_config_params",
+    "fixelconnectivity_execute",
+    "fixelconnectivity_outputs",
     "fixelconnectivity_params",
 ]

@@ -14,7 +14,7 @@ V_3D_UPSAMPLE_METADATA = Metadata(
 
 
 V3dUpsampleParameters = typing.TypedDict('V3dUpsampleParameters', {
-    "__STYXTYPE__": typing.Literal["3dUpsample"],
+    "@type": typing.Literal["afni.3dUpsample"],
     "upsample_factor": int,
     "input_dataset": str,
     "linear_interpolation": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dUpsample": v_3d_upsample_cargs,
+        "afni.3dUpsample": v_3d_upsample_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dUpsample": v_3d_upsample_outputs,
+        "afni.3dUpsample": v_3d_upsample_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def v_3d_upsample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dUpsample",
+        "@type": "afni.3dUpsample",
         "upsample_factor": upsample_factor,
         "input_dataset": input_dataset,
         "linear_interpolation": linear_interpolation,
@@ -241,5 +241,8 @@ __all__ = [
     "V3dUpsampleParameters",
     "V_3D_UPSAMPLE_METADATA",
     "v_3d_upsample",
+    "v_3d_upsample_cargs",
+    "v_3d_upsample_execute",
+    "v_3d_upsample_outputs",
     "v_3d_upsample_params",
 ]

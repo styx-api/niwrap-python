@@ -14,7 +14,7 @@ RCA_CONFIG_METADATA = Metadata(
 
 
 RcaConfigParameters = typing.TypedDict('RcaConfigParameters', {
-    "__STYXTYPE__": typing.Literal["rca-config"],
+    "@type": typing.Literal["freesurfer.rca-config"],
     "source_config": InputPathType,
     "updated_config": InputPathType,
     "unknown_args_file": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rca-config": rca_config_cargs,
+        "freesurfer.rca-config": rca_config_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def rca_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rca-config",
+        "@type": "freesurfer.rca-config",
         "source_config": source_config,
         "updated_config": updated_config,
         "unknown_args_file": unknown_args_file,
@@ -199,5 +199,8 @@ __all__ = [
     "RcaConfigOutputs",
     "RcaConfigParameters",
     "rca_config",
+    "rca_config_cargs",
+    "rca_config_execute",
+    "rca_config_outputs",
     "rca_config_params",
 ]

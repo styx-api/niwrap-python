@@ -14,28 +14,28 @@ CIFTI_MERGE_METADATA = Metadata(
 
 
 CiftiMergeUpToParameters = typing.TypedDict('CiftiMergeUpToParameters', {
-    "__STYXTYPE__": typing.Literal["up_to"],
+    "@type": typing.Literal["workbench.cifti-merge.cifti.index.up_to"],
     "last_index": str,
     "opt_reverse": bool,
 })
 
 
 CiftiMergeIndexParameters = typing.TypedDict('CiftiMergeIndexParameters', {
-    "__STYXTYPE__": typing.Literal["index"],
+    "@type": typing.Literal["workbench.cifti-merge.cifti.index"],
     "index": str,
     "up_to": typing.NotRequired[CiftiMergeUpToParameters | None],
 })
 
 
 CiftiMergeCiftiParameters = typing.TypedDict('CiftiMergeCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti"],
+    "@type": typing.Literal["workbench.cifti-merge.cifti"],
     "cifti_in": InputPathType,
     "index": typing.NotRequired[list[CiftiMergeIndexParameters] | None],
 })
 
 
 CiftiMergeParameters = typing.TypedDict('CiftiMergeParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-merge"],
+    "@type": typing.Literal["workbench.cifti-merge"],
     "cifti_out": str,
     "opt_direction_direction": typing.NotRequired[str | None],
     "opt_mem_limit_limit_gb": typing.NotRequired[float | None],
@@ -55,10 +55,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-merge": cifti_merge_cargs,
-        "cifti": cifti_merge_cifti_cargs,
-        "index": cifti_merge_index_cargs,
-        "up_to": cifti_merge_up_to_cargs,
+        "workbench.cifti-merge": cifti_merge_cargs,
+        "workbench.cifti-merge.cifti": cifti_merge_cifti_cargs,
+        "workbench.cifti-merge.cifti.index": cifti_merge_index_cargs,
+        "workbench.cifti-merge.cifti.index.up_to": cifti_merge_up_to_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-merge": cifti_merge_outputs,
+        "workbench.cifti-merge": cifti_merge_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def cifti_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "up_to",
+        "@type": "workbench.cifti-merge.cifti.index.up_to",
         "last_index": last_index,
         "opt_reverse": opt_reverse,
     }
@@ -134,7 +134,7 @@ def cifti_merge_index_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "index",
+        "@type": "workbench.cifti-merge.cifti.index",
         "index": index,
     }
     if up_to is not None:
@@ -159,7 +159,7 @@ def cifti_merge_index_cargs(
     cargs.append("-index")
     cargs.append(params.get("index"))
     if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["__STYXTYPE__"])(params.get("up_to"), execution))
+        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
     return cargs
 
 
@@ -177,7 +177,7 @@ def cifti_merge_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti",
+        "@type": "workbench.cifti-merge.cifti",
         "cifti_in": cifti_in,
     }
     if index is not None:
@@ -202,7 +202,7 @@ def cifti_merge_cifti_cargs(
     cargs.append("-cifti")
     cargs.append(execution.input_file(params.get("cifti_in")))
     if params.get("index") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("index")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("index")] for a in c])
     return cargs
 
 
@@ -236,7 +236,7 @@ def cifti_merge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-merge",
+        "@type": "workbench.cifti-merge",
         "cifti_out": cifti_out,
     }
     if opt_direction_direction is not None:
@@ -276,7 +276,7 @@ def cifti_merge_cargs(
             str(params.get("opt_mem_limit_limit_gb"))
         ])
     if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cifti")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
     return cargs
 
 
@@ -398,8 +398,14 @@ __all__ = [
     "CiftiMergeParameters",
     "CiftiMergeUpToParameters",
     "cifti_merge",
+    "cifti_merge_cargs",
+    "cifti_merge_cifti_cargs",
     "cifti_merge_cifti_params",
+    "cifti_merge_execute",
+    "cifti_merge_index_cargs",
     "cifti_merge_index_params",
+    "cifti_merge_outputs",
     "cifti_merge_params",
+    "cifti_merge_up_to_cargs",
     "cifti_merge_up_to_params",
 ]

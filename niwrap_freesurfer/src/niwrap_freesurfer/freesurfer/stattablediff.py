@@ -14,7 +14,7 @@ STATTABLEDIFF_METADATA = Metadata(
 
 
 StattablediffParameters = typing.TypedDict('StattablediffParameters', {
-    "__STYXTYPE__": typing.Literal["stattablediff"],
+    "@type": typing.Literal["freesurfer.stattablediff"],
     "t1": InputPathType,
     "t2": InputPathType,
     "output": str,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "stattablediff": stattablediff_cargs,
+        "freesurfer.stattablediff": stattablediff_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "stattablediff": stattablediff_outputs,
+        "freesurfer.stattablediff": stattablediff_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def stattablediff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "stattablediff",
+        "@type": "freesurfer.stattablediff",
         "t1": t1,
         "t2": t2,
         "output": output,
@@ -277,5 +277,8 @@ __all__ = [
     "StattablediffOutputs",
     "StattablediffParameters",
     "stattablediff",
+    "stattablediff_cargs",
+    "stattablediff_execute",
+    "stattablediff_outputs",
     "stattablediff_params",
 ]

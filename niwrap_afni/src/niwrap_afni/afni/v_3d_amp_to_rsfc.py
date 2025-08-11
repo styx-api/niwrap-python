@@ -14,7 +14,7 @@ V_3D_AMP_TO_RSFC_METADATA = Metadata(
 
 
 V3dAmpToRsfcParameters = typing.TypedDict('V3dAmpToRsfcParameters', {
-    "__STYXTYPE__": typing.Literal["3dAmpToRSFC"],
+    "@type": typing.Literal["afni.3dAmpToRSFC"],
     "in_amp": typing.NotRequired[InputPathType | None],
     "in_pow": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAmpToRSFC": v_3d_amp_to_rsfc_cargs,
+        "afni.3dAmpToRSFC": v_3d_amp_to_rsfc_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAmpToRSFC": v_3d_amp_to_rsfc_outputs,
+        "afni.3dAmpToRSFC": v_3d_amp_to_rsfc_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def v_3d_amp_to_rsfc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAmpToRSFC",
+        "@type": "afni.3dAmpToRSFC",
         "prefix": prefix,
         "band": band,
         "nifti": nifti,
@@ -259,5 +259,8 @@ __all__ = [
     "V3dAmpToRsfcParameters",
     "V_3D_AMP_TO_RSFC_METADATA",
     "v_3d_amp_to_rsfc",
+    "v_3d_amp_to_rsfc_cargs",
+    "v_3d_amp_to_rsfc_execute",
+    "v_3d_amp_to_rsfc_outputs",
     "v_3d_amp_to_rsfc_params",
 ]

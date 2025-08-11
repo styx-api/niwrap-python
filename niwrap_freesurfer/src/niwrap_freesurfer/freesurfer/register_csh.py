@@ -14,7 +14,7 @@ REGISTER_CSH_METADATA = Metadata(
 
 
 RegisterCshParameters = typing.TypedDict('RegisterCshParameters', {
-    "__STYXTYPE__": typing.Literal["register.csh"],
+    "@type": typing.Literal["freesurfer.register.csh"],
     "base_image": InputPathType,
     "new_image": InputPathType,
     "options": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "register.csh": register_csh_cargs,
+        "freesurfer.register.csh": register_csh_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "register.csh": register_csh_outputs,
+        "freesurfer.register.csh": register_csh_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def register_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "register.csh",
+        "@type": "freesurfer.register.csh",
         "base_image": base_image,
         "new_image": new_image,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "RegisterCshOutputs",
     "RegisterCshParameters",
     "register_csh",
+    "register_csh_cargs",
+    "register_csh_execute",
+    "register_csh_outputs",
     "register_csh_params",
 ]

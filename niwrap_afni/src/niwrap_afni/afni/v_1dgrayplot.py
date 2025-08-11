@@ -14,7 +14,7 @@ V_1DGRAYPLOT_METADATA = Metadata(
 
 
 V1dgrayplotParameters = typing.TypedDict('V1dgrayplotParameters', {
-    "__STYXTYPE__": typing.Literal["1dgrayplot"],
+    "@type": typing.Literal["afni.1dgrayplot"],
     "tsfile": InputPathType,
     "install": bool,
     "ignore": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dgrayplot": v_1dgrayplot_cargs,
+        "afni.1dgrayplot": v_1dgrayplot_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_1dgrayplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dgrayplot",
+        "@type": "afni.1dgrayplot",
         "tsfile": tsfile,
         "install": install,
         "flip": flip,
@@ -234,5 +234,8 @@ __all__ = [
     "V1dgrayplotParameters",
     "V_1DGRAYPLOT_METADATA",
     "v_1dgrayplot",
+    "v_1dgrayplot_cargs",
+    "v_1dgrayplot_execute",
+    "v_1dgrayplot_outputs",
     "v_1dgrayplot_params",
 ]

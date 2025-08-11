@@ -14,7 +14,7 @@ MRI_COR2LABEL_METADATA = Metadata(
 
 
 MriCor2labelParameters = typing.TypedDict('MriCor2labelParameters', {
-    "__STYXTYPE__": typing.Literal["mri_cor2label"],
+    "@type": typing.Literal["freesurfer.mri_cor2label"],
     "input_file": InputPathType,
     "label_id": float,
     "label_file": str,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_cor2label": mri_cor2label_cargs,
+        "freesurfer.mri_cor2label": mri_cor2label_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_cor2label": mri_cor2label_outputs,
+        "freesurfer.mri_cor2label": mri_cor2label_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def mri_cor2label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_cor2label",
+        "@type": "freesurfer.mri_cor2label",
         "input_file": input_file,
         "label_id": label_id,
         "label_file": label_file,
@@ -321,5 +321,8 @@ __all__ = [
     "MriCor2labelOutputs",
     "MriCor2labelParameters",
     "mri_cor2label",
+    "mri_cor2label_cargs",
+    "mri_cor2label_execute",
+    "mri_cor2label_outputs",
     "mri_cor2label_params",
 ]

@@ -14,7 +14,7 @@ MRIS_ENTROPY_METADATA = Metadata(
 
 
 MrisEntropyParameters = typing.TypedDict('MrisEntropyParameters', {
-    "__STYXTYPE__": typing.Literal["mris_entropy"],
+    "@type": typing.Literal["freesurfer.mris_entropy"],
     "subject": str,
     "hemi": str,
     "wfile": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_entropy": mris_entropy_cargs,
+        "freesurfer.mris_entropy": mris_entropy_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_entropy": mris_entropy_outputs,
+        "freesurfer.mris_entropy": mris_entropy_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def mris_entropy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_entropy",
+        "@type": "freesurfer.mris_entropy",
         "subject": subject,
         "hemi": hemi,
         "wfile": wfile,
@@ -220,5 +220,8 @@ __all__ = [
     "MrisEntropyOutputs",
     "MrisEntropyParameters",
     "mris_entropy",
+    "mris_entropy_cargs",
+    "mris_entropy_execute",
+    "mris_entropy_outputs",
     "mris_entropy_params",
 ]

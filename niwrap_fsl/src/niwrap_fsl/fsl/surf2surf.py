@@ -14,7 +14,7 @@ SURF2SURF_METADATA = Metadata(
 
 
 Surf2surfParameters = typing.TypedDict('Surf2surfParameters', {
-    "__STYXTYPE__": typing.Literal["surf2surf"],
+    "@type": typing.Literal["fsl.surf2surf"],
     "input_surface": InputPathType,
     "output_surface": InputPathType,
     "input_convention": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surf2surf": surf2surf_cargs,
+        "fsl.surf2surf": surf2surf_cargs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def surf2surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surf2surf",
+        "@type": "fsl.surf2surf",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -277,5 +277,8 @@ __all__ = [
     "Surf2surfOutputs",
     "Surf2surfParameters",
     "surf2surf",
+    "surf2surf_cargs",
+    "surf2surf_execute",
+    "surf2surf_outputs",
     "surf2surf_params",
 ]

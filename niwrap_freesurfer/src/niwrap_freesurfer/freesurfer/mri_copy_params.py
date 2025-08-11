@@ -14,7 +14,7 @@ MRI_COPY_PARAMS_METADATA = Metadata(
 
 
 MriCopyParamsParameters = typing.TypedDict('MriCopyParamsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_copy_params"],
+    "@type": typing.Literal["freesurfer.mri_copy_params"],
     "in_vol": InputPathType,
     "template_vol": InputPathType,
     "out_vol": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_copy_params": mri_copy_params_cargs,
+        "freesurfer.mri_copy_params": mri_copy_params_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_copy_params": mri_copy_params_outputs,
+        "freesurfer.mri_copy_params": mri_copy_params_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mri_copy_params_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_copy_params",
+        "@type": "freesurfer.mri_copy_params",
         "in_vol": in_vol,
         "template_vol": template_vol,
         "out_vol": out_vol,
@@ -199,5 +199,8 @@ __all__ = [
     "MriCopyParamsOutputs",
     "MriCopyParamsParameters",
     "mri_copy_params",
+    "mri_copy_params_cargs",
+    "mri_copy_params_execute",
+    "mri_copy_params_outputs",
     "mri_copy_params_params",
 ]

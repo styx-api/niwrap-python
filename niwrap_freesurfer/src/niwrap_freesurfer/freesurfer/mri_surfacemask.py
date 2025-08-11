@@ -14,7 +14,7 @@ MRI_SURFACEMASK_METADATA = Metadata(
 
 
 MriSurfacemaskParameters = typing.TypedDict('MriSurfacemaskParameters', {
-    "__STYXTYPE__": typing.Literal["mri_surfacemask"],
+    "@type": typing.Literal["freesurfer.mri_surfacemask"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_volume": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_surfacemask": mri_surfacemask_cargs,
+        "freesurfer.mri_surfacemask": mri_surfacemask_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_surfacemask": mri_surfacemask_outputs,
+        "freesurfer.mri_surfacemask": mri_surfacemask_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mri_surfacemask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_surfacemask",
+        "@type": "freesurfer.mri_surfacemask",
         "input_volume": input_volume,
         "input_surface": input_surface,
         "output_volume": output_volume,
@@ -192,5 +192,8 @@ __all__ = [
     "MriSurfacemaskOutputs",
     "MriSurfacemaskParameters",
     "mri_surfacemask",
+    "mri_surfacemask_cargs",
+    "mri_surfacemask_execute",
+    "mri_surfacemask_outputs",
     "mri_surfacemask_params",
 ]

@@ -14,7 +14,7 @@ SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA = Metadata(
 
 
 SurfaceSphereTriangularPatchesParameters = typing.TypedDict('SurfaceSphereTriangularPatchesParameters', {
-    "__STYXTYPE__": typing.Literal["surface-sphere-triangular-patches"],
+    "@type": typing.Literal["workbench.surface-sphere-triangular-patches"],
     "sphere": InputPathType,
     "divisions": int,
     "text_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-sphere-triangular-patches": surface_sphere_triangular_patches_cargs,
+        "workbench.surface-sphere-triangular-patches": surface_sphere_triangular_patches_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def surface_sphere_triangular_patches_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-sphere-triangular-patches",
+        "@type": "workbench.surface-sphere-triangular-patches",
         "sphere": sphere,
         "divisions": divisions,
         "text_out": text_out,
@@ -193,5 +193,8 @@ __all__ = [
     "SurfaceSphereTriangularPatchesOutputs",
     "SurfaceSphereTriangularPatchesParameters",
     "surface_sphere_triangular_patches",
+    "surface_sphere_triangular_patches_cargs",
+    "surface_sphere_triangular_patches_execute",
+    "surface_sphere_triangular_patches_outputs",
     "surface_sphere_triangular_patches_params",
 ]

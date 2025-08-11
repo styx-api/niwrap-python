@@ -14,7 +14,7 @@ MRI_ANNOTATION2LABEL_METADATA = Metadata(
 
 
 MriAnnotation2labelParameters = typing.TypedDict('MriAnnotation2labelParameters', {
-    "__STYXTYPE__": typing.Literal["mri_annotation2label"],
+    "@type": typing.Literal["freesurfer.mri_annotation2label"],
     "subject": str,
     "hemi": str,
     "lobes": typing.NotRequired[InputPathType | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_annotation2label": mri_annotation2label_cargs,
+        "freesurfer.mri_annotation2label": mri_annotation2label_cargs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def mri_annotation2label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_annotation2label",
+        "@type": "freesurfer.mri_annotation2label",
         "subject": subject,
         "hemi": hemi,
         "help": help_,
@@ -401,5 +401,8 @@ __all__ = [
     "MriAnnotation2labelOutputs",
     "MriAnnotation2labelParameters",
     "mri_annotation2label",
+    "mri_annotation2label_cargs",
+    "mri_annotation2label_execute",
+    "mri_annotation2label_outputs",
     "mri_annotation2label_params",
 ]

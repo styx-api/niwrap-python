@@ -14,7 +14,7 @@ IMAGE_INTENSITY_STATISTICS_METADATA = Metadata(
 
 
 ImageIntensityStatisticsParameters = typing.TypedDict('ImageIntensityStatisticsParameters', {
-    "__STYXTYPE__": typing.Literal["ImageIntensityStatistics"],
+    "@type": typing.Literal["ants.ImageIntensityStatistics"],
     "image_dimension": int,
     "input_image": InputPathType,
     "label_image": typing.NotRequired[InputPathType | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ImageIntensityStatistics": image_intensity_statistics_cargs,
+        "ants.ImageIntensityStatistics": image_intensity_statistics_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ImageIntensityStatistics": image_intensity_statistics_outputs,
+        "ants.ImageIntensityStatistics": image_intensity_statistics_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def image_intensity_statistics_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ImageIntensityStatistics",
+        "@type": "ants.ImageIntensityStatistics",
         "image_dimension": image_dimension,
         "input_image": input_image,
     }
@@ -194,5 +194,8 @@ __all__ = [
     "ImageIntensityStatisticsOutputs",
     "ImageIntensityStatisticsParameters",
     "image_intensity_statistics",
+    "image_intensity_statistics_cargs",
+    "image_intensity_statistics_execute",
+    "image_intensity_statistics_outputs",
     "image_intensity_statistics_params",
 ]

@@ -14,7 +14,7 @@ V_3D_DIFF_METADATA = Metadata(
 
 
 V3dDiffParameters = typing.TypedDict('V3dDiffParameters', {
-    "__STYXTYPE__": typing.Literal["3dDiff"],
+    "@type": typing.Literal["afni.3dDiff"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
     "tolerance": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDiff": v_3d_diff_cargs,
+        "afni.3dDiff": v_3d_diff_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDiff": v_3d_diff_outputs,
+        "afni.3dDiff": v_3d_diff_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v_3d_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDiff",
+        "@type": "afni.3dDiff",
         "dataset_a": dataset_a,
         "dataset_b": dataset_b,
         "quiet_mode": quiet_mode,
@@ -250,5 +250,8 @@ __all__ = [
     "V3dDiffParameters",
     "V_3D_DIFF_METADATA",
     "v_3d_diff",
+    "v_3d_diff_cargs",
+    "v_3d_diff_execute",
+    "v_3d_diff_outputs",
     "v_3d_diff_params",
 ]

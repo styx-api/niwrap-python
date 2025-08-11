@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_NOTAL_METADATA = Metadata(
 
 
 SegmentSubjectNotalParameters = typing.TypedDict('SegmentSubjectNotalParameters', {
-    "__STYXTYPE__": typing.Literal["segment_subject_notal"],
+    "@type": typing.Literal["freesurfer.segment_subject_notal"],
     "subject_path": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segment_subject_notal": segment_subject_notal_cargs,
+        "freesurfer.segment_subject_notal": segment_subject_notal_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def segment_subject_notal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segment_subject_notal",
+        "@type": "freesurfer.segment_subject_notal",
         "subject_path": subject_path,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "SegmentSubjectNotalOutputs",
     "SegmentSubjectNotalParameters",
     "segment_subject_notal",
+    "segment_subject_notal_cargs",
+    "segment_subject_notal_execute",
+    "segment_subject_notal_outputs",
     "segment_subject_notal_params",
 ]

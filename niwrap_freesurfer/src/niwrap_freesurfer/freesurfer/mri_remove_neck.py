@@ -14,7 +14,7 @@ MRI_REMOVE_NECK_METADATA = Metadata(
 
 
 MriRemoveNeckParameters = typing.TypedDict('MriRemoveNeckParameters', {
-    "__STYXTYPE__": typing.Literal["mri_remove_neck"],
+    "@type": typing.Literal["freesurfer.mri_remove_neck"],
     "input_volume": InputPathType,
     "transform": InputPathType,
     "gca": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_remove_neck": mri_remove_neck_cargs,
+        "freesurfer.mri_remove_neck": mri_remove_neck_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_remove_neck": mri_remove_neck_outputs,
+        "freesurfer.mri_remove_neck": mri_remove_neck_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mri_remove_neck_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_remove_neck",
+        "@type": "freesurfer.mri_remove_neck",
         "input_volume": input_volume,
         "transform": transform,
         "gca": gca,
@@ -196,5 +196,8 @@ __all__ = [
     "MriRemoveNeckOutputs",
     "MriRemoveNeckParameters",
     "mri_remove_neck",
+    "mri_remove_neck_cargs",
+    "mri_remove_neck_execute",
+    "mri_remove_neck_outputs",
     "mri_remove_neck_params",
 ]

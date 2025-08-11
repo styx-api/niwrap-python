@@ -14,7 +14,7 @@ MRI_OR_METADATA = Metadata(
 
 
 MriOrParameters = typing.TypedDict('MriOrParameters', {
-    "__STYXTYPE__": typing.Literal["mri_or"],
+    "@type": typing.Literal["freesurfer.mri_or"],
     "original_labels": bool,
     "input_files": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_or": mri_or_cargs,
+        "freesurfer.mri_or": mri_or_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def mri_or_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_or",
+        "@type": "freesurfer.mri_or",
         "original_labels": original_labels,
         "input_files": input_files,
     }
@@ -181,5 +181,8 @@ __all__ = [
     "MriOrOutputs",
     "MriOrParameters",
     "mri_or",
+    "mri_or_cargs",
+    "mri_or_execute",
+    "mri_or_outputs",
     "mri_or_params",
 ]

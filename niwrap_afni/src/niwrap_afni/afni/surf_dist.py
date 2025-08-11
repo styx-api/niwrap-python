@@ -14,7 +14,7 @@ SURF_DIST_METADATA = Metadata(
 
 
 SurfDistParameters = typing.TypedDict('SurfDistParameters', {
-    "__STYXTYPE__": typing.Literal["SurfDist"],
+    "@type": typing.Literal["afni.SurfDist"],
     "surface": InputPathType,
     "nodepairs": InputPathType,
     "node_path_do": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfDist": surf_dist_cargs,
+        "afni.SurfDist": surf_dist_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfDist": surf_dist_outputs,
+        "afni.SurfDist": surf_dist_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def surf_dist_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfDist",
+        "@type": "afni.SurfDist",
         "surface": surface,
         "nodepairs": nodepairs,
         "euclidean": euclidean,
@@ -250,5 +250,8 @@ __all__ = [
     "SurfDistOutputs",
     "SurfDistParameters",
     "surf_dist",
+    "surf_dist_cargs",
+    "surf_dist_execute",
+    "surf_dist_outputs",
     "surf_dist_params",
 ]

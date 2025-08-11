@@ -14,7 +14,7 @@ RMZ_METADATA = Metadata(
 
 
 RmzParameters = typing.TypedDict('RmzParameters', {
-    "__STYXTYPE__": typing.Literal["rmz"],
+    "@type": typing.Literal["afni.rmz"],
     "quiet": bool,
     "hash_flag": typing.NotRequired[float | None],
     "keep_flag": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rmz": rmz_cargs,
+        "afni.rmz": rmz_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def rmz_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rmz",
+        "@type": "afni.rmz",
         "quiet": quiet,
         "keep_flag": keep_flag,
         "filenames": filenames,
@@ -199,5 +199,8 @@ __all__ = [
     "RmzOutputs",
     "RmzParameters",
     "rmz",
+    "rmz_cargs",
+    "rmz_execute",
+    "rmz_outputs",
     "rmz_params",
 ]

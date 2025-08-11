@@ -14,7 +14,7 @@ MRIS_INTERPOLATE_WARP_METADATA = Metadata(
 
 
 MrisInterpolateWarpParameters = typing.TypedDict('MrisInterpolateWarpParameters', {
-    "__STYXTYPE__": typing.Literal["mris_interpolate_warp"],
+    "@type": typing.Literal["freesurfer.mris_interpolate_warp"],
     "start_surface": InputPathType,
     "end_surface": InputPathType,
     "warp_field": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_interpolate_warp": mris_interpolate_warp_cargs,
+        "freesurfer.mris_interpolate_warp": mris_interpolate_warp_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_interpolate_warp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_interpolate_warp",
+        "@type": "freesurfer.mris_interpolate_warp",
         "start_surface": start_surface,
         "end_surface": end_surface,
         "warp_field": warp_field,
@@ -184,5 +184,8 @@ __all__ = [
     "MrisInterpolateWarpOutputs",
     "MrisInterpolateWarpParameters",
     "mris_interpolate_warp",
+    "mris_interpolate_warp_cargs",
+    "mris_interpolate_warp_execute",
+    "mris_interpolate_warp_outputs",
     "mris_interpolate_warp_params",
 ]

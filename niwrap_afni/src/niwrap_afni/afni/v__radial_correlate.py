@@ -14,7 +14,7 @@ V__RADIAL_CORRELATE_METADATA = Metadata(
 
 
 VRadialCorrelateParameters = typing.TypedDict('VRadialCorrelateParameters', {
-    "__STYXTYPE__": typing.Literal["@radial_correlate"],
+    "@type": typing.Literal["afni.@radial_correlate"],
     "input_files": list[InputPathType],
     "results_dir": typing.NotRequired[str | None],
     "do_corr": typing.NotRequired[str | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@radial_correlate": v__radial_correlate_cargs,
+        "afni.@radial_correlate": v__radial_correlate_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@radial_correlate": v__radial_correlate_outputs,
+        "afni.@radial_correlate": v__radial_correlate_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def v__radial_correlate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@radial_correlate",
+        "@type": "afni.@radial_correlate",
         "input_files": input_files,
         "ver": ver,
         "verbose": verbose,
@@ -403,5 +403,8 @@ __all__ = [
     "VRadialCorrelateParameters",
     "V__RADIAL_CORRELATE_METADATA",
     "v__radial_correlate",
+    "v__radial_correlate_cargs",
+    "v__radial_correlate_execute",
+    "v__radial_correlate_outputs",
     "v__radial_correlate_params",
 ]

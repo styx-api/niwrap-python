@@ -14,14 +14,14 @@ CIFTI_EXTREMA_METADATA = Metadata(
 
 
 CiftiExtremaThresholdParameters = typing.TypedDict('CiftiExtremaThresholdParameters', {
-    "__STYXTYPE__": typing.Literal["threshold"],
+    "@type": typing.Literal["workbench.cifti-extrema.threshold"],
     "low": float,
     "high": float,
 })
 
 
 CiftiExtremaParameters = typing.TypedDict('CiftiExtremaParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-extrema"],
+    "@type": typing.Literal["workbench.cifti-extrema"],
     "cifti": InputPathType,
     "surface_distance": float,
     "volume_distance": float,
@@ -54,8 +54,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-extrema": cifti_extrema_cargs,
-        "threshold": cifti_extrema_threshold_cargs,
+        "workbench.cifti-extrema": cifti_extrema_cargs,
+        "workbench.cifti-extrema.threshold": cifti_extrema_threshold_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-extrema": cifti_extrema_outputs,
+        "workbench.cifti-extrema": cifti_extrema_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def cifti_extrema_threshold_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "threshold",
+        "@type": "workbench.cifti-extrema.threshold",
         "low": low,
         "high": high,
     }
@@ -182,7 +182,7 @@ def cifti_extrema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-extrema",
+        "@type": "workbench.cifti-extrema",
         "cifti": cifti,
         "surface_distance": surface_distance,
         "volume_distance": volume_distance,
@@ -259,7 +259,7 @@ def cifti_extrema_cargs(
     if params.get("opt_presmooth_fwhm"):
         cargs.append("-presmooth-fwhm")
     if params.get("threshold") is not None:
-        cargs.extend(dyn_cargs(params.get("threshold")["__STYXTYPE__"])(params.get("threshold"), execution))
+        cargs.extend(dyn_cargs(params.get("threshold")["@type"])(params.get("threshold"), execution))
     if params.get("opt_merged_volume"):
         cargs.append("-merged-volume")
     if params.get("opt_sum_maps"):
@@ -420,6 +420,10 @@ __all__ = [
     "CiftiExtremaParameters",
     "CiftiExtremaThresholdParameters",
     "cifti_extrema",
+    "cifti_extrema_cargs",
+    "cifti_extrema_execute",
+    "cifti_extrema_outputs",
     "cifti_extrema_params",
+    "cifti_extrema_threshold_cargs",
     "cifti_extrema_threshold_params",
 ]

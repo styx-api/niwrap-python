@@ -14,7 +14,7 @@ V_3DKMEANS_METADATA = Metadata(
 
 
 V3dkmeansParameters = typing.TypedDict('V3dkmeansParameters', {
-    "__STYXTYPE__": typing.Literal["3dkmeans"],
+    "@type": typing.Literal["afni.3dkmeans"],
     "version": bool,
     "input": list[InputPathType],
     "mask": typing.NotRequired[InputPathType | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dkmeans": v_3dkmeans_cargs,
+        "afni.3dkmeans": v_3dkmeans_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dkmeans": v_3dkmeans_outputs,
+        "afni.3dkmeans": v_3dkmeans_outputs,
     }.get(t)
 
 
@@ -154,7 +154,7 @@ def v_3dkmeans_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dkmeans",
+        "@type": "afni.3dkmeans",
         "version": version,
         "input": input_,
         "verbose": verbose,
@@ -445,5 +445,8 @@ __all__ = [
     "V3dkmeansParameters",
     "V_3DKMEANS_METADATA",
     "v_3dkmeans",
+    "v_3dkmeans_cargs",
+    "v_3dkmeans_execute",
+    "v_3dkmeans_outputs",
     "v_3dkmeans_params",
 ]

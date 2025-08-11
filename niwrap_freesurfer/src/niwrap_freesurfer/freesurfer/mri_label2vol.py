@@ -14,7 +14,7 @@ MRI_LABEL2VOL_METADATA = Metadata(
 
 
 MriLabel2volParameters = typing.TypedDict('MriLabel2volParameters', {
-    "__STYXTYPE__": typing.Literal["mri_label2vol"],
+    "@type": typing.Literal["freesurfer.mri_label2vol"],
     "labels": typing.NotRequired[list[str] | None],
     "annotation": typing.NotRequired[InputPathType | None],
     "segmentation": typing.NotRequired[InputPathType | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_label2vol": mri_label2vol_cargs,
+        "freesurfer.mri_label2vol": mri_label2vol_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_label2vol": mri_label2vol_outputs,
+        "freesurfer.mri_label2vol": mri_label2vol_outputs,
     }.get(t)
 
 
@@ -137,7 +137,7 @@ def mri_label2vol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_label2vol",
+        "@type": "freesurfer.mri_label2vol",
         "template": template,
         "identity_flag": identity_flag,
         "output_volume": output_volume,
@@ -410,5 +410,8 @@ __all__ = [
     "MriLabel2volOutputs",
     "MriLabel2volParameters",
     "mri_label2vol",
+    "mri_label2vol_cargs",
+    "mri_label2vol_execute",
+    "mri_label2vol_outputs",
     "mri_label2vol_params",
 ]

@@ -14,7 +14,7 @@ V_3D_TOUTCOUNT_METADATA = Metadata(
 
 
 V3dToutcountParameters = typing.TypedDict('V3dToutcountParameters', {
-    "__STYXTYPE__": typing.Literal["3dToutcount"],
+    "@type": typing.Literal["afni.3dToutcount"],
     "input_dataset": str,
     "output_prefix": typing.NotRequired[str | None],
     "mask_dataset": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dToutcount": v_3d_toutcount_cargs,
+        "afni.3dToutcount": v_3d_toutcount_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dToutcount": v_3d_toutcount_outputs,
+        "afni.3dToutcount": v_3d_toutcount_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def v_3d_toutcount_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dToutcount",
+        "@type": "afni.3dToutcount",
         "input_dataset": input_dataset,
         "autoclip": autoclip,
         "automask": automask,
@@ -281,5 +281,8 @@ __all__ = [
     "V3dToutcountParameters",
     "V_3D_TOUTCOUNT_METADATA",
     "v_3d_toutcount",
+    "v_3d_toutcount_cargs",
+    "v_3d_toutcount_execute",
+    "v_3d_toutcount_outputs",
     "v_3d_toutcount_params",
 ]

@@ -14,7 +14,7 @@ QUANTIFY_HASUBREGIONS_SH_METADATA = Metadata(
 
 
 QuantifyHasubregionsShParameters = typing.TypedDict('QuantifyHasubregionsShParameters', {
-    "__STYXTYPE__": typing.Literal["quantifyHAsubregions.sh"],
+    "@type": typing.Literal["freesurfer.quantifyHAsubregions.sh"],
     "prefix": str,
     "suffix": str,
     "output_file": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "quantifyHAsubregions.sh": quantify_hasubregions_sh_cargs,
+        "freesurfer.quantifyHAsubregions.sh": quantify_hasubregions_sh_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "quantifyHAsubregions.sh": quantify_hasubregions_sh_outputs,
+        "freesurfer.quantifyHAsubregions.sh": quantify_hasubregions_sh_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def quantify_hasubregions_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "quantifyHAsubregions.sh",
+        "@type": "freesurfer.quantifyHAsubregions.sh",
         "prefix": prefix,
         "suffix": suffix,
         "output_file": output_file,
@@ -200,5 +200,8 @@ __all__ = [
     "QuantifyHasubregionsShOutputs",
     "QuantifyHasubregionsShParameters",
     "quantify_hasubregions_sh",
+    "quantify_hasubregions_sh_cargs",
+    "quantify_hasubregions_sh_execute",
+    "quantify_hasubregions_sh_outputs",
     "quantify_hasubregions_sh_params",
 ]

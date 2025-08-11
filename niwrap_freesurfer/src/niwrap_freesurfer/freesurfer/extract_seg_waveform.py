@@ -14,7 +14,7 @@ EXTRACT_SEG_WAVEFORM_METADATA = Metadata(
 
 
 ExtractSegWaveformParameters = typing.TypedDict('ExtractSegWaveformParameters', {
-    "__STYXTYPE__": typing.Literal["extract_seg_waveform"],
+    "@type": typing.Literal["freesurfer.extract_seg_waveform"],
     "seg_file": InputPathType,
     "seg_indices": list[float],
     "input_volume": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "extract_seg_waveform": extract_seg_waveform_cargs,
+        "freesurfer.extract_seg_waveform": extract_seg_waveform_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def extract_seg_waveform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "extract_seg_waveform",
+        "@type": "freesurfer.extract_seg_waveform",
         "seg_file": seg_file,
         "seg_indices": seg_indices,
         "input_volume": input_volume,
@@ -254,5 +254,8 @@ __all__ = [
     "ExtractSegWaveformOutputs",
     "ExtractSegWaveformParameters",
     "extract_seg_waveform",
+    "extract_seg_waveform_cargs",
+    "extract_seg_waveform_execute",
+    "extract_seg_waveform_outputs",
     "extract_seg_waveform_params",
 ]

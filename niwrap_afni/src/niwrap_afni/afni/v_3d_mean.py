@@ -14,7 +14,7 @@ V_3D_MEAN_METADATA = Metadata(
 
 
 V3dMeanParameters = typing.TypedDict('V3dMeanParameters', {
-    "__STYXTYPE__": typing.Literal["3dMean"],
+    "@type": typing.Literal["afni.3dMean"],
     "input_files": list[InputPathType],
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMean": v_3d_mean_cargs,
+        "afni.3dMean": v_3d_mean_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMean": v_3d_mean_outputs,
+        "afni.3dMean": v_3d_mean_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def v_3d_mean_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMean",
+        "@type": "afni.3dMean",
         "input_files": input_files,
         "verbose": verbose,
         "fscale": fscale,
@@ -360,5 +360,8 @@ __all__ = [
     "V3dMeanParameters",
     "V_3D_MEAN_METADATA",
     "v_3d_mean",
+    "v_3d_mean_cargs",
+    "v_3d_mean_execute",
+    "v_3d_mean_outputs",
     "v_3d_mean_params",
 ]

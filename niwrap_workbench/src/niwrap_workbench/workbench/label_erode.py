@@ -14,7 +14,7 @@ LABEL_ERODE_METADATA = Metadata(
 
 
 LabelErodeParameters = typing.TypedDict('LabelErodeParameters', {
-    "__STYXTYPE__": typing.Literal["label-erode"],
+    "@type": typing.Literal["workbench.label-erode"],
     "label": InputPathType,
     "surface": InputPathType,
     "erode_dist": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-erode": label_erode_cargs,
+        "workbench.label-erode": label_erode_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-erode": label_erode_outputs,
+        "workbench.label-erode": label_erode_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def label_erode_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-erode",
+        "@type": "workbench.label-erode",
         "label": label,
         "surface": surface,
         "erode_dist": erode_dist,
@@ -258,5 +258,8 @@ __all__ = [
     "LabelErodeOutputs",
     "LabelErodeParameters",
     "label_erode",
+    "label_erode_cargs",
+    "label_erode_execute",
+    "label_erode_outputs",
     "label_erode_params",
 ]

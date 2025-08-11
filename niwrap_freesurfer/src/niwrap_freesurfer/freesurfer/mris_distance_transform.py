@@ -14,7 +14,7 @@ MRIS_DISTANCE_TRANSFORM_METADATA = Metadata(
 
 
 MrisDistanceTransformParameters = typing.TypedDict('MrisDistanceTransformParameters', {
-    "__STYXTYPE__": typing.Literal["mris_distance_transform"],
+    "@type": typing.Literal["freesurfer.mris_distance_transform"],
     "surface": InputPathType,
     "label": InputPathType,
     "mode": typing.Literal["signed", "unsigned", "outside"],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_distance_transform": mris_distance_transform_cargs,
+        "freesurfer.mris_distance_transform": mris_distance_transform_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_distance_transform": mris_distance_transform_outputs,
+        "freesurfer.mris_distance_transform": mris_distance_transform_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def mris_distance_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_distance_transform",
+        "@type": "freesurfer.mris_distance_transform",
         "surface": surface,
         "label": label,
         "mode": mode,
@@ -246,5 +246,8 @@ __all__ = [
     "MrisDistanceTransformOutputs",
     "MrisDistanceTransformParameters",
     "mris_distance_transform",
+    "mris_distance_transform_cargs",
+    "mris_distance_transform_execute",
+    "mris_distance_transform_outputs",
     "mris_distance_transform_params",
 ]

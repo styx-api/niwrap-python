@@ -14,7 +14,7 @@ V__DIFF_TREE_METADATA = Metadata(
 
 
 VDiffTreeParameters = typing.TypedDict('VDiffTreeParameters', {
-    "__STYXTYPE__": typing.Literal["@diff.tree"],
+    "@type": typing.Literal["afni.@diff.tree"],
     "new_dir": str,
     "old_dir": str,
     "diff_opts": typing.NotRequired[str | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@diff.tree": v__diff_tree_cargs,
+        "afni.@diff.tree": v__diff_tree_cargs,
     }.get(t)
 
 
@@ -124,7 +124,7 @@ def v__diff_tree_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@diff.tree",
+        "@type": "afni.@diff.tree",
         "new_dir": new_dir,
         "old_dir": old_dir,
         "ignore_missing": ignore_missing,
@@ -354,5 +354,8 @@ __all__ = [
     "VDiffTreeParameters",
     "V__DIFF_TREE_METADATA",
     "v__diff_tree",
+    "v__diff_tree_cargs",
+    "v__diff_tree_execute",
+    "v__diff_tree_outputs",
     "v__diff_tree_params",
 ]

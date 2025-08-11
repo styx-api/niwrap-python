@@ -14,7 +14,7 @@ SURFACE_CLOSEST_VERTEX_METADATA = Metadata(
 
 
 SurfaceClosestVertexParameters = typing.TypedDict('SurfaceClosestVertexParameters', {
-    "__STYXTYPE__": typing.Literal["surface-closest-vertex"],
+    "@type": typing.Literal["workbench.surface-closest-vertex"],
     "surface": InputPathType,
     "coord_list_file": str,
     "vertex_list_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-closest-vertex": surface_closest_vertex_cargs,
+        "workbench.surface-closest-vertex": surface_closest_vertex_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_closest_vertex_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-closest-vertex",
+        "@type": "workbench.surface-closest-vertex",
         "surface": surface,
         "coord_list_file": coord_list_file,
         "vertex_list_out": vertex_list_out,
@@ -199,5 +199,8 @@ __all__ = [
     "SurfaceClosestVertexOutputs",
     "SurfaceClosestVertexParameters",
     "surface_closest_vertex",
+    "surface_closest_vertex_cargs",
+    "surface_closest_vertex_execute",
+    "surface_closest_vertex_outputs",
     "surface_closest_vertex_params",
 ]

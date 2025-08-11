@@ -14,7 +14,7 @@ FSLMERGE_METADATA = Metadata(
 
 
 FslmergeParameters = typing.TypedDict('FslmergeParameters', {
-    "__STYXTYPE__": typing.Literal["fslmerge"],
+    "@type": typing.Literal["fsl.fslmerge"],
     "merge_time": bool,
     "merge_x": bool,
     "merge_y": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslmerge": fslmerge_cargs,
+        "fsl.fslmerge": fslmerge_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslmerge": fslmerge_outputs,
+        "fsl.fslmerge": fslmerge_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def fslmerge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslmerge",
+        "@type": "fsl.fslmerge",
         "merge_time": merge_time,
         "merge_x": merge_x,
         "merge_y": merge_y,
@@ -263,5 +263,8 @@ __all__ = [
     "FslmergeOutputs",
     "FslmergeParameters",
     "fslmerge",
+    "fslmerge_cargs",
+    "fslmerge_execute",
+    "fslmerge_outputs",
     "fslmerge_params",
 ]

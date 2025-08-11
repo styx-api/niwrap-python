@@ -14,7 +14,7 @@ MKXSUBJREG_METADATA = Metadata(
 
 
 MkxsubjregParameters = typing.TypedDict('MkxsubjregParameters', {
-    "__STYXTYPE__": typing.Literal["mkxsubjreg"],
+    "@type": typing.Literal["freesurfer.mkxsubjreg"],
     "srcreg": InputPathType,
     "targreg": InputPathType,
     "targsubj": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mkxsubjreg": mkxsubjreg_cargs,
+        "freesurfer.mkxsubjreg": mkxsubjreg_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mkxsubjreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mkxsubjreg",
+        "@type": "freesurfer.mkxsubjreg",
         "srcreg": srcreg,
         "targreg": targreg,
         "help": help_,
@@ -256,5 +256,8 @@ __all__ = [
     "MkxsubjregOutputs",
     "MkxsubjregParameters",
     "mkxsubjreg",
+    "mkxsubjreg_cargs",
+    "mkxsubjreg_execute",
+    "mkxsubjreg_outputs",
     "mkxsubjreg_params",
 ]

@@ -14,7 +14,7 @@ V__FAST_ROI_METADATA = Metadata(
 
 
 VFastRoiParameters = typing.TypedDict('VFastRoiParameters', {
-    "__STYXTYPE__": typing.Literal["@fast_roi"],
+    "@type": typing.Literal["afni.@fast_roi"],
     "region": list[str],
     "drawn_roi": typing.NotRequired[InputPathType | None],
     "anat": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@fast_roi": v__fast_roi_cargs,
+        "afni.@fast_roi": v__fast_roi_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@fast_roi": v__fast_roi_outputs,
+        "afni.@fast_roi": v__fast_roi_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def v__fast_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@fast_roi",
+        "@type": "afni.@fast_roi",
         "region": region,
         "anat": anat,
         "base": base,
@@ -286,5 +286,8 @@ __all__ = [
     "VFastRoiParameters",
     "V__FAST_ROI_METADATA",
     "v__fast_roi",
+    "v__fast_roi_cargs",
+    "v__fast_roi_execute",
+    "v__fast_roi_outputs",
     "v__fast_roi_params",
 ]

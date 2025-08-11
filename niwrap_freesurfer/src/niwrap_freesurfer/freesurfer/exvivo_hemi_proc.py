@@ -14,7 +14,7 @@ EXVIVO_HEMI_PROC_METADATA = Metadata(
 
 
 ExvivoHemiProcParameters = typing.TypedDict('ExvivoHemiProcParameters', {
-    "__STYXTYPE__": typing.Literal["exvivo-hemi-proc"],
+    "@type": typing.Literal["freesurfer.exvivo-hemi-proc"],
     "flashdir": str,
     "outdir": str,
     "subject": str,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "exvivo-hemi-proc": exvivo_hemi_proc_cargs,
+        "freesurfer.exvivo-hemi-proc": exvivo_hemi_proc_cargs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def exvivo_hemi_proc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "exvivo-hemi-proc",
+        "@type": "freesurfer.exvivo-hemi-proc",
         "flashdir": flashdir,
         "outdir": outdir,
         "subject": subject,
@@ -315,5 +315,8 @@ __all__ = [
     "ExvivoHemiProcOutputs",
     "ExvivoHemiProcParameters",
     "exvivo_hemi_proc",
+    "exvivo_hemi_proc_cargs",
+    "exvivo_hemi_proc_execute",
+    "exvivo_hemi_proc_outputs",
     "exvivo_hemi_proc_params",
 ]

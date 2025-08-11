@@ -14,7 +14,7 @@ FOCI_GET_PROJECTION_VERTEX_METADATA = Metadata(
 
 
 FociGetProjectionVertexParameters = typing.TypedDict('FociGetProjectionVertexParameters', {
-    "__STYXTYPE__": typing.Literal["foci-get-projection-vertex"],
+    "@type": typing.Literal["workbench.foci-get-projection-vertex"],
     "foci": InputPathType,
     "surface": InputPathType,
     "metric_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "foci-get-projection-vertex": foci_get_projection_vertex_cargs,
+        "workbench.foci-get-projection-vertex": foci_get_projection_vertex_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "foci-get-projection-vertex": foci_get_projection_vertex_outputs,
+        "workbench.foci-get-projection-vertex": foci_get_projection_vertex_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def foci_get_projection_vertex_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "foci-get-projection-vertex",
+        "@type": "workbench.foci-get-projection-vertex",
         "foci": foci,
         "surface": surface,
         "metric_out": metric_out,
@@ -210,5 +210,8 @@ __all__ = [
     "FociGetProjectionVertexOutputs",
     "FociGetProjectionVertexParameters",
     "foci_get_projection_vertex",
+    "foci_get_projection_vertex_cargs",
+    "foci_get_projection_vertex_execute",
+    "foci_get_projection_vertex_outputs",
     "foci_get_projection_vertex_params",
 ]

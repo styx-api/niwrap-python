@@ -14,7 +14,7 @@ FDR_METADATA = Metadata(
 
 
 FdrParameters = typing.TypedDict('FdrParameters', {
-    "__STYXTYPE__": typing.Literal["fdr"],
+    "@type": typing.Literal["fsl.fdr"],
     "infile": InputPathType,
     "maskfile": typing.NotRequired[InputPathType | None],
     "qvalue": typing.NotRequired[float | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fdr": fdr_cargs,
+        "fsl.fdr": fdr_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fdr": fdr_outputs,
+        "fsl.fdr": fdr_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def fdr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fdr",
+        "@type": "fsl.fdr",
         "infile": infile,
         "othresh_flag": othresh_flag,
         "order_flag": order_flag,
@@ -296,5 +296,8 @@ __all__ = [
     "FdrOutputs",
     "FdrParameters",
     "fdr",
+    "fdr_cargs",
+    "fdr_execute",
+    "fdr_outputs",
     "fdr_params",
 ]

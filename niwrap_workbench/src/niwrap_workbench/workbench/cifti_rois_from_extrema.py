@@ -14,14 +14,14 @@ CIFTI_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 CiftiRoisFromExtremaGaussianParameters = typing.TypedDict('CiftiRoisFromExtremaGaussianParameters', {
-    "__STYXTYPE__": typing.Literal["gaussian"],
+    "@type": typing.Literal["workbench.cifti-rois-from-extrema.gaussian"],
     "surf_sigma": float,
     "vol_sigma": float,
 })
 
 
 CiftiRoisFromExtremaParameters = typing.TypedDict('CiftiRoisFromExtremaParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-rois-from-extrema"],
+    "@type": typing.Literal["workbench.cifti-rois-from-extrema"],
     "cifti": InputPathType,
     "surf_limit": float,
     "vol_limit": float,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-rois-from-extrema": cifti_rois_from_extrema_cargs,
-        "gaussian": cifti_rois_from_extrema_gaussian_cargs,
+        "workbench.cifti-rois-from-extrema": cifti_rois_from_extrema_cargs,
+        "workbench.cifti-rois-from-extrema.gaussian": cifti_rois_from_extrema_gaussian_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-rois-from-extrema": cifti_rois_from_extrema_outputs,
+        "workbench.cifti-rois-from-extrema": cifti_rois_from_extrema_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def cifti_rois_from_extrema_gaussian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gaussian",
+        "@type": "workbench.cifti-rois-from-extrema.gaussian",
         "surf_sigma": surf_sigma,
         "vol_sigma": vol_sigma,
     }
@@ -157,7 +157,7 @@ def cifti_rois_from_extrema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-rois-from-extrema",
+        "@type": "workbench.cifti-rois-from-extrema",
         "cifti": cifti,
         "surf_limit": surf_limit,
         "vol_limit": vol_limit,
@@ -215,7 +215,7 @@ def cifti_rois_from_extrema_cargs(
             execution.input_file(params.get("opt_cerebellum_surface_surface"))
         ])
     if params.get("gaussian") is not None:
-        cargs.extend(dyn_cargs(params.get("gaussian")["__STYXTYPE__"])(params.get("gaussian"), execution))
+        cargs.extend(dyn_cargs(params.get("gaussian")["@type"])(params.get("gaussian"), execution))
     if params.get("opt_overlap_logic_method") is not None:
         cargs.extend([
             "-overlap-logic",
@@ -354,6 +354,10 @@ __all__ = [
     "CiftiRoisFromExtremaOutputs",
     "CiftiRoisFromExtremaParameters",
     "cifti_rois_from_extrema",
+    "cifti_rois_from_extrema_cargs",
+    "cifti_rois_from_extrema_execute",
+    "cifti_rois_from_extrema_gaussian_cargs",
     "cifti_rois_from_extrema_gaussian_params",
+    "cifti_rois_from_extrema_outputs",
     "cifti_rois_from_extrema_params",
 ]

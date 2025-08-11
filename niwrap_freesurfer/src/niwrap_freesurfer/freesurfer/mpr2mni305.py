@@ -14,7 +14,7 @@ MPR2MNI305_METADATA = Metadata(
 
 
 Mpr2mni305Parameters = typing.TypedDict('Mpr2mni305Parameters', {
-    "__STYXTYPE__": typing.Literal["mpr2mni305"],
+    "@type": typing.Literal["freesurfer.mpr2mni305"],
     "mpr_anat": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mpr2mni305": mpr2mni305_cargs,
+        "freesurfer.mpr2mni305": mpr2mni305_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def mpr2mni305_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mpr2mni305",
+        "@type": "freesurfer.mpr2mni305",
         "mpr_anat": mpr_anat,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "Mpr2mni305Outputs",
     "Mpr2mni305Parameters",
     "mpr2mni305",
+    "mpr2mni305_cargs",
+    "mpr2mni305_execute",
+    "mpr2mni305_outputs",
     "mpr2mni305_params",
 ]

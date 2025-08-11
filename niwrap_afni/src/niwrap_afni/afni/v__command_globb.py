@@ -14,7 +14,7 @@ V__COMMAND_GLOBB_METADATA = Metadata(
 
 
 VCommandGlobbParameters = typing.TypedDict('VCommandGlobbParameters', {
-    "__STYXTYPE__": typing.Literal["@CommandGlobb"],
+    "@type": typing.Literal["afni.@CommandGlobb"],
     "program_command": str,
     "output_dir": str,
     "extension": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@CommandGlobb": v__command_globb_cargs,
+        "afni.@CommandGlobb": v__command_globb_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@CommandGlobb": v__command_globb_outputs,
+        "afni.@CommandGlobb": v__command_globb_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def v__command_globb_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@CommandGlobb",
+        "@type": "afni.@CommandGlobb",
         "program_command": program_command,
         "output_dir": output_dir,
         "brick_list": brick_list,
@@ -222,5 +222,8 @@ __all__ = [
     "VCommandGlobbParameters",
     "V__COMMAND_GLOBB_METADATA",
     "v__command_globb",
+    "v__command_globb_cargs",
+    "v__command_globb_execute",
+    "v__command_globb_outputs",
     "v__command_globb_params",
 ]

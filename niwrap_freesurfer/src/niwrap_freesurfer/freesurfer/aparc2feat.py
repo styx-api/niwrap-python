@@ -14,7 +14,7 @@ APARC2FEAT_METADATA = Metadata(
 
 
 Aparc2featParameters = typing.TypedDict('Aparc2featParameters', {
-    "__STYXTYPE__": typing.Literal["aparc2feat"],
+    "@type": typing.Literal["freesurfer.aparc2feat"],
     "feat_directories": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "hemi": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "aparc2feat": aparc2feat_cargs,
+        "freesurfer.aparc2feat": aparc2feat_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "aparc2feat": aparc2feat_outputs,
+        "freesurfer.aparc2feat": aparc2feat_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def aparc2feat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "aparc2feat",
+        "@type": "freesurfer.aparc2feat",
         "feat_directories": feat_directories,
         "annot_a2005s_flag": annot_a2005s_flag,
         "annot_a2009s_flag": annot_a2009s_flag,
@@ -268,5 +268,8 @@ __all__ = [
     "Aparc2featOutputs",
     "Aparc2featParameters",
     "aparc2feat",
+    "aparc2feat_cargs",
+    "aparc2feat_execute",
+    "aparc2feat_outputs",
     "aparc2feat_params",
 ]

@@ -14,7 +14,7 @@ MRIS_SMOOTH_METADATA = Metadata(
 
 
 MrisSmoothParameters = typing.TypedDict('MrisSmoothParameters', {
-    "__STYXTYPE__": typing.Literal["mris_smooth"],
+    "@type": typing.Literal["freesurfer.mris_smooth"],
     "input_surface": InputPathType,
     "output_surface": str,
     "average_iters": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_smooth": mris_smooth_cargs,
+        "freesurfer.mris_smooth": mris_smooth_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_smooth": mris_smooth_outputs,
+        "freesurfer.mris_smooth": mris_smooth_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def mris_smooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_smooth",
+        "@type": "freesurfer.mris_smooth",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "no_write": no_write,
@@ -305,5 +305,8 @@ __all__ = [
     "MrisSmoothOutputs",
     "MrisSmoothParameters",
     "mris_smooth",
+    "mris_smooth_cargs",
+    "mris_smooth_execute",
+    "mris_smooth_outputs",
     "mris_smooth_params",
 ]

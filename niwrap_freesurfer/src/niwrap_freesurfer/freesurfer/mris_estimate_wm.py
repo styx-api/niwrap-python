@@ -14,7 +14,7 @@ MRIS_ESTIMATE_WM_METADATA = Metadata(
 
 
 MrisEstimateWmParameters = typing.TypedDict('MrisEstimateWmParameters', {
-    "__STYXTYPE__": typing.Literal["mris_estimate_wm"],
+    "@type": typing.Literal["freesurfer.mris_estimate_wm"],
     "subjs": list[str],
     "hemi": str,
     "sdir": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_estimate_wm": mris_estimate_wm_cargs,
+        "freesurfer.mris_estimate_wm": mris_estimate_wm_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def mris_estimate_wm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_estimate_wm",
+        "@type": "freesurfer.mris_estimate_wm",
         "subjs": subjs,
         "hemi": hemi,
         "gpu": gpu,
@@ -261,5 +261,8 @@ __all__ = [
     "MrisEstimateWmOutputs",
     "MrisEstimateWmParameters",
     "mris_estimate_wm",
+    "mris_estimate_wm_cargs",
+    "mris_estimate_wm_execute",
+    "mris_estimate_wm_outputs",
     "mris_estimate_wm_params",
 ]

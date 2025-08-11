@@ -14,7 +14,7 @@ VERTEXVOL_METADATA = Metadata(
 
 
 VertexvolParameters = typing.TypedDict('VertexvolParameters', {
-    "__STYXTYPE__": typing.Literal["vertexvol"],
+    "@type": typing.Literal["freesurfer.vertexvol"],
     "subject": str,
     "left_hemisphere": bool,
     "right_hemisphere": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vertexvol": vertexvol_cargs,
+        "freesurfer.vertexvol": vertexvol_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "vertexvol": vertexvol_outputs,
+        "freesurfer.vertexvol": vertexvol_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def vertexvol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vertexvol",
+        "@type": "freesurfer.vertexvol",
         "subject": subject,
         "left_hemisphere": left_hemisphere,
         "right_hemisphere": right_hemisphere,
@@ -224,5 +224,8 @@ __all__ = [
     "VertexvolOutputs",
     "VertexvolParameters",
     "vertexvol",
+    "vertexvol_cargs",
+    "vertexvol_execute",
+    "vertexvol_outputs",
     "vertexvol_params",
 ]

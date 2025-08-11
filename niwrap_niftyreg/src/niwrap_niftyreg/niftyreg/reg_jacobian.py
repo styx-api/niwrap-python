@@ -14,7 +14,7 @@ REG_JACOBIAN_METADATA = Metadata(
 
 
 RegJacobianParameters = typing.TypedDict('RegJacobianParameters', {
-    "__STYXTYPE__": typing.Literal["reg_jacobian"],
+    "@type": typing.Literal["niftyreg.reg_jacobian"],
     "reference_image": InputPathType,
     "deformation_field": typing.NotRequired[InputPathType | None],
     "control_point_lattice": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg_jacobian": reg_jacobian_cargs,
+        "niftyreg.reg_jacobian": reg_jacobian_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg_jacobian": reg_jacobian_outputs,
+        "niftyreg.reg_jacobian": reg_jacobian_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def reg_jacobian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg_jacobian",
+        "@type": "niftyreg.reg_jacobian",
         "reference_image": reference_image,
     }
     if deformation_field is not None:
@@ -271,5 +271,8 @@ __all__ = [
     "RegJacobianOutputs",
     "RegJacobianParameters",
     "reg_jacobian",
+    "reg_jacobian_cargs",
+    "reg_jacobian_execute",
+    "reg_jacobian_outputs",
     "reg_jacobian_params",
 ]

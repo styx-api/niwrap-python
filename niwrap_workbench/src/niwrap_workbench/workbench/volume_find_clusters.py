@@ -14,7 +14,7 @@ VOLUME_FIND_CLUSTERS_METADATA = Metadata(
 
 
 VolumeFindClustersParameters = typing.TypedDict('VolumeFindClustersParameters', {
-    "__STYXTYPE__": typing.Literal["volume-find-clusters"],
+    "@type": typing.Literal["workbench.volume-find-clusters"],
     "volume_in": InputPathType,
     "value_threshold": float,
     "minimum_volume": float,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-find-clusters": volume_find_clusters_cargs,
+        "workbench.volume-find-clusters": volume_find_clusters_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-find-clusters": volume_find_clusters_outputs,
+        "workbench.volume-find-clusters": volume_find_clusters_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def volume_find_clusters_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-find-clusters",
+        "@type": "workbench.volume-find-clusters",
         "volume_in": volume_in,
         "value_threshold": value_threshold,
         "minimum_volume": minimum_volume,
@@ -303,5 +303,8 @@ __all__ = [
     "VolumeFindClustersOutputs",
     "VolumeFindClustersParameters",
     "volume_find_clusters",
+    "volume_find_clusters_cargs",
+    "volume_find_clusters_execute",
+    "volume_find_clusters_outputs",
     "volume_find_clusters_params",
 ]

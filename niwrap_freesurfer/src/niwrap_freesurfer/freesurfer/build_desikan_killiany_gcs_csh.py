@@ -14,7 +14,7 @@ BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA = Metadata(
 
 
 BuildDesikanKillianyGcsCshParameters = typing.TypedDict('BuildDesikanKillianyGcsCshParameters', {
-    "__STYXTYPE__": typing.Literal["build_desikan_killiany_gcs.csh"],
+    "@type": typing.Literal["freesurfer.build_desikan_killiany_gcs.csh"],
     "hemi": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "build_desikan_killiany_gcs.csh": build_desikan_killiany_gcs_csh_cargs,
+        "freesurfer.build_desikan_killiany_gcs.csh": build_desikan_killiany_gcs_csh_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def build_desikan_killiany_gcs_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "build_desikan_killiany_gcs.csh",
+        "@type": "freesurfer.build_desikan_killiany_gcs.csh",
         "hemi": hemi,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "BuildDesikanKillianyGcsCshOutputs",
     "BuildDesikanKillianyGcsCshParameters",
     "build_desikan_killiany_gcs_csh",
+    "build_desikan_killiany_gcs_csh_cargs",
+    "build_desikan_killiany_gcs_csh_execute",
+    "build_desikan_killiany_gcs_csh_outputs",
     "build_desikan_killiany_gcs_csh_params",
 ]

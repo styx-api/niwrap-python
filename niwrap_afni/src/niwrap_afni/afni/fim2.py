@@ -14,7 +14,7 @@ FIM2_METADATA = Metadata(
 
 
 Fim2Parameters = typing.TypedDict('Fim2Parameters', {
-    "__STYXTYPE__": typing.Literal["fim2"],
+    "@type": typing.Literal["afni.fim2"],
     "image_files": list[InputPathType],
     "pcnt": typing.NotRequired[float | None],
     "pcthresh": typing.NotRequired[float | None],
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fim2": fim2_cargs,
+        "afni.fim2": fim2_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fim2": fim2_outputs,
+        "afni.fim2": fim2_outputs,
     }.get(t)
 
 
@@ -157,7 +157,7 @@ def fim2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fim2",
+        "@type": "afni.fim2",
         "image_files": image_files,
         "non": non,
         "corr": corr,
@@ -461,5 +461,8 @@ __all__ = [
     "Fim2Outputs",
     "Fim2Parameters",
     "fim2",
+    "fim2_cargs",
+    "fim2_execute",
+    "fim2_outputs",
     "fim2_params",
 ]

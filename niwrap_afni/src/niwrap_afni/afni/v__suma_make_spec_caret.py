@@ -14,7 +14,7 @@ V__SUMA_MAKE_SPEC_CARET_METADATA = Metadata(
 
 
 VSumaMakeSpecCaretParameters = typing.TypedDict('VSumaMakeSpecCaretParameters', {
-    "__STYXTYPE__": typing.Literal["@SUMA_Make_Spec_Caret"],
+    "@type": typing.Literal["afni.@SUMA_Make_Spec_Caret"],
     "subject_id": str,
     "help": bool,
     "debug": typing.NotRequired[int | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@SUMA_Make_Spec_Caret": v__suma_make_spec_caret_cargs,
+        "afni.@SUMA_Make_Spec_Caret": v__suma_make_spec_caret_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@SUMA_Make_Spec_Caret": v__suma_make_spec_caret_outputs,
+        "afni.@SUMA_Make_Spec_Caret": v__suma_make_spec_caret_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v__suma_make_spec_caret_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@SUMA_Make_Spec_Caret",
+        "@type": "afni.@SUMA_Make_Spec_Caret",
         "subject_id": subject_id,
         "help": help_,
         "echo": echo,
@@ -239,5 +239,8 @@ __all__ = [
     "VSumaMakeSpecCaretParameters",
     "V__SUMA_MAKE_SPEC_CARET_METADATA",
     "v__suma_make_spec_caret",
+    "v__suma_make_spec_caret_cargs",
+    "v__suma_make_spec_caret_execute",
+    "v__suma_make_spec_caret_outputs",
     "v__suma_make_spec_caret_params",
 ]

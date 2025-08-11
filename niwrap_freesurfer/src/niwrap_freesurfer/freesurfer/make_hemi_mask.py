@@ -14,7 +14,7 @@ MAKE_HEMI_MASK_METADATA = Metadata(
 
 
 MakeHemiMaskParameters = typing.TypedDict('MakeHemiMaskParameters', {
-    "__STYXTYPE__": typing.Literal["make_hemi_mask"],
+    "@type": typing.Literal["freesurfer.make_hemi_mask"],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_hemi_mask": make_hemi_mask_cargs,
+        "freesurfer.make_hemi_mask": make_hemi_mask_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_hemi_mask": make_hemi_mask_outputs,
+        "freesurfer.make_hemi_mask": make_hemi_mask_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def make_hemi_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_hemi_mask",
+        "@type": "freesurfer.make_hemi_mask",
         "hemi": hemi,
         "input_file": input_file,
         "output_file": output_file,
@@ -192,5 +192,8 @@ __all__ = [
     "MakeHemiMaskOutputs",
     "MakeHemiMaskParameters",
     "make_hemi_mask",
+    "make_hemi_mask_cargs",
+    "make_hemi_mask_execute",
+    "make_hemi_mask_outputs",
     "make_hemi_mask_params",
 ]

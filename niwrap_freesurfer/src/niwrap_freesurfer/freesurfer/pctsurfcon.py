@@ -14,7 +14,7 @@ PCTSURFCON_METADATA = Metadata(
 
 
 PctsurfconParameters = typing.TypedDict('PctsurfconParameters', {
-    "__STYXTYPE__": typing.Literal["pctsurfcon"],
+    "@type": typing.Literal["freesurfer.pctsurfcon"],
     "subject": str,
     "fsvol": typing.NotRequired[str | None],
     "outbase": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pctsurfcon": pctsurfcon_cargs,
+        "freesurfer.pctsurfcon": pctsurfcon_cargs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def pctsurfcon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pctsurfcon",
+        "@type": "freesurfer.pctsurfcon",
         "subject": subject,
         "lh_only": lh_only,
         "rh_only": rh_only,
@@ -303,5 +303,8 @@ __all__ = [
     "PctsurfconOutputs",
     "PctsurfconParameters",
     "pctsurfcon",
+    "pctsurfcon_cargs",
+    "pctsurfcon_execute",
+    "pctsurfcon_outputs",
     "pctsurfcon_params",
 ]

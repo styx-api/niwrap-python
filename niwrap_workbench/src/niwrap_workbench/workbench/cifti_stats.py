@@ -14,14 +14,14 @@ CIFTI_STATS_METADATA = Metadata(
 
 
 CiftiStatsRoiParameters = typing.TypedDict('CiftiStatsRoiParameters', {
-    "__STYXTYPE__": typing.Literal["roi"],
+    "@type": typing.Literal["workbench.cifti-stats.roi"],
     "roi_cifti": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 CiftiStatsParameters = typing.TypedDict('CiftiStatsParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-stats"],
+    "@type": typing.Literal["workbench.cifti-stats"],
     "cifti_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],
@@ -43,8 +43,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-stats": cifti_stats_cargs,
-        "roi": cifti_stats_roi_cargs,
+        "workbench.cifti-stats": cifti_stats_cargs,
+        "workbench.cifti-stats.roi": cifti_stats_roi_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def cifti_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "roi",
+        "@type": "workbench.cifti-stats.roi",
         "roi_cifti": roi_cifti,
         "opt_match_maps": opt_match_maps,
     }
@@ -139,7 +139,7 @@ def cifti_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-stats",
+        "@type": "workbench.cifti-stats",
         "cifti_in": cifti_in,
         "opt_show_map_name": opt_show_map_name,
     }
@@ -187,7 +187,7 @@ def cifti_stats_cargs(
             str(params.get("opt_column_column"))
         ])
     if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["__STYXTYPE__"])(params.get("roi"), execution))
+        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
     if params.get("opt_show_map_name"):
         cargs.append("-show-map-name")
     return cargs
@@ -339,6 +339,10 @@ __all__ = [
     "CiftiStatsParameters",
     "CiftiStatsRoiParameters",
     "cifti_stats",
+    "cifti_stats_cargs",
+    "cifti_stats_execute",
+    "cifti_stats_outputs",
     "cifti_stats_params",
+    "cifti_stats_roi_cargs",
     "cifti_stats_roi_params",
 ]

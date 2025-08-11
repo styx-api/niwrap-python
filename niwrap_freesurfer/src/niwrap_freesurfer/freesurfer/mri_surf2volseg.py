@@ -14,7 +14,7 @@ MRI_SURF2VOLSEG_METADATA = Metadata(
 
 
 MriSurf2volsegParameters = typing.TypedDict('MriSurf2volsegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_surf2volseg"],
+    "@type": typing.Literal["freesurfer.mri_surf2volseg"],
     "input_segmentation": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "source_segmentation": typing.NotRequired[InputPathType | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_surf2volseg": mri_surf2volseg_cargs,
+        "freesurfer.mri_surf2volseg": mri_surf2volseg_cargs,
     }.get(t)
 
 
@@ -152,7 +152,7 @@ def mri_surf2volseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_surf2volseg",
+        "@type": "freesurfer.mri_surf2volseg",
         "label_cortex": label_cortex,
         "label_wm": label_wm,
         "rip_unknown": rip_unknown,
@@ -483,5 +483,8 @@ __all__ = [
     "MriSurf2volsegOutputs",
     "MriSurf2volsegParameters",
     "mri_surf2volseg",
+    "mri_surf2volseg_cargs",
+    "mri_surf2volseg_execute",
+    "mri_surf2volseg_outputs",
     "mri_surf2volseg_params",
 ]

@@ -14,7 +14,7 @@ FEATQUERY_METADATA = Metadata(
 
 
 FeatqueryParameters = typing.TypedDict('FeatqueryParameters', {
-    "__STYXTYPE__": typing.Literal["featquery"],
+    "@type": typing.Literal["fsl.featquery"],
     "n_featdirs": float,
     "featdirs": list[str],
     "n_stats": float,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "featquery": featquery_cargs,
+        "fsl.featquery": featquery_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "featquery": featquery_outputs,
+        "fsl.featquery": featquery_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def featquery_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "featquery",
+        "@type": "fsl.featquery",
         "n_featdirs": n_featdirs,
         "featdirs": featdirs,
         "n_stats": n_stats,
@@ -300,5 +300,8 @@ __all__ = [
     "FeatqueryOutputs",
     "FeatqueryParameters",
     "featquery",
+    "featquery_cargs",
+    "featquery_execute",
+    "featquery_outputs",
     "featquery_params",
 ]

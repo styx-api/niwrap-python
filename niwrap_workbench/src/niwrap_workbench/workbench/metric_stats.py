@@ -14,14 +14,14 @@ METRIC_STATS_METADATA = Metadata(
 
 
 MetricStatsRoiParameters = typing.TypedDict('MetricStatsRoiParameters', {
-    "__STYXTYPE__": typing.Literal["roi"],
+    "@type": typing.Literal["workbench.metric-stats.roi"],
     "roi_metric": InputPathType,
     "opt_match_maps": bool,
 })
 
 
 MetricStatsParameters = typing.TypedDict('MetricStatsParameters', {
-    "__STYXTYPE__": typing.Literal["metric-stats"],
+    "@type": typing.Literal["workbench.metric-stats"],
     "metric_in": InputPathType,
     "opt_reduce_operation": typing.NotRequired[str | None],
     "opt_percentile_percent": typing.NotRequired[float | None],
@@ -43,8 +43,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-stats": metric_stats_cargs,
-        "roi": metric_stats_roi_cargs,
+        "workbench.metric-stats": metric_stats_cargs,
+        "workbench.metric-stats.roi": metric_stats_roi_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def metric_stats_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "roi",
+        "@type": "workbench.metric-stats.roi",
         "roi_metric": roi_metric,
         "opt_match_maps": opt_match_maps,
     }
@@ -139,7 +139,7 @@ def metric_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-stats",
+        "@type": "workbench.metric-stats",
         "metric_in": metric_in,
         "opt_show_map_name": opt_show_map_name,
     }
@@ -187,7 +187,7 @@ def metric_stats_cargs(
             params.get("opt_column_column")
         ])
     if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["__STYXTYPE__"])(params.get("roi"), execution))
+        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
     if params.get("opt_show_map_name"):
         cargs.append("-show-map-name")
     return cargs
@@ -339,6 +339,10 @@ __all__ = [
     "MetricStatsParameters",
     "MetricStatsRoiParameters",
     "metric_stats",
+    "metric_stats_cargs",
+    "metric_stats_execute",
+    "metric_stats_outputs",
     "metric_stats_params",
+    "metric_stats_roi_cargs",
     "metric_stats_roi_params",
 ]

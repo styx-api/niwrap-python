@@ -14,7 +14,7 @@ MNI152REG_METADATA = Metadata(
 
 
 Mni152regParameters = typing.TypedDict('Mni152regParameters', {
-    "__STYXTYPE__": typing.Literal["mni152reg"],
+    "@type": typing.Literal["freesurfer.mni152reg"],
     "subject": str,
     "register_1mm": bool,
     "output": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mni152reg": mni152reg_cargs,
+        "freesurfer.mni152reg": mni152reg_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mni152reg": mni152reg_outputs,
+        "freesurfer.mni152reg": mni152reg_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def mni152reg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mni152reg",
+        "@type": "freesurfer.mni152reg",
         "subject": subject,
         "register_1mm": register_1mm,
         "symmetric": symmetric,
@@ -220,5 +220,8 @@ __all__ = [
     "Mni152regOutputs",
     "Mni152regParameters",
     "mni152reg",
+    "mni152reg_cargs",
+    "mni152reg_execute",
+    "mni152reg_outputs",
     "mni152reg_params",
 ]

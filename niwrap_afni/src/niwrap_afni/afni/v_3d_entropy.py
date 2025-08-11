@@ -14,7 +14,7 @@ V_3D_ENTROPY_METADATA = Metadata(
 
 
 V3dEntropyParameters = typing.TypedDict('V3dEntropyParameters', {
-    "__STYXTYPE__": typing.Literal["3dEntropy"],
+    "@type": typing.Literal["afni.3dEntropy"],
     "zskip": bool,
     "input_dataset": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dEntropy": v_3d_entropy_cargs,
+        "afni.3dEntropy": v_3d_entropy_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v_3d_entropy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dEntropy",
+        "@type": "afni.3dEntropy",
         "zskip": zskip,
         "input_dataset": input_dataset,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "V3dEntropyParameters",
     "V_3D_ENTROPY_METADATA",
     "v_3d_entropy",
+    "v_3d_entropy_cargs",
+    "v_3d_entropy_execute",
+    "v_3d_entropy_outputs",
     "v_3d_entropy_params",
 ]

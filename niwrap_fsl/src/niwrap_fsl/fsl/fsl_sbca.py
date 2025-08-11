@@ -14,7 +14,7 @@ FSL_SBCA_METADATA = Metadata(
 
 
 FslSbcaParameters = typing.TypedDict('FslSbcaParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_sbca"],
+    "@type": typing.Literal["fsl.fsl_sbca"],
     "infile": InputPathType,
     "seed": InputPathType,
     "target": InputPathType,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_sbca": fsl_sbca_cargs,
+        "fsl.fsl_sbca": fsl_sbca_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_sbca": fsl_sbca_outputs,
+        "fsl.fsl_sbca": fsl_sbca_outputs,
     }.get(t)
 
 
@@ -132,7 +132,7 @@ def fsl_sbca_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_sbca",
+        "@type": "fsl.fsl_sbca",
         "infile": infile,
         "seed": seed,
         "target": target,
@@ -358,5 +358,8 @@ __all__ = [
     "FslSbcaOutputs",
     "FslSbcaParameters",
     "fsl_sbca",
+    "fsl_sbca_cargs",
+    "fsl_sbca_execute",
+    "fsl_sbca_outputs",
     "fsl_sbca_params",
 ]

@@ -14,7 +14,7 @@ AUTO_WARP_PY_METADATA = Metadata(
 
 
 AutoWarpPyParameters = typing.TypedDict('AutoWarpPyParameters', {
-    "__STYXTYPE__": typing.Literal["auto_warp.py"],
+    "@type": typing.Literal["afni.auto_warp.py"],
     "base": InputPathType,
     "input": InputPathType,
     "skull_strip_input": bool,
@@ -63,7 +63,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "auto_warp.py": auto_warp_py_cargs,
+        "afni.auto_warp.py": auto_warp_py_cargs,
     }.get(t)
 
 
@@ -169,7 +169,7 @@ def auto_warp_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "auto_warp.py",
+        "@type": "afni.auto_warp.py",
         "base": base,
         "input": input_,
         "skull_strip_input": skull_strip_input,
@@ -523,5 +523,8 @@ __all__ = [
     "AutoWarpPyOutputs",
     "AutoWarpPyParameters",
     "auto_warp_py",
+    "auto_warp_py_cargs",
+    "auto_warp_py_execute",
+    "auto_warp_py_outputs",
     "auto_warp_py_params",
 ]

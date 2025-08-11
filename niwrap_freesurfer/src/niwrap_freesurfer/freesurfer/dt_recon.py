@@ -14,7 +14,7 @@ DT_RECON_METADATA = Metadata(
 
 
 DtReconParameters = typing.TypedDict('DtReconParameters', {
-    "__STYXTYPE__": typing.Literal["dt_recon"],
+    "@type": typing.Literal["freesurfer.dt_recon"],
     "input_volume": InputPathType,
     "bvals_bvecs": typing.NotRequired[str | None],
     "subject_id": str,
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dt_recon": dt_recon_cargs,
+        "freesurfer.dt_recon": dt_recon_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dt_recon": dt_recon_outputs,
+        "freesurfer.dt_recon": dt_recon_outputs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def dt_recon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dt_recon",
+        "@type": "freesurfer.dt_recon",
         "input_volume": input_volume,
         "subject_id": subject_id,
         "output_dir": output_dir,
@@ -380,5 +380,8 @@ __all__ = [
     "DtReconOutputs",
     "DtReconParameters",
     "dt_recon",
+    "dt_recon_cargs",
+    "dt_recon_execute",
+    "dt_recon_outputs",
     "dt_recon_params",
 ]

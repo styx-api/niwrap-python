@@ -14,7 +14,7 @@ V_3D_ECM_METADATA = Metadata(
 
 
 V3dEcmParameters = typing.TypedDict('V3dEcmParameters', {
-    "__STYXTYPE__": typing.Literal["3dECM"],
+    "@type": typing.Literal["afni.3dECM"],
     "in_file": InputPathType,
     "autoclip": bool,
     "automask": bool,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dECM": v_3d_ecm_cargs,
+        "afni.3dECM": v_3d_ecm_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dECM": v_3d_ecm_outputs,
+        "afni.3dECM": v_3d_ecm_outputs,
     }.get(t)
 
 
@@ -132,7 +132,7 @@ def v_3d_ecm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dECM",
+        "@type": "afni.3dECM",
         "in_file": in_file,
         "autoclip": autoclip,
         "automask": automask,
@@ -381,5 +381,8 @@ __all__ = [
     "V3dEcmParameters",
     "V_3D_ECM_METADATA",
     "v_3d_ecm",
+    "v_3d_ecm_cargs",
+    "v_3d_ecm_execute",
+    "v_3d_ecm_outputs",
     "v_3d_ecm_params",
 ]

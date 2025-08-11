@@ -14,7 +14,7 @@ FAT_PROC_ALIGN_ANAT_PAIR_METADATA = Metadata(
 
 
 FatProcAlignAnatPairParameters = typing.TypedDict('FatProcAlignAnatPairParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_align_anat_pair"],
+    "@type": typing.Literal["afni.fat_proc_align_anat_pair"],
     "input_t1w": InputPathType,
     "input_t2w": InputPathType,
     "output_prefix": str,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_align_anat_pair": fat_proc_align_anat_pair_cargs,
+        "afni.fat_proc_align_anat_pair": fat_proc_align_anat_pair_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_align_anat_pair": fat_proc_align_anat_pair_outputs,
+        "afni.fat_proc_align_anat_pair": fat_proc_align_anat_pair_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def fat_proc_align_anat_pair_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_align_anat_pair",
+        "@type": "afni.fat_proc_align_anat_pair",
         "input_t1w": input_t1w,
         "input_t2w": input_t2w,
         "output_prefix": output_prefix,
@@ -312,5 +312,8 @@ __all__ = [
     "FatProcAlignAnatPairOutputs",
     "FatProcAlignAnatPairParameters",
     "fat_proc_align_anat_pair",
+    "fat_proc_align_anat_pair_cargs",
+    "fat_proc_align_anat_pair_execute",
+    "fat_proc_align_anat_pair_outputs",
     "fat_proc_align_anat_pair_params",
 ]

@@ -14,7 +14,7 @@ CLUST_EXP_STAT_PARSE_PY_METADATA = Metadata(
 
 
 ClustExpStatParsePyParameters = typing.TypedDict('ClustExpStatParsePyParameters', {
-    "__STYXTYPE__": typing.Literal["ClustExp_StatParse.py"],
+    "@type": typing.Literal["afni.ClustExp_StatParse.py"],
     "statdset": InputPathType,
     "meanbrik": float,
     "threshbrik": float,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ClustExp_StatParse.py": clust_exp_stat_parse_py_cargs,
+        "afni.ClustExp_StatParse.py": clust_exp_stat_parse_py_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ClustExp_StatParse.py": clust_exp_stat_parse_py_outputs,
+        "afni.ClustExp_StatParse.py": clust_exp_stat_parse_py_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def clust_exp_stat_parse_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ClustExp_StatParse.py",
+        "@type": "afni.ClustExp_StatParse.py",
         "statdset": statdset,
         "meanbrik": meanbrik,
         "threshbrik": threshbrik,
@@ -342,5 +342,8 @@ __all__ = [
     "ClustExpStatParsePyOutputs",
     "ClustExpStatParsePyParameters",
     "clust_exp_stat_parse_py",
+    "clust_exp_stat_parse_py_cargs",
+    "clust_exp_stat_parse_py_execute",
+    "clust_exp_stat_parse_py_outputs",
     "clust_exp_stat_parse_py_params",
 ]

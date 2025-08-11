@@ -14,7 +14,7 @@ MRI_ROBUST_REGISTER_METADATA = Metadata(
 
 
 MriRobustRegisterParameters = typing.TypedDict('MriRobustRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_robust_register"],
+    "@type": typing.Literal["freesurfer.mri_robust_register"],
     "movable_volume": InputPathType,
     "target_volume": InputPathType,
     "output_registration": str,
@@ -79,7 +79,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_robust_register": mri_robust_register_cargs,
+        "freesurfer.mri_robust_register": mri_robust_register_cargs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_robust_register": mri_robust_register_outputs,
+        "freesurfer.mri_robust_register": mri_robust_register_outputs,
     }.get(t)
 
 
@@ -248,7 +248,7 @@ def mri_robust_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_robust_register",
+        "@type": "freesurfer.mri_robust_register",
         "movable_volume": movable_volume,
         "target_volume": target_volume,
         "output_registration": output_registration,
@@ -771,5 +771,8 @@ __all__ = [
     "MriRobustRegisterOutputs",
     "MriRobustRegisterParameters",
     "mri_robust_register",
+    "mri_robust_register_cargs",
+    "mri_robust_register_execute",
+    "mri_robust_register_outputs",
     "mri_robust_register_params",
 ]

@@ -14,7 +14,7 @@ MRIS_VOLMASK_NOVTK_METADATA = Metadata(
 
 
 MrisVolmaskNovtkParameters = typing.TypedDict('MrisVolmaskNovtkParameters', {
-    "__STYXTYPE__": typing.Literal["mris_volmask_novtk"],
+    "@type": typing.Literal["freesurfer.mris_volmask_novtk"],
     "io": str,
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_volmask_novtk": mris_volmask_novtk_cargs,
+        "freesurfer.mris_volmask_novtk": mris_volmask_novtk_cargs,
     }.get(t)
 
 
@@ -125,7 +125,7 @@ def mris_volmask_novtk_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_volmask_novtk",
+        "@type": "freesurfer.mris_volmask_novtk",
         "io": io_,
         "save_distance": save_distance,
         "lh_only": lh_only,
@@ -375,5 +375,8 @@ __all__ = [
     "MrisVolmaskNovtkOutputs",
     "MrisVolmaskNovtkParameters",
     "mris_volmask_novtk",
+    "mris_volmask_novtk_cargs",
+    "mris_volmask_novtk_execute",
+    "mris_volmask_novtk_outputs",
     "mris_volmask_novtk_params",
 ]

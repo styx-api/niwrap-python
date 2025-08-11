@@ -14,7 +14,7 @@ ADD_TO_SPEC_FILE_METADATA = Metadata(
 
 
 AddToSpecFileParameters = typing.TypedDict('AddToSpecFileParameters', {
-    "__STYXTYPE__": typing.Literal["add-to-spec-file"],
+    "@type": typing.Literal["workbench.add-to-spec-file"],
     "specfile": str,
     "structure": str,
     "filename": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "add-to-spec-file": add_to_spec_file_cargs,
+        "workbench.add-to-spec-file": add_to_spec_file_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def add_to_spec_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "add-to-spec-file",
+        "@type": "workbench.add-to-spec-file",
         "specfile": specfile,
         "structure": structure,
         "filename": filename,
@@ -263,5 +263,8 @@ __all__ = [
     "AddToSpecFileOutputs",
     "AddToSpecFileParameters",
     "add_to_spec_file",
+    "add_to_spec_file_cargs",
+    "add_to_spec_file_execute",
+    "add_to_spec_file_outputs",
     "add_to_spec_file_params",
 ]

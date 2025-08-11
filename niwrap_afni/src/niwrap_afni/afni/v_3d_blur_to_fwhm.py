@@ -14,7 +14,7 @@ V_3D_BLUR_TO_FWHM_METADATA = Metadata(
 
 
 V3dBlurToFwhmParameters = typing.TypedDict('V3dBlurToFwhmParameters', {
-    "__STYXTYPE__": typing.Literal["3dBlurToFWHM"],
+    "@type": typing.Literal["afni.3dBlurToFWHM"],
     "automask": bool,
     "blurmaster": typing.NotRequired[InputPathType | None],
     "fwhm": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dBlurToFWHM": v_3d_blur_to_fwhm_cargs,
+        "afni.3dBlurToFWHM": v_3d_blur_to_fwhm_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dBlurToFWHM": v_3d_blur_to_fwhm_outputs,
+        "afni.3dBlurToFWHM": v_3d_blur_to_fwhm_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def v_3d_blur_to_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dBlurToFWHM",
+        "@type": "afni.3dBlurToFWHM",
         "automask": automask,
         "in_file": in_file,
     }
@@ -263,5 +263,8 @@ __all__ = [
     "V3dBlurToFwhmParameters",
     "V_3D_BLUR_TO_FWHM_METADATA",
     "v_3d_blur_to_fwhm",
+    "v_3d_blur_to_fwhm_cargs",
+    "v_3d_blur_to_fwhm_execute",
+    "v_3d_blur_to_fwhm_outputs",
     "v_3d_blur_to_fwhm_params",
 ]

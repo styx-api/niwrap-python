@@ -14,7 +14,7 @@ TKREGISTERFV_METADATA = Metadata(
 
 
 TkregisterfvParameters = typing.TypedDict('TkregisterfvParameters', {
-    "__STYXTYPE__": typing.Literal["tkregisterfv"],
+    "@type": typing.Literal["freesurfer.tkregisterfv"],
     "mov": typing.NotRequired[InputPathType | None],
     "targ": typing.NotRequired[InputPathType | None],
     "reg": InputPathType,
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tkregisterfv": tkregisterfv_cargs,
+        "freesurfer.tkregisterfv": tkregisterfv_cargs,
     }.get(t)
 
 
@@ -165,7 +165,7 @@ def tkregisterfv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tkregisterfv",
+        "@type": "freesurfer.tkregisterfv",
         "reg": reg,
         "aseg_flag": aseg_flag,
         "aparc_aseg_flag": aparc_aseg_flag,
@@ -520,5 +520,8 @@ __all__ = [
     "TkregisterfvOutputs",
     "TkregisterfvParameters",
     "tkregisterfv",
+    "tkregisterfv_cargs",
+    "tkregisterfv_execute",
+    "tkregisterfv_outputs",
     "tkregisterfv_params",
 ]

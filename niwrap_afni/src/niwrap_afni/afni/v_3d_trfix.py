@@ -14,7 +14,7 @@ V_3D_TRFIX_METADATA = Metadata(
 
 
 V3dTrfixParameters = typing.TypedDict('V3dTrfixParameters', {
-    "__STYXTYPE__": typing.Literal["3dTRfix"],
+    "@type": typing.Literal["afni.3dTRfix"],
     "input_file": InputPathType,
     "tr_list": typing.NotRequired[InputPathType | None],
     "time_list": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTRfix": v_3d_trfix_cargs,
+        "afni.3dTRfix": v_3d_trfix_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTRfix": v_3d_trfix_outputs,
+        "afni.3dTRfix": v_3d_trfix_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def v_3d_trfix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTRfix",
+        "@type": "afni.3dTRfix",
         "input_file": input_file,
         "prefix": prefix,
     }
@@ -230,5 +230,8 @@ __all__ = [
     "V3dTrfixParameters",
     "V_3D_TRFIX_METADATA",
     "v_3d_trfix",
+    "v_3d_trfix_cargs",
+    "v_3d_trfix_execute",
+    "v_3d_trfix_outputs",
     "v_3d_trfix_params",
 ]

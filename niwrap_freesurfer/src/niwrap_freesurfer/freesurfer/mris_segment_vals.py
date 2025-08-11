@@ -14,7 +14,7 @@ MRIS_SEGMENT_VALS_METADATA = Metadata(
 
 
 MrisSegmentValsParameters = typing.TypedDict('MrisSegmentValsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_segment_vals"],
+    "@type": typing.Literal["freesurfer.mris_segment_vals"],
     "input_surface": InputPathType,
     "input_curv_file": InputPathType,
     "output_curv_file": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_segment_vals": mris_segment_vals_cargs,
+        "freesurfer.mris_segment_vals": mris_segment_vals_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_segment_vals": mris_segment_vals_outputs,
+        "freesurfer.mris_segment_vals": mris_segment_vals_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mris_segment_vals_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_segment_vals",
+        "@type": "freesurfer.mris_segment_vals",
         "input_surface": input_surface,
         "input_curv_file": input_curv_file,
         "output_curv_file": output_curv_file,
@@ -214,5 +214,8 @@ __all__ = [
     "MrisSegmentValsOutputs",
     "MrisSegmentValsParameters",
     "mris_segment_vals",
+    "mris_segment_vals_cargs",
+    "mris_segment_vals_execute",
+    "mris_segment_vals_outputs",
     "mris_segment_vals_params",
 ]

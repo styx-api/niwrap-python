@@ -14,32 +14,32 @@ FIXELCFESTATS_METADATA = Metadata(
 
 
 FixelcfestatsColumnParameters = typing.TypedDict('FixelcfestatsColumnParameters', {
-    "__STYXTYPE__": typing.Literal["column"],
+    "@type": typing.Literal["mrtrix.fixelcfestats.column"],
     "path": InputPathType,
 })
 
 
 FixelcfestatsConfigParameters = typing.TypedDict('FixelcfestatsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixelcfestats.config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcfestatsVariousStringParameters = typing.TypedDict('FixelcfestatsVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.fixelcfestats.VariousString"],
     "obj": str,
 })
 
 
 FixelcfestatsVariousFileParameters = typing.TypedDict('FixelcfestatsVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.fixelcfestats.VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelcfestatsParameters = typing.TypedDict('FixelcfestatsParameters', {
-    "__STYXTYPE__": typing.Literal["fixelcfestats"],
+    "@type": typing.Literal["mrtrix.fixelcfestats"],
     "mask": typing.NotRequired[InputPathType | None],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
@@ -90,11 +90,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixelcfestats": fixelcfestats_cargs,
-        "column": fixelcfestats_column_cargs,
-        "config": fixelcfestats_config_cargs,
-        "VariousString": fixelcfestats_various_string_cargs,
-        "VariousFile": fixelcfestats_various_file_cargs,
+        "mrtrix.fixelcfestats": fixelcfestats_cargs,
+        "mrtrix.fixelcfestats.column": fixelcfestats_column_cargs,
+        "mrtrix.fixelcfestats.config": fixelcfestats_config_cargs,
+        "mrtrix.fixelcfestats.VariousString": fixelcfestats_various_string_cargs,
+        "mrtrix.fixelcfestats.VariousFile": fixelcfestats_various_file_cargs,
     }.get(t)
 
 
@@ -128,7 +128,7 @@ def fixelcfestats_column_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "column",
+        "@type": "mrtrix.fixelcfestats.column",
         "path": path,
     }
     return params
@@ -167,7 +167,7 @@ def fixelcfestats_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixelcfestats.config",
         "key": key,
         "value": value,
     }
@@ -206,7 +206,7 @@ def fixelcfestats_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.fixelcfestats.VariousString",
         "obj": obj,
     }
     return params
@@ -242,7 +242,7 @@ def fixelcfestats_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.fixelcfestats.VariousFile",
         "obj": obj,
     }
     return params
@@ -392,7 +392,7 @@ def fixelcfestats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixelcfestats",
+        "@type": "mrtrix.fixelcfestats",
         "notest": notest,
         "strong": strong,
         "nonstationarity": nonstationarity,
@@ -551,7 +551,7 @@ def fixelcfestats_cargs(
     if params.get("fonly"):
         cargs.append("-fonly")
     if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("column")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -566,7 +566,7 @@ def fixelcfestats_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -575,7 +575,7 @@ def fixelcfestats_cargs(
     cargs.append(execution.input_file(params.get("subjects")))
     cargs.append(execution.input_file(params.get("design")))
     cargs.append(execution.input_file(params.get("contrast")))
-    cargs.extend(dyn_cargs(params.get("connectivity")["__STYXTYPE__"])(params.get("connectivity"), execution))
+    cargs.extend(dyn_cargs(params.get("connectivity")["@type"])(params.get("connectivity"), execution))
     cargs.append(params.get("out_fixel_directory"))
     return cargs
 
@@ -885,9 +885,16 @@ __all__ = [
     "FixelcfestatsVariousFileParameters",
     "FixelcfestatsVariousStringParameters",
     "fixelcfestats",
+    "fixelcfestats_cargs",
+    "fixelcfestats_column_cargs",
     "fixelcfestats_column_params",
+    "fixelcfestats_config_cargs",
     "fixelcfestats_config_params",
+    "fixelcfestats_execute",
+    "fixelcfestats_outputs",
     "fixelcfestats_params",
+    "fixelcfestats_various_file_cargs",
     "fixelcfestats_various_file_params",
+    "fixelcfestats_various_string_cargs",
     "fixelcfestats_various_string_params",
 ]

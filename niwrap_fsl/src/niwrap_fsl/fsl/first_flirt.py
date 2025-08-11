@@ -14,7 +14,7 @@ FIRST_FLIRT_METADATA = Metadata(
 
 
 FirstFlirtParameters = typing.TypedDict('FirstFlirtParameters', {
-    "__STYXTYPE__": typing.Literal["first_flirt"],
+    "@type": typing.Literal["fsl.first_flirt"],
     "input_image": InputPathType,
     "output_basename": str,
     "already_brain_extracted_flag": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "first_flirt": first_flirt_cargs,
+        "fsl.first_flirt": first_flirt_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "first_flirt": first_flirt_outputs,
+        "fsl.first_flirt": first_flirt_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def first_flirt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "first_flirt",
+        "@type": "fsl.first_flirt",
         "input_image": input_image,
         "output_basename": output_basename,
         "already_brain_extracted_flag": already_brain_extracted_flag,
@@ -258,5 +258,8 @@ __all__ = [
     "FirstFlirtOutputs",
     "FirstFlirtParameters",
     "first_flirt",
+    "first_flirt_cargs",
+    "first_flirt_execute",
+    "first_flirt_outputs",
     "first_flirt_params",
 ]

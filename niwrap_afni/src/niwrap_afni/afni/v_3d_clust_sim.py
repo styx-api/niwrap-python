@@ -14,7 +14,7 @@ V_3D_CLUST_SIM_METADATA = Metadata(
 
 
 V3dClustSimParameters = typing.TypedDict('V3dClustSimParameters', {
-    "__STYXTYPE__": typing.Literal["3dClustSim"],
+    "@type": typing.Literal["afni.3dClustSim"],
     "nxyz": typing.NotRequired[str | None],
     "dxyz": typing.NotRequired[str | None],
     "ball": bool,
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dClustSim": v_3d_clust_sim_cargs,
+        "afni.3dClustSim": v_3d_clust_sim_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dClustSim": v_3d_clust_sim_outputs,
+        "afni.3dClustSim": v_3d_clust_sim_outputs,
     }.get(t)
 
 
@@ -156,7 +156,7 @@ def v_3d_clust_sim_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dClustSim",
+        "@type": "afni.3dClustSim",
         "ball": ball,
         "oksmallmask": oksmallmask,
         "nopad": nopad,
@@ -445,5 +445,8 @@ __all__ = [
     "V3dClustSimParameters",
     "V_3D_CLUST_SIM_METADATA",
     "v_3d_clust_sim",
+    "v_3d_clust_sim_cargs",
+    "v_3d_clust_sim_execute",
+    "v_3d_clust_sim_outputs",
     "v_3d_clust_sim_params",
 ]

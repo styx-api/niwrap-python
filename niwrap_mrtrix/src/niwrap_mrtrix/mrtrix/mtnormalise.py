@@ -14,21 +14,21 @@ MTNORMALISE_METADATA = Metadata(
 
 
 MtnormaliseConfigParameters = typing.TypedDict('MtnormaliseConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mtnormalise.config"],
     "key": str,
     "value": str,
 })
 
 
 MtnormaliseInputOutputParameters = typing.TypedDict('MtnormaliseInputOutputParameters', {
-    "__STYXTYPE__": typing.Literal["input_output"],
+    "@type": typing.Literal["mrtrix.mtnormalise.input_output"],
     "input": InputPathType,
     "output": str,
 })
 
 
 MtnormaliseParameters = typing.TypedDict('MtnormaliseParameters', {
-    "__STYXTYPE__": typing.Literal["mtnormalise"],
+    "@type": typing.Literal["mrtrix.mtnormalise"],
     "mask": InputPathType,
     "order": typing.NotRequired[str | None],
     "niter": typing.NotRequired[list[int] | None],
@@ -61,9 +61,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mtnormalise": mtnormalise_cargs,
-        "config": mtnormalise_config_cargs,
-        "input_output": mtnormalise_input_output_cargs,
+        "mrtrix.mtnormalise": mtnormalise_cargs,
+        "mrtrix.mtnormalise.config": mtnormalise_config_cargs,
+        "mrtrix.mtnormalise.input_output": mtnormalise_input_output_cargs,
     }.get(t)
 
 
@@ -79,8 +79,8 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mtnormalise": mtnormalise_outputs,
-        "input_output": mtnormalise_input_output_outputs,
+        "mrtrix.mtnormalise": mtnormalise_outputs,
+        "mrtrix.mtnormalise.input_output": mtnormalise_input_output_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def mtnormalise_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mtnormalise.config",
         "key": key,
         "value": value,
     }
@@ -149,7 +149,7 @@ def mtnormalise_input_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "input_output",
+        "@type": "mrtrix.mtnormalise.input_output",
         "input": input_,
         "output": output,
     }
@@ -279,7 +279,7 @@ def mtnormalise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mtnormalise",
+        "@type": "mrtrix.mtnormalise",
         "mask": mask,
         "balanced": balanced,
         "info": info,
@@ -374,12 +374,12 @@ def mtnormalise_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
-    cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("input_output")] for a in c])
+    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("input_output")] for a in c])
     return cargs
 
 
@@ -401,7 +401,7 @@ def mtnormalise_outputs(
         check_norm=execution.output_file(params.get("check_norm")) if (params.get("check_norm") is not None) else None,
         check_mask=execution.output_file(params.get("check_mask")) if (params.get("check_mask") is not None) else None,
         check_factors=execution.output_file(params.get("check_factors")) if (params.get("check_factors") is not None) else None,
-        input_output=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("input_output")],
+        input_output=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("input_output")],
     )
     return ret
 
@@ -590,7 +590,13 @@ __all__ = [
     "MtnormaliseOutputs",
     "MtnormaliseParameters",
     "mtnormalise",
+    "mtnormalise_cargs",
+    "mtnormalise_config_cargs",
     "mtnormalise_config_params",
+    "mtnormalise_execute",
+    "mtnormalise_input_output_cargs",
+    "mtnormalise_input_output_outputs",
     "mtnormalise_input_output_params",
+    "mtnormalise_outputs",
     "mtnormalise_params",
 ]

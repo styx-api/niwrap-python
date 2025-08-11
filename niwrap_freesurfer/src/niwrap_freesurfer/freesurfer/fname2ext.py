@@ -14,7 +14,7 @@ FNAME2EXT_METADATA = Metadata(
 
 
 Fname2extParameters = typing.TypedDict('Fname2extParameters', {
-    "__STYXTYPE__": typing.Literal["fname2ext"],
+    "@type": typing.Literal["freesurfer.fname2ext"],
     "filename": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fname2ext": fname2ext_cargs,
+        "freesurfer.fname2ext": fname2ext_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fname2ext": fname2ext_outputs,
+        "freesurfer.fname2ext": fname2ext_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def fname2ext_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fname2ext",
+        "@type": "freesurfer.fname2ext",
         "filename": filename,
     }
     return params
@@ -174,5 +174,8 @@ __all__ = [
     "Fname2extOutputs",
     "Fname2extParameters",
     "fname2ext",
+    "fname2ext_cargs",
+    "fname2ext_execute",
+    "fname2ext_outputs",
     "fname2ext_params",
 ]

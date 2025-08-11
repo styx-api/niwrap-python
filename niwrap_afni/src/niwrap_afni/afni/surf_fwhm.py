@@ -14,7 +14,7 @@ SURF_FWHM_METADATA = Metadata(
 
 
 SurfFwhmParameters = typing.TypedDict('SurfFwhmParameters', {
-    "__STYXTYPE__": typing.Literal["SurfFWHM"],
+    "@type": typing.Literal["afni.SurfFWHM"],
     "input_file": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "surf_1": typing.NotRequired[str | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfFWHM": surf_fwhm_cargs,
+        "afni.SurfFWHM": surf_fwhm_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfFWHM": surf_fwhm_outputs,
+        "afni.SurfFWHM": surf_fwhm_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def surf_fwhm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfFWHM",
+        "@type": "afni.SurfFWHM",
         "input_file": input_file,
         "clean": clean,
         "ok_warn": ok_warn,
@@ -342,5 +342,8 @@ __all__ = [
     "SurfFwhmOutputs",
     "SurfFwhmParameters",
     "surf_fwhm",
+    "surf_fwhm_cargs",
+    "surf_fwhm_execute",
+    "surf_fwhm_outputs",
     "surf_fwhm_params",
 ]

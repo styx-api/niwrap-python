@@ -14,7 +14,7 @@ FIXUP_MNI_PATHS_METADATA = Metadata(
 
 
 FixupMniPathsParameters = typing.TypedDict('FixupMniPathsParameters', {
-    "__STYXTYPE__": typing.Literal["fixup_mni_paths"],
+    "@type": typing.Literal["freesurfer.fixup_mni_paths"],
     "verbose": bool,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixup_mni_paths": fixup_mni_paths_cargs,
+        "freesurfer.fixup_mni_paths": fixup_mni_paths_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixup_mni_paths": fixup_mni_paths_outputs,
+        "freesurfer.fixup_mni_paths": fixup_mni_paths_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def fixup_mni_paths_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixup_mni_paths",
+        "@type": "freesurfer.fixup_mni_paths",
         "verbose": verbose,
     }
     return params
@@ -209,5 +209,8 @@ __all__ = [
     "FixupMniPathsOutputs",
     "FixupMniPathsParameters",
     "fixup_mni_paths",
+    "fixup_mni_paths_cargs",
+    "fixup_mni_paths_execute",
+    "fixup_mni_paths_outputs",
     "fixup_mni_paths_params",
 ]

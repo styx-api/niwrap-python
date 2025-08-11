@@ -14,7 +14,7 @@ MRI_TRAIN_METADATA = Metadata(
 
 
 MriTrainParameters = typing.TypedDict('MriTrainParameters', {
-    "__STYXTYPE__": typing.Literal["mri_train"],
+    "@type": typing.Literal["freesurfer.mri_train"],
     "training_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_train": mri_train_cargs,
+        "freesurfer.mri_train": mri_train_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_train": mri_train_outputs,
+        "freesurfer.mri_train": mri_train_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_train",
+        "@type": "freesurfer.mri_train",
         "training_file": training_file,
         "output_file": output_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MriTrainOutputs",
     "MriTrainParameters",
     "mri_train",
+    "mri_train_cargs",
+    "mri_train_execute",
+    "mri_train_outputs",
     "mri_train_params",
 ]

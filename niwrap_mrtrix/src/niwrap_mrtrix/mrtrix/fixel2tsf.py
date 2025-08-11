@@ -14,14 +14,14 @@ FIXEL2TSF_METADATA = Metadata(
 
 
 Fixel2tsfConfigParameters = typing.TypedDict('Fixel2tsfConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixel2tsf.config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2tsfParameters = typing.TypedDict('Fixel2tsfParameters', {
-    "__STYXTYPE__": typing.Literal["fixel2tsf"],
+    "@type": typing.Literal["mrtrix.fixel2tsf"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -49,8 +49,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixel2tsf": fixel2tsf_cargs,
-        "config": fixel2tsf_config_cargs,
+        "mrtrix.fixel2tsf": fixel2tsf_cargs,
+        "mrtrix.fixel2tsf.config": fixel2tsf_config_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixel2tsf": fixel2tsf_outputs,
+        "mrtrix.fixel2tsf": fixel2tsf_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def fixel2tsf_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixel2tsf.config",
         "key": key,
         "value": value,
     }
@@ -160,7 +160,7 @@ def fixel2tsf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixel2tsf",
+        "@type": "mrtrix.fixel2tsf",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -214,7 +214,7 @@ def fixel2tsf_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -352,6 +352,10 @@ __all__ = [
     "Fixel2tsfOutputs",
     "Fixel2tsfParameters",
     "fixel2tsf",
+    "fixel2tsf_cargs",
+    "fixel2tsf_config_cargs",
     "fixel2tsf_config_params",
+    "fixel2tsf_execute",
+    "fixel2tsf_outputs",
     "fixel2tsf_params",
 ]

@@ -14,7 +14,7 @@ MCCUTUP_METADATA = Metadata(
 
 
 MccutupParameters = typing.TypedDict('MccutupParameters', {
-    "__STYXTYPE__": typing.Literal["mccutup"],
+    "@type": typing.Literal["fsl.mccutup"],
     "input": InputPathType,
     "output_file": typing.NotRequired[str | None],
     "param1": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mccutup": mccutup_cargs,
+        "fsl.mccutup": mccutup_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mccutup": mccutup_outputs,
+        "fsl.mccutup": mccutup_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mccutup_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mccutup",
+        "@type": "fsl.mccutup",
         "input": input_,
     }
     if output_file is not None:
@@ -211,5 +211,8 @@ __all__ = [
     "MccutupOutputs",
     "MccutupParameters",
     "mccutup",
+    "mccutup_cargs",
+    "mccutup_execute",
+    "mccutup_outputs",
     "mccutup_params",
 ]

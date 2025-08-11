@@ -14,26 +14,26 @@ TCKCONVERT_METADATA = Metadata(
 
 
 TckconvertConfigParameters = typing.TypedDict('TckconvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckconvert.config"],
     "key": str,
     "value": str,
 })
 
 
 TckconvertVariousStringParameters = typing.TypedDict('TckconvertVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.tckconvert.VariousString"],
     "obj": str,
 })
 
 
 TckconvertVariousFileParameters = typing.TypedDict('TckconvertVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.tckconvert.VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckconvertParameters = typing.TypedDict('TckconvertParameters', {
-    "__STYXTYPE__": typing.Literal["tckconvert"],
+    "@type": typing.Literal["mrtrix.tckconvert"],
     "scanner2voxel": typing.NotRequired[InputPathType | None],
     "scanner2image": typing.NotRequired[InputPathType | None],
     "voxel2scanner": typing.NotRequired[InputPathType | None],
@@ -69,10 +69,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckconvert": tckconvert_cargs,
-        "config": tckconvert_config_cargs,
-        "VariousString": tckconvert_various_string_cargs,
-        "VariousFile": tckconvert_various_file_cargs,
+        "mrtrix.tckconvert": tckconvert_cargs,
+        "mrtrix.tckconvert.config": tckconvert_config_cargs,
+        "mrtrix.tckconvert.VariousString": tckconvert_various_string_cargs,
+        "mrtrix.tckconvert.VariousFile": tckconvert_various_file_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tckconvert": tckconvert_outputs,
+        "mrtrix.tckconvert": tckconvert_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def tckconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckconvert.config",
         "key": key,
         "value": value,
     }
@@ -145,7 +145,7 @@ def tckconvert_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.tckconvert.VariousString",
         "obj": obj,
     }
     return params
@@ -181,7 +181,7 @@ def tckconvert_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.tckconvert.VariousFile",
         "obj": obj,
     }
     return params
@@ -277,7 +277,7 @@ def tckconvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckconvert",
+        "@type": "mrtrix.tckconvert",
         "dec": dec,
         "ascii": ascii_,
         "binary": binary,
@@ -381,12 +381,12 @@ def tckconvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
-    cargs.extend(dyn_cargs(params.get("input")["__STYXTYPE__"])(params.get("input"), execution))
+    cargs.extend(dyn_cargs(params.get("input")["@type"])(params.get("input"), execution))
     cargs.append(params.get("output"))
     return cargs
 
@@ -573,8 +573,14 @@ __all__ = [
     "TckconvertVariousFileParameters",
     "TckconvertVariousStringParameters",
     "tckconvert",
+    "tckconvert_cargs",
+    "tckconvert_config_cargs",
     "tckconvert_config_params",
+    "tckconvert_execute",
+    "tckconvert_outputs",
     "tckconvert_params",
+    "tckconvert_various_file_cargs",
     "tckconvert_various_file_params",
+    "tckconvert_various_string_cargs",
     "tckconvert_various_string_params",
 ]

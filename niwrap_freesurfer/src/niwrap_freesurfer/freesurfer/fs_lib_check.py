@@ -14,7 +14,7 @@ FS_LIB_CHECK_METADATA = Metadata(
 
 
 FsLibCheckParameters = typing.TypedDict('FsLibCheckParameters', {
-    "__STYXTYPE__": typing.Literal["fs_lib_check"],
+    "@type": typing.Literal["freesurfer.fs_lib_check"],
     "use_ldconfig": bool,
     "use_rpm": bool,
     "show_help": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_lib_check": fs_lib_check_cargs,
+        "freesurfer.fs_lib_check": fs_lib_check_cargs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def fs_lib_check_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_lib_check",
+        "@type": "freesurfer.fs_lib_check",
         "use_ldconfig": use_ldconfig,
         "use_rpm": use_rpm,
         "show_help": show_help,
@@ -208,5 +208,8 @@ __all__ = [
     "FsLibCheckOutputs",
     "FsLibCheckParameters",
     "fs_lib_check",
+    "fs_lib_check_cargs",
+    "fs_lib_check_execute",
+    "fs_lib_check_outputs",
     "fs_lib_check_params",
 ]

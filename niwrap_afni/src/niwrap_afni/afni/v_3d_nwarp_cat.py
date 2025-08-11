@@ -14,7 +14,7 @@ V_3D_NWARP_CAT_METADATA = Metadata(
 
 
 V3dNwarpCatParameters = typing.TypedDict('V3dNwarpCatParameters', {
-    "__STYXTYPE__": typing.Literal["3dNwarpCat"],
+    "@type": typing.Literal["afni.3dNwarpCat"],
     "interpolation": typing.NotRequired[str | None],
     "verbosity": bool,
     "output_prefix": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dNwarpCat": v_3d_nwarp_cat_cargs,
+        "afni.3dNwarpCat": v_3d_nwarp_cat_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dNwarpCat": v_3d_nwarp_cat_outputs,
+        "afni.3dNwarpCat": v_3d_nwarp_cat_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_3d_nwarp_cat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dNwarpCat",
+        "@type": "afni.3dNwarpCat",
         "verbosity": verbosity,
         "output_prefix": output_prefix,
         "warp1": warp1,
@@ -273,5 +273,8 @@ __all__ = [
     "V3dNwarpCatParameters",
     "V_3D_NWARP_CAT_METADATA",
     "v_3d_nwarp_cat",
+    "v_3d_nwarp_cat_cargs",
+    "v_3d_nwarp_cat_execute",
+    "v_3d_nwarp_cat_outputs",
     "v_3d_nwarp_cat_params",
 ]

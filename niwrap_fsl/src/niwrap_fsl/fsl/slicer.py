@@ -14,7 +14,7 @@ SLICER_METADATA = Metadata(
 
 
 SlicerParameters = typing.TypedDict('SlicerParameters', {
-    "__STYXTYPE__": typing.Literal["slicer"],
+    "@type": typing.Literal["fsl.slicer"],
     "in_file": InputPathType,
     "overlay_file": typing.NotRequired[InputPathType | None],
     "label_slices": bool,
@@ -53,7 +53,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slicer": slicer_cargs,
+        "fsl.slicer": slicer_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "slicer": slicer_outputs,
+        "fsl.slicer": slicer_outputs,
     }.get(t)
 
 
@@ -155,7 +155,7 @@ def slicer_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slicer",
+        "@type": "fsl.slicer",
         "in_file": in_file,
         "label_slices": label_slices,
         "dither_edges": dither_edges,
@@ -431,5 +431,8 @@ __all__ = [
     "SlicerOutputs",
     "SlicerParameters",
     "slicer",
+    "slicer_cargs",
+    "slicer_execute",
+    "slicer_outputs",
     "slicer_params",
 ]

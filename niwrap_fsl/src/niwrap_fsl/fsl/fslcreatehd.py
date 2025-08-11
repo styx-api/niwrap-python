@@ -14,7 +14,7 @@ FSLCREATEHD_METADATA = Metadata(
 
 
 FslcreatehdParameters = typing.TypedDict('FslcreatehdParameters', {
-    "__STYXTYPE__": typing.Literal["fslcreatehd"],
+    "@type": typing.Literal["fsl.fslcreatehd"],
     "xsize": float,
     "ysize": float,
     "zsize": float,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslcreatehd": fslcreatehd_cargs,
+        "fsl.fslcreatehd": fslcreatehd_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslcreatehd": fslcreatehd_outputs,
+        "fsl.fslcreatehd": fslcreatehd_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def fslcreatehd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslcreatehd",
+        "@type": "fsl.fslcreatehd",
         "xsize": xsize,
         "ysize": ysize,
         "zsize": zsize,
@@ -282,5 +282,8 @@ __all__ = [
     "FslcreatehdOutputs",
     "FslcreatehdParameters",
     "fslcreatehd",
+    "fslcreatehd_cargs",
+    "fslcreatehd_execute",
+    "fslcreatehd_outputs",
     "fslcreatehd_params",
 ]

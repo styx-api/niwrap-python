@@ -14,7 +14,7 @@ MRI_AVERAGE_METADATA = Metadata(
 
 
 MriAverageParameters = typing.TypedDict('MriAverageParameters', {
-    "__STYXTYPE__": typing.Literal["mri_average"],
+    "@type": typing.Literal["freesurfer.mri_average"],
     "input_volumes": list[InputPathType],
     "output_volume": str,
     "rigid_alignment": bool,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_average": mri_average_cargs,
+        "freesurfer.mri_average": mri_average_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_average": mri_average_outputs,
+        "freesurfer.mri_average": mri_average_outputs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def mri_average_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_average",
+        "@type": "freesurfer.mri_average",
         "input_volumes": input_volumes,
         "output_volume": output_volume,
         "rigid_alignment": rigid_alignment,
@@ -393,5 +393,8 @@ __all__ = [
     "MriAverageOutputs",
     "MriAverageParameters",
     "mri_average",
+    "mri_average_cargs",
+    "mri_average_execute",
+    "mri_average_outputs",
     "mri_average_params",
 ]

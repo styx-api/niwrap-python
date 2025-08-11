@@ -14,7 +14,7 @@ V_3D_SETUP_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dSetupGroupInCorrParameters = typing.TypedDict('V3dSetupGroupInCorrParameters', {
-    "__STYXTYPE__": typing.Literal["3dSetupGroupInCorr"],
+    "@type": typing.Literal["afni.3dSetupGroupInCorr"],
     "datasets": list[InputPathType],
     "mask_dataset": typing.NotRequired[InputPathType | None],
     "prefix": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSetupGroupInCorr": v_3d_setup_group_in_corr_cargs,
+        "afni.3dSetupGroupInCorr": v_3d_setup_group_in_corr_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSetupGroupInCorr": v_3d_setup_group_in_corr_outputs,
+        "afni.3dSetupGroupInCorr": v_3d_setup_group_in_corr_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def v_3d_setup_group_in_corr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSetupGroupInCorr",
+        "@type": "afni.3dSetupGroupInCorr",
         "datasets": datasets,
         "prefix": prefix,
         "short_flag": short_flag,
@@ -269,5 +269,8 @@ __all__ = [
     "V3dSetupGroupInCorrParameters",
     "V_3D_SETUP_GROUP_IN_CORR_METADATA",
     "v_3d_setup_group_in_corr",
+    "v_3d_setup_group_in_corr_cargs",
+    "v_3d_setup_group_in_corr_execute",
+    "v_3d_setup_group_in_corr_outputs",
     "v_3d_setup_group_in_corr_params",
 ]

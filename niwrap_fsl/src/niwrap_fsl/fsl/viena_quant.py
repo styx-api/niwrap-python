@@ -14,7 +14,7 @@ VIENA_QUANT_METADATA = Metadata(
 
 
 VienaQuantParameters = typing.TypedDict('VienaQuantParameters', {
-    "__STYXTYPE__": typing.Literal["viena_quant"],
+    "@type": typing.Literal["fsl.viena_quant"],
     "input1": InputPathType,
     "input2": InputPathType,
     "ventricle_mask": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "viena_quant": viena_quant_cargs,
+        "fsl.viena_quant": viena_quant_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "viena_quant": viena_quant_outputs,
+        "fsl.viena_quant": viena_quant_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def viena_quant_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "viena_quant",
+        "@type": "fsl.viena_quant",
         "input1": input1,
         "input2": input2,
         "ventricle_mask": ventricle_mask,
@@ -188,5 +188,8 @@ __all__ = [
     "VienaQuantOutputs",
     "VienaQuantParameters",
     "viena_quant",
+    "viena_quant_cargs",
+    "viena_quant_execute",
+    "viena_quant_outputs",
     "viena_quant_params",
 ]

@@ -14,7 +14,7 @@ ISOLATE_LABELS_KEEPORIGVAL_CSH_METADATA = Metadata(
 
 
 IsolateLabelsKeeporigvalCshParameters = typing.TypedDict('IsolateLabelsKeeporigvalCshParameters', {
-    "__STYXTYPE__": typing.Literal["isolate_labels_keeporigval.csh"],
+    "@type": typing.Literal["freesurfer.isolate_labels_keeporigval.csh"],
     "vol": InputPathType,
     "outprefix": str,
     "label": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "isolate_labels_keeporigval.csh": isolate_labels_keeporigval_csh_cargs,
+        "freesurfer.isolate_labels_keeporigval.csh": isolate_labels_keeporigval_csh_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "isolate_labels_keeporigval.csh": isolate_labels_keeporigval_csh_outputs,
+        "freesurfer.isolate_labels_keeporigval.csh": isolate_labels_keeporigval_csh_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def isolate_labels_keeporigval_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "isolate_labels_keeporigval.csh",
+        "@type": "freesurfer.isolate_labels_keeporigval.csh",
         "vol": vol,
         "outprefix": outprefix,
         "version": version,
@@ -221,5 +221,8 @@ __all__ = [
     "IsolateLabelsKeeporigvalCshOutputs",
     "IsolateLabelsKeeporigvalCshParameters",
     "isolate_labels_keeporigval_csh",
+    "isolate_labels_keeporigval_csh_cargs",
+    "isolate_labels_keeporigval_csh_execute",
+    "isolate_labels_keeporigval_csh_outputs",
     "isolate_labels_keeporigval_csh_params",
 ]

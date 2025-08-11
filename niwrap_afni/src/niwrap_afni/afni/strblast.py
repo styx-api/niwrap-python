@@ -14,7 +14,7 @@ STRBLAST_METADATA = Metadata(
 
 
 StrblastParameters = typing.TypedDict('StrblastParameters', {
-    "__STYXTYPE__": typing.Literal["strblast"],
+    "@type": typing.Literal["afni.strblast"],
     "targetstring": str,
     "input_files": list[InputPathType],
     "new_char": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "strblast": strblast_cargs,
+        "afni.strblast": strblast_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def strblast_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "strblast",
+        "@type": "afni.strblast",
         "targetstring": targetstring,
         "input_files": input_files,
         "unescape": unescape,
@@ -235,5 +235,8 @@ __all__ = [
     "StrblastOutputs",
     "StrblastParameters",
     "strblast",
+    "strblast_cargs",
+    "strblast_execute",
+    "strblast_outputs",
     "strblast_params",
 ]

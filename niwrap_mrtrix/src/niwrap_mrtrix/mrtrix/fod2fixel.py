@@ -14,14 +14,14 @@ FOD2FIXEL_METADATA = Metadata(
 
 
 Fod2fixelConfigParameters = typing.TypedDict('Fod2fixelConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fod2fixel.config"],
     "key": str,
     "value": str,
 })
 
 
 Fod2fixelParameters = typing.TypedDict('Fod2fixelParameters', {
-    "__STYXTYPE__": typing.Literal["fod2fixel"],
+    "@type": typing.Literal["mrtrix.fod2fixel"],
     "afd": typing.NotRequired[str | None],
     "peak_amp": typing.NotRequired[str | None],
     "disp": typing.NotRequired[str | None],
@@ -58,8 +58,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fod2fixel": fod2fixel_cargs,
-        "config": fod2fixel_config_cargs,
+        "mrtrix.fod2fixel": fod2fixel_cargs,
+        "mrtrix.fod2fixel.config": fod2fixel_config_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fod2fixel": fod2fixel_outputs,
+        "mrtrix.fod2fixel": fod2fixel_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def fod2fixel_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fod2fixel.config",
         "key": key,
         "value": value,
     }
@@ -212,7 +212,7 @@ def fod2fixel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fod2fixel",
+        "@type": "mrtrix.fod2fixel",
         "fmls_no_thresholds": fmls_no_thresholds,
         "nii": nii,
         "dirpeak": dirpeak,
@@ -323,7 +323,7 @@ def fod2fixel_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -525,6 +525,10 @@ __all__ = [
     "Fod2fixelOutputs",
     "Fod2fixelParameters",
     "fod2fixel",
+    "fod2fixel_cargs",
+    "fod2fixel_config_cargs",
     "fod2fixel_config_params",
+    "fod2fixel_execute",
+    "fod2fixel_outputs",
     "fod2fixel_params",
 ]

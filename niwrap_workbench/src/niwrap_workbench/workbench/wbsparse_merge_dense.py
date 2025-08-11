@@ -14,13 +14,13 @@ WBSPARSE_MERGE_DENSE_METADATA = Metadata(
 
 
 WbsparseMergeDenseWbsparseParameters = typing.TypedDict('WbsparseMergeDenseWbsparseParameters', {
-    "__STYXTYPE__": typing.Literal["wbsparse"],
+    "@type": typing.Literal["workbench.wbsparse-merge-dense.wbsparse"],
     "wbsparse_in": str,
 })
 
 
 WbsparseMergeDenseParameters = typing.TypedDict('WbsparseMergeDenseParameters', {
-    "__STYXTYPE__": typing.Literal["wbsparse-merge-dense"],
+    "@type": typing.Literal["workbench.wbsparse-merge-dense"],
     "direction": str,
     "wbsparse_out": str,
     "wbsparse": typing.NotRequired[list[WbsparseMergeDenseWbsparseParameters] | None],
@@ -39,8 +39,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "wbsparse-merge-dense": wbsparse_merge_dense_cargs,
-        "wbsparse": wbsparse_merge_dense_wbsparse_cargs,
+        "workbench.wbsparse-merge-dense": wbsparse_merge_dense_cargs,
+        "workbench.wbsparse-merge-dense.wbsparse": wbsparse_merge_dense_wbsparse_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def wbsparse_merge_dense_wbsparse_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "wbsparse",
+        "@type": "workbench.wbsparse-merge-dense.wbsparse",
         "wbsparse_in": wbsparse_in,
     }
     return params
@@ -120,7 +120,7 @@ def wbsparse_merge_dense_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "wbsparse-merge-dense",
+        "@type": "workbench.wbsparse-merge-dense",
         "direction": direction,
         "wbsparse_out": wbsparse_out,
     }
@@ -148,7 +148,7 @@ def wbsparse_merge_dense_cargs(
     cargs.append(params.get("direction"))
     cargs.append(params.get("wbsparse_out"))
     if params.get("wbsparse") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("wbsparse")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("wbsparse")] for a in c])
     return cargs
 
 
@@ -240,6 +240,10 @@ __all__ = [
     "WbsparseMergeDenseParameters",
     "WbsparseMergeDenseWbsparseParameters",
     "wbsparse_merge_dense",
+    "wbsparse_merge_dense_cargs",
+    "wbsparse_merge_dense_execute",
+    "wbsparse_merge_dense_outputs",
     "wbsparse_merge_dense_params",
+    "wbsparse_merge_dense_wbsparse_cargs",
     "wbsparse_merge_dense_wbsparse_params",
 ]

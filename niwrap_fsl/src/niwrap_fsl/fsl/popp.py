@@ -14,7 +14,7 @@ POPP_METADATA = Metadata(
 
 
 PoppParameters = typing.TypedDict('PoppParameters', {
-    "__STYXTYPE__": typing.Literal["popp"],
+    "@type": typing.Literal["fsl.popp"],
     "input_file": InputPathType,
     "output_basename": str,
     "sampling_rate": typing.NotRequired[float | None],
@@ -63,7 +63,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "popp": popp_cargs,
+        "fsl.popp": popp_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "popp": popp_outputs,
+        "fsl.popp": popp_outputs,
     }.get(t)
 
 
@@ -185,7 +185,7 @@ def popp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "popp",
+        "@type": "fsl.popp",
         "input_file": input_file,
         "output_basename": output_basename,
         "rvt_flag": rvt_flag,
@@ -578,5 +578,8 @@ __all__ = [
     "PoppOutputs",
     "PoppParameters",
     "popp",
+    "popp_cargs",
+    "popp_execute",
+    "popp_outputs",
     "popp_params",
 ]

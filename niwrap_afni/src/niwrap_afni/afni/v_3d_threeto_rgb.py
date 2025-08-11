@@ -14,7 +14,7 @@ V_3D_THREETO_RGB_METADATA = Metadata(
 
 
 V3dThreetoRgbParameters = typing.TypedDict('V3dThreetoRgbParameters', {
-    "__STYXTYPE__": typing.Literal["3dThreetoRGB"],
+    "@type": typing.Literal["afni.3dThreetoRGB"],
     "output_prefix": typing.NotRequired[str | None],
     "scale_factor": typing.NotRequired[float | None],
     "mask_dataset": typing.NotRequired[InputPathType | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dThreetoRGB": v_3d_threeto_rgb_cargs,
+        "afni.3dThreetoRGB": v_3d_threeto_rgb_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dThreetoRGB": v_3d_threeto_rgb_outputs,
+        "afni.3dThreetoRGB": v_3d_threeto_rgb_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def v_3d_threeto_rgb_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dThreetoRGB",
+        "@type": "afni.3dThreetoRGB",
         "fim": fim,
         "anat": anat,
         "input_dataset": input_dataset,
@@ -260,5 +260,8 @@ __all__ = [
     "V3dThreetoRgbParameters",
     "V_3D_THREETO_RGB_METADATA",
     "v_3d_threeto_rgb",
+    "v_3d_threeto_rgb_cargs",
+    "v_3d_threeto_rgb_execute",
+    "v_3d_threeto_rgb_outputs",
     "v_3d_threeto_rgb_params",
 ]

@@ -14,7 +14,7 @@ GPS_METADATA = Metadata(
 
 
 GpsParameters = typing.TypedDict('GpsParameters', {
-    "__STYXTYPE__": typing.Literal["gps"],
+    "@type": typing.Literal["fsl.gps"],
     "ndir": float,
     "optws": bool,
     "output": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gps": gps_cargs,
+        "fsl.gps": gps_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gps": gps_outputs,
+        "fsl.gps": gps_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def gps_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gps",
+        "@type": "fsl.gps",
         "ndir": ndir,
         "optws": optws,
         "report": report,
@@ -252,5 +252,8 @@ __all__ = [
     "GpsOutputs",
     "GpsParameters",
     "gps",
+    "gps_cargs",
+    "gps_execute",
+    "gps_outputs",
     "gps_params",
 ]

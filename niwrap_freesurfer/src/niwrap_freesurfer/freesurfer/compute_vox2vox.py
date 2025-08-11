@@ -14,7 +14,7 @@ COMPUTE_VOX2VOX_METADATA = Metadata(
 
 
 ComputeVox2voxParameters = typing.TypedDict('ComputeVox2voxParameters', {
-    "__STYXTYPE__": typing.Literal["compute_vox2vox"],
+    "@type": typing.Literal["freesurfer.compute_vox2vox"],
     "source": InputPathType,
     "t4file": InputPathType,
     "target": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "compute_vox2vox": compute_vox2vox_cargs,
+        "freesurfer.compute_vox2vox": compute_vox2vox_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "compute_vox2vox": compute_vox2vox_outputs,
+        "freesurfer.compute_vox2vox": compute_vox2vox_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def compute_vox2vox_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "compute_vox2vox",
+        "@type": "freesurfer.compute_vox2vox",
         "source": source,
         "t4file": t4file,
         "target": target,
@@ -188,5 +188,8 @@ __all__ = [
     "ComputeVox2voxOutputs",
     "ComputeVox2voxParameters",
     "compute_vox2vox",
+    "compute_vox2vox_cargs",
+    "compute_vox2vox_execute",
+    "compute_vox2vox_outputs",
     "compute_vox2vox_params",
 ]

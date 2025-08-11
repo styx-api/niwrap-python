@@ -14,7 +14,7 @@ TIMING_TOOL_PY_METADATA = Metadata(
 
 
 TimingToolPyParameters = typing.TypedDict('TimingToolPyParameters', {
-    "__STYXTYPE__": typing.Literal["timing_tool.py"],
+    "@type": typing.Literal["afni.timing_tool.py"],
     "timing_file": typing.NotRequired[InputPathType | None],
     "output_file": typing.NotRequired[str | None],
     "run_length": typing.NotRequired[list[float] | None],
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "timing_tool.py": timing_tool_py_cargs,
+        "afni.timing_tool.py": timing_tool_py_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "timing_tool.py": timing_tool_py_outputs,
+        "afni.timing_tool.py": timing_tool_py_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def timing_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "timing_tool.py",
+        "@type": "afni.timing_tool.py",
         "sort": sort,
         "multi_show_isi_stats": multi_show_isi_stats,
         "multi_show_timing": multi_show_timing,
@@ -402,5 +402,8 @@ __all__ = [
     "TimingToolPyOutputs",
     "TimingToolPyParameters",
     "timing_tool_py",
+    "timing_tool_py_cargs",
+    "timing_tool_py_execute",
+    "timing_tool_py_outputs",
     "timing_tool_py_params",
 ]

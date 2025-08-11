@@ -14,14 +14,14 @@ FIXELCROP_METADATA = Metadata(
 
 
 FixelcropConfigParameters = typing.TypedDict('FixelcropConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixelcrop.config"],
     "key": str,
     "value": str,
 })
 
 
 FixelcropParameters = typing.TypedDict('FixelcropParameters', {
-    "__STYXTYPE__": typing.Literal["fixelcrop"],
+    "@type": typing.Literal["mrtrix.fixelcrop"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixelcrop": fixelcrop_cargs,
-        "config": fixelcrop_config_cargs,
+        "mrtrix.fixelcrop": fixelcrop_cargs,
+        "mrtrix.fixelcrop.config": fixelcrop_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixelcrop": fixelcrop_outputs,
+        "mrtrix.fixelcrop": fixelcrop_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def fixelcrop_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixelcrop.config",
         "key": key,
         "value": value,
     }
@@ -159,7 +159,7 @@ def fixelcrop_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixelcrop",
+        "@type": "mrtrix.fixelcrop",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -206,7 +206,7 @@ def fixelcrop_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -343,6 +343,10 @@ __all__ = [
     "FixelcropOutputs",
     "FixelcropParameters",
     "fixelcrop",
+    "fixelcrop_cargs",
+    "fixelcrop_config_cargs",
     "fixelcrop_config_params",
+    "fixelcrop_execute",
+    "fixelcrop_outputs",
     "fixelcrop_params",
 ]

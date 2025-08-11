@@ -14,7 +14,7 @@ QATOOLS_PY_METADATA = Metadata(
 
 
 QatoolsPyParameters = typing.TypedDict('QatoolsPyParameters', {
-    "__STYXTYPE__": typing.Literal["qatools.py"],
+    "@type": typing.Literal["freesurfer.qatools.py"],
     "subjects_dir": str,
     "output_dir": str,
     "subjects": typing.NotRequired[list[str] | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "qatools.py": qatools_py_cargs,
+        "freesurfer.qatools.py": qatools_py_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "qatools.py": qatools_py_outputs,
+        "freesurfer.qatools.py": qatools_py_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def qatools_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "qatools.py",
+        "@type": "freesurfer.qatools.py",
         "subjects_dir": subjects_dir,
         "output_dir": output_dir,
         "screenshots": screenshots,
@@ -247,5 +247,8 @@ __all__ = [
     "QatoolsPyOutputs",
     "QatoolsPyParameters",
     "qatools_py",
+    "qatools_py_cargs",
+    "qatools_py_execute",
+    "qatools_py_outputs",
     "qatools_py_params",
 ]

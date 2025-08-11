@@ -14,7 +14,7 @@ FSL_SUB_METADATA = Metadata(
 
 
 FslSubParameters = typing.TypedDict('FslSubParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_sub"],
+    "@type": typing.Literal["fsl.fsl_sub"],
     "arch": typing.NotRequired[str | None],
     "coprocessor": typing.NotRequired[str | None],
     "coprocessor_multi": typing.NotRequired[float | None],
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_sub": fsl_sub_cargs,
+        "fsl.fsl_sub": fsl_sub_cargs,
     }.get(t)
 
 
@@ -182,7 +182,7 @@ def fsl_sub_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_sub",
+        "@type": "fsl.fsl_sub",
         "coprocessor_class_strict": coprocessor_class_strict,
         "usescript": usescript,
         "not_requeueable": not_requeueable,
@@ -588,5 +588,8 @@ __all__ = [
     "FslSubOutputs",
     "FslSubParameters",
     "fsl_sub",
+    "fsl_sub_cargs",
+    "fsl_sub_execute",
+    "fsl_sub_outputs",
     "fsl_sub_params",
 ]

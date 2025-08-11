@@ -14,7 +14,7 @@ WAVER_METADATA = Metadata(
 
 
 WaverParameters = typing.TypedDict('WaverParameters', {
-    "__STYXTYPE__": typing.Literal["waver"],
+    "@type": typing.Literal["afni.waver"],
     "wav": bool,
     "gam": bool,
     "expr": typing.NotRequired[str | None],
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "waver": waver_cargs,
+        "afni.waver": waver_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "waver": waver_outputs,
+        "afni.waver": waver_outputs,
     }.get(t)
 
 
@@ -146,7 +146,7 @@ def waver_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "waver",
+        "@type": "afni.waver",
         "wav": wav,
         "gam": gam,
         "xyout": xyout,
@@ -454,5 +454,8 @@ __all__ = [
     "WaverOutputs",
     "WaverParameters",
     "waver",
+    "waver_cargs",
+    "waver_execute",
+    "waver_outputs",
     "waver_params",
 ]

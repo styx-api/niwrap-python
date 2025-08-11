@@ -14,7 +14,7 @@ MRIS_TRANSFORM_METADATA = Metadata(
 
 
 MrisTransformParameters = typing.TypedDict('MrisTransformParameters', {
-    "__STYXTYPE__": typing.Literal["mris_transform"],
+    "@type": typing.Literal["freesurfer.mris_transform"],
     "input_surface": InputPathType,
     "transform": InputPathType,
     "output_surface": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_transform": mris_transform_cargs,
+        "freesurfer.mris_transform": mris_transform_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_transform": mris_transform_outputs,
+        "freesurfer.mris_transform": mris_transform_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_transform",
+        "@type": "freesurfer.mris_transform",
         "input_surface": input_surface,
         "transform": transform,
         "output_surface": output_surface,
@@ -229,5 +229,8 @@ __all__ = [
     "MrisTransformOutputs",
     "MrisTransformParameters",
     "mris_transform",
+    "mris_transform_cargs",
+    "mris_transform_execute",
+    "mris_transform_outputs",
     "mris_transform_params",
 ]

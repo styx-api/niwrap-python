@@ -14,7 +14,7 @@ HISTO_COMPUTE_JOINT_DENSITY_METADATA = Metadata(
 
 
 HistoComputeJointDensityParameters = typing.TypedDict('HistoComputeJointDensityParameters', {
-    "__STYXTYPE__": typing.Literal["histo_compute_joint_density"],
+    "@type": typing.Literal["freesurfer.histo_compute_joint_density"],
     "volume1": InputPathType,
     "volume2": InputPathType,
     "joint_density_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "histo_compute_joint_density": histo_compute_joint_density_cargs,
+        "freesurfer.histo_compute_joint_density": histo_compute_joint_density_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "histo_compute_joint_density": histo_compute_joint_density_outputs,
+        "freesurfer.histo_compute_joint_density": histo_compute_joint_density_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def histo_compute_joint_density_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "histo_compute_joint_density",
+        "@type": "freesurfer.histo_compute_joint_density",
         "volume1": volume1,
         "volume2": volume2,
         "joint_density_file": joint_density_file,
@@ -188,5 +188,8 @@ __all__ = [
     "HistoComputeJointDensityOutputs",
     "HistoComputeJointDensityParameters",
     "histo_compute_joint_density",
+    "histo_compute_joint_density_cargs",
+    "histo_compute_joint_density_execute",
+    "histo_compute_joint_density_outputs",
     "histo_compute_joint_density_params",
 ]

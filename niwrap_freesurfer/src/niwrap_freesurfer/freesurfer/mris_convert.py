@@ -14,7 +14,7 @@ MRIS_CONVERT_METADATA = Metadata(
 
 
 MrisConvertParameters = typing.TypedDict('MrisConvertParameters', {
-    "__STYXTYPE__": typing.Literal["mris_convert"],
+    "@type": typing.Literal["freesurfer.mris_convert"],
     "input_file": InputPathType,
     "second_input_file": typing.NotRequired[InputPathType | None],
     "output_file": str,
@@ -68,7 +68,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_convert": mris_convert_cargs,
+        "freesurfer.mris_convert": mris_convert_cargs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_convert": mris_convert_outputs,
+        "freesurfer.mris_convert": mris_convert_outputs,
     }.get(t)
 
 
@@ -192,7 +192,7 @@ def mris_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_convert",
+        "@type": "freesurfer.mris_convert",
         "input_file": input_file,
         "output_file": output_file,
         "patch": patch,
@@ -593,5 +593,8 @@ __all__ = [
     "MrisConvertOutputs",
     "MrisConvertParameters",
     "mris_convert",
+    "mris_convert_cargs",
+    "mris_convert_execute",
+    "mris_convert_outputs",
     "mris_convert_params",
 ]

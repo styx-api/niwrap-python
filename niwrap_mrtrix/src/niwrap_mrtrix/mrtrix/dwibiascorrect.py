@@ -14,21 +14,21 @@ DWIBIASCORRECT_METADATA = Metadata(
 
 
 DwibiascorrectFslgradParameters = typing.TypedDict('DwibiascorrectFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dwibiascorrect.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 DwibiascorrectConfigParameters = typing.TypedDict('DwibiascorrectConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dwibiascorrect.config"],
     "key": str,
     "value": str,
 })
 
 
 DwibiascorrectParameters = typing.TypedDict('DwibiascorrectParameters', {
-    "__STYXTYPE__": typing.Literal["dwibiascorrect"],
+    "@type": typing.Literal["mrtrix.dwibiascorrect"],
     "algorithm": str,
     "input_image": InputPathType,
     "output_image": str,
@@ -65,9 +65,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwibiascorrect": dwibiascorrect_cargs,
-        "fslgrad": dwibiascorrect_fslgrad_cargs,
-        "config": dwibiascorrect_config_cargs,
+        "mrtrix.dwibiascorrect": dwibiascorrect_cargs,
+        "mrtrix.dwibiascorrect.fslgrad": dwibiascorrect_fslgrad_cargs,
+        "mrtrix.dwibiascorrect.config": dwibiascorrect_config_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwibiascorrect": dwibiascorrect_outputs,
+        "mrtrix.dwibiascorrect": dwibiascorrect_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def dwibiascorrect_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dwibiascorrect.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -148,7 +148,7 @@ def dwibiascorrect_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dwibiascorrect.config",
         "key": key,
         "value": value,
     }
@@ -250,7 +250,7 @@ def dwibiascorrect_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwibiascorrect",
+        "@type": "mrtrix.dwibiascorrect",
         "algorithm": algorithm,
         "input_image": input_image,
         "output_image": output_image,
@@ -311,7 +311,7 @@ def dwibiascorrect_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("mask_image") is not None:
         cargs.extend([
             "-mask",
@@ -348,7 +348,7 @@ def dwibiascorrect_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -521,7 +521,12 @@ __all__ = [
     "DwibiascorrectOutputs",
     "DwibiascorrectParameters",
     "dwibiascorrect",
+    "dwibiascorrect_cargs",
+    "dwibiascorrect_config_cargs",
     "dwibiascorrect_config_params",
+    "dwibiascorrect_execute",
+    "dwibiascorrect_fslgrad_cargs",
     "dwibiascorrect_fslgrad_params",
+    "dwibiascorrect_outputs",
     "dwibiascorrect_params",
 ]

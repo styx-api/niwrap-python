@@ -14,7 +14,7 @@ SURF_INFO_METADATA = Metadata(
 
 
 SurfInfoParameters = typing.TypedDict('SurfInfoParameters', {
-    "__STYXTYPE__": typing.Literal["SurfInfo"],
+    "@type": typing.Literal["afni.SurfInfo"],
     "surface": InputPathType,
     "com": bool,
     "debug_level": typing.NotRequired[float | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfInfo": surf_info_cargs,
+        "afni.SurfInfo": surf_info_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfInfo": surf_info_outputs,
+        "afni.SurfInfo": surf_info_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def surf_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfInfo",
+        "@type": "afni.SurfInfo",
         "surface": surface,
         "com": com,
         "n_node": n_node,
@@ -381,5 +381,8 @@ __all__ = [
     "SurfInfoOutputs",
     "SurfInfoParameters",
     "surf_info",
+    "surf_info_cargs",
+    "surf_info_execute",
+    "surf_info_outputs",
     "surf_info_params",
 ]

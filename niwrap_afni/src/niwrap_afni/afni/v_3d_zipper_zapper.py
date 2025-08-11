@@ -14,7 +14,7 @@ V_3D_ZIPPER_ZAPPER_METADATA = Metadata(
 
 
 V3dZipperZapperParameters = typing.TypedDict('V3dZipperZapperParameters', {
-    "__STYXTYPE__": typing.Literal["3dZipperZapper"],
+    "@type": typing.Literal["afni.3dZipperZapper"],
     "input_file": InputPathType,
     "output_prefix": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dZipperZapper": v_3d_zipper_zapper_cargs,
+        "afni.3dZipperZapper": v_3d_zipper_zapper_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dZipperZapper": v_3d_zipper_zapper_outputs,
+        "afni.3dZipperZapper": v_3d_zipper_zapper_outputs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def v_3d_zipper_zapper_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dZipperZapper",
+        "@type": "afni.3dZipperZapper",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "do_out_slice_param": do_out_slice_param,
@@ -384,5 +384,8 @@ __all__ = [
     "V3dZipperZapperParameters",
     "V_3D_ZIPPER_ZAPPER_METADATA",
     "v_3d_zipper_zapper",
+    "v_3d_zipper_zapper_cargs",
+    "v_3d_zipper_zapper_execute",
+    "v_3d_zipper_zapper_outputs",
     "v_3d_zipper_zapper_params",
 ]

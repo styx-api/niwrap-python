@@ -14,7 +14,7 @@ APQC_MAKE_TCSH_PY_METADATA = Metadata(
 
 
 ApqcMakeTcshPyParameters = typing.TypedDict('ApqcMakeTcshPyParameters', {
-    "__STYXTYPE__": typing.Literal["apqc_make_tcsh.py"],
+    "@type": typing.Literal["afni.apqc_make_tcsh.py"],
     "uvar_json": InputPathType,
     "subj_dir": str,
     "review_style": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "apqc_make_tcsh.py": apqc_make_tcsh_py_cargs,
+        "afni.apqc_make_tcsh.py": apqc_make_tcsh_py_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def apqc_make_tcsh_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "apqc_make_tcsh.py",
+        "@type": "afni.apqc_make_tcsh.py",
         "uvar_json": uvar_json,
         "subj_dir": subj_dir,
         "mot_grayplot_off": mot_grayplot_off,
@@ -237,5 +237,8 @@ __all__ = [
     "ApqcMakeTcshPyOutputs",
     "ApqcMakeTcshPyParameters",
     "apqc_make_tcsh_py",
+    "apqc_make_tcsh_py_cargs",
+    "apqc_make_tcsh_py_execute",
+    "apqc_make_tcsh_py_outputs",
     "apqc_make_tcsh_py_params",
 ]

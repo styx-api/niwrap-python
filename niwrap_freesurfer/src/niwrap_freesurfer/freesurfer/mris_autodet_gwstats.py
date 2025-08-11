@@ -14,7 +14,7 @@ MRIS_AUTODET_GWSTATS_METADATA = Metadata(
 
 
 MrisAutodetGwstatsParameters = typing.TypedDict('MrisAutodetGwstatsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_autodet_gwstats"],
+    "@type": typing.Literal["freesurfer.mris_autodet_gwstats"],
     "output_file": str,
     "t1w_volume": InputPathType,
     "wm_volume": InputPathType,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_autodet_gwstats": mris_autodet_gwstats_cargs,
+        "freesurfer.mris_autodet_gwstats": mris_autodet_gwstats_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_autodet_gwstats": mris_autodet_gwstats_outputs,
+        "freesurfer.mris_autodet_gwstats": mris_autodet_gwstats_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def mris_autodet_gwstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_autodet_gwstats",
+        "@type": "freesurfer.mris_autodet_gwstats",
         "output_file": output_file,
         "t1w_volume": t1w_volume,
         "wm_volume": wm_volume,
@@ -351,5 +351,8 @@ __all__ = [
     "MrisAutodetGwstatsOutputs",
     "MrisAutodetGwstatsParameters",
     "mris_autodet_gwstats",
+    "mris_autodet_gwstats_cargs",
+    "mris_autodet_gwstats_execute",
+    "mris_autodet_gwstats_outputs",
     "mris_autodet_gwstats_params",
 ]

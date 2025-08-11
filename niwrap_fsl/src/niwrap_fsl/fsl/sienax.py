@@ -14,7 +14,7 @@ SIENAX_METADATA = Metadata(
 
 
 SienaxParameters = typing.TypedDict('SienaxParameters', {
-    "__STYXTYPE__": typing.Literal["sienax"],
+    "@type": typing.Literal["fsl.sienax"],
     "infile": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "debug_flag": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sienax": sienax_cargs,
+        "fsl.sienax": sienax_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sienax": sienax_outputs,
+        "fsl.sienax": sienax_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def sienax_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sienax",
+        "@type": "fsl.sienax",
         "infile": infile,
         "debug_flag": debug_flag,
         "twoclass_segment_flag": twoclass_segment_flag,
@@ -303,5 +303,8 @@ __all__ = [
     "SienaxOutputs",
     "SienaxParameters",
     "sienax",
+    "sienax_cargs",
+    "sienax_execute",
+    "sienax_outputs",
     "sienax_params",
 ]

@@ -14,7 +14,7 @@ FILM_CIFTI_METADATA = Metadata(
 
 
 FilmCiftiParameters = typing.TypedDict('FilmCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["film_cifti"],
+    "@type": typing.Literal["fsl.film_cifti"],
     "input_filename": InputPathType,
     "basename": str,
     "left_surface": InputPathType,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "film_cifti": film_cifti_cargs,
+        "fsl.film_cifti": film_cifti_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "film_cifti": film_cifti_outputs,
+        "fsl.film_cifti": film_cifti_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def film_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "film_cifti",
+        "@type": "fsl.film_cifti",
         "input_filename": input_filename,
         "basename": basename,
         "left_surface": left_surface,
@@ -277,5 +277,8 @@ __all__ = [
     "FilmCiftiOutputs",
     "FilmCiftiParameters",
     "film_cifti",
+    "film_cifti_cargs",
+    "film_cifti_execute",
+    "film_cifti_outputs",
     "film_cifti_params",
 ]

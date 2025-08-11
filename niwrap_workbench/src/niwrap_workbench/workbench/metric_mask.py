@@ -14,7 +14,7 @@ METRIC_MASK_METADATA = Metadata(
 
 
 MetricMaskParameters = typing.TypedDict('MetricMaskParameters', {
-    "__STYXTYPE__": typing.Literal["metric-mask"],
+    "@type": typing.Literal["workbench.metric-mask"],
     "metric": InputPathType,
     "mask": InputPathType,
     "metric_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-mask": metric_mask_cargs,
+        "workbench.metric-mask": metric_mask_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-mask": metric_mask_outputs,
+        "workbench.metric-mask": metric_mask_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def metric_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-mask",
+        "@type": "workbench.metric-mask",
         "metric": metric,
         "mask": mask,
         "metric_out": metric_out,
@@ -212,5 +212,8 @@ __all__ = [
     "MetricMaskOutputs",
     "MetricMaskParameters",
     "metric_mask",
+    "metric_mask_cargs",
+    "metric_mask_execute",
+    "metric_mask_outputs",
     "metric_mask_params",
 ]

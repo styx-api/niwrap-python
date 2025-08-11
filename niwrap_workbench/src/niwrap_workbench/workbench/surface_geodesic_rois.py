@@ -14,7 +14,7 @@ SURFACE_GEODESIC_ROIS_METADATA = Metadata(
 
 
 SurfaceGeodesicRoisParameters = typing.TypedDict('SurfaceGeodesicRoisParameters', {
-    "__STYXTYPE__": typing.Literal["surface-geodesic-rois"],
+    "@type": typing.Literal["workbench.surface-geodesic-rois"],
     "surface": InputPathType,
     "limit": float,
     "vertex_list_file": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-geodesic-rois": surface_geodesic_rois_cargs,
+        "workbench.surface-geodesic-rois": surface_geodesic_rois_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-geodesic-rois": surface_geodesic_rois_outputs,
+        "workbench.surface-geodesic-rois": surface_geodesic_rois_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def surface_geodesic_rois_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-geodesic-rois",
+        "@type": "workbench.surface-geodesic-rois",
         "surface": surface,
         "limit": limit,
         "vertex_list_file": vertex_list_file,
@@ -287,5 +287,8 @@ __all__ = [
     "SurfaceGeodesicRoisOutputs",
     "SurfaceGeodesicRoisParameters",
     "surface_geodesic_rois",
+    "surface_geodesic_rois_cargs",
+    "surface_geodesic_rois_execute",
+    "surface_geodesic_rois_outputs",
     "surface_geodesic_rois_params",
 ]

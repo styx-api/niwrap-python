@@ -14,7 +14,7 @@ DIMON_METADATA = Metadata(
 
 
 DimonParameters = typing.TypedDict('DimonParameters', {
-    "__STYXTYPE__": typing.Literal["Dimon"],
+    "@type": typing.Literal["afni.Dimon"],
     "infile_prefix": str,
     "infile_pattern": typing.NotRequired[str | None],
     "infile_list": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "Dimon": dimon_cargs,
+        "afni.Dimon": dimon_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "Dimon": dimon_outputs,
+        "afni.Dimon": dimon_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def dimon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "Dimon",
+        "@type": "afni.Dimon",
         "infile_prefix": infile_prefix,
     }
     if infile_pattern is not None:
@@ -282,5 +282,8 @@ __all__ = [
     "DimonOutputs",
     "DimonParameters",
     "dimon",
+    "dimon_cargs",
+    "dimon_execute",
+    "dimon_outputs",
     "dimon_params",
 ]

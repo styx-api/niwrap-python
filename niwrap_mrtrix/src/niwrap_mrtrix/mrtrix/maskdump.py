@@ -14,14 +14,14 @@ MASKDUMP_METADATA = Metadata(
 
 
 MaskdumpConfigParameters = typing.TypedDict('MaskdumpConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.maskdump.config"],
     "key": str,
     "value": str,
 })
 
 
 MaskdumpParameters = typing.TypedDict('MaskdumpParameters', {
-    "__STYXTYPE__": typing.Literal["maskdump"],
+    "@type": typing.Literal["mrtrix.maskdump"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "maskdump": maskdump_cargs,
-        "config": maskdump_config_cargs,
+        "mrtrix.maskdump": maskdump_cargs,
+        "mrtrix.maskdump.config": maskdump_config_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "maskdump": maskdump_outputs,
+        "mrtrix.maskdump": maskdump_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def maskdump_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.maskdump.config",
         "key": key,
         "value": value,
     }
@@ -153,7 +153,7 @@ def maskdump_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "maskdump",
+        "@type": "mrtrix.maskdump",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -200,7 +200,7 @@ def maskdump_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -331,6 +331,10 @@ __all__ = [
     "MaskdumpOutputs",
     "MaskdumpParameters",
     "maskdump",
+    "maskdump_cargs",
+    "maskdump_config_cargs",
     "maskdump_config_params",
+    "maskdump_execute",
+    "maskdump_outputs",
     "maskdump_params",
 ]

@@ -14,7 +14,7 @@ V_3D_BANDPASS_METADATA = Metadata(
 
 
 V3dBandpassParameters = typing.TypedDict('V3dBandpassParameters', {
-    "__STYXTYPE__": typing.Literal["3dBandpass"],
+    "@type": typing.Literal["afni.3dBandpass"],
     "prefix": typing.NotRequired[str | None],
     "automask": bool,
     "blur": typing.NotRequired[float | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dBandpass": v_3d_bandpass_cargs,
+        "afni.3dBandpass": v_3d_bandpass_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dBandpass": v_3d_bandpass_outputs,
+        "afni.3dBandpass": v_3d_bandpass_outputs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def v_3d_bandpass_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dBandpass",
+        "@type": "afni.3dBandpass",
         "automask": automask,
         "despike": despike,
         "highpass": highpass,
@@ -377,5 +377,8 @@ __all__ = [
     "V3dBandpassParameters",
     "V_3D_BANDPASS_METADATA",
     "v_3d_bandpass",
+    "v_3d_bandpass_cargs",
+    "v_3d_bandpass_execute",
+    "v_3d_bandpass_outputs",
     "v_3d_bandpass_params",
 ]

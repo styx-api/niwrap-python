@@ -14,7 +14,7 @@ MRI_JOINT_DENSITY_METADATA = Metadata(
 
 
 MriJointDensityParameters = typing.TypedDict('MriJointDensityParameters', {
-    "__STYXTYPE__": typing.Literal["mri_joint_density"],
+    "@type": typing.Literal["freesurfer.mri_joint_density"],
     "vol1": InputPathType,
     "vol2": InputPathType,
     "output_density_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_joint_density": mri_joint_density_cargs,
+        "freesurfer.mri_joint_density": mri_joint_density_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_joint_density": mri_joint_density_outputs,
+        "freesurfer.mri_joint_density": mri_joint_density_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_joint_density_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_joint_density",
+        "@type": "freesurfer.mri_joint_density",
         "vol1": vol1,
         "vol2": vol2,
         "output_density_file": output_density_file,
@@ -188,5 +188,8 @@ __all__ = [
     "MriJointDensityOutputs",
     "MriJointDensityParameters",
     "mri_joint_density",
+    "mri_joint_density_cargs",
+    "mri_joint_density_execute",
+    "mri_joint_density_outputs",
     "mri_joint_density_params",
 ]

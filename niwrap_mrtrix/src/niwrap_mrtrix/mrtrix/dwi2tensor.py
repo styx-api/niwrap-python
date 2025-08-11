@@ -14,21 +14,21 @@ DWI2TENSOR_METADATA = Metadata(
 
 
 Dwi2tensorFslgradParameters = typing.TypedDict('Dwi2tensorFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.dwi2tensor.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 Dwi2tensorConfigParameters = typing.TypedDict('Dwi2tensorConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dwi2tensor.config"],
     "key": str,
     "value": str,
 })
 
 
 Dwi2tensorParameters = typing.TypedDict('Dwi2tensorParameters', {
-    "__STYXTYPE__": typing.Literal["dwi2tensor"],
+    "@type": typing.Literal["mrtrix.dwi2tensor"],
     "ols": bool,
     "mask": typing.NotRequired[InputPathType | None],
     "b0": typing.NotRequired[str | None],
@@ -62,9 +62,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dwi2tensor": dwi2tensor_cargs,
-        "fslgrad": dwi2tensor_fslgrad_cargs,
-        "config": dwi2tensor_config_cargs,
+        "mrtrix.dwi2tensor": dwi2tensor_cargs,
+        "mrtrix.dwi2tensor.fslgrad": dwi2tensor_fslgrad_cargs,
+        "mrtrix.dwi2tensor.config": dwi2tensor_config_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dwi2tensor": dwi2tensor_outputs,
+        "mrtrix.dwi2tensor": dwi2tensor_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def dwi2tensor_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.dwi2tensor.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -145,7 +145,7 @@ def dwi2tensor_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dwi2tensor.config",
         "key": key,
         "value": value,
     }
@@ -249,7 +249,7 @@ def dwi2tensor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dwi2tensor",
+        "@type": "mrtrix.dwi2tensor",
         "ols": ols,
         "info": info,
         "quiet": quiet,
@@ -329,7 +329,7 @@ def dwi2tensor_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -344,7 +344,7 @@ def dwi2tensor_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -581,7 +581,12 @@ __all__ = [
     "Dwi2tensorOutputs",
     "Dwi2tensorParameters",
     "dwi2tensor",
+    "dwi2tensor_cargs",
+    "dwi2tensor_config_cargs",
     "dwi2tensor_config_params",
+    "dwi2tensor_execute",
+    "dwi2tensor_fslgrad_cargs",
     "dwi2tensor_fslgrad_params",
+    "dwi2tensor_outputs",
     "dwi2tensor_params",
 ]

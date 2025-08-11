@@ -14,7 +14,7 @@ ANTSJACOBIAN_METADATA = Metadata(
 
 
 AntsjacobianParameters = typing.TypedDict('AntsjacobianParameters', {
-    "__STYXTYPE__": typing.Literal["ANTSJacobian"],
+    "@type": typing.Literal["ants.ANTSJacobian"],
     "imagedim": int,
     "gwarp": InputPathType,
     "outfile": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ANTSJacobian": antsjacobian_cargs,
+        "ants.ANTSJacobian": antsjacobian_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ANTSJacobian": antsjacobian_outputs,
+        "ants.ANTSJacobian": antsjacobian_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def antsjacobian_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ANTSJacobian",
+        "@type": "ants.ANTSJacobian",
         "imagedim": imagedim,
         "gwarp": gwarp,
         "outfile": outfile,
@@ -230,5 +230,8 @@ __all__ = [
     "AntsjacobianOutputs",
     "AntsjacobianParameters",
     "antsjacobian",
+    "antsjacobian_cargs",
+    "antsjacobian_execute",
+    "antsjacobian_outputs",
     "antsjacobian_params",
 ]

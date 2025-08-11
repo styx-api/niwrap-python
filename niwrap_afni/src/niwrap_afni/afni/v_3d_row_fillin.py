@@ -14,7 +14,7 @@ V_3D_ROW_FILLIN_METADATA = Metadata(
 
 
 V3dRowFillinParameters = typing.TypedDict('V3dRowFillinParameters', {
-    "__STYXTYPE__": typing.Literal["3dRowFillin"],
+    "@type": typing.Literal["afni.3dRowFillin"],
     "maxgap": typing.NotRequired[float | None],
     "dir": typing.NotRequired[str | None],
     "binary": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dRowFillin": v_3d_row_fillin_cargs,
+        "afni.3dRowFillin": v_3d_row_fillin_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dRowFillin": v_3d_row_fillin_outputs,
+        "afni.3dRowFillin": v_3d_row_fillin_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def v_3d_row_fillin_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dRowFillin",
+        "@type": "afni.3dRowFillin",
         "binary": binary,
         "input_dataset": input_dataset,
     }
@@ -227,5 +227,8 @@ __all__ = [
     "V3dRowFillinParameters",
     "V_3D_ROW_FILLIN_METADATA",
     "v_3d_row_fillin",
+    "v_3d_row_fillin_cargs",
+    "v_3d_row_fillin_execute",
+    "v_3d_row_fillin_outputs",
     "v_3d_row_fillin_params",
 ]

@@ -14,14 +14,14 @@ MRCENTROID_METADATA = Metadata(
 
 
 MrcentroidConfigParameters = typing.TypedDict('MrcentroidConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrcentroid.config"],
     "key": str,
     "value": str,
 })
 
 
 MrcentroidParameters = typing.TypedDict('MrcentroidParameters', {
-    "__STYXTYPE__": typing.Literal["mrcentroid"],
+    "@type": typing.Literal["mrtrix.mrcentroid"],
     "mask": typing.NotRequired[InputPathType | None],
     "voxelspace": bool,
     "info": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrcentroid": mrcentroid_cargs,
-        "config": mrcentroid_config_cargs,
+        "mrtrix.mrcentroid": mrcentroid_cargs,
+        "mrtrix.mrcentroid.config": mrcentroid_config_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mrcentroid_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrcentroid.config",
         "key": key,
         "value": value,
     }
@@ -154,7 +154,7 @@ def mrcentroid_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrcentroid",
+        "@type": "mrtrix.mrcentroid",
         "voxelspace": voxelspace,
         "info": info,
         "quiet": quiet,
@@ -209,7 +209,7 @@ def mrcentroid_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -339,6 +339,10 @@ __all__ = [
     "MrcentroidOutputs",
     "MrcentroidParameters",
     "mrcentroid",
+    "mrcentroid_cargs",
+    "mrcentroid_config_cargs",
     "mrcentroid_config_params",
+    "mrcentroid_execute",
+    "mrcentroid_outputs",
     "mrcentroid_params",
 ]

@@ -14,7 +14,7 @@ IMMV_METADATA = Metadata(
 
 
 ImmvParameters = typing.TypedDict('ImmvParameters', {
-    "__STYXTYPE__": typing.Literal["immv"],
+    "@type": typing.Literal["fsl.immv"],
     "source_files": list[InputPathType],
     "destination": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "immv": immv_cargs,
+        "fsl.immv": immv_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def immv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "immv",
+        "@type": "fsl.immv",
         "source_files": source_files,
         "destination": destination,
     }
@@ -178,5 +178,8 @@ __all__ = [
     "ImmvOutputs",
     "ImmvParameters",
     "immv",
+    "immv_cargs",
+    "immv_execute",
+    "immv_outputs",
     "immv_params",
 ]

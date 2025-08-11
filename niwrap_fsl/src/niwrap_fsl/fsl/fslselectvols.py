@@ -14,7 +14,7 @@ FSLSELECTVOLS_METADATA = Metadata(
 
 
 FslselectvolsParameters = typing.TypedDict('FslselectvolsParameters', {
-    "__STYXTYPE__": typing.Literal["fslselectvols"],
+    "@type": typing.Literal["fsl.fslselectvols"],
     "input_file": InputPathType,
     "output_file": str,
     "vols_list": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslselectvols": fslselectvols_cargs,
+        "fsl.fslselectvols": fslselectvols_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslselectvols": fslselectvols_outputs,
+        "fsl.fslselectvols": fslselectvols_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def fslselectvols_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslselectvols",
+        "@type": "fsl.fslselectvols",
         "input_file": input_file,
         "output_file": output_file,
         "vols_list": vols_list,
@@ -226,5 +226,8 @@ __all__ = [
     "FslselectvolsOutputs",
     "FslselectvolsParameters",
     "fslselectvols",
+    "fslselectvols_cargs",
+    "fslselectvols_execute",
+    "fslselectvols_outputs",
     "fslselectvols_params",
 ]

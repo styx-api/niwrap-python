@@ -14,7 +14,7 @@ V__DJUNCT_DWI_SELECTOR_METADATA = Metadata(
 
 
 VDjunctDwiSelectorParameters = typing.TypedDict('VDjunctDwiSelectorParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_dwi_selector"],
+    "@type": typing.Literal["afni.@djunct_dwi_selector"],
     "dwi": InputPathType,
     "png": InputPathType,
     "outfile": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_dwi_selector": v__djunct_dwi_selector_cargs,
+        "afni.@djunct_dwi_selector": v__djunct_dwi_selector_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@djunct_dwi_selector": v__djunct_dwi_selector_outputs,
+        "afni.@djunct_dwi_selector": v__djunct_dwi_selector_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def v__djunct_dwi_selector_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_dwi_selector",
+        "@type": "afni.@djunct_dwi_selector",
         "dwi": dwi,
         "png": png,
         "outfile": outfile,
@@ -188,5 +188,8 @@ __all__ = [
     "VDjunctDwiSelectorParameters",
     "V__DJUNCT_DWI_SELECTOR_METADATA",
     "v__djunct_dwi_selector",
+    "v__djunct_dwi_selector_cargs",
+    "v__djunct_dwi_selector_execute",
+    "v__djunct_dwi_selector_outputs",
     "v__djunct_dwi_selector_params",
 ]

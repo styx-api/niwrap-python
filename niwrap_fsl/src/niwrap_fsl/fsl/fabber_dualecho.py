@@ -14,7 +14,7 @@ FABBER_DUALECHO_METADATA = Metadata(
 
 
 FabberDualechoParameters = typing.TypedDict('FabberDualechoParameters', {
-    "__STYXTYPE__": typing.Literal["fabber_dualecho"],
+    "@type": typing.Literal["fsl.fabber_dualecho"],
     "output_directory": str,
     "method": str,
     "model": str,
@@ -65,7 +65,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber_dualecho": fabber_dualecho_cargs,
+        "fsl.fabber_dualecho": fabber_dualecho_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber_dualecho": fabber_dualecho_outputs,
+        "fsl.fabber_dualecho": fabber_dualecho_outputs,
     }.get(t)
 
 
@@ -199,7 +199,7 @@ def fabber_dualecho_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber_dualecho",
+        "@type": "fsl.fabber_dualecho",
         "output_directory": output_directory,
         "method": method,
         "model": model,
@@ -567,5 +567,8 @@ __all__ = [
     "FabberDualechoOutputs",
     "FabberDualechoParameters",
     "fabber_dualecho",
+    "fabber_dualecho_cargs",
+    "fabber_dualecho_execute",
+    "fabber_dualecho_outputs",
     "fabber_dualecho_params",
 ]

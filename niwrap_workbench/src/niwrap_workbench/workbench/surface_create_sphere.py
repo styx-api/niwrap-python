@@ -14,7 +14,7 @@ SURFACE_CREATE_SPHERE_METADATA = Metadata(
 
 
 SurfaceCreateSphereParameters = typing.TypedDict('SurfaceCreateSphereParameters', {
-    "__STYXTYPE__": typing.Literal["surface-create-sphere"],
+    "@type": typing.Literal["workbench.surface-create-sphere"],
     "num_vertices": int,
     "sphere_out": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-create-sphere": surface_create_sphere_cargs,
+        "workbench.surface-create-sphere": surface_create_sphere_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-create-sphere": surface_create_sphere_outputs,
+        "workbench.surface-create-sphere": surface_create_sphere_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_create_sphere_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-create-sphere",
+        "@type": "workbench.surface-create-sphere",
         "num_vertices": num_vertices,
         "sphere_out": sphere_out,
     }
@@ -205,5 +205,8 @@ __all__ = [
     "SurfaceCreateSphereOutputs",
     "SurfaceCreateSphereParameters",
     "surface_create_sphere",
+    "surface_create_sphere_cargs",
+    "surface_create_sphere_execute",
+    "surface_create_sphere_outputs",
     "surface_create_sphere_params",
 ]

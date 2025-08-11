@@ -14,14 +14,14 @@ DIRORDER_METADATA = Metadata(
 
 
 DirorderConfigParameters = typing.TypedDict('DirorderConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dirorder.config"],
     "key": str,
     "value": str,
 })
 
 
 DirorderParameters = typing.TypedDict('DirorderParameters', {
-    "__STYXTYPE__": typing.Literal["dirorder"],
+    "@type": typing.Literal["mrtrix.dirorder"],
     "cartesian": bool,
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dirorder": dirorder_cargs,
-        "config": dirorder_config_cargs,
+        "mrtrix.dirorder": dirorder_cargs,
+        "mrtrix.dirorder.config": dirorder_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dirorder": dirorder_outputs,
+        "mrtrix.dirorder": dirorder_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dirorder_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dirorder.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def dirorder_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dirorder",
+        "@type": "mrtrix.dirorder",
         "cartesian": cartesian,
         "info": info,
         "quiet": quiet,
@@ -206,7 +206,7 @@ def dirorder_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -342,6 +342,10 @@ __all__ = [
     "DirorderOutputs",
     "DirorderParameters",
     "dirorder",
+    "dirorder_cargs",
+    "dirorder_config_cargs",
     "dirorder_config_params",
+    "dirorder_execute",
+    "dirorder_outputs",
     "dirorder_params",
 ]

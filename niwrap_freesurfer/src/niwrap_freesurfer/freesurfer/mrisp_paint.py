@@ -14,7 +14,7 @@ MRISP_PAINT_METADATA = Metadata(
 
 
 MrispPaintParameters = typing.TypedDict('MrispPaintParameters', {
-    "__STYXTYPE__": typing.Literal["mrisp_paint"],
+    "@type": typing.Literal["freesurfer.mrisp_paint"],
     "template_file": InputPathType,
     "input_surface": InputPathType,
     "output_name": str,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrisp_paint": mrisp_paint_cargs,
+        "freesurfer.mrisp_paint": mrisp_paint_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrisp_paint": mrisp_paint_outputs,
+        "freesurfer.mrisp_paint": mrisp_paint_outputs,
     }.get(t)
 
 
@@ -125,7 +125,7 @@ def mrisp_paint_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrisp_paint",
+        "@type": "freesurfer.mrisp_paint",
         "template_file": template_file,
         "input_surface": input_surface,
         "output_name": output_name,
@@ -344,5 +344,8 @@ __all__ = [
     "MrispPaintOutputs",
     "MrispPaintParameters",
     "mrisp_paint",
+    "mrisp_paint_cargs",
+    "mrisp_paint_execute",
+    "mrisp_paint_outputs",
     "mrisp_paint_params",
 ]

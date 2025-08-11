@@ -14,7 +14,7 @@ V_3D_MULTI_THRESH_METADATA = Metadata(
 
 
 V3dMultiThreshParameters = typing.TypedDict('V3dMultiThreshParameters', {
-    "__STYXTYPE__": typing.Literal["3dMultiThresh"],
+    "@type": typing.Literal["afni.3dMultiThresh"],
     "mthresh_file": InputPathType,
     "input_file": InputPathType,
     "index": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMultiThresh": v_3d_multi_thresh_cargs,
+        "afni.3dMultiThresh": v_3d_multi_thresh_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMultiThresh": v_3d_multi_thresh_outputs,
+        "afni.3dMultiThresh": v_3d_multi_thresh_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def v_3d_multi_thresh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMultiThresh",
+        "@type": "afni.3dMultiThresh",
         "mthresh_file": mthresh_file,
         "input_file": input_file,
         "positive_sign_flag": positive_sign_flag,
@@ -302,5 +302,8 @@ __all__ = [
     "V3dMultiThreshParameters",
     "V_3D_MULTI_THRESH_METADATA",
     "v_3d_multi_thresh",
+    "v_3d_multi_thresh_cargs",
+    "v_3d_multi_thresh_execute",
+    "v_3d_multi_thresh_outputs",
     "v_3d_multi_thresh_params",
 ]

@@ -14,7 +14,7 @@ V__GET_AFNI_PREFIX_METADATA = Metadata(
 
 
 VGetAfniPrefixParameters = typing.TypedDict('VGetAfniPrefixParameters', {
-    "__STYXTYPE__": typing.Literal["@GetAfniPrefix"],
+    "@type": typing.Literal["afni.@GetAfniPrefix"],
     "name": InputPathType,
     "suffix": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@GetAfniPrefix": v__get_afni_prefix_cargs,
+        "afni.@GetAfniPrefix": v__get_afni_prefix_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__get_afni_prefix_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@GetAfniPrefix",
+        "@type": "afni.@GetAfniPrefix",
         "name": name,
     }
     if suffix is not None:
@@ -178,5 +178,8 @@ __all__ = [
     "VGetAfniPrefixParameters",
     "V__GET_AFNI_PREFIX_METADATA",
     "v__get_afni_prefix",
+    "v__get_afni_prefix_cargs",
+    "v__get_afni_prefix_execute",
+    "v__get_afni_prefix_outputs",
     "v__get_afni_prefix_params",
 ]

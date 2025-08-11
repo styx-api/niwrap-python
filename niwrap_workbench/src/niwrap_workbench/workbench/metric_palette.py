@@ -14,35 +14,35 @@ METRIC_PALETTE_METADATA = Metadata(
 
 
 MetricPalettePosPercentParameters = typing.TypedDict('MetricPalettePosPercentParameters', {
-    "__STYXTYPE__": typing.Literal["pos_percent"],
+    "@type": typing.Literal["workbench.metric-palette.pos_percent"],
     "pos_min__": float,
     "pos_max__": float,
 })
 
 
 MetricPaletteNegPercentParameters = typing.TypedDict('MetricPaletteNegPercentParameters', {
-    "__STYXTYPE__": typing.Literal["neg_percent"],
+    "@type": typing.Literal["workbench.metric-palette.neg_percent"],
     "neg_min__": float,
     "neg_max__": float,
 })
 
 
 MetricPalettePosUserParameters = typing.TypedDict('MetricPalettePosUserParameters', {
-    "__STYXTYPE__": typing.Literal["pos_user"],
+    "@type": typing.Literal["workbench.metric-palette.pos_user"],
     "pos_min_user": float,
     "pos_max_user": float,
 })
 
 
 MetricPaletteNegUserParameters = typing.TypedDict('MetricPaletteNegUserParameters', {
-    "__STYXTYPE__": typing.Literal["neg_user"],
+    "@type": typing.Literal["workbench.metric-palette.neg_user"],
     "neg_min_user": float,
     "neg_max_user": float,
 })
 
 
 MetricPaletteThresholdingParameters = typing.TypedDict('MetricPaletteThresholdingParameters', {
-    "__STYXTYPE__": typing.Literal["thresholding"],
+    "@type": typing.Literal["workbench.metric-palette.thresholding"],
     "type": str,
     "test": str,
     "min": float,
@@ -51,7 +51,7 @@ MetricPaletteThresholdingParameters = typing.TypedDict('MetricPaletteThresholdin
 
 
 MetricPaletteParameters = typing.TypedDict('MetricPaletteParameters', {
-    "__STYXTYPE__": typing.Literal["metric-palette"],
+    "@type": typing.Literal["workbench.metric-palette"],
     "metric": str,
     "mode": str,
     "opt_column_column": typing.NotRequired[str | None],
@@ -81,12 +81,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-palette": metric_palette_cargs,
-        "pos_percent": metric_palette_pos_percent_cargs,
-        "neg_percent": metric_palette_neg_percent_cargs,
-        "pos_user": metric_palette_pos_user_cargs,
-        "neg_user": metric_palette_neg_user_cargs,
-        "thresholding": metric_palette_thresholding_cargs,
+        "workbench.metric-palette": metric_palette_cargs,
+        "workbench.metric-palette.pos_percent": metric_palette_pos_percent_cargs,
+        "workbench.metric-palette.neg_percent": metric_palette_neg_percent_cargs,
+        "workbench.metric-palette.pos_user": metric_palette_pos_user_cargs,
+        "workbench.metric-palette.neg_user": metric_palette_neg_user_cargs,
+        "workbench.metric-palette.thresholding": metric_palette_thresholding_cargs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def metric_palette_pos_percent_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pos_percent",
+        "@type": "workbench.metric-palette.pos_percent",
         "pos_min__": pos_min__,
         "pos_max__": pos_max__,
     }
@@ -160,7 +160,7 @@ def metric_palette_neg_percent_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neg_percent",
+        "@type": "workbench.metric-palette.neg_percent",
         "neg_min__": neg_min__,
         "neg_max__": neg_max__,
     }
@@ -201,7 +201,7 @@ def metric_palette_pos_user_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pos_user",
+        "@type": "workbench.metric-palette.pos_user",
         "pos_min_user": pos_min_user,
         "pos_max_user": pos_max_user,
     }
@@ -242,7 +242,7 @@ def metric_palette_neg_user_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neg_user",
+        "@type": "workbench.metric-palette.neg_user",
         "neg_min_user": neg_min_user,
         "neg_max_user": neg_max_user,
     }
@@ -287,7 +287,7 @@ def metric_palette_thresholding_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "thresholding",
+        "@type": "workbench.metric-palette.thresholding",
         "type": type_,
         "test": test,
         "min": min_,
@@ -368,7 +368,7 @@ def metric_palette_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-palette",
+        "@type": "workbench.metric-palette",
         "metric": metric,
         "mode": mode,
     }
@@ -423,13 +423,13 @@ def metric_palette_cargs(
             params.get("opt_column_column")
         ])
     if params.get("pos_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_percent")["__STYXTYPE__"])(params.get("pos_percent"), execution))
+        cargs.extend(dyn_cargs(params.get("pos_percent")["@type"])(params.get("pos_percent"), execution))
     if params.get("neg_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_percent")["__STYXTYPE__"])(params.get("neg_percent"), execution))
+        cargs.extend(dyn_cargs(params.get("neg_percent")["@type"])(params.get("neg_percent"), execution))
     if params.get("pos_user") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_user")["__STYXTYPE__"])(params.get("pos_user"), execution))
+        cargs.extend(dyn_cargs(params.get("pos_user")["@type"])(params.get("pos_user"), execution))
     if params.get("neg_user") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_user")["__STYXTYPE__"])(params.get("neg_user"), execution))
+        cargs.extend(dyn_cargs(params.get("neg_user")["@type"])(params.get("neg_user"), execution))
     if params.get("opt_interpolate_interpolate") is not None:
         cargs.extend([
             "-interpolate",
@@ -456,7 +456,7 @@ def metric_palette_cargs(
             params.get("opt_palette_name_name")
         ])
     if params.get("thresholding") is not None:
-        cargs.extend(dyn_cargs(params.get("thresholding")["__STYXTYPE__"])(params.get("thresholding"), execution))
+        cargs.extend(dyn_cargs(params.get("thresholding")["@type"])(params.get("thresholding"), execution))
     if params.get("opt_inversion_type") is not None:
         cargs.extend([
             "-inversion",
@@ -738,10 +738,18 @@ __all__ = [
     "MetricPalettePosUserParameters",
     "MetricPaletteThresholdingParameters",
     "metric_palette",
+    "metric_palette_cargs",
+    "metric_palette_execute",
+    "metric_palette_neg_percent_cargs",
     "metric_palette_neg_percent_params",
+    "metric_palette_neg_user_cargs",
     "metric_palette_neg_user_params",
+    "metric_palette_outputs",
     "metric_palette_params",
+    "metric_palette_pos_percent_cargs",
     "metric_palette_pos_percent_params",
+    "metric_palette_pos_user_cargs",
     "metric_palette_pos_user_params",
+    "metric_palette_thresholding_cargs",
     "metric_palette_thresholding_params",
 ]

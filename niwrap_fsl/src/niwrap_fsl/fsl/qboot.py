@@ -14,7 +14,7 @@ QBOOT_METADATA = Metadata(
 
 
 QbootParameters = typing.TypedDict('QbootParameters', {
-    "__STYXTYPE__": typing.Literal["qboot"],
+    "@type": typing.Literal["fsl.qboot"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvecs_file": InputPathType,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "qboot": qboot_cargs,
+        "fsl.qboot": qboot_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "qboot": qboot_outputs,
+        "fsl.qboot": qboot_outputs,
     }.get(t)
 
 
@@ -142,7 +142,7 @@ def qboot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "qboot",
+        "@type": "fsl.qboot",
         "data_file": data_file,
         "mask_file": mask_file,
         "bvecs_file": bvecs_file,
@@ -423,5 +423,8 @@ __all__ = [
     "QbootOutputs",
     "QbootParameters",
     "qboot",
+    "qboot_cargs",
+    "qboot_execute",
+    "qboot_outputs",
     "qboot_params",
 ]

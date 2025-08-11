@@ -14,7 +14,7 @@ AVSCALE_METADATA = Metadata(
 
 
 AvscaleParameters = typing.TypedDict('AvscaleParameters', {
-    "__STYXTYPE__": typing.Literal["avscale"],
+    "@type": typing.Literal["fsl.avscale"],
     "allparams_flag": bool,
     "inverteddies_flag": bool,
     "matrix_file": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "avscale": avscale_cargs,
+        "fsl.avscale": avscale_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def avscale_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "avscale",
+        "@type": "fsl.avscale",
         "allparams_flag": allparams_flag,
         "inverteddies_flag": inverteddies_flag,
         "matrix_file": matrix_file,
@@ -199,5 +199,8 @@ __all__ = [
     "AvscaleOutputs",
     "AvscaleParameters",
     "avscale",
+    "avscale_cargs",
+    "avscale_execute",
+    "avscale_outputs",
     "avscale_params",
 ]

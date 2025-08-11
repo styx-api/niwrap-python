@@ -14,7 +14,7 @@ DMRI_AC_SH_METADATA = Metadata(
 
 
 DmriAcShParameters = typing.TypedDict('DmriAcShParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_ac.sh"],
+    "@type": typing.Literal["freesurfer.dmri_ac.sh"],
     "additional_args": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_ac.sh": dmri_ac_sh_cargs,
+        "freesurfer.dmri_ac.sh": dmri_ac_sh_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dmri_ac_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_ac.sh",
+        "@type": "freesurfer.dmri_ac.sh",
     }
     if additional_args is not None:
         params["additional_args"] = additional_args
@@ -170,5 +170,8 @@ __all__ = [
     "DmriAcShOutputs",
     "DmriAcShParameters",
     "dmri_ac_sh",
+    "dmri_ac_sh_cargs",
+    "dmri_ac_sh_execute",
+    "dmri_ac_sh_outputs",
     "dmri_ac_sh_params",
 ]

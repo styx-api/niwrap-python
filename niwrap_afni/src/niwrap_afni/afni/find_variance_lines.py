@@ -14,7 +14,7 @@ FIND_VARIANCE_LINES_METADATA = Metadata(
 
 
 FindVarianceLinesParameters = typing.TypedDict('FindVarianceLinesParameters', {
-    "__STYXTYPE__": typing.Literal["find_variance_lines"],
+    "@type": typing.Literal["afni.find_variance_lines"],
     "input_files": list[InputPathType],
     "mask": typing.NotRequired[str | None],
     "min_cvox": typing.NotRequired[int | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "find_variance_lines": find_variance_lines_cargs,
+        "afni.find_variance_lines": find_variance_lines_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "find_variance_lines": find_variance_lines_outputs,
+        "afni.find_variance_lines": find_variance_lines_outputs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def find_variance_lines_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "find_variance_lines",
+        "@type": "afni.find_variance_lines",
         "input_files": input_files,
         "echo": echo,
         "help": help_,
@@ -349,5 +349,8 @@ __all__ = [
     "FindVarianceLinesOutputs",
     "FindVarianceLinesParameters",
     "find_variance_lines",
+    "find_variance_lines_cargs",
+    "find_variance_lines_execute",
+    "find_variance_lines_outputs",
     "find_variance_lines_params",
 ]

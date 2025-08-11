@@ -14,7 +14,7 @@ FUGUE_METADATA = Metadata(
 
 
 FugueParameters = typing.TypedDict('FugueParameters', {
-    "__STYXTYPE__": typing.Literal["fugue"],
+    "@type": typing.Literal["fsl.fugue"],
     "asym_se_time": typing.NotRequired[float | None],
     "despike_2dfilter": bool,
     "despike_threshold": typing.NotRequired[float | None],
@@ -63,7 +63,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fugue": fugue_cargs,
+        "fsl.fugue": fugue_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fugue": fugue_outputs,
+        "fsl.fugue": fugue_outputs,
     }.get(t)
 
 
@@ -180,7 +180,7 @@ def fugue_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fugue",
+        "@type": "fsl.fugue",
         "despike_2dfilter": despike_2dfilter,
         "forward_warping": forward_warping,
         "icorr": icorr,
@@ -499,5 +499,8 @@ __all__ = [
     "FugueOutputs",
     "FugueParameters",
     "fugue",
+    "fugue_cargs",
+    "fugue_execute",
+    "fugue_outputs",
     "fugue_params",
 ]

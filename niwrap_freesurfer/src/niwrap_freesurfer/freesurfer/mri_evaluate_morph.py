@@ -14,7 +14,7 @@ MRI_EVALUATE_MORPH_METADATA = Metadata(
 
 
 MriEvaluateMorphParameters = typing.TypedDict('MriEvaluateMorphParameters', {
-    "__STYXTYPE__": typing.Literal["mri_evaluate_morph"],
+    "@type": typing.Literal["freesurfer.mri_evaluate_morph"],
     "xform_name": InputPathType,
     "segmentation_files": list[InputPathType],
     "output_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_evaluate_morph": mri_evaluate_morph_cargs,
+        "freesurfer.mri_evaluate_morph": mri_evaluate_morph_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_evaluate_morph": mri_evaluate_morph_outputs,
+        "freesurfer.mri_evaluate_morph": mri_evaluate_morph_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_evaluate_morph_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_evaluate_morph",
+        "@type": "freesurfer.mri_evaluate_morph",
         "xform_name": xform_name,
         "segmentation_files": segmentation_files,
         "output_file": output_file,
@@ -190,5 +190,8 @@ __all__ = [
     "MriEvaluateMorphOutputs",
     "MriEvaluateMorphParameters",
     "mri_evaluate_morph",
+    "mri_evaluate_morph_cargs",
+    "mri_evaluate_morph_execute",
+    "mri_evaluate_morph_outputs",
     "mri_evaluate_morph_params",
 ]

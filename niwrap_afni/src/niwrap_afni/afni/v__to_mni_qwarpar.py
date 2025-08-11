@@ -14,7 +14,7 @@ V__TO_MNI_QWARPAR_METADATA = Metadata(
 
 
 VToMniQwarparParameters = typing.TypedDict('VToMniQwarparParameters', {
-    "__STYXTYPE__": typing.Literal["@toMNI_Qwarpar"],
+    "@type": typing.Literal["afni.@toMNI_Qwarpar"],
     "numcpu": float,
     "numjob": float,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@toMNI_Qwarpar": v__to_mni_qwarpar_cargs,
+        "afni.@toMNI_Qwarpar": v__to_mni_qwarpar_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@toMNI_Qwarpar": v__to_mni_qwarpar_outputs,
+        "afni.@toMNI_Qwarpar": v__to_mni_qwarpar_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def v__to_mni_qwarpar_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@toMNI_Qwarpar",
+        "@type": "afni.@toMNI_Qwarpar",
         "numcpu": numcpu,
         "numjob": numjob,
     }
@@ -186,5 +186,8 @@ __all__ = [
     "VToMniQwarparParameters",
     "V__TO_MNI_QWARPAR_METADATA",
     "v__to_mni_qwarpar",
+    "v__to_mni_qwarpar_cargs",
+    "v__to_mni_qwarpar_execute",
+    "v__to_mni_qwarpar_outputs",
     "v__to_mni_qwarpar_params",
 ]

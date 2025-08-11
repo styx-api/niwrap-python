@@ -14,7 +14,7 @@ MEDIANFILTER_METADATA = Metadata(
 
 
 MedianfilterParameters = typing.TypedDict('MedianfilterParameters', {
-    "__STYXTYPE__": typing.Literal["medianfilter"],
+    "@type": typing.Literal["fsl.medianfilter"],
     "infile": InputPathType,
     "outfile": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "medianfilter": medianfilter_cargs,
+        "fsl.medianfilter": medianfilter_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "medianfilter": medianfilter_outputs,
+        "fsl.medianfilter": medianfilter_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def medianfilter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "medianfilter",
+        "@type": "fsl.medianfilter",
         "infile": infile,
         "outfile": outfile,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "MedianfilterOutputs",
     "MedianfilterParameters",
     "medianfilter",
+    "medianfilter_cargs",
+    "medianfilter_execute",
+    "medianfilter_outputs",
     "medianfilter_params",
 ]

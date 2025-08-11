@@ -14,7 +14,7 @@ CP_DICOM_METADATA = Metadata(
 
 
 CpDicomParameters = typing.TypedDict('CpDicomParameters', {
-    "__STYXTYPE__": typing.Literal["cp-dicom"],
+    "@type": typing.Literal["freesurfer.cp-dicom"],
     "dicom_dir": str,
     "output_dir": str,
     "debug": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cp-dicom": cp_dicom_cargs,
+        "freesurfer.cp-dicom": cp_dicom_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def cp_dicom_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cp-dicom",
+        "@type": "freesurfer.cp-dicom",
         "dicom_dir": dicom_dir,
         "output_dir": output_dir,
         "debug": debug,
@@ -193,5 +193,8 @@ __all__ = [
     "CpDicomOutputs",
     "CpDicomParameters",
     "cp_dicom",
+    "cp_dicom_cargs",
+    "cp_dicom_execute",
+    "cp_dicom_outputs",
     "cp_dicom_params",
 ]

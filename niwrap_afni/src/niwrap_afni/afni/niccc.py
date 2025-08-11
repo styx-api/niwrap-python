@@ -14,7 +14,7 @@ NICCC_METADATA = Metadata(
 
 
 NicccParameters = typing.TypedDict('NicccParameters', {
-    "__STYXTYPE__": typing.Literal["niccc"],
+    "@type": typing.Literal["afni.niccc"],
     "streamspec": str,
     "duplicate": bool,
     "nodata": bool,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "niccc": niccc_cargs,
+        "afni.niccc": niccc_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "niccc": niccc_outputs,
+        "afni.niccc": niccc_outputs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def niccc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "niccc",
+        "@type": "afni.niccc",
         "streamspec": streamspec,
         "duplicate": duplicate,
         "nodata": nodata,
@@ -303,5 +303,8 @@ __all__ = [
     "NicccOutputs",
     "NicccParameters",
     "niccc",
+    "niccc_cargs",
+    "niccc_execute",
+    "niccc_outputs",
     "niccc_params",
 ]

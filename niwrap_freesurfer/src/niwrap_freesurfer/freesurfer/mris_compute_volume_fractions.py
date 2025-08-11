@@ -14,7 +14,7 @@ MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA = Metadata(
 
 
 MrisComputeVolumeFractionsParameters = typing.TypedDict('MrisComputeVolumeFractionsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_compute_volume_fractions"],
+    "@type": typing.Literal["freesurfer.mris_compute_volume_fractions"],
     "volume_file": InputPathType,
     "surface_file": InputPathType,
     "accuracy": float,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_compute_volume_fractions": mris_compute_volume_fractions_cargs,
+        "freesurfer.mris_compute_volume_fractions": mris_compute_volume_fractions_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_compute_volume_fractions": mris_compute_volume_fractions_outputs,
+        "freesurfer.mris_compute_volume_fractions": mris_compute_volume_fractions_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mris_compute_volume_fractions_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_compute_volume_fractions",
+        "@type": "freesurfer.mris_compute_volume_fractions",
         "volume_file": volume_file,
         "surface_file": surface_file,
         "accuracy": accuracy,
@@ -226,5 +226,8 @@ __all__ = [
     "MrisComputeVolumeFractionsOutputs",
     "MrisComputeVolumeFractionsParameters",
     "mris_compute_volume_fractions",
+    "mris_compute_volume_fractions_cargs",
+    "mris_compute_volume_fractions_execute",
+    "mris_compute_volume_fractions_outputs",
     "mris_compute_volume_fractions_params",
 ]

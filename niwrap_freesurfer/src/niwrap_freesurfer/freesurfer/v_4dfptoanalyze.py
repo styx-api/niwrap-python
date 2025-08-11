@@ -14,7 +14,7 @@ V_4DFPTOANALYZE_METADATA = Metadata(
 
 
 V4dfptoanalyzeParameters = typing.TypedDict('V4dfptoanalyzeParameters', {
-    "__STYXTYPE__": typing.Literal["4dfptoanalyze"],
+    "@type": typing.Literal["freesurfer.4dfptoanalyze"],
     "input_file": InputPathType,
     "scale_factor": typing.NotRequired[float | None],
     "output_8bit": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "4dfptoanalyze": v_4dfptoanalyze_cargs,
+        "freesurfer.4dfptoanalyze": v_4dfptoanalyze_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "4dfptoanalyze": v_4dfptoanalyze_outputs,
+        "freesurfer.4dfptoanalyze": v_4dfptoanalyze_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def v_4dfptoanalyze_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "4dfptoanalyze",
+        "@type": "freesurfer.4dfptoanalyze",
         "input_file": input_file,
         "output_8bit": output_8bit,
         "spm99": spm99,
@@ -219,5 +219,8 @@ __all__ = [
     "V4dfptoanalyzeParameters",
     "V_4DFPTOANALYZE_METADATA",
     "v_4dfptoanalyze",
+    "v_4dfptoanalyze_cargs",
+    "v_4dfptoanalyze_execute",
+    "v_4dfptoanalyze_outputs",
     "v_4dfptoanalyze_params",
 ]

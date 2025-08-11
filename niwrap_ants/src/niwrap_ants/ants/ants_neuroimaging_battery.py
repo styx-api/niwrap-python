@@ -14,7 +14,7 @@ ANTS_NEUROIMAGING_BATTERY_METADATA = Metadata(
 
 
 AntsNeuroimagingBatteryParameters = typing.TypedDict('AntsNeuroimagingBatteryParameters', {
-    "__STYXTYPE__": typing.Literal["antsNeuroimagingBattery"],
+    "@type": typing.Literal["ants.antsNeuroimagingBattery"],
     "input_directory": str,
     "output_directory": str,
     "output_name": str,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsNeuroimagingBattery": ants_neuroimaging_battery_cargs,
+        "ants.antsNeuroimagingBattery": ants_neuroimaging_battery_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsNeuroimagingBattery": ants_neuroimaging_battery_outputs,
+        "ants.antsNeuroimagingBattery": ants_neuroimaging_battery_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def ants_neuroimaging_battery_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsNeuroimagingBattery",
+        "@type": "ants.antsNeuroimagingBattery",
         "input_directory": input_directory,
         "output_directory": output_directory,
         "output_name": output_name,
@@ -401,5 +401,8 @@ __all__ = [
     "AntsNeuroimagingBatteryOutputs",
     "AntsNeuroimagingBatteryParameters",
     "ants_neuroimaging_battery",
+    "ants_neuroimaging_battery_cargs",
+    "ants_neuroimaging_battery_execute",
+    "ants_neuroimaging_battery_outputs",
     "ants_neuroimaging_battery_params",
 ]

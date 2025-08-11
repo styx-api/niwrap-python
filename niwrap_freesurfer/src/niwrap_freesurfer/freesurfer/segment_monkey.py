@@ -14,7 +14,7 @@ SEGMENT_MONKEY_METADATA = Metadata(
 
 
 SegmentMonkeyParameters = typing.TypedDict('SegmentMonkeyParameters', {
-    "__STYXTYPE__": typing.Literal["segment_monkey"],
+    "@type": typing.Literal["freesurfer.segment_monkey"],
     "control_points": list[str],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segment_monkey": segment_monkey_cargs,
+        "freesurfer.segment_monkey": segment_monkey_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def segment_monkey_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segment_monkey",
+        "@type": "freesurfer.segment_monkey",
         "control_points": control_points,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "SegmentMonkeyOutputs",
     "SegmentMonkeyParameters",
     "segment_monkey",
+    "segment_monkey_cargs",
+    "segment_monkey_execute",
+    "segment_monkey_outputs",
     "segment_monkey_params",
 ]

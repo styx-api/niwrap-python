@@ -14,25 +14,25 @@ SCENE_FILE_UPDATE_METADATA = Metadata(
 
 
 SceneFileUpdateCopyMapOnePaletteParameters = typing.TypedDict('SceneFileUpdateCopyMapOnePaletteParameters', {
-    "__STYXTYPE__": typing.Literal["copy_map_one_palette"],
+    "@type": typing.Literal["workbench.scene-file-update.copy_map_one_palette"],
     "data_file_name_suffix": str,
 })
 
 
 SceneFileUpdateDataFileAddParameters = typing.TypedDict('SceneFileUpdateDataFileAddParameters', {
-    "__STYXTYPE__": typing.Literal["data_file_add"],
+    "@type": typing.Literal["workbench.scene-file-update.data_file_add"],
     "name_of_data_file": str,
 })
 
 
 SceneFileUpdateDataFileRemoveParameters = typing.TypedDict('SceneFileUpdateDataFileRemoveParameters', {
-    "__STYXTYPE__": typing.Literal["data_file_remove"],
+    "@type": typing.Literal["workbench.scene-file-update.data_file_remove"],
     "name_of_data_file": str,
 })
 
 
 SceneFileUpdateParameters = typing.TypedDict('SceneFileUpdateParameters', {
-    "__STYXTYPE__": typing.Literal["scene-file-update"],
+    "@type": typing.Literal["workbench.scene-file-update"],
     "input_scene_file": str,
     "output_scene_file": str,
     "scene_name_or_number": str,
@@ -58,10 +58,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "scene-file-update": scene_file_update_cargs,
-        "copy_map_one_palette": scene_file_update_copy_map_one_palette_cargs,
-        "data_file_add": scene_file_update_data_file_add_cargs,
-        "data_file_remove": scene_file_update_data_file_remove_cargs,
+        "workbench.scene-file-update": scene_file_update_cargs,
+        "workbench.scene-file-update.copy_map_one_palette": scene_file_update_copy_map_one_palette_cargs,
+        "workbench.scene-file-update.data_file_add": scene_file_update_data_file_add_cargs,
+        "workbench.scene-file-update.data_file_remove": scene_file_update_data_file_remove_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def scene_file_update_copy_map_one_palette_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "copy_map_one_palette",
+        "@type": "workbench.scene-file-update.copy_map_one_palette",
         "data_file_name_suffix": data_file_name_suffix,
     }
     return params
@@ -137,7 +137,7 @@ def scene_file_update_data_file_add_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "data_file_add",
+        "@type": "workbench.scene-file-update.data_file_add",
         "name_of_data_file": name_of_data_file,
     }
     return params
@@ -181,7 +181,7 @@ def scene_file_update_data_file_remove_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "data_file_remove",
+        "@type": "workbench.scene-file-update.data_file_remove",
         "name_of_data_file": name_of_data_file,
     }
     return params
@@ -248,7 +248,7 @@ def scene_file_update_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "scene-file-update",
+        "@type": "workbench.scene-file-update",
         "input_scene_file": input_scene_file,
         "output_scene_file": output_scene_file,
         "scene_name_or_number": scene_name_or_number,
@@ -294,11 +294,11 @@ def scene_file_update_cargs(
     if params.get("opt_verbose"):
         cargs.append("-verbose")
     if params.get("copy_map_one_palette") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("copy_map_one_palette")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("copy_map_one_palette")] for a in c])
     if params.get("data_file_add") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("data_file_add")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("data_file_add")] for a in c])
     if params.get("data_file_remove") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("data_file_remove")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("data_file_remove")] for a in c])
     return cargs
 
 
@@ -465,8 +465,14 @@ __all__ = [
     "SceneFileUpdateOutputs",
     "SceneFileUpdateParameters",
     "scene_file_update",
+    "scene_file_update_cargs",
+    "scene_file_update_copy_map_one_palette_cargs",
     "scene_file_update_copy_map_one_palette_params",
+    "scene_file_update_data_file_add_cargs",
     "scene_file_update_data_file_add_params",
+    "scene_file_update_data_file_remove_cargs",
     "scene_file_update_data_file_remove_params",
+    "scene_file_update_execute",
+    "scene_file_update_outputs",
     "scene_file_update_params",
 ]

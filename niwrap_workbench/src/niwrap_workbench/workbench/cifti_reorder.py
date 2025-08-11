@@ -14,7 +14,7 @@ CIFTI_REORDER_METADATA = Metadata(
 
 
 CiftiReorderParameters = typing.TypedDict('CiftiReorderParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-reorder"],
+    "@type": typing.Literal["workbench.cifti-reorder"],
     "cifti_in": InputPathType,
     "direction": str,
     "reorder_list": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-reorder": cifti_reorder_cargs,
+        "workbench.cifti-reorder": cifti_reorder_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-reorder": cifti_reorder_outputs,
+        "workbench.cifti-reorder": cifti_reorder_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def cifti_reorder_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-reorder",
+        "@type": "workbench.cifti-reorder",
         "cifti_in": cifti_in,
         "direction": direction,
         "reorder_list": reorder_list,
@@ -215,5 +215,8 @@ __all__ = [
     "CiftiReorderOutputs",
     "CiftiReorderParameters",
     "cifti_reorder",
+    "cifti_reorder_cargs",
+    "cifti_reorder_execute",
+    "cifti_reorder_outputs",
     "cifti_reorder_params",
 ]

@@ -14,7 +14,7 @@ QUICKSPEC_METADATA = Metadata(
 
 
 QuickspecParameters = typing.TypedDict('QuickspecParameters', {
-    "__STYXTYPE__": typing.Literal["quickspec"],
+    "@type": typing.Literal["afni.quickspec"],
     "tn": list[str],
     "tsn": list[str],
     "tsnad": typing.NotRequired[list[str] | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "quickspec": quickspec_cargs,
+        "afni.quickspec": quickspec_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "quickspec": quickspec_outputs,
+        "afni.quickspec": quickspec_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def quickspec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "quickspec",
+        "@type": "afni.quickspec",
         "tn": tn,
         "tsn": tsn,
         "help": help_,
@@ -255,5 +255,8 @@ __all__ = [
     "QuickspecOutputs",
     "QuickspecParameters",
     "quickspec",
+    "quickspec_cargs",
+    "quickspec_execute",
+    "quickspec_outputs",
     "quickspec_params",
 ]

@@ -14,7 +14,7 @@ AFNI_SYSTEM_CHECK_PY_METADATA = Metadata(
 
 
 AfniSystemCheckPyParameters = typing.TypedDict('AfniSystemCheckPyParameters', {
-    "__STYXTYPE__": typing.Literal["afni_system_check.py"],
+    "@type": typing.Literal["afni.afni_system_check.py"],
     "check_all": bool,
     "find_prog": typing.NotRequired[str | None],
     "exact": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni_system_check.py": afni_system_check_py_cargs,
+        "afni.afni_system_check.py": afni_system_check_py_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def afni_system_check_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afni_system_check.py",
+        "@type": "afni.afni_system_check.py",
         "check_all": check_all,
         "disp_num_cpu": disp_num_cpu,
         "disp_ver_matplotlib": disp_ver_matplotlib,
@@ -270,5 +270,8 @@ __all__ = [
     "AfniSystemCheckPyOutputs",
     "AfniSystemCheckPyParameters",
     "afni_system_check_py",
+    "afni_system_check_py_cargs",
+    "afni_system_check_py_execute",
+    "afni_system_check_py_outputs",
     "afni_system_check_py_params",
 ]

@@ -14,7 +14,7 @@ IMDUMP_METADATA = Metadata(
 
 
 ImdumpParameters = typing.TypedDict('ImdumpParameters', {
-    "__STYXTYPE__": typing.Literal["imdump"],
+    "@type": typing.Literal["afni.imdump"],
     "input_image": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imdump": imdump_cargs,
+        "afni.imdump": imdump_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imdump": imdump_outputs,
+        "afni.imdump": imdump_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def imdump_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imdump",
+        "@type": "afni.imdump",
         "input_image": input_image,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "ImdumpOutputs",
     "ImdumpParameters",
     "imdump",
+    "imdump_cargs",
+    "imdump_execute",
+    "imdump_outputs",
     "imdump_params",
 ]

@@ -14,7 +14,7 @@ V__STATAUXCODE_METADATA = Metadata(
 
 
 VStatauxcodeParameters = typing.TypedDict('VStatauxcodeParameters', {
-    "__STYXTYPE__": typing.Literal["@statauxcode"],
+    "@type": typing.Literal["afni.@statauxcode"],
     "code": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@statauxcode": v__statauxcode_cargs,
+        "afni.@statauxcode": v__statauxcode_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@statauxcode": v__statauxcode_outputs,
+        "afni.@statauxcode": v__statauxcode_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__statauxcode_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@statauxcode",
+        "@type": "afni.@statauxcode",
         "code": code_,
     }
     return params
@@ -174,5 +174,8 @@ __all__ = [
     "VStatauxcodeParameters",
     "V__STATAUXCODE_METADATA",
     "v__statauxcode",
+    "v__statauxcode_cargs",
+    "v__statauxcode_execute",
+    "v__statauxcode_outputs",
     "v__statauxcode_params",
 ]

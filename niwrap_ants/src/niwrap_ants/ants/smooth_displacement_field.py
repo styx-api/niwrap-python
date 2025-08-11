@@ -14,7 +14,7 @@ SMOOTH_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 SmoothDisplacementFieldParameters = typing.TypedDict('SmoothDisplacementFieldParameters', {
-    "__STYXTYPE__": typing.Literal["SmoothDisplacementField"],
+    "@type": typing.Literal["ants.SmoothDisplacementField"],
     "image_dimension": int,
     "input_field": InputPathType,
     "output_field": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SmoothDisplacementField": smooth_displacement_field_cargs,
+        "ants.SmoothDisplacementField": smooth_displacement_field_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SmoothDisplacementField": smooth_displacement_field_outputs,
+        "ants.SmoothDisplacementField": smooth_displacement_field_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def smooth_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SmoothDisplacementField",
+        "@type": "ants.SmoothDisplacementField",
         "image_dimension": image_dimension,
         "input_field": input_field,
         "output_field": output_field,
@@ -250,5 +250,8 @@ __all__ = [
     "SmoothDisplacementFieldOutputs",
     "SmoothDisplacementFieldParameters",
     "smooth_displacement_field",
+    "smooth_displacement_field_cargs",
+    "smooth_displacement_field_execute",
+    "smooth_displacement_field_outputs",
     "smooth_displacement_field_params",
 ]

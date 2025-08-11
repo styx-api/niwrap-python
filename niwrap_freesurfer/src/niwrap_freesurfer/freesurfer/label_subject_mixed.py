@@ -14,7 +14,7 @@ LABEL_SUBJECT_MIXED_METADATA = Metadata(
 
 
 LabelSubjectMixedParameters = typing.TypedDict('LabelSubjectMixedParameters', {
-    "__STYXTYPE__": typing.Literal["label_subject_mixed"],
+    "@type": typing.Literal["freesurfer.label_subject_mixed"],
     "brain_mask": InputPathType,
     "norm_volume": InputPathType,
     "transform": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label_subject_mixed": label_subject_mixed_cargs,
+        "freesurfer.label_subject_mixed": label_subject_mixed_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label_subject_mixed": label_subject_mixed_outputs,
+        "freesurfer.label_subject_mixed": label_subject_mixed_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def label_subject_mixed_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label_subject_mixed",
+        "@type": "freesurfer.label_subject_mixed",
         "brain_mask": brain_mask,
         "norm_volume": norm_volume,
         "transform": transform,
@@ -207,5 +207,8 @@ __all__ = [
     "LabelSubjectMixedOutputs",
     "LabelSubjectMixedParameters",
     "label_subject_mixed",
+    "label_subject_mixed_cargs",
+    "label_subject_mixed_execute",
+    "label_subject_mixed_outputs",
     "label_subject_mixed_params",
 ]

@@ -14,7 +14,7 @@ V__GET_AFNI_VERSION_METADATA = Metadata(
 
 
 VGetAfniVersionParameters = typing.TypedDict('VGetAfniVersionParameters', {
-    "__STYXTYPE__": typing.Literal["@get.afni.version"],
+    "@type": typing.Literal["afni.@get.afni.version"],
     "version": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@get.afni.version": v__get_afni_version_cargs,
+        "afni.@get.afni.version": v__get_afni_version_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@get.afni.version": v__get_afni_version_outputs,
+        "afni.@get.afni.version": v__get_afni_version_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__get_afni_version_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@get.afni.version",
+        "@type": "afni.@get.afni.version",
         "version": version,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "VGetAfniVersionParameters",
     "V__GET_AFNI_VERSION_METADATA",
     "v__get_afni_version",
+    "v__get_afni_version_cargs",
+    "v__get_afni_version_execute",
+    "v__get_afni_version_outputs",
     "v__get_afni_version_params",
 ]

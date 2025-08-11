@@ -14,7 +14,7 @@ EDDY_METADATA = Metadata(
 
 
 EddyParameters = typing.TypedDict('EddyParameters', {
-    "__STYXTYPE__": typing.Literal["eddy"],
+    "@type": typing.Literal["fsl.eddy"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy": eddy_cargs,
+        "fsl.eddy": eddy_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy": eddy_outputs,
+        "fsl.eddy": eddy_outputs,
     }.get(t)
 
 
@@ -260,7 +260,7 @@ def eddy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy",
+        "@type": "fsl.eddy",
         "imain": imain,
         "mask": mask,
         "index": index,
@@ -674,5 +674,8 @@ __all__ = [
     "EddyOutputs",
     "EddyParameters",
     "eddy",
+    "eddy_cargs",
+    "eddy_execute",
+    "eddy_outputs",
     "eddy_params",
 ]

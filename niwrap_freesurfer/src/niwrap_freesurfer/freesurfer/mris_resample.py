@@ -14,7 +14,7 @@ MRIS_RESAMPLE_METADATA = Metadata(
 
 
 MrisResampleParameters = typing.TypedDict('MrisResampleParameters', {
-    "__STYXTYPE__": typing.Literal["mris_resample"],
+    "@type": typing.Literal["freesurfer.mris_resample"],
     "atlas_reg": InputPathType,
     "subject_reg": InputPathType,
     "subject_surf": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_resample": mris_resample_cargs,
+        "freesurfer.mris_resample": mris_resample_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_resample": mris_resample_outputs,
+        "freesurfer.mris_resample": mris_resample_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mris_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_resample",
+        "@type": "freesurfer.mris_resample",
         "atlas_reg": atlas_reg,
         "subject_reg": subject_reg,
         "subject_surf": subject_surf,
@@ -241,5 +241,8 @@ __all__ = [
     "MrisResampleOutputs",
     "MrisResampleParameters",
     "mris_resample",
+    "mris_resample_cargs",
+    "mris_resample_execute",
+    "mris_resample_outputs",
     "mris_resample_params",
 ]

@@ -14,7 +14,7 @@ MRI_APARC2WMSEG_METADATA = Metadata(
 
 
 MriAparc2wmsegParameters = typing.TypedDict('MriAparc2wmsegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_aparc2wmseg"],
+    "@type": typing.Literal["freesurfer.mri_aparc2wmseg"],
     "subject": str,
     "wmseg_file": str,
     "help": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_aparc2wmseg": mri_aparc2wmseg_cargs,
+        "freesurfer.mri_aparc2wmseg": mri_aparc2wmseg_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_aparc2wmseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_aparc2wmseg",
+        "@type": "freesurfer.mri_aparc2wmseg",
         "subject": subject,
         "wmseg_file": wmseg_file,
         "help": help_,
@@ -202,5 +202,8 @@ __all__ = [
     "MriAparc2wmsegOutputs",
     "MriAparc2wmsegParameters",
     "mri_aparc2wmseg",
+    "mri_aparc2wmseg_cargs",
+    "mri_aparc2wmseg_execute",
+    "mri_aparc2wmseg_outputs",
     "mri_aparc2wmseg_params",
 ]

@@ -14,7 +14,7 @@ V__ANATICOR_METADATA = Metadata(
 
 
 VAnaticorParameters = typing.TypedDict('VAnaticorParameters', {
-    "__STYXTYPE__": typing.Literal["@ANATICOR"],
+    "@type": typing.Literal["afni.@ANATICOR"],
     "ts": InputPathType,
     "polort": str,
     "motion": InputPathType,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ANATICOR": v__anaticor_cargs,
+        "afni.@ANATICOR": v__anaticor_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ANATICOR": v__anaticor_outputs,
+        "afni.@ANATICOR": v__anaticor_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def v__anaticor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ANATICOR",
+        "@type": "afni.@ANATICOR",
         "ts": ts,
         "polort": polort,
         "motion": motion,
@@ -322,5 +322,8 @@ __all__ = [
     "VAnaticorParameters",
     "V__ANATICOR_METADATA",
     "v__anaticor",
+    "v__anaticor_cargs",
+    "v__anaticor_execute",
+    "v__anaticor_outputs",
     "v__anaticor_params",
 ]

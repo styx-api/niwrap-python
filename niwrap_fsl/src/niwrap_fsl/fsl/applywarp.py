@@ -14,7 +14,7 @@ APPLYWARP_METADATA = Metadata(
 
 
 ApplywarpParameters = typing.TypedDict('ApplywarpParameters', {
-    "__STYXTYPE__": typing.Literal["applywarp"],
+    "@type": typing.Literal["fsl.applywarp"],
     "interp": typing.NotRequired[typing.Literal["nn", "trilinear", "sinc", "spline"] | None],
     "in_file": InputPathType,
     "ref_file": InputPathType,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "applywarp": applywarp_cargs,
+        "fsl.applywarp": applywarp_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "applywarp": applywarp_outputs,
+        "fsl.applywarp": applywarp_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def applywarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "applywarp",
+        "@type": "fsl.applywarp",
         "in_file": in_file,
         "ref_file": ref_file,
         "relwarp": relwarp,
@@ -317,5 +317,8 @@ __all__ = [
     "ApplywarpOutputs",
     "ApplywarpParameters",
     "applywarp",
+    "applywarp_cargs",
+    "applywarp_execute",
+    "applywarp_outputs",
     "applywarp_params",
 ]

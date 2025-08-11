@@ -14,7 +14,7 @@ V_2PERM_METADATA = Metadata(
 
 
 V2permParameters = typing.TypedDict('V2permParameters', {
-    "__STYXTYPE__": typing.Literal["2perm"],
+    "@type": typing.Literal["afni.2perm"],
     "prefix": typing.NotRequired[str | None],
     "comma": bool,
     "bottom_int": float,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "2perm": v_2perm_cargs,
+        "afni.2perm": v_2perm_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "2perm": v_2perm_outputs,
+        "afni.2perm": v_2perm_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v_2perm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "2perm",
+        "@type": "afni.2perm",
         "comma": comma,
         "bottom_int": bottom_int,
         "top_int": top_int,
@@ -229,5 +229,8 @@ __all__ = [
     "V2permParameters",
     "V_2PERM_METADATA",
     "v_2perm",
+    "v_2perm_cargs",
+    "v_2perm_execute",
+    "v_2perm_outputs",
     "v_2perm_params",
 ]

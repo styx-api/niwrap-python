@@ -14,7 +14,7 @@ FSL_FIX_TEXT_METADATA = Metadata(
 
 
 FslFixTextParameters = typing.TypedDict('FslFixTextParameters', {
-    "__STYXTYPE__": typing.Literal["fslFixText"],
+    "@type": typing.Literal["fsl.fslFixText"],
     "input_text_file": InputPathType,
     "output_text_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslFixText": fsl_fix_text_cargs,
+        "fsl.fslFixText": fsl_fix_text_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslFixText": fsl_fix_text_outputs,
+        "fsl.fslFixText": fsl_fix_text_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fsl_fix_text_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslFixText",
+        "@type": "fsl.fslFixText",
         "input_text_file": input_text_file,
         "output_text_file": output_text_file,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "FslFixTextOutputs",
     "FslFixTextParameters",
     "fsl_fix_text",
+    "fsl_fix_text_cargs",
+    "fsl_fix_text_execute",
+    "fsl_fix_text_outputs",
     "fsl_fix_text_params",
 ]

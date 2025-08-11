@@ -14,7 +14,7 @@ CALC_GRAD_PERC_DEV_METADATA = Metadata(
 
 
 CalcGradPercDevParameters = typing.TypedDict('CalcGradPercDevParameters', {
-    "__STYXTYPE__": typing.Literal["calc_grad_perc_dev"],
+    "@type": typing.Literal["fsl.calc_grad_perc_dev"],
     "fullwarp_image": InputPathType,
     "out_basename": str,
     "verbose_flag": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "calc_grad_perc_dev": calc_grad_perc_dev_cargs,
+        "fsl.calc_grad_perc_dev": calc_grad_perc_dev_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def calc_grad_perc_dev_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "calc_grad_perc_dev",
+        "@type": "fsl.calc_grad_perc_dev",
         "fullwarp_image": fullwarp_image,
         "out_basename": out_basename,
         "verbose_flag": verbose_flag,
@@ -202,5 +202,8 @@ __all__ = [
     "CalcGradPercDevOutputs",
     "CalcGradPercDevParameters",
     "calc_grad_perc_dev",
+    "calc_grad_perc_dev_cargs",
+    "calc_grad_perc_dev_execute",
+    "calc_grad_perc_dev_outputs",
     "calc_grad_perc_dev_params",
 ]

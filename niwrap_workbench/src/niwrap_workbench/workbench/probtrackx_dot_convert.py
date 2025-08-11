@@ -14,35 +14,35 @@ PROBTRACKX_DOT_CONVERT_METADATA = Metadata(
 
 
 ProbtrackxDotConvertRowVoxelsParameters = typing.TypedDict('ProbtrackxDotConvertRowVoxelsParameters', {
-    "__STYXTYPE__": typing.Literal["row_voxels"],
+    "@type": typing.Literal["workbench.probtrackx-dot-convert.row_voxels"],
     "voxel_list_file": str,
     "label_vol": InputPathType,
 })
 
 
 ProbtrackxDotConvertRowCiftiParameters = typing.TypedDict('ProbtrackxDotConvertRowCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["row_cifti"],
+    "@type": typing.Literal["workbench.probtrackx-dot-convert.row_cifti"],
     "cifti": InputPathType,
     "direction": str,
 })
 
 
 ProbtrackxDotConvertColVoxelsParameters = typing.TypedDict('ProbtrackxDotConvertColVoxelsParameters', {
-    "__STYXTYPE__": typing.Literal["col_voxels"],
+    "@type": typing.Literal["workbench.probtrackx-dot-convert.col_voxels"],
     "voxel_list_file": str,
     "label_vol": InputPathType,
 })
 
 
 ProbtrackxDotConvertColCiftiParameters = typing.TypedDict('ProbtrackxDotConvertColCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["col_cifti"],
+    "@type": typing.Literal["workbench.probtrackx-dot-convert.col_cifti"],
     "cifti": InputPathType,
     "direction": str,
 })
 
 
 ProbtrackxDotConvertParameters = typing.TypedDict('ProbtrackxDotConvertParameters', {
-    "__STYXTYPE__": typing.Literal["probtrackx-dot-convert"],
+    "@type": typing.Literal["workbench.probtrackx-dot-convert"],
     "dot_file": str,
     "cifti_out": str,
     "row_voxels": typing.NotRequired[ProbtrackxDotConvertRowVoxelsParameters | None],
@@ -68,11 +68,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "probtrackx-dot-convert": probtrackx_dot_convert_cargs,
-        "row_voxels": probtrackx_dot_convert_row_voxels_cargs,
-        "row_cifti": probtrackx_dot_convert_row_cifti_cargs,
-        "col_voxels": probtrackx_dot_convert_col_voxels_cargs,
-        "col_cifti": probtrackx_dot_convert_col_cifti_cargs,
+        "workbench.probtrackx-dot-convert": probtrackx_dot_convert_cargs,
+        "workbench.probtrackx-dot-convert.row_voxels": probtrackx_dot_convert_row_voxels_cargs,
+        "workbench.probtrackx-dot-convert.row_cifti": probtrackx_dot_convert_row_cifti_cargs,
+        "workbench.probtrackx-dot-convert.col_voxels": probtrackx_dot_convert_col_voxels_cargs,
+        "workbench.probtrackx-dot-convert.col_cifti": probtrackx_dot_convert_col_cifti_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "probtrackx-dot-convert": probtrackx_dot_convert_outputs,
+        "workbench.probtrackx-dot-convert": probtrackx_dot_convert_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def probtrackx_dot_convert_row_voxels_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "row_voxels",
+        "@type": "workbench.probtrackx-dot-convert.row_voxels",
         "voxel_list_file": voxel_list_file,
         "label_vol": label_vol,
     }
@@ -148,7 +148,7 @@ def probtrackx_dot_convert_row_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "row_cifti",
+        "@type": "workbench.probtrackx-dot-convert.row_cifti",
         "cifti": cifti,
         "direction": direction,
     }
@@ -190,7 +190,7 @@ def probtrackx_dot_convert_col_voxels_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "col_voxels",
+        "@type": "workbench.probtrackx-dot-convert.col_voxels",
         "voxel_list_file": voxel_list_file,
         "label_vol": label_vol,
     }
@@ -231,7 +231,7 @@ def probtrackx_dot_convert_col_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "col_cifti",
+        "@type": "workbench.probtrackx-dot-convert.col_cifti",
         "cifti": cifti,
         "direction": direction,
     }
@@ -302,7 +302,7 @@ def probtrackx_dot_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "probtrackx-dot-convert",
+        "@type": "workbench.probtrackx-dot-convert",
         "dot_file": dot_file,
         "cifti_out": cifti_out,
         "opt_transpose": opt_transpose,
@@ -342,23 +342,23 @@ def probtrackx_dot_convert_cargs(
     cargs.append(params.get("dot_file"))
     cargs.append(params.get("cifti_out"))
     if params.get("row_voxels") is not None:
-        cargs.extend(dyn_cargs(params.get("row_voxels")["__STYXTYPE__"])(params.get("row_voxels"), execution))
+        cargs.extend(dyn_cargs(params.get("row_voxels")["@type"])(params.get("row_voxels"), execution))
     if params.get("opt_row_surface_roi_metric") is not None:
         cargs.extend([
             "-row-surface",
             execution.input_file(params.get("opt_row_surface_roi_metric"))
         ])
     if params.get("row_cifti") is not None:
-        cargs.extend(dyn_cargs(params.get("row_cifti")["__STYXTYPE__"])(params.get("row_cifti"), execution))
+        cargs.extend(dyn_cargs(params.get("row_cifti")["@type"])(params.get("row_cifti"), execution))
     if params.get("col_voxels") is not None:
-        cargs.extend(dyn_cargs(params.get("col_voxels")["__STYXTYPE__"])(params.get("col_voxels"), execution))
+        cargs.extend(dyn_cargs(params.get("col_voxels")["@type"])(params.get("col_voxels"), execution))
     if params.get("opt_col_surface_roi_metric") is not None:
         cargs.extend([
             "-col-surface",
             execution.input_file(params.get("opt_col_surface_roi_metric"))
         ])
     if params.get("col_cifti") is not None:
-        cargs.extend(dyn_cargs(params.get("col_cifti")["__STYXTYPE__"])(params.get("col_cifti"), execution))
+        cargs.extend(dyn_cargs(params.get("col_cifti")["@type"])(params.get("col_cifti"), execution))
     if params.get("opt_transpose"):
         cargs.append("-transpose")
     if params.get("opt_make_symmetric"):
@@ -567,9 +567,16 @@ __all__ = [
     "ProbtrackxDotConvertRowCiftiParameters",
     "ProbtrackxDotConvertRowVoxelsParameters",
     "probtrackx_dot_convert",
+    "probtrackx_dot_convert_cargs",
+    "probtrackx_dot_convert_col_cifti_cargs",
     "probtrackx_dot_convert_col_cifti_params",
+    "probtrackx_dot_convert_col_voxels_cargs",
     "probtrackx_dot_convert_col_voxels_params",
+    "probtrackx_dot_convert_execute",
+    "probtrackx_dot_convert_outputs",
     "probtrackx_dot_convert_params",
+    "probtrackx_dot_convert_row_cifti_cargs",
     "probtrackx_dot_convert_row_cifti_params",
+    "probtrackx_dot_convert_row_voxels_cargs",
     "probtrackx_dot_convert_row_voxels_params",
 ]

@@ -14,7 +14,7 @@ V__COMPUTE_GCOR_METADATA = Metadata(
 
 
 VComputeGcorParameters = typing.TypedDict('VComputeGcorParameters', {
-    "__STYXTYPE__": typing.Literal["@compute_gcor"],
+    "@type": typing.Literal["afni.@compute_gcor"],
     "input": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "corr_vol_prefix": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@compute_gcor": v__compute_gcor_cargs,
+        "afni.@compute_gcor": v__compute_gcor_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@compute_gcor": v__compute_gcor_outputs,
+        "afni.@compute_gcor": v__compute_gcor_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def v__compute_gcor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@compute_gcor",
+        "@type": "afni.@compute_gcor",
         "input": input_,
         "no_demean": no_demean,
         "save_tmp": save_tmp,
@@ -242,5 +242,8 @@ __all__ = [
     "VComputeGcorParameters",
     "V__COMPUTE_GCOR_METADATA",
     "v__compute_gcor",
+    "v__compute_gcor_cargs",
+    "v__compute_gcor_execute",
+    "v__compute_gcor_outputs",
     "v__compute_gcor_params",
 ]

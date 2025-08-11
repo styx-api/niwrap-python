@@ -14,7 +14,7 @@ MRI_MOTION_CORRECT2_METADATA = Metadata(
 
 
 MriMotionCorrect2Parameters = typing.TypedDict('MriMotionCorrect2Parameters', {
-    "__STYXTYPE__": typing.Literal["mri_motion_correct2"],
+    "@type": typing.Literal["freesurfer.mri_motion_correct2"],
     "output_spec": str,
     "input_files": list[InputPathType],
     "target": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_motion_correct2": mri_motion_correct2_cargs,
+        "freesurfer.mri_motion_correct2": mri_motion_correct2_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_motion_correct2": mri_motion_correct2_outputs,
+        "freesurfer.mri_motion_correct2": mri_motion_correct2_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def mri_motion_correct2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_motion_correct2",
+        "@type": "freesurfer.mri_motion_correct2",
         "output_spec": output_spec,
         "input_files": input_files,
         "wild": wild,
@@ -274,5 +274,8 @@ __all__ = [
     "MriMotionCorrect2Outputs",
     "MriMotionCorrect2Parameters",
     "mri_motion_correct2",
+    "mri_motion_correct2_cargs",
+    "mri_motion_correct2_execute",
+    "mri_motion_correct2_outputs",
     "mri_motion_correct2_params",
 ]

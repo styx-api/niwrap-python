@@ -14,7 +14,7 @@ MORPH_KERNEL_METADATA = Metadata(
 
 
 MorphKernelParameters = typing.TypedDict('MorphKernelParameters', {
-    "__STYXTYPE__": typing.Literal["morph_kernel"],
+    "@type": typing.Literal["fsl.morph_kernel"],
     "cube_side_length": float,
     "sphere_radius": float,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "morph_kernel": morph_kernel_cargs,
+        "fsl.morph_kernel": morph_kernel_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "morph_kernel": morph_kernel_outputs,
+        "fsl.morph_kernel": morph_kernel_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def morph_kernel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "morph_kernel",
+        "@type": "fsl.morph_kernel",
         "cube_side_length": cube_side_length,
         "sphere_radius": sphere_radius,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MorphKernelOutputs",
     "MorphKernelParameters",
     "morph_kernel",
+    "morph_kernel_cargs",
+    "morph_kernel_execute",
+    "morph_kernel_outputs",
     "morph_kernel_params",
 ]

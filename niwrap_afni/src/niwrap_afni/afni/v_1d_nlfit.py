@@ -14,7 +14,7 @@ V_1D_NLFIT_METADATA = Metadata(
 
 
 V1dNlfitParameters = typing.TypedDict('V1dNlfitParameters', {
-    "__STYXTYPE__": typing.Literal["1dNLfit"],
+    "@type": typing.Literal["afni.1dNLfit"],
     "expression": str,
     "independent_variable": str,
     "parameters": list[str],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dNLfit": v_1d_nlfit_cargs,
+        "afni.1dNLfit": v_1d_nlfit_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dNLfit": v_1d_nlfit_outputs,
+        "afni.1dNLfit": v_1d_nlfit_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def v_1d_nlfit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dNLfit",
+        "@type": "afni.1dNLfit",
         "expression": expression,
         "independent_variable": independent_variable,
         "parameters": parameters,
@@ -250,5 +250,8 @@ __all__ = [
     "V1dNlfitParameters",
     "V_1D_NLFIT_METADATA",
     "v_1d_nlfit",
+    "v_1d_nlfit_cargs",
+    "v_1d_nlfit_execute",
+    "v_1d_nlfit_outputs",
     "v_1d_nlfit_params",
 ]

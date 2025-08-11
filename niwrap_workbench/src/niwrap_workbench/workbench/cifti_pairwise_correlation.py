@@ -14,7 +14,7 @@ CIFTI_PAIRWISE_CORRELATION_METADATA = Metadata(
 
 
 CiftiPairwiseCorrelationParameters = typing.TypedDict('CiftiPairwiseCorrelationParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-pairwise-correlation"],
+    "@type": typing.Literal["workbench.cifti-pairwise-correlation"],
     "cifti_a": InputPathType,
     "cifti_b": InputPathType,
     "cifti_out": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-pairwise-correlation": cifti_pairwise_correlation_cargs,
+        "workbench.cifti-pairwise-correlation": cifti_pairwise_correlation_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-pairwise-correlation": cifti_pairwise_correlation_outputs,
+        "workbench.cifti-pairwise-correlation": cifti_pairwise_correlation_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def cifti_pairwise_correlation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-pairwise-correlation",
+        "@type": "workbench.cifti-pairwise-correlation",
         "cifti_a": cifti_a,
         "cifti_b": cifti_b,
         "cifti_out": cifti_out,
@@ -217,5 +217,8 @@ __all__ = [
     "CiftiPairwiseCorrelationOutputs",
     "CiftiPairwiseCorrelationParameters",
     "cifti_pairwise_correlation",
+    "cifti_pairwise_correlation_cargs",
+    "cifti_pairwise_correlation_execute",
+    "cifti_pairwise_correlation_outputs",
     "cifti_pairwise_correlation_params",
 ]

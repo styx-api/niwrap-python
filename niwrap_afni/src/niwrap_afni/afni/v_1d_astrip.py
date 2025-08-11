@@ -14,7 +14,7 @@ V_1D_ASTRIP_METADATA = Metadata(
 
 
 V1dAstripParameters = typing.TypedDict('V1dAstripParameters', {
-    "__STYXTYPE__": typing.Literal["1dAstrip"],
+    "@type": typing.Literal["afni.1dAstrip"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dAstrip": v_1d_astrip_cargs,
+        "afni.1dAstrip": v_1d_astrip_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dAstrip": v_1d_astrip_outputs,
+        "afni.1dAstrip": v_1d_astrip_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v_1d_astrip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dAstrip",
+        "@type": "afni.1dAstrip",
         "infile": infile,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "V1dAstripParameters",
     "V_1D_ASTRIP_METADATA",
     "v_1d_astrip",
+    "v_1d_astrip_cargs",
+    "v_1d_astrip_execute",
+    "v_1d_astrip_outputs",
     "v_1d_astrip_params",
 ]

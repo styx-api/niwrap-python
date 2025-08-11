@@ -14,7 +14,7 @@ MRIS_COMPUTE_ACORR_METADATA = Metadata(
 
 
 MrisComputeAcorrParameters = typing.TypedDict('MrisComputeAcorrParameters', {
-    "__STYXTYPE__": typing.Literal["mris_compute_acorr"],
+    "@type": typing.Literal["freesurfer.mris_compute_acorr"],
     "output_subject": str,
     "hemi": str,
     "surf": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_compute_acorr": mris_compute_acorr_cargs,
+        "freesurfer.mris_compute_acorr": mris_compute_acorr_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def mris_compute_acorr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_compute_acorr",
+        "@type": "freesurfer.mris_compute_acorr",
         "output_subject": output_subject,
         "hemi": hemi,
         "surf": surf,
@@ -213,5 +213,8 @@ __all__ = [
     "MrisComputeAcorrOutputs",
     "MrisComputeAcorrParameters",
     "mris_compute_acorr",
+    "mris_compute_acorr_cargs",
+    "mris_compute_acorr_execute",
+    "mris_compute_acorr_outputs",
     "mris_compute_acorr_params",
 ]

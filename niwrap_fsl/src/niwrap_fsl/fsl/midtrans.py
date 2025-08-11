@@ -14,7 +14,7 @@ MIDTRANS_METADATA = Metadata(
 
 
 MidtransParameters = typing.TypedDict('MidtransParameters', {
-    "__STYXTYPE__": typing.Literal["midtrans"],
+    "@type": typing.Literal["fsl.midtrans"],
     "transforms": list[InputPathType],
     "output_matrix": typing.NotRequired[str | None],
     "template_image": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "midtrans": midtrans_cargs,
+        "fsl.midtrans": midtrans_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def midtrans_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "midtrans",
+        "@type": "fsl.midtrans",
         "transforms": transforms,
         "debug_flag": debug_flag,
         "verbose_flag": verbose_flag,
@@ -231,5 +231,8 @@ __all__ = [
     "MidtransOutputs",
     "MidtransParameters",
     "midtrans",
+    "midtrans_cargs",
+    "midtrans_execute",
+    "midtrans_outputs",
     "midtrans_params",
 ]

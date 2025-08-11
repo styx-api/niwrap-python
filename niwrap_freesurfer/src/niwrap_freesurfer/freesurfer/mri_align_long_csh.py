@@ -14,7 +14,7 @@ MRI_ALIGN_LONG_CSH_METADATA = Metadata(
 
 
 MriAlignLongCshParameters = typing.TypedDict('MriAlignLongCshParameters', {
-    "__STYXTYPE__": typing.Literal["mri_align_long.csh"],
+    "@type": typing.Literal["freesurfer.mri_align_long.csh"],
     "base_id": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_align_long.csh": mri_align_long_csh_cargs,
+        "freesurfer.mri_align_long.csh": mri_align_long_csh_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_align_long.csh": mri_align_long_csh_outputs,
+        "freesurfer.mri_align_long.csh": mri_align_long_csh_outputs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def mri_align_long_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_align_long.csh",
+        "@type": "freesurfer.mri_align_long.csh",
         "base_id": base_id,
     }
     return params
@@ -177,5 +177,8 @@ __all__ = [
     "MriAlignLongCshOutputs",
     "MriAlignLongCshParameters",
     "mri_align_long_csh",
+    "mri_align_long_csh_cargs",
+    "mri_align_long_csh_execute",
+    "mri_align_long_csh_outputs",
     "mri_align_long_csh_params",
 ]

@@ -14,7 +14,7 @@ V_3D_EXTREMA_METADATA = Metadata(
 
 
 V3dExtremaParameters = typing.TypedDict('V3dExtremaParameters', {
-    "__STYXTYPE__": typing.Literal["3dExtrema"],
+    "@type": typing.Literal["afni.3dExtrema"],
     "input_dataset": InputPathType,
     "output_prefix": typing.NotRequired[str | None],
     "output_session": typing.NotRequired[str | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dExtrema": v_3d_extrema_cargs,
+        "afni.3dExtrema": v_3d_extrema_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dExtrema": v_3d_extrema_outputs,
+        "afni.3dExtrema": v_3d_extrema_outputs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def v_3d_extrema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dExtrema",
+        "@type": "afni.3dExtrema",
         "input_dataset": input_dataset,
         "quiet": quiet,
         "minima": minima,
@@ -380,5 +380,8 @@ __all__ = [
     "V3dExtremaParameters",
     "V_3D_EXTREMA_METADATA",
     "v_3d_extrema",
+    "v_3d_extrema_cargs",
+    "v_3d_extrema_execute",
+    "v_3d_extrema_outputs",
     "v_3d_extrema_params",
 ]

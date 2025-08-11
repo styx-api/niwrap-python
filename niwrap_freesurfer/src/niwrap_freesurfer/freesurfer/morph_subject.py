@@ -14,7 +14,7 @@ MORPH_SUBJECT_METADATA = Metadata(
 
 
 MorphSubjectParameters = typing.TypedDict('MorphSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["morph_subject"],
+    "@type": typing.Literal["freesurfer.morph_subject"],
     "subjid": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "morph_subject": morph_subject_cargs,
+        "freesurfer.morph_subject": morph_subject_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def morph_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "morph_subject",
+        "@type": "freesurfer.morph_subject",
         "subjid": subjid,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "MorphSubjectOutputs",
     "MorphSubjectParameters",
     "morph_subject",
+    "morph_subject_cargs",
+    "morph_subject_execute",
+    "morph_subject_outputs",
     "morph_subject_params",
 ]

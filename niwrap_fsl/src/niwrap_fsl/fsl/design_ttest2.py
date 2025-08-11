@@ -14,7 +14,7 @@ DESIGN_TTEST2_METADATA = Metadata(
 
 
 DesignTtest2Parameters = typing.TypedDict('DesignTtest2Parameters', {
-    "__STYXTYPE__": typing.Literal["design_ttest2"],
+    "@type": typing.Literal["fsl.design_ttest2"],
     "design_files_rootname": str,
     "ngroupa": float,
     "ngroupb": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "design_ttest2": design_ttest2_cargs,
+        "fsl.design_ttest2": design_ttest2_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def design_ttest2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "design_ttest2",
+        "@type": "fsl.design_ttest2",
         "design_files_rootname": design_files_rootname,
         "ngroupa": ngroupa,
         "ngroupb": ngroupb,
@@ -193,5 +193,8 @@ __all__ = [
     "DesignTtest2Outputs",
     "DesignTtest2Parameters",
     "design_ttest2",
+    "design_ttest2_cargs",
+    "design_ttest2_execute",
+    "design_ttest2_outputs",
     "design_ttest2_params",
 ]

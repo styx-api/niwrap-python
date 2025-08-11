@@ -14,7 +14,7 @@ V_3D_HIST_METADATA = Metadata(
 
 
 V3dHistParameters = typing.TypedDict('V3dHistParameters', {
-    "__STYXTYPE__": typing.Literal["3dHist"],
+    "@type": typing.Literal["afni.3dHist"],
     "input": InputPathType,
     "dind_subbrick": typing.NotRequired[float | None],
     "mask_dset": typing.NotRequired[InputPathType | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dHist": v_3d_hist_cargs,
+        "afni.3dHist": v_3d_hist_cargs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def v_3d_hist_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dHist",
+        "@type": "afni.3dHist",
         "input": input_,
         "ignore_out": ignore_out,
         "showhist": showhist,
@@ -415,5 +415,8 @@ __all__ = [
     "V3dHistParameters",
     "V_3D_HIST_METADATA",
     "v_3d_hist",
+    "v_3d_hist_cargs",
+    "v_3d_hist_execute",
+    "v_3d_hist_outputs",
     "v_3d_hist_params",
 ]

@@ -14,7 +14,7 @@ MRI_SYNTHMORPH_METADATA = Metadata(
 
 
 MriSynthmorphParameters = typing.TypedDict('MriSynthmorphParameters', {
-    "__STYXTYPE__": typing.Literal["mri_synthmorph"],
+    "@type": typing.Literal["freesurfer.mri_synthmorph"],
     "moving_image": InputPathType,
     "fixed_image": InputPathType,
     "moved_output": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_synthmorph": mri_synthmorph_cargs,
+        "freesurfer.mri_synthmorph": mri_synthmorph_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_synthmorph": mri_synthmorph_outputs,
+        "freesurfer.mri_synthmorph": mri_synthmorph_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def mri_synthmorph_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_synthmorph",
+        "@type": "freesurfer.mri_synthmorph",
         "moving_image": moving_image,
         "fixed_image": fixed_image,
         "header_only": header_only,
@@ -338,5 +338,8 @@ __all__ = [
     "MriSynthmorphOutputs",
     "MriSynthmorphParameters",
     "mri_synthmorph",
+    "mri_synthmorph_cargs",
+    "mri_synthmorph_execute",
+    "mri_synthmorph_outputs",
     "mri_synthmorph_params",
 ]

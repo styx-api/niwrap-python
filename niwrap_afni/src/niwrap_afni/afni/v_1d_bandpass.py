@@ -14,7 +14,7 @@ V_1D_BANDPASS_METADATA = Metadata(
 
 
 V1dBandpassParameters = typing.TypedDict('V1dBandpassParameters', {
-    "__STYXTYPE__": typing.Literal["1dBandpass"],
+    "@type": typing.Literal["afni.1dBandpass"],
     "fbot": float,
     "ftop": float,
     "infile": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dBandpass": v_1d_bandpass_cargs,
+        "afni.1dBandpass": v_1d_bandpass_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def v_1d_bandpass_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dBandpass",
+        "@type": "afni.1dBandpass",
         "fbot": fbot,
         "ftop": ftop,
         "infile": infile,
@@ -234,5 +234,8 @@ __all__ = [
     "V1dBandpassParameters",
     "V_1D_BANDPASS_METADATA",
     "v_1d_bandpass",
+    "v_1d_bandpass_cargs",
+    "v_1d_bandpass_execute",
+    "v_1d_bandpass_outputs",
     "v_1d_bandpass_params",
 ]

@@ -14,7 +14,7 @@ DMRI_COLORED_FA_METADATA = Metadata(
 
 
 DmriColoredFaParameters = typing.TypedDict('DmriColoredFaParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_coloredFA"],
+    "@type": typing.Literal["freesurfer.dmri_coloredFA"],
     "input_volume": InputPathType,
     "output_volume": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_coloredFA": dmri_colored_fa_cargs,
+        "freesurfer.dmri_coloredFA": dmri_colored_fa_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dmri_coloredFA": dmri_colored_fa_outputs,
+        "freesurfer.dmri_coloredFA": dmri_colored_fa_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def dmri_colored_fa_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_coloredFA",
+        "@type": "freesurfer.dmri_coloredFA",
         "input_volume": input_volume,
         "output_volume": output_volume,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "DmriColoredFaOutputs",
     "DmriColoredFaParameters",
     "dmri_colored_fa",
+    "dmri_colored_fa_cargs",
+    "dmri_colored_fa_execute",
+    "dmri_colored_fa_outputs",
     "dmri_colored_fa_params",
 ]

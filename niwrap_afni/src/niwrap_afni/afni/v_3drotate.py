@@ -14,7 +14,7 @@ V_3DROTATE_METADATA = Metadata(
 
 
 V3drotateParameters = typing.TypedDict('V3drotateParameters', {
-    "__STYXTYPE__": typing.Literal["3drotate"],
+    "@type": typing.Literal["afni.3drotate"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verbose": bool,
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3drotate": v_3drotate_cargs,
+        "afni.3drotate": v_3drotate_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3drotate": v_3drotate_outputs,
+        "afni.3drotate": v_3drotate_outputs,
     }.get(t)
 
 
@@ -162,7 +162,7 @@ def v_3drotate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3drotate",
+        "@type": "afni.3drotate",
         "dataset": dataset,
         "verbose": verbose,
         "points": points,
@@ -473,5 +473,8 @@ __all__ = [
     "V3drotateParameters",
     "V_3DROTATE_METADATA",
     "v_3drotate",
+    "v_3drotate_cargs",
+    "v_3drotate_execute",
+    "v_3drotate_outputs",
     "v_3drotate_params",
 ]

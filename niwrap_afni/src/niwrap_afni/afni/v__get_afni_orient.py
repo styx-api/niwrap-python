@@ -14,7 +14,7 @@ V__GET_AFNI_ORIENT_METADATA = Metadata(
 
 
 VGetAfniOrientParameters = typing.TypedDict('VGetAfniOrientParameters', {
-    "__STYXTYPE__": typing.Literal["@GetAfniOrient"],
+    "@type": typing.Literal["afni.@GetAfniOrient"],
     "exploratory": bool,
     "infile": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@GetAfniOrient": v__get_afni_orient_cargs,
+        "afni.@GetAfniOrient": v__get_afni_orient_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@GetAfniOrient": v__get_afni_orient_outputs,
+        "afni.@GetAfniOrient": v__get_afni_orient_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def v__get_afni_orient_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@GetAfniOrient",
+        "@type": "afni.@GetAfniOrient",
         "exploratory": exploratory,
         "infile": infile,
     }
@@ -181,5 +181,8 @@ __all__ = [
     "VGetAfniOrientParameters",
     "V__GET_AFNI_ORIENT_METADATA",
     "v__get_afni_orient",
+    "v__get_afni_orient_cargs",
+    "v__get_afni_orient_execute",
+    "v__get_afni_orient_outputs",
     "v__get_afni_orient_params",
 ]

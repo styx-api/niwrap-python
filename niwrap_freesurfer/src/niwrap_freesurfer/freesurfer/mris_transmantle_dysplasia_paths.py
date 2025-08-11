@@ -14,7 +14,7 @@ MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA = Metadata(
 
 
 MrisTransmantleDysplasiaPathsParameters = typing.TypedDict('MrisTransmantleDysplasiaPathsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_transmantle_dysplasia_paths"],
+    "@type": typing.Literal["freesurfer.mris_transmantle_dysplasia_paths"],
     "surface": InputPathType,
     "aseg_volume": InputPathType,
     "intensity_volume": InputPathType,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_transmantle_dysplasia_paths": mris_transmantle_dysplasia_paths_cargs,
+        "freesurfer.mris_transmantle_dysplasia_paths": mris_transmantle_dysplasia_paths_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_transmantle_dysplasia_paths": mris_transmantle_dysplasia_paths_outputs,
+        "freesurfer.mris_transmantle_dysplasia_paths": mris_transmantle_dysplasia_paths_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mris_transmantle_dysplasia_paths_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_transmantle_dysplasia_paths",
+        "@type": "freesurfer.mris_transmantle_dysplasia_paths",
         "surface": surface,
         "aseg_volume": aseg_volume,
         "intensity_volume": intensity_volume,
@@ -228,5 +228,8 @@ __all__ = [
     "MrisTransmantleDysplasiaPathsOutputs",
     "MrisTransmantleDysplasiaPathsParameters",
     "mris_transmantle_dysplasia_paths",
+    "mris_transmantle_dysplasia_paths_cargs",
+    "mris_transmantle_dysplasia_paths_execute",
+    "mris_transmantle_dysplasia_paths_outputs",
     "mris_transmantle_dysplasia_paths_params",
 ]

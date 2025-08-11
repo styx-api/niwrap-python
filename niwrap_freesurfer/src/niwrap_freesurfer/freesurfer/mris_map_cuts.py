@@ -14,7 +14,7 @@ MRIS_MAP_CUTS_METADATA = Metadata(
 
 
 MrisMapCutsParameters = typing.TypedDict('MrisMapCutsParameters', {
-    "__STYXTYPE__": typing.Literal["mris_map_cuts"],
+    "@type": typing.Literal["freesurfer.mris_map_cuts"],
     "input_patch": InputPathType,
     "output_patch": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_map_cuts": mris_map_cuts_cargs,
+        "freesurfer.mris_map_cuts": mris_map_cuts_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mris_map_cuts_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_map_cuts",
+        "@type": "freesurfer.mris_map_cuts",
         "input_patch": input_patch,
         "output_patch": output_patch,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "MrisMapCutsOutputs",
     "MrisMapCutsParameters",
     "mris_map_cuts",
+    "mris_map_cuts_cargs",
+    "mris_map_cuts_execute",
+    "mris_map_cuts_outputs",
     "mris_map_cuts_params",
 ]

@@ -14,93 +14,93 @@ MRCONVERT_METADATA = Metadata(
 
 
 MrconvertCoordParameters = typing.TypedDict('MrconvertCoordParameters', {
-    "__STYXTYPE__": typing.Literal["coord"],
+    "@type": typing.Literal["mrtrix.mrconvert.coord"],
     "axis": int,
     "selection": list[int],
 })
 
 
 MrconvertClearPropertyParameters = typing.TypedDict('MrconvertClearPropertyParameters', {
-    "__STYXTYPE__": typing.Literal["clear_property"],
+    "@type": typing.Literal["mrtrix.mrconvert.clear_property"],
     "key": str,
 })
 
 
 MrconvertSetPropertyParameters = typing.TypedDict('MrconvertSetPropertyParameters', {
-    "__STYXTYPE__": typing.Literal["set_property"],
+    "@type": typing.Literal["mrtrix.mrconvert.set_property"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertAppendPropertyParameters = typing.TypedDict('MrconvertAppendPropertyParameters', {
-    "__STYXTYPE__": typing.Literal["append_property"],
+    "@type": typing.Literal["mrtrix.mrconvert.append_property"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertVariousStringParameters = typing.TypedDict('MrconvertVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.mrconvert.VariousString"],
     "obj": str,
 })
 
 
 MrconvertVariousFileParameters = typing.TypedDict('MrconvertVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.mrconvert.VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrconvertVariousString1Parameters = typing.TypedDict('MrconvertVariousString1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousString_1"],
+    "@type": typing.Literal["mrtrix.mrconvert.VariousString"],
     "obj": str,
 })
 
 
 MrconvertVariousFile1Parameters = typing.TypedDict('MrconvertVariousFile1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile_1"],
+    "@type": typing.Literal["mrtrix.mrconvert.VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrconvertFslgradParameters = typing.TypedDict('MrconvertFslgradParameters', {
-    "__STYXTYPE__": typing.Literal["fslgrad"],
+    "@type": typing.Literal["mrtrix.mrconvert.fslgrad"],
     "bvecs": InputPathType,
     "bvals": InputPathType,
 })
 
 
 MrconvertExportGradFslParameters = typing.TypedDict('MrconvertExportGradFslParameters', {
-    "__STYXTYPE__": typing.Literal["export_grad_fsl"],
+    "@type": typing.Literal["mrtrix.mrconvert.export_grad_fsl"],
     "bvecs_path": str,
     "bvals_path": str,
 })
 
 
 MrconvertImportPeEddyParameters = typing.TypedDict('MrconvertImportPeEddyParameters', {
-    "__STYXTYPE__": typing.Literal["import_pe_eddy"],
+    "@type": typing.Literal["mrtrix.mrconvert.import_pe_eddy"],
     "config": InputPathType,
     "indices": InputPathType,
 })
 
 
 MrconvertExportPeEddyParameters = typing.TypedDict('MrconvertExportPeEddyParameters', {
-    "__STYXTYPE__": typing.Literal["export_pe_eddy"],
+    "@type": typing.Literal["mrtrix.mrconvert.export_pe_eddy"],
     "config": str,
     "indices": str,
 })
 
 
 MrconvertConfigParameters = typing.TypedDict('MrconvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrconvert.config"],
     "key": str,
     "value": str,
 })
 
 
 MrconvertParameters = typing.TypedDict('MrconvertParameters', {
-    "__STYXTYPE__": typing.Literal["mrconvert"],
+    "@type": typing.Literal["mrtrix.mrconvert"],
     "coord": typing.NotRequired[list[MrconvertCoordParameters] | None],
     "vox": typing.NotRequired[list[float] | None],
     "axes": typing.NotRequired[list[int] | None],
@@ -147,20 +147,20 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrconvert": mrconvert_cargs,
-        "coord": mrconvert_coord_cargs,
-        "clear_property": mrconvert_clear_property_cargs,
-        "set_property": mrconvert_set_property_cargs,
-        "append_property": mrconvert_append_property_cargs,
-        "VariousString": mrconvert_various_string_cargs,
-        "VariousFile": mrconvert_various_file_cargs,
-        "VariousString_1": mrconvert_various_string_1_cargs,
-        "VariousFile_1": mrconvert_various_file_1_cargs,
-        "fslgrad": mrconvert_fslgrad_cargs,
-        "export_grad_fsl": mrconvert_export_grad_fsl_cargs,
-        "import_pe_eddy": mrconvert_import_pe_eddy_cargs,
-        "export_pe_eddy": mrconvert_export_pe_eddy_cargs,
-        "config": mrconvert_config_cargs,
+        "mrtrix.mrconvert": mrconvert_cargs,
+        "mrtrix.mrconvert.coord": mrconvert_coord_cargs,
+        "mrtrix.mrconvert.clear_property": mrconvert_clear_property_cargs,
+        "mrtrix.mrconvert.set_property": mrconvert_set_property_cargs,
+        "mrtrix.mrconvert.append_property": mrconvert_append_property_cargs,
+        "mrtrix.mrconvert.VariousString": mrconvert_various_string_cargs,
+        "mrtrix.mrconvert.VariousFile": mrconvert_various_file_cargs,
+        "mrtrix.mrconvert.VariousString": mrconvert_various_string_1_cargs,
+        "mrtrix.mrconvert.VariousFile": mrconvert_various_file_1_cargs,
+        "mrtrix.mrconvert.fslgrad": mrconvert_fslgrad_cargs,
+        "mrtrix.mrconvert.export_grad_fsl": mrconvert_export_grad_fsl_cargs,
+        "mrtrix.mrconvert.import_pe_eddy": mrconvert_import_pe_eddy_cargs,
+        "mrtrix.mrconvert.export_pe_eddy": mrconvert_export_pe_eddy_cargs,
+        "mrtrix.mrconvert.config": mrconvert_config_cargs,
     }.get(t)
 
 
@@ -176,9 +176,9 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrconvert": mrconvert_outputs,
-        "export_grad_fsl": mrconvert_export_grad_fsl_outputs,
-        "export_pe_eddy": mrconvert_export_pe_eddy_outputs,
+        "mrtrix.mrconvert": mrconvert_outputs,
+        "mrtrix.mrconvert.export_grad_fsl": mrconvert_export_grad_fsl_outputs,
+        "mrtrix.mrconvert.export_pe_eddy": mrconvert_export_pe_eddy_outputs,
     }.get(t)
 
 
@@ -202,7 +202,7 @@ def mrconvert_coord_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "coord",
+        "@type": "mrtrix.mrconvert.coord",
         "axis": axis,
         "selection": selection,
     }
@@ -241,7 +241,7 @@ def mrconvert_clear_property_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "clear_property",
+        "@type": "mrtrix.mrconvert.clear_property",
         "key": key,
     }
     return params
@@ -280,7 +280,7 @@ def mrconvert_set_property_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "set_property",
+        "@type": "mrtrix.mrconvert.set_property",
         "key": key,
         "value": value,
     }
@@ -323,7 +323,7 @@ def mrconvert_append_property_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "append_property",
+        "@type": "mrtrix.mrconvert.append_property",
         "key": key,
         "value": value,
     }
@@ -362,7 +362,7 @@ def mrconvert_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.mrconvert.VariousString",
         "obj": obj,
     }
     return params
@@ -398,7 +398,7 @@ def mrconvert_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.mrconvert.VariousFile",
         "obj": obj,
     }
     return params
@@ -434,7 +434,7 @@ def mrconvert_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString_1",
+        "@type": "mrtrix.mrconvert.VariousString",
         "obj": obj,
     }
     return params
@@ -470,7 +470,7 @@ def mrconvert_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile_1",
+        "@type": "mrtrix.mrconvert.VariousFile",
         "obj": obj,
     }
     return params
@@ -514,7 +514,7 @@ def mrconvert_fslgrad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslgrad",
+        "@type": "mrtrix.mrconvert.fslgrad",
         "bvecs": bvecs,
         "bvals": bvals,
     }
@@ -571,7 +571,7 @@ def mrconvert_export_grad_fsl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "export_grad_fsl",
+        "@type": "mrtrix.mrconvert.export_grad_fsl",
         "bvecs_path": bvecs_path,
         "bvals_path": bvals_path,
     }
@@ -635,7 +635,7 @@ def mrconvert_import_pe_eddy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "import_pe_eddy",
+        "@type": "mrtrix.mrconvert.import_pe_eddy",
         "config": config,
         "indices": indices,
     }
@@ -692,7 +692,7 @@ def mrconvert_export_pe_eddy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "export_pe_eddy",
+        "@type": "mrtrix.mrconvert.export_pe_eddy",
         "config": config,
         "indices": indices,
     }
@@ -754,7 +754,7 @@ def mrconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrconvert.config",
         "key": key,
         "value": value,
     }
@@ -909,7 +909,7 @@ def mrconvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrconvert",
+        "@type": "mrtrix.mrconvert",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -984,7 +984,7 @@ def mrconvert_cargs(
     cargs = []
     cargs.append("mrconvert")
     if params.get("coord") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("coord")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("coord")] for a in c])
     if params.get("vox") is not None:
         cargs.extend([
             "-vox",
@@ -1011,20 +1011,20 @@ def mrconvert_cargs(
             params.get("json_export")
         ])
     if params.get("clear_property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("clear_property")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("clear_property")] for a in c])
     if params.get("set_property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("set_property")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("set_property")] for a in c])
     if params.get("append_property") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("append_property")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("append_property")] for a in c])
     if params.get("copy_properties") is not None:
         cargs.extend([
             "-copy_properties",
-            *dyn_cargs(params.get("copy_properties")["__STYXTYPE__"])(params.get("copy_properties"), execution)
+            *dyn_cargs(params.get("copy_properties")["@type"])(params.get("copy_properties"), execution)
         ])
     if params.get("strides") is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["__STYXTYPE__"])(params.get("strides"), execution)
+            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
         ])
     if params.get("datatype") is not None:
         cargs.extend([
@@ -1037,7 +1037,7 @@ def mrconvert_cargs(
             execution.input_file(params.get("grad"))
         ])
     if params.get("fslgrad") is not None:
-        cargs.extend(dyn_cargs(params.get("fslgrad")["__STYXTYPE__"])(params.get("fslgrad"), execution))
+        cargs.extend(dyn_cargs(params.get("fslgrad")["@type"])(params.get("fslgrad"), execution))
     if params.get("bvalue_scaling") is not None:
         cargs.extend([
             "-bvalue_scaling",
@@ -1049,21 +1049,21 @@ def mrconvert_cargs(
             params.get("export_grad_mrtrix")
         ])
     if params.get("export_grad_fsl") is not None:
-        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution))
+        cargs.extend(dyn_cargs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution))
     if params.get("import_pe_table") is not None:
         cargs.extend([
             "-import_pe_table",
             execution.input_file(params.get("import_pe_table"))
         ])
     if params.get("import_pe_eddy") is not None:
-        cargs.extend(dyn_cargs(params.get("import_pe_eddy")["__STYXTYPE__"])(params.get("import_pe_eddy"), execution))
+        cargs.extend(dyn_cargs(params.get("import_pe_eddy")["@type"])(params.get("import_pe_eddy"), execution))
     if params.get("export_pe_table") is not None:
         cargs.extend([
             "-export_pe_table",
             params.get("export_pe_table")
         ])
     if params.get("export_pe_eddy") is not None:
-        cargs.extend(dyn_cargs(params.get("export_pe_eddy")["__STYXTYPE__"])(params.get("export_pe_eddy"), execution))
+        cargs.extend(dyn_cargs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution))
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -1078,7 +1078,7 @@ def mrconvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -1107,8 +1107,8 @@ def mrconvert_outputs(
         json_export=execution.output_file(params.get("json_export")) if (params.get("json_export") is not None) else None,
         export_grad_mrtrix=execution.output_file(params.get("export_grad_mrtrix")) if (params.get("export_grad_mrtrix") is not None) else None,
         export_pe_table=execution.output_file(params.get("export_pe_table")) if (params.get("export_pe_table") is not None) else None,
-        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["__STYXTYPE__"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
-        export_pe_eddy=dyn_outputs(params.get("export_pe_eddy")["__STYXTYPE__"])(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
+        export_grad_fsl=dyn_outputs(params.get("export_grad_fsl")["@type"])(params.get("export_grad_fsl"), execution) if params.get("export_grad_fsl") else None,
+        export_pe_eddy=dyn_outputs(params.get("export_pe_eddy")["@type"])(params.get("export_pe_eddy"), execution) if params.get("export_pe_eddy") else None,
     )
     return ret
 
@@ -1406,18 +1406,36 @@ __all__ = [
     "MrconvertVariousString1Parameters",
     "MrconvertVariousStringParameters",
     "mrconvert",
+    "mrconvert_append_property_cargs",
     "mrconvert_append_property_params",
+    "mrconvert_cargs",
+    "mrconvert_clear_property_cargs",
     "mrconvert_clear_property_params",
+    "mrconvert_config_cargs",
     "mrconvert_config_params",
+    "mrconvert_coord_cargs",
     "mrconvert_coord_params",
+    "mrconvert_execute",
+    "mrconvert_export_grad_fsl_cargs",
+    "mrconvert_export_grad_fsl_outputs",
     "mrconvert_export_grad_fsl_params",
+    "mrconvert_export_pe_eddy_cargs",
+    "mrconvert_export_pe_eddy_outputs",
     "mrconvert_export_pe_eddy_params",
+    "mrconvert_fslgrad_cargs",
     "mrconvert_fslgrad_params",
+    "mrconvert_import_pe_eddy_cargs",
     "mrconvert_import_pe_eddy_params",
+    "mrconvert_outputs",
     "mrconvert_params",
+    "mrconvert_set_property_cargs",
     "mrconvert_set_property_params",
+    "mrconvert_various_file_1_cargs",
     "mrconvert_various_file_1_params",
+    "mrconvert_various_file_cargs",
     "mrconvert_various_file_params",
+    "mrconvert_various_string_1_cargs",
     "mrconvert_various_string_1_params",
+    "mrconvert_various_string_cargs",
     "mrconvert_various_string_params",
 ]

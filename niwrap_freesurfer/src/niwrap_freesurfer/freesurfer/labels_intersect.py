@@ -14,7 +14,7 @@ LABELS_INTERSECT_METADATA = Metadata(
 
 
 LabelsIntersectParameters = typing.TypedDict('LabelsIntersectParameters', {
-    "__STYXTYPE__": typing.Literal["labels_intersect"],
+    "@type": typing.Literal["freesurfer.labels_intersect"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "labels_intersect": labels_intersect_cargs,
+        "freesurfer.labels_intersect": labels_intersect_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "labels_intersect": labels_intersect_outputs,
+        "freesurfer.labels_intersect": labels_intersect_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def labels_intersect_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "labels_intersect",
+        "@type": "freesurfer.labels_intersect",
         "label1": label1,
         "label2": label2,
         "outputname": outputname,
@@ -188,5 +188,8 @@ __all__ = [
     "LabelsIntersectOutputs",
     "LabelsIntersectParameters",
     "labels_intersect",
+    "labels_intersect_cargs",
+    "labels_intersect_execute",
+    "labels_intersect_outputs",
     "labels_intersect_params",
 ]

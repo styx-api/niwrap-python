@@ -14,7 +14,7 @@ FAT_PROC_CONVERT_DCM_DWIS_METADATA = Metadata(
 
 
 FatProcConvertDcmDwisParameters = typing.TypedDict('FatProcConvertDcmDwisParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_convert_dcm_dwis"],
+    "@type": typing.Literal["afni.fat_proc_convert_dcm_dwis"],
     "dicom_dir": str,
     "output_prefix": str,
     "nifti_files": typing.NotRequired[list[InputPathType] | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_convert_dcm_dwis": fat_proc_convert_dcm_dwis_cargs,
+        "afni.fat_proc_convert_dcm_dwis": fat_proc_convert_dcm_dwis_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_proc_convert_dcm_dwis": fat_proc_convert_dcm_dwis_outputs,
+        "afni.fat_proc_convert_dcm_dwis": fat_proc_convert_dcm_dwis_outputs,
     }.get(t)
 
 
@@ -145,7 +145,7 @@ def fat_proc_convert_dcm_dwis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_convert_dcm_dwis",
+        "@type": "afni.fat_proc_convert_dcm_dwis",
         "dicom_dir": dicom_dir,
         "output_prefix": output_prefix,
         "flip_x": flip_x,
@@ -370,5 +370,8 @@ __all__ = [
     "FatProcConvertDcmDwisOutputs",
     "FatProcConvertDcmDwisParameters",
     "fat_proc_convert_dcm_dwis",
+    "fat_proc_convert_dcm_dwis_cargs",
+    "fat_proc_convert_dcm_dwis_execute",
+    "fat_proc_convert_dcm_dwis_outputs",
     "fat_proc_convert_dcm_dwis_params",
 ]

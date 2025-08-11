@@ -14,7 +14,7 @@ TRAIN_GCS_ATLAS_METADATA = Metadata(
 
 
 TrainGcsAtlasParameters = typing.TypedDict('TrainGcsAtlasParameters', {
-    "__STYXTYPE__": typing.Literal["train-gcs-atlas"],
+    "@type": typing.Literal["freesurfer.train-gcs-atlas"],
     "manual_parcellation": typing.NotRequired[str | None],
     "subjlist_file": typing.NotRequired[InputPathType | None],
     "left_hemi": bool,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "train-gcs-atlas": train_gcs_atlas_cargs,
+        "freesurfer.train-gcs-atlas": train_gcs_atlas_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "train-gcs-atlas": train_gcs_atlas_outputs,
+        "freesurfer.train-gcs-atlas": train_gcs_atlas_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def train_gcs_atlas_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "train-gcs-atlas",
+        "@type": "freesurfer.train-gcs-atlas",
         "left_hemi": left_hemi,
         "right_hemi": right_hemi,
         "output_gcs": output_gcs,
@@ -308,5 +308,8 @@ __all__ = [
     "TrainGcsAtlasOutputs",
     "TrainGcsAtlasParameters",
     "train_gcs_atlas",
+    "train_gcs_atlas_cargs",
+    "train_gcs_atlas_execute",
+    "train_gcs_atlas_outputs",
     "train_gcs_atlas_params",
 ]

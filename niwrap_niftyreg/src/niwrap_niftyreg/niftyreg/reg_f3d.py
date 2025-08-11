@@ -14,7 +14,7 @@ REG_F3D_METADATA = Metadata(
 
 
 RegF3dParameters = typing.TypedDict('RegF3dParameters', {
-    "__STYXTYPE__": typing.Literal["reg_f3d"],
+    "@type": typing.Literal["niftyreg.reg_f3d"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],
@@ -70,7 +70,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg_f3d": reg_f3d_cargs,
+        "niftyreg.reg_f3d": reg_f3d_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg_f3d": reg_f3d_outputs,
+        "niftyreg.reg_f3d": reg_f3d_outputs,
     }.get(t)
 
 
@@ -208,7 +208,7 @@ def reg_f3d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg_f3d",
+        "@type": "niftyreg.reg_f3d",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "no_approx_jl": no_approx_jl,
@@ -681,5 +681,8 @@ __all__ = [
     "RegF3dOutputs",
     "RegF3dParameters",
     "reg_f3d",
+    "reg_f3d_cargs",
+    "reg_f3d_execute",
+    "reg_f3d_outputs",
     "reg_f3d_params",
 ]

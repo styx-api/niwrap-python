@@ -14,7 +14,7 @@ EDDY_CUDA_METADATA = Metadata(
 
 
 EddyCudaParameters = typing.TypedDict('EddyCudaParameters', {
-    "__STYXTYPE__": typing.Literal["eddy_cuda"],
+    "@type": typing.Literal["fsl.eddy_cuda"],
     "imain": InputPathType,
     "mask": InputPathType,
     "index": InputPathType,
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy_cuda": eddy_cuda_cargs,
+        "fsl.eddy_cuda": eddy_cuda_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy_cuda": eddy_cuda_outputs,
+        "fsl.eddy_cuda": eddy_cuda_outputs,
     }.get(t)
 
 
@@ -260,7 +260,7 @@ def eddy_cuda_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy_cuda",
+        "@type": "fsl.eddy_cuda",
         "imain": imain,
         "mask": mask,
         "index": index,
@@ -674,5 +674,8 @@ __all__ = [
     "EddyCudaOutputs",
     "EddyCudaParameters",
     "eddy_cuda",
+    "eddy_cuda_cargs",
+    "eddy_cuda_execute",
+    "eddy_cuda_outputs",
     "eddy_cuda_params",
 ]

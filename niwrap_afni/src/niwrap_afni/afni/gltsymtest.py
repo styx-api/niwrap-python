@@ -14,7 +14,7 @@ GLTSYMTEST_METADATA = Metadata(
 
 
 GltsymtestParameters = typing.TypedDict('GltsymtestParameters', {
-    "__STYXTYPE__": typing.Literal["GLTsymtest"],
+    "@type": typing.Literal["afni.GLTsymtest"],
     "badonly": bool,
     "varlist": str,
     "expr": list[str],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "GLTsymtest": gltsymtest_cargs,
+        "afni.GLTsymtest": gltsymtest_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def gltsymtest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "GLTsymtest",
+        "@type": "afni.GLTsymtest",
         "badonly": badonly,
         "varlist": varlist,
         "expr": expr,
@@ -189,5 +189,8 @@ __all__ = [
     "GltsymtestOutputs",
     "GltsymtestParameters",
     "gltsymtest",
+    "gltsymtest_cargs",
+    "gltsymtest_execute",
+    "gltsymtest_outputs",
     "gltsymtest_params",
 ]

@@ -14,7 +14,7 @@ FSLREORIENT2STD_METADATA = Metadata(
 
 
 Fslreorient2stdParameters = typing.TypedDict('Fslreorient2stdParameters', {
-    "__STYXTYPE__": typing.Literal["fslreorient2std"],
+    "@type": typing.Literal["fsl.fslreorient2std"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "matrix_file": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslreorient2std": fslreorient2std_cargs,
+        "fsl.fslreorient2std": fslreorient2std_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslreorient2std": fslreorient2std_outputs,
+        "fsl.fslreorient2std": fslreorient2std_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def fslreorient2std_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslreorient2std",
+        "@type": "fsl.fslreorient2std",
         "input_image": input_image,
     }
     if output_image is not None:
@@ -206,5 +206,8 @@ __all__ = [
     "Fslreorient2stdOutputs",
     "Fslreorient2stdParameters",
     "fslreorient2std",
+    "fslreorient2std_cargs",
+    "fslreorient2std_execute",
+    "fslreorient2std_outputs",
     "fslreorient2std_params",
 ]

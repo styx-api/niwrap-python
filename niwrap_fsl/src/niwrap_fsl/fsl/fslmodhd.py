@@ -14,7 +14,7 @@ FSLMODHD_METADATA = Metadata(
 
 
 FslmodhdParameters = typing.TypedDict('FslmodhdParameters', {
-    "__STYXTYPE__": typing.Literal["fslmodhd"],
+    "@type": typing.Literal["fsl.fslmodhd"],
     "image": InputPathType,
     "keyword": str,
     "value": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslmodhd": fslmodhd_cargs,
+        "fsl.fslmodhd": fslmodhd_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fslmodhd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslmodhd",
+        "@type": "fsl.fslmodhd",
         "image": image,
         "keyword": keyword_,
         "value": value,
@@ -184,5 +184,8 @@ __all__ = [
     "FslmodhdOutputs",
     "FslmodhdParameters",
     "fslmodhd",
+    "fslmodhd_cargs",
+    "fslmodhd_execute",
+    "fslmodhd_outputs",
     "fslmodhd_params",
 ]

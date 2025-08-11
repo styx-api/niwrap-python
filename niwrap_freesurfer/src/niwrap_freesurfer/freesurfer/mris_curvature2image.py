@@ -14,7 +14,7 @@ MRIS_CURVATURE2IMAGE_METADATA = Metadata(
 
 
 MrisCurvature2imageParameters = typing.TypedDict('MrisCurvature2imageParameters', {
-    "__STYXTYPE__": typing.Literal["mris_curvature2image"],
+    "@type": typing.Literal["freesurfer.mris_curvature2image"],
     "surface": InputPathType,
     "mask": InputPathType,
     "output_overlay": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_curvature2image": mris_curvature2image_cargs,
+        "freesurfer.mris_curvature2image": mris_curvature2image_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_curvature2image": mris_curvature2image_outputs,
+        "freesurfer.mris_curvature2image": mris_curvature2image_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def mris_curvature2image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_curvature2image",
+        "@type": "freesurfer.mris_curvature2image",
         "surface": surface,
         "mask": mask,
         "output_overlay": output_overlay,
@@ -253,5 +253,8 @@ __all__ = [
     "MrisCurvature2imageOutputs",
     "MrisCurvature2imageParameters",
     "mris_curvature2image",
+    "mris_curvature2image_cargs",
+    "mris_curvature2image_execute",
+    "mris_curvature2image_outputs",
     "mris_curvature2image_params",
 ]

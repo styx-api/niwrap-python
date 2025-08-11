@@ -14,7 +14,7 @@ MRI_BRAINVOL_STATS_METADATA = Metadata(
 
 
 MriBrainvolStatsParameters = typing.TypedDict('MriBrainvolStatsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_brainvol_stats"],
+    "@type": typing.Literal["freesurfer.mri_brainvol_stats"],
     "subject_id": str,
     "xml_string": typing.NotRequired[str | None],
     "no_surface": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_brainvol_stats": mri_brainvol_stats_cargs,
+        "freesurfer.mri_brainvol_stats": mri_brainvol_stats_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_brainvol_stats": mri_brainvol_stats_outputs,
+        "freesurfer.mri_brainvol_stats": mri_brainvol_stats_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def mri_brainvol_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_brainvol_stats",
+        "@type": "freesurfer.mri_brainvol_stats",
         "subject_id": subject_id,
         "no_surface": no_surface,
         "include_segmentation": include_segmentation,
@@ -227,5 +227,8 @@ __all__ = [
     "MriBrainvolStatsOutputs",
     "MriBrainvolStatsParameters",
     "mri_brainvol_stats",
+    "mri_brainvol_stats_cargs",
+    "mri_brainvol_stats_execute",
+    "mri_brainvol_stats_outputs",
     "mri_brainvol_stats_params",
 ]

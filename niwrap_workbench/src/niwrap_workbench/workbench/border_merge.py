@@ -14,28 +14,28 @@ BORDER_MERGE_METADATA = Metadata(
 
 
 BorderMergeUpToParameters = typing.TypedDict('BorderMergeUpToParameters', {
-    "__STYXTYPE__": typing.Literal["up_to"],
+    "@type": typing.Literal["workbench.border-merge.border.select.up_to"],
     "last_border": str,
     "opt_reverse": bool,
 })
 
 
 BorderMergeSelectParameters = typing.TypedDict('BorderMergeSelectParameters', {
-    "__STYXTYPE__": typing.Literal["select"],
+    "@type": typing.Literal["workbench.border-merge.border.select"],
     "border": str,
     "up_to": typing.NotRequired[BorderMergeUpToParameters | None],
 })
 
 
 BorderMergeBorderParameters = typing.TypedDict('BorderMergeBorderParameters', {
-    "__STYXTYPE__": typing.Literal["border"],
+    "@type": typing.Literal["workbench.border-merge.border"],
     "border_file_in": InputPathType,
     "select": typing.NotRequired[list[BorderMergeSelectParameters] | None],
 })
 
 
 BorderMergeParameters = typing.TypedDict('BorderMergeParameters', {
-    "__STYXTYPE__": typing.Literal["border-merge"],
+    "@type": typing.Literal["workbench.border-merge"],
     "border_file_out": str,
     "border": typing.NotRequired[list[BorderMergeBorderParameters] | None],
 })
@@ -53,10 +53,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "border-merge": border_merge_cargs,
-        "border": border_merge_border_cargs,
-        "select": border_merge_select_cargs,
-        "up_to": border_merge_up_to_cargs,
+        "workbench.border-merge": border_merge_cargs,
+        "workbench.border-merge.border": border_merge_border_cargs,
+        "workbench.border-merge.border.select": border_merge_select_cargs,
+        "workbench.border-merge.border.select.up_to": border_merge_up_to_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "border-merge": border_merge_outputs,
+        "workbench.border-merge": border_merge_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def border_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "up_to",
+        "@type": "workbench.border-merge.border.select.up_to",
         "last_border": last_border,
         "opt_reverse": opt_reverse,
     }
@@ -132,7 +132,7 @@ def border_merge_select_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "select",
+        "@type": "workbench.border-merge.border.select",
         "border": border,
     }
     if up_to is not None:
@@ -157,7 +157,7 @@ def border_merge_select_cargs(
     cargs.append("-select")
     cargs.append(params.get("border"))
     if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["__STYXTYPE__"])(params.get("up_to"), execution))
+        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
     return cargs
 
 
@@ -175,7 +175,7 @@ def border_merge_border_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border",
+        "@type": "workbench.border-merge.border",
         "border_file_in": border_file_in,
     }
     if select_ is not None:
@@ -200,7 +200,7 @@ def border_merge_border_cargs(
     cargs.append("-border")
     cargs.append(execution.input_file(params.get("border_file_in")))
     if params.get("select") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("select")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("select")] for a in c])
     return cargs
 
 
@@ -228,7 +228,7 @@ def border_merge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border-merge",
+        "@type": "workbench.border-merge",
         "border_file_out": border_file_out,
     }
     if border is not None:
@@ -254,7 +254,7 @@ def border_merge_cargs(
     cargs.append("-border-merge")
     cargs.append(params.get("border_file_out"))
     if params.get("border") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("border")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("border")] for a in c])
     return cargs
 
 
@@ -356,8 +356,14 @@ __all__ = [
     "BorderMergeSelectParameters",
     "BorderMergeUpToParameters",
     "border_merge",
+    "border_merge_border_cargs",
     "border_merge_border_params",
+    "border_merge_cargs",
+    "border_merge_execute",
+    "border_merge_outputs",
     "border_merge_params",
+    "border_merge_select_cargs",
     "border_merge_select_params",
+    "border_merge_up_to_cargs",
     "border_merge_up_to_params",
 ]

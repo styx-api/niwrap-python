@@ -14,7 +14,7 @@ CIFTI_MATH_METADATA = Metadata(
 
 
 CiftiMathSelectParameters = typing.TypedDict('CiftiMathSelectParameters', {
-    "__STYXTYPE__": typing.Literal["select"],
+    "@type": typing.Literal["workbench.cifti-math.var.select"],
     "dim": int,
     "index": str,
     "opt_repeat": bool,
@@ -22,7 +22,7 @@ CiftiMathSelectParameters = typing.TypedDict('CiftiMathSelectParameters', {
 
 
 CiftiMathVarParameters = typing.TypedDict('CiftiMathVarParameters', {
-    "__STYXTYPE__": typing.Literal["var"],
+    "@type": typing.Literal["workbench.cifti-math.var"],
     "name": str,
     "cifti": InputPathType,
     "select": typing.NotRequired[list[CiftiMathSelectParameters] | None],
@@ -30,7 +30,7 @@ CiftiMathVarParameters = typing.TypedDict('CiftiMathVarParameters', {
 
 
 CiftiMathParameters = typing.TypedDict('CiftiMathParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-math"],
+    "@type": typing.Literal["workbench.cifti-math"],
     "expression": str,
     "cifti_out": str,
     "opt_fixnan_replace": typing.NotRequired[float | None],
@@ -51,9 +51,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-math": cifti_math_cargs,
-        "var": cifti_math_var_cargs,
-        "select": cifti_math_select_cargs,
+        "workbench.cifti-math": cifti_math_cargs,
+        "workbench.cifti-math.var": cifti_math_var_cargs,
+        "workbench.cifti-math.var.select": cifti_math_select_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-math": cifti_math_outputs,
+        "workbench.cifti-math": cifti_math_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def cifti_math_select_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "select",
+        "@type": "workbench.cifti-math.var.select",
         "dim": dim,
         "index": index,
         "opt_repeat": opt_repeat,
@@ -136,7 +136,7 @@ def cifti_math_var_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "var",
+        "@type": "workbench.cifti-math.var",
         "name": name,
         "cifti": cifti,
     }
@@ -163,7 +163,7 @@ def cifti_math_var_cargs(
     cargs.append(params.get("name"))
     cargs.append(execution.input_file(params.get("cifti")))
     if params.get("select") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("select")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("select")] for a in c])
     return cargs
 
 
@@ -199,7 +199,7 @@ def cifti_math_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-math",
+        "@type": "workbench.cifti-math",
         "expression": expression,
         "cifti_out": cifti_out,
         "opt_override_mapping_check": opt_override_mapping_check,
@@ -237,7 +237,7 @@ def cifti_math_cargs(
     if params.get("opt_override_mapping_check"):
         cargs.append("-override-mapping-check")
     if params.get("var") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("var")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("var")] for a in c])
     return cargs
 
 
@@ -477,7 +477,12 @@ __all__ = [
     "CiftiMathSelectParameters",
     "CiftiMathVarParameters",
     "cifti_math",
+    "cifti_math_cargs",
+    "cifti_math_execute",
+    "cifti_math_outputs",
     "cifti_math_params",
+    "cifti_math_select_cargs",
     "cifti_math_select_params",
+    "cifti_math_var_cargs",
     "cifti_math_var_params",
 ]

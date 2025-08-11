@@ -14,7 +14,7 @@ V_3D_FDR_METADATA = Metadata(
 
 
 V3dFdrParameters = typing.TypedDict('V3dFdrParameters', {
-    "__STYXTYPE__": typing.Literal["3dFDR"],
+    "@type": typing.Literal["afni.3dFDR"],
     "input_file": InputPathType,
     "input1d_file": typing.NotRequired[InputPathType | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dFDR": v_3d_fdr_cargs,
+        "afni.3dFDR": v_3d_fdr_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dFDR": v_3d_fdr_outputs,
+        "afni.3dFDR": v_3d_fdr_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def v_3d_fdr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dFDR",
+        "@type": "afni.3dFDR",
         "input_file": input_file,
         "quiet": quiet,
         "list": list_,
@@ -334,5 +334,8 @@ __all__ = [
     "V3dFdrParameters",
     "V_3D_FDR_METADATA",
     "v_3d_fdr",
+    "v_3d_fdr_cargs",
+    "v_3d_fdr_execute",
+    "v_3d_fdr_outputs",
     "v_3d_fdr_params",
 ]

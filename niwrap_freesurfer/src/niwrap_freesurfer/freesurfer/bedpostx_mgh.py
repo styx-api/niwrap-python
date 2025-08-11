@@ -14,7 +14,7 @@ BEDPOSTX_MGH_METADATA = Metadata(
 
 
 BedpostxMghParameters = typing.TypedDict('BedpostxMghParameters', {
-    "__STYXTYPE__": typing.Literal["bedpostx_mgh"],
+    "@type": typing.Literal["freesurfer.bedpostx_mgh"],
     "subject_directory": str,
     "fibres": typing.NotRequired[float | None],
     "ard_weight": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bedpostx_mgh": bedpostx_mgh_cargs,
+        "freesurfer.bedpostx_mgh": bedpostx_mgh_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def bedpostx_mgh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bedpostx_mgh",
+        "@type": "freesurfer.bedpostx_mgh",
         "subject_directory": subject_directory,
         "gradient_nonlin": gradient_nonlin,
     }
@@ -263,5 +263,8 @@ __all__ = [
     "BedpostxMghOutputs",
     "BedpostxMghParameters",
     "bedpostx_mgh",
+    "bedpostx_mgh_cargs",
+    "bedpostx_mgh_execute",
+    "bedpostx_mgh_outputs",
     "bedpostx_mgh_params",
 ]

@@ -14,7 +14,7 @@ V_3D_DTTO_NOISY_DWI_METADATA = Metadata(
 
 
 V3dDttoNoisyDwiParameters = typing.TypedDict('V3dDttoNoisyDwiParameters', {
-    "__STYXTYPE__": typing.Literal["3dDTtoNoisyDWI"],
+    "@type": typing.Literal["afni.3dDTtoNoisyDWI"],
     "dt_file": InputPathType,
     "grad_file": InputPathType,
     "noise_dwi": float,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dDTtoNoisyDWI": v_3d_dtto_noisy_dwi_cargs,
+        "afni.3dDTtoNoisyDWI": v_3d_dtto_noisy_dwi_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dDTtoNoisyDWI": v_3d_dtto_noisy_dwi_outputs,
+        "afni.3dDTtoNoisyDWI": v_3d_dtto_noisy_dwi_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_3d_dtto_noisy_dwi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dDTtoNoisyDWI",
+        "@type": "afni.3dDTtoNoisyDWI",
         "dt_file": dt_file,
         "grad_file": grad_file,
         "noise_dwi": noise_dwi,
@@ -271,5 +271,8 @@ __all__ = [
     "V3dDttoNoisyDwiParameters",
     "V_3D_DTTO_NOISY_DWI_METADATA",
     "v_3d_dtto_noisy_dwi",
+    "v_3d_dtto_noisy_dwi_cargs",
+    "v_3d_dtto_noisy_dwi_execute",
+    "v_3d_dtto_noisy_dwi_outputs",
     "v_3d_dtto_noisy_dwi_params",
 ]

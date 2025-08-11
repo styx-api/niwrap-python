@@ -14,7 +14,7 @@ SPLINE3_TEST_METADATA = Metadata(
 
 
 Spline3TestParameters = typing.TypedDict('Spline3TestParameters', {
-    "__STYXTYPE__": typing.Literal["Spline3_test"],
+    "@type": typing.Literal["freesurfer.Spline3_test"],
     "x_values": list[float],
     "y_values": list[float],
     "x_new_values": list[float],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "Spline3_test": spline3_test_cargs,
+        "freesurfer.Spline3_test": spline3_test_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "Spline3_test": spline3_test_outputs,
+        "freesurfer.Spline3_test": spline3_test_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def spline3_test_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "Spline3_test",
+        "@type": "freesurfer.Spline3_test",
         "x_values": x_values,
         "y_values": y_values,
         "x_new_values": x_new_values,
@@ -191,5 +191,8 @@ __all__ = [
     "Spline3TestOutputs",
     "Spline3TestParameters",
     "spline3_test",
+    "spline3_test_cargs",
+    "spline3_test_execute",
+    "spline3_test_outputs",
     "spline3_test_params",
 ]

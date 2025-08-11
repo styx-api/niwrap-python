@@ -14,7 +14,7 @@ DUAL_REGRESSION_METADATA = Metadata(
 
 
 DualRegressionParameters = typing.TypedDict('DualRegressionParameters', {
-    "__STYXTYPE__": typing.Literal["dual_regression"],
+    "@type": typing.Literal["fsl.dual_regression"],
     "group_ic_maps": InputPathType,
     "des_norm": float,
     "design_mat": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dual_regression": dual_regression_cargs,
+        "fsl.dual_regression": dual_regression_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dual_regression": dual_regression_outputs,
+        "fsl.dual_regression": dual_regression_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def dual_regression_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dual_regression",
+        "@type": "fsl.dual_regression",
         "group_ic_maps": group_ic_maps,
         "des_norm": des_norm,
         "design_mat": design_mat,
@@ -254,5 +254,8 @@ __all__ = [
     "DualRegressionOutputs",
     "DualRegressionParameters",
     "dual_regression",
+    "dual_regression_cargs",
+    "dual_regression_execute",
+    "dual_regression_outputs",
     "dual_regression_params",
 ]

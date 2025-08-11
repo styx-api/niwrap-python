@@ -14,7 +14,7 @@ ICO_SUPERSAMPLE_METADATA = Metadata(
 
 
 IcoSupersampleParameters = typing.TypedDict('IcoSupersampleParameters', {
-    "__STYXTYPE__": typing.Literal["ico_supersample"],
+    "@type": typing.Literal["freesurfer.ico_supersample"],
     "refine": bool,
     "radius": typing.NotRequired[float | None],
     "projection_point": typing.NotRequired[list[float] | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ico_supersample": ico_supersample_cargs,
+        "freesurfer.ico_supersample": ico_supersample_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ico_supersample": ico_supersample_outputs,
+        "freesurfer.ico_supersample": ico_supersample_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def ico_supersample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ico_supersample",
+        "@type": "freesurfer.ico_supersample",
         "refine": refine,
     }
     if radius is not None:
@@ -195,5 +195,8 @@ __all__ = [
     "IcoSupersampleOutputs",
     "IcoSupersampleParameters",
     "ico_supersample",
+    "ico_supersample_cargs",
+    "ico_supersample_execute",
+    "ico_supersample_outputs",
     "ico_supersample_params",
 ]

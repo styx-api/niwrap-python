@@ -14,20 +14,20 @@ TCKSTATS_METADATA = Metadata(
 
 
 TckstatsOutputParameters = typing.TypedDict('TckstatsOutputParameters', {
-    "__STYXTYPE__": typing.Literal["output"],
+    "@type": typing.Literal["mrtrix.tckstats.output"],
     "field": str,
 })
 
 
 TckstatsConfigParameters = typing.TypedDict('TckstatsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckstats.config"],
     "key": str,
     "value": str,
 })
 
 
 TckstatsParameters = typing.TypedDict('TckstatsParameters', {
-    "__STYXTYPE__": typing.Literal["tckstats"],
+    "@type": typing.Literal["mrtrix.tckstats"],
     "output": typing.NotRequired[list[TckstatsOutputParameters] | None],
     "histogram": typing.NotRequired[str | None],
     "dump": typing.NotRequired[str | None],
@@ -57,9 +57,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckstats": tckstats_cargs,
-        "output": tckstats_output_cargs,
-        "config": tckstats_config_cargs,
+        "mrtrix.tckstats": tckstats_cargs,
+        "mrtrix.tckstats.output": tckstats_output_cargs,
+        "mrtrix.tckstats.config": tckstats_config_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tckstats": tckstats_outputs,
+        "mrtrix.tckstats": tckstats_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def tckstats_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "output",
+        "@type": "mrtrix.tckstats.output",
         "field": field,
     }
     return params
@@ -132,7 +132,7 @@ def tckstats_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckstats.config",
         "key": key,
         "value": value,
     }
@@ -217,7 +217,7 @@ def tckstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckstats",
+        "@type": "mrtrix.tckstats",
         "ignorezero": ignorezero,
         "info": info,
         "quiet": quiet,
@@ -258,7 +258,7 @@ def tckstats_cargs(
     cargs = []
     cargs.append("tckstats")
     if params.get("output") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("output")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("output")] for a in c])
     if params.get("histogram") is not None:
         cargs.extend([
             "-histogram",
@@ -290,7 +290,7 @@ def tckstats_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -435,7 +435,12 @@ __all__ = [
     "TckstatsOutputs",
     "TckstatsParameters",
     "tckstats",
+    "tckstats_cargs",
+    "tckstats_config_cargs",
     "tckstats_config_params",
+    "tckstats_execute",
+    "tckstats_output_cargs",
     "tckstats_output_params",
+    "tckstats_outputs",
     "tckstats_params",
 ]

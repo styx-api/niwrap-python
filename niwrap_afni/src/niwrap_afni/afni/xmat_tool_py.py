@@ -14,7 +14,7 @@ XMAT_TOOL_PY_METADATA = Metadata(
 
 
 XmatToolPyParameters = typing.TypedDict('XmatToolPyParameters', {
-    "__STYXTYPE__": typing.Literal["xmat_tool.py"],
+    "@type": typing.Literal["afni.xmat_tool.py"],
     "no_gui": bool,
     "load_xmat": typing.NotRequired[InputPathType | None],
     "load_1d": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xmat_tool.py": xmat_tool_py_cargs,
+        "afni.xmat_tool.py": xmat_tool_py_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "xmat_tool.py": xmat_tool_py_outputs,
+        "afni.xmat_tool.py": xmat_tool_py_outputs,
     }.get(t)
 
 
@@ -133,7 +133,7 @@ def xmat_tool_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xmat_tool.py",
+        "@type": "afni.xmat_tool.py",
         "no_gui": no_gui,
         "choose_nonzero_cols": choose_nonzero_cols,
         "chrono": chrono,
@@ -377,5 +377,8 @@ __all__ = [
     "XmatToolPyOutputs",
     "XmatToolPyParameters",
     "xmat_tool_py",
+    "xmat_tool_py_cargs",
+    "xmat_tool_py_execute",
+    "xmat_tool_py_outputs",
     "xmat_tool_py_params",
 ]

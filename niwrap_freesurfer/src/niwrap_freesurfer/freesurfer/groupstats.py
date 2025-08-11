@@ -14,7 +14,7 @@ GROUPSTATS_METADATA = Metadata(
 
 
 GroupstatsParameters = typing.TypedDict('GroupstatsParameters', {
-    "__STYXTYPE__": typing.Literal["groupstats"],
+    "@type": typing.Literal["freesurfer.groupstats"],
     "outdir": str,
     "group_fsgd": typing.NotRequired[InputPathType | None],
     "subjectfile": typing.NotRequired[InputPathType | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "groupstats": groupstats_cargs,
+        "freesurfer.groupstats": groupstats_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "groupstats": groupstats_outputs,
+        "freesurfer.groupstats": groupstats_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def groupstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "groupstats",
+        "@type": "freesurfer.groupstats",
         "outdir": outdir,
         "no_maps": no_maps,
         "lh_only": lh_only,
@@ -347,5 +347,8 @@ __all__ = [
     "GroupstatsOutputs",
     "GroupstatsParameters",
     "groupstats",
+    "groupstats_cargs",
+    "groupstats_execute",
+    "groupstats_outputs",
     "groupstats_params",
 ]

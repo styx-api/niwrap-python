@@ -14,7 +14,7 @@ FSLVAL_METADATA = Metadata(
 
 
 FslvalParameters = typing.TypedDict('FslvalParameters', {
-    "__STYXTYPE__": typing.Literal["fslval"],
+    "@type": typing.Literal["fsl.fslval"],
     "input_file": InputPathType,
     "keyword": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslval": fslval_cargs,
+        "fsl.fslval": fslval_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslval": fslval_outputs,
+        "fsl.fslval": fslval_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fslval_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslval",
+        "@type": "fsl.fslval",
         "input_file": input_file,
         "keyword": keyword_,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "FslvalOutputs",
     "FslvalParameters",
     "fslval",
+    "fslval_cargs",
+    "fslval_execute",
+    "fslval_outputs",
     "fslval_params",
 ]

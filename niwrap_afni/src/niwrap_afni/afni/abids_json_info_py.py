@@ -14,7 +14,7 @@ ABIDS_JSON_INFO_PY_METADATA = Metadata(
 
 
 AbidsJsonInfoPyParameters = typing.TypedDict('AbidsJsonInfoPyParameters', {
-    "__STYXTYPE__": typing.Literal["abids_json_info.py"],
+    "@type": typing.Literal["afni.abids_json_info.py"],
     "json_files": list[InputPathType],
     "tr_flag": bool,
     "te_flag": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "abids_json_info.py": abids_json_info_py_cargs,
+        "afni.abids_json_info.py": abids_json_info_py_cargs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def abids_json_info_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "abids_json_info.py",
+        "@type": "afni.abids_json_info.py",
         "json_files": json_files,
         "tr_flag": tr_flag,
         "te_flag": te_flag,
@@ -243,5 +243,8 @@ __all__ = [
     "AbidsJsonInfoPyOutputs",
     "AbidsJsonInfoPyParameters",
     "abids_json_info_py",
+    "abids_json_info_py_cargs",
+    "abids_json_info_py_execute",
+    "abids_json_info_py_outputs",
     "abids_json_info_py_params",
 ]

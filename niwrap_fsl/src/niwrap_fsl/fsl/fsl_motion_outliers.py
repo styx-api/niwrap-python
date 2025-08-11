@@ -14,7 +14,7 @@ FSL_MOTION_OUTLIERS_METADATA = Metadata(
 
 
 FslMotionOutliersParameters = typing.TypedDict('FslMotionOutliersParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_motion_outliers"],
+    "@type": typing.Literal["fsl.fsl_motion_outliers"],
     "input_4d_image": InputPathType,
     "output_confound_file": str,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_motion_outliers": fsl_motion_outliers_cargs,
+        "fsl.fsl_motion_outliers": fsl_motion_outliers_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_motion_outliers": fsl_motion_outliers_outputs,
+        "fsl.fsl_motion_outliers": fsl_motion_outliers_outputs,
     }.get(t)
 
 
@@ -125,7 +125,7 @@ def fsl_motion_outliers_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_motion_outliers",
+        "@type": "fsl.fsl_motion_outliers",
         "input_4d_image": input_4d_image,
         "output_confound_file": output_confound_file,
         "refrms_flag": refrms_flag,
@@ -345,5 +345,8 @@ __all__ = [
     "FslMotionOutliersOutputs",
     "FslMotionOutliersParameters",
     "fsl_motion_outliers",
+    "fsl_motion_outliers_cargs",
+    "fsl_motion_outliers_execute",
+    "fsl_motion_outliers_outputs",
     "fsl_motion_outliers_params",
 ]

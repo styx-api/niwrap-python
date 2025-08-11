@@ -14,7 +14,7 @@ PERFUSION_SUBTRACT_METADATA = Metadata(
 
 
 PerfusionSubtractParameters = typing.TypedDict('PerfusionSubtractParameters', {
-    "__STYXTYPE__": typing.Literal["perfusion_subtract"],
+    "@type": typing.Literal["fsl.perfusion_subtract"],
     "four_d_input": InputPathType,
     "four_d_output": str,
     "control_first_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "perfusion_subtract": perfusion_subtract_cargs,
+        "fsl.perfusion_subtract": perfusion_subtract_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "perfusion_subtract": perfusion_subtract_outputs,
+        "fsl.perfusion_subtract": perfusion_subtract_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def perfusion_subtract_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "perfusion_subtract",
+        "@type": "fsl.perfusion_subtract",
         "four_d_input": four_d_input,
         "four_d_output": four_d_output,
         "control_first_flag": control_first_flag,
@@ -193,5 +193,8 @@ __all__ = [
     "PerfusionSubtractOutputs",
     "PerfusionSubtractParameters",
     "perfusion_subtract",
+    "perfusion_subtract_cargs",
+    "perfusion_subtract_execute",
+    "perfusion_subtract_outputs",
     "perfusion_subtract_params",
 ]

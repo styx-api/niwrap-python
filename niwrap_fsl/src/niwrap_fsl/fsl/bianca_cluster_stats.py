@@ -14,7 +14,7 @@ BIANCA_CLUSTER_STATS_METADATA = Metadata(
 
 
 BiancaClusterStatsParameters = typing.TypedDict('BiancaClusterStatsParameters', {
-    "__STYXTYPE__": typing.Literal["bianca_cluster_stats"],
+    "@type": typing.Literal["fsl.bianca_cluster_stats"],
     "bianca_output_map": InputPathType,
     "threshold": float,
     "min_cluster_size": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bianca_cluster_stats": bianca_cluster_stats_cargs,
+        "fsl.bianca_cluster_stats": bianca_cluster_stats_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def bianca_cluster_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bianca_cluster_stats",
+        "@type": "fsl.bianca_cluster_stats",
         "bianca_output_map": bianca_output_map,
         "threshold": threshold,
         "min_cluster_size": min_cluster_size,
@@ -194,5 +194,8 @@ __all__ = [
     "BiancaClusterStatsOutputs",
     "BiancaClusterStatsParameters",
     "bianca_cluster_stats",
+    "bianca_cluster_stats_cargs",
+    "bianca_cluster_stats_execute",
+    "bianca_cluster_stats_outputs",
     "bianca_cluster_stats_params",
 ]

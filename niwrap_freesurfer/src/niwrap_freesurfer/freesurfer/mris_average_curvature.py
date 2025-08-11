@@ -14,7 +14,7 @@ MRIS_AVERAGE_CURVATURE_METADATA = Metadata(
 
 
 MrisAverageCurvatureParameters = typing.TypedDict('MrisAverageCurvatureParameters', {
-    "__STYXTYPE__": typing.Literal["mris_average_curvature"],
+    "@type": typing.Literal["freesurfer.mris_average_curvature"],
     "input_curvature_file": InputPathType,
     "hemi": str,
     "surface": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_average_curvature": mris_average_curvature_cargs,
+        "freesurfer.mris_average_curvature": mris_average_curvature_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def mris_average_curvature_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_average_curvature",
+        "@type": "freesurfer.mris_average_curvature",
         "input_curvature_file": input_curvature_file,
         "hemi": hemi,
         "surface": surface,
@@ -226,5 +226,8 @@ __all__ = [
     "MrisAverageCurvatureOutputs",
     "MrisAverageCurvatureParameters",
     "mris_average_curvature",
+    "mris_average_curvature_cargs",
+    "mris_average_curvature_execute",
+    "mris_average_curvature_outputs",
     "mris_average_curvature_params",
 ]

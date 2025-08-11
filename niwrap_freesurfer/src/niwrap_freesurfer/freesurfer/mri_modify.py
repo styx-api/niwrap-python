@@ -14,7 +14,7 @@ MRI_MODIFY_METADATA = Metadata(
 
 
 MriModifyParameters = typing.TypedDict('MriModifyParameters', {
-    "__STYXTYPE__": typing.Literal["mri_modify"],
+    "@type": typing.Literal["freesurfer.mri_modify"],
     "x_ras": list[float],
     "y_ras": list[float],
     "z_ras": list[float],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_modify": mri_modify_cargs,
+        "freesurfer.mri_modify": mri_modify_cargs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def mri_modify_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_modify",
+        "@type": "freesurfer.mri_modify",
         "x_ras": x_ras,
         "y_ras": y_ras,
         "z_ras": z_ras,
@@ -308,5 +308,8 @@ __all__ = [
     "MriModifyOutputs",
     "MriModifyParameters",
     "mri_modify",
+    "mri_modify_cargs",
+    "mri_modify_execute",
+    "mri_modify_outputs",
     "mri_modify_params",
 ]

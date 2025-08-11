@@ -14,7 +14,7 @@ MRI_FILL_METADATA = Metadata(
 
 
 MriFillParameters = typing.TypedDict('MriFillParameters', {
-    "__STYXTYPE__": typing.Literal["mri_fill"],
+    "@type": typing.Literal["freesurfer.mri_fill"],
     "input_mr_dir": str,
     "output_mr_dir": str,
     "threshold": typing.NotRequired[float | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_fill": mri_fill_cargs,
+        "freesurfer.mri_fill": mri_fill_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_fill": mri_fill_outputs,
+        "freesurfer.mri_fill": mri_fill_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def mri_fill_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_fill",
+        "@type": "freesurfer.mri_fill",
         "input_mr_dir": input_mr_dir,
         "output_mr_dir": output_mr_dir,
         "fill_ven": fill_ven,
@@ -388,5 +388,8 @@ __all__ = [
     "MriFillOutputs",
     "MriFillParameters",
     "mri_fill",
+    "mri_fill_cargs",
+    "mri_fill_execute",
+    "mri_fill_outputs",
     "mri_fill_params",
 ]

@@ -14,14 +14,14 @@ V_5TT2VIS_METADATA = Metadata(
 
 
 V5tt2visConfigParameters = typing.TypedDict('V5tt2visConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.5tt2vis.config"],
     "key": str,
     "value": str,
 })
 
 
 V5tt2visParameters = typing.TypedDict('V5tt2visParameters', {
-    "__STYXTYPE__": typing.Literal["5tt2vis"],
+    "@type": typing.Literal["mrtrix.5tt2vis"],
     "bg": typing.NotRequired[float | None],
     "cgm": typing.NotRequired[float | None],
     "sgm": typing.NotRequired[float | None],
@@ -53,8 +53,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "5tt2vis": v_5tt2vis_cargs,
-        "config": v_5tt2vis_config_cargs,
+        "mrtrix.5tt2vis": v_5tt2vis_cargs,
+        "mrtrix.5tt2vis.config": v_5tt2vis_config_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "5tt2vis": v_5tt2vis_outputs,
+        "mrtrix.5tt2vis": v_5tt2vis_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def v_5tt2vis_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.5tt2vis.config",
         "key": key,
         "value": value,
     }
@@ -171,7 +171,7 @@ def v_5tt2vis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "5tt2vis",
+        "@type": "mrtrix.5tt2vis",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -259,7 +259,7 @@ def v_5tt2vis_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -407,6 +407,10 @@ __all__ = [
     "V5tt2visParameters",
     "V_5TT2VIS_METADATA",
     "v_5tt2vis",
+    "v_5tt2vis_cargs",
+    "v_5tt2vis_config_cargs",
     "v_5tt2vis_config_params",
+    "v_5tt2vis_execute",
+    "v_5tt2vis_outputs",
     "v_5tt2vis_params",
 ]

@@ -14,20 +14,20 @@ VECTORSTATS_METADATA = Metadata(
 
 
 VectorstatsColumnParameters = typing.TypedDict('VectorstatsColumnParameters', {
-    "__STYXTYPE__": typing.Literal["column"],
+    "@type": typing.Literal["mrtrix.vectorstats.column"],
     "path": InputPathType,
 })
 
 
 VectorstatsConfigParameters = typing.TypedDict('VectorstatsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.vectorstats.config"],
     "key": str,
     "value": str,
 })
 
 
 VectorstatsParameters = typing.TypedDict('VectorstatsParameters', {
-    "__STYXTYPE__": typing.Literal["vectorstats"],
+    "@type": typing.Literal["mrtrix.vectorstats"],
     "notest": bool,
     "errors": typing.NotRequired[str | None],
     "exchange_within": typing.NotRequired[InputPathType | None],
@@ -66,9 +66,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "vectorstats": vectorstats_cargs,
-        "column": vectorstats_column_cargs,
-        "config": vectorstats_config_cargs,
+        "mrtrix.vectorstats": vectorstats_cargs,
+        "mrtrix.vectorstats.column": vectorstats_column_cargs,
+        "mrtrix.vectorstats.config": vectorstats_config_cargs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def vectorstats_column_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "column",
+        "@type": "mrtrix.vectorstats.column",
         "path": path,
     }
     return params
@@ -141,7 +141,7 @@ def vectorstats_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.vectorstats.config",
         "key": key,
         "value": value,
     }
@@ -254,7 +254,7 @@ def vectorstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "vectorstats",
+        "@type": "mrtrix.vectorstats",
         "notest": notest,
         "strong": strong,
         "fonly": fonly,
@@ -349,7 +349,7 @@ def vectorstats_cargs(
     if params.get("fonly"):
         cargs.append("-fonly")
     if params.get("column") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("column")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("column")] for a in c])
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -364,7 +364,7 @@ def vectorstats_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -579,7 +579,12 @@ __all__ = [
     "VectorstatsOutputs",
     "VectorstatsParameters",
     "vectorstats",
+    "vectorstats_cargs",
+    "vectorstats_column_cargs",
     "vectorstats_column_params",
+    "vectorstats_config_cargs",
     "vectorstats_config_params",
+    "vectorstats_execute",
+    "vectorstats_outputs",
     "vectorstats_params",
 ]

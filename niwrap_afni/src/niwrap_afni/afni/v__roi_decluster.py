@@ -14,7 +14,7 @@ V__ROI_DECLUSTER_METADATA = Metadata(
 
 
 VRoiDeclusterParameters = typing.TypedDict('VRoiDeclusterParameters', {
-    "__STYXTYPE__": typing.Literal["@ROI_decluster"],
+    "@type": typing.Literal["afni.@ROI_decluster"],
     "input_dset": InputPathType,
     "output_dir": typing.NotRequired[str | None],
     "nvox_thresh": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@ROI_decluster": v__roi_decluster_cargs,
+        "afni.@ROI_decluster": v__roi_decluster_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@ROI_decluster": v__roi_decluster_outputs,
+        "afni.@ROI_decluster": v__roi_decluster_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v__roi_decluster_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@ROI_decluster",
+        "@type": "afni.@ROI_decluster",
         "input_dset": input_dset,
     }
     if output_dir is not None:
@@ -248,5 +248,8 @@ __all__ = [
     "VRoiDeclusterParameters",
     "V__ROI_DECLUSTER_METADATA",
     "v__roi_decluster",
+    "v__roi_decluster_cargs",
+    "v__roi_decluster_execute",
+    "v__roi_decluster_outputs",
     "v__roi_decluster_params",
 ]

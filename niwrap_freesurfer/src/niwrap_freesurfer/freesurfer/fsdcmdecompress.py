@@ -14,7 +14,7 @@ FSDCMDECOMPRESS_METADATA = Metadata(
 
 
 FsdcmdecompressParameters = typing.TypedDict('FsdcmdecompressParameters', {
-    "__STYXTYPE__": typing.Literal["fsdcmdecompress"],
+    "@type": typing.Literal["freesurfer.fsdcmdecompress"],
     "indcmfile": InputPathType,
     "outdcmfile": str,
     "dcmtk": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsdcmdecompress": fsdcmdecompress_cargs,
+        "freesurfer.fsdcmdecompress": fsdcmdecompress_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsdcmdecompress": fsdcmdecompress_outputs,
+        "freesurfer.fsdcmdecompress": fsdcmdecompress_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def fsdcmdecompress_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsdcmdecompress",
+        "@type": "freesurfer.fsdcmdecompress",
         "indcmfile": indcmfile,
         "outdcmfile": outdcmfile,
         "dcmtk": dcmtk,
@@ -222,5 +222,8 @@ __all__ = [
     "FsdcmdecompressOutputs",
     "FsdcmdecompressParameters",
     "fsdcmdecompress",
+    "fsdcmdecompress_cargs",
+    "fsdcmdecompress_execute",
+    "fsdcmdecompress_outputs",
     "fsdcmdecompress_params",
 ]

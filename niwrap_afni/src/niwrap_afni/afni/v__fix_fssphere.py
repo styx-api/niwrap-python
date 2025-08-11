@@ -14,7 +14,7 @@ V__FIX_FSSPHERE_METADATA = Metadata(
 
 
 VFixFssphereParameters = typing.TypedDict('VFixFssphereParameters', {
-    "__STYXTYPE__": typing.Literal["@fix_FSsphere"],
+    "@type": typing.Literal["afni.@fix_FSsphere"],
     "spec_file": InputPathType,
     "sphere_file": InputPathType,
     "num_iterations": typing.NotRequired[int | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@fix_FSsphere": v__fix_fssphere_cargs,
+        "afni.@fix_FSsphere": v__fix_fssphere_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@fix_FSsphere": v__fix_fssphere_outputs,
+        "afni.@fix_FSsphere": v__fix_fssphere_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def v__fix_fssphere_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@fix_FSsphere",
+        "@type": "afni.@fix_FSsphere",
         "spec_file": spec_file,
         "sphere_file": sphere_file,
         "project_first": project_first,
@@ -232,5 +232,8 @@ __all__ = [
     "VFixFssphereParameters",
     "V__FIX_FSSPHERE_METADATA",
     "v__fix_fssphere",
+    "v__fix_fssphere_cargs",
+    "v__fix_fssphere_execute",
+    "v__fix_fssphere_outputs",
     "v__fix_fssphere_params",
 ]

@@ -14,7 +14,7 @@ V__SUMA_REPREFIXIZE_SPEC_METADATA = Metadata(
 
 
 VSumaReprefixizeSpecParameters = typing.TypedDict('VSumaReprefixizeSpecParameters', {
-    "__STYXTYPE__": typing.Literal["@suma_reprefixize_spec"],
+    "@type": typing.Literal["afni.@suma_reprefixize_spec"],
     "input_file": InputPathType,
     "prefix": str,
     "output_dir": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@suma_reprefixize_spec": v__suma_reprefixize_spec_cargs,
+        "afni.@suma_reprefixize_spec": v__suma_reprefixize_spec_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@suma_reprefixize_spec": v__suma_reprefixize_spec_outputs,
+        "afni.@suma_reprefixize_spec": v__suma_reprefixize_spec_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def v__suma_reprefixize_spec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@suma_reprefixize_spec",
+        "@type": "afni.@suma_reprefixize_spec",
         "input_file": input_file,
         "prefix": prefix,
         "output_dir": output_dir,
@@ -217,5 +217,8 @@ __all__ = [
     "VSumaReprefixizeSpecParameters",
     "V__SUMA_REPREFIXIZE_SPEC_METADATA",
     "v__suma_reprefixize_spec",
+    "v__suma_reprefixize_spec_cargs",
+    "v__suma_reprefixize_spec_execute",
+    "v__suma_reprefixize_spec_outputs",
     "v__suma_reprefixize_spec_params",
 ]

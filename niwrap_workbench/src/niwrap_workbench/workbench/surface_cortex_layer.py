@@ -14,7 +14,7 @@ SURFACE_CORTEX_LAYER_METADATA = Metadata(
 
 
 SurfaceCortexLayerParameters = typing.TypedDict('SurfaceCortexLayerParameters', {
-    "__STYXTYPE__": typing.Literal["surface-cortex-layer"],
+    "@type": typing.Literal["workbench.surface-cortex-layer"],
     "white_surface": InputPathType,
     "pial_surface": InputPathType,
     "location": float,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-cortex-layer": surface_cortex_layer_cargs,
+        "workbench.surface-cortex-layer": surface_cortex_layer_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-cortex-layer": surface_cortex_layer_outputs,
+        "workbench.surface-cortex-layer": surface_cortex_layer_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def surface_cortex_layer_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-cortex-layer",
+        "@type": "workbench.surface-cortex-layer",
         "white_surface": white_surface,
         "pial_surface": pial_surface,
         "location": location,
@@ -230,5 +230,8 @@ __all__ = [
     "SurfaceCortexLayerOutputs",
     "SurfaceCortexLayerParameters",
     "surface_cortex_layer",
+    "surface_cortex_layer_cargs",
+    "surface_cortex_layer_execute",
+    "surface_cortex_layer_outputs",
     "surface_cortex_layer_params",
 ]

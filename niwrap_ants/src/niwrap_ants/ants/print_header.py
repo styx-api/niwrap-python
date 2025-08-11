@@ -14,7 +14,7 @@ PRINT_HEADER_METADATA = Metadata(
 
 
 PrintHeaderParameters = typing.TypedDict('PrintHeaderParameters', {
-    "__STYXTYPE__": typing.Literal["PrintHeader"],
+    "@type": typing.Literal["ants.PrintHeader"],
     "image": InputPathType,
     "what_information": typing.NotRequired[typing.Literal[0, 1, 2, 3, 4] | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "PrintHeader": print_header_cargs,
+        "ants.PrintHeader": print_header_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "PrintHeader": print_header_outputs,
+        "ants.PrintHeader": print_header_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def print_header_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "PrintHeader",
+        "@type": "ants.PrintHeader",
         "image": image,
     }
     if what_information is not None:
@@ -186,5 +186,8 @@ __all__ = [
     "PrintHeaderOutputs",
     "PrintHeaderParameters",
     "print_header",
+    "print_header_cargs",
+    "print_header_execute",
+    "print_header_outputs",
     "print_header_params",
 ]

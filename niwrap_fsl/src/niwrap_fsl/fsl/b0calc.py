@@ -14,7 +14,7 @@ B0CALC_METADATA = Metadata(
 
 
 B0calcParameters = typing.TypedDict('B0calcParameters', {
-    "__STYXTYPE__": typing.Literal["b0calc"],
+    "@type": typing.Literal["fsl.b0calc"],
     "input_file": InputPathType,
     "output_file": str,
     "zero_order_x": typing.NotRequired[float | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "b0calc": b0calc_cargs,
+        "fsl.b0calc": b0calc_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "b0calc": b0calc_outputs,
+        "fsl.b0calc": b0calc_outputs,
     }.get(t)
 
 
@@ -125,7 +125,7 @@ def b0calc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "b0calc",
+        "@type": "fsl.b0calc",
         "input_file": input_file,
         "output_file": output_file,
         "xyz_flag": xyz_flag,
@@ -356,5 +356,8 @@ __all__ = [
     "B0calcOutputs",
     "B0calcParameters",
     "b0calc",
+    "b0calc_cargs",
+    "b0calc_execute",
+    "b0calc_outputs",
     "b0calc_params",
 ]

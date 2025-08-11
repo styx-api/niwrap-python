@@ -14,7 +14,7 @@ V_3DMAXDISP_METADATA = Metadata(
 
 
 V3dmaxdispParameters = typing.TypedDict('V3dmaxdispParameters', {
-    "__STYXTYPE__": typing.Literal["3dmaxdisp"],
+    "@type": typing.Literal["afni.3dmaxdisp"],
     "inset": InputPathType,
     "matrix": InputPathType,
     "verbose": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmaxdisp": v_3dmaxdisp_cargs,
+        "afni.3dmaxdisp": v_3dmaxdisp_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmaxdisp": v_3dmaxdisp_outputs,
+        "afni.3dmaxdisp": v_3dmaxdisp_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v_3dmaxdisp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmaxdisp",
+        "@type": "afni.3dmaxdisp",
         "inset": inset,
         "matrix": matrix,
         "verbose": verbose,
@@ -201,5 +201,8 @@ __all__ = [
     "V3dmaxdispParameters",
     "V_3DMAXDISP_METADATA",
     "v_3dmaxdisp",
+    "v_3dmaxdisp_cargs",
+    "v_3dmaxdisp_execute",
+    "v_3dmaxdisp_outputs",
     "v_3dmaxdisp_params",
 ]

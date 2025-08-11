@@ -14,7 +14,7 @@ PVMFIT_METADATA = Metadata(
 
 
 PvmfitParameters = typing.TypedDict('PvmfitParameters', {
-    "__STYXTYPE__": typing.Literal["pvmfit"],
+    "@type": typing.Literal["fsl.pvmfit"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "bvec_file": InputPathType,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pvmfit": pvmfit_cargs,
+        "fsl.pvmfit": pvmfit_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "pvmfit": pvmfit_outputs,
+        "fsl.pvmfit": pvmfit_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def pvmfit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pvmfit",
+        "@type": "fsl.pvmfit",
         "data_file": data_file,
         "mask_file": mask_file,
         "bvec_file": bvec_file,
@@ -333,5 +333,8 @@ __all__ = [
     "PvmfitOutputs",
     "PvmfitParameters",
     "pvmfit",
+    "pvmfit_cargs",
+    "pvmfit_execute",
+    "pvmfit_outputs",
     "pvmfit_params",
 ]

@@ -14,7 +14,7 @@ V__CENTER_DISTANCE_METADATA = Metadata(
 
 
 VCenterDistanceParameters = typing.TypedDict('VCenterDistanceParameters', {
-    "__STYXTYPE__": typing.Literal["@Center_Distance"],
+    "@type": typing.Literal["afni.@Center_Distance"],
     "dset1": InputPathType,
     "dset2": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@Center_Distance": v__center_distance_cargs,
+        "afni.@Center_Distance": v__center_distance_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@Center_Distance": v__center_distance_outputs,
+        "afni.@Center_Distance": v__center_distance_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def v__center_distance_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@Center_Distance",
+        "@type": "afni.@Center_Distance",
         "dset1": dset1,
         "dset2": dset2,
     }
@@ -183,5 +183,8 @@ __all__ = [
     "VCenterDistanceParameters",
     "V__CENTER_DISTANCE_METADATA",
     "v__center_distance",
+    "v__center_distance_cargs",
+    "v__center_distance_execute",
+    "v__center_distance_outputs",
     "v__center_distance_params",
 ]

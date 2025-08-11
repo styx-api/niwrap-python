@@ -14,7 +14,7 @@ MRI_APARC2ASEG_METADATA = Metadata(
 
 
 MriAparc2asegParameters = typing.TypedDict('MriAparc2asegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_aparc2aseg"],
+    "@type": typing.Literal["freesurfer.mri_aparc2aseg"],
     "subject": typing.NotRequired[str | None],
     "output_volfile": typing.NotRequired[str | None],
     "old_ribbon": bool,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_aparc2aseg": mri_aparc2aseg_cargs,
+        "freesurfer.mri_aparc2aseg": mri_aparc2aseg_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_aparc2aseg": mri_aparc2aseg_outputs,
+        "freesurfer.mri_aparc2aseg": mri_aparc2aseg_outputs,
     }.get(t)
 
 
@@ -141,7 +141,7 @@ def mri_aparc2aseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_aparc2aseg",
+        "@type": "freesurfer.mri_aparc2aseg",
         "old_ribbon": old_ribbon,
         "new_ribbon": new_ribbon,
         "a2005s": a2005s,
@@ -407,5 +407,8 @@ __all__ = [
     "MriAparc2asegOutputs",
     "MriAparc2asegParameters",
     "mri_aparc2aseg",
+    "mri_aparc2aseg_cargs",
+    "mri_aparc2aseg_execute",
+    "mri_aparc2aseg_outputs",
     "mri_aparc2aseg_params",
 ]

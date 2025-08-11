@@ -14,14 +14,14 @@ SH2RESPONSE_METADATA = Metadata(
 
 
 Sh2responseConfigParameters = typing.TypedDict('Sh2responseConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.sh2response.config"],
     "key": str,
     "value": str,
 })
 
 
 Sh2responseParameters = typing.TypedDict('Sh2responseParameters', {
-    "__STYXTYPE__": typing.Literal["sh2response"],
+    "@type": typing.Literal["mrtrix.sh2response"],
     "lmax": typing.NotRequired[int | None],
     "dump": typing.NotRequired[str | None],
     "info": bool,
@@ -51,8 +51,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sh2response": sh2response_cargs,
-        "config": sh2response_config_cargs,
+        "mrtrix.sh2response": sh2response_cargs,
+        "mrtrix.sh2response.config": sh2response_config_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sh2response": sh2response_outputs,
+        "mrtrix.sh2response": sh2response_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def sh2response_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.sh2response.config",
         "key": key,
         "value": value,
     }
@@ -173,7 +173,7 @@ def sh2response_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sh2response",
+        "@type": "mrtrix.sh2response",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -235,7 +235,7 @@ def sh2response_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -389,6 +389,10 @@ __all__ = [
     "Sh2responseOutputs",
     "Sh2responseParameters",
     "sh2response",
+    "sh2response_cargs",
+    "sh2response_config_cargs",
     "sh2response_config_params",
+    "sh2response_execute",
+    "sh2response_outputs",
     "sh2response_params",
 ]

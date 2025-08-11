@@ -14,7 +14,7 @@ TBSS_X_METADATA = Metadata(
 
 
 TbssXParameters = typing.TypedDict('TbssXParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_x"],
+    "@type": typing.Literal["fsl.tbss_x"],
     "scalar_dirs": list[str],
     "vector_dirs": list[str],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_x": tbss_x_cargs,
+        "fsl.tbss_x": tbss_x_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def tbss_x_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_x",
+        "@type": "fsl.tbss_x",
         "scalar_dirs": scalar_dirs,
         "vector_dirs": vector_dirs,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "TbssXOutputs",
     "TbssXParameters",
     "tbss_x",
+    "tbss_x_cargs",
+    "tbss_x_execute",
+    "tbss_x_outputs",
     "tbss_x_params",
 ]

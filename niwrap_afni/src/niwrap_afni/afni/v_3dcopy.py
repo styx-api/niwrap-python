@@ -14,7 +14,7 @@ V_3DCOPY_METADATA = Metadata(
 
 
 V3dcopyParameters = typing.TypedDict('V3dcopyParameters', {
-    "__STYXTYPE__": typing.Literal["3dcopy"],
+    "@type": typing.Literal["afni.3dcopy"],
     "verbose": bool,
     "denote": bool,
     "old_prefix": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dcopy": v_3dcopy_cargs,
+        "afni.3dcopy": v_3dcopy_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def v_3dcopy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dcopy",
+        "@type": "afni.3dcopy",
         "verbose": verbose,
         "denote": denote,
         "old_prefix": old_prefix,
@@ -208,5 +208,8 @@ __all__ = [
     "V3dcopyParameters",
     "V_3DCOPY_METADATA",
     "v_3dcopy",
+    "v_3dcopy_cargs",
+    "v_3dcopy_execute",
+    "v_3dcopy_outputs",
     "v_3dcopy_params",
 ]

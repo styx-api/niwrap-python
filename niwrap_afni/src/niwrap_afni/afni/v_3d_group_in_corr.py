@@ -14,7 +14,7 @@ V_3D_GROUP_IN_CORR_METADATA = Metadata(
 
 
 V3dGroupInCorrParameters = typing.TypedDict('V3dGroupInCorrParameters', {
-    "__STYXTYPE__": typing.Literal["3dGroupInCorr"],
+    "@type": typing.Literal["afni.3dGroupInCorr"],
     "set_a": InputPathType,
     "set_b": typing.NotRequired[InputPathType | None],
     "apair": bool,
@@ -58,7 +58,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dGroupInCorr": v_3d_group_in_corr_cargs,
+        "afni.3dGroupInCorr": v_3d_group_in_corr_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dGroupInCorr": v_3d_group_in_corr_outputs,
+        "afni.3dGroupInCorr": v_3d_group_in_corr_outputs,
     }.get(t)
 
 
@@ -161,7 +161,7 @@ def v_3d_group_in_corr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dGroupInCorr",
+        "@type": "afni.3dGroupInCorr",
         "set_a": set_a,
         "apair": apair,
         "pooled": pooled,
@@ -480,5 +480,8 @@ __all__ = [
     "V3dGroupInCorrParameters",
     "V_3D_GROUP_IN_CORR_METADATA",
     "v_3d_group_in_corr",
+    "v_3d_group_in_corr_cargs",
+    "v_3d_group_in_corr_execute",
+    "v_3d_group_in_corr_outputs",
     "v_3d_group_in_corr_params",
 ]

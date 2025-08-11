@@ -14,7 +14,7 @@ LONG_CREATE_BASE_SIGMA_METADATA = Metadata(
 
 
 LongCreateBaseSigmaParameters = typing.TypedDict('LongCreateBaseSigmaParameters', {
-    "__STYXTYPE__": typing.Literal["long_create_base_sigma"],
+    "@type": typing.Literal["freesurfer.long_create_base_sigma"],
     "base_id": str,
     "sigma": int,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_create_base_sigma": long_create_base_sigma_cargs,
+        "freesurfer.long_create_base_sigma": long_create_base_sigma_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def long_create_base_sigma_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_create_base_sigma",
+        "@type": "freesurfer.long_create_base_sigma",
         "base_id": base_id,
         "sigma": sigma,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "LongCreateBaseSigmaOutputs",
     "LongCreateBaseSigmaParameters",
     "long_create_base_sigma",
+    "long_create_base_sigma_cargs",
+    "long_create_base_sigma_execute",
+    "long_create_base_sigma_outputs",
     "long_create_base_sigma_params",
 ]

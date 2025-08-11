@@ -14,14 +14,14 @@ DIRFLIP_METADATA = Metadata(
 
 
 DirflipConfigParameters = typing.TypedDict('DirflipConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dirflip.config"],
     "key": str,
     "value": str,
 })
 
 
 DirflipParameters = typing.TypedDict('DirflipParameters', {
-    "__STYXTYPE__": typing.Literal["dirflip"],
+    "@type": typing.Literal["mrtrix.dirflip"],
     "permutations": typing.NotRequired[int | None],
     "cartesian": bool,
     "info": bool,
@@ -49,8 +49,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dirflip": dirflip_cargs,
-        "config": dirflip_config_cargs,
+        "mrtrix.dirflip": dirflip_cargs,
+        "mrtrix.dirflip.config": dirflip_config_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dirflip": dirflip_outputs,
+        "mrtrix.dirflip": dirflip_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def dirflip_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dirflip.config",
         "key": key,
         "value": value,
     }
@@ -160,7 +160,7 @@ def dirflip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dirflip",
+        "@type": "mrtrix.dirflip",
         "cartesian": cartesian,
         "info": info,
         "quiet": quiet,
@@ -216,7 +216,7 @@ def dirflip_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -357,6 +357,10 @@ __all__ = [
     "DirflipOutputs",
     "DirflipParameters",
     "dirflip",
+    "dirflip_cargs",
+    "dirflip_config_cargs",
     "dirflip_config_params",
+    "dirflip_execute",
+    "dirflip_outputs",
     "dirflip_params",
 ]

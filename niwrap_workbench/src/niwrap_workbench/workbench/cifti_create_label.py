@@ -14,35 +14,35 @@ CIFTI_CREATE_LABEL_METADATA = Metadata(
 
 
 CiftiCreateLabelVolumeParameters = typing.TypedDict('CiftiCreateLabelVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["volume"],
+    "@type": typing.Literal["workbench.cifti-create-label.volume"],
     "label_volume": InputPathType,
     "structure_label_volume": InputPathType,
 })
 
 
 CiftiCreateLabelLeftLabelParameters = typing.TypedDict('CiftiCreateLabelLeftLabelParameters', {
-    "__STYXTYPE__": typing.Literal["left_label"],
+    "@type": typing.Literal["workbench.cifti-create-label.left_label"],
     "label": InputPathType,
     "opt_roi_left_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelRightLabelParameters = typing.TypedDict('CiftiCreateLabelRightLabelParameters', {
-    "__STYXTYPE__": typing.Literal["right_label"],
+    "@type": typing.Literal["workbench.cifti-create-label.right_label"],
     "label": InputPathType,
     "opt_roi_right_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelCerebellumLabelParameters = typing.TypedDict('CiftiCreateLabelCerebellumLabelParameters', {
-    "__STYXTYPE__": typing.Literal["cerebellum_label"],
+    "@type": typing.Literal["workbench.cifti-create-label.cerebellum_label"],
     "label": InputPathType,
     "opt_roi_cerebellum_roi_metric": typing.NotRequired[InputPathType | None],
 })
 
 
 CiftiCreateLabelParameters = typing.TypedDict('CiftiCreateLabelParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-create-label"],
+    "@type": typing.Literal["workbench.cifti-create-label"],
     "cifti_out": str,
     "volume": typing.NotRequired[CiftiCreateLabelVolumeParameters | None],
     "left_label": typing.NotRequired[CiftiCreateLabelLeftLabelParameters | None],
@@ -63,11 +63,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-create-label": cifti_create_label_cargs,
-        "volume": cifti_create_label_volume_cargs,
-        "left_label": cifti_create_label_left_label_cargs,
-        "right_label": cifti_create_label_right_label_cargs,
-        "cerebellum_label": cifti_create_label_cerebellum_label_cargs,
+        "workbench.cifti-create-label": cifti_create_label_cargs,
+        "workbench.cifti-create-label.volume": cifti_create_label_volume_cargs,
+        "workbench.cifti-create-label.left_label": cifti_create_label_left_label_cargs,
+        "workbench.cifti-create-label.right_label": cifti_create_label_right_label_cargs,
+        "workbench.cifti-create-label.cerebellum_label": cifti_create_label_cerebellum_label_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-create-label": cifti_create_label_outputs,
+        "workbench.cifti-create-label": cifti_create_label_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def cifti_create_label_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume",
+        "@type": "workbench.cifti-create-label.volume",
         "label_volume": label_volume,
         "structure_label_volume": structure_label_volume,
     }
@@ -144,7 +144,7 @@ def cifti_create_label_left_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "left_label",
+        "@type": "workbench.cifti-create-label.left_label",
         "label": label,
     }
     if opt_roi_left_roi_metric is not None:
@@ -191,7 +191,7 @@ def cifti_create_label_right_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "right_label",
+        "@type": "workbench.cifti-create-label.right_label",
         "label": label,
     }
     if opt_roi_right_roi_metric is not None:
@@ -238,7 +238,7 @@ def cifti_create_label_cerebellum_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cerebellum_label",
+        "@type": "workbench.cifti-create-label.cerebellum_label",
         "label": label,
     }
     if opt_roi_cerebellum_roi_metric is not None:
@@ -300,7 +300,7 @@ def cifti_create_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-create-label",
+        "@type": "workbench.cifti-create-label",
         "cifti_out": cifti_out,
     }
     if volume is not None:
@@ -332,13 +332,13 @@ def cifti_create_label_cargs(
     cargs.append("-cifti-create-label")
     cargs.append(params.get("cifti_out"))
     if params.get("volume") is not None:
-        cargs.extend(dyn_cargs(params.get("volume")["__STYXTYPE__"])(params.get("volume"), execution))
+        cargs.extend(dyn_cargs(params.get("volume")["@type"])(params.get("volume"), execution))
     if params.get("left_label") is not None:
-        cargs.extend(dyn_cargs(params.get("left_label")["__STYXTYPE__"])(params.get("left_label"), execution))
+        cargs.extend(dyn_cargs(params.get("left_label")["@type"])(params.get("left_label"), execution))
     if params.get("right_label") is not None:
-        cargs.extend(dyn_cargs(params.get("right_label")["__STYXTYPE__"])(params.get("right_label"), execution))
+        cargs.extend(dyn_cargs(params.get("right_label")["@type"])(params.get("right_label"), execution))
     if params.get("cerebellum_label") is not None:
-        cargs.extend(dyn_cargs(params.get("cerebellum_label")["__STYXTYPE__"])(params.get("cerebellum_label"), execution))
+        cargs.extend(dyn_cargs(params.get("cerebellum_label")["@type"])(params.get("cerebellum_label"), execution))
     return cargs
 
 
@@ -528,9 +528,16 @@ __all__ = [
     "CiftiCreateLabelRightLabelParameters",
     "CiftiCreateLabelVolumeParameters",
     "cifti_create_label",
+    "cifti_create_label_cargs",
+    "cifti_create_label_cerebellum_label_cargs",
     "cifti_create_label_cerebellum_label_params",
+    "cifti_create_label_execute",
+    "cifti_create_label_left_label_cargs",
     "cifti_create_label_left_label_params",
+    "cifti_create_label_outputs",
     "cifti_create_label_params",
+    "cifti_create_label_right_label_cargs",
     "cifti_create_label_right_label_params",
+    "cifti_create_label_volume_cargs",
     "cifti_create_label_volume_params",
 ]

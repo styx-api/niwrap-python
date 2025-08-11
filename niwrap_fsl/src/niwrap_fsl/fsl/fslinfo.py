@@ -14,7 +14,7 @@ FSLINFO_METADATA = Metadata(
 
 
 FslinfoParameters = typing.TypedDict('FslinfoParameters', {
-    "__STYXTYPE__": typing.Literal["fslinfo"],
+    "@type": typing.Literal["fsl.fslinfo"],
     "filename": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslinfo": fslinfo_cargs,
+        "fsl.fslinfo": fslinfo_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def fslinfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslinfo",
+        "@type": "fsl.fslinfo",
         "filename": filename,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "FslinfoOutputs",
     "FslinfoParameters",
     "fslinfo",
+    "fslinfo_cargs",
+    "fslinfo_execute",
+    "fslinfo_outputs",
     "fslinfo_params",
 ]

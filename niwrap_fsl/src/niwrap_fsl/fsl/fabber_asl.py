@@ -14,7 +14,7 @@ FABBER_ASL_METADATA = Metadata(
 
 
 FabberAslParameters = typing.TypedDict('FabberAslParameters', {
-    "__STYXTYPE__": typing.Literal["fabber_asl"],
+    "@type": typing.Literal["fsl.fabber_asl"],
     "listmethods": bool,
     "listmodels": bool,
     "listparams": bool,
@@ -62,7 +62,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber_asl": fabber_asl_cargs,
+        "fsl.fabber_asl": fabber_asl_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber_asl": fabber_asl_outputs,
+        "fsl.fabber_asl": fabber_asl_outputs,
     }.get(t)
 
 
@@ -205,7 +205,7 @@ def fabber_asl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber_asl",
+        "@type": "fsl.fabber_asl",
         "listmethods": listmethods,
         "listmodels": listmodels,
         "listparams": listparams,
@@ -522,5 +522,8 @@ __all__ = [
     "FabberAslOutputs",
     "FabberAslParameters",
     "fabber_asl",
+    "fabber_asl_cargs",
+    "fabber_asl_execute",
+    "fabber_asl_outputs",
     "fabber_asl_params",
 ]

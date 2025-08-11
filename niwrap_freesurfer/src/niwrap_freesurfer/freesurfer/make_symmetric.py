@@ -14,7 +14,7 @@ MAKE_SYMMETRIC_METADATA = Metadata(
 
 
 MakeSymmetricParameters = typing.TypedDict('MakeSymmetricParameters', {
-    "__STYXTYPE__": typing.Literal["make_symmetric"],
+    "@type": typing.Literal["freesurfer.make_symmetric"],
     "hemi": str,
     "input_file": InputPathType,
     "output_file": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_symmetric": make_symmetric_cargs,
+        "freesurfer.make_symmetric": make_symmetric_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_symmetric": make_symmetric_outputs,
+        "freesurfer.make_symmetric": make_symmetric_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def make_symmetric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_symmetric",
+        "@type": "freesurfer.make_symmetric",
         "hemi": hemi,
         "input_file": input_file,
         "output_file": output_file,
@@ -207,5 +207,8 @@ __all__ = [
     "MakeSymmetricOutputs",
     "MakeSymmetricParameters",
     "make_symmetric",
+    "make_symmetric_cargs",
+    "make_symmetric_execute",
+    "make_symmetric_outputs",
     "make_symmetric_params",
 ]

@@ -14,7 +14,7 @@ HALFCOSBASIS_METADATA = Metadata(
 
 
 HalfcosbasisParameters = typing.TypedDict('HalfcosbasisParameters', {
-    "__STYXTYPE__": typing.Literal["halfcosbasis"],
+    "@type": typing.Literal["fsl.halfcosbasis"],
     "hrf_param_file": InputPathType,
     "hrf_param_file_hf": InputPathType,
     "verbose_flag": bool,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "halfcosbasis": halfcosbasis_cargs,
+        "fsl.halfcosbasis": halfcosbasis_cargs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def halfcosbasis_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "halfcosbasis",
+        "@type": "fsl.halfcosbasis",
         "hrf_param_file": hrf_param_file,
         "hrf_param_file_hf": hrf_param_file_hf,
         "verbose_flag": verbose_flag,
@@ -363,5 +363,8 @@ __all__ = [
     "HalfcosbasisOutputs",
     "HalfcosbasisParameters",
     "halfcosbasis",
+    "halfcosbasis_cargs",
+    "halfcosbasis_execute",
+    "halfcosbasis_outputs",
     "halfcosbasis_params",
 ]

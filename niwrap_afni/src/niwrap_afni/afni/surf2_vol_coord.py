@@ -14,7 +14,7 @@ SURF2_VOL_COORD_METADATA = Metadata(
 
 
 Surf2VolCoordParameters = typing.TypedDict('Surf2VolCoordParameters', {
-    "__STYXTYPE__": typing.Literal["Surf2VolCoord"],
+    "@type": typing.Literal["afni.Surf2VolCoord"],
     "surface": str,
     "grid_vol": InputPathType,
     "grid_subbrick": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "Surf2VolCoord": surf2_vol_coord_cargs,
+        "afni.Surf2VolCoord": surf2_vol_coord_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "Surf2VolCoord": surf2_vol_coord_outputs,
+        "afni.Surf2VolCoord": surf2_vol_coord_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def surf2_vol_coord_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "Surf2VolCoord",
+        "@type": "afni.Surf2VolCoord",
         "surface": surface,
         "grid_vol": grid_vol,
         "closest_nodes": closest_nodes,
@@ -301,5 +301,8 @@ __all__ = [
     "Surf2VolCoordOutputs",
     "Surf2VolCoordParameters",
     "surf2_vol_coord",
+    "surf2_vol_coord_cargs",
+    "surf2_vol_coord_execute",
+    "surf2_vol_coord_outputs",
     "surf2_vol_coord_params",
 ]

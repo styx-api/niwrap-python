@@ -14,7 +14,7 @@ MRIS_LABEL_CALC_METADATA = Metadata(
 
 
 MrisLabelCalcParameters = typing.TypedDict('MrisLabelCalcParameters', {
-    "__STYXTYPE__": typing.Literal["mris_label_calc"],
+    "@type": typing.Literal["freesurfer.mris_label_calc"],
     "command": typing.Literal["union", "intersect", "invert", "erode", "dilate"],
     "input1": InputPathType,
     "input2": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_label_calc": mris_label_calc_cargs,
+        "freesurfer.mris_label_calc": mris_label_calc_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_label_calc": mris_label_calc_outputs,
+        "freesurfer.mris_label_calc": mris_label_calc_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def mris_label_calc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_label_calc",
+        "@type": "freesurfer.mris_label_calc",
         "command": command,
         "input1": input1,
         "input2": input2,
@@ -211,5 +211,8 @@ __all__ = [
     "MrisLabelCalcOutputs",
     "MrisLabelCalcParameters",
     "mris_label_calc",
+    "mris_label_calc_cargs",
+    "mris_label_calc_execute",
+    "mris_label_calc_outputs",
     "mris_label_calc_params",
 ]

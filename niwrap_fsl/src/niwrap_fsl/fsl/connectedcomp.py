@@ -14,7 +14,7 @@ CONNECTEDCOMP_METADATA = Metadata(
 
 
 ConnectedcompParameters = typing.TypedDict('ConnectedcompParameters', {
-    "__STYXTYPE__": typing.Literal["connectedcomp"],
+    "@type": typing.Literal["fsl.connectedcomp"],
     "in_volume": InputPathType,
     "output_volume": typing.NotRequired[str | None],
     "num_connect": typing.NotRequired[int | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "connectedcomp": connectedcomp_cargs,
+        "fsl.connectedcomp": connectedcomp_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "connectedcomp": connectedcomp_outputs,
+        "fsl.connectedcomp": connectedcomp_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def connectedcomp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "connectedcomp",
+        "@type": "fsl.connectedcomp",
         "in_volume": in_volume,
     }
     if output_volume is not None:
@@ -192,5 +192,8 @@ __all__ = [
     "ConnectedcompOutputs",
     "ConnectedcompParameters",
     "connectedcomp",
+    "connectedcomp_cargs",
+    "connectedcomp_execute",
+    "connectedcomp_outputs",
     "connectedcomp_params",
 ]

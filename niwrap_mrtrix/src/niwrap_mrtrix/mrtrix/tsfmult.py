@@ -14,14 +14,14 @@ TSFMULT_METADATA = Metadata(
 
 
 TsfmultConfigParameters = typing.TypedDict('TsfmultConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tsfmult.config"],
     "key": str,
     "value": str,
 })
 
 
 TsfmultParameters = typing.TypedDict('TsfmultParameters', {
-    "__STYXTYPE__": typing.Literal["tsfmult"],
+    "@type": typing.Literal["mrtrix.tsfmult"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tsfmult": tsfmult_cargs,
-        "config": tsfmult_config_cargs,
+        "mrtrix.tsfmult": tsfmult_cargs,
+        "mrtrix.tsfmult.config": tsfmult_config_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tsfmult": tsfmult_outputs,
+        "mrtrix.tsfmult": tsfmult_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def tsfmult_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tsfmult.config",
         "key": key,
         "value": value,
     }
@@ -153,7 +153,7 @@ def tsfmult_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tsfmult",
+        "@type": "mrtrix.tsfmult",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -199,7 +199,7 @@ def tsfmult_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -327,6 +327,10 @@ __all__ = [
     "TsfmultOutputs",
     "TsfmultParameters",
     "tsfmult",
+    "tsfmult_cargs",
+    "tsfmult_config_cargs",
     "tsfmult_config_params",
+    "tsfmult_execute",
+    "tsfmult_outputs",
     "tsfmult_params",
 ]

@@ -14,7 +14,7 @@ MRIS_WM_VOLUME_METADATA = Metadata(
 
 
 MrisWmVolumeParameters = typing.TypedDict('MrisWmVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["mris_wm_volume"],
+    "@type": typing.Literal["freesurfer.mris_wm_volume"],
     "subject": str,
     "hemi": str,
     "subjects_dir": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_wm_volume": mris_wm_volume_cargs,
+        "freesurfer.mris_wm_volume": mris_wm_volume_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mris_wm_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_wm_volume",
+        "@type": "freesurfer.mris_wm_volume",
         "subject": subject,
         "hemi": hemi,
         "verbose": verbose,
@@ -226,5 +226,8 @@ __all__ = [
     "MrisWmVolumeOutputs",
     "MrisWmVolumeParameters",
     "mris_wm_volume",
+    "mris_wm_volume_cargs",
+    "mris_wm_volume_execute",
+    "mris_wm_volume_outputs",
     "mris_wm_volume_params",
 ]

@@ -14,7 +14,7 @@ ANALYZETO4DFP_METADATA = Metadata(
 
 
 Analyzeto4dfpParameters = typing.TypedDict('Analyzeto4dfpParameters', {
-    "__STYXTYPE__": typing.Literal["analyzeto4dfp"],
+    "@type": typing.Literal["freesurfer.analyzeto4dfp"],
     "analyze_image": InputPathType,
     "rois_scale": bool,
     "flip_x": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "analyzeto4dfp": analyzeto4dfp_cargs,
+        "freesurfer.analyzeto4dfp": analyzeto4dfp_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def analyzeto4dfp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "analyzeto4dfp",
+        "@type": "freesurfer.analyzeto4dfp",
         "analyze_image": analyze_image,
         "rois_scale": rois_scale,
         "flip_x": flip_x,
@@ -230,5 +230,8 @@ __all__ = [
     "Analyzeto4dfpOutputs",
     "Analyzeto4dfpParameters",
     "analyzeto4dfp",
+    "analyzeto4dfp_cargs",
+    "analyzeto4dfp_execute",
+    "analyzeto4dfp_outputs",
     "analyzeto4dfp_params",
 ]

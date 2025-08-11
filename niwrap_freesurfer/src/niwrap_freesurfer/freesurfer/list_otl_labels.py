@@ -14,7 +14,7 @@ LIST_OTL_LABELS_METADATA = Metadata(
 
 
 ListOtlLabelsParameters = typing.TypedDict('ListOtlLabelsParameters', {
-    "__STYXTYPE__": typing.Literal["list_otl_labels"],
+    "@type": typing.Literal["freesurfer.list_otl_labels"],
     "input_file": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "list_otl_labels": list_otl_labels_cargs,
+        "freesurfer.list_otl_labels": list_otl_labels_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def list_otl_labels_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "list_otl_labels",
+        "@type": "freesurfer.list_otl_labels",
         "input_file": input_file,
     }
     return params
@@ -171,5 +171,8 @@ __all__ = [
     "ListOtlLabelsOutputs",
     "ListOtlLabelsParameters",
     "list_otl_labels",
+    "list_otl_labels_cargs",
+    "list_otl_labels_execute",
+    "list_otl_labels_outputs",
     "list_otl_labels_params",
 ]

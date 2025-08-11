@@ -14,7 +14,7 @@ V_3D_ABOVERLAP_METADATA = Metadata(
 
 
 V3dAboverlapParameters = typing.TypedDict('V3dAboverlapParameters', {
-    "__STYXTYPE__": typing.Literal["3dABoverlap"],
+    "@type": typing.Literal["afni.3dABoverlap"],
     "dataset_a": InputPathType,
     "dataset_b": InputPathType,
     "no_automask": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dABoverlap": v_3d_aboverlap_cargs,
+        "afni.3dABoverlap": v_3d_aboverlap_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def v_3d_aboverlap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dABoverlap",
+        "@type": "afni.3dABoverlap",
         "dataset_a": dataset_a,
         "dataset_b": dataset_b,
         "no_automask": no_automask,
@@ -207,5 +207,8 @@ __all__ = [
     "V3dAboverlapParameters",
     "V_3D_ABOVERLAP_METADATA",
     "v_3d_aboverlap",
+    "v_3d_aboverlap_cargs",
+    "v_3d_aboverlap_execute",
+    "v_3d_aboverlap_outputs",
     "v_3d_aboverlap_params",
 ]

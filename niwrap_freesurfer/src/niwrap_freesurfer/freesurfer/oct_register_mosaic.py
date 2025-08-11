@@ -14,7 +14,7 @@ OCT_REGISTER_MOSAIC_METADATA = Metadata(
 
 
 OctRegisterMosaicParameters = typing.TypedDict('OctRegisterMosaicParameters', {
-    "__STYXTYPE__": typing.Literal["oct_register_mosaic"],
+    "@type": typing.Literal["freesurfer.oct_register_mosaic"],
     "tiles_or_mosaic_list": list[str],
     "output_volume": str,
     "downsample": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "oct_register_mosaic": oct_register_mosaic_cargs,
+        "freesurfer.oct_register_mosaic": oct_register_mosaic_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "oct_register_mosaic": oct_register_mosaic_outputs,
+        "freesurfer.oct_register_mosaic": oct_register_mosaic_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def oct_register_mosaic_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "oct_register_mosaic",
+        "@type": "freesurfer.oct_register_mosaic",
         "tiles_or_mosaic_list": tiles_or_mosaic_list,
         "output_volume": output_volume,
     }
@@ -210,5 +210,8 @@ __all__ = [
     "OctRegisterMosaicOutputs",
     "OctRegisterMosaicParameters",
     "oct_register_mosaic",
+    "oct_register_mosaic_cargs",
+    "oct_register_mosaic_execute",
+    "oct_register_mosaic_outputs",
     "oct_register_mosaic_params",
 ]

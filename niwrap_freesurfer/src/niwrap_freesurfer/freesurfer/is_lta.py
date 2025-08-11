@@ -14,7 +14,7 @@ IS_LTA_METADATA = Metadata(
 
 
 IsLtaParameters = typing.TypedDict('IsLtaParameters', {
-    "__STYXTYPE__": typing.Literal["IsLTA"],
+    "@type": typing.Literal["freesurfer.IsLTA"],
     "candidate_file": InputPathType,
     "outfile": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "IsLTA": is_lta_cargs,
+        "freesurfer.IsLTA": is_lta_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "IsLTA": is_lta_outputs,
+        "freesurfer.IsLTA": is_lta_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def is_lta_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "IsLTA",
+        "@type": "freesurfer.IsLTA",
         "candidate_file": candidate_file,
         "outfile": outfile,
     }
@@ -188,5 +188,8 @@ __all__ = [
     "IsLtaOutputs",
     "IsLtaParameters",
     "is_lta",
+    "is_lta_cargs",
+    "is_lta_execute",
+    "is_lta_outputs",
     "is_lta_params",
 ]

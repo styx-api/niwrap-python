@@ -14,7 +14,7 @@ MRI_REORIENT_LR_CSH_METADATA = Metadata(
 
 
 MriReorientLrCshParameters = typing.TypedDict('MriReorientLrCshParameters', {
-    "__STYXTYPE__": typing.Literal["mri_reorient_LR.csh"],
+    "@type": typing.Literal["freesurfer.mri_reorient_LR.csh"],
     "input_vol": InputPathType,
     "output_vol": str,
     "display_result": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_reorient_LR.csh": mri_reorient_lr_csh_cargs,
+        "freesurfer.mri_reorient_LR.csh": mri_reorient_lr_csh_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_reorient_LR.csh": mri_reorient_lr_csh_outputs,
+        "freesurfer.mri_reorient_LR.csh": mri_reorient_lr_csh_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def mri_reorient_lr_csh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_reorient_LR.csh",
+        "@type": "freesurfer.mri_reorient_LR.csh",
         "input_vol": input_vol,
         "output_vol": output_vol,
         "display_result": display_result,
@@ -233,5 +233,8 @@ __all__ = [
     "MriReorientLrCshOutputs",
     "MriReorientLrCshParameters",
     "mri_reorient_lr_csh",
+    "mri_reorient_lr_csh_cargs",
+    "mri_reorient_lr_csh_execute",
+    "mri_reorient_lr_csh_outputs",
     "mri_reorient_lr_csh_params",
 ]

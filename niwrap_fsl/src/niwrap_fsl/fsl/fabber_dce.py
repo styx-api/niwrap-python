@@ -14,7 +14,7 @@ FABBER_DCE_METADATA = Metadata(
 
 
 FabberDceParameters = typing.TypedDict('FabberDceParameters', {
-    "__STYXTYPE__": typing.Literal["fabber_dce"],
+    "@type": typing.Literal["fsl.fabber_dce"],
     "output_directory": str,
     "inference_method": str,
     "forward_model": str,
@@ -66,7 +66,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber_dce": fabber_dce_cargs,
+        "fsl.fabber_dce": fabber_dce_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber_dce": fabber_dce_outputs,
+        "fsl.fabber_dce": fabber_dce_outputs,
     }.get(t)
 
 
@@ -198,7 +198,7 @@ def fabber_dce_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber_dce",
+        "@type": "fsl.fabber_dce",
         "output_directory": output_directory,
         "inference_method": inference_method,
         "forward_model": forward_model,
@@ -578,5 +578,8 @@ __all__ = [
     "FabberDceOutputs",
     "FabberDceParameters",
     "fabber_dce",
+    "fabber_dce_cargs",
+    "fabber_dce_execute",
+    "fabber_dce_outputs",
     "fabber_dce_params",
 ]

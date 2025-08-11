@@ -14,7 +14,7 @@ MATCH_SMOOTHING_METADATA = Metadata(
 
 
 MatchSmoothingParameters = typing.TypedDict('MatchSmoothingParameters', {
-    "__STYXTYPE__": typing.Literal["match_smoothing"],
+    "@type": typing.Literal["fsl.match_smoothing"],
     "example_func": InputPathType,
     "func_smoothing_FWHM": float,
     "example_structural": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "match_smoothing": match_smoothing_cargs,
+        "fsl.match_smoothing": match_smoothing_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def match_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "match_smoothing",
+        "@type": "fsl.match_smoothing",
         "example_func": example_func,
         "func_smoothing_FWHM": func_smoothing_fwhm,
         "example_structural": example_structural,
@@ -198,5 +198,8 @@ __all__ = [
     "MatchSmoothingOutputs",
     "MatchSmoothingParameters",
     "match_smoothing",
+    "match_smoothing_cargs",
+    "match_smoothing_execute",
+    "match_smoothing_outputs",
     "match_smoothing_params",
 ]

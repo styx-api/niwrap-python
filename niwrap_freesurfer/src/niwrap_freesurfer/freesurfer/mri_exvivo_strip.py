@@ -14,7 +14,7 @@ MRI_EXVIVO_STRIP_METADATA = Metadata(
 
 
 MriExvivoStripParameters = typing.TypedDict('MriExvivoStripParameters', {
-    "__STYXTYPE__": typing.Literal["mri_exvivo_strip"],
+    "@type": typing.Literal["freesurfer.mri_exvivo_strip"],
     "invol": InputPathType,
     "outvol": str,
     "hemi": str,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_exvivo_strip": mri_exvivo_strip_cargs,
+        "freesurfer.mri_exvivo_strip": mri_exvivo_strip_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_exvivo_strip": mri_exvivo_strip_outputs,
+        "freesurfer.mri_exvivo_strip": mri_exvivo_strip_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def mri_exvivo_strip_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_exvivo_strip",
+        "@type": "freesurfer.mri_exvivo_strip",
         "invol": invol,
         "outvol": outvol,
         "hemi": hemi,
@@ -312,5 +312,8 @@ __all__ = [
     "MriExvivoStripOutputs",
     "MriExvivoStripParameters",
     "mri_exvivo_strip",
+    "mri_exvivo_strip_cargs",
+    "mri_exvivo_strip_execute",
+    "mri_exvivo_strip_outputs",
     "mri_exvivo_strip_params",
 ]

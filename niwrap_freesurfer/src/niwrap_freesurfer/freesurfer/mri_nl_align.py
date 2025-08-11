@@ -14,7 +14,7 @@ MRI_NL_ALIGN_METADATA = Metadata(
 
 
 MriNlAlignParameters = typing.TypedDict('MriNlAlignParameters', {
-    "__STYXTYPE__": typing.Literal["mri_nl_align"],
+    "@type": typing.Literal["freesurfer.mri_nl_align"],
     "source": InputPathType,
     "target": InputPathType,
     "warp": str,
@@ -78,7 +78,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_nl_align": mri_nl_align_cargs,
+        "freesurfer.mri_nl_align": mri_nl_align_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_nl_align": mri_nl_align_outputs,
+        "freesurfer.mri_nl_align": mri_nl_align_outputs,
     }.get(t)
 
 
@@ -214,7 +214,7 @@ def mri_nl_align_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_nl_align",
+        "@type": "freesurfer.mri_nl_align",
         "source": source,
         "target": target,
         "warp": warp,
@@ -745,5 +745,8 @@ __all__ = [
     "MriNlAlignOutputs",
     "MriNlAlignParameters",
     "mri_nl_align",
+    "mri_nl_align_cargs",
+    "mri_nl_align_execute",
+    "mri_nl_align_outputs",
     "mri_nl_align_params",
 ]

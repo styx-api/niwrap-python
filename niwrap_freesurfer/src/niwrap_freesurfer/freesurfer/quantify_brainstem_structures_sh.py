@@ -14,7 +14,7 @@ QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA = Metadata(
 
 
 QuantifyBrainstemStructuresShParameters = typing.TypedDict('QuantifyBrainstemStructuresShParameters', {
-    "__STYXTYPE__": typing.Literal["quantifyBrainstemStructures.sh"],
+    "@type": typing.Literal["freesurfer.quantifyBrainstemStructures.sh"],
     "output_file": str,
     "subjects_directory": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "quantifyBrainstemStructures.sh": quantify_brainstem_structures_sh_cargs,
+        "freesurfer.quantifyBrainstemStructures.sh": quantify_brainstem_structures_sh_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "quantifyBrainstemStructures.sh": quantify_brainstem_structures_sh_outputs,
+        "freesurfer.quantifyBrainstemStructures.sh": quantify_brainstem_structures_sh_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def quantify_brainstem_structures_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "quantifyBrainstemStructures.sh",
+        "@type": "freesurfer.quantifyBrainstemStructures.sh",
         "output_file": output_file,
     }
     if subjects_directory is not None:
@@ -188,5 +188,8 @@ __all__ = [
     "QuantifyBrainstemStructuresShOutputs",
     "QuantifyBrainstemStructuresShParameters",
     "quantify_brainstem_structures_sh",
+    "quantify_brainstem_structures_sh_cargs",
+    "quantify_brainstem_structures_sh_execute",
+    "quantify_brainstem_structures_sh_outputs",
     "quantify_brainstem_structures_sh_params",
 ]

@@ -14,7 +14,7 @@ TALAIRACH2_METADATA = Metadata(
 
 
 Talairach2Parameters = typing.TypedDict('Talairach2Parameters', {
-    "__STYXTYPE__": typing.Literal["talairach2"],
+    "@type": typing.Literal["freesurfer.talairach2"],
     "subject_id": str,
     "mgz_flag": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "talairach2": talairach2_cargs,
+        "freesurfer.talairach2": talairach2_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def talairach2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "talairach2",
+        "@type": "freesurfer.talairach2",
         "subject_id": subject_id,
     }
     if mgz_flag is not None:
@@ -178,5 +178,8 @@ __all__ = [
     "Talairach2Outputs",
     "Talairach2Parameters",
     "talairach2",
+    "talairach2_cargs",
+    "talairach2_execute",
+    "talairach2_outputs",
     "talairach2_params",
 ]

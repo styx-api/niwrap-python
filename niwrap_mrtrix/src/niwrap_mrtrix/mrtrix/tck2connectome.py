@@ -14,14 +14,14 @@ TCK2CONNECTOME_METADATA = Metadata(
 
 
 Tck2connectomeConfigParameters = typing.TypedDict('Tck2connectomeConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tck2connectome.config"],
     "key": str,
     "value": str,
 })
 
 
 Tck2connectomeParameters = typing.TypedDict('Tck2connectomeParameters', {
-    "__STYXTYPE__": typing.Literal["tck2connectome"],
+    "@type": typing.Literal["mrtrix.tck2connectome"],
     "assignment_end_voxels": bool,
     "assignment_radial_search": typing.NotRequired[float | None],
     "assignment_reverse_search": typing.NotRequired[float | None],
@@ -64,8 +64,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tck2connectome": tck2connectome_cargs,
-        "config": tck2connectome_config_cargs,
+        "mrtrix.tck2connectome": tck2connectome_cargs,
+        "mrtrix.tck2connectome.config": tck2connectome_config_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tck2connectome": tck2connectome_outputs,
+        "mrtrix.tck2connectome": tck2connectome_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def tck2connectome_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tck2connectome.config",
         "key": key,
         "value": value,
     }
@@ -230,7 +230,7 @@ def tck2connectome_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tck2connectome",
+        "@type": "mrtrix.tck2connectome",
         "assignment_end_voxels": assignment_end_voxels,
         "assignment_all_voxels": assignment_all_voxels,
         "scale_length": scale_length,
@@ -353,7 +353,7 @@ def tck2connectome_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -575,6 +575,10 @@ __all__ = [
     "Tck2connectomeOutputs",
     "Tck2connectomeParameters",
     "tck2connectome",
+    "tck2connectome_cargs",
+    "tck2connectome_config_cargs",
     "tck2connectome_config_params",
+    "tck2connectome_execute",
+    "tck2connectome_outputs",
     "tck2connectome_params",
 ]

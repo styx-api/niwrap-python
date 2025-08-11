@@ -14,7 +14,7 @@ MRI_LINEAR_REGISTER_METADATA = Metadata(
 
 
 MriLinearRegisterParameters = typing.TypedDict('MriLinearRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_linear_register"],
+    "@type": typing.Literal["freesurfer.mri_linear_register"],
     "input_brain": InputPathType,
     "template": InputPathType,
     "output_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_linear_register": mri_linear_register_cargs,
+        "freesurfer.mri_linear_register": mri_linear_register_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_linear_register": mri_linear_register_outputs,
+        "freesurfer.mri_linear_register": mri_linear_register_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_linear_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_linear_register",
+        "@type": "freesurfer.mri_linear_register",
         "input_brain": input_brain,
         "template": template,
         "output_file": output_file,
@@ -188,5 +188,8 @@ __all__ = [
     "MriLinearRegisterOutputs",
     "MriLinearRegisterParameters",
     "mri_linear_register",
+    "mri_linear_register_cargs",
+    "mri_linear_register_execute",
+    "mri_linear_register_outputs",
     "mri_linear_register_params",
 ]

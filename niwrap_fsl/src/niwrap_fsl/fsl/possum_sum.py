@@ -14,7 +14,7 @@ POSSUM_SUM_METADATA = Metadata(
 
 
 PossumSumParameters = typing.TypedDict('PossumSumParameters', {
-    "__STYXTYPE__": typing.Literal["possum_sum"],
+    "@type": typing.Literal["fsl.possum_sum"],
     "input_signal": InputPathType,
     "output_signal": str,
     "num_processors": typing.NotRequired[int | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "possum_sum": possum_sum_cargs,
+        "fsl.possum_sum": possum_sum_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "possum_sum": possum_sum_outputs,
+        "fsl.possum_sum": possum_sum_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def possum_sum_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "possum_sum",
+        "@type": "fsl.possum_sum",
         "input_signal": input_signal,
         "output_signal": output_signal,
         "verbose_flag": verbose_flag,
@@ -210,5 +210,8 @@ __all__ = [
     "PossumSumOutputs",
     "PossumSumParameters",
     "possum_sum",
+    "possum_sum_cargs",
+    "possum_sum_execute",
+    "possum_sum_outputs",
     "possum_sum_params",
 ]

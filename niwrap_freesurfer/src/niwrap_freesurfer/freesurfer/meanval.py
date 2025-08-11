@@ -14,7 +14,7 @@ MEANVAL_METADATA = Metadata(
 
 
 MeanvalParameters = typing.TypedDict('MeanvalParameters', {
-    "__STYXTYPE__": typing.Literal["meanval"],
+    "@type": typing.Literal["freesurfer.meanval"],
     "input_file": InputPathType,
     "mask_file": InputPathType,
     "output_file": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "meanval": meanval_cargs,
+        "freesurfer.meanval": meanval_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "meanval": meanval_outputs,
+        "freesurfer.meanval": meanval_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def meanval_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "meanval",
+        "@type": "freesurfer.meanval",
         "input_file": input_file,
         "mask_file": mask_file,
         "output_file": output_file,
@@ -206,5 +206,8 @@ __all__ = [
     "MeanvalOutputs",
     "MeanvalParameters",
     "meanval",
+    "meanval_cargs",
+    "meanval_execute",
+    "meanval_outputs",
     "meanval_params",
 ]

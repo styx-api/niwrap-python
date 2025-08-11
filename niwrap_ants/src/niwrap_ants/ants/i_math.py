@@ -14,7 +14,7 @@ I_MATH_METADATA = Metadata(
 
 
 IMathParameters = typing.TypedDict('IMathParameters', {
-    "__STYXTYPE__": typing.Literal["iMath"],
+    "@type": typing.Literal["ants.iMath"],
     "image_dimension": typing.Literal[2, 3, 4],
     "output_image": str,
     "operations": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "iMath": i_math_cargs,
+        "ants.iMath": i_math_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "iMath": i_math_outputs,
+        "ants.iMath": i_math_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def i_math_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "iMath",
+        "@type": "ants.iMath",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "operations": operations,
@@ -210,5 +210,8 @@ __all__ = [
     "IMathParameters",
     "I_MATH_METADATA",
     "i_math",
+    "i_math_cargs",
+    "i_math_execute",
+    "i_math_outputs",
     "i_math_params",
 ]

@@ -14,7 +14,7 @@ SET_SPACING_METADATA = Metadata(
 
 
 SetSpacingParameters = typing.TypedDict('SetSpacingParameters', {
-    "__STYXTYPE__": typing.Literal["SetSpacing"],
+    "@type": typing.Literal["ants.SetSpacing"],
     "dimension": int,
     "input_file": InputPathType,
     "output_file": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SetSpacing": set_spacing_cargs,
+        "ants.SetSpacing": set_spacing_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SetSpacing": set_spacing_outputs,
+        "ants.SetSpacing": set_spacing_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def set_spacing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SetSpacing",
+        "@type": "ants.SetSpacing",
         "dimension": dimension,
         "input_file": input_file,
         "output_file": output_file,
@@ -198,5 +198,8 @@ __all__ = [
     "SetSpacingOutputs",
     "SetSpacingParameters",
     "set_spacing",
+    "set_spacing_cargs",
+    "set_spacing_execute",
+    "set_spacing_outputs",
     "set_spacing_params",
 ]

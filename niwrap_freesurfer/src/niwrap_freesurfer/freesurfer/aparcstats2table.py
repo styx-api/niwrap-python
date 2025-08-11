@@ -14,7 +14,7 @@ APARCSTATS2TABLE_METADATA = Metadata(
 
 
 Aparcstats2tableParameters = typing.TypedDict('Aparcstats2tableParameters', {
-    "__STYXTYPE__": typing.Literal["aparcstats2table"],
+    "@type": typing.Literal["freesurfer.aparcstats2table"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjectsfile": typing.NotRequired[InputPathType | None],
     "qdec": typing.NotRequired[InputPathType | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "aparcstats2table": aparcstats2table_cargs,
+        "freesurfer.aparcstats2table": aparcstats2table_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "aparcstats2table": aparcstats2table_outputs,
+        "freesurfer.aparcstats2table": aparcstats2table_outputs,
     }.get(t)
 
 
@@ -124,7 +124,7 @@ def aparcstats2table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "aparcstats2table",
+        "@type": "freesurfer.aparcstats2table",
         "hemi": hemi,
         "tablefile": tablefile,
         "skip_missing": skip_missing,
@@ -368,5 +368,8 @@ __all__ = [
     "Aparcstats2tableOutputs",
     "Aparcstats2tableParameters",
     "aparcstats2table",
+    "aparcstats2table_cargs",
+    "aparcstats2table_execute",
+    "aparcstats2table_outputs",
     "aparcstats2table_params",
 ]

@@ -14,7 +14,7 @@ MRI_LINEAR_ALIGN_METADATA = Metadata(
 
 
 MriLinearAlignParameters = typing.TypedDict('MriLinearAlignParameters', {
-    "__STYXTYPE__": typing.Literal["mri_linear_align"],
+    "@type": typing.Literal["freesurfer.mri_linear_align"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_linear_align": mri_linear_align_cargs,
+        "freesurfer.mri_linear_align": mri_linear_align_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_linear_align_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_linear_align",
+        "@type": "freesurfer.mri_linear_align",
         "source": source,
         "target": target,
         "output_xform": output_xform,
@@ -184,5 +184,8 @@ __all__ = [
     "MriLinearAlignOutputs",
     "MriLinearAlignParameters",
     "mri_linear_align",
+    "mri_linear_align_cargs",
+    "mri_linear_align_execute",
+    "mri_linear_align_outputs",
     "mri_linear_align_params",
 ]

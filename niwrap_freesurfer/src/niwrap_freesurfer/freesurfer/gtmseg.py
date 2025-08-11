@@ -14,7 +14,7 @@ GTMSEG_METADATA = Metadata(
 
 
 GtmsegParameters = typing.TypedDict('GtmsegParameters', {
-    "__STYXTYPE__": typing.Literal["gtmseg"],
+    "@type": typing.Literal["freesurfer.gtmseg"],
     "subject": str,
     "outvol": typing.NotRequired[str | None],
     "usf": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gtmseg": gtmseg_cargs,
+        "freesurfer.gtmseg": gtmseg_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gtmseg": gtmseg_outputs,
+        "freesurfer.gtmseg": gtmseg_outputs,
     }.get(t)
 
 
@@ -128,7 +128,7 @@ def gtmseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gtmseg",
+        "@type": "freesurfer.gtmseg",
         "subject": subject,
         "subsegwm": subsegwm,
         "keep_hypo": keep_hypo,
@@ -369,5 +369,8 @@ __all__ = [
     "GtmsegOutputs",
     "GtmsegParameters",
     "gtmseg",
+    "gtmseg_cargs",
+    "gtmseg_execute",
+    "gtmseg_outputs",
     "gtmseg_params",
 ]

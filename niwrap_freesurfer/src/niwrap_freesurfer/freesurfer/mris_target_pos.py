@@ -14,7 +14,7 @@ MRIS_TARGET_POS_METADATA = Metadata(
 
 
 MrisTargetPosParameters = typing.TypedDict('MrisTargetPosParameters', {
-    "__STYXTYPE__": typing.Literal["mris_target_pos"],
+    "@type": typing.Literal["freesurfer.mris_target_pos"],
     "input_volume": InputPathType,
     "input_surface": InputPathType,
     "output_surface": str,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_target_pos": mris_target_pos_cargs,
+        "freesurfer.mris_target_pos": mris_target_pos_cargs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def mris_target_pos_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_target_pos",
+        "@type": "freesurfer.mris_target_pos",
         "input_volume": input_volume,
         "input_surface": input_surface,
         "output_surface": output_surface,
@@ -305,5 +305,8 @@ __all__ = [
     "MrisTargetPosOutputs",
     "MrisTargetPosParameters",
     "mris_target_pos",
+    "mris_target_pos_cargs",
+    "mris_target_pos_execute",
+    "mris_target_pos_outputs",
     "mris_target_pos_params",
 ]

@@ -14,7 +14,7 @@ MRI_ENTOWM_SEG_METADATA = Metadata(
 
 
 MriEntowmSegParameters = typing.TypedDict('MriEntowmSegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_entowm_seg"],
+    "@type": typing.Literal["freesurfer.mri_entowm_seg"],
     "input_image": typing.NotRequired[InputPathType | None],
     "output_segmentation": typing.NotRequired[str | None],
     "recon_subjects": typing.NotRequired[list[str] | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_entowm_seg": mri_entowm_seg_cargs,
+        "freesurfer.mri_entowm_seg": mri_entowm_seg_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_entowm_seg": mri_entowm_seg_outputs,
+        "freesurfer.mri_entowm_seg": mri_entowm_seg_outputs,
     }.get(t)
 
 
@@ -160,7 +160,7 @@ def mri_entowm_seg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_entowm_seg",
+        "@type": "freesurfer.mri_entowm_seg",
         "conform": conform,
         "etiv": etiv,
         "write_posteriors": write_posteriors,
@@ -474,5 +474,8 @@ __all__ = [
     "MriEntowmSegOutputs",
     "MriEntowmSegParameters",
     "mri_entowm_seg",
+    "mri_entowm_seg_cargs",
+    "mri_entowm_seg_execute",
+    "mri_entowm_seg_outputs",
     "mri_entowm_seg_params",
 ]

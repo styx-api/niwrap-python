@@ -14,7 +14,7 @@ TKREGISTER2_METADATA = Metadata(
 
 
 Tkregister2Parameters = typing.TypedDict('Tkregister2Parameters', {
-    "__STYXTYPE__": typing.Literal["tkregister2"],
+    "@type": typing.Literal["freesurfer.tkregister2"],
     "fixed_volume": InputPathType,
     "moving_volume": InputPathType,
     "reg_file": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tkregister2": tkregister2_cargs,
+        "freesurfer.tkregister2": tkregister2_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tkregister2": tkregister2_outputs,
+        "freesurfer.tkregister2": tkregister2_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def tkregister2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tkregister2",
+        "@type": "freesurfer.tkregister2",
         "fixed_volume": fixed_volume,
         "moving_volume": moving_volume,
         "reg_file": reg_file,
@@ -233,5 +233,8 @@ __all__ = [
     "Tkregister2Outputs",
     "Tkregister2Parameters",
     "tkregister2",
+    "tkregister2_cargs",
+    "tkregister2_execute",
+    "tkregister2_outputs",
     "tkregister2_params",
 ]

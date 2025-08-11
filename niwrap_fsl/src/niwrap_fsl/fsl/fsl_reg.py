@@ -14,7 +14,7 @@ FSL_REG_METADATA = Metadata(
 
 
 FslRegParameters = typing.TypedDict('FslRegParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_reg"],
+    "@type": typing.Literal["fsl.fsl_reg"],
     "input_file": InputPathType,
     "reference_file": InputPathType,
     "output_file": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_reg": fsl_reg_cargs,
+        "fsl.fsl_reg": fsl_reg_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_reg": fsl_reg_outputs,
+        "fsl.fsl_reg": fsl_reg_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def fsl_reg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_reg",
+        "@type": "fsl.fsl_reg",
         "input_file": input_file,
         "reference_file": reference_file,
         "output_file": output_file,
@@ -241,5 +241,8 @@ __all__ = [
     "FslRegOutputs",
     "FslRegParameters",
     "fsl_reg",
+    "fsl_reg_cargs",
+    "fsl_reg_execute",
+    "fsl_reg_outputs",
     "fsl_reg_params",
 ]

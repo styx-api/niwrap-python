@@ -14,7 +14,7 @@ V_3D_STAT_CLUST_METADATA = Metadata(
 
 
 V3dStatClustParameters = typing.TypedDict('V3dStatClustParameters', {
-    "__STYXTYPE__": typing.Literal["3dStatClust"],
+    "@type": typing.Literal["afni.3dStatClust"],
     "prefix": typing.NotRequired[str | None],
     "session_dir": typing.NotRequired[str | None],
     "verbose": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dStatClust": v_3d_stat_clust_cargs,
+        "afni.3dStatClust": v_3d_stat_clust_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dStatClust": v_3d_stat_clust_outputs,
+        "afni.3dStatClust": v_3d_stat_clust_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v_3d_stat_clust_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dStatClust",
+        "@type": "afni.3dStatClust",
         "verbose": verbose,
         "dist_euc": dist_euc,
         "dist_ind": dist_ind,
@@ -271,5 +271,8 @@ __all__ = [
     "V3dStatClustParameters",
     "V_3D_STAT_CLUST_METADATA",
     "v_3d_stat_clust",
+    "v_3d_stat_clust_cargs",
+    "v_3d_stat_clust_execute",
+    "v_3d_stat_clust_outputs",
     "v_3d_stat_clust_params",
 ]

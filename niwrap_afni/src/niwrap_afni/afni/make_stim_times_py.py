@@ -14,7 +14,7 @@ MAKE_STIM_TIMES_PY_METADATA = Metadata(
 
 
 MakeStimTimesPyParameters = typing.TypedDict('MakeStimTimesPyParameters', {
-    "__STYXTYPE__": typing.Literal["make_stim_times.py"],
+    "@type": typing.Literal["afni.make_stim_times.py"],
     "files": list[InputPathType],
     "prefix": str,
     "tr": float,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_stim_times.py": make_stim_times_py_cargs,
+        "afni.make_stim_times.py": make_stim_times_py_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_stim_times.py": make_stim_times_py_outputs,
+        "afni.make_stim_times.py": make_stim_times_py_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def make_stim_times_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_stim_times.py",
+        "@type": "afni.make_stim_times.py",
         "files": files,
         "prefix": prefix,
         "tr": tr,
@@ -300,5 +300,8 @@ __all__ = [
     "MakeStimTimesPyOutputs",
     "MakeStimTimesPyParameters",
     "make_stim_times_py",
+    "make_stim_times_py_cargs",
+    "make_stim_times_py_execute",
+    "make_stim_times_py_outputs",
     "make_stim_times_py_params",
 ]

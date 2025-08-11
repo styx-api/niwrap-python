@@ -14,14 +14,14 @@ TENSOR2METRIC_METADATA = Metadata(
 
 
 Tensor2metricConfigParameters = typing.TypedDict('Tensor2metricConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tensor2metric.config"],
     "key": str,
     "value": str,
 })
 
 
 Tensor2metricParameters = typing.TypedDict('Tensor2metricParameters', {
-    "__STYXTYPE__": typing.Literal["tensor2metric"],
+    "@type": typing.Literal["mrtrix.tensor2metric"],
     "adc": typing.NotRequired[str | None],
     "fa": typing.NotRequired[str | None],
     "ad": typing.NotRequired[str | None],
@@ -58,8 +58,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tensor2metric": tensor2metric_cargs,
-        "config": tensor2metric_config_cargs,
+        "mrtrix.tensor2metric": tensor2metric_cargs,
+        "mrtrix.tensor2metric.config": tensor2metric_config_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tensor2metric": tensor2metric_outputs,
+        "mrtrix.tensor2metric": tensor2metric_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def tensor2metric_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tensor2metric.config",
         "key": key,
         "value": value,
     }
@@ -220,7 +220,7 @@ def tensor2metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tensor2metric",
+        "@type": "mrtrix.tensor2metric",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -349,7 +349,7 @@ def tensor2metric_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -539,6 +539,10 @@ __all__ = [
     "Tensor2metricOutputs",
     "Tensor2metricParameters",
     "tensor2metric",
+    "tensor2metric_cargs",
+    "tensor2metric_config_cargs",
     "tensor2metric_config_params",
+    "tensor2metric_execute",
+    "tensor2metric_outputs",
     "tensor2metric_params",
 ]

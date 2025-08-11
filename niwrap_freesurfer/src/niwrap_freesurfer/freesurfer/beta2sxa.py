@@ -14,7 +14,7 @@ BETA2SXA_METADATA = Metadata(
 
 
 Beta2sxaParameters = typing.TypedDict('Beta2sxaParameters', {
-    "__STYXTYPE__": typing.Literal["beta2sxa"],
+    "@type": typing.Literal["freesurfer.beta2sxa"],
     "beta_files": list[InputPathType],
     "number_of_conditions": float,
     "number_of_per_subjects": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "beta2sxa": beta2sxa_cargs,
+        "freesurfer.beta2sxa": beta2sxa_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "beta2sxa": beta2sxa_outputs,
+        "freesurfer.beta2sxa": beta2sxa_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def beta2sxa_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "beta2sxa",
+        "@type": "freesurfer.beta2sxa",
         "beta_files": beta_files,
         "number_of_conditions": number_of_conditions,
         "number_of_per_subjects": number_of_per_subjects,
@@ -212,5 +212,8 @@ __all__ = [
     "Beta2sxaOutputs",
     "Beta2sxaParameters",
     "beta2sxa",
+    "beta2sxa_cargs",
+    "beta2sxa_execute",
+    "beta2sxa_outputs",
     "beta2sxa_params",
 ]

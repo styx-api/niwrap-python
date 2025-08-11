@@ -14,7 +14,7 @@ V_3D_BRAIN_SYNC_METADATA = Metadata(
 
 
 V3dBrainSyncParameters = typing.TypedDict('V3dBrainSyncParameters', {
-    "__STYXTYPE__": typing.Literal["3dBrainSync"],
+    "@type": typing.Literal["afni.3dBrainSync"],
     "inset1": InputPathType,
     "inset2": InputPathType,
     "qprefix": typing.NotRequired[str | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dBrainSync": v_3d_brain_sync_cargs,
+        "afni.3dBrainSync": v_3d_brain_sync_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dBrainSync": v_3d_brain_sync_outputs,
+        "afni.3dBrainSync": v_3d_brain_sync_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_3d_brain_sync_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dBrainSync",
+        "@type": "afni.3dBrainSync",
         "inset1": inset1,
         "inset2": inset2,
         "normalize": normalize,
@@ -263,5 +263,8 @@ __all__ = [
     "V3dBrainSyncParameters",
     "V_3D_BRAIN_SYNC_METADATA",
     "v_3d_brain_sync",
+    "v_3d_brain_sync_cargs",
+    "v_3d_brain_sync_execute",
+    "v_3d_brain_sync_outputs",
     "v_3d_brain_sync_params",
 ]

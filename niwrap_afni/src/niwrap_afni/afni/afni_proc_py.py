@@ -14,7 +14,7 @@ AFNI_PROC_PY_METADATA = Metadata(
 
 
 AfniProcPyParameters = typing.TypedDict('AfniProcPyParameters', {
-    "__STYXTYPE__": typing.Literal["afni_proc.py"],
+    "@type": typing.Literal["afni.afni_proc.py"],
     "dsets": list[InputPathType],
     "subj_id": str,
     "out_dir": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "afni_proc.py": afni_proc_py_cargs,
+        "afni.afni_proc.py": afni_proc_py_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "afni_proc.py": afni_proc_py_outputs,
+        "afni.afni_proc.py": afni_proc_py_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def afni_proc_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "afni_proc.py",
+        "@type": "afni.afni_proc.py",
         "dsets": dsets,
         "subj_id": subj_id,
         "anat": anat,
@@ -279,5 +279,8 @@ __all__ = [
     "AfniProcPyOutputs",
     "AfniProcPyParameters",
     "afni_proc_py",
+    "afni_proc_py_cargs",
+    "afni_proc_py_execute",
+    "afni_proc_py_outputs",
     "afni_proc_py_params",
 ]

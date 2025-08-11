@@ -14,7 +14,7 @@ LABELS_UNION_METADATA = Metadata(
 
 
 LabelsUnionParameters = typing.TypedDict('LabelsUnionParameters', {
-    "__STYXTYPE__": typing.Literal["labels_union"],
+    "@type": typing.Literal["freesurfer.labels_union"],
     "label1": InputPathType,
     "label2": InputPathType,
     "outputname": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "labels_union": labels_union_cargs,
+        "freesurfer.labels_union": labels_union_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "labels_union": labels_union_outputs,
+        "freesurfer.labels_union": labels_union_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def labels_union_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "labels_union",
+        "@type": "freesurfer.labels_union",
         "label1": label1,
         "label2": label2,
         "outputname": outputname,
@@ -190,5 +190,8 @@ __all__ = [
     "LabelsUnionOutputs",
     "LabelsUnionParameters",
     "labels_union",
+    "labels_union_cargs",
+    "labels_union_execute",
+    "labels_union_outputs",
     "labels_union_params",
 ]

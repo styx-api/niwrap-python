@@ -14,26 +14,26 @@ TRANSFORMCOMPOSE_METADATA = Metadata(
 
 
 TransformcomposeConfigParameters = typing.TypedDict('TransformcomposeConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.transformcompose.config"],
     "key": str,
     "value": str,
 })
 
 
 TransformcomposeVariousStringParameters = typing.TypedDict('TransformcomposeVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.transformcompose.VariousString"],
     "obj": str,
 })
 
 
 TransformcomposeVariousFileParameters = typing.TypedDict('TransformcomposeVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.transformcompose.VariousFile"],
     "obj": InputPathType,
 })
 
 
 TransformcomposeParameters = typing.TypedDict('TransformcomposeParameters', {
-    "__STYXTYPE__": typing.Literal["transformcompose"],
+    "@type": typing.Literal["mrtrix.transformcompose"],
     "template": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -60,10 +60,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "transformcompose": transformcompose_cargs,
-        "config": transformcompose_config_cargs,
-        "VariousString": transformcompose_various_string_cargs,
-        "VariousFile": transformcompose_various_file_cargs,
+        "mrtrix.transformcompose": transformcompose_cargs,
+        "mrtrix.transformcompose.config": transformcompose_config_cargs,
+        "mrtrix.transformcompose.VariousString": transformcompose_various_string_cargs,
+        "mrtrix.transformcompose.VariousFile": transformcompose_various_file_cargs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def transformcompose_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.transformcompose.config",
         "key": key,
         "value": value,
     }
@@ -135,7 +135,7 @@ def transformcompose_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.transformcompose.VariousString",
         "obj": obj,
     }
     return params
@@ -171,7 +171,7 @@ def transformcompose_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.transformcompose.VariousFile",
         "obj": obj,
     }
     return params
@@ -240,7 +240,7 @@ def transformcompose_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transformcompose",
+        "@type": "mrtrix.transformcompose",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -293,13 +293,13 @@ def transformcompose_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
     cargs.extend([execution.input_file(f) for f in params.get("input")])
-    cargs.extend(dyn_cargs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution))
+    cargs.extend(dyn_cargs(params.get("output")["@type"])(params.get("output"), execution))
     return cargs
 
 
@@ -458,8 +458,14 @@ __all__ = [
     "TransformcomposeVariousFileParameters",
     "TransformcomposeVariousStringParameters",
     "transformcompose",
+    "transformcompose_cargs",
+    "transformcompose_config_cargs",
     "transformcompose_config_params",
+    "transformcompose_execute",
+    "transformcompose_outputs",
     "transformcompose_params",
+    "transformcompose_various_file_cargs",
     "transformcompose_various_file_params",
+    "transformcompose_various_string_cargs",
     "transformcompose_various_string_params",
 ]

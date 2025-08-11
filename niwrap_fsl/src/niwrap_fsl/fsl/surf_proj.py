@@ -14,7 +14,7 @@ SURF_PROJ_METADATA = Metadata(
 
 
 SurfProjParameters = typing.TypedDict('SurfProjParameters', {
-    "__STYXTYPE__": typing.Literal["surf_proj"],
+    "@type": typing.Literal["fsl.surf_proj"],
     "data": InputPathType,
     "surface": InputPathType,
     "output_file": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surf_proj": surf_proj_cargs,
+        "fsl.surf_proj": surf_proj_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surf_proj": surf_proj_outputs,
+        "fsl.surf_proj": surf_proj_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def surf_proj_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surf_proj",
+        "@type": "fsl.surf_proj",
         "data": data,
         "surface": surface,
         "output_file": output_file,
@@ -295,5 +295,8 @@ __all__ = [
     "SurfProjOutputs",
     "SurfProjParameters",
     "surf_proj",
+    "surf_proj_cargs",
+    "surf_proj_execute",
+    "surf_proj_outputs",
     "surf_proj_params",
 ]

@@ -14,7 +14,7 @@ DMRI_TRAIN_METADATA = Metadata(
 
 
 DmriTrainParameters = typing.TypedDict('DmriTrainParameters', {
-    "__STYXTYPE__": typing.Literal["dmri_train"],
+    "@type": typing.Literal["freesurfer.dmri_train"],
     "slist": InputPathType,
     "trk_files": list[InputPathType],
     "rois": typing.NotRequired[list[InputPathType] | None],
@@ -58,7 +58,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dmri_train": dmri_train_cargs,
+        "freesurfer.dmri_train": dmri_train_cargs,
     }.get(t)
 
 
@@ -152,7 +152,7 @@ def dmri_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dmri_train",
+        "@type": "freesurfer.dmri_train",
         "slist": slist,
         "trk_files": trk_files,
         "seg": seg,
@@ -472,5 +472,8 @@ __all__ = [
     "DmriTrainOutputs",
     "DmriTrainParameters",
     "dmri_train",
+    "dmri_train_cargs",
+    "dmri_train_execute",
+    "dmri_train_outputs",
     "dmri_train_params",
 ]

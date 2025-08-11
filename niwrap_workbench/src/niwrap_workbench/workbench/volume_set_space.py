@@ -14,7 +14,7 @@ VOLUME_SET_SPACE_METADATA = Metadata(
 
 
 VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters', {
-    "__STYXTYPE__": typing.Literal["plumb"],
+    "@type": typing.Literal["workbench.volume-set-space.plumb"],
     "axis_order": str,
     "x_spacing": float,
     "y_spacing": float,
@@ -26,7 +26,7 @@ VolumeSetSpacePlumbParameters = typing.TypedDict('VolumeSetSpacePlumbParameters'
 
 
 VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters', {
-    "__STYXTYPE__": typing.Literal["sform"],
+    "@type": typing.Literal["workbench.volume-set-space.sform"],
     "xi_spacing": float,
     "xj_spacing": float,
     "xk_spacing": float,
@@ -43,14 +43,14 @@ VolumeSetSpaceSformParameters = typing.TypedDict('VolumeSetSpaceSformParameters'
 
 
 VolumeSetSpaceFileParameters = typing.TypedDict('VolumeSetSpaceFileParameters', {
-    "__STYXTYPE__": typing.Literal["file"],
+    "@type": typing.Literal["workbench.volume-set-space.file"],
     "volume_ref": str,
     "opt_ignore_dims": bool,
 })
 
 
 VolumeSetSpaceParameters = typing.TypedDict('VolumeSetSpaceParameters', {
-    "__STYXTYPE__": typing.Literal["volume-set-space"],
+    "@type": typing.Literal["workbench.volume-set-space"],
     "volume_in": InputPathType,
     "volume_out": str,
     "plumb": typing.NotRequired[VolumeSetSpacePlumbParameters | None],
@@ -71,10 +71,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-set-space": volume_set_space_cargs,
-        "plumb": volume_set_space_plumb_cargs,
-        "sform": volume_set_space_sform_cargs,
-        "file": volume_set_space_file_cargs,
+        "workbench.volume-set-space": volume_set_space_cargs,
+        "workbench.volume-set-space.plumb": volume_set_space_plumb_cargs,
+        "workbench.volume-set-space.sform": volume_set_space_sform_cargs,
+        "workbench.volume-set-space.file": volume_set_space_file_cargs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def volume_set_space_plumb_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "plumb",
+        "@type": "workbench.volume-set-space.plumb",
         "axis_order": axis_order,
         "x_spacing": x_spacing,
         "y_spacing": y_spacing,
@@ -189,7 +189,7 @@ def volume_set_space_sform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sform",
+        "@type": "workbench.volume-set-space.sform",
         "xi_spacing": xi_spacing,
         "xj_spacing": xj_spacing,
         "xk_spacing": xk_spacing,
@@ -251,7 +251,7 @@ def volume_set_space_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "file",
+        "@type": "workbench.volume-set-space.file",
         "volume_ref": volume_ref,
         "opt_ignore_dims": opt_ignore_dims,
     }
@@ -307,7 +307,7 @@ def volume_set_space_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-set-space",
+        "@type": "workbench.volume-set-space",
         "volume_in": volume_in,
         "volume_out": volume_out,
     }
@@ -339,11 +339,11 @@ def volume_set_space_cargs(
     cargs.append(execution.input_file(params.get("volume_in")))
     cargs.append(params.get("volume_out"))
     if params.get("plumb") is not None:
-        cargs.extend(dyn_cargs(params.get("plumb")["__STYXTYPE__"])(params.get("plumb"), execution))
+        cargs.extend(dyn_cargs(params.get("plumb")["@type"])(params.get("plumb"), execution))
     if params.get("sform") is not None:
-        cargs.extend(dyn_cargs(params.get("sform")["__STYXTYPE__"])(params.get("sform"), execution))
+        cargs.extend(dyn_cargs(params.get("sform")["@type"])(params.get("sform"), execution))
     if params.get("file") is not None:
-        cargs.extend(dyn_cargs(params.get("file")["__STYXTYPE__"])(params.get("file"), execution))
+        cargs.extend(dyn_cargs(params.get("file")["@type"])(params.get("file"), execution))
     return cargs
 
 
@@ -445,8 +445,14 @@ __all__ = [
     "VolumeSetSpacePlumbParameters",
     "VolumeSetSpaceSformParameters",
     "volume_set_space",
+    "volume_set_space_cargs",
+    "volume_set_space_execute",
+    "volume_set_space_file_cargs",
     "volume_set_space_file_params",
+    "volume_set_space_outputs",
     "volume_set_space_params",
+    "volume_set_space_plumb_cargs",
     "volume_set_space_plumb_params",
+    "volume_set_space_sform_cargs",
     "volume_set_space_sform_params",
 ]

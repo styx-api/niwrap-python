@@ -14,21 +14,21 @@ DCMINFO_METADATA = Metadata(
 
 
 DcminfoTagParameters = typing.TypedDict('DcminfoTagParameters', {
-    "__STYXTYPE__": typing.Literal["tag"],
+    "@type": typing.Literal["mrtrix.dcminfo.tag"],
     "group": str,
     "element": str,
 })
 
 
 DcminfoConfigParameters = typing.TypedDict('DcminfoConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.dcminfo.config"],
     "key": str,
     "value": str,
 })
 
 
 DcminfoParameters = typing.TypedDict('DcminfoParameters', {
-    "__STYXTYPE__": typing.Literal["dcminfo"],
+    "@type": typing.Literal["mrtrix.dcminfo"],
     "all": bool,
     "csa": bool,
     "phoenix": bool,
@@ -57,9 +57,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcminfo": dcminfo_cargs,
-        "tag": dcminfo_tag_cargs,
-        "config": dcminfo_config_cargs,
+        "mrtrix.dcminfo": dcminfo_cargs,
+        "mrtrix.dcminfo.tag": dcminfo_tag_cargs,
+        "mrtrix.dcminfo.config": dcminfo_config_cargs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def dcminfo_tag_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tag",
+        "@type": "mrtrix.dcminfo.tag",
         "group": group,
         "element": element,
     }
@@ -137,7 +137,7 @@ def dcminfo_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.dcminfo.config",
         "key": key,
         "value": value,
     }
@@ -214,7 +214,7 @@ def dcminfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcminfo",
+        "@type": "mrtrix.dcminfo",
         "all": all_,
         "csa": csa,
         "phoenix": phoenix,
@@ -257,7 +257,7 @@ def dcminfo_cargs(
     if params.get("phoenix"):
         cargs.append("-phoenix")
     if params.get("tag") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("tag")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tag")] for a in c])
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -272,7 +272,7 @@ def dcminfo_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -410,7 +410,12 @@ __all__ = [
     "DcminfoParameters",
     "DcminfoTagParameters",
     "dcminfo",
+    "dcminfo_cargs",
+    "dcminfo_config_cargs",
     "dcminfo_config_params",
+    "dcminfo_execute",
+    "dcminfo_outputs",
     "dcminfo_params",
+    "dcminfo_tag_cargs",
     "dcminfo_tag_params",
 ]

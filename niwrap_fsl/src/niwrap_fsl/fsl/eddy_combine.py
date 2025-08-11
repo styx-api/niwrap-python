@@ -14,7 +14,7 @@ EDDY_COMBINE_METADATA = Metadata(
 
 
 EddyCombineParameters = typing.TypedDict('EddyCombineParameters', {
-    "__STYXTYPE__": typing.Literal["eddy_combine"],
+    "@type": typing.Literal["fsl.eddy_combine"],
     "pos_data": InputPathType,
     "pos_bvals": InputPathType,
     "pos_bvecs": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy_combine": eddy_combine_cargs,
+        "fsl.eddy_combine": eddy_combine_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy_combine": eddy_combine_outputs,
+        "fsl.eddy_combine": eddy_combine_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def eddy_combine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy_combine",
+        "@type": "fsl.eddy_combine",
         "pos_data": pos_data,
         "pos_bvals": pos_bvals,
         "pos_bvecs": pos_bvecs,
@@ -266,5 +266,8 @@ __all__ = [
     "EddyCombineOutputs",
     "EddyCombineParameters",
     "eddy_combine",
+    "eddy_combine_cargs",
+    "eddy_combine_execute",
+    "eddy_combine_outputs",
     "eddy_combine_params",
 ]

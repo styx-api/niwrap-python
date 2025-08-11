@@ -14,34 +14,34 @@ MRREGISTER_METADATA = Metadata(
 
 
 MrregisterTransformedParameters = typing.TypedDict('MrregisterTransformedParameters', {
-    "__STYXTYPE__": typing.Literal["transformed"],
+    "@type": typing.Literal["mrtrix.mrregister.transformed"],
     "image": str,
 })
 
 
 MrregisterTransformedMidwayParameters = typing.TypedDict('MrregisterTransformedMidwayParameters', {
-    "__STYXTYPE__": typing.Literal["transformed_midway"],
+    "@type": typing.Literal["mrtrix.mrregister.transformed_midway"],
     "image1_transformed": str,
     "image2_transformed": str,
 })
 
 
 MrregisterNlWarpParameters = typing.TypedDict('MrregisterNlWarpParameters', {
-    "__STYXTYPE__": typing.Literal["nl_warp"],
+    "@type": typing.Literal["mrtrix.mrregister.nl_warp"],
     "warp1": str,
     "warp2": str,
 })
 
 
 MrregisterConfigParameters = typing.TypedDict('MrregisterConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrregister.config"],
     "key": str,
     "value": str,
 })
 
 
 MrregisterParameters = typing.TypedDict('MrregisterParameters', {
-    "__STYXTYPE__": typing.Literal["mrregister"],
+    "@type": typing.Literal["mrtrix.mrregister"],
     "type": typing.NotRequired[str | None],
     "transformed": typing.NotRequired[list[MrregisterTransformedParameters] | None],
     "transformed_midway": typing.NotRequired[list[MrregisterTransformedMidwayParameters] | None],
@@ -125,11 +125,11 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrregister": mrregister_cargs,
-        "transformed": mrregister_transformed_cargs,
-        "transformed_midway": mrregister_transformed_midway_cargs,
-        "nl_warp": mrregister_nl_warp_cargs,
-        "config": mrregister_config_cargs,
+        "mrtrix.mrregister": mrregister_cargs,
+        "mrtrix.mrregister.transformed": mrregister_transformed_cargs,
+        "mrtrix.mrregister.transformed_midway": mrregister_transformed_midway_cargs,
+        "mrtrix.mrregister.nl_warp": mrregister_nl_warp_cargs,
+        "mrtrix.mrregister.config": mrregister_config_cargs,
     }.get(t)
 
 
@@ -145,10 +145,10 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mrregister": mrregister_outputs,
-        "transformed": mrregister_transformed_outputs,
-        "transformed_midway": mrregister_transformed_midway_outputs,
-        "nl_warp": mrregister_nl_warp_outputs,
+        "mrtrix.mrregister": mrregister_outputs,
+        "mrtrix.mrregister.transformed": mrregister_transformed_outputs,
+        "mrtrix.mrregister.transformed_midway": mrregister_transformed_midway_outputs,
+        "mrtrix.mrregister.nl_warp": mrregister_nl_warp_outputs,
     }.get(t)
 
 
@@ -178,7 +178,7 @@ def mrregister_transformed_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transformed",
+        "@type": "mrtrix.mrregister.transformed",
         "image": image,
     }
     return params
@@ -259,7 +259,7 @@ def mrregister_transformed_midway_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transformed_midway",
+        "@type": "mrtrix.mrregister.transformed_midway",
         "image1_transformed": image1_transformed,
         "image2_transformed": image2_transformed,
     }
@@ -345,7 +345,7 @@ def mrregister_nl_warp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "nl_warp",
+        "@type": "mrtrix.mrregister.nl_warp",
         "warp1": warp1,
         "warp2": warp2,
     }
@@ -407,7 +407,7 @@ def mrregister_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrregister.config",
         "key": key,
         "value": value,
     }
@@ -754,7 +754,7 @@ def mrregister_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrregister",
+        "@type": "mrtrix.mrregister",
         "nan": nan,
         "init_translation_unmasked1": init_translation_unmasked1,
         "init_translation_unmasked2": init_translation_unmasked2,
@@ -902,9 +902,9 @@ def mrregister_cargs(
             params.get("type")
         ])
     if params.get("transformed") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("transformed")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("transformed")] for a in c])
     if params.get("transformed_midway") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("transformed_midway")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("transformed_midway")] for a in c])
     if params.get("mask1") is not None:
         cargs.extend([
             "-mask1",
@@ -1093,7 +1093,7 @@ def mrregister_cargs(
             params.get("linstage_diagnostics_prefix")
         ])
     if params.get("nl_warp") is not None:
-        cargs.extend(dyn_cargs(params.get("nl_warp")["__STYXTYPE__"])(params.get("nl_warp"), execution))
+        cargs.extend(dyn_cargs(params.get("nl_warp")["@type"])(params.get("nl_warp"), execution))
     if params.get("nl_warp_full") is not None:
         cargs.extend([
             "-nl_warp_full",
@@ -1170,7 +1170,7 @@ def mrregister_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -1205,9 +1205,9 @@ def mrregister_outputs(
         affine_2tomidway=execution.output_file(params.get("affine_2tomidway")) if (params.get("affine_2tomidway") is not None) else None,
         affine_log=execution.output_file(params.get("affine_log")) if (params.get("affine_log") is not None) else None,
         nl_warp_full=execution.output_file(params.get("nl_warp_full")) if (params.get("nl_warp_full") is not None) else None,
-        transformed=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("transformed")] if params.get("transformed") else None,
-        transformed_midway=[dyn_outputs(i["__STYXTYPE__"])(i, execution) if dyn_outputs(i["__STYXTYPE__"]) else None for i in params.get("transformed_midway")] if params.get("transformed_midway") else None,
-        nl_warp=dyn_outputs(params.get("nl_warp")["__STYXTYPE__"])(params.get("nl_warp"), execution) if params.get("nl_warp") else None,
+        transformed=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("transformed")] if params.get("transformed") else None,
+        transformed_midway=[dyn_outputs(i["@type"])(i, execution) if dyn_outputs(i["@type"]) else None for i in params.get("transformed_midway")] if params.get("transformed_midway") else None,
+        nl_warp=dyn_outputs(params.get("nl_warp")["@type"])(params.get("nl_warp"), execution) if params.get("nl_warp") else None,
     )
     return ret
 
@@ -1668,9 +1668,19 @@ __all__ = [
     "MrregisterTransformedOutputs",
     "MrregisterTransformedParameters",
     "mrregister",
+    "mrregister_cargs",
+    "mrregister_config_cargs",
     "mrregister_config_params",
+    "mrregister_execute",
+    "mrregister_nl_warp_cargs",
+    "mrregister_nl_warp_outputs",
     "mrregister_nl_warp_params",
+    "mrregister_outputs",
     "mrregister_params",
+    "mrregister_transformed_cargs",
+    "mrregister_transformed_midway_cargs",
+    "mrregister_transformed_midway_outputs",
     "mrregister_transformed_midway_params",
+    "mrregister_transformed_outputs",
     "mrregister_transformed_params",
 ]

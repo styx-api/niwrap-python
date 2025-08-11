@@ -14,7 +14,7 @@ MMPPSP_METADATA = Metadata(
 
 
 MmppspParameters = typing.TypedDict('MmppspParameters', {
-    "__STYXTYPE__": typing.Literal["mmppsp"],
+    "@type": typing.Literal["freesurfer.mmppsp"],
     "samseg_dir": str,
     "outdir": str,
     "lh_flag": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mmppsp": mmppsp_cargs,
+        "freesurfer.mmppsp": mmppsp_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mmppsp": mmppsp_outputs,
+        "freesurfer.mmppsp": mmppsp_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def mmppsp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mmppsp",
+        "@type": "freesurfer.mmppsp",
         "samseg_dir": samseg_dir,
         "outdir": outdir,
         "lh_flag": lh_flag,
@@ -283,5 +283,8 @@ __all__ = [
     "MmppspOutputs",
     "MmppspParameters",
     "mmppsp",
+    "mmppsp_cargs",
+    "mmppsp_execute",
+    "mmppsp_outputs",
     "mmppsp_params",
 ]

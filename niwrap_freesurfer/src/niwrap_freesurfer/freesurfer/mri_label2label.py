@@ -14,7 +14,7 @@ MRI_LABEL2LABEL_METADATA = Metadata(
 
 
 MriLabel2labelParameters = typing.TypedDict('MriLabel2labelParameters', {
-    "__STYXTYPE__": typing.Literal["mri_label2label"],
+    "@type": typing.Literal["freesurfer.mri_label2label"],
     "src_label": InputPathType,
     "trg_label": str,
     "erode": typing.NotRequired[float | None],
@@ -76,7 +76,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_label2label": mri_label2label_cargs,
+        "freesurfer.mri_label2label": mri_label2label_cargs,
     }.get(t)
 
 
@@ -206,7 +206,7 @@ def mri_label2label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_label2label",
+        "@type": "freesurfer.mri_label2label",
         "src_label": src_label,
         "trg_label": trg_label,
         "usepathfiles": usepathfiles,
@@ -736,5 +736,8 @@ __all__ = [
     "MriLabel2labelOutputs",
     "MriLabel2labelParameters",
     "mri_label2label",
+    "mri_label2label_cargs",
+    "mri_label2label_execute",
+    "mri_label2label_outputs",
     "mri_label2label_params",
 ]

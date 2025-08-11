@@ -14,7 +14,7 @@ FSLMEANTS_METADATA = Metadata(
 
 
 FslmeantsParameters = typing.TypedDict('FslmeantsParameters', {
-    "__STYXTYPE__": typing.Literal["fslmeants"],
+    "@type": typing.Literal["fsl.fslmeants"],
     "input_image": InputPathType,
     "output": typing.NotRequired[str | None],
     "mask": typing.NotRequired[InputPathType | None],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslmeants": fslmeants_cargs,
+        "fsl.fslmeants": fslmeants_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslmeants": fslmeants_outputs,
+        "fsl.fslmeants": fslmeants_outputs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def fslmeants_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslmeants",
+        "@type": "fsl.fslmeants",
         "input_image": input_image,
         "usemm_flag": usemm_flag,
         "showall_flag": showall_flag,
@@ -324,5 +324,8 @@ __all__ = [
     "FslmeantsOutputs",
     "FslmeantsParameters",
     "fslmeants",
+    "fslmeants_cargs",
+    "fslmeants_execute",
+    "fslmeants_outputs",
     "fslmeants_params",
 ]

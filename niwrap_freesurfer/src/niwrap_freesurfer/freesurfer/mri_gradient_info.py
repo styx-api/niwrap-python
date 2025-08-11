@@ -14,7 +14,7 @@ MRI_GRADIENT_INFO_METADATA = Metadata(
 
 
 MriGradientInfoParameters = typing.TypedDict('MriGradientInfoParameters', {
-    "__STYXTYPE__": typing.Literal["mri_gradient_info"],
+    "@type": typing.Literal["freesurfer.mri_gradient_info"],
     "input_image": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_gradient_info": mri_gradient_info_cargs,
+        "freesurfer.mri_gradient_info": mri_gradient_info_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_gradient_info": mri_gradient_info_outputs,
+        "freesurfer.mri_gradient_info": mri_gradient_info_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mri_gradient_info_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_gradient_info",
+        "@type": "freesurfer.mri_gradient_info",
         "input_image": input_image,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "MriGradientInfoOutputs",
     "MriGradientInfoParameters",
     "mri_gradient_info",
+    "mri_gradient_info_cargs",
+    "mri_gradient_info_execute",
+    "mri_gradient_info_outputs",
     "mri_gradient_info_params",
 ]

@@ -14,7 +14,7 @@ VOLUME_SMOOTHING_METADATA = Metadata(
 
 
 VolumeSmoothingParameters = typing.TypedDict('VolumeSmoothingParameters', {
-    "__STYXTYPE__": typing.Literal["volume-smoothing"],
+    "@type": typing.Literal["workbench.volume-smoothing"],
     "volume_in": InputPathType,
     "kernel": float,
     "volume_out": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-smoothing": volume_smoothing_cargs,
+        "workbench.volume-smoothing": volume_smoothing_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-smoothing": volume_smoothing_outputs,
+        "workbench.volume-smoothing": volume_smoothing_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def volume_smoothing_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-smoothing",
+        "@type": "workbench.volume-smoothing",
         "volume_in": volume_in,
         "kernel": kernel,
         "volume_out": volume_out,
@@ -263,5 +263,8 @@ __all__ = [
     "VolumeSmoothingOutputs",
     "VolumeSmoothingParameters",
     "volume_smoothing",
+    "volume_smoothing_cargs",
+    "volume_smoothing_execute",
+    "volume_smoothing_outputs",
     "volume_smoothing_params",
 ]

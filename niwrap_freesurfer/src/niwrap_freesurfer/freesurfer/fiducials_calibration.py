@@ -14,7 +14,7 @@ FIDUCIALS_CALIBRATION_METADATA = Metadata(
 
 
 FiducialsCalibrationParameters = typing.TypedDict('FiducialsCalibrationParameters', {
-    "__STYXTYPE__": typing.Literal["fiducials_calibration"],
+    "@type": typing.Literal["freesurfer.fiducials_calibration"],
     "qt_plugin_installation": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fiducials_calibration": fiducials_calibration_cargs,
+        "freesurfer.fiducials_calibration": fiducials_calibration_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def fiducials_calibration_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fiducials_calibration",
+        "@type": "freesurfer.fiducials_calibration",
     }
     if qt_plugin_installation is not None:
         params["qt_plugin_installation"] = qt_plugin_installation
@@ -174,5 +174,8 @@ __all__ = [
     "FiducialsCalibrationOutputs",
     "FiducialsCalibrationParameters",
     "fiducials_calibration",
+    "fiducials_calibration_cargs",
+    "fiducials_calibration_execute",
+    "fiducials_calibration_outputs",
     "fiducials_calibration_params",
 ]

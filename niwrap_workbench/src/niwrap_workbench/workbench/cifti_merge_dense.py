@@ -14,13 +14,13 @@ CIFTI_MERGE_DENSE_METADATA = Metadata(
 
 
 CiftiMergeDenseCiftiParameters = typing.TypedDict('CiftiMergeDenseCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti"],
+    "@type": typing.Literal["workbench.cifti-merge-dense.cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiMergeDenseParameters = typing.TypedDict('CiftiMergeDenseParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-merge-dense"],
+    "@type": typing.Literal["workbench.cifti-merge-dense"],
     "direction": str,
     "cifti_out": str,
     "opt_label_collision_action": typing.NotRequired[str | None],
@@ -40,8 +40,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-merge-dense": cifti_merge_dense_cargs,
-        "cifti": cifti_merge_dense_cifti_cargs,
+        "workbench.cifti-merge-dense": cifti_merge_dense_cargs,
+        "workbench.cifti-merge-dense.cifti": cifti_merge_dense_cifti_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-merge-dense": cifti_merge_dense_outputs,
+        "workbench.cifti-merge-dense": cifti_merge_dense_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def cifti_merge_dense_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti",
+        "@type": "workbench.cifti-merge-dense.cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -128,7 +128,7 @@ def cifti_merge_dense_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-merge-dense",
+        "@type": "workbench.cifti-merge-dense",
         "direction": direction,
         "cifti_out": cifti_out,
     }
@@ -163,7 +163,7 @@ def cifti_merge_dense_cargs(
             params.get("opt_label_collision_action")
         ])
     if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cifti")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
     return cargs
 
 
@@ -261,6 +261,10 @@ __all__ = [
     "CiftiMergeDenseOutputs",
     "CiftiMergeDenseParameters",
     "cifti_merge_dense",
+    "cifti_merge_dense_cargs",
+    "cifti_merge_dense_cifti_cargs",
     "cifti_merge_dense_cifti_params",
+    "cifti_merge_dense_execute",
+    "cifti_merge_dense_outputs",
     "cifti_merge_dense_params",
 ]

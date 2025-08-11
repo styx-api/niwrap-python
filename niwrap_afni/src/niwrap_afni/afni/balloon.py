@@ -14,7 +14,7 @@ BALLOON_METADATA = Metadata(
 
 
 BalloonParameters = typing.TypedDict('BalloonParameters', {
-    "__STYXTYPE__": typing.Literal["balloon"],
+    "@type": typing.Literal["afni.balloon"],
     "tr": float,
     "num_scans": int,
     "event_times": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "balloon": balloon_cargs,
+        "afni.balloon": balloon_cargs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def balloon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "balloon",
+        "@type": "afni.balloon",
         "tr": tr,
         "num_scans": num_scans,
         "event_times": event_times,
@@ -230,5 +230,8 @@ __all__ = [
     "BalloonOutputs",
     "BalloonParameters",
     "balloon",
+    "balloon_cargs",
+    "balloon_execute",
+    "balloon_outputs",
     "balloon_params",
 ]

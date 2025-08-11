@@ -14,7 +14,7 @@ V_3DNVALS_METADATA = Metadata(
 
 
 V3dnvalsParameters = typing.TypedDict('V3dnvalsParameters', {
-    "__STYXTYPE__": typing.Literal["3dnvals"],
+    "@type": typing.Literal["afni.3dnvals"],
     "datasets": list[InputPathType],
     "all_flag": bool,
     "verbose_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dnvals": v_3dnvals_cargs,
+        "afni.3dnvals": v_3dnvals_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def v_3dnvals_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dnvals",
+        "@type": "afni.3dnvals",
         "datasets": datasets,
         "all_flag": all_flag,
         "verbose_flag": verbose_flag,
@@ -186,5 +186,8 @@ __all__ = [
     "V3dnvalsParameters",
     "V_3DNVALS_METADATA",
     "v_3dnvals",
+    "v_3dnvals_cargs",
+    "v_3dnvals_execute",
+    "v_3dnvals_outputs",
     "v_3dnvals_params",
 ]

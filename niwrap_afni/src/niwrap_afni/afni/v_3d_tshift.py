@@ -14,7 +14,7 @@ V_3D_TSHIFT_METADATA = Metadata(
 
 
 V3dTshiftParameters = typing.TypedDict('V3dTshiftParameters', {
-    "__STYXTYPE__": typing.Literal["3dTshift"],
+    "@type": typing.Literal["afni.3dTshift"],
     "prefix": typing.NotRequired[str | None],
     "ignore": typing.NotRequired[int | None],
     "in_file": InputPathType,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTshift": v_3d_tshift_cargs,
+        "afni.3dTshift": v_3d_tshift_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTshift": v_3d_tshift_outputs,
+        "afni.3dTshift": v_3d_tshift_outputs,
     }.get(t)
 
 
@@ -122,7 +122,7 @@ def v_3d_tshift_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTshift",
+        "@type": "afni.3dTshift",
         "in_file": in_file,
         "rlt": rlt,
         "rltplus": rltplus,
@@ -338,5 +338,8 @@ __all__ = [
     "V3dTshiftParameters",
     "V_3D_TSHIFT_METADATA",
     "v_3d_tshift",
+    "v_3d_tshift_cargs",
+    "v_3d_tshift_execute",
+    "v_3d_tshift_outputs",
     "v_3d_tshift_params",
 ]

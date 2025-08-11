@@ -14,7 +14,7 @@ FFTEST_METADATA = Metadata(
 
 
 FftestParameters = typing.TypedDict('FftestParameters', {
-    "__STYXTYPE__": typing.Literal["fftest"],
+    "@type": typing.Literal["afni.fftest"],
     "length": float,
     "num_tests": float,
     "vector_size": float,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fftest": fftest_cargs,
+        "afni.fftest": fftest_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def fftest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fftest",
+        "@type": "afni.fftest",
         "length": length,
         "num_tests": num_tests,
         "vector_size": vector_size,
@@ -193,5 +193,8 @@ __all__ = [
     "FftestOutputs",
     "FftestParameters",
     "fftest",
+    "fftest_cargs",
+    "fftest_execute",
+    "fftest_outputs",
     "fftest_params",
 ]

@@ -14,7 +14,7 @@ V_3D_NWARP_FUNCS_METADATA = Metadata(
 
 
 V3dNwarpFuncsParameters = typing.TypedDict('V3dNwarpFuncsParameters', {
-    "__STYXTYPE__": typing.Literal["3dNwarpFuncs"],
+    "@type": typing.Literal["afni.3dNwarpFuncs"],
     "input_warp": InputPathType,
     "output_prefix": str,
     "bulk_flag": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dNwarpFuncs": v_3d_nwarp_funcs_cargs,
+        "afni.3dNwarpFuncs": v_3d_nwarp_funcs_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dNwarpFuncs": v_3d_nwarp_funcs_outputs,
+        "afni.3dNwarpFuncs": v_3d_nwarp_funcs_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_3d_nwarp_funcs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dNwarpFuncs",
+        "@type": "afni.3dNwarpFuncs",
         "input_warp": input_warp,
         "output_prefix": output_prefix,
         "bulk_flag": bulk_flag,
@@ -228,5 +228,8 @@ __all__ = [
     "V3dNwarpFuncsParameters",
     "V_3D_NWARP_FUNCS_METADATA",
     "v_3d_nwarp_funcs",
+    "v_3d_nwarp_funcs_cargs",
+    "v_3d_nwarp_funcs_execute",
+    "v_3d_nwarp_funcs_outputs",
     "v_3d_nwarp_funcs_params",
 ]

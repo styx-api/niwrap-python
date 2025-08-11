@@ -14,14 +14,14 @@ TRANSFORMCALC_METADATA = Metadata(
 
 
 TransformcalcConfigParameters = typing.TypedDict('TransformcalcConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.transformcalc.config"],
     "key": str,
     "value": str,
 })
 
 
 TransformcalcParameters = typing.TypedDict('TransformcalcParameters', {
-    "__STYXTYPE__": typing.Literal["transformcalc"],
+    "@type": typing.Literal["mrtrix.transformcalc"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "transformcalc": transformcalc_cargs,
-        "config": transformcalc_config_cargs,
+        "mrtrix.transformcalc": transformcalc_cargs,
+        "mrtrix.transformcalc.config": transformcalc_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "transformcalc": transformcalc_outputs,
+        "mrtrix.transformcalc": transformcalc_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def transformcalc_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.transformcalc.config",
         "key": key,
         "value": value,
     }
@@ -158,7 +158,7 @@ def transformcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transformcalc",
+        "@type": "mrtrix.transformcalc",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -205,7 +205,7 @@ def transformcalc_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -339,6 +339,10 @@ __all__ = [
     "TransformcalcOutputs",
     "TransformcalcParameters",
     "transformcalc",
+    "transformcalc_cargs",
+    "transformcalc_config_cargs",
     "transformcalc_config_params",
+    "transformcalc_execute",
+    "transformcalc_outputs",
     "transformcalc_params",
 ]

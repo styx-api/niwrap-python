@@ -14,7 +14,7 @@ MRI_FUSE_INTENSITY_IMAGES_METADATA = Metadata(
 
 
 MriFuseIntensityImagesParameters = typing.TypedDict('MriFuseIntensityImagesParameters', {
-    "__STYXTYPE__": typing.Literal["mri_fuse_intensity_images"],
+    "@type": typing.Literal["freesurfer.mri_fuse_intensity_images"],
     "longitudinal_time_point_file": InputPathType,
     "input_volume": InputPathType,
     "transform_file": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_fuse_intensity_images": mri_fuse_intensity_images_cargs,
+        "freesurfer.mri_fuse_intensity_images": mri_fuse_intensity_images_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_fuse_intensity_images": mri_fuse_intensity_images_outputs,
+        "freesurfer.mri_fuse_intensity_images": mri_fuse_intensity_images_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mri_fuse_intensity_images_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_fuse_intensity_images",
+        "@type": "freesurfer.mri_fuse_intensity_images",
         "longitudinal_time_point_file": longitudinal_time_point_file,
         "input_volume": input_volume,
         "transform_file": transform_file,
@@ -198,5 +198,8 @@ __all__ = [
     "MriFuseIntensityImagesOutputs",
     "MriFuseIntensityImagesParameters",
     "mri_fuse_intensity_images",
+    "mri_fuse_intensity_images_cargs",
+    "mri_fuse_intensity_images_execute",
+    "mri_fuse_intensity_images_outputs",
     "mri_fuse_intensity_images_params",
 ]

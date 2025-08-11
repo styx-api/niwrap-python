@@ -14,7 +14,7 @@ BORDER_EXPORT_COLOR_TABLE_METADATA = Metadata(
 
 
 BorderExportColorTableParameters = typing.TypedDict('BorderExportColorTableParameters', {
-    "__STYXTYPE__": typing.Literal["border-export-color-table"],
+    "@type": typing.Literal["workbench.border-export-color-table"],
     "border_file": InputPathType,
     "table_out": str,
     "opt_class_colors": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "border-export-color-table": border_export_color_table_cargs,
+        "workbench.border-export-color-table": border_export_color_table_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def border_export_color_table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "border-export-color-table",
+        "@type": "workbench.border-export-color-table",
         "border_file": border_file,
         "table_out": table_out,
         "opt_class_colors": opt_class_colors,
@@ -196,5 +196,8 @@ __all__ = [
     "BorderExportColorTableOutputs",
     "BorderExportColorTableParameters",
     "border_export_color_table",
+    "border_export_color_table_cargs",
+    "border_export_color_table_execute",
+    "border_export_color_table_outputs",
     "border_export_color_table_params",
 ]

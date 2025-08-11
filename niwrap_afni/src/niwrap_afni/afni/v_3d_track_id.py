@@ -14,7 +14,7 @@ V_3D_TRACK_ID_METADATA = Metadata(
 
 
 V3dTrackIdParameters = typing.TypedDict('V3dTrackIdParameters', {
-    "__STYXTYPE__": typing.Literal["3dTrackID"],
+    "@type": typing.Literal["afni.3dTrackID"],
     "mode": typing.Literal["DET", "MINIP", "PROB"],
     "netrois": InputPathType,
     "prefix": str,
@@ -74,7 +74,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTrackID": v_3d_track_id_cargs,
+        "afni.3dTrackID": v_3d_track_id_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTrackID": v_3d_track_id_outputs,
+        "afni.3dTrackID": v_3d_track_id_outputs,
     }.get(t)
 
 
@@ -228,7 +228,7 @@ def v_3d_track_id_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTrackID",
+        "@type": "afni.3dTrackID",
         "mode": mode,
         "netrois": netrois,
         "prefix": prefix,
@@ -624,5 +624,8 @@ __all__ = [
     "V3dTrackIdParameters",
     "V_3D_TRACK_ID_METADATA",
     "v_3d_track_id",
+    "v_3d_track_id_cargs",
+    "v_3d_track_id_execute",
+    "v_3d_track_id_outputs",
     "v_3d_track_id_params",
 ]

@@ -14,7 +14,7 @@ RESPONSEMEAN_METADATA = Metadata(
 
 
 ResponsemeanParameters = typing.TypedDict('ResponsemeanParameters', {
-    "__STYXTYPE__": typing.Literal["responsemean"],
+    "@type": typing.Literal["mrtrix.responsemean"],
     "input_response": list[InputPathType],
     "output_response": str,
     "legacy": bool,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "responsemean": responsemean_cargs,
+        "mrtrix.responsemean": responsemean_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "responsemean": responsemean_outputs,
+        "mrtrix.responsemean": responsemean_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def responsemean_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "responsemean",
+        "@type": "mrtrix.responsemean",
         "input_response": input_response,
         "output_response": output_response,
         "legacy": legacy,
@@ -312,5 +312,8 @@ __all__ = [
     "ResponsemeanOutputs",
     "ResponsemeanParameters",
     "responsemean",
+    "responsemean_cargs",
+    "responsemean_execute",
+    "responsemean_outputs",
     "responsemean_params",
 ]

@@ -14,7 +14,7 @@ MAP_TRACK_ID_METADATA = Metadata(
 
 
 MapTrackIdParameters = typing.TypedDict('MapTrackIdParameters', {
-    "__STYXTYPE__": typing.Literal["map_TrackID"],
+    "@type": typing.Literal["afni.map_TrackID"],
     "prefix": str,
     "in_trk": InputPathType,
     "in_map": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "map_TrackID": map_track_id_cargs,
+        "afni.map_TrackID": map_track_id_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "map_TrackID": map_track_id_outputs,
+        "afni.map_TrackID": map_track_id_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def map_track_id_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "map_TrackID",
+        "@type": "afni.map_TrackID",
         "prefix": prefix,
         "in_trk": in_trk,
         "in_map": in_map,
@@ -250,5 +250,8 @@ __all__ = [
     "MapTrackIdOutputs",
     "MapTrackIdParameters",
     "map_track_id",
+    "map_track_id_cargs",
+    "map_track_id_execute",
+    "map_track_id_outputs",
     "map_track_id_params",
 ]

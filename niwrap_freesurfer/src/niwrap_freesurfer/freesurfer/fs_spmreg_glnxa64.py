@@ -14,7 +14,7 @@ FS_SPMREG_GLNXA64_METADATA = Metadata(
 
 
 FsSpmregGlnxa64Parameters = typing.TypedDict('FsSpmregGlnxa64Parameters', {
-    "__STYXTYPE__": typing.Literal["fs_spmreg.glnxa64"],
+    "@type": typing.Literal["freesurfer.fs_spmreg.glnxa64"],
     "input_volume": InputPathType,
     "output_matrix": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fs_spmreg.glnxa64": fs_spmreg_glnxa64_cargs,
+        "freesurfer.fs_spmreg.glnxa64": fs_spmreg_glnxa64_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fs_spmreg.glnxa64": fs_spmreg_glnxa64_outputs,
+        "freesurfer.fs_spmreg.glnxa64": fs_spmreg_glnxa64_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fs_spmreg_glnxa64_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fs_spmreg.glnxa64",
+        "@type": "freesurfer.fs_spmreg.glnxa64",
         "input_volume": input_volume,
         "output_matrix": output_matrix,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "FsSpmregGlnxa64Outputs",
     "FsSpmregGlnxa64Parameters",
     "fs_spmreg_glnxa64",
+    "fs_spmreg_glnxa64_cargs",
+    "fs_spmreg_glnxa64_execute",
+    "fs_spmreg_glnxa64_outputs",
     "fs_spmreg_glnxa64_params",
 ]

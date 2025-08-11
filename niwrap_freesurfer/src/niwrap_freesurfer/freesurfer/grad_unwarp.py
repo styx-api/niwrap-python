@@ -14,7 +14,7 @@ GRAD_UNWARP_METADATA = Metadata(
 
 
 GradUnwarpParameters = typing.TypedDict('GradUnwarpParameters', {
-    "__STYXTYPE__": typing.Literal["grad_unwarp"],
+    "@type": typing.Literal["freesurfer.grad_unwarp"],
     "infile": InputPathType,
     "seriesno": typing.NotRequired[str | None],
     "unwarp_type": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "grad_unwarp": grad_unwarp_cargs,
+        "freesurfer.grad_unwarp": grad_unwarp_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "grad_unwarp": grad_unwarp_outputs,
+        "freesurfer.grad_unwarp": grad_unwarp_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def grad_unwarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "grad_unwarp",
+        "@type": "freesurfer.grad_unwarp",
         "infile": infile,
         "nojac": nojac,
         "corfov": corfov,
@@ -269,5 +269,8 @@ __all__ = [
     "GradUnwarpOutputs",
     "GradUnwarpParameters",
     "grad_unwarp",
+    "grad_unwarp_cargs",
+    "grad_unwarp_execute",
+    "grad_unwarp_outputs",
     "grad_unwarp_params",
 ]

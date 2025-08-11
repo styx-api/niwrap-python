@@ -14,7 +14,7 @@ SWE_METADATA = Metadata(
 
 
 SweParameters = typing.TypedDict('SweParameters', {
-    "__STYXTYPE__": typing.Literal["swe"],
+    "@type": typing.Literal["fsl.swe"],
     "input_file": InputPathType,
     "output_root": str,
     "design_mat": InputPathType,
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "swe": swe_cargs,
+        "fsl.swe": swe_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "swe": swe_outputs,
+        "fsl.swe": swe_outputs,
     }.get(t)
 
 
@@ -198,7 +198,7 @@ def swe_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "swe",
+        "@type": "fsl.swe",
         "input_file": input_file,
         "output_root": output_root,
         "design_mat": design_mat,
@@ -581,5 +581,8 @@ __all__ = [
     "SweOutputs",
     "SweParameters",
     "swe",
+    "swe_cargs",
+    "swe_execute",
+    "swe_outputs",
     "swe_params",
 ]

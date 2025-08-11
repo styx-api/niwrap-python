@@ -14,7 +14,7 @@ TBSS_2_REG_METADATA = Metadata(
 
 
 Tbss2RegParameters = typing.TypedDict('Tbss2RegParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_2_reg"],
+    "@type": typing.Literal["fsl.tbss_2_reg"],
     "use_fmrib58_fa_1mm": bool,
     "target_image": typing.NotRequired[InputPathType | None],
     "find_best_target": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_2_reg": tbss_2_reg_cargs,
+        "fsl.tbss_2_reg": tbss_2_reg_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def tbss_2_reg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_2_reg",
+        "@type": "fsl.tbss_2_reg",
         "use_fmrib58_fa_1mm": use_fmrib58_fa_1mm,
         "find_best_target": find_best_target,
     }
@@ -197,5 +197,8 @@ __all__ = [
     "Tbss2RegOutputs",
     "Tbss2RegParameters",
     "tbss_2_reg",
+    "tbss_2_reg_cargs",
+    "tbss_2_reg_execute",
+    "tbss_2_reg_outputs",
     "tbss_2_reg_params",
 ]

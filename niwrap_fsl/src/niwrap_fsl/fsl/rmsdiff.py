@@ -14,7 +14,7 @@ RMSDIFF_METADATA = Metadata(
 
 
 RmsdiffParameters = typing.TypedDict('RmsdiffParameters', {
-    "__STYXTYPE__": typing.Literal["rmsdiff"],
+    "@type": typing.Literal["fsl.rmsdiff"],
     "matrixfile1": InputPathType,
     "matrixfile2": InputPathType,
     "refvol": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rmsdiff": rmsdiff_cargs,
+        "fsl.rmsdiff": rmsdiff_cargs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def rmsdiff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rmsdiff",
+        "@type": "fsl.rmsdiff",
         "matrixfile1": matrixfile1,
         "matrixfile2": matrixfile2,
         "refvol": refvol,
@@ -194,5 +194,8 @@ __all__ = [
     "RmsdiffOutputs",
     "RmsdiffParameters",
     "rmsdiff",
+    "rmsdiff_cargs",
+    "rmsdiff_execute",
+    "rmsdiff_outputs",
     "rmsdiff_params",
 ]

@@ -14,7 +14,7 @@ MRI_GLMFIT_METADATA = Metadata(
 
 
 MriGlmfitParameters = typing.TypedDict('MriGlmfitParameters', {
-    "__STYXTYPE__": typing.Literal["mri_glmfit"],
+    "@type": typing.Literal["freesurfer.mri_glmfit"],
     "glmdir": typing.NotRequired[str | None],
     "y_input": InputPathType,
     "table_input": typing.NotRequired[InputPathType | None],
@@ -102,7 +102,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_glmfit": mri_glmfit_cargs,
+        "freesurfer.mri_glmfit": mri_glmfit_cargs,
     }.get(t)
 
 
@@ -118,7 +118,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_glmfit": mri_glmfit_outputs,
+        "freesurfer.mri_glmfit": mri_glmfit_outputs,
     }.get(t)
 
 
@@ -327,7 +327,7 @@ def mri_glmfit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_glmfit",
+        "@type": "freesurfer.mri_glmfit",
         "y_input": y_input,
         "osgm_flag": osgm_flag,
         "no_contrasts_ok_flag": no_contrasts_ok_flag,
@@ -1019,5 +1019,8 @@ __all__ = [
     "MriGlmfitOutputs",
     "MriGlmfitParameters",
     "mri_glmfit",
+    "mri_glmfit_cargs",
+    "mri_glmfit_execute",
+    "mri_glmfit_outputs",
     "mri_glmfit_params",
 ]

@@ -14,7 +14,7 @@ CIFTI_TOOL_METADATA = Metadata(
 
 
 CiftiToolParameters = typing.TypedDict('CiftiToolParameters', {
-    "__STYXTYPE__": typing.Literal["cifti_tool"],
+    "@type": typing.Literal["afni.cifti_tool"],
     "input_file": InputPathType,
     "as_cext": bool,
     "disp_cext": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti_tool": cifti_tool_cargs,
+        "afni.cifti_tool": cifti_tool_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti_tool": cifti_tool_outputs,
+        "afni.cifti_tool": cifti_tool_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def cifti_tool_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti_tool",
+        "@type": "afni.cifti_tool",
         "input_file": input_file,
         "as_cext": as_cext,
         "disp_cext": disp_cext,
@@ -267,5 +267,8 @@ __all__ = [
     "CiftiToolOutputs",
     "CiftiToolParameters",
     "cifti_tool",
+    "cifti_tool_cargs",
+    "cifti_tool_execute",
+    "cifti_tool_outputs",
     "cifti_tool_params",
 ]

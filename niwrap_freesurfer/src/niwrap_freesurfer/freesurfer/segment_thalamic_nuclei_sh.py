@@ -14,7 +14,7 @@ SEGMENT_THALAMIC_NUCLEI_SH_METADATA = Metadata(
 
 
 SegmentThalamicNucleiShParameters = typing.TypedDict('SegmentThalamicNucleiShParameters', {
-    "__STYXTYPE__": typing.Literal["segmentThalamicNuclei.sh"],
+    "@type": typing.Literal["freesurfer.segmentThalamicNuclei.sh"],
     "subject_id": str,
     "output_dir": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segmentThalamicNuclei.sh": segment_thalamic_nuclei_sh_cargs,
+        "freesurfer.segmentThalamicNuclei.sh": segment_thalamic_nuclei_sh_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segmentThalamicNuclei.sh": segment_thalamic_nuclei_sh_outputs,
+        "freesurfer.segmentThalamicNuclei.sh": segment_thalamic_nuclei_sh_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def segment_thalamic_nuclei_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segmentThalamicNuclei.sh",
+        "@type": "freesurfer.segmentThalamicNuclei.sh",
         "subject_id": subject_id,
         "output_dir": output_dir,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "SegmentThalamicNucleiShOutputs",
     "SegmentThalamicNucleiShParameters",
     "segment_thalamic_nuclei_sh",
+    "segment_thalamic_nuclei_sh_cargs",
+    "segment_thalamic_nuclei_sh_execute",
+    "segment_thalamic_nuclei_sh_outputs",
     "segment_thalamic_nuclei_sh_params",
 ]

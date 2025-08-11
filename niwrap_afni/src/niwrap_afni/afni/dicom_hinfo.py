@@ -14,7 +14,7 @@ DICOM_HINFO_METADATA = Metadata(
 
 
 DicomHinfoParameters = typing.TypedDict('DicomHinfoParameters', {
-    "__STYXTYPE__": typing.Literal["dicom_hinfo"],
+    "@type": typing.Literal["afni.dicom_hinfo"],
     "tag": list[str],
     "sepstr": typing.NotRequired[str | None],
     "full_entry": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dicom_hinfo": dicom_hinfo_cargs,
+        "afni.dicom_hinfo": dicom_hinfo_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def dicom_hinfo_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dicom_hinfo",
+        "@type": "afni.dicom_hinfo",
         "tag": tag,
         "full_entry": full_entry,
         "no_name": no_name,
@@ -223,5 +223,8 @@ __all__ = [
     "DicomHinfoOutputs",
     "DicomHinfoParameters",
     "dicom_hinfo",
+    "dicom_hinfo_cargs",
+    "dicom_hinfo_execute",
+    "dicom_hinfo_outputs",
     "dicom_hinfo_params",
 ]

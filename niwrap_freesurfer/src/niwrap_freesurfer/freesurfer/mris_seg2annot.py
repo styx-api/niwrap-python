@@ -14,7 +14,7 @@ MRIS_SEG2ANNOT_METADATA = Metadata(
 
 
 MrisSeg2annotParameters = typing.TypedDict('MrisSeg2annotParameters', {
-    "__STYXTYPE__": typing.Literal["mris_seg2annot"],
+    "@type": typing.Literal["freesurfer.mris_seg2annot"],
     "surfseg": InputPathType,
     "colortable": typing.NotRequired[InputPathType | None],
     "auto_ctab": typing.NotRequired[str | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_seg2annot": mris_seg2annot_cargs,
+        "freesurfer.mris_seg2annot": mris_seg2annot_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_seg2annot": mris_seg2annot_outputs,
+        "freesurfer.mris_seg2annot": mris_seg2annot_outputs,
     }.get(t)
 
 
@@ -105,7 +105,7 @@ def mris_seg2annot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_seg2annot",
+        "@type": "freesurfer.mris_seg2annot",
         "surfseg": surfseg,
         "subject": subject,
         "hemi": hemi,
@@ -291,5 +291,8 @@ __all__ = [
     "MrisSeg2annotOutputs",
     "MrisSeg2annotParameters",
     "mris_seg2annot",
+    "mris_seg2annot_cargs",
+    "mris_seg2annot_execute",
+    "mris_seg2annot_outputs",
     "mris_seg2annot_params",
 ]

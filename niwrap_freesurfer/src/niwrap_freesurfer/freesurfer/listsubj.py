@@ -14,7 +14,7 @@ LISTSUBJ_METADATA = Metadata(
 
 
 ListsubjParameters = typing.TypedDict('ListsubjParameters', {
-    "__STYXTYPE__": typing.Literal["listsubj"],
+    "@type": typing.Literal["freesurfer.listsubj"],
     "subject_dir": str,
     "cross": bool,
     "base": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "listsubj": listsubj_cargs,
+        "freesurfer.listsubj": listsubj_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def listsubj_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "listsubj",
+        "@type": "freesurfer.listsubj",
         "subject_dir": subject_dir,
         "cross": cross,
         "base": base,
@@ -249,5 +249,8 @@ __all__ = [
     "ListsubjOutputs",
     "ListsubjParameters",
     "listsubj",
+    "listsubj_cargs",
+    "listsubj_execute",
+    "listsubj_outputs",
     "listsubj_params",
 ]

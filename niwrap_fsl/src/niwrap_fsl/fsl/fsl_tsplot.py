@@ -14,7 +14,7 @@ FSL_TSPLOT_METADATA = Metadata(
 
 
 FslTsplotParameters = typing.TypedDict('FslTsplotParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_tsplot"],
+    "@type": typing.Literal["fsl.fsl_tsplot"],
     "input_files": str,
     "output_file": str,
     "title": typing.NotRequired[str | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_tsplot": fsl_tsplot_cargs,
+        "fsl.fsl_tsplot": fsl_tsplot_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_tsplot": fsl_tsplot_outputs,
+        "fsl.fsl_tsplot": fsl_tsplot_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def fsl_tsplot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_tsplot",
+        "@type": "fsl.fsl_tsplot",
         "input_files": input_files,
         "output_file": output_file,
         "sci_flag": sci_flag,
@@ -366,5 +366,8 @@ __all__ = [
     "FslTsplotOutputs",
     "FslTsplotParameters",
     "fsl_tsplot",
+    "fsl_tsplot_cargs",
+    "fsl_tsplot_execute",
+    "fsl_tsplot_outputs",
     "fsl_tsplot_params",
 ]

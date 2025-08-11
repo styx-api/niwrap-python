@@ -14,7 +14,7 @@ MAKE_RANDOM_TIMING_PY_METADATA = Metadata(
 
 
 MakeRandomTimingPyParameters = typing.TypedDict('MakeRandomTimingPyParameters', {
-    "__STYXTYPE__": typing.Literal["make_random_timing.py"],
+    "@type": typing.Literal["afni.make_random_timing.py"],
     "num_runs": float,
     "run_time": list[float],
     "num_stim": float,
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_random_timing.py": make_random_timing_py_cargs,
+        "afni.make_random_timing.py": make_random_timing_py_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_random_timing.py": make_random_timing_py_outputs,
+        "afni.make_random_timing.py": make_random_timing_py_outputs,
     }.get(t)
 
 
@@ -145,7 +145,7 @@ def make_random_timing_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_random_timing.py",
+        "@type": "afni.make_random_timing.py",
         "num_runs": num_runs,
         "run_time": run_time,
         "num_stim": num_stim,
@@ -467,5 +467,8 @@ __all__ = [
     "MakeRandomTimingPyOutputs",
     "MakeRandomTimingPyParameters",
     "make_random_timing_py",
+    "make_random_timing_py_cargs",
+    "make_random_timing_py_execute",
+    "make_random_timing_py_outputs",
     "make_random_timing_py_params",
 ]

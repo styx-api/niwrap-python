@@ -14,7 +14,7 @@ MRIS_SEGMENT_METADATA = Metadata(
 
 
 MrisSegmentParameters = typing.TypedDict('MrisSegmentParameters', {
-    "__STYXTYPE__": typing.Literal["mris_segment"],
+    "@type": typing.Literal["freesurfer.mris_segment"],
     "subjects": list[str],
     "output_subject": str,
     "output_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_segment": mris_segment_cargs,
+        "freesurfer.mris_segment": mris_segment_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_segment": mris_segment_outputs,
+        "freesurfer.mris_segment": mris_segment_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mris_segment_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_segment",
+        "@type": "freesurfer.mris_segment",
         "subjects": subjects,
         "output_subject": output_subject,
         "output_file": output_file,
@@ -188,5 +188,8 @@ __all__ = [
     "MrisSegmentOutputs",
     "MrisSegmentParameters",
     "mris_segment",
+    "mris_segment_cargs",
+    "mris_segment_execute",
+    "mris_segment_outputs",
     "mris_segment_params",
 ]

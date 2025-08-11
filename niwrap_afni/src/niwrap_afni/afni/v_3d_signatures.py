@@ -14,7 +14,7 @@ V_3D_SIGNATURES_METADATA = Metadata(
 
 
 V3dSignaturesParameters = typing.TypedDict('V3dSignaturesParameters', {
-    "__STYXTYPE__": typing.Literal["3dSignatures"],
+    "@type": typing.Literal["afni.3dSignatures"],
     "infile": InputPathType,
     "outfile": str,
     "segmentation": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSignatures": v_3d_signatures_cargs,
+        "afni.3dSignatures": v_3d_signatures_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSignatures": v_3d_signatures_outputs,
+        "afni.3dSignatures": v_3d_signatures_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def v_3d_signatures_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSignatures",
+        "@type": "afni.3dSignatures",
         "infile": infile,
         "outfile": outfile,
         "segmentation": segmentation,
@@ -226,5 +226,8 @@ __all__ = [
     "V3dSignaturesParameters",
     "V_3D_SIGNATURES_METADATA",
     "v_3d_signatures",
+    "v_3d_signatures_cargs",
+    "v_3d_signatures_execute",
+    "v_3d_signatures_outputs",
     "v_3d_signatures_params",
 ]

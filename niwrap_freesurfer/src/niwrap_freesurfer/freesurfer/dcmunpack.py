@@ -14,7 +14,7 @@ DCMUNPACK_METADATA = Metadata(
 
 
 DcmunpackParameters = typing.TypedDict('DcmunpackParameters', {
-    "__STYXTYPE__": typing.Literal["dcmunpack"],
+    "@type": typing.Literal["freesurfer.dcmunpack"],
     "src": str,
     "targ": typing.NotRequired[str | None],
     "run": typing.NotRequired[str | None],
@@ -68,7 +68,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcmunpack": dcmunpack_cargs,
+        "freesurfer.dcmunpack": dcmunpack_cargs,
     }.get(t)
 
 
@@ -189,7 +189,7 @@ def dcmunpack_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcmunpack",
+        "@type": "freesurfer.dcmunpack",
         "src": src,
         "keep_scouts": keep_scouts,
         "one_per_dir": one_per_dir,
@@ -590,5 +590,8 @@ __all__ = [
     "DcmunpackOutputs",
     "DcmunpackParameters",
     "dcmunpack",
+    "dcmunpack_cargs",
+    "dcmunpack_execute",
+    "dcmunpack_outputs",
     "dcmunpack_params",
 ]

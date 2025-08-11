@@ -14,7 +14,7 @@ ISNIFTI_METADATA = Metadata(
 
 
 IsniftiParameters = typing.TypedDict('IsniftiParameters', {
-    "__STYXTYPE__": typing.Literal["isnifti"],
+    "@type": typing.Literal["freesurfer.isnifti"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "isnifti": isnifti_cargs,
+        "freesurfer.isnifti": isnifti_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def isnifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "isnifti",
+        "@type": "freesurfer.isnifti",
         "infile": infile,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "IsniftiOutputs",
     "IsniftiParameters",
     "isnifti",
+    "isnifti_cargs",
+    "isnifti_execute",
+    "isnifti_outputs",
     "isnifti_params",
 ]

@@ -14,7 +14,7 @@ MRI_RF_LABEL_METADATA = Metadata(
 
 
 MriRfLabelParameters = typing.TypedDict('MriRfLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mri_rf_label"],
+    "@type": typing.Literal["freesurfer.mri_rf_label"],
     "input_volumes": list[InputPathType],
     "transform_file": InputPathType,
     "gcafile": InputPathType,
@@ -70,7 +70,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_rf_label": mri_rf_label_cargs,
+        "freesurfer.mri_rf_label": mri_rf_label_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_rf_label": mri_rf_label_outputs,
+        "freesurfer.mri_rf_label": mri_rf_label_outputs,
     }.get(t)
 
 
@@ -194,7 +194,7 @@ def mri_rf_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_rf_label",
+        "@type": "freesurfer.mri_rf_label",
         "input_volumes": input_volumes,
         "transform_file": transform_file,
         "gcafile": gcafile,
@@ -637,5 +637,8 @@ __all__ = [
     "MriRfLabelOutputs",
     "MriRfLabelParameters",
     "mri_rf_label",
+    "mri_rf_label_cargs",
+    "mri_rf_label_execute",
+    "mri_rf_label_outputs",
     "mri_rf_label_params",
 ]

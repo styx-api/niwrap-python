@@ -14,7 +14,7 @@ CREATE_DISPLACEMENT_FIELD_METADATA = Metadata(
 
 
 CreateDisplacementFieldParameters = typing.TypedDict('CreateDisplacementFieldParameters', {
-    "__STYXTYPE__": typing.Literal["CreateDisplacementField"],
+    "@type": typing.Literal["ants.CreateDisplacementField"],
     "image_dimension": int,
     "enforce_zero_boundary_flag": typing.Literal[0, 1],
     "component_images": list[InputPathType],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "CreateDisplacementField": create_displacement_field_cargs,
+        "ants.CreateDisplacementField": create_displacement_field_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "CreateDisplacementField": create_displacement_field_outputs,
+        "ants.CreateDisplacementField": create_displacement_field_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def create_displacement_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "CreateDisplacementField",
+        "@type": "ants.CreateDisplacementField",
         "image_dimension": image_dimension,
         "enforce_zero_boundary_flag": enforce_zero_boundary_flag,
         "component_images": component_images,
@@ -219,5 +219,8 @@ __all__ = [
     "CreateDisplacementFieldOutputs",
     "CreateDisplacementFieldParameters",
     "create_displacement_field",
+    "create_displacement_field_cargs",
+    "create_displacement_field_execute",
+    "create_displacement_field_outputs",
     "create_displacement_field_params",
 ]

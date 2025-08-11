@@ -14,7 +14,7 @@ MRI_EASYWARP_METADATA = Metadata(
 
 
 MriEasywarpParameters = typing.TypedDict('MriEasywarpParameters', {
-    "__STYXTYPE__": typing.Literal["mri_easywarp"],
+    "@type": typing.Literal["freesurfer.mri_easywarp"],
     "input_image": InputPathType,
     "output_image": str,
     "deformation_field": typing.NotRequired[InputPathType | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_easywarp": mri_easywarp_cargs,
+        "freesurfer.mri_easywarp": mri_easywarp_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_easywarp": mri_easywarp_outputs,
+        "freesurfer.mri_easywarp": mri_easywarp_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def mri_easywarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_easywarp",
+        "@type": "freesurfer.mri_easywarp",
         "input_image": input_image,
         "output_image": output_image,
         "nearest_neighbor": nearest_neighbor,
@@ -225,5 +225,8 @@ __all__ = [
     "MriEasywarpOutputs",
     "MriEasywarpParameters",
     "mri_easywarp",
+    "mri_easywarp_cargs",
+    "mri_easywarp_execute",
+    "mri_easywarp_outputs",
     "mri_easywarp_params",
 ]

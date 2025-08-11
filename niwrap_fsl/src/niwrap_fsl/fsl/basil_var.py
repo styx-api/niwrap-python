@@ -14,7 +14,7 @@ BASIL_VAR_METADATA = Metadata(
 
 
 BasilVarParameters = typing.TypedDict('BasilVarParameters', {
-    "__STYXTYPE__": typing.Literal["basil_var"],
+    "@type": typing.Literal["fsl.basil_var"],
     "results_dir": str,
     "mask_image": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "basil_var": basil_var_cargs,
+        "fsl.basil_var": basil_var_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def basil_var_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "basil_var",
+        "@type": "fsl.basil_var",
         "results_dir": results_dir,
         "mask_image": mask_image,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "BasilVarOutputs",
     "BasilVarParameters",
     "basil_var",
+    "basil_var_cargs",
+    "basil_var_execute",
+    "basil_var_outputs",
     "basil_var_params",
 ]

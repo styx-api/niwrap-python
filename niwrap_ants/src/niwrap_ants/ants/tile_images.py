@@ -14,7 +14,7 @@ TILE_IMAGES_METADATA = Metadata(
 
 
 TileImagesParameters = typing.TypedDict('TileImagesParameters', {
-    "__STYXTYPE__": typing.Literal["TileImages"],
+    "@type": typing.Literal["ants.TileImages"],
     "image_dimension": int,
     "output_image": str,
     "layout": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "TileImages": tile_images_cargs,
+        "ants.TileImages": tile_images_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "TileImages": tile_images_outputs,
+        "ants.TileImages": tile_images_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def tile_images_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "TileImages",
+        "@type": "ants.TileImages",
         "image_dimension": image_dimension,
         "output_image": output_image,
         "layout": layout,
@@ -206,5 +206,8 @@ __all__ = [
     "TileImagesOutputs",
     "TileImagesParameters",
     "tile_images",
+    "tile_images_cargs",
+    "tile_images_execute",
+    "tile_images_outputs",
     "tile_images_params",
 ]

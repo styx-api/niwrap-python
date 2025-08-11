@@ -14,7 +14,7 @@ ESTNOISE_METADATA = Metadata(
 
 
 EstnoiseParameters = typing.TypedDict('EstnoiseParameters', {
-    "__STYXTYPE__": typing.Literal["estnoise"],
+    "@type": typing.Literal["fsl.estnoise"],
     "input_4d_data": InputPathType,
     "spatial_sigma": typing.NotRequired[float | None],
     "temp_hp_sigma": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "estnoise": estnoise_cargs,
+        "fsl.estnoise": estnoise_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "estnoise": estnoise_outputs,
+        "fsl.estnoise": estnoise_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def estnoise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "estnoise",
+        "@type": "fsl.estnoise",
         "input_4d_data": input_4d_data,
     }
     if spatial_sigma is not None:
@@ -202,5 +202,8 @@ __all__ = [
     "EstnoiseOutputs",
     "EstnoiseParameters",
     "estnoise",
+    "estnoise_cargs",
+    "estnoise_execute",
+    "estnoise_outputs",
     "estnoise_params",
 ]

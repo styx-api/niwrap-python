@@ -14,7 +14,7 @@ FIX_SUBJECT_METADATA = Metadata(
 
 
 FixSubjectParameters = typing.TypedDict('FixSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["fix_subject"],
+    "@type": typing.Literal["freesurfer.fix_subject"],
     "arguments": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fix_subject": fix_subject_cargs,
+        "freesurfer.fix_subject": fix_subject_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def fix_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fix_subject",
+        "@type": "freesurfer.fix_subject",
     }
     if arguments is not None:
         params["arguments"] = arguments
@@ -174,5 +174,8 @@ __all__ = [
     "FixSubjectOutputs",
     "FixSubjectParameters",
     "fix_subject",
+    "fix_subject_cargs",
+    "fix_subject_execute",
+    "fix_subject_outputs",
     "fix_subject_params",
 ]

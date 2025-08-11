@@ -14,7 +14,7 @@ BIASFIELD_METADATA = Metadata(
 
 
 BiasfieldParameters = typing.TypedDict('BiasfieldParameters', {
-    "__STYXTYPE__": typing.Literal["biasfield"],
+    "@type": typing.Literal["freesurfer.biasfield"],
     "subject": str,
     "tmpdir": typing.NotRequired[str | None],
     "no_cleanup": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "biasfield": biasfield_cargs,
+        "freesurfer.biasfield": biasfield_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "biasfield": biasfield_outputs,
+        "freesurfer.biasfield": biasfield_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def biasfield_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "biasfield",
+        "@type": "freesurfer.biasfield",
         "subject": subject,
         "no_cleanup": no_cleanup,
         "help": help_,
@@ -227,5 +227,8 @@ __all__ = [
     "BiasfieldOutputs",
     "BiasfieldParameters",
     "biasfield",
+    "biasfield_cargs",
+    "biasfield_execute",
+    "biasfield_outputs",
     "biasfield_params",
 ]

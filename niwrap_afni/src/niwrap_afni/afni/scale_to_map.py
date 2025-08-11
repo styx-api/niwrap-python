@@ -14,14 +14,14 @@ SCALE_TO_MAP_METADATA = Metadata(
 
 
 ScaleToMapTraceParameters = typing.TypedDict('ScaleToMapTraceParameters', {
-    "__STYXTYPE__": typing.Literal["trace"],
+    "@type": typing.Literal["afni.ScaleToMap.trace"],
     "trace": bool,
     "TRACE": bool,
 })
 
 
 ScaleToMapParameters = typing.TypedDict('ScaleToMapParameters', {
-    "__STYXTYPE__": typing.Literal["ScaleToMap"],
+    "@type": typing.Literal["afni.ScaleToMap"],
     "input_file": InputPathType,
     "icol": float,
     "vcol": float,
@@ -66,8 +66,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ScaleToMap": scale_to_map_cargs,
-        "trace": scale_to_map_trace_cargs,
+        "afni.ScaleToMap": scale_to_map_cargs,
+        "afni.ScaleToMap.trace": scale_to_map_trace_cargs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def scale_to_map_trace_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "trace",
+        "@type": "afni.ScaleToMap.trace",
         "trace": trace_,
         "TRACE": trace_2,
     }
@@ -209,7 +209,7 @@ def scale_to_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ScaleToMap",
+        "@type": "afni.ScaleToMap",
         "input_file": input_file,
         "icol": icol,
         "vcol": vcol,
@@ -353,7 +353,7 @@ def scale_to_map_cargs(
             params.get("setenv")
         ])
     if params.get("trace") is not None:
-        cargs.extend(dyn_cargs(params.get("trace")["__STYXTYPE__"])(params.get("trace"), execution))
+        cargs.extend(dyn_cargs(params.get("trace")["@type"])(params.get("trace"), execution))
     if params.get("nomall"):
         cargs.append("-nomall")
     if params.get("yesmall"):
@@ -523,6 +523,10 @@ __all__ = [
     "ScaleToMapParameters",
     "ScaleToMapTraceParameters",
     "scale_to_map",
+    "scale_to_map_cargs",
+    "scale_to_map_execute",
+    "scale_to_map_outputs",
     "scale_to_map_params",
+    "scale_to_map_trace_cargs",
     "scale_to_map_trace_params",
 ]

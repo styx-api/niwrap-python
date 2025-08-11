@@ -14,7 +14,7 @@ V_3D_BLUR_IN_MASK_METADATA = Metadata(
 
 
 V3dBlurInMaskParameters = typing.TypedDict('V3dBlurInMaskParameters', {
-    "__STYXTYPE__": typing.Literal["3dBlurInMask"],
+    "@type": typing.Literal["afni.3dBlurInMask"],
     "input_file": InputPathType,
     "output_prefix": str,
     "fwhm": float,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dBlurInMask": v_3d_blur_in_mask_cargs,
+        "afni.3dBlurInMask": v_3d_blur_in_mask_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dBlurInMask": v_3d_blur_in_mask_outputs,
+        "afni.3dBlurInMask": v_3d_blur_in_mask_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def v_3d_blur_in_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dBlurInMask",
+        "@type": "afni.3dBlurInMask",
         "input_file": input_file,
         "output_prefix": output_prefix,
         "fwhm": fwhm,
@@ -287,5 +287,8 @@ __all__ = [
     "V3dBlurInMaskParameters",
     "V_3D_BLUR_IN_MASK_METADATA",
     "v_3d_blur_in_mask",
+    "v_3d_blur_in_mask_cargs",
+    "v_3d_blur_in_mask_execute",
+    "v_3d_blur_in_mask_outputs",
     "v_3d_blur_in_mask_params",
 ]

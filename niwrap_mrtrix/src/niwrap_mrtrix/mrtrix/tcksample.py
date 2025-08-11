@@ -14,14 +14,14 @@ TCKSAMPLE_METADATA = Metadata(
 
 
 TcksampleConfigParameters = typing.TypedDict('TcksampleConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tcksample.config"],
     "key": str,
     "value": str,
 })
 
 
 TcksampleParameters = typing.TypedDict('TcksampleParameters', {
-    "__STYXTYPE__": typing.Literal["tcksample"],
+    "@type": typing.Literal["mrtrix.tcksample"],
     "stat_tck": typing.NotRequired[str | None],
     "nointerp": bool,
     "precise": bool,
@@ -52,8 +52,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tcksample": tcksample_cargs,
-        "config": tcksample_config_cargs,
+        "mrtrix.tcksample": tcksample_cargs,
+        "mrtrix.tcksample.config": tcksample_config_cargs,
     }.get(t)
 
 
@@ -69,7 +69,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tcksample": tcksample_outputs,
+        "mrtrix.tcksample": tcksample_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def tcksample_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tcksample.config",
         "key": key,
         "value": value,
     }
@@ -175,7 +175,7 @@ def tcksample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tcksample",
+        "@type": "mrtrix.tcksample",
         "nointerp": nointerp,
         "precise": precise,
         "use_tdi_fraction": use_tdi_fraction,
@@ -238,7 +238,7 @@ def tcksample_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -399,6 +399,10 @@ __all__ = [
     "TcksampleOutputs",
     "TcksampleParameters",
     "tcksample",
+    "tcksample_cargs",
+    "tcksample_config_cargs",
     "tcksample_config_params",
+    "tcksample_execute",
+    "tcksample_outputs",
     "tcksample_params",
 ]

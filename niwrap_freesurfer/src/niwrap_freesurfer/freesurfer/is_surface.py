@@ -14,7 +14,7 @@ IS_SURFACE_METADATA = Metadata(
 
 
 IsSurfaceParameters = typing.TypedDict('IsSurfaceParameters', {
-    "__STYXTYPE__": typing.Literal["is-surface"],
+    "@type": typing.Literal["freesurfer.is-surface"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "is-surface": is_surface_cargs,
+        "freesurfer.is-surface": is_surface_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def is_surface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "is-surface",
+        "@type": "freesurfer.is-surface",
         "infile": infile,
     }
     return params
@@ -173,5 +173,8 @@ __all__ = [
     "IsSurfaceOutputs",
     "IsSurfaceParameters",
     "is_surface",
+    "is_surface_cargs",
+    "is_surface_execute",
+    "is_surface_outputs",
     "is_surface_params",
 ]

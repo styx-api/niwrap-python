@@ -14,7 +14,7 @@ V_3DAXIALIZE_METADATA = Metadata(
 
 
 V3daxializeParameters = typing.TypedDict('V3daxializeParameters', {
-    "__STYXTYPE__": typing.Literal["3daxialize"],
+    "@type": typing.Literal["afni.3daxialize"],
     "infile": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "verb": bool,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3daxialize": v_3daxialize_cargs,
+        "afni.3daxialize": v_3daxialize_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3daxialize": v_3daxialize_outputs,
+        "afni.3daxialize": v_3daxialize_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def v_3daxialize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3daxialize",
+        "@type": "afni.3daxialize",
         "infile": infile,
         "verb": verb,
         "sagittal": sagittal,
@@ -249,5 +249,8 @@ __all__ = [
     "V3daxializeParameters",
     "V_3DAXIALIZE_METADATA",
     "v_3daxialize",
+    "v_3daxialize_cargs",
+    "v_3daxialize_execute",
+    "v_3daxialize_outputs",
     "v_3daxialize_params",
 ]

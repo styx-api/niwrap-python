@@ -14,7 +14,7 @@ DCM2NIIX_AFNI_METADATA = Metadata(
 
 
 Dcm2niixAfniParameters = typing.TypedDict('Dcm2niixAfniParameters', {
-    "__STYXTYPE__": typing.Literal["dcm2niix_afni"],
+    "@type": typing.Literal["afni.dcm2niix_afni"],
     "input_folder": str,
     "compression_level": typing.NotRequired[int | None],
     "adjacent_dicoms": typing.NotRequired[str | None],
@@ -59,7 +59,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcm2niix_afni": dcm2niix_afni_cargs,
+        "afni.dcm2niix_afni": dcm2niix_afni_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dcm2niix_afni": dcm2niix_afni_outputs,
+        "afni.dcm2niix_afni": dcm2niix_afni_outputs,
     }.get(t)
 
 
@@ -172,7 +172,7 @@ def dcm2niix_afni_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcm2niix_afni",
+        "@type": "afni.dcm2niix_afni",
         "input_folder": input_folder,
         "up_to_date": up_to_date,
         "ignore_trigger_times": ignore_trigger_times,
@@ -546,5 +546,8 @@ __all__ = [
     "Dcm2niixAfniOutputs",
     "Dcm2niixAfniParameters",
     "dcm2niix_afni",
+    "dcm2niix_afni_cargs",
+    "dcm2niix_afni_execute",
+    "dcm2niix_afni_outputs",
     "dcm2niix_afni_params",
 ]

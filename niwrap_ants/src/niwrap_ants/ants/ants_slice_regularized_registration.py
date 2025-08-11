@@ -14,7 +14,7 @@ ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA = Metadata(
 
 
 AntsSliceRegularizedRegistrationParameters = typing.TypedDict('AntsSliceRegularizedRegistrationParameters', {
-    "__STYXTYPE__": typing.Literal["antsSliceRegularizedRegistration"],
+    "@type": typing.Literal["ants.antsSliceRegularizedRegistration"],
     "polydegree": int,
     "output": str,
     "metric": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsSliceRegularizedRegistration": ants_slice_regularized_registration_cargs,
+        "ants.antsSliceRegularizedRegistration": ants_slice_regularized_registration_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsSliceRegularizedRegistration": ants_slice_regularized_registration_outputs,
+        "ants.antsSliceRegularizedRegistration": ants_slice_regularized_registration_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def ants_slice_regularized_registration_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsSliceRegularizedRegistration",
+        "@type": "ants.antsSliceRegularizedRegistration",
         "polydegree": polydegree,
         "output": output,
         "metric": metric,
@@ -313,5 +313,8 @@ __all__ = [
     "AntsSliceRegularizedRegistrationOutputs",
     "AntsSliceRegularizedRegistrationParameters",
     "ants_slice_regularized_registration",
+    "ants_slice_regularized_registration_cargs",
+    "ants_slice_regularized_registration_execute",
+    "ants_slice_regularized_registration_outputs",
     "ants_slice_regularized_registration_params",
 ]

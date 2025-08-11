@@ -14,7 +14,7 @@ WHIRLGIF_METADATA = Metadata(
 
 
 WhirlgifParameters = typing.TypedDict('WhirlgifParameters', {
-    "__STYXTYPE__": typing.Literal["whirlgif"],
+    "@type": typing.Literal["fsl.whirlgif"],
     "outfile": typing.NotRequired[InputPathType | None],
     "loop_count": typing.NotRequired[int | None],
     "delay_time": typing.NotRequired[int | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "whirlgif": whirlgif_cargs,
+        "fsl.whirlgif": whirlgif_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "whirlgif": whirlgif_outputs,
+        "fsl.whirlgif": whirlgif_outputs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def whirlgif_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "whirlgif",
+        "@type": "fsl.whirlgif",
         "input_files": input_files,
     }
     if outfile is not None:
@@ -239,5 +239,8 @@ __all__ = [
     "WhirlgifOutputs",
     "WhirlgifParameters",
     "whirlgif",
+    "whirlgif_cargs",
+    "whirlgif_execute",
+    "whirlgif_outputs",
     "whirlgif_params",
 ]

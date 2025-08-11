@@ -14,7 +14,7 @@ V_3D_CLUSTERIZE_METADATA = Metadata(
 
 
 V3dClusterizeParameters = typing.TypedDict('V3dClusterizeParameters', {
-    "__STYXTYPE__": typing.Literal["3dClusterize"],
+    "@type": typing.Literal["afni.3dClusterize"],
     "inset": InputPathType,
     "mask": typing.NotRequired[InputPathType | None],
     "mask_from_hdr": bool,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dClusterize": v_3d_clusterize_cargs,
+        "afni.3dClusterize": v_3d_clusterize_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dClusterize": v_3d_clusterize_outputs,
+        "afni.3dClusterize": v_3d_clusterize_outputs,
     }.get(t)
 
 
@@ -148,7 +148,7 @@ def v_3d_clusterize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dClusterize",
+        "@type": "afni.3dClusterize",
         "inset": inset,
         "mask_from_hdr": mask_from_hdr,
         "ithr": ithr,
@@ -444,5 +444,8 @@ __all__ = [
     "V3dClusterizeParameters",
     "V_3D_CLUSTERIZE_METADATA",
     "v_3d_clusterize",
+    "v_3d_clusterize_cargs",
+    "v_3d_clusterize_execute",
+    "v_3d_clusterize_outputs",
     "v_3d_clusterize_params",
 ]

@@ -14,7 +14,7 @@ DICOM_HDR_METADATA = Metadata(
 
 
 DicomHdrParameters = typing.TypedDict('DicomHdrParameters', {
-    "__STYXTYPE__": typing.Literal["dicom_hdr"],
+    "@type": typing.Literal["afni.dicom_hdr"],
     "files": list[InputPathType],
     "hex": bool,
     "noname": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dicom_hdr": dicom_hdr_cargs,
+        "afni.dicom_hdr": dicom_hdr_cargs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def dicom_hdr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dicom_hdr",
+        "@type": "afni.dicom_hdr",
         "files": files,
         "hex": hex_,
         "noname": noname,
@@ -259,5 +259,8 @@ __all__ = [
     "DicomHdrOutputs",
     "DicomHdrParameters",
     "dicom_hdr",
+    "dicom_hdr_cargs",
+    "dicom_hdr_execute",
+    "dicom_hdr_outputs",
     "dicom_hdr_params",
 ]

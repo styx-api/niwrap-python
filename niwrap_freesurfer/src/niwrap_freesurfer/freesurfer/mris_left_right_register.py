@@ -14,7 +14,7 @@ MRIS_LEFT_RIGHT_REGISTER_METADATA = Metadata(
 
 
 MrisLeftRightRegisterParameters = typing.TypedDict('MrisLeftRightRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["mris_left_right_register"],
+    "@type": typing.Literal["freesurfer.mris_left_right_register"],
     "lh_sphere": InputPathType,
     "rh_sphere": InputPathType,
     "lh_sphere_left_right": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_left_right_register": mris_left_right_register_cargs,
+        "freesurfer.mris_left_right_register": mris_left_right_register_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_left_right_register": mris_left_right_register_outputs,
+        "freesurfer.mris_left_right_register": mris_left_right_register_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def mris_left_right_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_left_right_register",
+        "@type": "freesurfer.mris_left_right_register",
         "lh_sphere": lh_sphere,
         "rh_sphere": rh_sphere,
         "lh_sphere_left_right": lh_sphere_left_right,
@@ -203,5 +203,8 @@ __all__ = [
     "MrisLeftRightRegisterOutputs",
     "MrisLeftRightRegisterParameters",
     "mris_left_right_register",
+    "mris_left_right_register_cargs",
+    "mris_left_right_register_execute",
+    "mris_left_right_register_outputs",
     "mris_left_right_register_params",
 ]

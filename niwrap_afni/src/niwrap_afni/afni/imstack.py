@@ -14,7 +14,7 @@ IMSTACK_METADATA = Metadata(
 
 
 ImstackParameters = typing.TypedDict('ImstackParameters', {
-    "__STYXTYPE__": typing.Literal["imstack"],
+    "@type": typing.Literal["afni.imstack"],
     "image_files": list[InputPathType],
     "data_type": typing.NotRequired[typing.Literal["short", "float"] | None],
     "output_prefix": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imstack": imstack_cargs,
+        "afni.imstack": imstack_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imstack": imstack_outputs,
+        "afni.imstack": imstack_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def imstack_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imstack",
+        "@type": "afni.imstack",
         "image_files": image_files,
     }
     if data_type is not None:
@@ -205,5 +205,8 @@ __all__ = [
     "ImstackOutputs",
     "ImstackParameters",
     "imstack",
+    "imstack_cargs",
+    "imstack_execute",
+    "imstack_outputs",
     "imstack_params",
 ]

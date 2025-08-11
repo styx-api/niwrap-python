@@ -14,7 +14,7 @@ SAMSEGMESH2SURF_METADATA = Metadata(
 
 
 Samsegmesh2surfParameters = typing.TypedDict('Samsegmesh2surfParameters', {
-    "__STYXTYPE__": typing.Literal["samsegmesh2surf"],
+    "@type": typing.Literal["freesurfer.samsegmesh2surf"],
     "atlas_mesh": InputPathType,
     "template": typing.NotRequired[InputPathType | None],
     "lta_transform": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "samsegmesh2surf": samsegmesh2surf_cargs,
+        "freesurfer.samsegmesh2surf": samsegmesh2surf_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "samsegmesh2surf": samsegmesh2surf_outputs,
+        "freesurfer.samsegmesh2surf": samsegmesh2surf_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def samsegmesh2surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "samsegmesh2surf",
+        "@type": "freesurfer.samsegmesh2surf",
         "atlas_mesh": atlas_mesh,
         "invert_flag": invert_flag,
     }
@@ -241,5 +241,8 @@ __all__ = [
     "Samsegmesh2surfOutputs",
     "Samsegmesh2surfParameters",
     "samsegmesh2surf",
+    "samsegmesh2surf_cargs",
+    "samsegmesh2surf_execute",
+    "samsegmesh2surf_outputs",
     "samsegmesh2surf_params",
 ]

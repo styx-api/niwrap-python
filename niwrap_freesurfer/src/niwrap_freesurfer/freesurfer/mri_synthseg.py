@@ -14,7 +14,7 @@ MRI_SYNTHSEG_METADATA = Metadata(
 
 
 MriSynthsegParameters = typing.TypedDict('MriSynthsegParameters', {
-    "__STYXTYPE__": typing.Literal["mri_synthseg"],
+    "@type": typing.Literal["freesurfer.mri_synthseg"],
     "input_image": InputPathType,
     "output_segmentation": str,
     "cortex_parcellation": bool,
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_synthseg": mri_synthseg_cargs,
+        "freesurfer.mri_synthseg": mri_synthseg_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_synthseg": mri_synthseg_outputs,
+        "freesurfer.mri_synthseg": mri_synthseg_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def mri_synthseg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_synthseg",
+        "@type": "freesurfer.mri_synthseg",
         "input_image": input_image,
         "output_segmentation": output_segmentation,
         "cortex_parcellation": cortex_parcellation,
@@ -330,5 +330,8 @@ __all__ = [
     "MriSynthsegOutputs",
     "MriSynthsegParameters",
     "mri_synthseg",
+    "mri_synthseg_cargs",
+    "mri_synthseg_execute",
+    "mri_synthseg_outputs",
     "mri_synthseg_params",
 ]

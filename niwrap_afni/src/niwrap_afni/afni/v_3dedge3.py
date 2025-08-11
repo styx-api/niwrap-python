@@ -14,7 +14,7 @@ V_3DEDGE3_METADATA = Metadata(
 
 
 V3dedge3Parameters = typing.TypedDict('V3dedge3Parameters', {
-    "__STYXTYPE__": typing.Literal["3dedge3"],
+    "@type": typing.Literal["afni.3dedge3"],
     "input_file": InputPathType,
     "verbose": bool,
     "prefix": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dedge3": v_3dedge3_cargs,
+        "afni.3dedge3": v_3dedge3_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dedge3": v_3dedge3_outputs,
+        "afni.3dedge3": v_3dedge3_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def v_3dedge3_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dedge3",
+        "@type": "afni.3dedge3",
         "input_file": input_file,
         "verbose": verbose,
         "fscale": fscale,
@@ -265,5 +265,8 @@ __all__ = [
     "V3dedge3Parameters",
     "V_3DEDGE3_METADATA",
     "v_3dedge3",
+    "v_3dedge3_cargs",
+    "v_3dedge3_execute",
+    "v_3dedge3_outputs",
     "v_3dedge3_params",
 ]

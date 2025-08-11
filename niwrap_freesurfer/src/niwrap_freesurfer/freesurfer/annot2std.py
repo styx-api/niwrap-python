@@ -14,7 +14,7 @@ ANNOT2STD_METADATA = Metadata(
 
 
 Annot2stdParameters = typing.TypedDict('Annot2stdParameters', {
-    "__STYXTYPE__": typing.Literal["annot2std"],
+    "@type": typing.Literal["freesurfer.annot2std"],
     "output_annot_path": str,
     "subjects": list[str],
     "fsgd_file": typing.NotRequired[InputPathType | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "annot2std": annot2std_cargs,
+        "freesurfer.annot2std": annot2std_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "annot2std": annot2std_outputs,
+        "freesurfer.annot2std": annot2std_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def annot2std_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "annot2std",
+        "@type": "freesurfer.annot2std",
         "output_annot_path": output_annot_path,
         "subjects": subjects,
         "left_hemisphere": left_hemisphere,
@@ -380,5 +380,8 @@ __all__ = [
     "Annot2stdOutputs",
     "Annot2stdParameters",
     "annot2std",
+    "annot2std_cargs",
+    "annot2std_execute",
+    "annot2std_outputs",
     "annot2std_params",
 ]

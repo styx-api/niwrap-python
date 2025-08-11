@@ -14,7 +14,7 @@ V_3D_ISC_METADATA = Metadata(
 
 
 V3dIscParameters = typing.TypedDict('V3dIscParameters', {
-    "__STYXTYPE__": typing.Literal["3dISC"],
+    "@type": typing.Literal["afni.3dISC"],
     "outfile_prefix": str,
     "num_jobs": typing.NotRequired[float | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dISC": v_3d_isc_cargs,
+        "afni.3dISC": v_3d_isc_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dISC": v_3d_isc_outputs,
+        "afni.3dISC": v_3d_isc_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def v_3d_isc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dISC",
+        "@type": "afni.3dISC",
         "outfile_prefix": outfile_prefix,
         "model_structure": model_structure,
         "fisher_transform": fisher_transform,
@@ -294,5 +294,8 @@ __all__ = [
     "V3dIscParameters",
     "V_3D_ISC_METADATA",
     "v_3d_isc",
+    "v_3d_isc_cargs",
+    "v_3d_isc_execute",
+    "v_3d_isc_outputs",
     "v_3d_isc_params",
 ]

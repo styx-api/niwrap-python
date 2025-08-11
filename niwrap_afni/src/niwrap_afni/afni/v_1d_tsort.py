@@ -14,7 +14,7 @@ V_1D_TSORT_METADATA = Metadata(
 
 
 V1dTsortParameters = typing.TypedDict('V1dTsortParameters', {
-    "__STYXTYPE__": typing.Literal["1dTsort"],
+    "@type": typing.Literal["afni.1dTsort"],
     "inc_order": bool,
     "dec_order": bool,
     "transpose": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dTsort": v_1d_tsort_cargs,
+        "afni.1dTsort": v_1d_tsort_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def v_1d_tsort_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dTsort",
+        "@type": "afni.1dTsort",
         "inc_order": inc_order,
         "dec_order": dec_order,
         "transpose": transpose,
@@ -221,5 +221,8 @@ __all__ = [
     "V1dTsortParameters",
     "V_1D_TSORT_METADATA",
     "v_1d_tsort",
+    "v_1d_tsort_cargs",
+    "v_1d_tsort_execute",
+    "v_1d_tsort_outputs",
     "v_1d_tsort_params",
 ]

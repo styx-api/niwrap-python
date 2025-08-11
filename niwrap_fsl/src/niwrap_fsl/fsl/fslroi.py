@@ -14,7 +14,7 @@ FSLROI_METADATA = Metadata(
 
 
 FslroiParameters = typing.TypedDict('FslroiParameters', {
-    "__STYXTYPE__": typing.Literal["fslroi"],
+    "@type": typing.Literal["fsl.fslroi"],
     "infile": InputPathType,
     "outfile": str,
     "xmin": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslroi": fslroi_cargs,
+        "fsl.fslroi": fslroi_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslroi": fslroi_outputs,
+        "fsl.fslroi": fslroi_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def fslroi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslroi",
+        "@type": "fsl.fslroi",
         "infile": infile,
         "outfile": outfile,
     }
@@ -260,5 +260,8 @@ __all__ = [
     "FslroiOutputs",
     "FslroiParameters",
     "fslroi",
+    "fslroi_cargs",
+    "fslroi_execute",
+    "fslroi_outputs",
     "fslroi_params",
 ]

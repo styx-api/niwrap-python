@@ -14,7 +14,7 @@ TBSS_4_PRESTATS_METADATA = Metadata(
 
 
 Tbss4PrestatsParameters = typing.TypedDict('Tbss4PrestatsParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_4_prestats"],
+    "@type": typing.Literal["fsl.tbss_4_prestats"],
     "threshold": float,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_4_prestats": tbss_4_prestats_cargs,
+        "fsl.tbss_4_prestats": tbss_4_prestats_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def tbss_4_prestats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_4_prestats",
+        "@type": "fsl.tbss_4_prestats",
         "threshold": threshold,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "Tbss4PrestatsOutputs",
     "Tbss4PrestatsParameters",
     "tbss_4_prestats",
+    "tbss_4_prestats_cargs",
+    "tbss_4_prestats_execute",
+    "tbss_4_prestats_outputs",
     "tbss_4_prestats_params",
 ]

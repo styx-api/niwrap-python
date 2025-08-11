@@ -14,7 +14,7 @@ V_3D_MSE_METADATA = Metadata(
 
 
 V3dMseParameters = typing.TypedDict('V3dMseParameters', {
-    "__STYXTYPE__": typing.Literal["3dMSE"],
+    "@type": typing.Literal["afni.3dMSE"],
     "polynomial_order": typing.NotRequired[int | None],
     "autoclip": bool,
     "automask": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dMSE": v_3d_mse_cargs,
+        "afni.3dMSE": v_3d_mse_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dMSE": v_3d_mse_outputs,
+        "afni.3dMSE": v_3d_mse_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def v_3d_mse_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dMSE",
+        "@type": "afni.3dMSE",
         "autoclip": autoclip,
         "automask": automask,
         "dset": dset,
@@ -279,5 +279,8 @@ __all__ = [
     "V3dMseParameters",
     "V_3D_MSE_METADATA",
     "v_3d_mse",
+    "v_3d_mse_cargs",
+    "v_3d_mse_execute",
+    "v_3d_mse_outputs",
     "v_3d_mse_params",
 ]

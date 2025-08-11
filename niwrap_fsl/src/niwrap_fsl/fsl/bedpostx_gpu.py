@@ -14,7 +14,7 @@ BEDPOSTX_GPU_METADATA = Metadata(
 
 
 BedpostxGpuParameters = typing.TypedDict('BedpostxGpuParameters', {
-    "__STYXTYPE__": typing.Literal["bedpostx_gpu"],
+    "@type": typing.Literal["fsl.bedpostx_gpu"],
     "subject_dir": str,
     "gpu_queue": typing.NotRequired[str | None],
     "num_jobs": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bedpostx_gpu": bedpostx_gpu_cargs,
+        "fsl.bedpostx_gpu": bedpostx_gpu_cargs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def bedpostx_gpu_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bedpostx_gpu",
+        "@type": "fsl.bedpostx_gpu",
         "subject_dir": subject_dir,
         "grad_nonlinear": grad_nonlinear,
     }
@@ -291,5 +291,8 @@ __all__ = [
     "BedpostxGpuOutputs",
     "BedpostxGpuParameters",
     "bedpostx_gpu",
+    "bedpostx_gpu_cargs",
+    "bedpostx_gpu_execute",
+    "bedpostx_gpu_outputs",
     "bedpostx_gpu_params",
 ]

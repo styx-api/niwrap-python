@@ -14,7 +14,7 @@ VECWARP_METADATA = Metadata(
 
 
 VecwarpParameters = typing.TypedDict('VecwarpParameters', {
-    "__STYXTYPE__": typing.Literal["Vecwarp"],
+    "@type": typing.Literal["afni.Vecwarp"],
     "apar": typing.NotRequired[InputPathType | None],
     "matvec": typing.NotRequired[InputPathType | None],
     "forward": bool,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "Vecwarp": vecwarp_cargs,
+        "afni.Vecwarp": vecwarp_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "Vecwarp": vecwarp_outputs,
+        "afni.Vecwarp": vecwarp_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def vecwarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "Vecwarp",
+        "@type": "afni.Vecwarp",
         "forward": forward,
         "backward": backward,
         "force": force,
@@ -261,5 +261,8 @@ __all__ = [
     "VecwarpOutputs",
     "VecwarpParameters",
     "vecwarp",
+    "vecwarp_cargs",
+    "vecwarp_execute",
+    "vecwarp_outputs",
     "vecwarp_params",
 ]

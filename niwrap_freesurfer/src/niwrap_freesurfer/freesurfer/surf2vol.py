@@ -14,7 +14,7 @@ SURF2VOL_METADATA = Metadata(
 
 
 Surf2volParameters = typing.TypedDict('Surf2volParameters', {
-    "__STYXTYPE__": typing.Literal["surf2vol"],
+    "@type": typing.Literal["freesurfer.surf2vol"],
     "fixed_surface": InputPathType,
     "moving_surface": InputPathType,
     "fixed_mri": InputPathType,
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surf2vol": surf2vol_cargs,
+        "freesurfer.surf2vol": surf2vol_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surf2vol": surf2vol_outputs,
+        "freesurfer.surf2vol": surf2vol_outputs,
     }.get(t)
 
 
@@ -127,7 +127,7 @@ def surf2vol_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surf2vol",
+        "@type": "freesurfer.surf2vol",
         "fixed_surface": fixed_surface,
         "moving_surface": moving_surface,
         "fixed_mri": fixed_mri,
@@ -384,5 +384,8 @@ __all__ = [
     "Surf2volOutputs",
     "Surf2volParameters",
     "surf2vol",
+    "surf2vol_cargs",
+    "surf2vol_execute",
+    "surf2vol_outputs",
     "surf2vol_params",
 ]

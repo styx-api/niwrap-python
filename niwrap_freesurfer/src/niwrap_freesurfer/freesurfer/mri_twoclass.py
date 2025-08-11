@@ -14,7 +14,7 @@ MRI_TWOCLASS_METADATA = Metadata(
 
 
 MriTwoclassParameters = typing.TypedDict('MriTwoclassParameters', {
-    "__STYXTYPE__": typing.Literal["mri_twoclass"],
+    "@type": typing.Literal["freesurfer.mri_twoclass"],
     "segmentation_volume": InputPathType,
     "output_subject": str,
     "output_volume": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_twoclass": mri_twoclass_cargs,
+        "freesurfer.mri_twoclass": mri_twoclass_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_twoclass": mri_twoclass_outputs,
+        "freesurfer.mri_twoclass": mri_twoclass_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mri_twoclass_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_twoclass",
+        "@type": "freesurfer.mri_twoclass",
         "segmentation_volume": segmentation_volume,
         "output_subject": output_subject,
         "output_volume": output_volume,
@@ -226,5 +226,8 @@ __all__ = [
     "MriTwoclassOutputs",
     "MriTwoclassParameters",
     "mri_twoclass",
+    "mri_twoclass_cargs",
+    "mri_twoclass_execute",
+    "mri_twoclass_outputs",
     "mri_twoclass_params",
 ]

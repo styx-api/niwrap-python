@@ -14,7 +14,7 @@ V_3D_AFNITO_NIML_METADATA = Metadata(
 
 
 V3dAfnitoNimlParameters = typing.TypedDict('V3dAfnitoNimlParameters', {
-    "__STYXTYPE__": typing.Literal["3dAFNItoNIML"],
+    "@type": typing.Literal["afni.3dAFNItoNIML"],
     "dset": InputPathType,
     "data": bool,
     "ascii": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAFNItoNIML": v_3d_afnito_niml_cargs,
+        "afni.3dAFNItoNIML": v_3d_afnito_niml_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def v_3d_afnito_niml_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAFNItoNIML",
+        "@type": "afni.3dAFNItoNIML",
         "dset": dset,
         "data": data,
         "ascii": ascii_,
@@ -203,5 +203,8 @@ __all__ = [
     "V3dAfnitoNimlParameters",
     "V_3D_AFNITO_NIML_METADATA",
     "v_3d_afnito_niml",
+    "v_3d_afnito_niml_cargs",
+    "v_3d_afnito_niml_execute",
+    "v_3d_afnito_niml_outputs",
     "v_3d_afnito_niml_params",
 ]

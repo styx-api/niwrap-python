@@ -14,14 +14,14 @@ MRAVERAGEHEADER_METADATA = Metadata(
 
 
 MraverageheaderConfigParameters = typing.TypedDict('MraverageheaderConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mraverageheader.config"],
     "key": str,
     "value": str,
 })
 
 
 MraverageheaderParameters = typing.TypedDict('MraverageheaderParameters', {
-    "__STYXTYPE__": typing.Literal["mraverageheader"],
+    "@type": typing.Literal["mrtrix.mraverageheader"],
     "padding": typing.NotRequired[float | None],
     "resolution": typing.NotRequired[str | None],
     "fill": bool,
@@ -51,8 +51,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mraverageheader": mraverageheader_cargs,
-        "config": mraverageheader_config_cargs,
+        "mrtrix.mraverageheader": mraverageheader_cargs,
+        "mrtrix.mraverageheader.config": mraverageheader_config_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mraverageheader": mraverageheader_outputs,
+        "mrtrix.mraverageheader": mraverageheader_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def mraverageheader_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mraverageheader.config",
         "key": key,
         "value": value,
     }
@@ -173,7 +173,7 @@ def mraverageheader_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mraverageheader",
+        "@type": "mrtrix.mraverageheader",
         "fill": fill,
         "info": info,
         "quiet": quiet,
@@ -243,7 +243,7 @@ def mraverageheader_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -391,6 +391,10 @@ __all__ = [
     "MraverageheaderOutputs",
     "MraverageheaderParameters",
     "mraverageheader",
+    "mraverageheader_cargs",
+    "mraverageheader_config_cargs",
     "mraverageheader_config_params",
+    "mraverageheader_execute",
+    "mraverageheader_outputs",
     "mraverageheader_params",
 ]

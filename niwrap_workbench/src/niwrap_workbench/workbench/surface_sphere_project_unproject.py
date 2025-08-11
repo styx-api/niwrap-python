@@ -14,7 +14,7 @@ SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA = Metadata(
 
 
 SurfaceSphereProjectUnprojectParameters = typing.TypedDict('SurfaceSphereProjectUnprojectParameters', {
-    "__STYXTYPE__": typing.Literal["surface-sphere-project-unproject"],
+    "@type": typing.Literal["workbench.surface-sphere-project-unproject"],
     "sphere_in": InputPathType,
     "sphere_project_to": InputPathType,
     "sphere_unproject_from": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-sphere-project-unproject": surface_sphere_project_unproject_cargs,
+        "workbench.surface-sphere-project-unproject": surface_sphere_project_unproject_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-sphere-project-unproject": surface_sphere_project_unproject_outputs,
+        "workbench.surface-sphere-project-unproject": surface_sphere_project_unproject_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def surface_sphere_project_unproject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-sphere-project-unproject",
+        "@type": "workbench.surface-sphere-project-unproject",
         "sphere_in": sphere_in,
         "sphere_project_to": sphere_project_to,
         "sphere_unproject_from": sphere_unproject_from,
@@ -309,5 +309,8 @@ __all__ = [
     "SurfaceSphereProjectUnprojectOutputs",
     "SurfaceSphereProjectUnprojectParameters",
     "surface_sphere_project_unproject",
+    "surface_sphere_project_unproject_cargs",
+    "surface_sphere_project_unproject_execute",
+    "surface_sphere_project_unproject_outputs",
     "surface_sphere_project_unproject_params",
 ]

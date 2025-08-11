@@ -14,7 +14,7 @@ FSCALC_METADATA = Metadata(
 
 
 FscalcParameters = typing.TypedDict('FscalcParameters', {
-    "__STYXTYPE__": typing.Literal["fscalc"],
+    "@type": typing.Literal["freesurfer.fscalc"],
     "input1": str,
     "operation": str,
     "input2": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fscalc": fscalc_cargs,
+        "freesurfer.fscalc": fscalc_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fscalc": fscalc_outputs,
+        "freesurfer.fscalc": fscalc_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def fscalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fscalc",
+        "@type": "freesurfer.fscalc",
         "input1": input1,
         "operation": operation,
         "output_file": output_file,
@@ -262,5 +262,8 @@ __all__ = [
     "FscalcOutputs",
     "FscalcParameters",
     "fscalc",
+    "fscalc_cargs",
+    "fscalc_execute",
+    "fscalc_outputs",
     "fscalc_params",
 ]

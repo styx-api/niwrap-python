@@ -14,7 +14,7 @@ V__MEASURE_EROSION_THICK_METADATA = Metadata(
 
 
 VMeasureErosionThickParameters = typing.TypedDict('VMeasureErosionThickParameters', {
-    "__STYXTYPE__": typing.Literal["@measure_erosion_thick"],
+    "@type": typing.Literal["afni.@measure_erosion_thick"],
     "maskset": InputPathType,
     "surfset": InputPathType,
     "outdir": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@measure_erosion_thick": v__measure_erosion_thick_cargs,
+        "afni.@measure_erosion_thick": v__measure_erosion_thick_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@measure_erosion_thick": v__measure_erosion_thick_outputs,
+        "afni.@measure_erosion_thick": v__measure_erosion_thick_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def v__measure_erosion_thick_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@measure_erosion_thick",
+        "@type": "afni.@measure_erosion_thick",
         "maskset": maskset,
         "surfset": surfset,
         "keep_temp_files": keep_temp_files,
@@ -324,5 +324,8 @@ __all__ = [
     "VMeasureErosionThickParameters",
     "V__MEASURE_EROSION_THICK_METADATA",
     "v__measure_erosion_thick",
+    "v__measure_erosion_thick_cargs",
+    "v__measure_erosion_thick_execute",
+    "v__measure_erosion_thick_outputs",
     "v__measure_erosion_thick_params",
 ]

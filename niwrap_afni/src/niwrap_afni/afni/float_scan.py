@@ -14,7 +14,7 @@ FLOAT_SCAN_METADATA = Metadata(
 
 
 FloatScanParameters = typing.TypedDict('FloatScanParameters', {
-    "__STYXTYPE__": typing.Literal["float_scan"],
+    "@type": typing.Literal["afni.float_scan"],
     "fix_illegal_values": bool,
     "verbose_mode": bool,
     "skip_count": typing.NotRequired[int | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "float_scan": float_scan_cargs,
+        "afni.float_scan": float_scan_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "float_scan": float_scan_outputs,
+        "afni.float_scan": float_scan_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def float_scan_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "float_scan",
+        "@type": "afni.float_scan",
         "fix_illegal_values": fix_illegal_values,
         "verbose_mode": verbose_mode,
         "input_file": input_file,
@@ -209,5 +209,8 @@ __all__ = [
     "FloatScanOutputs",
     "FloatScanParameters",
     "float_scan",
+    "float_scan_cargs",
+    "float_scan_execute",
+    "float_scan_outputs",
     "float_scan_params",
 ]

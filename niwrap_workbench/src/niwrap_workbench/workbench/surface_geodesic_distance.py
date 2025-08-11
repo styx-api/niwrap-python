@@ -14,7 +14,7 @@ SURFACE_GEODESIC_DISTANCE_METADATA = Metadata(
 
 
 SurfaceGeodesicDistanceParameters = typing.TypedDict('SurfaceGeodesicDistanceParameters', {
-    "__STYXTYPE__": typing.Literal["surface-geodesic-distance"],
+    "@type": typing.Literal["workbench.surface-geodesic-distance"],
     "surface": InputPathType,
     "vertex": int,
     "metric_out": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-geodesic-distance": surface_geodesic_distance_cargs,
+        "workbench.surface-geodesic-distance": surface_geodesic_distance_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-geodesic-distance": surface_geodesic_distance_outputs,
+        "workbench.surface-geodesic-distance": surface_geodesic_distance_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def surface_geodesic_distance_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-geodesic-distance",
+        "@type": "workbench.surface-geodesic-distance",
         "surface": surface,
         "vertex": vertex,
         "metric_out": metric_out,
@@ -262,5 +262,8 @@ __all__ = [
     "SurfaceGeodesicDistanceOutputs",
     "SurfaceGeodesicDistanceParameters",
     "surface_geodesic_distance",
+    "surface_geodesic_distance_cargs",
+    "surface_geodesic_distance_execute",
+    "surface_geodesic_distance_outputs",
     "surface_geodesic_distance_params",
 ]

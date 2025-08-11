@@ -14,7 +14,7 @@ MRIS_COPY_HEADER_METADATA = Metadata(
 
 
 MrisCopyHeaderParameters = typing.TypedDict('MrisCopyHeaderParameters', {
-    "__STYXTYPE__": typing.Literal["mris_copy_header"],
+    "@type": typing.Literal["freesurfer.mris_copy_header"],
     "input_surface": InputPathType,
     "template_surface": InputPathType,
     "output_surface": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_copy_header": mris_copy_header_cargs,
+        "freesurfer.mris_copy_header": mris_copy_header_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_copy_header": mris_copy_header_outputs,
+        "freesurfer.mris_copy_header": mris_copy_header_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mris_copy_header_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_copy_header",
+        "@type": "freesurfer.mris_copy_header",
         "input_surface": input_surface,
         "template_surface": template_surface,
         "output_surface": output_surface,
@@ -192,5 +192,8 @@ __all__ = [
     "MrisCopyHeaderOutputs",
     "MrisCopyHeaderParameters",
     "mris_copy_header",
+    "mris_copy_header_cargs",
+    "mris_copy_header_execute",
+    "mris_copy_header_outputs",
     "mris_copy_header_params",
 ]

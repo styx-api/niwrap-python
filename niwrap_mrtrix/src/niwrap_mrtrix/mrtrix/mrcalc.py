@@ -14,276 +14,276 @@ MRCALC_METADATA = Metadata(
 
 
 MrcalcAbsParameters = typing.TypedDict('MrcalcAbsParameters', {
-    "__STYXTYPE__": typing.Literal["abs"],
+    "@type": typing.Literal["mrtrix.mrcalc.abs"],
 })
 
 
 MrcalcNegParameters = typing.TypedDict('MrcalcNegParameters', {
-    "__STYXTYPE__": typing.Literal["neg"],
+    "@type": typing.Literal["mrtrix.mrcalc.neg"],
 })
 
 
 MrcalcAddParameters = typing.TypedDict('MrcalcAddParameters', {
-    "__STYXTYPE__": typing.Literal["add"],
+    "@type": typing.Literal["mrtrix.mrcalc.add"],
 })
 
 
 MrcalcSubtractParameters = typing.TypedDict('MrcalcSubtractParameters', {
-    "__STYXTYPE__": typing.Literal["subtract"],
+    "@type": typing.Literal["mrtrix.mrcalc.subtract"],
 })
 
 
 MrcalcMultiplyParameters = typing.TypedDict('MrcalcMultiplyParameters', {
-    "__STYXTYPE__": typing.Literal["multiply"],
+    "@type": typing.Literal["mrtrix.mrcalc.multiply"],
 })
 
 
 MrcalcDivideParameters = typing.TypedDict('MrcalcDivideParameters', {
-    "__STYXTYPE__": typing.Literal["divide"],
+    "@type": typing.Literal["mrtrix.mrcalc.divide"],
 })
 
 
 MrcalcMinParameters = typing.TypedDict('MrcalcMinParameters', {
-    "__STYXTYPE__": typing.Literal["min"],
+    "@type": typing.Literal["mrtrix.mrcalc.min"],
 })
 
 
 MrcalcMaxParameters = typing.TypedDict('MrcalcMaxParameters', {
-    "__STYXTYPE__": typing.Literal["max"],
+    "@type": typing.Literal["mrtrix.mrcalc.max"],
 })
 
 
 MrcalcLtParameters = typing.TypedDict('MrcalcLtParameters', {
-    "__STYXTYPE__": typing.Literal["lt"],
+    "@type": typing.Literal["mrtrix.mrcalc.lt"],
 })
 
 
 MrcalcGtParameters = typing.TypedDict('MrcalcGtParameters', {
-    "__STYXTYPE__": typing.Literal["gt"],
+    "@type": typing.Literal["mrtrix.mrcalc.gt"],
 })
 
 
 MrcalcLeParameters = typing.TypedDict('MrcalcLeParameters', {
-    "__STYXTYPE__": typing.Literal["le"],
+    "@type": typing.Literal["mrtrix.mrcalc.le"],
 })
 
 
 MrcalcGeParameters = typing.TypedDict('MrcalcGeParameters', {
-    "__STYXTYPE__": typing.Literal["ge"],
+    "@type": typing.Literal["mrtrix.mrcalc.ge"],
 })
 
 
 MrcalcEqParameters = typing.TypedDict('MrcalcEqParameters', {
-    "__STYXTYPE__": typing.Literal["eq"],
+    "@type": typing.Literal["mrtrix.mrcalc.eq"],
 })
 
 
 MrcalcNeqParameters = typing.TypedDict('MrcalcNeqParameters', {
-    "__STYXTYPE__": typing.Literal["neq"],
+    "@type": typing.Literal["mrtrix.mrcalc.neq"],
 })
 
 
 MrcalcIfParameters = typing.TypedDict('MrcalcIfParameters', {
-    "__STYXTYPE__": typing.Literal["if"],
+    "@type": typing.Literal["mrtrix.mrcalc.if"],
 })
 
 
 MrcalcReplaceParameters = typing.TypedDict('MrcalcReplaceParameters', {
-    "__STYXTYPE__": typing.Literal["replace"],
+    "@type": typing.Literal["mrtrix.mrcalc.replace"],
 })
 
 
 MrcalcSqrtParameters = typing.TypedDict('MrcalcSqrtParameters', {
-    "__STYXTYPE__": typing.Literal["sqrt"],
+    "@type": typing.Literal["mrtrix.mrcalc.sqrt"],
 })
 
 
 MrcalcPowParameters = typing.TypedDict('MrcalcPowParameters', {
-    "__STYXTYPE__": typing.Literal["pow"],
+    "@type": typing.Literal["mrtrix.mrcalc.pow"],
 })
 
 
 MrcalcRoundParameters = typing.TypedDict('MrcalcRoundParameters', {
-    "__STYXTYPE__": typing.Literal["round"],
+    "@type": typing.Literal["mrtrix.mrcalc.round"],
 })
 
 
 MrcalcCeilParameters = typing.TypedDict('MrcalcCeilParameters', {
-    "__STYXTYPE__": typing.Literal["ceil"],
+    "@type": typing.Literal["mrtrix.mrcalc.ceil"],
 })
 
 
 MrcalcFloorParameters = typing.TypedDict('MrcalcFloorParameters', {
-    "__STYXTYPE__": typing.Literal["floor"],
+    "@type": typing.Literal["mrtrix.mrcalc.floor"],
 })
 
 
 MrcalcNotParameters = typing.TypedDict('MrcalcNotParameters', {
-    "__STYXTYPE__": typing.Literal["not"],
+    "@type": typing.Literal["mrtrix.mrcalc.not"],
 })
 
 
 MrcalcAndParameters = typing.TypedDict('MrcalcAndParameters', {
-    "__STYXTYPE__": typing.Literal["and"],
+    "@type": typing.Literal["mrtrix.mrcalc.and"],
 })
 
 
 MrcalcOrParameters = typing.TypedDict('MrcalcOrParameters', {
-    "__STYXTYPE__": typing.Literal["or"],
+    "@type": typing.Literal["mrtrix.mrcalc.or"],
 })
 
 
 MrcalcXorParameters = typing.TypedDict('MrcalcXorParameters', {
-    "__STYXTYPE__": typing.Literal["xor"],
+    "@type": typing.Literal["mrtrix.mrcalc.xor"],
 })
 
 
 MrcalcIsnanParameters = typing.TypedDict('MrcalcIsnanParameters', {
-    "__STYXTYPE__": typing.Literal["isnan"],
+    "@type": typing.Literal["mrtrix.mrcalc.isnan"],
 })
 
 
 MrcalcIsinfParameters = typing.TypedDict('MrcalcIsinfParameters', {
-    "__STYXTYPE__": typing.Literal["isinf"],
+    "@type": typing.Literal["mrtrix.mrcalc.isinf"],
 })
 
 
 MrcalcFiniteParameters = typing.TypedDict('MrcalcFiniteParameters', {
-    "__STYXTYPE__": typing.Literal["finite"],
+    "@type": typing.Literal["mrtrix.mrcalc.finite"],
 })
 
 
 MrcalcComplexParameters = typing.TypedDict('MrcalcComplexParameters', {
-    "__STYXTYPE__": typing.Literal["complex"],
+    "@type": typing.Literal["mrtrix.mrcalc.complex"],
 })
 
 
 MrcalcPolarParameters = typing.TypedDict('MrcalcPolarParameters', {
-    "__STYXTYPE__": typing.Literal["polar"],
+    "@type": typing.Literal["mrtrix.mrcalc.polar"],
 })
 
 
 MrcalcRealParameters = typing.TypedDict('MrcalcRealParameters', {
-    "__STYXTYPE__": typing.Literal["real"],
+    "@type": typing.Literal["mrtrix.mrcalc.real"],
 })
 
 
 MrcalcImagParameters = typing.TypedDict('MrcalcImagParameters', {
-    "__STYXTYPE__": typing.Literal["imag"],
+    "@type": typing.Literal["mrtrix.mrcalc.imag"],
 })
 
 
 MrcalcPhaseParameters = typing.TypedDict('MrcalcPhaseParameters', {
-    "__STYXTYPE__": typing.Literal["phase"],
+    "@type": typing.Literal["mrtrix.mrcalc.phase"],
 })
 
 
 MrcalcConjParameters = typing.TypedDict('MrcalcConjParameters', {
-    "__STYXTYPE__": typing.Literal["conj"],
+    "@type": typing.Literal["mrtrix.mrcalc.conj"],
 })
 
 
 MrcalcProjParameters = typing.TypedDict('MrcalcProjParameters', {
-    "__STYXTYPE__": typing.Literal["proj"],
+    "@type": typing.Literal["mrtrix.mrcalc.proj"],
 })
 
 
 MrcalcExpParameters = typing.TypedDict('MrcalcExpParameters', {
-    "__STYXTYPE__": typing.Literal["exp"],
+    "@type": typing.Literal["mrtrix.mrcalc.exp"],
 })
 
 
 MrcalcLogParameters = typing.TypedDict('MrcalcLogParameters', {
-    "__STYXTYPE__": typing.Literal["log"],
+    "@type": typing.Literal["mrtrix.mrcalc.log"],
 })
 
 
 MrcalcLog10Parameters = typing.TypedDict('MrcalcLog10Parameters', {
-    "__STYXTYPE__": typing.Literal["log10"],
+    "@type": typing.Literal["mrtrix.mrcalc.log10"],
 })
 
 
 MrcalcCosParameters = typing.TypedDict('MrcalcCosParameters', {
-    "__STYXTYPE__": typing.Literal["cos"],
+    "@type": typing.Literal["mrtrix.mrcalc.cos"],
 })
 
 
 MrcalcSinParameters = typing.TypedDict('MrcalcSinParameters', {
-    "__STYXTYPE__": typing.Literal["sin"],
+    "@type": typing.Literal["mrtrix.mrcalc.sin"],
 })
 
 
 MrcalcTanParameters = typing.TypedDict('MrcalcTanParameters', {
-    "__STYXTYPE__": typing.Literal["tan"],
+    "@type": typing.Literal["mrtrix.mrcalc.tan"],
 })
 
 
 MrcalcAcosParameters = typing.TypedDict('MrcalcAcosParameters', {
-    "__STYXTYPE__": typing.Literal["acos"],
+    "@type": typing.Literal["mrtrix.mrcalc.acos"],
 })
 
 
 MrcalcAsinParameters = typing.TypedDict('MrcalcAsinParameters', {
-    "__STYXTYPE__": typing.Literal["asin"],
+    "@type": typing.Literal["mrtrix.mrcalc.asin"],
 })
 
 
 MrcalcAtanParameters = typing.TypedDict('MrcalcAtanParameters', {
-    "__STYXTYPE__": typing.Literal["atan"],
+    "@type": typing.Literal["mrtrix.mrcalc.atan"],
 })
 
 
 MrcalcCoshParameters = typing.TypedDict('MrcalcCoshParameters', {
-    "__STYXTYPE__": typing.Literal["cosh"],
+    "@type": typing.Literal["mrtrix.mrcalc.cosh"],
 })
 
 
 MrcalcSinhParameters = typing.TypedDict('MrcalcSinhParameters', {
-    "__STYXTYPE__": typing.Literal["sinh"],
+    "@type": typing.Literal["mrtrix.mrcalc.sinh"],
 })
 
 
 MrcalcTanhParameters = typing.TypedDict('MrcalcTanhParameters', {
-    "__STYXTYPE__": typing.Literal["tanh"],
+    "@type": typing.Literal["mrtrix.mrcalc.tanh"],
 })
 
 
 MrcalcAcoshParameters = typing.TypedDict('MrcalcAcoshParameters', {
-    "__STYXTYPE__": typing.Literal["acosh"],
+    "@type": typing.Literal["mrtrix.mrcalc.acosh"],
 })
 
 
 MrcalcAsinhParameters = typing.TypedDict('MrcalcAsinhParameters', {
-    "__STYXTYPE__": typing.Literal["asinh"],
+    "@type": typing.Literal["mrtrix.mrcalc.asinh"],
 })
 
 
 MrcalcAtanhParameters = typing.TypedDict('MrcalcAtanhParameters', {
-    "__STYXTYPE__": typing.Literal["atanh"],
+    "@type": typing.Literal["mrtrix.mrcalc.atanh"],
 })
 
 
 MrcalcConfigParameters = typing.TypedDict('MrcalcConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.mrcalc.config"],
     "key": str,
     "value": str,
 })
 
 
 MrcalcVariousStringParameters = typing.TypedDict('MrcalcVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.mrcalc.VariousString"],
     "obj": str,
 })
 
 
 MrcalcVariousFileParameters = typing.TypedDict('MrcalcVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.mrcalc.VariousFile"],
     "obj": InputPathType,
 })
 
 
 MrcalcParameters = typing.TypedDict('MrcalcParameters', {
-    "__STYXTYPE__": typing.Literal["mrcalc"],
+    "@type": typing.Literal["mrtrix.mrcalc"],
     "abs": typing.NotRequired[list[MrcalcAbsParameters] | None],
     "neg": typing.NotRequired[list[MrcalcNegParameters] | None],
     "add": typing.NotRequired[list[MrcalcAddParameters] | None],
@@ -359,60 +359,60 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mrcalc": mrcalc_cargs,
-        "abs": mrcalc_abs_cargs,
-        "neg": mrcalc_neg_cargs,
-        "add": mrcalc_add_cargs,
-        "subtract": mrcalc_subtract_cargs,
-        "multiply": mrcalc_multiply_cargs,
-        "divide": mrcalc_divide_cargs,
-        "min": mrcalc_min_cargs,
-        "max": mrcalc_max_cargs,
-        "lt": mrcalc_lt_cargs,
-        "gt": mrcalc_gt_cargs,
-        "le": mrcalc_le_cargs,
-        "ge": mrcalc_ge_cargs,
-        "eq": mrcalc_eq_cargs,
-        "neq": mrcalc_neq_cargs,
-        "if": mrcalc_if_cargs,
-        "replace": mrcalc_replace_cargs,
-        "sqrt": mrcalc_sqrt_cargs,
-        "pow": mrcalc_pow_cargs,
-        "round": mrcalc_round_cargs,
-        "ceil": mrcalc_ceil_cargs,
-        "floor": mrcalc_floor_cargs,
-        "not": mrcalc_not_cargs,
-        "and": mrcalc_and_cargs,
-        "or": mrcalc_or_cargs,
-        "xor": mrcalc_xor_cargs,
-        "isnan": mrcalc_isnan_cargs,
-        "isinf": mrcalc_isinf_cargs,
-        "finite": mrcalc_finite_cargs,
-        "complex": mrcalc_complex_cargs,
-        "polar": mrcalc_polar_cargs,
-        "real": mrcalc_real_cargs,
-        "imag": mrcalc_imag_cargs,
-        "phase": mrcalc_phase_cargs,
-        "conj": mrcalc_conj_cargs,
-        "proj": mrcalc_proj_cargs,
-        "exp": mrcalc_exp_cargs,
-        "log": mrcalc_log_cargs,
-        "log10": mrcalc_log10_cargs,
-        "cos": mrcalc_cos_cargs,
-        "sin": mrcalc_sin_cargs,
-        "tan": mrcalc_tan_cargs,
-        "acos": mrcalc_acos_cargs,
-        "asin": mrcalc_asin_cargs,
-        "atan": mrcalc_atan_cargs,
-        "cosh": mrcalc_cosh_cargs,
-        "sinh": mrcalc_sinh_cargs,
-        "tanh": mrcalc_tanh_cargs,
-        "acosh": mrcalc_acosh_cargs,
-        "asinh": mrcalc_asinh_cargs,
-        "atanh": mrcalc_atanh_cargs,
-        "config": mrcalc_config_cargs,
-        "VariousString": mrcalc_various_string_cargs,
-        "VariousFile": mrcalc_various_file_cargs,
+        "mrtrix.mrcalc": mrcalc_cargs,
+        "mrtrix.mrcalc.abs": mrcalc_abs_cargs,
+        "mrtrix.mrcalc.neg": mrcalc_neg_cargs,
+        "mrtrix.mrcalc.add": mrcalc_add_cargs,
+        "mrtrix.mrcalc.subtract": mrcalc_subtract_cargs,
+        "mrtrix.mrcalc.multiply": mrcalc_multiply_cargs,
+        "mrtrix.mrcalc.divide": mrcalc_divide_cargs,
+        "mrtrix.mrcalc.min": mrcalc_min_cargs,
+        "mrtrix.mrcalc.max": mrcalc_max_cargs,
+        "mrtrix.mrcalc.lt": mrcalc_lt_cargs,
+        "mrtrix.mrcalc.gt": mrcalc_gt_cargs,
+        "mrtrix.mrcalc.le": mrcalc_le_cargs,
+        "mrtrix.mrcalc.ge": mrcalc_ge_cargs,
+        "mrtrix.mrcalc.eq": mrcalc_eq_cargs,
+        "mrtrix.mrcalc.neq": mrcalc_neq_cargs,
+        "mrtrix.mrcalc.if": mrcalc_if_cargs,
+        "mrtrix.mrcalc.replace": mrcalc_replace_cargs,
+        "mrtrix.mrcalc.sqrt": mrcalc_sqrt_cargs,
+        "mrtrix.mrcalc.pow": mrcalc_pow_cargs,
+        "mrtrix.mrcalc.round": mrcalc_round_cargs,
+        "mrtrix.mrcalc.ceil": mrcalc_ceil_cargs,
+        "mrtrix.mrcalc.floor": mrcalc_floor_cargs,
+        "mrtrix.mrcalc.not": mrcalc_not_cargs,
+        "mrtrix.mrcalc.and": mrcalc_and_cargs,
+        "mrtrix.mrcalc.or": mrcalc_or_cargs,
+        "mrtrix.mrcalc.xor": mrcalc_xor_cargs,
+        "mrtrix.mrcalc.isnan": mrcalc_isnan_cargs,
+        "mrtrix.mrcalc.isinf": mrcalc_isinf_cargs,
+        "mrtrix.mrcalc.finite": mrcalc_finite_cargs,
+        "mrtrix.mrcalc.complex": mrcalc_complex_cargs,
+        "mrtrix.mrcalc.polar": mrcalc_polar_cargs,
+        "mrtrix.mrcalc.real": mrcalc_real_cargs,
+        "mrtrix.mrcalc.imag": mrcalc_imag_cargs,
+        "mrtrix.mrcalc.phase": mrcalc_phase_cargs,
+        "mrtrix.mrcalc.conj": mrcalc_conj_cargs,
+        "mrtrix.mrcalc.proj": mrcalc_proj_cargs,
+        "mrtrix.mrcalc.exp": mrcalc_exp_cargs,
+        "mrtrix.mrcalc.log": mrcalc_log_cargs,
+        "mrtrix.mrcalc.log10": mrcalc_log10_cargs,
+        "mrtrix.mrcalc.cos": mrcalc_cos_cargs,
+        "mrtrix.mrcalc.sin": mrcalc_sin_cargs,
+        "mrtrix.mrcalc.tan": mrcalc_tan_cargs,
+        "mrtrix.mrcalc.acos": mrcalc_acos_cargs,
+        "mrtrix.mrcalc.asin": mrcalc_asin_cargs,
+        "mrtrix.mrcalc.atan": mrcalc_atan_cargs,
+        "mrtrix.mrcalc.cosh": mrcalc_cosh_cargs,
+        "mrtrix.mrcalc.sinh": mrcalc_sinh_cargs,
+        "mrtrix.mrcalc.tanh": mrcalc_tanh_cargs,
+        "mrtrix.mrcalc.acosh": mrcalc_acosh_cargs,
+        "mrtrix.mrcalc.asinh": mrcalc_asinh_cargs,
+        "mrtrix.mrcalc.atanh": mrcalc_atanh_cargs,
+        "mrtrix.mrcalc.config": mrcalc_config_cargs,
+        "mrtrix.mrcalc.VariousString": mrcalc_various_string_cargs,
+        "mrtrix.mrcalc.VariousFile": mrcalc_various_file_cargs,
     }.get(t)
 
 
@@ -441,7 +441,7 @@ def mrcalc_abs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "abs",
+        "@type": "mrtrix.mrcalc.abs",
     }
     return params
 
@@ -474,7 +474,7 @@ def mrcalc_neg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neg",
+        "@type": "mrtrix.mrcalc.neg",
     }
     return params
 
@@ -507,7 +507,7 @@ def mrcalc_add_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "add",
+        "@type": "mrtrix.mrcalc.add",
     }
     return params
 
@@ -540,7 +540,7 @@ def mrcalc_subtract_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "subtract",
+        "@type": "mrtrix.mrcalc.subtract",
     }
     return params
 
@@ -573,7 +573,7 @@ def mrcalc_multiply_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "multiply",
+        "@type": "mrtrix.mrcalc.multiply",
     }
     return params
 
@@ -606,7 +606,7 @@ def mrcalc_divide_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "divide",
+        "@type": "mrtrix.mrcalc.divide",
     }
     return params
 
@@ -639,7 +639,7 @@ def mrcalc_min_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "min",
+        "@type": "mrtrix.mrcalc.min",
     }
     return params
 
@@ -672,7 +672,7 @@ def mrcalc_max_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "max",
+        "@type": "mrtrix.mrcalc.max",
     }
     return params
 
@@ -705,7 +705,7 @@ def mrcalc_lt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "lt",
+        "@type": "mrtrix.mrcalc.lt",
     }
     return params
 
@@ -738,7 +738,7 @@ def mrcalc_gt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gt",
+        "@type": "mrtrix.mrcalc.gt",
     }
     return params
 
@@ -771,7 +771,7 @@ def mrcalc_le_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "le",
+        "@type": "mrtrix.mrcalc.le",
     }
     return params
 
@@ -804,7 +804,7 @@ def mrcalc_ge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ge",
+        "@type": "mrtrix.mrcalc.ge",
     }
     return params
 
@@ -837,7 +837,7 @@ def mrcalc_eq_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eq",
+        "@type": "mrtrix.mrcalc.eq",
     }
     return params
 
@@ -870,7 +870,7 @@ def mrcalc_neq_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neq",
+        "@type": "mrtrix.mrcalc.neq",
     }
     return params
 
@@ -903,7 +903,7 @@ def mrcalc_if_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "if",
+        "@type": "mrtrix.mrcalc.if",
     }
     return params
 
@@ -936,7 +936,7 @@ def mrcalc_replace_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "replace",
+        "@type": "mrtrix.mrcalc.replace",
     }
     return params
 
@@ -969,7 +969,7 @@ def mrcalc_sqrt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sqrt",
+        "@type": "mrtrix.mrcalc.sqrt",
     }
     return params
 
@@ -1002,7 +1002,7 @@ def mrcalc_pow_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pow",
+        "@type": "mrtrix.mrcalc.pow",
     }
     return params
 
@@ -1035,7 +1035,7 @@ def mrcalc_round_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "round",
+        "@type": "mrtrix.mrcalc.round",
     }
     return params
 
@@ -1068,7 +1068,7 @@ def mrcalc_ceil_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ceil",
+        "@type": "mrtrix.mrcalc.ceil",
     }
     return params
 
@@ -1101,7 +1101,7 @@ def mrcalc_floor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "floor",
+        "@type": "mrtrix.mrcalc.floor",
     }
     return params
 
@@ -1134,7 +1134,7 @@ def mrcalc_not_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "not",
+        "@type": "mrtrix.mrcalc.not",
     }
     return params
 
@@ -1167,7 +1167,7 @@ def mrcalc_and_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "and",
+        "@type": "mrtrix.mrcalc.and",
     }
     return params
 
@@ -1200,7 +1200,7 @@ def mrcalc_or_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "or",
+        "@type": "mrtrix.mrcalc.or",
     }
     return params
 
@@ -1233,7 +1233,7 @@ def mrcalc_xor_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xor",
+        "@type": "mrtrix.mrcalc.xor",
     }
     return params
 
@@ -1266,7 +1266,7 @@ def mrcalc_isnan_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "isnan",
+        "@type": "mrtrix.mrcalc.isnan",
     }
     return params
 
@@ -1299,7 +1299,7 @@ def mrcalc_isinf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "isinf",
+        "@type": "mrtrix.mrcalc.isinf",
     }
     return params
 
@@ -1332,7 +1332,7 @@ def mrcalc_finite_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "finite",
+        "@type": "mrtrix.mrcalc.finite",
     }
     return params
 
@@ -1365,7 +1365,7 @@ def mrcalc_complex_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "complex",
+        "@type": "mrtrix.mrcalc.complex",
     }
     return params
 
@@ -1398,7 +1398,7 @@ def mrcalc_polar_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "polar",
+        "@type": "mrtrix.mrcalc.polar",
     }
     return params
 
@@ -1431,7 +1431,7 @@ def mrcalc_real_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "real",
+        "@type": "mrtrix.mrcalc.real",
     }
     return params
 
@@ -1464,7 +1464,7 @@ def mrcalc_imag_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imag",
+        "@type": "mrtrix.mrcalc.imag",
     }
     return params
 
@@ -1497,7 +1497,7 @@ def mrcalc_phase_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "phase",
+        "@type": "mrtrix.mrcalc.phase",
     }
     return params
 
@@ -1530,7 +1530,7 @@ def mrcalc_conj_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "conj",
+        "@type": "mrtrix.mrcalc.conj",
     }
     return params
 
@@ -1563,7 +1563,7 @@ def mrcalc_proj_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "proj",
+        "@type": "mrtrix.mrcalc.proj",
     }
     return params
 
@@ -1596,7 +1596,7 @@ def mrcalc_exp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "exp",
+        "@type": "mrtrix.mrcalc.exp",
     }
     return params
 
@@ -1629,7 +1629,7 @@ def mrcalc_log_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "log",
+        "@type": "mrtrix.mrcalc.log",
     }
     return params
 
@@ -1662,7 +1662,7 @@ def mrcalc_log10_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "log10",
+        "@type": "mrtrix.mrcalc.log10",
     }
     return params
 
@@ -1695,7 +1695,7 @@ def mrcalc_cos_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cos",
+        "@type": "mrtrix.mrcalc.cos",
     }
     return params
 
@@ -1728,7 +1728,7 @@ def mrcalc_sin_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sin",
+        "@type": "mrtrix.mrcalc.sin",
     }
     return params
 
@@ -1761,7 +1761,7 @@ def mrcalc_tan_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tan",
+        "@type": "mrtrix.mrcalc.tan",
     }
     return params
 
@@ -1794,7 +1794,7 @@ def mrcalc_acos_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "acos",
+        "@type": "mrtrix.mrcalc.acos",
     }
     return params
 
@@ -1827,7 +1827,7 @@ def mrcalc_asin_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "asin",
+        "@type": "mrtrix.mrcalc.asin",
     }
     return params
 
@@ -1860,7 +1860,7 @@ def mrcalc_atan_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "atan",
+        "@type": "mrtrix.mrcalc.atan",
     }
     return params
 
@@ -1893,7 +1893,7 @@ def mrcalc_cosh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cosh",
+        "@type": "mrtrix.mrcalc.cosh",
     }
     return params
 
@@ -1926,7 +1926,7 @@ def mrcalc_sinh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sinh",
+        "@type": "mrtrix.mrcalc.sinh",
     }
     return params
 
@@ -1959,7 +1959,7 @@ def mrcalc_tanh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tanh",
+        "@type": "mrtrix.mrcalc.tanh",
     }
     return params
 
@@ -1992,7 +1992,7 @@ def mrcalc_acosh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "acosh",
+        "@type": "mrtrix.mrcalc.acosh",
     }
     return params
 
@@ -2025,7 +2025,7 @@ def mrcalc_asinh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "asinh",
+        "@type": "mrtrix.mrcalc.asinh",
     }
     return params
 
@@ -2058,7 +2058,7 @@ def mrcalc_atanh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "atanh",
+        "@type": "mrtrix.mrcalc.atanh",
     }
     return params
 
@@ -2095,7 +2095,7 @@ def mrcalc_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.mrcalc.config",
         "key": key,
         "value": value,
     }
@@ -2134,7 +2134,7 @@ def mrcalc_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.mrcalc.VariousString",
         "obj": obj,
     }
     return params
@@ -2170,7 +2170,7 @@ def mrcalc_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.mrcalc.VariousFile",
         "obj": obj,
     }
     return params
@@ -2353,7 +2353,7 @@ def mrcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mrcalc",
+        "@type": "mrtrix.mrcalc",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -2487,105 +2487,105 @@ def mrcalc_cargs(
     cargs = []
     cargs.append("mrcalc")
     if params.get("abs") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("abs")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("abs")] for a in c])
     if params.get("neg") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("neg")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("neg")] for a in c])
     if params.get("add") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("add")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("add")] for a in c])
     if params.get("subtract") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("subtract")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("subtract")] for a in c])
     if params.get("multiply") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("multiply")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("multiply")] for a in c])
     if params.get("divide") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("divide")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("divide")] for a in c])
     if params.get("min") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("min")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("min")] for a in c])
     if params.get("max") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("max")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("max")] for a in c])
     if params.get("lt") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("lt")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("lt")] for a in c])
     if params.get("gt") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("gt")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("gt")] for a in c])
     if params.get("le") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("le")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("le")] for a in c])
     if params.get("ge") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("ge")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("ge")] for a in c])
     if params.get("eq") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("eq")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("eq")] for a in c])
     if params.get("neq") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("neq")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("neq")] for a in c])
     if params.get("if") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("if")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("if")] for a in c])
     if params.get("replace") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("replace")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("replace")] for a in c])
     if params.get("sqrt") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("sqrt")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sqrt")] for a in c])
     if params.get("pow") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("pow")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("pow")] for a in c])
     if params.get("round") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("round")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("round")] for a in c])
     if params.get("ceil") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("ceil")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("ceil")] for a in c])
     if params.get("floor") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("floor")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("floor")] for a in c])
     if params.get("not") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("not")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("not")] for a in c])
     if params.get("and") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("and")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("and")] for a in c])
     if params.get("or") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("or")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("or")] for a in c])
     if params.get("xor") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("xor")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("xor")] for a in c])
     if params.get("isnan") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("isnan")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("isnan")] for a in c])
     if params.get("isinf") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("isinf")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("isinf")] for a in c])
     if params.get("finite") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("finite")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("finite")] for a in c])
     if params.get("complex") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("complex")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("complex")] for a in c])
     if params.get("polar") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("polar")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("polar")] for a in c])
     if params.get("real") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("real")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("real")] for a in c])
     if params.get("imag") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("imag")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("imag")] for a in c])
     if params.get("phase") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("phase")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("phase")] for a in c])
     if params.get("conj") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("conj")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("conj")] for a in c])
     if params.get("proj") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("proj")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("proj")] for a in c])
     if params.get("exp") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("exp")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("exp")] for a in c])
     if params.get("log") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("log")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("log")] for a in c])
     if params.get("log10") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("log10")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("log10")] for a in c])
     if params.get("cos") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cos")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cos")] for a in c])
     if params.get("sin") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("sin")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sin")] for a in c])
     if params.get("tan") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("tan")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tan")] for a in c])
     if params.get("acos") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("acos")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("acos")] for a in c])
     if params.get("asin") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("asin")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("asin")] for a in c])
     if params.get("atan") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("atan")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("atan")] for a in c])
     if params.get("cosh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cosh")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cosh")] for a in c])
     if params.get("sinh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("sinh")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("sinh")] for a in c])
     if params.get("tanh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("tanh")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("tanh")] for a in c])
     if params.get("acosh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("acosh")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("acosh")] for a in c])
     if params.get("asinh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("asinh")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("asinh")] for a in c])
     if params.get("atanh") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("atanh")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("atanh")] for a in c])
     if params.get("datatype") is not None:
         cargs.extend([
             "-datatype",
@@ -2605,12 +2605,12 @@ def mrcalc_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
-    cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("operand")] for a in c])
+    cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("operand")] for a in c])
     return cargs
 
 
@@ -2990,58 +2990,114 @@ __all__ = [
     "MrcalcVariousStringParameters",
     "MrcalcXorParameters",
     "mrcalc",
+    "mrcalc_abs_cargs",
     "mrcalc_abs_params",
+    "mrcalc_acos_cargs",
     "mrcalc_acos_params",
+    "mrcalc_acosh_cargs",
     "mrcalc_acosh_params",
+    "mrcalc_add_cargs",
     "mrcalc_add_params",
+    "mrcalc_and_cargs",
     "mrcalc_and_params",
+    "mrcalc_asin_cargs",
     "mrcalc_asin_params",
+    "mrcalc_asinh_cargs",
     "mrcalc_asinh_params",
+    "mrcalc_atan_cargs",
     "mrcalc_atan_params",
+    "mrcalc_atanh_cargs",
     "mrcalc_atanh_params",
+    "mrcalc_cargs",
+    "mrcalc_ceil_cargs",
     "mrcalc_ceil_params",
+    "mrcalc_complex_cargs",
     "mrcalc_complex_params",
+    "mrcalc_config_cargs",
     "mrcalc_config_params",
+    "mrcalc_conj_cargs",
     "mrcalc_conj_params",
+    "mrcalc_cos_cargs",
     "mrcalc_cos_params",
+    "mrcalc_cosh_cargs",
     "mrcalc_cosh_params",
+    "mrcalc_divide_cargs",
     "mrcalc_divide_params",
+    "mrcalc_eq_cargs",
     "mrcalc_eq_params",
+    "mrcalc_execute",
+    "mrcalc_exp_cargs",
     "mrcalc_exp_params",
+    "mrcalc_finite_cargs",
     "mrcalc_finite_params",
+    "mrcalc_floor_cargs",
     "mrcalc_floor_params",
+    "mrcalc_ge_cargs",
     "mrcalc_ge_params",
+    "mrcalc_gt_cargs",
     "mrcalc_gt_params",
+    "mrcalc_if_cargs",
     "mrcalc_if_params",
+    "mrcalc_imag_cargs",
     "mrcalc_imag_params",
+    "mrcalc_isinf_cargs",
     "mrcalc_isinf_params",
+    "mrcalc_isnan_cargs",
     "mrcalc_isnan_params",
+    "mrcalc_le_cargs",
     "mrcalc_le_params",
+    "mrcalc_log10_cargs",
     "mrcalc_log10_params",
+    "mrcalc_log_cargs",
     "mrcalc_log_params",
+    "mrcalc_lt_cargs",
     "mrcalc_lt_params",
+    "mrcalc_max_cargs",
     "mrcalc_max_params",
+    "mrcalc_min_cargs",
     "mrcalc_min_params",
+    "mrcalc_multiply_cargs",
     "mrcalc_multiply_params",
+    "mrcalc_neg_cargs",
     "mrcalc_neg_params",
+    "mrcalc_neq_cargs",
     "mrcalc_neq_params",
+    "mrcalc_not_cargs",
     "mrcalc_not_params",
+    "mrcalc_or_cargs",
     "mrcalc_or_params",
+    "mrcalc_outputs",
     "mrcalc_params",
+    "mrcalc_phase_cargs",
     "mrcalc_phase_params",
+    "mrcalc_polar_cargs",
     "mrcalc_polar_params",
+    "mrcalc_pow_cargs",
     "mrcalc_pow_params",
+    "mrcalc_proj_cargs",
     "mrcalc_proj_params",
+    "mrcalc_real_cargs",
     "mrcalc_real_params",
+    "mrcalc_replace_cargs",
     "mrcalc_replace_params",
+    "mrcalc_round_cargs",
     "mrcalc_round_params",
+    "mrcalc_sin_cargs",
     "mrcalc_sin_params",
+    "mrcalc_sinh_cargs",
     "mrcalc_sinh_params",
+    "mrcalc_sqrt_cargs",
     "mrcalc_sqrt_params",
+    "mrcalc_subtract_cargs",
     "mrcalc_subtract_params",
+    "mrcalc_tan_cargs",
     "mrcalc_tan_params",
+    "mrcalc_tanh_cargs",
     "mrcalc_tanh_params",
+    "mrcalc_various_file_cargs",
     "mrcalc_various_file_params",
+    "mrcalc_various_string_cargs",
     "mrcalc_various_string_params",
+    "mrcalc_xor_cargs",
     "mrcalc_xor_params",
 ]

@@ -14,7 +14,7 @@ MIST_FA_REG_METADATA = Metadata(
 
 
 MistFaRegParameters = typing.TypedDict('MistFaRegParameters', {
-    "__STYXTYPE__": typing.Literal["mist_FA_reg"],
+    "@type": typing.Literal["fsl.mist_FA_reg"],
     "fa_volume": InputPathType,
     "s0_volume": InputPathType,
     "reference_t1_volume": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mist_FA_reg": mist_fa_reg_cargs,
+        "fsl.mist_FA_reg": mist_fa_reg_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mist_FA_reg": mist_fa_reg_outputs,
+        "fsl.mist_FA_reg": mist_fa_reg_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mist_fa_reg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mist_FA_reg",
+        "@type": "fsl.mist_FA_reg",
         "fa_volume": fa_volume,
         "s0_volume": s0_volume,
         "reference_t1_volume": reference_t1_volume,
@@ -196,5 +196,8 @@ __all__ = [
     "MistFaRegOutputs",
     "MistFaRegParameters",
     "mist_fa_reg",
+    "mist_fa_reg_cargs",
+    "mist_fa_reg_execute",
+    "mist_fa_reg_outputs",
     "mist_fa_reg_params",
 ]

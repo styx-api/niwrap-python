@@ -14,7 +14,7 @@ BEDPOSTX_METADATA = Metadata(
 
 
 BedpostxParameters = typing.TypedDict('BedpostxParameters', {
-    "__STYXTYPE__": typing.Literal["bedpostx"],
+    "@type": typing.Literal["fsl.bedpostx"],
     "subject_dir": str,
     "num_fibres": typing.NotRequired[float | None],
     "ard_weight": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "bedpostx": bedpostx_cargs,
+        "fsl.bedpostx": bedpostx_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "bedpostx": bedpostx_outputs,
+        "fsl.bedpostx": bedpostx_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def bedpostx_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bedpostx",
+        "@type": "fsl.bedpostx",
         "subject_dir": subject_dir,
         "grad_nonlinear": grad_nonlinear,
     }
@@ -272,5 +272,8 @@ __all__ = [
     "BedpostxOutputs",
     "BedpostxParameters",
     "bedpostx",
+    "bedpostx_cargs",
+    "bedpostx_execute",
+    "bedpostx_outputs",
     "bedpostx_params",
 ]

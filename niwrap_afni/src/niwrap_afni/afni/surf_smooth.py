@@ -14,7 +14,7 @@ SURF_SMOOTH_METADATA = Metadata(
 
 
 SurfSmoothParameters = typing.TypedDict('SurfSmoothParameters', {
-    "__STYXTYPE__": typing.Literal["SurfSmooth"],
+    "@type": typing.Literal["afni.SurfSmooth"],
     "surface": str,
     "method": str,
     "input_data": typing.NotRequired[InputPathType | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfSmooth": surf_smooth_cargs,
+        "afni.SurfSmooth": surf_smooth_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfSmooth": surf_smooth_outputs,
+        "afni.SurfSmooth": surf_smooth_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def surf_smooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfSmooth",
+        "@type": "afni.SurfSmooth",
         "surface": surface,
         "method": method,
         "use_neighbors_outside_mask": use_neighbors_outside_mask,
@@ -384,5 +384,8 @@ __all__ = [
     "SurfSmoothOutputs",
     "SurfSmoothParameters",
     "surf_smooth",
+    "surf_smooth_cargs",
+    "surf_smooth_execute",
+    "surf_smooth_outputs",
     "surf_smooth_params",
 ]

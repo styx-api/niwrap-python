@@ -14,7 +14,7 @@ VOLUME_COMPONENTS_TO_FRAMES_METADATA = Metadata(
 
 
 VolumeComponentsToFramesParameters = typing.TypedDict('VolumeComponentsToFramesParameters', {
-    "__STYXTYPE__": typing.Literal["volume-components-to-frames"],
+    "@type": typing.Literal["workbench.volume-components-to-frames"],
     "input": InputPathType,
     "output": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-components-to-frames": volume_components_to_frames_cargs,
+        "workbench.volume-components-to-frames": volume_components_to_frames_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-components-to-frames": volume_components_to_frames_outputs,
+        "workbench.volume-components-to-frames": volume_components_to_frames_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def volume_components_to_frames_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-components-to-frames",
+        "@type": "workbench.volume-components-to-frames",
         "input": input_,
         "output": output,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "VolumeComponentsToFramesOutputs",
     "VolumeComponentsToFramesParameters",
     "volume_components_to_frames",
+    "volume_components_to_frames_cargs",
+    "volume_components_to_frames_execute",
+    "volume_components_to_frames_outputs",
     "volume_components_to_frames_params",
 ]

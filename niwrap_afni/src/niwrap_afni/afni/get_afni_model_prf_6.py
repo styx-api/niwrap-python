@@ -14,7 +14,7 @@ GET_AFNI_MODEL_PRF_6_METADATA = Metadata(
 
 
 GetAfniModelPrf6Parameters = typing.TypedDict('GetAfniModelPrf6Parameters', {
-    "__STYXTYPE__": typing.Literal["get_afni_model_PRF_6"],
+    "@type": typing.Literal["afni.get_afni_model_PRF_6"],
     "NT": float,
     "AMP": float,
     "X": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "get_afni_model_PRF_6": get_afni_model_prf_6_cargs,
+        "afni.get_afni_model_PRF_6": get_afni_model_prf_6_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def get_afni_model_prf_6_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "get_afni_model_PRF_6",
+        "@type": "afni.get_afni_model_PRF_6",
         "NT": nt_,
         "AMP": amp,
         "X": x,
@@ -218,5 +218,8 @@ __all__ = [
     "GetAfniModelPrf6Outputs",
     "GetAfniModelPrf6Parameters",
     "get_afni_model_prf_6",
+    "get_afni_model_prf_6_cargs",
+    "get_afni_model_prf_6_execute",
+    "get_afni_model_prf_6_outputs",
     "get_afni_model_prf_6_params",
 ]

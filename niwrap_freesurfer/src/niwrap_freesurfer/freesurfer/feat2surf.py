@@ -14,7 +14,7 @@ FEAT2SURF_METADATA = Metadata(
 
 
 Feat2surfParameters = typing.TypedDict('Feat2surfParameters', {
-    "__STYXTYPE__": typing.Literal["feat2surf"],
+    "@type": typing.Literal["freesurfer.feat2surf"],
     "feat_dirs": list[str],
     "feat_dirfile": typing.NotRequired[InputPathType | None],
     "proj_frac": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "feat2surf": feat2surf_cargs,
+        "freesurfer.feat2surf": feat2surf_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "feat2surf": feat2surf_outputs,
+        "freesurfer.feat2surf": feat2surf_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def feat2surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "feat2surf",
+        "@type": "freesurfer.feat2surf",
         "feat_dirs": feat_dirs,
         "cope_only": cope_only,
         "debug_flag": debug_flag,
@@ -301,5 +301,8 @@ __all__ = [
     "Feat2surfOutputs",
     "Feat2surfParameters",
     "feat2surf",
+    "feat2surf_cargs",
+    "feat2surf_execute",
+    "feat2surf_outputs",
     "feat2surf_params",
 ]

@@ -14,7 +14,7 @@ GETFULLPATH_METADATA = Metadata(
 
 
 GetfullpathParameters = typing.TypedDict('GetfullpathParameters', {
-    "__STYXTYPE__": typing.Literal["getfullpath"],
+    "@type": typing.Literal["freesurfer.getfullpath"],
     "filename": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "getfullpath": getfullpath_cargs,
+        "freesurfer.getfullpath": getfullpath_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def getfullpath_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "getfullpath",
+        "@type": "freesurfer.getfullpath",
         "filename": filename,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "GetfullpathOutputs",
     "GetfullpathParameters",
     "getfullpath",
+    "getfullpath_cargs",
+    "getfullpath_execute",
+    "getfullpath_outputs",
     "getfullpath_params",
 ]

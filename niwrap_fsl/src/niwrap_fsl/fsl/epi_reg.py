@@ -14,7 +14,7 @@ EPI_REG_METADATA = Metadata(
 
 
 EpiRegParameters = typing.TypedDict('EpiRegParameters', {
-    "__STYXTYPE__": typing.Literal["epi_reg"],
+    "@type": typing.Literal["fsl.epi_reg"],
     "epi": InputPathType,
     "t1_head": InputPathType,
     "t1_brain": InputPathType,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "epi_reg": epi_reg_cargs,
+        "fsl.epi_reg": epi_reg_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "epi_reg": epi_reg_outputs,
+        "fsl.epi_reg": epi_reg_outputs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def epi_reg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "epi_reg",
+        "@type": "fsl.epi_reg",
         "epi": epi,
         "t1_head": t1_head,
         "t1_brain": t1_brain,
@@ -331,5 +331,8 @@ __all__ = [
     "EpiRegOutputs",
     "EpiRegParameters",
     "epi_reg",
+    "epi_reg_cargs",
+    "epi_reg_execute",
+    "epi_reg_outputs",
     "epi_reg_params",
 ]

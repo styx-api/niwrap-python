@@ -14,7 +14,7 @@ V_1DFFT_METADATA = Metadata(
 
 
 V1dfftParameters = typing.TypedDict('V1dfftParameters', {
-    "__STYXTYPE__": typing.Literal["1dfft"],
+    "@type": typing.Literal["afni.1dfft"],
     "infile": InputPathType,
     "outfile": str,
     "ignore": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "1dfft": v_1dfft_cargs,
+        "afni.1dfft": v_1dfft_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "1dfft": v_1dfft_outputs,
+        "afni.1dfft": v_1dfft_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_1dfft_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "1dfft",
+        "@type": "afni.1dfft",
         "infile": infile,
         "outfile": outfile,
         "tocx": tocx,
@@ -265,5 +265,8 @@ __all__ = [
     "V1dfftParameters",
     "V_1DFFT_METADATA",
     "v_1dfft",
+    "v_1dfft_cargs",
+    "v_1dfft_execute",
+    "v_1dfft_outputs",
     "v_1dfft_params",
 ]

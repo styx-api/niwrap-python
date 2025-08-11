@@ -14,7 +14,7 @@ V__IS_OBLIQUE_METADATA = Metadata(
 
 
 VIsObliqueParameters = typing.TypedDict('VIsObliqueParameters', {
-    "__STYXTYPE__": typing.Literal["@isOblique"],
+    "@type": typing.Literal["afni.@isOblique"],
     "infile": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@isOblique": v__is_oblique_cargs,
+        "afni.@isOblique": v__is_oblique_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@isOblique": v__is_oblique_outputs,
+        "afni.@isOblique": v__is_oblique_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__is_oblique_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@isOblique",
+        "@type": "afni.@isOblique",
         "infile": infile,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "VIsObliqueParameters",
     "V__IS_OBLIQUE_METADATA",
     "v__is_oblique",
+    "v__is_oblique_cargs",
+    "v__is_oblique_execute",
+    "v__is_oblique_outputs",
     "v__is_oblique_params",
 ]

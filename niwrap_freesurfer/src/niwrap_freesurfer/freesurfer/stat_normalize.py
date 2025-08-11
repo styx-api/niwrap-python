@@ -14,7 +14,7 @@ STAT_NORMALIZE_METADATA = Metadata(
 
 
 StatNormalizeParameters = typing.TypedDict('StatNormalizeParameters', {
-    "__STYXTYPE__": typing.Literal["stat_normalize"],
+    "@type": typing.Literal["freesurfer.stat_normalize"],
     "input_sv_prefix": str,
     "output_sv_prefix": str,
     "resolution": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "stat_normalize": stat_normalize_cargs,
+        "freesurfer.stat_normalize": stat_normalize_cargs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def stat_normalize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "stat_normalize",
+        "@type": "freesurfer.stat_normalize",
         "input_sv_prefix": input_sv_prefix,
         "output_sv_prefix": output_sv_prefix,
         "fix_xfm_flag": fix_xfm_flag,
@@ -256,5 +256,8 @@ __all__ = [
     "StatNormalizeOutputs",
     "StatNormalizeParameters",
     "stat_normalize",
+    "stat_normalize_cargs",
+    "stat_normalize_execute",
+    "stat_normalize_outputs",
     "stat_normalize_params",
 ]

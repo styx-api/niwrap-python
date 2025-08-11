@@ -14,7 +14,7 @@ IFH2HDR_METADATA = Metadata(
 
 
 Ifh2hdrParameters = typing.TypedDict('Ifh2hdrParameters', {
-    "__STYXTYPE__": typing.Literal["ifh2hdr"],
+    "@type": typing.Literal["freesurfer.ifh2hdr"],
     "input_file": InputPathType,
     "range": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ifh2hdr": ifh2hdr_cargs,
+        "freesurfer.ifh2hdr": ifh2hdr_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def ifh2hdr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ifh2hdr",
+        "@type": "freesurfer.ifh2hdr",
         "input_file": input_file,
     }
     if range_ is not None:
@@ -183,5 +183,8 @@ __all__ = [
     "Ifh2hdrOutputs",
     "Ifh2hdrParameters",
     "ifh2hdr",
+    "ifh2hdr_cargs",
+    "ifh2hdr_execute",
+    "ifh2hdr_outputs",
     "ifh2hdr_params",
 ]

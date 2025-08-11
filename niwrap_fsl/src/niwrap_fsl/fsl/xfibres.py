@@ -14,7 +14,7 @@ XFIBRES_METADATA = Metadata(
 
 
 XfibresParameters = typing.TypedDict('XfibresParameters', {
-    "__STYXTYPE__": typing.Literal["xfibres"],
+    "@type": typing.Literal["fsl.xfibres"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvecs": InputPathType,
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xfibres": xfibres_cargs,
+        "fsl.xfibres": xfibres_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "xfibres": xfibres_outputs,
+        "fsl.xfibres": xfibres_outputs,
     }.get(t)
 
 
@@ -156,7 +156,7 @@ def xfibres_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xfibres",
+        "@type": "fsl.xfibres",
         "datafile": datafile,
         "maskfile": maskfile,
         "bvecs": bvecs,
@@ -473,5 +473,8 @@ __all__ = [
     "XfibresOutputs",
     "XfibresParameters",
     "xfibres",
+    "xfibres_cargs",
+    "xfibres_execute",
+    "xfibres_outputs",
     "xfibres_params",
 ]

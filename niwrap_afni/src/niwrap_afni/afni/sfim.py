@@ -14,7 +14,7 @@ SFIM_METADATA = Metadata(
 
 
 SfimParameters = typing.TypedDict('SfimParameters', {
-    "__STYXTYPE__": typing.Literal["sfim"],
+    "@type": typing.Literal["afni.sfim"],
     "input_images": list[InputPathType],
     "sfint_file": typing.NotRequired[str | None],
     "baseline_state": typing.NotRequired[str | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "sfim": sfim_cargs,
+        "afni.sfim": sfim_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "sfim": sfim_outputs,
+        "afni.sfim": sfim_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def sfim_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sfim",
+        "@type": "afni.sfim",
         "input_images": input_images,
         "local_base_option": local_base_option,
     }
@@ -232,5 +232,8 @@ __all__ = [
     "SfimOutputs",
     "SfimParameters",
     "sfim",
+    "sfim_cargs",
+    "sfim_execute",
+    "sfim_outputs",
     "sfim_params",
 ]

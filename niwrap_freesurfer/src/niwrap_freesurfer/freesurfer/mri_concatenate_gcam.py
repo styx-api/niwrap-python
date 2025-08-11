@@ -14,7 +14,7 @@ MRI_CONCATENATE_GCAM_METADATA = Metadata(
 
 
 MriConcatenateGcamParameters = typing.TypedDict('MriConcatenateGcamParameters', {
-    "__STYXTYPE__": typing.Literal["mri_concatenate_gcam"],
+    "@type": typing.Literal["freesurfer.mri_concatenate_gcam"],
     "inputs": list[InputPathType],
     "output": str,
     "source_image": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_concatenate_gcam": mri_concatenate_gcam_cargs,
+        "freesurfer.mri_concatenate_gcam": mri_concatenate_gcam_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_concatenate_gcam": mri_concatenate_gcam_outputs,
+        "freesurfer.mri_concatenate_gcam": mri_concatenate_gcam_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def mri_concatenate_gcam_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_concatenate_gcam",
+        "@type": "freesurfer.mri_concatenate_gcam",
         "inputs": inputs,
         "output": output,
         "reduce": reduce,
@@ -241,5 +241,8 @@ __all__ = [
     "MriConcatenateGcamOutputs",
     "MriConcatenateGcamParameters",
     "mri_concatenate_gcam",
+    "mri_concatenate_gcam_cargs",
+    "mri_concatenate_gcam_execute",
+    "mri_concatenate_gcam_outputs",
     "mri_concatenate_gcam_params",
 ]

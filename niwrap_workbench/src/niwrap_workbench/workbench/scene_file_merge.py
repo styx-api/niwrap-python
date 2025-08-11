@@ -14,28 +14,28 @@ SCENE_FILE_MERGE_METADATA = Metadata(
 
 
 SceneFileMergeUpToParameters = typing.TypedDict('SceneFileMergeUpToParameters', {
-    "__STYXTYPE__": typing.Literal["up_to"],
+    "@type": typing.Literal["workbench.scene-file-merge.scene_file.scene.up_to"],
     "last_column": str,
     "opt_reverse": bool,
 })
 
 
 SceneFileMergeSceneParameters = typing.TypedDict('SceneFileMergeSceneParameters', {
-    "__STYXTYPE__": typing.Literal["scene"],
+    "@type": typing.Literal["workbench.scene-file-merge.scene_file.scene"],
     "scene": str,
     "up_to": typing.NotRequired[SceneFileMergeUpToParameters | None],
 })
 
 
 SceneFileMergeSceneFileParameters = typing.TypedDict('SceneFileMergeSceneFileParameters', {
-    "__STYXTYPE__": typing.Literal["scene_file"],
+    "@type": typing.Literal["workbench.scene-file-merge.scene_file"],
     "scene_file": str,
     "scene": typing.NotRequired[list[SceneFileMergeSceneParameters] | None],
 })
 
 
 SceneFileMergeParameters = typing.TypedDict('SceneFileMergeParameters', {
-    "__STYXTYPE__": typing.Literal["scene-file-merge"],
+    "@type": typing.Literal["workbench.scene-file-merge"],
     "scene_file_out": str,
     "scene_file": typing.NotRequired[list[SceneFileMergeSceneFileParameters] | None],
 })
@@ -53,10 +53,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "scene-file-merge": scene_file_merge_cargs,
-        "scene_file": scene_file_merge_scene_file_cargs,
-        "scene": scene_file_merge_scene_cargs,
-        "up_to": scene_file_merge_up_to_cargs,
+        "workbench.scene-file-merge": scene_file_merge_cargs,
+        "workbench.scene-file-merge.scene_file": scene_file_merge_scene_file_cargs,
+        "workbench.scene-file-merge.scene_file.scene": scene_file_merge_scene_cargs,
+        "workbench.scene-file-merge.scene_file.scene.up_to": scene_file_merge_up_to_cargs,
     }.get(t)
 
 
@@ -89,7 +89,7 @@ def scene_file_merge_up_to_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "up_to",
+        "@type": "workbench.scene-file-merge.scene_file.scene.up_to",
         "last_column": last_column,
         "opt_reverse": opt_reverse,
     }
@@ -131,7 +131,7 @@ def scene_file_merge_scene_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "scene",
+        "@type": "workbench.scene-file-merge.scene_file.scene",
         "scene": scene,
     }
     if up_to is not None:
@@ -156,7 +156,7 @@ def scene_file_merge_scene_cargs(
     cargs.append("-scene")
     cargs.append(params.get("scene"))
     if params.get("up_to") is not None:
-        cargs.extend(dyn_cargs(params.get("up_to")["__STYXTYPE__"])(params.get("up_to"), execution))
+        cargs.extend(dyn_cargs(params.get("up_to")["@type"])(params.get("up_to"), execution))
     return cargs
 
 
@@ -174,7 +174,7 @@ def scene_file_merge_scene_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "scene_file",
+        "@type": "workbench.scene-file-merge.scene_file",
         "scene_file": scene_file,
     }
     if scene is not None:
@@ -199,7 +199,7 @@ def scene_file_merge_scene_file_cargs(
     cargs.append("-scene-file")
     cargs.append(params.get("scene_file"))
     if params.get("scene") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("scene")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("scene")] for a in c])
     return cargs
 
 
@@ -225,7 +225,7 @@ def scene_file_merge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "scene-file-merge",
+        "@type": "workbench.scene-file-merge",
         "scene_file_out": scene_file_out,
     }
     if scene_file is not None:
@@ -251,7 +251,7 @@ def scene_file_merge_cargs(
     cargs.append("-scene-file-merge")
     cargs.append(params.get("scene_file_out"))
     if params.get("scene_file") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("scene_file")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("scene_file")] for a in c])
     return cargs
 
 
@@ -352,8 +352,14 @@ __all__ = [
     "SceneFileMergeSceneParameters",
     "SceneFileMergeUpToParameters",
     "scene_file_merge",
+    "scene_file_merge_cargs",
+    "scene_file_merge_execute",
+    "scene_file_merge_outputs",
     "scene_file_merge_params",
+    "scene_file_merge_scene_cargs",
+    "scene_file_merge_scene_file_cargs",
     "scene_file_merge_scene_file_params",
     "scene_file_merge_scene_params",
+    "scene_file_merge_up_to_cargs",
     "scene_file_merge_up_to_params",
 ]

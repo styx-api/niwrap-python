@@ -14,7 +14,7 @@ SEGMENT_HA_T1_LONG_SH_METADATA = Metadata(
 
 
 SegmentHaT1LongShParameters = typing.TypedDict('SegmentHaT1LongShParameters', {
-    "__STYXTYPE__": typing.Literal["segmentHA_T1_long.sh"],
+    "@type": typing.Literal["freesurfer.segmentHA_T1_long.sh"],
     "subject_dir": str,
     "subject_id": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segmentHA_T1_long.sh": segment_ha_t1_long_sh_cargs,
+        "freesurfer.segmentHA_T1_long.sh": segment_ha_t1_long_sh_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segmentHA_T1_long.sh": segment_ha_t1_long_sh_outputs,
+        "freesurfer.segmentHA_T1_long.sh": segment_ha_t1_long_sh_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def segment_ha_t1_long_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segmentHA_T1_long.sh",
+        "@type": "freesurfer.segmentHA_T1_long.sh",
         "subject_dir": subject_dir,
         "subject_id": subject_id,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "SegmentHaT1LongShOutputs",
     "SegmentHaT1LongShParameters",
     "segment_ha_t1_long_sh",
+    "segment_ha_t1_long_sh_cargs",
+    "segment_ha_t1_long_sh_execute",
+    "segment_ha_t1_long_sh_outputs",
     "segment_ha_t1_long_sh_params",
 ]

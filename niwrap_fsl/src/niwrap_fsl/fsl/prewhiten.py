@@ -14,7 +14,7 @@ PREWHITEN_METADATA = Metadata(
 
 
 PrewhitenParameters = typing.TypedDict('PrewhitenParameters', {
-    "__STYXTYPE__": typing.Literal["prewhiten"],
+    "@type": typing.Literal["fsl.prewhiten"],
     "feat_directory": str,
     "output_directory": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "prewhiten": prewhiten_cargs,
+        "fsl.prewhiten": prewhiten_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "prewhiten": prewhiten_outputs,
+        "fsl.prewhiten": prewhiten_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def prewhiten_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "prewhiten",
+        "@type": "fsl.prewhiten",
         "feat_directory": feat_directory,
     }
     if output_directory is not None:
@@ -187,5 +187,8 @@ __all__ = [
     "PrewhitenOutputs",
     "PrewhitenParameters",
     "prewhiten",
+    "prewhiten_cargs",
+    "prewhiten_execute",
+    "prewhiten_outputs",
     "prewhiten_params",
 ]

@@ -14,7 +14,7 @@ METRIC_REMOVE_ISLANDS_METADATA = Metadata(
 
 
 MetricRemoveIslandsParameters = typing.TypedDict('MetricRemoveIslandsParameters', {
-    "__STYXTYPE__": typing.Literal["metric-remove-islands"],
+    "@type": typing.Literal["workbench.metric-remove-islands"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-remove-islands": metric_remove_islands_cargs,
+        "workbench.metric-remove-islands": metric_remove_islands_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-remove-islands": metric_remove_islands_outputs,
+        "workbench.metric-remove-islands": metric_remove_islands_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def metric_remove_islands_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-remove-islands",
+        "@type": "workbench.metric-remove-islands",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -212,5 +212,8 @@ __all__ = [
     "MetricRemoveIslandsOutputs",
     "MetricRemoveIslandsParameters",
     "metric_remove_islands",
+    "metric_remove_islands_cargs",
+    "metric_remove_islands_execute",
+    "metric_remove_islands_outputs",
     "metric_remove_islands_params",
 ]

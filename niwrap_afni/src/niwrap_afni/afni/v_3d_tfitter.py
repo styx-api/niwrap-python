@@ -14,7 +14,7 @@ V_3D_TFITTER_METADATA = Metadata(
 
 
 V3dTfitterParameters = typing.TypedDict('V3dTfitterParameters', {
-    "__STYXTYPE__": typing.Literal["3dTfitter"],
+    "@type": typing.Literal["afni.3dTfitter"],
     "RHS": str,
     "LHS": typing.NotRequired[list[str] | None],
     "polort": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTfitter": v_3d_tfitter_cargs,
+        "afni.3dTfitter": v_3d_tfitter_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTfitter": v_3d_tfitter_outputs,
+        "afni.3dTfitter": v_3d_tfitter_outputs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def v_3d_tfitter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTfitter",
+        "@type": "afni.3dTfitter",
         "RHS": rhs,
         "lsqfit": lsqfit,
         "l1fit": l1fit,
@@ -426,5 +426,8 @@ __all__ = [
     "V3dTfitterParameters",
     "V_3D_TFITTER_METADATA",
     "v_3d_tfitter",
+    "v_3d_tfitter_cargs",
+    "v_3d_tfitter_execute",
+    "v_3d_tfitter_outputs",
     "v_3d_tfitter_params",
 ]

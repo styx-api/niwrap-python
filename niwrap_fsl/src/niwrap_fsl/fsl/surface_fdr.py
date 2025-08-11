@@ -14,7 +14,7 @@ SURFACE_FDR_METADATA = Metadata(
 
 
 SurfaceFdrParameters = typing.TypedDict('SurfaceFdrParameters', {
-    "__STYXTYPE__": typing.Literal["surface_fdr"],
+    "@type": typing.Literal["fsl.surface_fdr"],
     "input_vtk": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface_fdr": surface_fdr_cargs,
+        "fsl.surface_fdr": surface_fdr_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface_fdr": surface_fdr_outputs,
+        "fsl.surface_fdr": surface_fdr_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def surface_fdr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface_fdr",
+        "@type": "fsl.surface_fdr",
         "input_vtk": input_vtk,
     }
     return params
@@ -178,5 +178,8 @@ __all__ = [
     "SurfaceFdrOutputs",
     "SurfaceFdrParameters",
     "surface_fdr",
+    "surface_fdr_cargs",
+    "surface_fdr_execute",
+    "surface_fdr_outputs",
     "surface_fdr_params",
 ]

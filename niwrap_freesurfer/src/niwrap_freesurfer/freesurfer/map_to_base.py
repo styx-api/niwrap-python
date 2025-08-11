@@ -14,7 +14,7 @@ MAP_TO_BASE_METADATA = Metadata(
 
 
 MapToBaseParameters = typing.TypedDict('MapToBaseParameters', {
-    "__STYXTYPE__": typing.Literal["map_to_base"],
+    "@type": typing.Literal["freesurfer.map_to_base"],
     "baseid": str,
     "tpid": str,
     "input_image": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "map_to_base": map_to_base_cargs,
+        "freesurfer.map_to_base": map_to_base_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "map_to_base": map_to_base_outputs,
+        "freesurfer.map_to_base": map_to_base_outputs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def map_to_base_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "map_to_base",
+        "@type": "freesurfer.map_to_base",
         "baseid": baseid,
         "tpid": tpid,
         "input_image": input_image,
@@ -227,5 +227,8 @@ __all__ = [
     "MapToBaseOutputs",
     "MapToBaseParameters",
     "map_to_base",
+    "map_to_base_cargs",
+    "map_to_base_execute",
+    "map_to_base_outputs",
     "map_to_base_params",
 ]

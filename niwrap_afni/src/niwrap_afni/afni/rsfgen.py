@@ -14,7 +14,7 @@ RSFGEN_METADATA = Metadata(
 
 
 RsfgenParameters = typing.TypedDict('RsfgenParameters', {
-    "__STYXTYPE__": typing.Literal["RSFgen"],
+    "@type": typing.Literal["afni.RSFgen"],
     "length": int,
     "num_experimental_conditions": int,
     "block_length": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "RSFgen": rsfgen_cargs,
+        "afni.RSFgen": rsfgen_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "RSFgen": rsfgen_outputs,
+        "afni.RSFgen": rsfgen_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def rsfgen_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "RSFgen",
+        "@type": "afni.RSFgen",
         "length": length,
         "num_experimental_conditions": num_experimental_conditions,
         "suppress_output_flag": suppress_output_flag,
@@ -326,5 +326,8 @@ __all__ = [
     "RsfgenOutputs",
     "RsfgenParameters",
     "rsfgen",
+    "rsfgen_cargs",
+    "rsfgen_execute",
+    "rsfgen_outputs",
     "rsfgen_params",
 ]

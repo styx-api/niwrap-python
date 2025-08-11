@@ -14,7 +14,7 @@ IMRM_METADATA = Metadata(
 
 
 ImrmParameters = typing.TypedDict('ImrmParameters', {
-    "__STYXTYPE__": typing.Literal["imrm"],
+    "@type": typing.Literal["fsl.imrm"],
     "images_to_remove": list[str],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imrm": imrm_cargs,
+        "fsl.imrm": imrm_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def imrm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imrm",
+        "@type": "fsl.imrm",
         "images_to_remove": images_to_remove,
     }
     return params
@@ -170,5 +170,8 @@ __all__ = [
     "ImrmOutputs",
     "ImrmParameters",
     "imrm",
+    "imrm_cargs",
+    "imrm_execute",
+    "imrm_outputs",
     "imrm_params",
 ]

@@ -14,7 +14,7 @@ FSLSIZE_METADATA = Metadata(
 
 
 FslsizeParameters = typing.TypedDict('FslsizeParameters', {
-    "__STYXTYPE__": typing.Literal["fslsize"],
+    "@type": typing.Literal["fsl.fslsize"],
     "input_file": InputPathType,
     "short_format_flag": bool,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslsize": fslsize_cargs,
+        "fsl.fslsize": fslsize_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def fslsize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslsize",
+        "@type": "fsl.fslsize",
         "input_file": input_file,
         "short_format_flag": short_format_flag,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "FslsizeOutputs",
     "FslsizeParameters",
     "fslsize",
+    "fslsize_cargs",
+    "fslsize_execute",
+    "fslsize_outputs",
     "fslsize_params",
 ]

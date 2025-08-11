@@ -14,7 +14,7 @@ MRIS_THICKNESS_COMPARISON_METADATA = Metadata(
 
 
 MrisThicknessComparisonParameters = typing.TypedDict('MrisThicknessComparisonParameters', {
-    "__STYXTYPE__": typing.Literal["mris_thickness_comparison"],
+    "@type": typing.Literal["freesurfer.mris_thickness_comparison"],
     "subject": str,
     "hemi": str,
     "thickness_file": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_thickness_comparison": mris_thickness_comparison_cargs,
+        "freesurfer.mris_thickness_comparison": mris_thickness_comparison_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mris_thickness_comparison_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_thickness_comparison",
+        "@type": "freesurfer.mris_thickness_comparison",
         "subject": subject,
         "hemi": hemi,
         "thickness_file": thickness_file,
@@ -202,5 +202,8 @@ __all__ = [
     "MrisThicknessComparisonOutputs",
     "MrisThicknessComparisonParameters",
     "mris_thickness_comparison",
+    "mris_thickness_comparison_cargs",
+    "mris_thickness_comparison_execute",
+    "mris_thickness_comparison_outputs",
     "mris_thickness_comparison_params",
 ]

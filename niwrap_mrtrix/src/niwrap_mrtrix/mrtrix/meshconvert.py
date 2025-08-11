@@ -14,21 +14,21 @@ MESHCONVERT_METADATA = Metadata(
 
 
 MeshconvertTransformParameters = typing.TypedDict('MeshconvertTransformParameters', {
-    "__STYXTYPE__": typing.Literal["transform"],
+    "@type": typing.Literal["mrtrix.meshconvert.transform"],
     "mode": str,
     "image": InputPathType,
 })
 
 
 MeshconvertConfigParameters = typing.TypedDict('MeshconvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.meshconvert.config"],
     "key": str,
     "value": str,
 })
 
 
 MeshconvertParameters = typing.TypedDict('MeshconvertParameters', {
-    "__STYXTYPE__": typing.Literal["meshconvert"],
+    "@type": typing.Literal["mrtrix.meshconvert"],
     "binary": bool,
     "transform": typing.NotRequired[MeshconvertTransformParameters | None],
     "info": bool,
@@ -56,9 +56,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "meshconvert": meshconvert_cargs,
-        "transform": meshconvert_transform_cargs,
-        "config": meshconvert_config_cargs,
+        "mrtrix.meshconvert": meshconvert_cargs,
+        "mrtrix.meshconvert.transform": meshconvert_transform_cargs,
+        "mrtrix.meshconvert.config": meshconvert_config_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "meshconvert": meshconvert_outputs,
+        "mrtrix.meshconvert": meshconvert_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def meshconvert_transform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transform",
+        "@type": "mrtrix.meshconvert.transform",
         "mode": mode,
         "image": image,
     }
@@ -137,7 +137,7 @@ def meshconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.meshconvert.config",
         "key": key,
         "value": value,
     }
@@ -214,7 +214,7 @@ def meshconvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "meshconvert",
+        "@type": "mrtrix.meshconvert",
         "binary": binary,
         "info": info,
         "quiet": quiet,
@@ -252,7 +252,7 @@ def meshconvert_cargs(
     if params.get("binary"):
         cargs.append("-binary")
     if params.get("transform") is not None:
-        cargs.extend(dyn_cargs(params.get("transform")["__STYXTYPE__"])(params.get("transform"), execution))
+        cargs.extend(dyn_cargs(params.get("transform")["@type"])(params.get("transform"), execution))
     if params.get("info"):
         cargs.append("-info")
     if params.get("quiet"):
@@ -267,7 +267,7 @@ def meshconvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -404,7 +404,12 @@ __all__ = [
     "MeshconvertParameters",
     "MeshconvertTransformParameters",
     "meshconvert",
+    "meshconvert_cargs",
+    "meshconvert_config_cargs",
     "meshconvert_config_params",
+    "meshconvert_execute",
+    "meshconvert_outputs",
     "meshconvert_params",
+    "meshconvert_transform_cargs",
     "meshconvert_transform_params",
 ]

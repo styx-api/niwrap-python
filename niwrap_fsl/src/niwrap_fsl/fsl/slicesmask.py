@@ -14,7 +14,7 @@ SLICESMASK_METADATA = Metadata(
 
 
 SlicesmaskParameters = typing.TypedDict('SlicesmaskParameters', {
-    "__STYXTYPE__": typing.Literal["slicesmask"],
+    "@type": typing.Literal["fsl.slicesmask"],
     "image": InputPathType,
     "mask": InputPathType,
     "output": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "slicesmask": slicesmask_cargs,
+        "fsl.slicesmask": slicesmask_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "slicesmask": slicesmask_outputs,
+        "fsl.slicesmask": slicesmask_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def slicesmask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "slicesmask",
+        "@type": "fsl.slicesmask",
         "image": image,
         "mask": mask,
         "output": output,
@@ -188,5 +188,8 @@ __all__ = [
     "SlicesmaskOutputs",
     "SlicesmaskParameters",
     "slicesmask",
+    "slicesmask_cargs",
+    "slicesmask_execute",
+    "slicesmask_outputs",
     "slicesmask_params",
 ]

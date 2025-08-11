@@ -14,7 +14,7 @@ V_3DBUCKET_METADATA = Metadata(
 
 
 V3dbucketParameters = typing.TypedDict('V3dbucketParameters', {
-    "__STYXTYPE__": typing.Literal["3dbucket"],
+    "@type": typing.Literal["afni.3dbucket"],
     "prefix": typing.NotRequired[str | None],
     "output": typing.NotRequired[str | None],
     "session": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dbucket": v_3dbucket_cargs,
+        "afni.3dbucket": v_3dbucket_cargs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def v_3dbucket_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dbucket",
+        "@type": "afni.3dbucket",
         "dry": dry,
         "verbose": verbose,
         "fbuc": fbuc,
@@ -275,5 +275,8 @@ __all__ = [
     "V3dbucketParameters",
     "V_3DBUCKET_METADATA",
     "v_3dbucket",
+    "v_3dbucket_cargs",
+    "v_3dbucket_execute",
+    "v_3dbucket_outputs",
     "v_3dbucket_params",
 ]

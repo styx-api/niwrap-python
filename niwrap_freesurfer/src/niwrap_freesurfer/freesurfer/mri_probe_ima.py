@@ -14,7 +14,7 @@ MRI_PROBE_IMA_METADATA = Metadata(
 
 
 MriProbeImaParameters = typing.TypedDict('MriProbeImaParameters', {
-    "__STYXTYPE__": typing.Literal["mri_probe_ima"],
+    "@type": typing.Literal["freesurfer.mri_probe_ima"],
     "ima_file": InputPathType,
     "key_string": typing.NotRequired[str | None],
     "offset_type_len": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_probe_ima": mri_probe_ima_cargs,
+        "freesurfer.mri_probe_ima": mri_probe_ima_cargs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def mri_probe_ima_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_probe_ima",
+        "@type": "freesurfer.mri_probe_ima",
         "ima_file": ima_file,
         "fileinfo": fileinfo,
         "dictionary": dictionary,
@@ -261,5 +261,8 @@ __all__ = [
     "MriProbeImaOutputs",
     "MriProbeImaParameters",
     "mri_probe_ima",
+    "mri_probe_ima_cargs",
+    "mri_probe_ima_execute",
+    "mri_probe_ima_outputs",
     "mri_probe_ima_params",
 ]

@@ -14,7 +14,7 @@ T4IMGS_4DFP_METADATA = Metadata(
 
 
 T4imgs4dfpParameters = typing.TypedDict('T4imgs4dfpParameters', {
-    "__STYXTYPE__": typing.Literal["t4imgs_4dfp"],
+    "@type": typing.Literal["freesurfer.t4imgs_4dfp"],
     "sqrt_normalize": bool,
     "cubic_spline": bool,
     "output_nan": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "t4imgs_4dfp": t4imgs_4dfp_cargs,
+        "freesurfer.t4imgs_4dfp": t4imgs_4dfp_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "t4imgs_4dfp": t4imgs_4dfp_outputs,
+        "freesurfer.t4imgs_4dfp": t4imgs_4dfp_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def t4imgs_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "t4imgs_4dfp",
+        "@type": "freesurfer.t4imgs_4dfp",
         "sqrt_normalize": sqrt_normalize,
         "cubic_spline": cubic_spline,
         "output_nan": output_nan,
@@ -287,5 +287,8 @@ __all__ = [
     "T4imgs4dfpOutputs",
     "T4imgs4dfpParameters",
     "t4imgs_4dfp",
+    "t4imgs_4dfp_cargs",
+    "t4imgs_4dfp_execute",
+    "t4imgs_4dfp_outputs",
     "t4imgs_4dfp_params",
 ]

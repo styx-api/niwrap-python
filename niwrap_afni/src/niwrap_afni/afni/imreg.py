@@ -14,7 +14,7 @@ IMREG_METADATA = Metadata(
 
 
 ImregParameters = typing.TypedDict('ImregParameters', {
-    "__STYXTYPE__": typing.Literal["imreg"],
+    "@type": typing.Literal["afni.imreg"],
     "base_image": str,
     "image_sequence": list[InputPathType],
     "nowrite": bool,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imreg": imreg_cargs,
+        "afni.imreg": imreg_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imreg": imreg_outputs,
+        "afni.imreg": imreg_outputs,
     }.get(t)
 
 
@@ -137,7 +137,7 @@ def imreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imreg",
+        "@type": "afni.imreg",
         "base_image": base_image,
         "image_sequence": image_sequence,
         "nowrite": nowrite,
@@ -385,5 +385,8 @@ __all__ = [
     "ImregOutputs",
     "ImregParameters",
     "imreg",
+    "imreg_cargs",
+    "imreg_execute",
+    "imreg_outputs",
     "imreg_params",
 ]

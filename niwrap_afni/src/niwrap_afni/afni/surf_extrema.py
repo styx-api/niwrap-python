@@ -14,7 +14,7 @@ SURF_EXTREMA_METADATA = Metadata(
 
 
 SurfExtremaParameters = typing.TypedDict('SurfExtremaParameters', {
-    "__STYXTYPE__": typing.Literal["SurfExtrema"],
+    "@type": typing.Literal["afni.SurfExtrema"],
     "input": typing.NotRequired[InputPathType | None],
     "hood": typing.NotRequired[float | None],
     "thresh": typing.NotRequired[float | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfExtrema": surf_extrema_cargs,
+        "afni.SurfExtrema": surf_extrema_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfExtrema": surf_extrema_outputs,
+        "afni.SurfExtrema": surf_extrema_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def surf_extrema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfExtrema",
+        "@type": "afni.SurfExtrema",
         "prefix": prefix,
     }
     if input_ is not None:
@@ -275,5 +275,8 @@ __all__ = [
     "SurfExtremaOutputs",
     "SurfExtremaParameters",
     "surf_extrema",
+    "surf_extrema_cargs",
+    "surf_extrema_execute",
+    "surf_extrema_outputs",
     "surf_extrema_params",
 ]

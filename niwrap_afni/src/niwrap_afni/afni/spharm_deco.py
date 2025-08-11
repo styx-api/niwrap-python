@@ -14,7 +14,7 @@ SPHARM_DECO_METADATA = Metadata(
 
 
 SpharmDecoParameters = typing.TypedDict('SpharmDecoParameters', {
-    "__STYXTYPE__": typing.Literal["SpharmDeco"],
+    "@type": typing.Literal["afni.SpharmDeco"],
     "i_type_s": InputPathType,
     "unit_sph_label": str,
     "order_l": float,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SpharmDeco": spharm_deco_cargs,
+        "afni.SpharmDeco": spharm_deco_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SpharmDeco": spharm_deco_outputs,
+        "afni.SpharmDeco": spharm_deco_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def spharm_deco_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SpharmDeco",
+        "@type": "afni.SpharmDeco",
         "i_type_s": i_type_s,
         "unit_sph_label": unit_sph_label,
         "order_l": order_l,
@@ -280,5 +280,8 @@ __all__ = [
     "SpharmDecoOutputs",
     "SpharmDecoParameters",
     "spharm_deco",
+    "spharm_deco_cargs",
+    "spharm_deco_execute",
+    "spharm_deco_outputs",
     "spharm_deco_params",
 ]

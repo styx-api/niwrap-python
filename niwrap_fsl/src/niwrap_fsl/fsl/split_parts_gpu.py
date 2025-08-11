@@ -14,7 +14,7 @@ SPLIT_PARTS_GPU_METADATA = Metadata(
 
 
 SplitPartsGpuParameters = typing.TypedDict('SplitPartsGpuParameters', {
-    "__STYXTYPE__": typing.Literal["split_parts_gpu"],
+    "@type": typing.Literal["fsl.split_parts_gpu"],
     "datafile": InputPathType,
     "maskfile": InputPathType,
     "bvals_file": InputPathType,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "split_parts_gpu": split_parts_gpu_cargs,
+        "fsl.split_parts_gpu": split_parts_gpu_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "split_parts_gpu": split_parts_gpu_outputs,
+        "fsl.split_parts_gpu": split_parts_gpu_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def split_parts_gpu_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "split_parts_gpu",
+        "@type": "fsl.split_parts_gpu",
         "datafile": datafile,
         "maskfile": maskfile,
         "bvals_file": bvals_file,
@@ -230,5 +230,8 @@ __all__ = [
     "SplitPartsGpuOutputs",
     "SplitPartsGpuParameters",
     "split_parts_gpu",
+    "split_parts_gpu_cargs",
+    "split_parts_gpu_execute",
+    "split_parts_gpu_outputs",
     "split_parts_gpu_params",
 ]

@@ -14,7 +14,7 @@ SURFACE_INFLATION_METADATA = Metadata(
 
 
 SurfaceInflationParameters = typing.TypedDict('SurfaceInflationParameters', {
-    "__STYXTYPE__": typing.Literal["surface-inflation"],
+    "@type": typing.Literal["workbench.surface-inflation"],
     "anatomical_surface_in": InputPathType,
     "surface_in": InputPathType,
     "number_of_smoothing_cycles": int,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-inflation": surface_inflation_cargs,
+        "workbench.surface-inflation": surface_inflation_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-inflation": surface_inflation_outputs,
+        "workbench.surface-inflation": surface_inflation_outputs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def surface_inflation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-inflation",
+        "@type": "workbench.surface-inflation",
         "anatomical_surface_in": anatomical_surface_in,
         "surface_in": surface_in,
         "number_of_smoothing_cycles": number_of_smoothing_cycles,
@@ -227,5 +227,8 @@ __all__ = [
     "SurfaceInflationOutputs",
     "SurfaceInflationParameters",
     "surface_inflation",
+    "surface_inflation_cargs",
+    "surface_inflation_execute",
+    "surface_inflation_outputs",
     "surface_inflation_params",
 ]

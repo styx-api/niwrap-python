@@ -14,7 +14,7 @@ MRI_RF_TRAIN_METADATA = Metadata(
 
 
 MriRfTrainParameters = typing.TypedDict('MriRfTrainParameters', {
-    "__STYXTYPE__": typing.Literal["mri_rf_train"],
+    "@type": typing.Literal["freesurfer.mri_rf_train"],
     "seg_volume": str,
     "atlas_transform": str,
     "mask_volume": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_rf_train": mri_rf_train_cargs,
+        "freesurfer.mri_rf_train": mri_rf_train_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def mri_rf_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_rf_train",
+        "@type": "freesurfer.mri_rf_train",
         "seg_volume": seg_volume,
         "atlas_transform": atlas_transform,
         "sanity_check": sanity_check,
@@ -265,5 +265,8 @@ __all__ = [
     "MriRfTrainOutputs",
     "MriRfTrainParameters",
     "mri_rf_train",
+    "mri_rf_train_cargs",
+    "mri_rf_train_execute",
+    "mri_rf_train_outputs",
     "mri_rf_train_params",
 ]

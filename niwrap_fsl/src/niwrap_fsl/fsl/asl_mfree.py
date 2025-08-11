@@ -14,7 +14,7 @@ ASL_MFREE_METADATA = Metadata(
 
 
 AslMfreeParameters = typing.TypedDict('AslMfreeParameters', {
-    "__STYXTYPE__": typing.Literal["asl_mfree"],
+    "@type": typing.Literal["fsl.asl_mfree"],
     "datafile": InputPathType,
     "mask": InputPathType,
     "out": str,
@@ -49,7 +49,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "asl_mfree": asl_mfree_cargs,
+        "fsl.asl_mfree": asl_mfree_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "asl_mfree": asl_mfree_outputs,
+        "fsl.asl_mfree": asl_mfree_outputs,
     }.get(t)
 
 
@@ -134,7 +134,7 @@ def asl_mfree_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "asl_mfree",
+        "@type": "fsl.asl_mfree",
         "datafile": datafile,
         "mask": mask,
         "out": out,
@@ -394,5 +394,8 @@ __all__ = [
     "AslMfreeOutputs",
     "AslMfreeParameters",
     "asl_mfree",
+    "asl_mfree_cargs",
+    "asl_mfree_execute",
+    "asl_mfree_outputs",
     "asl_mfree_params",
 ]

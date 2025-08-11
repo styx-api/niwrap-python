@@ -14,7 +14,7 @@ MRI_POLV_METADATA = Metadata(
 
 
 MriPolvParameters = typing.TypedDict('MriPolvParameters', {
-    "__STYXTYPE__": typing.Literal["mri_polv"],
+    "@type": typing.Literal["freesurfer.mri_polv"],
     "window_size": typing.NotRequired[float | None],
     "input_image": InputPathType,
     "output_image": InputPathType,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_polv": mri_polv_cargs,
+        "freesurfer.mri_polv": mri_polv_cargs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def mri_polv_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_polv",
+        "@type": "freesurfer.mri_polv",
         "input_image": input_image,
         "output_image": output_image,
     }
@@ -195,5 +195,8 @@ __all__ = [
     "MriPolvOutputs",
     "MriPolvParameters",
     "mri_polv",
+    "mri_polv_cargs",
+    "mri_polv_execute",
+    "mri_polv_outputs",
     "mri_polv_params",
 ]

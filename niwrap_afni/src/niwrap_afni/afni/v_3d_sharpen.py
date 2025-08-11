@@ -14,7 +14,7 @@ V_3D_SHARPEN_METADATA = Metadata(
 
 
 V3dSharpenParameters = typing.TypedDict('V3dSharpenParameters', {
-    "__STYXTYPE__": typing.Literal["3dSharpen"],
+    "@type": typing.Literal["afni.3dSharpen"],
     "sharpening_factor": typing.NotRequired[float | None],
     "input_dataset": InputPathType,
     "output_prefix": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSharpen": v_3d_sharpen_cargs,
+        "afni.3dSharpen": v_3d_sharpen_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSharpen": v_3d_sharpen_outputs,
+        "afni.3dSharpen": v_3d_sharpen_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def v_3d_sharpen_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSharpen",
+        "@type": "afni.3dSharpen",
         "input_dataset": input_dataset,
         "output_prefix": output_prefix,
     }
@@ -202,5 +202,8 @@ __all__ = [
     "V3dSharpenParameters",
     "V_3D_SHARPEN_METADATA",
     "v_3d_sharpen",
+    "v_3d_sharpen_cargs",
+    "v_3d_sharpen_execute",
+    "v_3d_sharpen_outputs",
     "v_3d_sharpen_params",
 ]

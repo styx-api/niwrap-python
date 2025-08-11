@@ -14,7 +14,7 @@ MRI_SEGMENT_METADATA = Metadata(
 
 
 MriSegmentParameters = typing.TypedDict('MriSegmentParameters', {
-    "__STYXTYPE__": typing.Literal["mri_segment"],
+    "@type": typing.Literal["freesurfer.mri_segment"],
     "in_vol": InputPathType,
     "out_vol": str,
     "no1d_remove": typing.NotRequired[float | None],
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_segment": mri_segment_cargs,
+        "freesurfer.mri_segment": mri_segment_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_segment": mri_segment_outputs,
+        "freesurfer.mri_segment": mri_segment_outputs,
     }.get(t)
 
 
@@ -174,7 +174,7 @@ def mri_segment_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_segment",
+        "@type": "freesurfer.mri_segment",
         "in_vol": in_vol,
         "out_vol": out_vol,
         "auto": auto,
@@ -559,5 +559,8 @@ __all__ = [
     "MriSegmentOutputs",
     "MriSegmentParameters",
     "mri_segment",
+    "mri_segment_cargs",
+    "mri_segment_execute",
+    "mri_segment_outputs",
     "mri_segment_params",
 ]

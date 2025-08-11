@@ -14,7 +14,7 @@ MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA = Metadata(
 
 
 MrisInitGlobalTractographyParameters = typing.TypedDict('MrisInitGlobalTractographyParameters', {
-    "__STYXTYPE__": typing.Literal["mris_init_global_tractography"],
+    "@type": typing.Literal["freesurfer.mris_init_global_tractography"],
     "subject": str,
     "parcellation": str,
     "output_volume": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_init_global_tractography": mris_init_global_tractography_cargs,
+        "freesurfer.mris_init_global_tractography": mris_init_global_tractography_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mris_init_global_tractography_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_init_global_tractography",
+        "@type": "freesurfer.mris_init_global_tractography",
         "subject": subject,
         "parcellation": parcellation,
         "output_volume": output_volume,
@@ -184,5 +184,8 @@ __all__ = [
     "MrisInitGlobalTractographyOutputs",
     "MrisInitGlobalTractographyParameters",
     "mris_init_global_tractography",
+    "mris_init_global_tractography_cargs",
+    "mris_init_global_tractography_execute",
+    "mris_init_global_tractography_outputs",
     "mris_init_global_tractography_params",
 ]

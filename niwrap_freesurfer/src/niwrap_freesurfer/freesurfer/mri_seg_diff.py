@@ -14,7 +14,7 @@ MRI_SEG_DIFF_METADATA = Metadata(
 
 
 MriSegDiffParameters = typing.TypedDict('MriSegDiffParameters', {
-    "__STYXTYPE__": typing.Literal["mri_seg_diff"],
+    "@type": typing.Literal["freesurfer.mri_seg_diff"],
     "seg1": typing.NotRequired[InputPathType | None],
     "seg2": typing.NotRequired[InputPathType | None],
     "seg": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_seg_diff": mri_seg_diff_cargs,
+        "freesurfer.mri_seg_diff": mri_seg_diff_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_seg_diff": mri_seg_diff_outputs,
+        "freesurfer.mri_seg_diff": mri_seg_diff_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def mri_seg_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_seg_diff",
+        "@type": "freesurfer.mri_seg_diff",
         "diff": diff,
         "diff_force": diff_force,
         "debug": debug,
@@ -281,5 +281,8 @@ __all__ = [
     "MriSegDiffOutputs",
     "MriSegDiffParameters",
     "mri_seg_diff",
+    "mri_seg_diff_cargs",
+    "mri_seg_diff_execute",
+    "mri_seg_diff_outputs",
     "mri_seg_diff_params",
 ]

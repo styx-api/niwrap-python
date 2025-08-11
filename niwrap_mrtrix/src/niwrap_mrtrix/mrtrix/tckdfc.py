@@ -14,21 +14,21 @@ TCKDFC_METADATA = Metadata(
 
 
 TckdfcDynamicParameters = typing.TypedDict('TckdfcDynamicParameters', {
-    "__STYXTYPE__": typing.Literal["dynamic"],
+    "@type": typing.Literal["mrtrix.tckdfc.dynamic"],
     "shape": str,
     "width": int,
 })
 
 
 TckdfcConfigParameters = typing.TypedDict('TckdfcConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckdfc.config"],
     "key": str,
     "value": str,
 })
 
 
 TckdfcParameters = typing.TypedDict('TckdfcParameters', {
-    "__STYXTYPE__": typing.Literal["tckdfc"],
+    "@type": typing.Literal["mrtrix.tckdfc"],
     "static": bool,
     "dynamic": typing.NotRequired[TckdfcDynamicParameters | None],
     "template": typing.NotRequired[InputPathType | None],
@@ -62,9 +62,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckdfc": tckdfc_cargs,
-        "dynamic": tckdfc_dynamic_cargs,
-        "config": tckdfc_config_cargs,
+        "mrtrix.tckdfc": tckdfc_cargs,
+        "mrtrix.tckdfc.dynamic": tckdfc_dynamic_cargs,
+        "mrtrix.tckdfc.config": tckdfc_config_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tckdfc": tckdfc_outputs,
+        "mrtrix.tckdfc": tckdfc_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def tckdfc_dynamic_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dynamic",
+        "@type": "mrtrix.tckdfc.dynamic",
         "shape": shape,
         "width": width,
     }
@@ -141,7 +141,7 @@ def tckdfc_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckdfc.config",
         "key": key,
         "value": value,
     }
@@ -238,7 +238,7 @@ def tckdfc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckdfc",
+        "@type": "mrtrix.tckdfc",
         "static": static,
         "backtrack": backtrack,
         "info": info,
@@ -286,7 +286,7 @@ def tckdfc_cargs(
     if params.get("static"):
         cargs.append("-static")
     if params.get("dynamic") is not None:
-        cargs.extend(dyn_cargs(params.get("dynamic")["__STYXTYPE__"])(params.get("dynamic"), execution))
+        cargs.extend(dyn_cargs(params.get("dynamic")["@type"])(params.get("dynamic"), execution))
     if params.get("template") is not None:
         cargs.extend([
             "-template",
@@ -323,7 +323,7 @@ def tckdfc_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -545,7 +545,12 @@ __all__ = [
     "TckdfcOutputs",
     "TckdfcParameters",
     "tckdfc",
+    "tckdfc_cargs",
+    "tckdfc_config_cargs",
     "tckdfc_config_params",
+    "tckdfc_dynamic_cargs",
     "tckdfc_dynamic_params",
+    "tckdfc_execute",
+    "tckdfc_outputs",
     "tckdfc_params",
 ]

@@ -14,7 +14,7 @@ IMGREG_4DFP_METADATA = Metadata(
 
 
 Imgreg4dfpParameters = typing.TypedDict('Imgreg4dfpParameters', {
-    "__STYXTYPE__": typing.Literal["imgreg_4dfp"],
+    "@type": typing.Literal["freesurfer.imgreg_4dfp"],
     "target_image": InputPathType,
     "target_mask": str,
     "source_image": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imgreg_4dfp": imgreg_4dfp_cargs,
+        "freesurfer.imgreg_4dfp": imgreg_4dfp_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def imgreg_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imgreg_4dfp",
+        "@type": "freesurfer.imgreg_4dfp",
         "target_image": target_image,
         "target_mask": target_mask,
         "source_image": source_image,
@@ -208,5 +208,8 @@ __all__ = [
     "Imgreg4dfpOutputs",
     "Imgreg4dfpParameters",
     "imgreg_4dfp",
+    "imgreg_4dfp_cargs",
+    "imgreg_4dfp_execute",
+    "imgreg_4dfp_outputs",
     "imgreg_4dfp_params",
 ]

@@ -14,7 +14,7 @@ V__AFNI_ENV_METADATA = Metadata(
 
 
 VAfniEnvParameters = typing.TypedDict('VAfniEnvParameters', {
-    "__STYXTYPE__": typing.Literal["@AfniEnv"],
+    "@type": typing.Literal["afni.@AfniEnv"],
     "set_flag": typing.NotRequired[list[str] | None],
     "unset_flag": typing.NotRequired[str | None],
     "get_flag": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@AfniEnv": v__afni_env_cargs,
+        "afni.@AfniEnv": v__afni_env_cargs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def v__afni_env_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@AfniEnv",
+        "@type": "afni.@AfniEnv",
         "help_flag": help_flag,
         "help_web_flag": help_web_flag,
         "help_web_flag_alias": help_web_flag_alias,
@@ -268,5 +268,8 @@ __all__ = [
     "VAfniEnvParameters",
     "V__AFNI_ENV_METADATA",
     "v__afni_env",
+    "v__afni_env_cargs",
+    "v__afni_env_execute",
+    "v__afni_env_outputs",
     "v__afni_env_params",
 ]

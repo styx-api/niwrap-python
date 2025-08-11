@@ -14,7 +14,7 @@ GEN_GROUP_COMMAND_METADATA = Metadata(
 
 
 GenGroupCommandParameters = typing.TypedDict('GenGroupCommandParameters', {
-    "__STYXTYPE__": typing.Literal["gen_group_command"],
+    "@type": typing.Literal["afni.gen_group_command"],
     "command_name": str,
     "datasets": list[str],
     "prefix": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "gen_group_command": gen_group_command_cargs,
+        "afni.gen_group_command": gen_group_command_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "gen_group_command": gen_group_command_outputs,
+        "afni.gen_group_command": gen_group_command_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def gen_group_command_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "gen_group_command",
+        "@type": "afni.gen_group_command",
         "command_name": command_name,
         "datasets": datasets,
     }
@@ -320,5 +320,8 @@ __all__ = [
     "GenGroupCommandOutputs",
     "GenGroupCommandParameters",
     "gen_group_command",
+    "gen_group_command_cargs",
+    "gen_group_command_execute",
+    "gen_group_command_outputs",
     "gen_group_command_params",
 ]

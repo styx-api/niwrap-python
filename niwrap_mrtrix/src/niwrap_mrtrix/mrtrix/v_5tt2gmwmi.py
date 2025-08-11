@@ -14,14 +14,14 @@ V_5TT2GMWMI_METADATA = Metadata(
 
 
 V5tt2gmwmiConfigParameters = typing.TypedDict('V5tt2gmwmiConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.5tt2gmwmi.config"],
     "key": str,
     "value": str,
 })
 
 
 V5tt2gmwmiParameters = typing.TypedDict('V5tt2gmwmiParameters', {
-    "__STYXTYPE__": typing.Literal["5tt2gmwmi"],
+    "@type": typing.Literal["mrtrix.5tt2gmwmi"],
     "mask_in": typing.NotRequired[InputPathType | None],
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "5tt2gmwmi": v_5tt2gmwmi_cargs,
-        "config": v_5tt2gmwmi_config_cargs,
+        "mrtrix.5tt2gmwmi": v_5tt2gmwmi_cargs,
+        "mrtrix.5tt2gmwmi.config": v_5tt2gmwmi_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "5tt2gmwmi": v_5tt2gmwmi_outputs,
+        "mrtrix.5tt2gmwmi": v_5tt2gmwmi_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def v_5tt2gmwmi_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.5tt2gmwmi.config",
         "key": key,
         "value": value,
     }
@@ -159,7 +159,7 @@ def v_5tt2gmwmi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "5tt2gmwmi",
+        "@type": "mrtrix.5tt2gmwmi",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -212,7 +212,7 @@ def v_5tt2gmwmi_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -354,6 +354,10 @@ __all__ = [
     "V5tt2gmwmiParameters",
     "V_5TT2GMWMI_METADATA",
     "v_5tt2gmwmi",
+    "v_5tt2gmwmi_cargs",
+    "v_5tt2gmwmi_config_cargs",
     "v_5tt2gmwmi_config_params",
+    "v_5tt2gmwmi_execute",
+    "v_5tt2gmwmi_outputs",
     "v_5tt2gmwmi_params",
 ]

@@ -14,7 +14,7 @@ MRIS_VOLMASK_VTK_METADATA = Metadata(
 
 
 MrisVolmaskVtkParameters = typing.TypedDict('MrisVolmaskVtkParameters', {
-    "__STYXTYPE__": typing.Literal["mris_volmask_vtk"],
+    "@type": typing.Literal["freesurfer.mris_volmask_vtk"],
     "cap_distance": typing.NotRequired[float | None],
     "label_background": typing.NotRequired[float | None],
     "label_left_white": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_volmask_vtk": mris_volmask_vtk_cargs,
+        "freesurfer.mris_volmask_vtk": mris_volmask_vtk_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_volmask_vtk": mris_volmask_vtk_outputs,
+        "freesurfer.mris_volmask_vtk": mris_volmask_vtk_outputs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def mris_volmask_vtk_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_volmask_vtk",
+        "@type": "freesurfer.mris_volmask_vtk",
         "save_distance": save_distance,
         "lh_only": lh_only,
         "rh_only": rh_only,
@@ -396,5 +396,8 @@ __all__ = [
     "MrisVolmaskVtkOutputs",
     "MrisVolmaskVtkParameters",
     "mris_volmask_vtk",
+    "mris_volmask_vtk_cargs",
+    "mris_volmask_vtk_execute",
+    "mris_volmask_vtk_outputs",
     "mris_volmask_vtk_params",
 ]

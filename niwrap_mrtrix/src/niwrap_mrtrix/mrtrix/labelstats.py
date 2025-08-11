@@ -14,14 +14,14 @@ LABELSTATS_METADATA = Metadata(
 
 
 LabelstatsConfigParameters = typing.TypedDict('LabelstatsConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.labelstats.config"],
     "key": str,
     "value": str,
 })
 
 
 LabelstatsParameters = typing.TypedDict('LabelstatsParameters', {
-    "__STYXTYPE__": typing.Literal["labelstats"],
+    "@type": typing.Literal["mrtrix.labelstats"],
     "output": typing.NotRequired[str | None],
     "voxelspace": bool,
     "info": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "labelstats": labelstats_cargs,
-        "config": labelstats_config_cargs,
+        "mrtrix.labelstats": labelstats_cargs,
+        "mrtrix.labelstats.config": labelstats_config_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def labelstats_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.labelstats.config",
         "key": key,
         "value": value,
     }
@@ -154,7 +154,7 @@ def labelstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "labelstats",
+        "@type": "mrtrix.labelstats",
         "voxelspace": voxelspace,
         "info": info,
         "quiet": quiet,
@@ -209,7 +209,7 @@ def labelstats_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -339,6 +339,10 @@ __all__ = [
     "LabelstatsOutputs",
     "LabelstatsParameters",
     "labelstats",
+    "labelstats_cargs",
+    "labelstats_config_cargs",
     "labelstats_config_params",
+    "labelstats_execute",
+    "labelstats_outputs",
     "labelstats_params",
 ]

@@ -14,7 +14,7 @@ V_3D_SPAT_NORM_METADATA = Metadata(
 
 
 V3dSpatNormParameters = typing.TypedDict('V3dSpatNormParameters', {
-    "__STYXTYPE__": typing.Literal["3dSpatNorm"],
+    "@type": typing.Literal["afni.3dSpatNorm"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "orig_space": bool,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSpatNorm": v_3d_spat_norm_cargs,
+        "afni.3dSpatNorm": v_3d_spat_norm_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSpatNorm": v_3d_spat_norm_outputs,
+        "afni.3dSpatNorm": v_3d_spat_norm_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def v_3d_spat_norm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSpatNorm",
+        "@type": "afni.3dSpatNorm",
         "dataset": dataset,
         "orig_space": orig_space,
         "verbose": verbose,
@@ -261,5 +261,8 @@ __all__ = [
     "V3dSpatNormParameters",
     "V_3D_SPAT_NORM_METADATA",
     "v_3d_spat_norm",
+    "v_3d_spat_norm_cargs",
+    "v_3d_spat_norm_execute",
+    "v_3d_spat_norm_outputs",
     "v_3d_spat_norm_params",
 ]

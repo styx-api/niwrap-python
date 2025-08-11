@@ -14,7 +14,7 @@ CIFTI_RESTRICT_DENSE_MAP_METADATA = Metadata(
 
 
 CiftiRestrictDenseMapParameters = typing.TypedDict('CiftiRestrictDenseMapParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-restrict-dense-map"],
+    "@type": typing.Literal["workbench.cifti-restrict-dense-map"],
     "cifti_in": InputPathType,
     "direction": str,
     "cifti_out": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-restrict-dense-map": cifti_restrict_dense_map_cargs,
+        "workbench.cifti-restrict-dense-map": cifti_restrict_dense_map_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-restrict-dense-map": cifti_restrict_dense_map_outputs,
+        "workbench.cifti-restrict-dense-map": cifti_restrict_dense_map_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def cifti_restrict_dense_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-restrict-dense-map",
+        "@type": "workbench.cifti-restrict-dense-map",
         "cifti_in": cifti_in,
         "direction": direction,
         "cifti_out": cifti_out,
@@ -278,5 +278,8 @@ __all__ = [
     "CiftiRestrictDenseMapOutputs",
     "CiftiRestrictDenseMapParameters",
     "cifti_restrict_dense_map",
+    "cifti_restrict_dense_map_cargs",
+    "cifti_restrict_dense_map_execute",
+    "cifti_restrict_dense_map_outputs",
     "cifti_restrict_dense_map_params",
 ]

@@ -14,7 +14,7 @@ FILE_TOOL_METADATA = Metadata(
 
 
 FileToolParameters = typing.TypedDict('FileToolParameters', {
-    "__STYXTYPE__": typing.Literal["file_tool"],
+    "@type": typing.Literal["afni.file_tool"],
     "help": bool,
     "version": bool,
     "hist": bool,
@@ -72,7 +72,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "file_tool": file_tool_cargs,
+        "afni.file_tool": file_tool_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "file_tool": file_tool_outputs,
+        "afni.file_tool": file_tool_outputs,
     }.get(t)
 
 
@@ -196,7 +196,7 @@ def file_tool_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "file_tool",
+        "@type": "afni.file_tool",
         "help": help_,
         "version": version,
         "hist": hist,
@@ -576,5 +576,8 @@ __all__ = [
     "FileToolOutputs",
     "FileToolParameters",
     "file_tool",
+    "file_tool_cargs",
+    "file_tool_execute",
+    "file_tool_outputs",
     "file_tool_params",
 ]

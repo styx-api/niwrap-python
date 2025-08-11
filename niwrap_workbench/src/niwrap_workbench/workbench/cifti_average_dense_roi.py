@@ -14,20 +14,20 @@ CIFTI_AVERAGE_DENSE_ROI_METADATA = Metadata(
 
 
 CiftiAverageDenseRoiCiftiRoiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiRoiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti_roi"],
+    "@type": typing.Literal["workbench.cifti-average-dense-roi.cifti_roi"],
     "roi_cifti": InputPathType,
     "opt_in_memory": bool,
 })
 
 
 CiftiAverageDenseRoiCiftiParameters = typing.TypedDict('CiftiAverageDenseRoiCiftiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti"],
+    "@type": typing.Literal["workbench.cifti-average-dense-roi.cifti"],
     "cifti_in": InputPathType,
 })
 
 
 CiftiAverageDenseRoiParameters = typing.TypedDict('CiftiAverageDenseRoiParameters', {
-    "__STYXTYPE__": typing.Literal["cifti-average-dense-roi"],
+    "@type": typing.Literal["workbench.cifti-average-dense-roi"],
     "cifti_out": str,
     "cifti_roi": typing.NotRequired[CiftiAverageDenseRoiCiftiRoiParameters | None],
     "opt_left_roi_roi_metric": typing.NotRequired[InputPathType | None],
@@ -53,9 +53,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cifti-average-dense-roi": cifti_average_dense_roi_cargs,
-        "cifti_roi": cifti_average_dense_roi_cifti_roi_cargs,
-        "cifti": cifti_average_dense_roi_cifti_cargs,
+        "workbench.cifti-average-dense-roi": cifti_average_dense_roi_cargs,
+        "workbench.cifti-average-dense-roi.cifti_roi": cifti_average_dense_roi_cifti_roi_cargs,
+        "workbench.cifti-average-dense-roi.cifti": cifti_average_dense_roi_cifti_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cifti-average-dense-roi": cifti_average_dense_roi_outputs,
+        "workbench.cifti-average-dense-roi": cifti_average_dense_roi_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def cifti_average_dense_roi_cifti_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti_roi",
+        "@type": "workbench.cifti-average-dense-roi.cifti_roi",
         "roi_cifti": roi_cifti,
         "opt_in_memory": opt_in_memory,
     }
@@ -130,7 +130,7 @@ def cifti_average_dense_roi_cifti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti",
+        "@type": "workbench.cifti-average-dense-roi.cifti",
         "cifti_in": cifti_in,
     }
     return params
@@ -201,7 +201,7 @@ def cifti_average_dense_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cifti-average-dense-roi",
+        "@type": "workbench.cifti-average-dense-roi",
         "cifti_out": cifti_out,
     }
     if cifti_roi is not None:
@@ -243,7 +243,7 @@ def cifti_average_dense_roi_cargs(
     cargs.append("-cifti-average-dense-roi")
     cargs.append(params.get("cifti_out"))
     if params.get("cifti_roi") is not None:
-        cargs.extend(dyn_cargs(params.get("cifti_roi")["__STYXTYPE__"])(params.get("cifti_roi"), execution))
+        cargs.extend(dyn_cargs(params.get("cifti_roi")["@type"])(params.get("cifti_roi"), execution))
     if params.get("opt_left_roi_roi_metric") is not None:
         cargs.extend([
             "-left-roi",
@@ -280,7 +280,7 @@ def cifti_average_dense_roi_cargs(
             execution.input_file(params.get("opt_cerebellum_area_surf_cerebellum_surf"))
         ])
     if params.get("cifti") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("cifti")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("cifti")] for a in c])
     return cargs
 
 
@@ -407,7 +407,12 @@ __all__ = [
     "CiftiAverageDenseRoiOutputs",
     "CiftiAverageDenseRoiParameters",
     "cifti_average_dense_roi",
+    "cifti_average_dense_roi_cargs",
+    "cifti_average_dense_roi_cifti_cargs",
     "cifti_average_dense_roi_cifti_params",
+    "cifti_average_dense_roi_cifti_roi_cargs",
     "cifti_average_dense_roi_cifti_roi_params",
+    "cifti_average_dense_roi_execute",
+    "cifti_average_dense_roi_outputs",
     "cifti_average_dense_roi_params",
 ]

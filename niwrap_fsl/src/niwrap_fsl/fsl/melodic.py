@@ -14,7 +14,7 @@ MELODIC_METADATA = Metadata(
 
 
 MelodicParameters = typing.TypedDict('MelodicParameters', {
-    "__STYXTYPE__": typing.Literal["melodic"],
+    "@type": typing.Literal["fsl.melodic"],
     "input_file": InputPathType,
     "output_directory": typing.NotRequired[str | None],
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -79,7 +79,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "melodic": melodic_cargs,
+        "fsl.melodic": melodic_cargs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "melodic": melodic_outputs,
+        "fsl.melodic": melodic_outputs,
     }.get(t)
 
 
@@ -238,7 +238,7 @@ def melodic_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "melodic",
+        "@type": "fsl.melodic",
         "input_file": input_file,
         "generate_report": generate_report,
         "cifti_io": cifti_io,
@@ -751,5 +751,8 @@ __all__ = [
     "MelodicOutputs",
     "MelodicParameters",
     "melodic",
+    "melodic_cargs",
+    "melodic_execute",
+    "melodic_outputs",
     "melodic_params",
 ]

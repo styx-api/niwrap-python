@@ -14,7 +14,7 @@ MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA = Metadata(
 
 
 MriSegmentHypothalamicSubunitsParameters = typing.TypedDict('MriSegmentHypothalamicSubunitsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_segment_hypothalamic_subunits"],
+    "@type": typing.Literal["freesurfer.mri_segment_hypothalamic_subunits"],
     "subjects": typing.NotRequired[list[str] | None],
     "subjects_dir": typing.NotRequired[str | None],
     "write_posteriors": bool,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_segment_hypothalamic_subunits": mri_segment_hypothalamic_subunits_cargs,
+        "freesurfer.mri_segment_hypothalamic_subunits": mri_segment_hypothalamic_subunits_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_segment_hypothalamic_subunits": mri_segment_hypothalamic_subunits_outputs,
+        "freesurfer.mri_segment_hypothalamic_subunits": mri_segment_hypothalamic_subunits_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def mri_segment_hypothalamic_subunits_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_segment_hypothalamic_subunits",
+        "@type": "freesurfer.mri_segment_hypothalamic_subunits",
         "write_posteriors": write_posteriors,
         "cpu": cpu,
     }
@@ -332,5 +332,8 @@ __all__ = [
     "MriSegmentHypothalamicSubunitsOutputs",
     "MriSegmentHypothalamicSubunitsParameters",
     "mri_segment_hypothalamic_subunits",
+    "mri_segment_hypothalamic_subunits_cargs",
+    "mri_segment_hypothalamic_subunits_execute",
+    "mri_segment_hypothalamic_subunits_outputs",
     "mri_segment_hypothalamic_subunits_params",
 ]

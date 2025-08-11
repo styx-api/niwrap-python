@@ -14,7 +14,7 @@ V__CLIP_VOLUME_METADATA = Metadata(
 
 
 VClipVolumeParameters = typing.TypedDict('VClipVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["@clip_volume"],
+    "@type": typing.Literal["afni.@clip_volume"],
     "input_volume": InputPathType,
     "below_zmm": typing.NotRequired[float | None],
     "above_zmm": typing.NotRequired[float | None],
@@ -48,7 +48,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@clip_volume": v__clip_volume_cargs,
+        "afni.@clip_volume": v__clip_volume_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@clip_volume": v__clip_volume_outputs,
+        "afni.@clip_volume": v__clip_volume_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def v__clip_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@clip_volume",
+        "@type": "afni.@clip_volume",
         "input_volume": input_volume,
         "and_logic": and_logic,
         "or_logic": or_logic,
@@ -384,5 +384,8 @@ __all__ = [
     "VClipVolumeParameters",
     "V__CLIP_VOLUME_METADATA",
     "v__clip_volume",
+    "v__clip_volume_cargs",
+    "v__clip_volume_execute",
+    "v__clip_volume_outputs",
     "v__clip_volume_params",
 ]

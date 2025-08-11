@@ -14,7 +14,7 @@ CONVERT_FIBER_ORIENTATIONS_METADATA = Metadata(
 
 
 ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientationsFiberParameters', {
-    "__STYXTYPE__": typing.Literal["fiber"],
+    "@type": typing.Literal["workbench.convert-fiber-orientations.fiber"],
     "mean_f": InputPathType,
     "stdev_f": InputPathType,
     "theta": InputPathType,
@@ -26,7 +26,7 @@ ConvertFiberOrientationsFiberParameters = typing.TypedDict('ConvertFiberOrientat
 
 
 ConvertFiberOrientationsParameters = typing.TypedDict('ConvertFiberOrientationsParameters', {
-    "__STYXTYPE__": typing.Literal["convert-fiber-orientations"],
+    "@type": typing.Literal["workbench.convert-fiber-orientations"],
     "label_volume": InputPathType,
     "fiber_out": str,
     "fiber": typing.NotRequired[list[ConvertFiberOrientationsFiberParameters] | None],
@@ -45,8 +45,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "convert-fiber-orientations": convert_fiber_orientations_cargs,
-        "fiber": convert_fiber_orientations_fiber_cargs,
+        "workbench.convert-fiber-orientations": convert_fiber_orientations_cargs,
+        "workbench.convert-fiber-orientations.fiber": convert_fiber_orientations_fiber_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "convert-fiber-orientations": convert_fiber_orientations_outputs,
+        "workbench.convert-fiber-orientations": convert_fiber_orientations_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def convert_fiber_orientations_fiber_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fiber",
+        "@type": "workbench.convert-fiber-orientations.fiber",
         "mean_f": mean_f,
         "stdev_f": stdev_f,
         "theta": theta,
@@ -153,7 +153,7 @@ def convert_fiber_orientations_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convert-fiber-orientations",
+        "@type": "workbench.convert-fiber-orientations",
         "label_volume": label_volume,
         "fiber_out": fiber_out,
     }
@@ -181,7 +181,7 @@ def convert_fiber_orientations_cargs(
     cargs.append(execution.input_file(params.get("label_volume")))
     cargs.append(params.get("fiber_out"))
     if params.get("fiber") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("fiber")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("fiber")] for a in c])
     return cargs
 
 
@@ -344,6 +344,10 @@ __all__ = [
     "ConvertFiberOrientationsOutputs",
     "ConvertFiberOrientationsParameters",
     "convert_fiber_orientations",
+    "convert_fiber_orientations_cargs",
+    "convert_fiber_orientations_execute",
+    "convert_fiber_orientations_fiber_cargs",
     "convert_fiber_orientations_fiber_params",
+    "convert_fiber_orientations_outputs",
     "convert_fiber_orientations_params",
 ]

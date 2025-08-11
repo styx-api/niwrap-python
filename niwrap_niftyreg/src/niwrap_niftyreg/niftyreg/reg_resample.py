@@ -14,7 +14,7 @@ REG_RESAMPLE_METADATA = Metadata(
 
 
 RegResampleParameters = typing.TypedDict('RegResampleParameters', {
-    "__STYXTYPE__": typing.Literal["reg_resample"],
+    "@type": typing.Literal["niftyreg.reg_resample"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "affine_transform": typing.NotRequired[InputPathType | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg_resample": reg_resample_cargs,
+        "niftyreg.reg_resample": reg_resample_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg_resample": reg_resample_outputs,
+        "niftyreg.reg_resample": reg_resample_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def reg_resample_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg_resample",
+        "@type": "niftyreg.reg_resample",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "nearest_neighbor": nearest_neighbor,
@@ -299,5 +299,8 @@ __all__ = [
     "RegResampleOutputs",
     "RegResampleParameters",
     "reg_resample",
+    "reg_resample_cargs",
+    "reg_resample_execute",
+    "reg_resample_outputs",
     "reg_resample_params",
 ]

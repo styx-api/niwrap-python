@@ -14,7 +14,7 @@ DCMDJPEG_FS_METADATA = Metadata(
 
 
 DcmdjpegFsParameters = typing.TypedDict('DcmdjpegFsParameters', {
-    "__STYXTYPE__": typing.Literal["dcmdjpeg.fs"],
+    "@type": typing.Literal["freesurfer.dcmdjpeg.fs"],
     "input_file": InputPathType,
     "output_file": str,
     "help": bool,
@@ -71,7 +71,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dcmdjpeg.fs": dcmdjpeg_fs_cargs,
+        "freesurfer.dcmdjpeg.fs": dcmdjpeg_fs_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dcmdjpeg.fs": dcmdjpeg_fs_outputs,
+        "freesurfer.dcmdjpeg.fs": dcmdjpeg_fs_outputs,
     }.get(t)
 
 
@@ -197,7 +197,7 @@ def dcmdjpeg_fs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dcmdjpeg.fs",
+        "@type": "freesurfer.dcmdjpeg.fs",
         "input_file": input_file,
         "output_file": output_file,
         "help": help_,
@@ -551,5 +551,8 @@ __all__ = [
     "DcmdjpegFsOutputs",
     "DcmdjpegFsParameters",
     "dcmdjpeg_fs",
+    "dcmdjpeg_fs_cargs",
+    "dcmdjpeg_fs_execute",
+    "dcmdjpeg_fs_outputs",
     "dcmdjpeg_fs_params",
 ]

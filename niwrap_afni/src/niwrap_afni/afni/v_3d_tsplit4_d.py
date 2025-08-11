@@ -14,7 +14,7 @@ V_3D_TSPLIT4_D_METADATA = Metadata(
 
 
 V3dTsplit4DParameters = typing.TypedDict('V3dTsplit4DParameters', {
-    "__STYXTYPE__": typing.Literal["3dTsplit4D"],
+    "@type": typing.Literal["afni.3dTsplit4D"],
     "prefix": str,
     "infile": InputPathType,
     "keep_datum": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTsplit4D": v_3d_tsplit4_d_cargs,
+        "afni.3dTsplit4D": v_3d_tsplit4_d_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTsplit4D": v_3d_tsplit4_d_outputs,
+        "afni.3dTsplit4D": v_3d_tsplit4_d_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v_3d_tsplit4_d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTsplit4D",
+        "@type": "afni.3dTsplit4D",
         "prefix": prefix,
         "infile": infile,
         "keep_datum": keep_datum,
@@ -205,5 +205,8 @@ __all__ = [
     "V3dTsplit4DParameters",
     "V_3D_TSPLIT4_D_METADATA",
     "v_3d_tsplit4_d",
+    "v_3d_tsplit4_d_cargs",
+    "v_3d_tsplit4_d_execute",
+    "v_3d_tsplit4_d_outputs",
     "v_3d_tsplit4_d_params",
 ]

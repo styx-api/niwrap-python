@@ -14,7 +14,7 @@ SURFACE_CURVATURE_METADATA = Metadata(
 
 
 SurfaceCurvatureParameters = typing.TypedDict('SurfaceCurvatureParameters', {
-    "__STYXTYPE__": typing.Literal["surface-curvature"],
+    "@type": typing.Literal["workbench.surface-curvature"],
     "surface": InputPathType,
     "opt_mean_mean_out": typing.NotRequired[str | None],
     "opt_gauss_gauss_out": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-curvature": surface_curvature_cargs,
+        "workbench.surface-curvature": surface_curvature_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-curvature": surface_curvature_outputs,
+        "workbench.surface-curvature": surface_curvature_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def surface_curvature_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-curvature",
+        "@type": "workbench.surface-curvature",
         "surface": surface,
     }
     if opt_mean_mean_out is not None:
@@ -212,5 +212,8 @@ __all__ = [
     "SurfaceCurvatureOutputs",
     "SurfaceCurvatureParameters",
     "surface_curvature",
+    "surface_curvature_cargs",
+    "surface_curvature_execute",
+    "surface_curvature_outputs",
     "surface_curvature_params",
 ]

@@ -14,7 +14,7 @@ MRI_EXTRACT_METADATA = Metadata(
 
 
 MriExtractParameters = typing.TypedDict('MriExtractParameters', {
-    "__STYXTYPE__": typing.Literal["mri_extract"],
+    "@type": typing.Literal["freesurfer.mri_extract"],
     "like_template": typing.NotRequired[InputPathType | None],
     "src_volume": InputPathType,
     "dst_volume": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_extract": mri_extract_cargs,
+        "freesurfer.mri_extract": mri_extract_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_extract": mri_extract_outputs,
+        "freesurfer.mri_extract": mri_extract_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def mri_extract_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_extract",
+        "@type": "freesurfer.mri_extract",
         "src_volume": src_volume,
         "dst_volume": dst_volume,
     }
@@ -207,5 +207,8 @@ __all__ = [
     "MriExtractOutputs",
     "MriExtractParameters",
     "mri_extract",
+    "mri_extract_cargs",
+    "mri_extract_execute",
+    "mri_extract_outputs",
     "mri_extract_params",
 ]

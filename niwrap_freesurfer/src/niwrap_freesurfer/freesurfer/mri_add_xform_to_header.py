@@ -14,7 +14,7 @@ MRI_ADD_XFORM_TO_HEADER_METADATA = Metadata(
 
 
 MriAddXformToHeaderParameters = typing.TypedDict('MriAddXformToHeaderParameters', {
-    "__STYXTYPE__": typing.Literal["mri_add_xform_to_header"],
+    "@type": typing.Literal["freesurfer.mri_add_xform_to_header"],
     "xfm_file": InputPathType,
     "input_volume": InputPathType,
     "output_volume": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_add_xform_to_header": mri_add_xform_to_header_cargs,
+        "freesurfer.mri_add_xform_to_header": mri_add_xform_to_header_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_add_xform_to_header": mri_add_xform_to_header_outputs,
+        "freesurfer.mri_add_xform_to_header": mri_add_xform_to_header_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_add_xform_to_header_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_add_xform_to_header",
+        "@type": "freesurfer.mri_add_xform_to_header",
         "xfm_file": xfm_file,
         "input_volume": input_volume,
         "output_volume": output_volume,
@@ -206,5 +206,8 @@ __all__ = [
     "MriAddXformToHeaderOutputs",
     "MriAddXformToHeaderParameters",
     "mri_add_xform_to_header",
+    "mri_add_xform_to_header_cargs",
+    "mri_add_xform_to_header_execute",
+    "mri_add_xform_to_header_outputs",
     "mri_add_xform_to_header_params",
 ]

@@ -14,7 +14,7 @@ FSL_DEFACE_METADATA = Metadata(
 
 
 FslDefaceParameters = typing.TypedDict('FslDefaceParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_deface"],
+    "@type": typing.Literal["fsl.fsl_deface"],
     "infile": InputPathType,
     "outfile": str,
     "cropped_defacing_flag": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_deface": fsl_deface_cargs,
+        "fsl.fsl_deface": fsl_deface_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_deface": fsl_deface_outputs,
+        "fsl.fsl_deface": fsl_deface_outputs,
     }.get(t)
 
 
@@ -130,7 +130,7 @@ def fsl_deface_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_deface",
+        "@type": "fsl.fsl_deface",
         "infile": infile,
         "outfile": outfile,
         "cropped_defacing_flag": cropped_defacing_flag,
@@ -350,5 +350,8 @@ __all__ = [
     "FslDefaceOutputs",
     "FslDefaceParameters",
     "fsl_deface",
+    "fsl_deface_cargs",
+    "fsl_deface_execute",
+    "fsl_deface_outputs",
     "fsl_deface_params",
 ]

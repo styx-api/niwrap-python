@@ -14,7 +14,7 @@ V_3D_SURF_MASK_METADATA = Metadata(
 
 
 V3dSurfMaskParameters = typing.TypedDict('V3dSurfMaskParameters', {
-    "__STYXTYPE__": typing.Literal["3dSurfMask"],
+    "@type": typing.Literal["afni.3dSurfMask"],
     "surface_type": str,
     "surface_file": InputPathType,
     "prefix": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSurfMask": v_3d_surf_mask_cargs,
+        "afni.3dSurfMask": v_3d_surf_mask_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSurfMask": v_3d_surf_mask_outputs,
+        "afni.3dSurfMask": v_3d_surf_mask_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def v_3d_surf_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSurfMask",
+        "@type": "afni.3dSurfMask",
         "surface_type": surface_type,
         "surface_file": surface_file,
         "prefix": prefix,
@@ -258,5 +258,8 @@ __all__ = [
     "V3dSurfMaskParameters",
     "V_3D_SURF_MASK_METADATA",
     "v_3d_surf_mask",
+    "v_3d_surf_mask_cargs",
+    "v_3d_surf_mask_execute",
+    "v_3d_surf_mask_outputs",
     "v_3d_surf_mask_params",
 ]

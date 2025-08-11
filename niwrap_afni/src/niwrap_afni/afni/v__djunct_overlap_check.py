@@ -14,7 +14,7 @@ V__DJUNCT_OVERLAP_CHECK_METADATA = Metadata(
 
 
 VDjunctOverlapCheckParameters = typing.TypedDict('VDjunctOverlapCheckParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_overlap_check"],
+    "@type": typing.Literal["afni.@djunct_overlap_check"],
     "ulay": InputPathType,
     "olay": InputPathType,
     "prefix": str,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_overlap_check": v__djunct_overlap_check_cargs,
+        "afni.@djunct_overlap_check": v__djunct_overlap_check_cargs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def v__djunct_overlap_check_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_overlap_check",
+        "@type": "afni.@djunct_overlap_check",
         "ulay": ulay,
         "olay": olay,
         "prefix": prefix,
@@ -426,5 +426,8 @@ __all__ = [
     "VDjunctOverlapCheckParameters",
     "V__DJUNCT_OVERLAP_CHECK_METADATA",
     "v__djunct_overlap_check",
+    "v__djunct_overlap_check_cargs",
+    "v__djunct_overlap_check_execute",
+    "v__djunct_overlap_check_outputs",
     "v__djunct_overlap_check_params",
 ]

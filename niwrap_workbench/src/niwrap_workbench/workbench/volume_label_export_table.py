@@ -14,7 +14,7 @@ VOLUME_LABEL_EXPORT_TABLE_METADATA = Metadata(
 
 
 VolumeLabelExportTableParameters = typing.TypedDict('VolumeLabelExportTableParameters', {
-    "__STYXTYPE__": typing.Literal["volume-label-export-table"],
+    "@type": typing.Literal["workbench.volume-label-export-table"],
     "label_in": InputPathType,
     "map": str,
     "table_out": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-label-export-table": volume_label_export_table_cargs,
+        "workbench.volume-label-export-table": volume_label_export_table_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def volume_label_export_table_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-label-export-table",
+        "@type": "workbench.volume-label-export-table",
         "label_in": label_in,
         "map": map_,
         "table_out": table_out,
@@ -191,5 +191,8 @@ __all__ = [
     "VolumeLabelExportTableOutputs",
     "VolumeLabelExportTableParameters",
     "volume_label_export_table",
+    "volume_label_export_table_cargs",
+    "volume_label_export_table_execute",
+    "volume_label_export_table_outputs",
     "volume_label_export_table_params",
 ]

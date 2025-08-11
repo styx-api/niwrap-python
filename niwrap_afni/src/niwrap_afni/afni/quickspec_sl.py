@@ -14,7 +14,7 @@ QUICKSPEC_SL_METADATA = Metadata(
 
 
 QuickspecSlParameters = typing.TypedDict('QuickspecSlParameters', {
-    "__STYXTYPE__": typing.Literal["quickspecSL"],
+    "@type": typing.Literal["afni.quickspecSL"],
     "surf_A": InputPathType,
     "surf_B": InputPathType,
     "surf_intermed_pref": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "quickspecSL": quickspec_sl_cargs,
+        "afni.quickspecSL": quickspec_sl_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "quickspecSL": quickspec_sl_outputs,
+        "afni.quickspecSL": quickspec_sl_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def quickspec_sl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "quickspecSL",
+        "@type": "afni.quickspecSL",
         "surf_A": surf_a,
         "surf_B": surf_b,
         "both_lr_flag": both_lr_flag,
@@ -278,5 +278,8 @@ __all__ = [
     "QuickspecSlOutputs",
     "QuickspecSlParameters",
     "quickspec_sl",
+    "quickspec_sl_cargs",
+    "quickspec_sl_execute",
+    "quickspec_sl_outputs",
     "quickspec_sl_params",
 ]

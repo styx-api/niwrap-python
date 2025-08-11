@@ -14,7 +14,7 @@ LONG_STATS_SLOPES_METADATA = Metadata(
 
 
 LongStatsSlopesParameters = typing.TypedDict('LongStatsSlopesParameters', {
-    "__STYXTYPE__": typing.Literal["long_stats_slopes"],
+    "@type": typing.Literal["freesurfer.long_stats_slopes"],
     "qdec_table": InputPathType,
     "stats_file": InputPathType,
     "measure": str,
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_stats_slopes": long_stats_slopes_cargs,
+        "freesurfer.long_stats_slopes": long_stats_slopes_cargs,
     }.get(t)
 
 
@@ -159,7 +159,7 @@ def long_stats_slopes_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_stats_slopes",
+        "@type": "freesurfer.long_stats_slopes",
         "qdec_table": qdec_table,
         "stats_file": stats_file,
         "measure": measure,
@@ -495,5 +495,8 @@ __all__ = [
     "LongStatsSlopesOutputs",
     "LongStatsSlopesParameters",
     "long_stats_slopes",
+    "long_stats_slopes_cargs",
+    "long_stats_slopes_execute",
+    "long_stats_slopes_outputs",
     "long_stats_slopes_params",
 ]

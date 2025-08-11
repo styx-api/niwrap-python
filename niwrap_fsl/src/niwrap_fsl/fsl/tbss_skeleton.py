@@ -14,7 +14,7 @@ TBSS_SKELETON_METADATA = Metadata(
 
 
 TbssSkeletonParameters = typing.TypedDict('TbssSkeletonParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_skeleton"],
+    "@type": typing.Literal["fsl.tbss_skeleton"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "skeleton_params": typing.NotRequired[list[str] | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_skeleton": tbss_skeleton_cargs,
+        "fsl.tbss_skeleton": tbss_skeleton_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tbss_skeleton": tbss_skeleton_outputs,
+        "fsl.tbss_skeleton": tbss_skeleton_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def tbss_skeleton_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_skeleton",
+        "@type": "fsl.tbss_skeleton",
         "input_image": input_image,
         "debug_flag": debug_flag,
     }
@@ -267,5 +267,8 @@ __all__ = [
     "TbssSkeletonOutputs",
     "TbssSkeletonParameters",
     "tbss_skeleton",
+    "tbss_skeleton_cargs",
+    "tbss_skeleton_execute",
+    "tbss_skeleton_outputs",
     "tbss_skeleton_params",
 ]

@@ -14,7 +14,7 @@ RECON_ALL_METADATA = Metadata(
 
 
 ReconAllParameters = typing.TypedDict('ReconAllParameters', {
-    "__STYXTYPE__": typing.Literal["recon-all"],
+    "@type": typing.Literal["freesurfer.recon-all"],
     "subjid": str,
     "all_flag": bool,
     "autorecon_all_flag": bool,
@@ -99,7 +99,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "recon-all": recon_all_cargs,
+        "freesurfer.recon-all": recon_all_cargs,
     }.get(t)
 
 
@@ -115,7 +115,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "recon-all": recon_all_outputs,
+        "freesurfer.recon-all": recon_all_outputs,
     }.get(t)
 
 
@@ -287,7 +287,7 @@ def recon_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "recon-all",
+        "@type": "freesurfer.recon-all",
         "subjid": subjid,
         "all_flag": all_flag,
         "autorecon_all_flag": autorecon_all_flag,
@@ -926,5 +926,8 @@ __all__ = [
     "ReconAllOutputs",
     "ReconAllParameters",
     "recon_all",
+    "recon_all_cargs",
+    "recon_all_execute",
+    "recon_all_outputs",
     "recon_all_params",
 ]

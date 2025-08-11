@@ -14,7 +14,7 @@ TALSEGPROB_METADATA = Metadata(
 
 
 TalsegprobParameters = typing.TypedDict('TalsegprobParameters', {
-    "__STYXTYPE__": typing.Literal["talsegprob"],
+    "@type": typing.Literal["freesurfer.talsegprob"],
     "subjects_list": typing.NotRequired[list[str] | None],
     "fsgd_file": typing.NotRequired[InputPathType | None],
     "segmentation_number": typing.NotRequired[float | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "talsegprob": talsegprob_cargs,
+        "freesurfer.talsegprob": talsegprob_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "talsegprob": talsegprob_outputs,
+        "freesurfer.talsegprob": talsegprob_outputs,
     }.get(t)
 
 
@@ -126,7 +126,7 @@ def talsegprob_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "talsegprob",
+        "@type": "freesurfer.talsegprob",
         "hippo_flag": hippo_flag,
         "left_hippo_flag": left_hippo_flag,
         "right_hippo_flag": right_hippo_flag,
@@ -371,5 +371,8 @@ __all__ = [
     "TalsegprobOutputs",
     "TalsegprobParameters",
     "talsegprob",
+    "talsegprob_cargs",
+    "talsegprob_execute",
+    "talsegprob_outputs",
     "talsegprob_params",
 ]

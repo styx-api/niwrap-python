@@ -14,7 +14,7 @@ SURFACE_WEDGE_VOLUME_METADATA = Metadata(
 
 
 SurfaceWedgeVolumeParameters = typing.TypedDict('SurfaceWedgeVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["surface-wedge-volume"],
+    "@type": typing.Literal["workbench.surface-wedge-volume"],
     "inner_surface": InputPathType,
     "outer_surface": InputPathType,
     "metric": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-wedge-volume": surface_wedge_volume_cargs,
+        "workbench.surface-wedge-volume": surface_wedge_volume_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-wedge-volume": surface_wedge_volume_outputs,
+        "workbench.surface-wedge-volume": surface_wedge_volume_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def surface_wedge_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-wedge-volume",
+        "@type": "workbench.surface-wedge-volume",
         "inner_surface": inner_surface,
         "outer_surface": outer_surface,
         "metric": metric,
@@ -197,5 +197,8 @@ __all__ = [
     "SurfaceWedgeVolumeOutputs",
     "SurfaceWedgeVolumeParameters",
     "surface_wedge_volume",
+    "surface_wedge_volume_cargs",
+    "surface_wedge_volume_execute",
+    "surface_wedge_volume_outputs",
     "surface_wedge_volume_params",
 ]

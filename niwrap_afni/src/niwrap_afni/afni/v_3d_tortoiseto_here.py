@@ -14,7 +14,7 @@ V_3D_TORTOISETO_HERE_METADATA = Metadata(
 
 
 V3dTortoisetoHereParameters = typing.TypedDict('V3dTortoisetoHereParameters', {
-    "__STYXTYPE__": typing.Literal["3dTORTOISEtoHere"],
+    "@type": typing.Literal["afni.3dTORTOISEtoHere"],
     "dt_tort": InputPathType,
     "prefix": str,
     "scale_factor": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dTORTOISEtoHere": v_3d_tortoiseto_here_cargs,
+        "afni.3dTORTOISEtoHere": v_3d_tortoiseto_here_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dTORTOISEtoHere": v_3d_tortoiseto_here_outputs,
+        "afni.3dTORTOISEtoHere": v_3d_tortoiseto_here_outputs,
     }.get(t)
 
 
@@ -92,7 +92,7 @@ def v_3d_tortoiseto_here_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dTORTOISEtoHere",
+        "@type": "afni.3dTORTOISEtoHere",
         "dt_tort": dt_tort,
         "prefix": prefix,
         "flip_x": flip_x,
@@ -235,5 +235,8 @@ __all__ = [
     "V3dTortoisetoHereParameters",
     "V_3D_TORTOISETO_HERE_METADATA",
     "v_3d_tortoiseto_here",
+    "v_3d_tortoiseto_here_cargs",
+    "v_3d_tortoiseto_here_execute",
+    "v_3d_tortoiseto_here_outputs",
     "v_3d_tortoiseto_here_params",
 ]

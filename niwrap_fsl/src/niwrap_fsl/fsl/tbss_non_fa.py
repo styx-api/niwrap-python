@@ -14,7 +14,7 @@ TBSS_NON_FA_METADATA = Metadata(
 
 
 TbssNonFaParameters = typing.TypedDict('TbssNonFaParameters', {
-    "__STYXTYPE__": typing.Literal["tbss_non_FA"],
+    "@type": typing.Literal["fsl.tbss_non_FA"],
     "concat_auto": bool,
     "output_file": str,
     "input_files": list[InputPathType],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tbss_non_FA": tbss_non_fa_cargs,
+        "fsl.tbss_non_FA": tbss_non_fa_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tbss_non_FA": tbss_non_fa_outputs,
+        "fsl.tbss_non_FA": tbss_non_fa_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def tbss_non_fa_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tbss_non_FA",
+        "@type": "fsl.tbss_non_FA",
         "concat_auto": concat_auto,
         "output_file": output_file,
         "input_files": input_files,
@@ -257,5 +257,8 @@ __all__ = [
     "TbssNonFaOutputs",
     "TbssNonFaParameters",
     "tbss_non_fa",
+    "tbss_non_fa_cargs",
+    "tbss_non_fa_execute",
+    "tbss_non_fa_outputs",
     "tbss_non_fa_params",
 ]

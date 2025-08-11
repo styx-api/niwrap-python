@@ -14,7 +14,7 @@ MRI_CVS_DATA_COPY_METADATA = Metadata(
 
 
 MriCvsDataCopyParameters = typing.TypedDict('MriCvsDataCopyParameters', {
-    "__STYXTYPE__": typing.Literal["mri_cvs_data_copy"],
+    "@type": typing.Literal["freesurfer.mri_cvs_data_copy"],
     "subjid": str,
     "olddir": str,
     "newdir": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_cvs_data_copy": mri_cvs_data_copy_cargs,
+        "freesurfer.mri_cvs_data_copy": mri_cvs_data_copy_cargs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def mri_cvs_data_copy_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_cvs_data_copy",
+        "@type": "freesurfer.mri_cvs_data_copy",
         "subjid": subjid,
         "olddir": olddir,
         "newdir": newdir,
@@ -215,5 +215,8 @@ __all__ = [
     "MriCvsDataCopyOutputs",
     "MriCvsDataCopyParameters",
     "mri_cvs_data_copy",
+    "mri_cvs_data_copy_cargs",
+    "mri_cvs_data_copy_execute",
+    "mri_cvs_data_copy_outputs",
     "mri_cvs_data_copy_params",
 ]

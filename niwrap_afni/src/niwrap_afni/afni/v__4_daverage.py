@@ -14,7 +14,7 @@ V__4_DAVERAGE_METADATA = Metadata(
 
 
 V4DaverageParameters = typing.TypedDict('V4DaverageParameters', {
-    "__STYXTYPE__": typing.Literal["@4Daverage"],
+    "@type": typing.Literal["afni.@4Daverage"],
     "output_prefix": str,
     "input_files": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@4Daverage": v__4_daverage_cargs,
+        "afni.@4Daverage": v__4_daverage_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def v__4_daverage_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@4Daverage",
+        "@type": "afni.@4Daverage",
         "output_prefix": output_prefix,
         "input_files": input_files,
     }
@@ -178,5 +178,8 @@ __all__ = [
     "V4DaverageParameters",
     "V__4_DAVERAGE_METADATA",
     "v__4_daverage",
+    "v__4_daverage_cargs",
+    "v__4_daverage_execute",
+    "v__4_daverage_outputs",
     "v__4_daverage_params",
 ]

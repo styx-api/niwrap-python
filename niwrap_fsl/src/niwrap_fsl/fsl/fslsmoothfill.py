@@ -14,7 +14,7 @@ FSLSMOOTHFILL_METADATA = Metadata(
 
 
 FslsmoothfillParameters = typing.TypedDict('FslsmoothfillParameters', {
-    "__STYXTYPE__": typing.Literal["fslsmoothfill"],
+    "@type": typing.Literal["fsl.fslsmoothfill"],
     "input_image": InputPathType,
     "mask_image": InputPathType,
     "output_image": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslsmoothfill": fslsmoothfill_cargs,
+        "fsl.fslsmoothfill": fslsmoothfill_cargs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def fslsmoothfill_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslsmoothfill",
+        "@type": "fsl.fslsmoothfill",
         "input_image": input_image,
         "mask_image": mask_image,
         "output_image": output_image,
@@ -217,5 +217,8 @@ __all__ = [
     "FslsmoothfillOutputs",
     "FslsmoothfillParameters",
     "fslsmoothfill",
+    "fslsmoothfill_cargs",
+    "fslsmoothfill_execute",
+    "fslsmoothfill_outputs",
     "fslsmoothfill_params",
 ]

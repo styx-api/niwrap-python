@@ -14,7 +14,7 @@ ADJUNCT_COMBINE_STR_PY_METADATA = Metadata(
 
 
 AdjunctCombineStrPyParameters = typing.TypedDict('AdjunctCombineStrPyParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_combine_str.py"],
+    "@type": typing.Literal["afni.adjunct_combine_str.py"],
     "output_file": str,
     "upper_index": float,
     "string_selectors": list[str],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_combine_str.py": adjunct_combine_str_py_cargs,
+        "afni.adjunct_combine_str.py": adjunct_combine_str_py_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "adjunct_combine_str.py": adjunct_combine_str_py_outputs,
+        "afni.adjunct_combine_str.py": adjunct_combine_str_py_outputs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def adjunct_combine_str_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_combine_str.py",
+        "@type": "afni.adjunct_combine_str.py",
         "output_file": output_file,
         "upper_index": upper_index,
         "string_selectors": string_selectors,
@@ -194,5 +194,8 @@ __all__ = [
     "AdjunctCombineStrPyOutputs",
     "AdjunctCombineStrPyParameters",
     "adjunct_combine_str_py",
+    "adjunct_combine_str_py_cargs",
+    "adjunct_combine_str_py_execute",
+    "adjunct_combine_str_py_outputs",
     "adjunct_combine_str_py_params",
 ]

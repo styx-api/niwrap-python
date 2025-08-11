@@ -14,7 +14,7 @@ V__ADD_EDGE_METADATA = Metadata(
 
 
 VAddEdgeParameters = typing.TypedDict('VAddEdgeParameters', {
-    "__STYXTYPE__": typing.Literal["@AddEdge"],
+    "@type": typing.Literal["afni.@AddEdge"],
     "input_files": list[InputPathType],
     "examine_list": typing.NotRequired[str | None],
     "ax_mont": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@AddEdge": v__add_edge_cargs,
+        "afni.@AddEdge": v__add_edge_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@AddEdge": v__add_edge_outputs,
+        "afni.@AddEdge": v__add_edge_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def v__add_edge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@AddEdge",
+        "@type": "afni.@AddEdge",
         "input_files": input_files,
         "no_layout": no_layout,
         "single_edge": single_edge,
@@ -340,5 +340,8 @@ __all__ = [
     "VAddEdgeParameters",
     "V__ADD_EDGE_METADATA",
     "v__add_edge",
+    "v__add_edge_cargs",
+    "v__add_edge_execute",
+    "v__add_edge_outputs",
     "v__add_edge_params",
 ]

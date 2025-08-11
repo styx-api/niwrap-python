@@ -14,7 +14,7 @@ FIRDESIGN_METADATA = Metadata(
 
 
 FirdesignParameters = typing.TypedDict('FirdesignParameters', {
-    "__STYXTYPE__": typing.Literal["FIRdesign"],
+    "@type": typing.Literal["afni.FIRdesign"],
     "fbot": float,
     "ftop": float,
     "ntap": float,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "FIRdesign": firdesign_cargs,
+        "afni.FIRdesign": firdesign_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def firdesign_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "FIRdesign",
+        "@type": "afni.FIRdesign",
         "fbot": fbot,
         "ftop": ftop,
         "ntap": ntap,
@@ -231,5 +231,8 @@ __all__ = [
     "FirdesignOutputs",
     "FirdesignParameters",
     "firdesign",
+    "firdesign_cargs",
+    "firdesign_execute",
+    "firdesign_outputs",
     "firdesign_params",
 ]

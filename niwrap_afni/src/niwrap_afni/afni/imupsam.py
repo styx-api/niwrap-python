@@ -14,7 +14,7 @@ IMUPSAM_METADATA = Metadata(
 
 
 ImupsamParameters = typing.TypedDict('ImupsamParameters', {
-    "__STYXTYPE__": typing.Literal["imupsam"],
+    "@type": typing.Literal["afni.imupsam"],
     "ascii_flag": bool,
     "factor": int,
     "input_image": InputPathType,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imupsam": imupsam_cargs,
+        "afni.imupsam": imupsam_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imupsam": imupsam_outputs,
+        "afni.imupsam": imupsam_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def imupsam_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imupsam",
+        "@type": "afni.imupsam",
         "ascii_flag": ascii_flag,
         "factor": factor,
         "input_image": input_image,
@@ -201,5 +201,8 @@ __all__ = [
     "ImupsamOutputs",
     "ImupsamParameters",
     "imupsam",
+    "imupsam_cargs",
+    "imupsam_execute",
+    "imupsam_outputs",
     "imupsam_params",
 ]

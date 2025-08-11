@@ -14,7 +14,7 @@ CONVERT_SCALAR_IMAGE_TO_RGB_METADATA = Metadata(
 
 
 ConvertScalarImageToRgbParameters = typing.TypedDict('ConvertScalarImageToRgbParameters', {
-    "__STYXTYPE__": typing.Literal["ConvertScalarImageToRGB"],
+    "@type": typing.Literal["ants.ConvertScalarImageToRGB"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": str,
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ConvertScalarImageToRGB": convert_scalar_image_to_rgb_cargs,
+        "ants.ConvertScalarImageToRGB": convert_scalar_image_to_rgb_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ConvertScalarImageToRGB": convert_scalar_image_to_rgb_outputs,
+        "ants.ConvertScalarImageToRGB": convert_scalar_image_to_rgb_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def convert_scalar_image_to_rgb_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ConvertScalarImageToRGB",
+        "@type": "ants.ConvertScalarImageToRGB",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -274,5 +274,8 @@ __all__ = [
     "ConvertScalarImageToRgbOutputs",
     "ConvertScalarImageToRgbParameters",
     "convert_scalar_image_to_rgb",
+    "convert_scalar_image_to_rgb_cargs",
+    "convert_scalar_image_to_rgb_execute",
+    "convert_scalar_image_to_rgb_outputs",
     "convert_scalar_image_to_rgb_params",
 ]

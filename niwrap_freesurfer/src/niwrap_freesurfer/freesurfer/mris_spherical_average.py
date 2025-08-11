@@ -14,7 +14,7 @@ MRIS_SPHERICAL_AVERAGE_METADATA = Metadata(
 
 
 MrisSphericalAverageParameters = typing.TypedDict('MrisSphericalAverageParameters', {
-    "__STYXTYPE__": typing.Literal["mris_spherical_average"],
+    "@type": typing.Literal["freesurfer.mris_spherical_average"],
     "which": typing.Literal["coords", "label", "vals", "curv", "area"],
     "fname": str,
     "hemi": typing.Literal["lh", "rh"],
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_spherical_average": mris_spherical_average_cargs,
+        "freesurfer.mris_spherical_average": mris_spherical_average_cargs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def mris_spherical_average_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_spherical_average",
+        "@type": "freesurfer.mris_spherical_average",
         "which": which,
         "fname": fname,
         "hemi": hemi,
@@ -308,5 +308,8 @@ __all__ = [
     "MrisSphericalAverageOutputs",
     "MrisSphericalAverageParameters",
     "mris_spherical_average",
+    "mris_spherical_average_cargs",
+    "mris_spherical_average_execute",
+    "mris_spherical_average_outputs",
     "mris_spherical_average_params",
 ]

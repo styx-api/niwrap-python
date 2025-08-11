@@ -14,7 +14,7 @@ MRI_SYNTHSR_HYPERFINE_METADATA = Metadata(
 
 
 MriSynthsrHyperfineParameters = typing.TypedDict('MriSynthsrHyperfineParameters', {
-    "__STYXTYPE__": typing.Literal["mri_synthsr_hyperfine"],
+    "@type": typing.Literal["freesurfer.mri_synthsr_hyperfine"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "output": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_synthsr_hyperfine": mri_synthsr_hyperfine_cargs,
+        "freesurfer.mri_synthsr_hyperfine": mri_synthsr_hyperfine_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_synthsr_hyperfine": mri_synthsr_hyperfine_outputs,
+        "freesurfer.mri_synthsr_hyperfine": mri_synthsr_hyperfine_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def mri_synthsr_hyperfine_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_synthsr_hyperfine",
+        "@type": "freesurfer.mri_synthsr_hyperfine",
         "t1_image": t1_image,
         "t2_image": t2_image,
         "output": output,
@@ -231,5 +231,8 @@ __all__ = [
     "MriSynthsrHyperfineOutputs",
     "MriSynthsrHyperfineParameters",
     "mri_synthsr_hyperfine",
+    "mri_synthsr_hyperfine_cargs",
+    "mri_synthsr_hyperfine_execute",
+    "mri_synthsr_hyperfine_outputs",
     "mri_synthsr_hyperfine_params",
 ]

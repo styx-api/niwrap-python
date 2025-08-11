@@ -14,7 +14,7 @@ CUTOFFCALC_METADATA = Metadata(
 
 
 CutoffcalcParameters = typing.TypedDict('CutoffcalcParameters', {
-    "__STYXTYPE__": typing.Literal["cutoffcalc"],
+    "@type": typing.Literal["fsl.cutoffcalc"],
     "input_design": InputPathType,
     "threshold": typing.NotRequired[float | None],
     "tr": typing.NotRequired[float | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cutoffcalc": cutoffcalc_cargs,
+        "fsl.cutoffcalc": cutoffcalc_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cutoffcalc": cutoffcalc_outputs,
+        "fsl.cutoffcalc": cutoffcalc_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def cutoffcalc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cutoffcalc",
+        "@type": "fsl.cutoffcalc",
         "input_design": input_design,
         "verbose_flag": verbose_flag,
         "debug_flag": debug_flag,
@@ -236,5 +236,8 @@ __all__ = [
     "CutoffcalcOutputs",
     "CutoffcalcParameters",
     "cutoffcalc",
+    "cutoffcalc_cargs",
+    "cutoffcalc_execute",
+    "cutoffcalc_outputs",
     "cutoffcalc_params",
 ]

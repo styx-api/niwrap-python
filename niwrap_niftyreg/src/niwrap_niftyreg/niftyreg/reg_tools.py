@@ -14,7 +14,7 @@ REG_TOOLS_METADATA = Metadata(
 
 
 RegToolsParameters = typing.TypedDict('RegToolsParameters', {
-    "__STYXTYPE__": typing.Literal["reg_tools"],
+    "@type": typing.Literal["niftyreg.reg_tools"],
     "input_image": InputPathType,
     "output_image": typing.NotRequired[str | None],
     "add_value_or_image": typing.NotRequired[str | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg_tools": reg_tools_cargs,
+        "niftyreg.reg_tools": reg_tools_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg_tools": reg_tools_outputs,
+        "niftyreg.reg_tools": reg_tools_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def reg_tools_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg_tools",
+        "@type": "niftyreg.reg_tools",
         "input_image": input_image,
         "binarize": binarize,
     }
@@ -316,5 +316,8 @@ __all__ = [
     "RegToolsOutputs",
     "RegToolsParameters",
     "reg_tools",
+    "reg_tools_cargs",
+    "reg_tools_execute",
+    "reg_tools_outputs",
     "reg_tools_params",
 ]

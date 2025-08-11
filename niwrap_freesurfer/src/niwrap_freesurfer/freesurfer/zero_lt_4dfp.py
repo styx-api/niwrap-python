@@ -14,7 +14,7 @@ ZERO_LT_4DFP_METADATA = Metadata(
 
 
 ZeroLt4dfpParameters = typing.TypedDict('ZeroLt4dfpParameters', {
-    "__STYXTYPE__": typing.Literal["zero_lt_4dfp"],
+    "@type": typing.Literal["freesurfer.zero_lt_4dfp"],
     "flt_value": float,
     "file_4dfp": InputPathType,
     "outroot": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "zero_lt_4dfp": zero_lt_4dfp_cargs,
+        "freesurfer.zero_lt_4dfp": zero_lt_4dfp_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "zero_lt_4dfp": zero_lt_4dfp_outputs,
+        "freesurfer.zero_lt_4dfp": zero_lt_4dfp_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def zero_lt_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "zero_lt_4dfp",
+        "@type": "freesurfer.zero_lt_4dfp",
         "flt_value": flt_value,
         "file_4dfp": file_4dfp,
     }
@@ -211,5 +211,8 @@ __all__ = [
     "ZeroLt4dfpOutputs",
     "ZeroLt4dfpParameters",
     "zero_lt_4dfp",
+    "zero_lt_4dfp_cargs",
+    "zero_lt_4dfp_execute",
+    "zero_lt_4dfp_outputs",
     "zero_lt_4dfp_params",
 ]

@@ -14,74 +14,74 @@ TCKEDIT_METADATA = Metadata(
 
 
 TckeditVariousStringParameters = typing.TypedDict('TckeditVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.tckedit.include.VariousString"],
     "obj": str,
 })
 
 
 TckeditVariousFileParameters = typing.TypedDict('TckeditVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.tckedit.include.VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckeditIncludeParameters = typing.TypedDict('TckeditIncludeParameters', {
-    "__STYXTYPE__": typing.Literal["include"],
+    "@type": typing.Literal["mrtrix.tckedit.include"],
     "spec": typing.Union[TckeditVariousStringParameters, TckeditVariousFileParameters],
 })
 
 
 TckeditIncludeOrderedParameters = typing.TypedDict('TckeditIncludeOrderedParameters', {
-    "__STYXTYPE__": typing.Literal["include_ordered"],
+    "@type": typing.Literal["mrtrix.tckedit.include_ordered"],
     "image": str,
 })
 
 
 TckeditVariousString1Parameters = typing.TypedDict('TckeditVariousString1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousString_1"],
+    "@type": typing.Literal["mrtrix.tckedit.exclude.VariousString"],
     "obj": str,
 })
 
 
 TckeditVariousFile1Parameters = typing.TypedDict('TckeditVariousFile1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile_1"],
+    "@type": typing.Literal["mrtrix.tckedit.exclude.VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckeditExcludeParameters = typing.TypedDict('TckeditExcludeParameters', {
-    "__STYXTYPE__": typing.Literal["exclude"],
+    "@type": typing.Literal["mrtrix.tckedit.exclude"],
     "spec": typing.Union[TckeditVariousString1Parameters, TckeditVariousFile1Parameters],
 })
 
 
 TckeditVariousString2Parameters = typing.TypedDict('TckeditVariousString2Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousString_2"],
+    "@type": typing.Literal["mrtrix.tckedit.mask.VariousString"],
     "obj": str,
 })
 
 
 TckeditVariousFile2Parameters = typing.TypedDict('TckeditVariousFile2Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile_2"],
+    "@type": typing.Literal["mrtrix.tckedit.mask.VariousFile"],
     "obj": InputPathType,
 })
 
 
 TckeditMaskParameters = typing.TypedDict('TckeditMaskParameters', {
-    "__STYXTYPE__": typing.Literal["mask"],
+    "@type": typing.Literal["mrtrix.tckedit.mask"],
     "spec": typing.Union[TckeditVariousString2Parameters, TckeditVariousFile2Parameters],
 })
 
 
 TckeditConfigParameters = typing.TypedDict('TckeditConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tckedit.config"],
     "key": str,
     "value": str,
 })
 
 
 TckeditParameters = typing.TypedDict('TckeditParameters', {
-    "__STYXTYPE__": typing.Literal["tckedit"],
+    "@type": typing.Literal["mrtrix.tckedit"],
     "include": typing.NotRequired[list[TckeditIncludeParameters] | None],
     "include_ordered": typing.NotRequired[list[TckeditIncludeOrderedParameters] | None],
     "exclude": typing.NotRequired[list[TckeditExcludeParameters] | None],
@@ -121,18 +121,18 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tckedit": tckedit_cargs,
-        "include": tckedit_include_cargs,
-        "VariousString": tckedit_various_string_cargs,
-        "VariousFile": tckedit_various_file_cargs,
-        "include_ordered": tckedit_include_ordered_cargs,
-        "exclude": tckedit_exclude_cargs,
-        "VariousString_1": tckedit_various_string_1_cargs,
-        "VariousFile_1": tckedit_various_file_1_cargs,
-        "mask": tckedit_mask_cargs,
-        "VariousString_2": tckedit_various_string_2_cargs,
-        "VariousFile_2": tckedit_various_file_2_cargs,
-        "config": tckedit_config_cargs,
+        "mrtrix.tckedit": tckedit_cargs,
+        "mrtrix.tckedit.include": tckedit_include_cargs,
+        "mrtrix.tckedit.include.VariousString": tckedit_various_string_cargs,
+        "mrtrix.tckedit.include.VariousFile": tckedit_various_file_cargs,
+        "mrtrix.tckedit.include_ordered": tckedit_include_ordered_cargs,
+        "mrtrix.tckedit.exclude": tckedit_exclude_cargs,
+        "mrtrix.tckedit.exclude.VariousString": tckedit_various_string_1_cargs,
+        "mrtrix.tckedit.exclude.VariousFile": tckedit_various_file_1_cargs,
+        "mrtrix.tckedit.mask": tckedit_mask_cargs,
+        "mrtrix.tckedit.mask.VariousString": tckedit_various_string_2_cargs,
+        "mrtrix.tckedit.mask.VariousFile": tckedit_various_file_2_cargs,
+        "mrtrix.tckedit.config": tckedit_config_cargs,
     }.get(t)
 
 
@@ -148,7 +148,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tckedit": tckedit_outputs,
+        "mrtrix.tckedit": tckedit_outputs,
     }.get(t)
 
 
@@ -164,7 +164,7 @@ def tckedit_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.tckedit.include.VariousString",
         "obj": obj,
     }
     return params
@@ -200,7 +200,7 @@ def tckedit_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.tckedit.include.VariousFile",
         "obj": obj,
     }
     return params
@@ -238,7 +238,7 @@ def tckedit_include_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "include",
+        "@type": "mrtrix.tckedit.include",
         "spec": spec,
     }
     return params
@@ -259,7 +259,7 @@ def tckedit_include_cargs(
     """
     cargs = []
     cargs.append("-include")
-    cargs.extend(dyn_cargs(params.get("spec")["__STYXTYPE__"])(params.get("spec"), execution))
+    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
     return cargs
 
 
@@ -278,7 +278,7 @@ def tckedit_include_ordered_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "include_ordered",
+        "@type": "mrtrix.tckedit.include_ordered",
         "image": image,
     }
     return params
@@ -315,7 +315,7 @@ def tckedit_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString_1",
+        "@type": "mrtrix.tckedit.exclude.VariousString",
         "obj": obj,
     }
     return params
@@ -351,7 +351,7 @@ def tckedit_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile_1",
+        "@type": "mrtrix.tckedit.exclude.VariousFile",
         "obj": obj,
     }
     return params
@@ -389,7 +389,7 @@ def tckedit_exclude_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "exclude",
+        "@type": "mrtrix.tckedit.exclude",
         "spec": spec,
     }
     return params
@@ -410,7 +410,7 @@ def tckedit_exclude_cargs(
     """
     cargs = []
     cargs.append("-exclude")
-    cargs.extend(dyn_cargs(params.get("spec")["__STYXTYPE__"])(params.get("spec"), execution))
+    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
     return cargs
 
 
@@ -426,7 +426,7 @@ def tckedit_various_string_2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString_2",
+        "@type": "mrtrix.tckedit.mask.VariousString",
         "obj": obj,
     }
     return params
@@ -462,7 +462,7 @@ def tckedit_various_file_2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile_2",
+        "@type": "mrtrix.tckedit.mask.VariousFile",
         "obj": obj,
     }
     return params
@@ -500,7 +500,7 @@ def tckedit_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mask",
+        "@type": "mrtrix.tckedit.mask",
         "spec": spec,
     }
     return params
@@ -521,7 +521,7 @@ def tckedit_mask_cargs(
     """
     cargs = []
     cargs.append("-mask")
-    cargs.extend(dyn_cargs(params.get("spec")["__STYXTYPE__"])(params.get("spec"), execution))
+    cargs.extend(dyn_cargs(params.get("spec")["@type"])(params.get("spec"), execution))
     return cargs
 
 
@@ -539,7 +539,7 @@ def tckedit_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tckedit.config",
         "key": key,
         "value": value,
     }
@@ -660,7 +660,7 @@ def tckedit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tckedit",
+        "@type": "mrtrix.tckedit",
         "inverse": inverse,
         "ends_only": ends_only,
         "info": info,
@@ -719,13 +719,13 @@ def tckedit_cargs(
     cargs = []
     cargs.append("tckedit")
     if params.get("include") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("include")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("include")] for a in c])
     if params.get("include_ordered") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("include_ordered")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("include_ordered")] for a in c])
     if params.get("exclude") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("exclude")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("exclude")] for a in c])
     if params.get("mask") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("mask")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("mask")] for a in c])
     if params.get("maxlength") is not None:
         cargs.extend([
             "-maxlength",
@@ -784,7 +784,7 @@ def tckedit_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -988,16 +988,30 @@ __all__ = [
     "TckeditVariousString2Parameters",
     "TckeditVariousStringParameters",
     "tckedit",
+    "tckedit_cargs",
+    "tckedit_config_cargs",
     "tckedit_config_params",
+    "tckedit_exclude_cargs",
     "tckedit_exclude_params",
+    "tckedit_execute",
+    "tckedit_include_cargs",
+    "tckedit_include_ordered_cargs",
     "tckedit_include_ordered_params",
     "tckedit_include_params",
+    "tckedit_mask_cargs",
     "tckedit_mask_params",
+    "tckedit_outputs",
     "tckedit_params",
+    "tckedit_various_file_1_cargs",
     "tckedit_various_file_1_params",
+    "tckedit_various_file_2_cargs",
     "tckedit_various_file_2_params",
+    "tckedit_various_file_cargs",
     "tckedit_various_file_params",
+    "tckedit_various_string_1_cargs",
     "tckedit_various_string_1_params",
+    "tckedit_various_string_2_cargs",
     "tckedit_various_string_2_params",
+    "tckedit_various_string_cargs",
     "tckedit_various_string_params",
 ]

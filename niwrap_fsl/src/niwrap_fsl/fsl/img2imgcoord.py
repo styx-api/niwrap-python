@@ -14,7 +14,7 @@ IMG2IMGCOORD_METADATA = Metadata(
 
 
 Img2imgcoordParameters = typing.TypedDict('Img2imgcoordParameters', {
-    "__STYXTYPE__": typing.Literal["img2imgcoord"],
+    "@type": typing.Literal["fsl.img2imgcoord"],
     "coordinates_file": str,
     "source_image": InputPathType,
     "dest_image": InputPathType,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "img2imgcoord": img2imgcoord_cargs,
+        "fsl.img2imgcoord": img2imgcoord_cargs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def img2imgcoord_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "img2imgcoord",
+        "@type": "fsl.img2imgcoord",
         "coordinates_file": coordinates_file,
         "source_image": source_image,
         "dest_image": dest_image,
@@ -265,5 +265,8 @@ __all__ = [
     "Img2imgcoordOutputs",
     "Img2imgcoordParameters",
     "img2imgcoord",
+    "img2imgcoord_cargs",
+    "img2imgcoord_execute",
+    "img2imgcoord_outputs",
     "img2imgcoord_params",
 ]

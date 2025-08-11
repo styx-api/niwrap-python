@@ -14,7 +14,7 @@ FSLPSPEC_METADATA = Metadata(
 
 
 FslpspecParameters = typing.TypedDict('FslpspecParameters', {
-    "__STYXTYPE__": typing.Literal["fslpspec"],
+    "@type": typing.Literal["fsl.fslpspec"],
     "infile": InputPathType,
     "outfile": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslpspec": fslpspec_cargs,
+        "fsl.fslpspec": fslpspec_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fslpspec": fslpspec_outputs,
+        "fsl.fslpspec": fslpspec_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def fslpspec_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslpspec",
+        "@type": "fsl.fslpspec",
         "infile": infile,
     }
     if outfile is not None:
@@ -182,5 +182,8 @@ __all__ = [
     "FslpspecOutputs",
     "FslpspecParameters",
     "fslpspec",
+    "fslpspec_cargs",
+    "fslpspec_execute",
+    "fslpspec_outputs",
     "fslpspec_params",
 ]

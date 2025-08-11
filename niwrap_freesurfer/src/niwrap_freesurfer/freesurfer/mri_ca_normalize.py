@@ -14,7 +14,7 @@ MRI_CA_NORMALIZE_METADATA = Metadata(
 
 
 MriCaNormalizeParameters = typing.TypedDict('MriCaNormalizeParameters', {
-    "__STYXTYPE__": typing.Literal["mri_ca_normalize"],
+    "@type": typing.Literal["freesurfer.mri_ca_normalize"],
     "input_brain_volumes": list[InputPathType],
     "atlas_file": InputPathType,
     "xform_file": InputPathType,
@@ -57,7 +57,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_ca_normalize": mri_ca_normalize_cargs,
+        "freesurfer.mri_ca_normalize": mri_ca_normalize_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_ca_normalize": mri_ca_normalize_outputs,
+        "freesurfer.mri_ca_normalize": mri_ca_normalize_outputs,
     }.get(t)
 
 
@@ -156,7 +156,7 @@ def mri_ca_normalize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_ca_normalize",
+        "@type": "freesurfer.mri_ca_normalize",
         "input_brain_volumes": input_brain_volumes,
         "atlas_file": atlas_file,
         "xform_file": xform_file,
@@ -499,5 +499,8 @@ __all__ = [
     "MriCaNormalizeOutputs",
     "MriCaNormalizeParameters",
     "mri_ca_normalize",
+    "mri_ca_normalize_cargs",
+    "mri_ca_normalize_execute",
+    "mri_ca_normalize_outputs",
     "mri_ca_normalize_params",
 ]

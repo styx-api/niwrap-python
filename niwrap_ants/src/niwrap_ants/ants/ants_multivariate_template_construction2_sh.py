@@ -14,7 +14,7 @@ ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA = Metadata(
 
 
 AntsMultivariateTemplateConstruction2ShParameters = typing.TypedDict('AntsMultivariateTemplateConstruction2ShParameters', {
-    "__STYXTYPE__": typing.Literal["antsMultivariateTemplateConstruction2.sh"],
+    "@type": typing.Literal["ants.antsMultivariateTemplateConstruction2.sh"],
     "input": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "antsMultivariateTemplateConstruction2.sh": ants_multivariate_template_construction2_sh_cargs,
+        "ants.antsMultivariateTemplateConstruction2.sh": ants_multivariate_template_construction2_sh_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "antsMultivariateTemplateConstruction2.sh": ants_multivariate_template_construction2_sh_outputs,
+        "ants.antsMultivariateTemplateConstruction2.sh": ants_multivariate_template_construction2_sh_outputs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def ants_multivariate_template_construction2_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "antsMultivariateTemplateConstruction2.sh",
+        "@type": "ants.antsMultivariateTemplateConstruction2.sh",
         "input": input_,
     }
     return params
@@ -178,5 +178,8 @@ __all__ = [
     "AntsMultivariateTemplateConstruction2ShOutputs",
     "AntsMultivariateTemplateConstruction2ShParameters",
     "ants_multivariate_template_construction2_sh",
+    "ants_multivariate_template_construction2_sh_cargs",
+    "ants_multivariate_template_construction2_sh_execute",
+    "ants_multivariate_template_construction2_sh_outputs",
     "ants_multivariate_template_construction2_sh_params",
 ]

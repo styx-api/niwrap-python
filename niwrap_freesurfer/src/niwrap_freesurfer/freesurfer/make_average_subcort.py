@@ -14,7 +14,7 @@ MAKE_AVERAGE_SUBCORT_METADATA = Metadata(
 
 
 MakeAverageSubcortParameters = typing.TypedDict('MakeAverageSubcortParameters', {
-    "__STYXTYPE__": typing.Literal["make_average_subcort"],
+    "@type": typing.Literal["freesurfer.make_average_subcort"],
     "subjects": list[str],
     "output_volume": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_average_subcort": make_average_subcort_cargs,
+        "freesurfer.make_average_subcort": make_average_subcort_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "make_average_subcort": make_average_subcort_outputs,
+        "freesurfer.make_average_subcort": make_average_subcort_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def make_average_subcort_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_average_subcort",
+        "@type": "freesurfer.make_average_subcort",
         "subjects": subjects,
         "output_volume": output_volume,
     }
@@ -185,5 +185,8 @@ __all__ = [
     "MakeAverageSubcortOutputs",
     "MakeAverageSubcortParameters",
     "make_average_subcort",
+    "make_average_subcort_cargs",
+    "make_average_subcort_execute",
+    "make_average_subcort_outputs",
     "make_average_subcort_params",
 ]

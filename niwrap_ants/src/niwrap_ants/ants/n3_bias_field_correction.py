@@ -14,7 +14,7 @@ N3_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 
 
 N3BiasFieldCorrectionParameters = typing.TypedDict('N3BiasFieldCorrectionParameters', {
-    "__STYXTYPE__": typing.Literal["N3BiasFieldCorrection"],
+    "@type": typing.Literal["ants.N3BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "input_image": InputPathType,
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "N3BiasFieldCorrection": n3_bias_field_correction_cargs,
+        "ants.N3BiasFieldCorrection": n3_bias_field_correction_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "N3BiasFieldCorrection": n3_bias_field_correction_outputs,
+        "ants.N3BiasFieldCorrection": n3_bias_field_correction_outputs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def n3_bias_field_correction_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "N3BiasFieldCorrection",
+        "@type": "ants.N3BiasFieldCorrection",
         "input_image": input_image,
         "output": output,
     }
@@ -346,5 +346,8 @@ __all__ = [
     "N3BiasFieldCorrectionParameters",
     "N3_BIAS_FIELD_CORRECTION_METADATA",
     "n3_bias_field_correction",
+    "n3_bias_field_correction_cargs",
+    "n3_bias_field_correction_execute",
+    "n3_bias_field_correction_outputs",
     "n3_bias_field_correction_params",
 ]

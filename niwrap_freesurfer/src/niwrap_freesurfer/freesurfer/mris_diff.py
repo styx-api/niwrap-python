@@ -14,7 +14,7 @@ MRIS_DIFF_METADATA = Metadata(
 
 
 MrisDiffParameters = typing.TypedDict('MrisDiffParameters', {
-    "__STYXTYPE__": typing.Literal["mris_diff"],
+    "@type": typing.Literal["freesurfer.mris_diff"],
     "surface1": InputPathType,
     "surface2": InputPathType,
     "subject1": str,
@@ -59,7 +59,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_diff": mris_diff_cargs,
+        "freesurfer.mris_diff": mris_diff_cargs,
     }.get(t)
 
 
@@ -156,7 +156,7 @@ def mris_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_diff",
+        "@type": "freesurfer.mris_diff",
         "surface1": surface1,
         "surface2": surface2,
         "subject1": subject1,
@@ -489,5 +489,8 @@ __all__ = [
     "MrisDiffOutputs",
     "MrisDiffParameters",
     "mris_diff",
+    "mris_diff_cargs",
+    "mris_diff_execute",
+    "mris_diff_outputs",
     "mris_diff_params",
 ]

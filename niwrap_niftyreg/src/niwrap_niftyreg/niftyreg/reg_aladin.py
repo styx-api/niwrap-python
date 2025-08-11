@@ -14,7 +14,7 @@ REG_ALADIN_METADATA = Metadata(
 
 
 RegAladinParameters = typing.TypedDict('RegAladinParameters', {
-    "__STYXTYPE__": typing.Literal["reg_aladin"],
+    "@type": typing.Literal["niftyreg.reg_aladin"],
     "reference_image": InputPathType,
     "floating_image": InputPathType,
     "symmetric": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "reg_aladin": reg_aladin_cargs,
+        "niftyreg.reg_aladin": reg_aladin_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "reg_aladin": reg_aladin_outputs,
+        "niftyreg.reg_aladin": reg_aladin_outputs,
     }.get(t)
 
 
@@ -110,7 +110,7 @@ def reg_aladin_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "reg_aladin",
+        "@type": "niftyreg.reg_aladin",
         "reference_image": reference_image,
         "floating_image": floating_image,
         "symmetric": symmetric,
@@ -317,5 +317,8 @@ __all__ = [
     "RegAladinOutputs",
     "RegAladinParameters",
     "reg_aladin",
+    "reg_aladin_cargs",
+    "reg_aladin_execute",
+    "reg_aladin_outputs",
     "reg_aladin_params",
 ]

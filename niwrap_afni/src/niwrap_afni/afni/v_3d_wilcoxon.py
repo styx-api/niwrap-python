@@ -14,7 +14,7 @@ V_3D_WILCOXON_METADATA = Metadata(
 
 
 V3dWilcoxonParameters = typing.TypedDict('V3dWilcoxonParameters', {
-    "__STYXTYPE__": typing.Literal["3dWilcoxon"],
+    "@type": typing.Literal["afni.3dWilcoxon"],
     "workmem": typing.NotRequired[float | None],
     "voxel": typing.NotRequired[float | None],
     "dset1_x": list[InputPathType],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dWilcoxon": v_3d_wilcoxon_cargs,
+        "afni.3dWilcoxon": v_3d_wilcoxon_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dWilcoxon": v_3d_wilcoxon_outputs,
+        "afni.3dWilcoxon": v_3d_wilcoxon_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def v_3d_wilcoxon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dWilcoxon",
+        "@type": "afni.3dWilcoxon",
         "dset1_x": dset1_x,
         "dset2_y": dset2_y,
         "output_prefix": output_prefix,
@@ -229,5 +229,8 @@ __all__ = [
     "V3dWilcoxonParameters",
     "V_3D_WILCOXON_METADATA",
     "v_3d_wilcoxon",
+    "v_3d_wilcoxon_cargs",
+    "v_3d_wilcoxon_execute",
+    "v_3d_wilcoxon_outputs",
     "v_3d_wilcoxon_params",
 ]

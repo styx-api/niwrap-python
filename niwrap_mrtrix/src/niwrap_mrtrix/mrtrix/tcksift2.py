@@ -14,14 +14,14 @@ TCKSIFT2_METADATA = Metadata(
 
 
 Tcksift2ConfigParameters = typing.TypedDict('Tcksift2ConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tcksift2.config"],
     "key": str,
     "value": str,
 })
 
 
 Tcksift2Parameters = typing.TypedDict('Tcksift2Parameters', {
-    "__STYXTYPE__": typing.Literal["tcksift2"],
+    "@type": typing.Literal["mrtrix.tcksift2"],
     "proc_mask": typing.NotRequired[InputPathType | None],
     "act": typing.NotRequired[InputPathType | None],
     "fd_scale_gm": bool,
@@ -71,8 +71,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tcksift2": tcksift2_cargs,
-        "config": tcksift2_config_cargs,
+        "mrtrix.tcksift2": tcksift2_cargs,
+        "mrtrix.tcksift2.config": tcksift2_config_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "tcksift2": tcksift2_outputs,
+        "mrtrix.tcksift2": tcksift2_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def tcksift2_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tcksift2.config",
         "key": key,
         "value": value,
     }
@@ -277,7 +277,7 @@ def tcksift2_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tcksift2",
+        "@type": "mrtrix.tcksift2",
         "fd_scale_gm": fd_scale_gm,
         "no_dilate_lut": no_dilate_lut,
         "make_null_lobes": make_null_lobes,
@@ -461,7 +461,7 @@ def tcksift2_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -725,6 +725,10 @@ __all__ = [
     "Tcksift2Outputs",
     "Tcksift2Parameters",
     "tcksift2",
+    "tcksift2_cargs",
+    "tcksift2_config_cargs",
     "tcksift2_config_params",
+    "tcksift2_execute",
+    "tcksift2_outputs",
     "tcksift2_params",
 ]

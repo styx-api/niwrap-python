@@ -14,7 +14,7 @@ MRI_XVOLAVG_METADATA = Metadata(
 
 
 MriXvolavgParameters = typing.TypedDict('MriXvolavgParameters', {
-    "__STYXTYPE__": typing.Literal["mri_xvolavg"],
+    "@type": typing.Literal["freesurfer.mri_xvolavg"],
     "input_volumes": list[InputPathType],
     "vol_type": str,
     "output_volume": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_xvolavg": mri_xvolavg_cargs,
+        "freesurfer.mri_xvolavg": mri_xvolavg_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_xvolavg": mri_xvolavg_outputs,
+        "freesurfer.mri_xvolavg": mri_xvolavg_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def mri_xvolavg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_xvolavg",
+        "@type": "freesurfer.mri_xvolavg",
         "input_volumes": input_volumes,
         "vol_type": vol_type,
         "output_volume": output_volume,
@@ -214,5 +214,8 @@ __all__ = [
     "MriXvolavgOutputs",
     "MriXvolavgParameters",
     "mri_xvolavg",
+    "mri_xvolavg_cargs",
+    "mri_xvolavg_execute",
+    "mri_xvolavg_outputs",
     "mri_xvolavg_params",
 ]

@@ -14,7 +14,7 @@ THRESHOLD_IMAGE_METADATA = Metadata(
 
 
 ThresholdImageParameters = typing.TypedDict('ThresholdImageParameters', {
-    "__STYXTYPE__": typing.Literal["ThresholdImage"],
+    "@type": typing.Literal["ants.ThresholdImage"],
     "image_dimension": int,
     "image_in": InputPathType,
     "out_image": str,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ThresholdImage": threshold_image_cargs,
+        "ants.ThresholdImage": threshold_image_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ThresholdImage": threshold_image_outputs,
+        "ants.ThresholdImage": threshold_image_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def threshold_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ThresholdImage",
+        "@type": "ants.ThresholdImage",
         "image_dimension": image_dimension,
         "image_in": image_in,
         "out_image": out_image,
@@ -266,5 +266,8 @@ __all__ = [
     "ThresholdImageOutputs",
     "ThresholdImageParameters",
     "threshold_image",
+    "threshold_image_cargs",
+    "threshold_image_execute",
+    "threshold_image_outputs",
     "threshold_image_params",
 ]

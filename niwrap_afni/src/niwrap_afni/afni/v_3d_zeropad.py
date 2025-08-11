@@ -14,7 +14,7 @@ V_3D_ZEROPAD_METADATA = Metadata(
 
 
 V3dZeropadParameters = typing.TypedDict('V3dZeropadParameters', {
-    "__STYXTYPE__": typing.Literal["3dZeropad"],
+    "@type": typing.Literal["afni.3dZeropad"],
     "dataset": InputPathType,
     "I": typing.NotRequired[float | None],
     "S": typing.NotRequired[float | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dZeropad": v_3d_zeropad_cargs,
+        "afni.3dZeropad": v_3d_zeropad_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dZeropad": v_3d_zeropad_outputs,
+        "afni.3dZeropad": v_3d_zeropad_outputs,
     }.get(t)
 
 
@@ -125,7 +125,7 @@ def v_3d_zeropad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dZeropad",
+        "@type": "afni.3dZeropad",
         "dataset": dataset,
         "pad2even": pad2even,
         "mm_flag": mm_flag,
@@ -367,5 +367,8 @@ __all__ = [
     "V3dZeropadParameters",
     "V_3D_ZEROPAD_METADATA",
     "v_3d_zeropad",
+    "v_3d_zeropad_cargs",
+    "v_3d_zeropad_execute",
+    "v_3d_zeropad_outputs",
     "v_3d_zeropad_params",
 ]

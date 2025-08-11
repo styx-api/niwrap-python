@@ -14,7 +14,7 @@ MRIS_CALC_METADATA = Metadata(
 
 
 MrisCalcParameters = typing.TypedDict('MrisCalcParameters', {
-    "__STYXTYPE__": typing.Literal["mris_calc"],
+    "@type": typing.Literal["freesurfer.mris_calc"],
     "input_file1": InputPathType,
     "action": str,
     "input_file2_or_float": typing.NotRequired[InputPathType | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_calc": mris_calc_cargs,
+        "freesurfer.mris_calc": mris_calc_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_calc": mris_calc_outputs,
+        "freesurfer.mris_calc": mris_calc_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def mris_calc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_calc",
+        "@type": "freesurfer.mris_calc",
         "input_file1": input_file1,
         "action": action,
     }
@@ -239,5 +239,8 @@ __all__ = [
     "MrisCalcOutputs",
     "MrisCalcParameters",
     "mris_calc",
+    "mris_calc_cargs",
+    "mris_calc_execute",
+    "mris_calc_outputs",
     "mris_calc_params",
 ]

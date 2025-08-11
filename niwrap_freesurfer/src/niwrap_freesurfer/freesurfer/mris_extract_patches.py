@@ -14,7 +14,7 @@ MRIS_EXTRACT_PATCHES_METADATA = Metadata(
 
 
 MrisExtractPatchesParameters = typing.TypedDict('MrisExtractPatchesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_extract_patches"],
+    "@type": typing.Literal["freesurfer.mris_extract_patches"],
     "subject": str,
     "output_dir": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_extract_patches": mris_extract_patches_cargs,
+        "freesurfer.mris_extract_patches": mris_extract_patches_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mris_extract_patches_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_extract_patches",
+        "@type": "freesurfer.mris_extract_patches",
         "subject": subject,
         "output_dir": output_dir,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "MrisExtractPatchesOutputs",
     "MrisExtractPatchesParameters",
     "mris_extract_patches",
+    "mris_extract_patches_cargs",
+    "mris_extract_patches_execute",
+    "mris_extract_patches_outputs",
     "mris_extract_patches_params",
 ]

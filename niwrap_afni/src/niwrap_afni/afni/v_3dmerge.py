@@ -14,7 +14,7 @@ V_3DMERGE_METADATA = Metadata(
 
 
 V3dmergeParameters = typing.TypedDict('V3dmergeParameters', {
-    "__STYXTYPE__": typing.Literal["3dmerge"],
+    "@type": typing.Literal["afni.3dmerge"],
     "input_files": list[InputPathType],
     "output_file": str,
     "blur_fwhm": typing.NotRequired[float | None],
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dmerge": v_3dmerge_cargs,
+        "afni.3dmerge": v_3dmerge_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dmerge": v_3dmerge_outputs,
+        "afni.3dmerge": v_3dmerge_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def v_3dmerge_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dmerge",
+        "@type": "afni.3dmerge",
         "input_files": input_files,
         "output_file": output_file,
         "absolute": absolute,
@@ -301,5 +301,8 @@ __all__ = [
     "V3dmergeParameters",
     "V_3DMERGE_METADATA",
     "v_3dmerge",
+    "v_3dmerge_cargs",
+    "v_3dmerge_execute",
+    "v_3dmerge_outputs",
     "v_3dmerge_params",
 ]

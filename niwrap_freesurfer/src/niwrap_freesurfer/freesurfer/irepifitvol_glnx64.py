@@ -14,7 +14,7 @@ IREPIFITVOL_GLNX64_METADATA = Metadata(
 
 
 IrepifitvolGlnx64Parameters = typing.TypedDict('IrepifitvolGlnx64Parameters', {
-    "__STYXTYPE__": typing.Literal["irepifitvol.glnx64"],
+    "@type": typing.Literal["freesurfer.irepifitvol.glnx64"],
     "input_file": InputPathType,
     "output_file": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "irepifitvol.glnx64": irepifitvol_glnx64_cargs,
+        "freesurfer.irepifitvol.glnx64": irepifitvol_glnx64_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "irepifitvol.glnx64": irepifitvol_glnx64_outputs,
+        "freesurfer.irepifitvol.glnx64": irepifitvol_glnx64_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def irepifitvol_glnx64_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "irepifitvol.glnx64",
+        "@type": "freesurfer.irepifitvol.glnx64",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "IrepifitvolGlnx64Outputs",
     "IrepifitvolGlnx64Parameters",
     "irepifitvol_glnx64",
+    "irepifitvol_glnx64_cargs",
+    "irepifitvol_glnx64_execute",
+    "irepifitvol_glnx64_outputs",
     "irepifitvol_glnx64_params",
 ]

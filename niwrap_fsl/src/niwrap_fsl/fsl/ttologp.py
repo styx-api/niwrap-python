@@ -14,7 +14,7 @@ TTOLOGP_METADATA = Metadata(
 
 
 TtologpParameters = typing.TypedDict('TtologpParameters', {
-    "__STYXTYPE__": typing.Literal["ttologp"],
+    "@type": typing.Literal["fsl.ttologp"],
     "varsfile": InputPathType,
     "cbsfile": InputPathType,
     "dof": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ttologp": ttologp_cargs,
+        "fsl.ttologp": ttologp_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ttologp": ttologp_outputs,
+        "fsl.ttologp": ttologp_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def ttologp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ttologp",
+        "@type": "fsl.ttologp",
         "varsfile": varsfile,
         "cbsfile": cbsfile,
         "dof": dof,
@@ -210,5 +210,8 @@ __all__ = [
     "TtologpOutputs",
     "TtologpParameters",
     "ttologp",
+    "ttologp_cargs",
+    "ttologp_execute",
+    "ttologp_outputs",
     "ttologp_params",
 ]

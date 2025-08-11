@@ -14,14 +14,14 @@ TCK2FIXEL_METADATA = Metadata(
 
 
 Tck2fixelConfigParameters = typing.TypedDict('Tck2fixelConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.tck2fixel.config"],
     "key": str,
     "value": str,
 })
 
 
 Tck2fixelParameters = typing.TypedDict('Tck2fixelParameters', {
-    "__STYXTYPE__": typing.Literal["tck2fixel"],
+    "@type": typing.Literal["mrtrix.tck2fixel"],
     "angle": typing.NotRequired[float | None],
     "info": bool,
     "quiet": bool,
@@ -50,8 +50,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "tck2fixel": tck2fixel_cargs,
-        "config": tck2fixel_config_cargs,
+        "mrtrix.tck2fixel": tck2fixel_cargs,
+        "mrtrix.tck2fixel.config": tck2fixel_config_cargs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def tck2fixel_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.tck2fixel.config",
         "key": key,
         "value": value,
     }
@@ -162,7 +162,7 @@ def tck2fixel_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "tck2fixel",
+        "@type": "mrtrix.tck2fixel",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -217,7 +217,7 @@ def tck2fixel_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -358,6 +358,10 @@ __all__ = [
     "Tck2fixelOutputs",
     "Tck2fixelParameters",
     "tck2fixel",
+    "tck2fixel_cargs",
+    "tck2fixel_config_cargs",
     "tck2fixel_config_params",
+    "tck2fixel_execute",
+    "tck2fixel_outputs",
     "tck2fixel_params",
 ]

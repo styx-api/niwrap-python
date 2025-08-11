@@ -14,7 +14,7 @@ RUN_FIRST_ALL_METADATA = Metadata(
 
 
 RunFirstAllParameters = typing.TypedDict('RunFirstAllParameters', {
-    "__STYXTYPE__": typing.Literal["run_first_all"],
+    "@type": typing.Literal["fsl.run_first_all"],
     "method": typing.NotRequired[typing.Literal["auto", "fast", "none"] | None],
     "brainextract_flag": bool,
     "structure": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "run_first_all": run_first_all_cargs,
+        "fsl.run_first_all": run_first_all_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "run_first_all": run_first_all_outputs,
+        "fsl.run_first_all": run_first_all_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def run_first_all_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "run_first_all",
+        "@type": "fsl.run_first_all",
         "brainextract_flag": brainextract_flag,
         "threestage_flag": threestage_flag,
         "debug_flag": debug_flag,
@@ -269,5 +269,8 @@ __all__ = [
     "RunFirstAllOutputs",
     "RunFirstAllParameters",
     "run_first_all",
+    "run_first_all_cargs",
+    "run_first_all_execute",
+    "run_first_all_outputs",
     "run_first_all_params",
 ]

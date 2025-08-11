@@ -14,7 +14,7 @@ MRIS_RF_TRAIN_METADATA = Metadata(
 
 
 MrisRfTrainParameters = typing.TypedDict('MrisRfTrainParameters', {
-    "__STYXTYPE__": typing.Literal["mris_rf_train"],
+    "@type": typing.Literal["freesurfer.mris_rf_train"],
     "subjects": list[str],
     "output_name": str,
     "hemi": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_rf_train": mris_rf_train_cargs,
+        "freesurfer.mris_rf_train": mris_rf_train_cargs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def mris_rf_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_rf_train",
+        "@type": "freesurfer.mris_rf_train",
         "subjects": subjects,
         "output_name": output_name,
     }
@@ -204,5 +204,8 @@ __all__ = [
     "MrisRfTrainOutputs",
     "MrisRfTrainParameters",
     "mris_rf_train",
+    "mris_rf_train_cargs",
+    "mris_rf_train_execute",
+    "mris_rf_train_outputs",
     "mris_rf_train_params",
 ]

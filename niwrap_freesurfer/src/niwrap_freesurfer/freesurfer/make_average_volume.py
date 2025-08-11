@@ -14,7 +14,7 @@ MAKE_AVERAGE_VOLUME_METADATA = Metadata(
 
 
 MakeAverageVolumeParameters = typing.TypedDict('MakeAverageVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["make_average_volume"],
+    "@type": typing.Literal["freesurfer.make_average_volume"],
     "subjects": list[str],
     "fsgd": typing.NotRequired[InputPathType | None],
     "out": typing.NotRequired[str | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "make_average_volume": make_average_volume_cargs,
+        "freesurfer.make_average_volume": make_average_volume_cargs,
     }.get(t)
 
 
@@ -113,7 +113,7 @@ def make_average_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "make_average_volume",
+        "@type": "freesurfer.make_average_volume",
         "subjects": subjects,
         "sd_flag": sd_flag,
         "force_flag": force_flag,
@@ -323,5 +323,8 @@ __all__ = [
     "MakeAverageVolumeOutputs",
     "MakeAverageVolumeParameters",
     "make_average_volume",
+    "make_average_volume_cargs",
+    "make_average_volume_execute",
+    "make_average_volume_outputs",
     "make_average_volume_params",
 ]

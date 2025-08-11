@@ -14,7 +14,7 @@ MRI_LINEAR_ALIGN_BINARY_METADATA = Metadata(
 
 
 MriLinearAlignBinaryParameters = typing.TypedDict('MriLinearAlignBinaryParameters', {
-    "__STYXTYPE__": typing.Literal["mri_linear_align_binary"],
+    "@type": typing.Literal["freesurfer.mri_linear_align_binary"],
     "source": InputPathType,
     "target": InputPathType,
     "output_xform": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_linear_align_binary": mri_linear_align_binary_cargs,
+        "freesurfer.mri_linear_align_binary": mri_linear_align_binary_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_linear_align_binary": mri_linear_align_binary_outputs,
+        "freesurfer.mri_linear_align_binary": mri_linear_align_binary_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def mri_linear_align_binary_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_linear_align_binary",
+        "@type": "freesurfer.mri_linear_align_binary",
         "source": source,
         "target": target,
         "output_xform": output_xform,
@@ -203,5 +203,8 @@ __all__ = [
     "MriLinearAlignBinaryOutputs",
     "MriLinearAlignBinaryParameters",
     "mri_linear_align_binary",
+    "mri_linear_align_binary_cargs",
+    "mri_linear_align_binary_execute",
+    "mri_linear_align_binary_outputs",
     "mri_linear_align_binary_params",
 ]

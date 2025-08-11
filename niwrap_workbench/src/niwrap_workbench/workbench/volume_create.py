@@ -14,7 +14,7 @@ VOLUME_CREATE_METADATA = Metadata(
 
 
 VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
-    "__STYXTYPE__": typing.Literal["plumb"],
+    "@type": typing.Literal["workbench.volume-create.plumb"],
     "axis_order": str,
     "x_spacing": float,
     "y_spacing": float,
@@ -26,7 +26,7 @@ VolumeCreatePlumbParameters = typing.TypedDict('VolumeCreatePlumbParameters', {
 
 
 VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
-    "__STYXTYPE__": typing.Literal["sform"],
+    "@type": typing.Literal["workbench.volume-create.sform"],
     "xi_spacing": float,
     "xj_spacing": float,
     "xk_spacing": float,
@@ -43,7 +43,7 @@ VolumeCreateSformParameters = typing.TypedDict('VolumeCreateSformParameters', {
 
 
 VolumeCreateParameters = typing.TypedDict('VolumeCreateParameters', {
-    "__STYXTYPE__": typing.Literal["volume-create"],
+    "@type": typing.Literal["workbench.volume-create"],
     "i_dim": int,
     "j_dim": int,
     "k_dim": int,
@@ -65,9 +65,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-create": volume_create_cargs,
-        "plumb": volume_create_plumb_cargs,
-        "sform": volume_create_sform_cargs,
+        "workbench.volume-create": volume_create_cargs,
+        "workbench.volume-create.plumb": volume_create_plumb_cargs,
+        "workbench.volume-create.sform": volume_create_sform_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-create": volume_create_outputs,
+        "workbench.volume-create": volume_create_outputs,
     }.get(t)
 
 
@@ -112,7 +112,7 @@ def volume_create_plumb_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "plumb",
+        "@type": "workbench.volume-create.plumb",
         "axis_order": axis_order,
         "x_spacing": x_spacing,
         "y_spacing": y_spacing,
@@ -183,7 +183,7 @@ def volume_create_sform_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "sform",
+        "@type": "workbench.volume-create.sform",
         "xi_spacing": xi_spacing,
         "xj_spacing": xj_spacing,
         "xk_spacing": xk_spacing,
@@ -262,7 +262,7 @@ def volume_create_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-create",
+        "@type": "workbench.volume-create",
         "i_dim": i_dim,
         "j_dim": j_dim,
         "k_dim": k_dim,
@@ -296,9 +296,9 @@ def volume_create_cargs(
     cargs.append(str(params.get("k_dim")))
     cargs.append(params.get("volume_out"))
     if params.get("plumb") is not None:
-        cargs.extend(dyn_cargs(params.get("plumb")["__STYXTYPE__"])(params.get("plumb"), execution))
+        cargs.extend(dyn_cargs(params.get("plumb")["@type"])(params.get("plumb"), execution))
     if params.get("sform") is not None:
-        cargs.extend(dyn_cargs(params.get("sform")["__STYXTYPE__"])(params.get("sform"), execution))
+        cargs.extend(dyn_cargs(params.get("sform")["@type"])(params.get("sform"), execution))
     return cargs
 
 
@@ -399,7 +399,12 @@ __all__ = [
     "VolumeCreatePlumbParameters",
     "VolumeCreateSformParameters",
     "volume_create",
+    "volume_create_cargs",
+    "volume_create_execute",
+    "volume_create_outputs",
     "volume_create_params",
+    "volume_create_plumb_cargs",
     "volume_create_plumb_params",
+    "volume_create_sform_cargs",
     "volume_create_sform_params",
 ]

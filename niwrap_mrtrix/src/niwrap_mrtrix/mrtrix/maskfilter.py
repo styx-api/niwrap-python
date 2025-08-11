@@ -14,26 +14,26 @@ MASKFILTER_METADATA = Metadata(
 
 
 MaskfilterVariousStringParameters = typing.TypedDict('MaskfilterVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.maskfilter.VariousString"],
     "obj": str,
 })
 
 
 MaskfilterVariousFileParameters = typing.TypedDict('MaskfilterVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.maskfilter.VariousFile"],
     "obj": InputPathType,
 })
 
 
 MaskfilterConfigParameters = typing.TypedDict('MaskfilterConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.maskfilter.config"],
     "key": str,
     "value": str,
 })
 
 
 MaskfilterParameters = typing.TypedDict('MaskfilterParameters', {
-    "__STYXTYPE__": typing.Literal["maskfilter"],
+    "@type": typing.Literal["mrtrix.maskfilter"],
     "scale": typing.NotRequired[int | None],
     "axes": typing.NotRequired[list[int] | None],
     "largest": bool,
@@ -67,10 +67,10 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "maskfilter": maskfilter_cargs,
-        "VariousString": maskfilter_various_string_cargs,
-        "VariousFile": maskfilter_various_file_cargs,
-        "config": maskfilter_config_cargs,
+        "mrtrix.maskfilter": maskfilter_cargs,
+        "mrtrix.maskfilter.VariousString": maskfilter_various_string_cargs,
+        "mrtrix.maskfilter.VariousFile": maskfilter_various_file_cargs,
+        "mrtrix.maskfilter.config": maskfilter_config_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "maskfilter": maskfilter_outputs,
+        "mrtrix.maskfilter": maskfilter_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def maskfilter_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.maskfilter.VariousString",
         "obj": obj,
     }
     return params
@@ -138,7 +138,7 @@ def maskfilter_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.maskfilter.VariousFile",
         "obj": obj,
     }
     return params
@@ -176,7 +176,7 @@ def maskfilter_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.maskfilter.config",
         "key": key,
         "value": value,
     }
@@ -273,7 +273,7 @@ def maskfilter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "maskfilter",
+        "@type": "mrtrix.maskfilter",
         "largest": largest,
         "connectivity": connectivity,
         "info": info,
@@ -345,7 +345,7 @@ def maskfilter_cargs(
     if params.get("strides") is not None:
         cargs.extend([
             "-strides",
-            *dyn_cargs(params.get("strides")["__STYXTYPE__"])(params.get("strides"), execution)
+            *dyn_cargs(params.get("strides")["@type"])(params.get("strides"), execution)
         ])
     if params.get("info"):
         cargs.append("-info")
@@ -361,7 +361,7 @@ def maskfilter_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -530,8 +530,14 @@ __all__ = [
     "MaskfilterVariousFileParameters",
     "MaskfilterVariousStringParameters",
     "maskfilter",
+    "maskfilter_cargs",
+    "maskfilter_config_cargs",
     "maskfilter_config_params",
+    "maskfilter_execute",
+    "maskfilter_outputs",
     "maskfilter_params",
+    "maskfilter_various_file_cargs",
     "maskfilter_various_file_params",
+    "maskfilter_various_string_cargs",
     "maskfilter_various_string_params",
 ]

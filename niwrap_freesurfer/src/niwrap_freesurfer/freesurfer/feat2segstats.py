@@ -14,7 +14,7 @@ FEAT2SEGSTATS_METADATA = Metadata(
 
 
 Feat2segstatsParameters = typing.TypedDict('Feat2segstatsParameters', {
-    "__STYXTYPE__": typing.Literal["feat2segstats"],
+    "@type": typing.Literal["freesurfer.feat2segstats"],
     "feat_dir": str,
     "featdirfile": typing.NotRequired[InputPathType | None],
     "seg_vol": typing.NotRequired[str | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "feat2segstats": feat2segstats_cargs,
+        "freesurfer.feat2segstats": feat2segstats_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "feat2segstats": feat2segstats_outputs,
+        "freesurfer.feat2segstats": feat2segstats_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def feat2segstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "feat2segstats",
+        "@type": "freesurfer.feat2segstats",
         "feat_dir": feat_dir,
         "aseg_flag": aseg_flag,
         "aparc_aseg_flag": aparc_aseg_flag,
@@ -380,5 +380,8 @@ __all__ = [
     "Feat2segstatsOutputs",
     "Feat2segstatsParameters",
     "feat2segstats",
+    "feat2segstats_cargs",
+    "feat2segstats_execute",
+    "feat2segstats_outputs",
     "feat2segstats_params",
 ]

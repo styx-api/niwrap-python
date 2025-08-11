@@ -14,7 +14,7 @@ MRIS_CONGEAL_METADATA = Metadata(
 
 
 MrisCongealParameters = typing.TypedDict('MrisCongealParameters', {
-    "__STYXTYPE__": typing.Literal["mris_congeal"],
+    "@type": typing.Literal["freesurfer.mris_congeal"],
     "input_surface_name": str,
     "hemi": str,
     "subjects": list[str],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_congeal": mris_congeal_cargs,
+        "freesurfer.mris_congeal": mris_congeal_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_congeal": mris_congeal_outputs,
+        "freesurfer.mris_congeal": mris_congeal_outputs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def mris_congeal_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_congeal",
+        "@type": "freesurfer.mris_congeal",
         "input_surface_name": input_surface_name,
         "hemi": hemi,
         "subjects": subjects,
@@ -325,5 +325,8 @@ __all__ = [
     "MrisCongealOutputs",
     "MrisCongealParameters",
     "mris_congeal",
+    "mris_congeal_cargs",
+    "mris_congeal_execute",
+    "mris_congeal_outputs",
     "mris_congeal_params",
 ]

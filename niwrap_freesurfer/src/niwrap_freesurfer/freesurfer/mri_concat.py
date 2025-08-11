@@ -14,7 +14,7 @@ MRI_CONCAT_METADATA = Metadata(
 
 
 MriConcatParameters = typing.TypedDict('MriConcatParameters', {
-    "__STYXTYPE__": typing.Literal["mri_concat"],
+    "@type": typing.Literal["freesurfer.mri_concat"],
     "input_files": list[InputPathType],
     "output_file": str,
     "file_list": typing.NotRequired[str | None],
@@ -78,7 +78,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_concat": mri_concat_cargs,
+        "freesurfer.mri_concat": mri_concat_cargs,
     }.get(t)
 
 
@@ -215,7 +215,7 @@ def mri_concat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_concat",
+        "@type": "freesurfer.mri_concat",
         "input_files": input_files,
         "output_file": output_file,
         "paired_sum": paired_sum,
@@ -649,5 +649,8 @@ __all__ = [
     "MriConcatOutputs",
     "MriConcatParameters",
     "mri_concat",
+    "mri_concat_cargs",
+    "mri_concat_execute",
+    "mri_concat_outputs",
     "mri_concat_params",
 ]

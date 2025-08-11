@@ -14,7 +14,7 @@ EDDY_SQUAD_METADATA = Metadata(
 
 
 EddySquadParameters = typing.TypedDict('EddySquadParameters', {
-    "__STYXTYPE__": typing.Literal["eddy_squad"],
+    "@type": typing.Literal["fsl.eddy_squad"],
     "grouping": typing.NotRequired[str | None],
     "group_db": typing.NotRequired[InputPathType | None],
     "update": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "eddy_squad": eddy_squad_cargs,
+        "fsl.eddy_squad": eddy_squad_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "eddy_squad": eddy_squad_outputs,
+        "fsl.eddy_squad": eddy_squad_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def eddy_squad_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "eddy_squad",
+        "@type": "fsl.eddy_squad",
         "update": update_,
         "subject_list": subject_list,
     }
@@ -220,5 +220,8 @@ __all__ = [
     "EddySquadOutputs",
     "EddySquadParameters",
     "eddy_squad",
+    "eddy_squad_cargs",
+    "eddy_squad_execute",
+    "eddy_squad_outputs",
     "eddy_squad_params",
 ]

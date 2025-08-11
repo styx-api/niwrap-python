@@ -14,7 +14,7 @@ V_3D_SPACE_TIME_CORR_METADATA = Metadata(
 
 
 V3dSpaceTimeCorrParameters = typing.TypedDict('V3dSpaceTimeCorrParameters', {
-    "__STYXTYPE__": typing.Literal["3dSpaceTimeCorr"],
+    "@type": typing.Literal["afni.3dSpaceTimeCorr"],
     "insetA": InputPathType,
     "insetB": InputPathType,
     "prefix": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dSpaceTimeCorr": v_3d_space_time_corr_cargs,
+        "afni.3dSpaceTimeCorr": v_3d_space_time_corr_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dSpaceTimeCorr": v_3d_space_time_corr_outputs,
+        "afni.3dSpaceTimeCorr": v_3d_space_time_corr_outputs,
     }.get(t)
 
 
@@ -98,7 +98,7 @@ def v_3d_space_time_corr_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dSpaceTimeCorr",
+        "@type": "afni.3dSpaceTimeCorr",
         "insetA": inset_a,
         "insetB": inset_b,
         "prefix": prefix,
@@ -261,5 +261,8 @@ __all__ = [
     "V3dSpaceTimeCorrParameters",
     "V_3D_SPACE_TIME_CORR_METADATA",
     "v_3d_space_time_corr",
+    "v_3d_space_time_corr_cargs",
+    "v_3d_space_time_corr_execute",
+    "v_3d_space_time_corr_outputs",
     "v_3d_space_time_corr_params",
 ]

@@ -14,7 +14,7 @@ INVFEATREG_METADATA = Metadata(
 
 
 InvfeatregParameters = typing.TypedDict('InvfeatregParameters', {
-    "__STYXTYPE__": typing.Literal["invfeatreg"],
+    "@type": typing.Literal["fsl.invfeatreg"],
     "feat_directory": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "invfeatreg": invfeatreg_cargs,
+        "fsl.invfeatreg": invfeatreg_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def invfeatreg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "invfeatreg",
+        "@type": "fsl.invfeatreg",
         "feat_directory": feat_directory,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "InvfeatregOutputs",
     "InvfeatregParameters",
     "invfeatreg",
+    "invfeatreg_cargs",
+    "invfeatreg_execute",
+    "invfeatreg_outputs",
     "invfeatreg_params",
 ]

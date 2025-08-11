@@ -14,7 +14,7 @@ MRI_Z2P_METADATA = Metadata(
 
 
 MriZ2pParameters = typing.TypedDict('MriZ2pParameters', {
-    "__STYXTYPE__": typing.Literal["mri_z2p"],
+    "@type": typing.Literal["freesurfer.mri_z2p"],
     "z_volume": InputPathType,
     "p_volume": str,
     "sig_volume": str,
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_z2p": mri_z2p_cargs,
+        "freesurfer.mri_z2p": mri_z2p_cargs,
     }.get(t)
 
 
@@ -62,7 +62,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_z2p": mri_z2p_outputs,
+        "freesurfer.mri_z2p": mri_z2p_outputs,
     }.get(t)
 
 
@@ -121,7 +121,7 @@ def mri_z2p_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_z2p",
+        "@type": "freesurfer.mri_z2p",
         "z_volume": z_volume,
         "p_volume": p_volume,
         "sig_volume": sig_volume,
@@ -331,5 +331,8 @@ __all__ = [
     "MriZ2pOutputs",
     "MriZ2pParameters",
     "mri_z2p",
+    "mri_z2p_cargs",
+    "mri_z2p_execute",
+    "mri_z2p_outputs",
     "mri_z2p_params",
 ]

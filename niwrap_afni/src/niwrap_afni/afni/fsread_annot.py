@@ -14,7 +14,7 @@ FSREAD_ANNOT_METADATA = Metadata(
 
 
 FsreadAnnotParameters = typing.TypedDict('FsreadAnnotParameters', {
-    "__STYXTYPE__": typing.Literal["FSread_annot"],
+    "@type": typing.Literal["afni.FSread_annot"],
     "infile": InputPathType,
     "hemi": typing.NotRequired[str | None],
     "fscmap": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "FSread_annot": fsread_annot_cargs,
+        "afni.FSread_annot": fsread_annot_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "FSread_annot": fsread_annot_outputs,
+        "afni.FSread_annot": fsread_annot_outputs,
     }.get(t)
 
 
@@ -114,7 +114,7 @@ def fsread_annot_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "FSread_annot",
+        "@type": "afni.FSread_annot",
         "infile": infile,
         "show_fscmap": show_fscmap,
         "help": help_,
@@ -318,5 +318,8 @@ __all__ = [
     "FsreadAnnotOutputs",
     "FsreadAnnotParameters",
     "fsread_annot",
+    "fsread_annot_cargs",
+    "fsread_annot_execute",
+    "fsread_annot_outputs",
     "fsread_annot_params",
 ]

@@ -14,14 +14,14 @@ TRANSFORMCONVERT_METADATA = Metadata(
 
 
 TransformconvertConfigParameters = typing.TypedDict('TransformconvertConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.transformconvert.config"],
     "key": str,
     "value": str,
 })
 
 
 TransformconvertParameters = typing.TypedDict('TransformconvertParameters', {
-    "__STYXTYPE__": typing.Literal["transformconvert"],
+    "@type": typing.Literal["mrtrix.transformconvert"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "transformconvert": transformconvert_cargs,
-        "config": transformconvert_config_cargs,
+        "mrtrix.transformconvert": transformconvert_cargs,
+        "mrtrix.transformconvert.config": transformconvert_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "transformconvert": transformconvert_outputs,
+        "mrtrix.transformconvert": transformconvert_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def transformconvert_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.transformconvert.config",
         "key": key,
         "value": value,
     }
@@ -157,7 +157,7 @@ def transformconvert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "transformconvert",
+        "@type": "mrtrix.transformconvert",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -204,7 +204,7 @@ def transformconvert_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -341,6 +341,10 @@ __all__ = [
     "TransformconvertOutputs",
     "TransformconvertParameters",
     "transformconvert",
+    "transformconvert_cargs",
+    "transformconvert_config_cargs",
     "transformconvert_config_params",
+    "transformconvert_execute",
+    "transformconvert_outputs",
     "transformconvert_params",
 ]

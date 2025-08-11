@@ -14,7 +14,7 @@ V_3DREFIT_METADATA = Metadata(
 
 
 V3drefitParameters = typing.TypedDict('V3drefitParameters', {
-    "__STYXTYPE__": typing.Literal["3drefit"],
+    "@type": typing.Literal["afni.3drefit"],
     "atrcopy": typing.NotRequired[list[str] | None],
     "atrfloat": typing.NotRequired[list[str] | None],
     "atrint": typing.NotRequired[list[str] | None],
@@ -47,7 +47,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3drefit": v_3drefit_cargs,
+        "afni.3drefit": v_3drefit_cargs,
     }.get(t)
 
 
@@ -63,7 +63,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3drefit": v_3drefit_outputs,
+        "afni.3drefit": v_3drefit_outputs,
     }.get(t)
 
 
@@ -138,7 +138,7 @@ def v_3drefit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3drefit",
+        "@type": "afni.3drefit",
         "deoblique": deoblique,
         "in_file": in_file,
         "nosaveatr": nosaveatr,
@@ -402,5 +402,8 @@ __all__ = [
     "V3drefitParameters",
     "V_3DREFIT_METADATA",
     "v_3drefit",
+    "v_3drefit_cargs",
+    "v_3drefit_execute",
+    "v_3drefit_outputs",
     "v_3drefit_params",
 ]

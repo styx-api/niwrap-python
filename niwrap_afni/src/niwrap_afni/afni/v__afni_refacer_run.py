@@ -14,7 +14,7 @@ V__AFNI_REFACER_RUN_METADATA = Metadata(
 
 
 VAfniRefacerRunParameters = typing.TypedDict('VAfniRefacerRunParameters', {
-    "__STYXTYPE__": typing.Literal["@afni_refacer_run"],
+    "@type": typing.Literal["afni.@afni_refacer_run"],
     "input_file": InputPathType,
     "mode_deface": bool,
     "mode_reface": bool,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@afni_refacer_run": v__afni_refacer_run_cargs,
+        "afni.@afni_refacer_run": v__afni_refacer_run_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@afni_refacer_run": v__afni_refacer_run_outputs,
+        "afni.@afni_refacer_run": v__afni_refacer_run_outputs,
     }.get(t)
 
 
@@ -131,7 +131,7 @@ def v__afni_refacer_run_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@afni_refacer_run",
+        "@type": "afni.@afni_refacer_run",
         "input_file": input_file,
         "mode_deface": mode_deface,
         "mode_reface": mode_reface,
@@ -335,5 +335,8 @@ __all__ = [
     "VAfniRefacerRunParameters",
     "V__AFNI_REFACER_RUN_METADATA",
     "v__afni_refacer_run",
+    "v__afni_refacer_run_cargs",
+    "v__afni_refacer_run_execute",
+    "v__afni_refacer_run_outputs",
     "v__afni_refacer_run_params",
 ]

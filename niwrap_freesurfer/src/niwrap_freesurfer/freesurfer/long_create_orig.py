@@ -14,7 +14,7 @@ LONG_CREATE_ORIG_METADATA = Metadata(
 
 
 LongCreateOrigParameters = typing.TypedDict('LongCreateOrigParameters', {
-    "__STYXTYPE__": typing.Literal["long_create_orig"],
+    "@type": typing.Literal["freesurfer.long_create_orig"],
     "base_id": str,
     "tp_id": typing.NotRequired[str | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_create_orig": long_create_orig_cargs,
+        "freesurfer.long_create_orig": long_create_orig_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "long_create_orig": long_create_orig_outputs,
+        "freesurfer.long_create_orig": long_create_orig_outputs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def long_create_orig_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_create_orig",
+        "@type": "freesurfer.long_create_orig",
         "base_id": base_id,
     }
     if tp_id is not None:
@@ -185,5 +185,8 @@ __all__ = [
     "LongCreateOrigOutputs",
     "LongCreateOrigParameters",
     "long_create_orig",
+    "long_create_orig_cargs",
+    "long_create_orig_execute",
+    "long_create_orig_outputs",
     "long_create_orig_params",
 ]

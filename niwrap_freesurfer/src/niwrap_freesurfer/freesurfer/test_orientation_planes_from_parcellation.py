@@ -14,7 +14,7 @@ TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA = Metadata(
 
 
 TestOrientationPlanesFromParcellationParameters = typing.TypedDict('TestOrientationPlanesFromParcellationParameters', {
-    "__STYXTYPE__": typing.Literal["testOrientationPlanesFromParcellation"],
+    "@type": typing.Literal["freesurfer.testOrientationPlanesFromParcellation"],
     "input_file": InputPathType,
     "output_file": str,
     "bb_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "testOrientationPlanesFromParcellation": test_orientation_planes_from_parcellation_cargs,
+        "freesurfer.testOrientationPlanesFromParcellation": test_orientation_planes_from_parcellation_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def test_orientation_planes_from_parcellation_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "testOrientationPlanesFromParcellation",
+        "@type": "freesurfer.testOrientationPlanesFromParcellation",
         "input_file": input_file,
         "output_file": output_file,
         "bb_flag": bb_flag,
@@ -191,5 +191,8 @@ __all__ = [
     "TestOrientationPlanesFromParcellationOutputs",
     "TestOrientationPlanesFromParcellationParameters",
     "test_orientation_planes_from_parcellation",
+    "test_orientation_planes_from_parcellation_cargs",
+    "test_orientation_planes_from_parcellation_execute",
+    "test_orientation_planes_from_parcellation_outputs",
     "test_orientation_planes_from_parcellation_params",
 ]

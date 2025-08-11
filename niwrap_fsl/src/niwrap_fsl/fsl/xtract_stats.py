@@ -14,7 +14,7 @@ XTRACT_STATS_METADATA = Metadata(
 
 
 XtractStatsParameters = typing.TypedDict('XtractStatsParameters', {
-    "__STYXTYPE__": typing.Literal["xtract_stats"],
+    "@type": typing.Literal["fsl.xtract_stats"],
     "folder_basename": str,
     "XTRACT_dir": str,
     "xtract2diff": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "xtract_stats": xtract_stats_cargs,
+        "fsl.xtract_stats": xtract_stats_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "xtract_stats": xtract_stats_outputs,
+        "fsl.xtract_stats": xtract_stats_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def xtract_stats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "xtract_stats",
+        "@type": "fsl.xtract_stats",
         "folder_basename": folder_basename,
         "XTRACT_dir": xtract_dir,
         "xtract2diff": xtract2diff,
@@ -289,5 +289,8 @@ __all__ = [
     "XtractStatsOutputs",
     "XtractStatsParameters",
     "xtract_stats",
+    "xtract_stats_cargs",
+    "xtract_stats_execute",
+    "xtract_stats_outputs",
     "xtract_stats_params",
 ]

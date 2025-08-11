@@ -14,7 +14,7 @@ V__DEMO_PROMPT_METADATA = Metadata(
 
 
 VDemoPromptParameters = typing.TypedDict('VDemoPromptParameters', {
-    "__STYXTYPE__": typing.Literal["@demo_prompt"],
+    "@type": typing.Literal["afni.@demo_prompt"],
     "message": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@demo_prompt": v__demo_prompt_cargs,
+        "afni.@demo_prompt": v__demo_prompt_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@demo_prompt": v__demo_prompt_outputs,
+        "afni.@demo_prompt": v__demo_prompt_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__demo_prompt_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@demo_prompt",
+        "@type": "afni.@demo_prompt",
         "message": message,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "VDemoPromptParameters",
     "V__DEMO_PROMPT_METADATA",
     "v__demo_prompt",
+    "v__demo_prompt_cargs",
+    "v__demo_prompt_execute",
+    "v__demo_prompt_outputs",
     "v__demo_prompt_params",
 ]

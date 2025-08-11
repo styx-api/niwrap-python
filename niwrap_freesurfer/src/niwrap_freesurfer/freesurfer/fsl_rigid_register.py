@@ -14,7 +14,7 @@ FSL_RIGID_REGISTER_METADATA = Metadata(
 
 
 FslRigidRegisterParameters = typing.TypedDict('FslRigidRegisterParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_rigid_register"],
+    "@type": typing.Literal["freesurfer.fsl_rigid_register"],
     "refvol": InputPathType,
     "inputvol": InputPathType,
     "outputvol": str,
@@ -52,7 +52,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_rigid_register": fsl_rigid_register_cargs,
+        "freesurfer.fsl_rigid_register": fsl_rigid_register_cargs,
     }.get(t)
 
 
@@ -68,7 +68,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_rigid_register": fsl_rigid_register_outputs,
+        "freesurfer.fsl_rigid_register": fsl_rigid_register_outputs,
     }.get(t)
 
 
@@ -140,7 +140,7 @@ def fsl_rigid_register_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_rigid_register",
+        "@type": "freesurfer.fsl_rigid_register",
         "refvol": refvol,
         "inputvol": inputvol,
         "outputvol": outputvol,
@@ -430,5 +430,8 @@ __all__ = [
     "FslRigidRegisterOutputs",
     "FslRigidRegisterParameters",
     "fsl_rigid_register",
+    "fsl_rigid_register_cargs",
+    "fsl_rigid_register_execute",
+    "fsl_rigid_register_outputs",
     "fsl_rigid_register_params",
 ]

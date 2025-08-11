@@ -14,7 +14,7 @@ ADWARP_METADATA = Metadata(
 
 
 AdwarpParameters = typing.TypedDict('AdwarpParameters', {
-    "__STYXTYPE__": typing.Literal["adwarp"],
+    "@type": typing.Literal["afni.adwarp"],
     "apar": InputPathType,
     "dpar": str,
     "prefix": typing.NotRequired[str | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adwarp": adwarp_cargs,
+        "afni.adwarp": adwarp_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "adwarp": adwarp_outputs,
+        "afni.adwarp": adwarp_outputs,
     }.get(t)
 
 
@@ -108,7 +108,7 @@ def adwarp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adwarp",
+        "@type": "afni.adwarp",
         "apar": apar,
         "dpar": dpar,
         "verbose": verbose,
@@ -292,5 +292,8 @@ __all__ = [
     "AdwarpOutputs",
     "AdwarpParameters",
     "adwarp",
+    "adwarp_cargs",
+    "adwarp_execute",
+    "adwarp_outputs",
     "adwarp_params",
 ]

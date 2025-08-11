@@ -14,7 +14,7 @@ MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
 
 
 MriFuseSegmentationsParameters = typing.TypedDict('MriFuseSegmentationsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_fuse_segmentations"],
+    "@type": typing.Literal["freesurfer.mri_fuse_segmentations"],
     "asegs": list[InputPathType],
     "nocc_asegs": list[InputPathType],
     "norm_volumes": list[InputPathType],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_fuse_segmentations": mri_fuse_segmentations_cargs,
+        "freesurfer.mri_fuse_segmentations": mri_fuse_segmentations_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_fuse_segmentations": mri_fuse_segmentations_outputs,
+        "freesurfer.mri_fuse_segmentations": mri_fuse_segmentations_outputs,
     }.get(t)
 
 
@@ -93,7 +93,7 @@ def mri_fuse_segmentations_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_fuse_segmentations",
+        "@type": "freesurfer.mri_fuse_segmentations",
         "asegs": asegs,
         "nocc_asegs": nocc_asegs,
         "norm_volumes": norm_volumes,
@@ -245,5 +245,8 @@ __all__ = [
     "MriFuseSegmentationsOutputs",
     "MriFuseSegmentationsParameters",
     "mri_fuse_segmentations",
+    "mri_fuse_segmentations_cargs",
+    "mri_fuse_segmentations_execute",
+    "mri_fuse_segmentations_outputs",
     "mri_fuse_segmentations_params",
 ]

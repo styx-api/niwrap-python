@@ -14,7 +14,7 @@ MRI_CA_TISSUE_PARMS_METADATA = Metadata(
 
 
 MriCaTissueParmsParameters = typing.TypedDict('MriCaTissueParmsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_ca_tissue_parms"],
+    "@type": typing.Literal["freesurfer.mri_ca_tissue_parms"],
     "subjects": list[str],
     "output_file": str,
     "spacing_flag": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_ca_tissue_parms": mri_ca_tissue_parms_cargs,
+        "freesurfer.mri_ca_tissue_parms": mri_ca_tissue_parms_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_ca_tissue_parms": mri_ca_tissue_parms_outputs,
+        "freesurfer.mri_ca_tissue_parms": mri_ca_tissue_parms_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def mri_ca_tissue_parms_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_ca_tissue_parms",
+        "@type": "freesurfer.mri_ca_tissue_parms",
         "subjects": subjects,
         "output_file": output_file,
         "spacing_flag": spacing_flag,
@@ -198,5 +198,8 @@ __all__ = [
     "MriCaTissueParmsOutputs",
     "MriCaTissueParmsParameters",
     "mri_ca_tissue_parms",
+    "mri_ca_tissue_parms_cargs",
+    "mri_ca_tissue_parms_execute",
+    "mri_ca_tissue_parms_outputs",
     "mri_ca_tissue_parms_params",
 ]

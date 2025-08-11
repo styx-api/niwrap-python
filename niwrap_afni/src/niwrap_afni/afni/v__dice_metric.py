@@ -14,7 +14,7 @@ V__DICE_METRIC_METADATA = Metadata(
 
 
 VDiceMetricParameters = typing.TypedDict('VDiceMetricParameters', {
-    "__STYXTYPE__": typing.Literal["@DiceMetric"],
+    "@type": typing.Literal["afni.@DiceMetric"],
     "base": InputPathType,
     "dsets": list[InputPathType],
     "max_roi": typing.NotRequired[float | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@DiceMetric": v__dice_metric_cargs,
+        "afni.@DiceMetric": v__dice_metric_cargs,
     }.get(t)
 
 
@@ -115,7 +115,7 @@ def v__dice_metric_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@DiceMetric",
+        "@type": "afni.@DiceMetric",
         "base": base,
         "dsets": dsets,
         "echo": echo,
@@ -315,5 +315,8 @@ __all__ = [
     "VDiceMetricParameters",
     "V__DICE_METRIC_METADATA",
     "v__dice_metric",
+    "v__dice_metric_cargs",
+    "v__dice_metric_execute",
+    "v__dice_metric_outputs",
     "v__dice_metric_params",
 ]

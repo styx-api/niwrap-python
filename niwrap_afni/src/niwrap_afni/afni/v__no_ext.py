@@ -14,7 +14,7 @@ V__NO_EXT_METADATA = Metadata(
 
 
 VNoExtParameters = typing.TypedDict('VNoExtParameters', {
-    "__STYXTYPE__": typing.Literal["@NoExt"],
+    "@type": typing.Literal["afni.@NoExt"],
     "inputfile": str,
     "extensions": typing.NotRequired[list[str] | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@NoExt": v__no_ext_cargs,
+        "afni.@NoExt": v__no_ext_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@NoExt": v__no_ext_outputs,
+        "afni.@NoExt": v__no_ext_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def v__no_ext_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@NoExt",
+        "@type": "afni.@NoExt",
         "inputfile": inputfile,
     }
     if extensions is not None:
@@ -182,5 +182,8 @@ __all__ = [
     "VNoExtParameters",
     "V__NO_EXT_METADATA",
     "v__no_ext",
+    "v__no_ext_cargs",
+    "v__no_ext_execute",
+    "v__no_ext_outputs",
     "v__no_ext_params",
 ]

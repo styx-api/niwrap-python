@@ -14,21 +14,21 @@ METRIC_GRADIENT_METADATA = Metadata(
 
 
 MetricGradientPresmoothParameters = typing.TypedDict('MetricGradientPresmoothParameters', {
-    "__STYXTYPE__": typing.Literal["presmooth"],
+    "@type": typing.Literal["workbench.metric-gradient.presmooth"],
     "kernel": float,
     "opt_fwhm": bool,
 })
 
 
 MetricGradientRoiParameters = typing.TypedDict('MetricGradientRoiParameters', {
-    "__STYXTYPE__": typing.Literal["roi"],
+    "@type": typing.Literal["workbench.metric-gradient.roi"],
     "roi_metric": InputPathType,
     "opt_match_columns": bool,
 })
 
 
 MetricGradientParameters = typing.TypedDict('MetricGradientParameters', {
-    "__STYXTYPE__": typing.Literal["metric-gradient"],
+    "@type": typing.Literal["workbench.metric-gradient"],
     "surface": InputPathType,
     "metric_in": InputPathType,
     "metric_out": str,
@@ -53,9 +53,9 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "metric-gradient": metric_gradient_cargs,
-        "presmooth": metric_gradient_presmooth_cargs,
-        "roi": metric_gradient_roi_cargs,
+        "workbench.metric-gradient": metric_gradient_cargs,
+        "workbench.metric-gradient.presmooth": metric_gradient_presmooth_cargs,
+        "workbench.metric-gradient.roi": metric_gradient_roi_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "metric-gradient": metric_gradient_outputs,
+        "workbench.metric-gradient": metric_gradient_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def metric_gradient_presmooth_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "presmooth",
+        "@type": "workbench.metric-gradient.presmooth",
         "kernel": kernel,
         "opt_fwhm": opt_fwhm,
     }
@@ -133,7 +133,7 @@ def metric_gradient_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "roi",
+        "@type": "workbench.metric-gradient.roi",
         "roi_metric": roi_metric,
         "opt_match_columns": opt_match_columns,
     }
@@ -206,7 +206,7 @@ def metric_gradient_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "metric-gradient",
+        "@type": "workbench.metric-gradient",
         "surface": surface,
         "metric_in": metric_in,
         "metric_out": metric_out,
@@ -245,9 +245,9 @@ def metric_gradient_cargs(
     cargs.append(execution.input_file(params.get("metric_in")))
     cargs.append(params.get("metric_out"))
     if params.get("presmooth") is not None:
-        cargs.extend(dyn_cargs(params.get("presmooth")["__STYXTYPE__"])(params.get("presmooth"), execution))
+        cargs.extend(dyn_cargs(params.get("presmooth")["@type"])(params.get("presmooth"), execution))
     if params.get("roi") is not None:
-        cargs.extend(dyn_cargs(params.get("roi")["__STYXTYPE__"])(params.get("roi"), execution))
+        cargs.extend(dyn_cargs(params.get("roi")["@type"])(params.get("roi"), execution))
     if params.get("opt_vectors_vector_metric_out") is not None:
         cargs.extend([
             "-vectors",
@@ -430,7 +430,12 @@ __all__ = [
     "MetricGradientPresmoothParameters",
     "MetricGradientRoiParameters",
     "metric_gradient",
+    "metric_gradient_cargs",
+    "metric_gradient_execute",
+    "metric_gradient_outputs",
     "metric_gradient_params",
+    "metric_gradient_presmooth_cargs",
     "metric_gradient_presmooth_params",
+    "metric_gradient_roi_cargs",
     "metric_gradient_roi_params",
 ]

@@ -14,7 +14,7 @@ SURFACE_VERTEX_AREAS_METADATA = Metadata(
 
 
 SurfaceVertexAreasParameters = typing.TypedDict('SurfaceVertexAreasParameters', {
-    "__STYXTYPE__": typing.Literal["surface-vertex-areas"],
+    "@type": typing.Literal["workbench.surface-vertex-areas"],
     "surface": InputPathType,
     "metric": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-vertex-areas": surface_vertex_areas_cargs,
+        "workbench.surface-vertex-areas": surface_vertex_areas_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-vertex-areas": surface_vertex_areas_outputs,
+        "workbench.surface-vertex-areas": surface_vertex_areas_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def surface_vertex_areas_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-vertex-areas",
+        "@type": "workbench.surface-vertex-areas",
         "surface": surface,
         "metric": metric,
     }
@@ -187,5 +187,8 @@ __all__ = [
     "SurfaceVertexAreasOutputs",
     "SurfaceVertexAreasParameters",
     "surface_vertex_areas",
+    "surface_vertex_areas_cargs",
+    "surface_vertex_areas_execute",
+    "surface_vertex_areas_outputs",
     "surface_vertex_areas_params",
 ]

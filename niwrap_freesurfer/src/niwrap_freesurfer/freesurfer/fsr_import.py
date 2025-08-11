@@ -14,7 +14,7 @@ FSR_IMPORT_METADATA = Metadata(
 
 
 FsrImportParameters = typing.TypedDict('FsrImportParameters', {
-    "__STYXTYPE__": typing.Literal["fsr-import"],
+    "@type": typing.Literal["freesurfer.fsr-import"],
     "outdir": str,
     "t1w_input": typing.NotRequired[list[InputPathType] | None],
     "t2w_input": typing.NotRequired[list[InputPathType] | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsr-import": fsr_import_cargs,
+        "freesurfer.fsr-import": fsr_import_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsr-import": fsr_import_outputs,
+        "freesurfer.fsr-import": fsr_import_outputs,
     }.get(t)
 
 
@@ -101,7 +101,7 @@ def fsr_import_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsr-import",
+        "@type": "freesurfer.fsr-import",
         "outdir": outdir,
         "force_update": force_update,
         "no_conform": no_conform,
@@ -265,5 +265,8 @@ __all__ = [
     "FsrImportOutputs",
     "FsrImportParameters",
     "fsr_import",
+    "fsr_import_cargs",
+    "fsr_import_execute",
+    "fsr_import_outputs",
     "fsr_import_params",
 ]

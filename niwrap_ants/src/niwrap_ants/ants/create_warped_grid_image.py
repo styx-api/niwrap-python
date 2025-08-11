@@ -14,7 +14,7 @@ CREATE_WARPED_GRID_IMAGE_METADATA = Metadata(
 
 
 CreateWarpedGridImageParameters = typing.TypedDict('CreateWarpedGridImageParameters', {
-    "__STYXTYPE__": typing.Literal["CreateWarpedGridImage"],
+    "@type": typing.Literal["ants.CreateWarpedGridImage"],
     "image_dimension": int,
     "deformation_field": InputPathType,
     "output_image": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "CreateWarpedGridImage": create_warped_grid_image_cargs,
+        "ants.CreateWarpedGridImage": create_warped_grid_image_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "CreateWarpedGridImage": create_warped_grid_image_outputs,
+        "ants.CreateWarpedGridImage": create_warped_grid_image_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def create_warped_grid_image_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "CreateWarpedGridImage",
+        "@type": "ants.CreateWarpedGridImage",
         "image_dimension": image_dimension,
         "deformation_field": deformation_field,
         "output_image": output_image,
@@ -218,5 +218,8 @@ __all__ = [
     "CreateWarpedGridImageOutputs",
     "CreateWarpedGridImageParameters",
     "create_warped_grid_image",
+    "create_warped_grid_image_cargs",
+    "create_warped_grid_image_execute",
+    "create_warped_grid_image_outputs",
     "create_warped_grid_image_params",
 ]

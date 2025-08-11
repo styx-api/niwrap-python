@@ -14,7 +14,7 @@ EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA = Metadata(
 
 
 ExtractRegionFromImageByMaskParameters = typing.TypedDict('ExtractRegionFromImageByMaskParameters', {
-    "__STYXTYPE__": typing.Literal["ExtractRegionFromImageByMask"],
+    "@type": typing.Literal["ants.ExtractRegionFromImageByMask"],
     "image_dimension": int,
     "input_image": InputPathType,
     "output_image": InputPathType,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ExtractRegionFromImageByMask": extract_region_from_image_by_mask_cargs,
+        "ants.ExtractRegionFromImageByMask": extract_region_from_image_by_mask_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def extract_region_from_image_by_mask_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ExtractRegionFromImageByMask",
+        "@type": "ants.ExtractRegionFromImageByMask",
         "image_dimension": image_dimension,
         "input_image": input_image,
         "output_image": output_image,
@@ -218,5 +218,8 @@ __all__ = [
     "ExtractRegionFromImageByMaskOutputs",
     "ExtractRegionFromImageByMaskParameters",
     "extract_region_from_image_by_mask",
+    "extract_region_from_image_by_mask_cargs",
+    "extract_region_from_image_by_mask_execute",
+    "extract_region_from_image_by_mask_outputs",
     "extract_region_from_image_by_mask_params",
 ]

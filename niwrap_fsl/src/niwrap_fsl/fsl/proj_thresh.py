@@ -14,7 +14,7 @@ PROJ_THRESH_METADATA = Metadata(
 
 
 ProjThreshParameters = typing.TypedDict('ProjThreshParameters', {
-    "__STYXTYPE__": typing.Literal["proj_thresh"],
+    "@type": typing.Literal["fsl.proj_thresh"],
     "input_paths": list[InputPathType],
     "threshold": float,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "proj_thresh": proj_thresh_cargs,
+        "fsl.proj_thresh": proj_thresh_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def proj_thresh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "proj_thresh",
+        "@type": "fsl.proj_thresh",
         "input_paths": input_paths,
         "threshold": threshold,
     }
@@ -178,5 +178,8 @@ __all__ = [
     "ProjThreshOutputs",
     "ProjThreshParameters",
     "proj_thresh",
+    "proj_thresh_cargs",
+    "proj_thresh_execute",
+    "proj_thresh_outputs",
     "proj_thresh_params",
 ]

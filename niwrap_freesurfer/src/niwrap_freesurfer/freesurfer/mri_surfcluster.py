@@ -14,7 +14,7 @@ MRI_SURFCLUSTER_METADATA = Metadata(
 
 
 MriSurfclusterParameters = typing.TypedDict('MriSurfclusterParameters', {
-    "__STYXTYPE__": typing.Literal["mri_surfcluster"],
+    "@type": typing.Literal["freesurfer.mri_surfcluster"],
     "infile": InputPathType,
     "thmin": typing.NotRequired[float | None],
     "sign": typing.NotRequired[str | None],
@@ -71,7 +71,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_surfcluster": mri_surfcluster_cargs,
+        "freesurfer.mri_surfcluster": mri_surfcluster_cargs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_surfcluster": mri_surfcluster_outputs,
+        "freesurfer.mri_surfcluster": mri_surfcluster_outputs,
     }.get(t)
 
 
@@ -203,7 +203,7 @@ def mri_surfcluster_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_surfcluster",
+        "@type": "freesurfer.mri_surfcluster",
         "infile": infile,
         "no_adjust_flag": no_adjust_flag,
         "sig2p_max_flag": sig2p_max_flag,
@@ -682,5 +682,8 @@ __all__ = [
     "MriSurfclusterOutputs",
     "MriSurfclusterParameters",
     "mri_surfcluster",
+    "mri_surfcluster_cargs",
+    "mri_surfcluster_execute",
+    "mri_surfcluster_outputs",
     "mri_surfcluster_params",
 ]

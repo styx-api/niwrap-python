@@ -14,7 +14,7 @@ IMSTAT_METADATA = Metadata(
 
 
 ImstatParameters = typing.TypedDict('ImstatParameters', {
-    "__STYXTYPE__": typing.Literal["imstat"],
+    "@type": typing.Literal["afni.imstat"],
     "no_label": bool,
     "quiet": bool,
     "pixstat_prefix": typing.NotRequired[str | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "imstat": imstat_cargs,
+        "afni.imstat": imstat_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "imstat": imstat_outputs,
+        "afni.imstat": imstat_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def imstat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "imstat",
+        "@type": "afni.imstat",
         "no_label": no_label,
         "quiet": quiet,
         "image_files": image_files,
@@ -213,5 +213,8 @@ __all__ = [
     "ImstatOutputs",
     "ImstatParameters",
     "imstat",
+    "imstat_cargs",
+    "imstat_execute",
+    "imstat_outputs",
     "imstat_params",
 ]

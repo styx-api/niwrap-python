@@ -14,7 +14,7 @@ MAP_CENTRAL_SULCUS_METADATA = Metadata(
 
 
 MapCentralSulcusParameters = typing.TypedDict('MapCentralSulcusParameters', {
-    "__STYXTYPE__": typing.Literal["map_central_sulcus"],
+    "@type": typing.Literal["freesurfer.map_central_sulcus"],
     "subjid": str,
     "process_directive": str,
     "hemi_flag": typing.NotRequired[str | None],
@@ -66,7 +66,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "map_central_sulcus": map_central_sulcus_cargs,
+        "freesurfer.map_central_sulcus": map_central_sulcus_cargs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "map_central_sulcus": map_central_sulcus_outputs,
+        "freesurfer.map_central_sulcus": map_central_sulcus_outputs,
     }.get(t)
 
 
@@ -192,7 +192,7 @@ def map_central_sulcus_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "map_central_sulcus",
+        "@type": "freesurfer.map_central_sulcus",
         "subjid": subjid,
         "process_directive": process_directive,
         "xopts_use": xopts_use,
@@ -580,5 +580,8 @@ __all__ = [
     "MapCentralSulcusOutputs",
     "MapCentralSulcusParameters",
     "map_central_sulcus",
+    "map_central_sulcus_cargs",
+    "map_central_sulcus_execute",
+    "map_central_sulcus_outputs",
     "map_central_sulcus_params",
 ]

@@ -14,7 +14,7 @@ V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA = Metadata(
 
 
 VDjunctSswIntermedEdgeImgsParameters = typing.TypedDict('VDjunctSswIntermedEdgeImgsParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_ssw_intermed_edge_imgs"],
+    "@type": typing.Literal["afni.@djunct_ssw_intermed_edge_imgs"],
     "prefix": str,
     "ulay": InputPathType,
     "olay": InputPathType,
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_ssw_intermed_edge_imgs": v__djunct_ssw_intermed_edge_imgs_cargs,
+        "afni.@djunct_ssw_intermed_edge_imgs": v__djunct_ssw_intermed_edge_imgs_cargs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def v__djunct_ssw_intermed_edge_imgs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_ssw_intermed_edge_imgs",
+        "@type": "afni.@djunct_ssw_intermed_edge_imgs",
         "prefix": prefix,
         "ulay": ulay,
         "olay": olay,
@@ -307,5 +307,8 @@ __all__ = [
     "VDjunctSswIntermedEdgeImgsParameters",
     "V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA",
     "v__djunct_ssw_intermed_edge_imgs",
+    "v__djunct_ssw_intermed_edge_imgs_cargs",
+    "v__djunct_ssw_intermed_edge_imgs_execute",
+    "v__djunct_ssw_intermed_edge_imgs_outputs",
     "v__djunct_ssw_intermed_edge_imgs_params",
 ]

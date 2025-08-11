@@ -14,14 +14,14 @@ FIXEL2SH_METADATA = Metadata(
 
 
 Fixel2shConfigParameters = typing.TypedDict('Fixel2shConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixel2sh.config"],
     "key": str,
     "value": str,
 })
 
 
 Fixel2shParameters = typing.TypedDict('Fixel2shParameters', {
-    "__STYXTYPE__": typing.Literal["fixel2sh"],
+    "@type": typing.Literal["mrtrix.fixel2sh"],
     "lmax": typing.NotRequired[int | None],
     "info": bool,
     "quiet": bool,
@@ -48,8 +48,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixel2sh": fixel2sh_cargs,
-        "config": fixel2sh_config_cargs,
+        "mrtrix.fixel2sh": fixel2sh_cargs,
+        "mrtrix.fixel2sh.config": fixel2sh_config_cargs,
     }.get(t)
 
 
@@ -65,7 +65,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fixel2sh": fixel2sh_outputs,
+        "mrtrix.fixel2sh": fixel2sh_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def fixel2sh_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixel2sh.config",
         "key": key,
         "value": value,
     }
@@ -156,7 +156,7 @@ def fixel2sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixel2sh",
+        "@type": "mrtrix.fixel2sh",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -209,7 +209,7 @@ def fixel2sh_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -352,6 +352,10 @@ __all__ = [
     "Fixel2shOutputs",
     "Fixel2shParameters",
     "fixel2sh",
+    "fixel2sh_cargs",
+    "fixel2sh_config_cargs",
     "fixel2sh_config_params",
+    "fixel2sh_execute",
+    "fixel2sh_outputs",
     "fixel2sh_params",
 ]

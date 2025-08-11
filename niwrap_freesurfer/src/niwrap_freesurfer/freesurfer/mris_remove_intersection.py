@@ -14,7 +14,7 @@ MRIS_REMOVE_INTERSECTION_METADATA = Metadata(
 
 
 MrisRemoveIntersectionParameters = typing.TypedDict('MrisRemoveIntersectionParameters', {
-    "__STYXTYPE__": typing.Literal["mris_remove_intersection"],
+    "@type": typing.Literal["freesurfer.mris_remove_intersection"],
     "surface_in_file": InputPathType,
     "corrected_surface_out_file": str,
     "fill_holes": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_remove_intersection": mris_remove_intersection_cargs,
+        "freesurfer.mris_remove_intersection": mris_remove_intersection_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_remove_intersection": mris_remove_intersection_outputs,
+        "freesurfer.mris_remove_intersection": mris_remove_intersection_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mris_remove_intersection_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_remove_intersection",
+        "@type": "freesurfer.mris_remove_intersection",
         "surface_in_file": surface_in_file,
         "corrected_surface_out_file": corrected_surface_out_file,
         "fill_holes": fill_holes,
@@ -217,5 +217,8 @@ __all__ = [
     "MrisRemoveIntersectionOutputs",
     "MrisRemoveIntersectionParameters",
     "mris_remove_intersection",
+    "mris_remove_intersection_cargs",
+    "mris_remove_intersection_execute",
+    "mris_remove_intersection_outputs",
     "mris_remove_intersection_params",
 ]

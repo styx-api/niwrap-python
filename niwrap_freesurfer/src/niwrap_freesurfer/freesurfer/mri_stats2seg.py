@@ -14,7 +14,7 @@ MRI_STATS2SEG_METADATA = Metadata(
 
 
 MriStats2segParameters = typing.TypedDict('MriStats2segParameters', {
-    "__STYXTYPE__": typing.Literal["mri_stats2seg"],
+    "@type": typing.Literal["freesurfer.mri_stats2seg"],
     "stat_file": InputPathType,
     "segmentation_volume": InputPathType,
     "output_file": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_stats2seg": mri_stats2seg_cargs,
+        "freesurfer.mri_stats2seg": mri_stats2seg_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_stats2seg": mri_stats2seg_outputs,
+        "freesurfer.mri_stats2seg": mri_stats2seg_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_stats2seg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_stats2seg",
+        "@type": "freesurfer.mri_stats2seg",
         "stat_file": stat_file,
         "segmentation_volume": segmentation_volume,
         "output_file": output_file,
@@ -215,5 +215,8 @@ __all__ = [
     "MriStats2segOutputs",
     "MriStats2segParameters",
     "mri_stats2seg",
+    "mri_stats2seg_cargs",
+    "mri_stats2seg_execute",
+    "mri_stats2seg_outputs",
     "mri_stats2seg_params",
 ]

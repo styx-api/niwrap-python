@@ -14,7 +14,7 @@ VOLUME_ROIS_FROM_EXTREMA_METADATA = Metadata(
 
 
 VolumeRoisFromExtremaParameters = typing.TypedDict('VolumeRoisFromExtremaParameters', {
-    "__STYXTYPE__": typing.Literal["volume-rois-from-extrema"],
+    "@type": typing.Literal["workbench.volume-rois-from-extrema"],
     "volume_in": InputPathType,
     "limit": float,
     "volume_out": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-rois-from-extrema": volume_rois_from_extrema_cargs,
+        "workbench.volume-rois-from-extrema": volume_rois_from_extrema_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-rois-from-extrema": volume_rois_from_extrema_outputs,
+        "workbench.volume-rois-from-extrema": volume_rois_from_extrema_outputs,
     }.get(t)
 
 
@@ -95,7 +95,7 @@ def volume_rois_from_extrema_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-rois-from-extrema",
+        "@type": "workbench.volume-rois-from-extrema",
         "volume_in": volume_in,
         "limit": limit,
         "volume_out": volume_out,
@@ -267,5 +267,8 @@ __all__ = [
     "VolumeRoisFromExtremaOutputs",
     "VolumeRoisFromExtremaParameters",
     "volume_rois_from_extrema",
+    "volume_rois_from_extrema_cargs",
+    "volume_rois_from_extrema_execute",
+    "volume_rois_from_extrema_outputs",
     "volume_rois_from_extrema_params",
 ]

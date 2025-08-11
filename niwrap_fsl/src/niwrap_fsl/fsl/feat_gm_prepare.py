@@ -14,7 +14,7 @@ FEAT_GM_PREPARE_METADATA = Metadata(
 
 
 FeatGmPrepareParameters = typing.TypedDict('FeatGmPrepareParameters', {
-    "__STYXTYPE__": typing.Literal["feat_gm_prepare"],
+    "@type": typing.Literal["fsl.feat_gm_prepare"],
     "gm_output": str,
     "feat_dirs_list": list[InputPathType],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "feat_gm_prepare": feat_gm_prepare_cargs,
+        "fsl.feat_gm_prepare": feat_gm_prepare_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def feat_gm_prepare_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "feat_gm_prepare",
+        "@type": "fsl.feat_gm_prepare",
         "gm_output": gm_output,
         "feat_dirs_list": feat_dirs_list,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "FeatGmPrepareOutputs",
     "FeatGmPrepareParameters",
     "feat_gm_prepare",
+    "feat_gm_prepare_cargs",
+    "feat_gm_prepare_execute",
+    "feat_gm_prepare_outputs",
     "feat_gm_prepare_params",
 ]

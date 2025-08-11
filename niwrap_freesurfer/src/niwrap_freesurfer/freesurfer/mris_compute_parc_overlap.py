@@ -14,7 +14,7 @@ MRIS_COMPUTE_PARC_OVERLAP_METADATA = Metadata(
 
 
 MrisComputeParcOverlapParameters = typing.TypedDict('MrisComputeParcOverlapParameters', {
-    "__STYXTYPE__": typing.Literal["mris_compute_parc_overlap"],
+    "@type": typing.Literal["freesurfer.mris_compute_parc_overlap"],
     "subject": str,
     "hemi": str,
     "annot1": typing.NotRequired[InputPathType | None],
@@ -46,7 +46,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_compute_parc_overlap": mris_compute_parc_overlap_cargs,
+        "freesurfer.mris_compute_parc_overlap": mris_compute_parc_overlap_cargs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def mris_compute_parc_overlap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_compute_parc_overlap",
+        "@type": "freesurfer.mris_compute_parc_overlap",
         "subject": subject,
         "hemi": hemi,
         "nocheck_label1_xyz": nocheck_label1_xyz,
@@ -342,5 +342,8 @@ __all__ = [
     "MrisComputeParcOverlapOutputs",
     "MrisComputeParcOverlapParameters",
     "mris_compute_parc_overlap",
+    "mris_compute_parc_overlap_cargs",
+    "mris_compute_parc_overlap_execute",
+    "mris_compute_parc_overlap_outputs",
     "mris_compute_parc_overlap_params",
 ]

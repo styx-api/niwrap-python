@@ -14,7 +14,7 @@ V_3D_PERIODOGRAM_METADATA = Metadata(
 
 
 V3dPeriodogramParameters = typing.TypedDict('V3dPeriodogramParameters', {
-    "__STYXTYPE__": typing.Literal["3dPeriodogram"],
+    "@type": typing.Literal["afni.3dPeriodogram"],
     "prefix": typing.NotRequired[str | None],
     "taper": typing.NotRequired[float | None],
     "nfft": typing.NotRequired[float | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dPeriodogram": v_3d_periodogram_cargs,
+        "afni.3dPeriodogram": v_3d_periodogram_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dPeriodogram": v_3d_periodogram_outputs,
+        "afni.3dPeriodogram": v_3d_periodogram_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def v_3d_periodogram_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dPeriodogram",
+        "@type": "afni.3dPeriodogram",
         "dataset": dataset,
     }
     if prefix is not None:
@@ -216,5 +216,8 @@ __all__ = [
     "V3dPeriodogramParameters",
     "V_3D_PERIODOGRAM_METADATA",
     "v_3d_periodogram",
+    "v_3d_periodogram_cargs",
+    "v_3d_periodogram_execute",
+    "v_3d_periodogram_outputs",
     "v_3d_periodogram_params",
 ]

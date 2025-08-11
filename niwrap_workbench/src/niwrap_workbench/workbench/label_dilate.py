@@ -14,7 +14,7 @@ LABEL_DILATE_METADATA = Metadata(
 
 
 LabelDilateParameters = typing.TypedDict('LabelDilateParameters', {
-    "__STYXTYPE__": typing.Literal["label-dilate"],
+    "@type": typing.Literal["workbench.label-dilate"],
     "label": InputPathType,
     "surface": InputPathType,
     "dilate_dist": float,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-dilate": label_dilate_cargs,
+        "workbench.label-dilate": label_dilate_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-dilate": label_dilate_outputs,
+        "workbench.label-dilate": label_dilate_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def label_dilate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-dilate",
+        "@type": "workbench.label-dilate",
         "label": label,
         "surface": surface,
         "dilate_dist": dilate_dist,
@@ -258,5 +258,8 @@ __all__ = [
     "LabelDilateOutputs",
     "LabelDilateParameters",
     "label_dilate",
+    "label_dilate_cargs",
+    "label_dilate_execute",
+    "label_dilate_outputs",
     "label_dilate_params",
 ]

@@ -14,7 +14,7 @@ LTA_CONVERT_METADATA = Metadata(
 
 
 LtaConvertParameters = typing.TypedDict('LtaConvertParameters', {
-    "__STYXTYPE__": typing.Literal["lta_convert"],
+    "@type": typing.Literal["freesurfer.lta_convert"],
     "in_lta": typing.NotRequired[InputPathType | None],
     "in_fsl": typing.NotRequired[InputPathType | None],
     "in_mni": typing.NotRequired[InputPathType | None],
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "lta_convert": lta_convert_cargs,
+        "freesurfer.lta_convert": lta_convert_cargs,
     }.get(t)
 
 
@@ -67,7 +67,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "lta_convert": lta_convert_outputs,
+        "freesurfer.lta_convert": lta_convert_outputs,
     }.get(t)
 
 
@@ -135,7 +135,7 @@ def lta_convert_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "lta_convert",
+        "@type": "freesurfer.lta_convert",
         "invert": invert,
         "ltavox2vox": ltavox2vox,
         "ltatkreg": ltatkreg,
@@ -425,5 +425,8 @@ __all__ = [
     "LtaConvertOutputs",
     "LtaConvertParameters",
     "lta_convert",
+    "lta_convert_cargs",
+    "lta_convert_execute",
+    "lta_convert_outputs",
     "lta_convert_params",
 ]

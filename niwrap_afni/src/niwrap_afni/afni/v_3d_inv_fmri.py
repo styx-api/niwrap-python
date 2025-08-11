@@ -14,7 +14,7 @@ V_3D_INV_FMRI_METADATA = Metadata(
 
 
 V3dInvFmriParameters = typing.TypedDict('V3dInvFmriParameters', {
-    "__STYXTYPE__": typing.Literal["3dInvFMRI"],
+    "@type": typing.Literal["afni.3dInvFMRI"],
     "input_file": InputPathType,
     "activation_map": InputPathType,
     "map_weight": typing.NotRequired[InputPathType | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dInvFMRI": v_3d_inv_fmri_cargs,
+        "afni.3dInvFMRI": v_3d_inv_fmri_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dInvFMRI": v_3d_inv_fmri_outputs,
+        "afni.3dInvFMRI": v_3d_inv_fmri_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def v_3d_inv_fmri_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dInvFMRI",
+        "@type": "afni.3dInvFMRI",
         "input_file": input_file,
         "activation_map": activation_map,
         "smooth_fir": smooth_fir,
@@ -313,5 +313,8 @@ __all__ = [
     "V3dInvFmriParameters",
     "V_3D_INV_FMRI_METADATA",
     "v_3d_inv_fmri",
+    "v_3d_inv_fmri_cargs",
+    "v_3d_inv_fmri_execute",
+    "v_3d_inv_fmri_outputs",
     "v_3d_inv_fmri_params",
 ]

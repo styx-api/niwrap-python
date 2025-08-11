@@ -14,7 +14,7 @@ SEG2RECON_METADATA = Metadata(
 
 
 Seg2reconParameters = typing.TypedDict('Seg2reconParameters', {
-    "__STYXTYPE__": typing.Literal["seg2recon"],
+    "@type": typing.Literal["freesurfer.seg2recon"],
     "subject": str,
     "segvol": InputPathType,
     "inputvol": InputPathType,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "seg2recon": seg2recon_cargs,
+        "freesurfer.seg2recon": seg2recon_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "seg2recon": seg2recon_outputs,
+        "freesurfer.seg2recon": seg2recon_outputs,
     }.get(t)
 
 
@@ -120,7 +120,7 @@ def seg2recon_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "seg2recon",
+        "@type": "freesurfer.seg2recon",
         "subject": subject,
         "segvol": segvol,
         "inputvol": inputvol,
@@ -340,5 +340,8 @@ __all__ = [
     "Seg2reconOutputs",
     "Seg2reconParameters",
     "seg2recon",
+    "seg2recon_cargs",
+    "seg2recon_execute",
+    "seg2recon_outputs",
     "seg2recon_params",
 ]

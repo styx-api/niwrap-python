@@ -14,7 +14,7 @@ MRI_SEGSTATS_METADATA = Metadata(
 
 
 MriSegstatsParameters = typing.TypedDict('MriSegstatsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_segstats"],
+    "@type": typing.Literal["freesurfer.mri_segstats"],
     "segvol": InputPathType,
     "annot_subject": typing.NotRequired[str | None],
     "annot_hemisphere": typing.NotRequired[str | None],
@@ -90,7 +90,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_segstats": mri_segstats_cargs,
+        "freesurfer.mri_segstats": mri_segstats_cargs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_segstats": mri_segstats_outputs,
+        "freesurfer.mri_segstats": mri_segstats_outputs,
     }.get(t)
 
 
@@ -282,7 +282,7 @@ def mri_segstats_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_segstats",
+        "@type": "freesurfer.mri_segstats",
         "segvol": segvol,
         "output_file": output_file,
         "square_input": square_input,
@@ -899,5 +899,8 @@ __all__ = [
     "MriSegstatsOutputs",
     "MriSegstatsParameters",
     "mri_segstats",
+    "mri_segstats_cargs",
+    "mri_segstats_execute",
+    "mri_segstats_outputs",
     "mri_segstats_params",
 ]

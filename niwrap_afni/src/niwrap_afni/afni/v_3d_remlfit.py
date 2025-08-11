@@ -14,7 +14,7 @@ V_3D_REMLFIT_METADATA = Metadata(
 
 
 V3dRemlfitParameters = typing.TypedDict('V3dRemlfitParameters', {
-    "__STYXTYPE__": typing.Literal["3dREMLfit"],
+    "@type": typing.Literal["afni.3dREMLfit"],
     "input_file": InputPathType,
     "regression_matrix": InputPathType,
     "baseline_files": typing.NotRequired[list[str] | None],
@@ -45,7 +45,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dREMLfit": v_3d_remlfit_cargs,
+        "afni.3dREMLfit": v_3d_remlfit_cargs,
     }.get(t)
 
 
@@ -61,7 +61,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dREMLfit": v_3d_remlfit_outputs,
+        "afni.3dREMLfit": v_3d_remlfit_outputs,
     }.get(t)
 
 
@@ -132,7 +132,7 @@ def v_3d_remlfit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dREMLfit",
+        "@type": "afni.3dREMLfit",
         "input_file": input_file,
         "regression_matrix": regression_matrix,
         "sort_nods": sort_nods,
@@ -358,5 +358,8 @@ __all__ = [
     "V3dRemlfitParameters",
     "V_3D_REMLFIT_METADATA",
     "v_3d_remlfit",
+    "v_3d_remlfit_cargs",
+    "v_3d_remlfit_execute",
+    "v_3d_remlfit_outputs",
     "v_3d_remlfit_params",
 ]

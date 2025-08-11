@@ -14,7 +14,7 @@ LONG_MRIS_SLOPES_METADATA = Metadata(
 
 
 LongMrisSlopesParameters = typing.TypedDict('LongMrisSlopesParameters', {
-    "__STYXTYPE__": typing.Literal["long_mris_slopes"],
+    "@type": typing.Literal["freesurfer.long_mris_slopes"],
     "qdec": InputPathType,
     "meas": str,
     "hemi": str,
@@ -64,7 +64,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "long_mris_slopes": long_mris_slopes_cargs,
+        "freesurfer.long_mris_slopes": long_mris_slopes_cargs,
     }.get(t)
 
 
@@ -176,7 +176,7 @@ def long_mris_slopes_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "long_mris_slopes",
+        "@type": "freesurfer.long_mris_slopes",
         "qdec": qdec,
         "meas": meas,
         "hemi": hemi,
@@ -570,5 +570,8 @@ __all__ = [
     "LongMrisSlopesOutputs",
     "LongMrisSlopesParameters",
     "long_mris_slopes",
+    "long_mris_slopes_cargs",
+    "long_mris_slopes_execute",
+    "long_mris_slopes_outputs",
     "long_mris_slopes_params",
 ]

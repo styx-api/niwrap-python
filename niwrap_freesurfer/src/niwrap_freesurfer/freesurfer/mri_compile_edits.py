@@ -14,7 +14,7 @@ MRI_COMPILE_EDITS_METADATA = Metadata(
 
 
 MriCompileEditsParameters = typing.TypedDict('MriCompileEditsParameters', {
-    "__STYXTYPE__": typing.Literal["mri_compile_edits"],
+    "@type": typing.Literal["freesurfer.mri_compile_edits"],
     "subject_name": str,
     "output_volume": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_compile_edits": mri_compile_edits_cargs,
+        "freesurfer.mri_compile_edits": mri_compile_edits_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_compile_edits": mri_compile_edits_outputs,
+        "freesurfer.mri_compile_edits": mri_compile_edits_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mri_compile_edits_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_compile_edits",
+        "@type": "freesurfer.mri_compile_edits",
         "subject_name": subject_name,
         "output_volume": output_volume,
     }
@@ -182,5 +182,8 @@ __all__ = [
     "MriCompileEditsOutputs",
     "MriCompileEditsParameters",
     "mri_compile_edits",
+    "mri_compile_edits_cargs",
+    "mri_compile_edits_execute",
+    "mri_compile_edits_outputs",
     "mri_compile_edits_params",
 ]

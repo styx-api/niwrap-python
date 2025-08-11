@@ -14,7 +14,7 @@ SEGMENT_SUBJECT_METADATA = Metadata(
 
 
 SegmentSubjectParameters = typing.TypedDict('SegmentSubjectParameters', {
-    "__STYXTYPE__": typing.Literal["segment_subject"],
+    "@type": typing.Literal["freesurfer.segment_subject"],
     "input_volume": InputPathType,
     "output_xfm": str,
     "log_file": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "segment_subject": segment_subject_cargs,
+        "freesurfer.segment_subject": segment_subject_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "segment_subject": segment_subject_outputs,
+        "freesurfer.segment_subject": segment_subject_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def segment_subject_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "segment_subject",
+        "@type": "freesurfer.segment_subject",
         "input_volume": input_volume,
         "output_xfm": output_xfm,
         "help_flag": help_flag,
@@ -228,5 +228,8 @@ __all__ = [
     "SegmentSubjectOutputs",
     "SegmentSubjectParameters",
     "segment_subject",
+    "segment_subject_cargs",
+    "segment_subject_execute",
+    "segment_subject_outputs",
     "segment_subject_params",
 ]

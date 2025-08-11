@@ -14,7 +14,7 @@ CBLUMWMGYRI_METADATA = Metadata(
 
 
 CblumwmgyriParameters = typing.TypedDict('CblumwmgyriParameters', {
-    "__STYXTYPE__": typing.Literal["cblumwmgyri"],
+    "@type": typing.Literal["freesurfer.cblumwmgyri"],
     "subject": str,
     "source_seg": typing.NotRequired[InputPathType | None],
     "n_erodes_dilates": typing.NotRequired[float | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "cblumwmgyri": cblumwmgyri_cargs,
+        "freesurfer.cblumwmgyri": cblumwmgyri_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "cblumwmgyri": cblumwmgyri_outputs,
+        "freesurfer.cblumwmgyri": cblumwmgyri_outputs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def cblumwmgyri_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "cblumwmgyri",
+        "@type": "freesurfer.cblumwmgyri",
         "subject": subject,
         "no_segstats": no_segstats,
     }
@@ -238,5 +238,8 @@ __all__ = [
     "CblumwmgyriOutputs",
     "CblumwmgyriParameters",
     "cblumwmgyri",
+    "cblumwmgyri_cargs",
+    "cblumwmgyri_execute",
+    "cblumwmgyri_outputs",
     "cblumwmgyri_params",
 ]

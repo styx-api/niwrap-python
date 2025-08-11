@@ -14,7 +14,7 @@ CREATE_ICOSAHEDRON_METADATA = Metadata(
 
 
 CreateIcosahedronParameters = typing.TypedDict('CreateIcosahedronParameters', {
-    "__STYXTYPE__": typing.Literal["CreateIcosahedron"],
+    "@type": typing.Literal["afni.CreateIcosahedron"],
     "rad": typing.NotRequired[float | None],
     "rec_depth": typing.NotRequired[float | None],
     "lin_depth": typing.NotRequired[float | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "CreateIcosahedron": create_icosahedron_cargs,
+        "afni.CreateIcosahedron": create_icosahedron_cargs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def create_icosahedron_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "CreateIcosahedron",
+        "@type": "afni.CreateIcosahedron",
         "nums": nums,
         "nums_quiet": nums_quiet,
         "to_sphere": to_sphere,
@@ -278,5 +278,8 @@ __all__ = [
     "CreateIcosahedronOutputs",
     "CreateIcosahedronParameters",
     "create_icosahedron",
+    "create_icosahedron_cargs",
+    "create_icosahedron_execute",
+    "create_icosahedron_outputs",
     "create_icosahedron_params",
 ]

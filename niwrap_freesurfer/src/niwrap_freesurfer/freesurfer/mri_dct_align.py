@@ -14,7 +14,7 @@ MRI_DCT_ALIGN_METADATA = Metadata(
 
 
 MriDctAlignParameters = typing.TypedDict('MriDctAlignParameters', {
-    "__STYXTYPE__": typing.Literal["mri_dct_align"],
+    "@type": typing.Literal["freesurfer.mri_dct_align"],
     "source": InputPathType,
     "destination": InputPathType,
     "output_xform": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_dct_align": mri_dct_align_cargs,
+        "freesurfer.mri_dct_align": mri_dct_align_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_dct_align": mri_dct_align_outputs,
+        "freesurfer.mri_dct_align": mri_dct_align_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mri_dct_align_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_dct_align",
+        "@type": "freesurfer.mri_dct_align",
         "source": source,
         "destination": destination,
         "output_xform": output_xform,
@@ -188,5 +188,8 @@ __all__ = [
     "MriDctAlignOutputs",
     "MriDctAlignParameters",
     "mri_dct_align",
+    "mri_dct_align_cargs",
+    "mri_dct_align_execute",
+    "mri_dct_align_outputs",
     "mri_dct_align_params",
 ]

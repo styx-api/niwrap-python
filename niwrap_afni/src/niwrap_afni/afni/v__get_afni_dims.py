@@ -14,7 +14,7 @@ V__GET_AFNI_DIMS_METADATA = Metadata(
 
 
 VGetAfniDimsParameters = typing.TypedDict('VGetAfniDimsParameters', {
-    "__STYXTYPE__": typing.Literal["@GetAfniDims"],
+    "@type": typing.Literal["afni.@GetAfniDims"],
     "input_dset": InputPathType,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@GetAfniDims": v__get_afni_dims_cargs,
+        "afni.@GetAfniDims": v__get_afni_dims_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@GetAfniDims": v__get_afni_dims_outputs,
+        "afni.@GetAfniDims": v__get_afni_dims_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def v__get_afni_dims_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@GetAfniDims",
+        "@type": "afni.@GetAfniDims",
         "input_dset": input_dset,
     }
     return params
@@ -172,5 +172,8 @@ __all__ = [
     "VGetAfniDimsParameters",
     "V__GET_AFNI_DIMS_METADATA",
     "v__get_afni_dims",
+    "v__get_afni_dims_cargs",
+    "v__get_afni_dims_execute",
+    "v__get_afni_dims_outputs",
     "v__get_afni_dims_params",
 ]

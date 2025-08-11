@@ -14,7 +14,7 @@ RBOX_METADATA = Metadata(
 
 
 RboxParameters = typing.TypedDict('RboxParameters', {
-    "__STYXTYPE__": typing.Literal["rbox"],
+    "@type": typing.Literal["afni.rbox"],
     "number_points": str,
     "dimension": typing.NotRequired[str | None],
     "unit_cube": bool,
@@ -51,7 +51,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rbox": rbox_cargs,
+        "afni.rbox": rbox_cargs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def rbox_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rbox",
+        "@type": "afni.rbox",
         "number_points": number_points,
         "unit_cube": unit_cube,
         "unit_diamond": unit_diamond,
@@ -389,5 +389,8 @@ __all__ = [
     "RboxOutputs",
     "RboxParameters",
     "rbox",
+    "rbox_cargs",
+    "rbox_execute",
+    "rbox_outputs",
     "rbox_params",
 ]

@@ -14,7 +14,7 @@ MRI_VESSEL_SEGMENT_METADATA = Metadata(
 
 
 MriVesselSegmentParameters = typing.TypedDict('MriVesselSegmentParameters', {
-    "__STYXTYPE__": typing.Literal["mri_vessel_segment"],
+    "@type": typing.Literal["freesurfer.mri_vessel_segment"],
     "t1_image": InputPathType,
     "t2_image": InputPathType,
     "aseg_file": InputPathType,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_vessel_segment": mri_vessel_segment_cargs,
+        "freesurfer.mri_vessel_segment": mri_vessel_segment_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_vessel_segment": mri_vessel_segment_outputs,
+        "freesurfer.mri_vessel_segment": mri_vessel_segment_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def mri_vessel_segment_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_vessel_segment",
+        "@type": "freesurfer.mri_vessel_segment",
         "t1_image": t1_image,
         "t2_image": t2_image,
         "aseg_file": aseg_file,
@@ -217,5 +217,8 @@ __all__ = [
     "MriVesselSegmentOutputs",
     "MriVesselSegmentParameters",
     "mri_vessel_segment",
+    "mri_vessel_segment_cargs",
+    "mri_vessel_segment_execute",
+    "mri_vessel_segment_outputs",
     "mri_vessel_segment_params",
 ]

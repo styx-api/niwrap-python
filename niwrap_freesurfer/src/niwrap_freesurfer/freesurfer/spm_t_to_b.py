@@ -14,7 +14,7 @@ SPM_T_TO_B_METADATA = Metadata(
 
 
 SpmTToBParameters = typing.TypedDict('SpmTToBParameters', {
-    "__STYXTYPE__": typing.Literal["spm_t_to_b"],
+    "@type": typing.Literal["freesurfer.spm_t_to_b"],
     "spm_stem_format": str,
     "bshort_stem": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "spm_t_to_b": spm_t_to_b_cargs,
+        "freesurfer.spm_t_to_b": spm_t_to_b_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def spm_t_to_b_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "spm_t_to_b",
+        "@type": "freesurfer.spm_t_to_b",
         "spm_stem_format": spm_stem_format,
         "bshort_stem": bshort_stem,
     }
@@ -176,5 +176,8 @@ __all__ = [
     "SpmTToBOutputs",
     "SpmTToBParameters",
     "spm_t_to_b",
+    "spm_t_to_b_cargs",
+    "spm_t_to_b_execute",
+    "spm_t_to_b_outputs",
     "spm_t_to_b_params",
 ]

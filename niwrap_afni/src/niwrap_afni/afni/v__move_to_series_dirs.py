@@ -14,7 +14,7 @@ V__MOVE_TO_SERIES_DIRS_METADATA = Metadata(
 
 
 VMoveToSeriesDirsParameters = typing.TypedDict('VMoveToSeriesDirsParameters', {
-    "__STYXTYPE__": typing.Literal["@move.to.series.dirs"],
+    "@type": typing.Literal["afni.@move.to.series.dirs"],
     "action": typing.NotRequired[typing.Literal["copy", "move"] | None],
     "dprefix": typing.NotRequired[str | None],
     "tag": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@move.to.series.dirs": v__move_to_series_dirs_cargs,
+        "afni.@move.to.series.dirs": v__move_to_series_dirs_cargs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def v__move_to_series_dirs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@move.to.series.dirs",
+        "@type": "afni.@move.to.series.dirs",
         "test": test,
         "help": help_,
         "hist": hist,
@@ -251,5 +251,8 @@ __all__ = [
     "VMoveToSeriesDirsParameters",
     "V__MOVE_TO_SERIES_DIRS_METADATA",
     "v__move_to_series_dirs",
+    "v__move_to_series_dirs_cargs",
+    "v__move_to_series_dirs_execute",
+    "v__move_to_series_dirs_outputs",
     "v__move_to_series_dirs_params",
 ]

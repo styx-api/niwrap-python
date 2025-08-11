@@ -14,7 +14,7 @@ LABEL_PROBABILITY_METADATA = Metadata(
 
 
 LabelProbabilityParameters = typing.TypedDict('LabelProbabilityParameters', {
-    "__STYXTYPE__": typing.Literal["label-probability"],
+    "@type": typing.Literal["workbench.label-probability"],
     "label_maps": InputPathType,
     "probability_metric_out": str,
     "opt_exclude_unlabeled": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "label-probability": label_probability_cargs,
+        "workbench.label-probability": label_probability_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "label-probability": label_probability_outputs,
+        "workbench.label-probability": label_probability_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def label_probability_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "label-probability",
+        "@type": "workbench.label-probability",
         "label_maps": label_maps,
         "probability_metric_out": probability_metric_out,
         "opt_exclude_unlabeled": opt_exclude_unlabeled,
@@ -204,5 +204,8 @@ __all__ = [
     "LabelProbabilityOutputs",
     "LabelProbabilityParameters",
     "label_probability",
+    "label_probability_cargs",
+    "label_probability_execute",
+    "label_probability_outputs",
     "label_probability_params",
 ]

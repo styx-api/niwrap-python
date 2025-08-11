@@ -14,7 +14,7 @@ ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA = Metadata(
 
 
 AdjunctSumaFsMaskAndQcParameters = typing.TypedDict('AdjunctSumaFsMaskAndQcParameters', {
-    "__STYXTYPE__": typing.Literal["adjunct_suma_fs_mask_and_qc"],
+    "@type": typing.Literal["afni.adjunct_suma_fs_mask_and_qc"],
     "subj_id": str,
     "suma_dir": str,
     "no_clean": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "adjunct_suma_fs_mask_and_qc": adjunct_suma_fs_mask_and_qc_cargs,
+        "afni.adjunct_suma_fs_mask_and_qc": adjunct_suma_fs_mask_and_qc_cargs,
     }.get(t)
 
 
@@ -52,7 +52,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "adjunct_suma_fs_mask_and_qc": adjunct_suma_fs_mask_and_qc_outputs,
+        "afni.adjunct_suma_fs_mask_and_qc": adjunct_suma_fs_mask_and_qc_outputs,
     }.get(t)
 
 
@@ -102,7 +102,7 @@ def adjunct_suma_fs_mask_and_qc_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "adjunct_suma_fs_mask_and_qc",
+        "@type": "afni.adjunct_suma_fs_mask_and_qc",
         "subj_id": subj_id,
         "suma_dir": suma_dir,
         "no_clean": no_clean,
@@ -245,5 +245,8 @@ __all__ = [
     "AdjunctSumaFsMaskAndQcOutputs",
     "AdjunctSumaFsMaskAndQcParameters",
     "adjunct_suma_fs_mask_and_qc",
+    "adjunct_suma_fs_mask_and_qc_cargs",
+    "adjunct_suma_fs_mask_and_qc_execute",
+    "adjunct_suma_fs_mask_and_qc_outputs",
     "adjunct_suma_fs_mask_and_qc_params",
 ]

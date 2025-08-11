@@ -14,7 +14,7 @@ T4IMG_4DFP_METADATA = Metadata(
 
 
 T4img4dfpParameters = typing.TypedDict('T4img4dfpParameters', {
-    "__STYXTYPE__": typing.Literal["t4img_4dfp"],
+    "@type": typing.Literal["freesurfer.t4img_4dfp"],
     "t4file": InputPathType,
     "imgfile": InputPathType,
     "outfile": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "t4img_4dfp": t4img_4dfp_cargs,
+        "freesurfer.t4img_4dfp": t4img_4dfp_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "t4img_4dfp": t4img_4dfp_outputs,
+        "freesurfer.t4img_4dfp": t4img_4dfp_outputs,
     }.get(t)
 
 
@@ -80,7 +80,7 @@ def t4img_4dfp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "t4img_4dfp",
+        "@type": "freesurfer.t4img_4dfp",
         "t4file": t4file,
         "imgfile": imgfile,
     }
@@ -192,5 +192,8 @@ __all__ = [
     "T4img4dfpOutputs",
     "T4img4dfpParameters",
     "t4img_4dfp",
+    "t4img_4dfp_cargs",
+    "t4img_4dfp_execute",
+    "t4img_4dfp_outputs",
     "t4img_4dfp_params",
 ]

@@ -14,7 +14,7 @@ FAT_PROC_MAP_TO_DTI_METADATA = Metadata(
 
 
 FatProcMapToDtiParameters = typing.TypedDict('FatProcMapToDtiParameters', {
-    "__STYXTYPE__": typing.Literal["fat_proc_map_to_dti"],
+    "@type": typing.Literal["afni.fat_proc_map_to_dti"],
     "source": InputPathType,
     "base": InputPathType,
     "prefix": str,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_proc_map_to_dti": fat_proc_map_to_dti_cargs,
+        "afni.fat_proc_map_to_dti": fat_proc_map_to_dti_cargs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def fat_proc_map_to_dti_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_proc_map_to_dti",
+        "@type": "afni.fat_proc_map_to_dti",
         "source": source,
         "base": base,
         "prefix": prefix,
@@ -304,5 +304,8 @@ __all__ = [
     "FatProcMapToDtiOutputs",
     "FatProcMapToDtiParameters",
     "fat_proc_map_to_dti",
+    "fat_proc_map_to_dti_cargs",
+    "fat_proc_map_to_dti_execute",
+    "fat_proc_map_to_dti_outputs",
     "fat_proc_map_to_dti_params",
 ]

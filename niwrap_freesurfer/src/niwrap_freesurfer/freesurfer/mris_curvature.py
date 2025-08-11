@@ -14,7 +14,7 @@ MRIS_CURVATURE_METADATA = Metadata(
 
 
 MrisCurvatureParameters = typing.TypedDict('MrisCurvatureParameters', {
-    "__STYXTYPE__": typing.Literal["mris_curvature"],
+    "@type": typing.Literal["freesurfer.mris_curvature"],
     "save_curvature_files": bool,
     "max_principal_curvature": bool,
     "mgh_output_format": bool,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_curvature": mris_curvature_cargs,
+        "freesurfer.mris_curvature": mris_curvature_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_curvature": mris_curvature_outputs,
+        "freesurfer.mris_curvature": mris_curvature_outputs,
     }.get(t)
 
 
@@ -123,7 +123,7 @@ def mris_curvature_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_curvature",
+        "@type": "freesurfer.mris_curvature",
         "save_curvature_files": save_curvature_files,
         "max_principal_curvature": max_principal_curvature,
         "mgh_output_format": mgh_output_format,
@@ -348,5 +348,8 @@ __all__ = [
     "MrisCurvatureOutputs",
     "MrisCurvatureParameters",
     "mris_curvature",
+    "mris_curvature_cargs",
+    "mris_curvature_execute",
+    "mris_curvature_outputs",
     "mris_curvature_params",
 ]

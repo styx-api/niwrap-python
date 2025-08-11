@@ -14,7 +14,7 @@ SURF_LAYERS_METADATA = Metadata(
 
 
 SurfLayersParameters = typing.TypedDict('SurfLayersParameters', {
-    "__STYXTYPE__": typing.Literal["SurfLayers"],
+    "@type": typing.Literal["afni.SurfLayers"],
     "spec_dset": typing.NotRequired[InputPathType | None],
     "outdir": typing.NotRequired[str | None],
     "states": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "SurfLayers": surf_layers_cargs,
+        "afni.SurfLayers": surf_layers_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "SurfLayers": surf_layers_outputs,
+        "afni.SurfLayers": surf_layers_outputs,
     }.get(t)
 
 
@@ -106,7 +106,7 @@ def surf_layers_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "SurfLayers",
+        "@type": "afni.SurfLayers",
         "echo": echo,
         "no_clean": no_clean,
     }
@@ -296,5 +296,8 @@ __all__ = [
     "SurfLayersOutputs",
     "SurfLayersParameters",
     "surf_layers",
+    "surf_layers_cargs",
+    "surf_layers_execute",
+    "surf_layers_outputs",
     "surf_layers_params",
 ]

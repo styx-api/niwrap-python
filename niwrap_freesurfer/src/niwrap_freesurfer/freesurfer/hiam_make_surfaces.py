@@ -14,7 +14,7 @@ HIAM_MAKE_SURFACES_METADATA = Metadata(
 
 
 HiamMakeSurfacesParameters = typing.TypedDict('HiamMakeSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["hiam_make_surfaces"],
+    "@type": typing.Literal["freesurfer.hiam_make_surfaces"],
     "subject_name": str,
     "structure": typing.Literal["RA", "LA", "RH", "LH"],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "hiam_make_surfaces": hiam_make_surfaces_cargs,
+        "freesurfer.hiam_make_surfaces": hiam_make_surfaces_cargs,
     }.get(t)
 
 
@@ -74,7 +74,7 @@ def hiam_make_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "hiam_make_surfaces",
+        "@type": "freesurfer.hiam_make_surfaces",
         "subject_name": subject_name,
         "structure": structure,
     }
@@ -178,5 +178,8 @@ __all__ = [
     "HiamMakeSurfacesOutputs",
     "HiamMakeSurfacesParameters",
     "hiam_make_surfaces",
+    "hiam_make_surfaces_cargs",
+    "hiam_make_surfaces_execute",
+    "hiam_make_surfaces_outputs",
     "hiam_make_surfaces_params",
 ]

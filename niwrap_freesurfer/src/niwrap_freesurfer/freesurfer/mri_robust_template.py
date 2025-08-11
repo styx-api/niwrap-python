@@ -14,7 +14,7 @@ MRI_ROBUST_TEMPLATE_METADATA = Metadata(
 
 
 MriRobustTemplateParameters = typing.TypedDict('MriRobustTemplateParameters', {
-    "__STYXTYPE__": typing.Literal["mri_robust_template"],
+    "@type": typing.Literal["freesurfer.mri_robust_template"],
     "mov_files": list[InputPathType],
     "template_file": str,
     "sat_value": typing.NotRequired[float | None],
@@ -67,7 +67,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mri_robust_template": mri_robust_template_cargs,
+        "freesurfer.mri_robust_template": mri_robust_template_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mri_robust_template": mri_robust_template_outputs,
+        "freesurfer.mri_robust_template": mri_robust_template_outputs,
     }.get(t)
 
 
@@ -202,7 +202,7 @@ def mri_robust_template_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mri_robust_template",
+        "@type": "freesurfer.mri_robust_template",
         "mov_files": mov_files,
         "template_file": template_file,
         "satit_flag": satit_flag,
@@ -618,5 +618,8 @@ __all__ = [
     "MriRobustTemplateOutputs",
     "MriRobustTemplateParameters",
     "mri_robust_template",
+    "mri_robust_template_cargs",
+    "mri_robust_template_execute",
+    "mri_robust_template_outputs",
     "mri_robust_template_params",
 ]

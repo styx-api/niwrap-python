@@ -14,7 +14,7 @@ FLIRT_NEWDEFAULT_20080811_SCH_METADATA = Metadata(
 
 
 FlirtNewdefault20080811SchParameters = typing.TypedDict('FlirtNewdefault20080811SchParameters', {
-    "__STYXTYPE__": typing.Literal["flirt.newdefault.20080811.sch"],
+    "@type": typing.Literal["freesurfer.flirt.newdefault.20080811.sch"],
     "term_option": typing.NotRequired[str | None],
     "curses_flag": bool,
     "scrollback_flag": bool,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "flirt.newdefault.20080811.sch": flirt_newdefault_20080811_sch_cargs,
+        "freesurfer.flirt.newdefault.20080811.sch": flirt_newdefault_20080811_sch_cargs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def flirt_newdefault_20080811_sch_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "flirt.newdefault.20080811.sch",
+        "@type": "freesurfer.flirt.newdefault.20080811.sch",
         "curses_flag": curses_flag,
         "scrollback_flag": scrollback_flag,
     }
@@ -191,5 +191,8 @@ __all__ = [
     "FlirtNewdefault20080811SchOutputs",
     "FlirtNewdefault20080811SchParameters",
     "flirt_newdefault_20080811_sch",
+    "flirt_newdefault_20080811_sch_cargs",
+    "flirt_newdefault_20080811_sch_execute",
+    "flirt_newdefault_20080811_sch_outputs",
     "flirt_newdefault_20080811_sch_params",
 ]

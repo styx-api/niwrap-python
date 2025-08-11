@@ -14,7 +14,7 @@ POSSUM_METADATA = Metadata(
 
 
 PossumParameters = typing.TypedDict('PossumParameters', {
-    "__STYXTYPE__": typing.Literal["possum"],
+    "@type": typing.Literal["fsl.possum"],
     "input_volume": InputPathType,
     "mr_parameters": InputPathType,
     "motion_matrix": InputPathType,
@@ -54,7 +54,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "possum": possum_cargs,
+        "fsl.possum": possum_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "possum": possum_outputs,
+        "fsl.possum": possum_outputs,
     }.get(t)
 
 
@@ -148,7 +148,7 @@ def possum_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "possum",
+        "@type": "fsl.possum",
         "input_volume": input_volume,
         "mr_parameters": mr_parameters,
         "motion_matrix": motion_matrix,
@@ -454,5 +454,8 @@ __all__ = [
     "PossumOutputs",
     "PossumParameters",
     "possum",
+    "possum_cargs",
+    "possum_execute",
+    "possum_outputs",
     "possum_params",
 ]

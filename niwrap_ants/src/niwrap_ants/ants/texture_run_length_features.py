@@ -14,7 +14,7 @@ TEXTURE_RUN_LENGTH_FEATURES_METADATA = Metadata(
 
 
 TextureRunLengthFeaturesParameters = typing.TypedDict('TextureRunLengthFeaturesParameters', {
-    "__STYXTYPE__": typing.Literal["TextureRunLengthFeatures"],
+    "@type": typing.Literal["ants.TextureRunLengthFeatures"],
     "image_dimension": int,
     "input_image": InputPathType,
     "number_of_bins_per_axis": typing.NotRequired[int | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "TextureRunLengthFeatures": texture_run_length_features_cargs,
+        "ants.TextureRunLengthFeatures": texture_run_length_features_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "TextureRunLengthFeatures": texture_run_length_features_outputs,
+        "ants.TextureRunLengthFeatures": texture_run_length_features_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def texture_run_length_features_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "TextureRunLengthFeatures",
+        "@type": "ants.TextureRunLengthFeatures",
         "image_dimension": image_dimension,
         "input_image": input_image,
     }
@@ -237,5 +237,8 @@ __all__ = [
     "TextureRunLengthFeaturesOutputs",
     "TextureRunLengthFeaturesParameters",
     "texture_run_length_features",
+    "texture_run_length_features_cargs",
+    "texture_run_length_features_execute",
+    "texture_run_length_features_outputs",
     "texture_run_length_features_params",
 ]

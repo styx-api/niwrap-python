@@ -14,7 +14,7 @@ V_3D_UNIFIZE_METADATA = Metadata(
 
 
 V3dUnifizeParameters = typing.TypedDict('V3dUnifizeParameters', {
-    "__STYXTYPE__": typing.Literal["3dUnifize"],
+    "@type": typing.Literal["afni.3dUnifize"],
     "cl_frac": typing.NotRequired[float | None],
     "epi": bool,
     "gm": bool,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dUnifize": v_3d_unifize_cargs,
+        "afni.3dUnifize": v_3d_unifize_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dUnifize": v_3d_unifize_outputs,
+        "afni.3dUnifize": v_3d_unifize_outputs,
     }.get(t)
 
 
@@ -136,7 +136,7 @@ def v_3d_unifize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dUnifize",
+        "@type": "afni.3dUnifize",
         "epi": epi,
         "gm": gm,
         "no_duplo": no_duplo,
@@ -399,5 +399,8 @@ __all__ = [
     "V3dUnifizeParameters",
     "V_3D_UNIFIZE_METADATA",
     "v_3d_unifize",
+    "v_3d_unifize_cargs",
+    "v_3d_unifize_execute",
+    "v_3d_unifize_outputs",
     "v_3d_unifize_params",
 ]

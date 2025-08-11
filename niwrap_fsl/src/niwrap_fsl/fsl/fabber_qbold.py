@@ -14,7 +14,7 @@ FABBER_QBOLD_METADATA = Metadata(
 
 
 FabberQboldParameters = typing.TypedDict('FabberQboldParameters', {
-    "__STYXTYPE__": typing.Literal["fabber_qbold"],
+    "@type": typing.Literal["fsl.fabber_qbold"],
     "output_dir": str,
     "method": str,
     "model": str,
@@ -65,7 +65,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fabber_qbold": fabber_qbold_cargs,
+        "fsl.fabber_qbold": fabber_qbold_cargs,
     }.get(t)
 
 
@@ -81,7 +81,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fabber_qbold": fabber_qbold_outputs,
+        "fsl.fabber_qbold": fabber_qbold_outputs,
     }.get(t)
 
 
@@ -219,7 +219,7 @@ def fabber_qbold_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fabber_qbold",
+        "@type": "fsl.fabber_qbold",
         "output_dir": output_dir,
         "method": method,
         "model": model,
@@ -603,5 +603,8 @@ __all__ = [
     "FabberQboldOutputs",
     "FabberQboldParameters",
     "fabber_qbold",
+    "fabber_qbold_cargs",
+    "fabber_qbold_execute",
+    "fabber_qbold_outputs",
     "fabber_qbold_params",
 ]

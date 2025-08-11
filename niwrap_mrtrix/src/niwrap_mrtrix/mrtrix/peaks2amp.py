@@ -14,14 +14,14 @@ PEAKS2AMP_METADATA = Metadata(
 
 
 Peaks2ampConfigParameters = typing.TypedDict('Peaks2ampConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.peaks2amp.config"],
     "key": str,
     "value": str,
 })
 
 
 Peaks2ampParameters = typing.TypedDict('Peaks2ampParameters', {
-    "__STYXTYPE__": typing.Literal["peaks2amp"],
+    "@type": typing.Literal["mrtrix.peaks2amp"],
     "info": bool,
     "quiet": bool,
     "debug": bool,
@@ -47,8 +47,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "peaks2amp": peaks2amp_cargs,
-        "config": peaks2amp_config_cargs,
+        "mrtrix.peaks2amp": peaks2amp_cargs,
+        "mrtrix.peaks2amp.config": peaks2amp_config_cargs,
     }.get(t)
 
 
@@ -64,7 +64,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "peaks2amp": peaks2amp_outputs,
+        "mrtrix.peaks2amp": peaks2amp_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def peaks2amp_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.peaks2amp.config",
         "key": key,
         "value": value,
     }
@@ -154,7 +154,7 @@ def peaks2amp_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "peaks2amp",
+        "@type": "mrtrix.peaks2amp",
         "info": info,
         "quiet": quiet,
         "debug": debug,
@@ -200,7 +200,7 @@ def peaks2amp_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
@@ -329,6 +329,10 @@ __all__ = [
     "Peaks2ampOutputs",
     "Peaks2ampParameters",
     "peaks2amp",
+    "peaks2amp_cargs",
+    "peaks2amp_config_cargs",
     "peaks2amp_config_params",
+    "peaks2amp_execute",
+    "peaks2amp_outputs",
     "peaks2amp_params",
 ]

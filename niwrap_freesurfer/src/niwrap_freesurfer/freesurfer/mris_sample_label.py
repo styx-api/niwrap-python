@@ -14,7 +14,7 @@ MRIS_SAMPLE_LABEL_METADATA = Metadata(
 
 
 MrisSampleLabelParameters = typing.TypedDict('MrisSampleLabelParameters', {
-    "__STYXTYPE__": typing.Literal["mris_sample_label"],
+    "@type": typing.Literal["freesurfer.mris_sample_label"],
     "input_label_file": InputPathType,
     "input_surface_file": InputPathType,
     "output_label_file": str,
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_sample_label": mris_sample_label_cargs,
+        "freesurfer.mris_sample_label": mris_sample_label_cargs,
     }.get(t)
 
 
@@ -49,7 +49,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_sample_label": mris_sample_label_outputs,
+        "freesurfer.mris_sample_label": mris_sample_label_outputs,
     }.get(t)
 
 
@@ -79,7 +79,7 @@ def mris_sample_label_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_sample_label",
+        "@type": "freesurfer.mris_sample_label",
         "input_label_file": input_label_file,
         "input_surface_file": input_surface_file,
         "output_label_file": output_label_file,
@@ -188,5 +188,8 @@ __all__ = [
     "MrisSampleLabelOutputs",
     "MrisSampleLabelParameters",
     "mris_sample_label",
+    "mris_sample_label_cargs",
+    "mris_sample_label_execute",
+    "mris_sample_label_outputs",
     "mris_sample_label_params",
 ]

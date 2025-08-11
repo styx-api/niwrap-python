@@ -14,7 +14,7 @@ V_3D_LOCALSTAT_METADATA = Metadata(
 
 
 V3dLocalstatParameters = typing.TypedDict('V3dLocalstatParameters', {
-    "__STYXTYPE__": typing.Literal["3dLocalstat"],
+    "@type": typing.Literal["afni.3dLocalstat"],
     "dataset": InputPathType,
     "nbhd": str,
     "stat": typing.NotRequired[list[str] | None],
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dLocalstat": v_3d_localstat_cargs,
+        "afni.3dLocalstat": v_3d_localstat_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dLocalstat": v_3d_localstat_outputs,
+        "afni.3dLocalstat": v_3d_localstat_outputs,
     }.get(t)
 
 
@@ -142,7 +142,7 @@ def v_3d_localstat_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dLocalstat",
+        "@type": "afni.3dLocalstat",
         "dataset": dataset,
         "nbhd": nbhd,
         "automask": automask,
@@ -423,5 +423,8 @@ __all__ = [
     "V3dLocalstatParameters",
     "V_3D_LOCALSTAT_METADATA",
     "v_3d_localstat",
+    "v_3d_localstat_cargs",
+    "v_3d_localstat_execute",
+    "v_3d_localstat_outputs",
     "v_3d_localstat_params",
 ]

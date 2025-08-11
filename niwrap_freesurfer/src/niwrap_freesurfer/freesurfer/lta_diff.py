@@ -14,7 +14,7 @@ LTA_DIFF_METADATA = Metadata(
 
 
 LtaDiffParameters = typing.TypedDict('LtaDiffParameters', {
-    "__STYXTYPE__": typing.Literal["lta_diff"],
+    "@type": typing.Literal["freesurfer.lta_diff"],
     "transform1": InputPathType,
     "transform2": typing.NotRequired[InputPathType | None],
     "dist_type": typing.NotRequired[int | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "lta_diff": lta_diff_cargs,
+        "freesurfer.lta_diff": lta_diff_cargs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def lta_diff_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "lta_diff",
+        "@type": "freesurfer.lta_diff",
         "transform1": transform1,
         "invert1": invert1,
         "invert2": invert2,
@@ -256,5 +256,8 @@ __all__ = [
     "LtaDiffOutputs",
     "LtaDiffParameters",
     "lta_diff",
+    "lta_diff_cargs",
+    "lta_diff_execute",
+    "lta_diff_outputs",
     "lta_diff_params",
 ]

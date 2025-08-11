@@ -14,7 +14,7 @@ MRIS_CA_TRAIN_METADATA = Metadata(
 
 
 MrisCaTrainParameters = typing.TypedDict('MrisCaTrainParameters', {
-    "__STYXTYPE__": typing.Literal["mris_ca_train"],
+    "@type": typing.Literal["freesurfer.mris_ca_train"],
     "hemi": str,
     "canonsurf": InputPathType,
     "annot_file": InputPathType,
@@ -56,7 +56,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_ca_train": mris_ca_train_cargs,
+        "freesurfer.mris_ca_train": mris_ca_train_cargs,
     }.get(t)
 
 
@@ -72,7 +72,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_ca_train": mris_ca_train_outputs,
+        "freesurfer.mris_ca_train": mris_ca_train_outputs,
     }.get(t)
 
 
@@ -149,7 +149,7 @@ def mris_ca_train_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_ca_train",
+        "@type": "freesurfer.mris_ca_train",
         "hemi": hemi,
         "canonsurf": canonsurf,
         "annot_file": annot_file,
@@ -449,5 +449,8 @@ __all__ = [
     "MrisCaTrainOutputs",
     "MrisCaTrainParameters",
     "mris_ca_train",
+    "mris_ca_train_cargs",
+    "mris_ca_train_execute",
+    "mris_ca_train_outputs",
     "mris_ca_train_params",
 ]

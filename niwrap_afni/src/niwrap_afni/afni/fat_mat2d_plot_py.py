@@ -14,7 +14,7 @@ FAT_MAT2D_PLOT_PY_METADATA = Metadata(
 
 
 FatMat2dPlotPyParameters = typing.TypedDict('FatMat2dPlotPyParameters', {
-    "__STYXTYPE__": typing.Literal["fat_mat2d_plot.py"],
+    "@type": typing.Literal["afni.fat_mat2d_plot.py"],
     "input_file": InputPathType,
     "matrices": typing.NotRequired[list[str] | None],
     "prefix": typing.NotRequired[str | None],
@@ -55,7 +55,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_mat2d_plot.py": fat_mat2d_plot_py_cargs,
+        "afni.fat_mat2d_plot.py": fat_mat2d_plot_py_cargs,
     }.get(t)
 
 
@@ -71,7 +71,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_mat2d_plot.py": fat_mat2d_plot_py_outputs,
+        "afni.fat_mat2d_plot.py": fat_mat2d_plot_py_outputs,
     }.get(t)
 
 
@@ -156,7 +156,7 @@ def fat_mat2d_plot_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_mat2d_plot.py",
+        "@type": "afni.fat_mat2d_plot.py",
         "input_file": input_file,
         "no_colorbar": no_colorbar,
         "hold_image": hold_image,
@@ -424,5 +424,8 @@ __all__ = [
     "FatMat2dPlotPyOutputs",
     "FatMat2dPlotPyParameters",
     "fat_mat2d_plot_py",
+    "fat_mat2d_plot_py_cargs",
+    "fat_mat2d_plot_py_execute",
+    "fat_mat2d_plot_py_outputs",
     "fat_mat2d_plot_py_params",
 ]

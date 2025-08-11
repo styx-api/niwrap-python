@@ -14,7 +14,7 @@ FSVGLRUN_METADATA = Metadata(
 
 
 FsvglrunParameters = typing.TypedDict('FsvglrunParameters', {
-    "__STYXTYPE__": typing.Literal["fsvglrun"],
+    "@type": typing.Literal["freesurfer.fsvglrun"],
     "zeroth_arg_name": typing.NotRequired[str | None],
     "empty_env": bool,
     "dashed_arg": bool,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsvglrun": fsvglrun_cargs,
+        "freesurfer.fsvglrun": fsvglrun_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def fsvglrun_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsvglrun",
+        "@type": "freesurfer.fsvglrun",
         "empty_env": empty_env,
         "dashed_arg": dashed_arg,
         "command": command,
@@ -213,5 +213,8 @@ __all__ = [
     "FsvglrunOutputs",
     "FsvglrunParameters",
     "fsvglrun",
+    "fsvglrun_cargs",
+    "fsvglrun_execute",
+    "fsvglrun_outputs",
     "fsvglrun_params",
 ]

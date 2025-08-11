@@ -14,7 +14,7 @@ MKMNC_INDEX_TCL_METADATA = Metadata(
 
 
 MkmncIndexTclParameters = typing.TypedDict('MkmncIndexTclParameters', {
-    "__STYXTYPE__": typing.Literal["mkmnc_index.tcl"],
+    "@type": typing.Literal["freesurfer.mkmnc_index.tcl"],
     "infile": InputPathType,
     "outfile": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mkmnc_index.tcl": mkmnc_index_tcl_cargs,
+        "freesurfer.mkmnc_index.tcl": mkmnc_index_tcl_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mkmnc_index.tcl": mkmnc_index_tcl_outputs,
+        "freesurfer.mkmnc_index.tcl": mkmnc_index_tcl_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def mkmnc_index_tcl_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mkmnc_index.tcl",
+        "@type": "freesurfer.mkmnc_index.tcl",
         "infile": infile,
         "outfile": outfile,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "MkmncIndexTclOutputs",
     "MkmncIndexTclParameters",
     "mkmnc_index_tcl",
+    "mkmnc_index_tcl_cargs",
+    "mkmnc_index_tcl_execute",
+    "mkmnc_index_tcl_outputs",
     "mkmnc_index_tcl_params",
 ]

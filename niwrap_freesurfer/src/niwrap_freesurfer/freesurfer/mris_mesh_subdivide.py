@@ -14,7 +14,7 @@ MRIS_MESH_SUBDIVIDE_METADATA = Metadata(
 
 
 MrisMeshSubdivideParameters = typing.TypedDict('MrisMeshSubdivideParameters', {
-    "__STYXTYPE__": typing.Literal["mris_mesh_subdivide"],
+    "@type": typing.Literal["freesurfer.mris_mesh_subdivide"],
     "input_surface": InputPathType,
     "output_surface": str,
     "subdivision_method": typing.NotRequired[typing.Literal["butterfly", "loop", "linear"] | None],
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_mesh_subdivide": mris_mesh_subdivide_cargs,
+        "freesurfer.mris_mesh_subdivide": mris_mesh_subdivide_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_mesh_subdivide": mris_mesh_subdivide_outputs,
+        "freesurfer.mris_mesh_subdivide": mris_mesh_subdivide_outputs,
     }.get(t)
 
 
@@ -84,7 +84,7 @@ def mris_mesh_subdivide_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_mesh_subdivide",
+        "@type": "freesurfer.mris_mesh_subdivide",
         "input_surface": input_surface,
         "output_surface": output_surface,
     }
@@ -216,5 +216,8 @@ __all__ = [
     "MrisMeshSubdivideOutputs",
     "MrisMeshSubdivideParameters",
     "mris_mesh_subdivide",
+    "mris_mesh_subdivide_cargs",
+    "mris_mesh_subdivide_execute",
+    "mris_mesh_subdivide_outputs",
     "mris_mesh_subdivide_params",
 ]

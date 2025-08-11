@@ -14,7 +14,7 @@ TALAIRACH_AFD_METADATA = Metadata(
 
 
 TalairachAfdParameters = typing.TypedDict('TalairachAfdParameters', {
-    "__STYXTYPE__": typing.Literal["talairach_afd"],
+    "@type": typing.Literal["freesurfer.talairach_afd"],
     "subject_name": typing.NotRequired[str | None],
     "xfm_file": typing.NotRequired[InputPathType | None],
     "p_value_threshold": typing.NotRequired[float | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "talairach_afd": talairach_afd_cargs,
+        "freesurfer.talairach_afd": talairach_afd_cargs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def talairach_afd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "talairach_afd",
+        "@type": "freesurfer.talairach_afd",
         "verbose": verbose,
     }
     if subject_name is not None:
@@ -223,5 +223,8 @@ __all__ = [
     "TalairachAfdOutputs",
     "TalairachAfdParameters",
     "talairach_afd",
+    "talairach_afd_cargs",
+    "talairach_afd_execute",
+    "talairach_afd_outputs",
     "talairach_afd_params",
 ]

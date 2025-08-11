@@ -14,7 +14,7 @@ WMEDITS2SURF_METADATA = Metadata(
 
 
 Wmedits2surfParameters = typing.TypedDict('Wmedits2surfParameters', {
-    "__STYXTYPE__": typing.Literal["wmedits2surf"],
+    "@type": typing.Literal["freesurfer.wmedits2surf"],
     "subject": str,
     "self": bool,
     "overwrite": bool,
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "wmedits2surf": wmedits2surf_cargs,
+        "freesurfer.wmedits2surf": wmedits2surf_cargs,
     }.get(t)
 
 
@@ -56,7 +56,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "wmedits2surf": wmedits2surf_outputs,
+        "freesurfer.wmedits2surf": wmedits2surf_outputs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def wmedits2surf_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "wmedits2surf",
+        "@type": "freesurfer.wmedits2surf",
         "subject": subject,
         "self": self,
         "overwrite": overwrite,
@@ -275,5 +275,8 @@ __all__ = [
     "Wmedits2surfOutputs",
     "Wmedits2surfParameters",
     "wmedits2surf",
+    "wmedits2surf_cargs",
+    "wmedits2surf_execute",
+    "wmedits2surf_outputs",
     "wmedits2surf_params",
 ]

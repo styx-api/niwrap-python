@@ -14,7 +14,7 @@ V__DJUNCT_EDGY_ALIGN_CHECK_METADATA = Metadata(
 
 
 VDjunctEdgyAlignCheckParameters = typing.TypedDict('VDjunctEdgyAlignCheckParameters', {
-    "__STYXTYPE__": typing.Literal["@djunct_edgy_align_check"],
+    "@type": typing.Literal["afni.@djunct_edgy_align_check"],
     "ULAY": str,
     "OLAY": str,
     "PREFIX": str,
@@ -56,7 +56,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@djunct_edgy_align_check": v__djunct_edgy_align_check_cargs,
+        "afni.@djunct_edgy_align_check": v__djunct_edgy_align_check_cargs,
     }.get(t)
 
 
@@ -145,7 +145,7 @@ def v__djunct_edgy_align_check_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@djunct_edgy_align_check",
+        "@type": "afni.@djunct_edgy_align_check",
         "ULAY": ulay,
         "OLAY": olay,
         "PREFIX": prefix,
@@ -407,5 +407,8 @@ __all__ = [
     "VDjunctEdgyAlignCheckParameters",
     "V__DJUNCT_EDGY_ALIGN_CHECK_METADATA",
     "v__djunct_edgy_align_check",
+    "v__djunct_edgy_align_check_cargs",
+    "v__djunct_edgy_align_check_execute",
+    "v__djunct_edgy_align_check_outputs",
     "v__djunct_edgy_align_check_params",
 ]

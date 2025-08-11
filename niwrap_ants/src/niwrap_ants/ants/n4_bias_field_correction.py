@@ -14,21 +14,21 @@ N4_BIAS_FIELD_CORRECTION_METADATA = Metadata(
 
 
 N4BiasFieldCorrectionConvergenceParameters = typing.TypedDict('N4BiasFieldCorrectionConvergenceParameters', {
-    "__STYXTYPE__": typing.Literal["convergence"],
+    "@type": typing.Literal["ants.N4BiasFieldCorrection.convergence"],
     "convergence": list[int],
     "convergence_threshold": typing.NotRequired[float | None],
 })
 
 
 N4BiasFieldCorrectionBsplineFittingParameters = typing.TypedDict('N4BiasFieldCorrectionBsplineFittingParameters', {
-    "__STYXTYPE__": typing.Literal["bspline_fitting"],
+    "@type": typing.Literal["ants.N4BiasFieldCorrection.bspline_fitting"],
     "spline_distance": list[float],
     "spline_order": typing.NotRequired[int | None],
 })
 
 
 N4BiasFieldCorrectionHistogramSharpeningParameters = typing.TypedDict('N4BiasFieldCorrectionHistogramSharpeningParameters', {
-    "__STYXTYPE__": typing.Literal["histogram_sharpening"],
+    "@type": typing.Literal["ants.N4BiasFieldCorrection.histogram_sharpening"],
     "fwhm": typing.NotRequired[float | None],
     "wiener_noise": typing.NotRequired[float | None],
     "number_of_histogram_bins": typing.NotRequired[int | None],
@@ -36,20 +36,20 @@ N4BiasFieldCorrectionHistogramSharpeningParameters = typing.TypedDict('N4BiasFie
 
 
 N4BiasFieldCorrectionCorrectedOutputParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputParameters', {
-    "__STYXTYPE__": typing.Literal["correctedOutput"],
+    "@type": typing.Literal["ants.N4BiasFieldCorrection.correctedOutput"],
     "correctedOutputFileName": str,
 })
 
 
 N4BiasFieldCorrectionCorrectedOutputNoiseParameters = typing.TypedDict('N4BiasFieldCorrectionCorrectedOutputNoiseParameters', {
-    "__STYXTYPE__": typing.Literal["correctedOutputNoise"],
+    "@type": typing.Literal["ants.N4BiasFieldCorrection.correctedOutputNoise"],
     "correctedOutputFileName": str,
     "biasFile": typing.NotRequired[str | None],
 })
 
 
 N4BiasFieldCorrectionParameters = typing.TypedDict('N4BiasFieldCorrectionParameters', {
-    "__STYXTYPE__": typing.Literal["N4BiasFieldCorrection"],
+    "@type": typing.Literal["ants.N4BiasFieldCorrection"],
     "image_dimensionality": typing.NotRequired[typing.Literal[2, 3, 4] | None],
     "shrink_factor": typing.NotRequired[int | None],
     "mask_image": typing.NotRequired[InputPathType | None],
@@ -76,12 +76,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "N4BiasFieldCorrection": n4_bias_field_correction_cargs,
-        "convergence": n4_bias_field_correction_convergence_cargs,
-        "bspline_fitting": n4_bias_field_correction_bspline_fitting_cargs,
-        "histogram_sharpening": n4_bias_field_correction_histogram_sharpening_cargs,
-        "correctedOutput": n4_bias_field_correction_corrected_output_cargs,
-        "correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_cargs,
+        "ants.N4BiasFieldCorrection": n4_bias_field_correction_cargs,
+        "ants.N4BiasFieldCorrection.convergence": n4_bias_field_correction_convergence_cargs,
+        "ants.N4BiasFieldCorrection.bspline_fitting": n4_bias_field_correction_bspline_fitting_cargs,
+        "ants.N4BiasFieldCorrection.histogram_sharpening": n4_bias_field_correction_histogram_sharpening_cargs,
+        "ants.N4BiasFieldCorrection.correctedOutput": n4_bias_field_correction_corrected_output_cargs,
+        "ants.N4BiasFieldCorrection.correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_cargs,
     }.get(t)
 
 
@@ -97,9 +97,9 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "N4BiasFieldCorrection": n4_bias_field_correction_outputs,
-        "correctedOutput": n4_bias_field_correction_corrected_output_outputs,
-        "correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_outputs,
+        "ants.N4BiasFieldCorrection": n4_bias_field_correction_outputs,
+        "ants.N4BiasFieldCorrection.correctedOutput": n4_bias_field_correction_corrected_output_outputs,
+        "ants.N4BiasFieldCorrection.correctedOutputNoise": n4_bias_field_correction_corrected_output_noise_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def n4_bias_field_correction_convergence_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "convergence",
+        "@type": "ants.N4BiasFieldCorrection.convergence",
         "convergence": convergence,
     }
     if convergence_threshold is not None:
@@ -158,7 +158,7 @@ def n4_bias_field_correction_bspline_fitting_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "bspline_fitting",
+        "@type": "ants.N4BiasFieldCorrection.bspline_fitting",
         "spline_distance": spline_distance,
     }
     if spline_order is not None:
@@ -201,7 +201,7 @@ def n4_bias_field_correction_histogram_sharpening_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "histogram_sharpening",
+        "@type": "ants.N4BiasFieldCorrection.histogram_sharpening",
     }
     if fwhm is not None:
         params["fwhm"] = fwhm
@@ -253,7 +253,7 @@ def n4_bias_field_correction_corrected_output_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "correctedOutput",
+        "@type": "ants.N4BiasFieldCorrection.correctedOutput",
         "correctedOutputFileName": corrected_output_file_name,
     }
     return params
@@ -323,7 +323,7 @@ def n4_bias_field_correction_corrected_output_noise_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "correctedOutputNoise",
+        "@type": "ants.N4BiasFieldCorrection.correctedOutputNoise",
         "correctedOutputFileName": corrected_output_file_name,
     }
     if bias_file is not None:
@@ -472,7 +472,7 @@ def n4_bias_field_correction_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "N4BiasFieldCorrection",
+        "@type": "ants.N4BiasFieldCorrection",
         "input_image": input_image,
         "output": output,
     }
@@ -540,17 +540,17 @@ def n4_bias_field_correction_cargs(
     if params.get("convergence") is not None:
         cargs.extend([
             "--convergence",
-            *dyn_cargs(params.get("convergence")["__STYXTYPE__"])(params.get("convergence"), execution)
+            *dyn_cargs(params.get("convergence")["@type"])(params.get("convergence"), execution)
         ])
     if params.get("bspline_fitting") is not None:
         cargs.extend([
             "--bspline-fitting",
-            *dyn_cargs(params.get("bspline_fitting")["__STYXTYPE__"])(params.get("bspline_fitting"), execution)
+            *dyn_cargs(params.get("bspline_fitting")["@type"])(params.get("bspline_fitting"), execution)
         ])
     if params.get("histogram_sharpening") is not None:
         cargs.extend([
             "--histogram-sharpening",
-            *dyn_cargs(params.get("histogram_sharpening")["__STYXTYPE__"])(params.get("histogram_sharpening"), execution)
+            *dyn_cargs(params.get("histogram_sharpening")["@type"])(params.get("histogram_sharpening"), execution)
         ])
     if params.get("verbose") is not None:
         cargs.extend([
@@ -563,7 +563,7 @@ def n4_bias_field_correction_cargs(
     ])
     cargs.extend([
         "--output",
-        *dyn_cargs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution)
+        *dyn_cargs(params.get("output")["@type"])(params.get("output"), execution)
     ])
     return cargs
 
@@ -583,7 +583,7 @@ def n4_bias_field_correction_outputs(
     """
     ret = N4BiasFieldCorrectionOutputs(
         root=execution.output_file("."),
-        output=dyn_outputs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution),
+        output=dyn_outputs(params.get("output")["@type"])(params.get("output"), execution),
     )
     return ret
 
@@ -749,10 +749,20 @@ __all__ = [
     "N4BiasFieldCorrectionParameters",
     "N4_BIAS_FIELD_CORRECTION_METADATA",
     "n4_bias_field_correction",
+    "n4_bias_field_correction_bspline_fitting_cargs",
     "n4_bias_field_correction_bspline_fitting_params",
+    "n4_bias_field_correction_cargs",
+    "n4_bias_field_correction_convergence_cargs",
     "n4_bias_field_correction_convergence_params",
+    "n4_bias_field_correction_corrected_output_cargs",
+    "n4_bias_field_correction_corrected_output_noise_cargs",
+    "n4_bias_field_correction_corrected_output_noise_outputs",
     "n4_bias_field_correction_corrected_output_noise_params",
+    "n4_bias_field_correction_corrected_output_outputs",
     "n4_bias_field_correction_corrected_output_params",
+    "n4_bias_field_correction_execute",
+    "n4_bias_field_correction_histogram_sharpening_cargs",
     "n4_bias_field_correction_histogram_sharpening_params",
+    "n4_bias_field_correction_outputs",
     "n4_bias_field_correction_params",
 ]

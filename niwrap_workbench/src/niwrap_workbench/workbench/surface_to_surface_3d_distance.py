@@ -14,7 +14,7 @@ SURFACE_TO_SURFACE_3D_DISTANCE_METADATA = Metadata(
 
 
 SurfaceToSurface3dDistanceParameters = typing.TypedDict('SurfaceToSurface3dDistanceParameters', {
-    "__STYXTYPE__": typing.Literal["surface-to-surface-3d-distance"],
+    "@type": typing.Literal["workbench.surface-to-surface-3d-distance"],
     "surface_comp": InputPathType,
     "surface_ref": InputPathType,
     "dists_out": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "surface-to-surface-3d-distance": surface_to_surface_3d_distance_cargs,
+        "workbench.surface-to-surface-3d-distance": surface_to_surface_3d_distance_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "surface-to-surface-3d-distance": surface_to_surface_3d_distance_outputs,
+        "workbench.surface-to-surface-3d-distance": surface_to_surface_3d_distance_outputs,
     }.get(t)
 
 
@@ -85,7 +85,7 @@ def surface_to_surface_3d_distance_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "surface-to-surface-3d-distance",
+        "@type": "workbench.surface-to-surface-3d-distance",
         "surface_comp": surface_comp,
         "surface_ref": surface_ref,
         "dists_out": dists_out,
@@ -215,5 +215,8 @@ __all__ = [
     "SurfaceToSurface3dDistanceOutputs",
     "SurfaceToSurface3dDistanceParameters",
     "surface_to_surface_3d_distance",
+    "surface_to_surface_3d_distance_cargs",
+    "surface_to_surface_3d_distance_execute",
+    "surface_to_surface_3d_distance_outputs",
     "surface_to_surface_3d_distance_params",
 ]

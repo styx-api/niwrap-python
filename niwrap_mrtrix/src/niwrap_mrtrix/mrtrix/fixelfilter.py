@@ -14,38 +14,38 @@ FIXELFILTER_METADATA = Metadata(
 
 
 FixelfilterConfigParameters = typing.TypedDict('FixelfilterConfigParameters', {
-    "__STYXTYPE__": typing.Literal["config"],
+    "@type": typing.Literal["mrtrix.fixelfilter.config"],
     "key": str,
     "value": str,
 })
 
 
 FixelfilterVariousStringParameters = typing.TypedDict('FixelfilterVariousStringParameters', {
-    "__STYXTYPE__": typing.Literal["VariousString"],
+    "@type": typing.Literal["mrtrix.fixelfilter.VariousString"],
     "obj": str,
 })
 
 
 FixelfilterVariousFileParameters = typing.TypedDict('FixelfilterVariousFileParameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile"],
+    "@type": typing.Literal["mrtrix.fixelfilter.VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelfilterVariousString1Parameters = typing.TypedDict('FixelfilterVariousString1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousString_1"],
+    "@type": typing.Literal["mrtrix.fixelfilter.VariousString"],
     "obj": str,
 })
 
 
 FixelfilterVariousFile1Parameters = typing.TypedDict('FixelfilterVariousFile1Parameters', {
-    "__STYXTYPE__": typing.Literal["VariousFile_1"],
+    "@type": typing.Literal["mrtrix.fixelfilter.VariousFile"],
     "obj": InputPathType,
 })
 
 
 FixelfilterParameters = typing.TypedDict('FixelfilterParameters', {
-    "__STYXTYPE__": typing.Literal["fixelfilter"],
+    "@type": typing.Literal["mrtrix.fixelfilter"],
     "matrix": InputPathType,
     "threshold_value": typing.NotRequired[float | None],
     "threshold_connectivity": typing.NotRequired[float | None],
@@ -78,12 +78,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fixelfilter": fixelfilter_cargs,
-        "config": fixelfilter_config_cargs,
-        "VariousString": fixelfilter_various_string_cargs,
-        "VariousFile": fixelfilter_various_file_cargs,
-        "VariousString_1": fixelfilter_various_string_1_cargs,
-        "VariousFile_1": fixelfilter_various_file_1_cargs,
+        "mrtrix.fixelfilter": fixelfilter_cargs,
+        "mrtrix.fixelfilter.config": fixelfilter_config_cargs,
+        "mrtrix.fixelfilter.VariousString": fixelfilter_various_string_cargs,
+        "mrtrix.fixelfilter.VariousFile": fixelfilter_various_file_cargs,
+        "mrtrix.fixelfilter.VariousString": fixelfilter_various_string_1_cargs,
+        "mrtrix.fixelfilter.VariousFile": fixelfilter_various_file_1_cargs,
     }.get(t)
 
 
@@ -116,7 +116,7 @@ def fixelfilter_config_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "config",
+        "@type": "mrtrix.fixelfilter.config",
         "key": key,
         "value": value,
     }
@@ -155,7 +155,7 @@ def fixelfilter_various_string_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString",
+        "@type": "mrtrix.fixelfilter.VariousString",
         "obj": obj,
     }
     return params
@@ -191,7 +191,7 @@ def fixelfilter_various_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile",
+        "@type": "mrtrix.fixelfilter.VariousFile",
         "obj": obj,
     }
     return params
@@ -227,7 +227,7 @@ def fixelfilter_various_string_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousString_1",
+        "@type": "mrtrix.fixelfilter.VariousString",
         "obj": obj,
     }
     return params
@@ -263,7 +263,7 @@ def fixelfilter_various_file_1_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "VariousFile_1",
+        "@type": "mrtrix.fixelfilter.VariousFile",
         "obj": obj,
     }
     return params
@@ -351,7 +351,7 @@ def fixelfilter_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fixelfilter",
+        "@type": "mrtrix.fixelfilter",
         "matrix": matrix,
         "info": info,
         "quiet": quiet,
@@ -438,14 +438,14 @@ def fixelfilter_cargs(
             str(params.get("nthreads"))
         ])
     if params.get("config") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("config")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("config")] for a in c])
     if params.get("help"):
         cargs.append("-help")
     if params.get("version"):
         cargs.append("-version")
-    cargs.extend(dyn_cargs(params.get("input")["__STYXTYPE__"])(params.get("input"), execution))
+    cargs.extend(dyn_cargs(params.get("input")["@type"])(params.get("input"), execution))
     cargs.append(params.get("filter"))
-    cargs.extend(dyn_cargs(params.get("output")["__STYXTYPE__"])(params.get("output"), execution))
+    cargs.extend(dyn_cargs(params.get("output")["@type"])(params.get("output"), execution))
     return cargs
 
 
@@ -607,10 +607,18 @@ __all__ = [
     "FixelfilterVariousString1Parameters",
     "FixelfilterVariousStringParameters",
     "fixelfilter",
+    "fixelfilter_cargs",
+    "fixelfilter_config_cargs",
     "fixelfilter_config_params",
+    "fixelfilter_execute",
+    "fixelfilter_outputs",
     "fixelfilter_params",
+    "fixelfilter_various_file_1_cargs",
     "fixelfilter_various_file_1_params",
+    "fixelfilter_various_file_cargs",
     "fixelfilter_various_file_params",
+    "fixelfilter_various_string_1_cargs",
     "fixelfilter_various_string_1_params",
+    "fixelfilter_various_string_cargs",
     "fixelfilter_various_string_params",
 ]

@@ -14,7 +14,7 @@ ZIP_SCENE_FILE_METADATA = Metadata(
 
 
 ZipSceneFileParameters = typing.TypedDict('ZipSceneFileParameters', {
-    "__STYXTYPE__": typing.Literal["zip-scene-file"],
+    "@type": typing.Literal["workbench.zip-scene-file"],
     "scene_file": str,
     "extract_folder": str,
     "zip_file": str,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "zip-scene-file": zip_scene_file_cargs,
+        "workbench.zip-scene-file": zip_scene_file_cargs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def zip_scene_file_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "zip-scene-file",
+        "@type": "workbench.zip-scene-file",
         "scene_file": scene_file,
         "extract_folder": extract_folder,
         "zip_file": zip_file,
@@ -236,5 +236,8 @@ __all__ = [
     "ZipSceneFileOutputs",
     "ZipSceneFileParameters",
     "zip_scene_file",
+    "zip_scene_file_cargs",
+    "zip_scene_file_execute",
+    "zip_scene_file_outputs",
     "zip_scene_file_params",
 ]

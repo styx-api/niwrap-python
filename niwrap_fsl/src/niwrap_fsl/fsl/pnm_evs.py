@@ -14,7 +14,7 @@ PNM_EVS_METADATA = Metadata(
 
 
 PnmEvsParameters = typing.TypedDict('PnmEvsParameters', {
-    "__STYXTYPE__": typing.Literal["pnm_evs"],
+    "@type": typing.Literal["fsl.pnm_evs"],
     "input_file": InputPathType,
     "output_file": str,
     "tr_value": float,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "pnm_evs": pnm_evs_cargs,
+        "fsl.pnm_evs": pnm_evs_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "pnm_evs": pnm_evs_outputs,
+        "fsl.pnm_evs": pnm_evs_outputs,
     }.get(t)
 
 
@@ -139,7 +139,7 @@ def pnm_evs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pnm_evs",
+        "@type": "fsl.pnm_evs",
         "input_file": input_file,
         "output_file": output_file,
         "tr_value": tr_value,
@@ -424,5 +424,8 @@ __all__ = [
     "PnmEvsOutputs",
     "PnmEvsParameters",
     "pnm_evs",
+    "pnm_evs_cargs",
+    "pnm_evs_execute",
+    "pnm_evs_outputs",
     "pnm_evs_params",
 ]

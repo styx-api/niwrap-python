@@ -14,7 +14,7 @@ DEFECT2SEG_METADATA = Metadata(
 
 
 Defect2segParameters = typing.TypedDict('Defect2segParameters', {
-    "__STYXTYPE__": typing.Literal["defect2seg"],
+    "@type": typing.Literal["freesurfer.defect2seg"],
     "output_seg": str,
     "template": InputPathType,
     "left_hemisphere": typing.NotRequired[list[str] | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "defect2seg": defect2seg_cargs,
+        "freesurfer.defect2seg": defect2seg_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "defect2seg": defect2seg_outputs,
+        "freesurfer.defect2seg": defect2seg_outputs,
     }.get(t)
 
 
@@ -99,7 +99,7 @@ def defect2seg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "defect2seg",
+        "@type": "freesurfer.defect2seg",
         "output_seg": output_seg,
         "template": template,
         "lh_only": lh_only,
@@ -265,5 +265,8 @@ __all__ = [
     "Defect2segOutputs",
     "Defect2segParameters",
     "defect2seg",
+    "defect2seg_cargs",
+    "defect2seg_execute",
+    "defect2seg_outputs",
     "defect2seg_params",
 ]

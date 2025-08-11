@@ -14,7 +14,7 @@ ROIGROW_METADATA = Metadata(
 
 
 RoigrowParameters = typing.TypedDict('RoigrowParameters', {
-    "__STYXTYPE__": typing.Literal["ROIgrow"],
+    "@type": typing.Literal["afni.ROIgrow"],
     "input_surface": str,
     "roi_labels": str,
     "lim_distance": float,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ROIgrow": roigrow_cargs,
+        "afni.ROIgrow": roigrow_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ROIgrow": roigrow_outputs,
+        "afni.ROIgrow": roigrow_outputs,
     }.get(t)
 
 
@@ -103,7 +103,7 @@ def roigrow_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ROIgrow",
+        "@type": "afni.ROIgrow",
         "input_surface": input_surface,
         "roi_labels": roi_labels,
         "lim_distance": lim_distance,
@@ -272,5 +272,8 @@ __all__ = [
     "RoigrowOutputs",
     "RoigrowParameters",
     "roigrow",
+    "roigrow_cargs",
+    "roigrow_execute",
+    "roigrow_outputs",
     "roigrow_params",
 ]

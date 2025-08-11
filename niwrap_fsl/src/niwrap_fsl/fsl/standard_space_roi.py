@@ -14,7 +14,7 @@ STANDARD_SPACE_ROI_METADATA = Metadata(
 
 
 StandardSpaceRoiParameters = typing.TypedDict('StandardSpaceRoiParameters', {
-    "__STYXTYPE__": typing.Literal["standard_space_roi"],
+    "@type": typing.Literal["fsl.standard_space_roi"],
     "infile": InputPathType,
     "outfile": str,
     "mask_fov_flag": bool,
@@ -42,7 +42,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "standard_space_roi": standard_space_roi_cargs,
+        "fsl.standard_space_roi": standard_space_roi_cargs,
     }.get(t)
 
 
@@ -58,7 +58,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "standard_space_roi": standard_space_roi_outputs,
+        "fsl.standard_space_roi": standard_space_roi_outputs,
     }.get(t)
 
 
@@ -111,7 +111,7 @@ def standard_space_roi_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "standard_space_roi",
+        "@type": "fsl.standard_space_roi",
         "infile": infile,
         "outfile": outfile,
         "mask_fov_flag": mask_fov_flag,
@@ -298,5 +298,8 @@ __all__ = [
     "StandardSpaceRoiOutputs",
     "StandardSpaceRoiParameters",
     "standard_space_roi",
+    "standard_space_roi_cargs",
+    "standard_space_roi_execute",
+    "standard_space_roi_outputs",
     "standard_space_roi_params",
 ]

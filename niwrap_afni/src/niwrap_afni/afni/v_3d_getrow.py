@@ -14,7 +14,7 @@ V_3D_GETROW_METADATA = Metadata(
 
 
 V3dGetrowParameters = typing.TypedDict('V3dGetrowParameters', {
-    "__STYXTYPE__": typing.Literal["3dGetrow"],
+    "@type": typing.Literal["afni.3dGetrow"],
     "xrow": typing.NotRequired[list[int] | None],
     "yrow": typing.NotRequired[list[int] | None],
     "zrow": typing.NotRequired[list[int] | None],
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dGetrow": v_3d_getrow_cargs,
+        "afni.3dGetrow": v_3d_getrow_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dGetrow": v_3d_getrow_outputs,
+        "afni.3dGetrow": v_3d_getrow_outputs,
     }.get(t)
 
 
@@ -90,7 +90,7 @@ def v_3d_getrow_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dGetrow",
+        "@type": "afni.3dGetrow",
     }
     if xrow is not None:
         params["xrow"] = xrow
@@ -239,5 +239,8 @@ __all__ = [
     "V3dGetrowParameters",
     "V_3D_GETROW_METADATA",
     "v_3d_getrow",
+    "v_3d_getrow_cargs",
+    "v_3d_getrow_execute",
+    "v_3d_getrow_outputs",
     "v_3d_getrow_params",
 ]

@@ -14,7 +14,7 @@ MRIS_INFLATE_METADATA = Metadata(
 
 
 MrisInflateParameters = typing.TypedDict('MrisInflateParameters', {
-    "__STYXTYPE__": typing.Literal["mris_inflate"],
+    "@type": typing.Literal["freesurfer.mris_inflate"],
     "input_surface": InputPathType,
     "output_surface": str,
     "max_iterations": typing.NotRequired[float | None],
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_inflate": mris_inflate_cargs,
+        "freesurfer.mris_inflate": mris_inflate_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_inflate": mris_inflate_outputs,
+        "freesurfer.mris_inflate": mris_inflate_outputs,
     }.get(t)
 
 
@@ -100,7 +100,7 @@ def mris_inflate_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_inflate",
+        "@type": "freesurfer.mris_inflate",
         "input_surface": input_surface,
         "output_surface": output_surface,
         "no_save_sulc": no_save_sulc,
@@ -269,5 +269,8 @@ __all__ = [
     "MrisInflateOutputs",
     "MrisInflateParameters",
     "mris_inflate",
+    "mris_inflate_cargs",
+    "mris_inflate_execute",
+    "mris_inflate_outputs",
     "mris_inflate_params",
 ]

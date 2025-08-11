@@ -14,7 +14,7 @@ ANTSINTEGRATE_VECTOR_FIELD_METADATA = Metadata(
 
 
 AntsintegrateVectorFieldParameters = typing.TypedDict('AntsintegrateVectorFieldParameters', {
-    "__STYXTYPE__": typing.Literal["ANTSIntegrateVectorField"],
+    "@type": typing.Literal["ants.ANTSIntegrateVectorField"],
     "vector_field_input": InputPathType,
     "roi_mask_input": InputPathType,
     "fibers_output": str,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ANTSIntegrateVectorField": antsintegrate_vector_field_cargs,
+        "ants.ANTSIntegrateVectorField": antsintegrate_vector_field_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ANTSIntegrateVectorField": antsintegrate_vector_field_outputs,
+        "ants.ANTSIntegrateVectorField": antsintegrate_vector_field_outputs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def antsintegrate_vector_field_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ANTSIntegrateVectorField",
+        "@type": "ants.ANTSIntegrateVectorField",
         "vector_field_input": vector_field_input,
         "roi_mask_input": roi_mask_input,
         "fibers_output": fibers_output,
@@ -207,5 +207,8 @@ __all__ = [
     "AntsintegrateVectorFieldOutputs",
     "AntsintegrateVectorFieldParameters",
     "antsintegrate_vector_field",
+    "antsintegrate_vector_field_cargs",
+    "antsintegrate_vector_field_execute",
+    "antsintegrate_vector_field_outputs",
     "antsintegrate_vector_field_params",
 ]

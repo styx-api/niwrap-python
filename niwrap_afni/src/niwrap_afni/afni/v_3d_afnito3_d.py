@@ -14,7 +14,7 @@ V_3D_AFNITO3_D_METADATA = Metadata(
 
 
 V3dAfnito3DParameters = typing.TypedDict('V3dAfnito3DParameters', {
-    "__STYXTYPE__": typing.Literal["3dAFNIto3D"],
+    "@type": typing.Literal["afni.3dAFNIto3D"],
     "dataset": InputPathType,
     "prefix": typing.NotRequired[str | None],
     "binary": bool,
@@ -34,7 +34,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "3dAFNIto3D": v_3d_afnito3_d_cargs,
+        "afni.3dAFNIto3D": v_3d_afnito3_d_cargs,
     }.get(t)
 
 
@@ -50,7 +50,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "3dAFNIto3D": v_3d_afnito3_d_outputs,
+        "afni.3dAFNIto3D": v_3d_afnito3_d_outputs,
     }.get(t)
 
 
@@ -82,7 +82,7 @@ def v_3d_afnito3_d_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "3dAFNIto3D",
+        "@type": "afni.3dAFNIto3D",
         "dataset": dataset,
         "binary": binary,
         "text": text,
@@ -203,5 +203,8 @@ __all__ = [
     "V3dAfnito3DParameters",
     "V_3D_AFNITO3_D_METADATA",
     "v_3d_afnito3_d",
+    "v_3d_afnito3_d_cargs",
+    "v_3d_afnito3_d_execute",
+    "v_3d_afnito3_d_outputs",
     "v_3d_afnito3_d_params",
 ]

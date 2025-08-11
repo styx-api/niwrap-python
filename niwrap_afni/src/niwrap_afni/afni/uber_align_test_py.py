@@ -14,7 +14,7 @@ UBER_ALIGN_TEST_PY_METADATA = Metadata(
 
 
 UberAlignTestPyParameters = typing.TypedDict('UberAlignTestPyParameters', {
-    "__STYXTYPE__": typing.Literal["uber_align_test.py"],
+    "@type": typing.Literal["afni.uber_align_test.py"],
     "no_gui": bool,
     "print_script": bool,
     "save_script": typing.NotRequired[str | None],
@@ -40,7 +40,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "uber_align_test.py": uber_align_test_py_cargs,
+        "afni.uber_align_test.py": uber_align_test_py_cargs,
     }.get(t)
 
 
@@ -97,7 +97,7 @@ def uber_align_test_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "uber_align_test.py",
+        "@type": "afni.uber_align_test.py",
         "no_gui": no_gui,
         "print_script": print_script,
         "help": help_,
@@ -262,5 +262,8 @@ __all__ = [
     "UberAlignTestPyOutputs",
     "UberAlignTestPyParameters",
     "uber_align_test_py",
+    "uber_align_test_py_cargs",
+    "uber_align_test_py_execute",
+    "uber_align_test_py_outputs",
     "uber_align_test_py_params",
 ]

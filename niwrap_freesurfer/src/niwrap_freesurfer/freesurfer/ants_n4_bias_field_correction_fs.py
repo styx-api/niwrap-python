@@ -14,7 +14,7 @@ ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA = Metadata(
 
 
 AntsN4BiasFieldCorrectionFsParameters = typing.TypedDict('AntsN4BiasFieldCorrectionFsParameters', {
-    "__STYXTYPE__": typing.Literal["AntsN4BiasFieldCorrectionFs"],
+    "@type": typing.Literal["freesurfer.AntsN4BiasFieldCorrectionFs"],
     "input_file": InputPathType,
     "output_file": str,
     "mask_file": typing.NotRequired[InputPathType | None],
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "AntsN4BiasFieldCorrectionFs": ants_n4_bias_field_correction_fs_cargs,
+        "freesurfer.AntsN4BiasFieldCorrectionFs": ants_n4_bias_field_correction_fs_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "AntsN4BiasFieldCorrectionFs": ants_n4_bias_field_correction_fs_outputs,
+        "freesurfer.AntsN4BiasFieldCorrectionFs": ants_n4_bias_field_correction_fs_outputs,
     }.get(t)
 
 
@@ -96,7 +96,7 @@ def ants_n4_bias_field_correction_fs_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "AntsN4BiasFieldCorrectionFs",
+        "@type": "freesurfer.AntsN4BiasFieldCorrectionFs",
         "input_file": input_file,
         "output_file": output_file,
     }
@@ -265,5 +265,8 @@ __all__ = [
     "AntsN4BiasFieldCorrectionFsOutputs",
     "AntsN4BiasFieldCorrectionFsParameters",
     "ants_n4_bias_field_correction_fs",
+    "ants_n4_bias_field_correction_fs_cargs",
+    "ants_n4_bias_field_correction_fs_execute",
+    "ants_n4_bias_field_correction_fs_outputs",
     "ants_n4_bias_field_correction_fs_params",
 ]

@@ -14,7 +14,7 @@ V__FAT_TRACT_COLORIZE_METADATA = Metadata(
 
 
 VFatTractColorizeParameters = typing.TypedDict('VFatTractColorizeParameters', {
-    "__STYXTYPE__": typing.Literal["@fat_tract_colorize"],
+    "@type": typing.Literal["afni.@fat_tract_colorize"],
     "in_fa": InputPathType,
     "in_v1": InputPathType,
     "in_tracts": str,
@@ -37,7 +37,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@fat_tract_colorize": v__fat_tract_colorize_cargs,
+        "afni.@fat_tract_colorize": v__fat_tract_colorize_cargs,
     }.get(t)
 
 
@@ -53,7 +53,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@fat_tract_colorize": v__fat_tract_colorize_outputs,
+        "afni.@fat_tract_colorize": v__fat_tract_colorize_outputs,
     }.get(t)
 
 
@@ -104,7 +104,7 @@ def v__fat_tract_colorize_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@fat_tract_colorize",
+        "@type": "afni.@fat_tract_colorize",
         "in_fa": in_fa,
         "in_v1": in_v1,
         "in_tracts": in_tracts,
@@ -263,5 +263,8 @@ __all__ = [
     "VFatTractColorizeParameters",
     "V__FAT_TRACT_COLORIZE_METADATA",
     "v__fat_tract_colorize",
+    "v__fat_tract_colorize_cargs",
+    "v__fat_tract_colorize_execute",
+    "v__fat_tract_colorize_outputs",
     "v__fat_tract_colorize_params",
 ]

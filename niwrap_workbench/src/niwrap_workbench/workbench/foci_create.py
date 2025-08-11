@@ -14,7 +14,7 @@ FOCI_CREATE_METADATA = Metadata(
 
 
 FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
-    "__STYXTYPE__": typing.Literal["class"],
+    "@type": typing.Literal["workbench.foci-create.class"],
     "class_name": str,
     "foci_list_file": str,
     "surface": InputPathType,
@@ -22,7 +22,7 @@ FociCreateClassParameters = typing.TypedDict('FociCreateClassParameters', {
 
 
 FociCreateParameters = typing.TypedDict('FociCreateParameters', {
-    "__STYXTYPE__": typing.Literal["foci-create"],
+    "@type": typing.Literal["workbench.foci-create"],
     "output": str,
     "class": typing.NotRequired[list[FociCreateClassParameters] | None],
 })
@@ -40,8 +40,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "foci-create": foci_create_cargs,
-        "class": foci_create_class_cargs,
+        "workbench.foci-create": foci_create_cargs,
+        "workbench.foci-create.class": foci_create_class_cargs,
     }.get(t)
 
 
@@ -57,7 +57,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "foci-create": foci_create_outputs,
+        "workbench.foci-create": foci_create_outputs,
     }.get(t)
 
 
@@ -78,7 +78,7 @@ def foci_create_class_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "class",
+        "@type": "workbench.foci-create.class",
         "class_name": class_name,
         "foci_list_file": foci_list_file,
         "surface": surface,
@@ -131,7 +131,7 @@ def foci_create_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "foci-create",
+        "@type": "workbench.foci-create",
         "output": output,
     }
     if class_ is not None:
@@ -157,7 +157,7 @@ def foci_create_cargs(
     cargs.append("-foci-create")
     cargs.append(params.get("output"))
     if params.get("class") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("class")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("class")] for a in c])
     return cargs
 
 
@@ -277,6 +277,10 @@ __all__ = [
     "FociCreateOutputs",
     "FociCreateParameters",
     "foci_create",
+    "foci_create_cargs",
+    "foci_create_class_cargs",
     "foci_create_class_params",
+    "foci_create_execute",
+    "foci_create_outputs",
     "foci_create_params",
 ]

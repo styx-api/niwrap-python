@@ -14,7 +14,7 @@ V__SURF_TO_VOL_SPACKLE_METADATA = Metadata(
 
 
 VSurfToVolSpackleParameters = typing.TypedDict('VSurfToVolSpackleParameters', {
-    "__STYXTYPE__": typing.Literal["@surf_to_vol_spackle"],
+    "@type": typing.Literal["afni.@surf_to_vol_spackle"],
     "maskset": InputPathType,
     "spec": InputPathType,
     "surfA": str,
@@ -44,7 +44,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@surf_to_vol_spackle": v__surf_to_vol_spackle_cargs,
+        "afni.@surf_to_vol_spackle": v__surf_to_vol_spackle_cargs,
     }.get(t)
 
 
@@ -60,7 +60,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "@surf_to_vol_spackle": v__surf_to_vol_spackle_outputs,
+        "afni.@surf_to_vol_spackle": v__surf_to_vol_spackle_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def v__surf_to_vol_spackle_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@surf_to_vol_spackle",
+        "@type": "afni.@surf_to_vol_spackle",
         "maskset": maskset,
         "spec": spec,
         "surfA": surf_a,
@@ -318,5 +318,8 @@ __all__ = [
     "VSurfToVolSpackleParameters",
     "V__SURF_TO_VOL_SPACKLE_METADATA",
     "v__surf_to_vol_spackle",
+    "v__surf_to_vol_spackle_cargs",
+    "v__surf_to_vol_spackle_execute",
+    "v__surf_to_vol_spackle_outputs",
     "v__surf_to_vol_spackle_params",
 ]

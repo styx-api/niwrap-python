@@ -14,7 +14,7 @@ CONVERT_TO_JPG_METADATA = Metadata(
 
 
 ConvertToJpgParameters = typing.TypedDict('ConvertToJpgParameters', {
-    "__STYXTYPE__": typing.Literal["ConvertToJpg"],
+    "@type": typing.Literal["ants.ConvertToJpg"],
     "infile": InputPathType,
     "outfile": str,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "ConvertToJpg": convert_to_jpg_cargs,
+        "ants.ConvertToJpg": convert_to_jpg_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "ConvertToJpg": convert_to_jpg_outputs,
+        "ants.ConvertToJpg": convert_to_jpg_outputs,
     }.get(t)
 
 
@@ -76,7 +76,7 @@ def convert_to_jpg_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "ConvertToJpg",
+        "@type": "ants.ConvertToJpg",
         "infile": infile,
         "outfile": outfile,
     }
@@ -180,5 +180,8 @@ __all__ = [
     "ConvertToJpgOutputs",
     "ConvertToJpgParameters",
     "convert_to_jpg",
+    "convert_to_jpg_cargs",
+    "convert_to_jpg_execute",
+    "convert_to_jpg_outputs",
     "convert_to_jpg_params",
 ]

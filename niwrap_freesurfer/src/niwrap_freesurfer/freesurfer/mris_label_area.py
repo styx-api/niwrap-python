@@ -14,7 +14,7 @@ MRIS_LABEL_AREA_METADATA = Metadata(
 
 
 MrisLabelAreaParameters = typing.TypedDict('MrisLabelAreaParameters', {
-    "__STYXTYPE__": typing.Literal["mris_label_area"],
+    "@type": typing.Literal["freesurfer.mris_label_area"],
     "pct_flag": bool,
     "log_file": typing.NotRequired[str | None],
     "brain_vol": typing.NotRequired[str | None],
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_label_area": mris_label_area_cargs,
+        "freesurfer.mris_label_area": mris_label_area_cargs,
     }.get(t)
 
 
@@ -91,7 +91,7 @@ def mris_label_area_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_label_area",
+        "@type": "freesurfer.mris_label_area",
         "pct_flag": pct_flag,
         "subject_name": subject_name,
         "hemi": hemi,
@@ -237,5 +237,8 @@ __all__ = [
     "MrisLabelAreaOutputs",
     "MrisLabelAreaParameters",
     "mris_label_area",
+    "mris_label_area_cargs",
+    "mris_label_area_execute",
+    "mris_label_area_outputs",
     "mris_label_area_params",
 ]

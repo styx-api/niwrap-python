@@ -14,7 +14,7 @@ FSLHD_METADATA = Metadata(
 
 
 FslhdParameters = typing.TypedDict('FslhdParameters', {
-    "__STYXTYPE__": typing.Literal["fslhd"],
+    "@type": typing.Literal["fsl.fslhd"],
     "xml_flag": bool,
     "input_file": InputPathType,
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslhd": fslhd_cargs,
+        "fsl.fslhd": fslhd_cargs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def fslhd_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslhd",
+        "@type": "fsl.fslhd",
         "xml_flag": xml_flag,
         "input_file": input_file,
     }
@@ -177,5 +177,8 @@ __all__ = [
     "FslhdOutputs",
     "FslhdParameters",
     "fslhd",
+    "fslhd_cargs",
+    "fslhd_execute",
+    "fslhd_outputs",
     "fslhd_params",
 ]

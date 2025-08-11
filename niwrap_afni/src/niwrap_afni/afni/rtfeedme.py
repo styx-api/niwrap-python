@@ -14,7 +14,7 @@ RTFEEDME_METADATA = Metadata(
 
 
 RtfeedmeParameters = typing.TypedDict('RtfeedmeParameters', {
-    "__STYXTYPE__": typing.Literal["rtfeedme"],
+    "@type": typing.Literal["afni.rtfeedme"],
     "datasets": list[InputPathType],
     "host": typing.NotRequired[str | None],
     "interval_ms": typing.NotRequired[float | None],
@@ -41,7 +41,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "rtfeedme": rtfeedme_cargs,
+        "afni.rtfeedme": rtfeedme_cargs,
     }.get(t)
 
 
@@ -109,7 +109,7 @@ def rtfeedme_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "rtfeedme",
+        "@type": "afni.rtfeedme",
         "datasets": datasets,
         "send_3d": send_3d,
         "verbose": verbose,
@@ -304,5 +304,8 @@ __all__ = [
     "RtfeedmeOutputs",
     "RtfeedmeParameters",
     "rtfeedme",
+    "rtfeedme_cargs",
+    "rtfeedme_execute",
+    "rtfeedme_outputs",
     "rtfeedme_params",
 ]

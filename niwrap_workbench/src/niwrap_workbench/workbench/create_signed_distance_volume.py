@@ -14,7 +14,7 @@ CREATE_SIGNED_DISTANCE_VOLUME_METADATA = Metadata(
 
 
 CreateSignedDistanceVolumeParameters = typing.TypedDict('CreateSignedDistanceVolumeParameters', {
-    "__STYXTYPE__": typing.Literal["create-signed-distance-volume"],
+    "@type": typing.Literal["workbench.create-signed-distance-volume"],
     "surface": InputPathType,
     "refspace": str,
     "outvol": str,
@@ -39,7 +39,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "create-signed-distance-volume": create_signed_distance_volume_cargs,
+        "workbench.create-signed-distance-volume": create_signed_distance_volume_cargs,
     }.get(t)
 
 
@@ -55,7 +55,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "create-signed-distance-volume": create_signed_distance_volume_outputs,
+        "workbench.create-signed-distance-volume": create_signed_distance_volume_outputs,
     }.get(t)
 
 
@@ -107,7 +107,7 @@ def create_signed_distance_volume_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "create-signed-distance-volume",
+        "@type": "workbench.create-signed-distance-volume",
         "surface": surface,
         "refspace": refspace,
         "outvol": outvol,
@@ -323,5 +323,8 @@ __all__ = [
     "CreateSignedDistanceVolumeOutputs",
     "CreateSignedDistanceVolumeParameters",
     "create_signed_distance_volume",
+    "create_signed_distance_volume_cargs",
+    "create_signed_distance_volume_execute",
+    "create_signed_distance_volume_outputs",
     "create_signed_distance_volume_params",
 ]

@@ -14,7 +14,7 @@ FSL_MVLM_METADATA = Metadata(
 
 
 FslMvlmParameters = typing.TypedDict('FslMvlmParameters', {
-    "__STYXTYPE__": typing.Literal["fsl_mvlm"],
+    "@type": typing.Literal["fsl.fsl_mvlm"],
     "input_file": InputPathType,
     "basename_output_files": str,
     "algorithm": typing.NotRequired[str | None],
@@ -43,7 +43,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fsl_mvlm": fsl_mvlm_cargs,
+        "fsl.fsl_mvlm": fsl_mvlm_cargs,
     }.get(t)
 
 
@@ -59,7 +59,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fsl_mvlm": fsl_mvlm_outputs,
+        "fsl.fsl_mvlm": fsl_mvlm_outputs,
     }.get(t)
 
 
@@ -117,7 +117,7 @@ def fsl_mvlm_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fsl_mvlm",
+        "@type": "fsl.fsl_mvlm",
         "input_file": input_file,
         "basename_output_files": basename_output_files,
         "design_normalization": design_normalization,
@@ -329,5 +329,8 @@ __all__ = [
     "FslMvlmOutputs",
     "FslMvlmParameters",
     "fsl_mvlm",
+    "fsl_mvlm_cargs",
+    "fsl_mvlm_execute",
+    "fsl_mvlm_outputs",
     "fsl_mvlm_params",
 ]

@@ -14,7 +14,7 @@ BAYCEST_METADATA = Metadata(
 
 
 BaycestParameters = typing.TypedDict('BaycestParameters', {
-    "__STYXTYPE__": typing.Literal["baycest"],
+    "@type": typing.Literal["fsl.baycest"],
     "data_file": InputPathType,
     "mask_file": InputPathType,
     "output_dir": str,
@@ -38,7 +38,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "baycest": baycest_cargs,
+        "fsl.baycest": baycest_cargs,
     }.get(t)
 
 
@@ -54,7 +54,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "baycest": baycest_outputs,
+        "fsl.baycest": baycest_outputs,
     }.get(t)
 
 
@@ -94,7 +94,7 @@ def baycest_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "baycest",
+        "@type": "fsl.baycest",
         "data_file": data_file,
         "mask_file": mask_file,
         "output_dir": output_dir,
@@ -230,5 +230,8 @@ __all__ = [
     "BaycestOutputs",
     "BaycestParameters",
     "baycest",
+    "baycest_cargs",
+    "baycest_execute",
+    "baycest_outputs",
     "baycest_params",
 ]

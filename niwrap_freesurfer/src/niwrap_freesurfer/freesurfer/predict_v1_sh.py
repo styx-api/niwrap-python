@@ -14,7 +14,7 @@ PREDICT_V1_SH_METADATA = Metadata(
 
 
 PredictV1ShParameters = typing.TypedDict('PredictV1ShParameters', {
-    "__STYXTYPE__": typing.Literal["predict_v1.sh"],
+    "@type": typing.Literal["freesurfer.predict_v1.sh"],
     "template": typing.NotRequired[str | None],
     "inflated_surface_flag": bool,
     "hemisphere": typing.NotRequired[str | None],
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "predict_v1.sh": predict_v1_sh_cargs,
+        "freesurfer.predict_v1.sh": predict_v1_sh_cargs,
     }.get(t)
 
 
@@ -86,7 +86,7 @@ def predict_v1_sh_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "predict_v1.sh",
+        "@type": "freesurfer.predict_v1.sh",
         "inflated_surface_flag": inflated_surface_flag,
         "print_mode_flag": print_mode_flag,
         "subjects": subjects,
@@ -223,5 +223,8 @@ __all__ = [
     "PredictV1ShOutputs",
     "PredictV1ShParameters",
     "predict_v1_sh",
+    "predict_v1_sh_cargs",
+    "predict_v1_sh_execute",
+    "predict_v1_sh_outputs",
     "predict_v1_sh_params",
 ]

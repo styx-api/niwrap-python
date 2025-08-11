@@ -14,7 +14,7 @@ FAT_MVM_GRIDCONV_PY_METADATA = Metadata(
 
 
 FatMvmGridconvPyParameters = typing.TypedDict('FatMvmGridconvPyParameters', {
-    "__STYXTYPE__": typing.Literal["fat_mvm_gridconv.py"],
+    "@type": typing.Literal["afni.fat_mvm_gridconv.py"],
     "matrix_files": typing.NotRequired[str | None],
     "list_file": typing.NotRequired[InputPathType | None],
 })
@@ -32,7 +32,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fat_mvm_gridconv.py": fat_mvm_gridconv_py_cargs,
+        "afni.fat_mvm_gridconv.py": fat_mvm_gridconv_py_cargs,
     }.get(t)
 
 
@@ -48,7 +48,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "fat_mvm_gridconv.py": fat_mvm_gridconv_py_outputs,
+        "afni.fat_mvm_gridconv.py": fat_mvm_gridconv_py_outputs,
     }.get(t)
 
 
@@ -83,7 +83,7 @@ def fat_mvm_gridconv_py_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fat_mvm_gridconv.py",
+        "@type": "afni.fat_mvm_gridconv.py",
     }
     if matrix_files is not None:
         params["matrix_files"] = matrix_files
@@ -203,5 +203,8 @@ __all__ = [
     "FatMvmGridconvPyOutputs",
     "FatMvmGridconvPyParameters",
     "fat_mvm_gridconv_py",
+    "fat_mvm_gridconv_py_cargs",
+    "fat_mvm_gridconv_py_execute",
+    "fat_mvm_gridconv_py_outputs",
     "fat_mvm_gridconv_py_params",
 ]

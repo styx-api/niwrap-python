@@ -14,7 +14,7 @@ MRIS_MEF_SURFACES_METADATA = Metadata(
 
 
 MrisMefSurfacesParameters = typing.TypedDict('MrisMefSurfacesParameters', {
-    "__STYXTYPE__": typing.Literal["mris_mef_surfaces"],
+    "@type": typing.Literal["freesurfer.mris_mef_surfaces"],
     "subject_name": str,
     "hemisphere": str,
     "omit_self_intersection": bool,
@@ -36,7 +36,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_mef_surfaces": mris_mef_surfaces_cargs,
+        "freesurfer.mris_mef_surfaces": mris_mef_surfaces_cargs,
     }.get(t)
 
 
@@ -88,7 +88,7 @@ def mris_mef_surfaces_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_mef_surfaces",
+        "@type": "freesurfer.mris_mef_surfaces",
         "subject_name": subject_name,
         "hemisphere": hemisphere,
         "omit_self_intersection": omit_self_intersection,
@@ -228,5 +228,8 @@ __all__ = [
     "MrisMefSurfacesOutputs",
     "MrisMefSurfacesParameters",
     "mris_mef_surfaces",
+    "mris_mef_surfaces_cargs",
+    "mris_mef_surfaces_execute",
+    "mris_mef_surfaces_outputs",
     "mris_mef_surfaces_params",
 ]

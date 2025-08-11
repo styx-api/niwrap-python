@@ -14,35 +14,35 @@ VOLUME_PALETTE_METADATA = Metadata(
 
 
 VolumePalettePosPercentParameters = typing.TypedDict('VolumePalettePosPercentParameters', {
-    "__STYXTYPE__": typing.Literal["pos_percent"],
+    "@type": typing.Literal["workbench.volume-palette.pos_percent"],
     "pos_min__": float,
     "pos_max__": float,
 })
 
 
 VolumePaletteNegPercentParameters = typing.TypedDict('VolumePaletteNegPercentParameters', {
-    "__STYXTYPE__": typing.Literal["neg_percent"],
+    "@type": typing.Literal["workbench.volume-palette.neg_percent"],
     "neg_min__": float,
     "neg_max__": float,
 })
 
 
 VolumePalettePosUserParameters = typing.TypedDict('VolumePalettePosUserParameters', {
-    "__STYXTYPE__": typing.Literal["pos_user"],
+    "@type": typing.Literal["workbench.volume-palette.pos_user"],
     "pos_min_user": float,
     "pos_max_user": float,
 })
 
 
 VolumePaletteNegUserParameters = typing.TypedDict('VolumePaletteNegUserParameters', {
-    "__STYXTYPE__": typing.Literal["neg_user"],
+    "@type": typing.Literal["workbench.volume-palette.neg_user"],
     "neg_min_user": float,
     "neg_max_user": float,
 })
 
 
 VolumePaletteThresholdingParameters = typing.TypedDict('VolumePaletteThresholdingParameters', {
-    "__STYXTYPE__": typing.Literal["thresholding"],
+    "@type": typing.Literal["workbench.volume-palette.thresholding"],
     "type": str,
     "test": str,
     "min": float,
@@ -51,7 +51,7 @@ VolumePaletteThresholdingParameters = typing.TypedDict('VolumePaletteThresholdin
 
 
 VolumePaletteParameters = typing.TypedDict('VolumePaletteParameters', {
-    "__STYXTYPE__": typing.Literal["volume-palette"],
+    "@type": typing.Literal["workbench.volume-palette"],
     "volume": str,
     "mode": str,
     "opt_subvolume_subvolume": typing.NotRequired[str | None],
@@ -81,12 +81,12 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-palette": volume_palette_cargs,
-        "pos_percent": volume_palette_pos_percent_cargs,
-        "neg_percent": volume_palette_neg_percent_cargs,
-        "pos_user": volume_palette_pos_user_cargs,
-        "neg_user": volume_palette_neg_user_cargs,
-        "thresholding": volume_palette_thresholding_cargs,
+        "workbench.volume-palette": volume_palette_cargs,
+        "workbench.volume-palette.pos_percent": volume_palette_pos_percent_cargs,
+        "workbench.volume-palette.neg_percent": volume_palette_neg_percent_cargs,
+        "workbench.volume-palette.pos_user": volume_palette_pos_user_cargs,
+        "workbench.volume-palette.neg_user": volume_palette_neg_user_cargs,
+        "workbench.volume-palette.thresholding": volume_palette_thresholding_cargs,
     }.get(t)
 
 
@@ -119,7 +119,7 @@ def volume_palette_pos_percent_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pos_percent",
+        "@type": "workbench.volume-palette.pos_percent",
         "pos_min__": pos_min__,
         "pos_max__": pos_max__,
     }
@@ -160,7 +160,7 @@ def volume_palette_neg_percent_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neg_percent",
+        "@type": "workbench.volume-palette.neg_percent",
         "neg_min__": neg_min__,
         "neg_max__": neg_max__,
     }
@@ -201,7 +201,7 @@ def volume_palette_pos_user_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "pos_user",
+        "@type": "workbench.volume-palette.pos_user",
         "pos_min_user": pos_min_user,
         "pos_max_user": pos_max_user,
     }
@@ -242,7 +242,7 @@ def volume_palette_neg_user_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "neg_user",
+        "@type": "workbench.volume-palette.neg_user",
         "neg_min_user": neg_min_user,
         "neg_max_user": neg_max_user,
     }
@@ -287,7 +287,7 @@ def volume_palette_thresholding_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "thresholding",
+        "@type": "workbench.volume-palette.thresholding",
         "type": type_,
         "test": test,
         "min": min_,
@@ -369,7 +369,7 @@ def volume_palette_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-palette",
+        "@type": "workbench.volume-palette",
         "volume": volume,
         "mode": mode,
     }
@@ -424,13 +424,13 @@ def volume_palette_cargs(
             params.get("opt_subvolume_subvolume")
         ])
     if params.get("pos_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_percent")["__STYXTYPE__"])(params.get("pos_percent"), execution))
+        cargs.extend(dyn_cargs(params.get("pos_percent")["@type"])(params.get("pos_percent"), execution))
     if params.get("neg_percent") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_percent")["__STYXTYPE__"])(params.get("neg_percent"), execution))
+        cargs.extend(dyn_cargs(params.get("neg_percent")["@type"])(params.get("neg_percent"), execution))
     if params.get("pos_user") is not None:
-        cargs.extend(dyn_cargs(params.get("pos_user")["__STYXTYPE__"])(params.get("pos_user"), execution))
+        cargs.extend(dyn_cargs(params.get("pos_user")["@type"])(params.get("pos_user"), execution))
     if params.get("neg_user") is not None:
-        cargs.extend(dyn_cargs(params.get("neg_user")["__STYXTYPE__"])(params.get("neg_user"), execution))
+        cargs.extend(dyn_cargs(params.get("neg_user")["@type"])(params.get("neg_user"), execution))
     if params.get("opt_interpolate_interpolate") is not None:
         cargs.extend([
             "-interpolate",
@@ -457,7 +457,7 @@ def volume_palette_cargs(
             params.get("opt_palette_name_name")
         ])
     if params.get("thresholding") is not None:
-        cargs.extend(dyn_cargs(params.get("thresholding")["__STYXTYPE__"])(params.get("thresholding"), execution))
+        cargs.extend(dyn_cargs(params.get("thresholding")["@type"])(params.get("thresholding"), execution))
     if params.get("opt_inversion_type") is not None:
         cargs.extend([
             "-inversion",
@@ -740,10 +740,18 @@ __all__ = [
     "VolumePalettePosUserParameters",
     "VolumePaletteThresholdingParameters",
     "volume_palette",
+    "volume_palette_cargs",
+    "volume_palette_execute",
+    "volume_palette_neg_percent_cargs",
     "volume_palette_neg_percent_params",
+    "volume_palette_neg_user_cargs",
     "volume_palette_neg_user_params",
+    "volume_palette_outputs",
     "volume_palette_params",
+    "volume_palette_pos_percent_cargs",
     "volume_palette_pos_percent_params",
+    "volume_palette_pos_user_cargs",
     "volume_palette_pos_user_params",
+    "volume_palette_thresholding_cargs",
     "volume_palette_thresholding_params",
 ]

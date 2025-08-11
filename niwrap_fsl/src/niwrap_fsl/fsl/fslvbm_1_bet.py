@@ -14,7 +14,7 @@ FSLVBM_1_BET_METADATA = Metadata(
 
 
 Fslvbm1BetParameters = typing.TypedDict('Fslvbm1BetParameters', {
-    "__STYXTYPE__": typing.Literal["fslvbm_1_bet"],
+    "@type": typing.Literal["fsl.fslvbm_1_bet"],
     "default_bet": bool,
     "increased_robustness": bool,
     "bet_parameters": typing.NotRequired[str | None],
@@ -33,7 +33,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "fslvbm_1_bet": fslvbm_1_bet_cargs,
+        "fsl.fslvbm_1_bet": fslvbm_1_bet_cargs,
     }.get(t)
 
 
@@ -77,7 +77,7 @@ def fslvbm_1_bet_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "fslvbm_1_bet",
+        "@type": "fsl.fslvbm_1_bet",
         "default_bet": default_bet,
         "increased_robustness": increased_robustness,
     }
@@ -190,5 +190,8 @@ __all__ = [
     "Fslvbm1BetOutputs",
     "Fslvbm1BetParameters",
     "fslvbm_1_bet",
+    "fslvbm_1_bet_cargs",
+    "fslvbm_1_bet_execute",
+    "fslvbm_1_bet_outputs",
     "fslvbm_1_bet_params",
 ]

@@ -14,14 +14,14 @@ SET_MAP_NAMES_METADATA = Metadata(
 
 
 SetMapNamesMapParameters = typing.TypedDict('SetMapNamesMapParameters', {
-    "__STYXTYPE__": typing.Literal["map"],
+    "@type": typing.Literal["workbench.set-map-names.map"],
     "index": int,
     "new_name": str,
 })
 
 
 SetMapNamesParameters = typing.TypedDict('SetMapNamesParameters', {
-    "__STYXTYPE__": typing.Literal["set-map-names"],
+    "@type": typing.Literal["workbench.set-map-names"],
     "data_file": str,
     "opt_name_file_file": typing.NotRequired[str | None],
     "opt_from_data_file_file": typing.NotRequired[str | None],
@@ -41,8 +41,8 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "set-map-names": set_map_names_cargs,
-        "map": set_map_names_map_cargs,
+        "workbench.set-map-names": set_map_names_cargs,
+        "workbench.set-map-names.map": set_map_names_map_cargs,
     }.get(t)
 
 
@@ -75,7 +75,7 @@ def set_map_names_map_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "map",
+        "@type": "workbench.set-map-names.map",
         "index": index,
         "new_name": new_name,
     }
@@ -130,7 +130,7 @@ def set_map_names_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "set-map-names",
+        "@type": "workbench.set-map-names",
         "data_file": data_file,
     }
     if opt_name_file_file is not None:
@@ -170,7 +170,7 @@ def set_map_names_cargs(
             params.get("opt_from_data_file_file")
         ])
     if params.get("map") is not None:
-        cargs.extend([a for c in [dyn_cargs(s["__STYXTYPE__"])(s, execution) for s in params.get("map")] for a in c])
+        cargs.extend([a for c in [dyn_cargs(s["@type"])(s, execution) for s in params.get("map")] for a in c])
     return cargs
 
 
@@ -269,6 +269,10 @@ __all__ = [
     "SetMapNamesOutputs",
     "SetMapNamesParameters",
     "set_map_names",
+    "set_map_names_cargs",
+    "set_map_names_execute",
+    "set_map_names_map_cargs",
     "set_map_names_map_params",
+    "set_map_names_outputs",
     "set_map_names_params",
 ]

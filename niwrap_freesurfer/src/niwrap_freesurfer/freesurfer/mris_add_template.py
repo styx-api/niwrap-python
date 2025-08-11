@@ -14,7 +14,7 @@ MRIS_ADD_TEMPLATE_METADATA = Metadata(
 
 
 MrisAddTemplateParameters = typing.TypedDict('MrisAddTemplateParameters', {
-    "__STYXTYPE__": typing.Literal["mris_add_template"],
+    "@type": typing.Literal["freesurfer.mris_add_template"],
     "placeholder_input": typing.NotRequired[str | None],
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "mris_add_template": mris_add_template_cargs,
+        "freesurfer.mris_add_template": mris_add_template_cargs,
     }.get(t)
 
 
@@ -47,7 +47,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "mris_add_template": mris_add_template_outputs,
+        "freesurfer.mris_add_template": mris_add_template_outputs,
     }.get(t)
 
 
@@ -73,7 +73,7 @@ def mris_add_template_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "mris_add_template",
+        "@type": "freesurfer.mris_add_template",
     }
     if placeholder_input is not None:
         params["placeholder_input"] = placeholder_input
@@ -174,5 +174,8 @@ __all__ = [
     "MrisAddTemplateOutputs",
     "MrisAddTemplateParameters",
     "mris_add_template",
+    "mris_add_template_cargs",
+    "mris_add_template_execute",
+    "mris_add_template_outputs",
     "mris_add_template_params",
 ]

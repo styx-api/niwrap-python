@@ -14,7 +14,7 @@ DTIFIT_METADATA = Metadata(
 
 
 DtifitParameters = typing.TypedDict('DtifitParameters', {
-    "__STYXTYPE__": typing.Literal["dtifit"],
+    "@type": typing.Literal["fsl.dtifit"],
     "data_file": InputPathType,
     "output_basename": str,
     "mask_file": InputPathType,
@@ -50,7 +50,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "dtifit": dtifit_cargs,
+        "fsl.dtifit": dtifit_cargs,
     }.get(t)
 
 
@@ -66,7 +66,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "dtifit": dtifit_outputs,
+        "fsl.dtifit": dtifit_outputs,
     }.get(t)
 
 
@@ -141,7 +141,7 @@ def dtifit_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "dtifit",
+        "@type": "fsl.dtifit",
         "data_file": data_file,
         "output_basename": output_basename,
         "mask_file": mask_file,
@@ -403,5 +403,8 @@ __all__ = [
     "DtifitOutputs",
     "DtifitParameters",
     "dtifit",
+    "dtifit_cargs",
+    "dtifit_execute",
+    "dtifit_outputs",
     "dtifit_params",
 ]

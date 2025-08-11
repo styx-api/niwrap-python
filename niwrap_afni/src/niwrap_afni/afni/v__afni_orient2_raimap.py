@@ -14,7 +14,7 @@ V__AFNI_ORIENT2_RAIMAP_METADATA = Metadata(
 
 
 VAfniOrient2RaimapParameters = typing.TypedDict('VAfniOrient2RaimapParameters', {
-    "__STYXTYPE__": typing.Literal["@AfniOrient2RAImap"],
+    "@type": typing.Literal["afni.@AfniOrient2RAImap"],
     "orientation_code": str,
 })
 
@@ -31,7 +31,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "@AfniOrient2RAImap": v__afni_orient2_raimap_cargs,
+        "afni.@AfniOrient2RAImap": v__afni_orient2_raimap_cargs,
     }.get(t)
 
 
@@ -70,7 +70,7 @@ def v__afni_orient2_raimap_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "@AfniOrient2RAImap",
+        "@type": "afni.@AfniOrient2RAImap",
         "orientation_code": orientation_code,
     }
     return params
@@ -168,5 +168,8 @@ __all__ = [
     "VAfniOrient2RaimapParameters",
     "V__AFNI_ORIENT2_RAIMAP_METADATA",
     "v__afni_orient2_raimap",
+    "v__afni_orient2_raimap_cargs",
+    "v__afni_orient2_raimap_execute",
+    "v__afni_orient2_raimap_outputs",
     "v__afni_orient2_raimap_params",
 ]

@@ -14,7 +14,7 @@ VOLUME_ERODE_METADATA = Metadata(
 
 
 VolumeErodeParameters = typing.TypedDict('VolumeErodeParameters', {
-    "__STYXTYPE__": typing.Literal["volume-erode"],
+    "@type": typing.Literal["workbench.volume-erode"],
     "volume": InputPathType,
     "distance": float,
     "volume_out": str,
@@ -35,7 +35,7 @@ def dyn_cargs(
         Build cargs function.
     """
     return {
-        "volume-erode": volume_erode_cargs,
+        "workbench.volume-erode": volume_erode_cargs,
     }.get(t)
 
 
@@ -51,7 +51,7 @@ def dyn_outputs(
         Build outputs function.
     """
     return {
-        "volume-erode": volume_erode_outputs,
+        "workbench.volume-erode": volume_erode_outputs,
     }.get(t)
 
 
@@ -87,7 +87,7 @@ def volume_erode_params(
         Parameter dictionary
     """
     params = {
-        "__STYXTYPE__": "volume-erode",
+        "@type": "workbench.volume-erode",
         "volume": volume,
         "distance": distance,
         "volume_out": volume_out,
@@ -227,5 +227,8 @@ __all__ = [
     "VolumeErodeOutputs",
     "VolumeErodeParameters",
     "volume_erode",
+    "volume_erode_cargs",
+    "volume_erode_execute",
+    "volume_erode_outputs",
     "volume_erode_params",
 ]
