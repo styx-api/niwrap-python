@@ -1,0 +1,13 @@
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_c3d
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_afni
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_ants
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_mrtrix
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_workbench
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_freesurfer
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_dcm2niix
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_niftyreg
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_fastsurfer
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_mrtrix3tissue
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_greedy
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap_fsl
+git+https://github.com/styx-api/niwrap-python.git#subdirectory=niwrap
