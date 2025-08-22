@@ -242,7 +242,7 @@ def surf_dset_info_outputs(
 
 def surf_dset_info_execute(
     params: SurfDsetInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfDsetInfoOutputs:
     """
     Provides information about surface datasets (DSET).
@@ -253,10 +253,12 @@ def surf_dset_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfDsetInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_DSET_INFO_METADATA)
     params = execution.params(params)
     cargs = surf_dset_info_cargs(params, execution)
     ret = surf_dset_info_outputs(params, execution)
@@ -320,8 +322,6 @@ def surf_dset_info(
     Returns:
         NamedTuple of outputs (described in `SurfDsetInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_DSET_INFO_METADATA)
     params = surf_dset_info_params(
         input_dsets=input_dsets,
         debug_level=debug_level,
@@ -343,7 +343,7 @@ def surf_dset_info(
         help_aspx=help_aspx,
         all_opts=all_opts,
     )
-    return surf_dset_info_execute(params, execution)
+    return surf_dset_info_execute(params, runner)
 
 
 __all__ = [
@@ -351,8 +351,6 @@ __all__ = [
     "SurfDsetInfoOutputs",
     "SurfDsetInfoParameters",
     "surf_dset_info",
-    "surf_dset_info_cargs",
     "surf_dset_info_execute",
-    "surf_dset_info_outputs",
     "surf_dset_info_params",
 ]

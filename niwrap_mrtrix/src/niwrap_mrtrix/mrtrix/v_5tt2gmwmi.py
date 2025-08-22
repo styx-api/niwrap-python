@@ -244,7 +244,7 @@ def v_5tt2gmwmi_outputs(
 
 def v_5tt2gmwmi_execute(
     params: V5tt2gmwmiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V5tt2gmwmiOutputs:
     """
     Generate a mask image appropriate for seeding streamlines on the grey
@@ -265,10 +265,12 @@ def v_5tt2gmwmi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V5tt2gmwmiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_5TT2GMWMI_METADATA)
     params = execution.params(params)
     cargs = v_5tt2gmwmi_cargs(params, execution)
     ret = v_5tt2gmwmi_outputs(params, execution)
@@ -330,8 +332,6 @@ def v_5tt2gmwmi(
     Returns:
         NamedTuple of outputs (described in `V5tt2gmwmiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_5TT2GMWMI_METADATA)
     params = v_5tt2gmwmi_params(
         mask_in=mask_in,
         info=info,
@@ -345,7 +345,7 @@ def v_5tt2gmwmi(
         v_5tt_in=v_5tt_in,
         mask_out=mask_out,
     )
-    return v_5tt2gmwmi_execute(params, execution)
+    return v_5tt2gmwmi_execute(params, runner)
 
 
 __all__ = [
@@ -354,10 +354,7 @@ __all__ = [
     "V5tt2gmwmiParameters",
     "V_5TT2GMWMI_METADATA",
     "v_5tt2gmwmi",
-    "v_5tt2gmwmi_cargs",
-    "v_5tt2gmwmi_config_cargs",
     "v_5tt2gmwmi_config_params",
     "v_5tt2gmwmi_execute",
-    "v_5tt2gmwmi_outputs",
     "v_5tt2gmwmi_params",
 ]

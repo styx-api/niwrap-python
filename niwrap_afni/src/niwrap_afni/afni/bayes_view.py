@@ -132,7 +132,7 @@ def bayes_view_outputs(
 
 def bayes_view_execute(
     params: BayesViewParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BayesViewOutputs:
     """
     Launch a shiny app to visualize RBA output files. The files must have the .RData
@@ -144,10 +144,12 @@ def bayes_view_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BayesViewOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BAYES_VIEW_METADATA)
     params = execution.params(params)
     cargs = bayes_view_cargs(params, execution)
     ret = bayes_view_outputs(params, execution)
@@ -177,14 +179,12 @@ def bayes_view(
     Returns:
         NamedTuple of outputs (described in `BayesViewOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BAYES_VIEW_METADATA)
     params = bayes_view_params(
         input_folder=input_folder,
         help_=help_,
         shiny_folder=shiny_folder,
     )
-    return bayes_view_execute(params, execution)
+    return bayes_view_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "BayesViewOutputs",
     "BayesViewParameters",
     "bayes_view",
-    "bayes_view_cargs",
     "bayes_view_execute",
-    "bayes_view_outputs",
     "bayes_view_params",
 ]

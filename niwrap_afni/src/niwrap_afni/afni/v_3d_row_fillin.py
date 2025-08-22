@@ -161,7 +161,7 @@ def v_3d_row_fillin_outputs(
 
 def v_3d_row_fillin_execute(
     params: V3dRowFillinParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRowFillinOutputs:
     """
     Fills in blank regions in 1D rows extracted from a 3D dataset.
@@ -172,10 +172,12 @@ def v_3d_row_fillin_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRowFillinOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ROW_FILLIN_METADATA)
     params = execution.params(params)
     cargs = v_3d_row_fillin_cargs(params, execution)
     ret = v_3d_row_fillin_outputs(params, execution)
@@ -210,8 +212,6 @@ def v_3d_row_fillin(
     Returns:
         NamedTuple of outputs (described in `V3dRowFillinOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ROW_FILLIN_METADATA)
     params = v_3d_row_fillin_params(
         maxgap=maxgap,
         dir_=dir_,
@@ -219,7 +219,7 @@ def v_3d_row_fillin(
         prefix=prefix,
         input_dataset=input_dataset,
     )
-    return v_3d_row_fillin_execute(params, execution)
+    return v_3d_row_fillin_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "V3dRowFillinParameters",
     "V_3D_ROW_FILLIN_METADATA",
     "v_3d_row_fillin",
-    "v_3d_row_fillin_cargs",
     "v_3d_row_fillin_execute",
-    "v_3d_row_fillin_outputs",
     "v_3d_row_fillin_params",
 ]

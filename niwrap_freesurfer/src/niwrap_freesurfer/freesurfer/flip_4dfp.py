@@ -157,7 +157,7 @@ def flip_4dfp_outputs(
 
 def flip_4dfp_execute(
     params: Flip4dfpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Flip4dfpOutputs:
     """
     A tool to flip 4dfp images along specified axes.
@@ -168,10 +168,12 @@ def flip_4dfp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Flip4dfpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FLIP_4DFP_METADATA)
     params = execution.params(params)
     cargs = flip_4dfp_cargs(params, execution)
     ret = flip_4dfp_outputs(params, execution)
@@ -208,8 +210,6 @@ def flip_4dfp(
     Returns:
         NamedTuple of outputs (described in `Flip4dfpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FLIP_4DFP_METADATA)
     params = flip_4dfp_params(
         input_image=input_image,
         output_image=output_image,
@@ -218,7 +218,7 @@ def flip_4dfp(
         flip_z=flip_z,
         endianness=endianness,
     )
-    return flip_4dfp_execute(params, execution)
+    return flip_4dfp_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "Flip4dfpOutputs",
     "Flip4dfpParameters",
     "flip_4dfp",
-    "flip_4dfp_cargs",
     "flip_4dfp_execute",
-    "flip_4dfp_outputs",
     "flip_4dfp_params",
 ]

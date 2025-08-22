@@ -145,7 +145,7 @@ def make_dyadic_vectors_outputs(
 
 def make_dyadic_vectors_execute(
     params: MakeDyadicVectorsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeDyadicVectorsOutputs:
     """
     Generate dyadic vectors from theta and phi volumes.
@@ -156,10 +156,12 @@ def make_dyadic_vectors_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeDyadicVectorsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_DYADIC_VECTORS_METADATA)
     params = execution.params(params)
     cargs = make_dyadic_vectors_cargs(params, execution)
     ret = make_dyadic_vectors_outputs(params, execution)
@@ -193,8 +195,6 @@ def make_dyadic_vectors(
     Returns:
         NamedTuple of outputs (described in `MakeDyadicVectorsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_DYADIC_VECTORS_METADATA)
     params = make_dyadic_vectors_params(
         theta_vol=theta_vol,
         phi_vol=phi_vol,
@@ -202,7 +202,7 @@ def make_dyadic_vectors(
         output=output,
         perc=perc,
     )
-    return make_dyadic_vectors_execute(params, execution)
+    return make_dyadic_vectors_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "MakeDyadicVectorsOutputs",
     "MakeDyadicVectorsParameters",
     "make_dyadic_vectors",
-    "make_dyadic_vectors_cargs",
     "make_dyadic_vectors_execute",
-    "make_dyadic_vectors_outputs",
     "make_dyadic_vectors_params",
 ]

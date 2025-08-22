@@ -293,7 +293,7 @@ def dtifit_outputs(
 
 def dtifit_execute(
     params: DtifitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DtifitOutputs:
     """
     DTIFIT - Fit a diffusion tensor model at each voxel.
@@ -304,10 +304,12 @@ def dtifit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DtifitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DTIFIT_METADATA)
     params = execution.params(params)
     cargs = dtifit_cargs(params, execution)
     ret = dtifit_outputs(params, execution)
@@ -371,8 +373,6 @@ def dtifit(
     Returns:
         NamedTuple of outputs (described in `DtifitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DTIFIT_METADATA)
     params = dtifit_params(
         data_file=data_file,
         output_basename=output_basename,
@@ -395,7 +395,7 @@ def dtifit(
         gradnonlin_file=gradnonlin_file,
         confound_regressors=confound_regressors,
     )
-    return dtifit_execute(params, execution)
+    return dtifit_execute(params, runner)
 
 
 __all__ = [
@@ -403,8 +403,6 @@ __all__ = [
     "DtifitOutputs",
     "DtifitParameters",
     "dtifit",
-    "dtifit_cargs",
     "dtifit_execute",
-    "dtifit_outputs",
     "dtifit_params",
 ]

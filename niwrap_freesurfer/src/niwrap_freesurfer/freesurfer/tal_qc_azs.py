@@ -116,7 +116,7 @@ def tal_qc_azs_outputs(
 
 def tal_qc_azs_execute(
     params: TalQcAzsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TalQcAzsOutputs:
     """
     A tool that processes a logfile.
@@ -127,10 +127,12 @@ def tal_qc_azs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TalQcAzsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TAL_QC_AZS_METADATA)
     params = execution.params(params)
     cargs = tal_qc_azs_cargs(params, execution)
     ret = tal_qc_azs_outputs(params, execution)
@@ -155,12 +157,10 @@ def tal_qc_azs(
     Returns:
         NamedTuple of outputs (described in `TalQcAzsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TAL_QC_AZS_METADATA)
     params = tal_qc_azs_params(
         logfile=logfile,
     )
-    return tal_qc_azs_execute(params, execution)
+    return tal_qc_azs_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "TalQcAzsOutputs",
     "TalQcAzsParameters",
     "tal_qc_azs",
-    "tal_qc_azs_cargs",
     "tal_qc_azs_execute",
-    "tal_qc_azs_outputs",
     "tal_qc_azs_params",
 ]

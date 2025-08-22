@@ -145,7 +145,7 @@ def zero_lt_4dfp_outputs(
 
 def zero_lt_4dfp_execute(
     params: ZeroLt4dfpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ZeroLt4dfpOutputs:
     """
     A tool to process 4dfp image files by zeroing values less than a given float
@@ -157,10 +157,12 @@ def zero_lt_4dfp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ZeroLt4dfpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ZERO_LT_4DFP_METADATA)
     params = execution.params(params)
     cargs = zero_lt_4dfp_cargs(params, execution)
     ret = zero_lt_4dfp_outputs(params, execution)
@@ -195,15 +197,13 @@ def zero_lt_4dfp(
     Returns:
         NamedTuple of outputs (described in `ZeroLt4dfpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ZERO_LT_4DFP_METADATA)
     params = zero_lt_4dfp_params(
         flt_value=flt_value,
         file_4dfp=file_4dfp,
         outroot=outroot,
         endianness=endianness,
     )
-    return zero_lt_4dfp_execute(params, execution)
+    return zero_lt_4dfp_execute(params, runner)
 
 
 __all__ = [
@@ -211,8 +211,6 @@ __all__ = [
     "ZeroLt4dfpOutputs",
     "ZeroLt4dfpParameters",
     "zero_lt_4dfp",
-    "zero_lt_4dfp_cargs",
     "zero_lt_4dfp_execute",
-    "zero_lt_4dfp_outputs",
     "zero_lt_4dfp_params",
 ]

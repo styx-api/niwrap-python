@@ -188,7 +188,7 @@ def v_3d_amp_to_rsfc_outputs(
 
 def v_3d_amp_to_rsfc_execute(
     params: V3dAmpToRsfcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAmpToRsfcOutputs:
     """
     Convert spectral amplitudes into standard RSFC parameters.
@@ -199,10 +199,12 @@ def v_3d_amp_to_rsfc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAmpToRsfcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AMP_TO_RSFC_METADATA)
     params = execution.params(params)
     cargs = v_3d_amp_to_rsfc_cargs(params, execution)
     ret = v_3d_amp_to_rsfc_outputs(params, execution)
@@ -241,8 +243,6 @@ def v_3d_amp_to_rsfc(
     Returns:
         NamedTuple of outputs (described in `V3dAmpToRsfcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AMP_TO_RSFC_METADATA)
     params = v_3d_amp_to_rsfc_params(
         in_amp=in_amp,
         in_pow=in_pow,
@@ -251,7 +251,7 @@ def v_3d_amp_to_rsfc(
         mask=mask,
         nifti=nifti,
     )
-    return v_3d_amp_to_rsfc_execute(params, execution)
+    return v_3d_amp_to_rsfc_execute(params, runner)
 
 
 __all__ = [
@@ -259,8 +259,6 @@ __all__ = [
     "V3dAmpToRsfcParameters",
     "V_3D_AMP_TO_RSFC_METADATA",
     "v_3d_amp_to_rsfc",
-    "v_3d_amp_to_rsfc_cargs",
     "v_3d_amp_to_rsfc_execute",
-    "v_3d_amp_to_rsfc_outputs",
     "v_3d_amp_to_rsfc_params",
 ]

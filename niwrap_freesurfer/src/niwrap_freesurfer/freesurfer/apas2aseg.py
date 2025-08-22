@@ -146,7 +146,7 @@ def apas2aseg_outputs(
 
 def apas2aseg_execute(
     params: Apas2asegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Apas2asegOutputs:
     """
     Converts aparc+aseg.mgz into aseg.mgz-like format by replacing specific cortical
@@ -158,10 +158,12 @@ def apas2aseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Apas2asegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APAS2ASEG_METADATA)
     params = execution.params(params)
     cargs = apas2aseg_cargs(params, execution)
     ret = apas2aseg_outputs(params, execution)
@@ -192,14 +194,12 @@ def apas2aseg(
     Returns:
         NamedTuple of outputs (described in `Apas2asegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APAS2ASEG_METADATA)
     params = apas2aseg_params(
         subject=subject,
         input_aparc_aseg=input_aparc_aseg,
         output_seg=output_seg,
     )
-    return apas2aseg_execute(params, execution)
+    return apas2aseg_execute(params, runner)
 
 
 __all__ = [
@@ -207,8 +207,6 @@ __all__ = [
     "Apas2asegOutputs",
     "Apas2asegParameters",
     "apas2aseg",
-    "apas2aseg_cargs",
     "apas2aseg_execute",
-    "apas2aseg_outputs",
     "apas2aseg_params",
 ]

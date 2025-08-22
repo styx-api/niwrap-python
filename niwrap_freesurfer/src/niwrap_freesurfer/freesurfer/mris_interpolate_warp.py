@@ -126,7 +126,7 @@ def mris_interpolate_warp_outputs(
 
 def mris_interpolate_warp_execute(
     params: MrisInterpolateWarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisInterpolateWarpOutputs:
     """
     Interpolate warp on cortical surfaces.
@@ -137,10 +137,12 @@ def mris_interpolate_warp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisInterpolateWarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_INTERPOLATE_WARP_METADATA)
     params = execution.params(params)
     cargs = mris_interpolate_warp_cargs(params, execution)
     ret = mris_interpolate_warp_outputs(params, execution)
@@ -169,14 +171,12 @@ def mris_interpolate_warp(
     Returns:
         NamedTuple of outputs (described in `MrisInterpolateWarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_INTERPOLATE_WARP_METADATA)
     params = mris_interpolate_warp_params(
         start_surface=start_surface,
         end_surface=end_surface,
         warp_field=warp_field,
     )
-    return mris_interpolate_warp_execute(params, execution)
+    return mris_interpolate_warp_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "MrisInterpolateWarpOutputs",
     "MrisInterpolateWarpParameters",
     "mris_interpolate_warp",
-    "mris_interpolate_warp_cargs",
     "mris_interpolate_warp_execute",
-    "mris_interpolate_warp_outputs",
     "mris_interpolate_warp_params",
 ]

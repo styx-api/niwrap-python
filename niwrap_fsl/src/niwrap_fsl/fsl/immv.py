@@ -122,7 +122,7 @@ def immv_outputs(
 
 def immv_execute(
     params: ImmvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImmvOutputs:
     """
     Moves images from one file or directory to another.
@@ -133,10 +133,12 @@ def immv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImmvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMMV_METADATA)
     params = execution.params(params)
     cargs = immv_cargs(params, execution)
     ret = immv_outputs(params, execution)
@@ -164,13 +166,11 @@ def immv(
     Returns:
         NamedTuple of outputs (described in `ImmvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMMV_METADATA)
     params = immv_params(
         source_files=source_files,
         destination=destination,
     )
-    return immv_execute(params, execution)
+    return immv_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "ImmvOutputs",
     "ImmvParameters",
     "immv",
-    "immv_cargs",
     "immv_execute",
-    "immv_outputs",
     "immv_params",
 ]

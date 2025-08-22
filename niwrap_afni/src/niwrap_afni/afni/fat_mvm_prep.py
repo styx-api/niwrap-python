@@ -177,7 +177,7 @@ def fat_mvm_prep_outputs(
 
 def fat_mvm_prep_execute(
     params: FatMvmPrepParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatMvmPrepOutputs:
     """
     Combine FATCAT output with CSV data for statistical modeling.
@@ -188,10 +188,12 @@ def fat_mvm_prep_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatMvmPrepOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_MVM_PREP_METADATA)
     params = execution.params(params)
     cargs = fat_mvm_prep_cargs(params, execution)
     ret = fat_mvm_prep_outputs(params, execution)
@@ -233,8 +235,6 @@ def fat_mvm_prep(
     Returns:
         NamedTuple of outputs (described in `FatMvmPrepOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MVM_PREP_METADATA)
     params = fat_mvm_prep_params(
         prefix=prefix,
         csv_file=csv_file,
@@ -244,7 +244,7 @@ def fat_mvm_prep(
         na_warn_off=na_warn_off,
         extern_labels_no=extern_labels_no,
     )
-    return fat_mvm_prep_execute(params, execution)
+    return fat_mvm_prep_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "FatMvmPrepOutputs",
     "FatMvmPrepParameters",
     "fat_mvm_prep",
-    "fat_mvm_prep_cargs",
     "fat_mvm_prep_execute",
-    "fat_mvm_prep_outputs",
     "fat_mvm_prep_params",
 ]

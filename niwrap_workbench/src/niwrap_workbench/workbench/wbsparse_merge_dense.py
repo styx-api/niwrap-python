@@ -173,7 +173,7 @@ def wbsparse_merge_dense_outputs(
 
 def wbsparse_merge_dense_execute(
     params: WbsparseMergeDenseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WbsparseMergeDenseOutputs:
     """
     Merge wbsparse files along dense dimension.
@@ -188,10 +188,12 @@ def wbsparse_merge_dense_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WbsparseMergeDenseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WBSPARSE_MERGE_DENSE_METADATA)
     params = execution.params(params)
     cargs = wbsparse_merge_dense_cargs(params, execution)
     ret = wbsparse_merge_dense_outputs(params, execution)
@@ -224,14 +226,12 @@ def wbsparse_merge_dense(
     Returns:
         NamedTuple of outputs (described in `WbsparseMergeDenseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WBSPARSE_MERGE_DENSE_METADATA)
     params = wbsparse_merge_dense_params(
         direction=direction,
         wbsparse_out=wbsparse_out,
         wbsparse=wbsparse,
     )
-    return wbsparse_merge_dense_execute(params, execution)
+    return wbsparse_merge_dense_execute(params, runner)
 
 
 __all__ = [
@@ -240,10 +240,7 @@ __all__ = [
     "WbsparseMergeDenseParameters",
     "WbsparseMergeDenseWbsparseParameters",
     "wbsparse_merge_dense",
-    "wbsparse_merge_dense_cargs",
     "wbsparse_merge_dense_execute",
-    "wbsparse_merge_dense_outputs",
     "wbsparse_merge_dense_params",
-    "wbsparse_merge_dense_wbsparse_cargs",
     "wbsparse_merge_dense_wbsparse_params",
 ]

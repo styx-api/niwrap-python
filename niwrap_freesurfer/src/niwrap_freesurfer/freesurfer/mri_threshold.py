@@ -157,7 +157,7 @@ def mri_threshold_outputs(
 
 def mri_threshold_execute(
     params: MriThresholdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriThresholdOutputs:
     """
     This program will lower threshold an input volume.
@@ -168,10 +168,12 @@ def mri_threshold_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriThresholdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_THRESHOLD_METADATA)
     params = execution.params(params)
     cargs = mri_threshold_cargs(params, execution)
     ret = mri_threshold_outputs(params, execution)
@@ -207,8 +209,6 @@ def mri_threshold(
     Returns:
         NamedTuple of outputs (described in `MriThresholdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_THRESHOLD_METADATA)
     params = mri_threshold_params(
         input_vol=input_vol,
         threshold=threshold,
@@ -217,7 +217,7 @@ def mri_threshold(
         upper_threshold=upper_threshold,
         frame_number=frame_number,
     )
-    return mri_threshold_execute(params, execution)
+    return mri_threshold_execute(params, runner)
 
 
 __all__ = [
@@ -225,8 +225,6 @@ __all__ = [
     "MriThresholdOutputs",
     "MriThresholdParameters",
     "mri_threshold",
-    "mri_threshold_cargs",
     "mri_threshold_execute",
-    "mri_threshold_outputs",
     "mri_threshold_params",
 ]

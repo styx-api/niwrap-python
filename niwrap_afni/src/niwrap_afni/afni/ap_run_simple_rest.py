@@ -210,7 +210,7 @@ def ap_run_simple_rest_outputs(
 
 def ap_run_simple_rest_execute(
     params: ApRunSimpleRestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ApRunSimpleRestOutputs:
     """
     Run a quick afni_proc.py analysis for QC.
@@ -221,10 +221,12 @@ def ap_run_simple_rest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ApRunSimpleRestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AP_RUN_SIMPLE_REST_METADATA)
     params = execution.params(params)
     cargs = ap_run_simple_rest_cargs(params, execution)
     ret = ap_run_simple_rest_outputs(params, execution)
@@ -267,8 +269,6 @@ def ap_run_simple_rest(
     Returns:
         NamedTuple of outputs (described in `ApRunSimpleRestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AP_RUN_SIMPLE_REST_METADATA)
     params = ap_run_simple_rest_params(
         anat=anat,
         epi=epi,
@@ -281,7 +281,7 @@ def ap_run_simple_rest(
         verb=verb,
         echo=echo,
     )
-    return ap_run_simple_rest_execute(params, execution)
+    return ap_run_simple_rest_execute(params, runner)
 
 
 __all__ = [
@@ -289,8 +289,6 @@ __all__ = [
     "ApRunSimpleRestOutputs",
     "ApRunSimpleRestParameters",
     "ap_run_simple_rest",
-    "ap_run_simple_rest_cargs",
     "ap_run_simple_rest_execute",
-    "ap_run_simple_rest_outputs",
     "ap_run_simple_rest_params",
 ]

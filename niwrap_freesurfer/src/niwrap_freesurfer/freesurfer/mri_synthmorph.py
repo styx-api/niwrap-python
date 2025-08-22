@@ -239,7 +239,7 @@ def mri_synthmorph_outputs(
 
 def mri_synthmorph_execute(
     params: MriSynthmorphParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSynthmorphOutputs:
     """
     SynthMorph is a deep-learning tool for brain-specific MRI image registration
@@ -251,10 +251,12 @@ def mri_synthmorph_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSynthmorphOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SYNTHMORPH_METADATA)
     params = execution.params(params)
     cargs = mri_synthmorph_cargs(params, execution)
     ret = mri_synthmorph_outputs(params, execution)
@@ -313,8 +315,6 @@ def mri_synthmorph(
     Returns:
         NamedTuple of outputs (described in `MriSynthmorphOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SYNTHMORPH_METADATA)
     params = mri_synthmorph_params(
         moving_image=moving_image,
         fixed_image=fixed_image,
@@ -330,7 +330,7 @@ def mri_synthmorph(
         model_weights=model_weights,
         inspect_directory=inspect_directory,
     )
-    return mri_synthmorph_execute(params, execution)
+    return mri_synthmorph_execute(params, runner)
 
 
 __all__ = [
@@ -338,8 +338,6 @@ __all__ = [
     "MriSynthmorphOutputs",
     "MriSynthmorphParameters",
     "mri_synthmorph",
-    "mri_synthmorph_cargs",
     "mri_synthmorph_execute",
-    "mri_synthmorph_outputs",
     "mri_synthmorph_params",
 ]

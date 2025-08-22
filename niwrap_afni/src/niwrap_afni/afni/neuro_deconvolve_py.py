@@ -204,7 +204,7 @@ def neuro_deconvolve_py_outputs(
 
 def neuro_deconvolve_py_execute(
     params: NeuroDeconvolvePyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NeuroDeconvolvePyOutputs:
     """
     Generate a script to apply 3dTfitter to deconvolve an MRI signal (BOLD response
@@ -216,10 +216,12 @@ def neuro_deconvolve_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NeuroDeconvolvePyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NEURO_DECONVOLVE_PY_METADATA)
     params = execution.params(params)
     cargs = neuro_deconvolve_py_cargs(params, execution)
     ret = neuro_deconvolve_py_outputs(params, execution)
@@ -265,8 +267,6 @@ def neuro_deconvolve_py(
     Returns:
         NamedTuple of outputs (described in `NeuroDeconvolvePyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NEURO_DECONVOLVE_PY_METADATA)
     params = neuro_deconvolve_py_params(
         input_file=input_file,
         prefix=prefix,
@@ -279,7 +279,7 @@ def neuro_deconvolve_py(
         tr_nup=tr_nup,
         verbosity=verbosity,
     )
-    return neuro_deconvolve_py_execute(params, execution)
+    return neuro_deconvolve_py_execute(params, runner)
 
 
 __all__ = [
@@ -287,8 +287,6 @@ __all__ = [
     "NeuroDeconvolvePyOutputs",
     "NeuroDeconvolvePyParameters",
     "neuro_deconvolve_py",
-    "neuro_deconvolve_py_cargs",
     "neuro_deconvolve_py_execute",
-    "neuro_deconvolve_py_outputs",
     "neuro_deconvolve_py_params",
 ]

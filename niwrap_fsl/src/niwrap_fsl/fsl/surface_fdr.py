@@ -126,7 +126,7 @@ def surface_fdr_outputs(
 
 def surface_fdr_execute(
     params: SurfaceFdrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceFdrOutputs:
     """
     Tool to calculate surface FDR correction for vertex analysis.
@@ -137,10 +137,12 @@ def surface_fdr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceFdrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_FDR_METADATA)
     params = execution.params(params)
     cargs = surface_fdr_cargs(params, execution)
     ret = surface_fdr_outputs(params, execution)
@@ -165,12 +167,10 @@ def surface_fdr(
     Returns:
         NamedTuple of outputs (described in `SurfaceFdrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_FDR_METADATA)
     params = surface_fdr_params(
         input_vtk=input_vtk,
     )
-    return surface_fdr_execute(params, execution)
+    return surface_fdr_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "SurfaceFdrOutputs",
     "SurfaceFdrParameters",
     "surface_fdr",
-    "surface_fdr_cargs",
     "surface_fdr_execute",
-    "surface_fdr_outputs",
     "surface_fdr_params",
 ]

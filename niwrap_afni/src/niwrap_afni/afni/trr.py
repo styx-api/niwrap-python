@@ -294,7 +294,7 @@ def trr_outputs(
 
 def trr_execute(
     params: TrrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TrrOutputs:
     """
     Test-Retest Reliability Program through Bayesian Multilevel Modeling.
@@ -305,10 +305,12 @@ def trr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TrrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRR_METADATA)
     params = execution.params(params)
     cargs = trr_cargs(params, execution)
     ret = trr_outputs(params, execution)
@@ -371,8 +373,6 @@ def trr(
     Returns:
         NamedTuple of outputs (described in `TrrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRR_METADATA)
     params = trr_params(
         prefix=prefix,
         chains=chains,
@@ -393,7 +393,7 @@ def trr(
         debug=debug,
         verbose=verbose,
     )
-    return trr_execute(params, execution)
+    return trr_execute(params, runner)
 
 
 __all__ = [
@@ -401,8 +401,6 @@ __all__ = [
     "TrrOutputs",
     "TrrParameters",
     "trr",
-    "trr_cargs",
     "trr_execute",
-    "trr_outputs",
     "trr_params",
 ]

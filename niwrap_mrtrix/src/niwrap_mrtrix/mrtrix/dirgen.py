@@ -277,7 +277,7 @@ def dirgen_outputs(
 
 def dirgen_execute(
     params: DirgenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DirgenOutputs:
     """
     Generate a set of uniformly distributed directions using a bipolar electrostatic
@@ -307,10 +307,12 @@ def dirgen_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DirgenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DIRGEN_METADATA)
     params = execution.params(params)
     cargs = dirgen_cargs(params, execution)
     ret = dirgen_outputs(params, execution)
@@ -390,8 +392,6 @@ def dirgen(
     Returns:
         NamedTuple of outputs (described in `DirgenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DIRGEN_METADATA)
     params = dirgen_params(
         power=power,
         niter=niter,
@@ -409,7 +409,7 @@ def dirgen(
         ndir=ndir,
         dirs=dirs,
     )
-    return dirgen_execute(params, execution)
+    return dirgen_execute(params, runner)
 
 
 __all__ = [
@@ -418,10 +418,7 @@ __all__ = [
     "DirgenOutputs",
     "DirgenParameters",
     "dirgen",
-    "dirgen_cargs",
-    "dirgen_config_cargs",
     "dirgen_config_params",
     "dirgen_execute",
-    "dirgen_outputs",
     "dirgen_params",
 ]

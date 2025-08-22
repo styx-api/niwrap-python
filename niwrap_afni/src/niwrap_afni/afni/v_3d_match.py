@@ -212,7 +212,7 @@ def v_3d_match_outputs(
 
 def v_3d_match_execute(
     params: V3dMatchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMatchOutputs:
     """
     Find similar subbricks and rearrange order to ease comparison. Part of FATCAT in
@@ -224,10 +224,12 @@ def v_3d_match_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMatchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MATCH_METADATA)
     params = execution.params(params)
     cargs = v_3d_match_cargs(params, execution)
     ret = v_3d_match_outputs(params, execution)
@@ -275,8 +277,6 @@ def v_3d_match(
     Returns:
         NamedTuple of outputs (described in `V3dMatchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MATCH_METADATA)
     params = v_3d_match_params(
         inset=inset,
         refset=refset,
@@ -288,7 +288,7 @@ def v_3d_match(
         prefix=prefix,
         only_dice_thr=only_dice_thr,
     )
-    return v_3d_match_execute(params, execution)
+    return v_3d_match_execute(params, runner)
 
 
 __all__ = [
@@ -296,8 +296,6 @@ __all__ = [
     "V3dMatchParameters",
     "V_3D_MATCH_METADATA",
     "v_3d_match",
-    "v_3d_match_cargs",
     "v_3d_match_execute",
-    "v_3d_match_outputs",
     "v_3d_match_params",
 ]

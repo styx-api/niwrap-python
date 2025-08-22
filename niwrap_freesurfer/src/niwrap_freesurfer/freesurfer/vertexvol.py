@@ -157,7 +157,7 @@ def vertexvol_outputs(
 
 def vertexvol_execute(
     params: VertexvolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VertexvolOutputs:
     """
     Computes vertex-wise volume (and mid.area).
@@ -168,10 +168,12 @@ def vertexvol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VertexvolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VERTEXVOL_METADATA)
     params = execution.params(params)
     cargs = vertexvol_cargs(params, execution)
     ret = vertexvol_outputs(params, execution)
@@ -206,8 +208,6 @@ def vertexvol(
     Returns:
         NamedTuple of outputs (described in `VertexvolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VERTEXVOL_METADATA)
     params = vertexvol_params(
         subject=subject,
         left_hemisphere=left_hemisphere,
@@ -216,7 +216,7 @@ def vertexvol(
         use_th3=use_th3,
         no_th3=no_th3,
     )
-    return vertexvol_execute(params, execution)
+    return vertexvol_execute(params, runner)
 
 
 __all__ = [
@@ -224,8 +224,6 @@ __all__ = [
     "VertexvolOutputs",
     "VertexvolParameters",
     "vertexvol",
-    "vertexvol_cargs",
     "vertexvol_execute",
-    "vertexvol_outputs",
     "vertexvol_params",
 ]

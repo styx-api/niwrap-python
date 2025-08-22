@@ -186,7 +186,7 @@ def bbmask_outputs(
 
 def bbmask_execute(
     params: BbmaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BbmaskOutputs:
     """
     Tool to create a volume with a smaller field of view by creating a bounding box
@@ -198,10 +198,12 @@ def bbmask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BbmaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BBMASK_METADATA)
     params = execution.params(params)
     cargs = bbmask_cargs(params, execution)
     ret = bbmask_outputs(params, execution)
@@ -238,8 +240,6 @@ def bbmask(
     Returns:
         NamedTuple of outputs (described in `BbmaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BBMASK_METADATA)
     params = bbmask_params(
         mask=mask,
         src_volumes=src_volumes,
@@ -248,7 +248,7 @@ def bbmask(
         regheader=regheader,
         sub2src=sub2src,
     )
-    return bbmask_execute(params, execution)
+    return bbmask_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "BbmaskOutputs",
     "BbmaskParameters",
     "bbmask",
-    "bbmask_cargs",
     "bbmask_execute",
-    "bbmask_outputs",
     "bbmask_params",
 ]

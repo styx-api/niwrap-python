@@ -163,7 +163,7 @@ def v_3dnewid_outputs(
 
 def v_3dnewid_execute(
     params: V3dnewidParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dnewidOutputs:
     """
     Assigns a new ID code to a dataset, ensuring internal ID codes remain unique.
@@ -174,10 +174,12 @@ def v_3dnewid_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dnewidOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DNEWID_METADATA)
     params = execution.params(params)
     cargs = v_3dnewid_cargs(params, execution)
     ret = v_3dnewid_outputs(params, execution)
@@ -217,8 +219,6 @@ def v_3dnewid(
     Returns:
         NamedTuple of outputs (described in `V3dnewidOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DNEWID_METADATA)
     params = v_3dnewid_params(
         datasets=datasets,
         fun=fun,
@@ -227,7 +227,7 @@ def v_3dnewid(
         hash_=hash_,
         md5=md5,
     )
-    return v_3dnewid_execute(params, execution)
+    return v_3dnewid_execute(params, runner)
 
 
 __all__ = [
@@ -235,8 +235,6 @@ __all__ = [
     "V3dnewidParameters",
     "V_3DNEWID_METADATA",
     "v_3dnewid",
-    "v_3dnewid_cargs",
     "v_3dnewid_execute",
-    "v_3dnewid_outputs",
     "v_3dnewid_params",
 ]

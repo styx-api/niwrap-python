@@ -129,7 +129,7 @@ def v__afni_run_me_outputs(
 
 def v__afni_run_me_execute(
     params: VAfniRunMeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniRunMeOutputs:
     """
     A tool to execute a specific command.
@@ -140,10 +140,12 @@ def v__afni_run_me_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniRunMeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_RUN_ME_METADATA)
     params = execution.params(params)
     cargs = v__afni_run_me_cargs(params, execution)
     ret = v__afni_run_me_outputs(params, execution)
@@ -172,14 +174,12 @@ def v__afni_run_me(
     Returns:
         NamedTuple of outputs (described in `VAfniRunMeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_RUN_ME_METADATA)
     params = v__afni_run_me_params(
         go=go,
         curl=curl,
         help_=help_,
     )
-    return v__afni_run_me_execute(params, execution)
+    return v__afni_run_me_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "VAfniRunMeParameters",
     "V__AFNI_RUN_ME_METADATA",
     "v__afni_run_me",
-    "v__afni_run_me_cargs",
     "v__afni_run_me_execute",
-    "v__afni_run_me_outputs",
     "v__afni_run_me_params",
 ]

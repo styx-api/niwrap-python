@@ -126,7 +126,7 @@ def volume_fill_holes_outputs(
 
 def volume_fill_holes_execute(
     params: VolumeFillHolesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeFillHolesOutputs:
     """
     Fill holes in an roi volume.
@@ -140,10 +140,12 @@ def volume_fill_holes_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeFillHolesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_FILL_HOLES_METADATA)
     params = execution.params(params)
     cargs = volume_fill_holes_cargs(params, execution)
     ret = volume_fill_holes_outputs(params, execution)
@@ -173,13 +175,11 @@ def volume_fill_holes(
     Returns:
         NamedTuple of outputs (described in `VolumeFillHolesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_FILL_HOLES_METADATA)
     params = volume_fill_holes_params(
         volume_in=volume_in,
         volume_out=volume_out,
     )
-    return volume_fill_holes_execute(params, execution)
+    return volume_fill_holes_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "VolumeFillHolesOutputs",
     "VolumeFillHolesParameters",
     "volume_fill_holes",
-    "volume_fill_holes_cargs",
     "volume_fill_holes_execute",
-    "volume_fill_holes_outputs",
     "volume_fill_holes_params",
 ]

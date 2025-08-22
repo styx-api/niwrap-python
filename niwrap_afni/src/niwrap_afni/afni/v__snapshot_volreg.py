@@ -140,7 +140,7 @@ def v__snapshot_volreg_outputs(
 
 def v__snapshot_volreg_execute(
     params: VSnapshotVolregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSnapshotVolregOutputs:
     """
     Create a JPEG image showing the edges of an EPI dataset overlayed on an
@@ -152,10 +152,12 @@ def v__snapshot_volreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSnapshotVolregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SNAPSHOT_VOLREG_METADATA)
     params = execution.params(params)
     cargs = v__snapshot_volreg_cargs(params, execution)
     ret = v__snapshot_volreg_outputs(params, execution)
@@ -187,15 +189,13 @@ def v__snapshot_volreg(
     Returns:
         NamedTuple of outputs (described in `VSnapshotVolregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SNAPSHOT_VOLREG_METADATA)
     params = v__snapshot_volreg_params(
         anatdataset=anatdataset,
         epidataset=epidataset,
         jname=jname,
         xdisplay=xdisplay,
     )
-    return v__snapshot_volreg_execute(params, execution)
+    return v__snapshot_volreg_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "VSnapshotVolregParameters",
     "V__SNAPSHOT_VOLREG_METADATA",
     "v__snapshot_volreg",
-    "v__snapshot_volreg_cargs",
     "v__snapshot_volreg_execute",
-    "v__snapshot_volreg_outputs",
     "v__snapshot_volreg_params",
 ]

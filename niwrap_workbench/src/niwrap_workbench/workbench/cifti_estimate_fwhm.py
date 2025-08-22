@@ -244,7 +244,7 @@ def cifti_estimate_fwhm_outputs(
 
 def cifti_estimate_fwhm_execute(
     params: CiftiEstimateFwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
     """
     Estimate fwhm smoothness of a cifti file.
@@ -295,10 +295,12 @@ def cifti_estimate_fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiEstimateFwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_ESTIMATE_FWHM_METADATA)
     params = execution.params(params)
     cargs = cifti_estimate_fwhm_cargs(params, execution)
     ret = cifti_estimate_fwhm_outputs(params, execution)
@@ -374,8 +376,6 @@ def cifti_estimate_fwhm(
     Returns:
         NamedTuple of outputs (described in `CiftiEstimateFwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_ESTIMATE_FWHM_METADATA)
     params = cifti_estimate_fwhm_params(
         cifti=cifti,
         opt_merged_volume=opt_merged_volume,
@@ -383,7 +383,7 @@ def cifti_estimate_fwhm(
         whole_file=whole_file,
         surface=surface,
     )
-    return cifti_estimate_fwhm_execute(params, execution)
+    return cifti_estimate_fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -393,12 +393,8 @@ __all__ = [
     "CiftiEstimateFwhmSurfaceParameters",
     "CiftiEstimateFwhmWholeFileParameters",
     "cifti_estimate_fwhm",
-    "cifti_estimate_fwhm_cargs",
     "cifti_estimate_fwhm_execute",
-    "cifti_estimate_fwhm_outputs",
     "cifti_estimate_fwhm_params",
-    "cifti_estimate_fwhm_surface_cargs",
     "cifti_estimate_fwhm_surface_params",
-    "cifti_estimate_fwhm_whole_file_cargs",
     "cifti_estimate_fwhm_whole_file_params",
 ]

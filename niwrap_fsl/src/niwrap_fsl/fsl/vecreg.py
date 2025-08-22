@@ -215,7 +215,7 @@ def vecreg_outputs(
 
 def vecreg_execute(
     params: VecregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VecregOutputs:
     """
     Vector Affine/NonLinear Transformation with Orientation Preservation.
@@ -226,10 +226,12 @@ def vecreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VecregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VECREG_METADATA)
     params = execution.params(params)
     cargs = vecreg_cargs(params, execution)
     ret = vecreg_outputs(params, execution)
@@ -278,8 +280,6 @@ def vecreg(
     Returns:
         NamedTuple of outputs (described in `VecregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VECREG_METADATA)
     params = vecreg_params(
         input_file=input_file,
         output_file=output_file,
@@ -293,7 +293,7 @@ def vecreg(
         brain_mask=brain_mask,
         ref_brain_mask=ref_brain_mask,
     )
-    return vecreg_execute(params, execution)
+    return vecreg_execute(params, runner)
 
 
 __all__ = [
@@ -301,8 +301,6 @@ __all__ = [
     "VecregOutputs",
     "VecregParameters",
     "vecreg",
-    "vecreg_cargs",
     "vecreg_execute",
-    "vecreg_outputs",
     "vecreg_params",
 ]

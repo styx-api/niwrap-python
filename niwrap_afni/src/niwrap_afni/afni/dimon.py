@@ -206,7 +206,7 @@ def dimon_outputs(
 
 def dimon_execute(
     params: DimonParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DimonOutputs:
     """
     Monitor real-time acquisition of DICOM image files.
@@ -217,10 +217,12 @@ def dimon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DimonOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DIMON_METADATA)
     params = execution.params(params)
     cargs = dimon_cargs(params, execution)
     ret = dimon_outputs(params, execution)
@@ -261,8 +263,6 @@ def dimon(
     Returns:
         NamedTuple of outputs (described in `DimonOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DIMON_METADATA)
     params = dimon_params(
         infile_prefix=infile_prefix,
         infile_pattern=infile_pattern,
@@ -274,7 +274,7 @@ def dimon(
         te_list=te_list,
         sort_method=sort_method,
     )
-    return dimon_execute(params, execution)
+    return dimon_execute(params, runner)
 
 
 __all__ = [
@@ -282,8 +282,6 @@ __all__ = [
     "DimonOutputs",
     "DimonParameters",
     "dimon",
-    "dimon_cargs",
     "dimon_execute",
-    "dimon_outputs",
     "dimon_params",
 ]

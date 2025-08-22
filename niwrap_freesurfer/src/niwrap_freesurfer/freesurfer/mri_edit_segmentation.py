@@ -130,7 +130,7 @@ def mri_edit_segmentation_outputs(
 
 def mri_edit_segmentation_execute(
     params: MriEditSegmentationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEditSegmentationOutputs:
     """
     A tool used for editing segmentations.
@@ -141,10 +141,12 @@ def mri_edit_segmentation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEditSegmentationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EDIT_SEGMENTATION_METADATA)
     params = execution.params(params)
     cargs = mri_edit_segmentation_cargs(params, execution)
     ret = mri_edit_segmentation_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_edit_segmentation(
     Returns:
         NamedTuple of outputs (described in `MriEditSegmentationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EDIT_SEGMENTATION_METADATA)
     params = mri_edit_segmentation_params(
         input_segmentation=input_segmentation,
         t1_volume=t1_volume,
         output_segmentation=output_segmentation,
     )
-    return mri_edit_segmentation_execute(params, execution)
+    return mri_edit_segmentation_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriEditSegmentationOutputs",
     "MriEditSegmentationParameters",
     "mri_edit_segmentation",
-    "mri_edit_segmentation_cargs",
     "mri_edit_segmentation_execute",
-    "mri_edit_segmentation_outputs",
     "mri_edit_segmentation_params",
 ]

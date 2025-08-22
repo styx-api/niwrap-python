@@ -121,7 +121,7 @@ def v__get_afni_view_outputs(
 
 def v__get_afni_view_execute(
     params: VGetAfniViewParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGetAfniViewOutputs:
     """
     A tool to retrieve the AFNI view of a given dataset name.
@@ -132,10 +132,12 @@ def v__get_afni_view_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGetAfniViewOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GET_AFNI_VIEW_METADATA)
     params = execution.params(params)
     cargs = v__get_afni_view_cargs(params, execution)
     ret = v__get_afni_view_outputs(params, execution)
@@ -161,12 +163,10 @@ def v__get_afni_view(
     Returns:
         NamedTuple of outputs (described in `VGetAfniViewOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GET_AFNI_VIEW_METADATA)
     params = v__get_afni_view_params(
         dataset_name=dataset_name,
     )
-    return v__get_afni_view_execute(params, execution)
+    return v__get_afni_view_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "VGetAfniViewParameters",
     "V__GET_AFNI_VIEW_METADATA",
     "v__get_afni_view",
-    "v__get_afni_view_cargs",
     "v__get_afni_view_execute",
-    "v__get_afni_view_outputs",
     "v__get_afni_view_params",
 ]

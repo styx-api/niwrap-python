@@ -185,7 +185,7 @@ def mris_estimate_wm_outputs(
 
 def mris_estimate_wm_execute(
     params: MrisEstimateWmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisEstimateWmOutputs:
     """
     Tool to estimate white matter surfaces using MRI data.
@@ -196,10 +196,12 @@ def mris_estimate_wm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisEstimateWmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ESTIMATE_WM_METADATA)
     params = execution.params(params)
     cargs = mris_estimate_wm_cargs(params, execution)
     ret = mris_estimate_wm_outputs(params, execution)
@@ -240,8 +242,6 @@ def mris_estimate_wm(
     Returns:
         NamedTuple of outputs (described in `MrisEstimateWmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ESTIMATE_WM_METADATA)
     params = mris_estimate_wm_params(
         subjs=subjs,
         hemi=hemi,
@@ -253,7 +253,7 @@ def mris_estimate_wm(
         single_iter=single_iter,
         vol=vol,
     )
-    return mris_estimate_wm_execute(params, execution)
+    return mris_estimate_wm_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "MrisEstimateWmOutputs",
     "MrisEstimateWmParameters",
     "mris_estimate_wm",
-    "mris_estimate_wm_cargs",
     "mris_estimate_wm_execute",
-    "mris_estimate_wm_outputs",
     "mris_estimate_wm_params",
 ]

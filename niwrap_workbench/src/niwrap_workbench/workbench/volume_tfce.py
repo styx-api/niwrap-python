@@ -262,7 +262,7 @@ def volume_tfce_outputs(
 
 def volume_tfce_execute(
     params: VolumeTfceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
     Do tfce on a volume file.
@@ -292,10 +292,12 @@ def volume_tfce_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeTfceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_TFCE_METADATA)
     params = execution.params(params)
     cargs = volume_tfce_cargs(params, execution)
     ret = volume_tfce_outputs(params, execution)
@@ -351,8 +353,6 @@ def volume_tfce(
     Returns:
         NamedTuple of outputs (described in `VolumeTfceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_TFCE_METADATA)
     params = volume_tfce_params(
         volume_in=volume_in,
         volume_out=volume_out,
@@ -361,7 +361,7 @@ def volume_tfce(
         parameters=parameters,
         opt_subvolume_subvolume=opt_subvolume_subvolume,
     )
-    return volume_tfce_execute(params, execution)
+    return volume_tfce_execute(params, runner)
 
 
 __all__ = [
@@ -371,12 +371,8 @@ __all__ = [
     "VolumeTfceParametersParameters",
     "VolumeTfcePresmoothParameters",
     "volume_tfce",
-    "volume_tfce_cargs",
     "volume_tfce_execute",
-    "volume_tfce_outputs",
-    "volume_tfce_parameters_cargs",
     "volume_tfce_parameters_params",
     "volume_tfce_params",
-    "volume_tfce_presmooth_cargs",
     "volume_tfce_presmooth_params",
 ]

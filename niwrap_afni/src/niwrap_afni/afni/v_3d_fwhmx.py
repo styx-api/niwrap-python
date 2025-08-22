@@ -221,7 +221,7 @@ def v_3d_fwhmx_outputs(
 
 def v_3d_fwhmx_execute(
     params: V3dFwhmxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dFwhmxOutputs:
     """
     Compute Full Width at Half Maximum (FWHM) for FMRI datasets using
@@ -233,10 +233,12 @@ def v_3d_fwhmx_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dFwhmxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_FWHMX_METADATA)
     params = execution.params(params)
     cargs = v_3d_fwhmx_cargs(params, execution)
     ret = v_3d_fwhmx_outputs(params, execution)
@@ -292,8 +294,6 @@ def v_3d_fwhmx(
     Returns:
         NamedTuple of outputs (described in `V3dFwhmxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_FWHMX_METADATA)
     params = v_3d_fwhmx_params(
         mask=mask,
         automask=automask,
@@ -309,7 +309,7 @@ def v_3d_fwhmx(
         acf=acf,
         infile=infile,
     )
-    return v_3d_fwhmx_execute(params, execution)
+    return v_3d_fwhmx_execute(params, runner)
 
 
 __all__ = [
@@ -317,8 +317,6 @@ __all__ = [
     "V3dFwhmxParameters",
     "V_3D_FWHMX_METADATA",
     "v_3d_fwhmx",
-    "v_3d_fwhmx_cargs",
     "v_3d_fwhmx_execute",
-    "v_3d_fwhmx_outputs",
     "v_3d_fwhmx_params",
 ]

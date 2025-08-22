@@ -390,7 +390,7 @@ def run_samseg_outputs(
 
 def run_samseg_execute(
     params: RunSamsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunSamsegOutputs:
     """
     SAMSEG (Sequence Adaptive Multimodal SEGmentation) is a tool for automated
@@ -402,10 +402,12 @@ def run_samseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunSamsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_SAMSEG_METADATA)
     params = execution.params(params)
     cargs = run_samseg_cargs(params, execution)
     ret = run_samseg_outputs(params, execution)
@@ -496,8 +498,6 @@ def run_samseg(
     Returns:
         NamedTuple of outputs (described in `RunSamsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_SAMSEG_METADATA)
     params = run_samseg_params(
         output_dir=output_dir,
         input_files=input_files,
@@ -532,7 +532,7 @@ def run_samseg(
         save_warp=save_warp,
         movie=movie,
     )
-    return run_samseg_execute(params, execution)
+    return run_samseg_execute(params, runner)
 
 
 __all__ = [
@@ -540,8 +540,6 @@ __all__ = [
     "RunSamsegOutputs",
     "RunSamsegParameters",
     "run_samseg",
-    "run_samseg_cargs",
     "run_samseg_execute",
-    "run_samseg_outputs",
     "run_samseg_params",
 ]

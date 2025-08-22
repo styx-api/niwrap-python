@@ -120,7 +120,7 @@ def register_subject_flash_outputs(
 
 def register_subject_flash_execute(
     params: RegisterSubjectFlashParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegisterSubjectFlashOutputs:
     """
     Register subject using the FLASH forward model to predict intensity values.
@@ -131,10 +131,12 @@ def register_subject_flash_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegisterSubjectFlashOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REGISTER_SUBJECT_FLASH_METADATA)
     params = execution.params(params)
     cargs = register_subject_flash_cargs(params, execution)
     ret = register_subject_flash_outputs(params, execution)
@@ -159,12 +161,10 @@ def register_subject_flash(
     Returns:
         NamedTuple of outputs (described in `RegisterSubjectFlashOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REGISTER_SUBJECT_FLASH_METADATA)
     params = register_subject_flash_params(
         input_volumes=input_volumes,
     )
-    return register_subject_flash_execute(params, execution)
+    return register_subject_flash_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "RegisterSubjectFlashOutputs",
     "RegisterSubjectFlashParameters",
     "register_subject_flash",
-    "register_subject_flash_cargs",
     "register_subject_flash_execute",
-    "register_subject_flash_outputs",
     "register_subject_flash_params",
 ]

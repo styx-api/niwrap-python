@@ -233,7 +233,7 @@ def ants_intermodality_intrasubject_sh_outputs(
 
 def ants_intermodality_intrasubject_sh_execute(
     params: AntsIntermodalityIntrasubjectShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsIntermodalityIntrasubjectShOutputs:
     """
     Performs registration between a scalar image and a T1 image.
@@ -244,10 +244,12 @@ def ants_intermodality_intrasubject_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsIntermodalityIntrasubjectShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA)
     params = execution.params(params)
     cargs = ants_intermodality_intrasubject_sh_cargs(params, execution)
     ret = ants_intermodality_intrasubject_sh_outputs(params, execution)
@@ -300,8 +302,6 @@ def ants_intermodality_intrasubject_sh(
     Returns:
         NamedTuple of outputs (described in `AntsIntermodalityIntrasubjectShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_INTERMODALITY_INTRASUBJECT_SH_METADATA)
     params = ants_intermodality_intrasubject_sh_params(
         dimension=dimension,
         anatomical_t1_image=anatomical_t1_image,
@@ -316,7 +316,7 @@ def ants_intermodality_intrasubject_sh(
         auxiliary_scalar_images=auxiliary_scalar_images,
         auxiliary_dt_image=auxiliary_dt_image,
     )
-    return ants_intermodality_intrasubject_sh_execute(params, execution)
+    return ants_intermodality_intrasubject_sh_execute(params, runner)
 
 
 __all__ = [
@@ -324,8 +324,6 @@ __all__ = [
     "AntsIntermodalityIntrasubjectShOutputs",
     "AntsIntermodalityIntrasubjectShParameters",
     "ants_intermodality_intrasubject_sh",
-    "ants_intermodality_intrasubject_sh_cargs",
     "ants_intermodality_intrasubject_sh_execute",
-    "ants_intermodality_intrasubject_sh_outputs",
     "ants_intermodality_intrasubject_sh_params",
 ]

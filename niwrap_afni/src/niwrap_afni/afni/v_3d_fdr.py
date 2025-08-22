@@ -235,7 +235,7 @@ def v_3d_fdr_outputs(
 
 def v_3d_fdr_execute(
     params: V3dFdrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dFdrOutputs:
     """
     A tool for applying False Discovery Rate (FDR) thresholding to voxelwise
@@ -247,10 +247,12 @@ def v_3d_fdr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dFdrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_FDR_METADATA)
     params = execution.params(params)
     cargs = v_3d_fdr_cargs(params, execution)
     ret = v_3d_fdr_outputs(params, execution)
@@ -308,8 +310,6 @@ def v_3d_fdr(
     Returns:
         NamedTuple of outputs (described in `V3dFdrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_FDR_METADATA)
     params = v_3d_fdr_params(
         input_file=input_file,
         input1d_file=input1d_file,
@@ -326,7 +326,7 @@ def v_3d_fdr(
         float_=float_,
         qval=qval,
     )
-    return v_3d_fdr_execute(params, execution)
+    return v_3d_fdr_execute(params, runner)
 
 
 __all__ = [
@@ -334,8 +334,6 @@ __all__ = [
     "V3dFdrParameters",
     "V_3D_FDR_METADATA",
     "v_3d_fdr",
-    "v_3d_fdr_cargs",
     "v_3d_fdr_execute",
-    "v_3d_fdr_outputs",
     "v_3d_fdr_params",
 ]

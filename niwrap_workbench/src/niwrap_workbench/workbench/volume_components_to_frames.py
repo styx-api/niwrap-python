@@ -126,7 +126,7 @@ def volume_components_to_frames_outputs(
 
 def volume_components_to_frames_execute(
     params: VolumeComponentsToFramesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeComponentsToFramesOutputs:
     """
     Convert rgb/complex volume to frames.
@@ -140,10 +140,12 @@ def volume_components_to_frames_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeComponentsToFramesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_COMPONENTS_TO_FRAMES_METADATA)
     params = execution.params(params)
     cargs = volume_components_to_frames_cargs(params, execution)
     ret = volume_components_to_frames_outputs(params, execution)
@@ -173,13 +175,11 @@ def volume_components_to_frames(
     Returns:
         NamedTuple of outputs (described in `VolumeComponentsToFramesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_COMPONENTS_TO_FRAMES_METADATA)
     params = volume_components_to_frames_params(
         input_=input_,
         output=output,
     )
-    return volume_components_to_frames_execute(params, execution)
+    return volume_components_to_frames_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "VolumeComponentsToFramesOutputs",
     "VolumeComponentsToFramesParameters",
     "volume_components_to_frames",
-    "volume_components_to_frames_cargs",
     "volume_components_to_frames_execute",
-    "volume_components_to_frames_outputs",
     "volume_components_to_frames_params",
 ]

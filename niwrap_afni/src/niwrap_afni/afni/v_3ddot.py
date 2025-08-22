@@ -218,7 +218,7 @@ def v_3ddot_outputs(
 
 def v_3ddot_execute(
     params: V3ddotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3ddotOutputs:
     """
     Computes correlation coefficients between sub-brick pairs.
@@ -229,10 +229,12 @@ def v_3ddot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3ddotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DDOT_METADATA)
     params = execution.params(params)
     cargs = v_3ddot_cargs(params, execution)
     ret = v_3ddot_outputs(params, execution)
@@ -291,8 +293,6 @@ def v_3ddot(
     Returns:
         NamedTuple of outputs (described in `V3ddotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DDOT_METADATA)
     params = v_3ddot_params(
         input_datasets=input_datasets,
         mask=mask,
@@ -310,7 +310,7 @@ def v_3ddot(
         v_1_d=v_1_d,
         niml=niml,
     )
-    return v_3ddot_execute(params, execution)
+    return v_3ddot_execute(params, runner)
 
 
 __all__ = [
@@ -318,8 +318,6 @@ __all__ = [
     "V3ddotParameters",
     "V_3DDOT_METADATA",
     "v_3ddot",
-    "v_3ddot_cargs",
     "v_3ddot_execute",
-    "v_3ddot_outputs",
     "v_3ddot_params",
 ]

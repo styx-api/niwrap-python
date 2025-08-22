@@ -130,7 +130,7 @@ def slicesmask_outputs(
 
 def slicesmask_execute(
     params: SlicesmaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlicesmaskOutputs:
     """
     Tool for masking slices from an image using a mask.
@@ -141,10 +141,12 @@ def slicesmask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlicesmaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICESMASK_METADATA)
     params = execution.params(params)
     cargs = slicesmask_cargs(params, execution)
     ret = slicesmask_outputs(params, execution)
@@ -173,14 +175,12 @@ def slicesmask(
     Returns:
         NamedTuple of outputs (described in `SlicesmaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICESMASK_METADATA)
     params = slicesmask_params(
         image=image,
         mask=mask,
         output=output,
     )
-    return slicesmask_execute(params, execution)
+    return slicesmask_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "SlicesmaskOutputs",
     "SlicesmaskParameters",
     "slicesmask",
-    "slicesmask_cargs",
     "slicesmask_execute",
-    "slicesmask_outputs",
     "slicesmask_params",
 ]

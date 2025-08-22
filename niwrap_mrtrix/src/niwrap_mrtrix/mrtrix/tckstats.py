@@ -322,7 +322,7 @@ def tckstats_outputs(
 
 def tckstats_execute(
     params: TckstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckstatsOutputs:
     """
     Calculate statistics on streamlines lengths.
@@ -339,10 +339,12 @@ def tckstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKSTATS_METADATA)
     params = execution.params(params)
     cargs = tckstats_cargs(params, execution)
     ret = tckstats_outputs(params, execution)
@@ -407,8 +409,6 @@ def tckstats(
     Returns:
         NamedTuple of outputs (described in `TckstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKSTATS_METADATA)
     params = tckstats_params(
         output=output,
         histogram=histogram,
@@ -425,7 +425,7 @@ def tckstats(
         version=version,
         tracks_in=tracks_in,
     )
-    return tckstats_execute(params, execution)
+    return tckstats_execute(params, runner)
 
 
 __all__ = [
@@ -435,12 +435,8 @@ __all__ = [
     "TckstatsOutputs",
     "TckstatsParameters",
     "tckstats",
-    "tckstats_cargs",
-    "tckstats_config_cargs",
     "tckstats_config_params",
     "tckstats_execute",
-    "tckstats_output_cargs",
     "tckstats_output_params",
-    "tckstats_outputs",
     "tckstats_params",
 ]

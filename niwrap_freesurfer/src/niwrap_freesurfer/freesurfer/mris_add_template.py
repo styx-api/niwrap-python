@@ -122,7 +122,7 @@ def mris_add_template_outputs(
 
 def mris_add_template_execute(
     params: MrisAddTemplateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisAddTemplateOutputs:
     """
     This tool has been removed from the current version of FreeSurfer.
@@ -133,10 +133,12 @@ def mris_add_template_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAddTemplateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ADD_TEMPLATE_METADATA)
     params = execution.params(params)
     cargs = mris_add_template_cargs(params, execution)
     ret = mris_add_template_outputs(params, execution)
@@ -161,12 +163,10 @@ def mris_add_template(
     Returns:
         NamedTuple of outputs (described in `MrisAddTemplateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ADD_TEMPLATE_METADATA)
     params = mris_add_template_params(
         placeholder_input=placeholder_input,
     )
-    return mris_add_template_execute(params, execution)
+    return mris_add_template_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "MrisAddTemplateOutputs",
     "MrisAddTemplateParameters",
     "mris_add_template",
-    "mris_add_template_cargs",
     "mris_add_template_execute",
-    "mris_add_template_outputs",
     "mris_add_template_params",
 ]

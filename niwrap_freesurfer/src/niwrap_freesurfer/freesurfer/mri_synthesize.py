@@ -152,7 +152,7 @@ def mri_synthesize_outputs(
 
 def mri_synthesize_execute(
     params: MriSynthesizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSynthesizeOutputs:
     """
     This program synthesizes a FLASH acquisition based on previously computed T1/PD
@@ -164,10 +164,12 @@ def mri_synthesize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSynthesizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SYNTHESIZE_METADATA)
     params = execution.params(params)
     cargs = mri_synthesize_cargs(params, execution)
     ret = mri_synthesize_outputs(params, execution)
@@ -206,8 +208,6 @@ def mri_synthesize(
     Returns:
         NamedTuple of outputs (described in `MriSynthesizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SYNTHESIZE_METADATA)
     params = mri_synthesize_params(
         tr=tr,
         alpha=alpha,
@@ -217,7 +217,7 @@ def mri_synthesize(
         output_volume=output_volume,
         fixed_weight=fixed_weight,
     )
-    return mri_synthesize_execute(params, execution)
+    return mri_synthesize_execute(params, runner)
 
 
 __all__ = [
@@ -225,8 +225,6 @@ __all__ = [
     "MriSynthesizeOutputs",
     "MriSynthesizeParameters",
     "mri_synthesize",
-    "mri_synthesize_cargs",
     "mri_synthesize_execute",
-    "mri_synthesize_outputs",
     "mri_synthesize_params",
 ]

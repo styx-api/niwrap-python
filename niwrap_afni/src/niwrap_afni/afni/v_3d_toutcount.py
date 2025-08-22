@@ -196,7 +196,7 @@ def v_3d_toutcount_outputs(
 
 def v_3d_toutcount_execute(
     params: V3dToutcountParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dToutcountOutputs:
     """
     Calculates the number of 'outliers' in a 3D+time dataset at each time point.
@@ -207,10 +207,12 @@ def v_3d_toutcount_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dToutcountOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TOUTCOUNT_METADATA)
     params = execution.params(params)
     cargs = v_3d_toutcount_cargs(params, execution)
     ret = v_3d_toutcount_outputs(params, execution)
@@ -259,8 +261,6 @@ def v_3d_toutcount(
     Returns:
         NamedTuple of outputs (described in `V3dToutcountOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TOUTCOUNT_METADATA)
     params = v_3d_toutcount_params(
         input_dataset=input_dataset,
         output_prefix=output_prefix,
@@ -273,7 +273,7 @@ def v_3d_toutcount(
         polort_order=polort_order,
         legendre=legendre,
     )
-    return v_3d_toutcount_execute(params, execution)
+    return v_3d_toutcount_execute(params, runner)
 
 
 __all__ = [
@@ -281,8 +281,6 @@ __all__ = [
     "V3dToutcountParameters",
     "V_3D_TOUTCOUNT_METADATA",
     "v_3d_toutcount",
-    "v_3d_toutcount_cargs",
     "v_3d_toutcount_execute",
-    "v_3d_toutcount_outputs",
     "v_3d_toutcount_params",
 ]

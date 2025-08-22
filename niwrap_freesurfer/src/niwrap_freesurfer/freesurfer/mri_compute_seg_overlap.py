@@ -192,7 +192,7 @@ def mri_compute_seg_overlap_outputs(
 
 def mri_compute_seg_overlap_execute(
     params: MriComputeSegOverlapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeSegOverlapOutputs:
     """
     Compute coefficients of overlap between segmentation volumes.
@@ -203,10 +203,12 @@ def mri_compute_seg_overlap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeSegOverlapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_SEG_OVERLAP_METADATA)
     params = execution.params(params)
     cargs = mri_compute_seg_overlap_cargs(params, execution)
     ret = mri_compute_seg_overlap_outputs(params, execution)
@@ -256,8 +258,6 @@ def mri_compute_seg_overlap(
     Returns:
         NamedTuple of outputs (described in `MriComputeSegOverlapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_SEG_OVERLAP_METADATA)
     params = mri_compute_seg_overlap_params(
         segvol1=segvol1,
         segvol2=segvol2,
@@ -270,7 +270,7 @@ def mri_compute_seg_overlap(
         all_labels_flag=all_labels_flag,
         dice_params=dice_params,
     )
-    return mri_compute_seg_overlap_execute(params, execution)
+    return mri_compute_seg_overlap_execute(params, runner)
 
 
 __all__ = [
@@ -278,8 +278,6 @@ __all__ = [
     "MriComputeSegOverlapOutputs",
     "MriComputeSegOverlapParameters",
     "mri_compute_seg_overlap",
-    "mri_compute_seg_overlap_cargs",
     "mri_compute_seg_overlap_execute",
-    "mri_compute_seg_overlap_outputs",
     "mri_compute_seg_overlap_params",
 ]

@@ -200,7 +200,7 @@ def fat_proc_imit2w_from_t1w_outputs(
 
 def fat_proc_imit2w_from_t1w_execute(
     params: FatProcImit2wFromT1wParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcImit2wFromT1wOutputs:
     """
     Process T1w anatomical images to generate an imitation T2w-contrast image.
@@ -211,10 +211,12 @@ def fat_proc_imit2w_from_t1w_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcImit2wFromT1wOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_IMIT2W_FROM_T1W_METADATA)
     params = execution.params(params)
     cargs = fat_proc_imit2w_from_t1w_cargs(params, execution)
     ret = fat_proc_imit2w_from_t1w_outputs(params, execution)
@@ -259,8 +261,6 @@ def fat_proc_imit2w_from_t1w(
     Returns:
         NamedTuple of outputs (described in `FatProcImit2wFromT1wOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_IMIT2W_FROM_T1W_METADATA)
     params = fat_proc_imit2w_from_t1w_params(
         t1_file=t1_file,
         prefix=prefix,
@@ -271,7 +271,7 @@ def fat_proc_imit2w_from_t1w(
         no_qc_view=no_qc_view,
         qc_prefix=qc_prefix,
     )
-    return fat_proc_imit2w_from_t1w_execute(params, execution)
+    return fat_proc_imit2w_from_t1w_execute(params, runner)
 
 
 __all__ = [
@@ -279,8 +279,6 @@ __all__ = [
     "FatProcImit2wFromT1wOutputs",
     "FatProcImit2wFromT1wParameters",
     "fat_proc_imit2w_from_t1w",
-    "fat_proc_imit2w_from_t1w_cargs",
     "fat_proc_imit2w_from_t1w_execute",
-    "fat_proc_imit2w_from_t1w_outputs",
     "fat_proc_imit2w_from_t1w_params",
 ]

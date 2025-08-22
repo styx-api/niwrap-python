@@ -133,7 +133,7 @@ def flirt_newdefault_20080811_sch_outputs(
 
 def flirt_newdefault_20080811_sch_execute(
     params: FlirtNewdefault20080811SchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FlirtNewdefault20080811SchOutputs:
     """
     FLIRT (FMRIB's Linear Image Registration Tool) new default configuration script.
@@ -144,10 +144,12 @@ def flirt_newdefault_20080811_sch_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FlirtNewdefault20080811SchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FLIRT_NEWDEFAULT_20080811_SCH_METADATA)
     params = execution.params(params)
     cargs = flirt_newdefault_20080811_sch_cargs(params, execution)
     ret = flirt_newdefault_20080811_sch_outputs(params, execution)
@@ -176,14 +178,12 @@ def flirt_newdefault_20080811_sch(
     Returns:
         NamedTuple of outputs (described in `FlirtNewdefault20080811SchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FLIRT_NEWDEFAULT_20080811_SCH_METADATA)
     params = flirt_newdefault_20080811_sch_params(
         term_option=term_option,
         curses_flag=curses_flag,
         scrollback_flag=scrollback_flag,
     )
-    return flirt_newdefault_20080811_sch_execute(params, execution)
+    return flirt_newdefault_20080811_sch_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "FlirtNewdefault20080811SchOutputs",
     "FlirtNewdefault20080811SchParameters",
     "flirt_newdefault_20080811_sch",
-    "flirt_newdefault_20080811_sch_cargs",
     "flirt_newdefault_20080811_sch_execute",
-    "flirt_newdefault_20080811_sch_outputs",
     "flirt_newdefault_20080811_sch_params",
 ]

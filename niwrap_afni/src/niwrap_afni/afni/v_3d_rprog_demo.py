@@ -193,7 +193,7 @@ def v_3d_rprog_demo_outputs(
 
 def v_3d_rprog_demo_execute(
     params: V3dRprogDemoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRprogDemoOutputs:
     """
     Template program to help users write their own R processing routines on MRI
@@ -205,10 +205,12 @@ def v_3d_rprog_demo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRprogDemoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_RPROG_DEMO_METADATA)
     params = execution.params(params)
     cargs = v_3d_rprog_demo_cargs(params, execution)
     ret = v_3d_rprog_demo_outputs(params, execution)
@@ -255,8 +257,6 @@ def v_3d_rprog_demo(
     Returns:
         NamedTuple of outputs (described in `V3dRprogDemoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_RPROG_DEMO_METADATA)
     params = v_3d_rprog_demo_params(
         input_dsets=input_dsets,
         mask=mask,
@@ -270,7 +270,7 @@ def v_3d_rprog_demo(
         show_allowed_options=show_allowed_options,
         verbosity_level=verbosity_level,
     )
-    return v_3d_rprog_demo_execute(params, execution)
+    return v_3d_rprog_demo_execute(params, runner)
 
 
 __all__ = [
@@ -278,8 +278,6 @@ __all__ = [
     "V3dRprogDemoParameters",
     "V_3D_RPROG_DEMO_METADATA",
     "v_3d_rprog_demo",
-    "v_3d_rprog_demo_cargs",
     "v_3d_rprog_demo_execute",
-    "v_3d_rprog_demo_outputs",
     "v_3d_rprog_demo_params",
 ]

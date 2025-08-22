@@ -126,7 +126,7 @@ def mri_log_likelihood_outputs(
 
 def mri_log_likelihood_execute(
     params: MriLogLikelihoodParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLogLikelihoodOutputs:
     """
     MRI log likelihood calculation tool for brain images.
@@ -137,10 +137,12 @@ def mri_log_likelihood_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLogLikelihoodOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LOG_LIKELIHOOD_METADATA)
     params = execution.params(params)
     cargs = mri_log_likelihood_cargs(params, execution)
     ret = mri_log_likelihood_outputs(params, execution)
@@ -169,14 +171,12 @@ def mri_log_likelihood(
     Returns:
         NamedTuple of outputs (described in `MriLogLikelihoodOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LOG_LIKELIHOOD_METADATA)
     params = mri_log_likelihood_params(
         input_brain_images=input_brain_images,
         atlas_file=atlas_file,
         transform_file=transform_file,
     )
-    return mri_log_likelihood_execute(params, execution)
+    return mri_log_likelihood_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "MriLogLikelihoodOutputs",
     "MriLogLikelihoodParameters",
     "mri_log_likelihood",
-    "mri_log_likelihood_cargs",
     "mri_log_likelihood_execute",
-    "mri_log_likelihood_outputs",
     "mri_log_likelihood_params",
 ]

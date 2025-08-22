@@ -135,7 +135,7 @@ def label2flat_outputs(
 
 def label2flat_execute(
     params: Label2flatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Label2flatOutputs:
     """
     A tool used in FreeSurfer to process labeling and patch files.
@@ -146,10 +146,12 @@ def label2flat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Label2flatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL2FLAT_METADATA)
     params = execution.params(params)
     cargs = label2flat_cargs(params, execution)
     ret = label2flat_outputs(params, execution)
@@ -180,15 +182,13 @@ def label2flat(
     Returns:
         NamedTuple of outputs (described in `Label2flatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL2FLAT_METADATA)
     params = label2flat_params(
         subject_name=subject_name,
         label_file=label_file,
         patch_file=patch_file,
         output_file=output_file,
     )
-    return label2flat_execute(params, execution)
+    return label2flat_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "Label2flatOutputs",
     "Label2flatParameters",
     "label2flat",
-    "label2flat_cargs",
     "label2flat_execute",
-    "label2flat_outputs",
     "label2flat_params",
 ]

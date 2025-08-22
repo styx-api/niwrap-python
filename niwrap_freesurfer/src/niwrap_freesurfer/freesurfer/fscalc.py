@@ -183,7 +183,7 @@ def fscalc_outputs(
 
 def fscalc_execute(
     params: FscalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FscalcOutputs:
     """
     A frontend tool to perform mathematical operations on volumes/surfaces of data
@@ -195,10 +195,12 @@ def fscalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FscalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSCALC_METADATA)
     params = execution.params(params)
     cargs = fscalc_cargs(params, execution)
     ret = fscalc_outputs(params, execution)
@@ -241,8 +243,6 @@ def fscalc(
     Returns:
         NamedTuple of outputs (described in `FscalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSCALC_METADATA)
     params = fscalc_params(
         input1=input1,
         operation=operation,
@@ -254,7 +254,7 @@ def fscalc(
         nocleanup=nocleanup,
         log_file=log_file,
     )
-    return fscalc_execute(params, execution)
+    return fscalc_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "FscalcOutputs",
     "FscalcParameters",
     "fscalc",
-    "fscalc_cargs",
     "fscalc_execute",
-    "fscalc_outputs",
     "fscalc_params",
 ]

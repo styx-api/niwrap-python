@@ -161,7 +161,7 @@ def apqc_make_tcsh_py_outputs(
 
 def apqc_make_tcsh_py_execute(
     params: ApqcMakeTcshPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ApqcMakeTcshPyOutputs:
     """
     This program creates the single subject (ss) HTML review script
@@ -174,10 +174,12 @@ def apqc_make_tcsh_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ApqcMakeTcshPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APQC_MAKE_TCSH_PY_METADATA)
     params = execution.params(params)
     cargs = apqc_make_tcsh_py_cargs(params, execution)
     ret = apqc_make_tcsh_py_outputs(params, execution)
@@ -220,8 +222,6 @@ def apqc_make_tcsh_py(
     Returns:
         NamedTuple of outputs (described in `ApqcMakeTcshPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APQC_MAKE_TCSH_PY_METADATA)
     params = apqc_make_tcsh_py_params(
         uvar_json=uvar_json,
         subj_dir=subj_dir,
@@ -229,7 +229,7 @@ def apqc_make_tcsh_py(
         mot_grayplot_off=mot_grayplot_off,
         vstat_list=vstat_list,
     )
-    return apqc_make_tcsh_py_execute(params, execution)
+    return apqc_make_tcsh_py_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "ApqcMakeTcshPyOutputs",
     "ApqcMakeTcshPyParameters",
     "apqc_make_tcsh_py",
-    "apqc_make_tcsh_py_cargs",
     "apqc_make_tcsh_py_execute",
-    "apqc_make_tcsh_py_outputs",
     "apqc_make_tcsh_py_params",
 ]

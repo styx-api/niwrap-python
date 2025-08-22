@@ -311,7 +311,7 @@ def v_3ddelay_outputs(
 
 def v_3ddelay_execute(
     params: V3ddelayParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3ddelayOutputs:
     """
     Estimates the time delay between each voxel time series in a 3D+time dataset and
@@ -323,10 +323,12 @@ def v_3ddelay_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3ddelayOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DDELAY_METADATA)
     params = execution.params(params)
     cargs = v_3ddelay_cargs(params, execution)
     ret = v_3ddelay_outputs(params, execution)
@@ -403,8 +405,6 @@ def v_3ddelay(
     Returns:
         NamedTuple of outputs (described in `V3ddelayOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DDELAY_METADATA)
     params = v_3ddelay_params(
         input_file=input_file,
         reference_file=reference_file,
@@ -431,7 +431,7 @@ def v_3ddelay(
         asc=asc,
         ascts=ascts,
     )
-    return v_3ddelay_execute(params, execution)
+    return v_3ddelay_execute(params, runner)
 
 
 __all__ = [
@@ -439,8 +439,6 @@ __all__ = [
     "V3ddelayParameters",
     "V_3DDELAY_METADATA",
     "v_3ddelay",
-    "v_3ddelay_cargs",
     "v_3ddelay_execute",
-    "v_3ddelay_outputs",
     "v_3ddelay_params",
 ]

@@ -121,7 +121,7 @@ def fname2ext_outputs(
 
 def fname2ext_execute(
     params: Fname2extParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fname2extOutputs:
     """
     Converts the name of a file to its extension.
@@ -132,10 +132,12 @@ def fname2ext_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fname2extOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FNAME2EXT_METADATA)
     params = execution.params(params)
     cargs = fname2ext_cargs(params, execution)
     ret = fname2ext_outputs(params, execution)
@@ -161,12 +163,10 @@ def fname2ext(
     Returns:
         NamedTuple of outputs (described in `Fname2extOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FNAME2EXT_METADATA)
     params = fname2ext_params(
         filename=filename,
     )
-    return fname2ext_execute(params, execution)
+    return fname2ext_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "Fname2extOutputs",
     "Fname2extParameters",
     "fname2ext",
-    "fname2ext_cargs",
     "fname2ext_execute",
-    "fname2ext_outputs",
     "fname2ext_params",
 ]

@@ -212,7 +212,7 @@ def surface_average_outputs(
 
 def surface_average_execute(
     params: SurfaceAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
     """
     Average surface files together.
@@ -232,10 +232,12 @@ def surface_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = surface_average_cargs(params, execution)
     ret = surface_average_outputs(params, execution)
@@ -277,15 +279,13 @@ def surface_average(
     Returns:
         NamedTuple of outputs (described in `SurfaceAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_AVERAGE_METADATA)
     params = surface_average_params(
         surface_out=surface_out,
         opt_stddev_stddev_metric_out=opt_stddev_stddev_metric_out,
         opt_uncertainty_uncert_metric_out=opt_uncertainty_uncert_metric_out,
         surf=surf,
     )
-    return surface_average_execute(params, execution)
+    return surface_average_execute(params, runner)
 
 
 __all__ = [
@@ -294,10 +294,7 @@ __all__ = [
     "SurfaceAverageParameters",
     "SurfaceAverageSurfParameters",
     "surface_average",
-    "surface_average_cargs",
     "surface_average_execute",
-    "surface_average_outputs",
     "surface_average_params",
-    "surface_average_surf_cargs",
     "surface_average_surf_params",
 ]

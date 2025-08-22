@@ -162,7 +162,7 @@ def mris_compute_overlap_outputs(
 
 def mris_compute_overlap_execute(
     params: MrisComputeOverlapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisComputeOverlapOutputs:
     """
     Tool to compute the overlap between two or more labels on a cortical surface.
@@ -173,10 +173,12 @@ def mris_compute_overlap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisComputeOverlapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_COMPUTE_OVERLAP_METADATA)
     params = execution.params(params)
     cargs = mris_compute_overlap_cargs(params, execution)
     ret = mris_compute_overlap_outputs(params, execution)
@@ -215,8 +217,6 @@ def mris_compute_overlap(
     Returns:
         NamedTuple of outputs (described in `MrisComputeOverlapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_COMPUTE_OVERLAP_METADATA)
     params = mris_compute_overlap_params(
         subject=subject,
         hemi=hemi,
@@ -227,7 +227,7 @@ def mris_compute_overlap(
         log_file=log_file,
         brain_volume=brain_volume,
     )
-    return mris_compute_overlap_execute(params, execution)
+    return mris_compute_overlap_execute(params, runner)
 
 
 __all__ = [
@@ -235,8 +235,6 @@ __all__ = [
     "MrisComputeOverlapOutputs",
     "MrisComputeOverlapParameters",
     "mris_compute_overlap",
-    "mris_compute_overlap_cargs",
     "mris_compute_overlap_execute",
-    "mris_compute_overlap_outputs",
     "mris_compute_overlap_params",
 ]

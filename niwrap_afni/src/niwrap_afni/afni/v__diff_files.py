@@ -187,7 +187,7 @@ def v__diff_files_outputs(
 
 def v__diff_files_execute(
     params: VDiffFilesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDiffFilesOutputs:
     """
     Show file differences (between specified files and those in another directory).
@@ -198,10 +198,12 @@ def v__diff_files_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDiffFilesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DIFF_FILES_METADATA)
     params = execution.params(params)
     cargs = v__diff_files_cargs(params, execution)
     ret = v__diff_files_outputs(params, execution)
@@ -246,8 +248,6 @@ def v__diff_files(
     Returns:
         NamedTuple of outputs (described in `VDiffFilesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DIFF_FILES_METADATA)
     params = v__diff_files_params(
         files=files,
         old_dir=old_dir,
@@ -261,7 +261,7 @@ def v__diff_files(
         x_flag=x_flag,
         verbosity=verbosity,
     )
-    return v__diff_files_execute(params, execution)
+    return v__diff_files_execute(params, runner)
 
 
 __all__ = [
@@ -269,8 +269,6 @@ __all__ = [
     "VDiffFilesParameters",
     "V__DIFF_FILES_METADATA",
     "v__diff_files",
-    "v__diff_files_cargs",
     "v__diff_files_execute",
-    "v__diff_files_outputs",
     "v__diff_files_params",
 ]

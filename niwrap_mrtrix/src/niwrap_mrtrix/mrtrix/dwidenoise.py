@@ -297,7 +297,7 @@ def dwidenoise_outputs(
 
 def dwidenoise_execute(
     params: DwidenoiseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DwidenoiseOutputs:
     """
     dMRI noise level estimation and denoising using Marchenko-Pastur PCA.
@@ -341,10 +341,12 @@ def dwidenoise_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DwidenoiseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWIDENOISE_METADATA)
     params = execution.params(params)
     cargs = dwidenoise_cargs(params, execution)
     ret = dwidenoise_outputs(params, execution)
@@ -445,8 +447,6 @@ def dwidenoise(
     Returns:
         NamedTuple of outputs (described in `DwidenoiseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWIDENOISE_METADATA)
     params = dwidenoise_params(
         mask=mask,
         extent=extent,
@@ -464,7 +464,7 @@ def dwidenoise(
         dwi=dwi,
         out=out,
     )
-    return dwidenoise_execute(params, execution)
+    return dwidenoise_execute(params, runner)
 
 
 __all__ = [
@@ -473,10 +473,7 @@ __all__ = [
     "DwidenoiseOutputs",
     "DwidenoiseParameters",
     "dwidenoise",
-    "dwidenoise_cargs",
-    "dwidenoise_config_cargs",
     "dwidenoise_config_params",
     "dwidenoise_execute",
-    "dwidenoise_outputs",
     "dwidenoise_params",
 ]

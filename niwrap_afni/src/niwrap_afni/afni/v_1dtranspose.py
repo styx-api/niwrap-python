@@ -128,7 +128,7 @@ def v_1dtranspose_outputs(
 
 def v_1dtranspose_execute(
     params: V1dtransposeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dtransposeOutputs:
     """
     Transpose an AFNI *.1D file (ASCII list of numbers arranged in columns).
@@ -139,10 +139,12 @@ def v_1dtranspose_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dtransposeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DTRANSPOSE_METADATA)
     params = execution.params(params)
     cargs = v_1dtranspose_cargs(params, execution)
     ret = v_1dtranspose_outputs(params, execution)
@@ -170,13 +172,11 @@ def v_1dtranspose(
     Returns:
         NamedTuple of outputs (described in `V1dtransposeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DTRANSPOSE_METADATA)
     params = v_1dtranspose_params(
         infile=infile,
         outfile=outfile,
     )
-    return v_1dtranspose_execute(params, execution)
+    return v_1dtranspose_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "V1dtransposeParameters",
     "V_1DTRANSPOSE_METADATA",
     "v_1dtranspose",
-    "v_1dtranspose_cargs",
     "v_1dtranspose_execute",
-    "v_1dtranspose_outputs",
     "v_1dtranspose_params",
 ]

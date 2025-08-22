@@ -398,7 +398,7 @@ def cifti_create_dense_timeseries_outputs(
 
 def cifti_create_dense_timeseries_execute(
     params: CiftiCreateDenseTimeseriesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
     Create a cifti dense timeseries.
@@ -458,10 +458,12 @@ def cifti_create_dense_timeseries_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseTimeseriesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CREATE_DENSE_TIMESERIES_METADATA)
     params = execution.params(params)
     cargs = cifti_create_dense_timeseries_cargs(params, execution)
     ret = cifti_create_dense_timeseries_outputs(params, execution)
@@ -552,8 +554,6 @@ def cifti_create_dense_timeseries(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseTimeseriesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CREATE_DENSE_TIMESERIES_METADATA)
     params = cifti_create_dense_timeseries_params(
         cifti_out=cifti_out,
         volume=volume,
@@ -564,7 +564,7 @@ def cifti_create_dense_timeseries(
         opt_timestart_start=opt_timestart_start,
         opt_unit_unit=opt_unit_unit,
     )
-    return cifti_create_dense_timeseries_execute(params, execution)
+    return cifti_create_dense_timeseries_execute(params, runner)
 
 
 __all__ = [
@@ -576,16 +576,10 @@ __all__ = [
     "CiftiCreateDenseTimeseriesRightMetricParameters",
     "CiftiCreateDenseTimeseriesVolumeParameters",
     "cifti_create_dense_timeseries",
-    "cifti_create_dense_timeseries_cargs",
-    "cifti_create_dense_timeseries_cerebellum_metric_cargs",
     "cifti_create_dense_timeseries_cerebellum_metric_params",
     "cifti_create_dense_timeseries_execute",
-    "cifti_create_dense_timeseries_left_metric_cargs",
     "cifti_create_dense_timeseries_left_metric_params",
-    "cifti_create_dense_timeseries_outputs",
     "cifti_create_dense_timeseries_params",
-    "cifti_create_dense_timeseries_right_metric_cargs",
     "cifti_create_dense_timeseries_right_metric_params",
-    "cifti_create_dense_timeseries_volume_cargs",
     "cifti_create_dense_timeseries_volume_params",
 ]

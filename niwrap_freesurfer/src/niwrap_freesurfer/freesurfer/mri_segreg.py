@@ -126,7 +126,7 @@ def mri_segreg_outputs(
 
 def mri_segreg_execute(
     params: MriSegregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegregOutputs:
     """
     MRI Segregation tool.
@@ -137,10 +137,12 @@ def mri_segreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEGREG_METADATA)
     params = execution.params(params)
     cargs = mri_segreg_cargs(params, execution)
     ret = mri_segreg_outputs(params, execution)
@@ -168,13 +170,11 @@ def mri_segreg(
     Returns:
         NamedTuple of outputs (described in `MriSegregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEGREG_METADATA)
     params = mri_segreg_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return mri_segreg_execute(params, execution)
+    return mri_segreg_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "MriSegregOutputs",
     "MriSegregParameters",
     "mri_segreg",
-    "mri_segreg_cargs",
     "mri_segreg_execute",
-    "mri_segreg_outputs",
     "mri_segreg_params",
 ]

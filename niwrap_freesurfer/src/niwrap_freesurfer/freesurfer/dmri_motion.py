@@ -210,7 +210,7 @@ def dmri_motion_outputs(
 
 def dmri_motion_execute(
     params: DmriMotionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriMotionOutputs:
     """
     A tool for calculating motion measures from DWI scans.
@@ -221,10 +221,12 @@ def dmri_motion_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriMotionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_MOTION_METADATA)
     params = execution.params(params)
     cargs = dmri_motion_cargs(params, execution)
     ret = dmri_motion_outputs(params, execution)
@@ -269,8 +271,6 @@ def dmri_motion(
     Returns:
         NamedTuple of outputs (described in `DmriMotionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_MOTION_METADATA)
     params = dmri_motion_params(
         outfile=outfile,
         outf=outf,
@@ -284,7 +284,7 @@ def dmri_motion(
         help_=help_,
         version=version,
     )
-    return dmri_motion_execute(params, execution)
+    return dmri_motion_execute(params, runner)
 
 
 __all__ = [
@@ -292,8 +292,6 @@ __all__ = [
     "DmriMotionOutputs",
     "DmriMotionParameters",
     "dmri_motion",
-    "dmri_motion_cargs",
     "dmri_motion_execute",
-    "dmri_motion_outputs",
     "dmri_motion_params",
 ]

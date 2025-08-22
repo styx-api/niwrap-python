@@ -226,7 +226,7 @@ def mris_make_template_outputs(
 
 def mris_make_template_execute(
     params: MrisMakeTemplateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMakeTemplateOutputs:
     """
     This program will add a template into an average surface.
@@ -237,10 +237,12 @@ def mris_make_template_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMakeTemplateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MAKE_TEMPLATE_METADATA)
     params = execution.params(params)
     cargs = mris_make_template_cargs(params, execution)
     ret = mris_make_template_outputs(params, execution)
@@ -294,8 +296,6 @@ def mris_make_template(
     Returns:
         NamedTuple of outputs (described in `MrisMakeTemplateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MAKE_TEMPLATE_METADATA)
     params = mris_make_template_params(
         hemi=hemi,
         surface_name=surface_name,
@@ -313,7 +313,7 @@ def mris_make_template(
         smooth_iterations=smooth_iterations,
         subjects_dir=subjects_dir,
     )
-    return mris_make_template_execute(params, execution)
+    return mris_make_template_execute(params, runner)
 
 
 __all__ = [
@@ -321,8 +321,6 @@ __all__ = [
     "MrisMakeTemplateOutputs",
     "MrisMakeTemplateParameters",
     "mris_make_template",
-    "mris_make_template_cargs",
     "mris_make_template_execute",
-    "mris_make_template_outputs",
     "mris_make_template_params",
 ]

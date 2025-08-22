@@ -135,7 +135,7 @@ def mri_label_histo_outputs(
 
 def mri_label_histo_execute(
     params: MriLabelHistoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLabelHistoOutputs:
     """
     Tool for creating a histogram of voxel values within a specified label.
@@ -146,10 +146,12 @@ def mri_label_histo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLabelHistoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LABEL_HISTO_METADATA)
     params = execution.params(params)
     cargs = mri_label_histo_cargs(params, execution)
     ret = mri_label_histo_outputs(params, execution)
@@ -180,15 +182,13 @@ def mri_label_histo(
     Returns:
         NamedTuple of outputs (described in `MriLabelHistoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LABEL_HISTO_METADATA)
     params = mri_label_histo_params(
         t1_volume=t1_volume,
         labeled_volume=labeled_volume,
         label=label,
         output=output,
     )
-    return mri_label_histo_execute(params, execution)
+    return mri_label_histo_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MriLabelHistoOutputs",
     "MriLabelHistoParameters",
     "mri_label_histo",
-    "mri_label_histo_cargs",
     "mri_label_histo_execute",
-    "mri_label_histo_outputs",
     "mri_label_histo_params",
 ]

@@ -173,7 +173,7 @@ def possum_matrix_outputs(
 
 def possum_matrix_execute(
     params: PossumMatrixParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PossumMatrixOutputs:
     """
     Event matrix generator for POSSUM simulation in FSL.
@@ -184,10 +184,12 @@ def possum_matrix_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PossumMatrixOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POSSUM_MATRIX_METADATA)
     params = execution.params(params)
     cargs = possum_matrix_cargs(params, execution)
     ret = possum_matrix_outputs(params, execution)
@@ -230,8 +232,6 @@ def possum_matrix(
     Returns:
         NamedTuple of outputs (described in `PossumMatrixOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POSSUM_MATRIX_METADATA)
     params = possum_matrix_params(
         pulse_sequence=pulse_sequence,
         motion_matrix=motion_matrix,
@@ -241,7 +241,7 @@ def possum_matrix(
         old_version_flag=old_version_flag,
         segment_size=segment_size,
     )
-    return possum_matrix_execute(params, execution)
+    return possum_matrix_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "PossumMatrixOutputs",
     "PossumMatrixParameters",
     "possum_matrix",
-    "possum_matrix_cargs",
     "possum_matrix_execute",
-    "possum_matrix_outputs",
     "possum_matrix_params",
 ]

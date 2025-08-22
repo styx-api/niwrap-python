@@ -120,7 +120,7 @@ def help_format_outputs(
 
 def help_format_execute(
     params: HelpFormatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HelpFormatOutputs:
     """
     Formats text by converting URLs into HTML hyperlinks.
@@ -131,10 +131,12 @@ def help_format_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HelpFormatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HELP_FORMAT_METADATA)
     params = execution.params(params)
     cargs = help_format_cargs(params, execution)
     ret = help_format_outputs(params, execution)
@@ -159,12 +161,10 @@ def help_format(
     Returns:
         NamedTuple of outputs (described in `HelpFormatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HELP_FORMAT_METADATA)
     params = help_format_params(
         stdin=stdin,
     )
-    return help_format_execute(params, execution)
+    return help_format_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "HelpFormatOutputs",
     "HelpFormatParameters",
     "help_format",
-    "help_format_cargs",
     "help_format_execute",
-    "help_format_outputs",
     "help_format_params",
 ]

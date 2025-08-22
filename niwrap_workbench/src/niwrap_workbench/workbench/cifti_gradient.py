@@ -371,7 +371,7 @@ def cifti_gradient_outputs(
 
 def cifti_gradient_execute(
     params: CiftiGradientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiGradientOutputs:
     """
     Take gradient of a cifti file.
@@ -389,10 +389,12 @@ def cifti_gradient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiGradientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_GRADIENT_METADATA)
     params = execution.params(params)
     cargs = cifti_gradient_cargs(params, execution)
     ret = cifti_gradient_outputs(params, execution)
@@ -450,8 +452,6 @@ def cifti_gradient(
     Returns:
         NamedTuple of outputs (described in `CiftiGradientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_GRADIENT_METADATA)
     params = cifti_gradient_params(
         cifti=cifti,
         direction=direction,
@@ -465,7 +465,7 @@ def cifti_gradient(
         opt_average_output=opt_average_output,
         opt_vectors_vectors_out=opt_vectors_vectors_out,
     )
-    return cifti_gradient_execute(params, execution)
+    return cifti_gradient_execute(params, runner)
 
 
 __all__ = [
@@ -476,14 +476,9 @@ __all__ = [
     "CiftiGradientParameters",
     "CiftiGradientRightSurfaceParameters",
     "cifti_gradient",
-    "cifti_gradient_cargs",
-    "cifti_gradient_cerebellum_surface_cargs",
     "cifti_gradient_cerebellum_surface_params",
     "cifti_gradient_execute",
-    "cifti_gradient_left_surface_cargs",
     "cifti_gradient_left_surface_params",
-    "cifti_gradient_outputs",
     "cifti_gradient_params",
-    "cifti_gradient_right_surface_cargs",
     "cifti_gradient_right_surface_params",
 ]

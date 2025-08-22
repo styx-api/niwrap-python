@@ -172,7 +172,7 @@ def mris_distance_transform_outputs(
 
 def mris_distance_transform_execute(
     params: MrisDistanceTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisDistanceTransformOutputs:
     """
     Computes the distance transform of a label on the surface.
@@ -183,10 +183,12 @@ def mris_distance_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDistanceTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_DISTANCE_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = mris_distance_transform_cargs(params, execution)
     ret = mris_distance_transform_outputs(params, execution)
@@ -226,8 +228,6 @@ def mris_distance_transform(
     Returns:
         NamedTuple of outputs (described in `MrisDistanceTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_DISTANCE_TRANSFORM_METADATA)
     params = mris_distance_transform_params(
         surface=surface,
         label=label,
@@ -238,7 +238,7 @@ def mris_distance_transform(
         divide=divide,
         olabel=olabel,
     )
-    return mris_distance_transform_execute(params, execution)
+    return mris_distance_transform_execute(params, runner)
 
 
 __all__ = [
@@ -246,8 +246,6 @@ __all__ = [
     "MrisDistanceTransformOutputs",
     "MrisDistanceTransformParameters",
     "mris_distance_transform",
-    "mris_distance_transform_cargs",
     "mris_distance_transform_execute",
-    "mris_distance_transform_outputs",
     "mris_distance_transform_params",
 ]

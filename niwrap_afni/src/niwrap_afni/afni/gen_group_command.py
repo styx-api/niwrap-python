@@ -232,7 +232,7 @@ def gen_group_command_outputs(
 
 def gen_group_command_execute(
     params: GenGroupCommandParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GenGroupCommandOutputs:
     """
     Generate group analysis command scripts by parsing wildcard-based lists of input
@@ -244,10 +244,12 @@ def gen_group_command_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GenGroupCommandOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GEN_GROUP_COMMAND_METADATA)
     params = execution.params(params)
     cargs = gen_group_command_cargs(params, execution)
     ret = gen_group_command_outputs(params, execution)
@@ -296,8 +298,6 @@ def gen_group_command(
     Returns:
         NamedTuple of outputs (described in `GenGroupCommandOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GEN_GROUP_COMMAND_METADATA)
     params = gen_group_command_params(
         command_name=command_name,
         datasets=datasets,
@@ -312,7 +312,7 @@ def gen_group_command(
         write_script=write_script,
         other_options=other_options,
     )
-    return gen_group_command_execute(params, execution)
+    return gen_group_command_execute(params, runner)
 
 
 __all__ = [
@@ -320,8 +320,6 @@ __all__ = [
     "GenGroupCommandOutputs",
     "GenGroupCommandParameters",
     "gen_group_command",
-    "gen_group_command_cargs",
     "gen_group_command_execute",
-    "gen_group_command_outputs",
     "gen_group_command_params",
 ]

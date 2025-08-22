@@ -410,7 +410,7 @@ def long_mris_slopes_outputs(
 
 def long_mris_slopes_execute(
     params: LongMrisSlopesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongMrisSlopesOutputs:
     """
     Computes slope maps (e.g., of thickness) in a longitudinal study using
@@ -422,10 +422,12 @@ def long_mris_slopes_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongMrisSlopesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_MRIS_SLOPES_METADATA)
     params = execution.params(params)
     cargs = long_mris_slopes_cargs(params, execution)
     ret = long_mris_slopes_outputs(params, execution)
@@ -524,8 +526,6 @@ def long_mris_slopes(
     Returns:
         NamedTuple of outputs (described in `LongMrisSlopesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_MRIS_SLOPES_METADATA)
     params = long_mris_slopes_params(
         qdec=qdec,
         meas=meas,
@@ -562,7 +562,7 @@ def long_mris_slopes(
         stack_spc=stack_spc,
         stack_resid=stack_resid,
     )
-    return long_mris_slopes_execute(params, execution)
+    return long_mris_slopes_execute(params, runner)
 
 
 __all__ = [
@@ -570,8 +570,6 @@ __all__ = [
     "LongMrisSlopesOutputs",
     "LongMrisSlopesParameters",
     "long_mris_slopes",
-    "long_mris_slopes_cargs",
     "long_mris_slopes_execute",
-    "long_mris_slopes_outputs",
     "long_mris_slopes_params",
 ]

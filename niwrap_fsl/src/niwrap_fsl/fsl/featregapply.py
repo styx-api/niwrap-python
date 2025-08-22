@@ -174,7 +174,7 @@ def featregapply_outputs(
 
 def featregapply_execute(
     params: FeatregapplyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FeatregapplyOutputs:
     """
     Apply registration from FEAT analysis to other images.
@@ -185,10 +185,12 @@ def featregapply_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FeatregapplyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FEATREGAPPLY_METADATA)
     params = execution.params(params)
     cargs = featregapply_cargs(params, execution)
     ret = featregapply_outputs(params, execution)
@@ -231,8 +233,6 @@ def featregapply(
     Returns:
         NamedTuple of outputs (described in `FeatregapplyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FEATREGAPPLY_METADATA)
     params = featregapply_params(
         feat_directory=feat_directory,
         force_flag=force_flag,
@@ -242,7 +242,7 @@ def featregapply(
         standard_space_res=standard_space_res,
         exclude_filtered_func_flag=exclude_filtered_func_flag,
     )
-    return featregapply_execute(params, execution)
+    return featregapply_execute(params, runner)
 
 
 __all__ = [
@@ -250,8 +250,6 @@ __all__ = [
     "FeatregapplyOutputs",
     "FeatregapplyParameters",
     "featregapply",
-    "featregapply_cargs",
     "featregapply_execute",
-    "featregapply_outputs",
     "featregapply_params",
 ]

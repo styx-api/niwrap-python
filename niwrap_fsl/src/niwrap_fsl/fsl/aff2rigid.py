@@ -123,7 +123,7 @@ def aff2rigid_outputs(
 
 def aff2rigid_execute(
     params: Aff2rigidParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Aff2rigidOutputs:
     """
     Tool for converting affine transformations to rigid transformations.
@@ -134,10 +134,12 @@ def aff2rigid_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Aff2rigidOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFF2RIGID_METADATA)
     params = execution.params(params)
     cargs = aff2rigid_cargs(params, execution)
     ret = aff2rigid_outputs(params, execution)
@@ -166,13 +168,11 @@ def aff2rigid(
     Returns:
         NamedTuple of outputs (described in `Aff2rigidOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFF2RIGID_METADATA)
     params = aff2rigid_params(
         input_transform=input_transform,
         output_transform=output_transform,
     )
-    return aff2rigid_execute(params, execution)
+    return aff2rigid_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "Aff2rigidOutputs",
     "Aff2rigidParameters",
     "aff2rigid",
-    "aff2rigid_cargs",
     "aff2rigid_execute",
-    "aff2rigid_outputs",
     "aff2rigid_params",
 ]

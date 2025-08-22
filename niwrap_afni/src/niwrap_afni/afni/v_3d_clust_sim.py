@@ -328,7 +328,7 @@ def v_3d_clust_sim_outputs(
 
 def v_3d_clust_sim_execute(
     params: V3dClustSimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dClustSimOutputs:
     """
     Program to estimate the probability of false positive (noise-only) clusters.
@@ -339,10 +339,12 @@ def v_3d_clust_sim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dClustSimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CLUST_SIM_METADATA)
     params = execution.params(params)
     cargs = v_3d_clust_sim_cargs(params, execution)
     ret = v_3d_clust_sim_outputs(params, execution)
@@ -411,8 +413,6 @@ def v_3d_clust_sim(
     Returns:
         NamedTuple of outputs (described in `V3dClustSimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CLUST_SIM_METADATA)
     params = v_3d_clust_sim_params(
         nxyz=nxyz,
         dxyz=dxyz,
@@ -437,7 +437,7 @@ def v_3d_clust_sim(
         quiet=quiet,
         ssave=ssave,
     )
-    return v_3d_clust_sim_execute(params, execution)
+    return v_3d_clust_sim_execute(params, runner)
 
 
 __all__ = [
@@ -445,8 +445,6 @@ __all__ = [
     "V3dClustSimParameters",
     "V_3D_CLUST_SIM_METADATA",
     "v_3d_clust_sim",
-    "v_3d_clust_sim_cargs",
     "v_3d_clust_sim_execute",
-    "v_3d_clust_sim_outputs",
     "v_3d_clust_sim_params",
 ]

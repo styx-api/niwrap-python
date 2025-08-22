@@ -137,7 +137,7 @@ def imaver_outputs(
 
 def imaver_execute(
     params: ImaverParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImaverOutputs:
     """
     Computes the mean and standard deviation, pixel-by-pixel, of a whole bunch of
@@ -149,10 +149,12 @@ def imaver_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImaverOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMAVER_METADATA)
     params = execution.params(params)
     cargs = imaver_cargs(params, execution)
     ret = imaver_outputs(params, execution)
@@ -182,14 +184,12 @@ def imaver(
     Returns:
         NamedTuple of outputs (described in `ImaverOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMAVER_METADATA)
     params = imaver_params(
         out_ave=out_ave,
         out_sig=out_sig,
         input_images=input_images,
     )
-    return imaver_execute(params, execution)
+    return imaver_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "ImaverOutputs",
     "ImaverParameters",
     "imaver",
-    "imaver_cargs",
     "imaver_execute",
-    "imaver_outputs",
     "imaver_params",
 ]

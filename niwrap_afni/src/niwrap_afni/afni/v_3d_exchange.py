@@ -156,7 +156,7 @@ def v_3d_exchange_outputs(
 
 def v_3d_exchange_execute(
     params: V3dExchangeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dExchangeOutputs:
     """
     Replaces voxel values using a mapping file with specified columns.
@@ -167,10 +167,12 @@ def v_3d_exchange_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dExchangeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_EXCHANGE_METADATA)
     params = execution.params(params)
     cargs = v_3d_exchange_cargs(params, execution)
     ret = v_3d_exchange_outputs(params, execution)
@@ -205,8 +207,6 @@ def v_3d_exchange(
     Returns:
         NamedTuple of outputs (described in `V3dExchangeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_EXCHANGE_METADATA)
     params = v_3d_exchange_params(
         prefix=prefix,
         infile=infile,
@@ -214,7 +214,7 @@ def v_3d_exchange(
         version=version,
         help_=help_,
     )
-    return v_3d_exchange_execute(params, execution)
+    return v_3d_exchange_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "V3dExchangeParameters",
     "V_3D_EXCHANGE_METADATA",
     "v_3d_exchange",
-    "v_3d_exchange_cargs",
     "v_3d_exchange_execute",
-    "v_3d_exchange_outputs",
     "v_3d_exchange_params",
 ]

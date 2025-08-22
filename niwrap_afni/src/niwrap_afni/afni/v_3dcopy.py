@@ -143,7 +143,7 @@ def v_3dcopy_outputs(
 
 def v_3dcopy_execute(
     params: V3dcopyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dcopyOutputs:
     """
     3dcopy copies datasets with or without altering prefixes and converting formats.
@@ -154,10 +154,12 @@ def v_3dcopy_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dcopyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DCOPY_METADATA)
     params = execution.params(params)
     cargs = v_3dcopy_cargs(params, execution)
     ret = v_3dcopy_outputs(params, execution)
@@ -191,8 +193,6 @@ def v_3dcopy(
     Returns:
         NamedTuple of outputs (described in `V3dcopyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DCOPY_METADATA)
     params = v_3dcopy_params(
         verbose=verbose,
         denote=denote,
@@ -200,7 +200,7 @@ def v_3dcopy(
         view=view,
         new_prefix=new_prefix,
     )
-    return v_3dcopy_execute(params, execution)
+    return v_3dcopy_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "V3dcopyParameters",
     "V_3DCOPY_METADATA",
     "v_3dcopy",
-    "v_3dcopy_cargs",
     "v_3dcopy_execute",
-    "v_3dcopy_outputs",
     "v_3dcopy_params",
 ]

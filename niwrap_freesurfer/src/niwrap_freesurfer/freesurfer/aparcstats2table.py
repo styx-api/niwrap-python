@@ -263,7 +263,7 @@ def aparcstats2table_outputs(
 
 def aparcstats2table_execute(
     params: Aparcstats2tableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Aparcstats2tableOutputs:
     """
     Converts a cortical stats file into a table format with subjects as rows and
@@ -275,10 +275,12 @@ def aparcstats2table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Aparcstats2tableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APARCSTATS2TABLE_METADATA)
     params = execution.params(params)
     cargs = aparcstats2table_cargs(params, execution)
     ret = aparcstats2table_outputs(params, execution)
@@ -338,8 +340,6 @@ def aparcstats2table(
     Returns:
         NamedTuple of outputs (described in `Aparcstats2tableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APARCSTATS2TABLE_METADATA)
     params = aparcstats2table_params(
         subjects=subjects,
         subjectsfile=subjectsfile,
@@ -360,7 +360,7 @@ def aparcstats2table(
         etiv=etiv,
         scale=scale,
     )
-    return aparcstats2table_execute(params, execution)
+    return aparcstats2table_execute(params, runner)
 
 
 __all__ = [
@@ -368,8 +368,6 @@ __all__ = [
     "Aparcstats2tableOutputs",
     "Aparcstats2tableParameters",
     "aparcstats2table",
-    "aparcstats2table_cargs",
     "aparcstats2table_execute",
-    "aparcstats2table_outputs",
     "aparcstats2table_params",
 ]

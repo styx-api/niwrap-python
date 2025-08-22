@@ -164,7 +164,7 @@ def v_3d_trfix_outputs(
 
 def v_3d_trfix_execute(
     params: V3dTrfixParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTrfixOutputs:
     """
     Re-sample dataset with irregular time grid to regular time grid via linear
@@ -176,10 +176,12 @@ def v_3d_trfix_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTrfixOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TRFIX_METADATA)
     params = execution.params(params)
     cargs = v_3d_trfix_cargs(params, execution)
     ret = v_3d_trfix_outputs(params, execution)
@@ -213,8 +215,6 @@ def v_3d_trfix(
     Returns:
         NamedTuple of outputs (described in `V3dTrfixOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TRFIX_METADATA)
     params = v_3d_trfix_params(
         input_file=input_file,
         tr_list=tr_list,
@@ -222,7 +222,7 @@ def v_3d_trfix(
         prefix=prefix,
         output_tr=output_tr,
     )
-    return v_3d_trfix_execute(params, execution)
+    return v_3d_trfix_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "V3dTrfixParameters",
     "V_3D_TRFIX_METADATA",
     "v_3d_trfix",
-    "v_3d_trfix_cargs",
     "v_3d_trfix_execute",
-    "v_3d_trfix_outputs",
     "v_3d_trfix_params",
 ]

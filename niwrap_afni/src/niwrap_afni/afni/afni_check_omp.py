@@ -118,7 +118,7 @@ def afni_check_omp_outputs(
 
 def afni_check_omp_execute(
     params: AfniCheckOmpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniCheckOmpOutputs:
     """
     Tool to check the OpenMP multi-threading environment for AFNI.
@@ -129,10 +129,12 @@ def afni_check_omp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniCheckOmpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_CHECK_OMP_METADATA)
     params = execution.params(params)
     cargs = afni_check_omp_cargs(params, execution)
     ret = afni_check_omp_outputs(params, execution)
@@ -157,12 +159,10 @@ def afni_check_omp(
     Returns:
         NamedTuple of outputs (described in `AfniCheckOmpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_CHECK_OMP_METADATA)
     params = afni_check_omp_params(
         iterations=iterations,
     )
-    return afni_check_omp_execute(params, execution)
+    return afni_check_omp_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "AfniCheckOmpOutputs",
     "AfniCheckOmpParameters",
     "afni_check_omp",
-    "afni_check_omp_cargs",
     "afni_check_omp_execute",
-    "afni_check_omp_outputs",
     "afni_check_omp_params",
 ]

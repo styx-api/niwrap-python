@@ -154,7 +154,7 @@ def dicom_hinfo_outputs(
 
 def dicom_hinfo_execute(
     params: DicomHinfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DicomHinfoOutputs:
     """
     Prints selected information from one or more DICOM files to stdout.
@@ -165,10 +165,12 @@ def dicom_hinfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DicomHinfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DICOM_HINFO_METADATA)
     params = execution.params(params)
     cargs = dicom_hinfo_cargs(params, execution)
     ret = dicom_hinfo_outputs(params, execution)
@@ -205,8 +207,6 @@ def dicom_hinfo(
     Returns:
         NamedTuple of outputs (described in `DicomHinfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DICOM_HINFO_METADATA)
     params = dicom_hinfo_params(
         tag=tag,
         sepstr=sepstr,
@@ -215,7 +215,7 @@ def dicom_hinfo(
         namelast=namelast,
         files=files,
     )
-    return dicom_hinfo_execute(params, execution)
+    return dicom_hinfo_execute(params, runner)
 
 
 __all__ = [
@@ -223,8 +223,6 @@ __all__ = [
     "DicomHinfoOutputs",
     "DicomHinfoParameters",
     "dicom_hinfo",
-    "dicom_hinfo_cargs",
     "dicom_hinfo_execute",
-    "dicom_hinfo_outputs",
     "dicom_hinfo_params",
 ]

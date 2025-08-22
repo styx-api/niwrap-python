@@ -213,7 +213,7 @@ def surf2_vol_coord_outputs(
 
 def surf2_vol_coord_execute(
     params: Surf2VolCoordParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Surf2VolCoordOutputs:
     """
     Relates node indices to coordinates given x y z coordinates and returns the
@@ -225,10 +225,12 @@ def surf2_vol_coord_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Surf2VolCoordOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF2_VOL_COORD_METADATA)
     params = execution.params(params)
     cargs = surf2_vol_coord_cargs(params, execution)
     ret = surf2_vol_coord_outputs(params, execution)
@@ -278,8 +280,6 @@ def surf2_vol_coord(
     Returns:
         NamedTuple of outputs (described in `Surf2VolCoordOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF2_VOL_COORD_METADATA)
     params = surf2_vol_coord_params(
         surface=surface,
         grid_vol=grid_vol,
@@ -293,7 +293,7 @@ def surf2_vol_coord(
         verb_level=verb_level,
         prefix=prefix,
     )
-    return surf2_vol_coord_execute(params, execution)
+    return surf2_vol_coord_execute(params, runner)
 
 
 __all__ = [
@@ -301,8 +301,6 @@ __all__ = [
     "Surf2VolCoordOutputs",
     "Surf2VolCoordParameters",
     "surf2_vol_coord",
-    "surf2_vol_coord_cargs",
     "surf2_vol_coord_execute",
-    "surf2_vol_coord_outputs",
     "surf2_vol_coord_params",
 ]

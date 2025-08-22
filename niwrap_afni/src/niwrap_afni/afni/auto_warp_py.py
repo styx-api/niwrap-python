@@ -372,7 +372,7 @@ def auto_warp_py_outputs(
 
 def auto_warp_py_execute(
     params: AutoWarpPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AutoWarpPyOutputs:
     """
     Nonlinear registration tool.
@@ -383,10 +383,12 @@ def auto_warp_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AutoWarpPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AUTO_WARP_PY_METADATA)
     params = execution.params(params)
     cargs = auto_warp_py_cargs(params, execution)
     ret = auto_warp_py_outputs(params, execution)
@@ -478,8 +480,6 @@ def auto_warp_py(
     Returns:
         NamedTuple of outputs (described in `AutoWarpPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AUTO_WARP_PY_METADATA)
     params = auto_warp_py_params(
         base=base,
         input_=input_,
@@ -515,7 +515,7 @@ def auto_warp_py(
         skullstrip_opts=skullstrip_opts,
         at_opts=at_opts,
     )
-    return auto_warp_py_execute(params, execution)
+    return auto_warp_py_execute(params, runner)
 
 
 __all__ = [
@@ -523,8 +523,6 @@ __all__ = [
     "AutoWarpPyOutputs",
     "AutoWarpPyParameters",
     "auto_warp_py",
-    "auto_warp_py_cargs",
     "auto_warp_py_execute",
-    "auto_warp_py_outputs",
     "auto_warp_py_params",
 ]

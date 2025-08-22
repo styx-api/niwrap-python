@@ -285,7 +285,7 @@ def v_3drefit_outputs(
 
 def v_3drefit_execute(
     params: V3drefitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3drefitOutputs:
     """
     Changes some of the information inside a 3D dataset's header.
@@ -296,10 +296,12 @@ def v_3drefit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3drefitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DREFIT_METADATA)
     params = execution.params(params)
     cargs = v_3drefit_cargs(params, execution)
     ret = v_3drefit_outputs(params, execution)
@@ -373,8 +375,6 @@ def v_3drefit(
     Returns:
         NamedTuple of outputs (described in `V3drefitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DREFIT_METADATA)
     params = v_3drefit_params(
         atrcopy=atrcopy,
         atrfloat=atrfloat,
@@ -394,7 +394,7 @@ def v_3drefit(
         zdel=zdel,
         zorigin=zorigin,
     )
-    return v_3drefit_execute(params, execution)
+    return v_3drefit_execute(params, runner)
 
 
 __all__ = [
@@ -402,8 +402,6 @@ __all__ = [
     "V3drefitParameters",
     "V_3DREFIT_METADATA",
     "v_3drefit",
-    "v_3drefit_cargs",
     "v_3drefit_execute",
-    "v_3drefit_outputs",
     "v_3drefit_params",
 ]

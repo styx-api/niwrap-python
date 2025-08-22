@@ -152,7 +152,7 @@ def v_1d_tsort_outputs(
 
 def v_1d_tsort_execute(
     params: V1dTsortParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dTsortOutputs:
     """
     Sorts each column of the input 1D file and writes result to stdout.
@@ -163,10 +163,12 @@ def v_1d_tsort_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dTsortOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_TSORT_METADATA)
     params = execution.params(params)
     cargs = v_1d_tsort_cargs(params, execution)
     ret = v_1d_tsort_outputs(params, execution)
@@ -203,8 +205,6 @@ def v_1d_tsort(
     Returns:
         NamedTuple of outputs (described in `V1dTsortOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_TSORT_METADATA)
     params = v_1d_tsort_params(
         inc_order=inc_order,
         dec_order=dec_order,
@@ -213,7 +213,7 @@ def v_1d_tsort(
         imode=imode,
         infile=infile,
     )
-    return v_1d_tsort_execute(params, execution)
+    return v_1d_tsort_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "V1dTsortParameters",
     "V_1D_TSORT_METADATA",
     "v_1d_tsort",
-    "v_1d_tsort_cargs",
     "v_1d_tsort_execute",
-    "v_1d_tsort_outputs",
     "v_1d_tsort_params",
 ]

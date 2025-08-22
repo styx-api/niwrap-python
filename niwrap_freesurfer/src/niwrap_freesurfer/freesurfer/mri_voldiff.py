@@ -177,7 +177,7 @@ def mri_voldiff_outputs(
 
 def mri_voldiff_execute(
     params: MriVoldiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriVoldiffOutputs:
     """
     Determines whether two volumes are different in terms of pixel data, dimension,
@@ -189,10 +189,12 @@ def mri_voldiff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriVoldiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_VOLDIFF_METADATA)
     params = execution.params(params)
     cargs = mri_voldiff_cargs(params, execution)
     ret = mri_voldiff_outputs(params, execution)
@@ -234,8 +236,6 @@ def mri_voldiff(
     Returns:
         NamedTuple of outputs (described in `MriVoldiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_VOLDIFF_METADATA)
     params = mri_voldiff_params(
         volume1=volume1,
         volume2=volume2,
@@ -247,7 +247,7 @@ def mri_voldiff(
         debug=debug,
         checkopts=checkopts,
     )
-    return mri_voldiff_execute(params, execution)
+    return mri_voldiff_execute(params, runner)
 
 
 __all__ = [
@@ -255,8 +255,6 @@ __all__ = [
     "MriVoldiffOutputs",
     "MriVoldiffParameters",
     "mri_voldiff",
-    "mri_voldiff_cargs",
     "mri_voldiff_execute",
-    "mri_voldiff_outputs",
     "mri_voldiff_params",
 ]

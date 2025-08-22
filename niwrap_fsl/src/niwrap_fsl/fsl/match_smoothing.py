@@ -133,7 +133,7 @@ def match_smoothing_outputs(
 
 def match_smoothing_execute(
     params: MatchSmoothingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MatchSmoothingOutputs:
     """
     Computes the smoothing sigma needed to be applied to structural data to match a
@@ -145,10 +145,12 @@ def match_smoothing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MatchSmoothingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MATCH_SMOOTHING_METADATA)
     params = execution.params(params)
     cargs = match_smoothing_cargs(params, execution)
     ret = match_smoothing_outputs(params, execution)
@@ -182,15 +184,13 @@ def match_smoothing(
     Returns:
         NamedTuple of outputs (described in `MatchSmoothingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MATCH_SMOOTHING_METADATA)
     params = match_smoothing_params(
         example_func=example_func,
         func_smoothing_fwhm=func_smoothing_fwhm,
         example_structural=example_structural,
         standard_space_resolution=standard_space_resolution,
     )
-    return match_smoothing_execute(params, execution)
+    return match_smoothing_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MatchSmoothingOutputs",
     "MatchSmoothingParameters",
     "match_smoothing",
-    "match_smoothing_cargs",
     "match_smoothing_execute",
-    "match_smoothing_outputs",
     "match_smoothing_params",
 ]

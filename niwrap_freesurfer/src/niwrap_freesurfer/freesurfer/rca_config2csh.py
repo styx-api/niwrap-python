@@ -119,7 +119,7 @@ def rca_config2csh_outputs(
 
 def rca_config2csh_execute(
     params: RcaConfig2cshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RcaConfig2cshOutputs:
     """
     rca-config2csh is a utility to convert configuration files into C-shell syntax.
@@ -130,10 +130,12 @@ def rca_config2csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RcaConfig2cshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RCA_CONFIG2CSH_METADATA)
     params = execution.params(params)
     cargs = rca_config2csh_cargs(params, execution)
     ret = rca_config2csh_outputs(params, execution)
@@ -158,12 +160,10 @@ def rca_config2csh(
     Returns:
         NamedTuple of outputs (described in `RcaConfig2cshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RCA_CONFIG2CSH_METADATA)
     params = rca_config2csh_params(
         configfile=configfile,
     )
-    return rca_config2csh_execute(params, execution)
+    return rca_config2csh_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "RcaConfig2cshOutputs",
     "RcaConfig2cshParameters",
     "rca_config2csh",
-    "rca_config2csh_cargs",
     "rca_config2csh_execute",
-    "rca_config2csh_outputs",
     "rca_config2csh_params",
 ]

@@ -126,7 +126,7 @@ def unpacksdcmdir_outputs(
 
 def unpacksdcmdir_execute(
     params: UnpacksdcmdirParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnpacksdcmdirOutputs:
     """
     A tool for unpacking SD card directories, typically used in neuroimaging
@@ -139,10 +139,12 @@ def unpacksdcmdir_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnpacksdcmdirOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNPACKSDCMDIR_METADATA)
     params = execution.params(params)
     cargs = unpacksdcmdir_cargs(params, execution)
     ret = unpacksdcmdir_outputs(params, execution)
@@ -172,13 +174,11 @@ def unpacksdcmdir(
     Returns:
         NamedTuple of outputs (described in `UnpacksdcmdirOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNPACKSDCMDIR_METADATA)
     params = unpacksdcmdir_params(
         input_directory=input_directory,
         output_directory=output_directory,
     )
-    return unpacksdcmdir_execute(params, execution)
+    return unpacksdcmdir_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "UnpacksdcmdirOutputs",
     "UnpacksdcmdirParameters",
     "unpacksdcmdir",
-    "unpacksdcmdir_cargs",
     "unpacksdcmdir_execute",
-    "unpacksdcmdir_outputs",
     "unpacksdcmdir_params",
 ]

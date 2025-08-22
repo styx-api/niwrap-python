@@ -149,7 +149,7 @@ def mri_cvs_data_copy_outputs(
 
 def mri_cvs_data_copy_execute(
     params: MriCvsDataCopyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCvsDataCopyOutputs:
     """
     Packs and copies files that are required for mri_cvs_register.
@@ -160,10 +160,12 @@ def mri_cvs_data_copy_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCvsDataCopyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CVS_DATA_COPY_METADATA)
     params = execution.params(params)
     cargs = mri_cvs_data_copy_cargs(params, execution)
     ret = mri_cvs_data_copy_outputs(params, execution)
@@ -198,8 +200,6 @@ def mri_cvs_data_copy(
     Returns:
         NamedTuple of outputs (described in `MriCvsDataCopyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CVS_DATA_COPY_METADATA)
     params = mri_cvs_data_copy_params(
         subjid=subjid,
         olddir=olddir,
@@ -207,7 +207,7 @@ def mri_cvs_data_copy(
         version=version,
         help_=help_,
     )
-    return mri_cvs_data_copy_execute(params, execution)
+    return mri_cvs_data_copy_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "MriCvsDataCopyOutputs",
     "MriCvsDataCopyParameters",
     "mri_cvs_data_copy",
-    "mri_cvs_data_copy_cargs",
     "mri_cvs_data_copy_execute",
-    "mri_cvs_data_copy_outputs",
     "mri_cvs_data_copy_params",
 ]

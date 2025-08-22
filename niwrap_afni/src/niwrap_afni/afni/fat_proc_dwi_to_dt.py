@@ -364,7 +364,7 @@ def fat_proc_dwi_to_dt_outputs(
 
 def fat_proc_dwi_to_dt_execute(
     params: FatProcDwiToDtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcDwiToDtOutputs:
     """
     This program fits tensors and DT parameters, as well as the uncertainty of DT
@@ -376,10 +376,12 @@ def fat_proc_dwi_to_dt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcDwiToDtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_DWI_TO_DT_METADATA)
     params = execution.params(params)
     cargs = fat_proc_dwi_to_dt_cargs(params, execution)
     ret = fat_proc_dwi_to_dt_outputs(params, execution)
@@ -477,8 +479,6 @@ def fat_proc_dwi_to_dt(
     Returns:
         NamedTuple of outputs (described in `FatProcDwiToDtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_DWI_TO_DT_METADATA)
     params = fat_proc_dwi_to_dt_params(
         in_dwi=in_dwi,
         in_gradmat=in_gradmat,
@@ -510,7 +510,7 @@ def fat_proc_dwi_to_dt(
         uncert_extra_cmds=uncert_extra_cmds,
         check_abs_min=check_abs_min,
     )
-    return fat_proc_dwi_to_dt_execute(params, execution)
+    return fat_proc_dwi_to_dt_execute(params, runner)
 
 
 __all__ = [
@@ -518,8 +518,6 @@ __all__ = [
     "FatProcDwiToDtOutputs",
     "FatProcDwiToDtParameters",
     "fat_proc_dwi_to_dt",
-    "fat_proc_dwi_to_dt_cargs",
     "fat_proc_dwi_to_dt_execute",
-    "fat_proc_dwi_to_dt_outputs",
     "fat_proc_dwi_to_dt_params",
 ]

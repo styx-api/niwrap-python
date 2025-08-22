@@ -228,7 +228,7 @@ def rtview_outputs(
 
 def rtview_execute(
     params: RtviewParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RtviewOutputs:
     """
     View FSFAST version 5 retinotopy data using the color wheel. This is a front-end
@@ -240,10 +240,12 @@ def rtview_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RtviewOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RTVIEW_METADATA)
     params = execution.params(params)
     cargs = rtview_cargs(params, execution)
     ret = rtview_outputs(params, execution)
@@ -296,8 +298,6 @@ def rtview(
     Returns:
         NamedTuple of outputs (described in `RtviewOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RTVIEW_METADATA)
     params = rtview_params(
         subject=subject,
         hemi=hemi,
@@ -314,7 +314,7 @@ def rtview(
         tcl_file=tcl_file,
         no_cleanup=no_cleanup,
     )
-    return rtview_execute(params, execution)
+    return rtview_execute(params, runner)
 
 
 __all__ = [
@@ -322,8 +322,6 @@ __all__ = [
     "RtviewOutputs",
     "RtviewParameters",
     "rtview",
-    "rtview_cargs",
     "rtview_execute",
-    "rtview_outputs",
     "rtview_params",
 ]

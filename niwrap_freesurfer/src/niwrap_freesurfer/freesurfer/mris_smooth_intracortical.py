@@ -213,7 +213,7 @@ def mris_smooth_intracortical_outputs(
 
 def mris_smooth_intracortical_execute(
     params: MrisSmoothIntracorticalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSmoothIntracorticalOutputs:
     """
     Smooths data overlaid onto cortical surface meshes using specified tangential
@@ -225,10 +225,12 @@ def mris_smooth_intracortical_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSmoothIntracorticalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SMOOTH_INTRACORTICAL_METADATA)
     params = execution.params(params)
     cargs = mris_smooth_intracortical_cargs(params, execution)
     ret = mris_smooth_intracortical_outputs(params, execution)
@@ -278,8 +280,6 @@ def mris_smooth_intracortical(
     Returns:
         NamedTuple of outputs (described in `MrisSmoothIntracorticalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SMOOTH_INTRACORTICAL_METADATA)
     params = mris_smooth_intracortical_params(
         surf_dir=surf_dir,
         surf_name=surf_name,
@@ -292,7 +292,7 @@ def mris_smooth_intracortical(
         rad_start=rad_start,
         tan_weights=tan_weights,
     )
-    return mris_smooth_intracortical_execute(params, execution)
+    return mris_smooth_intracortical_execute(params, runner)
 
 
 __all__ = [
@@ -300,8 +300,6 @@ __all__ = [
     "MrisSmoothIntracorticalOutputs",
     "MrisSmoothIntracorticalParameters",
     "mris_smooth_intracortical",
-    "mris_smooth_intracortical_cargs",
     "mris_smooth_intracortical_execute",
-    "mris_smooth_intracortical_outputs",
     "mris_smooth_intracortical_params",
 ]

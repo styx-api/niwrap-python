@@ -198,7 +198,7 @@ def fsl_boxplot_outputs(
 
 def fsl_boxplot_execute(
     params: FslBoxplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslBoxplotOutputs:
     """
     Tool for creating boxplot images from ASCII text matrices.
@@ -209,10 +209,12 @@ def fsl_boxplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslBoxplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_BOXPLOT_METADATA)
     params = execution.params(params)
     cargs = fsl_boxplot_cargs(params, execution)
     ret = fsl_boxplot_outputs(params, execution)
@@ -254,8 +256,6 @@ def fsl_boxplot(
     Returns:
         NamedTuple of outputs (described in `FslBoxplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_BOXPLOT_METADATA)
     params = fsl_boxplot_params(
         input_files=input_files,
         output_image=output_image,
@@ -267,7 +267,7 @@ def fsl_boxplot(
         plot_height=plot_height,
         plot_width=plot_width,
     )
-    return fsl_boxplot_execute(params, execution)
+    return fsl_boxplot_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "FslBoxplotOutputs",
     "FslBoxplotParameters",
     "fsl_boxplot",
-    "fsl_boxplot_cargs",
     "fsl_boxplot_execute",
-    "fsl_boxplot_outputs",
     "fsl_boxplot_params",
 ]

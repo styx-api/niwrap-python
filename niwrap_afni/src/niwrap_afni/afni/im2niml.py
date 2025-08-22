@@ -120,7 +120,7 @@ def im2niml_outputs(
 
 def im2niml_execute(
     params: Im2nimlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Im2nimlOutputs:
     """
     Converts the input image(s) to a text-based NIML element and writes the result
@@ -132,10 +132,12 @@ def im2niml_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Im2nimlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IM2NIML_METADATA)
     params = execution.params(params)
     cargs = im2niml_cargs(params, execution)
     ret = im2niml_outputs(params, execution)
@@ -161,12 +163,10 @@ def im2niml(
     Returns:
         NamedTuple of outputs (described in `Im2nimlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IM2NIML_METADATA)
     params = im2niml_params(
         input_files=input_files,
     )
-    return im2niml_execute(params, execution)
+    return im2niml_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "Im2nimlOutputs",
     "Im2nimlParameters",
     "im2niml",
-    "im2niml_cargs",
     "im2niml_execute",
-    "im2niml_outputs",
     "im2niml_params",
 ]

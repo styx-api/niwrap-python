@@ -230,7 +230,7 @@ def fat_proc_connec_vis_outputs(
 
 def fat_proc_connec_vis_execute(
     params: FatProcConnecVisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcConnecVisOutputs:
     """
     This program is for visualizing the volumetric output of tracking, mainly for
@@ -244,10 +244,12 @@ def fat_proc_connec_vis_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcConnecVisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_CONNEC_VIS_METADATA)
     params = execution.params(params)
     cargs = fat_proc_connec_vis_cargs(params, execution)
     ret = fat_proc_connec_vis_outputs(params, execution)
@@ -319,8 +321,6 @@ def fat_proc_connec_vis(
     Returns:
         NamedTuple of outputs (described in `FatProcConnecVisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_CONNEC_VIS_METADATA)
     params = fat_proc_connec_vis_params(
         in_rois=in_rois,
         prefix=prefix,
@@ -334,7 +334,7 @@ def fat_proc_connec_vis(
         wdir=wdir,
         no_clean=no_clean,
     )
-    return fat_proc_connec_vis_execute(params, execution)
+    return fat_proc_connec_vis_execute(params, runner)
 
 
 __all__ = [
@@ -342,8 +342,6 @@ __all__ = [
     "FatProcConnecVisOutputs",
     "FatProcConnecVisParameters",
     "fat_proc_connec_vis",
-    "fat_proc_connec_vis_cargs",
     "fat_proc_connec_vis_execute",
-    "fat_proc_connec_vis_outputs",
     "fat_proc_connec_vis_params",
 ]

@@ -128,7 +128,7 @@ def segment_ha_t2_sh_outputs(
 
 def segment_ha_t2_sh_execute(
     params: SegmentHaT2ShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentHaT2ShOutputs:
     """
     Segments hippocampal and amygdala structures from T2-weighted MRI images using
@@ -140,10 +140,12 @@ def segment_ha_t2_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentHaT2ShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_HA_T2_SH_METADATA)
     params = execution.params(params)
     cargs = segment_ha_t2_sh_cargs(params, execution)
     ret = segment_ha_t2_sh_outputs(params, execution)
@@ -171,13 +173,11 @@ def segment_ha_t2_sh(
     Returns:
         NamedTuple of outputs (described in `SegmentHaT2ShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_HA_T2_SH_METADATA)
     params = segment_ha_t2_sh_params(
         input_image=input_image,
         output_directory=output_directory,
     )
-    return segment_ha_t2_sh_execute(params, execution)
+    return segment_ha_t2_sh_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "SegmentHaT2ShOutputs",
     "SegmentHaT2ShParameters",
     "segment_ha_t2_sh",
-    "segment_ha_t2_sh_cargs",
     "segment_ha_t2_sh_execute",
-    "segment_ha_t2_sh_outputs",
     "segment_ha_t2_sh_params",
 ]

@@ -151,7 +151,7 @@ def slicesdir_outputs(
 
 def slicesdir_execute(
     params: SlicesdirParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlicesdirOutputs:
     """
     slicesdir generates a directory containing orthogonal slices through a set of
@@ -163,10 +163,12 @@ def slicesdir_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlicesdirOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICESDIR_METADATA)
     params = execution.params(params)
     cargs = slicesdir_cargs(params, execution)
     ret = slicesdir_outputs(params, execution)
@@ -203,8 +205,6 @@ def slicesdir(
     Returns:
         NamedTuple of outputs (described in `SlicesdirOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICESDIR_METADATA)
     params = slicesdir_params(
         flag_filelist=flag_filelist,
         outline_image=outline_image,
@@ -212,7 +212,7 @@ def slicesdir(
         slice_option=slice_option,
         filelist=filelist,
     )
-    return slicesdir_execute(params, execution)
+    return slicesdir_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "SlicesdirOutputs",
     "SlicesdirParameters",
     "slicesdir",
-    "slicesdir_cargs",
     "slicesdir_execute",
-    "slicesdir_outputs",
     "slicesdir_params",
 ]

@@ -147,7 +147,7 @@ def aparcstatsdiff_outputs(
 
 def aparcstatsdiff_execute(
     params: AparcstatsdiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AparcstatsdiffOutputs:
     """
     Utility to calculate percentage differences in aparc morphometry data between
@@ -159,10 +159,12 @@ def aparcstatsdiff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AparcstatsdiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APARCSTATSDIFF_METADATA)
     params = execution.params(params)
     cargs = aparcstatsdiff_cargs(params, execution)
     ret = aparcstatsdiff_outputs(params, execution)
@@ -198,8 +200,6 @@ def aparcstatsdiff(
     Returns:
         NamedTuple of outputs (described in `AparcstatsdiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APARCSTATSDIFF_METADATA)
     params = aparcstatsdiff_params(
         subj1=subj1,
         subj2=subj2,
@@ -208,7 +208,7 @@ def aparcstatsdiff(
         meas=meas,
         outdir=outdir,
     )
-    return aparcstatsdiff_execute(params, execution)
+    return aparcstatsdiff_execute(params, runner)
 
 
 __all__ = [
@@ -216,8 +216,6 @@ __all__ = [
     "AparcstatsdiffOutputs",
     "AparcstatsdiffParameters",
     "aparcstatsdiff",
-    "aparcstatsdiff_cargs",
     "aparcstatsdiff_execute",
-    "aparcstatsdiff_outputs",
     "aparcstatsdiff_params",
 ]

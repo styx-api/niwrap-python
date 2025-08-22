@@ -232,7 +232,7 @@ def nifti_information_outputs(
 
 def nifti_information_execute(
     params: NiftiInformationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
     Display information about a nifti/cifti file.
@@ -245,10 +245,12 @@ def nifti_information_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NiftiInformationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NIFTI_INFORMATION_METADATA)
     params = execution.params(params)
     cargs = nifti_information_cargs(params, execution)
     ret = nifti_information_outputs(params, execution)
@@ -281,15 +283,13 @@ def nifti_information(
     Returns:
         NamedTuple of outputs (described in `NiftiInformationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NIFTI_INFORMATION_METADATA)
     params = nifti_information_params(
         nifti_file=nifti_file,
         print_header=print_header,
         opt_print_matrix=opt_print_matrix,
         print_xml=print_xml,
     )
-    return nifti_information_execute(params, execution)
+    return nifti_information_execute(params, runner)
 
 
 __all__ = [
@@ -299,12 +299,8 @@ __all__ = [
     "NiftiInformationPrintHeaderParameters",
     "NiftiInformationPrintXmlParameters",
     "nifti_information",
-    "nifti_information_cargs",
     "nifti_information_execute",
-    "nifti_information_outputs",
     "nifti_information_params",
-    "nifti_information_print_header_cargs",
     "nifti_information_print_header_params",
-    "nifti_information_print_xml_cargs",
     "nifti_information_print_xml_params",
 ]

@@ -157,7 +157,7 @@ def map_to_base_outputs(
 
 def map_to_base_execute(
     params: MapToBaseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MapToBaseOutputs:
     """
     Maps an image or surface from a time point directory (either cross-sectional or
@@ -170,10 +170,12 @@ def map_to_base_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MapToBaseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAP_TO_BASE_METADATA)
     params = execution.params(params)
     cargs = map_to_base_cargs(params, execution)
     ret = map_to_base_outputs(params, execution)
@@ -210,8 +212,6 @@ def map_to_base(
     Returns:
         NamedTuple of outputs (described in `MapToBaseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAP_TO_BASE_METADATA)
     params = map_to_base_params(
         baseid=baseid,
         tpid=tpid,
@@ -219,7 +219,7 @@ def map_to_base(
         resample_type=resample_type,
         cross=cross,
     )
-    return map_to_base_execute(params, execution)
+    return map_to_base_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "MapToBaseOutputs",
     "MapToBaseParameters",
     "map_to_base",
-    "map_to_base_cargs",
     "map_to_base_execute",
-    "map_to_base_outputs",
     "map_to_base_params",
 ]

@@ -295,7 +295,7 @@ def v_5ttedit_outputs(
 
 def v_5ttedit_execute(
     params: V5tteditParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V5tteditOutputs:
     """
     Manually set the partial volume fractions in an ACT five-tissue-type (5TT) image
@@ -313,10 +313,12 @@ def v_5ttedit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V5tteditOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_5TTEDIT_METADATA)
     params = execution.params(params)
     cargs = v_5ttedit_cargs(params, execution)
     ret = v_5ttedit_outputs(params, execution)
@@ -386,8 +388,6 @@ def v_5ttedit(
     Returns:
         NamedTuple of outputs (described in `V5tteditOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_5TTEDIT_METADATA)
     params = v_5ttedit_params(
         cgm=cgm,
         sgm=sgm,
@@ -406,7 +406,7 @@ def v_5ttedit(
         input_=input_,
         output=output,
     )
-    return v_5ttedit_execute(params, execution)
+    return v_5ttedit_execute(params, runner)
 
 
 __all__ = [
@@ -415,10 +415,7 @@ __all__ = [
     "V5tteditParameters",
     "V_5TTEDIT_METADATA",
     "v_5ttedit",
-    "v_5ttedit_cargs",
-    "v_5ttedit_config_cargs",
     "v_5ttedit_config_params",
     "v_5ttedit_execute",
-    "v_5ttedit_outputs",
     "v_5ttedit_params",
 ]

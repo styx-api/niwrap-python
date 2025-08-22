@@ -140,7 +140,7 @@ def extracttxt_outputs(
 
 def extracttxt_execute(
     params: ExtracttxtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ExtracttxtOutputs:
     """
     Extracts text from a file based on a search word.
@@ -151,10 +151,12 @@ def extracttxt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ExtracttxtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EXTRACTTXT_METADATA)
     params = execution.params(params)
     cargs = extracttxt_cargs(params, execution)
     ret = extracttxt_outputs(params, execution)
@@ -186,15 +188,13 @@ def extracttxt(
     Returns:
         NamedTuple of outputs (described in `ExtracttxtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EXTRACTTXT_METADATA)
     params = extracttxt_params(
         search_word=search_word,
         file=file,
         num_trailing_lines=num_trailing_lines,
         relative_start=relative_start,
     )
-    return extracttxt_execute(params, execution)
+    return extracttxt_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "ExtracttxtOutputs",
     "ExtracttxtParameters",
     "extracttxt",
-    "extracttxt_cargs",
     "extracttxt_execute",
-    "extracttxt_outputs",
     "extracttxt_params",
 ]

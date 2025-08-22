@@ -241,7 +241,7 @@ def fixel2sh_outputs(
 
 def fixel2sh_execute(
     params: Fixel2shParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fixel2shOutputs:
     """
     Convert a fixel-based sparse-data image into an spherical harmonic image.
@@ -264,10 +264,12 @@ def fixel2sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fixel2shOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXEL2SH_METADATA)
     params = execution.params(params)
     cargs = fixel2sh_cargs(params, execution)
     ret = fixel2sh_outputs(params, execution)
@@ -328,8 +330,6 @@ def fixel2sh(
     Returns:
         NamedTuple of outputs (described in `Fixel2shOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXEL2SH_METADATA)
     params = fixel2sh_params(
         lmax=lmax,
         info=info,
@@ -343,7 +343,7 @@ def fixel2sh(
         fixel_in=fixel_in,
         sh_out=sh_out,
     )
-    return fixel2sh_execute(params, execution)
+    return fixel2sh_execute(params, runner)
 
 
 __all__ = [
@@ -352,10 +352,7 @@ __all__ = [
     "Fixel2shOutputs",
     "Fixel2shParameters",
     "fixel2sh",
-    "fixel2sh_cargs",
-    "fixel2sh_config_cargs",
     "fixel2sh_config_params",
     "fixel2sh_execute",
-    "fixel2sh_outputs",
     "fixel2sh_params",
 ]

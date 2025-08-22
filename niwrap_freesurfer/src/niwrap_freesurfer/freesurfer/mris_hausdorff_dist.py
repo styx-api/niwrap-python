@@ -141,7 +141,7 @@ def mris_hausdorff_dist_outputs(
 
 def mris_hausdorff_dist_execute(
     params: MrisHausdorffDistParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisHausdorffDistOutputs:
     """
     This program computes the Hausdorff distance between two labels on a surface.
@@ -152,10 +152,12 @@ def mris_hausdorff_dist_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisHausdorffDistOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_HAUSDORFF_DIST_METADATA)
     params = execution.params(params)
     cargs = mris_hausdorff_dist_cargs(params, execution)
     ret = mris_hausdorff_dist_outputs(params, execution)
@@ -187,15 +189,13 @@ def mris_hausdorff_dist(
     Returns:
         NamedTuple of outputs (described in `MrisHausdorffDistOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_HAUSDORFF_DIST_METADATA)
     params = mris_hausdorff_dist_params(
         surface=surface,
         label1=label1,
         label2=label2,
         annot_name=annot_name,
     )
-    return mris_hausdorff_dist_execute(params, execution)
+    return mris_hausdorff_dist_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "MrisHausdorffDistOutputs",
     "MrisHausdorffDistParameters",
     "mris_hausdorff_dist",
-    "mris_hausdorff_dist_cargs",
     "mris_hausdorff_dist_execute",
-    "mris_hausdorff_dist_outputs",
     "mris_hausdorff_dist_params",
 ]

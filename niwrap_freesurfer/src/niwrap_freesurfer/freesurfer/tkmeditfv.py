@@ -356,7 +356,7 @@ def tkmeditfv_outputs(
 
 def tkmeditfv_execute(
     params: TkmeditfvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TkmeditfvOutputs:
     """
     A wrapper script to run Freeview with arguments similar to tkmedit, providing
@@ -368,10 +368,12 @@ def tkmeditfv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TkmeditfvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TKMEDITFV_METADATA)
     params = execution.params(params)
     cargs = tkmeditfv_cargs(params, execution)
     ret = tkmeditfv_outputs(params, execution)
@@ -460,8 +462,6 @@ def tkmeditfv(
     Returns:
         NamedTuple of outputs (described in `TkmeditfvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TKMEDITFV_METADATA)
     params = tkmeditfv_params(
         subject=subject,
         mainvol=mainvol,
@@ -496,7 +496,7 @@ def tkmeditfv(
         use_tkmedit=use_tkmedit,
         load_aparc_aseg=load_aparc_aseg,
     )
-    return tkmeditfv_execute(params, execution)
+    return tkmeditfv_execute(params, runner)
 
 
 __all__ = [
@@ -504,8 +504,6 @@ __all__ = [
     "TkmeditfvOutputs",
     "TkmeditfvParameters",
     "tkmeditfv",
-    "tkmeditfv_cargs",
     "tkmeditfv_execute",
-    "tkmeditfv_outputs",
     "tkmeditfv_params",
 ]

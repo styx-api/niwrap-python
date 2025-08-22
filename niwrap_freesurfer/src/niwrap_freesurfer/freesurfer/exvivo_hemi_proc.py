@@ -220,7 +220,7 @@ def exvivo_hemi_proc_outputs(
 
 def exvivo_hemi_proc_execute(
     params: ExvivoHemiProcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ExvivoHemiProcOutputs:
     """
     Processes whole hemisphere data for Jeans entorhinal subfield labeling project.
@@ -231,10 +231,12 @@ def exvivo_hemi_proc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ExvivoHemiProcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EXVIVO_HEMI_PROC_METADATA)
     params = execution.params(params)
     cargs = exvivo_hemi_proc_cargs(params, execution)
     ret = exvivo_hemi_proc_outputs(params, execution)
@@ -288,8 +290,6 @@ def exvivo_hemi_proc(
     Returns:
         NamedTuple of outputs (described in `ExvivoHemiProcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EXVIVO_HEMI_PROC_METADATA)
     params = exvivo_hemi_proc_params(
         flashdir=flashdir,
         outdir=outdir,
@@ -307,7 +307,7 @@ def exvivo_hemi_proc(
         stop_mmppsp_after=stop_mmppsp_after,
         force=force,
     )
-    return exvivo_hemi_proc_execute(params, execution)
+    return exvivo_hemi_proc_execute(params, runner)
 
 
 __all__ = [
@@ -315,8 +315,6 @@ __all__ = [
     "ExvivoHemiProcOutputs",
     "ExvivoHemiProcParameters",
     "exvivo_hemi_proc",
-    "exvivo_hemi_proc_cargs",
     "exvivo_hemi_proc_execute",
-    "exvivo_hemi_proc_outputs",
     "exvivo_hemi_proc_params",
 ]

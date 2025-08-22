@@ -331,7 +331,7 @@ def film_gls_outputs(
 
 def film_gls_execute(
     params: FilmGlsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FilmGlsOutputs:
     """
     General Linear Model fitting with autocorrelation in FMRI.
@@ -342,10 +342,12 @@ def film_gls_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FilmGlsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FILM_GLS_METADATA)
     params = execution.params(params)
     cargs = film_gls_cargs(params, execution)
     ret = film_gls_outputs(params, execution)
@@ -427,8 +429,6 @@ def film_gls(
     Returns:
         NamedTuple of outputs (described in `FilmGlsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FILM_GLS_METADATA)
     params = film_gls_params(
         infile=infile,
         ac_flag=ac_flag,
@@ -454,7 +454,7 @@ def film_gls(
         ven=ven,
         vef=vef,
     )
-    return film_gls_execute(params, execution)
+    return film_gls_execute(params, runner)
 
 
 __all__ = [
@@ -462,8 +462,6 @@ __all__ = [
     "FilmGlsOutputs",
     "FilmGlsParameters",
     "film_gls",
-    "film_gls_cargs",
     "film_gls_execute",
-    "film_gls_outputs",
     "film_gls_params",
 ]

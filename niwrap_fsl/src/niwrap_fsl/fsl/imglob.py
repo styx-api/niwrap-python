@@ -128,7 +128,7 @@ def imglob_outputs(
 
 def imglob_execute(
     params: ImglobParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImglobOutputs:
     """
     Tool for generating image lists with specific extensions.
@@ -139,10 +139,12 @@ def imglob_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImglobOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMGLOB_METADATA)
     params = execution.params(params)
     cargs = imglob_cargs(params, execution)
     ret = imglob_outputs(params, execution)
@@ -171,14 +173,12 @@ def imglob(
     Returns:
         NamedTuple of outputs (described in `ImglobOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMGLOB_METADATA)
     params = imglob_params(
         multiple_extensions=multiple_extensions,
         input_list=input_list,
         single_extension=single_extension,
     )
-    return imglob_execute(params, execution)
+    return imglob_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "ImglobOutputs",
     "ImglobParameters",
     "imglob",
-    "imglob_cargs",
     "imglob_execute",
-    "imglob_outputs",
     "imglob_params",
 ]

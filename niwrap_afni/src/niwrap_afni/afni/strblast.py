@@ -161,7 +161,7 @@ def strblast_outputs(
 
 def strblast_execute(
     params: StrblastParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> StrblastOutputs:
     """
     Finds exact copies of the target string in each of the input files, and replaces
@@ -173,10 +173,12 @@ def strblast_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `StrblastOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(STRBLAST_METADATA)
     params = execution.params(params)
     cargs = strblast_cargs(params, execution)
     ret = strblast_outputs(params, execution)
@@ -216,8 +218,6 @@ def strblast(
     Returns:
         NamedTuple of outputs (described in `StrblastOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(STRBLAST_METADATA)
     params = strblast_params(
         targetstring=targetstring,
         input_files=input_files,
@@ -227,7 +227,7 @@ def strblast(
         quiet=quiet,
         help_=help_,
     )
-    return strblast_execute(params, execution)
+    return strblast_execute(params, runner)
 
 
 __all__ = [
@@ -235,8 +235,6 @@ __all__ = [
     "StrblastOutputs",
     "StrblastParameters",
     "strblast",
-    "strblast_cargs",
     "strblast_execute",
-    "strblast_outputs",
     "strblast_params",
 ]

@@ -141,7 +141,7 @@ def estnoise_outputs(
 
 def estnoise_execute(
     params: EstnoiseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EstnoiseOutputs:
     """
     Estimate noise in 4D fMRI data.
@@ -152,10 +152,12 @@ def estnoise_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EstnoiseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ESTNOISE_METADATA)
     params = execution.params(params)
     cargs = estnoise_cargs(params, execution)
     ret = estnoise_outputs(params, execution)
@@ -186,15 +188,13 @@ def estnoise(
     Returns:
         NamedTuple of outputs (described in `EstnoiseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ESTNOISE_METADATA)
     params = estnoise_params(
         input_4d_data=input_4d_data,
         spatial_sigma=spatial_sigma,
         temp_hp_sigma=temp_hp_sigma,
         temp_lp_sigma=temp_lp_sigma,
     )
-    return estnoise_execute(params, execution)
+    return estnoise_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "EstnoiseOutputs",
     "EstnoiseParameters",
     "estnoise",
-    "estnoise_cargs",
     "estnoise_execute",
-    "estnoise_outputs",
     "estnoise_params",
 ]

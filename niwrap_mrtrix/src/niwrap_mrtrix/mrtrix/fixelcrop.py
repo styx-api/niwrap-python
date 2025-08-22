@@ -239,7 +239,7 @@ def fixelcrop_outputs(
 
 def fixelcrop_execute(
     params: FixelcropParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixelcropOutputs:
     """
     Crop/remove fixels from sparse fixel image using a binary fixel mask.
@@ -257,10 +257,12 @@ def fixelcrop_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixelcropOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXELCROP_METADATA)
     params = execution.params(params)
     cargs = fixelcrop_cargs(params, execution)
     ret = fixelcrop_outputs(params, execution)
@@ -319,8 +321,6 @@ def fixelcrop(
     Returns:
         NamedTuple of outputs (described in `FixelcropOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXELCROP_METADATA)
     params = fixelcrop_params(
         info=info,
         quiet=quiet,
@@ -334,7 +334,7 @@ def fixelcrop(
         input_fixel_mask=input_fixel_mask,
         output_fixel_directory=output_fixel_directory,
     )
-    return fixelcrop_execute(params, execution)
+    return fixelcrop_execute(params, runner)
 
 
 __all__ = [
@@ -343,10 +343,7 @@ __all__ = [
     "FixelcropOutputs",
     "FixelcropParameters",
     "fixelcrop",
-    "fixelcrop_cargs",
-    "fixelcrop_config_cargs",
     "fixelcrop_config_params",
     "fixelcrop_execute",
-    "fixelcrop_outputs",
     "fixelcrop_params",
 ]

@@ -150,7 +150,7 @@ def dcmdir_info_mgh_outputs(
 
 def dcmdir_info_mgh_execute(
     params: DcmdirInfoMghParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DcmdirInfoMghOutputs:
     """
     Scans a DICOM directory and extracts information about each series.
@@ -161,10 +161,12 @@ def dcmdir_info_mgh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DcmdirInfoMghOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCMDIR_INFO_MGH_METADATA)
     params = execution.params(params)
     cargs = dcmdir_info_mgh_cargs(params, execution)
     ret = dcmdir_info_mgh_outputs(params, execution)
@@ -198,8 +200,6 @@ def dcmdir_info_mgh(
     Returns:
         NamedTuple of outputs (described in `DcmdirInfoMghOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCMDIR_INFO_MGH_METADATA)
     params = dcmdir_info_mgh_params(
         dicomdir=dicomdir,
         unpackdir=unpackdir,
@@ -207,7 +207,7 @@ def dcmdir_info_mgh(
         help_=help_,
         nopre=nopre,
     )
-    return dcmdir_info_mgh_execute(params, execution)
+    return dcmdir_info_mgh_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "DcmdirInfoMghOutputs",
     "DcmdirInfoMghParameters",
     "dcmdir_info_mgh",
-    "dcmdir_info_mgh_cargs",
     "dcmdir_info_mgh_execute",
-    "dcmdir_info_mgh_outputs",
     "dcmdir_info_mgh_params",
 ]

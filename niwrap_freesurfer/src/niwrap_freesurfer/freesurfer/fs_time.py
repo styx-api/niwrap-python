@@ -153,7 +153,7 @@ def fs_time_outputs(
 
 def fs_time_execute(
     params: FsTimeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsTimeOutputs:
     """
     A frontend for the unix /usr/bin/time program to track resource usage by a
@@ -165,10 +165,12 @@ def fs_time_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsTimeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_TIME_METADATA)
     params = execution.params(params)
     cargs = fs_time_cargs(params, execution)
     ret = fs_time_outputs(params, execution)
@@ -202,8 +204,6 @@ def fs_time(
     Returns:
         NamedTuple of outputs (described in `FsTimeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_TIME_METADATA)
     params = fs_time_params(
         output_file=output_file,
         key=key,
@@ -211,7 +211,7 @@ def fs_time(
         command=command,
         args=args,
     )
-    return fs_time_execute(params, execution)
+    return fs_time_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "FsTimeOutputs",
     "FsTimeParameters",
     "fs_time",
-    "fs_time_cargs",
     "fs_time_execute",
-    "fs_time_outputs",
     "fs_time_params",
 ]

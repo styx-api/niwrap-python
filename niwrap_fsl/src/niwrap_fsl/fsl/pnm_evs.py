@@ -306,7 +306,7 @@ def pnm_evs_outputs(
 
 def pnm_evs_execute(
     params: PnmEvsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PnmEvsOutputs:
     """
     PNM EVs: Generates physiological noise regressors for fMRI data.
@@ -317,10 +317,12 @@ def pnm_evs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PnmEvsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PNM_EVS_METADATA)
     params = execution.params(params)
     cargs = pnm_evs_cargs(params, execution)
     ret = pnm_evs_outputs(params, execution)
@@ -392,8 +394,6 @@ def pnm_evs(
     Returns:
         NamedTuple of outputs (described in `PnmEvsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PNM_EVS_METADATA)
     params = pnm_evs_params(
         input_file=input_file,
         output_file=output_file,
@@ -416,7 +416,7 @@ def pnm_evs(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return pnm_evs_execute(params, execution)
+    return pnm_evs_execute(params, runner)
 
 
 __all__ = [
@@ -424,8 +424,6 @@ __all__ = [
     "PnmEvsOutputs",
     "PnmEvsParameters",
     "pnm_evs",
-    "pnm_evs_cargs",
     "pnm_evs_execute",
-    "pnm_evs_outputs",
     "pnm_evs_params",
 ]

@@ -129,7 +129,7 @@ def update_needed_outputs(
 
 def update_needed_execute(
     params: UpdateNeededParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UpdateNeededOutputs:
     """
     A command-line tool to update a target file based on one or more source files.
@@ -140,10 +140,12 @@ def update_needed_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UpdateNeededOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UPDATE_NEEDED_METADATA)
     params = execution.params(params)
     cargs = update_needed_cargs(params, execution)
     ret = update_needed_outputs(params, execution)
@@ -173,14 +175,12 @@ def update_needed(
     Returns:
         NamedTuple of outputs (described in `UpdateNeededOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UPDATE_NEEDED_METADATA)
     params = update_needed_params(
         target_file=target_file,
         source_file=source_file,
         additional_source_files=additional_source_files,
     )
-    return update_needed_execute(params, execution)
+    return update_needed_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "UpdateNeededOutputs",
     "UpdateNeededParameters",
     "update_needed",
-    "update_needed_cargs",
     "update_needed_execute",
-    "update_needed_outputs",
     "update_needed_params",
 ]

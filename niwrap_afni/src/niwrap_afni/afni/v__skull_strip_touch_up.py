@@ -160,7 +160,7 @@ def v__skull_strip_touch_up_outputs(
 
 def v__skull_strip_touch_up_execute(
     params: VSkullStripTouchUpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSkullStripTouchUpOutputs:
     """
     Helper program to touch up failed skull stripping by resampling data, allowing
@@ -172,10 +172,12 @@ def v__skull_strip_touch_up_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSkullStripTouchUpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SKULL_STRIP_TOUCH_UP_METADATA)
     params = execution.params(params)
     cargs = v__skull_strip_touch_up_cargs(params, execution)
     ret = v__skull_strip_touch_up_outputs(params, execution)
@@ -211,8 +213,6 @@ def v__skull_strip_touch_up(
     Returns:
         NamedTuple of outputs (described in `VSkullStripTouchUpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SKULL_STRIP_TOUCH_UP_METADATA)
     params = v__skull_strip_touch_up_params(
         prefix=prefix,
         brain_dataset=brain_dataset,
@@ -221,7 +221,7 @@ def v__skull_strip_touch_up(
         orig_dim=orig_dim,
         help_=help_,
     )
-    return v__skull_strip_touch_up_execute(params, execution)
+    return v__skull_strip_touch_up_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "VSkullStripTouchUpParameters",
     "V__SKULL_STRIP_TOUCH_UP_METADATA",
     "v__skull_strip_touch_up",
-    "v__skull_strip_touch_up_cargs",
     "v__skull_strip_touch_up_execute",
-    "v__skull_strip_touch_up_outputs",
     "v__skull_strip_touch_up_params",
 ]

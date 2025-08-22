@@ -387,7 +387,7 @@ def tck2connectome_outputs(
 
 def tck2connectome_execute(
     params: Tck2connectomeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tck2connectomeOutputs:
     """
     Generate a connectome matrix from a streamlines file and a node parcellation
@@ -413,10 +413,12 @@ def tck2connectome_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tck2connectomeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCK2CONNECTOME_METADATA)
     params = execution.params(params)
     cargs = tck2connectome_cargs(params, execution)
     ret = tck2connectome_outputs(params, execution)
@@ -535,8 +537,6 @@ def tck2connectome(
     Returns:
         NamedTuple of outputs (described in `Tck2connectomeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCK2CONNECTOME_METADATA)
     params = tck2connectome_params(
         assignment_end_voxels=assignment_end_voxels,
         assignment_radial_search=assignment_radial_search,
@@ -566,7 +566,7 @@ def tck2connectome(
         nodes_in=nodes_in,
         connectome_out=connectome_out,
     )
-    return tck2connectome_execute(params, execution)
+    return tck2connectome_execute(params, runner)
 
 
 __all__ = [
@@ -575,10 +575,7 @@ __all__ = [
     "Tck2connectomeOutputs",
     "Tck2connectomeParameters",
     "tck2connectome",
-    "tck2connectome_cargs",
-    "tck2connectome_config_cargs",
     "tck2connectome_config_params",
     "tck2connectome_execute",
-    "tck2connectome_outputs",
     "tck2connectome_params",
 ]

@@ -182,7 +182,7 @@ def v_3d_space_time_corr_outputs(
 
 def v_3d_space_time_corr_execute(
     params: V3dSpaceTimeCorrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSpaceTimeCorrOutputs:
     """
     Calculates correlation coefficients between two 4D datasets using space+time
@@ -194,10 +194,12 @@ def v_3d_space_time_corr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSpaceTimeCorrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SPACE_TIME_CORR_METADATA)
     params = execution.params(params)
     cargs = v_3d_space_time_corr_cargs(params, execution)
     ret = v_3d_space_time_corr_outputs(params, execution)
@@ -242,8 +244,6 @@ def v_3d_space_time_corr(
     Returns:
         NamedTuple of outputs (described in `V3dSpaceTimeCorrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SPACE_TIME_CORR_METADATA)
     params = v_3d_space_time_corr_params(
         inset_a=inset_a,
         inset_b=inset_b,
@@ -253,7 +253,7 @@ def v_3d_space_time_corr(
         freeze_inset_a_ijk=freeze_inset_a_ijk,
         freeze_inset_a_xyz=freeze_inset_a_xyz,
     )
-    return v_3d_space_time_corr_execute(params, execution)
+    return v_3d_space_time_corr_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "V3dSpaceTimeCorrParameters",
     "V_3D_SPACE_TIME_CORR_METADATA",
     "v_3d_space_time_corr",
-    "v_3d_space_time_corr_cargs",
     "v_3d_space_time_corr_execute",
-    "v_3d_space_time_corr_outputs",
     "v_3d_space_time_corr_params",
 ]

@@ -130,7 +130,7 @@ def quotize_outputs(
 
 def quotize_execute(
     params: QuotizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QuotizeOutputs:
     """
     Turns a text file into a C array of strings initialized into an array 'char
@@ -142,10 +142,12 @@ def quotize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QuotizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QUOTIZE_METADATA)
     params = execution.params(params)
     cargs = quotize_cargs(params, execution)
     ret = quotize_outputs(params, execution)
@@ -175,14 +177,12 @@ def quotize(
     Returns:
         NamedTuple of outputs (described in `QuotizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QUOTIZE_METADATA)
     params = quotize_params(
         name=name,
         input_file=input_file,
         output_file=output_file,
     )
-    return quotize_execute(params, execution)
+    return quotize_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "QuotizeOutputs",
     "QuotizeParameters",
     "quotize",
-    "quotize_cargs",
     "quotize_execute",
-    "quotize_outputs",
     "quotize_params",
 ]

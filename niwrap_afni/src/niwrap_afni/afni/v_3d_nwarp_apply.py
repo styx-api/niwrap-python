@@ -245,7 +245,7 @@ def v_3d_nwarp_apply_outputs(
 
 def v_3d_nwarp_apply_execute(
     params: V3dNwarpApplyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNwarpApplyOutputs:
     """
     Program to apply a nonlinear 3D warp saved from 3dQwarp (or 3dNwarpCat, etc.) to
@@ -257,10 +257,12 @@ def v_3d_nwarp_apply_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNwarpApplyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NWARP_APPLY_METADATA)
     params = execution.params(params)
     cargs = v_3d_nwarp_apply_cargs(params, execution)
     ret = v_3d_nwarp_apply_outputs(params, execution)
@@ -319,8 +321,6 @@ def v_3d_nwarp_apply(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpApplyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NWARP_APPLY_METADATA)
     params = v_3d_nwarp_apply_params(
         nwarp=nwarp,
         iwarp=iwarp,
@@ -337,7 +337,7 @@ def v_3d_nwarp_apply(
         quiet=quiet,
         verb=verb,
     )
-    return v_3d_nwarp_apply_execute(params, execution)
+    return v_3d_nwarp_apply_execute(params, runner)
 
 
 __all__ = [
@@ -345,8 +345,6 @@ __all__ = [
     "V3dNwarpApplyParameters",
     "V_3D_NWARP_APPLY_METADATA",
     "v_3d_nwarp_apply",
-    "v_3d_nwarp_apply_cargs",
     "v_3d_nwarp_apply_execute",
-    "v_3d_nwarp_apply_outputs",
     "v_3d_nwarp_apply_params",
 ]

@@ -218,7 +218,7 @@ def applywarp_outputs(
 
 def applywarp_execute(
     params: ApplywarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ApplywarpOutputs:
     """
     Apply warps estimated by FNIRT (or some other software) to some image.
@@ -229,10 +229,12 @@ def applywarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ApplywarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APPLYWARP_METADATA)
     params = execution.params(params)
     cargs = applywarp_cargs(params, execution)
     ret = applywarp_outputs(params, execution)
@@ -290,8 +292,6 @@ def applywarp(
     Returns:
         NamedTuple of outputs (described in `ApplywarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APPLYWARP_METADATA)
     params = applywarp_params(
         interp=interp,
         in_file=in_file,
@@ -309,7 +309,7 @@ def applywarp(
         superlevel_2=superlevel_2,
         supersample=supersample,
     )
-    return applywarp_execute(params, execution)
+    return applywarp_execute(params, runner)
 
 
 __all__ = [
@@ -317,8 +317,6 @@ __all__ = [
     "ApplywarpOutputs",
     "ApplywarpParameters",
     "applywarp",
-    "applywarp_cargs",
     "applywarp_execute",
-    "applywarp_outputs",
     "applywarp_params",
 ]

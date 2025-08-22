@@ -212,7 +212,7 @@ def convert_matrix4_to_workbench_sparse_outputs(
 
 def convert_matrix4_to_workbench_sparse_execute(
     params: ConvertMatrix4ToWorkbenchSparseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
     """
     Convert a 3-file matrix4 to a workbench sparse file.
@@ -226,10 +226,12 @@ def convert_matrix4_to_workbench_sparse_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToWorkbenchSparseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA)
     params = execution.params(params)
     cargs = convert_matrix4_to_workbench_sparse_cargs(params, execution)
     ret = convert_matrix4_to_workbench_sparse_outputs(params, execution)
@@ -274,8 +276,6 @@ def convert_matrix4_to_workbench_sparse(
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToWorkbenchSparseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_MATRIX4_TO_WORKBENCH_SPARSE_METADATA)
     params = convert_matrix4_to_workbench_sparse_params(
         matrix4_1=matrix4_1,
         matrix4_2=matrix4_2,
@@ -286,7 +286,7 @@ def convert_matrix4_to_workbench_sparse(
         opt_surface_seeds_seed_roi=opt_surface_seeds_seed_roi,
         volume_seeds=volume_seeds,
     )
-    return convert_matrix4_to_workbench_sparse_execute(params, execution)
+    return convert_matrix4_to_workbench_sparse_execute(params, runner)
 
 
 __all__ = [
@@ -295,10 +295,7 @@ __all__ = [
     "ConvertMatrix4ToWorkbenchSparseParameters",
     "ConvertMatrix4ToWorkbenchSparseVolumeSeedsParameters",
     "convert_matrix4_to_workbench_sparse",
-    "convert_matrix4_to_workbench_sparse_cargs",
     "convert_matrix4_to_workbench_sparse_execute",
-    "convert_matrix4_to_workbench_sparse_outputs",
     "convert_matrix4_to_workbench_sparse_params",
-    "convert_matrix4_to_workbench_sparse_volume_seeds_cargs",
     "convert_matrix4_to_workbench_sparse_volume_seeds_params",
 ]

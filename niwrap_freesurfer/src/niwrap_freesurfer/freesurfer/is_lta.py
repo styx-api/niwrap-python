@@ -131,7 +131,7 @@ def is_lta_outputs(
 
 def is_lta_execute(
     params: IsLtaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IsLtaOutputs:
     """
     Determines if a given file is an LTA (Linear Transform Array) file. Outputs 1 if
@@ -143,10 +143,12 @@ def is_lta_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IsLtaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IS_LTA_METADATA)
     params = execution.params(params)
     cargs = is_lta_cargs(params, execution)
     ret = is_lta_outputs(params, execution)
@@ -174,13 +176,11 @@ def is_lta(
     Returns:
         NamedTuple of outputs (described in `IsLtaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IS_LTA_METADATA)
     params = is_lta_params(
         candidate_file=candidate_file,
         outfile=outfile,
     )
-    return is_lta_execute(params, execution)
+    return is_lta_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "IsLtaOutputs",
     "IsLtaParameters",
     "is_lta",
-    "is_lta_cargs",
     "is_lta_execute",
-    "is_lta_outputs",
     "is_lta_params",
 ]

@@ -150,7 +150,7 @@ def mris_average_curvature_outputs(
 
 def mris_average_curvature_execute(
     params: MrisAverageCurvatureParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisAverageCurvatureOutputs:
     """
     This tool averages curvature data across multiple subjects and generates an
@@ -163,10 +163,12 @@ def mris_average_curvature_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAverageCurvatureOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_AVERAGE_CURVATURE_METADATA)
     params = execution.params(params)
     cargs = mris_average_curvature_cargs(params, execution)
     ret = mris_average_curvature_outputs(params, execution)
@@ -207,8 +209,6 @@ def mris_average_curvature(
     Returns:
         NamedTuple of outputs (described in `MrisAverageCurvatureOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_AVERAGE_CURVATURE_METADATA)
     params = mris_average_curvature_params(
         input_curvature_file=input_curvature_file,
         hemi=hemi,
@@ -218,7 +218,7 @@ def mris_average_curvature(
         summary_stats_flag=summary_stats_flag,
         output_surface_flag=output_surface_flag,
     )
-    return mris_average_curvature_execute(params, execution)
+    return mris_average_curvature_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "MrisAverageCurvatureOutputs",
     "MrisAverageCurvatureParameters",
     "mris_average_curvature",
-    "mris_average_curvature_cargs",
     "mris_average_curvature_execute",
-    "mris_average_curvature_outputs",
     "mris_average_curvature_params",
 ]

@@ -246,7 +246,7 @@ def fat_mvm_scripter_py_outputs(
 
 def fat_mvm_scripter_py_execute(
     params: FatMvmScripterPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatMvmScripterPyOutputs:
     """
     Automated tool to create command scripts for 3dMVM statistical modeling.
@@ -257,10 +257,12 @@ def fat_mvm_scripter_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatMvmScripterPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_MVM_SCRIPTER_PY_METADATA)
     params = execution.params(params)
     cargs = fat_mvm_scripter_py_cargs(params, execution)
     ret = fat_mvm_scripter_py_outputs(params, execution)
@@ -324,8 +326,6 @@ def fat_mvm_scripter_py(
     Returns:
         NamedTuple of outputs (described in `FatMvmScripterPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MVM_SCRIPTER_PY_METADATA)
     params = fat_mvm_scripter_py_params(
         prefix=prefix,
         table=table,
@@ -341,7 +341,7 @@ def fat_mvm_scripter_py(
         subnet_pref=subnet_pref,
         cat_pair_off=cat_pair_off,
     )
-    return fat_mvm_scripter_py_execute(params, execution)
+    return fat_mvm_scripter_py_execute(params, runner)
 
 
 __all__ = [
@@ -349,8 +349,6 @@ __all__ = [
     "FatMvmScripterPyOutputs",
     "FatMvmScripterPyParameters",
     "fat_mvm_scripter_py",
-    "fat_mvm_scripter_py_cargs",
     "fat_mvm_scripter_py_execute",
-    "fat_mvm_scripter_py_outputs",
     "fat_mvm_scripter_py_params",
 ]

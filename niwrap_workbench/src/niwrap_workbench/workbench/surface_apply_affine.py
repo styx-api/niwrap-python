@@ -187,7 +187,7 @@ def surface_apply_affine_outputs(
 
 def surface_apply_affine_execute(
     params: SurfaceApplyAffineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
     """
     Apply affine transform to surface file.
@@ -204,10 +204,12 @@ def surface_apply_affine_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyAffineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_APPLY_AFFINE_METADATA)
     params = execution.params(params)
     cargs = surface_apply_affine_cargs(params, execution)
     ret = surface_apply_affine_outputs(params, execution)
@@ -244,15 +246,13 @@ def surface_apply_affine(
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyAffineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_APPLY_AFFINE_METADATA)
     params = surface_apply_affine_params(
         in_surf=in_surf,
         affine=affine,
         out_surf=out_surf,
         flirt=flirt,
     )
-    return surface_apply_affine_execute(params, execution)
+    return surface_apply_affine_execute(params, runner)
 
 
 __all__ = [
@@ -261,10 +261,7 @@ __all__ = [
     "SurfaceApplyAffineOutputs",
     "SurfaceApplyAffineParameters",
     "surface_apply_affine",
-    "surface_apply_affine_cargs",
     "surface_apply_affine_execute",
-    "surface_apply_affine_flirt_cargs",
     "surface_apply_affine_flirt_params",
-    "surface_apply_affine_outputs",
     "surface_apply_affine_params",
 ]

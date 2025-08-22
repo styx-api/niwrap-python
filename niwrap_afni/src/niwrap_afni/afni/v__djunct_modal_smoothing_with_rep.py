@@ -168,7 +168,7 @@ def v__djunct_modal_smoothing_with_rep_outputs(
 
 def v__djunct_modal_smoothing_with_rep_execute(
     params: VDjunctModalSmoothingWithRepParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunctModalSmoothingWithRepOutputs:
     """
     A script to perform modal smoothing of ROI maps and check for eliminated ROIs.
@@ -181,10 +181,12 @@ def v__djunct_modal_smoothing_with_rep_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunctModalSmoothingWithRepOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA)
     params = execution.params(params)
     cargs = v__djunct_modal_smoothing_with_rep_cargs(params, execution)
     ret = v__djunct_modal_smoothing_with_rep_outputs(params, execution)
@@ -225,8 +227,6 @@ def v__djunct_modal_smoothing_with_rep(
     Returns:
         NamedTuple of outputs (described in `VDjunctModalSmoothingWithRepOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA)
     params = v__djunct_modal_smoothing_with_rep_params(
         input_file=input_file,
         output_prefix=output_prefix,
@@ -237,7 +237,7 @@ def v__djunct_modal_smoothing_with_rep(
         overwrite=overwrite,
         no_clean=no_clean,
     )
-    return v__djunct_modal_smoothing_with_rep_execute(params, execution)
+    return v__djunct_modal_smoothing_with_rep_execute(params, runner)
 
 
 __all__ = [
@@ -245,8 +245,6 @@ __all__ = [
     "VDjunctModalSmoothingWithRepParameters",
     "V__DJUNCT_MODAL_SMOOTHING_WITH_REP_METADATA",
     "v__djunct_modal_smoothing_with_rep",
-    "v__djunct_modal_smoothing_with_rep_cargs",
     "v__djunct_modal_smoothing_with_rep_execute",
-    "v__djunct_modal_smoothing_with_rep_outputs",
     "v__djunct_modal_smoothing_with_rep_params",
 ]

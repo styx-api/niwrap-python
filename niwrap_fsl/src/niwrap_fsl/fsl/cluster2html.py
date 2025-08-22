@@ -128,7 +128,7 @@ def cluster2html_outputs(
 
 def cluster2html_execute(
     params: Cluster2htmlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Cluster2htmlOutputs:
     """
     Generates an HTML report from cluster-based FEAT analysis.
@@ -139,10 +139,12 @@ def cluster2html_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Cluster2htmlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CLUSTER2HTML_METADATA)
     params = execution.params(params)
     cargs = cluster2html_cargs(params, execution)
     ret = cluster2html_outputs(params, execution)
@@ -172,14 +174,12 @@ def cluster2html(
     Returns:
         NamedTuple of outputs (described in `Cluster2htmlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CLUSTER2HTML_METADATA)
     params = cluster2html_params(
         featdir=featdir,
         inroot=inroot,
         std_flag=std_flag,
     )
-    return cluster2html_execute(params, execution)
+    return cluster2html_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "Cluster2htmlOutputs",
     "Cluster2htmlParameters",
     "cluster2html",
-    "cluster2html_cargs",
     "cluster2html_execute",
-    "cluster2html_outputs",
     "cluster2html_params",
 ]

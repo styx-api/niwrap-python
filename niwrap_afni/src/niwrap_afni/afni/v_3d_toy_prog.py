@@ -222,7 +222,7 @@ def v_3d_toy_prog_outputs(
 
 def v_3d_toy_prog_execute(
     params: V3dToyProgParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dToyProgOutputs:
     """
     A program to illustrate dataset creation and manipulation in C using AFNI's API.
@@ -233,10 +233,12 @@ def v_3d_toy_prog_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dToyProgOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TOY_PROG_METADATA)
     params = execution.params(params)
     cargs = v_3d_toy_prog_cargs(params, execution)
     ret = v_3d_toy_prog_outputs(params, execution)
@@ -296,8 +298,6 @@ def v_3d_toy_prog(
     Returns:
         NamedTuple of outputs (described in `V3dToyProgOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TOY_PROG_METADATA)
     params = v_3d_toy_prog_params(
         input_dataset=input_dataset,
         output_prefix=output_prefix,
@@ -314,7 +314,7 @@ def v_3d_toy_prog(
         help_aspx=help_aspx,
         help_all_opts=help_all_opts,
     )
-    return v_3d_toy_prog_execute(params, execution)
+    return v_3d_toy_prog_execute(params, runner)
 
 
 __all__ = [
@@ -322,8 +322,6 @@ __all__ = [
     "V3dToyProgParameters",
     "V_3D_TOY_PROG_METADATA",
     "v_3d_toy_prog",
-    "v_3d_toy_prog_cargs",
     "v_3d_toy_prog_execute",
-    "v_3d_toy_prog_outputs",
     "v_3d_toy_prog_params",
 ]

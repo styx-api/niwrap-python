@@ -308,7 +308,7 @@ def foci_resample_outputs(
 
 def foci_resample_execute(
     params: FociResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FociResampleOutputs:
     """
     Project foci to a different surface.
@@ -325,10 +325,12 @@ def foci_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FOCI_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = foci_resample_cargs(params, execution)
     ret = foci_resample_outputs(params, execution)
@@ -373,8 +375,6 @@ def foci_resample(
     Returns:
         NamedTuple of outputs (described in `FociResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FOCI_RESAMPLE_METADATA)
     params = foci_resample_params(
         foci_in=foci_in,
         foci_out=foci_out,
@@ -384,7 +384,7 @@ def foci_resample(
         opt_discard_distance_from_surface=opt_discard_distance_from_surface,
         opt_restore_xyz=opt_restore_xyz,
     )
-    return foci_resample_execute(params, execution)
+    return foci_resample_execute(params, runner)
 
 
 __all__ = [
@@ -395,14 +395,9 @@ __all__ = [
     "FociResampleParameters",
     "FociResampleRightSurfacesParameters",
     "foci_resample",
-    "foci_resample_cargs",
-    "foci_resample_cerebellum_surfaces_cargs",
     "foci_resample_cerebellum_surfaces_params",
     "foci_resample_execute",
-    "foci_resample_left_surfaces_cargs",
     "foci_resample_left_surfaces_params",
-    "foci_resample_outputs",
     "foci_resample_params",
-    "foci_resample_right_surfaces_cargs",
     "foci_resample_right_surfaces_params",
 ]

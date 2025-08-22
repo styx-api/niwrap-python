@@ -118,7 +118,7 @@ def dmri_ac_sh_outputs(
 
 def dmri_ac_sh_execute(
     params: DmriAcShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriAcShOutputs:
     """
     A script related to diffusion MRI processing in FreeSurfer.
@@ -129,10 +129,12 @@ def dmri_ac_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriAcShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_AC_SH_METADATA)
     params = execution.params(params)
     cargs = dmri_ac_sh_cargs(params, execution)
     ret = dmri_ac_sh_outputs(params, execution)
@@ -157,12 +159,10 @@ def dmri_ac_sh(
     Returns:
         NamedTuple of outputs (described in `DmriAcShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_AC_SH_METADATA)
     params = dmri_ac_sh_params(
         additional_args=additional_args,
     )
-    return dmri_ac_sh_execute(params, execution)
+    return dmri_ac_sh_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "DmriAcShOutputs",
     "DmriAcShParameters",
     "dmri_ac_sh",
-    "dmri_ac_sh_cargs",
     "dmri_ac_sh_execute",
-    "dmri_ac_sh_outputs",
     "dmri_ac_sh_params",
 ]

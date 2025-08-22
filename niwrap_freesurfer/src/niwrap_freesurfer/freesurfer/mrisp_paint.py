@@ -239,7 +239,7 @@ def mrisp_paint_outputs(
 
 def mrisp_paint_execute(
     params: MrispPaintParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrispPaintOutputs:
     """
     A tool for extracting arrays from a surface-registration template file and
@@ -251,10 +251,12 @@ def mrisp_paint_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrispPaintOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRISP_PAINT_METADATA)
     params = execution.params(params)
     cargs = mrisp_paint_cargs(params, execution)
     ret = mrisp_paint_outputs(params, execution)
@@ -316,8 +318,6 @@ def mrisp_paint(
     Returns:
         NamedTuple of outputs (described in `MrispPaintOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRISP_PAINT_METADATA)
     params = mrisp_paint_params(
         template_file=template_file,
         input_surface=input_surface,
@@ -336,7 +336,7 @@ def mrisp_paint(
         version_flag=version_flag,
         diag_write_flag=diag_write_flag,
     )
-    return mrisp_paint_execute(params, execution)
+    return mrisp_paint_execute(params, runner)
 
 
 __all__ = [
@@ -344,8 +344,6 @@ __all__ = [
     "MrispPaintOutputs",
     "MrispPaintParameters",
     "mrisp_paint",
-    "mrisp_paint_cargs",
     "mrisp_paint_execute",
-    "mrisp_paint_outputs",
     "mrisp_paint_params",
 ]

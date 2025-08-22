@@ -152,7 +152,7 @@ def smooth_image_outputs(
 
 def smooth_image_execute(
     params: SmoothImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SmoothImageOutputs:
     """
     SmoothImage allows smoothing of images with adjustable sigma values, offering
@@ -164,10 +164,12 @@ def smooth_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SmoothImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SMOOTH_IMAGE_METADATA)
     params = execution.params(params)
     cargs = smooth_image_cargs(params, execution)
     ret = smooth_image_outputs(params, execution)
@@ -206,8 +208,6 @@ def smooth_image(
     Returns:
         NamedTuple of outputs (described in `SmoothImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SMOOTH_IMAGE_METADATA)
     params = smooth_image_params(
         image_dimension=image_dimension,
         image_ext=image_ext,
@@ -216,7 +216,7 @@ def smooth_image(
         sigma_units=sigma_units,
         median_filter=median_filter,
     )
-    return smooth_image_execute(params, execution)
+    return smooth_image_execute(params, runner)
 
 
 __all__ = [
@@ -224,8 +224,6 @@ __all__ = [
     "SmoothImageOutputs",
     "SmoothImageParameters",
     "smooth_image",
-    "smooth_image_cargs",
     "smooth_image_execute",
-    "smooth_image_outputs",
     "smooth_image_params",
 ]

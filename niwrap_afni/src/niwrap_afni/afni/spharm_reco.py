@@ -189,7 +189,7 @@ def spharm_reco_outputs(
 
 def spharm_reco_execute(
     params: SpharmRecoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SpharmRecoOutputs:
     """
     Spherical Harmonics Reconstruction from a set of harmonics and their
@@ -201,10 +201,12 @@ def spharm_reco_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SpharmRecoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPHARM_RECO_METADATA)
     params = execution.params(params)
     cargs = spharm_reco_cargs(params, execution)
     ret = spharm_reco_outputs(params, execution)
@@ -250,8 +252,6 @@ def spharm_reco(
     Returns:
         NamedTuple of outputs (described in `SpharmRecoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPHARM_RECO_METADATA)
     params = spharm_reco_params(
         input_surface=input_surface,
         decomposition_order=decomposition_order,
@@ -262,7 +262,7 @@ def spharm_reco(
         debug=debug,
         smoothing=smoothing,
     )
-    return spharm_reco_execute(params, execution)
+    return spharm_reco_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "SpharmRecoOutputs",
     "SpharmRecoParameters",
     "spharm_reco",
-    "spharm_reco_cargs",
     "spharm_reco_execute",
-    "spharm_reco_outputs",
     "spharm_reco_params",
 ]

@@ -127,7 +127,7 @@ def surface_closest_vertex_outputs(
 
 def surface_closest_vertex_execute(
     params: SurfaceClosestVertexParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceClosestVertexOutputs:
     """
     Find closest surface vertex to coordinates.
@@ -145,10 +145,12 @@ def surface_closest_vertex_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceClosestVertexOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_CLOSEST_VERTEX_METADATA)
     params = execution.params(params)
     cargs = surface_closest_vertex_cargs(params, execution)
     ret = surface_closest_vertex_outputs(params, execution)
@@ -184,14 +186,12 @@ def surface_closest_vertex(
     Returns:
         NamedTuple of outputs (described in `SurfaceClosestVertexOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_CLOSEST_VERTEX_METADATA)
     params = surface_closest_vertex_params(
         surface=surface,
         coord_list_file=coord_list_file,
         vertex_list_out=vertex_list_out,
     )
-    return surface_closest_vertex_execute(params, execution)
+    return surface_closest_vertex_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "SurfaceClosestVertexOutputs",
     "SurfaceClosestVertexParameters",
     "surface_closest_vertex",
-    "surface_closest_vertex_cargs",
     "surface_closest_vertex_execute",
-    "surface_closest_vertex_outputs",
     "surface_closest_vertex_params",
 ]

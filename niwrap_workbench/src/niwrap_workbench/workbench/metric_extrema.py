@@ -299,7 +299,7 @@ def metric_extrema_outputs(
 
 def metric_extrema_execute(
     params: MetricExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
     Find extrema in a metric file.
@@ -336,10 +336,12 @@ def metric_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = metric_extrema_cargs(params, execution)
     ret = metric_extrema_outputs(params, execution)
@@ -417,8 +419,6 @@ def metric_extrema(
     Returns:
         NamedTuple of outputs (described in `MetricExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_EXTREMA_METADATA)
     params = metric_extrema_params(
         surface=surface,
         metric_in=metric_in,
@@ -433,7 +433,7 @@ def metric_extrema(
         opt_only_minima=opt_only_minima,
         opt_column_column=opt_column_column,
     )
-    return metric_extrema_execute(params, execution)
+    return metric_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -443,12 +443,8 @@ __all__ = [
     "MetricExtremaPresmoothParameters",
     "MetricExtremaThresholdParameters",
     "metric_extrema",
-    "metric_extrema_cargs",
     "metric_extrema_execute",
-    "metric_extrema_outputs",
     "metric_extrema_params",
-    "metric_extrema_presmooth_cargs",
     "metric_extrema_presmooth_params",
-    "metric_extrema_threshold_cargs",
     "metric_extrema_threshold_params",
 ]

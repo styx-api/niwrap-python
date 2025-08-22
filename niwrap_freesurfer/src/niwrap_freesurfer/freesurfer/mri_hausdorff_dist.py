@@ -175,7 +175,7 @@ def mri_hausdorff_dist_outputs(
 
 def mri_hausdorff_dist_execute(
     params: MriHausdorffDistParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriHausdorffDistOutputs:
     """
     Tool for computing the mean or max of the minimum distances between point sets
@@ -187,10 +187,12 @@ def mri_hausdorff_dist_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriHausdorffDistOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_HAUSDORFF_DIST_METADATA)
     params = execution.params(params)
     cargs = mri_hausdorff_dist_cargs(params, execution)
     ret = mri_hausdorff_dist_outputs(params, execution)
@@ -232,8 +234,6 @@ def mri_hausdorff_dist(
     Returns:
         NamedTuple of outputs (described in `MriHausdorffDistOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_HAUSDORFF_DIST_METADATA)
     params = mri_hausdorff_dist_params(
         vol1=vol1,
         vol2=vol2,
@@ -244,7 +244,7 @@ def mri_hausdorff_dist(
         max_flag=max_flag,
         label_index=label_index,
     )
-    return mri_hausdorff_dist_execute(params, execution)
+    return mri_hausdorff_dist_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "MriHausdorffDistOutputs",
     "MriHausdorffDistParameters",
     "mri_hausdorff_dist",
-    "mri_hausdorff_dist_cargs",
     "mri_hausdorff_dist_execute",
-    "mri_hausdorff_dist_outputs",
     "mri_hausdorff_dist_params",
 ]

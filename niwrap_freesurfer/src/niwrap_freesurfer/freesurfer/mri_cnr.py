@@ -174,7 +174,7 @@ def mri_cnr_outputs(
 
 def mri_cnr_execute(
     params: MriCnrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCnrOutputs:
     """
     Compute the gray/white/csf contrast-to-noise ratio for volumes using FreeSurfer.
@@ -185,10 +185,12 @@ def mri_cnr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCnrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CNR_METADATA)
     params = execution.params(params)
     cargs = mri_cnr_cargs(params, execution)
     ret = mri_cnr_outputs(params, execution)
@@ -232,8 +234,6 @@ def mri_cnr(
     Returns:
         NamedTuple of outputs (described in `MriCnrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CNR_METADATA)
     params = mri_cnr_params(
         surf_dir=surf_dir,
         volume_files=volume_files,
@@ -244,7 +244,7 @@ def mri_cnr(
         version_flag=version_flag,
         help_flag=help_flag,
     )
-    return mri_cnr_execute(params, execution)
+    return mri_cnr_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "MriCnrOutputs",
     "MriCnrParameters",
     "mri_cnr",
-    "mri_cnr_cargs",
     "mri_cnr_execute",
-    "mri_cnr_outputs",
     "mri_cnr_params",
 ]

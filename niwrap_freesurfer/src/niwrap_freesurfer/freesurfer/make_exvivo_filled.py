@@ -131,7 +131,7 @@ def make_exvivo_filled_outputs(
 
 def make_exvivo_filled_execute(
     params: MakeExvivoFilledParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeExvivoFilledOutputs:
     """
     A command-line tool for generating filled ex vivo brain images.
@@ -142,10 +142,12 @@ def make_exvivo_filled_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeExvivoFilledOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_EXVIVO_FILLED_METADATA)
     params = execution.params(params)
     cargs = make_exvivo_filled_cargs(params, execution)
     ret = make_exvivo_filled_outputs(params, execution)
@@ -176,15 +178,13 @@ def make_exvivo_filled(
     Returns:
         NamedTuple of outputs (described in `MakeExvivoFilledOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_EXVIVO_FILLED_METADATA)
     params = make_exvivo_filled_params(
         subject_name=subject_name,
         input_samseg=input_samseg,
         input_intensity_vol=input_intensity_vol,
         hemi_both=hemi_both,
     )
-    return make_exvivo_filled_execute(params, execution)
+    return make_exvivo_filled_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "MakeExvivoFilledOutputs",
     "MakeExvivoFilledParameters",
     "make_exvivo_filled",
-    "make_exvivo_filled_cargs",
     "make_exvivo_filled_execute",
-    "make_exvivo_filled_outputs",
     "make_exvivo_filled_params",
 ]

@@ -285,7 +285,7 @@ def mri_aparc2aseg_outputs(
 
 def mri_aparc2aseg_execute(
     params: MriAparc2asegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAparc2asegOutputs:
     """
     Maps the cortical labels from the automatic cortical parcellation to the
@@ -297,10 +297,12 @@ def mri_aparc2aseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAparc2asegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_APARC2ASEG_METADATA)
     params = execution.params(params)
     cargs = mri_aparc2aseg_cargs(params, execution)
     ret = mri_aparc2aseg_outputs(params, execution)
@@ -374,8 +376,6 @@ def mri_aparc2aseg(
     Returns:
         NamedTuple of outputs (described in `MriAparc2asegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_APARC2ASEG_METADATA)
     params = mri_aparc2aseg_params(
         subject=subject,
         output_volfile=output_volfile,
@@ -399,7 +399,7 @@ def mri_aparc2aseg(
         help_=help_,
         version=version,
     )
-    return mri_aparc2aseg_execute(params, execution)
+    return mri_aparc2aseg_execute(params, runner)
 
 
 __all__ = [
@@ -407,8 +407,6 @@ __all__ = [
     "MriAparc2asegOutputs",
     "MriAparc2asegParameters",
     "mri_aparc2aseg",
-    "mri_aparc2aseg_cargs",
     "mri_aparc2aseg_execute",
-    "mri_aparc2aseg_outputs",
     "mri_aparc2aseg_params",
 ]

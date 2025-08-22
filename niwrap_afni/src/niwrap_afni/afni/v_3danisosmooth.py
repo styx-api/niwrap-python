@@ -312,7 +312,7 @@ def v_3danisosmooth_outputs(
 
 def v_3danisosmooth_execute(
     params: V3danisosmoothParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3danisosmoothOutputs:
     """
     Smooths a dataset using an anisotropic smoothing technique.
@@ -323,10 +323,12 @@ def v_3danisosmooth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3danisosmoothOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DANISOSMOOTH_METADATA)
     params = execution.params(params)
     cargs = v_3danisosmooth_cargs(params, execution)
     ret = v_3danisosmooth_outputs(params, execution)
@@ -398,8 +400,6 @@ def v_3danisosmooth(
     Returns:
         NamedTuple of outputs (described in `V3danisosmoothOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DANISOSMOOTH_METADATA)
     params = v_3danisosmooth_params(
         input_dataset=input_dataset,
         prefix=prefix,
@@ -424,7 +424,7 @@ def v_3danisosmooth(
         matchorig_flag=matchorig_flag,
         help_flag=help_flag,
     )
-    return v_3danisosmooth_execute(params, execution)
+    return v_3danisosmooth_execute(params, runner)
 
 
 __all__ = [
@@ -432,8 +432,6 @@ __all__ = [
     "V3danisosmoothParameters",
     "V_3DANISOSMOOTH_METADATA",
     "v_3danisosmooth",
-    "v_3danisosmooth_cargs",
     "v_3danisosmooth_execute",
-    "v_3danisosmooth_outputs",
     "v_3danisosmooth_params",
 ]

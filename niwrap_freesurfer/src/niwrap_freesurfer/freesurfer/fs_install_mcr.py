@@ -117,7 +117,7 @@ def fs_install_mcr_outputs(
 
 def fs_install_mcr_execute(
     params: FsInstallMcrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsInstallMcrOutputs:
     """
     MCR installation tool for FreeSurfer.
@@ -128,10 +128,12 @@ def fs_install_mcr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsInstallMcrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_INSTALL_MCR_METADATA)
     params = execution.params(params)
     cargs = fs_install_mcr_cargs(params, execution)
     ret = fs_install_mcr_outputs(params, execution)
@@ -157,12 +159,10 @@ def fs_install_mcr(
     Returns:
         NamedTuple of outputs (described in `FsInstallMcrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_INSTALL_MCR_METADATA)
     params = fs_install_mcr_params(
         mcr_version=mcr_version,
     )
-    return fs_install_mcr_execute(params, execution)
+    return fs_install_mcr_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "FsInstallMcrOutputs",
     "FsInstallMcrParameters",
     "fs_install_mcr",
-    "fs_install_mcr_cargs",
     "fs_install_mcr_execute",
-    "fs_install_mcr_outputs",
     "fs_install_mcr_params",
 ]

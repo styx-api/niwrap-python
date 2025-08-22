@@ -205,7 +205,7 @@ def cifti_create_scalar_series_outputs(
 
 def cifti_create_scalar_series_execute(
     params: CiftiCreateScalarSeriesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
     Import series data into cifti.
@@ -227,10 +227,12 @@ def cifti_create_scalar_series_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateScalarSeriesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CREATE_SCALAR_SERIES_METADATA)
     params = execution.params(params)
     cargs = cifti_create_scalar_series_cargs(params, execution)
     ret = cifti_create_scalar_series_outputs(params, execution)
@@ -276,8 +278,6 @@ def cifti_create_scalar_series(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateScalarSeriesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CREATE_SCALAR_SERIES_METADATA)
     params = cifti_create_scalar_series_params(
         input_=input_,
         cifti_out=cifti_out,
@@ -285,7 +285,7 @@ def cifti_create_scalar_series(
         opt_name_file_file=opt_name_file_file,
         series=series,
     )
-    return cifti_create_scalar_series_execute(params, execution)
+    return cifti_create_scalar_series_execute(params, runner)
 
 
 __all__ = [
@@ -294,10 +294,7 @@ __all__ = [
     "CiftiCreateScalarSeriesParameters",
     "CiftiCreateScalarSeriesSeriesParameters",
     "cifti_create_scalar_series",
-    "cifti_create_scalar_series_cargs",
     "cifti_create_scalar_series_execute",
-    "cifti_create_scalar_series_outputs",
     "cifti_create_scalar_series_params",
-    "cifti_create_scalar_series_series_cargs",
     "cifti_create_scalar_series_series_params",
 ]

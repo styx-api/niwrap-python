@@ -222,7 +222,7 @@ def fslorient_outputs(
 
 def fslorient_execute(
     params: FslorientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslorientOutputs:
     """
     FSL tool to manipulate NIfTI header orientation information.
@@ -233,10 +233,12 @@ def fslorient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslorientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLORIENT_METADATA)
     params = execution.params(params)
     cargs = fslorient_cargs(params, execution)
     ret = fslorient_outputs(params, execution)
@@ -293,8 +295,6 @@ def fslorient(
     Returns:
         NamedTuple of outputs (described in `FslorientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLORIENT_METADATA)
     params = fslorient_params(
         get_orient=get_orient,
         get_sform=get_sform,
@@ -313,7 +313,7 @@ def fslorient(
         swap_orient=swap_orient,
         filename=filename,
     )
-    return fslorient_execute(params, execution)
+    return fslorient_execute(params, runner)
 
 
 __all__ = [
@@ -321,8 +321,6 @@ __all__ = [
     "FslorientOutputs",
     "FslorientParameters",
     "fslorient",
-    "fslorient_cargs",
     "fslorient_execute",
-    "fslorient_outputs",
     "fslorient_params",
 ]

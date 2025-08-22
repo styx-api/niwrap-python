@@ -316,7 +316,7 @@ def v_3d_tproject_outputs(
 
 def v_3d_tproject_execute(
     params: V3dTprojectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTprojectOutputs:
     """
     This program projects (detrends) out various 'nuisance' time series from each
@@ -331,10 +331,12 @@ def v_3d_tproject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTprojectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TPROJECT_METADATA)
     params = execution.params(params)
     cargs = v_3d_tproject_cargs(params, execution)
     ret = v_3d_tproject_outputs(params, execution)
@@ -442,8 +444,6 @@ def v_3d_tproject(
     Returns:
         NamedTuple of outputs (described in `V3dTprojectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TPROJECT_METADATA)
     params = v_3d_tproject_params(
         tr=tr,
         automask=automask,
@@ -463,7 +463,7 @@ def v_3d_tproject(
         stopband=stopband,
         prefix=prefix,
     )
-    return v_3d_tproject_execute(params, execution)
+    return v_3d_tproject_execute(params, runner)
 
 
 __all__ = [
@@ -471,8 +471,6 @@ __all__ = [
     "V3dTprojectParameters",
     "V_3D_TPROJECT_METADATA",
     "v_3d_tproject",
-    "v_3d_tproject_cargs",
     "v_3d_tproject_execute",
-    "v_3d_tproject_outputs",
     "v_3d_tproject_params",
 ]

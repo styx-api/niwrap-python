@@ -281,7 +281,7 @@ def make_folding_atlas_outputs(
 
 def make_folding_atlas_execute(
     params: MakeFoldingAtlasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeFoldingAtlasOutputs:
     """
     Script to iteratively create a cortical folding atlas.
@@ -292,10 +292,12 @@ def make_folding_atlas_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeFoldingAtlasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_FOLDING_ATLAS_METADATA)
     params = execution.params(params)
     cargs = make_folding_atlas_cargs(params, execution)
     ret = make_folding_atlas_outputs(params, execution)
@@ -363,8 +365,6 @@ def make_folding_atlas(
     Returns:
         NamedTuple of outputs (described in `MakeFoldingAtlasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_FOLDING_ATLAS_METADATA)
     params = make_folding_atlas_params(
         subjlistfile=subjlistfile,
         fsgdfile=fsgdfile,
@@ -387,7 +387,7 @@ def make_folding_atlas(
         threads=threads,
         slurm_account=slurm_account,
     )
-    return make_folding_atlas_execute(params, execution)
+    return make_folding_atlas_execute(params, runner)
 
 
 __all__ = [
@@ -395,8 +395,6 @@ __all__ = [
     "MakeFoldingAtlasOutputs",
     "MakeFoldingAtlasParameters",
     "make_folding_atlas",
-    "make_folding_atlas_cargs",
     "make_folding_atlas_execute",
-    "make_folding_atlas_outputs",
     "make_folding_atlas_params",
 ]

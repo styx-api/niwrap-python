@@ -385,7 +385,7 @@ def ants_cortical_thickness_sh_outputs(
 
 def ants_cortical_thickness_sh_execute(
     params: AntsCorticalThicknessShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsCorticalThicknessShOutputs:
     """
     This script performs T1 anatomical brain processing including brain extraction,
@@ -398,10 +398,12 @@ def ants_cortical_thickness_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsCorticalThicknessShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_CORTICAL_THICKNESS_SH_METADATA)
     params = execution.params(params)
     cargs = ants_cortical_thickness_sh_cargs(params, execution)
     ret = ants_cortical_thickness_sh_outputs(params, execution)
@@ -499,8 +501,6 @@ def ants_cortical_thickness_sh(
     Returns:
         NamedTuple of outputs (described in `AntsCorticalThicknessShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_CORTICAL_THICKNESS_SH_METADATA)
     params = ants_cortical_thickness_sh_params(
         image_dimension=image_dimension,
         anatomical_image=anatomical_image,
@@ -528,7 +528,7 @@ def ants_cortical_thickness_sh(
         script_stage_to_run=script_stage_to_run,
         test_debug_mode=test_debug_mode,
     )
-    return ants_cortical_thickness_sh_execute(params, execution)
+    return ants_cortical_thickness_sh_execute(params, runner)
 
 
 __all__ = [
@@ -536,8 +536,6 @@ __all__ = [
     "AntsCorticalThicknessShOutputs",
     "AntsCorticalThicknessShParameters",
     "ants_cortical_thickness_sh",
-    "ants_cortical_thickness_sh_cargs",
     "ants_cortical_thickness_sh_execute",
-    "ants_cortical_thickness_sh_outputs",
     "ants_cortical_thickness_sh_params",
 ]

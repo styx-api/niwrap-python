@@ -149,7 +149,7 @@ def v_3d_nwarp_adjust_outputs(
 
 def v_3d_nwarp_adjust_execute(
     params: V3dNwarpAdjustParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNwarpAdjustOutputs:
     """
     Program to adjust 3D warp datasets by composing them with the inverse of their
@@ -162,10 +162,12 @@ def v_3d_nwarp_adjust_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNwarpAdjustOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NWARP_ADJUST_METADATA)
     params = execution.params(params)
     cargs = v_3d_nwarp_adjust_cargs(params, execution)
     ret = v_3d_nwarp_adjust_outputs(params, execution)
@@ -199,14 +201,12 @@ def v_3d_nwarp_adjust(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpAdjustOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NWARP_ADJUST_METADATA)
     params = v_3d_nwarp_adjust_params(
         input_warps=input_warps,
         source_datasets=source_datasets,
         output_prefix=output_prefix,
     )
-    return v_3d_nwarp_adjust_execute(params, execution)
+    return v_3d_nwarp_adjust_execute(params, runner)
 
 
 __all__ = [
@@ -214,8 +214,6 @@ __all__ = [
     "V3dNwarpAdjustParameters",
     "V_3D_NWARP_ADJUST_METADATA",
     "v_3d_nwarp_adjust",
-    "v_3d_nwarp_adjust_cargs",
     "v_3d_nwarp_adjust_execute",
-    "v_3d_nwarp_adjust_outputs",
     "v_3d_nwarp_adjust_params",
 ]

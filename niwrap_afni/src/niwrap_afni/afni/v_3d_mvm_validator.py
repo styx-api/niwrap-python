@@ -131,7 +131,7 @@ def v_3d_mvm_validator_outputs(
 
 def v_3d_mvm_validator_execute(
     params: V3dMvmValidatorParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMvmValidatorOutputs:
     """
     Launch the 3dMVM model validation shiny app in a web browser.
@@ -142,10 +142,12 @@ def v_3d_mvm_validator_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMvmValidatorOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MVM_VALIDATOR_METADATA)
     params = execution.params(params)
     cargs = v_3d_mvm_validator_cargs(params, execution)
     ret = v_3d_mvm_validator_outputs(params, execution)
@@ -173,13 +175,11 @@ def v_3d_mvm_validator(
     Returns:
         NamedTuple of outputs (described in `V3dMvmValidatorOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MVM_VALIDATOR_METADATA)
     params = v_3d_mvm_validator_params(
         datatable=datatable,
         shinyfolder=shinyfolder,
     )
-    return v_3d_mvm_validator_execute(params, execution)
+    return v_3d_mvm_validator_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "V3dMvmValidatorParameters",
     "V_3D_MVM_VALIDATOR_METADATA",
     "v_3d_mvm_validator",
-    "v_3d_mvm_validator_cargs",
     "v_3d_mvm_validator_execute",
-    "v_3d_mvm_validator_outputs",
     "v_3d_mvm_validator_params",
 ]

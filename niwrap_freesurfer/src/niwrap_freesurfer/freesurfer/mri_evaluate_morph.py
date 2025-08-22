@@ -130,7 +130,7 @@ def mri_evaluate_morph_outputs(
 
 def mri_evaluate_morph_execute(
     params: MriEvaluateMorphParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEvaluateMorphOutputs:
     """
     This program computes the overlap of a set of segmentations for a given morph
@@ -142,10 +142,12 @@ def mri_evaluate_morph_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEvaluateMorphOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EVALUATE_MORPH_METADATA)
     params = execution.params(params)
     cargs = mri_evaluate_morph_cargs(params, execution)
     ret = mri_evaluate_morph_outputs(params, execution)
@@ -175,14 +177,12 @@ def mri_evaluate_morph(
     Returns:
         NamedTuple of outputs (described in `MriEvaluateMorphOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EVALUATE_MORPH_METADATA)
     params = mri_evaluate_morph_params(
         xform_name=xform_name,
         segmentation_files=segmentation_files,
         output_file=output_file,
     )
-    return mri_evaluate_morph_execute(params, execution)
+    return mri_evaluate_morph_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "MriEvaluateMorphOutputs",
     "MriEvaluateMorphParameters",
     "mri_evaluate_morph",
-    "mri_evaluate_morph_cargs",
     "mri_evaluate_morph_execute",
-    "mri_evaluate_morph_outputs",
     "mri_evaluate_morph_params",
 ]

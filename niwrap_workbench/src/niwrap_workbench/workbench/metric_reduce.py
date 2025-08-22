@@ -194,7 +194,7 @@ def metric_reduce_outputs(
 
 def metric_reduce_execute(
     params: MetricReduceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricReduceOutputs:
     """
     Perform reduction operation across metric columns.
@@ -227,10 +227,12 @@ def metric_reduce_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricReduceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_REDUCE_METADATA)
     params = execution.params(params)
     cargs = metric_reduce_cargs(params, execution)
     ret = metric_reduce_outputs(params, execution)
@@ -286,8 +288,6 @@ def metric_reduce(
     Returns:
         NamedTuple of outputs (described in `MetricReduceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_REDUCE_METADATA)
     params = metric_reduce_params(
         metric_in=metric_in,
         operation=operation,
@@ -295,7 +295,7 @@ def metric_reduce(
         exclude_outliers=exclude_outliers,
         opt_only_numeric=opt_only_numeric,
     )
-    return metric_reduce_execute(params, execution)
+    return metric_reduce_execute(params, runner)
 
 
 __all__ = [
@@ -304,10 +304,7 @@ __all__ = [
     "MetricReduceOutputs",
     "MetricReduceParameters",
     "metric_reduce",
-    "metric_reduce_cargs",
-    "metric_reduce_exclude_outliers_cargs",
     "metric_reduce_exclude_outliers_params",
     "metric_reduce_execute",
-    "metric_reduce_outputs",
     "metric_reduce_params",
 ]

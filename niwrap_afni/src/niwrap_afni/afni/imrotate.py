@@ -152,7 +152,7 @@ def imrotate_outputs(
 
 def imrotate_execute(
     params: ImrotateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImrotateOutputs:
     """
     Shifts and rotates an image.
@@ -163,10 +163,12 @@ def imrotate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImrotateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMROTATE_METADATA)
     params = execution.params(params)
     cargs = imrotate_cargs(params, execution)
     ret = imrotate_outputs(params, execution)
@@ -203,8 +205,6 @@ def imrotate(
     Returns:
         NamedTuple of outputs (described in `ImrotateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMROTATE_METADATA)
     params = imrotate_params(
         linear_interpolation=linear_interpolation,
         fourier_interpolation=fourier_interpolation,
@@ -214,7 +214,7 @@ def imrotate(
         input_image=input_image,
         output_image=output_image,
     )
-    return imrotate_execute(params, execution)
+    return imrotate_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "ImrotateOutputs",
     "ImrotateParameters",
     "imrotate",
-    "imrotate_cargs",
     "imrotate_execute",
-    "imrotate_outputs",
     "imrotate_params",
 ]

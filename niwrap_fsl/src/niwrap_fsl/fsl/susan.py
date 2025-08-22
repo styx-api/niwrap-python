@@ -183,7 +183,7 @@ def susan_outputs(
 
 def susan_execute(
     params: SusanParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SusanOutputs:
     """
     Non-linear noise reduction filtering tool.
@@ -194,10 +194,12 @@ def susan_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SusanOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SUSAN_METADATA)
     params = execution.params(params)
     cargs = susan_cargs(params, execution)
     ret = susan_outputs(params, execution)
@@ -247,8 +249,6 @@ def susan(
     Returns:
         NamedTuple of outputs (described in `SusanOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SUSAN_METADATA)
     params = susan_params(
         input_file=input_file,
         brightness_threshold=brightness_threshold,
@@ -262,7 +262,7 @@ def susan(
         brightness_threshold2=brightness_threshold2,
         output_file=output_file,
     )
-    return susan_execute(params, execution)
+    return susan_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "SusanOutputs",
     "SusanParameters",
     "susan",
-    "susan_cargs",
     "susan_execute",
-    "susan_outputs",
     "susan_params",
 ]

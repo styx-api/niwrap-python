@@ -126,7 +126,7 @@ def possum_plot_outputs(
 
 def possum_plot_execute(
     params: PossumPlotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PossumPlotOutputs:
     """
     Tool for plotting results from POSSUM simulations in FSL.
@@ -137,10 +137,12 @@ def possum_plot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PossumPlotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POSSUM_PLOT_METADATA)
     params = execution.params(params)
     cargs = possum_plot_cargs(params, execution)
     ret = possum_plot_outputs(params, execution)
@@ -168,13 +170,11 @@ def possum_plot(
     Returns:
         NamedTuple of outputs (described in `PossumPlotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POSSUM_PLOT_METADATA)
     params = possum_plot_params(
         input_file=input_file,
         output_basename=output_basename,
     )
-    return possum_plot_execute(params, execution)
+    return possum_plot_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "PossumPlotOutputs",
     "PossumPlotParameters",
     "possum_plot",
-    "possum_plot_cargs",
     "possum_plot_execute",
-    "possum_plot_outputs",
     "possum_plot_params",
 ]

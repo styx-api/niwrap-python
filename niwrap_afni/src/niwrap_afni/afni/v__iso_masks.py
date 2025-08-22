@@ -126,7 +126,7 @@ def v__iso_masks_outputs(
 
 def v__iso_masks_execute(
     params: VIsoMasksParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VIsoMasksOutputs:
     """
     Creates isosurfaces from isovolume envelopes.
@@ -137,10 +137,12 @@ def v__iso_masks_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VIsoMasksOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ISO_MASKS_METADATA)
     params = execution.params(params)
     cargs = v__iso_masks_cargs(params, execution)
     ret = v__iso_masks_outputs(params, execution)
@@ -167,13 +169,11 @@ def v__iso_masks(
     Returns:
         NamedTuple of outputs (described in `VIsoMasksOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ISO_MASKS_METADATA)
     params = v__iso_masks_params(
         input_dataset=input_dataset,
         isovals=isovals,
     )
-    return v__iso_masks_execute(params, execution)
+    return v__iso_masks_execute(params, runner)
 
 
 __all__ = [
@@ -181,8 +181,6 @@ __all__ = [
     "VIsoMasksParameters",
     "V__ISO_MASKS_METADATA",
     "v__iso_masks",
-    "v__iso_masks_cargs",
     "v__iso_masks_execute",
-    "v__iso_masks_outputs",
     "v__iso_masks_params",
 ]

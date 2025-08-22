@@ -183,7 +183,7 @@ def uber_align_test_py_outputs(
 
 def uber_align_test_py_execute(
     params: UberAlignTestPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UberAlignTestPyOutputs:
     """
     Generate script to test anatomical/EPI alignment.
@@ -194,10 +194,12 @@ def uber_align_test_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UberAlignTestPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UBER_ALIGN_TEST_PY_METADATA)
     params = execution.params(params)
     cargs = uber_align_test_py_cargs(params, execution)
     ret = uber_align_test_py_outputs(params, execution)
@@ -240,8 +242,6 @@ def uber_align_test_py(
     Returns:
         NamedTuple of outputs (described in `UberAlignTestPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UBER_ALIGN_TEST_PY_METADATA)
     params = uber_align_test_py_params(
         no_gui=no_gui,
         print_script=print_script,
@@ -254,7 +254,7 @@ def uber_align_test_py(
         show_valid_opts=show_valid_opts,
         version=version,
     )
-    return uber_align_test_py_execute(params, execution)
+    return uber_align_test_py_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "UberAlignTestPyOutputs",
     "UberAlignTestPyParameters",
     "uber_align_test_py",
-    "uber_align_test_py_cargs",
     "uber_align_test_py_execute",
-    "uber_align_test_py_outputs",
     "uber_align_test_py_params",
 ]

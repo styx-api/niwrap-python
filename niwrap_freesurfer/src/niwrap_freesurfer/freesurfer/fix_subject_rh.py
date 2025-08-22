@@ -126,7 +126,7 @@ def fix_subject_rh_outputs(
 
 def fix_subject_rh_execute(
     params: FixSubjectRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixSubjectRhOutputs:
     """
     A tool from FreeSurfer that performs operations on the right hemisphere data
@@ -138,10 +138,12 @@ def fix_subject_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixSubjectRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIX_SUBJECT_RH_METADATA)
     params = execution.params(params)
     cargs = fix_subject_rh_cargs(params, execution)
     ret = fix_subject_rh_outputs(params, execution)
@@ -170,13 +172,11 @@ def fix_subject_rh(
     Returns:
         NamedTuple of outputs (described in `FixSubjectRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIX_SUBJECT_RH_METADATA)
     params = fix_subject_rh_params(
         input_directory=input_directory,
         help_flag=help_flag,
     )
-    return fix_subject_rh_execute(params, execution)
+    return fix_subject_rh_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "FixSubjectRhOutputs",
     "FixSubjectRhParameters",
     "fix_subject_rh",
-    "fix_subject_rh_cargs",
     "fix_subject_rh_execute",
-    "fix_subject_rh_outputs",
     "fix_subject_rh_params",
 ]

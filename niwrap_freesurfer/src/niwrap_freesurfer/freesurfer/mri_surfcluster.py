@@ -510,7 +510,7 @@ def mri_surfcluster_outputs(
 
 def mri_surfcluster_execute(
     params: MriSurfclusterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSurfclusterOutputs:
     """
     A tool for clustering vertices on a cortical surface based on intensity values.
@@ -521,10 +521,12 @@ def mri_surfcluster_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSurfclusterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SURFCLUSTER_METADATA)
     params = execution.params(params)
     cargs = mri_surfcluster_cargs(params, execution)
     ret = mri_surfcluster_outputs(params, execution)
@@ -629,8 +631,6 @@ def mri_surfcluster(
     Returns:
         NamedTuple of outputs (described in `MriSurfclusterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SURFCLUSTER_METADATA)
     params = mri_surfcluster_params(
         infile=infile,
         thmin=thmin,
@@ -674,7 +674,7 @@ def mri_surfcluster(
         sd=sd,
         thmax=thmax,
     )
-    return mri_surfcluster_execute(params, execution)
+    return mri_surfcluster_execute(params, runner)
 
 
 __all__ = [
@@ -682,8 +682,6 @@ __all__ = [
     "MriSurfclusterOutputs",
     "MriSurfclusterParameters",
     "mri_surfcluster",
-    "mri_surfcluster_cargs",
     "mri_surfcluster_execute",
-    "mri_surfcluster_outputs",
     "mri_surfcluster_params",
 ]

@@ -213,7 +213,7 @@ def make_stim_times_py_outputs(
 
 def make_stim_times_py_execute(
     params: MakeStimTimesPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeStimTimesPyOutputs:
     """
     Convert a set of 0/1 stim files into a set of stim_times files, or convert
@@ -225,10 +225,12 @@ def make_stim_times_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeStimTimesPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_STIM_TIMES_PY_METADATA)
     params = execution.params(params)
     cargs = make_stim_times_py_cargs(params, execution)
     ret = make_stim_times_py_outputs(params, execution)
@@ -276,8 +278,6 @@ def make_stim_times_py(
     Returns:
         NamedTuple of outputs (described in `MakeStimTimesPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_STIM_TIMES_PY_METADATA)
     params = make_stim_times_py_params(
         files=files,
         prefix=prefix,
@@ -292,7 +292,7 @@ def make_stim_times_py(
         show_valid_opts=show_valid_opts,
         verbose=verbose,
     )
-    return make_stim_times_py_execute(params, execution)
+    return make_stim_times_py_execute(params, runner)
 
 
 __all__ = [
@@ -300,8 +300,6 @@ __all__ = [
     "MakeStimTimesPyOutputs",
     "MakeStimTimesPyParameters",
     "make_stim_times_py",
-    "make_stim_times_py_cargs",
     "make_stim_times_py_execute",
-    "make_stim_times_py_outputs",
     "make_stim_times_py_params",
 ]

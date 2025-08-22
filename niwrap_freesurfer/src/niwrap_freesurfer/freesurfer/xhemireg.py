@@ -204,7 +204,7 @@ def xhemireg_outputs(
 
 def xhemireg_execute(
     params: XhemiregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XhemiregOutputs:
     """
     Tool for hemisphere registration in neuroimaging.
@@ -215,10 +215,12 @@ def xhemireg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XhemiregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XHEMIREG_METADATA)
     params = execution.params(params)
     cargs = xhemireg_cargs(params, execution)
     ret = xhemireg_outputs(params, execution)
@@ -268,8 +270,6 @@ def xhemireg(
     Returns:
         NamedTuple of outputs (described in `XhemiregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XHEMIREG_METADATA)
     params = xhemireg_params(
         subject=subject,
         output_dir=output_dir,
@@ -285,7 +285,7 @@ def xhemireg(
         version=version,
         help_=help_,
     )
-    return xhemireg_execute(params, execution)
+    return xhemireg_execute(params, runner)
 
 
 __all__ = [
@@ -293,8 +293,6 @@ __all__ = [
     "XhemiregOutputs",
     "XhemiregParameters",
     "xhemireg",
-    "xhemireg_cargs",
     "xhemireg_execute",
-    "xhemireg_outputs",
     "xhemireg_params",
 ]

@@ -144,7 +144,7 @@ def float_scan_outputs(
 
 def float_scan_execute(
     params: FloatScanParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FloatScanOutputs:
     """
     Scans the input file of IEEE floating point numbers for illegal values:
@@ -156,10 +156,12 @@ def float_scan_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FloatScanOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FLOAT_SCAN_METADATA)
     params = execution.params(params)
     cargs = float_scan_cargs(params, execution)
     ret = float_scan_outputs(params, execution)
@@ -193,15 +195,13 @@ def float_scan(
     Returns:
         NamedTuple of outputs (described in `FloatScanOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FLOAT_SCAN_METADATA)
     params = float_scan_params(
         fix_illegal_values=fix_illegal_values,
         verbose_mode=verbose_mode,
         skip_count=skip_count,
         input_file=input_file,
     )
-    return float_scan_execute(params, execution)
+    return float_scan_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "FloatScanOutputs",
     "FloatScanParameters",
     "float_scan",
-    "float_scan_cargs",
     "float_scan_execute",
-    "float_scan_outputs",
     "float_scan_params",
 ]

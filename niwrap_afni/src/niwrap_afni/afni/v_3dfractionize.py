@@ -179,7 +179,7 @@ def v_3dfractionize_outputs(
 
 def v_3dfractionize_execute(
     params: V3dfractionizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dfractionizeOutputs:
     """
     For each voxel in the output dataset, computes the fraction of it that is
@@ -191,10 +191,12 @@ def v_3dfractionize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dfractionizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DFRACTIONIZE_METADATA)
     params = execution.params(params)
     cargs = v_3dfractionize_cargs(params, execution)
     ret = v_3dfractionize_outputs(params, execution)
@@ -238,8 +240,6 @@ def v_3dfractionize(
     Returns:
         NamedTuple of outputs (described in `V3dfractionizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DFRACTIONIZE_METADATA)
     params = v_3dfractionize_params(
         template=template,
         input_=input_,
@@ -249,7 +249,7 @@ def v_3dfractionize(
         preserve=preserve,
         vote=vote,
     )
-    return v_3dfractionize_execute(params, execution)
+    return v_3dfractionize_execute(params, runner)
 
 
 __all__ = [
@@ -257,8 +257,6 @@ __all__ = [
     "V3dfractionizeParameters",
     "V_3DFRACTIONIZE_METADATA",
     "v_3dfractionize",
-    "v_3dfractionize_cargs",
     "v_3dfractionize_execute",
-    "v_3dfractionize_outputs",
     "v_3dfractionize_params",
 ]

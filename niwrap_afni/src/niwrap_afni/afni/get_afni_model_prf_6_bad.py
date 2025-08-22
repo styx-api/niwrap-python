@@ -141,7 +141,7 @@ def get_afni_model_prf_6_bad_outputs(
 
 def get_afni_model_prf_6_bad_execute(
     params: GetAfniModelPrf6BadParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GetAfniModelPrf6BadOutputs:
     """
     Command line tool for obtaining AFNI pRF model.
@@ -152,10 +152,12 @@ def get_afni_model_prf_6_bad_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrf6BadOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GET_AFNI_MODEL_PRF_6_BAD_METADATA)
     params = execution.params(params)
     cargs = get_afni_model_prf_6_bad_cargs(params, execution)
     ret = get_afni_model_prf_6_bad_outputs(params, execution)
@@ -190,8 +192,6 @@ def get_afni_model_prf_6_bad(
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrf6BadOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GET_AFNI_MODEL_PRF_6_BAD_METADATA)
     params = get_afni_model_prf_6_bad_params(
         amplitude=amplitude,
         x_coord=x_coord,
@@ -200,7 +200,7 @@ def get_afni_model_prf_6_bad(
         sigrat=sigrat,
         theta=theta,
     )
-    return get_afni_model_prf_6_bad_execute(params, execution)
+    return get_afni_model_prf_6_bad_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "GetAfniModelPrf6BadOutputs",
     "GetAfniModelPrf6BadParameters",
     "get_afni_model_prf_6_bad",
-    "get_afni_model_prf_6_bad_cargs",
     "get_afni_model_prf_6_bad_execute",
-    "get_afni_model_prf_6_bad_outputs",
     "get_afni_model_prf_6_bad_params",
 ]

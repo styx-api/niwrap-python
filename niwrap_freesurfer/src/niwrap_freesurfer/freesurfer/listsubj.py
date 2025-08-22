@@ -170,7 +170,7 @@ def listsubj_outputs(
 
 def listsubj_execute(
     params: ListsubjParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ListsubjOutputs:
     """
     List subject IDs in SUBJECT_DIR.
@@ -181,10 +181,12 @@ def listsubj_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ListsubjOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LISTSUBJ_METADATA)
     params = execution.params(params)
     cargs = listsubj_cargs(params, execution)
     ret = listsubj_outputs(params, execution)
@@ -227,8 +229,6 @@ def listsubj(
     Returns:
         NamedTuple of outputs (described in `ListsubjOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LISTSUBJ_METADATA)
     params = listsubj_params(
         subject_dir=subject_dir,
         cross=cross,
@@ -241,7 +241,7 @@ def listsubj(
         count=count,
         help_=help_,
     )
-    return listsubj_execute(params, execution)
+    return listsubj_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "ListsubjOutputs",
     "ListsubjParameters",
     "listsubj",
-    "listsubj_cargs",
     "listsubj_execute",
-    "listsubj_outputs",
     "listsubj_params",
 ]

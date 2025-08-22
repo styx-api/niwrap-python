@@ -362,7 +362,7 @@ def trac_all_outputs(
 
 def trac_all_execute(
     params: TracAllParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TracAllOutputs:
     """
     Reconstruct white-matter pathways using an atlas of the underlying anatomy.
@@ -373,10 +373,12 @@ def trac_all_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TracAllOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRAC_ALL_METADATA)
     params = execution.params(params)
     cargs = trac_all_cargs(params, execution)
     ret = trac_all_outputs(params, execution)
@@ -471,8 +473,6 @@ def trac_all(
     Returns:
         NamedTuple of outputs (described in `TracAllOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRAC_ALL_METADATA)
     params = trac_all_params(
         config_file=config_file,
         subject_name=subject_name,
@@ -509,7 +509,7 @@ def trac_all(
         version_info=version_info,
         help_=help_,
     )
-    return trac_all_execute(params, execution)
+    return trac_all_execute(params, runner)
 
 
 __all__ = [
@@ -517,8 +517,6 @@ __all__ = [
     "TracAllOutputs",
     "TracAllParameters",
     "trac_all",
-    "trac_all_cargs",
     "trac_all_execute",
-    "trac_all_outputs",
     "trac_all_params",
 ]

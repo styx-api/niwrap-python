@@ -356,7 +356,7 @@ def tckdfc_outputs(
 
 def tckdfc_execute(
     params: TckdfcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckdfcOutputs:
     """
     Perform the Track-Weighted Dynamic Functional Connectivity (TW-dFC) method.
@@ -402,10 +402,12 @@ def tckdfc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckdfcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKDFC_METADATA)
     params = execution.params(params)
     cargs = tckdfc_cargs(params, execution)
     ret = tckdfc_outputs(params, execution)
@@ -513,8 +515,6 @@ def tckdfc(
     Returns:
         NamedTuple of outputs (described in `TckdfcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKDFC_METADATA)
     params = tckdfc_params(
         static=static,
         dynamic=dynamic,
@@ -535,7 +535,7 @@ def tckdfc(
         fmri=fmri,
         output=output,
     )
-    return tckdfc_execute(params, execution)
+    return tckdfc_execute(params, runner)
 
 
 __all__ = [
@@ -545,12 +545,8 @@ __all__ = [
     "TckdfcOutputs",
     "TckdfcParameters",
     "tckdfc",
-    "tckdfc_cargs",
-    "tckdfc_config_cargs",
     "tckdfc_config_params",
-    "tckdfc_dynamic_cargs",
     "tckdfc_dynamic_params",
     "tckdfc_execute",
-    "tckdfc_outputs",
     "tckdfc_params",
 ]

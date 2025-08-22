@@ -452,7 +452,7 @@ def mri_concat_outputs(
 
 def mri_concat_execute(
     params: MriConcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriConcatOutputs:
     """
     Concatenates input data sets.
@@ -463,10 +463,12 @@ def mri_concat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriConcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CONCAT_METADATA)
     params = execution.params(params)
     cargs = mri_concat_cargs(params, execution)
     ret = mri_concat_outputs(params, execution)
@@ -589,8 +591,6 @@ def mri_concat(
     Returns:
         NamedTuple of outputs (described in `MriConcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CONCAT_METADATA)
     params = mri_concat_params(
         input_files=input_files,
         output_file=output_file,
@@ -641,7 +641,7 @@ def mri_concat(
         rms=rms,
         no_check=no_check,
     )
-    return mri_concat_execute(params, execution)
+    return mri_concat_execute(params, runner)
 
 
 __all__ = [
@@ -649,8 +649,6 @@ __all__ = [
     "MriConcatOutputs",
     "MriConcatParameters",
     "mri_concat",
-    "mri_concat_cargs",
     "mri_concat_execute",
-    "mri_concat_outputs",
     "mri_concat_params",
 ]

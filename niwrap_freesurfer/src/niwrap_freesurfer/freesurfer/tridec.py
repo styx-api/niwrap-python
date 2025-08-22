@@ -135,7 +135,7 @@ def tridec_outputs(
 
 def tridec_execute(
     params: TridecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TridecOutputs:
     """
     Tridec tool for processing brain images.
@@ -146,10 +146,12 @@ def tridec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TridecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRIDEC_METADATA)
     params = execution.params(params)
     cargs = tridec_cargs(params, execution)
     ret = tridec_outputs(params, execution)
@@ -180,15 +182,13 @@ def tridec(
     Returns:
         NamedTuple of outputs (described in `TridecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRIDEC_METADATA)
     params = tridec_params(
         subject_name=subject_name,
         fine_file=fine_file,
         ico_file=ico_file,
         out_file=out_file,
     )
-    return tridec_execute(params, execution)
+    return tridec_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "TridecOutputs",
     "TridecParameters",
     "tridec",
-    "tridec_cargs",
     "tridec_execute",
-    "tridec_outputs",
     "tridec_params",
 ]

@@ -125,7 +125,7 @@ def mri_train_outputs(
 
 def mri_train_execute(
     params: MriTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriTrainOutputs:
     """
     Tool for training with MRI data in FreeSurfer.
@@ -136,10 +136,12 @@ def mri_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_TRAIN_METADATA)
     params = execution.params(params)
     cargs = mri_train_cargs(params, execution)
     ret = mri_train_outputs(params, execution)
@@ -166,13 +168,11 @@ def mri_train(
     Returns:
         NamedTuple of outputs (described in `MriTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_TRAIN_METADATA)
     params = mri_train_params(
         training_file=training_file,
         output_file=output_file,
     )
-    return mri_train_execute(params, execution)
+    return mri_train_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MriTrainOutputs",
     "MriTrainParameters",
     "mri_train",
-    "mri_train_cargs",
     "mri_train_execute",
-    "mri_train_outputs",
     "mri_train_params",
 ]

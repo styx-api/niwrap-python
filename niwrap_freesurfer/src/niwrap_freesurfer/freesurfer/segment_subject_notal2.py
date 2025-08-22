@@ -125,7 +125,7 @@ def segment_subject_notal2_outputs(
 
 def segment_subject_notal2_execute(
     params: SegmentSubjectNotal2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubjectNotal2Outputs:
     """
     FreeSurfer tool for segmenting subject data using notal2 algorithm.
@@ -136,10 +136,12 @@ def segment_subject_notal2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectNotal2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBJECT_NOTAL2_METADATA)
     params = execution.params(params)
     cargs = segment_subject_notal2_cargs(params, execution)
     ret = segment_subject_notal2_outputs(params, execution)
@@ -166,12 +168,10 @@ def segment_subject_notal2(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectNotal2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBJECT_NOTAL2_METADATA)
     params = segment_subject_notal2_params(
         license_file=license_file,
     )
-    return segment_subject_notal2_execute(params, execution)
+    return segment_subject_notal2_execute(params, runner)
 
 
 __all__ = [
@@ -179,8 +179,6 @@ __all__ = [
     "SegmentSubjectNotal2Outputs",
     "SegmentSubjectNotal2Parameters",
     "segment_subject_notal2",
-    "segment_subject_notal2_cargs",
     "segment_subject_notal2_execute",
-    "segment_subject_notal2_outputs",
     "segment_subject_notal2_params",
 ]

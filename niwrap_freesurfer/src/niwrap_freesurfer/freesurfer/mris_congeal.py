@@ -230,7 +230,7 @@ def mris_congeal_outputs(
 
 def mris_congeal_execute(
     params: MrisCongealParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCongealOutputs:
     """
     Program that registers a set of input surfaces together and generates an atlas.
@@ -241,10 +241,12 @@ def mris_congeal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCongealOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CONGEAL_METADATA)
     params = execution.params(params)
     cargs = mris_congeal_cargs(params, execution)
     ret = mris_congeal_outputs(params, execution)
@@ -298,8 +300,6 @@ def mris_congeal(
     Returns:
         NamedTuple of outputs (described in `MrisCongealOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CONGEAL_METADATA)
     params = mris_congeal_params(
         input_surface_name=input_surface_name,
         hemi=hemi,
@@ -317,7 +317,7 @@ def mris_congeal(
         overlay_dir=overlay_dir,
         target_subject=target_subject,
     )
-    return mris_congeal_execute(params, execution)
+    return mris_congeal_execute(params, runner)
 
 
 __all__ = [
@@ -325,8 +325,6 @@ __all__ = [
     "MrisCongealOutputs",
     "MrisCongealParameters",
     "mris_congeal",
-    "mris_congeal_cargs",
     "mris_congeal_execute",
-    "mris_congeal_outputs",
     "mris_congeal_params",
 ]

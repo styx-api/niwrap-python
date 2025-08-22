@@ -125,7 +125,7 @@ def mri_reduce_outputs(
 
 def mri_reduce_execute(
     params: MriReduceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriReduceOutputs:
     """
     A tool to reduce MRI file dimensions.
@@ -136,10 +136,12 @@ def mri_reduce_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriReduceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_REDUCE_METADATA)
     params = execution.params(params)
     cargs = mri_reduce_cargs(params, execution)
     ret = mri_reduce_outputs(params, execution)
@@ -166,13 +168,11 @@ def mri_reduce(
     Returns:
         NamedTuple of outputs (described in `MriReduceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_REDUCE_METADATA)
     params = mri_reduce_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return mri_reduce_execute(params, execution)
+    return mri_reduce_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MriReduceOutputs",
     "MriReduceParameters",
     "mri_reduce",
-    "mri_reduce_cargs",
     "mri_reduce_execute",
-    "mri_reduce_outputs",
     "mri_reduce_params",
 ]

@@ -182,7 +182,7 @@ def mri_synthsr_outputs(
 
 def mri_synthsr_execute(
     params: MriSynthsrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSynthsrOutputs:
     """
     Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a scan of
@@ -194,10 +194,12 @@ def mri_synthsr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSynthsrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SYNTHSR_METADATA)
     params = execution.params(params)
     cargs = mri_synthsr_cargs(params, execution)
     ret = mri_synthsr_outputs(params, execution)
@@ -246,8 +248,6 @@ def mri_synthsr(
     Returns:
         NamedTuple of outputs (described in `MriSynthsrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SYNTHSR_METADATA)
     params = mri_synthsr_params(
         input_=input_,
         output=output,
@@ -260,7 +260,7 @@ def mri_synthsr(
         cpu=cpu,
         model=model,
     )
-    return mri_synthsr_execute(params, execution)
+    return mri_synthsr_execute(params, runner)
 
 
 __all__ = [
@@ -268,8 +268,6 @@ __all__ = [
     "MriSynthsrOutputs",
     "MriSynthsrParameters",
     "mri_synthsr",
-    "mri_synthsr_cargs",
     "mri_synthsr_execute",
-    "mri_synthsr_outputs",
     "mri_synthsr_params",
 ]

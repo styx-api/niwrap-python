@@ -141,7 +141,7 @@ def mris_parcellate_connectivity_outputs(
 
 def mris_parcellate_connectivity_execute(
     params: MrisParcellateConnectivityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisParcellateConnectivityOutputs:
     """
     A tool to parcellate brain connectivity using surface and correlation data.
@@ -152,10 +152,12 @@ def mris_parcellate_connectivity_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisParcellateConnectivityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_PARCELLATE_CONNECTIVITY_METADATA)
     params = execution.params(params)
     cargs = mris_parcellate_connectivity_cargs(params, execution)
     ret = mris_parcellate_connectivity_outputs(params, execution)
@@ -187,15 +189,13 @@ def mris_parcellate_connectivity(
     Returns:
         NamedTuple of outputs (described in `MrisParcellateConnectivityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_PARCELLATE_CONNECTIVITY_METADATA)
     params = mris_parcellate_connectivity_params(
         smooth_iterations=smooth_iterations,
         input_surface=input_surface,
         input_correlations=input_correlations,
         output_parcellation=output_parcellation,
     )
-    return mris_parcellate_connectivity_execute(params, execution)
+    return mris_parcellate_connectivity_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "MrisParcellateConnectivityOutputs",
     "MrisParcellateConnectivityParameters",
     "mris_parcellate_connectivity",
-    "mris_parcellate_connectivity_cargs",
     "mris_parcellate_connectivity_execute",
-    "mris_parcellate_connectivity_outputs",
     "mris_parcellate_connectivity_params",
 ]

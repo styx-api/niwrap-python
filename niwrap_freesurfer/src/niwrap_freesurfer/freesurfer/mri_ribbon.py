@@ -145,7 +145,7 @@ def mri_ribbon_outputs(
 
 def mri_ribbon_execute(
     params: MriRibbonParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRibbonOutputs:
     """
     MRI Ribbon tool to create ribbon volumes from surface files.
@@ -156,10 +156,12 @@ def mri_ribbon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRibbonOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RIBBON_METADATA)
     params = execution.params(params)
     cargs = mri_ribbon_cargs(params, execution)
     ret = mri_ribbon_outputs(params, execution)
@@ -192,8 +194,6 @@ def mri_ribbon(
     Returns:
         NamedTuple of outputs (described in `MriRibbonOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RIBBON_METADATA)
     params = mri_ribbon_params(
         label_file=label_file,
         inner_surface=inner_surface,
@@ -201,7 +201,7 @@ def mri_ribbon(
         input_volume=input_volume,
         output_volume=output_volume,
     )
-    return mri_ribbon_execute(params, execution)
+    return mri_ribbon_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "MriRibbonOutputs",
     "MriRibbonParameters",
     "mri_ribbon",
-    "mri_ribbon_cargs",
     "mri_ribbon_execute",
-    "mri_ribbon_outputs",
     "mri_ribbon_params",
 ]

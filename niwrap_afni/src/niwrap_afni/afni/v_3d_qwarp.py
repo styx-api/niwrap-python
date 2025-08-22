@@ -246,7 +246,7 @@ def v_3d_qwarp_outputs(
 
 def v_3d_qwarp_execute(
     params: V3dQwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dQwarpOutputs:
     """
     Computes a nonlinearly warped version of source_dataset to match base_dataset.
@@ -257,10 +257,12 @@ def v_3d_qwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dQwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_QWARP_METADATA)
     params = execution.params(params)
     cargs = v_3d_qwarp_cargs(params, execution)
     ret = v_3d_qwarp_outputs(params, execution)
@@ -323,8 +325,6 @@ def v_3d_qwarp(
     Returns:
         NamedTuple of outputs (described in `V3dQwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_QWARP_METADATA)
     params = v_3d_qwarp_params(
         base_dataset=base_dataset,
         source_dataset=source_dataset,
@@ -347,7 +347,7 @@ def v_3d_qwarp(
         verbose=verbose,
         quiet=quiet,
     )
-    return v_3d_qwarp_execute(params, execution)
+    return v_3d_qwarp_execute(params, runner)
 
 
 __all__ = [
@@ -355,8 +355,6 @@ __all__ = [
     "V3dQwarpParameters",
     "V_3D_QWARP_METADATA",
     "v_3d_qwarp",
-    "v_3d_qwarp_cargs",
     "v_3d_qwarp_execute",
-    "v_3d_qwarp_outputs",
     "v_3d_qwarp_params",
 ]

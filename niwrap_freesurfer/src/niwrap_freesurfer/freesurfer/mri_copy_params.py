@@ -136,7 +136,7 @@ def mri_copy_params_outputs(
 
 def mri_copy_params_execute(
     params: MriCopyParamsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCopyParamsOutputs:
     """
     A tool to replace the volume parameters of an input volume with those of a
@@ -148,10 +148,12 @@ def mri_copy_params_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCopyParamsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COPY_PARAMS_METADATA)
     params = execution.params(params)
     cargs = mri_copy_params_cargs(params, execution)
     ret = mri_copy_params_outputs(params, execution)
@@ -183,15 +185,13 @@ def mri_copy_params(
     Returns:
         NamedTuple of outputs (described in `MriCopyParamsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COPY_PARAMS_METADATA)
     params = mri_copy_params_params(
         in_vol=in_vol,
         template_vol=template_vol,
         out_vol=out_vol,
         size_flag=size_flag,
     )
-    return mri_copy_params_execute(params, execution)
+    return mri_copy_params_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "MriCopyParamsOutputs",
     "MriCopyParamsParameters",
     "mri_copy_params",
-    "mri_copy_params_cargs",
     "mri_copy_params_execute",
-    "mri_copy_params_outputs",
     "mri_copy_params_params",
 ]

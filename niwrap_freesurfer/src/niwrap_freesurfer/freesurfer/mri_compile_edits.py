@@ -125,7 +125,7 @@ def mri_compile_edits_outputs(
 
 def mri_compile_edits_execute(
     params: MriCompileEditsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCompileEditsOutputs:
     """
     Program to create a single volume showing all the volumetric edits made to a
@@ -137,10 +137,12 @@ def mri_compile_edits_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCompileEditsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPILE_EDITS_METADATA)
     params = execution.params(params)
     cargs = mri_compile_edits_cargs(params, execution)
     ret = mri_compile_edits_outputs(params, execution)
@@ -168,13 +170,11 @@ def mri_compile_edits(
     Returns:
         NamedTuple of outputs (described in `MriCompileEditsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPILE_EDITS_METADATA)
     params = mri_compile_edits_params(
         subject_name=subject_name,
         output_volume=output_volume,
     )
-    return mri_compile_edits_execute(params, execution)
+    return mri_compile_edits_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "MriCompileEditsOutputs",
     "MriCompileEditsParameters",
     "mri_compile_edits",
-    "mri_compile_edits_cargs",
     "mri_compile_edits_execute",
-    "mri_compile_edits_outputs",
     "mri_compile_edits_params",
 ]

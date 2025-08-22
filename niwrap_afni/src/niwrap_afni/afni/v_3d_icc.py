@@ -251,7 +251,7 @@ def v_3d_icc_outputs(
 
 def v_3d_icc_execute(
     params: V3dIccParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dIccOutputs:
     """
     AFNI Program for IntraClass Correlatin (ICC) Analysis.
@@ -262,10 +262,12 @@ def v_3d_icc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dIccOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ICC_METADATA)
     params = execution.params(params)
     cargs = v_3d_icc_cargs(params, execution)
     ret = v_3d_icc_outputs(params, execution)
@@ -333,8 +335,6 @@ def v_3d_icc(
     Returns:
         NamedTuple of outputs (described in `V3dIccOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ICC_METADATA)
     params = v_3d_icc_params(
         model=model,
         prefix=prefix,
@@ -351,7 +351,7 @@ def v_3d_icc(
         cio=cio,
         rio=rio,
     )
-    return v_3d_icc_execute(params, execution)
+    return v_3d_icc_execute(params, runner)
 
 
 __all__ = [
@@ -359,8 +359,6 @@ __all__ = [
     "V3dIccParameters",
     "V_3D_ICC_METADATA",
     "v_3d_icc",
-    "v_3d_icc_cargs",
     "v_3d_icc_execute",
-    "v_3d_icc_outputs",
     "v_3d_icc_params",
 ]

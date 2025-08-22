@@ -315,7 +315,7 @@ def v_3d_seg_outputs(
 
 def v_3d_seg_execute(
     params: V3dSegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSegOutputs:
     """
     Segments brain volumes into tissue classes with optional global and voxelwise
@@ -327,10 +327,12 @@ def v_3d_seg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SEG_METADATA)
     params = execution.params(params)
     cargs = v_3d_seg_cargs(params, execution)
     ret = v_3d_seg_outputs(params, execution)
@@ -402,8 +404,6 @@ def v_3d_seg(
     Returns:
         NamedTuple of outputs (described in `V3dSegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SEG_METADATA)
     params = v_3d_seg_params(
         anat=anat,
         mask=mask,
@@ -425,7 +425,7 @@ def v_3d_seg(
         vox_debug=vox_debug,
         vox_debug_file=vox_debug_file,
     )
-    return v_3d_seg_execute(params, execution)
+    return v_3d_seg_execute(params, runner)
 
 
 __all__ = [
@@ -433,8 +433,6 @@ __all__ = [
     "V3dSegParameters",
     "V_3D_SEG_METADATA",
     "v_3d_seg",
-    "v_3d_seg_cargs",
     "v_3d_seg_execute",
-    "v_3d_seg_outputs",
     "v_3d_seg_params",
 ]

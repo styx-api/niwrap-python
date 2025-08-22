@@ -166,7 +166,7 @@ def abids_json_info_py_outputs(
 
 def abids_json_info_py_execute(
     params: AbidsJsonInfoPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AbidsJsonInfoPyOutputs:
     """
     A tool to extract information from BIDS formatted json files.
@@ -177,10 +177,12 @@ def abids_json_info_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AbidsJsonInfoPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ABIDS_JSON_INFO_PY_METADATA)
     params = execution.params(params)
     cargs = abids_json_info_py_cargs(params, execution)
     ret = abids_json_info_py_outputs(params, execution)
@@ -223,8 +225,6 @@ def abids_json_info_py(
     Returns:
         NamedTuple of outputs (described in `AbidsJsonInfoPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ABIDS_JSON_INFO_PY_METADATA)
     params = abids_json_info_py_params(
         json_files=json_files,
         tr_flag=tr_flag,
@@ -235,7 +235,7 @@ def abids_json_info_py(
         list_fields_flag=list_fields_flag,
         help_flag=help_flag,
     )
-    return abids_json_info_py_execute(params, execution)
+    return abids_json_info_py_execute(params, runner)
 
 
 __all__ = [
@@ -243,8 +243,6 @@ __all__ = [
     "AbidsJsonInfoPyOutputs",
     "AbidsJsonInfoPyParameters",
     "abids_json_info_py",
-    "abids_json_info_py_cargs",
     "abids_json_info_py_execute",
-    "abids_json_info_py_outputs",
     "abids_json_info_py_params",
 ]

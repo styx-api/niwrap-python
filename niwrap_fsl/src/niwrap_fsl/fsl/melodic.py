@@ -540,7 +540,7 @@ def melodic_outputs(
 
 def melodic_execute(
     params: MelodicParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MelodicOutputs:
     """
     Multivariate Exploratory Linear Optimised Decomposition into Independent
@@ -552,10 +552,12 @@ def melodic_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MelodicOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MELODIC_METADATA)
     params = execution.params(params)
     cargs = melodic_cargs(params, execution)
     ret = melodic_outputs(params, execution)
@@ -690,8 +692,6 @@ def melodic(
     Returns:
         NamedTuple of outputs (described in `MelodicOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MELODIC_METADATA)
     params = melodic_params(
         input_file=input_file,
         output_directory=output_directory,
@@ -743,7 +743,7 @@ def melodic(
         report_maps=report_maps,
         keep_meanvol=keep_meanvol,
     )
-    return melodic_execute(params, execution)
+    return melodic_execute(params, runner)
 
 
 __all__ = [
@@ -751,8 +751,6 @@ __all__ = [
     "MelodicOutputs",
     "MelodicParameters",
     "melodic",
-    "melodic_cargs",
     "melodic_execute",
-    "melodic_outputs",
     "melodic_params",
 ]

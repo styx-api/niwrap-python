@@ -190,7 +190,7 @@ def vol2symsurf_outputs(
 
 def vol2symsurf_execute(
     params: Vol2symsurfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Vol2symsurfOutputs:
     """
     A tool that samples a volume onto the surface of the left-right symmetric
@@ -202,10 +202,12 @@ def vol2symsurf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Vol2symsurfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOL2SYMSURF_METADATA)
     params = execution.params(params)
     cargs = vol2symsurf_cargs(params, execution)
     ret = vol2symsurf_outputs(params, execution)
@@ -245,8 +247,6 @@ def vol2symsurf(
     Returns:
         NamedTuple of outputs (described in `Vol2symsurfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOL2SYMSURF_METADATA)
     params = vol2symsurf_params(
         registration_file=registration_file,
         input_volume=input_volume,
@@ -257,7 +257,7 @@ def vol2symsurf(
         no_diff=no_diff,
         laterality_index=laterality_index,
     )
-    return vol2symsurf_execute(params, execution)
+    return vol2symsurf_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "Vol2symsurfOutputs",
     "Vol2symsurfParameters",
     "vol2symsurf",
-    "vol2symsurf_cargs",
     "vol2symsurf_execute",
-    "vol2symsurf_outputs",
     "vol2symsurf_params",
 ]

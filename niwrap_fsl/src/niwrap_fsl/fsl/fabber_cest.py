@@ -418,7 +418,7 @@ def fabber_cest_outputs(
 
 def fabber_cest_execute(
     params: FabberCestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberCestOutputs:
     """
     Fabber Model-based Analysis.
@@ -429,10 +429,12 @@ def fabber_cest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberCestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_CEST_METADATA)
     params = execution.params(params)
     cargs = fabber_cest_cargs(params, execution)
     ret = fabber_cest_outputs(params, execution)
@@ -533,8 +535,6 @@ def fabber_cest(
     Returns:
         NamedTuple of outputs (described in `FabberCestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_CEST_METADATA)
     params = fabber_cest_params(
         output=output,
         method=method,
@@ -573,7 +573,7 @@ def fabber_cest(
         optfile=optfile,
         debug=debug,
     )
-    return fabber_cest_execute(params, execution)
+    return fabber_cest_execute(params, runner)
 
 
 __all__ = [
@@ -581,8 +581,6 @@ __all__ = [
     "FabberCestOutputs",
     "FabberCestParameters",
     "fabber_cest",
-    "fabber_cest_cargs",
     "fabber_cest_execute",
-    "fabber_cest_outputs",
     "fabber_cest_params",
 ]

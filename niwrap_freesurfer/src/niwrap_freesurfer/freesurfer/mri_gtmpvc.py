@@ -629,7 +629,7 @@ def mri_gtmpvc_outputs(
 
 def mri_gtmpvc_execute(
     params: MriGtmpvcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGtmpvcOutputs:
     """
     mri_gtmpvc performs partial volume correction on PET data using anatomical
@@ -641,10 +641,12 @@ def mri_gtmpvc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGtmpvcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GTMPVC_METADATA)
     params = execution.params(params)
     cargs = mri_gtmpvc_cargs(params, execution)
     ret = mri_gtmpvc_outputs(params, execution)
@@ -801,8 +803,6 @@ def mri_gtmpvc(
     Returns:
         NamedTuple of outputs (described in `MriGtmpvcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GTMPVC_METADATA)
     params = mri_gtmpvc_params(
         input_volume=input_volume,
         frame=frame,
@@ -867,7 +867,7 @@ def mri_gtmpvc(
         help_=help_,
         version=version,
     )
-    return mri_gtmpvc_execute(params, execution)
+    return mri_gtmpvc_execute(params, runner)
 
 
 __all__ = [
@@ -875,8 +875,6 @@ __all__ = [
     "MriGtmpvcOutputs",
     "MriGtmpvcParameters",
     "mri_gtmpvc",
-    "mri_gtmpvc_cargs",
     "mri_gtmpvc_execute",
-    "mri_gtmpvc_outputs",
     "mri_gtmpvc_params",
 ]

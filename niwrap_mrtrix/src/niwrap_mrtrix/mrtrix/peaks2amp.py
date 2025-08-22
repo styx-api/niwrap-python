@@ -232,7 +232,7 @@ def peaks2amp_outputs(
 
 def peaks2amp_execute(
     params: Peaks2ampParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Peaks2ampOutputs:
     """
     Extract amplitudes from a peak directions image.
@@ -249,10 +249,12 @@ def peaks2amp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Peaks2ampOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PEAKS2AMP_METADATA)
     params = execution.params(params)
     cargs = peaks2amp_cargs(params, execution)
     ret = peaks2amp_outputs(params, execution)
@@ -306,8 +308,6 @@ def peaks2amp(
     Returns:
         NamedTuple of outputs (described in `Peaks2ampOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PEAKS2AMP_METADATA)
     params = peaks2amp_params(
         info=info,
         quiet=quiet,
@@ -320,7 +320,7 @@ def peaks2amp(
         directions=directions,
         amplitudes=amplitudes,
     )
-    return peaks2amp_execute(params, execution)
+    return peaks2amp_execute(params, runner)
 
 
 __all__ = [
@@ -329,10 +329,7 @@ __all__ = [
     "Peaks2ampOutputs",
     "Peaks2ampParameters",
     "peaks2amp",
-    "peaks2amp_cargs",
-    "peaks2amp_config_cargs",
     "peaks2amp_config_params",
     "peaks2amp_execute",
-    "peaks2amp_outputs",
     "peaks2amp_params",
 ]

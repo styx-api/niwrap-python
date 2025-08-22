@@ -127,7 +127,7 @@ def gifti_convert_outputs(
 
 def gifti_convert_execute(
     params: GiftiConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GiftiConvertOutputs:
     """
     Convert a gifti file to a different encoding.
@@ -145,10 +145,12 @@ def gifti_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GIFTI_CONVERT_METADATA)
     params = execution.params(params)
     cargs = gifti_convert_cargs(params, execution)
     ret = gifti_convert_outputs(params, execution)
@@ -184,14 +186,12 @@ def gifti_convert(
     Returns:
         NamedTuple of outputs (described in `GiftiConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GIFTI_CONVERT_METADATA)
     params = gifti_convert_params(
         gifti_encoding=gifti_encoding,
         input_gifti_file=input_gifti_file,
         output_gifti_file=output_gifti_file,
     )
-    return gifti_convert_execute(params, execution)
+    return gifti_convert_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "GiftiConvertOutputs",
     "GiftiConvertParameters",
     "gifti_convert",
-    "gifti_convert_cargs",
     "gifti_convert_execute",
-    "gifti_convert_outputs",
     "gifti_convert_params",
 ]

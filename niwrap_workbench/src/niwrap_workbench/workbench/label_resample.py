@@ -295,7 +295,7 @@ def label_resample_outputs(
 
 def label_resample_execute(
     params: LabelResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelResampleOutputs:
     """
     Resample a label file to a different mesh.
@@ -328,10 +328,12 @@ def label_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = label_resample_cargs(params, execution)
     ret = label_resample_outputs(params, execution)
@@ -404,8 +406,6 @@ def label_resample(
     Returns:
         NamedTuple of outputs (described in `LabelResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_RESAMPLE_METADATA)
     params = label_resample_params(
         label_in=label_in,
         current_sphere=current_sphere,
@@ -419,7 +419,7 @@ def label_resample(
         opt_largest=opt_largest,
         opt_bypass_sphere_check=opt_bypass_sphere_check,
     )
-    return label_resample_execute(params, execution)
+    return label_resample_execute(params, runner)
 
 
 __all__ = [
@@ -429,12 +429,8 @@ __all__ = [
     "LabelResampleOutputs",
     "LabelResampleParameters",
     "label_resample",
-    "label_resample_area_metrics_cargs",
     "label_resample_area_metrics_params",
-    "label_resample_area_surfs_cargs",
     "label_resample_area_surfs_params",
-    "label_resample_cargs",
     "label_resample_execute",
-    "label_resample_outputs",
     "label_resample_params",
 ]

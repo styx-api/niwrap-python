@@ -299,7 +299,7 @@ def slicer_outputs(
 
 def slicer_execute(
     params: SlicerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlicerOutputs:
     """
     the main program which takes in one or two input images and produces as many
@@ -313,10 +313,12 @@ def slicer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlicerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICER_METADATA)
     params = execution.params(params)
     cargs = slicer_cargs(params, execution)
     ret = slicer_outputs(params, execution)
@@ -396,8 +398,6 @@ def slicer(
     Returns:
         NamedTuple of outputs (described in `SlicerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICER_METADATA)
     params = slicer_params(
         in_file=in_file,
         overlay_file=overlay_file,
@@ -423,7 +423,7 @@ def slicer(
         output_sample_axial_slices_width=output_sample_axial_slices_width,
         output_sample_axial_slices_fname=output_sample_axial_slices_fname,
     )
-    return slicer_execute(params, execution)
+    return slicer_execute(params, runner)
 
 
 __all__ = [
@@ -431,8 +431,6 @@ __all__ = [
     "SlicerOutputs",
     "SlicerParameters",
     "slicer",
-    "slicer_cargs",
     "slicer_execute",
-    "slicer_outputs",
     "slicer_params",
 ]

@@ -151,7 +151,7 @@ def mri_paint_outputs(
 
 def mri_paint_execute(
     params: MriPaintParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriPaintOutputs:
     """
     This program will paint average Talairach stats onto a surface.
@@ -162,10 +162,12 @@ def mri_paint_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriPaintOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_PAINT_METADATA)
     params = execution.params(params)
     cargs = mri_paint_cargs(params, execution)
     ret = mri_paint_outputs(params, execution)
@@ -200,8 +202,6 @@ def mri_paint(
     Returns:
         NamedTuple of outputs (described in `MriPaintOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_PAINT_METADATA)
     params = mri_paint_params(
         input_volume=input_volume,
         input_surface=input_surface,
@@ -210,7 +210,7 @@ def mri_paint(
         image_offset=image_offset,
         paint_surf_coords=paint_surf_coords,
     )
-    return mri_paint_execute(params, execution)
+    return mri_paint_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "MriPaintOutputs",
     "MriPaintParameters",
     "mri_paint",
-    "mri_paint_cargs",
     "mri_paint_execute",
-    "mri_paint_outputs",
     "mri_paint_params",
 ]

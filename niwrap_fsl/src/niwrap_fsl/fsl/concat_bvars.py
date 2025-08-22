@@ -125,7 +125,7 @@ def concat_bvars_outputs(
 
 def concat_bvars_execute(
     params: ConcatBvarsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConcatBvarsOutputs:
     """
     Concatenate multiple .bvars files into a single .bvars file.
@@ -136,10 +136,12 @@ def concat_bvars_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConcatBvarsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONCAT_BVARS_METADATA)
     params = execution.params(params)
     cargs = concat_bvars_cargs(params, execution)
     ret = concat_bvars_outputs(params, execution)
@@ -166,13 +168,11 @@ def concat_bvars(
     Returns:
         NamedTuple of outputs (described in `ConcatBvarsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONCAT_BVARS_METADATA)
     params = concat_bvars_params(
         output_bvars=output_bvars,
         input_bvars=input_bvars,
     )
-    return concat_bvars_execute(params, execution)
+    return concat_bvars_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "ConcatBvarsOutputs",
     "ConcatBvarsParameters",
     "concat_bvars",
-    "concat_bvars_cargs",
     "concat_bvars_execute",
-    "concat_bvars_outputs",
     "concat_bvars_params",
 ]

@@ -283,7 +283,7 @@ def v_3d_warp_outputs(
 
 def v_3d_warp_execute(
     params: V3dWarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dWarpOutputs:
     """
     Warp (spatially transform) one 3D dataset.
@@ -294,10 +294,12 @@ def v_3d_warp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dWarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_WARP_METADATA)
     params = execution.params(params)
     cargs = v_3d_warp_cargs(params, execution)
     ret = v_3d_warp_outputs(params, execution)
@@ -369,8 +371,6 @@ def v_3d_warp(
     Returns:
         NamedTuple of outputs (described in `V3dWarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_WARP_METADATA)
     params = v_3d_warp_params(
         matvec_in2out=matvec_in2out,
         matvec_out2in=matvec_out2in,
@@ -395,7 +395,7 @@ def v_3d_warp(
         prefix=prefix,
         dataset=dataset,
     )
-    return v_3d_warp_execute(params, execution)
+    return v_3d_warp_execute(params, runner)
 
 
 __all__ = [
@@ -403,8 +403,6 @@ __all__ = [
     "V3dWarpParameters",
     "V_3D_WARP_METADATA",
     "v_3d_warp",
-    "v_3d_warp_cargs",
     "v_3d_warp_execute",
-    "v_3d_warp_outputs",
     "v_3d_warp_params",
 ]

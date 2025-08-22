@@ -169,7 +169,7 @@ def v_3d_dft_outputs(
 
 def v_3d_dft_execute(
     params: V3dDftParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDftOutputs:
     """
     Performs Discrete Fourier Transform (DFT) along the time axis of a complex- or
@@ -181,10 +181,12 @@ def v_3d_dft_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDftOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DFT_METADATA)
     params = execution.params(params)
     cargs = v_3d_dft_cargs(params, execution)
     ret = v_3d_dft_outputs(params, execution)
@@ -222,8 +224,6 @@ def v_3d_dft(
     Returns:
         NamedTuple of outputs (described in `V3dDftOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DFT_METADATA)
     params = v_3d_dft_params(
         infile=infile,
         prefix=prefix,
@@ -233,7 +233,7 @@ def v_3d_dft(
         taper=taper,
         inverse=inverse,
     )
-    return v_3d_dft_execute(params, execution)
+    return v_3d_dft_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "V3dDftParameters",
     "V_3D_DFT_METADATA",
     "v_3d_dft",
-    "v_3d_dft_cargs",
     "v_3d_dft_execute",
-    "v_3d_dft_outputs",
     "v_3d_dft_params",
 ]

@@ -184,7 +184,7 @@ def mri_probe_ima_outputs(
 
 def mri_probe_ima_execute(
     params: MriProbeImaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriProbeImaOutputs:
     """
     Query Siemens IMA files to extract header information.
@@ -195,10 +195,12 @@ def mri_probe_ima_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriProbeImaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_PROBE_IMA_METADATA)
     params = execution.params(params)
     cargs = mri_probe_ima_cargs(params, execution)
     ret = mri_probe_ima_outputs(params, execution)
@@ -240,8 +242,6 @@ def mri_probe_ima(
     Returns:
         NamedTuple of outputs (described in `MriProbeImaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_PROBE_IMA_METADATA)
     params = mri_probe_ima_params(
         ima_file=ima_file,
         key_string=key_string,
@@ -253,7 +253,7 @@ def mri_probe_ima(
         help_=help_,
         version=version,
     )
-    return mri_probe_ima_execute(params, execution)
+    return mri_probe_ima_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "MriProbeImaOutputs",
     "MriProbeImaParameters",
     "mri_probe_ima",
-    "mri_probe_ima_cargs",
     "mri_probe_ima_execute",
-    "mri_probe_ima_outputs",
     "mri_probe_ima_params",
 ]

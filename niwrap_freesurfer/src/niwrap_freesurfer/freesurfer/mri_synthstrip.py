@@ -178,7 +178,7 @@ def mri_synthstrip_outputs(
 
 def mri_synthstrip_execute(
     params: MriSynthstripParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSynthstripOutputs:
     """
     Robust, universal skull-stripping for brain images of any type.
@@ -189,10 +189,12 @@ def mri_synthstrip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSynthstripOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SYNTHSTRIP_METADATA)
     params = execution.params(params)
     cargs = mri_synthstrip_cargs(params, execution)
     ret = mri_synthstrip_outputs(params, execution)
@@ -229,8 +231,6 @@ def mri_synthstrip(
     Returns:
         NamedTuple of outputs (described in `MriSynthstripOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SYNTHSTRIP_METADATA)
     params = mri_synthstrip_params(
         image=image,
         output_image=output_image,
@@ -240,7 +240,7 @@ def mri_synthstrip(
         exclude_csf=exclude_csf,
         model_weights=model_weights,
     )
-    return mri_synthstrip_execute(params, execution)
+    return mri_synthstrip_execute(params, runner)
 
 
 __all__ = [
@@ -248,8 +248,6 @@ __all__ = [
     "MriSynthstripOutputs",
     "MriSynthstripParameters",
     "mri_synthstrip",
-    "mri_synthstrip_cargs",
     "mri_synthstrip_execute",
-    "mri_synthstrip_outputs",
     "mri_synthstrip_params",
 ]

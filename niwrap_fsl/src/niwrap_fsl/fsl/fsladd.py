@@ -137,7 +137,7 @@ def fsladd_outputs(
 
 def fsladd_execute(
     params: FsladdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsladdOutputs:
     """
     Tool for adding or averaging multiple input volumes.
@@ -148,10 +148,12 @@ def fsladd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsladdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLADD_METADATA)
     params = execution.params(params)
     cargs = fsladd_cargs(params, execution)
     ret = fsladd_outputs(params, execution)
@@ -182,15 +184,13 @@ def fsladd(
     Returns:
         NamedTuple of outputs (described in `FsladdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLADD_METADATA)
     params = fsladd_params(
         output_file=output_file,
         mean_flag=mean_flag,
         scale_flag=scale_flag,
         volume_list=volume_list,
     )
-    return fsladd_execute(params, execution)
+    return fsladd_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "FsladdOutputs",
     "FsladdParameters",
     "fsladd",
-    "fsladd_cargs",
     "fsladd_execute",
-    "fsladd_outputs",
     "fsladd_params",
 ]

@@ -274,7 +274,7 @@ def dt_recon_outputs(
 
 def dt_recon_execute(
     params: DtReconParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DtReconOutputs:
     """
     Performs DTI reconstruction from the raw DWI input files.
@@ -285,10 +285,12 @@ def dt_recon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DtReconOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DT_RECON_METADATA)
     params = execution.params(params)
     cargs = dt_recon_cargs(params, execution)
     ret = dt_recon_outputs(params, execution)
@@ -350,8 +352,6 @@ def dt_recon(
     Returns:
         NamedTuple of outputs (described in `DtReconOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DT_RECON_METADATA)
     params = dt_recon_params(
         input_volume=input_volume,
         bvals_bvecs=bvals_bvecs,
@@ -372,7 +372,7 @@ def dt_recon(
         debug_flag=debug_flag,
         version_flag=version_flag,
     )
-    return dt_recon_execute(params, execution)
+    return dt_recon_execute(params, runner)
 
 
 __all__ = [
@@ -380,8 +380,6 @@ __all__ = [
     "DtReconOutputs",
     "DtReconParameters",
     "dt_recon",
-    "dt_recon_cargs",
     "dt_recon_execute",
-    "dt_recon_outputs",
     "dt_recon_params",
 ]

@@ -121,7 +121,7 @@ def afni_run_r_outputs(
 
 def afni_run_r_execute(
     params: AfniRunRParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniRunROutputs:
     """
     Run an R script with the specified arguments.
@@ -132,10 +132,12 @@ def afni_run_r_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniRunROutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_RUN_R_METADATA)
     params = execution.params(params)
     cargs = afni_run_r_cargs(params, execution)
     ret = afni_run_r_outputs(params, execution)
@@ -162,13 +164,11 @@ def afni_run_r(
     Returns:
         NamedTuple of outputs (described in `AfniRunROutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_RUN_R_METADATA)
     params = afni_run_r_params(
         r_script=r_script,
         r_args=r_args,
     )
-    return afni_run_r_execute(params, execution)
+    return afni_run_r_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "AfniRunROutputs",
     "AfniRunRParameters",
     "afni_run_r",
-    "afni_run_r_cargs",
     "afni_run_r_execute",
-    "afni_run_r_outputs",
     "afni_run_r_params",
 ]

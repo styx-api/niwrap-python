@@ -170,7 +170,7 @@ def v_3d_errts_cormat_outputs(
 
 def v_3d_errts_cormat_execute(
     params: V3dErrtsCormatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dErrtsCormatOutputs:
     """
     Computes the correlation matrix corresponding to the residual (or error) time
@@ -182,10 +182,12 @@ def v_3d_errts_cormat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dErrtsCormatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ERRTS_CORMAT_METADATA)
     params = execution.params(params)
     cargs = v_3d_errts_cormat_cargs(params, execution)
     ret = v_3d_errts_cormat_outputs(params, execution)
@@ -221,8 +223,6 @@ def v_3d_errts_cormat(
     Returns:
         NamedTuple of outputs (described in `V3dErrtsCormatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ERRTS_CORMAT_METADATA)
     params = v_3d_errts_cormat_params(
         dset=dset,
         concat=concat,
@@ -231,7 +231,7 @@ def v_3d_errts_cormat(
         maxlag=maxlag,
         polort=polort,
     )
-    return v_3d_errts_cormat_execute(params, execution)
+    return v_3d_errts_cormat_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "V3dErrtsCormatParameters",
     "V_3D_ERRTS_CORMAT_METADATA",
     "v_3d_errts_cormat",
-    "v_3d_errts_cormat_cargs",
     "v_3d_errts_cormat_execute",
-    "v_3d_errts_cormat_outputs",
     "v_3d_errts_cormat_params",
 ]

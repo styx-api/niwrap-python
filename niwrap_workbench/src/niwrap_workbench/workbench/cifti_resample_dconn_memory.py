@@ -1087,7 +1087,7 @@ def cifti_resample_dconn_memory_outputs(
 
 def cifti_resample_dconn_memory_execute(
     params: CiftiResampleDconnMemoryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiResampleDconnMemoryOutputs:
     """
     Use lots of memory to resample dconn.
@@ -1127,10 +1127,12 @@ def cifti_resample_dconn_memory_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiResampleDconnMemoryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_RESAMPLE_DCONN_MEMORY_METADATA)
     params = execution.params(params)
     cargs = cifti_resample_dconn_memory_cargs(params, execution)
     ret = cifti_resample_dconn_memory_outputs(params, execution)
@@ -1212,8 +1214,6 @@ def cifti_resample_dconn_memory(
     Returns:
         NamedTuple of outputs (described in `CiftiResampleDconnMemoryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_RESAMPLE_DCONN_MEMORY_METADATA)
     params = cifti_resample_dconn_memory_params(
         cifti_in=cifti_in,
         cifti_template=cifti_template,
@@ -1230,7 +1230,7 @@ def cifti_resample_dconn_memory(
         right_spheres=right_spheres,
         cerebellum_spheres=cerebellum_spheres,
     )
-    return cifti_resample_dconn_memory_execute(params, execution)
+    return cifti_resample_dconn_memory_execute(params, runner)
 
 
 __all__ = [
@@ -1254,40 +1254,22 @@ __all__ = [
     "CiftiResampleDconnMemoryWeighted1Parameters",
     "CiftiResampleDconnMemoryWeightedParameters",
     "cifti_resample_dconn_memory",
-    "cifti_resample_dconn_memory_affine_cargs",
     "cifti_resample_dconn_memory_affine_params",
-    "cifti_resample_dconn_memory_cargs",
-    "cifti_resample_dconn_memory_cerebellum_area_metrics_cargs",
     "cifti_resample_dconn_memory_cerebellum_area_metrics_params",
-    "cifti_resample_dconn_memory_cerebellum_area_surfs_cargs",
     "cifti_resample_dconn_memory_cerebellum_area_surfs_params",
-    "cifti_resample_dconn_memory_cerebellum_spheres_cargs",
     "cifti_resample_dconn_memory_cerebellum_spheres_params",
     "cifti_resample_dconn_memory_execute",
-    "cifti_resample_dconn_memory_flirt_cargs",
     "cifti_resample_dconn_memory_flirt_params",
-    "cifti_resample_dconn_memory_left_area_metrics_cargs",
     "cifti_resample_dconn_memory_left_area_metrics_params",
-    "cifti_resample_dconn_memory_left_area_surfs_cargs",
     "cifti_resample_dconn_memory_left_area_surfs_params",
-    "cifti_resample_dconn_memory_left_spheres_cargs",
     "cifti_resample_dconn_memory_left_spheres_params",
-    "cifti_resample_dconn_memory_outputs",
     "cifti_resample_dconn_memory_params",
-    "cifti_resample_dconn_memory_right_area_metrics_cargs",
     "cifti_resample_dconn_memory_right_area_metrics_params",
-    "cifti_resample_dconn_memory_right_area_surfs_cargs",
     "cifti_resample_dconn_memory_right_area_surfs_params",
-    "cifti_resample_dconn_memory_right_spheres_cargs",
     "cifti_resample_dconn_memory_right_spheres_params",
-    "cifti_resample_dconn_memory_surface_postdilate_cargs",
     "cifti_resample_dconn_memory_surface_postdilate_params",
-    "cifti_resample_dconn_memory_volume_predilate_cargs",
     "cifti_resample_dconn_memory_volume_predilate_params",
-    "cifti_resample_dconn_memory_warpfield_cargs",
     "cifti_resample_dconn_memory_warpfield_params",
-    "cifti_resample_dconn_memory_weighted_1_cargs",
     "cifti_resample_dconn_memory_weighted_1_params",
-    "cifti_resample_dconn_memory_weighted_cargs",
     "cifti_resample_dconn_memory_weighted_params",
 ]

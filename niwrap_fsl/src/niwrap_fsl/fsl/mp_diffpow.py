@@ -128,7 +128,7 @@ def mp_diffpow_outputs(
 
 def mp_diffpow_execute(
     params: MpDiffpowParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MpDiffpowOutputs:
     """
     Generates a file with specific motion parameter calculations useful for
@@ -141,10 +141,12 @@ def mp_diffpow_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MpDiffpowOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MP_DIFFPOW_METADATA)
     params = execution.params(params)
     cargs = mp_diffpow_cargs(params, execution)
     ret = mp_diffpow_outputs(params, execution)
@@ -175,13 +177,11 @@ def mp_diffpow(
     Returns:
         NamedTuple of outputs (described in `MpDiffpowOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MP_DIFFPOW_METADATA)
     params = mp_diffpow_params(
         reg_file=reg_file,
         diff_reg_file=diff_reg_file,
     )
-    return mp_diffpow_execute(params, execution)
+    return mp_diffpow_execute(params, runner)
 
 
 __all__ = [
@@ -189,8 +189,6 @@ __all__ = [
     "MpDiffpowOutputs",
     "MpDiffpowParameters",
     "mp_diffpow",
-    "mp_diffpow_cargs",
     "mp_diffpow_execute",
-    "mp_diffpow_outputs",
     "mp_diffpow_params",
 ]

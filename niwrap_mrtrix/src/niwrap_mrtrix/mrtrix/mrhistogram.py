@@ -275,7 +275,7 @@ def mrhistogram_outputs(
 
 def mrhistogram_execute(
     params: MrhistogramParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrhistogramOutputs:
     """
     Generate a histogram of image intensities.
@@ -292,10 +292,12 @@ def mrhistogram_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrhistogramOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRHISTOGRAM_METADATA)
     params = execution.params(params)
     cargs = mrhistogram_cargs(params, execution)
     ret = mrhistogram_outputs(params, execution)
@@ -360,8 +362,6 @@ def mrhistogram(
     Returns:
         NamedTuple of outputs (described in `MrhistogramOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRHISTOGRAM_METADATA)
     params = mrhistogram_params(
         bins=bins,
         template=template,
@@ -379,7 +379,7 @@ def mrhistogram(
         image=image,
         hist=hist,
     )
-    return mrhistogram_execute(params, execution)
+    return mrhistogram_execute(params, runner)
 
 
 __all__ = [
@@ -388,10 +388,7 @@ __all__ = [
     "MrhistogramOutputs",
     "MrhistogramParameters",
     "mrhistogram",
-    "mrhistogram_cargs",
-    "mrhistogram_config_cargs",
     "mrhistogram_config_params",
     "mrhistogram_execute",
-    "mrhistogram_outputs",
     "mrhistogram_params",
 ]

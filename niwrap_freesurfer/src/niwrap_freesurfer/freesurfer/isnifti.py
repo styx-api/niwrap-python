@@ -116,7 +116,7 @@ def isnifti_outputs(
 
 def isnifti_execute(
     params: IsniftiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IsniftiOutputs:
     """
     A simple tool to check if a file is a NIfTI image.
@@ -127,10 +127,12 @@ def isnifti_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IsniftiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ISNIFTI_METADATA)
     params = execution.params(params)
     cargs = isnifti_cargs(params, execution)
     ret = isnifti_outputs(params, execution)
@@ -155,12 +157,10 @@ def isnifti(
     Returns:
         NamedTuple of outputs (described in `IsniftiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ISNIFTI_METADATA)
     params = isnifti_params(
         infile=infile,
     )
-    return isnifti_execute(params, execution)
+    return isnifti_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "IsniftiOutputs",
     "IsniftiParameters",
     "isnifti",
-    "isnifti_cargs",
     "isnifti_execute",
-    "isnifti_outputs",
     "isnifti_params",
 ]

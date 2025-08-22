@@ -151,7 +151,7 @@ def print_unique_labels_csh_outputs(
 
 def print_unique_labels_csh_execute(
     params: PrintUniqueLabelsCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PrintUniqueLabelsCshOutputs:
     """
     Prints the list of unique labels (with structure name) in the input volume.
@@ -162,10 +162,12 @@ def print_unique_labels_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PrintUniqueLabelsCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PRINT_UNIQUE_LABELS_CSH_METADATA)
     params = execution.params(params)
     cargs = print_unique_labels_csh_cargs(params, execution)
     ret = print_unique_labels_csh_outputs(params, execution)
@@ -198,8 +200,6 @@ def print_unique_labels_csh(
     Returns:
         NamedTuple of outputs (described in `PrintUniqueLabelsCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PRINT_UNIQUE_LABELS_CSH_METADATA)
     params = print_unique_labels_csh_params(
         label_volume=label_volume,
         output_file=output_file,
@@ -207,7 +207,7 @@ def print_unique_labels_csh(
         version=version,
         help_=help_,
     )
-    return print_unique_labels_csh_execute(params, execution)
+    return print_unique_labels_csh_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "PrintUniqueLabelsCshOutputs",
     "PrintUniqueLabelsCshParameters",
     "print_unique_labels_csh",
-    "print_unique_labels_csh_cargs",
     "print_unique_labels_csh_execute",
-    "print_unique_labels_csh_outputs",
     "print_unique_labels_csh_params",
 ]

@@ -167,7 +167,7 @@ def lesion_filling_outputs(
 
 def lesion_filling_execute(
     params: LesionFillingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LesionFillingOutputs:
     """
     Lesion filling tool as part of FSL.
@@ -178,10 +178,12 @@ def lesion_filling_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LesionFillingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LESION_FILLING_METADATA)
     params = execution.params(params)
     cargs = lesion_filling_cargs(params, execution)
     ret = lesion_filling_outputs(params, execution)
@@ -218,8 +220,6 @@ def lesion_filling(
     Returns:
         NamedTuple of outputs (described in `LesionFillingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LESION_FILLING_METADATA)
     params = lesion_filling_params(
         infile=infile,
         outfile=outfile,
@@ -229,7 +229,7 @@ def lesion_filling(
         components_flag=components_flag,
         help_flag=help_flag,
     )
-    return lesion_filling_execute(params, execution)
+    return lesion_filling_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "LesionFillingOutputs",
     "LesionFillingParameters",
     "lesion_filling",
-    "lesion_filling_cargs",
     "lesion_filling_execute",
-    "lesion_filling_outputs",
     "lesion_filling_params",
 ]

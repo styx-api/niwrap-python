@@ -126,7 +126,7 @@ def mri_linear_align_outputs(
 
 def mri_linear_align_execute(
     params: MriLinearAlignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLinearAlignOutputs:
     """
     MRI Linear Alignment Tool for Freesurfer.
@@ -137,10 +137,12 @@ def mri_linear_align_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLinearAlignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LINEAR_ALIGN_METADATA)
     params = execution.params(params)
     cargs = mri_linear_align_cargs(params, execution)
     ret = mri_linear_align_outputs(params, execution)
@@ -169,14 +171,12 @@ def mri_linear_align(
     Returns:
         NamedTuple of outputs (described in `MriLinearAlignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LINEAR_ALIGN_METADATA)
     params = mri_linear_align_params(
         source=source,
         target=target,
         output_xform=output_xform,
     )
-    return mri_linear_align_execute(params, execution)
+    return mri_linear_align_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "MriLinearAlignOutputs",
     "MriLinearAlignParameters",
     "mri_linear_align",
-    "mri_linear_align_cargs",
     "mri_linear_align_execute",
-    "mri_linear_align_outputs",
     "mri_linear_align_params",
 ]

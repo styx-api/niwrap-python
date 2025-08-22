@@ -271,7 +271,7 @@ def ants_joint_fusion_outputs(
 
 def ants_joint_fusion_execute(
     params: AntsJointFusionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsJointFusionOutputs:
     """
     antsJointFusion is an image fusion algorithm developed by Hongzhi Wang and Paul
@@ -285,10 +285,12 @@ def ants_joint_fusion_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsJointFusionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_JOINT_FUSION_METADATA)
     params = execution.params(params)
     cargs = ants_joint_fusion_cargs(params, execution)
     ret = ants_joint_fusion_outputs(params, execution)
@@ -357,8 +359,6 @@ def ants_joint_fusion(
     Returns:
         NamedTuple of outputs (described in `AntsJointFusionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_JOINT_FUSION_METADATA)
     params = ants_joint_fusion_params(
         image_dimensionality=image_dimensionality,
         target_image=target_image,
@@ -375,7 +375,7 @@ def ants_joint_fusion(
         output=output,
         verbose=verbose,
     )
-    return ants_joint_fusion_execute(params, execution)
+    return ants_joint_fusion_execute(params, runner)
 
 
 __all__ = [
@@ -383,8 +383,6 @@ __all__ = [
     "AntsJointFusionOutputs",
     "AntsJointFusionParameters",
     "ants_joint_fusion",
-    "ants_joint_fusion_cargs",
     "ants_joint_fusion_execute",
-    "ants_joint_fusion_outputs",
     "ants_joint_fusion_params",
 ]

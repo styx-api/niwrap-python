@@ -184,7 +184,7 @@ def mris_warp_outputs(
 
 def mris_warp_execute(
     params: MrisWarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisWarpOutputs:
     """
     This program will warp a surface using a specified deformation field.
@@ -195,10 +195,12 @@ def mris_warp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisWarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_WARP_METADATA)
     params = execution.params(params)
     cargs = mris_warp_cargs(params, execution)
     ret = mris_warp_outputs(params, execution)
@@ -238,8 +240,6 @@ def mris_warp(
     Returns:
         NamedTuple of outputs (described in `MrisWarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_WARP_METADATA)
     params = mris_warp_params(
         deformvol=deformvol,
         m3z=m3z,
@@ -250,7 +250,7 @@ def mris_warp(
         help_=help_,
         version=version,
     )
-    return mris_warp_execute(params, execution)
+    return mris_warp_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "MrisWarpOutputs",
     "MrisWarpParameters",
     "mris_warp",
-    "mris_warp_cargs",
     "mris_warp_execute",
-    "mris_warp_outputs",
     "mris_warp_params",
 ]

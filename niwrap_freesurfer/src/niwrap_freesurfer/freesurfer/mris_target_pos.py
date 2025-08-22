@@ -214,7 +214,7 @@ def mris_target_pos_outputs(
 
 def mris_target_pos_execute(
     params: MrisTargetPosParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisTargetPosOutputs:
     """
     Tool for setting target positions of a surface using input imaging data and
@@ -226,10 +226,12 @@ def mris_target_pos_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisTargetPosOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_TARGET_POS_METADATA)
     params = execution.params(params)
     cargs = mris_target_pos_cargs(params, execution)
     ret = mris_target_pos_outputs(params, execution)
@@ -280,8 +282,6 @@ def mris_target_pos(
     Returns:
         NamedTuple of outputs (described in `MrisTargetPosOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_TARGET_POS_METADATA)
     params = mris_target_pos_params(
         input_volume=input_volume,
         input_surface=input_surface,
@@ -297,7 +297,7 @@ def mris_target_pos(
         help_flag=help_flag,
         version_flag=version_flag,
     )
-    return mris_target_pos_execute(params, execution)
+    return mris_target_pos_execute(params, runner)
 
 
 __all__ = [
@@ -305,8 +305,6 @@ __all__ = [
     "MrisTargetPosOutputs",
     "MrisTargetPosParameters",
     "mris_target_pos",
-    "mris_target_pos_cargs",
     "mris_target_pos_execute",
-    "mris_target_pos_outputs",
     "mris_target_pos_params",
 ]

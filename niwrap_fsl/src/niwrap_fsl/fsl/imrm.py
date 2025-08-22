@@ -117,7 +117,7 @@ def imrm_outputs(
 
 def imrm_execute(
     params: ImrmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImrmOutputs:
     """
     Remove specified image files.
@@ -128,10 +128,12 @@ def imrm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImrmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMRM_METADATA)
     params = execution.params(params)
     cargs = imrm_cargs(params, execution)
     ret = imrm_outputs(params, execution)
@@ -157,12 +159,10 @@ def imrm(
     Returns:
         NamedTuple of outputs (described in `ImrmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMRM_METADATA)
     params = imrm_params(
         images_to_remove=images_to_remove,
     )
-    return imrm_execute(params, execution)
+    return imrm_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "ImrmOutputs",
     "ImrmParameters",
     "imrm",
-    "imrm_cargs",
     "imrm_execute",
-    "imrm_outputs",
     "imrm_params",
 ]

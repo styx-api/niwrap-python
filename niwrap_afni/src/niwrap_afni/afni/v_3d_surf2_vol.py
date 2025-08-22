@@ -341,7 +341,7 @@ def v_3d_surf2_vol_outputs(
 
 def v_3d_surf2_vol_execute(
     params: V3dSurf2VolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSurf2VolOutputs:
     """
     Map data from a surface domain to an AFNI volume domain.
@@ -352,10 +352,12 @@ def v_3d_surf2_vol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSurf2VolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SURF2_VOL_METADATA)
     params = execution.params(params)
     cargs = v_3d_surf2_vol_cargs(params, execution)
     ret = v_3d_surf2_vol_outputs(params, execution)
@@ -428,8 +430,6 @@ def v_3d_surf2_vol(
     Returns:
         NamedTuple of outputs (described in `V3dSurf2VolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SURF2_VOL_METADATA)
     params = v_3d_surf2_vol_params(
         spec=spec,
         surface_volume=surface_volume,
@@ -457,7 +457,7 @@ def v_3d_surf2_vol(
         noscale=noscale,
         sxyz_orient_as_gpar=sxyz_orient_as_gpar,
     )
-    return v_3d_surf2_vol_execute(params, execution)
+    return v_3d_surf2_vol_execute(params, runner)
 
 
 __all__ = [
@@ -465,8 +465,6 @@ __all__ = [
     "V3dSurf2VolParameters",
     "V_3D_SURF2_VOL_METADATA",
     "v_3d_surf2_vol",
-    "v_3d_surf2_vol_cargs",
     "v_3d_surf2_vol_execute",
-    "v_3d_surf2_vol_outputs",
     "v_3d_surf2_vol_params",
 ]

@@ -160,7 +160,7 @@ def longmc_outputs(
 
 def longmc_execute(
     params: LongmcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongmcOutputs:
     """
     Perform motion correction for the longitudinal recon-all stream when creating
@@ -172,10 +172,12 @@ def longmc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongmcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONGMC_METADATA)
     params = execution.params(params)
     cargs = longmc_cargs(params, execution)
     ret = longmc_outputs(params, execution)
@@ -213,8 +215,6 @@ def longmc(
     Returns:
         NamedTuple of outputs (described in `LongmcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONGMC_METADATA)
     params = longmc_params(
         cross_tp_name=cross_tp_name,
         base_name=base_name,
@@ -224,7 +224,7 @@ def longmc(
         subject_name=subject_name,
         no_force_update=no_force_update,
     )
-    return longmc_execute(params, execution)
+    return longmc_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "LongmcOutputs",
     "LongmcParameters",
     "longmc",
-    "longmc_cargs",
     "longmc_execute",
-    "longmc_outputs",
     "longmc_params",
 ]

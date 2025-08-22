@@ -257,7 +257,7 @@ def v_3dmaxima_outputs(
 
 def v_3dmaxima_execute(
     params: V3dmaximaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmaximaOutputs:
     """
     Locate extrema in a functional dataset.
@@ -268,10 +268,12 @@ def v_3dmaxima_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmaximaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMAXIMA_METADATA)
     params = execution.params(params)
     cargs = v_3dmaxima_cargs(params, execution)
     ret = v_3dmaxima_outputs(params, execution)
@@ -337,8 +339,6 @@ def v_3dmaxima(
     Returns:
         NamedTuple of outputs (described in `V3dmaximaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMAXIMA_METADATA)
     params = v_3dmaxima_params(
         input_dataset=input_dataset,
         output_prefix=output_prefix,
@@ -361,7 +361,7 @@ def v_3dmaxima(
         hist_flag=hist_flag,
         ver_flag=ver_flag,
     )
-    return v_3dmaxima_execute(params, execution)
+    return v_3dmaxima_execute(params, runner)
 
 
 __all__ = [
@@ -369,8 +369,6 @@ __all__ = [
     "V3dmaximaParameters",
     "V_3DMAXIMA_METADATA",
     "v_3dmaxima",
-    "v_3dmaxima_cargs",
     "v_3dmaxima_execute",
-    "v_3dmaxima_outputs",
     "v_3dmaxima_params",
 ]

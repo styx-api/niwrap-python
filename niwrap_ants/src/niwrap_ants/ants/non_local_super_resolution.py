@@ -238,7 +238,7 @@ def non_local_super_resolution_outputs(
 
 def non_local_super_resolution_execute(
     params: NonLocalSuperResolutionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NonLocalSuperResolutionOutputs:
     """
     Non-local super resolution described in the papers by JV Manjon et al., focusing
@@ -250,10 +250,12 @@ def non_local_super_resolution_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NonLocalSuperResolutionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NON_LOCAL_SUPER_RESOLUTION_METADATA)
     params = execution.params(params)
     cargs = non_local_super_resolution_cargs(params, execution)
     ret = non_local_super_resolution_outputs(params, execution)
@@ -308,8 +310,6 @@ def non_local_super_resolution(
     Returns:
         NamedTuple of outputs (described in `NonLocalSuperResolutionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NON_LOCAL_SUPER_RESOLUTION_METADATA)
     params = non_local_super_resolution_params(
         image_dimensionality=image_dimensionality,
         input_image=input_image,
@@ -324,7 +324,7 @@ def non_local_super_resolution(
         output=output,
         verbose=verbose,
     )
-    return non_local_super_resolution_execute(params, execution)
+    return non_local_super_resolution_execute(params, runner)
 
 
 __all__ = [
@@ -332,8 +332,6 @@ __all__ = [
     "NonLocalSuperResolutionOutputs",
     "NonLocalSuperResolutionParameters",
     "non_local_super_resolution",
-    "non_local_super_resolution_cargs",
     "non_local_super_resolution_execute",
-    "non_local_super_resolution_outputs",
     "non_local_super_resolution_params",
 ]

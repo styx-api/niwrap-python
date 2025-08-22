@@ -648,7 +648,7 @@ def mri_segstats_outputs(
 
 def mri_segstats_execute(
     params: MriSegstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegstatsOutputs:
     """
     Calculates measures and stats derived from brain segmentation data.
@@ -659,10 +659,12 @@ def mri_segstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEGSTATS_METADATA)
     params = execution.params(params)
     cargs = mri_segstats_cargs(params, execution)
     ret = mri_segstats_outputs(params, execution)
@@ -827,8 +829,6 @@ def mri_segstats(
     Returns:
         NamedTuple of outputs (described in `MriSegstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEGSTATS_METADATA)
     params = mri_segstats_params(
         segvol=segvol,
         annot_subject=annot_subject,
@@ -891,7 +891,7 @@ def mri_segstats(
         subjects_dir=subjects_dir,
         random_seed=random_seed,
     )
-    return mri_segstats_execute(params, execution)
+    return mri_segstats_execute(params, runner)
 
 
 __all__ = [
@@ -899,8 +899,6 @@ __all__ = [
     "MriSegstatsOutputs",
     "MriSegstatsParameters",
     "mri_segstats",
-    "mri_segstats_cargs",
     "mri_segstats_execute",
-    "mri_segstats_outputs",
     "mri_segstats_params",
 ]

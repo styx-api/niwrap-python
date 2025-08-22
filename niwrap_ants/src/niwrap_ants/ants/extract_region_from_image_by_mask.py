@@ -147,7 +147,7 @@ def extract_region_from_image_by_mask_outputs(
 
 def extract_region_from_image_by_mask_execute(
     params: ExtractRegionFromImageByMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ExtractRegionFromImageByMaskOutputs:
     """
     Extract a sub-region from an image using the bounding box from a label image,
@@ -159,10 +159,12 @@ def extract_region_from_image_by_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ExtractRegionFromImageByMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA)
     params = execution.params(params)
     cargs = extract_region_from_image_by_mask_cargs(params, execution)
     ret = extract_region_from_image_by_mask_outputs(params, execution)
@@ -200,8 +202,6 @@ def extract_region_from_image_by_mask(
     Returns:
         NamedTuple of outputs (described in `ExtractRegionFromImageByMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA)
     params = extract_region_from_image_by_mask_params(
         image_dimension=image_dimension,
         input_image=input_image,
@@ -210,7 +210,7 @@ def extract_region_from_image_by_mask(
         label=label,
         pad_radius=pad_radius,
     )
-    return extract_region_from_image_by_mask_execute(params, execution)
+    return extract_region_from_image_by_mask_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "ExtractRegionFromImageByMaskOutputs",
     "ExtractRegionFromImageByMaskParameters",
     "extract_region_from_image_by_mask",
-    "extract_region_from_image_by_mask_cargs",
     "extract_region_from_image_by_mask_execute",
-    "extract_region_from_image_by_mask_outputs",
     "extract_region_from_image_by_mask_params",
 ]

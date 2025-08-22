@@ -129,7 +129,7 @@ def v__suma_fsvol_to_brik_outputs(
 
 def v__suma_fsvol_to_brik_execute(
     params: VSumaFsvolToBrikParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaFsvolToBrikOutputs:
     """
     A script to convert COR- or .mgz files from FreeSurfer to BRIK format.
@@ -140,10 +140,12 @@ def v__suma_fsvol_to_brik_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaFsvolToBrikOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_FSVOL_TO_BRIK_METADATA)
     params = execution.params(params)
     cargs = v__suma_fsvol_to_brik_cargs(params, execution)
     ret = v__suma_fsvol_to_brik_outputs(params, execution)
@@ -171,13 +173,11 @@ def v__suma_fsvol_to_brik(
     Returns:
         NamedTuple of outputs (described in `VSumaFsvolToBrikOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_FSVOL_TO_BRIK_METADATA)
     params = v__suma_fsvol_to_brik_params(
         fs_vol_data=fs_vol_data,
         prefix=prefix,
     )
-    return v__suma_fsvol_to_brik_execute(params, execution)
+    return v__suma_fsvol_to_brik_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "VSumaFsvolToBrikParameters",
     "V__SUMA_FSVOL_TO_BRIK_METADATA",
     "v__suma_fsvol_to_brik",
-    "v__suma_fsvol_to_brik_cargs",
     "v__suma_fsvol_to_brik_execute",
-    "v__suma_fsvol_to_brik_outputs",
     "v__suma_fsvol_to_brik_params",
 ]

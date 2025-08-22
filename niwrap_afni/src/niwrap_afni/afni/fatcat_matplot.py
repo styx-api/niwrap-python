@@ -122,7 +122,7 @@ def fatcat_matplot_outputs(
 
 def fatcat_matplot_execute(
     params: FatcatMatplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatcatMatplotOutputs:
     """
     Launch a shiny app to visualize .netcc and/or .grid files.
@@ -133,10 +133,12 @@ def fatcat_matplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatcatMatplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FATCAT_MATPLOT_METADATA)
     params = execution.params(params)
     cargs = fatcat_matplot_cargs(params, execution)
     ret = fatcat_matplot_outputs(params, execution)
@@ -163,13 +165,11 @@ def fatcat_matplot(
     Returns:
         NamedTuple of outputs (described in `FatcatMatplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FATCAT_MATPLOT_METADATA)
     params = fatcat_matplot_params(
         directory=directory,
         shiny_folder=shiny_folder,
     )
-    return fatcat_matplot_execute(params, execution)
+    return fatcat_matplot_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "FatcatMatplotOutputs",
     "FatcatMatplotParameters",
     "fatcat_matplot",
-    "fatcat_matplot_cargs",
     "fatcat_matplot_execute",
-    "fatcat_matplot_outputs",
     "fatcat_matplot_params",
 ]

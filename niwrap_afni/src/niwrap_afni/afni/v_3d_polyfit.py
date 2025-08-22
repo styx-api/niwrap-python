@@ -250,7 +250,7 @@ def v_3d_polyfit_outputs(
 
 def v_3d_polyfit_execute(
     params: V3dPolyfitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dPolyfitOutputs:
     """
     Fits a polynomial in space to the input dataset and outputs that fitted dataset.
@@ -262,10 +262,12 @@ def v_3d_polyfit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPolyfitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_POLYFIT_METADATA)
     params = execution.params(params)
     cargs = v_3d_polyfit_cargs(params, execution)
     ret = v_3d_polyfit_outputs(params, execution)
@@ -327,8 +329,6 @@ def v_3d_polyfit(
     Returns:
         NamedTuple of outputs (described in `V3dPolyfitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_POLYFIT_METADATA)
     params = v_3d_polyfit_params(
         input_dataset=input_dataset,
         poly_order=poly_order,
@@ -345,7 +345,7 @@ def v_3d_polyfit(
         base_dataset=base_dataset,
         verbose=verbose,
     )
-    return v_3d_polyfit_execute(params, execution)
+    return v_3d_polyfit_execute(params, runner)
 
 
 __all__ = [
@@ -353,8 +353,6 @@ __all__ = [
     "V3dPolyfitParameters",
     "V_3D_POLYFIT_METADATA",
     "v_3d_polyfit",
-    "v_3d_polyfit_cargs",
     "v_3d_polyfit_execute",
-    "v_3d_polyfit_outputs",
     "v_3d_polyfit_params",
 ]

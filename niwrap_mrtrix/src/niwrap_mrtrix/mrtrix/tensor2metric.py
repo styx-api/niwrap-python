@@ -388,7 +388,7 @@ def tensor2metric_outputs(
 
 def tensor2metric_execute(
     params: Tensor2metricParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tensor2metricOutputs:
     """
     Generate maps of tensor-derived parameters.
@@ -410,10 +410,12 @@ def tensor2metric_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tensor2metricOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TENSOR2METRIC_METADATA)
     params = execution.params(params)
     cargs = tensor2metric_cargs(params, execution)
     ret = tensor2metric_outputs(params, execution)
@@ -505,8 +507,6 @@ def tensor2metric(
     Returns:
         NamedTuple of outputs (described in `Tensor2metricOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TENSOR2METRIC_METADATA)
     params = tensor2metric_params(
         adc=adc,
         fa=fa,
@@ -530,7 +530,7 @@ def tensor2metric(
         version=version,
         tensor=tensor,
     )
-    return tensor2metric_execute(params, execution)
+    return tensor2metric_execute(params, runner)
 
 
 __all__ = [
@@ -539,10 +539,7 @@ __all__ = [
     "Tensor2metricOutputs",
     "Tensor2metricParameters",
     "tensor2metric",
-    "tensor2metric_cargs",
-    "tensor2metric_config_cargs",
     "tensor2metric_config_params",
     "tensor2metric_execute",
-    "tensor2metric_outputs",
     "tensor2metric_params",
 ]

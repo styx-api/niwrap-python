@@ -263,7 +263,7 @@ def mri_wbc_outputs(
 
 def mri_wbc_execute(
     params: MriWbcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriWbcOutputs:
     """
     A tool for working with functional brain imaging data on surfaces and volumes.
@@ -274,10 +274,12 @@ def mri_wbc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriWbcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_WBC_METADATA)
     params = execution.params(params)
     cargs = mri_wbc_cargs(params, execution)
     ret = mri_wbc_outputs(params, execution)
@@ -334,8 +336,6 @@ def mri_wbc(
     Returns:
         NamedTuple of outputs (described in `MriWbcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_WBC_METADATA)
     params = mri_wbc_params(
         functional_volume=functional_volume,
         volume_mask=volume_mask,
@@ -355,7 +355,7 @@ def mri_wbc(
         debug=debug,
         checkopts=checkopts,
     )
-    return mri_wbc_execute(params, execution)
+    return mri_wbc_execute(params, runner)
 
 
 __all__ = [
@@ -363,8 +363,6 @@ __all__ = [
     "MriWbcOutputs",
     "MriWbcParameters",
     "mri_wbc",
-    "mri_wbc_cargs",
     "mri_wbc_execute",
-    "mri_wbc_outputs",
     "mri_wbc_params",
 ]

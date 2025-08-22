@@ -273,7 +273,7 @@ def mris_volmask_outputs(
 
 def mris_volmask_execute(
     params: MrisVolmaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisVolmaskOutputs:
     """
     Computes a volume mask, at the same resolution as the <subject>/mri/brain.mgz.
@@ -286,10 +286,12 @@ def mris_volmask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisVolmaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_VOLMASK_METADATA)
     params = execution.params(params)
     cargs = mris_volmask_cargs(params, execution)
     ret = mris_volmask_outputs(params, execution)
@@ -361,8 +363,6 @@ def mris_volmask(
     Returns:
         NamedTuple of outputs (described in `MrisVolmaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_VOLMASK_METADATA)
     params = mris_volmask_params(
         cap_distance=cap_distance,
         label_background=label_background,
@@ -383,7 +383,7 @@ def mris_volmask(
         save_ribbon=save_ribbon,
         io_=io_,
     )
-    return mris_volmask_execute(params, execution)
+    return mris_volmask_execute(params, runner)
 
 
 __all__ = [
@@ -391,8 +391,6 @@ __all__ = [
     "MrisVolmaskOutputs",
     "MrisVolmaskParameters",
     "mris_volmask",
-    "mris_volmask_cargs",
     "mris_volmask_execute",
-    "mris_volmask_outputs",
     "mris_volmask_params",
 ]

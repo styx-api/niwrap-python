@@ -199,7 +199,7 @@ def volume_find_clusters_outputs(
 
 def volume_find_clusters_execute(
     params: VolumeFindClustersParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
     Filter clusters by volume.
@@ -219,10 +219,12 @@ def volume_find_clusters_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeFindClustersOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_FIND_CLUSTERS_METADATA)
     params = execution.params(params)
     cargs = volume_find_clusters_cargs(params, execution)
     ret = volume_find_clusters_outputs(params, execution)
@@ -281,8 +283,6 @@ def volume_find_clusters(
     Returns:
         NamedTuple of outputs (described in `VolumeFindClustersOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_FIND_CLUSTERS_METADATA)
     params = volume_find_clusters_params(
         volume_in=volume_in,
         value_threshold=value_threshold,
@@ -295,7 +295,7 @@ def volume_find_clusters(
         opt_distance_distance=opt_distance_distance,
         opt_start_startval=opt_start_startval,
     )
-    return volume_find_clusters_execute(params, execution)
+    return volume_find_clusters_execute(params, runner)
 
 
 __all__ = [
@@ -303,8 +303,6 @@ __all__ = [
     "VolumeFindClustersOutputs",
     "VolumeFindClustersParameters",
     "volume_find_clusters",
-    "volume_find_clusters_cargs",
     "volume_find_clusters_execute",
-    "volume_find_clusters_outputs",
     "volume_find_clusters_params",
 ]

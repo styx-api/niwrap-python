@@ -234,7 +234,7 @@ def pvmfit_outputs(
 
 def pvmfit_execute(
     params: PvmfitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PvmfitOutputs:
     """
     Fits diffusion models to multishell DWI data.
@@ -245,10 +245,12 @@ def pvmfit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PvmfitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PVMFIT_METADATA)
     params = execution.params(params)
     cargs = pvmfit_cargs(params, execution)
     ret = pvmfit_outputs(params, execution)
@@ -306,8 +308,6 @@ def pvmfit(
     Returns:
         NamedTuple of outputs (described in `PvmfitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PVMFIT_METADATA)
     params = pvmfit_params(
         data_file=data_file,
         mask_file=mask_file,
@@ -325,7 +325,7 @@ def pvmfit(
         verbose=verbose,
         help_=help_,
     )
-    return pvmfit_execute(params, execution)
+    return pvmfit_execute(params, runner)
 
 
 __all__ = [
@@ -333,8 +333,6 @@ __all__ = [
     "PvmfitOutputs",
     "PvmfitParameters",
     "pvmfit",
-    "pvmfit_cargs",
     "pvmfit_execute",
-    "pvmfit_outputs",
     "pvmfit_params",
 ]

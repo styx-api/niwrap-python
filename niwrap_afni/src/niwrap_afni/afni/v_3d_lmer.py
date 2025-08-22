@@ -304,7 +304,7 @@ def v_3d_lmer_outputs(
 
 def v_3d_lmer_execute(
     params: V3dLmerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLmerOutputs:
     """
     Program for Voxelwise Linear Mixed-Effects (LME) Analysis.
@@ -315,10 +315,12 @@ def v_3d_lmer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLmerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LMER_METADATA)
     params = execution.params(params)
     cargs = v_3d_lmer_cargs(params, execution)
     ret = v_3d_lmer_outputs(params, execution)
@@ -387,8 +389,6 @@ def v_3d_lmer(
     Returns:
         NamedTuple of outputs (described in `V3dLmerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LMER_METADATA)
     params = v_3d_lmer_params(
         bound_lower=bound_lower,
         bound_upper=bound_upper,
@@ -413,7 +413,7 @@ def v_3d_lmer(
         vvar_centers=vvar_centers,
         vvars=vvars,
     )
-    return v_3d_lmer_execute(params, execution)
+    return v_3d_lmer_execute(params, runner)
 
 
 __all__ = [
@@ -421,8 +421,6 @@ __all__ = [
     "V3dLmerParameters",
     "V_3D_LMER_METADATA",
     "v_3d_lmer",
-    "v_3d_lmer_cargs",
     "v_3d_lmer_execute",
-    "v_3d_lmer_outputs",
     "v_3d_lmer_params",
 ]

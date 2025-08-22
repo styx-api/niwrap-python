@@ -123,7 +123,7 @@ def v__do_examples_outputs(
 
 def v__do_examples_execute(
     params: VDoExamplesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDoExamplesOutputs:
     """
     A script to illustrate the use of Displayable Objects in SUMA.
@@ -134,10 +134,12 @@ def v__do_examples_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDoExamplesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DO_EXAMPLES_METADATA)
     params = execution.params(params)
     cargs = v__do_examples_cargs(params, execution)
     ret = v__do_examples_outputs(params, execution)
@@ -164,12 +166,10 @@ def v__do_examples(
     Returns:
         NamedTuple of outputs (described in `VDoExamplesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DO_EXAMPLES_METADATA)
     params = v__do_examples_params(
         auto_test=auto_test,
     )
-    return v__do_examples_execute(params, execution)
+    return v__do_examples_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "VDoExamplesParameters",
     "V__DO_EXAMPLES_METADATA",
     "v__do_examples",
-    "v__do_examples_cargs",
     "v__do_examples_execute",
-    "v__do_examples_outputs",
     "v__do_examples_params",
 ]

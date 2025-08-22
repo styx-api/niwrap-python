@@ -125,7 +125,7 @@ def nsize_outputs(
 
 def nsize_execute(
     params: NsizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NsizeOutputs:
     """
     Zero pads an input image to the nearest larger NxN dimensions.
@@ -136,10 +136,12 @@ def nsize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NsizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NSIZE_METADATA)
     params = execution.params(params)
     cargs = nsize_cargs(params, execution)
     ret = nsize_outputs(params, execution)
@@ -166,13 +168,11 @@ def nsize(
     Returns:
         NamedTuple of outputs (described in `NsizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NSIZE_METADATA)
     params = nsize_params(
         image_in=image_in,
         image_out=image_out,
     )
-    return nsize_execute(params, execution)
+    return nsize_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "NsizeOutputs",
     "NsizeParameters",
     "nsize",
-    "nsize_cargs",
     "nsize_execute",
-    "nsize_outputs",
     "nsize_params",
 ]

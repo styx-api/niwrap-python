@@ -156,7 +156,7 @@ def eddy_squad_outputs(
 
 def eddy_squad_execute(
     params: EddySquadParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddySquadOutputs:
     """
     Study-wise QC for dMRI data.
@@ -167,10 +167,12 @@ def eddy_squad_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddySquadOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_SQUAD_METADATA)
     params = execution.params(params)
     cargs = eddy_squad_cargs(params, execution)
     ret = eddy_squad_outputs(params, execution)
@@ -203,8 +205,6 @@ def eddy_squad(
     Returns:
         NamedTuple of outputs (described in `EddySquadOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_SQUAD_METADATA)
     params = eddy_squad_params(
         grouping=grouping,
         group_db=group_db,
@@ -212,7 +212,7 @@ def eddy_squad(
         output_dir=output_dir,
         subject_list=subject_list,
     )
-    return eddy_squad_execute(params, execution)
+    return eddy_squad_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "EddySquadOutputs",
     "EddySquadParameters",
     "eddy_squad",
-    "eddy_squad_cargs",
     "eddy_squad_execute",
-    "eddy_squad_outputs",
     "eddy_squad_params",
 ]

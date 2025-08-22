@@ -119,7 +119,7 @@ def morph_subject_rh_outputs(
 
 def morph_subject_rh_execute(
     params: MorphSubjectRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphSubjectRhOutputs:
     """
     A tool for morphing the right hemisphere of subject data in FreeSurfer.
@@ -130,10 +130,12 @@ def morph_subject_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphSubjectRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_SUBJECT_RH_METADATA)
     params = execution.params(params)
     cargs = morph_subject_rh_cargs(params, execution)
     ret = morph_subject_rh_outputs(params, execution)
@@ -158,12 +160,10 @@ def morph_subject_rh(
     Returns:
         NamedTuple of outputs (described in `MorphSubjectRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_SUBJECT_RH_METADATA)
     params = morph_subject_rh_params(
         subject_id=subject_id,
     )
-    return morph_subject_rh_execute(params, execution)
+    return morph_subject_rh_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "MorphSubjectRhOutputs",
     "MorphSubjectRhParameters",
     "morph_subject_rh",
-    "morph_subject_rh_cargs",
     "morph_subject_rh_execute",
-    "morph_subject_rh_outputs",
     "morph_subject_rh_params",
 ]

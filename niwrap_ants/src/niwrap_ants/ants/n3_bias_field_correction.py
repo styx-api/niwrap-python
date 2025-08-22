@@ -238,7 +238,7 @@ def n3_bias_field_correction_outputs(
 
 def n3_bias_field_correction_execute(
     params: N3BiasFieldCorrectionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> N3BiasFieldCorrectionOutputs:
     """
     This N3 is a variant of the popular N3 (nonparametric nonuniform normalization)
@@ -255,10 +255,12 @@ def n3_bias_field_correction_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `N3BiasFieldCorrectionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(N3_BIAS_FIELD_CORRECTION_METADATA)
     params = execution.params(params)
     cargs = n3_bias_field_correction_cargs(params, execution)
     ret = n3_bias_field_correction_outputs(params, execution)
@@ -323,8 +325,6 @@ def n3_bias_field_correction(
     Returns:
         NamedTuple of outputs (described in `N3BiasFieldCorrectionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(N3_BIAS_FIELD_CORRECTION_METADATA)
     params = n3_bias_field_correction_params(
         image_dimensionality=image_dimensionality,
         input_image=input_image,
@@ -338,7 +338,7 @@ def n3_bias_field_correction(
         output=output,
         verbose=verbose,
     )
-    return n3_bias_field_correction_execute(params, execution)
+    return n3_bias_field_correction_execute(params, runner)
 
 
 __all__ = [
@@ -346,8 +346,6 @@ __all__ = [
     "N3BiasFieldCorrectionParameters",
     "N3_BIAS_FIELD_CORRECTION_METADATA",
     "n3_bias_field_correction",
-    "n3_bias_field_correction_cargs",
     "n3_bias_field_correction_execute",
-    "n3_bias_field_correction_outputs",
     "n3_bias_field_correction_params",
 ]

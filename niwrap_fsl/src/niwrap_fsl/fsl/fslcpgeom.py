@@ -127,7 +127,7 @@ def fslcpgeom_outputs(
 
 def fslcpgeom_execute(
     params: FslcpgeomParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslcpgeomOutputs:
     """
     FSL tool to copy image geometry from one file to another.
@@ -138,10 +138,12 @@ def fslcpgeom_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslcpgeomOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLCPGEOM_METADATA)
     params = execution.params(params)
     cargs = fslcpgeom_cargs(params, execution)
     ret = fslcpgeom_outputs(params, execution)
@@ -170,14 +172,12 @@ def fslcpgeom(
     Returns:
         NamedTuple of outputs (described in `FslcpgeomOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLCPGEOM_METADATA)
     params = fslcpgeom_params(
         source_file=source_file,
         destination_file=destination_file,
         dimensions_flag=dimensions_flag,
     )
-    return fslcpgeom_execute(params, execution)
+    return fslcpgeom_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "FslcpgeomOutputs",
     "FslcpgeomParameters",
     "fslcpgeom",
-    "fslcpgeom_cargs",
     "fslcpgeom_execute",
-    "fslcpgeom_outputs",
     "fslcpgeom_params",
 ]

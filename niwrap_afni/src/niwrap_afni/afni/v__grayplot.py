@@ -147,7 +147,7 @@ def v__grayplot_outputs(
 
 def v__grayplot_execute(
     params: VGrayplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGrayplotOutputs:
     """
     Script to read files from an afni_proc.py results directory and produce a
@@ -160,10 +160,12 @@ def v__grayplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGrayplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GRAYPLOT_METADATA)
     params = execution.params(params)
     cargs = v__grayplot_cargs(params, execution)
     ret = v__grayplot_outputs(params, execution)
@@ -201,8 +203,6 @@ def v__grayplot(
     Returns:
         NamedTuple of outputs (described in `VGrayplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GRAYPLOT_METADATA)
     params = v__grayplot_params(
         dirname=dirname,
         pvorder=pvorder,
@@ -210,7 +210,7 @@ def v__grayplot(
         ijkorder=ijkorder,
         allorder=allorder,
     )
-    return v__grayplot_execute(params, execution)
+    return v__grayplot_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "VGrayplotParameters",
     "V__GRAYPLOT_METADATA",
     "v__grayplot",
-    "v__grayplot_cargs",
     "v__grayplot_execute",
-    "v__grayplot_outputs",
     "v__grayplot_params",
 ]

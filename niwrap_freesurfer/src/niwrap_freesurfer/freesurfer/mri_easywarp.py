@@ -159,7 +159,7 @@ def mri_easywarp_outputs(
 
 def mri_easywarp_execute(
     params: MriEasywarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEasywarpOutputs:
     """
     EasyReg: deep learning registration simple and easy.
@@ -170,10 +170,12 @@ def mri_easywarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEasywarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EASYWARP_METADATA)
     params = execution.params(params)
     cargs = mri_easywarp_cargs(params, execution)
     ret = mri_easywarp_outputs(params, execution)
@@ -208,8 +210,6 @@ def mri_easywarp(
     Returns:
         NamedTuple of outputs (described in `MriEasywarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EASYWARP_METADATA)
     params = mri_easywarp_params(
         input_image=input_image,
         output_image=output_image,
@@ -217,7 +217,7 @@ def mri_easywarp(
         nearest_neighbor=nearest_neighbor,
         num_threads=num_threads,
     )
-    return mri_easywarp_execute(params, execution)
+    return mri_easywarp_execute(params, runner)
 
 
 __all__ = [
@@ -225,8 +225,6 @@ __all__ = [
     "MriEasywarpOutputs",
     "MriEasywarpParameters",
     "mri_easywarp",
-    "mri_easywarp_cargs",
     "mri_easywarp_execute",
-    "mri_easywarp_outputs",
     "mri_easywarp_params",
 ]

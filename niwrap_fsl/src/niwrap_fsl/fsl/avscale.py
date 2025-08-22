@@ -138,7 +138,7 @@ def avscale_outputs(
 
 def avscale_execute(
     params: AvscaleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AvscaleOutputs:
     """
     A command line tool for computing affine transformations.
@@ -149,10 +149,12 @@ def avscale_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AvscaleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AVSCALE_METADATA)
     params = execution.params(params)
     cargs = avscale_cargs(params, execution)
     ret = avscale_outputs(params, execution)
@@ -183,15 +185,13 @@ def avscale(
     Returns:
         NamedTuple of outputs (described in `AvscaleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AVSCALE_METADATA)
     params = avscale_params(
         allparams_flag=allparams_flag,
         inverteddies_flag=inverteddies_flag,
         matrix_file=matrix_file,
         non_reference_volume=non_reference_volume,
     )
-    return avscale_execute(params, execution)
+    return avscale_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "AvscaleOutputs",
     "AvscaleParameters",
     "avscale",
-    "avscale_cargs",
     "avscale_execute",
-    "avscale_outputs",
     "avscale_params",
 ]

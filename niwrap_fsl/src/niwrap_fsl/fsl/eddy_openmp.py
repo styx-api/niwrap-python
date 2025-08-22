@@ -474,7 +474,7 @@ def eddy_openmp_outputs(
 
 def eddy_openmp_execute(
     params: EddyOpenmpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddyOpenmpOutputs:
     """
     A tool for correcting eddy currents and movements in diffusion data.
@@ -485,10 +485,12 @@ def eddy_openmp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddyOpenmpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_OPENMP_METADATA)
     params = execution.params(params)
     cargs = eddy_openmp_cargs(params, execution)
     ret = eddy_openmp_outputs(params, execution)
@@ -618,8 +620,6 @@ def eddy_openmp(
     Returns:
         NamedTuple of outputs (described in `EddyOpenmpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_OPENMP_METADATA)
     params = eddy_openmp_params(
         imain=imain,
         mask=mask,
@@ -666,7 +666,7 @@ def eddy_openmp(
         data_is_shelled=data_is_shelled,
         verbose=verbose,
     )
-    return eddy_openmp_execute(params, execution)
+    return eddy_openmp_execute(params, runner)
 
 
 __all__ = [
@@ -674,8 +674,6 @@ __all__ = [
     "EddyOpenmpOutputs",
     "EddyOpenmpParameters",
     "eddy_openmp",
-    "eddy_openmp_cargs",
     "eddy_openmp_execute",
-    "eddy_openmp_outputs",
     "eddy_openmp_params",
 ]

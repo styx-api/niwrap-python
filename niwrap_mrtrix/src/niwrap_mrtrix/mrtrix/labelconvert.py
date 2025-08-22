@@ -253,7 +253,7 @@ def labelconvert_outputs(
 
 def labelconvert_execute(
     params: LabelconvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelconvertOutputs:
     """
     Convert a connectome node image from one lookup table to another.
@@ -276,10 +276,12 @@ def labelconvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelconvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABELCONVERT_METADATA)
     params = execution.params(params)
     cargs = labelconvert_cargs(params, execution)
     ret = labelconvert_outputs(params, execution)
@@ -346,8 +348,6 @@ def labelconvert(
     Returns:
         NamedTuple of outputs (described in `LabelconvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABELCONVERT_METADATA)
     params = labelconvert_params(
         spine=spine,
         info=info,
@@ -363,7 +363,7 @@ def labelconvert(
         lut_out=lut_out,
         image_out=image_out,
     )
-    return labelconvert_execute(params, execution)
+    return labelconvert_execute(params, runner)
 
 
 __all__ = [
@@ -372,10 +372,7 @@ __all__ = [
     "LabelconvertOutputs",
     "LabelconvertParameters",
     "labelconvert",
-    "labelconvert_cargs",
-    "labelconvert_config_cargs",
     "labelconvert_config_params",
     "labelconvert_execute",
-    "labelconvert_outputs",
     "labelconvert_params",
 ]

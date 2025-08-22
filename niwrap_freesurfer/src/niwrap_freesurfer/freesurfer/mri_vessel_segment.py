@@ -153,7 +153,7 @@ def mri_vessel_segment_outputs(
 
 def mri_vessel_segment_execute(
     params: MriVesselSegmentParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriVesselSegmentOutputs:
     """
     MRI vessel segmentation tool.
@@ -164,10 +164,12 @@ def mri_vessel_segment_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriVesselSegmentOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_VESSEL_SEGMENT_METADATA)
     params = execution.params(params)
     cargs = mri_vessel_segment_cargs(params, execution)
     ret = mri_vessel_segment_outputs(params, execution)
@@ -200,8 +202,6 @@ def mri_vessel_segment(
     Returns:
         NamedTuple of outputs (described in `MriVesselSegmentOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_VESSEL_SEGMENT_METADATA)
     params = mri_vessel_segment_params(
         t1_image=t1_image,
         t2_image=t2_image,
@@ -209,7 +209,7 @@ def mri_vessel_segment(
         output_file=output_file,
         shape_flag=shape_flag,
     )
-    return mri_vessel_segment_execute(params, execution)
+    return mri_vessel_segment_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "MriVesselSegmentOutputs",
     "MriVesselSegmentParameters",
     "mri_vessel_segment",
-    "mri_vessel_segment_cargs",
     "mri_vessel_segment_execute",
-    "mri_vessel_segment_outputs",
     "mri_vessel_segment_params",
 ]

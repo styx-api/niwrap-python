@@ -141,7 +141,7 @@ def foci_get_projection_vertex_outputs(
 
 def foci_get_projection_vertex_execute(
     params: FociGetProjectionVertexParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
     """
     Get projection vertex for foci.
@@ -156,10 +156,12 @@ def foci_get_projection_vertex_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociGetProjectionVertexOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FOCI_GET_PROJECTION_VERTEX_METADATA)
     params = execution.params(params)
     cargs = foci_get_projection_vertex_cargs(params, execution)
     ret = foci_get_projection_vertex_outputs(params, execution)
@@ -194,15 +196,13 @@ def foci_get_projection_vertex(
     Returns:
         NamedTuple of outputs (described in `FociGetProjectionVertexOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FOCI_GET_PROJECTION_VERTEX_METADATA)
     params = foci_get_projection_vertex_params(
         foci=foci,
         surface=surface,
         metric_out=metric_out,
         opt_name_name=opt_name_name,
     )
-    return foci_get_projection_vertex_execute(params, execution)
+    return foci_get_projection_vertex_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "FociGetProjectionVertexOutputs",
     "FociGetProjectionVertexParameters",
     "foci_get_projection_vertex",
-    "foci_get_projection_vertex_cargs",
     "foci_get_projection_vertex_execute",
-    "foci_get_projection_vertex_outputs",
     "foci_get_projection_vertex_params",
 ]

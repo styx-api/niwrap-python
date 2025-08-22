@@ -181,7 +181,7 @@ def threshold_image_outputs(
 
 def threshold_image_execute(
     params: ThresholdImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ThresholdImageOutputs:
     """
     Image thresholding utility that applies different thresholding techniques to an
@@ -194,10 +194,12 @@ def threshold_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ThresholdImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(THRESHOLD_IMAGE_METADATA)
     params = execution.params(params)
     cargs = threshold_image_cargs(params, execution)
     ret = threshold_image_outputs(params, execution)
@@ -244,8 +246,6 @@ def threshold_image(
     Returns:
         NamedTuple of outputs (described in `ThresholdImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(THRESHOLD_IMAGE_METADATA)
     params = threshold_image_params(
         image_dimension=image_dimension,
         image_in=image_in,
@@ -258,7 +258,7 @@ def threshold_image(
         kmeans_number_of_thresholds=kmeans_number_of_thresholds,
         mask_image=mask_image,
     )
-    return threshold_image_execute(params, execution)
+    return threshold_image_execute(params, runner)
 
 
 __all__ = [
@@ -266,8 +266,6 @@ __all__ = [
     "ThresholdImageOutputs",
     "ThresholdImageParameters",
     "threshold_image",
-    "threshold_image_cargs",
     "threshold_image_execute",
-    "threshold_image_outputs",
     "threshold_image_params",
 ]

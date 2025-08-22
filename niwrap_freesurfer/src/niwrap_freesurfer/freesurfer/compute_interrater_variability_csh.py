@@ -159,7 +159,7 @@ def compute_interrater_variability_csh_outputs(
 
 def compute_interrater_variability_csh_execute(
     params: ComputeInterraterVariabilityCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ComputeInterraterVariabilityCshOutputs:
     """
     Computes the interrater variability between label volumes from different raters
@@ -171,10 +171,12 @@ def compute_interrater_variability_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ComputeInterraterVariabilityCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA)
     params = execution.params(params)
     cargs = compute_interrater_variability_csh_cargs(params, execution)
     ret = compute_interrater_variability_csh_outputs(params, execution)
@@ -209,8 +211,6 @@ def compute_interrater_variability_csh(
     Returns:
         NamedTuple of outputs (described in `ComputeInterraterVariabilityCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(COMPUTE_INTERRATER_VARIABILITY_CSH_METADATA)
     params = compute_interrater_variability_csh_params(
         label_vol1=label_vol1,
         label_vol2=label_vol2,
@@ -218,7 +218,7 @@ def compute_interrater_variability_csh(
         version=version,
         help_=help_,
     )
-    return compute_interrater_variability_csh_execute(params, execution)
+    return compute_interrater_variability_csh_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "ComputeInterraterVariabilityCshOutputs",
     "ComputeInterraterVariabilityCshParameters",
     "compute_interrater_variability_csh",
-    "compute_interrater_variability_csh_cargs",
     "compute_interrater_variability_csh_execute",
-    "compute_interrater_variability_csh_outputs",
     "compute_interrater_variability_csh_params",
 ]

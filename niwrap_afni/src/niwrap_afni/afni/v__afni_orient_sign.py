@@ -123,7 +123,7 @@ def v__afni_orient_sign_outputs(
 
 def v__afni_orient_sign_execute(
     params: VAfniOrientSignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniOrientSignOutputs:
     """
     A tool within the AFNI suite to determine the orientation signs of datasets.
@@ -134,10 +134,12 @@ def v__afni_orient_sign_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniOrientSignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_ORIENT_SIGN_METADATA)
     params = execution.params(params)
     cargs = v__afni_orient_sign_cargs(params, execution)
     ret = v__afni_orient_sign_outputs(params, execution)
@@ -162,12 +164,10 @@ def v__afni_orient_sign(
     Returns:
         NamedTuple of outputs (described in `VAfniOrientSignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_ORIENT_SIGN_METADATA)
     params = v__afni_orient_sign_params(
         infile=infile,
     )
-    return v__afni_orient_sign_execute(params, execution)
+    return v__afni_orient_sign_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "VAfniOrientSignParameters",
     "V__AFNI_ORIENT_SIGN_METADATA",
     "v__afni_orient_sign",
-    "v__afni_orient_sign_cargs",
     "v__afni_orient_sign_execute",
-    "v__afni_orient_sign_outputs",
     "v__afni_orient_sign_params",
 ]

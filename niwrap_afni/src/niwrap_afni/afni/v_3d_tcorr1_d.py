@@ -164,7 +164,7 @@ def v_3d_tcorr1_d_outputs(
 
 def v_3d_tcorr1_d_execute(
     params: V3dTcorr1DParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTcorr1DOutputs:
     """
     Computes the correlation coefficient between each voxel time series in the input
@@ -176,10 +176,12 @@ def v_3d_tcorr1_d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTcorr1DOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TCORR1_D_METADATA)
     params = execution.params(params)
     cargs = v_3d_tcorr1_d_cargs(params, execution)
     ret = v_3d_tcorr1_d_outputs(params, execution)
@@ -219,8 +221,6 @@ def v_3d_tcorr1_d(
     Returns:
         NamedTuple of outputs (described in `V3dTcorr1DOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TCORR1_D_METADATA)
     params = v_3d_tcorr1_d_params(
         ktaub=ktaub,
         num_threads=num_threads,
@@ -231,7 +231,7 @@ def v_3d_tcorr1_d(
         xset=xset,
         y_1d=y_1d,
     )
-    return v_3d_tcorr1_d_execute(params, execution)
+    return v_3d_tcorr1_d_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "V3dTcorr1DParameters",
     "V_3D_TCORR1_D_METADATA",
     "v_3d_tcorr1_d",
-    "v_3d_tcorr1_d_cargs",
     "v_3d_tcorr1_d_execute",
-    "v_3d_tcorr1_d_outputs",
     "v_3d_tcorr1_d_params",
 ]

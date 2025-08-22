@@ -623,7 +623,7 @@ def mri_em_register_outputs(
 
 def mri_em_register_execute(
     params: MriEmRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEmRegisterOutputs:
     """
     This program creates a transform in lta format.
@@ -634,10 +634,12 @@ def mri_em_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEmRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EM_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mri_em_register_cargs(params, execution)
     ret = mri_em_register_outputs(params, execution)
@@ -775,8 +777,6 @@ def mri_em_register(
     Returns:
         NamedTuple of outputs (described in `MriEmRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EM_REGISTER_METADATA)
     params = mri_em_register_params(
         input_volume=input_volume,
         template_gca=template_gca,
@@ -835,7 +835,7 @@ def mri_em_register(
         momentum=momentum,
         threads=threads,
     )
-    return mri_em_register_execute(params, execution)
+    return mri_em_register_execute(params, runner)
 
 
 __all__ = [
@@ -843,8 +843,6 @@ __all__ = [
     "MriEmRegisterOutputs",
     "MriEmRegisterParameters",
     "mri_em_register",
-    "mri_em_register_cargs",
     "mri_em_register_execute",
-    "mri_em_register_outputs",
     "mri_em_register_params",
 ]

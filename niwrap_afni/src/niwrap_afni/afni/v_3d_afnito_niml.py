@@ -139,7 +139,7 @@ def v_3d_afnito_niml_outputs(
 
 def v_3d_afnito_niml_execute(
     params: V3dAfnitoNimlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAfnitoNimlOutputs:
     """
     Dumps AFNI dataset header information to stdout in NIML format. Mostly for
@@ -151,10 +151,12 @@ def v_3d_afnito_niml_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoNimlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AFNITO_NIML_METADATA)
     params = execution.params(params)
     cargs = v_3d_afnito_niml_cargs(params, execution)
     ret = v_3d_afnito_niml_outputs(params, execution)
@@ -187,15 +189,13 @@ def v_3d_afnito_niml(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoNimlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AFNITO_NIML_METADATA)
     params = v_3d_afnito_niml_params(
         dset=dset,
         data=data,
         ascii_=ascii_,
         tcp=tcp,
     )
-    return v_3d_afnito_niml_execute(params, execution)
+    return v_3d_afnito_niml_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "V3dAfnitoNimlParameters",
     "V_3D_AFNITO_NIML_METADATA",
     "v_3d_afnito_niml",
-    "v_3d_afnito_niml_cargs",
     "v_3d_afnito_niml_execute",
-    "v_3d_afnito_niml_outputs",
     "v_3d_afnito_niml_params",
 ]

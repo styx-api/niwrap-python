@@ -171,7 +171,7 @@ def image_set_statistics_outputs(
 
 def image_set_statistics_execute(
     params: ImageSetStatisticsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImageSetStatisticsOutputs:
     """
     ImageSetStatistics computes statistics from a set of images. The whichstat
@@ -184,10 +184,12 @@ def image_set_statistics_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImageSetStatisticsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMAGE_SET_STATISTICS_METADATA)
     params = execution.params(params)
     cargs = image_set_statistics_cargs(params, execution)
     ret = image_set_statistics_outputs(params, execution)
@@ -231,8 +233,6 @@ def image_set_statistics(
     Returns:
         NamedTuple of outputs (described in `ImageSetStatisticsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMAGE_SET_STATISTICS_METADATA)
     params = image_set_statistics_params(
         image_dimension=image_dimension,
         controls_list=controls_list,
@@ -241,7 +241,7 @@ def image_set_statistics(
         roi=roi,
         imagelist2=imagelist2,
     )
-    return image_set_statistics_execute(params, execution)
+    return image_set_statistics_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "ImageSetStatisticsOutputs",
     "ImageSetStatisticsParameters",
     "image_set_statistics",
-    "image_set_statistics_cargs",
     "image_set_statistics_execute",
-    "image_set_statistics_outputs",
     "image_set_statistics_params",
 ]

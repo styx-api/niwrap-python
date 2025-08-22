@@ -303,7 +303,7 @@ def v_3_droimaker_outputs(
 
 def v_3_droimaker_execute(
     params: V3DroimakerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3DroimakerOutputs:
     """
     Create a labelled set of ROIs from input data, useful in combining functional
@@ -315,10 +315,12 @@ def v_3_droimaker_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3DroimakerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3_DROIMAKER_METADATA)
     params = execution.params(params)
     cargs = v_3_droimaker_cargs(params, execution)
     ret = v_3_droimaker_outputs(params, execution)
@@ -398,8 +400,6 @@ def v_3_droimaker(
     Returns:
         NamedTuple of outputs (described in `V3DroimakerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3_DROIMAKER_METADATA)
     params = v_3_droimaker_params(
         inset=inset,
         thresh=thresh,
@@ -422,7 +422,7 @@ def v_3_droimaker(
         preinfl_inflate=preinfl_inflate,
         dump_no_labtab=dump_no_labtab,
     )
-    return v_3_droimaker_execute(params, execution)
+    return v_3_droimaker_execute(params, runner)
 
 
 __all__ = [
@@ -430,8 +430,6 @@ __all__ = [
     "V3DroimakerParameters",
     "V_3_DROIMAKER_METADATA",
     "v_3_droimaker",
-    "v_3_droimaker_cargs",
     "v_3_droimaker_execute",
-    "v_3_droimaker_outputs",
     "v_3_droimaker_params",
 ]

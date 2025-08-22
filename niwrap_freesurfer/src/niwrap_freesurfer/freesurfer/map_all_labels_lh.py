@@ -149,7 +149,7 @@ def map_all_labels_lh_outputs(
 
 def map_all_labels_lh_execute(
     params: MapAllLabelsLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MapAllLabelsLhOutputs:
     """
     Paints output onto a subject's left hemisphere using FreeSurfer.
@@ -160,10 +160,12 @@ def map_all_labels_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MapAllLabelsLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAP_ALL_LABELS_LH_METADATA)
     params = execution.params(params)
     cargs = map_all_labels_lh_cargs(params, execution)
     ret = map_all_labels_lh_outputs(params, execution)
@@ -199,8 +201,6 @@ def map_all_labels_lh(
     Returns:
         NamedTuple of outputs (described in `MapAllLabelsLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAP_ALL_LABELS_LH_METADATA)
     params = map_all_labels_lh_params(
         which=which,
         fname=fname,
@@ -209,7 +209,7 @@ def map_all_labels_lh(
         subjects=subjects,
         output=output,
     )
-    return map_all_labels_lh_execute(params, execution)
+    return map_all_labels_lh_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "MapAllLabelsLhOutputs",
     "MapAllLabelsLhParameters",
     "map_all_labels_lh",
-    "map_all_labels_lh_cargs",
     "map_all_labels_lh_execute",
-    "map_all_labels_lh_outputs",
     "map_all_labels_lh_params",
 ]

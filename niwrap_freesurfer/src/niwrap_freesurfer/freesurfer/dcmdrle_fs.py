@@ -318,7 +318,7 @@ def dcmdrle_fs_outputs(
 
 def dcmdrle_fs_execute(
     params: DcmdrleFsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DcmdrleFsOutputs:
     """
     Decodes RLE-compressed DICOM files.
@@ -329,10 +329,12 @@ def dcmdrle_fs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DcmdrleFsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCMDRLE_FS_METADATA)
     params = execution.params(params)
     cargs = dcmdrle_fs_cargs(params, execution)
     ret = dcmdrle_fs_outputs(params, execution)
@@ -420,8 +422,6 @@ def dcmdrle_fs(
     Returns:
         NamedTuple of outputs (described in `DcmdrleFsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCMDRLE_FS_METADATA)
     params = dcmdrle_fs_params(
         input_file=input_file,
         output_file=output_file,
@@ -456,7 +456,7 @@ def dcmdrle_fs(
         padding_off=padding_off,
         padding_create=padding_create,
     )
-    return dcmdrle_fs_execute(params, execution)
+    return dcmdrle_fs_execute(params, runner)
 
 
 __all__ = [
@@ -464,8 +464,6 @@ __all__ = [
     "DcmdrleFsOutputs",
     "DcmdrleFsParameters",
     "dcmdrle_fs",
-    "dcmdrle_fs_cargs",
     "dcmdrle_fs_execute",
-    "dcmdrle_fs_outputs",
     "dcmdrle_fs_params",
 ]

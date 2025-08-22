@@ -147,7 +147,7 @@ def vsm_smooth_outputs(
 
 def vsm_smooth_execute(
     params: VsmSmoothParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VsmSmoothOutputs:
     """
     Implements a masked smoothing in which the input (vsm) is unchanged in voxels
@@ -164,10 +164,12 @@ def vsm_smooth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VsmSmoothOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VSM_SMOOTH_METADATA)
     params = execution.params(params)
     cargs = vsm_smooth_cargs(params, execution)
     ret = vsm_smooth_outputs(params, execution)
@@ -204,15 +206,13 @@ def vsm_smooth(
     Returns:
         NamedTuple of outputs (described in `VsmSmoothOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VSM_SMOOTH_METADATA)
     params = vsm_smooth_params(
         input_file=input_file,
         output_file=output_file,
         fwhm_value=fwhm_value,
         temp_dir=temp_dir,
     )
-    return vsm_smooth_execute(params, execution)
+    return vsm_smooth_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "VsmSmoothOutputs",
     "VsmSmoothParameters",
     "vsm_smooth",
-    "vsm_smooth_cargs",
     "vsm_smooth_execute",
-    "vsm_smooth_outputs",
     "vsm_smooth_params",
 ]

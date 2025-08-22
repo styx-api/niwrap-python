@@ -203,7 +203,7 @@ def v_3d_winsor_outputs(
 
 def v_3d_winsor_execute(
     params: V3dWinsorParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dWinsorOutputs:
     """
     Apply a 3D 'Winsorizing' filter to a short-valued dataset.
@@ -214,10 +214,12 @@ def v_3d_winsor_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dWinsorOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_WINSOR_METADATA)
     params = execution.params(params)
     cargs = v_3d_winsor_cargs(params, execution)
     ret = v_3d_winsor_outputs(params, execution)
@@ -262,8 +264,6 @@ def v_3d_winsor(
     Returns:
         NamedTuple of outputs (described in `V3dWinsorOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_WINSOR_METADATA)
     params = v_3d_winsor_params(
         irad=irad,
         cbot=cbot,
@@ -275,7 +275,7 @@ def v_3d_winsor(
         mask=mask,
         dataset=dataset,
     )
-    return v_3d_winsor_execute(params, execution)
+    return v_3d_winsor_execute(params, runner)
 
 
 __all__ = [
@@ -283,8 +283,6 @@ __all__ = [
     "V3dWinsorParameters",
     "V_3D_WINSOR_METADATA",
     "v_3d_winsor",
-    "v_3d_winsor_cargs",
     "v_3d_winsor_execute",
-    "v_3d_winsor_outputs",
     "v_3d_winsor_params",
 ]

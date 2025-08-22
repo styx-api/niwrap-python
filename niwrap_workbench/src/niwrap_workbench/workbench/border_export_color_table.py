@@ -128,7 +128,7 @@ def border_export_color_table_outputs(
 
 def border_export_color_table_execute(
     params: BorderExportColorTableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BorderExportColorTableOutputs:
     """
     Write border names and colors as text.
@@ -144,10 +144,12 @@ def border_export_color_table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderExportColorTableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BORDER_EXPORT_COLOR_TABLE_METADATA)
     params = execution.params(params)
     cargs = border_export_color_table_cargs(params, execution)
     ret = border_export_color_table_outputs(params, execution)
@@ -181,14 +183,12 @@ def border_export_color_table(
     Returns:
         NamedTuple of outputs (described in `BorderExportColorTableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BORDER_EXPORT_COLOR_TABLE_METADATA)
     params = border_export_color_table_params(
         border_file=border_file,
         table_out=table_out,
         opt_class_colors=opt_class_colors,
     )
-    return border_export_color_table_execute(params, execution)
+    return border_export_color_table_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "BorderExportColorTableOutputs",
     "BorderExportColorTableParameters",
     "border_export_color_table",
-    "border_export_color_table_cargs",
     "border_export_color_table_execute",
-    "border_export_color_table_outputs",
     "border_export_color_table_params",
 ]

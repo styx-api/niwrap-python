@@ -158,7 +158,7 @@ def talairach_afd_outputs(
 
 def talairach_afd_execute(
     params: TalairachAfdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TalairachAfdOutputs:
     """
     Detects Talairach alignment failures.
@@ -169,10 +169,12 @@ def talairach_afd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TalairachAfdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TALAIRACH_AFD_METADATA)
     params = execution.params(params)
     cargs = talairach_afd_cargs(params, execution)
     ret = talairach_afd_outputs(params, execution)
@@ -206,8 +208,6 @@ def talairach_afd(
     Returns:
         NamedTuple of outputs (described in `TalairachAfdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TALAIRACH_AFD_METADATA)
     params = talairach_afd_params(
         subject_name=subject_name,
         xfm_file=xfm_file,
@@ -215,7 +215,7 @@ def talairach_afd(
         afd_directory=afd_directory,
         verbose=verbose,
     )
-    return talairach_afd_execute(params, execution)
+    return talairach_afd_execute(params, runner)
 
 
 __all__ = [
@@ -223,8 +223,6 @@ __all__ = [
     "TalairachAfdOutputs",
     "TalairachAfdParameters",
     "talairach_afd",
-    "talairach_afd_cargs",
     "talairach_afd_execute",
-    "talairach_afd_outputs",
     "talairach_afd_params",
 ]

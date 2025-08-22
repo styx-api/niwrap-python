@@ -177,7 +177,7 @@ def tksurferfv_outputs(
 
 def tksurferfv_execute(
     params: TksurferfvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TksurferfvOutputs:
     """
     A script that runs freeview with arguments similar to tksurfer.
@@ -188,10 +188,12 @@ def tksurferfv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TksurferfvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TKSURFERFV_METADATA)
     params = execution.params(params)
     cargs = tksurferfv_cargs(params, execution)
     ret = tksurferfv_outputs(params, execution)
@@ -238,8 +240,6 @@ def tksurferfv(
     Returns:
         NamedTuple of outputs (described in `TksurferfvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TKSURFERFV_METADATA)
     params = tksurferfv_params(
         subject=subject,
         hemi=hemi,
@@ -253,7 +253,7 @@ def tksurferfv(
         rotate_around_cursor=rotate_around_cursor,
         heat_scale=heat_scale,
     )
-    return tksurferfv_execute(params, execution)
+    return tksurferfv_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "TksurferfvOutputs",
     "TksurferfvParameters",
     "tksurferfv",
-    "tksurferfv_cargs",
     "tksurferfv_execute",
-    "tksurferfv_outputs",
     "tksurferfv_params",
 ]

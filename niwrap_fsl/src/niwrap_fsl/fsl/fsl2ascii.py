@@ -125,7 +125,7 @@ def fsl2ascii_outputs(
 
 def fsl2ascii_execute(
     params: Fsl2asciiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fsl2asciiOutputs:
     """
     Convert NIfTI image or analyze 7.5 format file to ASCII text file.
@@ -136,10 +136,12 @@ def fsl2ascii_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fsl2asciiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL2ASCII_METADATA)
     params = execution.params(params)
     cargs = fsl2ascii_cargs(params, execution)
     ret = fsl2ascii_outputs(params, execution)
@@ -166,13 +168,11 @@ def fsl2ascii(
     Returns:
         NamedTuple of outputs (described in `Fsl2asciiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL2ASCII_METADATA)
     params = fsl2ascii_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return fsl2ascii_execute(params, execution)
+    return fsl2ascii_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "Fsl2asciiOutputs",
     "Fsl2asciiParameters",
     "fsl2ascii",
-    "fsl2ascii_cargs",
     "fsl2ascii_execute",
-    "fsl2ascii_outputs",
     "fsl2ascii_params",
 ]

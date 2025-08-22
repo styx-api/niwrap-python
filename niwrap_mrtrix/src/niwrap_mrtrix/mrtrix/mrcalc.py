@@ -2635,7 +2635,7 @@ def mrcalc_outputs(
 
 def mrcalc_execute(
     params: MrcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrcalcOutputs:
     """
     Apply generic voxel-wise mathematical operations to images.
@@ -2672,10 +2672,12 @@ def mrcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRCALC_METADATA)
     params = execution.params(params)
     cargs = mrcalc_cargs(params, execution)
     ret = mrcalc_outputs(params, execution)
@@ -2865,8 +2867,6 @@ def mrcalc(
     Returns:
         NamedTuple of outputs (described in `MrcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRCALC_METADATA)
     params = mrcalc_params(
         abs_=abs_,
         neg=neg,
@@ -2929,7 +2929,7 @@ def mrcalc(
         version=version,
         operand=operand,
     )
-    return mrcalc_execute(params, execution)
+    return mrcalc_execute(params, runner)
 
 
 __all__ = [
@@ -2990,114 +2990,59 @@ __all__ = [
     "MrcalcVariousStringParameters",
     "MrcalcXorParameters",
     "mrcalc",
-    "mrcalc_abs_cargs",
     "mrcalc_abs_params",
-    "mrcalc_acos_cargs",
     "mrcalc_acos_params",
-    "mrcalc_acosh_cargs",
     "mrcalc_acosh_params",
-    "mrcalc_add_cargs",
     "mrcalc_add_params",
-    "mrcalc_and_cargs",
     "mrcalc_and_params",
-    "mrcalc_asin_cargs",
     "mrcalc_asin_params",
-    "mrcalc_asinh_cargs",
     "mrcalc_asinh_params",
-    "mrcalc_atan_cargs",
     "mrcalc_atan_params",
-    "mrcalc_atanh_cargs",
     "mrcalc_atanh_params",
-    "mrcalc_cargs",
-    "mrcalc_ceil_cargs",
     "mrcalc_ceil_params",
-    "mrcalc_complex_cargs",
     "mrcalc_complex_params",
-    "mrcalc_config_cargs",
     "mrcalc_config_params",
-    "mrcalc_conj_cargs",
     "mrcalc_conj_params",
-    "mrcalc_cos_cargs",
     "mrcalc_cos_params",
-    "mrcalc_cosh_cargs",
     "mrcalc_cosh_params",
-    "mrcalc_divide_cargs",
     "mrcalc_divide_params",
-    "mrcalc_eq_cargs",
     "mrcalc_eq_params",
     "mrcalc_execute",
-    "mrcalc_exp_cargs",
     "mrcalc_exp_params",
-    "mrcalc_finite_cargs",
     "mrcalc_finite_params",
-    "mrcalc_floor_cargs",
     "mrcalc_floor_params",
-    "mrcalc_ge_cargs",
     "mrcalc_ge_params",
-    "mrcalc_gt_cargs",
     "mrcalc_gt_params",
-    "mrcalc_if_cargs",
     "mrcalc_if_params",
-    "mrcalc_imag_cargs",
     "mrcalc_imag_params",
-    "mrcalc_isinf_cargs",
     "mrcalc_isinf_params",
-    "mrcalc_isnan_cargs",
     "mrcalc_isnan_params",
-    "mrcalc_le_cargs",
     "mrcalc_le_params",
-    "mrcalc_log10_cargs",
     "mrcalc_log10_params",
-    "mrcalc_log_cargs",
     "mrcalc_log_params",
-    "mrcalc_lt_cargs",
     "mrcalc_lt_params",
-    "mrcalc_max_cargs",
     "mrcalc_max_params",
-    "mrcalc_min_cargs",
     "mrcalc_min_params",
-    "mrcalc_multiply_cargs",
     "mrcalc_multiply_params",
-    "mrcalc_neg_cargs",
     "mrcalc_neg_params",
-    "mrcalc_neq_cargs",
     "mrcalc_neq_params",
-    "mrcalc_not_cargs",
     "mrcalc_not_params",
-    "mrcalc_or_cargs",
     "mrcalc_or_params",
-    "mrcalc_outputs",
     "mrcalc_params",
-    "mrcalc_phase_cargs",
     "mrcalc_phase_params",
-    "mrcalc_polar_cargs",
     "mrcalc_polar_params",
-    "mrcalc_pow_cargs",
     "mrcalc_pow_params",
-    "mrcalc_proj_cargs",
     "mrcalc_proj_params",
-    "mrcalc_real_cargs",
     "mrcalc_real_params",
-    "mrcalc_replace_cargs",
     "mrcalc_replace_params",
-    "mrcalc_round_cargs",
     "mrcalc_round_params",
-    "mrcalc_sin_cargs",
     "mrcalc_sin_params",
-    "mrcalc_sinh_cargs",
     "mrcalc_sinh_params",
-    "mrcalc_sqrt_cargs",
     "mrcalc_sqrt_params",
-    "mrcalc_subtract_cargs",
     "mrcalc_subtract_params",
-    "mrcalc_tan_cargs",
     "mrcalc_tan_params",
-    "mrcalc_tanh_cargs",
     "mrcalc_tanh_params",
-    "mrcalc_various_file_cargs",
     "mrcalc_various_file_params",
-    "mrcalc_various_string_cargs",
     "mrcalc_various_string_params",
-    "mrcalc_xor_cargs",
     "mrcalc_xor_params",
 ]

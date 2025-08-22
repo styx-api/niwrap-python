@@ -171,7 +171,7 @@ def v_3d_dtto_dwi_outputs(
 
 def v_3d_dtto_dwi_execute(
     params: V3dDttoDwiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDttoDwiOutputs:
     """
     Tool to compute multiple gradient images from tensors and gradient vector
@@ -183,10 +183,12 @@ def v_3d_dtto_dwi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDttoDwiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DTTO_DWI_METADATA)
     params = execution.params(params)
     cargs = v_3d_dtto_dwi_cargs(params, execution)
     ret = v_3d_dtto_dwi_outputs(params, execution)
@@ -229,8 +231,6 @@ def v_3d_dtto_dwi(
     Returns:
         NamedTuple of outputs (described in `V3dDttoDwiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DTTO_DWI_METADATA)
     params = v_3d_dtto_dwi_params(
         gradient_file=gradient_file,
         i0_dataset=i0_dataset,
@@ -241,7 +241,7 @@ def v_3d_dtto_dwi(
         scale_out_1000=scale_out_1000,
         help_=help_,
     )
-    return v_3d_dtto_dwi_execute(params, execution)
+    return v_3d_dtto_dwi_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "V3dDttoDwiParameters",
     "V_3D_DTTO_DWI_METADATA",
     "v_3d_dtto_dwi",
-    "v_3d_dtto_dwi_cargs",
     "v_3d_dtto_dwi_execute",
-    "v_3d_dtto_dwi_outputs",
     "v_3d_dtto_dwi_params",
 ]

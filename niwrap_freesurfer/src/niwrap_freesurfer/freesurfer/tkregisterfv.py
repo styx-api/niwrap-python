@@ -371,7 +371,7 @@ def tkregisterfv_outputs(
 
 def tkregisterfv_execute(
     params: TkregisterfvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TkregisterfvOutputs:
     """
     A script that runs freeview with arguments like tkregister, focusing on LTA
@@ -383,10 +383,12 @@ def tkregisterfv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TkregisterfvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TKREGISTERFV_METADATA)
     params = execution.params(params)
     cargs = tkregisterfv_cargs(params, execution)
     ret = tkregisterfv_outputs(params, execution)
@@ -476,8 +478,6 @@ def tkregisterfv(
     Returns:
         NamedTuple of outputs (described in `TkregisterfvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TKREGISTERFV_METADATA)
     params = tkregisterfv_params(
         mov=mov,
         targ=targ,
@@ -512,7 +512,7 @@ def tkregisterfv(
         fstal=fstal,
         aux=aux,
     )
-    return tkregisterfv_execute(params, execution)
+    return tkregisterfv_execute(params, runner)
 
 
 __all__ = [
@@ -520,8 +520,6 @@ __all__ = [
     "TkregisterfvOutputs",
     "TkregisterfvParameters",
     "tkregisterfv",
-    "tkregisterfv_cargs",
     "tkregisterfv_execute",
-    "tkregisterfv_outputs",
     "tkregisterfv_params",
 ]

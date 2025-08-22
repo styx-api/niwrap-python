@@ -121,7 +121,7 @@ def mri_add_new_tp_outputs(
 
 def mri_add_new_tp_execute(
     params: MriAddNewTpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAddNewTpOutputs:
     """
     Adds a new time point to the base/template without re-creating the base. Only
@@ -133,10 +133,12 @@ def mri_add_new_tp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAddNewTpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_ADD_NEW_TP_METADATA)
     params = execution.params(params)
     cargs = mri_add_new_tp_cargs(params, execution)
     ret = mri_add_new_tp_outputs(params, execution)
@@ -164,13 +166,11 @@ def mri_add_new_tp(
     Returns:
         NamedTuple of outputs (described in `MriAddNewTpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_ADD_NEW_TP_METADATA)
     params = mri_add_new_tp_params(
         base_id=base_id,
         newtp_id=newtp_id,
     )
-    return mri_add_new_tp_execute(params, execution)
+    return mri_add_new_tp_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "MriAddNewTpOutputs",
     "MriAddNewTpParameters",
     "mri_add_new_tp",
-    "mri_add_new_tp_cargs",
     "mri_add_new_tp_execute",
-    "mri_add_new_tp_outputs",
     "mri_add_new_tp_params",
 ]

@@ -157,7 +157,7 @@ def mksubjdirs_outputs(
 
 def mksubjdirs_execute(
     params: MksubjdirsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MksubjdirsOutputs:
     """
     A command-line tool to create subject directories.
@@ -168,10 +168,12 @@ def mksubjdirs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MksubjdirsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MKSUBJDIRS_METADATA)
     params = execution.params(params)
     cargs = mksubjdirs_cargs(params, execution)
     ret = mksubjdirs_outputs(params, execution)
@@ -209,8 +211,6 @@ def mksubjdirs(
     Returns:
         NamedTuple of outputs (described in `MksubjdirsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MKSUBJDIRS_METADATA)
     params = mksubjdirs_params(
         subj_name=subj_name,
         mode=mode,
@@ -220,7 +220,7 @@ def mksubjdirs(
         help_=help_,
         version=version,
     )
-    return mksubjdirs_execute(params, execution)
+    return mksubjdirs_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "MksubjdirsOutputs",
     "MksubjdirsParameters",
     "mksubjdirs",
-    "mksubjdirs_cargs",
     "mksubjdirs_execute",
-    "mksubjdirs_outputs",
     "mksubjdirs_params",
 ]

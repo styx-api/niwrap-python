@@ -132,7 +132,7 @@ def v_24swap_outputs(
 
 def v_24swap_execute(
     params: V24swapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V24swapOutputs:
     """
     Swaps bytes pairs and/or quadruples on the files listed.
@@ -143,10 +143,12 @@ def v_24swap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V24swapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_24SWAP_METADATA)
     params = execution.params(params)
     cargs = v_24swap_cargs(params, execution)
     ret = v_24swap_outputs(params, execution)
@@ -175,14 +177,12 @@ def v_24swap(
     Returns:
         NamedTuple of outputs (described in `V24swapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_24SWAP_METADATA)
     params = v_24swap_params(
         quiet=quiet,
         pattern=pattern,
         input_files=input_files,
     )
-    return v_24swap_execute(params, execution)
+    return v_24swap_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "V24swapParameters",
     "V_24SWAP_METADATA",
     "v_24swap",
-    "v_24swap_cargs",
     "v_24swap_execute",
-    "v_24swap_outputs",
     "v_24swap_params",
 ]

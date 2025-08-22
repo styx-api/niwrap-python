@@ -150,7 +150,7 @@ def v_3d_xyzcat_outputs(
 
 def v_3d_xyzcat_execute(
     params: V3dXyzcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dXyzcatOutputs:
     """
     Catenates datasets spatially.
@@ -161,10 +161,12 @@ def v_3d_xyzcat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dXyzcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_XYZCAT_METADATA)
     params = execution.params(params)
     cargs = v_3d_xyzcat_cargs(params, execution)
     ret = v_3d_xyzcat_outputs(params, execution)
@@ -196,15 +198,13 @@ def v_3d_xyzcat(
     Returns:
         NamedTuple of outputs (described in `V3dXyzcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_XYZCAT_METADATA)
     params = v_3d_xyzcat_params(
         direction=direction,
         prefix=prefix,
         verbose=verbose,
         datasets=datasets,
     )
-    return v_3d_xyzcat_execute(params, execution)
+    return v_3d_xyzcat_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "V3dXyzcatParameters",
     "V_3D_XYZCAT_METADATA",
     "v_3d_xyzcat",
-    "v_3d_xyzcat_cargs",
     "v_3d_xyzcat_execute",
-    "v_3d_xyzcat_outputs",
     "v_3d_xyzcat_params",
 ]

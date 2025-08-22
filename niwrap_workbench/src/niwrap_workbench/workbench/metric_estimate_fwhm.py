@@ -197,7 +197,7 @@ def metric_estimate_fwhm_outputs(
 
 def metric_estimate_fwhm_execute(
     params: MetricEstimateFwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
     Estimate fwhm smoothness of a metric file.
@@ -211,10 +211,12 @@ def metric_estimate_fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricEstimateFwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_ESTIMATE_FWHM_METADATA)
     params = execution.params(params)
     cargs = metric_estimate_fwhm_cargs(params, execution)
     ret = metric_estimate_fwhm_outputs(params, execution)
@@ -253,8 +255,6 @@ def metric_estimate_fwhm(
     Returns:
         NamedTuple of outputs (described in `MetricEstimateFwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_ESTIMATE_FWHM_METADATA)
     params = metric_estimate_fwhm_params(
         surface=surface,
         metric_in=metric_in,
@@ -262,7 +262,7 @@ def metric_estimate_fwhm(
         opt_column_column=opt_column_column,
         whole_file=whole_file,
     )
-    return metric_estimate_fwhm_execute(params, execution)
+    return metric_estimate_fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -271,10 +271,7 @@ __all__ = [
     "MetricEstimateFwhmParameters",
     "MetricEstimateFwhmWholeFileParameters",
     "metric_estimate_fwhm",
-    "metric_estimate_fwhm_cargs",
     "metric_estimate_fwhm_execute",
-    "metric_estimate_fwhm_outputs",
     "metric_estimate_fwhm_params",
-    "metric_estimate_fwhm_whole_file_cargs",
     "metric_estimate_fwhm_whole_file_params",
 ]

@@ -320,7 +320,7 @@ def fast_outputs(
 
 def fast_execute(
     params: FastParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FastOutputs:
     """
     FAST (FMRIB's Automated Segmentation Tool) segments a 3D image of the brain into
@@ -339,10 +339,12 @@ def fast_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FastOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAST_METADATA)
     params = execution.params(params)
     cargs = fast_cargs(params, execution)
     ret = fast_outputs(params, execution)
@@ -423,8 +425,6 @@ def fast(
     Returns:
         NamedTuple of outputs (described in `FastOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAST_METADATA)
     params = fast_params(
         number_classes=number_classes,
         bias_iters=bias_iters,
@@ -449,7 +449,7 @@ def fast(
         iters_afterbias=iters_afterbias,
         in_files=in_files,
     )
-    return fast_execute(params, execution)
+    return fast_execute(params, runner)
 
 
 __all__ = [
@@ -457,8 +457,6 @@ __all__ = [
     "FastOutputs",
     "FastParameters",
     "fast",
-    "fast_cargs",
     "fast_execute",
-    "fast_outputs",
     "fast_params",
 ]

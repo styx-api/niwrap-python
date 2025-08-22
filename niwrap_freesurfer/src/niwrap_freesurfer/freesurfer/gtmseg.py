@@ -262,7 +262,7 @@ def gtmseg_outputs(
 
 def gtmseg_execute(
     params: GtmsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GtmsegOutputs:
     """
     Creates an anatomical segmentation for the geometric transfer matrix (GTM) used
@@ -274,10 +274,12 @@ def gtmseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GtmsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GTMSEG_METADATA)
     params = execution.params(params)
     cargs = gtmseg_cargs(params, execution)
     ret = gtmseg_outputs(params, execution)
@@ -339,8 +341,6 @@ def gtmseg(
     Returns:
         NamedTuple of outputs (described in `GtmsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GTMSEG_METADATA)
     params = gtmseg_params(
         subject=subject,
         outvol=outvol,
@@ -361,7 +361,7 @@ def gtmseg(
         xcerseg=xcerseg,
         debug=debug,
     )
-    return gtmseg_execute(params, execution)
+    return gtmseg_execute(params, runner)
 
 
 __all__ = [
@@ -369,8 +369,6 @@ __all__ = [
     "GtmsegOutputs",
     "GtmsegParameters",
     "gtmseg",
-    "gtmseg_cargs",
     "gtmseg_execute",
-    "gtmseg_outputs",
     "gtmseg_params",
 ]

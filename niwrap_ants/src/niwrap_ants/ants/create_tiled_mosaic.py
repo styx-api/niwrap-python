@@ -247,7 +247,7 @@ def create_tiled_mosaic_outputs(
 
 def create_tiled_mosaic_execute(
     params: CreateTiledMosaicParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateTiledMosaicOutputs:
     """
     Render a 3-D image volume with optional Rgb overlay.
@@ -258,10 +258,12 @@ def create_tiled_mosaic_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateTiledMosaicOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_TILED_MOSAIC_METADATA)
     params = execution.params(params)
     cargs = create_tiled_mosaic_cargs(params, execution)
     ret = create_tiled_mosaic_outputs(params, execution)
@@ -324,8 +326,6 @@ def create_tiled_mosaic(
     Returns:
         NamedTuple of outputs (described in `CreateTiledMosaicOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_TILED_MOSAIC_METADATA)
     params = create_tiled_mosaic_params(
         input_image=input_image,
         rgb_image=rgb_image,
@@ -340,7 +340,7 @@ def create_tiled_mosaic(
         flip_slice=flip_slice,
         permute_axes=permute_axes,
     )
-    return create_tiled_mosaic_execute(params, execution)
+    return create_tiled_mosaic_execute(params, runner)
 
 
 __all__ = [
@@ -348,8 +348,6 @@ __all__ = [
     "CreateTiledMosaicOutputs",
     "CreateTiledMosaicParameters",
     "create_tiled_mosaic",
-    "create_tiled_mosaic_cargs",
     "create_tiled_mosaic_execute",
-    "create_tiled_mosaic_outputs",
     "create_tiled_mosaic_params",
 ]

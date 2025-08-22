@@ -128,7 +128,7 @@ def gltsymtest_outputs(
 
 def gltsymtest_execute(
     params: GltsymtestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GltsymtestOutputs:
     """
     A tool to test the validity of '-gltsym' strings for use with 3dDeconvolve or
@@ -140,10 +140,12 @@ def gltsymtest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GltsymtestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GLTSYMTEST_METADATA)
     params = execution.params(params)
     cargs = gltsymtest_cargs(params, execution)
     ret = gltsymtest_outputs(params, execution)
@@ -174,14 +176,12 @@ def gltsymtest(
     Returns:
         NamedTuple of outputs (described in `GltsymtestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GLTSYMTEST_METADATA)
     params = gltsymtest_params(
         badonly=badonly,
         varlist=varlist,
         expr=expr,
     )
-    return gltsymtest_execute(params, execution)
+    return gltsymtest_execute(params, runner)
 
 
 __all__ = [
@@ -189,8 +189,6 @@ __all__ = [
     "GltsymtestOutputs",
     "GltsymtestParameters",
     "gltsymtest",
-    "gltsymtest_cargs",
     "gltsymtest_execute",
-    "gltsymtest_outputs",
     "gltsymtest_params",
 ]

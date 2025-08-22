@@ -204,7 +204,7 @@ def xtract_stats_outputs(
 
 def xtract_stats_execute(
     params: XtractStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XtractStatsOutputs:
     """
     Quantitative evaluation tool of XTRACT results in neuroimaging.
@@ -215,10 +215,12 @@ def xtract_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XtractStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XTRACT_STATS_METADATA)
     params = execution.params(params)
     cargs = xtract_stats_cargs(params, execution)
     ret = xtract_stats_outputs(params, execution)
@@ -268,8 +270,6 @@ def xtract_stats(
     Returns:
         NamedTuple of outputs (described in `XtractStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XTRACT_STATS_METADATA)
     params = xtract_stats_params(
         folder_basename=folder_basename,
         xtract_dir=xtract_dir,
@@ -281,7 +281,7 @@ def xtract_stats(
         measurements=measurements,
         keep_temp_files=keep_temp_files,
     )
-    return xtract_stats_execute(params, execution)
+    return xtract_stats_execute(params, runner)
 
 
 __all__ = [
@@ -289,8 +289,6 @@ __all__ = [
     "XtractStatsOutputs",
     "XtractStatsParameters",
     "xtract_stats",
-    "xtract_stats_cargs",
     "xtract_stats_execute",
-    "xtract_stats_outputs",
     "xtract_stats_params",
 ]

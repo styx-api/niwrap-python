@@ -146,7 +146,7 @@ def ftoz_outputs(
 
 def ftoz_execute(
     params: FtozParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FtozOutputs:
     """
     Convert F-statistics to Z-scores.
@@ -157,10 +157,12 @@ def ftoz_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FtozOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FTOZ_METADATA)
     params = execution.params(params)
     cargs = ftoz_cargs(params, execution)
     ret = ftoz_outputs(params, execution)
@@ -193,8 +195,6 @@ def ftoz(
     Returns:
         NamedTuple of outputs (described in `FtozOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FTOZ_METADATA)
     params = ftoz_params(
         input_file=input_file,
         dof1=dof1,
@@ -202,7 +202,7 @@ def ftoz(
         output_file=output_file,
         help_flag=help_flag,
     )
-    return ftoz_execute(params, execution)
+    return ftoz_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "FtozOutputs",
     "FtozParameters",
     "ftoz",
-    "ftoz_cargs",
     "ftoz_execute",
-    "ftoz_outputs",
     "ftoz_params",
 ]

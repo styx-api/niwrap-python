@@ -122,7 +122,7 @@ def label_export_table_outputs(
 
 def label_export_table_execute(
     params: LabelExportTableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelExportTableOutputs:
     """
     Export label table from gifti as text.
@@ -136,10 +136,12 @@ def label_export_table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelExportTableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_EXPORT_TABLE_METADATA)
     params = execution.params(params)
     cargs = label_export_table_cargs(params, execution)
     ret = label_export_table_outputs(params, execution)
@@ -169,13 +171,11 @@ def label_export_table(
     Returns:
         NamedTuple of outputs (described in `LabelExportTableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_EXPORT_TABLE_METADATA)
     params = label_export_table_params(
         label_in=label_in,
         table_out=table_out,
     )
-    return label_export_table_execute(params, execution)
+    return label_export_table_execute(params, runner)
 
 
 __all__ = [
@@ -183,8 +183,6 @@ __all__ = [
     "LabelExportTableOutputs",
     "LabelExportTableParameters",
     "label_export_table",
-    "label_export_table_cargs",
     "label_export_table_execute",
-    "label_export_table_outputs",
     "label_export_table_params",
 ]

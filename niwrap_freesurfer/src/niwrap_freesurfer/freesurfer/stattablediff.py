@@ -192,7 +192,7 @@ def stattablediff_outputs(
 
 def stattablediff_execute(
     params: StattablediffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> StattablediffOutputs:
     """
     Creates a table of the differences between two stats tables.
@@ -203,10 +203,12 @@ def stattablediff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `StattablediffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(STATTABLEDIFF_METADATA)
     params = execution.params(params)
     cargs = stattablediff_cargs(params, execution)
     ret = stattablediff_outputs(params, execution)
@@ -253,8 +255,6 @@ def stattablediff(
     Returns:
         NamedTuple of outputs (described in `StattablediffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(STATTABLEDIFF_METADATA)
     params = stattablediff_params(
         t1=t1,
         t2=t2,
@@ -269,7 +269,7 @@ def stattablediff(
         diff_subjects=diff_subjects,
         noreplace53=noreplace53,
     )
-    return stattablediff_execute(params, execution)
+    return stattablediff_execute(params, runner)
 
 
 __all__ = [
@@ -277,8 +277,6 @@ __all__ = [
     "StattablediffOutputs",
     "StattablediffParameters",
     "stattablediff",
-    "stattablediff_cargs",
     "stattablediff_execute",
-    "stattablediff_outputs",
     "stattablediff_params",
 ]

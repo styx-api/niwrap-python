@@ -189,7 +189,7 @@ def xsanatreg_outputs(
 
 def xsanatreg_execute(
     params: XsanatregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XsanatregOutputs:
     """
     A tool for registering source and target COR volumes.
@@ -200,10 +200,12 @@ def xsanatreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XsanatregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XSANATREG_METADATA)
     params = execution.params(params)
     cargs = xsanatreg_cargs(params, execution)
     ret = xsanatreg_outputs(params, execution)
@@ -246,8 +248,6 @@ def xsanatreg(
     Returns:
         NamedTuple of outputs (described in `XsanatregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XSANATREG_METADATA)
     params = xsanatreg_params(
         src_cordir=src_cordir,
         targ_cordir=targ_cordir,
@@ -259,7 +259,7 @@ def xsanatreg(
         version=version,
         umask=umask,
     )
-    return xsanatreg_execute(params, execution)
+    return xsanatreg_execute(params, runner)
 
 
 __all__ = [
@@ -267,8 +267,6 @@ __all__ = [
     "XsanatregOutputs",
     "XsanatregParameters",
     "xsanatreg",
-    "xsanatreg_cargs",
     "xsanatreg_execute",
-    "xsanatreg_outputs",
     "xsanatreg_params",
 ]

@@ -172,7 +172,7 @@ def v__compute_gcor_outputs(
 
 def v__compute_gcor_execute(
     params: VComputeGcorParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VComputeGcorOutputs:
     """
     Compute GCOR, the global correlation.
@@ -183,10 +183,12 @@ def v__compute_gcor_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VComputeGcorOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__COMPUTE_GCOR_METADATA)
     params = execution.params(params)
     cargs = v__compute_gcor_cargs(params, execution)
     ret = v__compute_gcor_outputs(params, execution)
@@ -223,8 +225,6 @@ def v__compute_gcor(
     Returns:
         NamedTuple of outputs (described in `VComputeGcorOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__COMPUTE_GCOR_METADATA)
     params = v__compute_gcor_params(
         input_=input_,
         mask=mask,
@@ -234,7 +234,7 @@ def v__compute_gcor(
         save_tmp=save_tmp,
         verbose=verbose,
     )
-    return v__compute_gcor_execute(params, execution)
+    return v__compute_gcor_execute(params, runner)
 
 
 __all__ = [
@@ -242,8 +242,6 @@ __all__ = [
     "VComputeGcorParameters",
     "V__COMPUTE_GCOR_METADATA",
     "v__compute_gcor",
-    "v__compute_gcor_cargs",
     "v__compute_gcor_execute",
-    "v__compute_gcor_outputs",
     "v__compute_gcor_params",
 ]

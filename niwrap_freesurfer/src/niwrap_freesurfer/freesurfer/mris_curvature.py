@@ -246,7 +246,7 @@ def mris_curvature_outputs(
 
 def mris_curvature_execute(
     params: MrisCurvatureParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCurvatureOutputs:
     """
     Compute the second fundamental form of a cortical surface to generate mean and
@@ -258,10 +258,12 @@ def mris_curvature_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCurvatureOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CURVATURE_METADATA)
     params = execution.params(params)
     cargs = mris_curvature_cargs(params, execution)
     ret = mris_curvature_outputs(params, execution)
@@ -322,8 +324,6 @@ def mris_curvature(
     Returns:
         NamedTuple of outputs (described in `MrisCurvatureOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CURVATURE_METADATA)
     params = mris_curvature_params(
         save_curvature_files=save_curvature_files,
         max_principal_curvature=max_principal_curvature,
@@ -340,7 +340,7 @@ def mris_curvature(
         k1k2_curvature=k1k2_curvature,
         input_surface=input_surface,
     )
-    return mris_curvature_execute(params, execution)
+    return mris_curvature_execute(params, runner)
 
 
 __all__ = [
@@ -348,8 +348,6 @@ __all__ = [
     "MrisCurvatureOutputs",
     "MrisCurvatureParameters",
     "mris_curvature",
-    "mris_curvature_cargs",
     "mris_curvature_execute",
-    "mris_curvature_outputs",
     "mris_curvature_params",
 ]

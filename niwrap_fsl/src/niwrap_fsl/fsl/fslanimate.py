@@ -132,7 +132,7 @@ def fslanimate_outputs(
 
 def fslanimate_execute(
     params: FslanimateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslanimateOutputs:
     """
     Tool for creating animations from imaging data.
@@ -143,10 +143,12 @@ def fslanimate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslanimateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLANIMATE_METADATA)
     params = execution.params(params)
     cargs = fslanimate_cargs(params, execution)
     ret = fslanimate_outputs(params, execution)
@@ -175,14 +177,12 @@ def fslanimate(
     Returns:
         NamedTuple of outputs (described in `FslanimateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLANIMATE_METADATA)
     params = fslanimate_params(
         input_file=input_file,
         output_file=output_file,
         tmp_dir=tmp_dir,
     )
-    return fslanimate_execute(params, execution)
+    return fslanimate_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "FslanimateOutputs",
     "FslanimateParameters",
     "fslanimate",
-    "fslanimate_cargs",
     "fslanimate_execute",
-    "fslanimate_outputs",
     "fslanimate_params",
 ]

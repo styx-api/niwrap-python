@@ -116,7 +116,7 @@ def inflate_subject_new_outputs(
 
 def inflate_subject_new_execute(
     params: InflateSubjectNewParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InflateSubjectNewOutputs:
     """
     Tool to inflate subject surfaces.
@@ -127,10 +127,12 @@ def inflate_subject_new_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectNewOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INFLATE_SUBJECT_NEW_METADATA)
     params = execution.params(params)
     cargs = inflate_subject_new_cargs(params, execution)
     ret = inflate_subject_new_outputs(params, execution)
@@ -155,12 +157,10 @@ def inflate_subject_new(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectNewOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INFLATE_SUBJECT_NEW_METADATA)
     params = inflate_subject_new_params(
         subject_dir=subject_dir,
     )
-    return inflate_subject_new_execute(params, execution)
+    return inflate_subject_new_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "InflateSubjectNewOutputs",
     "InflateSubjectNewParameters",
     "inflate_subject_new",
-    "inflate_subject_new_cargs",
     "inflate_subject_new_execute",
-    "inflate_subject_new_outputs",
     "inflate_subject_new_params",
 ]

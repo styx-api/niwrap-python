@@ -237,7 +237,7 @@ def v_1dgen_arma11_outputs(
 
 def v_1dgen_arma11_execute(
     params: V1dgenArma11Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dgenArma11Outputs:
     """
     Program to generate an ARMA(1,1) time series, for simulation studies. Results
@@ -249,10 +249,12 @@ def v_1dgen_arma11_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dgenArma11Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DGEN_ARMA11_METADATA)
     params = execution.params(params)
     cargs = v_1dgen_arma11_cargs(params, execution)
     ret = v_1dgen_arma11_outputs(params, execution)
@@ -306,8 +308,6 @@ def v_1dgen_arma11(
     Returns:
         NamedTuple of outputs (described in `V1dgenArma11Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DGEN_ARMA11_METADATA)
     params = v_1dgen_arma11_params(
         length=length,
         length_alt=length_alt,
@@ -322,7 +322,7 @@ def v_1dgen_arma11(
         arma31=arma31,
         arma51=arma51,
     )
-    return v_1dgen_arma11_execute(params, execution)
+    return v_1dgen_arma11_execute(params, runner)
 
 
 __all__ = [
@@ -330,8 +330,6 @@ __all__ = [
     "V1dgenArma11Parameters",
     "V_1DGEN_ARMA11_METADATA",
     "v_1dgen_arma11",
-    "v_1dgen_arma11_cargs",
     "v_1dgen_arma11_execute",
-    "v_1dgen_arma11_outputs",
     "v_1dgen_arma11_params",
 ]

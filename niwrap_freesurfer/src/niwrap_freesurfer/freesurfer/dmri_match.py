@@ -196,7 +196,7 @@ def dmri_match_outputs(
 
 def dmri_match_execute(
     params: DmriMatchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriMatchOutputs:
     """
     Tool for matching diffusion MRI parcellations.
@@ -207,10 +207,12 @@ def dmri_match_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriMatchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_MATCH_METADATA)
     params = execution.params(params)
     cargs = dmri_match_cargs(params, execution)
     ret = dmri_match_outputs(params, execution)
@@ -257,8 +259,6 @@ def dmri_match(
     Returns:
         NamedTuple of outputs (described in `DmriMatchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_MATCH_METADATA)
     params = dmri_match_params(
         parcellation1=parcellation1,
         parcellation2=parcellation2,
@@ -272,7 +272,7 @@ def dmri_match(
         inter_hemi_ratio_removal=inter_hemi_ratio_removal,
         output=output,
     )
-    return dmri_match_execute(params, execution)
+    return dmri_match_execute(params, runner)
 
 
 __all__ = [
@@ -280,8 +280,6 @@ __all__ = [
     "DmriMatchOutputs",
     "DmriMatchParameters",
     "dmri_match",
-    "dmri_match_cargs",
     "dmri_match_execute",
-    "dmri_match_outputs",
     "dmri_match_params",
 ]

@@ -238,7 +238,7 @@ def sh2power_outputs(
 
 def sh2power_execute(
     params: Sh2powerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Sh2powerOutputs:
     """
     Compute the total power of a spherical harmonics image.
@@ -260,10 +260,12 @@ def sh2power_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Sh2powerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SH2POWER_METADATA)
     params = execution.params(params)
     cargs = sh2power_cargs(params, execution)
     ret = sh2power_outputs(params, execution)
@@ -324,8 +326,6 @@ def sh2power(
     Returns:
         NamedTuple of outputs (described in `Sh2powerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SH2POWER_METADATA)
     params = sh2power_params(
         spectrum=spectrum,
         info=info,
@@ -339,7 +339,7 @@ def sh2power(
         sh=sh,
         power=power,
     )
-    return sh2power_execute(params, execution)
+    return sh2power_execute(params, runner)
 
 
 __all__ = [
@@ -348,10 +348,7 @@ __all__ = [
     "Sh2powerOutputs",
     "Sh2powerParameters",
     "sh2power",
-    "sh2power_cargs",
-    "sh2power_config_cargs",
     "sh2power_config_params",
     "sh2power_execute",
-    "sh2power_outputs",
     "sh2power_params",
 ]

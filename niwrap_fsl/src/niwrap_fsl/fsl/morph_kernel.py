@@ -125,7 +125,7 @@ def morph_kernel_outputs(
 
 def morph_kernel_execute(
     params: MorphKernelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphKernelOutputs:
     """
     Tool to generate morphological kernels.
@@ -136,10 +136,12 @@ def morph_kernel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphKernelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_KERNEL_METADATA)
     params = execution.params(params)
     cargs = morph_kernel_cargs(params, execution)
     ret = morph_kernel_outputs(params, execution)
@@ -166,13 +168,11 @@ def morph_kernel(
     Returns:
         NamedTuple of outputs (described in `MorphKernelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_KERNEL_METADATA)
     params = morph_kernel_params(
         cube_side_length=cube_side_length,
         sphere_radius=sphere_radius,
     )
-    return morph_kernel_execute(params, execution)
+    return morph_kernel_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MorphKernelOutputs",
     "MorphKernelParameters",
     "morph_kernel",
-    "morph_kernel_cargs",
     "morph_kernel_execute",
-    "morph_kernel_outputs",
     "morph_kernel_params",
 ]

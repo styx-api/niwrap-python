@@ -116,7 +116,7 @@ def check_subject_outputs(
 
 def check_subject_execute(
     params: CheckSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CheckSubjectOutputs:
     """
     Checks a subject directory for the existence of a surf directory.
@@ -127,10 +127,12 @@ def check_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CheckSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CHECK_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = check_subject_cargs(params, execution)
     ret = check_subject_outputs(params, execution)
@@ -155,12 +157,10 @@ def check_subject(
     Returns:
         NamedTuple of outputs (described in `CheckSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CHECK_SUBJECT_METADATA)
     params = check_subject_params(
         subject_dir=subject_dir,
     )
-    return check_subject_execute(params, execution)
+    return check_subject_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "CheckSubjectOutputs",
     "CheckSubjectParameters",
     "check_subject",
-    "check_subject_cargs",
     "check_subject_execute",
-    "check_subject_outputs",
     "check_subject_params",
 ]

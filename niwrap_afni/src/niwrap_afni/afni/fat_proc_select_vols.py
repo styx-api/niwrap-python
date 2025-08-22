@@ -185,7 +185,7 @@ def fat_proc_select_vols_outputs(
 
 def fat_proc_select_vols_execute(
     params: FatProcSelectVolsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcSelectVolsOutputs:
     """
     Tool for building a selector string for AFNI subbricks and/or 1D text files.
@@ -196,10 +196,12 @@ def fat_proc_select_vols_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcSelectVolsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_SELECT_VOLS_METADATA)
     params = execution.params(params)
     cargs = fat_proc_select_vols_cargs(params, execution)
     ret = fat_proc_select_vols_outputs(params, execution)
@@ -242,8 +244,6 @@ def fat_proc_select_vols(
     Returns:
         NamedTuple of outputs (described in `FatProcSelectVolsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_SELECT_VOLS_METADATA)
     params = fat_proc_select_vols_params(
         dwi_input=dwi_input,
         img_input=img_input,
@@ -254,7 +254,7 @@ def fat_proc_select_vols(
         workdir=workdir,
         no_cmd_out=no_cmd_out,
     )
-    return fat_proc_select_vols_execute(params, execution)
+    return fat_proc_select_vols_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "FatProcSelectVolsOutputs",
     "FatProcSelectVolsParameters",
     "fat_proc_select_vols",
-    "fat_proc_select_vols_cargs",
     "fat_proc_select_vols_execute",
-    "fat_proc_select_vols_outputs",
     "fat_proc_select_vols_params",
 ]

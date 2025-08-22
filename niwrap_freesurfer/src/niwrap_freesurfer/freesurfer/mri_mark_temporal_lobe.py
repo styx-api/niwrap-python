@@ -139,7 +139,7 @@ def mri_mark_temporal_lobe_outputs(
 
 def mri_mark_temporal_lobe_execute(
     params: MriMarkTemporalLobeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMarkTemporalLobeOutputs:
     """
     A tool for marking the temporal lobe in MRI images.
@@ -150,10 +150,12 @@ def mri_mark_temporal_lobe_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMarkTemporalLobeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MARK_TEMPORAL_LOBE_METADATA)
     params = execution.params(params)
     cargs = mri_mark_temporal_lobe_cargs(params, execution)
     ret = mri_mark_temporal_lobe_outputs(params, execution)
@@ -184,15 +186,13 @@ def mri_mark_temporal_lobe(
     Returns:
         NamedTuple of outputs (described in `MriMarkTemporalLobeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MARK_TEMPORAL_LOBE_METADATA)
     params = mri_mark_temporal_lobe_params(
         spacing=spacing,
         use_gradient=use_gradient,
         subjects=subjects,
         output_file=output_file,
     )
-    return mri_mark_temporal_lobe_execute(params, execution)
+    return mri_mark_temporal_lobe_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "MriMarkTemporalLobeOutputs",
     "MriMarkTemporalLobeParameters",
     "mri_mark_temporal_lobe",
-    "mri_mark_temporal_lobe_cargs",
     "mri_mark_temporal_lobe_execute",
-    "mri_mark_temporal_lobe_outputs",
     "mri_mark_temporal_lobe_params",
 ]

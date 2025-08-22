@@ -262,7 +262,7 @@ def v_3d_undump_outputs(
 
 def v_3d_undump_execute(
     params: V3dUndumpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dUndumpOutputs:
     """
     Assembles a 3D dataset from an ASCII list of coordinates and optionally values.
@@ -273,10 +273,12 @@ def v_3d_undump_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dUndumpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_UNDUMP_METADATA)
     params = execution.params(params)
     cargs = v_3d_undump_cargs(params, execution)
     ret = v_3d_undump_outputs(params, execution)
@@ -343,8 +345,6 @@ def v_3d_undump(
     Returns:
         NamedTuple of outputs (described in `V3dUndumpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_UNDUMP_METADATA)
     params = v_3d_undump_params(
         input_files=input_files,
         prefix=prefix,
@@ -363,7 +363,7 @@ def v_3d_undump(
         roimask=roimask,
         allow_nan=allow_nan,
     )
-    return v_3d_undump_execute(params, execution)
+    return v_3d_undump_execute(params, runner)
 
 
 __all__ = [
@@ -371,8 +371,6 @@ __all__ = [
     "V3dUndumpParameters",
     "V_3D_UNDUMP_METADATA",
     "v_3d_undump",
-    "v_3d_undump_cargs",
     "v_3d_undump_execute",
-    "v_3d_undump_outputs",
     "v_3d_undump_params",
 ]

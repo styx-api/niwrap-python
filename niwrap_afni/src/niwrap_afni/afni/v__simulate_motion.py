@@ -245,7 +245,7 @@ def v__simulate_motion_outputs(
 
 def v__simulate_motion_execute(
     params: VSimulateMotionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSimulateMotionOutputs:
     """
     Create simulated motion time series in an EPI dataset based on the provided
@@ -257,10 +257,12 @@ def v__simulate_motion_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSimulateMotionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SIMULATE_MOTION_METADATA)
     params = execution.params(params)
     cargs = v__simulate_motion_cargs(params, execution)
     ret = v__simulate_motion_outputs(params, execution)
@@ -318,8 +320,6 @@ def v__simulate_motion(
     Returns:
         NamedTuple of outputs (described in `VSimulateMotionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SIMULATE_MOTION_METADATA)
     params = v__simulate_motion_params(
         epi=epi,
         motion_file=motion_file,
@@ -338,7 +338,7 @@ def v__simulate_motion(
         todo=todo,
         ver=ver,
     )
-    return v__simulate_motion_execute(params, execution)
+    return v__simulate_motion_execute(params, runner)
 
 
 __all__ = [
@@ -346,8 +346,6 @@ __all__ = [
     "VSimulateMotionParameters",
     "V__SIMULATE_MOTION_METADATA",
     "v__simulate_motion",
-    "v__simulate_motion_cargs",
     "v__simulate_motion_execute",
-    "v__simulate_motion_outputs",
     "v__simulate_motion_params",
 ]

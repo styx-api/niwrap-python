@@ -291,7 +291,7 @@ def ants_neuroimaging_battery_outputs(
 
 def ants_neuroimaging_battery_execute(
     params: AntsNeuroimagingBatteryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsNeuroimagingBatteryOutputs:
     """
     Align MR modalities to a common within-subject (and optional template) space.
@@ -302,10 +302,12 @@ def ants_neuroimaging_battery_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsNeuroimagingBatteryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_NEUROIMAGING_BATTERY_METADATA)
     params = execution.params(params)
     cargs = ants_neuroimaging_battery_cargs(params, execution)
     ret = ants_neuroimaging_battery_outputs(params, execution)
@@ -370,8 +372,6 @@ def ants_neuroimaging_battery(
     Returns:
         NamedTuple of outputs (described in `AntsNeuroimagingBatteryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_NEUROIMAGING_BATTERY_METADATA)
     params = ants_neuroimaging_battery_params(
         input_directory=input_directory,
         output_directory=output_directory,
@@ -393,7 +393,7 @@ def ants_neuroimaging_battery(
         help_=help_,
         info_only=info_only,
     )
-    return ants_neuroimaging_battery_execute(params, execution)
+    return ants_neuroimaging_battery_execute(params, runner)
 
 
 __all__ = [
@@ -401,8 +401,6 @@ __all__ = [
     "AntsNeuroimagingBatteryOutputs",
     "AntsNeuroimagingBatteryParameters",
     "ants_neuroimaging_battery",
-    "ants_neuroimaging_battery_cargs",
     "ants_neuroimaging_battery_execute",
-    "ants_neuroimaging_battery_outputs",
     "ants_neuroimaging_battery_params",
 ]

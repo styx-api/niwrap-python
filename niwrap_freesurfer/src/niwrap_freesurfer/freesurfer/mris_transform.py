@@ -159,7 +159,7 @@ def mris_transform_outputs(
 
 def mris_transform_execute(
     params: MrisTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisTransformOutputs:
     """
     A tool to transform surfaces from one space to another using image transforms.
@@ -170,10 +170,12 @@ def mris_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = mris_transform_cargs(params, execution)
     ret = mris_transform_outputs(params, execution)
@@ -211,8 +213,6 @@ def mris_transform(
     Returns:
         NamedTuple of outputs (described in `MrisTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_TRANSFORM_METADATA)
     params = mris_transform_params(
         input_surface=input_surface,
         transform=transform,
@@ -221,7 +221,7 @@ def mris_transform(
         trx_dst=trx_dst,
         is_inverse=is_inverse,
     )
-    return mris_transform_execute(params, execution)
+    return mris_transform_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "MrisTransformOutputs",
     "MrisTransformParameters",
     "mris_transform",
-    "mris_transform_cargs",
     "mris_transform_execute",
-    "mris_transform_outputs",
     "mris_transform_params",
 ]

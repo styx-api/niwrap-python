@@ -280,7 +280,7 @@ def metric_merge_outputs(
 
 def metric_merge_execute(
     params: MetricMergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricMergeOutputs:
     """
     Merge metric files into a new file.
@@ -301,10 +301,12 @@ def metric_merge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricMergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_MERGE_METADATA)
     params = execution.params(params)
     cargs = metric_merge_cargs(params, execution)
     ret = metric_merge_outputs(params, execution)
@@ -341,13 +343,11 @@ def metric_merge(
     Returns:
         NamedTuple of outputs (described in `MetricMergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_MERGE_METADATA)
     params = metric_merge_params(
         metric_out=metric_out,
         metric=metric,
     )
-    return metric_merge_execute(params, execution)
+    return metric_merge_execute(params, runner)
 
 
 __all__ = [
@@ -358,14 +358,9 @@ __all__ = [
     "MetricMergeParameters",
     "MetricMergeUpToParameters",
     "metric_merge",
-    "metric_merge_cargs",
-    "metric_merge_column_cargs",
     "metric_merge_column_params",
     "metric_merge_execute",
-    "metric_merge_metric_cargs",
     "metric_merge_metric_params",
-    "metric_merge_outputs",
     "metric_merge_params",
-    "metric_merge_up_to_cargs",
     "metric_merge_up_to_params",
 ]

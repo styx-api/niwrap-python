@@ -154,7 +154,7 @@ def read_matlab_files_py_outputs(
 
 def read_matlab_files_py_execute(
     params: ReadMatlabFilesPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReadMatlabFilesPyOutputs:
     """
     Describe or convert MATLAB files (.mat) to 1D format.
@@ -165,10 +165,12 @@ def read_matlab_files_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReadMatlabFilesPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(READ_MATLAB_FILES_PY_METADATA)
     params = execution.params(params)
     cargs = read_matlab_files_py_cargs(params, execution)
     ret = read_matlab_files_py_outputs(params, execution)
@@ -203,8 +205,6 @@ def read_matlab_files_py(
     Returns:
         NamedTuple of outputs (described in `ReadMatlabFilesPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(READ_MATLAB_FILES_PY_METADATA)
     params = read_matlab_files_py_params(
         infiles=infiles,
         prefix=prefix,
@@ -213,7 +213,7 @@ def read_matlab_files_py(
         history=history,
         version=version,
     )
-    return read_matlab_files_py_execute(params, execution)
+    return read_matlab_files_py_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "ReadMatlabFilesPyOutputs",
     "ReadMatlabFilesPyParameters",
     "read_matlab_files_py",
-    "read_matlab_files_py_cargs",
     "read_matlab_files_py_execute",
-    "read_matlab_files_py_outputs",
     "read_matlab_files_py_params",
 ]

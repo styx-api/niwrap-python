@@ -138,7 +138,7 @@ def metadata_string_replace_outputs(
 
 def metadata_string_replace_execute(
     params: MetadataStringReplaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetadataStringReplaceOutputs:
     """
     Replace a string in all metadata of a file.
@@ -152,10 +152,12 @@ def metadata_string_replace_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetadataStringReplaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METADATA_STRING_REPLACE_METADATA)
     params = execution.params(params)
     cargs = metadata_string_replace_cargs(params, execution)
     ret = metadata_string_replace_outputs(params, execution)
@@ -191,8 +193,6 @@ def metadata_string_replace(
     Returns:
         NamedTuple of outputs (described in `MetadataStringReplaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METADATA_STRING_REPLACE_METADATA)
     params = metadata_string_replace_params(
         input_file=input_file,
         find_string=find_string,
@@ -200,7 +200,7 @@ def metadata_string_replace(
         output_file=output_file,
         opt_case_insensitive=opt_case_insensitive,
     )
-    return metadata_string_replace_execute(params, execution)
+    return metadata_string_replace_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "MetadataStringReplaceOutputs",
     "MetadataStringReplaceParameters",
     "metadata_string_replace",
-    "metadata_string_replace_cargs",
     "metadata_string_replace_execute",
-    "metadata_string_replace_outputs",
     "metadata_string_replace_params",
 ]

@@ -189,7 +189,7 @@ def v_3d_cm_outputs(
 
 def v_3d_cm_execute(
     params: V3dCmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dCmOutputs:
     """
     Tool for computing the center of mass of a dataset.
@@ -200,10 +200,12 @@ def v_3d_cm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dCmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CM_METADATA)
     params = execution.params(params)
     cargs = v_3d_cm_cargs(params, execution)
     ret = v_3d_cm_outputs(params, execution)
@@ -253,8 +255,6 @@ def v_3d_cm(
     Returns:
         NamedTuple of outputs (described in `V3dCmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CM_METADATA)
     params = v_3d_cm_params(
         dset=dset,
         mask=mask,
@@ -266,7 +266,7 @@ def v_3d_cm(
         icent=icent,
         dcent=dcent,
     )
-    return v_3d_cm_execute(params, execution)
+    return v_3d_cm_execute(params, runner)
 
 
 __all__ = [
@@ -274,8 +274,6 @@ __all__ = [
     "V3dCmParameters",
     "V_3D_CM_METADATA",
     "v_3d_cm",
-    "v_3d_cm_cargs",
     "v_3d_cm_execute",
-    "v_3d_cm_outputs",
     "v_3d_cm_params",
 ]

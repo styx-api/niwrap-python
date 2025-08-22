@@ -135,7 +135,7 @@ def mris_segmentation_stats_outputs(
 
 def mris_segmentation_stats_execute(
     params: MrisSegmentationStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSegmentationStatsOutputs:
     """
     Tool for calculating segmentation statistics.
@@ -146,10 +146,12 @@ def mris_segmentation_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSegmentationStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SEGMENTATION_STATS_METADATA)
     params = execution.params(params)
     cargs = mris_segmentation_stats_cargs(params, execution)
     ret = mris_segmentation_stats_outputs(params, execution)
@@ -180,15 +182,13 @@ def mris_segmentation_stats(
     Returns:
         NamedTuple of outputs (described in `MrisSegmentationStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SEGMENTATION_STATS_METADATA)
     params = mris_segmentation_stats_params(
         overlay_name=overlay_name,
         segmentation_label_name=segmentation_label_name,
         subjects=subjects,
         roc_file=roc_file,
     )
-    return mris_segmentation_stats_execute(params, execution)
+    return mris_segmentation_stats_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MrisSegmentationStatsOutputs",
     "MrisSegmentationStatsParameters",
     "mris_segmentation_stats",
-    "mris_segmentation_stats_cargs",
     "mris_segmentation_stats_execute",
-    "mris_segmentation_stats_outputs",
     "mris_segmentation_stats_params",
 ]

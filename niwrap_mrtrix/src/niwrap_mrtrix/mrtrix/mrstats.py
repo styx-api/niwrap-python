@@ -308,7 +308,7 @@ def mrstats_outputs(
 
 def mrstats_execute(
     params: MrstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrstatsOutputs:
     """
     Compute images statistics.
@@ -325,10 +325,12 @@ def mrstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRSTATS_METADATA)
     params = execution.params(params)
     cargs = mrstats_cargs(params, execution)
     ret = mrstats_outputs(params, execution)
@@ -394,8 +396,6 @@ def mrstats(
     Returns:
         NamedTuple of outputs (described in `MrstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRSTATS_METADATA)
     params = mrstats_params(
         output=output,
         mask=mask,
@@ -411,7 +411,7 @@ def mrstats(
         version=version,
         image=image,
     )
-    return mrstats_execute(params, execution)
+    return mrstats_execute(params, runner)
 
 
 __all__ = [
@@ -421,12 +421,8 @@ __all__ = [
     "MrstatsOutputs",
     "MrstatsParameters",
     "mrstats",
-    "mrstats_cargs",
-    "mrstats_config_cargs",
     "mrstats_config_params",
     "mrstats_execute",
-    "mrstats_output_cargs",
     "mrstats_output_params",
-    "mrstats_outputs",
     "mrstats_params",
 ]

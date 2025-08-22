@@ -159,7 +159,7 @@ def djpeg_outputs(
 
 def djpeg_execute(
     params: DjpegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DjpegOutputs:
     """
     Decompress a JPEG file to an image file.
@@ -170,10 +170,12 @@ def djpeg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DjpegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DJPEG_METADATA)
     params = execution.params(params)
     cargs = djpeg_cargs(params, execution)
     ret = djpeg_outputs(params, execution)
@@ -210,8 +212,6 @@ def djpeg(
     Returns:
         NamedTuple of outputs (described in `DjpegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DJPEG_METADATA)
     params = djpeg_params(
         input_file=input_file,
         output_file=output_file,
@@ -221,7 +221,7 @@ def djpeg(
         pseudo_pixel_ratio=pseudo_pixel_ratio,
         crop_region=crop_region,
     )
-    return djpeg_execute(params, execution)
+    return djpeg_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "DjpegOutputs",
     "DjpegParameters",
     "djpeg",
-    "djpeg_cargs",
     "djpeg_execute",
-    "djpeg_outputs",
     "djpeg_params",
 ]

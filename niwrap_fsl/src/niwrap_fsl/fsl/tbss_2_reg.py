@@ -135,7 +135,7 @@ def tbss_2_reg_outputs(
 
 def tbss_2_reg_execute(
     params: Tbss2RegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tbss2RegOutputs:
     """
     TBSS utility for target selection and registration for Tract-Based Spatial
@@ -147,10 +147,12 @@ def tbss_2_reg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tbss2RegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_2_REG_METADATA)
     params = execution.params(params)
     cargs = tbss_2_reg_cargs(params, execution)
     ret = tbss_2_reg_outputs(params, execution)
@@ -182,14 +184,12 @@ def tbss_2_reg(
     Returns:
         NamedTuple of outputs (described in `Tbss2RegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_2_REG_METADATA)
     params = tbss_2_reg_params(
         use_fmrib58_fa_1mm=use_fmrib58_fa_1mm,
         target_image=target_image,
         find_best_target=find_best_target,
     )
-    return tbss_2_reg_execute(params, execution)
+    return tbss_2_reg_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "Tbss2RegOutputs",
     "Tbss2RegParameters",
     "tbss_2_reg",
-    "tbss_2_reg_cargs",
     "tbss_2_reg_execute",
-    "tbss_2_reg_outputs",
     "tbss_2_reg_params",
 ]

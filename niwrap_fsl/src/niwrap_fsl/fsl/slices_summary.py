@@ -174,7 +174,7 @@ def slices_summary_outputs(
 
 def slices_summary_execute(
     params: SlicesSummaryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlicesSummaryOutputs:
     """
     Generate summary PNG images for 4D neuroimaging data.
@@ -185,10 +185,12 @@ def slices_summary_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlicesSummaryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICES_SUMMARY_METADATA)
     params = execution.params(params)
     cargs = slices_summary_cargs(params, execution)
     ret = slices_summary_outputs(params, execution)
@@ -234,8 +236,6 @@ def slices_summary(
     Returns:
         NamedTuple of outputs (described in `SlicesSummaryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICES_SUMMARY_METADATA)
     params = slices_summary_params(
         v_4d_input_file=v_4d_input_file,
         threshold=threshold,
@@ -248,7 +248,7 @@ def slices_summary(
         output_png=output_png,
         timepoints=timepoints,
     )
-    return slices_summary_execute(params, execution)
+    return slices_summary_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "SlicesSummaryOutputs",
     "SlicesSummaryParameters",
     "slices_summary",
-    "slices_summary_cargs",
     "slices_summary_execute",
-    "slices_summary_outputs",
     "slices_summary_params",
 ]

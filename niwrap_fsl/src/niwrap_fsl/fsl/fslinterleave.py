@@ -136,7 +136,7 @@ def fslinterleave_outputs(
 
 def fslinterleave_execute(
     params: FslinterleaveParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslinterleaveOutputs:
     """
     Interleaves two input images slice-by-slice to produce an output image.
@@ -147,10 +147,12 @@ def fslinterleave_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslinterleaveOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLINTERLEAVE_METADATA)
     params = execution.params(params)
     cargs = fslinterleave_cargs(params, execution)
     ret = fslinterleave_outputs(params, execution)
@@ -181,15 +183,13 @@ def fslinterleave(
     Returns:
         NamedTuple of outputs (described in `FslinterleaveOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLINTERLEAVE_METADATA)
     params = fslinterleave_params(
         infile1=infile1,
         infile2=infile2,
         outfile=outfile,
         reverse_slice_order_flag=reverse_slice_order_flag,
     )
-    return fslinterleave_execute(params, execution)
+    return fslinterleave_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "FslinterleaveOutputs",
     "FslinterleaveParameters",
     "fslinterleave",
-    "fslinterleave_cargs",
     "fslinterleave_execute",
-    "fslinterleave_outputs",
     "fslinterleave_params",
 ]

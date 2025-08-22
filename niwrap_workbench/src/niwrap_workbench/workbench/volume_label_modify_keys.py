@@ -142,7 +142,7 @@ def volume_label_modify_keys_outputs(
 
 def volume_label_modify_keys_execute(
     params: VolumeLabelModifyKeysParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
     """
     Change key values in a volume label file.
@@ -167,10 +167,12 @@ def volume_label_modify_keys_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelModifyKeysOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_LABEL_MODIFY_KEYS_METADATA)
     params = execution.params(params)
     cargs = volume_label_modify_keys_cargs(params, execution)
     ret = volume_label_modify_keys_outputs(params, execution)
@@ -216,15 +218,13 @@ def volume_label_modify_keys(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelModifyKeysOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_LABEL_MODIFY_KEYS_METADATA)
     params = volume_label_modify_keys_params(
         volume_in=volume_in,
         remap_file=remap_file,
         volume_out=volume_out,
         opt_subvolume_subvolume=opt_subvolume_subvolume,
     )
-    return volume_label_modify_keys_execute(params, execution)
+    return volume_label_modify_keys_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "VolumeLabelModifyKeysOutputs",
     "VolumeLabelModifyKeysParameters",
     "volume_label_modify_keys",
-    "volume_label_modify_keys_cargs",
     "volume_label_modify_keys_execute",
-    "volume_label_modify_keys_outputs",
     "volume_label_modify_keys_params",
 ]

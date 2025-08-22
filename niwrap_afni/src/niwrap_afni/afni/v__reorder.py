@@ -158,7 +158,7 @@ def v__reorder_outputs(
 
 def v__reorder_execute(
     params: VReorderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VReorderOutputs:
     """
     Reorder sub-bricks of a dataset based on event mapping. Works similarly to the
@@ -170,10 +170,12 @@ def v__reorder_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VReorderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__REORDER_METADATA)
     params = execution.params(params)
     cargs = v__reorder_cargs(params, execution)
     ret = v__reorder_outputs(params, execution)
@@ -211,8 +213,6 @@ def v__reorder(
     Returns:
         NamedTuple of outputs (described in `VReorderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__REORDER_METADATA)
     params = v__reorder_params(
         input_dataset=input_dataset,
         mapfile=mapfile,
@@ -222,7 +222,7 @@ def v__reorder(
         test=test,
         help_=help_,
     )
-    return v__reorder_execute(params, execution)
+    return v__reorder_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "VReorderParameters",
     "V__REORDER_METADATA",
     "v__reorder",
-    "v__reorder_cargs",
     "v__reorder_execute",
-    "v__reorder_outputs",
     "v__reorder_params",
 ]

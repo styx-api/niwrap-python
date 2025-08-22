@@ -382,7 +382,7 @@ def v_3d_anova2_outputs(
 
 def v_3d_anova2_execute(
     params: V3dAnova2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAnova2Outputs:
     """
     This program performs a two-factor Analysis of Variance (ANOVA) on 3D datasets.
@@ -393,10 +393,12 @@ def v_3d_anova2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAnova2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ANOVA2_METADATA)
     params = execution.params(params)
     cargs = v_3d_anova2_cargs(params, execution)
     ret = v_3d_anova2_outputs(params, execution)
@@ -475,8 +477,6 @@ def v_3d_anova2(
     Returns:
         NamedTuple of outputs (described in `V3dAnova2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ANOVA2_METADATA)
     params = v_3d_anova2_params(
         type_=type_,
         alevels=alevels,
@@ -503,7 +503,7 @@ def v_3d_anova2(
         ok=ok,
         assume_sph=assume_sph,
     )
-    return v_3d_anova2_execute(params, execution)
+    return v_3d_anova2_execute(params, runner)
 
 
 __all__ = [
@@ -511,8 +511,6 @@ __all__ = [
     "V3dAnova2Parameters",
     "V_3D_ANOVA2_METADATA",
     "v_3d_anova2",
-    "v_3d_anova2_cargs",
     "v_3d_anova2_execute",
-    "v_3d_anova2_outputs",
     "v_3d_anova2_params",
 ]

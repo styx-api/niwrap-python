@@ -376,7 +376,7 @@ def cifti_parcellate_outputs(
 
 def cifti_parcellate_execute(
     params: CiftiParcellateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiParcellateOutputs:
     """
     Parcellate a cifti file.
@@ -423,10 +423,12 @@ def cifti_parcellate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiParcellateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_PARCELLATE_METADATA)
     params = execution.params(params)
     cargs = cifti_parcellate_cargs(params, execution)
     ret = cifti_parcellate_outputs(params, execution)
@@ -520,8 +522,6 @@ def cifti_parcellate(
     Returns:
         NamedTuple of outputs (described in `CiftiParcellateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_PARCELLATE_METADATA)
     params = cifti_parcellate_params(
         cifti_in=cifti_in,
         cifti_label=cifti_label,
@@ -537,7 +537,7 @@ def cifti_parcellate(
         opt_legacy_mode=opt_legacy_mode,
         opt_include_empty=opt_include_empty,
     )
-    return cifti_parcellate_execute(params, execution)
+    return cifti_parcellate_execute(params, runner)
 
 
 __all__ = [
@@ -547,12 +547,8 @@ __all__ = [
     "CiftiParcellateParameters",
     "CiftiParcellateSpatialWeightsParameters",
     "cifti_parcellate",
-    "cifti_parcellate_cargs",
-    "cifti_parcellate_exclude_outliers_cargs",
     "cifti_parcellate_exclude_outliers_params",
     "cifti_parcellate_execute",
-    "cifti_parcellate_outputs",
     "cifti_parcellate_params",
-    "cifti_parcellate_spatial_weights_cargs",
     "cifti_parcellate_spatial_weights_params",
 ]

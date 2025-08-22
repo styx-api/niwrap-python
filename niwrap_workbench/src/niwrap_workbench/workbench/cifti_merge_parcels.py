@@ -177,7 +177,7 @@ def cifti_merge_parcels_outputs(
 
 def cifti_merge_parcels_execute(
     params: CiftiMergeParcelsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiMergeParcelsOutputs:
     """
     Merge cifti files along parcels dimension.
@@ -193,10 +193,12 @@ def cifti_merge_parcels_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiMergeParcelsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_MERGE_PARCELS_METADATA)
     params = execution.params(params)
     cargs = cifti_merge_parcels_cargs(params, execution)
     ret = cifti_merge_parcels_outputs(params, execution)
@@ -230,14 +232,12 @@ def cifti_merge_parcels(
     Returns:
         NamedTuple of outputs (described in `CiftiMergeParcelsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_MERGE_PARCELS_METADATA)
     params = cifti_merge_parcels_params(
         direction=direction,
         cifti_out=cifti_out,
         cifti=cifti,
     )
-    return cifti_merge_parcels_execute(params, execution)
+    return cifti_merge_parcels_execute(params, runner)
 
 
 __all__ = [
@@ -246,10 +246,7 @@ __all__ = [
     "CiftiMergeParcelsOutputs",
     "CiftiMergeParcelsParameters",
     "cifti_merge_parcels",
-    "cifti_merge_parcels_cargs",
-    "cifti_merge_parcels_cifti_cargs",
     "cifti_merge_parcels_cifti_params",
     "cifti_merge_parcels_execute",
-    "cifti_merge_parcels_outputs",
     "cifti_merge_parcels_params",
 ]

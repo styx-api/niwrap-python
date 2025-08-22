@@ -239,7 +239,7 @@ def mris_multimodal_surface_placement_outputs(
 
 def mris_multimodal_surface_placement_execute(
     params: MrisMultimodalSurfacePlacementParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMultimodalSurfacePlacementOutputs:
     """
     FreeSurfer command for multimodal surface placement.
@@ -250,10 +250,12 @@ def mris_multimodal_surface_placement_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMultimodalSurfacePlacementOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA)
     params = execution.params(params)
     cargs = mris_multimodal_surface_placement_cargs(params, execution)
     ret = mris_multimodal_surface_placement_outputs(params, execution)
@@ -308,8 +310,6 @@ def mris_multimodal_surface_placement(
     Returns:
         NamedTuple of outputs (described in `MrisMultimodalSurfacePlacementOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MULTIMODAL_SURFACE_PLACEMENT_METADATA)
     params = mris_multimodal_surface_placement_params(
         input_surface=input_surface,
         output_surface=output_surface,
@@ -328,7 +328,7 @@ def mris_multimodal_surface_placement(
         flair_image=flair_image,
         min_max=min_max,
     )
-    return mris_multimodal_surface_placement_execute(params, execution)
+    return mris_multimodal_surface_placement_execute(params, runner)
 
 
 __all__ = [
@@ -336,8 +336,6 @@ __all__ = [
     "MrisMultimodalSurfacePlacementOutputs",
     "MrisMultimodalSurfacePlacementParameters",
     "mris_multimodal_surface_placement",
-    "mris_multimodal_surface_placement_cargs",
     "mris_multimodal_surface_placement_execute",
-    "mris_multimodal_surface_placement_outputs",
     "mris_multimodal_surface_placement_params",
 ]

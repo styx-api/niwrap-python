@@ -145,7 +145,7 @@ def map_all_labels_outputs(
 
 def map_all_labels_execute(
     params: MapAllLabelsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MapAllLabelsOutputs:
     """
     Tool for mapping labels onto subject surfaces.
@@ -156,10 +156,12 @@ def map_all_labels_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MapAllLabelsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAP_ALL_LABELS_METADATA)
     params = execution.params(params)
     cargs = map_all_labels_cargs(params, execution)
     ret = map_all_labels_outputs(params, execution)
@@ -194,8 +196,6 @@ def map_all_labels(
     Returns:
         NamedTuple of outputs (described in `MapAllLabelsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAP_ALL_LABELS_METADATA)
     params = map_all_labels_params(
         which=which,
         fname=fname,
@@ -204,7 +204,7 @@ def map_all_labels(
         subjects=subjects,
         output=output,
     )
-    return map_all_labels_execute(params, execution)
+    return map_all_labels_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "MapAllLabelsOutputs",
     "MapAllLabelsParameters",
     "map_all_labels",
-    "map_all_labels_cargs",
     "map_all_labels_execute",
-    "map_all_labels_outputs",
     "map_all_labels_params",
 ]

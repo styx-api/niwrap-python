@@ -197,7 +197,7 @@ def v__align_partial_oblique_outputs(
 
 def v__align_partial_oblique_execute(
     params: VAlignPartialObliqueParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAlignPartialObliqueOutputs:
     """
     A script to align a full coverage T1 weighted non-oblique dataset to match a
@@ -210,10 +210,12 @@ def v__align_partial_oblique_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAlignPartialObliqueOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ALIGN_PARTIAL_OBLIQUE_METADATA)
     params = execution.params(params)
     cargs = v__align_partial_oblique_cargs(params, execution)
     ret = v__align_partial_oblique_outputs(params, execution)
@@ -260,8 +262,6 @@ def v__align_partial_oblique(
     Returns:
         NamedTuple of outputs (described in `VAlignPartialObliqueOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ALIGN_PARTIAL_OBLIQUE_METADATA)
     params = v__align_partial_oblique_params(
         base=base,
         input_=input_,
@@ -273,7 +273,7 @@ def v__align_partial_oblique(
         dy=dy,
         dz=dz,
     )
-    return v__align_partial_oblique_execute(params, execution)
+    return v__align_partial_oblique_execute(params, runner)
 
 
 __all__ = [
@@ -281,8 +281,6 @@ __all__ = [
     "VAlignPartialObliqueParameters",
     "V__ALIGN_PARTIAL_OBLIQUE_METADATA",
     "v__align_partial_oblique",
-    "v__align_partial_oblique_cargs",
     "v__align_partial_oblique_execute",
-    "v__align_partial_oblique_outputs",
     "v__align_partial_oblique_params",
 ]

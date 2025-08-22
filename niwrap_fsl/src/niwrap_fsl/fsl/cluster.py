@@ -358,7 +358,7 @@ def cluster_outputs(
 
 def cluster_execute(
     params: ClusterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ClusterOutputs:
     """
     Uses FSL cluster to perform clustering on statistical output.
@@ -369,10 +369,12 @@ def cluster_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ClusterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CLUSTER_METADATA)
     params = execution.params(params)
     cargs = cluster_cargs(params, execution)
     ret = cluster_outputs(params, execution)
@@ -472,8 +474,6 @@ def cluster(
     Returns:
         NamedTuple of outputs (described in `ClusterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CLUSTER_METADATA)
     params = cluster_params(
         connectivity=connectivity,
         cope_file=cope_file,
@@ -510,7 +510,7 @@ def cluster(
         warpfield_file=warpfield_file,
         xfm_file=xfm_file,
     )
-    return cluster_execute(params, execution)
+    return cluster_execute(params, runner)
 
 
 __all__ = [
@@ -518,8 +518,6 @@ __all__ = [
     "ClusterOutputs",
     "ClusterParameters",
     "cluster",
-    "cluster_cargs",
     "cluster_execute",
-    "cluster_outputs",
     "cluster_params",
 ]

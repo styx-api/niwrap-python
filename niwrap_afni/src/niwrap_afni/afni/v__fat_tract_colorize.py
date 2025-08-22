@@ -185,7 +185,7 @@ def v__fat_tract_colorize_outputs(
 
 def v__fat_tract_colorize_execute(
     params: VFatTractColorizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VFatTractColorizeOutputs:
     """
     Visualize tractographic output from 3dTrackID, particularly in probabilistic
@@ -197,10 +197,12 @@ def v__fat_tract_colorize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VFatTractColorizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__FAT_TRACT_COLORIZE_METADATA)
     params = execution.params(params)
     cargs = v__fat_tract_colorize_cargs(params, execution)
     ret = v__fat_tract_colorize_outputs(params, execution)
@@ -244,8 +246,6 @@ def v__fat_tract_colorize(
     Returns:
         NamedTuple of outputs (described in `VFatTractColorizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__FAT_TRACT_COLORIZE_METADATA)
     params = v__fat_tract_colorize_params(
         in_fa=in_fa,
         in_v1=in_v1,
@@ -255,7 +255,7 @@ def v__fat_tract_colorize(
         no_view=no_view,
         only_view=only_view,
     )
-    return v__fat_tract_colorize_execute(params, execution)
+    return v__fat_tract_colorize_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "VFatTractColorizeParameters",
     "V__FAT_TRACT_COLORIZE_METADATA",
     "v__fat_tract_colorize",
-    "v__fat_tract_colorize_cargs",
     "v__fat_tract_colorize_execute",
-    "v__fat_tract_colorize_outputs",
     "v__fat_tract_colorize_params",
 ]

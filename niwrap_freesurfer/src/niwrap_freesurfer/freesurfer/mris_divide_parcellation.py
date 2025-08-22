@@ -161,7 +161,7 @@ def mris_divide_parcellation_outputs(
 
 def mris_divide_parcellation_execute(
     params: MrisDivideParcellationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisDivideParcellationOutputs:
     """
     Divides one or more parcellations into divisions perpendicular to the long axis
@@ -173,10 +173,12 @@ def mris_divide_parcellation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDivideParcellationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_DIVIDE_PARCELLATION_METADATA)
     params = execution.params(params)
     cargs = mris_divide_parcellation_cargs(params, execution)
     ret = mris_divide_parcellation_outputs(params, execution)
@@ -215,8 +217,6 @@ def mris_divide_parcellation(
     Returns:
         NamedTuple of outputs (described in `MrisDivideParcellationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_DIVIDE_PARCELLATION_METADATA)
     params = mris_divide_parcellation_params(
         subject=subject,
         hemi=hemi,
@@ -226,7 +226,7 @@ def mris_divide_parcellation(
         scale=scale,
         label_name=label_name,
     )
-    return mris_divide_parcellation_execute(params, execution)
+    return mris_divide_parcellation_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "MrisDivideParcellationOutputs",
     "MrisDivideParcellationParameters",
     "mris_divide_parcellation",
-    "mris_divide_parcellation_cargs",
     "mris_divide_parcellation_execute",
-    "mris_divide_parcellation_outputs",
     "mris_divide_parcellation_params",
 ]

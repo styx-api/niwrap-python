@@ -263,7 +263,7 @@ def surface_resample_outputs(
 
 def surface_resample_execute(
     params: SurfaceResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceResampleOutputs:
     """
     Resample a surface to a different mesh.
@@ -293,10 +293,12 @@ def surface_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = surface_resample_cargs(params, execution)
     ret = surface_resample_outputs(params, execution)
@@ -358,8 +360,6 @@ def surface_resample(
     Returns:
         NamedTuple of outputs (described in `SurfaceResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_RESAMPLE_METADATA)
     params = surface_resample_params(
         surface_in=surface_in,
         current_sphere=current_sphere,
@@ -370,7 +370,7 @@ def surface_resample(
         area_metrics=area_metrics,
         opt_bypass_sphere_check=opt_bypass_sphere_check,
     )
-    return surface_resample_execute(params, execution)
+    return surface_resample_execute(params, runner)
 
 
 __all__ = [
@@ -380,12 +380,8 @@ __all__ = [
     "SurfaceResampleOutputs",
     "SurfaceResampleParameters",
     "surface_resample",
-    "surface_resample_area_metrics_cargs",
     "surface_resample_area_metrics_params",
-    "surface_resample_area_surfs_cargs",
     "surface_resample_area_surfs_params",
-    "surface_resample_cargs",
     "surface_resample_execute",
-    "surface_resample_outputs",
     "surface_resample_params",
 ]

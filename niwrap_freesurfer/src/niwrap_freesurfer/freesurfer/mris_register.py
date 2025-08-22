@@ -675,7 +675,7 @@ def mris_register_outputs(
 
 def mris_register_execute(
     params: MrisRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRegisterOutputs:
     """
     This program registers a surface to an average surface template.
@@ -686,10 +686,12 @@ def mris_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mris_register_cargs(params, execution)
     ret = mris_register_outputs(params, execution)
@@ -848,8 +850,6 @@ def mris_register(
     Returns:
         NamedTuple of outputs (described in `MrisRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REGISTER_METADATA)
     params = mris_register_params(
         surf_fname=surf_fname,
         target=target,
@@ -915,7 +915,7 @@ def mris_register(
         threads=threads,
         version_flag=version_flag,
     )
-    return mris_register_execute(params, execution)
+    return mris_register_execute(params, runner)
 
 
 __all__ = [
@@ -923,8 +923,6 @@ __all__ = [
     "MrisRegisterOutputs",
     "MrisRegisterParameters",
     "mris_register",
-    "mris_register_cargs",
     "mris_register_execute",
-    "mris_register_outputs",
     "mris_register_params",
 ]

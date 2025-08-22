@@ -122,7 +122,7 @@ def spec_file_relocate_outputs(
 
 def spec_file_relocate_execute(
     params: SpecFileRelocateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SpecFileRelocateOutputs:
     """
     Recreate spec file in new location.
@@ -138,10 +138,12 @@ def spec_file_relocate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SpecFileRelocateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPEC_FILE_RELOCATE_METADATA)
     params = execution.params(params)
     cargs = spec_file_relocate_cargs(params, execution)
     ret = spec_file_relocate_outputs(params, execution)
@@ -173,13 +175,11 @@ def spec_file_relocate(
     Returns:
         NamedTuple of outputs (described in `SpecFileRelocateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPEC_FILE_RELOCATE_METADATA)
     params = spec_file_relocate_params(
         input_spec=input_spec,
         output_spec=output_spec,
     )
-    return spec_file_relocate_execute(params, execution)
+    return spec_file_relocate_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "SpecFileRelocateOutputs",
     "SpecFileRelocateParameters",
     "spec_file_relocate",
-    "spec_file_relocate_cargs",
     "spec_file_relocate_execute",
-    "spec_file_relocate_outputs",
     "spec_file_relocate_params",
 ]

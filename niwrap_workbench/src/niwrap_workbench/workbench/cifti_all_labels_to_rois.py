@@ -131,7 +131,7 @@ def cifti_all_labels_to_rois_outputs(
 
 def cifti_all_labels_to_rois_execute(
     params: CiftiAllLabelsToRoisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
     Make rois from all labels in a cifti label map.
@@ -149,10 +149,12 @@ def cifti_all_labels_to_rois_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiAllLabelsToRoisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_ALL_LABELS_TO_ROIS_METADATA)
     params = execution.params(params)
     cargs = cifti_all_labels_to_rois_cargs(params, execution)
     ret = cifti_all_labels_to_rois_outputs(params, execution)
@@ -188,14 +190,12 @@ def cifti_all_labels_to_rois(
     Returns:
         NamedTuple of outputs (described in `CiftiAllLabelsToRoisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_ALL_LABELS_TO_ROIS_METADATA)
     params = cifti_all_labels_to_rois_params(
         label_in=label_in,
         map_=map_,
         cifti_out=cifti_out,
     )
-    return cifti_all_labels_to_rois_execute(params, execution)
+    return cifti_all_labels_to_rois_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "CiftiAllLabelsToRoisOutputs",
     "CiftiAllLabelsToRoisParameters",
     "cifti_all_labels_to_rois",
-    "cifti_all_labels_to_rois_cargs",
     "cifti_all_labels_to_rois_execute",
-    "cifti_all_labels_to_rois_outputs",
     "cifti_all_labels_to_rois_params",
 ]

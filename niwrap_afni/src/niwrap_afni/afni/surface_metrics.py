@@ -269,7 +269,7 @@ def surface_metrics_outputs(
 
 def surface_metrics_execute(
     params: SurfaceMetricsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceMetricsOutputs:
     """
     Outputs information about a surface's mesh.
@@ -280,10 +280,12 @@ def surface_metrics_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceMetricsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_METRICS_METADATA)
     params = execution.params(params)
     cargs = surface_metrics_cargs(params, execution)
     ret = surface_metrics_outputs(params, execution)
@@ -354,8 +356,6 @@ def surface_metrics(
     Returns:
         NamedTuple of outputs (described in `SurfaceMetricsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_METRICS_METADATA)
     params = surface_metrics_params(
         volume=volume,
         convexity=convexity,
@@ -381,7 +381,7 @@ def surface_metrics(
         tlrc=tlrc,
         prefix=prefix,
     )
-    return surface_metrics_execute(params, execution)
+    return surface_metrics_execute(params, runner)
 
 
 __all__ = [
@@ -389,8 +389,6 @@ __all__ = [
     "SurfaceMetricsOutputs",
     "SurfaceMetricsParameters",
     "surface_metrics",
-    "surface_metrics_cargs",
     "surface_metrics_execute",
-    "surface_metrics_outputs",
     "surface_metrics_params",
 ]

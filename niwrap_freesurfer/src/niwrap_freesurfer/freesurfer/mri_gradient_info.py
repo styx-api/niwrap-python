@@ -120,7 +120,7 @@ def mri_gradient_info_outputs(
 
 def mri_gradient_info_execute(
     params: MriGradientInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGradientInfoOutputs:
     """
     A utility to obtain gradient information from MRI images using FreeSurfer.
@@ -131,10 +131,12 @@ def mri_gradient_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGradientInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GRADIENT_INFO_METADATA)
     params = execution.params(params)
     cargs = mri_gradient_info_cargs(params, execution)
     ret = mri_gradient_info_outputs(params, execution)
@@ -159,12 +161,10 @@ def mri_gradient_info(
     Returns:
         NamedTuple of outputs (described in `MriGradientInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GRADIENT_INFO_METADATA)
     params = mri_gradient_info_params(
         input_image=input_image,
     )
-    return mri_gradient_info_execute(params, execution)
+    return mri_gradient_info_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "MriGradientInfoOutputs",
     "MriGradientInfoParameters",
     "mri_gradient_info",
-    "mri_gradient_info_cargs",
     "mri_gradient_info_execute",
-    "mri_gradient_info_outputs",
     "mri_gradient_info_params",
 ]

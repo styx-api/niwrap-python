@@ -204,7 +204,7 @@ def slicetimer_outputs(
 
 def slicetimer_execute(
     params: SlicetimerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlicetimerOutputs:
     """
     FMRIB's Interpolation for Slice Timing.
@@ -215,10 +215,12 @@ def slicetimer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlicetimerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICETIMER_METADATA)
     params = execution.params(params)
     cargs = slicetimer_cargs(params, execution)
     ret = slicetimer_outputs(params, execution)
@@ -264,8 +266,6 @@ def slicetimer(
     Returns:
         NamedTuple of outputs (described in `SlicetimerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICETIMER_METADATA)
     params = slicetimer_params(
         infile=infile,
         outfile=outfile,
@@ -278,7 +278,7 @@ def slicetimer(
         tglobal_value=tglobal_value,
         ocustom_file=ocustom_file,
     )
-    return slicetimer_execute(params, execution)
+    return slicetimer_execute(params, runner)
 
 
 __all__ = [
@@ -286,8 +286,6 @@ __all__ = [
     "SlicetimerOutputs",
     "SlicetimerParameters",
     "slicetimer",
-    "slicetimer_cargs",
     "slicetimer_execute",
-    "slicetimer_outputs",
     "slicetimer_params",
 ]

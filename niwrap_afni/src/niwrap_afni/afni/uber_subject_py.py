@@ -525,7 +525,7 @@ def uber_subject_py_outputs(
 
 def uber_subject_py_execute(
     params: UberSubjectPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UberSubjectPyOutputs:
     """
     Graphical interface to afni_proc.py.
@@ -536,10 +536,12 @@ def uber_subject_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UberSubjectPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UBER_SUBJECT_PY_METADATA)
     params = execution.params(params)
     cargs = uber_subject_py_cargs(params, execution)
     ret = uber_subject_py_outputs(params, execution)
@@ -648,8 +650,6 @@ def uber_subject_py(
     Returns:
         NamedTuple of outputs (described in `UberSubjectPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UBER_SUBJECT_PY_METADATA)
     params = uber_subject_py_params(
         qt_opts=qt_opts,
         svar=svar,
@@ -695,7 +695,7 @@ def uber_subject_py(
         volreg_base=volreg_base,
         verb=verb,
     )
-    return uber_subject_py_execute(params, execution)
+    return uber_subject_py_execute(params, runner)
 
 
 __all__ = [
@@ -703,8 +703,6 @@ __all__ = [
     "UberSubjectPyOutputs",
     "UberSubjectPyParameters",
     "uber_subject_py",
-    "uber_subject_py_cargs",
     "uber_subject_py_execute",
-    "uber_subject_py_outputs",
     "uber_subject_py_params",
 ]

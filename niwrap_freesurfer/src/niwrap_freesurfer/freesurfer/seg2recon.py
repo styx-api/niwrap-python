@@ -243,7 +243,7 @@ def seg2recon_outputs(
 
 def seg2recon_execute(
     params: Seg2reconParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Seg2reconOutputs:
     """
     Creates and populates a subjects directory from an input image and segmentation
@@ -255,10 +255,12 @@ def seg2recon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Seg2reconOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEG2RECON_METADATA)
     params = execution.params(params)
     cargs = seg2recon_cargs(params, execution)
     ret = seg2recon_outputs(params, execution)
@@ -314,8 +316,6 @@ def seg2recon(
     Returns:
         NamedTuple of outputs (described in `Seg2reconOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEG2RECON_METADATA)
     params = seg2recon_params(
         subject=subject,
         segvol=segvol,
@@ -332,7 +332,7 @@ def seg2recon(
         rca=rca,
         no_bias_field_cor=no_bias_field_cor,
     )
-    return seg2recon_execute(params, execution)
+    return seg2recon_execute(params, runner)
 
 
 __all__ = [
@@ -340,8 +340,6 @@ __all__ = [
     "Seg2reconOutputs",
     "Seg2reconParameters",
     "seg2recon",
-    "seg2recon_cargs",
     "seg2recon_execute",
-    "seg2recon_outputs",
     "seg2recon_params",
 ]

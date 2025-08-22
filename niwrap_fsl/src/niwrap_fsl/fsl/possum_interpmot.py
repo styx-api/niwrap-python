@@ -151,7 +151,7 @@ def possum_interpmot_outputs(
 
 def possum_interpmot_execute(
     params: PossumInterpmotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PossumInterpmotOutputs:
     """
     Position Interpolation for Movers and Shakers.
@@ -162,10 +162,12 @@ def possum_interpmot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PossumInterpmotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POSSUM_INTERPMOT_METADATA)
     params = execution.params(params)
     cargs = possum_interpmot_cargs(params, execution)
     ret = possum_interpmot_outputs(params, execution)
@@ -203,8 +205,6 @@ def possum_interpmot(
     Returns:
         NamedTuple of outputs (described in `PossumInterpmotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POSSUM_INTERPMOT_METADATA)
     params = possum_interpmot_params(
         motion_type=motion_type,
         tr=tr,
@@ -214,7 +214,7 @@ def possum_interpmot(
         custom_motion_file=custom_motion_file,
         output_file=output_file,
     )
-    return possum_interpmot_execute(params, execution)
+    return possum_interpmot_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "PossumInterpmotOutputs",
     "PossumInterpmotParameters",
     "possum_interpmot",
-    "possum_interpmot_cargs",
     "possum_interpmot_execute",
-    "possum_interpmot_outputs",
     "possum_interpmot_params",
 ]

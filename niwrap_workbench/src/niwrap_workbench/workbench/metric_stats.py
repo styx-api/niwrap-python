@@ -214,7 +214,7 @@ def metric_stats_outputs(
 
 def metric_stats_execute(
     params: MetricStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricStatsOutputs:
     """
     Spatial statistics on a metric file.
@@ -252,10 +252,12 @@ def metric_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_STATS_METADATA)
     params = execution.params(params)
     cargs = metric_stats_cargs(params, execution)
     ret = metric_stats_outputs(params, execution)
@@ -320,8 +322,6 @@ def metric_stats(
     Returns:
         NamedTuple of outputs (described in `MetricStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_STATS_METADATA)
     params = metric_stats_params(
         metric_in=metric_in,
         opt_reduce_operation=opt_reduce_operation,
@@ -330,7 +330,7 @@ def metric_stats(
         roi=roi,
         opt_show_map_name=opt_show_map_name,
     )
-    return metric_stats_execute(params, execution)
+    return metric_stats_execute(params, runner)
 
 
 __all__ = [
@@ -339,10 +339,7 @@ __all__ = [
     "MetricStatsParameters",
     "MetricStatsRoiParameters",
     "metric_stats",
-    "metric_stats_cargs",
     "metric_stats_execute",
-    "metric_stats_outputs",
     "metric_stats_params",
-    "metric_stats_roi_cargs",
     "metric_stats_roi_params",
 ]

@@ -130,7 +130,7 @@ def first_roi_slicesdir_outputs(
 
 def first_roi_slicesdir_execute(
     params: FirstRoiSlicesdirParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FirstRoiSlicesdirOutputs:
     """
     A utility for generating slice directories for FIRST-ROI.
@@ -141,10 +141,12 @@ def first_roi_slicesdir_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FirstRoiSlicesdirOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIRST_ROI_SLICESDIR_METADATA)
     params = execution.params(params)
     cargs = first_roi_slicesdir_cargs(params, execution)
     ret = first_roi_slicesdir_outputs(params, execution)
@@ -173,13 +175,11 @@ def first_roi_slicesdir(
     Returns:
         NamedTuple of outputs (described in `FirstRoiSlicesdirOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIRST_ROI_SLICESDIR_METADATA)
     params = first_roi_slicesdir_params(
         input_t1_images=input_t1_images,
         input_label_images=input_label_images,
     )
-    return first_roi_slicesdir_execute(params, execution)
+    return first_roi_slicesdir_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "FirstRoiSlicesdirOutputs",
     "FirstRoiSlicesdirParameters",
     "first_roi_slicesdir",
-    "first_roi_slicesdir_cargs",
     "first_roi_slicesdir_execute",
-    "first_roi_slicesdir_outputs",
     "first_roi_slicesdir_params",
 ]

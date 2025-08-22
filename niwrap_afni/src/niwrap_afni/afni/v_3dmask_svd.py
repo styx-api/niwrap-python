@@ -193,7 +193,7 @@ def v_3dmask_svd_outputs(
 
 def v_3dmask_svd_execute(
     params: V3dmaskSvdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmaskSvdOutputs:
     """
     Computes the principal singular vector of the time series vectors extracted from
@@ -205,10 +205,12 @@ def v_3dmask_svd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmaskSvdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMASK_SVD_METADATA)
     params = execution.params(params)
     cargs = v_3dmask_svd_cargs(params, execution)
     ret = v_3dmask_svd_outputs(params, execution)
@@ -251,8 +253,6 @@ def v_3dmask_svd(
     Returns:
         NamedTuple of outputs (described in `V3dmaskSvdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMASK_SVD_METADATA)
     params = v_3dmask_svd_params(
         input_dataset=input_dataset,
         vnorm=vnorm,
@@ -264,7 +264,7 @@ def v_3dmask_svd(
         ort=ort,
         alt_input=alt_input,
     )
-    return v_3dmask_svd_execute(params, execution)
+    return v_3dmask_svd_execute(params, runner)
 
 
 __all__ = [
@@ -272,8 +272,6 @@ __all__ = [
     "V3dmaskSvdParameters",
     "V_3DMASK_SVD_METADATA",
     "v_3dmask_svd",
-    "v_3dmask_svd_cargs",
     "v_3dmask_svd_execute",
-    "v_3dmask_svd_outputs",
     "v_3dmask_svd_params",
 ]

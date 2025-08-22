@@ -167,7 +167,7 @@ def mris_calc_outputs(
 
 def mris_calc_execute(
     params: MrisCalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCalcOutputs:
     """
     Simple calculator that operates on FreeSurfer curvatures and volumes.
@@ -178,10 +178,12 @@ def mris_calc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CALC_METADATA)
     params = execution.params(params)
     cargs = mris_calc_cargs(params, execution)
     ret = mris_calc_outputs(params, execution)
@@ -221,8 +223,6 @@ def mris_calc(
     Returns:
         NamedTuple of outputs (described in `MrisCalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CALC_METADATA)
     params = mris_calc_params(
         input_file1=input_file1,
         action=action,
@@ -231,7 +231,7 @@ def mris_calc(
         label_file=label_file,
         verbosity=verbosity,
     )
-    return mris_calc_execute(params, execution)
+    return mris_calc_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "MrisCalcOutputs",
     "MrisCalcParameters",
     "mris_calc",
-    "mris_calc_cargs",
     "mris_calc_execute",
-    "mris_calc_outputs",
     "mris_calc_params",
 ]

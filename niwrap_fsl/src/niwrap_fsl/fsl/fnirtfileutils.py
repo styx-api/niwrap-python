@@ -221,7 +221,7 @@ def fnirtfileutils_outputs(
 
 def fnirtfileutils_execute(
     params: FnirtfileutilsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FnirtfileutilsOutputs:
     """
     FNIRT file utilities for FSL - Converts FNIRT warp field coefficients to other
@@ -233,10 +233,12 @@ def fnirtfileutils_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FnirtfileutilsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FNIRTFILEUTILS_METADATA)
     params = execution.params(params)
     cargs = fnirtfileutils_cargs(params, execution)
     ret = fnirtfileutils_outputs(params, execution)
@@ -286,8 +288,6 @@ def fnirtfileutils(
     Returns:
         NamedTuple of outputs (described in `FnirtfileutilsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FNIRTFILEUTILS_METADATA)
     params = fnirtfileutils_params(
         input_coefs=input_coefs,
         ref_volume=ref_volume,
@@ -301,7 +301,7 @@ def fnirtfileutils(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return fnirtfileutils_execute(params, execution)
+    return fnirtfileutils_execute(params, runner)
 
 
 __all__ = [
@@ -309,8 +309,6 @@ __all__ = [
     "FnirtfileutilsOutputs",
     "FnirtfileutilsParameters",
     "fnirtfileutils",
-    "fnirtfileutils_cargs",
     "fnirtfileutils_execute",
-    "fnirtfileutils_outputs",
     "fnirtfileutils_params",
 ]

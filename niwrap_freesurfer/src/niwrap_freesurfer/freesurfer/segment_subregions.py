@@ -197,7 +197,7 @@ def segment_subregions_outputs(
 
 def segment_subregions_execute(
     params: SegmentSubregionsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubregionsOutputs:
     """
     Cross-sectional and longitudinal segmentation for brain structures like
@@ -209,10 +209,12 @@ def segment_subregions_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubregionsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBREGIONS_METADATA)
     params = execution.params(params)
     cargs = segment_subregions_cargs(params, execution)
     ret = segment_subregions_outputs(params, execution)
@@ -259,8 +261,6 @@ def segment_subregions(
     Returns:
         NamedTuple of outputs (described in `SegmentSubregionsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBREGIONS_METADATA)
     params = segment_subregions_params(
         structure=structure,
         cross=cross,
@@ -272,7 +272,7 @@ def segment_subregions(
         debug=debug,
         threads=threads,
     )
-    return segment_subregions_execute(params, execution)
+    return segment_subregions_execute(params, runner)
 
 
 __all__ = [
@@ -280,8 +280,6 @@ __all__ = [
     "SegmentSubregionsOutputs",
     "SegmentSubregionsParameters",
     "segment_subregions",
-    "segment_subregions_cargs",
     "segment_subregions_execute",
-    "segment_subregions_outputs",
     "segment_subregions_params",
 ]

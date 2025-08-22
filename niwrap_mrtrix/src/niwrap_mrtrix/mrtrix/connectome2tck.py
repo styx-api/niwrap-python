@@ -314,7 +314,7 @@ def connectome2tck_outputs(
 
 def connectome2tck_execute(
     params: Connectome2tckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Connectome2tckOutputs:
     """
     Extract streamlines from a tractogram based on their assignment to parcellated
@@ -338,10 +338,12 @@ def connectome2tck_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Connectome2tckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONNECTOME2TCK_METADATA)
     params = execution.params(params)
     cargs = connectome2tck_cargs(params, execution)
     ret = connectome2tck_outputs(params, execution)
@@ -433,8 +435,6 @@ def connectome2tck(
     Returns:
         NamedTuple of outputs (described in `Connectome2tckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONNECTOME2TCK_METADATA)
     params = connectome2tck_params(
         nodes=nodes,
         exclusive=exclusive,
@@ -456,7 +456,7 @@ def connectome2tck(
         assignments_in=assignments_in,
         prefix_out=prefix_out,
     )
-    return connectome2tck_execute(params, execution)
+    return connectome2tck_execute(params, runner)
 
 
 __all__ = [
@@ -465,10 +465,7 @@ __all__ = [
     "Connectome2tckOutputs",
     "Connectome2tckParameters",
     "connectome2tck",
-    "connectome2tck_cargs",
-    "connectome2tck_config_cargs",
     "connectome2tck_config_params",
     "connectome2tck_execute",
-    "connectome2tck_outputs",
     "connectome2tck_params",
 ]

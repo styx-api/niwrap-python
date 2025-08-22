@@ -137,7 +137,7 @@ def surface_sphere_project_unproject_outputs(
 
 def surface_sphere_project_unproject_execute(
     params: SurfaceSphereProjectUnprojectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
     Copy registration deformations to different sphere.
@@ -203,10 +203,12 @@ def surface_sphere_project_unproject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSphereProjectUnprojectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA)
     params = execution.params(params)
     cargs = surface_sphere_project_unproject_cargs(params, execution)
     ret = surface_sphere_project_unproject_outputs(params, execution)
@@ -293,15 +295,13 @@ def surface_sphere_project_unproject(
     Returns:
         NamedTuple of outputs (described in `SurfaceSphereProjectUnprojectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_SPHERE_PROJECT_UNPROJECT_METADATA)
     params = surface_sphere_project_unproject_params(
         sphere_in=sphere_in,
         sphere_project_to=sphere_project_to,
         sphere_unproject_from=sphere_unproject_from,
         sphere_out=sphere_out,
     )
-    return surface_sphere_project_unproject_execute(params, execution)
+    return surface_sphere_project_unproject_execute(params, runner)
 
 
 __all__ = [
@@ -309,8 +309,6 @@ __all__ = [
     "SurfaceSphereProjectUnprojectOutputs",
     "SurfaceSphereProjectUnprojectParameters",
     "surface_sphere_project_unproject",
-    "surface_sphere_project_unproject_cargs",
     "surface_sphere_project_unproject_execute",
-    "surface_sphere_project_unproject_outputs",
     "surface_sphere_project_unproject_params",
 ]

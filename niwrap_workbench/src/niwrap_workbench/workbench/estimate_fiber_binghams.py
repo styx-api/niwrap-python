@@ -171,7 +171,7 @@ def estimate_fiber_binghams_outputs(
 
 def estimate_fiber_binghams_execute(
     params: EstimateFiberBinghamsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EstimateFiberBinghamsOutputs:
     """
     Estimate fiber orientation distributions from bedpostx samples.
@@ -221,10 +221,12 @@ def estimate_fiber_binghams_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EstimateFiberBinghamsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ESTIMATE_FIBER_BINGHAMS_METADATA)
     params = execution.params(params)
     cargs = estimate_fiber_binghams_cargs(params, execution)
     ret = estimate_fiber_binghams_outputs(params, execution)
@@ -308,8 +310,6 @@ def estimate_fiber_binghams(
     Returns:
         NamedTuple of outputs (described in `EstimateFiberBinghamsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ESTIMATE_FIBER_BINGHAMS_METADATA)
     params = estimate_fiber_binghams_params(
         merged_f1samples=merged_f1samples,
         merged_th1samples=merged_th1samples,
@@ -323,7 +323,7 @@ def estimate_fiber_binghams(
         label_volume=label_volume,
         cifti_out=cifti_out,
     )
-    return estimate_fiber_binghams_execute(params, execution)
+    return estimate_fiber_binghams_execute(params, runner)
 
 
 __all__ = [
@@ -331,8 +331,6 @@ __all__ = [
     "EstimateFiberBinghamsOutputs",
     "EstimateFiberBinghamsParameters",
     "estimate_fiber_binghams",
-    "estimate_fiber_binghams_cargs",
     "estimate_fiber_binghams_execute",
-    "estimate_fiber_binghams_outputs",
     "estimate_fiber_binghams_params",
 ]

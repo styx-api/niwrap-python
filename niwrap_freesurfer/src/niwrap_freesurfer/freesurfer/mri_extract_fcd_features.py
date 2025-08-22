@@ -137,7 +137,7 @@ def mri_extract_fcd_features_outputs(
 
 def mri_extract_fcd_features_execute(
     params: MriExtractFcdFeaturesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriExtractFcdFeaturesOutputs:
     """
     A tool for extracting focal cortical dysplasia features.
@@ -148,10 +148,12 @@ def mri_extract_fcd_features_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriExtractFcdFeaturesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EXTRACT_FCD_FEATURES_METADATA)
     params = execution.params(params)
     cargs = mri_extract_fcd_features_cargs(params, execution)
     ret = mri_extract_fcd_features_outputs(params, execution)
@@ -183,15 +185,13 @@ def mri_extract_fcd_features(
     Returns:
         NamedTuple of outputs (described in `MriExtractFcdFeaturesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EXTRACT_FCD_FEATURES_METADATA)
     params = mri_extract_fcd_features_params(
         subject=subject,
         hemi=hemi,
         output_file=output_file,
         subjects_dir=subjects_dir,
     )
-    return mri_extract_fcd_features_execute(params, execution)
+    return mri_extract_fcd_features_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "MriExtractFcdFeaturesOutputs",
     "MriExtractFcdFeaturesParameters",
     "mri_extract_fcd_features",
-    "mri_extract_fcd_features_cargs",
     "mri_extract_fcd_features_execute",
-    "mri_extract_fcd_features_outputs",
     "mri_extract_fcd_features_params",
 ]

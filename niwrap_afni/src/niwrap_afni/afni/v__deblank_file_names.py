@@ -149,7 +149,7 @@ def v__deblank_file_names_outputs(
 
 def v__deblank_file_names_execute(
     params: VDeblankFileNamesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDeblankFileNamesOutputs:
     """
     A script to remove blanks and other annoying characters ([], ()) from filenames.
@@ -160,10 +160,12 @@ def v__deblank_file_names_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDeblankFileNamesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DEBLANK_FILE_NAMES_METADATA)
     params = execution.params(params)
     cargs = v__deblank_file_names_cargs(params, execution)
     ret = v__deblank_file_names_outputs(params, execution)
@@ -199,8 +201,6 @@ def v__deblank_file_names(
     Returns:
         NamedTuple of outputs (described in `VDeblankFileNamesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DEBLANK_FILE_NAMES_METADATA)
     params = v__deblank_file_names_params(
         move=move,
         nobrac=nobrac,
@@ -209,7 +209,7 @@ def v__deblank_file_names(
         help_=help_,
         files=files,
     )
-    return v__deblank_file_names_execute(params, execution)
+    return v__deblank_file_names_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "VDeblankFileNamesParameters",
     "V__DEBLANK_FILE_NAMES_METADATA",
     "v__deblank_file_names",
-    "v__deblank_file_names_cargs",
     "v__deblank_file_names_execute",
-    "v__deblank_file_names_outputs",
     "v__deblank_file_names_params",
 ]

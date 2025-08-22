@@ -144,7 +144,7 @@ def mri_extract_outputs(
 
 def mri_extract_execute(
     params: MriExtractParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriExtractOutputs:
     """
     MRI data extraction tool for FreeSurfer.
@@ -155,10 +155,12 @@ def mri_extract_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriExtractOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EXTRACT_METADATA)
     params = execution.params(params)
     cargs = mri_extract_cargs(params, execution)
     ret = mri_extract_outputs(params, execution)
@@ -191,15 +193,13 @@ def mri_extract(
     Returns:
         NamedTuple of outputs (described in `MriExtractOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EXTRACT_METADATA)
     params = mri_extract_params(
         like_template=like_template,
         src_volume=src_volume,
         dst_volume=dst_volume,
         coordinates=coordinates,
     )
-    return mri_extract_execute(params, execution)
+    return mri_extract_execute(params, runner)
 
 
 __all__ = [
@@ -207,8 +207,6 @@ __all__ = [
     "MriExtractOutputs",
     "MriExtractParameters",
     "mri_extract",
-    "mri_extract_cargs",
     "mri_extract_execute",
-    "mri_extract_outputs",
     "mri_extract_params",
 ]

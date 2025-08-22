@@ -135,7 +135,7 @@ def v_3d_convolve_outputs(
 
 def v_3d_convolve_execute(
     params: V3dConvolveParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dConvolveOutputs:
     """
     3dConvolve is no longer supported in AFNI.
@@ -146,10 +146,12 @@ def v_3d_convolve_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dConvolveOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CONVOLVE_METADATA)
     params = execution.params(params)
     cargs = v_3d_convolve_cargs(params, execution)
     ret = v_3d_convolve_outputs(params, execution)
@@ -178,14 +180,12 @@ def v_3d_convolve(
     Returns:
         NamedTuple of outputs (described in `V3dConvolveOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CONVOLVE_METADATA)
     params = v_3d_convolve_params(
         infile=infile,
         outfile=outfile,
         options=options,
     )
-    return v_3d_convolve_execute(params, execution)
+    return v_3d_convolve_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "V3dConvolveParameters",
     "V_3D_CONVOLVE_METADATA",
     "v_3d_convolve",
-    "v_3d_convolve_cargs",
     "v_3d_convolve_execute",
-    "v_3d_convolve_outputs",
     "v_3d_convolve_params",
 ]

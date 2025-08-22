@@ -377,7 +377,7 @@ def qdelaunay_outputs(
 
 def qdelaunay_execute(
     params: QdelaunayParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QdelaunayOutputs:
     """
     Compute the Delaunay triangulation using Qhull.
@@ -388,10 +388,12 @@ def qdelaunay_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QdelaunayOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QDELAUNAY_METADATA)
     params = execution.params(params)
     cargs = qdelaunay_cargs(params, execution)
     ret = qdelaunay_outputs(params, execution)
@@ -485,8 +487,6 @@ def qdelaunay(
     Returns:
         NamedTuple of outputs (described in `QdelaunayOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QDELAUNAY_METADATA)
     params = qdelaunay_params(
         input_file=input_file,
         furthest_site=furthest_site,
@@ -522,7 +522,7 @@ def qdelaunay(
         point_coordinates=point_coordinates,
         summary=summary,
     )
-    return qdelaunay_execute(params, execution)
+    return qdelaunay_execute(params, runner)
 
 
 __all__ = [
@@ -530,8 +530,6 @@ __all__ = [
     "QdelaunayOutputs",
     "QdelaunayParameters",
     "qdelaunay",
-    "qdelaunay_cargs",
     "qdelaunay_execute",
-    "qdelaunay_outputs",
     "qdelaunay_params",
 ]

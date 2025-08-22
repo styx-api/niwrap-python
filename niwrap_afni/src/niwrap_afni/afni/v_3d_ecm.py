@@ -270,7 +270,7 @@ def v_3d_ecm_outputs(
 
 def v_3d_ecm_execute(
     params: V3dEcmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dEcmOutputs:
     """
     Performs degree centrality on a dataset using a given maskfile via the 3dECM
@@ -282,10 +282,12 @@ def v_3d_ecm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dEcmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ECM_METADATA)
     params = execution.params(params)
     cargs = v_3d_ecm_cargs(params, execution)
     ret = v_3d_ecm_outputs(params, execution)
@@ -352,8 +354,6 @@ def v_3d_ecm(
     Returns:
         NamedTuple of outputs (described in `V3dEcmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ECM_METADATA)
     params = v_3d_ecm_params(
         in_file=in_file,
         autoclip=autoclip,
@@ -373,7 +373,7 @@ def v_3d_ecm(
         sparsity=sparsity,
         thresh=thresh,
     )
-    return v_3d_ecm_execute(params, execution)
+    return v_3d_ecm_execute(params, runner)
 
 
 __all__ = [
@@ -381,8 +381,6 @@ __all__ = [
     "V3dEcmParameters",
     "V_3D_ECM_METADATA",
     "v_3d_ecm",
-    "v_3d_ecm_cargs",
     "v_3d_ecm_execute",
-    "v_3d_ecm_outputs",
     "v_3d_ecm_params",
 ]

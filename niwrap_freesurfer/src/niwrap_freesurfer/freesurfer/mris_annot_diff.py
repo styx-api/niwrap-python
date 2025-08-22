@@ -133,7 +133,7 @@ def mris_annot_diff_outputs(
 
 def mris_annot_diff_execute(
     params: MrisAnnotDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisAnnotDiffOutputs:
     """
     Compare two surface annotation files. The program works with .annot only.
@@ -144,10 +144,12 @@ def mris_annot_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAnnotDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ANNOT_DIFF_METADATA)
     params = execution.params(params)
     cargs = mris_annot_diff_cargs(params, execution)
     ret = mris_annot_diff_outputs(params, execution)
@@ -178,15 +180,13 @@ def mris_annot_diff(
     Returns:
         NamedTuple of outputs (described in `MrisAnnotDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ANNOT_DIFF_METADATA)
     params = mris_annot_diff_params(
         annot1=annot1,
         annot2=annot2,
         diff_ctab=diff_ctab,
         verbose=verbose,
     )
-    return mris_annot_diff_execute(params, execution)
+    return mris_annot_diff_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "MrisAnnotDiffOutputs",
     "MrisAnnotDiffParameters",
     "mris_annot_diff",
-    "mris_annot_diff_cargs",
     "mris_annot_diff_execute",
-    "mris_annot_diff_outputs",
     "mris_annot_diff_params",
 ]

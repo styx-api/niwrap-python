@@ -498,7 +498,7 @@ def mrclusterstats_outputs(
 
 def mrclusterstats_execute(
     params: MrclusterstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrclusterstatsOutputs:
     """
     Voxel-based analysis using permutation testing and threshold-free cluster
@@ -532,10 +532,12 @@ def mrclusterstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrclusterstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRCLUSTERSTATS_METADATA)
     params = execution.params(params)
     cargs = mrclusterstats_cargs(params, execution)
     ret = mrclusterstats_outputs(params, execution)
@@ -683,8 +685,6 @@ def mrclusterstats(
     Returns:
         NamedTuple of outputs (described in `MrclusterstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRCLUSTERSTATS_METADATA)
     params = mrclusterstats_params(
         notest=notest,
         errors=errors,
@@ -720,7 +720,7 @@ def mrclusterstats(
         mask=mask,
         output=output,
     )
-    return mrclusterstats_execute(params, execution)
+    return mrclusterstats_execute(params, runner)
 
 
 __all__ = [
@@ -730,12 +730,8 @@ __all__ = [
     "MrclusterstatsOutputs",
     "MrclusterstatsParameters",
     "mrclusterstats",
-    "mrclusterstats_cargs",
-    "mrclusterstats_column_cargs",
     "mrclusterstats_column_params",
-    "mrclusterstats_config_cargs",
     "mrclusterstats_config_params",
     "mrclusterstats_execute",
-    "mrclusterstats_outputs",
     "mrclusterstats_params",
 ]

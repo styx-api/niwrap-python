@@ -151,7 +151,7 @@ def create_warped_grid_image_outputs(
 
 def create_warped_grid_image_execute(
     params: CreateWarpedGridImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateWarpedGridImageOutputs:
     """
     Create a warped grid image based on the specified deformation field.
@@ -162,10 +162,12 @@ def create_warped_grid_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateWarpedGridImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_WARPED_GRID_IMAGE_METADATA)
     params = execution.params(params)
     cargs = create_warped_grid_image_cargs(params, execution)
     ret = create_warped_grid_image_outputs(params, execution)
@@ -200,8 +202,6 @@ def create_warped_grid_image(
     Returns:
         NamedTuple of outputs (described in `CreateWarpedGridImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_WARPED_GRID_IMAGE_METADATA)
     params = create_warped_grid_image_params(
         image_dimension=image_dimension,
         deformation_field=deformation_field,
@@ -210,7 +210,7 @@ def create_warped_grid_image(
         grid_spacing=grid_spacing,
         grid_sigma=grid_sigma,
     )
-    return create_warped_grid_image_execute(params, execution)
+    return create_warped_grid_image_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "CreateWarpedGridImageOutputs",
     "CreateWarpedGridImageParameters",
     "create_warped_grid_image",
-    "create_warped_grid_image_cargs",
     "create_warped_grid_image_execute",
-    "create_warped_grid_image_outputs",
     "create_warped_grid_image_params",
 ]

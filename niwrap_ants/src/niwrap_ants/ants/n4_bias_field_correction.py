@@ -590,7 +590,7 @@ def n4_bias_field_correction_outputs(
 
 def n4_bias_field_correction_execute(
     params: N4BiasFieldCorrectionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> N4BiasFieldCorrectionOutputs:
     """
     N4 is a variant of the popular N3 (nonparameteric nonuniform normalization)
@@ -607,10 +607,12 @@ def n4_bias_field_correction_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `N4BiasFieldCorrectionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(N4_BIAS_FIELD_CORRECTION_METADATA)
     params = execution.params(params)
     cargs = n4_bias_field_correction_cargs(params, execution)
     ret = n4_bias_field_correction_outputs(params, execution)
@@ -719,8 +721,6 @@ def n4_bias_field_correction(
     Returns:
         NamedTuple of outputs (described in `N4BiasFieldCorrectionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(N4_BIAS_FIELD_CORRECTION_METADATA)
     params = n4_bias_field_correction_params(
         image_dimensionality=image_dimensionality,
         shrink_factor=shrink_factor,
@@ -734,7 +734,7 @@ def n4_bias_field_correction(
         input_image=input_image,
         output=output,
     )
-    return n4_bias_field_correction_execute(params, execution)
+    return n4_bias_field_correction_execute(params, runner)
 
 
 __all__ = [
@@ -749,20 +749,11 @@ __all__ = [
     "N4BiasFieldCorrectionParameters",
     "N4_BIAS_FIELD_CORRECTION_METADATA",
     "n4_bias_field_correction",
-    "n4_bias_field_correction_bspline_fitting_cargs",
     "n4_bias_field_correction_bspline_fitting_params",
-    "n4_bias_field_correction_cargs",
-    "n4_bias_field_correction_convergence_cargs",
     "n4_bias_field_correction_convergence_params",
-    "n4_bias_field_correction_corrected_output_cargs",
-    "n4_bias_field_correction_corrected_output_noise_cargs",
-    "n4_bias_field_correction_corrected_output_noise_outputs",
     "n4_bias_field_correction_corrected_output_noise_params",
-    "n4_bias_field_correction_corrected_output_outputs",
     "n4_bias_field_correction_corrected_output_params",
     "n4_bias_field_correction_execute",
-    "n4_bias_field_correction_histogram_sharpening_cargs",
     "n4_bias_field_correction_histogram_sharpening_params",
-    "n4_bias_field_correction_outputs",
     "n4_bias_field_correction_params",
 ]

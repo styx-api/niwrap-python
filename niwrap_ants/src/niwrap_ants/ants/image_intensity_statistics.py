@@ -133,7 +133,7 @@ def image_intensity_statistics_outputs(
 
 def image_intensity_statistics_execute(
     params: ImageIntensityStatisticsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImageIntensityStatisticsOutputs:
     """
     This tool computes intensity statistics of an input image, optionally given a
@@ -145,10 +145,12 @@ def image_intensity_statistics_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImageIntensityStatisticsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMAGE_INTENSITY_STATISTICS_METADATA)
     params = execution.params(params)
     cargs = image_intensity_statistics_cargs(params, execution)
     ret = image_intensity_statistics_outputs(params, execution)
@@ -179,14 +181,12 @@ def image_intensity_statistics(
     Returns:
         NamedTuple of outputs (described in `ImageIntensityStatisticsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMAGE_INTENSITY_STATISTICS_METADATA)
     params = image_intensity_statistics_params(
         image_dimension=image_dimension,
         input_image=input_image,
         label_image=label_image,
     )
-    return image_intensity_statistics_execute(params, execution)
+    return image_intensity_statistics_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "ImageIntensityStatisticsOutputs",
     "ImageIntensityStatisticsParameters",
     "image_intensity_statistics",
-    "image_intensity_statistics_cargs",
     "image_intensity_statistics_execute",
-    "image_intensity_statistics_outputs",
     "image_intensity_statistics_params",
 ]

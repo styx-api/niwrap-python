@@ -191,7 +191,7 @@ def std2imgcoord_outputs(
 
 def std2imgcoord_execute(
     params: Std2imgcoordParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Std2imgcoordOutputs:
     """
     Convert standard space coordinates to image space coordinates.
@@ -202,10 +202,12 @@ def std2imgcoord_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Std2imgcoordOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(STD2IMGCOORD_METADATA)
     params = execution.params(params)
     cargs = std2imgcoord_cargs(params, execution)
     ret = std2imgcoord_outputs(params, execution)
@@ -251,8 +253,6 @@ def std2imgcoord(
     Returns:
         NamedTuple of outputs (described in `Std2imgcoordOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(STD2IMGCOORD_METADATA)
     params = std2imgcoord_params(
         filename_coordinates=filename_coordinates,
         standard_image=standard_image,
@@ -265,7 +265,7 @@ def std2imgcoord(
         verbose=verbose,
         more_verbose=more_verbose,
     )
-    return std2imgcoord_execute(params, execution)
+    return std2imgcoord_execute(params, runner)
 
 
 __all__ = [
@@ -273,8 +273,6 @@ __all__ = [
     "Std2imgcoordOutputs",
     "Std2imgcoordParameters",
     "std2imgcoord",
-    "std2imgcoord_cargs",
     "std2imgcoord_execute",
-    "std2imgcoord_outputs",
     "std2imgcoord_params",
 ]

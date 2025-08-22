@@ -199,7 +199,7 @@ def v_1dsound_outputs(
 
 def v_1dsound_execute(
     params: V1dsoundParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dsoundOutputs:
     """
     Program to create a sound file from a 1D file (column of numbers).
@@ -210,10 +210,12 @@ def v_1dsound_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dsoundOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DSOUND_METADATA)
     params = execution.params(params)
     cargs = v_1dsound_cargs(params, execution)
     ret = v_1dsound_outputs(params, execution)
@@ -265,8 +267,6 @@ def v_1dsound(
     Returns:
         NamedTuple of outputs (described in `V1dsoundOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DSOUND_METADATA)
     params = v_1dsound_params(
         tsfile=tsfile,
         prefix=prefix,
@@ -280,7 +280,7 @@ def v_1dsound(
         despike_option=despike_option,
         play_option=play_option,
     )
-    return v_1dsound_execute(params, execution)
+    return v_1dsound_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "V1dsoundParameters",
     "V_1DSOUND_METADATA",
     "v_1dsound",
-    "v_1dsound_cargs",
     "v_1dsound_execute",
-    "v_1dsound_outputs",
     "v_1dsound_params",
 ]

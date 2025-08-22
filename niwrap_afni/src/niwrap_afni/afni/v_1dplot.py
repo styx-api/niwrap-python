@@ -726,7 +726,7 @@ def v_1dplot_outputs(
 
 def v_1dplot_execute(
     params: V1dplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dplotOutputs:
     """
     Graphs the columns of a *.1D time series file to the X11 screen, or to an image
@@ -738,10 +738,12 @@ def v_1dplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DPLOT_METADATA)
     params = execution.params(params)
     cargs = v_1dplot_cargs(params, execution)
     ret = v_1dplot_outputs(params, execution)
@@ -887,8 +889,6 @@ def v_1dplot(
     Returns:
         NamedTuple of outputs (described in `V1dplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DPLOT_METADATA)
     params = v_1dplot_params(
         tsfiles=tsfiles,
         install=install,
@@ -942,7 +942,7 @@ def v_1dplot(
         rbox=rbox,
         line=line,
     )
-    return v_1dplot_execute(params, execution)
+    return v_1dplot_execute(params, runner)
 
 
 __all__ = [
@@ -953,14 +953,9 @@ __all__ = [
     "V1dplotThickParameters",
     "V_1DPLOT_METADATA",
     "v_1dplot",
-    "v_1dplot_cargs",
     "v_1dplot_execute",
-    "v_1dplot_noline_cargs",
     "v_1dplot_noline_params",
-    "v_1dplot_outputs",
     "v_1dplot_params",
-    "v_1dplot_rbox_cargs",
     "v_1dplot_rbox_params",
-    "v_1dplot_thick_cargs",
     "v_1dplot_thick_params",
 ]

@@ -423,7 +423,7 @@ def mris_curvature_stats_outputs(
 
 def mris_curvature_stats_execute(
     params: MrisCurvatureStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCurvatureStatsOutputs:
     """
     Tool for calculating statistics on surface curvature values.
@@ -434,10 +434,12 @@ def mris_curvature_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCurvatureStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CURVATURE_STATS_METADATA)
     params = execution.params(params)
     cargs = mris_curvature_stats_cargs(params, execution)
     ret = mris_curvature_stats_outputs(params, execution)
@@ -545,8 +547,6 @@ def mris_curvature_stats(
     Returns:
         NamedTuple of outputs (described in `MrisCurvatureStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CURVATURE_STATS_METADATA)
     params = mris_curvature_stats_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -586,7 +586,7 @@ def mris_curvature_stats(
         set_zero_vertex=set_zero_vertex,
         max_ulps=max_ulps,
     )
-    return mris_curvature_stats_execute(params, execution)
+    return mris_curvature_stats_execute(params, runner)
 
 
 __all__ = [
@@ -594,8 +594,6 @@ __all__ = [
     "MrisCurvatureStatsOutputs",
     "MrisCurvatureStatsParameters",
     "mris_curvature_stats",
-    "mris_curvature_stats_cargs",
     "mris_curvature_stats_execute",
-    "mris_curvature_stats_outputs",
     "mris_curvature_stats_params",
 ]

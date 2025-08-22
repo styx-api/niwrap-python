@@ -127,7 +127,7 @@ def surface_match_outputs(
 
 def surface_match_execute(
     params: SurfaceMatchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceMatchOutputs:
     """
     Surface match.
@@ -141,10 +141,12 @@ def surface_match_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceMatchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_MATCH_METADATA)
     params = execution.params(params)
     cargs = surface_match_cargs(params, execution)
     ret = surface_match_outputs(params, execution)
@@ -176,14 +178,12 @@ def surface_match(
     Returns:
         NamedTuple of outputs (described in `SurfaceMatchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_MATCH_METADATA)
     params = surface_match_params(
         match_surface_file=match_surface_file,
         input_surface_file=input_surface_file,
         output_surface_name=output_surface_name,
     )
-    return surface_match_execute(params, execution)
+    return surface_match_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "SurfaceMatchOutputs",
     "SurfaceMatchParameters",
     "surface_match",
-    "surface_match_cargs",
     "surface_match_execute",
-    "surface_match_outputs",
     "surface_match_params",
 ]

@@ -208,7 +208,7 @@ def fnirt_outputs(
 
 def fnirt_execute(
     params: FnirtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FnirtOutputs:
     """
     FSL non-linear registration.
@@ -219,10 +219,12 @@ def fnirt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FnirtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FNIRT_METADATA)
     params = execution.params(params)
     cargs = fnirt_cargs(params, execution)
     ret = fnirt_outputs(params, execution)
@@ -272,8 +274,6 @@ def fnirt(
     Returns:
         NamedTuple of outputs (described in `FnirtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FNIRT_METADATA)
     params = fnirt_params(
         affine_file=affine_file,
         config_file=config_file,
@@ -287,7 +287,7 @@ def fnirt(
         refmask_file=refmask_file,
         warped_file=warped_file,
     )
-    return fnirt_execute(params, execution)
+    return fnirt_execute(params, runner)
 
 
 __all__ = [
@@ -295,8 +295,6 @@ __all__ = [
     "FnirtOutputs",
     "FnirtParameters",
     "fnirt",
-    "fnirt_cargs",
     "fnirt_execute",
-    "fnirt_outputs",
     "fnirt_params",
 ]

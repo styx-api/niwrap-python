@@ -134,7 +134,7 @@ def connectedcomp_outputs(
 
 def connectedcomp_execute(
     params: ConnectedcompParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConnectedcompOutputs:
     """
     Connected component analysis tool.
@@ -145,10 +145,12 @@ def connectedcomp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConnectedcompOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONNECTEDCOMP_METADATA)
     params = execution.params(params)
     cargs = connectedcomp_cargs(params, execution)
     ret = connectedcomp_outputs(params, execution)
@@ -177,14 +179,12 @@ def connectedcomp(
     Returns:
         NamedTuple of outputs (described in `ConnectedcompOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONNECTEDCOMP_METADATA)
     params = connectedcomp_params(
         in_volume=in_volume,
         output_volume=output_volume,
         num_connect=num_connect,
     )
-    return connectedcomp_execute(params, execution)
+    return connectedcomp_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "ConnectedcompOutputs",
     "ConnectedcompParameters",
     "connectedcomp",
-    "connectedcomp_cargs",
     "connectedcomp_execute",
-    "connectedcomp_outputs",
     "connectedcomp_params",
 ]

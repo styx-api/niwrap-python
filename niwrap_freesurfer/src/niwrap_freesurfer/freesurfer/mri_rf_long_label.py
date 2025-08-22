@@ -118,7 +118,7 @@ def mri_rf_long_label_outputs(
 
 def mri_rf_long_label_execute(
     params: MriRfLongLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRfLongLabelOutputs:
     """
     The mri_rf_long_label tool has been removed from this version of FreeSurfer.
@@ -129,10 +129,12 @@ def mri_rf_long_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRfLongLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RF_LONG_LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_rf_long_label_cargs(params, execution)
     ret = mri_rf_long_label_outputs(params, execution)
@@ -157,12 +159,10 @@ def mri_rf_long_label(
     Returns:
         NamedTuple of outputs (described in `MriRfLongLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RF_LONG_LABEL_METADATA)
     params = mri_rf_long_label_params(
         help_flag=help_flag,
     )
-    return mri_rf_long_label_execute(params, execution)
+    return mri_rf_long_label_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "MriRfLongLabelOutputs",
     "MriRfLongLabelParameters",
     "mri_rf_long_label",
-    "mri_rf_long_label_cargs",
     "mri_rf_long_label_execute",
-    "mri_rf_long_label_outputs",
     "mri_rf_long_label_params",
 ]

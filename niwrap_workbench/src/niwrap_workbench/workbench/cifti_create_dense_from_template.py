@@ -488,7 +488,7 @@ def cifti_create_dense_from_template_outputs(
 
 def cifti_create_dense_from_template_execute(
     params: CiftiCreateDenseFromTemplateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCreateDenseFromTemplateOutputs:
     """
     Create cifti with matching dense map.
@@ -556,10 +556,12 @@ def cifti_create_dense_from_template_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseFromTemplateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA)
     params = execution.params(params)
     cargs = cifti_create_dense_from_template_cargs(params, execution)
     ret = cifti_create_dense_from_template_outputs(params, execution)
@@ -659,8 +661,6 @@ def cifti_create_dense_from_template(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseFromTemplateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CREATE_DENSE_FROM_TEMPLATE_METADATA)
     params = cifti_create_dense_from_template_params(
         template_cifti=template_cifti,
         cifti_out=cifti_out,
@@ -672,7 +672,7 @@ def cifti_create_dense_from_template(
         label=label,
         volume=volume,
     )
-    return cifti_create_dense_from_template_execute(params, execution)
+    return cifti_create_dense_from_template_execute(params, runner)
 
 
 __all__ = [
@@ -686,20 +686,12 @@ __all__ = [
     "CiftiCreateDenseFromTemplateVolumeAllParameters",
     "CiftiCreateDenseFromTemplateVolumeParameters",
     "cifti_create_dense_from_template",
-    "cifti_create_dense_from_template_cargs",
-    "cifti_create_dense_from_template_cifti_cargs",
     "cifti_create_dense_from_template_cifti_params",
     "cifti_create_dense_from_template_execute",
-    "cifti_create_dense_from_template_label_cargs",
     "cifti_create_dense_from_template_label_params",
-    "cifti_create_dense_from_template_metric_cargs",
     "cifti_create_dense_from_template_metric_params",
-    "cifti_create_dense_from_template_outputs",
     "cifti_create_dense_from_template_params",
-    "cifti_create_dense_from_template_series_cargs",
     "cifti_create_dense_from_template_series_params",
-    "cifti_create_dense_from_template_volume_all_cargs",
     "cifti_create_dense_from_template_volume_all_params",
-    "cifti_create_dense_from_template_volume_cargs",
     "cifti_create_dense_from_template_volume_params",
 ]

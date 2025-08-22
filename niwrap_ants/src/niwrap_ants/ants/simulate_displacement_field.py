@@ -265,7 +265,7 @@ def simulate_displacement_field_outputs(
 
 def simulate_displacement_field_execute(
     params: SimulateDisplacementFieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SimulateDisplacementFieldOutputs:
     """
     Simulate displacement fields using various methods such as BSpline or
@@ -277,10 +277,12 @@ def simulate_displacement_field_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SimulateDisplacementFieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIMULATE_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)
     cargs = simulate_displacement_field_cargs(params, execution)
     ret = simulate_displacement_field_outputs(params, execution)
@@ -324,8 +326,6 @@ def simulate_displacement_field(
     Returns:
         NamedTuple of outputs (described in `SimulateDisplacementFieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIMULATE_DISPLACEMENT_FIELD_METADATA)
     params = simulate_displacement_field_params(
         image_dimension=image_dimension,
         displacement_field_type=displacement_field_type,
@@ -336,7 +336,7 @@ def simulate_displacement_field(
         enforce_stationary_boundary=enforce_stationary_boundary,
         displacement_specific_options=displacement_specific_options,
     )
-    return simulate_displacement_field_execute(params, execution)
+    return simulate_displacement_field_execute(params, runner)
 
 
 __all__ = [
@@ -346,12 +346,8 @@ __all__ = [
     "SimulateDisplacementFieldOutputs",
     "SimulateDisplacementFieldParameters",
     "simulate_displacement_field",
-    "simulate_displacement_field_bspline_options_cargs",
     "simulate_displacement_field_bspline_options_params",
-    "simulate_displacement_field_cargs",
     "simulate_displacement_field_execute",
-    "simulate_displacement_field_exponential_options_cargs",
     "simulate_displacement_field_exponential_options_params",
-    "simulate_displacement_field_outputs",
     "simulate_displacement_field_params",
 ]

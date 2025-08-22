@@ -376,7 +376,7 @@ def cifti_create_dense_scalar_outputs(
 
 def cifti_create_dense_scalar_execute(
     params: CiftiCreateDenseScalarParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCreateDenseScalarOutputs:
     """
     Create a cifti dense scalar file.
@@ -429,10 +429,12 @@ def cifti_create_dense_scalar_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseScalarOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CREATE_DENSE_SCALAR_METADATA)
     params = execution.params(params)
     cargs = cifti_create_dense_scalar_cargs(params, execution)
     ret = cifti_create_dense_scalar_outputs(params, execution)
@@ -510,8 +512,6 @@ def cifti_create_dense_scalar(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateDenseScalarOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CREATE_DENSE_SCALAR_METADATA)
     params = cifti_create_dense_scalar_params(
         cifti_out=cifti_out,
         volume=volume,
@@ -520,7 +520,7 @@ def cifti_create_dense_scalar(
         cerebellum_metric=cerebellum_metric,
         opt_name_file_file=opt_name_file_file,
     )
-    return cifti_create_dense_scalar_execute(params, execution)
+    return cifti_create_dense_scalar_execute(params, runner)
 
 
 __all__ = [
@@ -532,16 +532,10 @@ __all__ = [
     "CiftiCreateDenseScalarRightMetricParameters",
     "CiftiCreateDenseScalarVolumeParameters",
     "cifti_create_dense_scalar",
-    "cifti_create_dense_scalar_cargs",
-    "cifti_create_dense_scalar_cerebellum_metric_cargs",
     "cifti_create_dense_scalar_cerebellum_metric_params",
     "cifti_create_dense_scalar_execute",
-    "cifti_create_dense_scalar_left_metric_cargs",
     "cifti_create_dense_scalar_left_metric_params",
-    "cifti_create_dense_scalar_outputs",
     "cifti_create_dense_scalar_params",
-    "cifti_create_dense_scalar_right_metric_cargs",
     "cifti_create_dense_scalar_right_metric_params",
-    "cifti_create_dense_scalar_volume_cargs",
     "cifti_create_dense_scalar_volume_params",
 ]

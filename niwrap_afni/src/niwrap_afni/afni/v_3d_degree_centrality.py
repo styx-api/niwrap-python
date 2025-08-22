@@ -187,7 +187,7 @@ def v_3d_degree_centrality_outputs(
 
 def v_3d_degree_centrality_execute(
     params: V3dDegreeCentralityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDegreeCentralityOutputs:
     """
     Computes voxelwise weighted and binary degree centrality and stores the result
@@ -201,10 +201,12 @@ def v_3d_degree_centrality_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDegreeCentralityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DEGREE_CENTRALITY_METADATA)
     params = execution.params(params)
     cargs = v_3d_degree_centrality_cargs(params, execution)
     ret = v_3d_degree_centrality_outputs(params, execution)
@@ -246,8 +248,6 @@ def v_3d_degree_centrality(
     Returns:
         NamedTuple of outputs (described in `V3dDegreeCentralityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DEGREE_CENTRALITY_METADATA)
     params = v_3d_degree_centrality_params(
         autoclip=autoclip,
         automask=automask,
@@ -258,7 +258,7 @@ def v_3d_degree_centrality(
         sparsity=sparsity,
         thresh=thresh,
     )
-    return v_3d_degree_centrality_execute(params, execution)
+    return v_3d_degree_centrality_execute(params, runner)
 
 
 __all__ = [
@@ -266,8 +266,6 @@ __all__ = [
     "V3dDegreeCentralityParameters",
     "V_3D_DEGREE_CENTRALITY_METADATA",
     "v_3d_degree_centrality",
-    "v_3d_degree_centrality_cargs",
     "v_3d_degree_centrality_execute",
-    "v_3d_degree_centrality_outputs",
     "v_3d_degree_centrality_params",
 ]

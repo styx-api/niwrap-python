@@ -177,7 +177,7 @@ def dicom_hdr_outputs(
 
 def dicom_hdr_execute(
     params: DicomHdrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DicomHdrOutputs:
     """
     A tool to print DICOM file information to stdout.
@@ -188,10 +188,12 @@ def dicom_hdr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DicomHdrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DICOM_HDR_METADATA)
     params = execution.params(params)
     cargs = dicom_hdr_cargs(params, execution)
     ret = dicom_hdr_outputs(params, execution)
@@ -237,8 +239,6 @@ def dicom_hdr(
     Returns:
         NamedTuple of outputs (described in `DicomHdrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DICOM_HDR_METADATA)
     params = dicom_hdr_params(
         files=files,
         hex_=hex_,
@@ -251,7 +251,7 @@ def dicom_hdr(
         slice_times_verb=slice_times_verb,
         siemens_csa_data=siemens_csa_data,
     )
-    return dicom_hdr_execute(params, execution)
+    return dicom_hdr_execute(params, runner)
 
 
 __all__ = [
@@ -259,8 +259,6 @@ __all__ = [
     "DicomHdrOutputs",
     "DicomHdrParameters",
     "dicom_hdr",
-    "dicom_hdr_cargs",
     "dicom_hdr_execute",
-    "dicom_hdr_outputs",
     "dicom_hdr_params",
 ]

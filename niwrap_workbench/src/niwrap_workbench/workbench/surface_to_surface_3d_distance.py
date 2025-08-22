@@ -145,7 +145,7 @@ def surface_to_surface_3d_distance_outputs(
 
 def surface_to_surface_3d_distance_execute(
     params: SurfaceToSurface3dDistanceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
     Compute distance between corresponding vertices.
@@ -160,10 +160,12 @@ def surface_to_surface_3d_distance_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceToSurface3dDistanceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_TO_SURFACE_3D_DISTANCE_METADATA)
     params = execution.params(params)
     cargs = surface_to_surface_3d_distance_cargs(params, execution)
     ret = surface_to_surface_3d_distance_outputs(params, execution)
@@ -199,15 +201,13 @@ def surface_to_surface_3d_distance(
     Returns:
         NamedTuple of outputs (described in `SurfaceToSurface3dDistanceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_TO_SURFACE_3D_DISTANCE_METADATA)
     params = surface_to_surface_3d_distance_params(
         surface_comp=surface_comp,
         surface_ref=surface_ref,
         dists_out=dists_out,
         opt_vectors_vectors_out=opt_vectors_vectors_out,
     )
-    return surface_to_surface_3d_distance_execute(params, execution)
+    return surface_to_surface_3d_distance_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "SurfaceToSurface3dDistanceOutputs",
     "SurfaceToSurface3dDistanceParameters",
     "surface_to_surface_3d_distance",
-    "surface_to_surface_3d_distance_cargs",
     "surface_to_surface_3d_distance_execute",
-    "surface_to_surface_3d_distance_outputs",
     "surface_to_surface_3d_distance_params",
 ]

@@ -255,7 +255,7 @@ def v_3d_remlfit_outputs(
 
 def v_3d_remlfit_execute(
     params: V3dRemlfitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRemlfitOutputs:
     """
     Generalized least squares time series fit, with REML estimation of the temporal
@@ -267,10 +267,12 @@ def v_3d_remlfit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRemlfitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_REMLFIT_METADATA)
     params = execution.params(params)
     cargs = v_3d_remlfit_cargs(params, execution)
     ret = v_3d_remlfit_outputs(params, execution)
@@ -331,8 +333,6 @@ def v_3d_remlfit(
     Returns:
         NamedTuple of outputs (described in `V3dRemlfitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_REMLFIT_METADATA)
     params = v_3d_remlfit_params(
         input_file=input_file,
         regression_matrix=regression_matrix,
@@ -350,7 +350,7 @@ def v_3d_remlfit(
         quiet=quiet,
         verbose=verbose,
     )
-    return v_3d_remlfit_execute(params, execution)
+    return v_3d_remlfit_execute(params, runner)
 
 
 __all__ = [
@@ -358,8 +358,6 @@ __all__ = [
     "V3dRemlfitParameters",
     "V_3D_REMLFIT_METADATA",
     "v_3d_remlfit",
-    "v_3d_remlfit_cargs",
     "v_3d_remlfit_execute",
-    "v_3d_remlfit_outputs",
     "v_3d_remlfit_params",
 ]

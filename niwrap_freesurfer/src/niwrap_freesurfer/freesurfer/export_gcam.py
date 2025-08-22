@@ -186,7 +186,7 @@ def export_gcam_outputs(
 
 def export_gcam_execute(
     params: ExportGcamParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ExportGcamOutputs:
     """
     A tool for exporting GCAM (Geodesic Coordinate-based Anatomic Mapping) morphs.
@@ -197,10 +197,12 @@ def export_gcam_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ExportGcamOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EXPORT_GCAM_METADATA)
     params = execution.params(params)
     cargs = export_gcam_cargs(params, execution)
     ret = export_gcam_outputs(params, execution)
@@ -242,8 +244,6 @@ def export_gcam(
     Returns:
         NamedTuple of outputs (described in `ExportGcamOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EXPORT_GCAM_METADATA)
     params = export_gcam_params(
         fixed=fixed,
         moving=moving,
@@ -254,7 +254,7 @@ def export_gcam(
         interp_method=interp_method,
         test=test,
     )
-    return export_gcam_execute(params, execution)
+    return export_gcam_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "ExportGcamOutputs",
     "ExportGcamParameters",
     "export_gcam",
-    "export_gcam_cargs",
     "export_gcam_execute",
-    "export_gcam_outputs",
     "export_gcam_params",
 ]

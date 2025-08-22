@@ -182,7 +182,7 @@ def meica_py_outputs(
 
 def meica_py_execute(
     params: MeicaPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MeicaPyOutputs:
     """
     Multi-Echo Independent Component Analysis for fMRI denoising.
@@ -193,10 +193,12 @@ def meica_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MeicaPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MEICA_PY_METADATA)
     params = execution.params(params)
     cargs = meica_py_cargs(params, execution)
     ret = meica_py_outputs(params, execution)
@@ -235,8 +237,6 @@ def meica_py(
     Returns:
         NamedTuple of outputs (described in `MeicaPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MEICA_PY_METADATA)
     params = meica_py_params(
         infile=infile,
         echo_times=echo_times,
@@ -247,7 +247,7 @@ def meica_py(
         threshold=threshold,
         debug=debug,
     )
-    return meica_py_execute(params, execution)
+    return meica_py_execute(params, runner)
 
 
 __all__ = [
@@ -255,8 +255,6 @@ __all__ = [
     "MeicaPyOutputs",
     "MeicaPyParameters",
     "meica_py",
-    "meica_py_cargs",
     "meica_py_execute",
-    "meica_py_outputs",
     "meica_py_params",
 ]

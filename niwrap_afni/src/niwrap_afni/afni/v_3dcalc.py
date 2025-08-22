@@ -195,7 +195,7 @@ def v_3dcalc_outputs(
 
 def v_3dcalc_execute(
     params: V3dcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dcalcOutputs:
     """
     AFNI's calculator program.
@@ -206,10 +206,12 @@ def v_3dcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DCALC_METADATA)
     params = execution.params(params)
     cargs = v_3dcalc_cargs(params, execution)
     ret = v_3dcalc_outputs(params, execution)
@@ -252,8 +254,6 @@ def v_3dcalc(
     Returns:
         NamedTuple of outputs (described in `V3dcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DCALC_METADATA)
     params = v_3dcalc_params(
         in_file_a=in_file_a,
         in_file_b=in_file_b,
@@ -266,7 +266,7 @@ def v_3dcalc(
         expr=expr,
         prefix=prefix,
     )
-    return v_3dcalc_execute(params, execution)
+    return v_3dcalc_execute(params, runner)
 
 
 __all__ = [
@@ -274,8 +274,6 @@ __all__ = [
     "V3dcalcParameters",
     "V_3DCALC_METADATA",
     "v_3dcalc",
-    "v_3dcalc_cargs",
     "v_3dcalc_execute",
-    "v_3dcalc_outputs",
     "v_3dcalc_params",
 ]

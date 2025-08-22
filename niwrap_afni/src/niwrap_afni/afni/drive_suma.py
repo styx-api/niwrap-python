@@ -373,7 +373,7 @@ def drive_suma_outputs(
 
 def drive_suma_execute(
     params: DriveSumaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DriveSumaOutputs:
     """
     A program to drive suma from the command line.
@@ -384,10 +384,12 @@ def drive_suma_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DriveSumaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DRIVE_SUMA_METADATA)
     params = execution.params(params)
     cargs = drive_suma_cargs(params, execution)
     ret = drive_suma_outputs(params, execution)
@@ -473,8 +475,6 @@ def drive_suma(
     Returns:
         NamedTuple of outputs (described in `DriveSumaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DRIVE_SUMA_METADATA)
     params = drive_suma_params(
         command=command,
         surf_label=surf_label,
@@ -508,7 +508,7 @@ def drive_suma(
         c_demo=c_demo,
         viewer_cont=viewer_cont,
     )
-    return drive_suma_execute(params, execution)
+    return drive_suma_execute(params, runner)
 
 
 __all__ = [
@@ -516,8 +516,6 @@ __all__ = [
     "DriveSumaOutputs",
     "DriveSumaParameters",
     "drive_suma",
-    "drive_suma_cargs",
     "drive_suma_execute",
-    "drive_suma_outputs",
     "drive_suma_params",
 ]

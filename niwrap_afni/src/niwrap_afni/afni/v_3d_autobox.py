@@ -228,7 +228,7 @@ def v_3d_autobox_outputs(
 
 def v_3d_autobox_execute(
     params: V3dAutoboxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAutoboxOutputs:
     """
     Computes size of a box that fits around the volume. Can also be used to crop the
@@ -240,10 +240,12 @@ def v_3d_autobox_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAutoboxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AUTOBOX_METADATA)
     params = execution.params(params)
     cargs = v_3d_autobox_cargs(params, execution)
     ret = v_3d_autobox_outputs(params, execution)
@@ -305,8 +307,6 @@ def v_3d_autobox(
     Returns:
         NamedTuple of outputs (described in `V3dAutoboxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AUTOBOX_METADATA)
     params = v_3d_autobox_params(
         input_=input_,
         prefix=prefix,
@@ -323,7 +323,7 @@ def v_3d_autobox(
         npad=npad,
         npad_safety_on=npad_safety_on,
     )
-    return v_3d_autobox_execute(params, execution)
+    return v_3d_autobox_execute(params, runner)
 
 
 __all__ = [
@@ -331,8 +331,6 @@ __all__ = [
     "V3dAutoboxParameters",
     "V_3D_AUTOBOX_METADATA",
     "v_3d_autobox",
-    "v_3d_autobox_cargs",
     "v_3d_autobox_execute",
-    "v_3d_autobox_outputs",
     "v_3d_autobox_params",
 ]

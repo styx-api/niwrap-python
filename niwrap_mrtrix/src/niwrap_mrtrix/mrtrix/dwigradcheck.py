@@ -413,7 +413,7 @@ def dwigradcheck_outputs(
 
 def dwigradcheck_execute(
     params: DwigradcheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DwigradcheckOutputs:
     """
     Check the orientation of the diffusion gradient table.
@@ -424,10 +424,12 @@ def dwigradcheck_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DwigradcheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWIGRADCHECK_METADATA)
     params = execution.params(params)
     cargs = dwigradcheck_cargs(params, execution)
     ret = dwigradcheck_outputs(params, execution)
@@ -495,8 +497,6 @@ def dwigradcheck(
     Returns:
         NamedTuple of outputs (described in `DwigradcheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWIGRADCHECK_METADATA)
     params = dwigradcheck_params(
         input_image=input_image,
         grad=grad,
@@ -517,7 +517,7 @@ def dwigradcheck(
         help_=help_,
         version=version,
     )
-    return dwigradcheck_execute(params, execution)
+    return dwigradcheck_execute(params, runner)
 
 
 __all__ = [
@@ -528,13 +528,8 @@ __all__ = [
     "DwigradcheckOutputs",
     "DwigradcheckParameters",
     "dwigradcheck",
-    "dwigradcheck_cargs",
     "dwigradcheck_execute",
-    "dwigradcheck_export_grad_fsl_cargs",
-    "dwigradcheck_export_grad_fsl_outputs",
     "dwigradcheck_export_grad_fsl_params",
-    "dwigradcheck_fslgrad_cargs",
     "dwigradcheck_fslgrad_params",
-    "dwigradcheck_outputs",
     "dwigradcheck_params",
 ]

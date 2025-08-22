@@ -122,7 +122,7 @@ def mris_volume_outputs(
 
 def mris_volume_execute(
     params: MrisVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisVolumeOutputs:
     """
     A tool for computing the volume of a closed surface using a divergence formula.
@@ -133,10 +133,12 @@ def mris_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_VOLUME_METADATA)
     params = execution.params(params)
     cargs = mris_volume_cargs(params, execution)
     ret = mris_volume_outputs(params, execution)
@@ -163,13 +165,11 @@ def mris_volume(
     Returns:
         NamedTuple of outputs (described in `MrisVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_VOLUME_METADATA)
     params = mris_volume_params(
         surface_file=surface_file,
         verbose_flag=verbose_flag,
     )
-    return mris_volume_execute(params, execution)
+    return mris_volume_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "MrisVolumeOutputs",
     "MrisVolumeParameters",
     "mris_volume",
-    "mris_volume_cargs",
     "mris_volume_execute",
-    "mris_volume_outputs",
     "mris_volume_params",
 ]

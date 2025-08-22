@@ -148,7 +148,7 @@ def mris_jacobian_outputs(
 
 def mris_jacobian_execute(
     params: MrisJacobianParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisJacobianOutputs:
     """
     This program computes the Jacobian of a surface mapping.
@@ -159,10 +159,12 @@ def mris_jacobian_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisJacobianOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_JACOBIAN_METADATA)
     params = execution.params(params)
     cargs = mris_jacobian_cargs(params, execution)
     ret = mris_jacobian_outputs(params, execution)
@@ -197,8 +199,6 @@ def mris_jacobian(
     Returns:
         NamedTuple of outputs (described in `MrisJacobianOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_JACOBIAN_METADATA)
     params = mris_jacobian_params(
         original_surface=original_surface,
         mapped_surface=mapped_surface,
@@ -207,7 +207,7 @@ def mris_jacobian(
         noscale=noscale,
         invert=invert,
     )
-    return mris_jacobian_execute(params, execution)
+    return mris_jacobian_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "MrisJacobianOutputs",
     "MrisJacobianParameters",
     "mris_jacobian",
-    "mris_jacobian_cargs",
     "mris_jacobian_execute",
-    "mris_jacobian_outputs",
     "mris_jacobian_params",
 ]

@@ -413,7 +413,7 @@ def volume_resample_outputs(
 
 def volume_resample_execute(
     params: VolumeResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeResampleOutputs:
     """
     Transform and resample a volume file.
@@ -436,10 +436,12 @@ def volume_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = volume_resample_cargs(params, execution)
     ret = volume_resample_outputs(params, execution)
@@ -488,8 +490,6 @@ def volume_resample(
     Returns:
         NamedTuple of outputs (described in `VolumeResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_RESAMPLE_METADATA)
     params = volume_resample_params(
         volume_in=volume_in,
         volume_space=volume_space,
@@ -499,7 +499,7 @@ def volume_resample(
         affine_series=affine_series,
         warp=warp,
     )
-    return volume_resample_execute(params, execution)
+    return volume_resample_execute(params, runner)
 
 
 __all__ = [
@@ -512,18 +512,11 @@ __all__ = [
     "VolumeResampleParameters",
     "VolumeResampleWarpParameters",
     "volume_resample",
-    "volume_resample_affine_cargs",
     "volume_resample_affine_params",
-    "volume_resample_affine_series_cargs",
     "volume_resample_affine_series_params",
-    "volume_resample_cargs",
     "volume_resample_execute",
-    "volume_resample_flirt_1_cargs",
     "volume_resample_flirt_1_params",
-    "volume_resample_flirt_cargs",
     "volume_resample_flirt_params",
-    "volume_resample_outputs",
     "volume_resample_params",
-    "volume_resample_warp_cargs",
     "volume_resample_warp_params",
 ]

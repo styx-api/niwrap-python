@@ -17,3 +17,26 @@ from .reg_jacobian import *
 from .reg_resample import *
 from .reg_tools import *
 from .reg_transform import *
+from styxdefs import Runner as _Runner
+
+
+def execute(
+    params: dict,
+    runner: _Runner | None = None,
+) -> None:
+    """
+    Run a command in this package dynamically from a params object.
+    
+    Args:
+        params: The parameters.
+        runner: Command runner.
+    """
+    return {
+        "niftyreg.reg_aladin": reg_aladin_execute,
+        "niftyreg.reg_average": reg_average_execute,
+        "niftyreg.reg_f3d": reg_f3d_execute,
+        "niftyreg.reg_jacobian": reg_jacobian_execute,
+        "niftyreg.reg_resample": reg_resample_execute,
+        "niftyreg.reg_tools": reg_tools_execute,
+        "niftyreg.reg_transform": reg_transform_execute,
+    }[params["@type"]](params, runner)

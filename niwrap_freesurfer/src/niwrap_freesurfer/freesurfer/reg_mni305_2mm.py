@@ -132,7 +132,7 @@ def reg_mni305_2mm_outputs(
 
 def reg_mni305_2mm_execute(
     params: RegMni3052mmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegMni3052mmOutputs:
     """
     Computes the registration between the FreeSurfer MNI305 2mm space and a
@@ -144,10 +144,12 @@ def reg_mni305_2mm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegMni3052mmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_MNI305_2MM_METADATA)
     params = execution.params(params)
     cargs = reg_mni305_2mm_cargs(params, execution)
     ret = reg_mni305_2mm_outputs(params, execution)
@@ -176,13 +178,11 @@ def reg_mni305_2mm(
     Returns:
         NamedTuple of outputs (described in `RegMni3052mmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_MNI305_2MM_METADATA)
     params = reg_mni305_2mm_params(
         subject_id=subject_id,
         regfile=regfile,
     )
-    return reg_mni305_2mm_execute(params, execution)
+    return reg_mni305_2mm_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "RegMni3052mmOutputs",
     "RegMni3052mmParameters",
     "reg_mni305_2mm",
-    "reg_mni305_2mm_cargs",
     "reg_mni305_2mm_execute",
-    "reg_mni305_2mm_outputs",
     "reg_mni305_2mm_params",
 ]

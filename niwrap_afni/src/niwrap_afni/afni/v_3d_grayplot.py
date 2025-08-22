@@ -236,7 +236,7 @@ def v_3d_grayplot_outputs(
 
 def v_3d_grayplot_execute(
     params: V3dGrayplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dGrayplotOutputs:
     """
     Make a grayplot from a 3D+time dataset, like a carpet plot. Result is saved to a
@@ -248,10 +248,12 @@ def v_3d_grayplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dGrayplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_GRAYPLOT_METADATA)
     params = execution.params(params)
     cargs = v_3d_grayplot_cargs(params, execution)
     ret = v_3d_grayplot_outputs(params, execution)
@@ -313,8 +315,6 @@ def v_3d_grayplot(
     Returns:
         NamedTuple of outputs (described in `V3dGrayplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_GRAYPLOT_METADATA)
     params = v_3d_grayplot_params(
         input_=input_,
         mask=mask,
@@ -331,7 +331,7 @@ def v_3d_grayplot(
         percent=percent,
         raw_with_bounds=raw_with_bounds,
     )
-    return v_3d_grayplot_execute(params, execution)
+    return v_3d_grayplot_execute(params, runner)
 
 
 __all__ = [
@@ -339,8 +339,6 @@ __all__ = [
     "V3dGrayplotParameters",
     "V_3D_GRAYPLOT_METADATA",
     "v_3d_grayplot",
-    "v_3d_grayplot_cargs",
     "v_3d_grayplot_execute",
-    "v_3d_grayplot_outputs",
     "v_3d_grayplot_params",
 ]

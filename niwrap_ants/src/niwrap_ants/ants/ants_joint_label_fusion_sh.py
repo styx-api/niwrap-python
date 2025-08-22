@@ -234,7 +234,7 @@ def ants_joint_label_fusion_sh_outputs(
 
 def ants_joint_label_fusion_sh_execute(
     params: AntsJointLabelFusionShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsJointLabelFusionShOutputs:
     """
     The antsJointLabelFusion script is used for performing label fusion using
@@ -246,10 +246,12 @@ def ants_joint_label_fusion_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsJointLabelFusionShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_JOINT_LABEL_FUSION_SH_METADATA)
     params = execution.params(params)
     cargs = ants_joint_label_fusion_sh_cargs(params, execution)
     ret = ants_joint_label_fusion_sh_outputs(params, execution)
@@ -300,8 +302,6 @@ def ants_joint_label_fusion_sh(
     Returns:
         NamedTuple of outputs (described in `AntsJointLabelFusionShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_JOINT_LABEL_FUSION_SH_METADATA)
     params = ants_joint_label_fusion_sh_params(
         dimensionality=dimensionality,
         output=output,
@@ -316,7 +316,7 @@ def ants_joint_label_fusion_sh(
         rigid_transform_additional_options=rigid_transform_additional_options,
         similarity_metric_additional_options=similarity_metric_additional_options,
     )
-    return ants_joint_label_fusion_sh_execute(params, execution)
+    return ants_joint_label_fusion_sh_execute(params, runner)
 
 
 __all__ = [
@@ -324,8 +324,6 @@ __all__ = [
     "AntsJointLabelFusionShOutputs",
     "AntsJointLabelFusionShParameters",
     "ants_joint_label_fusion_sh",
-    "ants_joint_label_fusion_sh_cargs",
     "ants_joint_label_fusion_sh_execute",
-    "ants_joint_label_fusion_sh_outputs",
     "ants_joint_label_fusion_sh_params",
 ]

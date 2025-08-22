@@ -203,7 +203,7 @@ def mri_path2label_outputs(
 
 def mri_path2label_execute(
     params: MriPath2labelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriPath2labelOutputs:
     """
     Converts a path file to a label or a label file to a path file.
@@ -214,10 +214,12 @@ def mri_path2label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriPath2labelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_PATH2LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_path2label_cargs(params, execution)
     ret = mri_path2label_outputs(params, execution)
@@ -266,8 +268,6 @@ def mri_path2label(
     Returns:
         NamedTuple of outputs (described in `MriPath2labelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_PATH2LABEL_METADATA)
     params = mri_path2label_params(
         input_file=input_file,
         output_file=output_file,
@@ -281,7 +281,7 @@ def mri_path2label(
         source_file=source_file,
         dest_file=dest_file,
     )
-    return mri_path2label_execute(params, execution)
+    return mri_path2label_execute(params, runner)
 
 
 __all__ = [
@@ -289,8 +289,6 @@ __all__ = [
     "MriPath2labelOutputs",
     "MriPath2labelParameters",
     "mri_path2label",
-    "mri_path2label_cargs",
     "mri_path2label_execute",
-    "mri_path2label_outputs",
     "mri_path2label_params",
 ]

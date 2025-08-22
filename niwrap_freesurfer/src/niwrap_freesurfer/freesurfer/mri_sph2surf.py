@@ -194,7 +194,7 @@ def mri_sph2surf_outputs(
 
 def mri_sph2surf_execute(
     params: MriSph2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSph2surfOutputs:
     """
     Converts spherical functional data to surface data in the FreeSurfer processing
@@ -206,10 +206,12 @@ def mri_sph2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSph2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SPH2SURF_METADATA)
     params = execution.params(params)
     cargs = mri_sph2surf_cargs(params, execution)
     ret = mri_sph2surf_outputs(params, execution)
@@ -256,8 +258,6 @@ def mri_sph2surf(
     Returns:
         NamedTuple of outputs (described in `MriSph2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SPH2SURF_METADATA)
     params = mri_sph2surf_params(
         instem=instem,
         outstem=outstem,
@@ -269,7 +269,7 @@ def mri_sph2surf(
         verbose=verbose,
         version=version,
     )
-    return mri_sph2surf_execute(params, execution)
+    return mri_sph2surf_execute(params, runner)
 
 
 __all__ = [
@@ -277,8 +277,6 @@ __all__ = [
     "MriSph2surfOutputs",
     "MriSph2surfParameters",
     "mri_sph2surf",
-    "mri_sph2surf_cargs",
     "mri_sph2surf_execute",
-    "mri_sph2surf_outputs",
     "mri_sph2surf_params",
 ]

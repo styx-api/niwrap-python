@@ -429,7 +429,7 @@ def fabber_qbold_outputs(
 
 def fabber_qbold_execute(
     params: FabberQboldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberQboldOutputs:
     """
     Fabber - a flexible BaYesian modeling framework for FMRI and MRI analysis.
@@ -440,10 +440,12 @@ def fabber_qbold_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberQboldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_QBOLD_METADATA)
     params = execution.params(params)
     cargs = fabber_qbold_cargs(params, execution)
     ret = fabber_qbold_outputs(params, execution)
@@ -556,8 +558,6 @@ def fabber_qbold(
     Returns:
         NamedTuple of outputs (described in `FabberQboldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_QBOLD_METADATA)
     params = fabber_qbold_params(
         output_dir=output_dir,
         method=method,
@@ -595,7 +595,7 @@ def fabber_qbold(
         optfile=optfile,
         debug=debug,
     )
-    return fabber_qbold_execute(params, execution)
+    return fabber_qbold_execute(params, runner)
 
 
 __all__ = [
@@ -603,8 +603,6 @@ __all__ = [
     "FabberQboldOutputs",
     "FabberQboldParameters",
     "fabber_qbold",
-    "fabber_qbold_cargs",
     "fabber_qbold_execute",
-    "fabber_qbold_outputs",
     "fabber_qbold_params",
 ]

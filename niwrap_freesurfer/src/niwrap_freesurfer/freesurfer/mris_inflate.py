@@ -190,7 +190,7 @@ def mris_inflate_outputs(
 
 def mris_inflate_execute(
     params: MrisInflateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisInflateOutputs:
     """
     Cortical surface inflation tool.
@@ -201,10 +201,12 @@ def mris_inflate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisInflateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_INFLATE_METADATA)
     params = execution.params(params)
     cargs = mris_inflate_cargs(params, execution)
     ret = mris_inflate_outputs(params, execution)
@@ -248,8 +250,6 @@ def mris_inflate(
     Returns:
         NamedTuple of outputs (described in `MrisInflateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_INFLATE_METADATA)
     params = mris_inflate_params(
         input_surface=input_surface,
         output_surface=output_surface,
@@ -261,7 +261,7 @@ def mris_inflate(
         mm_flag=mm_flag,
         scale_flag=scale_flag,
     )
-    return mris_inflate_execute(params, execution)
+    return mris_inflate_execute(params, runner)
 
 
 __all__ = [
@@ -269,8 +269,6 @@ __all__ = [
     "MrisInflateOutputs",
     "MrisInflateParameters",
     "mris_inflate",
-    "mris_inflate_cargs",
     "mris_inflate_execute",
-    "mris_inflate_outputs",
     "mris_inflate_params",
 ]

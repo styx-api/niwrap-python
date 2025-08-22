@@ -176,7 +176,7 @@ def v_3d_diff_outputs(
 
 def v_3d_diff_execute(
     params: V3dDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDiffOutputs:
     """
     A program to examine element-wise differences between two images.
@@ -187,10 +187,12 @@ def v_3d_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DIFF_METADATA)
     params = execution.params(params)
     cargs = v_3d_diff_cargs(params, execution)
     ret = v_3d_diff_outputs(params, execution)
@@ -230,8 +232,6 @@ def v_3d_diff(
     Returns:
         NamedTuple of outputs (described in `V3dDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DIFF_METADATA)
     params = v_3d_diff_params(
         dataset_a=dataset_a,
         dataset_b=dataset_b,
@@ -242,7 +242,7 @@ def v_3d_diff(
         brutalist_mode=brutalist_mode,
         long_report_mode=long_report_mode,
     )
-    return v_3d_diff_execute(params, execution)
+    return v_3d_diff_execute(params, runner)
 
 
 __all__ = [
@@ -250,8 +250,6 @@ __all__ = [
     "V3dDiffParameters",
     "V_3D_DIFF_METADATA",
     "v_3d_diff",
-    "v_3d_diff_cargs",
     "v_3d_diff_execute",
-    "v_3d_diff_outputs",
     "v_3d_diff_params",
 ]

@@ -167,7 +167,7 @@ def isolate_labels_csh_outputs(
 
 def isolate_labels_csh_execute(
     params: IsolateLabelsCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IsolateLabelsCshOutputs:
     """
     Tool to separate out a particular or all labels into individual binary files for
@@ -179,10 +179,12 @@ def isolate_labels_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IsolateLabelsCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ISOLATE_LABELS_CSH_METADATA)
     params = execution.params(params)
     cargs = isolate_labels_csh_cargs(params, execution)
     ret = isolate_labels_csh_outputs(params, execution)
@@ -222,8 +224,6 @@ def isolate_labels_csh(
     Returns:
         NamedTuple of outputs (described in `IsolateLabelsCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ISOLATE_LABELS_CSH_METADATA)
     params = isolate_labels_csh_params(
         label_volume=label_volume,
         output_prefix=output_prefix,
@@ -233,7 +233,7 @@ def isolate_labels_csh(
         keepval=keepval,
         help_=help_,
     )
-    return isolate_labels_csh_execute(params, execution)
+    return isolate_labels_csh_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "IsolateLabelsCshOutputs",
     "IsolateLabelsCshParameters",
     "isolate_labels_csh",
-    "isolate_labels_csh_cargs",
     "isolate_labels_csh_execute",
-    "isolate_labels_csh_outputs",
     "isolate_labels_csh_params",
 ]

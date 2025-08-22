@@ -152,7 +152,7 @@ def v_3d_afnito_analyze_outputs(
 
 def v_3d_afnito_analyze_execute(
     params: V3dAfnitoAnalyzeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAfnitoAnalyzeOutputs:
     """
     Writes AFNI dataset to ANALYZE 7.5 format .hdr/.img file pairs.
@@ -163,10 +163,12 @@ def v_3d_afnito_analyze_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoAnalyzeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AFNITO_ANALYZE_METADATA)
     params = execution.params(params)
     cargs = v_3d_afnito_analyze_cargs(params, execution)
     ret = v_3d_afnito_analyze_outputs(params, execution)
@@ -199,15 +201,13 @@ def v_3d_afnito_analyze(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoAnalyzeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AFNITO_ANALYZE_METADATA)
     params = v_3d_afnito_analyze_params(
         v_4d_option=v_4d_option,
         orient_option=orient_option,
         output_name=output_name,
         afni_dataset=afni_dataset,
     )
-    return v_3d_afnito_analyze_execute(params, execution)
+    return v_3d_afnito_analyze_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "V3dAfnitoAnalyzeParameters",
     "V_3D_AFNITO_ANALYZE_METADATA",
     "v_3d_afnito_analyze",
-    "v_3d_afnito_analyze_cargs",
     "v_3d_afnito_analyze_execute",
-    "v_3d_afnito_analyze_outputs",
     "v_3d_afnito_analyze_params",
 ]

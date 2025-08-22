@@ -160,7 +160,7 @@ def analyzeto4dfp_outputs(
 
 def analyzeto4dfp_execute(
     params: Analyzeto4dfpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Analyzeto4dfpOutputs:
     """
     Convert ANALYZE image format to 4dfp format with various options.
@@ -171,10 +171,12 @@ def analyzeto4dfp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Analyzeto4dfpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANALYZETO4DFP_METADATA)
     params = execution.params(params)
     cargs = analyzeto4dfp_cargs(params, execution)
     ret = analyzeto4dfp_outputs(params, execution)
@@ -211,8 +213,6 @@ def analyzeto4dfp(
     Returns:
         NamedTuple of outputs (described in `Analyzeto4dfpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANALYZETO4DFP_METADATA)
     params = analyzeto4dfp_params(
         analyze_image=analyze_image,
         rois_scale=rois_scale,
@@ -222,7 +222,7 @@ def analyzeto4dfp(
         endian=endian,
         orientation=orientation,
     )
-    return analyzeto4dfp_execute(params, execution)
+    return analyzeto4dfp_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "Analyzeto4dfpOutputs",
     "Analyzeto4dfpParameters",
     "analyzeto4dfp",
-    "analyzeto4dfp_cargs",
     "analyzeto4dfp_execute",
-    "analyzeto4dfp_outputs",
     "analyzeto4dfp_params",
 ]

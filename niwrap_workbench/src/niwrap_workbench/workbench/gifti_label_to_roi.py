@@ -158,7 +158,7 @@ def gifti_label_to_roi_outputs(
 
 def gifti_label_to_roi_execute(
     params: GiftiLabelToRoiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
     Make a gifti label into an roi metric.
@@ -174,10 +174,12 @@ def gifti_label_to_roi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiLabelToRoiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GIFTI_LABEL_TO_ROI_METADATA)
     params = execution.params(params)
     cargs = gifti_label_to_roi_cargs(params, execution)
     ret = gifti_label_to_roi_outputs(params, execution)
@@ -217,8 +219,6 @@ def gifti_label_to_roi(
     Returns:
         NamedTuple of outputs (described in `GiftiLabelToRoiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GIFTI_LABEL_TO_ROI_METADATA)
     params = gifti_label_to_roi_params(
         label_in=label_in,
         metric_out=metric_out,
@@ -226,7 +226,7 @@ def gifti_label_to_roi(
         opt_key_label_key=opt_key_label_key,
         opt_map_map=opt_map_map,
     )
-    return gifti_label_to_roi_execute(params, execution)
+    return gifti_label_to_roi_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "GiftiLabelToRoiOutputs",
     "GiftiLabelToRoiParameters",
     "gifti_label_to_roi",
-    "gifti_label_to_roi_cargs",
     "gifti_label_to_roi_execute",
-    "gifti_label_to_roi_outputs",
     "gifti_label_to_roi_params",
 ]

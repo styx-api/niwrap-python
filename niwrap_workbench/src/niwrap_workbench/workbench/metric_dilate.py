@@ -214,7 +214,7 @@ def metric_dilate_outputs(
 
 def metric_dilate_execute(
     params: MetricDilateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricDilateOutputs:
     """
     Dilate a metric file.
@@ -244,10 +244,12 @@ def metric_dilate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricDilateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_DILATE_METADATA)
     params = execution.params(params)
     cargs = metric_dilate_cargs(params, execution)
     ret = metric_dilate_outputs(params, execution)
@@ -323,8 +325,6 @@ def metric_dilate(
     Returns:
         NamedTuple of outputs (described in `MetricDilateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_DILATE_METADATA)
     params = metric_dilate_params(
         metric=metric,
         surface=surface,
@@ -339,7 +339,7 @@ def metric_dilate(
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
         opt_legacy_cutoff=opt_legacy_cutoff,
     )
-    return metric_dilate_execute(params, execution)
+    return metric_dilate_execute(params, runner)
 
 
 __all__ = [
@@ -347,8 +347,6 @@ __all__ = [
     "MetricDilateOutputs",
     "MetricDilateParameters",
     "metric_dilate",
-    "metric_dilate_cargs",
     "metric_dilate_execute",
-    "metric_dilate_outputs",
     "metric_dilate_params",
 ]

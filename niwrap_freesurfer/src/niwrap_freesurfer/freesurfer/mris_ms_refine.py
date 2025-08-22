@@ -180,7 +180,7 @@ def mris_ms_refine_outputs(
 
 def mris_ms_refine_execute(
     params: MrisMsRefineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMsRefineOutputs:
     """
     This program positions the tessellation of the cortical surface at the white
@@ -194,10 +194,12 @@ def mris_ms_refine_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMsRefineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MS_REFINE_METADATA)
     params = execution.params(params)
     cargs = mris_ms_refine_cargs(params, execution)
     ret = mris_ms_refine_outputs(params, execution)
@@ -244,8 +246,6 @@ def mris_ms_refine(
     Returns:
         NamedTuple of outputs (described in `MrisMsRefineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MS_REFINE_METADATA)
     params = mris_ms_refine_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -257,7 +257,7 @@ def mris_ms_refine(
         average_curvature=average_curvature,
         white_only=white_only,
     )
-    return mris_ms_refine_execute(params, execution)
+    return mris_ms_refine_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "MrisMsRefineOutputs",
     "MrisMsRefineParameters",
     "mris_ms_refine",
-    "mris_ms_refine_cargs",
     "mris_ms_refine_execute",
-    "mris_ms_refine_outputs",
     "mris_ms_refine_params",
 ]

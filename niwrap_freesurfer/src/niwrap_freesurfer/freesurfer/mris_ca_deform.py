@@ -142,7 +142,7 @@ def mris_ca_deform_outputs(
 
 def mris_ca_deform_execute(
     params: MrisCaDeformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCaDeformOutputs:
     """
     Deforms a surface to match it to a volumetric map of cortical labels.
@@ -153,10 +153,12 @@ def mris_ca_deform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCaDeformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CA_DEFORM_METADATA)
     params = execution.params(params)
     cargs = mris_ca_deform_cargs(params, execution)
     ret = mris_ca_deform_outputs(params, execution)
@@ -191,8 +193,6 @@ def mris_ca_deform(
     Returns:
         NamedTuple of outputs (described in `MrisCaDeformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CA_DEFORM_METADATA)
     params = mris_ca_deform_params(
         input_surface=input_surface,
         label_vol=label_vol,
@@ -200,7 +200,7 @@ def mris_ca_deform(
         intensity_vol=intensity_vol,
         output_surface=output_surface,
     )
-    return mris_ca_deform_execute(params, execution)
+    return mris_ca_deform_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "MrisCaDeformOutputs",
     "MrisCaDeformParameters",
     "mris_ca_deform",
-    "mris_ca_deform_cargs",
     "mris_ca_deform_execute",
-    "mris_ca_deform_outputs",
     "mris_ca_deform_params",
 ]

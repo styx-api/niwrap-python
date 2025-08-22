@@ -138,7 +138,7 @@ def connected_components_outputs(
 
 def connected_components_execute(
     params: ConnectedComponentsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConnectedComponentsOutputs:
     """
     A tool for identifying connected components in an image.
@@ -149,10 +149,12 @@ def connected_components_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConnectedComponentsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONNECTED_COMPONENTS_METADATA)
     params = execution.params(params)
     cargs = connected_components_cargs(params, execution)
     ret = connected_components_outputs(params, execution)
@@ -181,14 +183,12 @@ def connected_components(
     Returns:
         NamedTuple of outputs (described in `ConnectedComponentsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONNECTED_COMPONENTS_METADATA)
     params = connected_components_params(
         input_image=input_image,
         output_image=output_image,
         threshold=threshold,
     )
-    return connected_components_execute(params, execution)
+    return connected_components_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "ConnectedComponentsOutputs",
     "ConnectedComponentsParameters",
     "connected_components",
-    "connected_components_cargs",
     "connected_components_execute",
-    "connected_components_outputs",
     "connected_components_params",
 ]

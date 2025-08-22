@@ -194,7 +194,7 @@ def volume_reduce_outputs(
 
 def volume_reduce_execute(
     params: VolumeReduceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeReduceOutputs:
     """
     Perform reduction operation across subvolumes.
@@ -227,10 +227,12 @@ def volume_reduce_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeReduceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_REDUCE_METADATA)
     params = execution.params(params)
     cargs = volume_reduce_cargs(params, execution)
     ret = volume_reduce_outputs(params, execution)
@@ -286,8 +288,6 @@ def volume_reduce(
     Returns:
         NamedTuple of outputs (described in `VolumeReduceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_REDUCE_METADATA)
     params = volume_reduce_params(
         volume_in=volume_in,
         operation=operation,
@@ -295,7 +295,7 @@ def volume_reduce(
         exclude_outliers=exclude_outliers,
         opt_only_numeric=opt_only_numeric,
     )
-    return volume_reduce_execute(params, execution)
+    return volume_reduce_execute(params, runner)
 
 
 __all__ = [
@@ -304,10 +304,7 @@ __all__ = [
     "VolumeReduceOutputs",
     "VolumeReduceParameters",
     "volume_reduce",
-    "volume_reduce_cargs",
-    "volume_reduce_exclude_outliers_cargs",
     "volume_reduce_exclude_outliers_params",
     "volume_reduce_execute",
-    "volume_reduce_outputs",
     "volume_reduce_params",
 ]

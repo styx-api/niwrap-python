@@ -209,7 +209,7 @@ def fdr_outputs(
 
 def fdr_execute(
     params: FdrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FdrOutputs:
     """
     False Discovery Rate (FDR) correction tool from FSL.
@@ -220,10 +220,12 @@ def fdr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FdrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FDR_METADATA)
     params = execution.params(params)
     cargs = fdr_cargs(params, execution)
     ret = fdr_outputs(params, execution)
@@ -272,8 +274,6 @@ def fdr(
     Returns:
         NamedTuple of outputs (described in `FdrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FDR_METADATA)
     params = fdr_params(
         infile=infile,
         maskfile=maskfile,
@@ -288,7 +288,7 @@ def fdr(
         debug_flag=debug_flag,
         verbose_flag=verbose_flag,
     )
-    return fdr_execute(params, execution)
+    return fdr_execute(params, runner)
 
 
 __all__ = [
@@ -296,8 +296,6 @@ __all__ = [
     "FdrOutputs",
     "FdrParameters",
     "fdr",
-    "fdr_cargs",
     "fdr_execute",
-    "fdr_outputs",
     "fdr_params",
 ]

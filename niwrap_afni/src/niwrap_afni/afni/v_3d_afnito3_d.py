@@ -142,7 +142,7 @@ def v_3d_afnito3_d_outputs(
 
 def v_3d_afnito3_d_execute(
     params: V3dAfnito3DParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAfnito3DOutputs:
     """
     Reads in an AFNI dataset, and writes it out as a 3D file.
@@ -153,10 +153,12 @@ def v_3d_afnito3_d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAfnito3DOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AFNITO3_D_METADATA)
     params = execution.params(params)
     cargs = v_3d_afnito3_d_cargs(params, execution)
     ret = v_3d_afnito3_d_outputs(params, execution)
@@ -187,15 +189,13 @@ def v_3d_afnito3_d(
     Returns:
         NamedTuple of outputs (described in `V3dAfnito3DOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AFNITO3_D_METADATA)
     params = v_3d_afnito3_d_params(
         dataset=dataset,
         prefix=prefix,
         binary=binary,
         text=text,
     )
-    return v_3d_afnito3_d_execute(params, execution)
+    return v_3d_afnito3_d_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "V3dAfnito3DParameters",
     "V_3D_AFNITO3_D_METADATA",
     "v_3d_afnito3_d",
-    "v_3d_afnito3_d_cargs",
     "v_3d_afnito3_d_execute",
-    "v_3d_afnito3_d_outputs",
     "v_3d_afnito3_d_params",
 ]

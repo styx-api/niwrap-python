@@ -132,7 +132,7 @@ def mris_profile_clustering_outputs(
 
 def mris_profile_clustering_execute(
     params: MrisProfileClusteringParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisProfileClusteringOutputs:
     """
     A tool from Freesurfer for clustering based on profile data.
@@ -143,10 +143,12 @@ def mris_profile_clustering_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisProfileClusteringOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_PROFILE_CLUSTERING_METADATA)
     params = execution.params(params)
     cargs = mris_profile_clustering_cargs(params, execution)
     ret = mris_profile_clustering_outputs(params, execution)
@@ -175,14 +177,12 @@ def mris_profile_clustering(
     Returns:
         NamedTuple of outputs (described in `MrisProfileClusteringOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_PROFILE_CLUSTERING_METADATA)
     params = mris_profile_clustering_params(
         input_file=input_file,
         output_file=output_file,
         other_options=other_options,
     )
-    return mris_profile_clustering_execute(params, execution)
+    return mris_profile_clustering_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "MrisProfileClusteringOutputs",
     "MrisProfileClusteringParameters",
     "mris_profile_clustering",
-    "mris_profile_clustering_cargs",
     "mris_profile_clustering_execute",
-    "mris_profile_clustering_outputs",
     "mris_profile_clustering_params",
 ]

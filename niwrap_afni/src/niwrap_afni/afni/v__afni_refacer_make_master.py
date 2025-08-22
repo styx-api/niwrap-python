@@ -121,7 +121,7 @@ def v__afni_refacer_make_master_outputs(
 
 def v__afni_refacer_make_master_execute(
     params: VAfniRefacerMakeMasterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniRefacerMakeMasterOutputs:
     """
     This script makes a new mask/shell dataset for use with @afni_refacer_run by
@@ -133,10 +133,12 @@ def v__afni_refacer_make_master_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerMakeMasterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_REFACER_MAKE_MASTER_METADATA)
     params = execution.params(params)
     cargs = v__afni_refacer_make_master_cargs(params, execution)
     ret = v__afni_refacer_make_master_outputs(params, execution)
@@ -163,12 +165,10 @@ def v__afni_refacer_make_master(
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerMakeMasterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_REFACER_MAKE_MASTER_METADATA)
     params = v__afni_refacer_make_master_params(
         input_datasets=input_datasets,
     )
-    return v__afni_refacer_make_master_execute(params, execution)
+    return v__afni_refacer_make_master_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "VAfniRefacerMakeMasterParameters",
     "V__AFNI_REFACER_MAKE_MASTER_METADATA",
     "v__afni_refacer_make_master",
-    "v__afni_refacer_make_master_cargs",
     "v__afni_refacer_make_master_execute",
-    "v__afni_refacer_make_master_outputs",
     "v__afni_refacer_make_master_params",
 ]

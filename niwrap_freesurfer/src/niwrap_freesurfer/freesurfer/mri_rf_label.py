@@ -464,7 +464,7 @@ def mri_rf_label_outputs(
 
 def mri_rf_label_execute(
     params: MriRfLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRfLabelOutputs:
     """
     MRI automatic tissue labeling using a Gaussian Classifier Atlas (GCA).
@@ -475,10 +475,12 @@ def mri_rf_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRfLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RF_LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_rf_label_cargs(params, execution)
     ret = mri_rf_label_outputs(params, execution)
@@ -585,8 +587,6 @@ def mri_rf_label(
     Returns:
         NamedTuple of outputs (described in `MriRfLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RF_LABEL_METADATA)
     params = mri_rf_label_params(
         input_volumes=input_volumes,
         transform_file=transform_file,
@@ -629,7 +629,7 @@ def mri_rf_label(
         longitudinal_lta=longitudinal_lta,
         relabel_unlikely_flag=relabel_unlikely_flag,
     )
-    return mri_rf_label_execute(params, execution)
+    return mri_rf_label_execute(params, runner)
 
 
 __all__ = [
@@ -637,8 +637,6 @@ __all__ = [
     "MriRfLabelOutputs",
     "MriRfLabelParameters",
     "mri_rf_label",
-    "mri_rf_label_cargs",
     "mri_rf_label_execute",
-    "mri_rf_label_outputs",
     "mri_rf_label_params",
 ]

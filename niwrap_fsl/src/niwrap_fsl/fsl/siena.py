@@ -224,7 +224,7 @@ def siena_outputs(
 
 def siena_execute(
     params: SienaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SienaOutputs:
     """
     Structural Image Evaluation, using Normalization, of Atrophy tool for evaluating
@@ -236,10 +236,12 @@ def siena_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SienaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIENA_METADATA)
     params = execution.params(params)
     cargs = siena_cargs(params, execution)
     ret = siena_outputs(params, execution)
@@ -295,8 +297,6 @@ def siena(
     Returns:
         NamedTuple of outputs (described in `SienaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIENA_METADATA)
     params = siena_params(
         input1=input1,
         input2=input2,
@@ -312,7 +312,7 @@ def siena(
         ventricle_analysis_flag=ventricle_analysis_flag,
         ventricle_mask=ventricle_mask,
     )
-    return siena_execute(params, execution)
+    return siena_execute(params, runner)
 
 
 __all__ = [
@@ -320,8 +320,6 @@ __all__ = [
     "SienaOutputs",
     "SienaParameters",
     "siena",
-    "siena_cargs",
     "siena_execute",
-    "siena_outputs",
     "siena_params",
 ]

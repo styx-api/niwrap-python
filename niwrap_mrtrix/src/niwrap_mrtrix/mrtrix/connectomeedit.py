@@ -233,7 +233,7 @@ def connectomeedit_outputs(
 
 def connectomeedit_execute(
     params: ConnectomeeditParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConnectomeeditOutputs:
     """
     Perform basic operations on a connectome.
@@ -250,10 +250,12 @@ def connectomeedit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConnectomeeditOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONNECTOMEEDIT_METADATA)
     params = execution.params(params)
     cargs = connectomeedit_cargs(params, execution)
     ret = connectomeedit_outputs(params, execution)
@@ -309,8 +311,6 @@ def connectomeedit(
     Returns:
         NamedTuple of outputs (described in `ConnectomeeditOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONNECTOMEEDIT_METADATA)
     params = connectomeedit_params(
         info=info,
         quiet=quiet,
@@ -324,7 +324,7 @@ def connectomeedit(
         operation=operation,
         output=output,
     )
-    return connectomeedit_execute(params, execution)
+    return connectomeedit_execute(params, runner)
 
 
 __all__ = [
@@ -333,10 +333,7 @@ __all__ = [
     "ConnectomeeditOutputs",
     "ConnectomeeditParameters",
     "connectomeedit",
-    "connectomeedit_cargs",
-    "connectomeedit_config_cargs",
     "connectomeedit_config_params",
     "connectomeedit_execute",
-    "connectomeedit_outputs",
     "connectomeedit_params",
 ]

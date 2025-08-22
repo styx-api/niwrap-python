@@ -196,7 +196,7 @@ def slow_surf_clustsim_py_outputs(
 
 def slow_surf_clustsim_py_execute(
     params: SlowSurfClustsimPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlowSurfClustsimPyOutputs:
     """
     Generate a tcsh script to run clustsim on surface.
@@ -207,10 +207,12 @@ def slow_surf_clustsim_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlowSurfClustsimPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLOW_SURF_CLUSTSIM_PY_METADATA)
     params = execution.params(params)
     cargs = slow_surf_clustsim_py_cargs(params, execution)
     ret = slow_surf_clustsim_py_outputs(params, execution)
@@ -258,8 +260,6 @@ def slow_surf_clustsim_py(
     Returns:
         NamedTuple of outputs (described in `SlowSurfClustsimPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLOW_SURF_CLUSTSIM_PY_METADATA)
     params = slow_surf_clustsim_py_params(
         on_surface=on_surface,
         save_script=save_script,
@@ -273,7 +273,7 @@ def slow_surf_clustsim_py(
         show_valid_opts=show_valid_opts,
         version=version,
     )
-    return slow_surf_clustsim_py_execute(params, execution)
+    return slow_surf_clustsim_py_execute(params, runner)
 
 
 __all__ = [
@@ -281,8 +281,6 @@ __all__ = [
     "SlowSurfClustsimPyOutputs",
     "SlowSurfClustsimPyParameters",
     "slow_surf_clustsim_py",
-    "slow_surf_clustsim_py_cargs",
     "slow_surf_clustsim_py_execute",
-    "slow_surf_clustsim_py_outputs",
     "slow_surf_clustsim_py_params",
 ]

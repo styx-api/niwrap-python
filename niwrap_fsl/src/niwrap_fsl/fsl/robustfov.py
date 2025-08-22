@@ -168,7 +168,7 @@ def robustfov_outputs(
 
 def robustfov_execute(
     params: RobustfovParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RobustfovOutputs:
     """
     Reduce FOV of image to remove lower head and neck.
@@ -179,10 +179,12 @@ def robustfov_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RobustfovOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ROBUSTFOV_METADATA)
     params = execution.params(params)
     cargs = robustfov_cargs(params, execution)
     ret = robustfov_outputs(params, execution)
@@ -217,8 +219,6 @@ def robustfov(
     Returns:
         NamedTuple of outputs (described in `RobustfovOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ROBUSTFOV_METADATA)
     params = robustfov_params(
         input_file=input_file,
         output_image=output_image,
@@ -227,7 +227,7 @@ def robustfov(
         debug_flag=debug_flag,
         verbose_flag=verbose_flag,
     )
-    return robustfov_execute(params, execution)
+    return robustfov_execute(params, runner)
 
 
 __all__ = [
@@ -235,8 +235,6 @@ __all__ = [
     "RobustfovOutputs",
     "RobustfovParameters",
     "robustfov",
-    "robustfov_cargs",
     "robustfov_execute",
-    "robustfov_outputs",
     "robustfov_params",
 ]

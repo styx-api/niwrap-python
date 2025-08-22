@@ -586,7 +586,7 @@ def mri_ca_label_outputs(
 
 def mri_ca_label_execute(
     params: MriCaLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCaLabelOutputs:
     """
     MRI cortical annotation labeler using atlas prior (GCA).
@@ -597,10 +597,12 @@ def mri_ca_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCaLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CA_LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_ca_label_cargs(params, execution)
     ret = mri_ca_label_outputs(params, execution)
@@ -734,8 +736,6 @@ def mri_ca_label(
     Returns:
         NamedTuple of outputs (described in `MriCaLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CA_LABEL_METADATA)
     params = mri_ca_label_params(
         input_volumes=input_volumes,
         transform_file=transform_file,
@@ -790,7 +790,7 @@ def mri_ca_label(
         sa_cblum_from_seg=sa_cblum_from_seg,
         threads=threads,
     )
-    return mri_ca_label_execute(params, execution)
+    return mri_ca_label_execute(params, runner)
 
 
 __all__ = [
@@ -798,8 +798,6 @@ __all__ = [
     "MriCaLabelOutputs",
     "MriCaLabelParameters",
     "mri_ca_label",
-    "mri_ca_label_cargs",
     "mri_ca_label_execute",
-    "mri_ca_label_outputs",
     "mri_ca_label_params",
 ]

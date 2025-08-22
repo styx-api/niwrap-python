@@ -190,7 +190,7 @@ def run_first_outputs(
 
 def run_first_execute(
     params: RunFirstParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunFirstOutputs:
     """
     A tool to run FSL's FIRST for subcortical segmentation.
@@ -201,10 +201,12 @@ def run_first_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunFirstOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_FIRST_METADATA)
     params = execution.params(params)
     cargs = run_first_cargs(params, execution)
     ret = run_first_outputs(params, execution)
@@ -248,8 +250,6 @@ def run_first(
     Returns:
         NamedTuple of outputs (described in `RunFirstOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_FIRST_METADATA)
     params = run_first_params(
         input_image=input_image,
         transformation_matrix=transformation_matrix,
@@ -261,7 +261,7 @@ def run_first(
         load_bvars=load_bvars,
         multiple_images_flag=multiple_images_flag,
     )
-    return run_first_execute(params, execution)
+    return run_first_execute(params, runner)
 
 
 __all__ = [
@@ -269,8 +269,6 @@ __all__ = [
     "RunFirstOutputs",
     "RunFirstParameters",
     "run_first",
-    "run_first_cargs",
     "run_first_execute",
-    "run_first_outputs",
     "run_first_params",
 ]

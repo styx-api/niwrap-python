@@ -220,7 +220,7 @@ def mri_nu_correct_mni_outputs(
 
 def mri_nu_correct_mni_execute(
     params: MriNuCorrectMniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriNuCorrectMniOutputs:
     """
     Wrapper for nu_correct, used for correcting intensity non-uniformity (bias
@@ -232,10 +232,12 @@ def mri_nu_correct_mni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriNuCorrectMniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_NU_CORRECT_MNI_METADATA)
     params = execution.params(params)
     cargs = mri_nu_correct_mni_cargs(params, execution)
     ret = mri_nu_correct_mni_outputs(params, execution)
@@ -290,8 +292,6 @@ def mri_nu_correct_mni(
     Returns:
         NamedTuple of outputs (described in `MriNuCorrectMniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_NU_CORRECT_MNI_METADATA)
     params = mri_nu_correct_mni_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -307,7 +307,7 @@ def mri_nu_correct_mni(
         cm_flag=cm_flag,
         debug_flag=debug_flag,
     )
-    return mri_nu_correct_mni_execute(params, execution)
+    return mri_nu_correct_mni_execute(params, runner)
 
 
 __all__ = [
@@ -315,8 +315,6 @@ __all__ = [
     "MriNuCorrectMniOutputs",
     "MriNuCorrectMniParameters",
     "mri_nu_correct_mni",
-    "mri_nu_correct_mni_cargs",
     "mri_nu_correct_mni_execute",
-    "mri_nu_correct_mni_outputs",
     "mri_nu_correct_mni_params",
 ]

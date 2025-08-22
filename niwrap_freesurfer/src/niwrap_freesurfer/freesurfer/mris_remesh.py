@@ -178,7 +178,7 @@ def mris_remesh_outputs(
 
 def mris_remesh_execute(
     params: MrisRemeshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRemeshOutputs:
     """
     Remeshes a surface to a desired edge length, number of vertices, or average face
@@ -190,10 +190,12 @@ def mris_remesh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRemeshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REMESH_METADATA)
     params = execution.params(params)
     cargs = mris_remesh_cargs(params, execution)
     ret = mris_remesh_outputs(params, execution)
@@ -232,8 +234,6 @@ def mris_remesh(
     Returns:
         NamedTuple of outputs (described in `MrisRemeshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REMESH_METADATA)
     params = mris_remesh_params(
         input_=input_,
         output=output,
@@ -243,7 +243,7 @@ def mris_remesh(
         remesh=remesh,
         iterations=iterations,
     )
-    return mris_remesh_execute(params, execution)
+    return mris_remesh_execute(params, runner)
 
 
 __all__ = [
@@ -251,8 +251,6 @@ __all__ = [
     "MrisRemeshOutputs",
     "MrisRemeshParameters",
     "mris_remesh",
-    "mris_remesh_cargs",
     "mris_remesh_execute",
-    "mris_remesh_outputs",
     "mris_remesh_params",
 ]

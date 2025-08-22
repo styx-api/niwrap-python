@@ -268,7 +268,7 @@ def mrcolour_outputs(
 
 def mrcolour_execute(
     params: MrcolourParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrcolourOutputs:
     """
     Apply a colour map to an image.
@@ -294,10 +294,12 @@ def mrcolour_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrcolourOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRCOLOUR_METADATA)
     params = execution.params(params)
     cargs = mrcolour_cargs(params, execution)
     ret = mrcolour_outputs(params, execution)
@@ -369,8 +371,6 @@ def mrcolour(
     Returns:
         NamedTuple of outputs (described in `MrcolourOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRCOLOUR_METADATA)
     params = mrcolour_params(
         upper=upper,
         lower=lower,
@@ -387,7 +387,7 @@ def mrcolour(
         map_=map_,
         output=output,
     )
-    return mrcolour_execute(params, execution)
+    return mrcolour_execute(params, runner)
 
 
 __all__ = [
@@ -396,10 +396,7 @@ __all__ = [
     "MrcolourOutputs",
     "MrcolourParameters",
     "mrcolour",
-    "mrcolour_cargs",
-    "mrcolour_config_cargs",
     "mrcolour_config_params",
     "mrcolour_execute",
-    "mrcolour_outputs",
     "mrcolour_params",
 ]

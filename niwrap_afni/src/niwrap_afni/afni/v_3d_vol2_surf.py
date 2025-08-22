@@ -467,7 +467,7 @@ def v_3d_vol2_surf_outputs(
 
 def v_3d_vol2_surf_execute(
     params: V3dVol2SurfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dVol2SurfOutputs:
     """
     Map data from a volume domain to a surface domain.
@@ -478,10 +478,12 @@ def v_3d_vol2_surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dVol2SurfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_VOL2_SURF_METADATA)
     params = execution.params(params)
     cargs = v_3d_vol2_surf_cargs(params, execution)
     ret = v_3d_vol2_surf_outputs(params, execution)
@@ -595,8 +597,6 @@ def v_3d_vol2_surf(
     Returns:
         NamedTuple of outputs (described in `V3dVol2SurfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_VOL2_SURF_METADATA)
     params = v_3d_vol2_surf_params(
         spec_file=spec_file,
         sv=sv,
@@ -641,7 +641,7 @@ def v_3d_vol2_surf(
         keep_norm_dir=keep_norm_dir,
         reverse_norm_dir=reverse_norm_dir,
     )
-    return v_3d_vol2_surf_execute(params, execution)
+    return v_3d_vol2_surf_execute(params, runner)
 
 
 __all__ = [
@@ -649,8 +649,6 @@ __all__ = [
     "V3dVol2SurfParameters",
     "V_3D_VOL2_SURF_METADATA",
     "v_3d_vol2_surf",
-    "v_3d_vol2_surf_cargs",
     "v_3d_vol2_surf_execute",
-    "v_3d_vol2_surf_outputs",
     "v_3d_vol2_surf_params",
 ]

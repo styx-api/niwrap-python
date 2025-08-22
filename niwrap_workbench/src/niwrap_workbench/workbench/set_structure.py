@@ -145,7 +145,7 @@ def set_structure_outputs(
 
 def set_structure_execute(
     params: SetStructureParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
     Set structure of a data file.
@@ -214,10 +214,12 @@ def set_structure_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetStructureOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SET_STRUCTURE_METADATA)
     params = execution.params(params)
     cargs = set_structure_cargs(params, execution)
     ret = set_structure_outputs(params, execution)
@@ -309,15 +311,13 @@ def set_structure(
     Returns:
         NamedTuple of outputs (described in `SetStructureOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SET_STRUCTURE_METADATA)
     params = set_structure_params(
         data_file=data_file,
         structure=structure,
         opt_surface_type_type=opt_surface_type_type,
         opt_surface_secondary_type_secondary_type=opt_surface_secondary_type_secondary_type,
     )
-    return set_structure_execute(params, execution)
+    return set_structure_execute(params, runner)
 
 
 __all__ = [
@@ -325,8 +325,6 @@ __all__ = [
     "SetStructureOutputs",
     "SetStructureParameters",
     "set_structure",
-    "set_structure_cargs",
     "set_structure_execute",
-    "set_structure_outputs",
     "set_structure_params",
 ]

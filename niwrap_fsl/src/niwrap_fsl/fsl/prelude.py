@@ -380,7 +380,7 @@ def prelude_outputs(
 
 def prelude_execute(
     params: PreludeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PreludeOutputs:
     """
     Phase Region Expanding Labeller for Unwrapping Discrete Estimates.
@@ -391,10 +391,12 @@ def prelude_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PreludeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PRELUDE_METADATA)
     params = execution.params(params)
     cargs = prelude_cargs(params, execution)
     ret = prelude_outputs(params, execution)
@@ -477,8 +479,6 @@ def prelude(
     Returns:
         NamedTuple of outputs (described in `PreludeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PRELUDE_METADATA)
     params = prelude_params(
         output_unwrap=output_unwrap,
         output_unwrap_alias=output_unwrap_alias,
@@ -511,7 +511,7 @@ def prelude(
         help_=help_,
         help_alias=help_alias,
     )
-    return prelude_execute(params, execution)
+    return prelude_execute(params, runner)
 
 
 __all__ = [
@@ -519,8 +519,6 @@ __all__ = [
     "PreludeOutputs",
     "PreludeParameters",
     "prelude",
-    "prelude_cargs",
     "prelude_execute",
-    "prelude_outputs",
     "prelude_params",
 ]

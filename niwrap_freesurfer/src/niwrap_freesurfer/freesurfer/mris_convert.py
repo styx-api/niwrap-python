@@ -422,7 +422,7 @@ def mris_convert_outputs(
 
 def mris_convert_execute(
     params: MrisConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisConvertOutputs:
     """
     This program will convert MRI-surface data formats.
@@ -433,10 +433,12 @@ def mris_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CONVERT_METADATA)
     params = execution.params(params)
     cargs = mris_convert_cargs(params, execution)
     ret = mris_convert_outputs(params, execution)
@@ -543,8 +545,6 @@ def mris_convert(
     Returns:
         NamedTuple of outputs (described in `MrisConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CONVERT_METADATA)
     params = mris_convert_params(
         input_file=input_file,
         second_input_file=second_input_file,
@@ -585,7 +585,7 @@ def mris_convert(
         cras_add=cras_add,
         cras_subtract=cras_subtract,
     )
-    return mris_convert_execute(params, execution)
+    return mris_convert_execute(params, runner)
 
 
 __all__ = [
@@ -593,8 +593,6 @@ __all__ = [
     "MrisConvertOutputs",
     "MrisConvertParameters",
     "mris_convert",
-    "mris_convert_cargs",
     "mris_convert_execute",
-    "mris_convert_outputs",
     "mris_convert_params",
 ]

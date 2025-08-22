@@ -281,7 +281,7 @@ def aparc_stats_aseg_outputs(
 
 def aparc_stats_aseg_execute(
     params: AparcStatsAsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AparcStatsAsegOutputs:
     """
     This program runs mris_ca_label, mris_anatomical_stats and mri_aparc2aseg.
@@ -292,10 +292,12 @@ def aparc_stats_aseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AparcStatsAsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APARC_STATS_ASEG_METADATA)
     params = execution.params(params)
     cargs = aparc_stats_aseg_cargs(params, execution)
     ret = aparc_stats_aseg_outputs(params, execution)
@@ -364,8 +366,6 @@ def aparc_stats_aseg(
     Returns:
         NamedTuple of outputs (described in `AparcStatsAsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APARC_STATS_ASEG_METADATA)
     params = aparc_stats_aseg_params(
         subject_name=subject_name,
         gcs_name=gcs_name,
@@ -390,7 +390,7 @@ def aparc_stats_aseg(
         expert_clean_flag=expert_clean_flag,
         expert_overwrite_flag=expert_overwrite_flag,
     )
-    return aparc_stats_aseg_execute(params, execution)
+    return aparc_stats_aseg_execute(params, runner)
 
 
 __all__ = [
@@ -398,8 +398,6 @@ __all__ = [
     "AparcStatsAsegOutputs",
     "AparcStatsAsegParameters",
     "aparc_stats_aseg",
-    "aparc_stats_aseg_cargs",
     "aparc_stats_aseg_execute",
-    "aparc_stats_aseg_outputs",
     "aparc_stats_aseg_params",
 ]

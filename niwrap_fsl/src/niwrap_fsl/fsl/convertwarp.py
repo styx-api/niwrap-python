@@ -253,7 +253,7 @@ def convertwarp_outputs(
 
 def convertwarp_execute(
     params: ConvertwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertwarpOutputs:
     """
     Use FSL convertwarp for combining multiple transforms into one.
@@ -264,10 +264,12 @@ def convertwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERTWARP_METADATA)
     params = execution.params(params)
     cargs = convertwarp_cargs(params, execution)
     ret = convertwarp_outputs(params, execution)
@@ -350,8 +352,6 @@ def convertwarp(
     Returns:
         NamedTuple of outputs (described in `ConvertwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERTWARP_METADATA)
     params = convertwarp_params(
         abswarp=abswarp,
         cons_jacobian=cons_jacobian,
@@ -370,7 +370,7 @@ def convertwarp(
         warp1=warp1,
         warp2=warp2,
     )
-    return convertwarp_execute(params, execution)
+    return convertwarp_execute(params, runner)
 
 
 __all__ = [
@@ -378,8 +378,6 @@ __all__ = [
     "ConvertwarpOutputs",
     "ConvertwarpParameters",
     "convertwarp",
-    "convertwarp_cargs",
     "convertwarp_execute",
-    "convertwarp_outputs",
     "convertwarp_params",
 ]

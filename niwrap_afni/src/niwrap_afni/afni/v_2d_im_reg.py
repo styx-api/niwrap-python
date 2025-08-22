@@ -214,7 +214,7 @@ def v_2d_im_reg_outputs(
 
 def v_2d_im_reg_execute(
     params: V2dImRegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V2dImRegOutputs:
     """
     2D image registration tool for 3D+time datasets, aligning images on a
@@ -226,10 +226,12 @@ def v_2d_im_reg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V2dImRegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_2D_IM_REG_METADATA)
     params = execution.params(params)
     cargs = v_2d_im_reg_cargs(params, execution)
     ret = v_2d_im_reg_outputs(params, execution)
@@ -284,8 +286,6 @@ def v_2d_im_reg(
     Returns:
         NamedTuple of outputs (described in `V2dImRegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_2D_IM_REG_METADATA)
     params = v_2d_im_reg_params(
         input_file=input_file,
         base_file=base_file,
@@ -300,7 +300,7 @@ def v_2d_im_reg(
         rprefix=rprefix,
         debug=debug,
     )
-    return v_2d_im_reg_execute(params, execution)
+    return v_2d_im_reg_execute(params, runner)
 
 
 __all__ = [
@@ -308,8 +308,6 @@ __all__ = [
     "V2dImRegParameters",
     "V_2D_IM_REG_METADATA",
     "v_2d_im_reg",
-    "v_2d_im_reg_cargs",
     "v_2d_im_reg_execute",
-    "v_2d_im_reg_outputs",
     "v_2d_im_reg_params",
 ]

@@ -141,7 +141,7 @@ def prompt_user_outputs(
 
 def prompt_user_execute(
     params: PromptUserParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PromptUserOutputs:
     """
     Tool that prompts a window requesting user input with a custom message.
@@ -152,10 +152,12 @@ def prompt_user_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PromptUserOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PROMPT_USER_METADATA)
     params = execution.params(params)
     cargs = prompt_user_cargs(params, execution)
     ret = prompt_user_outputs(params, execution)
@@ -186,14 +188,12 @@ def prompt_user(
     Returns:
         NamedTuple of outputs (described in `PromptUserOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PROMPT_USER_METADATA)
     params = prompt_user_params(
         pause_message=pause_message,
         timeout=timeout,
         timeout_alias=timeout_alias,
     )
-    return prompt_user_execute(params, execution)
+    return prompt_user_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "PromptUserOutputs",
     "PromptUserParameters",
     "prompt_user",
-    "prompt_user_cargs",
     "prompt_user_execute",
-    "prompt_user_outputs",
     "prompt_user_params",
 ]

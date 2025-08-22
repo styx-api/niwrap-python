@@ -319,7 +319,7 @@ def mris_ca_train_outputs(
 
 def mris_ca_train_execute(
     params: MrisCaTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCaTrainOutputs:
     """
     Creates a cortical parcellation atlas file based on one or more annotated
@@ -331,10 +331,12 @@ def mris_ca_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCaTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CA_TRAIN_METADATA)
     params = execution.params(params)
     cargs = mris_ca_train_cargs(params, execution)
     ret = mris_ca_train_outputs(params, execution)
@@ -411,8 +413,6 @@ def mris_ca_train(
     Returns:
         NamedTuple of outputs (described in `MrisCaTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CA_TRAIN_METADATA)
     params = mris_ca_train_params(
         hemi=hemi,
         canonsurf=canonsurf,
@@ -441,7 +441,7 @@ def mris_ca_train(
         help_=help_,
         version=version,
     )
-    return mris_ca_train_execute(params, execution)
+    return mris_ca_train_execute(params, runner)
 
 
 __all__ = [
@@ -449,8 +449,6 @@ __all__ = [
     "MrisCaTrainOutputs",
     "MrisCaTrainParameters",
     "mris_ca_train",
-    "mris_ca_train_cargs",
     "mris_ca_train_execute",
-    "mris_ca_train_outputs",
     "mris_ca_train_params",
 ]

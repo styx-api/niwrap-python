@@ -200,7 +200,7 @@ def v_3d_dwuncert_outputs(
 
 def v_3d_dwuncert_execute(
     params: V3dDwuncertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDwuncertOutputs:
     """
     Use jackknifing to estimate uncertainty of DTI parameters, important for
@@ -212,10 +212,12 @@ def v_3d_dwuncert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDwuncertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DWUNCERT_METADATA)
     params = execution.params(params)
     cargs = v_3d_dwuncert_cargs(params, execution)
     ret = v_3d_dwuncert_outputs(params, execution)
@@ -258,8 +260,6 @@ def v_3d_dwuncert(
     Returns:
         NamedTuple of outputs (described in `V3dDwuncertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DWUNCERT_METADATA)
     params = v_3d_dwuncert_params(
         input_file=input_file,
         input_prefix=input_prefix,
@@ -271,7 +271,7 @@ def v_3d_dwuncert(
         calc_thr_fa=calc_thr_fa,
         csf_fa=csf_fa,
     )
-    return v_3d_dwuncert_execute(params, execution)
+    return v_3d_dwuncert_execute(params, runner)
 
 
 __all__ = [
@@ -279,8 +279,6 @@ __all__ = [
     "V3dDwuncertParameters",
     "V_3D_DWUNCERT_METADATA",
     "v_3d_dwuncert",
-    "v_3d_dwuncert_cargs",
     "v_3d_dwuncert_execute",
-    "v_3d_dwuncert_outputs",
     "v_3d_dwuncert_params",
 ]

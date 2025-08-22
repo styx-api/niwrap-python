@@ -194,7 +194,7 @@ def v__examine_gen_feat_dists_outputs(
 
 def v__examine_gen_feat_dists_execute(
     params: VExamineGenFeatDistsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VExamineGenFeatDistsOutputs:
     """
     Examine histograms produced by 3dGenFeatDists.
@@ -205,10 +205,12 @@ def v__examine_gen_feat_dists_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VExamineGenFeatDistsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__EXAMINE_GEN_FEAT_DISTS_METADATA)
     params = execution.params(params)
     cargs = v__examine_gen_feat_dists_cargs(params, execution)
     ret = v__examine_gen_feat_dists_outputs(params, execution)
@@ -252,8 +254,6 @@ def v__examine_gen_feat_dists(
     Returns:
         NamedTuple of outputs (described in `VExamineGenFeatDistsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__EXAMINE_GEN_FEAT_DISTS_METADATA)
     params = v__examine_gen_feat_dists_params(
         features_dir=features_dir,
         wildcards=wildcards,
@@ -265,7 +265,7 @@ def v__examine_gen_feat_dists(
         echo=echo,
         help_=help_,
     )
-    return v__examine_gen_feat_dists_execute(params, execution)
+    return v__examine_gen_feat_dists_execute(params, runner)
 
 
 __all__ = [
@@ -273,8 +273,6 @@ __all__ = [
     "VExamineGenFeatDistsParameters",
     "V__EXAMINE_GEN_FEAT_DISTS_METADATA",
     "v__examine_gen_feat_dists",
-    "v__examine_gen_feat_dists_cargs",
     "v__examine_gen_feat_dists_execute",
-    "v__examine_gen_feat_dists_outputs",
     "v__examine_gen_feat_dists_params",
 ]

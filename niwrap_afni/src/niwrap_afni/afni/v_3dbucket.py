@@ -193,7 +193,7 @@ def v_3dbucket_outputs(
 
 def v_3dbucket_execute(
     params: V3dbucketParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dbucketOutputs:
     """
     Concatenate sub-bricks from input datasets into one big bucket dataset.
@@ -204,10 +204,12 @@ def v_3dbucket_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dbucketOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DBUCKET_METADATA)
     params = execution.params(params)
     cargs = v_3dbucket_cargs(params, execution)
     ret = v_3dbucket_outputs(params, execution)
@@ -253,8 +255,6 @@ def v_3dbucket(
     Returns:
         NamedTuple of outputs (described in `V3dbucketOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DBUCKET_METADATA)
     params = v_3dbucket_params(
         prefix=prefix,
         output=output,
@@ -267,7 +267,7 @@ def v_3dbucket(
         abuc=abuc,
         input_files=input_files,
     )
-    return v_3dbucket_execute(params, execution)
+    return v_3dbucket_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "V3dbucketParameters",
     "V_3DBUCKET_METADATA",
     "v_3dbucket",
-    "v_3dbucket_cargs",
     "v_3dbucket_execute",
-    "v_3dbucket_outputs",
     "v_3dbucket_params",
 ]

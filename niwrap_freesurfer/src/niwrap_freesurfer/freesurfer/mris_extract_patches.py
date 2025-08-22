@@ -121,7 +121,7 @@ def mris_extract_patches_outputs(
 
 def mris_extract_patches_execute(
     params: MrisExtractPatchesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisExtractPatchesOutputs:
     """
     A tool for extracting patches from brain surfaces.
@@ -132,10 +132,12 @@ def mris_extract_patches_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisExtractPatchesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_EXTRACT_PATCHES_METADATA)
     params = execution.params(params)
     cargs = mris_extract_patches_cargs(params, execution)
     ret = mris_extract_patches_outputs(params, execution)
@@ -162,13 +164,11 @@ def mris_extract_patches(
     Returns:
         NamedTuple of outputs (described in `MrisExtractPatchesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_EXTRACT_PATCHES_METADATA)
     params = mris_extract_patches_params(
         subject=subject,
         output_dir=output_dir,
     )
-    return mris_extract_patches_execute(params, execution)
+    return mris_extract_patches_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "MrisExtractPatchesOutputs",
     "MrisExtractPatchesParameters",
     "mris_extract_patches",
-    "mris_extract_patches_cargs",
     "mris_extract_patches_execute",
-    "mris_extract_patches_outputs",
     "mris_extract_patches_params",
 ]

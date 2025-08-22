@@ -211,7 +211,7 @@ def parc_atlas_jackknife_test_outputs(
 
 def parc_atlas_jackknife_test_execute(
     params: ParcAtlasJackknifeTestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ParcAtlasJackknifeTestOutputs:
     """
     Tool for conducting a jackknife accuracy test using FreeSurfer atlases.
@@ -222,10 +222,12 @@ def parc_atlas_jackknife_test_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ParcAtlasJackknifeTestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PARC_ATLAS_JACKKNIFE_TEST_METADATA)
     params = execution.params(params)
     cargs = parc_atlas_jackknife_test_cargs(params, execution)
     ret = parc_atlas_jackknife_test_outputs(params, execution)
@@ -272,8 +274,6 @@ def parc_atlas_jackknife_test(
     Returns:
         NamedTuple of outputs (described in `ParcAtlasJackknifeTestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PARC_ATLAS_JACKKNIFE_TEST_METADATA)
     params = parc_atlas_jackknife_test_params(
         register=register,
         reg_dist=reg_dist,
@@ -288,7 +288,7 @@ def parc_atlas_jackknife_test(
         binaries_path=binaries_path,
         dontrun=dontrun,
     )
-    return parc_atlas_jackknife_test_execute(params, execution)
+    return parc_atlas_jackknife_test_execute(params, runner)
 
 
 __all__ = [
@@ -296,8 +296,6 @@ __all__ = [
     "ParcAtlasJackknifeTestOutputs",
     "ParcAtlasJackknifeTestParameters",
     "parc_atlas_jackknife_test",
-    "parc_atlas_jackknife_test_cargs",
     "parc_atlas_jackknife_test_execute",
-    "parc_atlas_jackknife_test_outputs",
     "parc_atlas_jackknife_test_params",
 ]

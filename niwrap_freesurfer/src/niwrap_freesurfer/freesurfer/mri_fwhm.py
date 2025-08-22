@@ -441,7 +441,7 @@ def mri_fwhm_outputs(
 
 def mri_fwhm_execute(
     params: MriFwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFwhmOutputs:
     """
     FreeSurfer program to estimate the global Gaussian smoothness of a multi-frame,
@@ -453,10 +453,12 @@ def mri_fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FWHM_METADATA)
     params = execution.params(params)
     cargs = mri_fwhm_cargs(params, execution)
     ret = mri_fwhm_outputs(params, execution)
@@ -552,8 +554,6 @@ def mri_fwhm(
     Returns:
         NamedTuple of outputs (described in `MriFwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FWHM_METADATA)
     params = mri_fwhm_params(
         inputvol=inputvol,
         outputvol=outputvol,
@@ -591,7 +591,7 @@ def mri_fwhm(
         checkopts=checkopts,
         version=version,
     )
-    return mri_fwhm_execute(params, execution)
+    return mri_fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -599,8 +599,6 @@ __all__ = [
     "MriFwhmOutputs",
     "MriFwhmParameters",
     "mri_fwhm",
-    "mri_fwhm_cargs",
     "mri_fwhm_execute",
-    "mri_fwhm_outputs",
     "mri_fwhm_params",
 ]

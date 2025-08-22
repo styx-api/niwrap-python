@@ -207,7 +207,7 @@ def convert_fiber_orientations_outputs(
 
 def convert_fiber_orientations_execute(
     params: ConvertFiberOrientationsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
     """
     Convert bingham parameter volumes to fiber orientation file.
@@ -257,10 +257,12 @@ def convert_fiber_orientations_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertFiberOrientationsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_FIBER_ORIENTATIONS_METADATA)
     params = execution.params(params)
     cargs = convert_fiber_orientations_cargs(params, execution)
     ret = convert_fiber_orientations_outputs(params, execution)
@@ -328,14 +330,12 @@ def convert_fiber_orientations(
     Returns:
         NamedTuple of outputs (described in `ConvertFiberOrientationsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_FIBER_ORIENTATIONS_METADATA)
     params = convert_fiber_orientations_params(
         label_volume=label_volume,
         fiber_out=fiber_out,
         fiber=fiber,
     )
-    return convert_fiber_orientations_execute(params, execution)
+    return convert_fiber_orientations_execute(params, runner)
 
 
 __all__ = [
@@ -344,10 +344,7 @@ __all__ = [
     "ConvertFiberOrientationsOutputs",
     "ConvertFiberOrientationsParameters",
     "convert_fiber_orientations",
-    "convert_fiber_orientations_cargs",
     "convert_fiber_orientations_execute",
-    "convert_fiber_orientations_fiber_cargs",
     "convert_fiber_orientations_fiber_params",
-    "convert_fiber_orientations_outputs",
     "convert_fiber_orientations_params",
 ]

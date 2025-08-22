@@ -273,7 +273,7 @@ def convex_hull_outputs(
 
 def convex_hull_execute(
     params: ConvexHullParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvexHullOutputs:
     """
     A program to find the convex hull, or perform a Delaunay triangulation of a set
@@ -285,10 +285,12 @@ def convex_hull_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvexHullOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVEX_HULL_METADATA)
     params = execution.params(params)
     cargs = convex_hull_cargs(params, execution)
     ret = convex_hull_outputs(params, execution)
@@ -354,8 +356,6 @@ def convex_hull(
     Returns:
         NamedTuple of outputs (described in `ConvexHullOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVEX_HULL_METADATA)
     params = convex_hull_params(
         vol=vol,
         isoval=isoval,
@@ -374,7 +374,7 @@ def convex_hull(
         novolreg=novolreg,
         setenv=setenv,
     )
-    return convex_hull_execute(params, execution)
+    return convex_hull_execute(params, runner)
 
 
 __all__ = [
@@ -382,8 +382,6 @@ __all__ = [
     "ConvexHullOutputs",
     "ConvexHullParameters",
     "convex_hull",
-    "convex_hull_cargs",
     "convex_hull_execute",
-    "convex_hull_outputs",
     "convex_hull_params",
 ]

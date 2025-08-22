@@ -331,7 +331,7 @@ def v_3d_mema_outputs(
 
 def v_3d_mema_execute(
     params: V3dMemaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMemaOutputs:
     """
     3dMEMA is a program for performing Mixed Effects Meta Analysis at group level
@@ -343,10 +343,12 @@ def v_3d_mema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMemaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MEMA_METADATA)
     params = execution.params(params)
     cargs = v_3d_mema_cargs(params, execution)
     ret = v_3d_mema_outputs(params, execution)
@@ -426,8 +428,6 @@ def v_3d_mema(
     Returns:
         NamedTuple of outputs (described in `V3dMemaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MEMA_METADATA)
     params = v_3d_mema_params(
         prefix=prefix,
         jobs=jobs,
@@ -457,7 +457,7 @@ def v_3d_mema(
         conditions=conditions,
         no_tstat=no_tstat,
     )
-    return v_3d_mema_execute(params, execution)
+    return v_3d_mema_execute(params, runner)
 
 
 __all__ = [
@@ -465,8 +465,6 @@ __all__ = [
     "V3dMemaParameters",
     "V_3D_MEMA_METADATA",
     "v_3d_mema",
-    "v_3d_mema_cargs",
     "v_3d_mema_execute",
-    "v_3d_mema_outputs",
     "v_3d_mema_params",
 ]

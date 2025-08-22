@@ -141,7 +141,7 @@ def metric_mask_outputs(
 
 def metric_mask_execute(
     params: MetricMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricMaskOutputs:
     """
     Mask a metric file.
@@ -157,10 +157,12 @@ def metric_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_MASK_METADATA)
     params = execution.params(params)
     cargs = metric_mask_cargs(params, execution)
     ret = metric_mask_outputs(params, execution)
@@ -196,15 +198,13 @@ def metric_mask(
     Returns:
         NamedTuple of outputs (described in `MetricMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_MASK_METADATA)
     params = metric_mask_params(
         metric=metric,
         mask=mask,
         metric_out=metric_out,
         opt_column_column=opt_column_column,
     )
-    return metric_mask_execute(params, execution)
+    return metric_mask_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "MetricMaskOutputs",
     "MetricMaskParameters",
     "metric_mask",
-    "metric_mask_cargs",
     "metric_mask_execute",
-    "metric_mask_outputs",
     "metric_mask_params",
 ]

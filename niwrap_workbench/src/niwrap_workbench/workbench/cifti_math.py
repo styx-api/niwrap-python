@@ -263,7 +263,7 @@ def cifti_math_outputs(
 
 def cifti_math_execute(
     params: CiftiMathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
     Evaluate expression on cifti files.
@@ -347,10 +347,12 @@ def cifti_math_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiMathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_MATH_METADATA)
     params = execution.params(params)
     cargs = cifti_math_cargs(params, execution)
     ret = cifti_math_outputs(params, execution)
@@ -458,8 +460,6 @@ def cifti_math(
     Returns:
         NamedTuple of outputs (described in `CiftiMathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_MATH_METADATA)
     params = cifti_math_params(
         expression=expression,
         cifti_out=cifti_out,
@@ -467,7 +467,7 @@ def cifti_math(
         opt_override_mapping_check=opt_override_mapping_check,
         var=var,
     )
-    return cifti_math_execute(params, execution)
+    return cifti_math_execute(params, runner)
 
 
 __all__ = [
@@ -477,12 +477,8 @@ __all__ = [
     "CiftiMathSelectParameters",
     "CiftiMathVarParameters",
     "cifti_math",
-    "cifti_math_cargs",
     "cifti_math_execute",
-    "cifti_math_outputs",
     "cifti_math_params",
-    "cifti_math_select_cargs",
     "cifti_math_select_params",
-    "cifti_math_var_cargs",
     "cifti_math_var_params",
 ]

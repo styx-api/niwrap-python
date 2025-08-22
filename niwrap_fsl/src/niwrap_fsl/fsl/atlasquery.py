@@ -159,7 +159,7 @@ def atlasquery_outputs(
 
 def atlasquery_execute(
     params: AtlasqueryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AtlasqueryOutputs:
     """
     Structural lookup tool for FSL atlases.
@@ -170,10 +170,12 @@ def atlasquery_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AtlasqueryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ATLASQUERY_METADATA)
     params = execution.params(params)
     cargs = atlasquery_cargs(params, execution)
     ret = atlasquery_outputs(params, execution)
@@ -208,8 +210,6 @@ def atlasquery(
     Returns:
         NamedTuple of outputs (described in `AtlasqueryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ATLASQUERY_METADATA)
     params = atlasquery_params(
         dumpatlases_flag=dumpatlases_flag,
         atlas=atlas,
@@ -218,7 +218,7 @@ def atlasquery(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return atlasquery_execute(params, execution)
+    return atlasquery_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "AtlasqueryOutputs",
     "AtlasqueryParameters",
     "atlasquery",
-    "atlasquery_cargs",
     "atlasquery_execute",
-    "atlasquery_outputs",
     "atlasquery_params",
 ]

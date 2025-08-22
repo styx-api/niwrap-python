@@ -329,7 +329,7 @@ def waver_outputs(
 
 def waver_execute(
     params: WaverParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WaverOutputs:
     """
     Creates an ideal waveform timeseries file.
@@ -340,10 +340,12 @@ def waver_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WaverOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WAVER_METADATA)
     params = execution.params(params)
     cargs = waver_cargs(params, execution)
     ret = waver_outputs(params, execution)
@@ -420,8 +422,6 @@ def waver(
     Returns:
         NamedTuple of outputs (described in `WaverOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WAVER_METADATA)
     params = waver_params(
         wav=wav,
         gam=gam,
@@ -446,7 +446,7 @@ def waver(
         numout=numout,
         ver_flag=ver_flag,
     )
-    return waver_execute(params, execution)
+    return waver_execute(params, runner)
 
 
 __all__ = [
@@ -454,8 +454,6 @@ __all__ = [
     "WaverOutputs",
     "WaverParameters",
     "waver",
-    "waver_cargs",
     "waver_execute",
-    "waver_outputs",
     "waver_params",
 ]

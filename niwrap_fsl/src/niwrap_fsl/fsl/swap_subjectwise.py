@@ -169,7 +169,7 @@ def swap_subjectwise_outputs(
 
 def swap_subjectwise_execute(
     params: SwapSubjectwiseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SwapSubjectwiseOutputs:
     """
     Reordering of the dyadic vectors and fsamples according to average inter-subject
@@ -181,10 +181,12 @@ def swap_subjectwise_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SwapSubjectwiseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SWAP_SUBJECTWISE_METADATA)
     params = execution.params(params)
     cargs = swap_subjectwise_cargs(params, execution)
     ret = swap_subjectwise_outputs(params, execution)
@@ -222,8 +224,6 @@ def swap_subjectwise(
     Returns:
         NamedTuple of outputs (described in `SwapSubjectwiseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SWAP_SUBJECTWISE_METADATA)
     params = swap_subjectwise_params(
         dyads=dyads,
         fmean=fmean,
@@ -233,7 +233,7 @@ def swap_subjectwise(
         averageonly_flag=averageonly_flag,
         verbose_flag=verbose_flag,
     )
-    return swap_subjectwise_execute(params, execution)
+    return swap_subjectwise_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "SwapSubjectwiseOutputs",
     "SwapSubjectwiseParameters",
     "swap_subjectwise",
-    "swap_subjectwise_cargs",
     "swap_subjectwise_execute",
-    "swap_subjectwise_outputs",
     "swap_subjectwise_params",
 ]

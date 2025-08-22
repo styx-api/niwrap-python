@@ -395,7 +395,7 @@ def dcm2niix_afni_outputs(
 
 def dcm2niix_afni_execute(
     params: Dcm2niixAfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dcm2niixAfniOutputs:
     """
     DICOM to NIfTI converter optimized for AFNI.
@@ -406,10 +406,12 @@ def dcm2niix_afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dcm2niixAfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCM2NIIX_AFNI_METADATA)
     params = execution.params(params)
     cargs = dcm2niix_afni_cargs(params, execution)
     ret = dcm2niix_afni_outputs(params, execution)
@@ -505,8 +507,6 @@ def dcm2niix_afni(
     Returns:
         NamedTuple of outputs (described in `Dcm2niixAfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCM2NIIX_AFNI_METADATA)
     params = dcm2niix_afni_params(
         input_folder=input_folder,
         compression_level=compression_level,
@@ -538,7 +538,7 @@ def dcm2niix_afni(
         version=version,
         xml_=xml_,
     )
-    return dcm2niix_afni_execute(params, execution)
+    return dcm2niix_afni_execute(params, runner)
 
 
 __all__ = [
@@ -546,8 +546,6 @@ __all__ = [
     "Dcm2niixAfniOutputs",
     "Dcm2niixAfniParameters",
     "dcm2niix_afni",
-    "dcm2niix_afni_cargs",
     "dcm2niix_afni_execute",
-    "dcm2niix_afni_outputs",
     "dcm2niix_afni_params",
 ]

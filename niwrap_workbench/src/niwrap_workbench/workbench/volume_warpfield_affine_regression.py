@@ -202,7 +202,7 @@ def volume_warpfield_affine_regression_outputs(
 
 def volume_warpfield_affine_regression_execute(
     params: VolumeWarpfieldAffineRegressionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeWarpfieldAffineRegressionOutputs:
     """
     Regress affine from warpfield.
@@ -222,10 +222,12 @@ def volume_warpfield_affine_regression_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeWarpfieldAffineRegressionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA)
     params = execution.params(params)
     cargs = volume_warpfield_affine_regression_cargs(params, execution)
     ret = volume_warpfield_affine_regression_outputs(params, execution)
@@ -270,8 +272,6 @@ def volume_warpfield_affine_regression(
     Returns:
         NamedTuple of outputs (described in `VolumeWarpfieldAffineRegressionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_WARPFIELD_AFFINE_REGRESSION_METADATA)
     params = volume_warpfield_affine_regression_params(
         warpfield=warpfield,
         affine_out=affine_out,
@@ -279,7 +279,7 @@ def volume_warpfield_affine_regression(
         opt_fnirt_source_volume=opt_fnirt_source_volume,
         flirt_out=flirt_out,
     )
-    return volume_warpfield_affine_regression_execute(params, execution)
+    return volume_warpfield_affine_regression_execute(params, runner)
 
 
 __all__ = [
@@ -288,10 +288,7 @@ __all__ = [
     "VolumeWarpfieldAffineRegressionOutputs",
     "VolumeWarpfieldAffineRegressionParameters",
     "volume_warpfield_affine_regression",
-    "volume_warpfield_affine_regression_cargs",
     "volume_warpfield_affine_regression_execute",
-    "volume_warpfield_affine_regression_flirt_out_cargs",
     "volume_warpfield_affine_regression_flirt_out_params",
-    "volume_warpfield_affine_regression_outputs",
     "volume_warpfield_affine_regression_params",
 ]

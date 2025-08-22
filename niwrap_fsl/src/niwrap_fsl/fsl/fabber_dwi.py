@@ -402,7 +402,7 @@ def fabber_dwi_outputs(
 
 def fabber_dwi_execute(
     params: FabberDwiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberDwiOutputs:
     """
     Fabber diffusion-weighted imaging tool for model-based analysis using forward
@@ -414,10 +414,12 @@ def fabber_dwi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberDwiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_DWI_METADATA)
     params = execution.params(params)
     cargs = fabber_dwi_cargs(params, execution)
     ret = fabber_dwi_outputs(params, execution)
@@ -536,8 +538,6 @@ def fabber_dwi(
     Returns:
         NamedTuple of outputs (described in `FabberDwiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_DWI_METADATA)
     params = fabber_dwi_params(
         output_dir=output_dir,
         method=method,
@@ -576,7 +576,7 @@ def fabber_dwi(
         optfile=optfile,
         debug_flag=debug_flag,
     )
-    return fabber_dwi_execute(params, execution)
+    return fabber_dwi_execute(params, runner)
 
 
 __all__ = [
@@ -584,8 +584,6 @@ __all__ = [
     "FabberDwiOutputs",
     "FabberDwiParameters",
     "fabber_dwi",
-    "fabber_dwi_cargs",
     "fabber_dwi_execute",
-    "fabber_dwi_outputs",
     "fabber_dwi_params",
 ]

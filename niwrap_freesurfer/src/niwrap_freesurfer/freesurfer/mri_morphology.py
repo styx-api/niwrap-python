@@ -149,7 +149,7 @@ def mri_morphology_outputs(
 
 def mri_morphology_execute(
     params: MriMorphologyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMorphologyOutputs:
     """
     MRI Morphology Tool - performs various morphological operations on a volume.
@@ -160,10 +160,12 @@ def mri_morphology_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMorphologyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MORPHOLOGY_METADATA)
     params = execution.params(params)
     cargs = mri_morphology_cargs(params, execution)
     ret = mri_morphology_outputs(params, execution)
@@ -200,8 +202,6 @@ def mri_morphology(
     Returns:
         NamedTuple of outputs (described in `MriMorphologyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MORPHOLOGY_METADATA)
     params = mri_morphology_params(
         input_volume=input_volume,
         operation=operation,
@@ -209,7 +209,7 @@ def mri_morphology(
         output_volume=output_volume,
         label_option=label_option,
     )
-    return mri_morphology_execute(params, execution)
+    return mri_morphology_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "MriMorphologyOutputs",
     "MriMorphologyParameters",
     "mri_morphology",
-    "mri_morphology_cargs",
     "mri_morphology_execute",
-    "mri_morphology_outputs",
     "mri_morphology_params",
 ]

@@ -123,7 +123,7 @@ def talairach2_outputs(
 
 def talairach2_execute(
     params: Talairach2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Talairach2Outputs:
     """
     Tool for processing and converting talairach transformation files.
@@ -134,10 +134,12 @@ def talairach2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Talairach2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TALAIRACH2_METADATA)
     params = execution.params(params)
     cargs = talairach2_cargs(params, execution)
     ret = talairach2_outputs(params, execution)
@@ -164,13 +166,11 @@ def talairach2(
     Returns:
         NamedTuple of outputs (described in `Talairach2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TALAIRACH2_METADATA)
     params = talairach2_params(
         subject_id=subject_id,
         mgz_flag=mgz_flag,
     )
-    return talairach2_execute(params, execution)
+    return talairach2_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "Talairach2Outputs",
     "Talairach2Parameters",
     "talairach2",
-    "talairach2_cargs",
     "talairach2_execute",
-    "talairach2_outputs",
     "talairach2_params",
 ]

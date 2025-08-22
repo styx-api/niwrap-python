@@ -168,7 +168,7 @@ def dmri_project_end_points_outputs(
 
 def dmri_project_end_points_execute(
     params: DmriProjectEndPointsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriProjectEndPointsOutputs:
     """
     A tool for projecting the endpoints of streamlines onto cortical surfaces,
@@ -180,10 +180,12 @@ def dmri_project_end_points_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriProjectEndPointsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_PROJECT_END_POINTS_METADATA)
     params = execution.params(params)
     cargs = dmri_project_end_points_cargs(params, execution)
     ret = dmri_project_end_points_outputs(params, execution)
@@ -221,8 +223,6 @@ def dmri_project_end_points(
     Returns:
         NamedTuple of outputs (described in `DmriProjectEndPointsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_PROJECT_END_POINTS_METADATA)
     params = dmri_project_end_points_params(
         streamline_file=streamline_file,
         left_surface_file=left_surface_file,
@@ -231,7 +231,7 @@ def dmri_project_end_points(
         right_overlay_file=right_overlay_file,
         reference_image=reference_image,
     )
-    return dmri_project_end_points_execute(params, execution)
+    return dmri_project_end_points_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "DmriProjectEndPointsOutputs",
     "DmriProjectEndPointsParameters",
     "dmri_project_end_points",
-    "dmri_project_end_points_cargs",
     "dmri_project_end_points_execute",
-    "dmri_project_end_points_outputs",
     "dmri_project_end_points_params",
 ]

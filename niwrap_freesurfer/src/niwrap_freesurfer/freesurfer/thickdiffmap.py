@@ -138,7 +138,7 @@ def thickdiffmap_outputs(
 
 def thickdiffmap_execute(
     params: ThickdiffmapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ThickdiffmapOutputs:
     """
     Compute and analyze cortical thickness difference maps.
@@ -149,10 +149,12 @@ def thickdiffmap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ThickdiffmapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(THICKDIFFMAP_METADATA)
     params = execution.params(params)
     cargs = thickdiffmap_cargs(params, execution)
     ret = thickdiffmap_outputs(params, execution)
@@ -185,8 +187,6 @@ def thickdiffmap(
     Returns:
         NamedTuple of outputs (described in `ThickdiffmapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(THICKDIFFMAP_METADATA)
     params = thickdiffmap_params(
         subjscan1=subjscan1,
         subjscan2=subjscan2,
@@ -194,7 +194,7 @@ def thickdiffmap(
         hemi=hemi,
         steps=steps,
     )
-    return thickdiffmap_execute(params, execution)
+    return thickdiffmap_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "ThickdiffmapOutputs",
     "ThickdiffmapParameters",
     "thickdiffmap",
-    "thickdiffmap_cargs",
     "thickdiffmap_execute",
-    "thickdiffmap_outputs",
     "thickdiffmap_params",
 ]

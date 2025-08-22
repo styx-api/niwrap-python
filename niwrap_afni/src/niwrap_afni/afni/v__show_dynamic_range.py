@@ -125,7 +125,7 @@ def v__show_dynamic_range_outputs(
 
 def v__show_dynamic_range_execute(
     params: VShowDynamicRangeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VShowDynamicRangeOutputs:
     """
     The script checks the dynamic range of the time series data at locations inside
@@ -137,10 +137,12 @@ def v__show_dynamic_range_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VShowDynamicRangeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SHOW_DYNAMIC_RANGE_METADATA)
     params = execution.params(params)
     cargs = v__show_dynamic_range_cargs(params, execution)
     ret = v__show_dynamic_range_outputs(params, execution)
@@ -166,12 +168,10 @@ def v__show_dynamic_range(
     Returns:
         NamedTuple of outputs (described in `VShowDynamicRangeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SHOW_DYNAMIC_RANGE_METADATA)
     params = v__show_dynamic_range_params(
         infile=infile,
     )
-    return v__show_dynamic_range_execute(params, execution)
+    return v__show_dynamic_range_execute(params, runner)
 
 
 __all__ = [
@@ -179,8 +179,6 @@ __all__ = [
     "VShowDynamicRangeParameters",
     "V__SHOW_DYNAMIC_RANGE_METADATA",
     "v__show_dynamic_range",
-    "v__show_dynamic_range_cargs",
     "v__show_dynamic_range_execute",
-    "v__show_dynamic_range_outputs",
     "v__show_dynamic_range_params",
 ]

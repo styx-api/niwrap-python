@@ -220,7 +220,7 @@ def mri_easyreg_outputs(
 
 def mri_easyreg_execute(
     params: MriEasyregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEasyregOutputs:
     """
     EasyReg: deep learning registration simple and easy.
@@ -231,10 +231,12 @@ def mri_easyreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEasyregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EASYREG_METADATA)
     params = execution.params(params)
     cargs = mri_easyreg_cargs(params, execution)
     ret = mri_easyreg_outputs(params, execution)
@@ -281,8 +283,6 @@ def mri_easyreg(
     Returns:
         NamedTuple of outputs (described in `MriEasyregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EASYREG_METADATA)
     params = mri_easyreg_params(
         reference_image=reference_image,
         reference_segmentation=reference_segmentation,
@@ -295,7 +295,7 @@ def mri_easyreg(
         affine_only=affine_only,
         threads=threads,
     )
-    return mri_easyreg_execute(params, execution)
+    return mri_easyreg_execute(params, runner)
 
 
 __all__ = [
@@ -303,8 +303,6 @@ __all__ = [
     "MriEasyregOutputs",
     "MriEasyregParameters",
     "mri_easyreg",
-    "mri_easyreg_cargs",
     "mri_easyreg_execute",
-    "mri_easyreg_outputs",
     "mri_easyreg_params",
 ]

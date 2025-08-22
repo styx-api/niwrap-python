@@ -302,7 +302,7 @@ def cifti_merge_outputs(
 
 def cifti_merge_execute(
     params: CiftiMergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiMergeOutputs:
     """
     Merge or split on series, scalar, or label dimensions.
@@ -328,10 +328,12 @@ def cifti_merge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiMergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_MERGE_METADATA)
     params = execution.params(params)
     cargs = cifti_merge_cargs(params, execution)
     ret = cifti_merge_outputs(params, execution)
@@ -379,15 +381,13 @@ def cifti_merge(
     Returns:
         NamedTuple of outputs (described in `CiftiMergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_MERGE_METADATA)
     params = cifti_merge_params(
         cifti_out=cifti_out,
         opt_direction_direction=opt_direction_direction,
         opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
         cifti=cifti,
     )
-    return cifti_merge_execute(params, execution)
+    return cifti_merge_execute(params, runner)
 
 
 __all__ = [
@@ -398,14 +398,9 @@ __all__ = [
     "CiftiMergeParameters",
     "CiftiMergeUpToParameters",
     "cifti_merge",
-    "cifti_merge_cargs",
-    "cifti_merge_cifti_cargs",
     "cifti_merge_cifti_params",
     "cifti_merge_execute",
-    "cifti_merge_index_cargs",
     "cifti_merge_index_params",
-    "cifti_merge_outputs",
     "cifti_merge_params",
-    "cifti_merge_up_to_cargs",
     "cifti_merge_up_to_params",
 ]

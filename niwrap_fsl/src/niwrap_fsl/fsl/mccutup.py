@@ -150,7 +150,7 @@ def mccutup_outputs(
 
 def mccutup_execute(
     params: MccutupParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MccutupOutputs:
     """
     FSL mccutup tool.
@@ -161,10 +161,12 @@ def mccutup_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MccutupOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MCCUTUP_METADATA)
     params = execution.params(params)
     cargs = mccutup_cargs(params, execution)
     ret = mccutup_outputs(params, execution)
@@ -195,15 +197,13 @@ def mccutup(
     Returns:
         NamedTuple of outputs (described in `MccutupOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MCCUTUP_METADATA)
     params = mccutup_params(
         input_=input_,
         output_file=output_file,
         param1=param1,
         param2=param2,
     )
-    return mccutup_execute(params, execution)
+    return mccutup_execute(params, runner)
 
 
 __all__ = [
@@ -211,8 +211,6 @@ __all__ = [
     "MccutupOutputs",
     "MccutupParameters",
     "mccutup",
-    "mccutup_cargs",
     "mccutup_execute",
-    "mccutup_outputs",
     "mccutup_params",
 ]

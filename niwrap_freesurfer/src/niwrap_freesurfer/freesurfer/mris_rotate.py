@@ -157,7 +157,7 @@ def mris_rotate_outputs(
 
 def mris_rotate_execute(
     params: MrisRotateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRotateOutputs:
     """
     Rotate a surface given three angles.
@@ -168,10 +168,12 @@ def mris_rotate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRotateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ROTATE_METADATA)
     params = execution.params(params)
     cargs = mris_rotate_cargs(params, execution)
     ret = mris_rotate_outputs(params, execution)
@@ -209,8 +211,6 @@ def mris_rotate(
     Returns:
         NamedTuple of outputs (described in `MrisRotateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ROTATE_METADATA)
     params = mris_rotate_params(
         input_surface=input_surface,
         alpha_deg=alpha_deg,
@@ -220,7 +220,7 @@ def mris_rotate(
         regfile=regfile,
         invalidate_geometry=invalidate_geometry,
     )
-    return mris_rotate_execute(params, execution)
+    return mris_rotate_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "MrisRotateOutputs",
     "MrisRotateParameters",
     "mris_rotate",
-    "mris_rotate_cargs",
     "mris_rotate_execute",
-    "mris_rotate_outputs",
     "mris_rotate_params",
 ]

@@ -147,7 +147,7 @@ def deface_subject_outputs(
 
 def deface_subject_execute(
     params: DefaceSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DefaceSubjectOutputs:
     """
     Tool for defacing MRI images to anonymize patient data.
@@ -158,10 +158,12 @@ def deface_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DefaceSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DEFACE_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = deface_subject_cargs(params, execution)
     ret = deface_subject_outputs(params, execution)
@@ -192,15 +194,13 @@ def deface_subject(
     Returns:
         NamedTuple of outputs (described in `DefaceSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DEFACE_SUBJECT_METADATA)
     params = deface_subject_params(
         subjects_dir=subjects_dir,
         subject_id=subject_id,
         volume_input=volume_input,
         volume_output=volume_output,
     )
-    return deface_subject_execute(params, execution)
+    return deface_subject_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "DefaceSubjectOutputs",
     "DefaceSubjectParameters",
     "deface_subject",
-    "deface_subject_cargs",
     "deface_subject_execute",
-    "deface_subject_outputs",
     "deface_subject_params",
 ]

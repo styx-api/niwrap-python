@@ -271,7 +271,7 @@ def fixel2voxel_outputs(
 
 def fixel2voxel_execute(
     params: Fixel2voxelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fixel2voxelOutputs:
     """
     Convert a fixel-based sparse-data image into some form of scalar image.
@@ -312,10 +312,12 @@ def fixel2voxel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fixel2voxelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXEL2VOXEL_METADATA)
     params = execution.params(params)
     cargs = fixel2voxel_cargs(params, execution)
     ret = fixel2voxel_outputs(params, execution)
@@ -405,8 +407,6 @@ def fixel2voxel(
     Returns:
         NamedTuple of outputs (described in `Fixel2voxelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXEL2VOXEL_METADATA)
     params = fixel2voxel_params(
         number=number,
         fill=fill,
@@ -423,7 +423,7 @@ def fixel2voxel(
         operation=operation,
         image_out=image_out,
     )
-    return fixel2voxel_execute(params, execution)
+    return fixel2voxel_execute(params, runner)
 
 
 __all__ = [
@@ -432,10 +432,7 @@ __all__ = [
     "Fixel2voxelOutputs",
     "Fixel2voxelParameters",
     "fixel2voxel",
-    "fixel2voxel_cargs",
-    "fixel2voxel_config_cargs",
     "fixel2voxel_config_params",
     "fixel2voxel_execute",
-    "fixel2voxel_outputs",
     "fixel2voxel_params",
 ]

@@ -147,7 +147,7 @@ def v_3ddot_beta_outputs(
 
 def v_3ddot_beta_execute(
     params: V3ddotBetaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3ddotBetaOutputs:
     """
     Beta version of updating 3ddot, currently only performing eta2 tests and
@@ -159,10 +159,12 @@ def v_3ddot_beta_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3ddotBetaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DDOT_BETA_METADATA)
     params = execution.params(params)
     cargs = v_3ddot_beta_cargs(params, execution)
     ret = v_3ddot_beta_outputs(params, execution)
@@ -194,15 +196,13 @@ def v_3ddot_beta(
     Returns:
         NamedTuple of outputs (described in `V3ddotBetaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DDOT_BETA_METADATA)
     params = v_3ddot_beta_params(
         input_file=input_file,
         prefix=prefix,
         doeta2=doeta2,
         mask=mask,
     )
-    return v_3ddot_beta_execute(params, execution)
+    return v_3ddot_beta_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "V3ddotBetaParameters",
     "V_3DDOT_BETA_METADATA",
     "v_3ddot_beta",
-    "v_3ddot_beta_cargs",
     "v_3ddot_beta_execute",
-    "v_3ddot_beta_outputs",
     "v_3ddot_beta_params",
 ]

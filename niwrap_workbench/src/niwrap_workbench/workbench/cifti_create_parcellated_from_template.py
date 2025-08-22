@@ -195,7 +195,7 @@ def cifti_create_parcellated_from_template_outputs(
 
 def cifti_create_parcellated_from_template_execute(
     params: CiftiCreateParcellatedFromTemplateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
     Match parcels to template by name.
@@ -212,10 +212,12 @@ def cifti_create_parcellated_from_template_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateParcellatedFromTemplateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA)
     params = execution.params(params)
     cargs = cifti_create_parcellated_from_template_cargs(params, execution)
     ret = cifti_create_parcellated_from_template_outputs(params, execution)
@@ -257,8 +259,6 @@ def cifti_create_parcellated_from_template(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateParcellatedFromTemplateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CREATE_PARCELLATED_FROM_TEMPLATE_METADATA)
     params = cifti_create_parcellated_from_template_params(
         cifti_template=cifti_template,
         modify_direction=modify_direction,
@@ -266,7 +266,7 @@ def cifti_create_parcellated_from_template(
         opt_fill_value_value=opt_fill_value_value,
         cifti=cifti,
     )
-    return cifti_create_parcellated_from_template_execute(params, execution)
+    return cifti_create_parcellated_from_template_execute(params, runner)
 
 
 __all__ = [
@@ -275,10 +275,7 @@ __all__ = [
     "CiftiCreateParcellatedFromTemplateOutputs",
     "CiftiCreateParcellatedFromTemplateParameters",
     "cifti_create_parcellated_from_template",
-    "cifti_create_parcellated_from_template_cargs",
-    "cifti_create_parcellated_from_template_cifti_cargs",
     "cifti_create_parcellated_from_template_cifti_params",
     "cifti_create_parcellated_from_template_execute",
-    "cifti_create_parcellated_from_template_outputs",
     "cifti_create_parcellated_from_template_params",
 ]

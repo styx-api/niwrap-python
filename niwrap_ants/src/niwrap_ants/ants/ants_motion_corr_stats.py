@@ -182,7 +182,7 @@ def ants_motion_corr_stats_outputs(
 
 def ants_motion_corr_stats_execute(
     params: AntsMotionCorrStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsMotionCorrStatsOutputs:
     """
     Create summary measures of the parameters that are output by antsMotionCorr.
@@ -197,10 +197,12 @@ def ants_motion_corr_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_MOTION_CORR_STATS_METADATA)
     params = execution.params(params)
     cargs = ants_motion_corr_stats_cargs(params, execution)
     ret = ants_motion_corr_stats_outputs(params, execution)
@@ -244,8 +246,6 @@ def ants_motion_corr_stats(
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_MOTION_CORR_STATS_METADATA)
     params = ants_motion_corr_stats_params(
         mask=mask,
         moco_params=moco_params,
@@ -256,7 +256,7 @@ def ants_motion_corr_stats(
         timeseries_displacement=timeseries_displacement,
         help_=help_,
     )
-    return ants_motion_corr_stats_execute(params, execution)
+    return ants_motion_corr_stats_execute(params, runner)
 
 
 __all__ = [
@@ -264,8 +264,6 @@ __all__ = [
     "AntsMotionCorrStatsOutputs",
     "AntsMotionCorrStatsParameters",
     "ants_motion_corr_stats",
-    "ants_motion_corr_stats_cargs",
     "ants_motion_corr_stats_execute",
-    "ants_motion_corr_stats_outputs",
     "ants_motion_corr_stats_params",
 ]

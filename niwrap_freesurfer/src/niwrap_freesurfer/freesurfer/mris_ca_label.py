@@ -270,7 +270,7 @@ def mris_ca_label_outputs(
 
 def mris_ca_label_execute(
     params: MrisCaLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCaLabelOutputs:
     """
     Produces an annotation file in which each cortical surface vertex is assigned a
@@ -282,10 +282,12 @@ def mris_ca_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCaLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CA_LABEL_METADATA)
     params = execution.params(params)
     cargs = mris_ca_label_cargs(params, execution)
     ret = mris_ca_label_outputs(params, execution)
@@ -353,8 +355,6 @@ def mris_ca_label(
     Returns:
         NamedTuple of outputs (described in `MrisCaLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CA_LABEL_METADATA)
     params = mris_ca_label_params(
         subject=subject,
         hemi=hemi,
@@ -376,7 +376,7 @@ def mris_ca_label(
         help_flag=help_flag,
         version_flag=version_flag,
     )
-    return mris_ca_label_execute(params, execution)
+    return mris_ca_label_execute(params, runner)
 
 
 __all__ = [
@@ -384,8 +384,6 @@ __all__ = [
     "MrisCaLabelOutputs",
     "MrisCaLabelParameters",
     "mris_ca_label",
-    "mris_ca_label_cargs",
     "mris_ca_label_execute",
-    "mris_ca_label_outputs",
     "mris_ca_label_params",
 ]

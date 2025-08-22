@@ -130,7 +130,7 @@ def v_3d_despike_outputs(
 
 def v_3d_despike_execute(
     params: V3dDespikeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDespikeOutputs:
     """
     Removes 'spikes' from the 3D+time input dataset and writes a new dataset with
@@ -142,10 +142,12 @@ def v_3d_despike_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDespikeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DESPIKE_METADATA)
     params = execution.params(params)
     cargs = v_3d_despike_cargs(params, execution)
     ret = v_3d_despike_outputs(params, execution)
@@ -173,13 +175,11 @@ def v_3d_despike(
     Returns:
         NamedTuple of outputs (described in `V3dDespikeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DESPIKE_METADATA)
     params = v_3d_despike_params(
         prefix=prefix,
         in_file=in_file,
     )
-    return v_3d_despike_execute(params, execution)
+    return v_3d_despike_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "V3dDespikeParameters",
     "V_3D_DESPIKE_METADATA",
     "v_3d_despike",
-    "v_3d_despike_cargs",
     "v_3d_despike_execute",
-    "v_3d_despike_outputs",
     "v_3d_despike_params",
 ]

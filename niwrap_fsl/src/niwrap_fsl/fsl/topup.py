@@ -289,7 +289,7 @@ def topup_outputs(
 
 def topup_execute(
     params: TopupParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TopupOutputs:
     """
     topup is part of FSL and is used to estimate and correct for
@@ -301,10 +301,12 @@ def topup_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TopupOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TOPUP_METADATA)
     params = execution.params(params)
     cargs = topup_cargs(params, execution)
     ret = topup_outputs(params, execution)
@@ -384,8 +386,6 @@ def topup(
     Returns:
         NamedTuple of outputs (described in `TopupOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TOPUP_METADATA)
     params = topup_params(
         imain=imain,
         datain=datain,
@@ -411,7 +411,7 @@ def topup(
         nthr=nthr,
         verbose=verbose,
     )
-    return topup_execute(params, execution)
+    return topup_execute(params, runner)
 
 
 __all__ = [
@@ -419,8 +419,6 @@ __all__ = [
     "TopupOutputs",
     "TopupParameters",
     "topup",
-    "topup_cargs",
     "topup_execute",
-    "topup_outputs",
     "topup_params",
 ]

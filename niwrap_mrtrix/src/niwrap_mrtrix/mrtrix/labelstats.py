@@ -239,7 +239,7 @@ def labelstats_outputs(
 
 def labelstats_execute(
     params: LabelstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelstatsOutputs:
     """
     Compute statistics of parcels within a label image.
@@ -256,10 +256,12 @@ def labelstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABELSTATS_METADATA)
     params = execution.params(params)
     cargs = labelstats_cargs(params, execution)
     ret = labelstats_outputs(params, execution)
@@ -315,8 +317,6 @@ def labelstats(
     Returns:
         NamedTuple of outputs (described in `LabelstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABELSTATS_METADATA)
     params = labelstats_params(
         output=output,
         voxelspace=voxelspace,
@@ -330,7 +330,7 @@ def labelstats(
         version=version,
         input_=input_,
     )
-    return labelstats_execute(params, execution)
+    return labelstats_execute(params, runner)
 
 
 __all__ = [
@@ -339,10 +339,7 @@ __all__ = [
     "LabelstatsOutputs",
     "LabelstatsParameters",
     "labelstats",
-    "labelstats_cargs",
-    "labelstats_config_cargs",
     "labelstats_config_params",
     "labelstats_execute",
-    "labelstats_outputs",
     "labelstats_params",
 ]

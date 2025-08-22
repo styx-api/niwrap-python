@@ -163,7 +163,7 @@ def create_morph_outputs(
 
 def create_morph_execute(
     params: CreateMorphParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateMorphOutputs:
     """
     Tool to create morphological transformations using specified input transforms.
@@ -174,10 +174,12 @@ def create_morph_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateMorphOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_MORPH_METADATA)
     params = execution.params(params)
     cargs = create_morph_cargs(params, execution)
     ret = create_morph_outputs(params, execution)
@@ -212,8 +214,6 @@ def create_morph(
     Returns:
         NamedTuple of outputs (described in `CreateMorphOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_MORPH_METADATA)
     params = create_morph_params(
         input_transforms=input_transforms,
         output_transform=output_transform,
@@ -221,7 +221,7 @@ def create_morph(
         subject=subject,
         debug_coordinates=debug_coordinates,
     )
-    return create_morph_execute(params, execution)
+    return create_morph_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "CreateMorphOutputs",
     "CreateMorphParameters",
     "create_morph",
-    "create_morph_cargs",
     "create_morph_execute",
-    "create_morph_outputs",
     "create_morph_params",
 ]

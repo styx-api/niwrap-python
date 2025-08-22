@@ -126,7 +126,7 @@ def adjunct_select_str_py_outputs(
 
 def adjunct_select_str_py_execute(
     params: AdjunctSelectStrPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctSelectStrPyOutputs:
     """
     A simple helper function for the fat_proc* scripts.
@@ -137,10 +137,12 @@ def adjunct_select_str_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctSelectStrPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_SELECT_STR_PY_METADATA)
     params = execution.params(params)
     cargs = adjunct_select_str_py_cargs(params, execution)
     ret = adjunct_select_str_py_outputs(params, execution)
@@ -169,14 +171,12 @@ def adjunct_select_str_py(
     Returns:
         NamedTuple of outputs (described in `AdjunctSelectStrPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_SELECT_STR_PY_METADATA)
     params = adjunct_select_str_py_params(
         input_file=input_file,
         num_bricks=num_bricks,
         output_file=output_file,
     )
-    return adjunct_select_str_py_execute(params, execution)
+    return adjunct_select_str_py_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "AdjunctSelectStrPyOutputs",
     "AdjunctSelectStrPyParameters",
     "adjunct_select_str_py",
-    "adjunct_select_str_py_cargs",
     "adjunct_select_str_py_execute",
-    "adjunct_select_str_py_outputs",
     "adjunct_select_str_py_params",
 ]

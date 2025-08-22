@@ -393,7 +393,7 @@ def dcm2niix_outputs(
 
 def dcm2niix_execute(
     params: Dcm2niixParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dcm2niixOutputs:
     """
     Chris Rorden's dcm2niiX - DICOM to NIfTI converter. Converts DICOM files to
@@ -403,10 +403,12 @@ def dcm2niix_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dcm2niixOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCM2NIIX_METADATA)
     params = execution.params(params)
     cargs = dcm2niix_cargs(params, execution)
     ret = dcm2niix_outputs(params, execution)
@@ -502,8 +504,6 @@ def dcm2niix_(
     Returns:
         NamedTuple of outputs (described in `Dcm2niixOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCM2NIIX_METADATA)
     params = dcm2niix_params(
         compression_level=compression_level,
         adjacent=adjacent,
@@ -535,7 +535,7 @@ def dcm2niix_(
         xml_=xml_,
         input_dir=input_dir,
     )
-    return dcm2niix_execute(params, execution)
+    return dcm2niix_execute(params, runner)
 
 
 __all__ = [
@@ -543,8 +543,6 @@ __all__ = [
     "Dcm2niixOutputs",
     "Dcm2niixParameters",
     "dcm2niix_",
-    "dcm2niix_cargs",
     "dcm2niix_execute",
-    "dcm2niix_outputs",
     "dcm2niix_params",
 ]

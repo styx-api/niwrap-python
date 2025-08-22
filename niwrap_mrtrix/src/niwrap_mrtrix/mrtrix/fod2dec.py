@@ -310,7 +310,7 @@ def fod2dec_outputs(
 
 def fod2dec_execute(
     params: Fod2decParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fod2decOutputs:
     """
     Generate FOD-based DEC maps, with optional panchromatic sharpening and/or
@@ -337,10 +337,12 @@ def fod2dec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fod2decOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FOD2DEC_METADATA)
     params = execution.params(params)
     cargs = fod2dec_cargs(params, execution)
     ret = fod2dec_outputs(params, execution)
@@ -434,8 +436,6 @@ def fod2dec(
     Returns:
         NamedTuple of outputs (described in `Fod2decOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FOD2DEC_METADATA)
     params = fod2dec_params(
         mask=mask,
         contrast=contrast,
@@ -455,7 +455,7 @@ def fod2dec(
         input_=input_,
         output=output,
     )
-    return fod2dec_execute(params, execution)
+    return fod2dec_execute(params, runner)
 
 
 __all__ = [
@@ -464,10 +464,7 @@ __all__ = [
     "Fod2decOutputs",
     "Fod2decParameters",
     "fod2dec",
-    "fod2dec_cargs",
-    "fod2dec_config_cargs",
     "fod2dec_config_params",
     "fod2dec_execute",
-    "fod2dec_outputs",
     "fod2dec_params",
 ]

@@ -178,7 +178,7 @@ def inspec_outputs(
 
 def inspec_execute(
     params: InspecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InspecOutputs:
     """
     Outputs information found from specfile.
@@ -189,10 +189,12 @@ def inspec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InspecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INSPEC_METADATA)
     params = execution.params(params)
     cargs = inspec_cargs(params, execution)
     ret = inspec_outputs(params, execution)
@@ -232,8 +234,6 @@ def inspec(
     Returns:
         NamedTuple of outputs (described in `InspecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INSPEC_METADATA)
     params = inspec_params(
         specfile=specfile,
         newspecname=newspecname,
@@ -243,7 +243,7 @@ def inspec(
         state_rm=state_rm,
         help_=help_,
     )
-    return inspec_execute(params, execution)
+    return inspec_execute(params, runner)
 
 
 __all__ = [
@@ -251,8 +251,6 @@ __all__ = [
     "InspecOutputs",
     "InspecParameters",
     "inspec",
-    "inspec_cargs",
     "inspec_execute",
-    "inspec_outputs",
     "inspec_params",
 ]

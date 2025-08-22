@@ -122,7 +122,7 @@ def backend_average_dense_roi_outputs(
 
 def backend_average_dense_roi_execute(
     params: BackendAverageDenseRoiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BackendAverageDenseRoiOutputs:
     """
     Connectome db backend command for cifti average dense roi.
@@ -138,10 +138,12 @@ def backend_average_dense_roi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BackendAverageDenseRoiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BACKEND_AVERAGE_DENSE_ROI_METADATA)
     params = execution.params(params)
     cargs = backend_average_dense_roi_cargs(params, execution)
     ret = backend_average_dense_roi_outputs(params, execution)
@@ -173,13 +175,11 @@ def backend_average_dense_roi(
     Returns:
         NamedTuple of outputs (described in `BackendAverageDenseRoiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BACKEND_AVERAGE_DENSE_ROI_METADATA)
     params = backend_average_dense_roi_params(
         index_list=index_list,
         out_file=out_file,
     )
-    return backend_average_dense_roi_execute(params, execution)
+    return backend_average_dense_roi_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "BackendAverageDenseRoiOutputs",
     "BackendAverageDenseRoiParameters",
     "backend_average_dense_roi",
-    "backend_average_dense_roi_cargs",
     "backend_average_dense_roi_execute",
-    "backend_average_dense_roi_outputs",
     "backend_average_dense_roi_params",
 ]

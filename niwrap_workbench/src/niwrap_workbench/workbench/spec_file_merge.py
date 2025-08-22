@@ -127,7 +127,7 @@ def spec_file_merge_outputs(
 
 def spec_file_merge_execute(
     params: SpecFileMergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SpecFileMergeOutputs:
     """
     Merge two spec files into one.
@@ -141,10 +141,12 @@ def spec_file_merge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SpecFileMergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPEC_FILE_MERGE_METADATA)
     params = execution.params(params)
     cargs = spec_file_merge_cargs(params, execution)
     ret = spec_file_merge_outputs(params, execution)
@@ -176,14 +178,12 @@ def spec_file_merge(
     Returns:
         NamedTuple of outputs (described in `SpecFileMergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPEC_FILE_MERGE_METADATA)
     params = spec_file_merge_params(
         spec_1=spec_1,
         spec_2=spec_2,
         out_spec=out_spec,
     )
-    return spec_file_merge_execute(params, execution)
+    return spec_file_merge_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "SpecFileMergeOutputs",
     "SpecFileMergeParameters",
     "spec_file_merge",
-    "spec_file_merge_cargs",
     "spec_file_merge_execute",
-    "spec_file_merge_outputs",
     "spec_file_merge_params",
 ]

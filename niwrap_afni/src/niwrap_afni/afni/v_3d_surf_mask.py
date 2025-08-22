@@ -178,7 +178,7 @@ def v_3d_surf_mask_outputs(
 
 def v_3d_surf_mask_execute(
     params: V3dSurfMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSurfMaskOutputs:
     """
     Creates volumetric datasets marking voxels based on their location relative to a
@@ -190,10 +190,12 @@ def v_3d_surf_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSurfMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SURF_MASK_METADATA)
     params = execution.params(params)
     cargs = v_3d_surf_mask_cargs(params, execution)
     ret = v_3d_surf_mask_outputs(params, execution)
@@ -237,8 +239,6 @@ def v_3d_surf_mask(
     Returns:
         NamedTuple of outputs (described in `V3dSurfMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SURF_MASK_METADATA)
     params = v_3d_surf_mask_params(
         surface_type=surface_type,
         surface_file=surface_file,
@@ -250,7 +250,7 @@ def v_3d_surf_mask(
         flip_orientation=flip_orientation,
         no_distance=no_distance,
     )
-    return v_3d_surf_mask_execute(params, execution)
+    return v_3d_surf_mask_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "V3dSurfMaskParameters",
     "V_3D_SURF_MASK_METADATA",
     "v_3d_surf_mask",
-    "v_3d_surf_mask_cargs",
     "v_3d_surf_mask_execute",
-    "v_3d_surf_mask_outputs",
     "v_3d_surf_mask_params",
 ]

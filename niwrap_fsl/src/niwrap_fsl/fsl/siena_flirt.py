@@ -130,7 +130,7 @@ def siena_flirt_outputs(
 
 def siena_flirt_execute(
     params: SienaFlirtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SienaFlirtOutputs:
     """
     Wrapper for FLIRT image registration within the SIENA framework.
@@ -141,10 +141,12 @@ def siena_flirt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SienaFlirtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIENA_FLIRT_METADATA)
     params = execution.params(params)
     cargs = siena_flirt_cargs(params, execution)
     ret = siena_flirt_outputs(params, execution)
@@ -173,13 +175,11 @@ def siena_flirt(
     Returns:
         NamedTuple of outputs (described in `SienaFlirtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIENA_FLIRT_METADATA)
     params = siena_flirt_params(
         input1_fileroot=input1_fileroot,
         input2_fileroot=input2_fileroot,
     )
-    return siena_flirt_execute(params, execution)
+    return siena_flirt_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "SienaFlirtOutputs",
     "SienaFlirtParameters",
     "siena_flirt",
-    "siena_flirt_cargs",
     "siena_flirt_execute",
-    "siena_flirt_outputs",
     "siena_flirt_params",
 ]

@@ -116,7 +116,7 @@ def segment_monkey_outputs(
 
 def segment_monkey_execute(
     params: SegmentMonkeyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentMonkeyOutputs:
     """
     A tool for segmenting images using specified control points.
@@ -127,10 +127,12 @@ def segment_monkey_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentMonkeyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_MONKEY_METADATA)
     params = execution.params(params)
     cargs = segment_monkey_cargs(params, execution)
     ret = segment_monkey_outputs(params, execution)
@@ -155,12 +157,10 @@ def segment_monkey(
     Returns:
         NamedTuple of outputs (described in `SegmentMonkeyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_MONKEY_METADATA)
     params = segment_monkey_params(
         control_points=control_points,
     )
-    return segment_monkey_execute(params, execution)
+    return segment_monkey_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "SegmentMonkeyOutputs",
     "SegmentMonkeyParameters",
     "segment_monkey",
-    "segment_monkey_cargs",
     "segment_monkey_execute",
-    "segment_monkey_outputs",
     "segment_monkey_params",
 ]

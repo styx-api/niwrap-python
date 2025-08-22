@@ -242,7 +242,7 @@ def bet2_outputs(
 
 def bet2_execute(
     params: Bet2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Bet2Outputs:
     """
     Automated brain extraction tool for FSL.
@@ -253,10 +253,12 @@ def bet2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Bet2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BET2_METADATA)
     params = execution.params(params)
     cargs = bet2_cargs(params, execution)
     ret = bet2_outputs(params, execution)
@@ -318,8 +320,6 @@ def bet2(
     Returns:
         NamedTuple of outputs (described in `Bet2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BET2_METADATA)
     params = bet2_params(
         input_fileroot=input_fileroot,
         output_fileroot=output_fileroot,
@@ -337,7 +337,7 @@ def bet2(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return bet2_execute(params, execution)
+    return bet2_execute(params, runner)
 
 
 __all__ = [
@@ -345,8 +345,6 @@ __all__ = [
     "Bet2Outputs",
     "Bet2Parameters",
     "bet2",
-    "bet2_cargs",
     "bet2_execute",
-    "bet2_outputs",
     "bet2_params",
 ]

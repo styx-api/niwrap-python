@@ -160,7 +160,7 @@ def rca_long_tp_init_outputs(
 
 def rca_long_tp_init_execute(
     params: RcaLongTpInitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RcaLongTpInitOutputs:
     """
     Initialize long timepoint subject for recon-all processing.
@@ -171,10 +171,12 @@ def rca_long_tp_init_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RcaLongTpInitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RCA_LONG_TP_INIT_METADATA)
     params = execution.params(params)
     cargs = rca_long_tp_init_cargs(params, execution)
     ret = rca_long_tp_init_outputs(params, execution)
@@ -209,8 +211,6 @@ def rca_long_tp_init(
     Returns:
         NamedTuple of outputs (described in `RcaLongTpInitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RCA_LONG_TP_INIT_METADATA)
     params = rca_long_tp_init_params(
         timepoint=timepoint,
         base=base,
@@ -219,7 +219,7 @@ def rca_long_tp_init(
         expert_opts=expert_opts,
         subject=subject,
     )
-    return rca_long_tp_init_execute(params, execution)
+    return rca_long_tp_init_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "RcaLongTpInitOutputs",
     "RcaLongTpInitParameters",
     "rca_long_tp_init",
-    "rca_long_tp_init_cargs",
     "rca_long_tp_init_execute",
-    "rca_long_tp_init_outputs",
     "rca_long_tp_init_params",
 ]

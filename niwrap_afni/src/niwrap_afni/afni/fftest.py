@@ -132,7 +132,7 @@ def fftest_outputs(
 
 def fftest_execute(
     params: FftestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FftestOutputs:
     """
     A command line tool for testing purposes.
@@ -143,10 +143,12 @@ def fftest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FftestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FFTEST_METADATA)
     params = execution.params(params)
     cargs = fftest_cargs(params, execution)
     ret = fftest_outputs(params, execution)
@@ -177,15 +179,13 @@ def fftest(
     Returns:
         NamedTuple of outputs (described in `FftestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FFTEST_METADATA)
     params = fftest_params(
         length=length,
         num_tests=num_tests,
         vector_size=vector_size,
         quiet_mode=quiet_mode,
     )
-    return fftest_execute(params, execution)
+    return fftest_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "FftestOutputs",
     "FftestParameters",
     "fftest",
-    "fftest_cargs",
     "fftest_execute",
-    "fftest_outputs",
     "fftest_params",
 ]

@@ -187,7 +187,7 @@ def v_3d_stat_clust_outputs(
 
 def v_3d_stat_clust_execute(
     params: V3dStatClustParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dStatClustOutputs:
     """
     Perform agglomerative hierarchical clustering for user specified parameter
@@ -200,10 +200,12 @@ def v_3d_stat_clust_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dStatClustOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_STAT_CLUST_METADATA)
     params = execution.params(params)
     cargs = v_3d_stat_clust_cargs(params, execution)
     ret = v_3d_stat_clust_outputs(params, execution)
@@ -250,8 +252,6 @@ def v_3d_stat_clust(
     Returns:
         NamedTuple of outputs (described in `V3dStatClustOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_STAT_CLUST_METADATA)
     params = v_3d_stat_clust_params(
         prefix=prefix,
         session_dir=session_dir,
@@ -263,7 +263,7 @@ def v_3d_stat_clust(
         nclust=nclust,
         datasets=datasets,
     )
-    return v_3d_stat_clust_execute(params, execution)
+    return v_3d_stat_clust_execute(params, runner)
 
 
 __all__ = [
@@ -271,8 +271,6 @@ __all__ = [
     "V3dStatClustParameters",
     "V_3D_STAT_CLUST_METADATA",
     "v_3d_stat_clust",
-    "v_3d_stat_clust_cargs",
     "v_3d_stat_clust_execute",
-    "v_3d_stat_clust_outputs",
     "v_3d_stat_clust_params",
 ]

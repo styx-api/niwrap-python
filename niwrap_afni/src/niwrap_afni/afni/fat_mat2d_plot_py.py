@@ -290,7 +290,7 @@ def fat_mat2d_plot_py_outputs(
 
 def fat_mat2d_plot_py_execute(
     params: FatMat2dPlotPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatMat2dPlotPyOutputs:
     """
     Plots simple matrices output from 3dNetCorr (*.netcc) and 3dTrackID (*.grid).
@@ -301,10 +301,12 @@ def fat_mat2d_plot_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatMat2dPlotPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_MAT2D_PLOT_PY_METADATA)
     params = execution.params(params)
     cargs = fat_mat2d_plot_py_cargs(params, execution)
     ret = fat_mat2d_plot_py_outputs(params, execution)
@@ -387,8 +389,6 @@ def fat_mat2d_plot_py(
     Returns:
         NamedTuple of outputs (described in `FatMat2dPlotPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MAT2D_PLOT_PY_METADATA)
     params = fat_mat2d_plot_py_params(
         input_file=input_file,
         matrices=matrices,
@@ -416,7 +416,7 @@ def fat_mat2d_plot_py(
         help_=help_,
         help_view=help_view,
     )
-    return fat_mat2d_plot_py_execute(params, execution)
+    return fat_mat2d_plot_py_execute(params, runner)
 
 
 __all__ = [
@@ -424,8 +424,6 @@ __all__ = [
     "FatMat2dPlotPyOutputs",
     "FatMat2dPlotPyParameters",
     "fat_mat2d_plot_py",
-    "fat_mat2d_plot_py_cargs",
     "fat_mat2d_plot_py_execute",
-    "fat_mat2d_plot_py_outputs",
     "fat_mat2d_plot_py_params",
 ]

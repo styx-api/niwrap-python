@@ -193,7 +193,7 @@ def bedpostx_outputs(
 
 def bedpostx_execute(
     params: BedpostxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BedpostxOutputs:
     """
     Bayesian Estimation of Diffusion Parameters Obtained using Sampling Techniques
@@ -205,10 +205,12 @@ def bedpostx_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BedpostxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BEDPOSTX_METADATA)
     params = execution.params(params)
     cargs = bedpostx_cargs(params, execution)
     ret = bedpostx_outputs(params, execution)
@@ -252,8 +254,6 @@ def bedpostx(
     Returns:
         NamedTuple of outputs (described in `BedpostxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BEDPOSTX_METADATA)
     params = bedpostx_params(
         subject_dir=subject_dir,
         num_fibres=num_fibres,
@@ -264,7 +264,7 @@ def bedpostx(
         model_type=model_type,
         grad_nonlinear=grad_nonlinear,
     )
-    return bedpostx_execute(params, execution)
+    return bedpostx_execute(params, runner)
 
 
 __all__ = [
@@ -272,8 +272,6 @@ __all__ = [
     "BedpostxOutputs",
     "BedpostxParameters",
     "bedpostx",
-    "bedpostx_cargs",
     "bedpostx_execute",
-    "bedpostx_outputs",
     "bedpostx_params",
 ]

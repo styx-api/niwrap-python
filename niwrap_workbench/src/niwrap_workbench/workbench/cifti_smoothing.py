@@ -369,7 +369,7 @@ def cifti_smoothing_outputs(
 
 def cifti_smoothing_execute(
     params: CiftiSmoothingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiSmoothingOutputs:
     """
     Smooth a cifti file.
@@ -398,10 +398,12 @@ def cifti_smoothing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiSmoothingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_SMOOTHING_METADATA)
     params = execution.params(params)
     cargs = cifti_smoothing_cargs(params, execution)
     ret = cifti_smoothing_outputs(params, execution)
@@ -473,8 +475,6 @@ def cifti_smoothing(
     Returns:
         NamedTuple of outputs (described in `CiftiSmoothingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_SMOOTHING_METADATA)
     params = cifti_smoothing_params(
         cifti=cifti,
         surface_kernel=surface_kernel,
@@ -490,7 +490,7 @@ def cifti_smoothing(
         opt_fix_zeros_surface=opt_fix_zeros_surface,
         opt_merged_volume=opt_merged_volume,
     )
-    return cifti_smoothing_execute(params, execution)
+    return cifti_smoothing_execute(params, runner)
 
 
 __all__ = [
@@ -501,14 +501,9 @@ __all__ = [
     "CiftiSmoothingParameters",
     "CiftiSmoothingRightSurfaceParameters",
     "cifti_smoothing",
-    "cifti_smoothing_cargs",
-    "cifti_smoothing_cerebellum_surface_cargs",
     "cifti_smoothing_cerebellum_surface_params",
     "cifti_smoothing_execute",
-    "cifti_smoothing_left_surface_cargs",
     "cifti_smoothing_left_surface_params",
-    "cifti_smoothing_outputs",
     "cifti_smoothing_params",
-    "cifti_smoothing_right_surface_cargs",
     "cifti_smoothing_right_surface_params",
 ]

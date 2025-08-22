@@ -154,7 +154,7 @@ def super_resolution_outputs(
 
 def super_resolution_execute(
     params: SuperResolutionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SuperResolutionOutputs:
     """
     The SuperResolution tool enhances the spatial resolution of input images. The
@@ -168,10 +168,12 @@ def super_resolution_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SuperResolutionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SUPER_RESOLUTION_METADATA)
     params = execution.params(params)
     cargs = super_resolution_cargs(params, execution)
     ret = super_resolution_outputs(params, execution)
@@ -215,8 +217,6 @@ def super_resolution(
     Returns:
         NamedTuple of outputs (described in `SuperResolutionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SUPER_RESOLUTION_METADATA)
     params = super_resolution_params(
         image_dimension=image_dimension,
         output_image=output_image,
@@ -226,7 +226,7 @@ def super_resolution(
         number_of_levels=number_of_levels,
         input_image_files=input_image_files,
     )
-    return super_resolution_execute(params, execution)
+    return super_resolution_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "SuperResolutionOutputs",
     "SuperResolutionParameters",
     "super_resolution",
-    "super_resolution_cargs",
     "super_resolution_execute",
-    "super_resolution_outputs",
     "super_resolution_params",
 ]

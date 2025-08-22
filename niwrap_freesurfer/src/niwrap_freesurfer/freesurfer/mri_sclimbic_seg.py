@@ -326,7 +326,7 @@ def mri_sclimbic_seg_outputs(
 
 def mri_sclimbic_seg_execute(
     params: MriSclimbicSegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSclimbicSegOutputs:
     """
     Segment subcortical limbic structures using Freesurfer.
@@ -337,10 +337,12 @@ def mri_sclimbic_seg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSclimbicSegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SCLIMBIC_SEG_METADATA)
     params = execution.params(params)
     cargs = mri_sclimbic_seg_cargs(params, execution)
     ret = mri_sclimbic_seg_outputs(params, execution)
@@ -422,8 +424,6 @@ def mri_sclimbic_seg(
     Returns:
         NamedTuple of outputs (described in `MriSclimbicSegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SCLIMBIC_SEG_METADATA)
     params = mri_sclimbic_seg_params(
         input_file=input_file,
         output_file=output_file,
@@ -451,7 +451,7 @@ def mri_sclimbic_seg(
         no_cite=no_cite,
         nchannels=nchannels,
     )
-    return mri_sclimbic_seg_execute(params, execution)
+    return mri_sclimbic_seg_execute(params, runner)
 
 
 __all__ = [
@@ -459,8 +459,6 @@ __all__ = [
     "MriSclimbicSegOutputs",
     "MriSclimbicSegParameters",
     "mri_sclimbic_seg",
-    "mri_sclimbic_seg_cargs",
     "mri_sclimbic_seg_execute",
-    "mri_sclimbic_seg_outputs",
     "mri_sclimbic_seg_params",
 ]

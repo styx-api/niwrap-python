@@ -267,7 +267,7 @@ def v_3d_deconvolve_outputs(
 
 def v_3d_deconvolve_execute(
     params: V3dDeconvolveParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDeconvolveOutputs:
     """
     Program to calculate the deconvolution of a measurement 3D+time dataset with a
@@ -279,10 +279,12 @@ def v_3d_deconvolve_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDeconvolveOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DECONVOLVE_METADATA)
     params = execution.params(params)
     cargs = v_3d_deconvolve_cargs(params, execution)
     ret = v_3d_deconvolve_outputs(params, execution)
@@ -340,8 +342,6 @@ def v_3d_deconvolve(
     Returns:
         NamedTuple of outputs (described in `V3dDeconvolveOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DECONVOLVE_METADATA)
     params = v_3d_deconvolve_params(
         input_dataset=input_dataset,
         mask_dataset=mask_dataset,
@@ -359,7 +359,7 @@ def v_3d_deconvolve(
         x1_d=x1_d,
         jobs=jobs,
     )
-    return v_3d_deconvolve_execute(params, execution)
+    return v_3d_deconvolve_execute(params, runner)
 
 
 __all__ = [
@@ -367,8 +367,6 @@ __all__ = [
     "V3dDeconvolveParameters",
     "V_3D_DECONVOLVE_METADATA",
     "v_3d_deconvolve",
-    "v_3d_deconvolve_cargs",
     "v_3d_deconvolve_execute",
-    "v_3d_deconvolve_outputs",
     "v_3d_deconvolve_params",
 ]

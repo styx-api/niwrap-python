@@ -329,7 +329,7 @@ def warp2metric_outputs(
 
 def warp2metric_execute(
     params: Warp2metricParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Warp2metricOutputs:
     """
     Compute fixel-wise or voxel-wise metrics from a 4D deformation field.
@@ -349,10 +349,12 @@ def warp2metric_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Warp2metricOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WARP2METRIC_METADATA)
     params = execution.params(params)
     cargs = warp2metric_cargs(params, execution)
     ret = warp2metric_outputs(params, execution)
@@ -417,8 +419,6 @@ def warp2metric(
     Returns:
         NamedTuple of outputs (described in `Warp2metricOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WARP2METRIC_METADATA)
     params = warp2metric_params(
         fc=fc,
         jmat=jmat,
@@ -433,7 +433,7 @@ def warp2metric(
         version=version,
         in_=in_,
     )
-    return warp2metric_execute(params, execution)
+    return warp2metric_execute(params, runner)
 
 
 __all__ = [
@@ -443,12 +443,8 @@ __all__ = [
     "Warp2metricOutputs",
     "Warp2metricParameters",
     "warp2metric",
-    "warp2metric_cargs",
-    "warp2metric_config_cargs",
     "warp2metric_config_params",
     "warp2metric_execute",
-    "warp2metric_fc_cargs",
     "warp2metric_fc_params",
-    "warp2metric_outputs",
     "warp2metric_params",
 ]

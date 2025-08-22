@@ -119,7 +119,7 @@ def uber_proc_py_outputs(
 
 def uber_proc_py_execute(
     params: UberProcPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UberProcPyOutputs:
     """
     Uber processing tool - work in progress.
@@ -130,10 +130,12 @@ def uber_proc_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UberProcPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UBER_PROC_PY_METADATA)
     params = execution.params(params)
     cargs = uber_proc_py_cargs(params, execution)
     ret = uber_proc_py_outputs(params, execution)
@@ -159,12 +161,10 @@ def uber_proc_py(
     Returns:
         NamedTuple of outputs (described in `UberProcPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UBER_PROC_PY_METADATA)
     params = uber_proc_py_params(
         results_dir=results_dir,
     )
-    return uber_proc_py_execute(params, execution)
+    return uber_proc_py_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "UberProcPyOutputs",
     "UberProcPyParameters",
     "uber_proc_py",
-    "uber_proc_py_cargs",
     "uber_proc_py_execute",
-    "uber_proc_py_outputs",
     "uber_proc_py_params",
 ]

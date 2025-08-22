@@ -248,7 +248,7 @@ def v_3dfim__outputs(
 
 def v_3dfim__execute(
     params: V3dfimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dfimOutputs:
     """
     Program to calculate the cross-correlation of an ideal reference waveform with
@@ -260,10 +260,12 @@ def v_3dfim__execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dfimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DFIM__METADATA)
     params = execution.params(params)
     cargs = v_3dfim__cargs(params, execution)
     ret = v_3dfim__outputs(params, execution)
@@ -322,8 +324,6 @@ def v_3dfim_(
     Returns:
         NamedTuple of outputs (described in `V3dfimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DFIM__METADATA)
     params = v_3dfim__params(
         infile=infile,
         input1dfile=input1dfile,
@@ -338,7 +338,7 @@ def v_3dfim_(
         output_params=output_params,
         output_bucket=output_bucket,
     )
-    return v_3dfim__execute(params, execution)
+    return v_3dfim__execute(params, runner)
 
 
 __all__ = [
@@ -346,8 +346,6 @@ __all__ = [
     "V3dfimParameters",
     "V_3DFIM__METADATA",
     "v_3dfim_",
-    "v_3dfim__cargs",
     "v_3dfim__execute",
-    "v_3dfim__outputs",
     "v_3dfim__params",
 ]

@@ -205,7 +205,7 @@ def afni_open_outputs(
 
 def afni_open_execute(
     params: AfniOpenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniOpenOutputs:
     """
     A program to open various AFNI/SUMA files.
@@ -216,10 +216,12 @@ def afni_open_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniOpenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_OPEN_METADATA)
     params = execution.params(params)
     cargs = afni_open_cargs(params, execution)
     ret = afni_open_outputs(params, execution)
@@ -273,8 +275,6 @@ def afni_open(
     Returns:
         NamedTuple of outputs (described in `AfniOpenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_OPEN_METADATA)
     params = afni_open_params(
         files=files,
         method=method,
@@ -292,7 +292,7 @@ def afni_open(
         h_view=h_view,
         h_web=h_web,
     )
-    return afni_open_execute(params, execution)
+    return afni_open_execute(params, runner)
 
 
 __all__ = [
@@ -300,8 +300,6 @@ __all__ = [
     "AfniOpenOutputs",
     "AfniOpenParameters",
     "afni_open",
-    "afni_open_cargs",
     "afni_open_execute",
-    "afni_open_outputs",
     "afni_open_params",
 ]

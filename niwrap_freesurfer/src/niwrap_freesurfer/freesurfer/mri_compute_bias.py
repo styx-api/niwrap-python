@@ -125,7 +125,7 @@ def mri_compute_bias_outputs(
 
 def mri_compute_bias_execute(
     params: MriComputeBiasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeBiasOutputs:
     """
     Compute bias correction volumes for the given subjects and outputs the result to
@@ -137,10 +137,12 @@ def mri_compute_bias_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeBiasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_BIAS_METADATA)
     params = execution.params(params)
     cargs = mri_compute_bias_cargs(params, execution)
     ret = mri_compute_bias_outputs(params, execution)
@@ -168,13 +170,11 @@ def mri_compute_bias(
     Returns:
         NamedTuple of outputs (described in `MriComputeBiasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_BIAS_METADATA)
     params = mri_compute_bias_params(
         subjects=subjects,
         output_volume=output_volume,
     )
-    return mri_compute_bias_execute(params, execution)
+    return mri_compute_bias_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "MriComputeBiasOutputs",
     "MriComputeBiasParameters",
     "mri_compute_bias",
-    "mri_compute_bias_cargs",
     "mri_compute_bias_execute",
-    "mri_compute_bias_outputs",
     "mri_compute_bias_params",
 ]

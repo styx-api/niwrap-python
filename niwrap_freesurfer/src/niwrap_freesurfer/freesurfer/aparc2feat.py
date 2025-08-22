@@ -188,7 +188,7 @@ def aparc2feat_outputs(
 
 def aparc2feat_execute(
     params: Aparc2featParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Aparc2featOutputs:
     """
     Resamples the FreeSurfer automatic cortical segmentation to the FEAT functional
@@ -200,10 +200,12 @@ def aparc2feat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Aparc2featOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APARC2FEAT_METADATA)
     params = execution.params(params)
     cargs = aparc2feat_cargs(params, execution)
     ret = aparc2feat_outputs(params, execution)
@@ -247,8 +249,6 @@ def aparc2feat(
     Returns:
         NamedTuple of outputs (described in `Aparc2featOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APARC2FEAT_METADATA)
     params = aparc2feat_params(
         feat_directories=feat_directories,
         featdirfile=featdirfile,
@@ -260,7 +260,7 @@ def aparc2feat(
         help_flag=help_flag,
         version_flag=version_flag,
     )
-    return aparc2feat_execute(params, execution)
+    return aparc2feat_execute(params, runner)
 
 
 __all__ = [
@@ -268,8 +268,6 @@ __all__ = [
     "Aparc2featOutputs",
     "Aparc2featParameters",
     "aparc2feat",
-    "aparc2feat_cargs",
     "aparc2feat_execute",
-    "aparc2feat_outputs",
     "aparc2feat_params",
 ]

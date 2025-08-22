@@ -180,7 +180,7 @@ def mris_curvature2image_outputs(
 
 def mris_curvature2image_execute(
     params: MrisCurvature2imageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCurvature2imageOutputs:
     """
     Tool to convert surface curvature data to an image using FreeSurfer.
@@ -191,10 +191,12 @@ def mris_curvature2image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCurvature2imageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_CURVATURE2IMAGE_METADATA)
     params = execution.params(params)
     cargs = mris_curvature2image_cargs(params, execution)
     ret = mris_curvature2image_outputs(params, execution)
@@ -233,8 +235,6 @@ def mris_curvature2image(
     Returns:
         NamedTuple of outputs (described in `MrisCurvature2imageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_CURVATURE2IMAGE_METADATA)
     params = mris_curvature2image_params(
         surface=surface,
         mask=mask,
@@ -245,7 +245,7 @@ def mris_curvature2image(
         invert_flag=invert_flag,
         radius=radius,
     )
-    return mris_curvature2image_execute(params, execution)
+    return mris_curvature2image_execute(params, runner)
 
 
 __all__ = [
@@ -253,8 +253,6 @@ __all__ = [
     "MrisCurvature2imageOutputs",
     "MrisCurvature2imageParameters",
     "mris_curvature2image",
-    "mris_curvature2image_cargs",
     "mris_curvature2image_execute",
-    "mris_curvature2image_outputs",
     "mris_curvature2image_params",
 ]

@@ -185,7 +185,7 @@ def bedpostx_mgh_outputs(
 
 def bedpostx_mgh_execute(
     params: BedpostxMghParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BedpostxMghOutputs:
     """
     A modified version of FSL's bedpostx compatible with PBS queueing system for
@@ -197,10 +197,12 @@ def bedpostx_mgh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BedpostxMghOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BEDPOSTX_MGH_METADATA)
     params = execution.params(params)
     cargs = bedpostx_mgh_cargs(params, execution)
     ret = bedpostx_mgh_outputs(params, execution)
@@ -243,8 +245,6 @@ def bedpostx_mgh(
     Returns:
         NamedTuple of outputs (described in `BedpostxMghOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BEDPOSTX_MGH_METADATA)
     params = bedpostx_mgh_params(
         subject_directory=subject_directory,
         fibres=fibres,
@@ -255,7 +255,7 @@ def bedpostx_mgh(
         deconv_model=deconv_model,
         gradient_nonlin=gradient_nonlin,
     )
-    return bedpostx_mgh_execute(params, execution)
+    return bedpostx_mgh_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "BedpostxMghOutputs",
     "BedpostxMghParameters",
     "bedpostx_mgh",
-    "bedpostx_mgh_cargs",
     "bedpostx_mgh_execute",
-    "bedpostx_mgh_outputs",
     "bedpostx_mgh_params",
 ]

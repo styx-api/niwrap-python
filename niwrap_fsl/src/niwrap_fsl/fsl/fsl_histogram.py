@@ -357,7 +357,7 @@ def fsl_histogram_outputs(
 
 def fsl_histogram_execute(
     params: FslHistogramParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslHistogramOutputs:
     """
     Histogram plotting tool for FSL.
@@ -368,10 +368,12 @@ def fsl_histogram_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslHistogramOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_HISTOGRAM_METADATA)
     params = execution.params(params)
     cargs = fsl_histogram_cargs(params, execution)
     ret = fsl_histogram_outputs(params, execution)
@@ -448,8 +450,6 @@ def fsl_histogram(
     Returns:
         NamedTuple of outputs (described in `FslHistogramOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_HISTOGRAM_METADATA)
     params = fsl_histogram_params(
         input_file=input_file,
         input_file_duplicate=input_file_duplicate,
@@ -477,7 +477,7 @@ def fsl_histogram(
         zoom_factor_duplicate=zoom_factor_duplicate,
         use_gmm_flag=use_gmm_flag,
     )
-    return fsl_histogram_execute(params, execution)
+    return fsl_histogram_execute(params, runner)
 
 
 __all__ = [
@@ -485,8 +485,6 @@ __all__ = [
     "FslHistogramOutputs",
     "FslHistogramParameters",
     "fsl_histogram",
-    "fsl_histogram_cargs",
     "fsl_histogram_execute",
-    "fsl_histogram_outputs",
     "fsl_histogram_params",
 ]

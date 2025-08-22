@@ -189,7 +189,7 @@ def v_3d_tsort_outputs(
 
 def v_3d_tsort_execute(
     params: V3dTsortParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTsortOutputs:
     """
     Sorts each voxel in a dataset and produces a new dataset.
@@ -200,10 +200,12 @@ def v_3d_tsort_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTsortOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TSORT_METADATA)
     params = execution.params(params)
     cargs = v_3d_tsort_cargs(params, execution)
     ret = v_3d_tsort_outputs(params, execution)
@@ -249,8 +251,6 @@ def v_3d_tsort(
     Returns:
         NamedTuple of outputs (described in `V3dTsortOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TSORT_METADATA)
     params = v_3d_tsort_params(
         input_file=input_file,
         prefix=prefix,
@@ -264,7 +264,7 @@ def v_3d_tsort(
         randft=randft,
         datum=datum,
     )
-    return v_3d_tsort_execute(params, execution)
+    return v_3d_tsort_execute(params, runner)
 
 
 __all__ = [
@@ -272,8 +272,6 @@ __all__ = [
     "V3dTsortParameters",
     "V_3D_TSORT_METADATA",
     "v_3d_tsort",
-    "v_3d_tsort_cargs",
     "v_3d_tsort_execute",
-    "v_3d_tsort_outputs",
     "v_3d_tsort_params",
 ]

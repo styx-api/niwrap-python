@@ -249,7 +249,7 @@ def align_epi_anat_outputs(
 
 def align_epi_anat_execute(
     params: AlignEpiAnatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AlignEpiAnatOutputs:
     """
     Align EPI to anatomical datasets or vice versa.
@@ -260,10 +260,12 @@ def align_epi_anat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AlignEpiAnatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ALIGN_EPI_ANAT_METADATA)
     params = execution.params(params)
     cargs = align_epi_anat_cargs(params, execution)
     ret = align_epi_anat_outputs(params, execution)
@@ -323,8 +325,6 @@ def align_epi_anat(
     Returns:
         NamedTuple of outputs (described in `AlignEpiAnatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ALIGN_EPI_ANAT_METADATA)
     params = align_epi_anat_params(
         epi=epi,
         anat=anat,
@@ -344,7 +344,7 @@ def align_epi_anat(
         ex_mode=ex_mode,
         overwrite=overwrite,
     )
-    return align_epi_anat_execute(params, execution)
+    return align_epi_anat_execute(params, runner)
 
 
 __all__ = [
@@ -352,8 +352,6 @@ __all__ = [
     "AlignEpiAnatOutputs",
     "AlignEpiAnatParameters",
     "align_epi_anat",
-    "align_epi_anat_cargs",
     "align_epi_anat_execute",
-    "align_epi_anat_outputs",
     "align_epi_anat_params",
 ]

@@ -188,7 +188,7 @@ def run_first_all_outputs(
 
 def run_first_all_execute(
     params: RunFirstAllParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunFirstAllOutputs:
     """
     FIRST - FMRIB's Integrated Registration and Segmentation Tool for subcortical
@@ -200,10 +200,12 @@ def run_first_all_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunFirstAllOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_FIRST_ALL_METADATA)
     params = execution.params(params)
     cargs = run_first_all_cargs(params, execution)
     ret = run_first_all_outputs(params, execution)
@@ -248,8 +250,6 @@ def run_first_all(
     Returns:
         NamedTuple of outputs (described in `RunFirstAllOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_FIRST_ALL_METADATA)
     params = run_first_all_params(
         method=method,
         brainextract_flag=brainextract_flag,
@@ -261,7 +261,7 @@ def run_first_all(
         input_image=input_image,
         output_image=output_image,
     )
-    return run_first_all_execute(params, execution)
+    return run_first_all_execute(params, runner)
 
 
 __all__ = [
@@ -269,8 +269,6 @@ __all__ = [
     "RunFirstAllOutputs",
     "RunFirstAllParameters",
     "run_first_all",
-    "run_first_all_cargs",
     "run_first_all_execute",
-    "run_first_all_outputs",
     "run_first_all_params",
 ]

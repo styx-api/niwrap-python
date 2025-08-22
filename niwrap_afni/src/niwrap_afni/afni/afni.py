@@ -299,7 +299,7 @@ def afni_outputs(
 
 def afni_execute(
     params: AfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniOutputs:
     """
     Tool for reading in sessions of 3D datasets and visualizing them.
@@ -310,10 +310,12 @@ def afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_METADATA)
     params = execution.params(params)
     cargs = afni_cargs(params, execution)
     ret = afni_outputs(params, execution)
@@ -387,8 +389,6 @@ def afni_(
     Returns:
         NamedTuple of outputs (described in `AfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_METADATA)
     params = afni_params(
         session_directories=session_directories,
         bysub=bysub,
@@ -416,7 +416,7 @@ def afni_(
         com=com,
         comsep=comsep,
     )
-    return afni_execute(params, execution)
+    return afni_execute(params, runner)
 
 
 __all__ = [
@@ -424,8 +424,6 @@ __all__ = [
     "AfniOutputs",
     "AfniParameters",
     "afni_",
-    "afni_cargs",
     "afni_execute",
-    "afni_outputs",
     "afni_params",
 ]

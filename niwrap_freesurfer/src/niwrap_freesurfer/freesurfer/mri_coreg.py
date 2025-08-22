@@ -594,7 +594,7 @@ def mri_coreg_outputs(
 
 def mri_coreg_execute(
     params: MriCoregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCoregOutputs:
     """
     mri_coreg performs a linear registration between two volumes using the method
@@ -606,10 +606,12 @@ def mri_coreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCoregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COREG_METADATA)
     params = execution.params(params)
     cargs = mri_coreg_cargs(params, execution)
     ret = mri_coreg_outputs(params, execution)
@@ -744,8 +746,6 @@ def mri_coreg(
     Returns:
         NamedTuple of outputs (described in `MriCoregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COREG_METADATA)
     params = mri_coreg_params(
         movvol=movvol,
         refvol=refvol,
@@ -801,7 +801,7 @@ def mri_coreg(
         checkopts=checkopts,
         version=version,
     )
-    return mri_coreg_execute(params, execution)
+    return mri_coreg_execute(params, runner)
 
 
 __all__ = [
@@ -809,8 +809,6 @@ __all__ = [
     "MriCoregOutputs",
     "MriCoregParameters",
     "mri_coreg",
-    "mri_coreg_cargs",
     "mri_coreg_execute",
-    "mri_coreg_outputs",
     "mri_coreg_params",
 ]

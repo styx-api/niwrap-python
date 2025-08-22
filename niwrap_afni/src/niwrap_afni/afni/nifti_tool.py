@@ -222,7 +222,7 @@ def nifti_tool_outputs(
 
 def nifti_tool_execute(
     params: NiftiToolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NiftiToolOutputs:
     """
     Display, modify, or compare nifti headers.
@@ -233,10 +233,12 @@ def nifti_tool_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NiftiToolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NIFTI_TOOL_METADATA)
     params = execution.params(params)
     cargs = nifti_tool_cargs(params, execution)
     ret = nifti_tool_outputs(params, execution)
@@ -283,8 +285,6 @@ def nifti_tool(
     Returns:
         NamedTuple of outputs (described in `NiftiToolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NIFTI_TOOL_METADATA)
     params = nifti_tool_params(
         action=action,
         input_files=input_files,
@@ -299,7 +299,7 @@ def nifti_tool(
         add_comment_ext=add_comment_ext,
         rm_ext=rm_ext,
     )
-    return nifti_tool_execute(params, execution)
+    return nifti_tool_execute(params, runner)
 
 
 __all__ = [
@@ -307,8 +307,6 @@ __all__ = [
     "NiftiToolOutputs",
     "NiftiToolParameters",
     "nifti_tool",
-    "nifti_tool_cargs",
     "nifti_tool_execute",
-    "nifti_tool_outputs",
     "nifti_tool_params",
 ]

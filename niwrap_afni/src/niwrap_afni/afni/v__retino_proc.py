@@ -490,7 +490,7 @@ def v__retino_proc_outputs(
 
 def v__retino_proc_execute(
     params: VRetinoProcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VRetinoProcOutputs:
     """
     A script to process retinotopic FMRI data, using AFNI's 3dRetinoPhase and
@@ -502,10 +502,12 @@ def v__retino_proc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VRetinoProcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__RETINO_PROC_METADATA)
     params = execution.params(params)
     cargs = v__retino_proc_cargs(params, execution)
     ret = v__retino_proc_outputs(params, execution)
@@ -614,8 +616,6 @@ def v__retino_proc(
     Returns:
         NamedTuple of outputs (described in `VRetinoProcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__RETINO_PROC_METADATA)
     params = v__retino_proc_params(
         ccw=ccw,
         clw=clw,
@@ -658,7 +658,7 @@ def v__retino_proc(
         a2e_opts=a2e_opts,
         aea_opts=aea_opts,
     )
-    return v__retino_proc_execute(params, execution)
+    return v__retino_proc_execute(params, runner)
 
 
 __all__ = [
@@ -666,8 +666,6 @@ __all__ = [
     "VRetinoProcParameters",
     "V__RETINO_PROC_METADATA",
     "v__retino_proc",
-    "v__retino_proc_cargs",
     "v__retino_proc_execute",
-    "v__retino_proc_outputs",
     "v__retino_proc_params",
 ]

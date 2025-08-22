@@ -117,7 +117,7 @@ def build_desikan_killiany_gcs_csh_outputs(
 
 def build_desikan_killiany_gcs_csh_execute(
     params: BuildDesikanKillianyGcsCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BuildDesikanKillianyGcsCshOutputs:
     """
     Tool to build Desikan-Killiany cortical parcellation in FreeSurfer.
@@ -128,10 +128,12 @@ def build_desikan_killiany_gcs_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BuildDesikanKillianyGcsCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA)
     params = execution.params(params)
     cargs = build_desikan_killiany_gcs_csh_cargs(params, execution)
     ret = build_desikan_killiany_gcs_csh_outputs(params, execution)
@@ -157,12 +159,10 @@ def build_desikan_killiany_gcs_csh(
     Returns:
         NamedTuple of outputs (described in `BuildDesikanKillianyGcsCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BUILD_DESIKAN_KILLIANY_GCS_CSH_METADATA)
     params = build_desikan_killiany_gcs_csh_params(
         hemi=hemi,
     )
-    return build_desikan_killiany_gcs_csh_execute(params, execution)
+    return build_desikan_killiany_gcs_csh_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "BuildDesikanKillianyGcsCshOutputs",
     "BuildDesikanKillianyGcsCshParameters",
     "build_desikan_killiany_gcs_csh",
-    "build_desikan_killiany_gcs_csh_cargs",
     "build_desikan_killiany_gcs_csh_execute",
-    "build_desikan_killiany_gcs_csh_outputs",
     "build_desikan_killiany_gcs_csh_params",
 ]

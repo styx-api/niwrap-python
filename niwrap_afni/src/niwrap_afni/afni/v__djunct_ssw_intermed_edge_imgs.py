@@ -219,7 +219,7 @@ def v__djunct_ssw_intermed_edge_imgs_outputs(
 
 def v__djunct_ssw_intermed_edge_imgs_execute(
     params: VDjunctSswIntermedEdgeImgsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunctSswIntermedEdgeImgsOutputs:
     """
     Helper script to generate intermediate edge images for SSW-related processing.
@@ -230,10 +230,12 @@ def v__djunct_ssw_intermed_edge_imgs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunctSswIntermedEdgeImgsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA)
     params = execution.params(params)
     cargs = v__djunct_ssw_intermed_edge_imgs_cargs(params, execution)
     ret = v__djunct_ssw_intermed_edge_imgs_outputs(params, execution)
@@ -282,8 +284,6 @@ def v__djunct_ssw_intermed_edge_imgs(
     Returns:
         NamedTuple of outputs (described in `VDjunctSswIntermedEdgeImgsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA)
     params = v__djunct_ssw_intermed_edge_imgs_params(
         prefix=prefix,
         ulay=ulay,
@@ -299,7 +299,7 @@ def v__djunct_ssw_intermed_edge_imgs(
         version=version,
         no_clean=no_clean,
     )
-    return v__djunct_ssw_intermed_edge_imgs_execute(params, execution)
+    return v__djunct_ssw_intermed_edge_imgs_execute(params, runner)
 
 
 __all__ = [
@@ -307,8 +307,6 @@ __all__ = [
     "VDjunctSswIntermedEdgeImgsParameters",
     "V__DJUNCT_SSW_INTERMED_EDGE_IMGS_METADATA",
     "v__djunct_ssw_intermed_edge_imgs",
-    "v__djunct_ssw_intermed_edge_imgs_cargs",
     "v__djunct_ssw_intermed_edge_imgs_execute",
-    "v__djunct_ssw_intermed_edge_imgs_outputs",
     "v__djunct_ssw_intermed_edge_imgs_params",
 ]

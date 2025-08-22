@@ -135,7 +135,7 @@ def make_pq_script_py_outputs(
 
 def make_pq_script_py_execute(
     params: MakePqScriptPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakePqScriptPyOutputs:
     """
     Creates a script to compute p-value and q-value curves.
@@ -146,10 +146,12 @@ def make_pq_script_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakePqScriptPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_PQ_SCRIPT_PY_METADATA)
     params = execution.params(params)
     cargs = make_pq_script_py_cargs(params, execution)
     ret = make_pq_script_py_outputs(params, execution)
@@ -180,15 +182,13 @@ def make_pq_script_py(
     Returns:
         NamedTuple of outputs (described in `MakePqScriptPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_PQ_SCRIPT_PY_METADATA)
     params = make_pq_script_py_params(
         dataset=dataset,
         brick_index=brick_index,
         mask=mask,
         out_script=out_script,
     )
-    return make_pq_script_py_execute(params, execution)
+    return make_pq_script_py_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MakePqScriptPyOutputs",
     "MakePqScriptPyParameters",
     "make_pq_script_py",
-    "make_pq_script_py_cargs",
     "make_pq_script_py_execute",
-    "make_pq_script_py_outputs",
     "make_pq_script_py_params",
 ]

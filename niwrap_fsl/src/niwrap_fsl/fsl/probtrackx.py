@@ -420,7 +420,7 @@ def probtrackx_outputs(
 
 def probtrackx_execute(
     params: ProbtrackxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ProbtrackxOutputs:
     """
     Streamlines tracking algorithm for probabilistic tractography.
@@ -431,10 +431,12 @@ def probtrackx_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ProbtrackxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PROBTRACKX_METADATA)
     params = execution.params(params)
     cargs = probtrackx_cargs(params, execution)
     ret = probtrackx_outputs(params, execution)
@@ -542,8 +544,6 @@ def probtrackx(
     Returns:
         NamedTuple of outputs (described in `ProbtrackxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PROBTRACKX_METADATA)
     params = probtrackx_params(
         samples=samples,
         mask=mask,
@@ -580,7 +580,7 @@ def probtrackx(
         rseed=rseed,
         s2tastext=s2tastext,
     )
-    return probtrackx_execute(params, execution)
+    return probtrackx_execute(params, runner)
 
 
 __all__ = [
@@ -588,8 +588,6 @@ __all__ = [
     "ProbtrackxOutputs",
     "ProbtrackxParameters",
     "probtrackx",
-    "probtrackx_cargs",
     "probtrackx_execute",
-    "probtrackx_outputs",
     "probtrackx_params",
 ]

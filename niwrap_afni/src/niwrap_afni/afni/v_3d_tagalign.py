@@ -233,7 +233,7 @@ def v_3d_tagalign_outputs(
 
 def v_3d_tagalign_execute(
     params: V3dTagalignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTagalignOutputs:
     """
     Rotates/translates dataset 'dset' to be aligned with the master using the
@@ -245,10 +245,12 @@ def v_3d_tagalign_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTagalignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TAGALIGN_METADATA)
     params = execution.params(params)
     cargs = v_3d_tagalign_cargs(params, execution)
     ret = v_3d_tagalign_outputs(params, execution)
@@ -311,8 +313,6 @@ def v_3d_tagalign(
     Returns:
         NamedTuple of outputs (described in `V3dTagalignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TAGALIGN_METADATA)
     params = v_3d_tagalign_params(
         input_dataset=input_dataset,
         master_dataset=master_dataset,
@@ -330,7 +330,7 @@ def v_3d_tagalign(
         nearest_neighbor_interpolation=nearest_neighbor_interpolation,
         quintic_interpolation=quintic_interpolation,
     )
-    return v_3d_tagalign_execute(params, execution)
+    return v_3d_tagalign_execute(params, runner)
 
 
 __all__ = [
@@ -338,8 +338,6 @@ __all__ = [
     "V3dTagalignParameters",
     "V_3D_TAGALIGN_METADATA",
     "v_3d_tagalign",
-    "v_3d_tagalign_cargs",
     "v_3d_tagalign_execute",
-    "v_3d_tagalign_outputs",
     "v_3d_tagalign_params",
 ]

@@ -131,7 +131,7 @@ def fslfft_outputs(
 
 def fslfft_execute(
     params: FslfftParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslfftOutputs:
     """
     A tool to compute the Fourier transform of an input volume and save the result
@@ -143,10 +143,12 @@ def fslfft_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslfftOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLFFT_METADATA)
     params = execution.params(params)
     cargs = fslfft_cargs(params, execution)
     ret = fslfft_outputs(params, execution)
@@ -176,14 +178,12 @@ def fslfft(
     Returns:
         NamedTuple of outputs (described in `FslfftOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLFFT_METADATA)
     params = fslfft_params(
         input_volume=input_volume,
         output_volume=output_volume,
         inverse_flag=inverse_flag,
     )
-    return fslfft_execute(params, execution)
+    return fslfft_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "FslfftOutputs",
     "FslfftParameters",
     "fslfft",
-    "fslfft_cargs",
     "fslfft_execute",
-    "fslfft_outputs",
     "fslfft_params",
 ]

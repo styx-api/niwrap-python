@@ -202,7 +202,7 @@ def trac_preproc_outputs(
 
 def trac_preproc_execute(
     params: TracPreprocParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TracPreprocOutputs:
     """
     Tractography pre-processing for a single subject.
@@ -213,10 +213,12 @@ def trac_preproc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TracPreprocOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRAC_PREPROC_METADATA)
     params = execution.params(params)
     cargs = trac_preproc_cargs(params, execution)
     ret = trac_preproc_outputs(params, execution)
@@ -264,8 +266,6 @@ def trac_preproc(
     Returns:
         NamedTuple of outputs (described in `TracPreprocOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRAC_PREPROC_METADATA)
     params = trac_preproc_params(
         dmrirc_file=dmrirc_file,
         log_file=log_file,
@@ -280,7 +280,7 @@ def trac_preproc(
         dontrun=dontrun,
         version=version,
     )
-    return trac_preproc_execute(params, execution)
+    return trac_preproc_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "TracPreprocOutputs",
     "TracPreprocParameters",
     "trac_preproc",
-    "trac_preproc_cargs",
     "trac_preproc_execute",
-    "trac_preproc_outputs",
     "trac_preproc_params",
 ]

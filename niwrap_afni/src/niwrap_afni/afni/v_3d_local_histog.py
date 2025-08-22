@@ -209,7 +209,7 @@ def v_3d_local_histog_outputs(
 
 def v_3d_local_histog_execute(
     params: V3dLocalHistogParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLocalHistogOutputs:
     """
     This program computes a local histogram at each voxel in the input datasets.
@@ -220,10 +220,12 @@ def v_3d_local_histog_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLocalHistogOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LOCAL_HISTOG_METADATA)
     params = execution.params(params)
     cargs = v_3d_local_histog_cargs(params, execution)
     ret = v_3d_local_histog_outputs(params, execution)
@@ -273,8 +275,6 @@ def v_3d_local_histog(
     Returns:
         NamedTuple of outputs (described in `V3dLocalHistogOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LOCAL_HISTOG_METADATA)
     params = v_3d_local_histog_params(
         nbhd_option=nbhd_option,
         prefix=prefix,
@@ -287,7 +287,7 @@ def v_3d_local_histog(
         quiet=quiet,
         input_datasets=input_datasets,
     )
-    return v_3d_local_histog_execute(params, execution)
+    return v_3d_local_histog_execute(params, runner)
 
 
 __all__ = [
@@ -295,8 +295,6 @@ __all__ = [
     "V3dLocalHistogParameters",
     "V_3D_LOCAL_HISTOG_METADATA",
     "v_3d_local_histog",
-    "v_3d_local_histog_cargs",
     "v_3d_local_histog_execute",
-    "v_3d_local_histog_outputs",
     "v_3d_local_histog_params",
 ]

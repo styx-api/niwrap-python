@@ -286,7 +286,7 @@ def mri_create_tests_outputs(
 
 def mri_create_tests_execute(
     params: MriCreateTestsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCreateTestsOutputs:
     """
     Creates test cases for the registration by mapping the input to a source (half
@@ -298,10 +298,12 @@ def mri_create_tests_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCreateTestsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CREATE_TESTS_METADATA)
     params = execution.params(params)
     cargs = mri_create_tests_cargs(params, execution)
     ret = mri_create_tests_outputs(params, execution)
@@ -366,8 +368,6 @@ def mri_create_tests(
     Returns:
         NamedTuple of outputs (described in `MriCreateTestsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CREATE_TESTS_METADATA)
     params = mri_create_tests_params(
         input_file=input_file,
         out_src=out_src,
@@ -389,7 +389,7 @@ def mri_create_tests(
         lta_outt=lta_outt,
         iscale_out=iscale_out,
     )
-    return mri_create_tests_execute(params, execution)
+    return mri_create_tests_execute(params, runner)
 
 
 __all__ = [
@@ -397,8 +397,6 @@ __all__ = [
     "MriCreateTestsOutputs",
     "MriCreateTestsParameters",
     "mri_create_tests",
-    "mri_create_tests_cargs",
     "mri_create_tests_execute",
-    "mri_create_tests_outputs",
     "mri_create_tests_params",
 ]

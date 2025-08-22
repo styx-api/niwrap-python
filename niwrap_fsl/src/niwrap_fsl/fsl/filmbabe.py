@@ -400,7 +400,7 @@ def filmbabe_outputs(
 
 def filmbabe_execute(
     params: FilmbabeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FilmbabeOutputs:
     """
     FILM with MCMC-based Bayesian Analysis for fMRI.
@@ -411,10 +411,12 @@ def filmbabe_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FilmbabeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FILMBABE_METADATA)
     params = execution.params(params)
     cargs = filmbabe_cargs(params, execution)
     ret = filmbabe_outputs(params, execution)
@@ -510,8 +512,6 @@ def filmbabe(
     Returns:
         NamedTuple of outputs (described in `FilmbabeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FILMBABE_METADATA)
     params = filmbabe_params(
         datafile=datafile,
         datafile_alias=datafile_alias,
@@ -547,7 +547,7 @@ def filmbabe(
         num_trace_samples_alias=num_trace_samples_alias,
         temporal_ar_order=temporal_ar_order,
     )
-    return filmbabe_execute(params, execution)
+    return filmbabe_execute(params, runner)
 
 
 __all__ = [
@@ -555,8 +555,6 @@ __all__ = [
     "FilmbabeOutputs",
     "FilmbabeParameters",
     "filmbabe",
-    "filmbabe_cargs",
     "filmbabe_execute",
-    "filmbabe_outputs",
     "filmbabe_params",
 ]

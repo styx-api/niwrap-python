@@ -215,7 +215,7 @@ def feat2surf_outputs(
 
 def feat2surf_execute(
     params: Feat2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Feat2surfOutputs:
     """
     Resamples Feat statistics onto the surface of the subject and onto a
@@ -227,10 +227,12 @@ def feat2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Feat2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FEAT2SURF_METADATA)
     params = execution.params(params)
     cargs = feat2surf_cargs(params, execution)
     ret = feat2surf_outputs(params, execution)
@@ -279,8 +281,6 @@ def feat2surf(
     Returns:
         NamedTuple of outputs (described in `Feat2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FEAT2SURF_METADATA)
     params = feat2surf_params(
         feat_dirs=feat_dirs,
         feat_dirfile=feat_dirfile,
@@ -293,7 +293,7 @@ def feat2surf(
         nolog_flag=nolog_flag,
         out_dir=out_dir,
     )
-    return feat2surf_execute(params, execution)
+    return feat2surf_execute(params, runner)
 
 
 __all__ = [
@@ -301,8 +301,6 @@ __all__ = [
     "Feat2surfOutputs",
     "Feat2surfParameters",
     "feat2surf",
-    "feat2surf_cargs",
     "feat2surf_execute",
-    "feat2surf_outputs",
     "feat2surf_params",
 ]

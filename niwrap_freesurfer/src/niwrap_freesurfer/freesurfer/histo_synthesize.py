@@ -130,7 +130,7 @@ def histo_synthesize_outputs(
 
 def histo_synthesize_execute(
     params: HistoSynthesizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HistoSynthesizeOutputs:
     """
     Tool for synthesizing histology-like volumes from MRI data.
@@ -141,10 +141,12 @@ def histo_synthesize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HistoSynthesizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HISTO_SYNTHESIZE_METADATA)
     params = execution.params(params)
     cargs = histo_synthesize_cargs(params, execution)
     ret = histo_synthesize_outputs(params, execution)
@@ -173,14 +175,12 @@ def histo_synthesize(
     Returns:
         NamedTuple of outputs (described in `HistoSynthesizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HISTO_SYNTHESIZE_METADATA)
     params = histo_synthesize_params(
         mri_volume=mri_volume,
         histo_volume=histo_volume,
         synthetic_histo=synthetic_histo,
     )
-    return histo_synthesize_execute(params, execution)
+    return histo_synthesize_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "HistoSynthesizeOutputs",
     "HistoSynthesizeParameters",
     "histo_synthesize",
-    "histo_synthesize_cargs",
     "histo_synthesize_execute",
-    "histo_synthesize_outputs",
     "histo_synthesize_params",
 ]

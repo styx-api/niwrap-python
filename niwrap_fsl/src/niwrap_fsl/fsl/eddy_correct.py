@@ -136,7 +136,7 @@ def eddy_correct_outputs(
 
 def eddy_correct_execute(
     params: EddyCorrectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddyCorrectOutputs:
     """
     Eddy current correction tool for FSL.
@@ -147,10 +147,12 @@ def eddy_correct_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddyCorrectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_CORRECT_METADATA)
     params = execution.params(params)
     cargs = eddy_correct_cargs(params, execution)
     ret = eddy_correct_outputs(params, execution)
@@ -181,15 +183,13 @@ def eddy_correct(
     Returns:
         NamedTuple of outputs (described in `EddyCorrectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_CORRECT_METADATA)
     params = eddy_correct_params(
         v_4d_input=v_4d_input,
         v_4d_output=v_4d_output,
         reference_no=reference_no,
         interp_method=interp_method,
     )
-    return eddy_correct_execute(params, execution)
+    return eddy_correct_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "EddyCorrectOutputs",
     "EddyCorrectParameters",
     "eddy_correct",
-    "eddy_correct_cargs",
     "eddy_correct_execute",
-    "eddy_correct_outputs",
     "eddy_correct_params",
 ]

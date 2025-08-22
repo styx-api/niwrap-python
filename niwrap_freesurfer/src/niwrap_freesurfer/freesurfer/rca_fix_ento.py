@@ -163,7 +163,7 @@ def rca_fix_ento_outputs(
 
 def rca_fix_ento_execute(
     params: RcaFixEntoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RcaFixEntoOutputs:
     """
     A tool to fix the entorhinal white matter in FreeSurfer using a deep learning
@@ -175,10 +175,12 @@ def rca_fix_ento_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RcaFixEntoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RCA_FIX_ENTO_METADATA)
     params = execution.params(params)
     cargs = rca_fix_ento_cargs(params, execution)
     ret = rca_fix_ento_outputs(params, execution)
@@ -214,8 +216,6 @@ def rca_fix_ento(
     Returns:
         NamedTuple of outputs (described in `RcaFixEntoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RCA_FIX_ENTO_METADATA)
     params = rca_fix_ento_params(
         subject=subject,
         threads=threads,
@@ -223,7 +223,7 @@ def rca_fix_ento(
         account=account,
         brain_mask=brain_mask,
     )
-    return rca_fix_ento_execute(params, execution)
+    return rca_fix_ento_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "RcaFixEntoOutputs",
     "RcaFixEntoParameters",
     "rca_fix_ento",
-    "rca_fix_ento_cargs",
     "rca_fix_ento_execute",
-    "rca_fix_ento_outputs",
     "rca_fix_ento_params",
 ]

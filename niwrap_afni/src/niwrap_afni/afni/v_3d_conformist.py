@@ -120,7 +120,7 @@ def v_3d_conformist_outputs(
 
 def v_3d_conformist_execute(
     params: V3dConformistParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dConformistOutputs:
     """
     Program to conform a collection of datasets to the same size by zero padding.
@@ -131,10 +131,12 @@ def v_3d_conformist_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dConformistOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CONFORMIST_METADATA)
     params = execution.params(params)
     cargs = v_3d_conformist_cargs(params, execution)
     ret = v_3d_conformist_outputs(params, execution)
@@ -159,12 +161,10 @@ def v_3d_conformist(
     Returns:
         NamedTuple of outputs (described in `V3dConformistOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CONFORMIST_METADATA)
     params = v_3d_conformist_params(
         input_files=input_files,
     )
-    return v_3d_conformist_execute(params, execution)
+    return v_3d_conformist_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "V3dConformistParameters",
     "V_3D_CONFORMIST_METADATA",
     "v_3d_conformist",
-    "v_3d_conformist_cargs",
     "v_3d_conformist_execute",
-    "v_3d_conformist_outputs",
     "v_3d_conformist_params",
 ]

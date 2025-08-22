@@ -128,7 +128,7 @@ def register_child_outputs(
 
 def register_child_execute(
     params: RegisterChildParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegisterChildOutputs:
     """
     A tool used for registering MR volumes with a child's atlas in Freesurfer.
@@ -139,10 +139,12 @@ def register_child_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegisterChildOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REGISTER_CHILD_METADATA)
     params = execution.params(params)
     cargs = register_child_cargs(params, execution)
     ret = register_child_outputs(params, execution)
@@ -169,13 +171,11 @@ def register_child(
     Returns:
         NamedTuple of outputs (described in `RegisterChildOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REGISTER_CHILD_METADATA)
     params = register_child_params(
         input_volume=input_volume,
         output_directory=output_directory,
     )
-    return register_child_execute(params, execution)
+    return register_child_execute(params, runner)
 
 
 __all__ = [
@@ -183,8 +183,6 @@ __all__ = [
     "RegisterChildOutputs",
     "RegisterChildParameters",
     "register_child",
-    "register_child_cargs",
     "register_child_execute",
-    "register_child_outputs",
     "register_child_params",
 ]

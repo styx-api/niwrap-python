@@ -207,7 +207,7 @@ def mris_seg2annot_outputs(
 
 def mris_seg2annot_execute(
     params: MrisSeg2annotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSeg2annotOutputs:
     """
     Converts a surface-based segmentation into a custom annotation file.
@@ -218,10 +218,12 @@ def mris_seg2annot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSeg2annotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SEG2ANNOT_METADATA)
     params = execution.params(params)
     cargs = mris_seg2annot_cargs(params, execution)
     ret = mris_seg2annot_outputs(params, execution)
@@ -268,8 +270,6 @@ def mris_seg2annot(
     Returns:
         NamedTuple of outputs (described in `MrisSeg2annotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SEG2ANNOT_METADATA)
     params = mris_seg2annot_params(
         surfseg=surfseg,
         colortable=colortable,
@@ -283,7 +283,7 @@ def mris_seg2annot(
         checkopts=checkopts,
         version=version,
     )
-    return mris_seg2annot_execute(params, execution)
+    return mris_seg2annot_execute(params, runner)
 
 
 __all__ = [
@@ -291,8 +291,6 @@ __all__ = [
     "MrisSeg2annotOutputs",
     "MrisSeg2annotParameters",
     "mris_seg2annot",
-    "mris_seg2annot_cargs",
     "mris_seg2annot_execute",
-    "mris_seg2annot_outputs",
     "mris_seg2annot_params",
 ]

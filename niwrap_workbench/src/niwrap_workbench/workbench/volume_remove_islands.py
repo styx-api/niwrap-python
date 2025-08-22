@@ -126,7 +126,7 @@ def volume_remove_islands_outputs(
 
 def volume_remove_islands_execute(
     params: VolumeRemoveIslandsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeRemoveIslandsOutputs:
     """
     Remove islands from an roi volume.
@@ -140,10 +140,12 @@ def volume_remove_islands_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeRemoveIslandsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_REMOVE_ISLANDS_METADATA)
     params = execution.params(params)
     cargs = volume_remove_islands_cargs(params, execution)
     ret = volume_remove_islands_outputs(params, execution)
@@ -173,13 +175,11 @@ def volume_remove_islands(
     Returns:
         NamedTuple of outputs (described in `VolumeRemoveIslandsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_REMOVE_ISLANDS_METADATA)
     params = volume_remove_islands_params(
         volume_in=volume_in,
         volume_out=volume_out,
     )
-    return volume_remove_islands_execute(params, execution)
+    return volume_remove_islands_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "VolumeRemoveIslandsOutputs",
     "VolumeRemoveIslandsParameters",
     "volume_remove_islands",
-    "volume_remove_islands_cargs",
     "volume_remove_islands_execute",
-    "volume_remove_islands_outputs",
     "volume_remove_islands_params",
 ]

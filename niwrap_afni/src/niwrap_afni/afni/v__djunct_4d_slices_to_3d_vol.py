@@ -121,7 +121,7 @@ def v__djunct_4d_slices_to_3d_vol_outputs(
 
 def v__djunct_4d_slices_to_3d_vol_execute(
     params: VDjunct4dSlicesTo3dVolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunct4dSlicesTo3dVolOutputs:
     """
     Tool description goes here.
@@ -132,10 +132,12 @@ def v__djunct_4d_slices_to_3d_vol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunct4dSlicesTo3dVolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA)
     params = execution.params(params)
     cargs = v__djunct_4d_slices_to_3d_vol_cargs(params, execution)
     ret = v__djunct_4d_slices_to_3d_vol_outputs(params, execution)
@@ -160,12 +162,10 @@ def v__djunct_4d_slices_to_3d_vol(
     Returns:
         NamedTuple of outputs (described in `VDjunct4dSlicesTo3dVolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA)
     params = v__djunct_4d_slices_to_3d_vol_params(
         do_something=do_something,
     )
-    return v__djunct_4d_slices_to_3d_vol_execute(params, execution)
+    return v__djunct_4d_slices_to_3d_vol_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "VDjunct4dSlicesTo3dVolParameters",
     "V__DJUNCT_4D_SLICES_TO_3D_VOL_METADATA",
     "v__djunct_4d_slices_to_3d_vol",
-    "v__djunct_4d_slices_to_3d_vol_cargs",
     "v__djunct_4d_slices_to_3d_vol_execute",
-    "v__djunct_4d_slices_to_3d_vol_outputs",
     "v__djunct_4d_slices_to_3d_vol_params",
 ]

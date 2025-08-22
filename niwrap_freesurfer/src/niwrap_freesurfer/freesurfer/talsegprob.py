@@ -268,7 +268,7 @@ def talsegprob_outputs(
 
 def talsegprob_execute(
     params: TalsegprobParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TalsegprobOutputs:
     """
     Tool to create a binary probability volume from aseg.mgz based on segmentation
@@ -280,10 +280,12 @@ def talsegprob_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TalsegprobOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TALSEGPROB_METADATA)
     params = execution.params(params)
     cargs = talsegprob_cargs(params, execution)
     ret = talsegprob_outputs(params, execution)
@@ -342,8 +344,6 @@ def talsegprob(
     Returns:
         NamedTuple of outputs (described in `TalsegprobOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TALSEGPROB_METADATA)
     params = talsegprob_params(
         subjects_list=subjects_list,
         fsgd_file=fsgd_file,
@@ -363,7 +363,7 @@ def talsegprob(
         version_flag=version_flag,
         echo_flag=echo_flag,
     )
-    return talsegprob_execute(params, execution)
+    return talsegprob_execute(params, runner)
 
 
 __all__ = [
@@ -371,8 +371,6 @@ __all__ = [
     "TalsegprobOutputs",
     "TalsegprobParameters",
     "talsegprob",
-    "talsegprob_cargs",
     "talsegprob_execute",
-    "talsegprob_outputs",
     "talsegprob_params",
 ]

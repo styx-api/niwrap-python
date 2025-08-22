@@ -158,7 +158,7 @@ def v__djunct_4d_imager_outputs(
 
 def v__djunct_4d_imager_execute(
     params: VDjunct4dImagerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunct4dImagerOutputs:
     """
     The program is useful for viewing the same slice across the 'time' dimension of
@@ -170,10 +170,12 @@ def v__djunct_4d_imager_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunct4dImagerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_4D_IMAGER_METADATA)
     params = execution.params(params)
     cargs = v__djunct_4d_imager_cargs(params, execution)
     ret = v__djunct_4d_imager_outputs(params, execution)
@@ -205,15 +207,13 @@ def v__djunct_4d_imager(
     Returns:
         NamedTuple of outputs (described in `VDjunct4dImagerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_4D_IMAGER_METADATA)
     params = v__djunct_4d_imager_params(
         inset=inset,
         prefix=prefix,
         do_movie=do_movie,
         no_clean=no_clean,
     )
-    return v__djunct_4d_imager_execute(params, execution)
+    return v__djunct_4d_imager_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "VDjunct4dImagerParameters",
     "V__DJUNCT_4D_IMAGER_METADATA",
     "v__djunct_4d_imager",
-    "v__djunct_4d_imager_cargs",
     "v__djunct_4d_imager_execute",
-    "v__djunct_4d_imager_outputs",
     "v__djunct_4d_imager_params",
 ]

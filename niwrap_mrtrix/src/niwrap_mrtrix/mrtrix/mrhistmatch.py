@@ -274,7 +274,7 @@ def mrhistmatch_outputs(
 
 def mrhistmatch_execute(
     params: MrhistmatchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrhistmatchOutputs:
     """
     Modify the intensities of one image to match the histogram of another.
@@ -296,10 +296,12 @@ def mrhistmatch_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrhistmatchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRHISTMATCH_METADATA)
     params = execution.params(params)
     cargs = mrhistmatch_cargs(params, execution)
     ret = mrhistmatch_outputs(params, execution)
@@ -370,8 +372,6 @@ def mrhistmatch(
     Returns:
         NamedTuple of outputs (described in `MrhistmatchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRHISTMATCH_METADATA)
     params = mrhistmatch_params(
         mask_input=mask_input,
         mask_target=mask_target,
@@ -389,7 +389,7 @@ def mrhistmatch(
         target=target,
         output=output,
     )
-    return mrhistmatch_execute(params, execution)
+    return mrhistmatch_execute(params, runner)
 
 
 __all__ = [
@@ -398,10 +398,7 @@ __all__ = [
     "MrhistmatchOutputs",
     "MrhistmatchParameters",
     "mrhistmatch",
-    "mrhistmatch_cargs",
-    "mrhistmatch_config_cargs",
     "mrhistmatch_config_params",
     "mrhistmatch_execute",
-    "mrhistmatch_outputs",
     "mrhistmatch_params",
 ]

@@ -178,7 +178,7 @@ def v__roi_modal_grow_outputs(
 
 def v__roi_modal_grow_execute(
     params: VRoiModalGrowParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VRoiModalGrowOutputs:
     """
     Script to grow a set of regions in a volumetric dataset using modal smoothing.
@@ -189,10 +189,12 @@ def v__roi_modal_grow_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VRoiModalGrowOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ROI_MODAL_GROW_METADATA)
     params = execution.params(params)
     cargs = v__roi_modal_grow_cargs(params, execution)
     ret = v__roi_modal_grow_outputs(params, execution)
@@ -234,8 +236,6 @@ def v__roi_modal_grow(
     Returns:
         NamedTuple of outputs (described in `VRoiModalGrowOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ROI_MODAL_GROW_METADATA)
     params = v__roi_modal_grow_params(
         input_dset=input_dset,
         niters=niters,
@@ -244,7 +244,7 @@ def v__roi_modal_grow(
         prefix=prefix,
         neighborhood_type=neighborhood_type,
     )
-    return v__roi_modal_grow_execute(params, execution)
+    return v__roi_modal_grow_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "VRoiModalGrowParameters",
     "V__ROI_MODAL_GROW_METADATA",
     "v__roi_modal_grow",
-    "v__roi_modal_grow_cargs",
     "v__roi_modal_grow_execute",
-    "v__roi_modal_grow_outputs",
     "v__roi_modal_grow_params",
 ]

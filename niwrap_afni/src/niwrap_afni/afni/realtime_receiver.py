@@ -220,7 +220,7 @@ def realtime_receiver_outputs(
 
 def realtime_receiver_execute(
     params: RealtimeReceiverParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RealtimeReceiverOutputs:
     """
     Program to receive and display real-time plugin data from AFNI.
@@ -231,10 +231,12 @@ def realtime_receiver_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RealtimeReceiverOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REALTIME_RECEIVER_METADATA)
     params = execution.params(params)
     cargs = realtime_receiver_cargs(params, execution)
     ret = realtime_receiver_outputs(params, execution)
@@ -282,8 +284,6 @@ def realtime_receiver(
     Returns:
         NamedTuple of outputs (described in `RealtimeReceiverOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REALTIME_RECEIVER_METADATA)
     params = realtime_receiver_params(
         show_data=show_data,
         write_text_data=write_text_data,
@@ -298,7 +298,7 @@ def realtime_receiver(
         tcp_port=tcp_port,
         verbosity=verbosity,
     )
-    return realtime_receiver_execute(params, execution)
+    return realtime_receiver_execute(params, runner)
 
 
 __all__ = [
@@ -306,8 +306,6 @@ __all__ = [
     "RealtimeReceiverOutputs",
     "RealtimeReceiverParameters",
     "realtime_receiver",
-    "realtime_receiver_cargs",
     "realtime_receiver_execute",
-    "realtime_receiver_outputs",
     "realtime_receiver_params",
 ]

@@ -125,7 +125,7 @@ def mri_gca_ambiguous_outputs(
 
 def mri_gca_ambiguous_execute(
     params: MriGcaAmbiguousParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGcaAmbiguousOutputs:
     """
     This program computes an ambiguity measure across a GCA and outputs an MR image
@@ -137,10 +137,12 @@ def mri_gca_ambiguous_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGcaAmbiguousOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GCA_AMBIGUOUS_METADATA)
     params = execution.params(params)
     cargs = mri_gca_ambiguous_cargs(params, execution)
     ret = mri_gca_ambiguous_outputs(params, execution)
@@ -168,13 +170,11 @@ def mri_gca_ambiguous(
     Returns:
         NamedTuple of outputs (described in `MriGcaAmbiguousOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GCA_AMBIGUOUS_METADATA)
     params = mri_gca_ambiguous_params(
         gca_file=gca_file,
         output_volume=output_volume,
     )
-    return mri_gca_ambiguous_execute(params, execution)
+    return mri_gca_ambiguous_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "MriGcaAmbiguousOutputs",
     "MriGcaAmbiguousParameters",
     "mri_gca_ambiguous",
-    "mri_gca_ambiguous_cargs",
     "mri_gca_ambiguous_execute",
-    "mri_gca_ambiguous_outputs",
     "mri_gca_ambiguous_params",
 ]

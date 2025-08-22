@@ -151,7 +151,7 @@ def mri_stats2seg_outputs(
 
 def mri_stats2seg_execute(
     params: MriStats2segParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriStats2segOutputs:
     """
     A command-line tool for converting MRI statistical maps to segmented volume.
@@ -162,10 +162,12 @@ def mri_stats2seg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriStats2segOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_STATS2SEG_METADATA)
     params = execution.params(params)
     cargs = mri_stats2seg_cargs(params, execution)
     ret = mri_stats2seg_outputs(params, execution)
@@ -198,8 +200,6 @@ def mri_stats2seg(
     Returns:
         NamedTuple of outputs (described in `MriStats2segOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_STATS2SEG_METADATA)
     params = mri_stats2seg_params(
         stat_file=stat_file,
         segmentation_volume=segmentation_volume,
@@ -207,7 +207,7 @@ def mri_stats2seg(
         debug=debug,
         check_opts=check_opts,
     )
-    return mri_stats2seg_execute(params, execution)
+    return mri_stats2seg_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "MriStats2segOutputs",
     "MriStats2segParameters",
     "mri_stats2seg",
-    "mri_stats2seg_cargs",
     "mri_stats2seg_execute",
-    "mri_stats2seg_outputs",
     "mri_stats2seg_params",
 ]

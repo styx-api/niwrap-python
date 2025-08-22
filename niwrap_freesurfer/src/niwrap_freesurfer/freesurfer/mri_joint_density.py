@@ -130,7 +130,7 @@ def mri_joint_density_outputs(
 
 def mri_joint_density_execute(
     params: MriJointDensityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriJointDensityOutputs:
     """
     Tool for computing joint density from two volumes.
@@ -141,10 +141,12 @@ def mri_joint_density_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriJointDensityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_JOINT_DENSITY_METADATA)
     params = execution.params(params)
     cargs = mri_joint_density_cargs(params, execution)
     ret = mri_joint_density_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_joint_density(
     Returns:
         NamedTuple of outputs (described in `MriJointDensityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_JOINT_DENSITY_METADATA)
     params = mri_joint_density_params(
         vol1=vol1,
         vol2=vol2,
         output_density_file=output_density_file,
     )
-    return mri_joint_density_execute(params, execution)
+    return mri_joint_density_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriJointDensityOutputs",
     "MriJointDensityParameters",
     "mri_joint_density",
-    "mri_joint_density_cargs",
     "mri_joint_density_execute",
-    "mri_joint_density_outputs",
     "mri_joint_density_params",
 ]

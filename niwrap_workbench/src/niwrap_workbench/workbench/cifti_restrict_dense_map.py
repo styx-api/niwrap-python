@@ -186,7 +186,7 @@ def cifti_restrict_dense_map_outputs(
 
 def cifti_restrict_dense_map_execute(
     params: CiftiRestrictDenseMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiRestrictDenseMapOutputs:
     """
     Exclude brainordinates from a cifti file.
@@ -204,10 +204,12 @@ def cifti_restrict_dense_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiRestrictDenseMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_RESTRICT_DENSE_MAP_METADATA)
     params = execution.params(params)
     cargs = cifti_restrict_dense_map_cargs(params, execution)
     ret = cifti_restrict_dense_map_outputs(params, execution)
@@ -258,8 +260,6 @@ def cifti_restrict_dense_map(
     Returns:
         NamedTuple of outputs (described in `CiftiRestrictDenseMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_RESTRICT_DENSE_MAP_METADATA)
     params = cifti_restrict_dense_map_params(
         cifti_in=cifti_in,
         direction=direction,
@@ -270,7 +270,7 @@ def cifti_restrict_dense_map(
         opt_cerebellum_roi_roi_metric=opt_cerebellum_roi_roi_metric,
         opt_vol_roi_roi_vol=opt_vol_roi_roi_vol,
     )
-    return cifti_restrict_dense_map_execute(params, execution)
+    return cifti_restrict_dense_map_execute(params, runner)
 
 
 __all__ = [
@@ -278,8 +278,6 @@ __all__ = [
     "CiftiRestrictDenseMapOutputs",
     "CiftiRestrictDenseMapParameters",
     "cifti_restrict_dense_map",
-    "cifti_restrict_dense_map_cargs",
     "cifti_restrict_dense_map_execute",
-    "cifti_restrict_dense_map_outputs",
     "cifti_restrict_dense_map_params",
 ]

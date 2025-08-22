@@ -250,7 +250,7 @@ def tck2fixel_outputs(
 
 def tck2fixel_execute(
     params: Tck2fixelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tck2fixelOutputs:
     """
     Compute a fixel TDI map from a tractogram.
@@ -267,10 +267,12 @@ def tck2fixel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tck2fixelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCK2FIXEL_METADATA)
     params = execution.params(params)
     cargs = tck2fixel_cargs(params, execution)
     ret = tck2fixel_outputs(params, execution)
@@ -332,8 +334,6 @@ def tck2fixel(
     Returns:
         NamedTuple of outputs (described in `Tck2fixelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCK2FIXEL_METADATA)
     params = tck2fixel_params(
         angle=angle,
         info=info,
@@ -349,7 +349,7 @@ def tck2fixel(
         fixel_folder_out=fixel_folder_out,
         fixel_data_out=fixel_data_out,
     )
-    return tck2fixel_execute(params, execution)
+    return tck2fixel_execute(params, runner)
 
 
 __all__ = [
@@ -358,10 +358,7 @@ __all__ = [
     "Tck2fixelOutputs",
     "Tck2fixelParameters",
     "tck2fixel",
-    "tck2fixel_cargs",
-    "tck2fixel_config_cargs",
     "tck2fixel_config_params",
     "tck2fixel_execute",
-    "tck2fixel_outputs",
     "tck2fixel_params",
 ]

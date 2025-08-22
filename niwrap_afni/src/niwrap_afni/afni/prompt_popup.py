@@ -173,7 +173,7 @@ def prompt_popup_outputs(
 
 def prompt_popup_execute(
     params: PromptPopupParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PromptPopupOutputs:
     """
     A command-line tool that pops up a window prompting user interaction with a
@@ -185,10 +185,12 @@ def prompt_popup_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PromptPopupOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PROMPT_POPUP_METADATA)
     params = execution.params(params)
     cargs = prompt_popup_cargs(params, execution)
     ret = prompt_popup_outputs(params, execution)
@@ -228,8 +230,6 @@ def prompt_popup(
     Returns:
         NamedTuple of outputs (described in `PromptPopupOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PROMPT_POPUP_METADATA)
     params = prompt_popup_params(
         message=message,
         message_pause=message_pause,
@@ -238,7 +238,7 @@ def prompt_popup(
         timeout=timeout,
         timeout_to=timeout_to,
     )
-    return prompt_popup_execute(params, execution)
+    return prompt_popup_execute(params, runner)
 
 
 __all__ = [
@@ -246,8 +246,6 @@ __all__ = [
     "PromptPopupOutputs",
     "PromptPopupParameters",
     "prompt_popup",
-    "prompt_popup_cargs",
     "prompt_popup_execute",
-    "prompt_popup_outputs",
     "prompt_popup_params",
 ]

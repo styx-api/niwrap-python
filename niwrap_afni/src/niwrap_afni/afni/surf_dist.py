@@ -175,7 +175,7 @@ def surf_dist_outputs(
 
 def surf_dist_execute(
     params: SurfDistParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfDistOutputs:
     """
     Calculate shortest distance between node pairs on a surface mesh.
@@ -186,10 +186,12 @@ def surf_dist_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfDistOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_DIST_METADATA)
     params = execution.params(params)
     cargs = surf_dist_cargs(params, execution)
     ret = surf_dist_outputs(params, execution)
@@ -230,8 +232,6 @@ def surf_dist(
     Returns:
         NamedTuple of outputs (described in `SurfDistOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_DIST_METADATA)
     params = surf_dist_params(
         surface=surface,
         nodepairs=nodepairs,
@@ -242,7 +242,7 @@ def surf_dist(
         from_node=from_node,
         to_nodes=to_nodes,
     )
-    return surf_dist_execute(params, execution)
+    return surf_dist_execute(params, runner)
 
 
 __all__ = [
@@ -250,8 +250,6 @@ __all__ = [
     "SurfDistOutputs",
     "SurfDistParameters",
     "surf_dist",
-    "surf_dist_cargs",
     "surf_dist_execute",
-    "surf_dist_outputs",
     "surf_dist_params",
 ]

@@ -207,7 +207,7 @@ def bedpostx_gpu_outputs(
 
 def bedpostx_gpu_execute(
     params: BedpostxGpuParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BedpostxGpuOutputs:
     """
     Probabilistic tractography and diffusion MRI fitting tool.
@@ -218,10 +218,12 @@ def bedpostx_gpu_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BedpostxGpuOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BEDPOSTX_GPU_METADATA)
     params = execution.params(params)
     cargs = bedpostx_gpu_cargs(params, execution)
     ret = bedpostx_gpu_outputs(params, execution)
@@ -269,8 +271,6 @@ def bedpostx_gpu(
     Returns:
         NamedTuple of outputs (described in `BedpostxGpuOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BEDPOSTX_GPU_METADATA)
     params = bedpostx_gpu_params(
         subject_dir=subject_dir,
         gpu_queue=gpu_queue,
@@ -283,7 +283,7 @@ def bedpostx_gpu(
         deconv_model=deconv_model,
         grad_nonlinear=grad_nonlinear,
     )
-    return bedpostx_gpu_execute(params, execution)
+    return bedpostx_gpu_execute(params, runner)
 
 
 __all__ = [
@@ -291,8 +291,6 @@ __all__ = [
     "BedpostxGpuOutputs",
     "BedpostxGpuParameters",
     "bedpostx_gpu",
-    "bedpostx_gpu_cargs",
     "bedpostx_gpu_execute",
-    "bedpostx_gpu_outputs",
     "bedpostx_gpu_params",
 ]

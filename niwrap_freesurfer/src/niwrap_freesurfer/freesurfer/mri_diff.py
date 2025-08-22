@@ -344,7 +344,7 @@ def mri_diff_outputs(
 
 def mri_diff_execute(
     params: MriDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriDiffOutputs:
     """
     Determines whether two volumes differ based on dimensions, resolutions,
@@ -356,10 +356,12 @@ def mri_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_DIFF_METADATA)
     params = execution.params(params)
     cargs = mri_diff_cargs(params, execution)
     ret = mri_diff_outputs(params, execution)
@@ -452,8 +454,6 @@ def mri_diff(
     Returns:
         NamedTuple of outputs (described in `MriDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_DIFF_METADATA)
     params = mri_diff_params(
         vol1file=vol1file,
         vol2file=vol2file,
@@ -487,7 +487,7 @@ def mri_diff(
         verbose_mode=verbose_mode,
         check_options=check_options,
     )
-    return mri_diff_execute(params, execution)
+    return mri_diff_execute(params, runner)
 
 
 __all__ = [
@@ -495,8 +495,6 @@ __all__ = [
     "MriDiffOutputs",
     "MriDiffParameters",
     "mri_diff",
-    "mri_diff_cargs",
     "mri_diff_execute",
-    "mri_diff_outputs",
     "mri_diff_params",
 ]

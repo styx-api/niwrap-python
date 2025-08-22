@@ -128,7 +128,7 @@ def rotcom_outputs(
 
 def rotcom_execute(
     params: RotcomParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RotcomOutputs:
     """
     Prints to stdout the 4x3 transformation matrix+vector that would be applied by
@@ -140,10 +140,12 @@ def rotcom_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RotcomOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ROTCOM_METADATA)
     params = execution.params(params)
     cargs = rotcom_cargs(params, execution)
     ret = rotcom_outputs(params, execution)
@@ -172,13 +174,11 @@ def rotcom(
     Returns:
         NamedTuple of outputs (described in `RotcomOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ROTCOM_METADATA)
     params = rotcom_params(
         rotate_ashift=rotate_ashift,
         dataset=dataset,
     )
-    return rotcom_execute(params, execution)
+    return rotcom_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "RotcomOutputs",
     "RotcomParameters",
     "rotcom",
-    "rotcom_cargs",
     "rotcom_execute",
-    "rotcom_outputs",
     "rotcom_params",
 ]

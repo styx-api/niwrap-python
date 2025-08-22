@@ -411,7 +411,7 @@ def map_central_sulcus_outputs(
 
 def map_central_sulcus_execute(
     params: MapCentralSulcusParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MapCentralSulcusOutputs:
     """
     Performs all, or any part of, the FreeSurfer cortical reconstruction process.
@@ -422,10 +422,12 @@ def map_central_sulcus_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MapCentralSulcusOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAP_CENTRAL_SULCUS_METADATA)
     params = execution.params(params)
     cargs = map_central_sulcus_cargs(params, execution)
     ret = map_central_sulcus_outputs(params, execution)
@@ -532,8 +534,6 @@ def map_central_sulcus(
     Returns:
         NamedTuple of outputs (described in `MapCentralSulcusOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAP_CENTRAL_SULCUS_METADATA)
     params = map_central_sulcus_params(
         subjid=subjid,
         process_directive=process_directive,
@@ -572,7 +572,7 @@ def map_central_sulcus(
         mail_username=mail_username,
         threads=threads,
     )
-    return map_central_sulcus_execute(params, execution)
+    return map_central_sulcus_execute(params, runner)
 
 
 __all__ = [
@@ -580,8 +580,6 @@ __all__ = [
     "MapCentralSulcusOutputs",
     "MapCentralSulcusParameters",
     "map_central_sulcus",
-    "map_central_sulcus_cargs",
     "map_central_sulcus_execute",
-    "map_central_sulcus_outputs",
     "map_central_sulcus_params",
 ]

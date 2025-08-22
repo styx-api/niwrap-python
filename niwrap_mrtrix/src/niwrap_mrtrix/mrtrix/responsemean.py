@@ -217,7 +217,7 @@ def responsemean_outputs(
 
 def responsemean_execute(
     params: ResponsemeanParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ResponsemeanOutputs:
     """
     Calculate the mean response function from a set of text files.
@@ -228,10 +228,12 @@ def responsemean_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ResponsemeanOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RESPONSEMEAN_METADATA)
     params = execution.params(params)
     cargs = responsemean_cargs(params, execution)
     ret = responsemean_outputs(params, execution)
@@ -286,8 +288,6 @@ def responsemean(
     Returns:
         NamedTuple of outputs (described in `ResponsemeanOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RESPONSEMEAN_METADATA)
     params = responsemean_params(
         input_response=input_response,
         output_response=output_response,
@@ -304,7 +304,7 @@ def responsemean(
         help_=help_,
         version=version,
     )
-    return responsemean_execute(params, execution)
+    return responsemean_execute(params, runner)
 
 
 __all__ = [
@@ -312,8 +312,6 @@ __all__ = [
     "ResponsemeanOutputs",
     "ResponsemeanParameters",
     "responsemean",
-    "responsemean_cargs",
     "responsemean_execute",
-    "responsemean_outputs",
     "responsemean_params",
 ]

@@ -130,7 +130,7 @@ def mris_euler_number_outputs(
 
 def mris_euler_number_execute(
     params: MrisEulerNumberParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisEulerNumberOutputs:
     """
     This program computes EulerNumber for a cortical surface.
@@ -141,10 +141,12 @@ def mris_euler_number_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisEulerNumberOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_EULER_NUMBER_METADATA)
     params = execution.params(params)
     cargs = mris_euler_number_cargs(params, execution)
     ret = mris_euler_number_outputs(params, execution)
@@ -171,13 +173,11 @@ def mris_euler_number(
     Returns:
         NamedTuple of outputs (described in `MrisEulerNumberOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_EULER_NUMBER_METADATA)
     params = mris_euler_number_params(
         input_surface=input_surface,
         output_file=output_file,
     )
-    return mris_euler_number_execute(params, execution)
+    return mris_euler_number_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "MrisEulerNumberOutputs",
     "MrisEulerNumberParameters",
     "mris_euler_number",
-    "mris_euler_number_cargs",
     "mris_euler_number_execute",
-    "mris_euler_number_outputs",
     "mris_euler_number_params",
 ]

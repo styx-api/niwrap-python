@@ -424,7 +424,7 @@ def fsl_sub_outputs(
 
 def fsl_sub_execute(
     params: FslSubParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslSubOutputs:
     """
     FSL cluster submission tool.
@@ -435,10 +435,12 @@ def fsl_sub_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslSubOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_SUB_METADATA)
     params = execution.params(params)
     cargs = fsl_sub_cargs(params, execution)
     ret = fsl_sub_outputs(params, execution)
@@ -542,8 +544,6 @@ def fsl_sub(
     Returns:
         NamedTuple of outputs (described in `FslSubOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_SUB_METADATA)
     params = fsl_sub_params(
         arch=arch,
         coprocessor=coprocessor,
@@ -580,7 +580,7 @@ def fsl_sub(
         version=version,
         fileisimage=fileisimage,
     )
-    return fsl_sub_execute(params, execution)
+    return fsl_sub_execute(params, runner)
 
 
 __all__ = [
@@ -588,8 +588,6 @@ __all__ = [
     "FslSubOutputs",
     "FslSubParameters",
     "fsl_sub",
-    "fsl_sub_cargs",
     "fsl_sub_execute",
-    "fsl_sub_outputs",
     "fsl_sub_params",
 ]

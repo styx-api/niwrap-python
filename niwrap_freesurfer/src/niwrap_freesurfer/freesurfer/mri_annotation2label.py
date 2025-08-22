@@ -292,7 +292,7 @@ def mri_annotation2label_outputs(
 
 def mri_annotation2label_execute(
     params: MriAnnotation2labelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAnnotation2labelOutputs:
     """
     Convert an annotation into multiple label files or into a segmentation volume.
@@ -303,10 +303,12 @@ def mri_annotation2label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAnnotation2labelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_ANNOTATION2LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_annotation2label_cargs(params, execution)
     ret = mri_annotation2label_outputs(params, execution)
@@ -370,8 +372,6 @@ def mri_annotation2label(
     Returns:
         NamedTuple of outputs (described in `MriAnnotation2labelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_ANNOTATION2LABEL_METADATA)
     params = mri_annotation2label_params(
         subject=subject,
         hemi=hemi,
@@ -393,7 +393,7 @@ def mri_annotation2label(
         help_=help_,
         version=version,
     )
-    return mri_annotation2label_execute(params, execution)
+    return mri_annotation2label_execute(params, runner)
 
 
 __all__ = [
@@ -401,8 +401,6 @@ __all__ = [
     "MriAnnotation2labelOutputs",
     "MriAnnotation2labelParameters",
     "mri_annotation2label",
-    "mri_annotation2label_cargs",
     "mri_annotation2label_execute",
-    "mri_annotation2label_outputs",
     "mri_annotation2label_params",
 ]

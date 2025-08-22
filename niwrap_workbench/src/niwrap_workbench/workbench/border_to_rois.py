@@ -153,7 +153,7 @@ def border_to_rois_outputs(
 
 def border_to_rois_execute(
     params: BorderToRoisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BorderToRoisOutputs:
     """
     Make metric rois from borders.
@@ -167,10 +167,12 @@ def border_to_rois_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderToRoisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BORDER_TO_ROIS_METADATA)
     params = execution.params(params)
     cargs = border_to_rois_cargs(params, execution)
     ret = border_to_rois_outputs(params, execution)
@@ -208,8 +210,6 @@ def border_to_rois(
     Returns:
         NamedTuple of outputs (described in `BorderToRoisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BORDER_TO_ROIS_METADATA)
     params = border_to_rois_params(
         surface=surface,
         border_file=border_file,
@@ -218,7 +218,7 @@ def border_to_rois(
         opt_inverse=opt_inverse,
         opt_include_border=opt_include_border,
     )
-    return border_to_rois_execute(params, execution)
+    return border_to_rois_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "BorderToRoisOutputs",
     "BorderToRoisParameters",
     "border_to_rois",
-    "border_to_rois_cargs",
     "border_to_rois_execute",
-    "border_to_rois_outputs",
     "border_to_rois_params",
 ]

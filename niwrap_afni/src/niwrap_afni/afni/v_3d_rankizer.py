@@ -164,7 +164,7 @@ def v_3d_rankizer_outputs(
 
 def v_3d_rankizer_execute(
     params: V3dRankizerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRankizerOutputs:
     """
     Tool to rank each voxel as sorted into increasing value. Ties get the average
@@ -176,10 +176,12 @@ def v_3d_rankizer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRankizerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_RANKIZER_METADATA)
     params = execution.params(params)
     cargs = v_3d_rankizer_cargs(params, execution)
     ret = v_3d_rankizer_outputs(params, execution)
@@ -219,8 +221,6 @@ def v_3d_rankizer(
     Returns:
         NamedTuple of outputs (described in `V3dRankizerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_RANKIZER_METADATA)
     params = v_3d_rankizer_params(
         dataset=dataset,
         base_rank=base_rank,
@@ -229,7 +229,7 @@ def v_3d_rankizer(
         percentize=percentize,
         percentize_mask=percentize_mask,
     )
-    return v_3d_rankizer_execute(params, execution)
+    return v_3d_rankizer_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "V3dRankizerParameters",
     "V_3D_RANKIZER_METADATA",
     "v_3d_rankizer",
-    "v_3d_rankizer_cargs",
     "v_3d_rankizer_execute",
-    "v_3d_rankizer_outputs",
     "v_3d_rankizer_params",
 ]

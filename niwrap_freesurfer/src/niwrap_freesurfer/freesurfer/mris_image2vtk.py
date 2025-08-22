@@ -150,7 +150,7 @@ def mris_image2vtk_outputs(
 
 def mris_image2vtk_execute(
     params: MrisImage2vtkParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisImage2vtkOutputs:
     """
     Convert image to VTK format with specified thresholds and smoothing parameters.
@@ -161,10 +161,12 @@ def mris_image2vtk_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisImage2vtkOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_IMAGE2VTK_METADATA)
     params = execution.params(params)
     cargs = mris_image2vtk_cargs(params, execution)
     ret = mris_image2vtk_outputs(params, execution)
@@ -201,8 +203,6 @@ def mris_image2vtk(
     Returns:
         NamedTuple of outputs (described in `MrisImage2vtkOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_IMAGE2VTK_METADATA)
     params = mris_image2vtk_params(
         input_filename=input_filename,
         output_filename=output_filename,
@@ -212,7 +212,7 @@ def mris_image2vtk(
         image_smoothing_size=image_smoothing_size,
         reduction_percent=reduction_percent,
     )
-    return mris_image2vtk_execute(params, execution)
+    return mris_image2vtk_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "MrisImage2vtkOutputs",
     "MrisImage2vtkParameters",
     "mris_image2vtk",
-    "mris_image2vtk_cargs",
     "mris_image2vtk_execute",
-    "mris_image2vtk_outputs",
     "mris_image2vtk_params",
 ]

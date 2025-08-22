@@ -132,7 +132,7 @@ def fs_temp_dir_outputs(
 
 def fs_temp_dir_execute(
     params: FsTempDirParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsTempDirOutputs:
     """
     Generates and creates an empty temporary directory.
@@ -143,10 +143,12 @@ def fs_temp_dir_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsTempDirOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_TEMP_DIR_METADATA)
     params = execution.params(params)
     cargs = fs_temp_dir_cargs(params, execution)
     ret = fs_temp_dir_outputs(params, execution)
@@ -174,13 +176,11 @@ def fs_temp_dir(
     Returns:
         NamedTuple of outputs (described in `FsTempDirOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_TEMP_DIR_METADATA)
     params = fs_temp_dir_params(
         base_directory=base_directory,
         scratch=scratch,
     )
-    return fs_temp_dir_execute(params, execution)
+    return fs_temp_dir_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "FsTempDirOutputs",
     "FsTempDirParameters",
     "fs_temp_dir",
-    "fs_temp_dir_cargs",
     "fs_temp_dir_execute",
-    "fs_temp_dir_outputs",
     "fs_temp_dir_params",
 ]

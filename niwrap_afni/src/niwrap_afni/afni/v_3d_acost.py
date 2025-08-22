@@ -145,7 +145,7 @@ def v_3d_acost_outputs(
 
 def v_3d_acost_execute(
     params: V3dAcostParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAcostOutputs:
     """
     Allineate dataset to a base dataset.
@@ -156,10 +156,12 @@ def v_3d_acost_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAcostOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ACOST_METADATA)
     params = execution.params(params)
     cargs = v_3d_acost_cargs(params, execution)
     ret = v_3d_acost_outputs(params, execution)
@@ -190,15 +192,13 @@ def v_3d_acost(
     Returns:
         NamedTuple of outputs (described in `V3dAcostOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ACOST_METADATA)
     params = v_3d_acost_params(
         infile=infile,
         basefile=basefile,
         outfile=outfile,
         all_cost=all_cost,
     )
-    return v_3d_acost_execute(params, execution)
+    return v_3d_acost_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "V3dAcostParameters",
     "V_3D_ACOST_METADATA",
     "v_3d_acost",
-    "v_3d_acost_cargs",
     "v_3d_acost_execute",
-    "v_3d_acost_outputs",
     "v_3d_acost_params",
 ]

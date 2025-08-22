@@ -160,7 +160,7 @@ def v_3d_kruskal_wallis_outputs(
 
 def v_3d_kruskal_wallis_execute(
     params: V3dKruskalWallisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dKruskalWallisOutputs:
     """
     This program performs nonparametric Kruskal-Wallis test for comparison of
@@ -172,10 +172,12 @@ def v_3d_kruskal_wallis_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dKruskalWallisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_KRUSKAL_WALLIS_METADATA)
     params = execution.params(params)
     cargs = v_3d_kruskal_wallis_cargs(params, execution)
     ret = v_3d_kruskal_wallis_outputs(params, execution)
@@ -210,8 +212,6 @@ def v_3d_kruskal_wallis(
     Returns:
         NamedTuple of outputs (described in `V3dKruskalWallisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_KRUSKAL_WALLIS_METADATA)
     params = v_3d_kruskal_wallis_params(
         levels=levels,
         datasets=datasets,
@@ -219,7 +219,7 @@ def v_3d_kruskal_wallis(
         voxel=voxel,
         output=output,
     )
-    return v_3d_kruskal_wallis_execute(params, execution)
+    return v_3d_kruskal_wallis_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "V3dKruskalWallisParameters",
     "V_3D_KRUSKAL_WALLIS_METADATA",
     "v_3d_kruskal_wallis",
-    "v_3d_kruskal_wallis_cargs",
     "v_3d_kruskal_wallis_execute",
-    "v_3d_kruskal_wallis_outputs",
     "v_3d_kruskal_wallis_params",
 ]

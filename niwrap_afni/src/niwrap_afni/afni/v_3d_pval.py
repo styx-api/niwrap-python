@@ -157,7 +157,7 @@ def v_3d_pval_outputs(
 
 def v_3d_pval_execute(
     params: V3dPvalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dPvalOutputs:
     """
     Convert a dataset's statistical sub-bricks to p-values or other statistical
@@ -169,10 +169,12 @@ def v_3d_pval_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPvalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_PVAL_METADATA)
     params = execution.params(params)
     cargs = v_3d_pval_cargs(params, execution)
     ret = v_3d_pval_outputs(params, execution)
@@ -210,8 +212,6 @@ def v_3d_pval(
     Returns:
         NamedTuple of outputs (described in `V3dPvalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_PVAL_METADATA)
     params = v_3d_pval_params(
         input_dataset=input_dataset,
         zscore=zscore,
@@ -220,7 +220,7 @@ def v_3d_pval(
         qval=qval,
         prefix=prefix,
     )
-    return v_3d_pval_execute(params, execution)
+    return v_3d_pval_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "V3dPvalParameters",
     "V_3D_PVAL_METADATA",
     "v_3d_pval",
-    "v_3d_pval_cargs",
     "v_3d_pval_execute",
-    "v_3d_pval_outputs",
     "v_3d_pval_params",
 ]

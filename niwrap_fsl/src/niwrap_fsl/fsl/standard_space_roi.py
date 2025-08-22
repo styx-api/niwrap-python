@@ -206,7 +206,7 @@ def standard_space_roi_outputs(
 
 def standard_space_roi_execute(
     params: StandardSpaceRoiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> StandardSpaceRoiOutputs:
     """
     Masks input and/or reduces its FOV based on a standard space image or mask,
@@ -218,10 +218,12 @@ def standard_space_roi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `StandardSpaceRoiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(STANDARD_SPACE_ROI_METADATA)
     params = execution.params(params)
     cargs = standard_space_roi_cargs(params, execution)
     ret = standard_space_roi_outputs(params, execution)
@@ -274,8 +276,6 @@ def standard_space_roi(
     Returns:
         NamedTuple of outputs (described in `StandardSpaceRoiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(STANDARD_SPACE_ROI_METADATA)
     params = standard_space_roi_params(
         infile=infile,
         outfile=outfile,
@@ -290,7 +290,7 @@ def standard_space_roi(
         debug_flag=debug_flag,
         bet_premask_flag=bet_premask_flag,
     )
-    return standard_space_roi_execute(params, execution)
+    return standard_space_roi_execute(params, runner)
 
 
 __all__ = [
@@ -298,8 +298,6 @@ __all__ = [
     "StandardSpaceRoiOutputs",
     "StandardSpaceRoiParameters",
     "standard_space_roi",
-    "standard_space_roi_cargs",
     "standard_space_roi_execute",
-    "standard_space_roi_outputs",
     "standard_space_roi_params",
 ]

@@ -139,7 +139,7 @@ def mri_aparc2wmseg_outputs(
 
 def mri_aparc2wmseg_execute(
     params: MriAparc2wmsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAparc2wmsegOutputs:
     """
     A tool to convert aparc+aseg.mgz annotations into a white matter segmentation
@@ -151,10 +151,12 @@ def mri_aparc2wmseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAparc2wmsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_APARC2WMSEG_METADATA)
     params = execution.params(params)
     cargs = mri_aparc2wmseg_cargs(params, execution)
     ret = mri_aparc2wmseg_outputs(params, execution)
@@ -186,15 +188,13 @@ def mri_aparc2wmseg(
     Returns:
         NamedTuple of outputs (described in `MriAparc2wmsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_APARC2WMSEG_METADATA)
     params = mri_aparc2wmseg_params(
         subject=subject,
         wmseg_file=wmseg_file,
         help_=help_,
         version=version,
     )
-    return mri_aparc2wmseg_execute(params, execution)
+    return mri_aparc2wmseg_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "MriAparc2wmsegOutputs",
     "MriAparc2wmsegParameters",
     "mri_aparc2wmseg",
-    "mri_aparc2wmseg_cargs",
     "mri_aparc2wmseg_execute",
-    "mri_aparc2wmseg_outputs",
     "mri_aparc2wmseg_params",
 ]

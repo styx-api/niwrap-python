@@ -175,7 +175,7 @@ def volume_rois_from_extrema_outputs(
 
 def volume_rois_from_extrema_execute(
     params: VolumeRoisFromExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
     Create volume roi maps from extrema maps.
@@ -195,10 +195,12 @@ def volume_rois_from_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeRoisFromExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_ROIS_FROM_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = volume_rois_from_extrema_cargs(params, execution)
     ret = volume_rois_from_extrema_outputs(params, execution)
@@ -248,8 +250,6 @@ def volume_rois_from_extrema(
     Returns:
         NamedTuple of outputs (described in `VolumeRoisFromExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_ROIS_FROM_EXTREMA_METADATA)
     params = volume_rois_from_extrema_params(
         volume_in=volume_in,
         limit=limit,
@@ -259,7 +259,7 @@ def volume_rois_from_extrema(
         opt_overlap_logic_method=opt_overlap_logic_method,
         opt_subvolume_subvol=opt_subvolume_subvol,
     )
-    return volume_rois_from_extrema_execute(params, execution)
+    return volume_rois_from_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -267,8 +267,6 @@ __all__ = [
     "VolumeRoisFromExtremaOutputs",
     "VolumeRoisFromExtremaParameters",
     "volume_rois_from_extrema",
-    "volume_rois_from_extrema_cargs",
     "volume_rois_from_extrema_execute",
-    "volume_rois_from_extrema_outputs",
     "volume_rois_from_extrema_params",
 ]

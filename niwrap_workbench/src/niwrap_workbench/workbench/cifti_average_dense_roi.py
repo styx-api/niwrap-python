@@ -306,7 +306,7 @@ def cifti_average_dense_roi_outputs(
 
 def cifti_average_dense_roi_execute(
     params: CiftiAverageDenseRoiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiAverageDenseRoiOutputs:
     """
     Average cifti rows across subjects by roi.
@@ -324,10 +324,12 @@ def cifti_average_dense_roi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiAverageDenseRoiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_AVERAGE_DENSE_ROI_METADATA)
     params = execution.params(params)
     cargs = cifti_average_dense_roi_cargs(params, execution)
     ret = cifti_average_dense_roi_outputs(params, execution)
@@ -383,8 +385,6 @@ def cifti_average_dense_roi(
     Returns:
         NamedTuple of outputs (described in `CiftiAverageDenseRoiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_AVERAGE_DENSE_ROI_METADATA)
     params = cifti_average_dense_roi_params(
         cifti_out=cifti_out,
         cifti_roi=cifti_roi,
@@ -397,7 +397,7 @@ def cifti_average_dense_roi(
         opt_cerebellum_area_surf_cerebellum_surf=opt_cerebellum_area_surf_cerebellum_surf,
         cifti=cifti,
     )
-    return cifti_average_dense_roi_execute(params, execution)
+    return cifti_average_dense_roi_execute(params, runner)
 
 
 __all__ = [
@@ -407,12 +407,8 @@ __all__ = [
     "CiftiAverageDenseRoiOutputs",
     "CiftiAverageDenseRoiParameters",
     "cifti_average_dense_roi",
-    "cifti_average_dense_roi_cargs",
-    "cifti_average_dense_roi_cifti_cargs",
     "cifti_average_dense_roi_cifti_params",
-    "cifti_average_dense_roi_cifti_roi_cargs",
     "cifti_average_dense_roi_cifti_roi_params",
     "cifti_average_dense_roi_execute",
-    "cifti_average_dense_roi_outputs",
     "cifti_average_dense_roi_params",
 ]

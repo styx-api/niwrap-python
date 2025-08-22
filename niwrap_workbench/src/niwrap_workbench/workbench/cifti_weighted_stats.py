@@ -390,7 +390,7 @@ def cifti_weighted_stats_outputs(
 
 def cifti_weighted_stats_execute(
     params: CiftiWeightedStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiWeightedStatsOutputs:
     """
     Weighted statistics along cifti columns.
@@ -416,10 +416,12 @@ def cifti_weighted_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiWeightedStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_WEIGHTED_STATS_METADATA)
     params = execution.params(params)
     cargs = cifti_weighted_stats_cargs(params, execution)
     ret = cifti_weighted_stats_outputs(params, execution)
@@ -480,8 +482,6 @@ def cifti_weighted_stats(
     Returns:
         NamedTuple of outputs (described in `CiftiWeightedStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_WEIGHTED_STATS_METADATA)
     params = cifti_weighted_stats_params(
         cifti_in=cifti_in,
         spatial_weights=spatial_weights,
@@ -494,7 +494,7 @@ def cifti_weighted_stats(
         opt_sum=opt_sum,
         opt_show_map_name=opt_show_map_name,
     )
-    return cifti_weighted_stats_execute(params, execution)
+    return cifti_weighted_stats_execute(params, runner)
 
 
 __all__ = [
@@ -505,14 +505,9 @@ __all__ = [
     "CiftiWeightedStatsSpatialWeightsParameters",
     "CiftiWeightedStatsStdevParameters",
     "cifti_weighted_stats",
-    "cifti_weighted_stats_cargs",
     "cifti_weighted_stats_execute",
-    "cifti_weighted_stats_outputs",
     "cifti_weighted_stats_params",
-    "cifti_weighted_stats_roi_cargs",
     "cifti_weighted_stats_roi_params",
-    "cifti_weighted_stats_spatial_weights_cargs",
     "cifti_weighted_stats_spatial_weights_params",
-    "cifti_weighted_stats_stdev_cargs",
     "cifti_weighted_stats_stdev_params",
 ]

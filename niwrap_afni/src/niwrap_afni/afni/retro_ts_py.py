@@ -337,7 +337,7 @@ def retro_ts_py_outputs(
 
 def retro_ts_py_execute(
     params: RetroTsPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RetroTsPyOutputs:
     """
     Creates slice-based regressors for regressing out components of heart rate,
@@ -350,10 +350,12 @@ def retro_ts_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RetroTsPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RETRO_TS_PY_METADATA)
     params = execution.params(params)
     cargs = retro_ts_py_cargs(params, execution)
     ret = retro_ts_py_outputs(params, execution)
@@ -436,8 +438,6 @@ def retro_ts_py(
     Returns:
         NamedTuple of outputs (described in `RetroTsPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RETRO_TS_PY_METADATA)
     params = retro_ts_py_params(
         resp_file=resp_file,
         card_file=card_file,
@@ -465,7 +465,7 @@ def retro_ts_py(
         zero_phase_offset=zero_phase_offset,
         legacy_transform=legacy_transform,
     )
-    return retro_ts_py_execute(params, execution)
+    return retro_ts_py_execute(params, runner)
 
 
 __all__ = [
@@ -473,8 +473,6 @@ __all__ = [
     "RetroTsPyOutputs",
     "RetroTsPyParameters",
     "retro_ts_py",
-    "retro_ts_py_cargs",
     "retro_ts_py_execute",
-    "retro_ts_py_outputs",
     "retro_ts_py_params",
 ]

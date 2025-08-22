@@ -175,7 +175,7 @@ def mris_niters2fwhm_outputs(
 
 def mris_niters2fwhm_execute(
     params: MrisNiters2fwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisNiters2fwhmOutputs:
     """
     Convert number of iterations to full width at half maximum (FWHM) for surface.
@@ -186,10 +186,12 @@ def mris_niters2fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisNiters2fwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_NITERS2FWHM_METADATA)
     params = execution.params(params)
     cargs = mris_niters2fwhm_cargs(params, execution)
     ret = mris_niters2fwhm_outputs(params, execution)
@@ -230,8 +232,6 @@ def mris_niters2fwhm(
     Returns:
         NamedTuple of outputs (described in `MrisNiters2fwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_NITERS2FWHM_METADATA)
     params = mris_niters2fwhm_params(
         subject=subject,
         hemi=hemi,
@@ -243,7 +243,7 @@ def mris_niters2fwhm(
         help_=help_,
         version=version,
     )
-    return mris_niters2fwhm_execute(params, execution)
+    return mris_niters2fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -251,8 +251,6 @@ __all__ = [
     "MrisNiters2fwhmOutputs",
     "MrisNiters2fwhmParameters",
     "mris_niters2fwhm",
-    "mris_niters2fwhm_cargs",
     "mris_niters2fwhm_execute",
-    "mris_niters2fwhm_outputs",
     "mris_niters2fwhm_params",
 ]

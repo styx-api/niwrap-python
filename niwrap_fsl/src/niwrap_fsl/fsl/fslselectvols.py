@@ -158,7 +158,7 @@ def fslselectvols_outputs(
 
 def fslselectvols_execute(
     params: FslselectvolsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslselectvolsOutputs:
     """
     Select volumes from a 4D time series and output a subset 4D volume.
@@ -169,10 +169,12 @@ def fslselectvols_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslselectvolsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSELECTVOLS_METADATA)
     params = execution.params(params)
     cargs = fslselectvols_cargs(params, execution)
     ret = fslselectvols_outputs(params, execution)
@@ -208,8 +210,6 @@ def fslselectvols(
     Returns:
         NamedTuple of outputs (described in `FslselectvolsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSELECTVOLS_METADATA)
     params = fslselectvols_params(
         input_file=input_file,
         output_file=output_file,
@@ -218,7 +218,7 @@ def fslselectvols(
         output_variance_flag=output_variance_flag,
         help_flag=help_flag,
     )
-    return fslselectvols_execute(params, execution)
+    return fslselectvols_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "FslselectvolsOutputs",
     "FslselectvolsParameters",
     "fslselectvols",
-    "fslselectvols_cargs",
     "fslselectvols_execute",
-    "fslselectvols_outputs",
     "fslselectvols_params",
 ]

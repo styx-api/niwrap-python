@@ -237,7 +237,7 @@ def v_3d_tshift_outputs(
 
 def v_3d_tshift_execute(
     params: V3dTshiftParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTshiftOutputs:
     """
     Shifts voxel time series from input so that separate slices are aligned to the
@@ -249,10 +249,12 @@ def v_3d_tshift_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTshiftOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TSHIFT_METADATA)
     params = execution.params(params)
     cargs = v_3d_tshift_cargs(params, execution)
     ret = v_3d_tshift_outputs(params, execution)
@@ -313,8 +315,6 @@ def v_3d_tshift(
     Returns:
         NamedTuple of outputs (described in `V3dTshiftOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TSHIFT_METADATA)
     params = v_3d_tshift_params(
         prefix=prefix,
         ignore=ignore,
@@ -330,7 +330,7 @@ def v_3d_tshift(
         tslice=tslice,
         tzero=tzero,
     )
-    return v_3d_tshift_execute(params, execution)
+    return v_3d_tshift_execute(params, runner)
 
 
 __all__ = [
@@ -338,8 +338,6 @@ __all__ = [
     "V3dTshiftParameters",
     "V_3D_TSHIFT_METADATA",
     "v_3d_tshift",
-    "v_3d_tshift_cargs",
     "v_3d_tshift_execute",
-    "v_3d_tshift_outputs",
     "v_3d_tshift_params",
 ]

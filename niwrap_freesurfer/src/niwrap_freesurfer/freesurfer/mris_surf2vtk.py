@@ -131,7 +131,7 @@ def mris_surf2vtk_outputs(
 
 def mris_surf2vtk_execute(
     params: MrisSurf2vtkParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSurf2vtkOutputs:
     """
     Conversion tool to convert surface files to VTK format.
@@ -142,10 +142,12 @@ def mris_surf2vtk_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSurf2vtkOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SURF2VTK_METADATA)
     params = execution.params(params)
     cargs = mris_surf2vtk_cargs(params, execution)
     ret = mris_surf2vtk_outputs(params, execution)
@@ -172,13 +174,11 @@ def mris_surf2vtk(
     Returns:
         NamedTuple of outputs (described in `MrisSurf2vtkOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SURF2VTK_METADATA)
     params = mris_surf2vtk_params(
         input_surface=input_surface,
         output_surface=output_surface,
     )
-    return mris_surf2vtk_execute(params, execution)
+    return mris_surf2vtk_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "MrisSurf2vtkOutputs",
     "MrisSurf2vtkParameters",
     "mris_surf2vtk",
-    "mris_surf2vtk_cargs",
     "mris_surf2vtk_execute",
-    "mris_surf2vtk_outputs",
     "mris_surf2vtk_params",
 ]

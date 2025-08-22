@@ -299,7 +299,7 @@ def meshconvert_outputs(
 
 def meshconvert_execute(
     params: MeshconvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MeshconvertOutputs:
     """
     Convert meshes between different formats, and apply transformations.
@@ -316,10 +316,12 @@ def meshconvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MeshconvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MESHCONVERT_METADATA)
     params = execution.params(params)
     cargs = meshconvert_cargs(params, execution)
     ret = meshconvert_outputs(params, execution)
@@ -378,8 +380,6 @@ def meshconvert(
     Returns:
         NamedTuple of outputs (described in `MeshconvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MESHCONVERT_METADATA)
     params = meshconvert_params(
         binary=binary,
         transform=transform,
@@ -394,7 +394,7 @@ def meshconvert(
         input_=input_,
         output=output,
     )
-    return meshconvert_execute(params, execution)
+    return meshconvert_execute(params, runner)
 
 
 __all__ = [
@@ -404,12 +404,8 @@ __all__ = [
     "MeshconvertParameters",
     "MeshconvertTransformParameters",
     "meshconvert",
-    "meshconvert_cargs",
-    "meshconvert_config_cargs",
     "meshconvert_config_params",
     "meshconvert_execute",
-    "meshconvert_outputs",
     "meshconvert_params",
-    "meshconvert_transform_cargs",
     "meshconvert_transform_params",
 ]

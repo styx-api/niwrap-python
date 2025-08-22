@@ -241,7 +241,7 @@ def v_3dedgedog_outputs(
 
 def v_3dedgedog_execute(
     params: V3dedgedogParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dedgedogOutputs:
     """
     Calculate edges in an image using the Difference of Gaussians (DOG) method with
@@ -253,10 +253,12 @@ def v_3dedgedog_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dedgedogOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DEDGEDOG_METADATA)
     params = execution.params(params)
     cargs = v_3dedgedog_cargs(params, execution)
     ret = v_3dedgedog_outputs(params, execution)
@@ -316,8 +318,6 @@ def v_3dedgedog(
     Returns:
         NamedTuple of outputs (described in `V3dedgedogOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DEDGEDOG_METADATA)
     params = v_3dedgedog_params(
         input_=input_,
         prefix=prefix,
@@ -332,7 +332,7 @@ def v_3dedgedog(
         edge_bnd_scale=edge_bnd_scale,
         only2d=only2d,
     )
-    return v_3dedgedog_execute(params, execution)
+    return v_3dedgedog_execute(params, runner)
 
 
 __all__ = [
@@ -340,8 +340,6 @@ __all__ = [
     "V3dedgedogParameters",
     "V_3DEDGEDOG_METADATA",
     "v_3dedgedog",
-    "v_3dedgedog_cargs",
     "v_3dedgedog_execute",
-    "v_3dedgedog_outputs",
     "v_3dedgedog_params",
 ]

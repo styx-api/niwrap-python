@@ -128,7 +128,7 @@ def old_betall_outputs(
 
 def old_betall_execute(
     params: OldBetallParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> OldBetallOutputs:
     """
     Automated brain extraction tool for FSL involving both T1 and T2 images.
@@ -139,10 +139,12 @@ def old_betall_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `OldBetallOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(OLD_BETALL_METADATA)
     params = execution.params(params)
     cargs = old_betall_cargs(params, execution)
     ret = old_betall_outputs(params, execution)
@@ -169,13 +171,11 @@ def old_betall(
     Returns:
         NamedTuple of outputs (described in `OldBetallOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(OLD_BETALL_METADATA)
     params = old_betall_params(
         t1_filerout=t1_filerout,
         t2_filerout=t2_filerout,
     )
-    return old_betall_execute(params, execution)
+    return old_betall_execute(params, runner)
 
 
 __all__ = [
@@ -183,8 +183,6 @@ __all__ = [
     "OldBetallOutputs",
     "OldBetallParameters",
     "old_betall",
-    "old_betall_cargs",
     "old_betall_execute",
-    "old_betall_outputs",
     "old_betall_params",
 ]

@@ -131,7 +131,7 @@ def gifti_label_add_prefix_outputs(
 
 def gifti_label_add_prefix_execute(
     params: GiftiLabelAddPrefixParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GiftiLabelAddPrefixOutputs:
     """
     Add prefix to all label names in a gifti label file.
@@ -144,10 +144,12 @@ def gifti_label_add_prefix_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiLabelAddPrefixOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GIFTI_LABEL_ADD_PREFIX_METADATA)
     params = execution.params(params)
     cargs = gifti_label_add_prefix_cargs(params, execution)
     ret = gifti_label_add_prefix_outputs(params, execution)
@@ -178,14 +180,12 @@ def gifti_label_add_prefix(
     Returns:
         NamedTuple of outputs (described in `GiftiLabelAddPrefixOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GIFTI_LABEL_ADD_PREFIX_METADATA)
     params = gifti_label_add_prefix_params(
         label_in=label_in,
         prefix=prefix,
         label_out=label_out,
     )
-    return gifti_label_add_prefix_execute(params, execution)
+    return gifti_label_add_prefix_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "GiftiLabelAddPrefixOutputs",
     "GiftiLabelAddPrefixParameters",
     "gifti_label_add_prefix",
-    "gifti_label_add_prefix_cargs",
     "gifti_label_add_prefix_execute",
-    "gifti_label_add_prefix_outputs",
     "gifti_label_add_prefix_params",
 ]

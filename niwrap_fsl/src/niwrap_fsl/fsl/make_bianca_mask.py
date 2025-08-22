@@ -271,7 +271,7 @@ def make_bianca_mask_outputs(
 
 def make_bianca_mask_execute(
     params: MakeBiancaMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeBiancaMaskOutputs:
     """
     A script for generating BIANCA masks.
@@ -282,10 +282,12 @@ def make_bianca_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeBiancaMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_BIANCA_MASK_METADATA)
     params = execution.params(params)
     cargs = make_bianca_mask_cargs(params, execution)
     ret = make_bianca_mask_outputs(params, execution)
@@ -362,8 +364,6 @@ def make_bianca_mask(
     Returns:
         NamedTuple of outputs (described in `MakeBiancaMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_BIANCA_MASK_METADATA)
     params = make_bianca_mask_params(
         input_image=input_image,
         output_image=output_image,
@@ -387,7 +387,7 @@ def make_bianca_mask(
         verbose_flag=verbose_flag,
         debug_flag=debug_flag,
     )
-    return make_bianca_mask_execute(params, execution)
+    return make_bianca_mask_execute(params, runner)
 
 
 __all__ = [
@@ -395,8 +395,6 @@ __all__ = [
     "MakeBiancaMaskOutputs",
     "MakeBiancaMaskParameters",
     "make_bianca_mask",
-    "make_bianca_mask_cargs",
     "make_bianca_mask_execute",
-    "make_bianca_mask_outputs",
     "make_bianca_mask_params",
 ]

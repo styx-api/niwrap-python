@@ -173,7 +173,7 @@ def texture_run_length_features_outputs(
 
 def texture_run_length_features_execute(
     params: TextureRunLengthFeaturesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TextureRunLengthFeaturesOutputs:
     """
     A tool to calculate texture run length features on an input image.
@@ -184,10 +184,12 @@ def texture_run_length_features_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TextureRunLengthFeaturesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TEXTURE_RUN_LENGTH_FEATURES_METADATA)
     params = execution.params(params)
     cargs = texture_run_length_features_cargs(params, execution)
     ret = texture_run_length_features_outputs(params, execution)
@@ -220,8 +222,6 @@ def texture_run_length_features(
     Returns:
         NamedTuple of outputs (described in `TextureRunLengthFeaturesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TEXTURE_RUN_LENGTH_FEATURES_METADATA)
     params = texture_run_length_features_params(
         image_dimension=image_dimension,
         input_image=input_image,
@@ -229,7 +229,7 @@ def texture_run_length_features(
         mask_image=mask_image,
         mask_label=mask_label,
     )
-    return texture_run_length_features_execute(params, execution)
+    return texture_run_length_features_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "TextureRunLengthFeaturesOutputs",
     "TextureRunLengthFeaturesParameters",
     "texture_run_length_features",
-    "texture_run_length_features_cargs",
     "texture_run_length_features_execute",
-    "texture_run_length_features_outputs",
     "texture_run_length_features_params",
 ]

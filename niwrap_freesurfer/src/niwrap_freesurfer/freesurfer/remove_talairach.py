@@ -127,7 +127,7 @@ def remove_talairach_outputs(
 
 def remove_talairach_execute(
     params: RemoveTalairachParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RemoveTalairachOutputs:
     """
     A tool for removing the Talairach transformation from a volume.
@@ -138,10 +138,12 @@ def remove_talairach_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RemoveTalairachOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REMOVE_TALAIRACH_METADATA)
     params = execution.params(params)
     cargs = remove_talairach_cargs(params, execution)
     ret = remove_talairach_outputs(params, execution)
@@ -170,13 +172,11 @@ def remove_talairach(
     Returns:
         NamedTuple of outputs (described in `RemoveTalairachOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REMOVE_TALAIRACH_METADATA)
     params = remove_talairach_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return remove_talairach_execute(params, execution)
+    return remove_talairach_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "RemoveTalairachOutputs",
     "RemoveTalairachParameters",
     "remove_talairach",
-    "remove_talairach_cargs",
     "remove_talairach_execute",
-    "remove_talairach_outputs",
     "remove_talairach_params",
 ]

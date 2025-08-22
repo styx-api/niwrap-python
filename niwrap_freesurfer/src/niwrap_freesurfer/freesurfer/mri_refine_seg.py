@@ -138,7 +138,7 @@ def mri_refine_seg_outputs(
 
 def mri_refine_seg_execute(
     params: MriRefineSegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRefineSegOutputs:
     """
     Refines a messy segmentation by recoding stray voxels.
@@ -149,10 +149,12 @@ def mri_refine_seg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRefineSegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_REFINE_SEG_METADATA)
     params = execution.params(params)
     cargs = mri_refine_seg_cargs(params, execution)
     ret = mri_refine_seg_outputs(params, execution)
@@ -182,14 +184,12 @@ def mri_refine_seg(
     Returns:
         NamedTuple of outputs (described in `MriRefineSegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_REFINE_SEG_METADATA)
     params = mri_refine_seg_params(
         input_segmentation=input_segmentation,
         output_segmentation=output_segmentation,
         debug=debug,
     )
-    return mri_refine_seg_execute(params, execution)
+    return mri_refine_seg_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "MriRefineSegOutputs",
     "MriRefineSegParameters",
     "mri_refine_seg",
-    "mri_refine_seg_cargs",
     "mri_refine_seg_execute",
-    "mri_refine_seg_outputs",
     "mri_refine_seg_params",
 ]

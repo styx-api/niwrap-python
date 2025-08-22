@@ -121,7 +121,7 @@ def v__1d_diff_mag_outputs(
 
 def v__1d_diff_mag_execute(
     params: V1dDiffMagParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dDiffMagOutputs:
     """
     Computes a magnitude estimate of the first differences of a 1D file.
@@ -132,10 +132,12 @@ def v__1d_diff_mag_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dDiffMagOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__1D_DIFF_MAG_METADATA)
     params = execution.params(params)
     cargs = v__1d_diff_mag_cargs(params, execution)
     ret = v__1d_diff_mag_outputs(params, execution)
@@ -161,12 +163,10 @@ def v__1d_diff_mag(
     Returns:
         NamedTuple of outputs (described in `V1dDiffMagOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__1D_DIFF_MAG_METADATA)
     params = v__1d_diff_mag_params(
         infile=infile,
     )
-    return v__1d_diff_mag_execute(params, execution)
+    return v__1d_diff_mag_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "V1dDiffMagParameters",
     "V__1D_DIFF_MAG_METADATA",
     "v__1d_diff_mag",
-    "v__1d_diff_mag_cargs",
     "v__1d_diff_mag_execute",
-    "v__1d_diff_mag_outputs",
     "v__1d_diff_mag_params",
 ]

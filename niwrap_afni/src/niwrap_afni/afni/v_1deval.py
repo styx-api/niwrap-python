@@ -195,7 +195,7 @@ def v_1deval_outputs(
 
 def v_1deval_execute(
     params: V1devalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1devalOutputs:
     """
     Evaluates an expression that may include columns of data from one or more text
@@ -207,10 +207,12 @@ def v_1deval_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1devalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DEVAL_METADATA)
     params = execution.params(params)
     cargs = v_1deval_cargs(params, execution)
     ret = v_1deval_outputs(params, execution)
@@ -256,8 +258,6 @@ def v_1deval(
     Returns:
         NamedTuple of outputs (described in `V1devalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DEVAL_METADATA)
     params = v_1deval_params(
         del_=del_,
         start=start,
@@ -268,7 +268,7 @@ def v_1deval(
         symbol_values=symbol_values,
         expression=expression,
     )
-    return v_1deval_execute(params, execution)
+    return v_1deval_execute(params, runner)
 
 
 __all__ = [
@@ -276,8 +276,6 @@ __all__ = [
     "V1devalParameters",
     "V_1DEVAL_METADATA",
     "v_1deval",
-    "v_1deval_cargs",
     "v_1deval_execute",
-    "v_1deval_outputs",
     "v_1deval_params",
 ]

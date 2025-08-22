@@ -222,7 +222,7 @@ def mri_cc_outputs(
 
 def mri_cc_execute(
     params: MriCcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCcOutputs:
     """
     Segments the corpus callosum into five separate labels in the subcortical
@@ -234,10 +234,12 @@ def mri_cc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CC_METADATA)
     params = execution.params(params)
     cargs = mri_cc_cargs(params, execution)
     ret = mri_cc_outputs(params, execution)
@@ -285,8 +287,6 @@ def mri_cc(
     Returns:
         NamedTuple of outputs (described in `MriCcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CC_METADATA)
     params = mri_cc_params(
         subject_name=subject_name,
         output_file=output_file,
@@ -301,7 +301,7 @@ def mri_cc(
         skip_voxels=skip_voxels,
         max_rotation=max_rotation,
     )
-    return mri_cc_execute(params, execution)
+    return mri_cc_execute(params, runner)
 
 
 __all__ = [
@@ -309,8 +309,6 @@ __all__ = [
     "MriCcOutputs",
     "MriCcParameters",
     "mri_cc",
-    "mri_cc_cargs",
     "mri_cc_execute",
-    "mri_cc_outputs",
     "mri_cc_params",
 ]

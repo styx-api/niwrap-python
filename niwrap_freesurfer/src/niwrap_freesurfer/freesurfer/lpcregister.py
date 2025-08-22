@@ -225,7 +225,7 @@ def lpcregister_outputs(
 
 def lpcregister_execute(
     params: LpcregisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LpcregisterOutputs:
     """
     Registers a volume to its FreeSurfer anatomical using Local Pearson Correlation
@@ -237,10 +237,12 @@ def lpcregister_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LpcregisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LPCREGISTER_METADATA)
     params = execution.params(params)
     cargs = lpcregister_cargs(params, execution)
     ret = lpcregister_outputs(params, execution)
@@ -297,8 +299,6 @@ def lpcregister(
     Returns:
         NamedTuple of outputs (described in `LpcregisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LPCREGISTER_METADATA)
     params = lpcregister_params(
         subject_id=subject_id,
         mov_volume=mov_volume,
@@ -314,7 +314,7 @@ def lpcregister(
         version=version,
         help_=help_,
     )
-    return lpcregister_execute(params, execution)
+    return lpcregister_execute(params, runner)
 
 
 __all__ = [
@@ -322,8 +322,6 @@ __all__ = [
     "LpcregisterOutputs",
     "LpcregisterParameters",
     "lpcregister",
-    "lpcregister_cargs",
     "lpcregister_execute",
-    "lpcregister_outputs",
     "lpcregister_params",
 ]

@@ -214,7 +214,7 @@ def sfa2fieldsign_outputs(
 
 def sfa2fieldsign_execute(
     params: Sfa2fieldsignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Sfa2fieldsignOutputs:
     """
     Computes fieldsign map from sfa-sess output. Masks the angle volumes and samples
@@ -226,10 +226,12 @@ def sfa2fieldsign_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Sfa2fieldsignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SFA2FIELDSIGN_METADATA)
     params = execution.params(params)
     cargs = sfa2fieldsign_cargs(params, execution)
     ret = sfa2fieldsign_outputs(params, execution)
@@ -273,8 +275,6 @@ def sfa2fieldsign(
     Returns:
         NamedTuple of outputs (described in `Sfa2fieldsignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SFA2FIELDSIGN_METADATA)
     params = sfa2fieldsign_params(
         sfadir=sfadir,
         register_dat=register_dat,
@@ -287,7 +287,7 @@ def sfa2fieldsign(
         lh=lh,
         rh=rh,
     )
-    return sfa2fieldsign_execute(params, execution)
+    return sfa2fieldsign_execute(params, runner)
 
 
 __all__ = [
@@ -295,8 +295,6 @@ __all__ = [
     "Sfa2fieldsignOutputs",
     "Sfa2fieldsignParameters",
     "sfa2fieldsign",
-    "sfa2fieldsign_cargs",
     "sfa2fieldsign_execute",
-    "sfa2fieldsign_outputs",
     "sfa2fieldsign_params",
 ]

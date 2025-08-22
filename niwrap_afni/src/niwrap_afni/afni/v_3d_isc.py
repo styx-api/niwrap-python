@@ -207,7 +207,7 @@ def v_3d_isc_outputs(
 
 def v_3d_isc_execute(
     params: V3dIscParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dIscOutputs:
     """
     Program for Voxelwise Inter-Subject Correlation (ISC) Analysis using linear
@@ -219,10 +219,12 @@ def v_3d_isc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dIscOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ISC_METADATA)
     params = execution.params(params)
     cargs = v_3d_isc_cargs(params, execution)
     ret = v_3d_isc_outputs(params, execution)
@@ -273,8 +275,6 @@ def v_3d_isc(
     Returns:
         NamedTuple of outputs (described in `V3dIscOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ISC_METADATA)
     params = v_3d_isc_params(
         outfile_prefix=outfile_prefix,
         num_jobs=num_jobs,
@@ -286,7 +286,7 @@ def v_3d_isc(
         io_functions=io_functions,
         data_table=data_table,
     )
-    return v_3d_isc_execute(params, execution)
+    return v_3d_isc_execute(params, runner)
 
 
 __all__ = [
@@ -294,8 +294,6 @@ __all__ = [
     "V3dIscParameters",
     "V_3D_ISC_METADATA",
     "v_3d_isc",
-    "v_3d_isc_cargs",
     "v_3d_isc_execute",
-    "v_3d_isc_outputs",
     "v_3d_isc_params",
 ]

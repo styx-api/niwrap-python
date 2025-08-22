@@ -143,7 +143,7 @@ def talairach_outputs(
 
 def talairach_execute(
     params: TalairachParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TalairachOutputs:
     """
     Front-end for MINC's mritotal to compute the Talairach transform mapping the
@@ -155,10 +155,12 @@ def talairach_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TalairachOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TALAIRACH_METADATA)
     params = execution.params(params)
     cargs = talairach_cargs(params, execution)
     ret = talairach_outputs(params, execution)
@@ -190,15 +192,13 @@ def talairach(
     Returns:
         NamedTuple of outputs (described in `TalairachOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TALAIRACH_METADATA)
     params = talairach_params(
         input_volume=input_volume,
         output_transform=output_transform,
         log_flag=log_flag,
         debug_flag=debug_flag,
     )
-    return talairach_execute(params, execution)
+    return talairach_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "TalairachOutputs",
     "TalairachParameters",
     "talairach",
-    "talairach_cargs",
     "talairach_execute",
-    "talairach_outputs",
     "talairach_params",
 ]

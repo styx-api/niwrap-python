@@ -120,7 +120,7 @@ def sphere_subject_rh_outputs(
 
 def sphere_subject_rh_execute(
     params: SphereSubjectRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SphereSubjectRhOutputs:
     """
     Sphere Subject RH tool for FreeSurfer, requires valid license.
@@ -131,10 +131,12 @@ def sphere_subject_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SphereSubjectRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPHERE_SUBJECT_RH_METADATA)
     params = execution.params(params)
     cargs = sphere_subject_rh_cargs(params, execution)
     ret = sphere_subject_rh_outputs(params, execution)
@@ -160,12 +162,10 @@ def sphere_subject_rh(
     Returns:
         NamedTuple of outputs (described in `SphereSubjectRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPHERE_SUBJECT_RH_METADATA)
     params = sphere_subject_rh_params(
         license_file=license_file,
     )
-    return sphere_subject_rh_execute(params, execution)
+    return sphere_subject_rh_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "SphereSubjectRhOutputs",
     "SphereSubjectRhParameters",
     "sphere_subject_rh",
-    "sphere_subject_rh_cargs",
     "sphere_subject_rh_execute",
-    "sphere_subject_rh_outputs",
     "sphere_subject_rh_params",
 ]

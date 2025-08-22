@@ -223,7 +223,7 @@ def fat_proc_filter_dwis_outputs(
 
 def fat_proc_filter_dwis_execute(
     params: FatProcFilterDwisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcFilterDwisOutputs:
     """
     Filter out user-found and user-defined bad volumes from DWI data sets.
@@ -234,10 +234,12 @@ def fat_proc_filter_dwis_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcFilterDwisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_FILTER_DWIS_METADATA)
     params = execution.params(params)
     cargs = fat_proc_filter_dwis_cargs(params, execution)
     ret = fat_proc_filter_dwis_outputs(params, execution)
@@ -294,8 +296,6 @@ def fat_proc_filter_dwis(
     Returns:
         NamedTuple of outputs (described in `FatProcFilterDwisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_FILTER_DWIS_METADATA)
     params = fat_proc_filter_dwis_params(
         input_dwi=input_dwi,
         input_gradient=input_gradient,
@@ -309,7 +309,7 @@ def fat_proc_filter_dwis(
         no_cmd_out=no_cmd_out,
         do_movie=do_movie,
     )
-    return fat_proc_filter_dwis_execute(params, execution)
+    return fat_proc_filter_dwis_execute(params, runner)
 
 
 __all__ = [
@@ -317,8 +317,6 @@ __all__ = [
     "FatProcFilterDwisOutputs",
     "FatProcFilterDwisParameters",
     "fat_proc_filter_dwis",
-    "fat_proc_filter_dwis_cargs",
     "fat_proc_filter_dwis_execute",
-    "fat_proc_filter_dwis_outputs",
     "fat_proc_filter_dwis_params",
 ]

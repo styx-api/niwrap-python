@@ -151,7 +151,7 @@ def fiber_dot_products_outputs(
 
 def fiber_dot_products_execute(
     params: FiberDotProductsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FiberDotProductsOutputs:
     """
     Compute dot products of fiber orientations with surface normals.
@@ -170,10 +170,12 @@ def fiber_dot_products_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FiberDotProductsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIBER_DOT_PRODUCTS_METADATA)
     params = execution.params(params)
     cargs = fiber_dot_products_cargs(params, execution)
     ret = fiber_dot_products_outputs(params, execution)
@@ -218,8 +220,6 @@ def fiber_dot_products(
     Returns:
         NamedTuple of outputs (described in `FiberDotProductsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIBER_DOT_PRODUCTS_METADATA)
     params = fiber_dot_products_params(
         white_surf=white_surf,
         fiber_file=fiber_file,
@@ -228,7 +228,7 @@ def fiber_dot_products(
         dot_metric=dot_metric,
         f_metric=f_metric,
     )
-    return fiber_dot_products_execute(params, execution)
+    return fiber_dot_products_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "FiberDotProductsOutputs",
     "FiberDotProductsParameters",
     "fiber_dot_products",
-    "fiber_dot_products_cargs",
     "fiber_dot_products_execute",
-    "fiber_dot_products_outputs",
     "fiber_dot_products_params",
 ]

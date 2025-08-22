@@ -145,7 +145,7 @@ def afni_batch_r_outputs(
 
 def afni_batch_r_execute(
     params: AfniBatchRParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniBatchROutputs:
     """
     Batch mode for executing R scripts in the AFNI environment.
@@ -156,10 +156,12 @@ def afni_batch_r_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniBatchROutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_BATCH_R_METADATA)
     params = execution.params(params)
     cargs = afni_batch_r_cargs(params, execution)
     ret = afni_batch_r_outputs(params, execution)
@@ -193,8 +195,6 @@ def afni_batch_r(
     Returns:
         NamedTuple of outputs (described in `AfniBatchROutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_BATCH_R_METADATA)
     params = afni_batch_r_params(
         no_restore=no_restore,
         save_workspace=save_workspace,
@@ -202,7 +202,7 @@ def afni_batch_r(
         vanilla_mode=vanilla_mode,
         help_=help_,
     )
-    return afni_batch_r_execute(params, execution)
+    return afni_batch_r_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "AfniBatchROutputs",
     "AfniBatchRParameters",
     "afni_batch_r",
-    "afni_batch_r_cargs",
     "afni_batch_r_execute",
-    "afni_batch_r_outputs",
     "afni_batch_r_params",
 ]

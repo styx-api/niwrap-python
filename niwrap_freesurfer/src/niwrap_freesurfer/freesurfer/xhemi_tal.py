@@ -119,7 +119,7 @@ def xhemi_tal_outputs(
 
 def xhemi_tal_execute(
     params: XhemiTalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XhemiTalOutputs:
     """
     Computes the talairach.xfm for xhemi based on the original (unflipped)
@@ -131,10 +131,12 @@ def xhemi_tal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XhemiTalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XHEMI_TAL_METADATA)
     params = execution.params(params)
     cargs = xhemi_tal_cargs(params, execution)
     ret = xhemi_tal_outputs(params, execution)
@@ -160,12 +162,10 @@ def xhemi_tal(
     Returns:
         NamedTuple of outputs (described in `XhemiTalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XHEMI_TAL_METADATA)
     params = xhemi_tal_params(
         subject=subject,
     )
-    return xhemi_tal_execute(params, execution)
+    return xhemi_tal_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "XhemiTalOutputs",
     "XhemiTalParameters",
     "xhemi_tal",
-    "xhemi_tal_cargs",
     "xhemi_tal_execute",
-    "xhemi_tal_outputs",
     "xhemi_tal_params",
 ]

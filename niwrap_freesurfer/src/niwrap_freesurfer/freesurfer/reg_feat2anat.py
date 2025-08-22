@@ -265,7 +265,7 @@ def reg_feat2anat_outputs(
 
 def reg_feat2anat_execute(
     params: RegFeat2anatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegFeat2anatOutputs:
     """
     Registers FSL-Feat example_func to FreeSurfer anatomical data.
@@ -276,10 +276,12 @@ def reg_feat2anat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegFeat2anatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_FEAT2ANAT_METADATA)
     params = execution.params(params)
     cargs = reg_feat2anat_cargs(params, execution)
     ret = reg_feat2anat_outputs(params, execution)
@@ -335,8 +337,6 @@ def reg_feat2anat(
     Returns:
         NamedTuple of outputs (described in `RegFeat2anatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_FEAT2ANAT_METADATA)
     params = reg_feat2anat_params(
         feat_dir=feat_dir,
         subject_id=subject_id,
@@ -355,7 +355,7 @@ def reg_feat2anat(
         fmov=fmov,
         debug=debug,
     )
-    return reg_feat2anat_execute(params, execution)
+    return reg_feat2anat_execute(params, runner)
 
 
 __all__ = [
@@ -363,8 +363,6 @@ __all__ = [
     "RegFeat2anatOutputs",
     "RegFeat2anatParameters",
     "reg_feat2anat",
-    "reg_feat2anat_cargs",
     "reg_feat2anat_execute",
-    "reg_feat2anat_outputs",
     "reg_feat2anat_params",
 ]

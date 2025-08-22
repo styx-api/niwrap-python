@@ -242,7 +242,7 @@ def plugout_drive_outputs(
 
 def plugout_drive_execute(
     params: PlugoutDriveParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PlugoutDriveOutputs:
     """
     This program connects to AFNI and sends commands that the user specifies
@@ -254,10 +254,12 @@ def plugout_drive_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PlugoutDriveOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PLUGOUT_DRIVE_METADATA)
     params = execution.params(params)
     cargs = plugout_drive_cargs(params, execution)
     ret = plugout_drive_outputs(params, execution)
@@ -320,8 +322,6 @@ def plugout_drive(
     Returns:
         NamedTuple of outputs (described in `PlugoutDriveOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PLUGOUT_DRIVE_METADATA)
     params = plugout_drive_params(
         host=host,
         shm=shm,
@@ -339,7 +339,7 @@ def plugout_drive(
         num_assigned_ports=num_assigned_ports,
         num_assigned_ports_quiet=num_assigned_ports_quiet,
     )
-    return plugout_drive_execute(params, execution)
+    return plugout_drive_execute(params, runner)
 
 
 __all__ = [
@@ -347,8 +347,6 @@ __all__ = [
     "PlugoutDriveOutputs",
     "PlugoutDriveParameters",
     "plugout_drive",
-    "plugout_drive_cargs",
     "plugout_drive_execute",
-    "plugout_drive_outputs",
     "plugout_drive_params",
 ]

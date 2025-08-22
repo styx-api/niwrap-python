@@ -148,7 +148,7 @@ def mri_head_outputs(
 
 def mri_head_execute(
     params: MriHeadParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriHeadOutputs:
     """
     No description.
@@ -159,10 +159,12 @@ def mri_head_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriHeadOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_HEAD_METADATA)
     params = execution.params(params)
     cargs = mri_head_cargs(params, execution)
     ret = mri_head_outputs(params, execution)
@@ -197,8 +199,6 @@ def mri_head(
     Returns:
         NamedTuple of outputs (described in `MriHeadOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_HEAD_METADATA)
     params = mri_head_params(
         identify=identify,
         read=read,
@@ -207,7 +207,7 @@ def mri_head(
         usage=usage,
         question_mark_help=question_mark_help,
     )
-    return mri_head_execute(params, execution)
+    return mri_head_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "MriHeadOutputs",
     "MriHeadParameters",
     "mri_head",
-    "mri_head_cargs",
     "mri_head_execute",
-    "mri_head_outputs",
     "mri_head_params",
 ]

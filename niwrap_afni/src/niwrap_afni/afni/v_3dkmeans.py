@@ -324,7 +324,7 @@ def v_3dkmeans_outputs(
 
 def v_3dkmeans_execute(
     params: V3dkmeansParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dkmeansOutputs:
     """
     3d+t Clustering segmentation based on The C clustering library.
@@ -335,10 +335,12 @@ def v_3dkmeans_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dkmeansOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DKMEANS_METADATA)
     params = execution.params(params)
     cargs = v_3dkmeans_cargs(params, execution)
     ret = v_3dkmeans_outputs(params, execution)
@@ -414,8 +416,6 @@ def v_3dkmeans(
     Returns:
         NamedTuple of outputs (described in `V3dkmeansOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DKMEANS_METADATA)
     params = v_3dkmeans_params(
         version=version,
         input_=input_,
@@ -437,7 +437,7 @@ def v_3dkmeans(
         voxdbg=voxdbg,
         seed=seed,
     )
-    return v_3dkmeans_execute(params, execution)
+    return v_3dkmeans_execute(params, runner)
 
 
 __all__ = [
@@ -445,8 +445,6 @@ __all__ = [
     "V3dkmeansParameters",
     "V_3DKMEANS_METADATA",
     "v_3dkmeans",
-    "v_3dkmeans_cargs",
     "v_3dkmeans_execute",
-    "v_3dkmeans_outputs",
     "v_3dkmeans_params",
 ]

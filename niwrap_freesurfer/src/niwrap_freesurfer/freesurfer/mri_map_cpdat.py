@@ -172,7 +172,7 @@ def mri_map_cpdat_outputs(
 
 def mri_map_cpdat_execute(
     params: MriMapCpdatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMapCpdatOutputs:
     """
     Maps a control.dat file to a different space using an LTA.
@@ -183,10 +183,12 @@ def mri_map_cpdat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMapCpdatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MAP_CPDAT_METADATA)
     params = execution.params(params)
     cargs = mri_map_cpdat_cargs(params, execution)
     ret = mri_map_cpdat_outputs(params, execution)
@@ -222,8 +224,6 @@ def mri_map_cpdat(
     Returns:
         NamedTuple of outputs (described in `MriMapCpdatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MAP_CPDAT_METADATA)
     params = mri_map_cpdat_params(
         input_file=input_file,
         output_file=output_file,
@@ -232,7 +232,7 @@ def mri_map_cpdat(
         from_mni305=from_mni305,
         subject_list_file=subject_list_file,
     )
-    return mri_map_cpdat_execute(params, execution)
+    return mri_map_cpdat_execute(params, runner)
 
 
 __all__ = [
@@ -240,8 +240,6 @@ __all__ = [
     "MriMapCpdatOutputs",
     "MriMapCpdatParameters",
     "mri_map_cpdat",
-    "mri_map_cpdat_cargs",
     "mri_map_cpdat_execute",
-    "mri_map_cpdat_outputs",
     "mri_map_cpdat_params",
 ]

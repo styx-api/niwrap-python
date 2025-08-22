@@ -119,7 +119,7 @@ def list_otl_labels_outputs(
 
 def list_otl_labels_execute(
     params: ListOtlLabelsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ListOtlLabelsOutputs:
     """
     Tool for listing labels in an imaging file.
@@ -130,10 +130,12 @@ def list_otl_labels_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ListOtlLabelsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LIST_OTL_LABELS_METADATA)
     params = execution.params(params)
     cargs = list_otl_labels_cargs(params, execution)
     ret = list_otl_labels_outputs(params, execution)
@@ -158,12 +160,10 @@ def list_otl_labels(
     Returns:
         NamedTuple of outputs (described in `ListOtlLabelsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LIST_OTL_LABELS_METADATA)
     params = list_otl_labels_params(
         input_file=input_file,
     )
-    return list_otl_labels_execute(params, execution)
+    return list_otl_labels_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "ListOtlLabelsOutputs",
     "ListOtlLabelsParameters",
     "list_otl_labels",
-    "list_otl_labels_cargs",
     "list_otl_labels_execute",
-    "list_otl_labels_outputs",
     "list_otl_labels_params",
 ]

@@ -186,7 +186,7 @@ def v_3d_lfcd_outputs(
 
 def v_3d_lfcd_execute(
     params: V3dLfcdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLfcdOutputs:
     """
     Performs degree centrality on a dataset using a given maskfile via the 3dLFCD
@@ -198,10 +198,12 @@ def v_3d_lfcd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLfcdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LFCD_METADATA)
     params = execution.params(params)
     cargs = v_3d_lfcd_cargs(params, execution)
     ret = v_3d_lfcd_outputs(params, execution)
@@ -243,8 +245,6 @@ def v_3d_lfcd(
     Returns:
         NamedTuple of outputs (described in `V3dLfcdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LFCD_METADATA)
     params = v_3d_lfcd_params(
         in_file=in_file,
         autoclip=autoclip,
@@ -256,7 +256,7 @@ def v_3d_lfcd(
         polort=polort,
         thresh=thresh,
     )
-    return v_3d_lfcd_execute(params, execution)
+    return v_3d_lfcd_execute(params, runner)
 
 
 __all__ = [
@@ -264,8 +264,6 @@ __all__ = [
     "V3dLfcdParameters",
     "V_3D_LFCD_METADATA",
     "v_3d_lfcd",
-    "v_3d_lfcd_cargs",
     "v_3d_lfcd_execute",
-    "v_3d_lfcd_outputs",
     "v_3d_lfcd_params",
 ]

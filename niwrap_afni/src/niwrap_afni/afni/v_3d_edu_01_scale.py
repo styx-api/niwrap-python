@@ -148,7 +148,7 @@ def v_3d_edu_01_scale_outputs(
 
 def v_3d_edu_01_scale_execute(
     params: V3dEdu01ScaleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dEdu01ScaleOutputs:
     """
     Educational program to create a new AFNI program. Scales and masks dataset
@@ -160,10 +160,12 @@ def v_3d_edu_01_scale_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dEdu01ScaleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_EDU_01_SCALE_METADATA)
     params = execution.params(params)
     cargs = v_3d_edu_01_scale_cargs(params, execution)
     ret = v_3d_edu_01_scale_outputs(params, execution)
@@ -196,15 +198,13 @@ def v_3d_edu_01_scale(
     Returns:
         NamedTuple of outputs (described in `V3dEdu01ScaleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_EDU_01_SCALE_METADATA)
     params = v_3d_edu_01_scale_params(
         input_=input_,
         mask=mask,
         mult_factors=mult_factors,
         option_flag=option_flag,
     )
-    return v_3d_edu_01_scale_execute(params, execution)
+    return v_3d_edu_01_scale_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "V3dEdu01ScaleParameters",
     "V_3D_EDU_01_SCALE_METADATA",
     "v_3d_edu_01_scale",
-    "v_3d_edu_01_scale_cargs",
     "v_3d_edu_01_scale_execute",
-    "v_3d_edu_01_scale_outputs",
     "v_3d_edu_01_scale_params",
 ]

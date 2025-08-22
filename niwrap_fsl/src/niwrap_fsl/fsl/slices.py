@@ -154,7 +154,7 @@ def slices_outputs(
 
 def slices_execute(
     params: SlicesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlicesOutputs:
     """
     Generate a set of slices from an image, possibly with some scaling and intensity
@@ -166,10 +166,12 @@ def slices_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlicesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICES_METADATA)
     params = execution.params(params)
     cargs = slices_cargs(params, execution)
     ret = slices_outputs(params, execution)
@@ -204,8 +206,6 @@ def slices(
     Returns:
         NamedTuple of outputs (described in `SlicesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICES_METADATA)
     params = slices_params(
         primary_input=primary_input,
         secondary_input=secondary_input,
@@ -213,7 +213,7 @@ def slices(
         intensity_range=intensity_range,
         output_gif=output_gif,
     )
-    return slices_execute(params, execution)
+    return slices_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "SlicesOutputs",
     "SlicesParameters",
     "slices",
-    "slices_cargs",
     "slices_execute",
-    "slices_outputs",
     "slices_params",
 ]

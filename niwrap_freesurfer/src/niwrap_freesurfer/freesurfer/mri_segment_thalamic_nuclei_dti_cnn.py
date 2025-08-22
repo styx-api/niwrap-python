@@ -211,7 +211,7 @@ def mri_segment_thalamic_nuclei_dti_cnn_outputs(
 
 def mri_segment_thalamic_nuclei_dti_cnn_execute(
     params: MriSegmentThalamicNucleiDtiCnnParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegmentThalamicNucleiDtiCnnOutputs:
     """
     Thalamic segmentation tool providing 0.7mm isotropic thalamus segmentation from
@@ -223,10 +223,12 @@ def mri_segment_thalamic_nuclei_dti_cnn_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegmentThalamicNucleiDtiCnnOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA)
     params = execution.params(params)
     cargs = mri_segment_thalamic_nuclei_dti_cnn_cargs(params, execution)
     ret = mri_segment_thalamic_nuclei_dti_cnn_outputs(params, execution)
@@ -272,8 +274,6 @@ def mri_segment_thalamic_nuclei_dti_cnn(
     Returns:
         NamedTuple of outputs (described in `MriSegmentThalamicNucleiDtiCnnOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEGMENT_THALAMIC_NUCLEI_DTI_CNN_METADATA)
     params = mri_segment_thalamic_nuclei_dti_cnn_params(
         t1_images=t1_images,
         aseg=aseg,
@@ -286,7 +286,7 @@ def mri_segment_thalamic_nuclei_dti_cnn(
         force_cpu=force_cpu,
         model=model,
     )
-    return mri_segment_thalamic_nuclei_dti_cnn_execute(params, execution)
+    return mri_segment_thalamic_nuclei_dti_cnn_execute(params, runner)
 
 
 __all__ = [
@@ -294,8 +294,6 @@ __all__ = [
     "MriSegmentThalamicNucleiDtiCnnOutputs",
     "MriSegmentThalamicNucleiDtiCnnParameters",
     "mri_segment_thalamic_nuclei_dti_cnn",
-    "mri_segment_thalamic_nuclei_dti_cnn_cargs",
     "mri_segment_thalamic_nuclei_dti_cnn_execute",
-    "mri_segment_thalamic_nuclei_dti_cnn_outputs",
     "mri_segment_thalamic_nuclei_dti_cnn_params",
 ]

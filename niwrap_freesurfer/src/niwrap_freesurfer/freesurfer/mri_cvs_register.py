@@ -333,7 +333,7 @@ def mri_cvs_register_outputs(
 
 def mri_cvs_register_execute(
     params: MriCvsRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCvsRegisterOutputs:
     """
     Combined Volume and Surface Registration.
@@ -344,10 +344,12 @@ def mri_cvs_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCvsRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CVS_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mri_cvs_register_cargs(params, execution)
     ret = mri_cvs_register_outputs(params, execution)
@@ -437,8 +439,6 @@ def mri_cvs_register(
     Returns:
         NamedTuple of outputs (described in `MriCvsRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CVS_REGISTER_METADATA)
     params = mri_cvs_register_params(
         mov_subjid=mov_subjid,
         template_subjid=template_subjid,
@@ -468,7 +468,7 @@ def mri_cvs_register(
         version_flag=version_flag,
         help_flag=help_flag,
     )
-    return mri_cvs_register_execute(params, execution)
+    return mri_cvs_register_execute(params, runner)
 
 
 __all__ = [
@@ -476,8 +476,6 @@ __all__ = [
     "MriCvsRegisterOutputs",
     "MriCvsRegisterParameters",
     "mri_cvs_register",
-    "mri_cvs_register_cargs",
     "mri_cvs_register_execute",
-    "mri_cvs_register_outputs",
     "mri_cvs_register_params",
 ]

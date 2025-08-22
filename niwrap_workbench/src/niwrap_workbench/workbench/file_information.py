@@ -228,7 +228,7 @@ def file_information_outputs(
 
 def file_information_execute(
     params: FileInformationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FileInformationOutputs:
     """
     List information about a file's content.
@@ -282,10 +282,12 @@ def file_information_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FileInformationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FILE_INFORMATION_METADATA)
     params = execution.params(params)
     cargs = file_information_cargs(params, execution)
     ret = file_information_outputs(params, execution)
@@ -377,8 +379,6 @@ def file_information(
     Returns:
         NamedTuple of outputs (described in `FileInformationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FILE_INFORMATION_METADATA)
     params = file_information_params(
         data_file=data_file,
         opt_no_map_info=opt_no_map_info,
@@ -391,7 +391,7 @@ def file_information(
         opt_czi_all_sub_blocks=opt_czi_all_sub_blocks,
         opt_czi_xml=opt_czi_xml,
     )
-    return file_information_execute(params, execution)
+    return file_information_execute(params, runner)
 
 
 __all__ = [
@@ -400,10 +400,7 @@ __all__ = [
     "FileInformationOutputs",
     "FileInformationParameters",
     "file_information",
-    "file_information_cargs",
     "file_information_execute",
-    "file_information_only_metadata_cargs",
     "file_information_only_metadata_params",
-    "file_information_outputs",
     "file_information_params",
 ]

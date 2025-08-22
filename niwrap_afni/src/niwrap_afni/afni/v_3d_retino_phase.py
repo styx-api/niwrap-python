@@ -273,7 +273,7 @@ def v_3d_retino_phase_outputs(
 
 def v_3d_retino_phase_execute(
     params: V3dRetinoPhaseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRetinoPhaseOutputs:
     """
     Process time series from retinotopy stimuli to create phase datasets and visual
@@ -285,10 +285,12 @@ def v_3d_retino_phase_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRetinoPhaseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_RETINO_PHASE_METADATA)
     params = execution.params(params)
     cargs = v_3d_retino_phase_cargs(params, execution)
     ret = v_3d_retino_phase_outputs(params, execution)
@@ -347,8 +349,6 @@ def v_3d_retino_phase(
     Returns:
         NamedTuple of outputs (described in `V3dRetinoPhaseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_RETINO_PHASE_METADATA)
     params = v_3d_retino_phase_params(
         prefix=prefix,
         dataset=dataset,
@@ -367,7 +367,7 @@ def v_3d_retino_phase(
         ref_ts=ref_ts,
         multi_ref_ts=multi_ref_ts,
     )
-    return v_3d_retino_phase_execute(params, execution)
+    return v_3d_retino_phase_execute(params, runner)
 
 
 __all__ = [
@@ -375,8 +375,6 @@ __all__ = [
     "V3dRetinoPhaseParameters",
     "V_3D_RETINO_PHASE_METADATA",
     "v_3d_retino_phase",
-    "v_3d_retino_phase_cargs",
     "v_3d_retino_phase_execute",
-    "v_3d_retino_phase_outputs",
     "v_3d_retino_phase_params",
 ]

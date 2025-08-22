@@ -270,7 +270,7 @@ def sh2response_outputs(
 
 def sh2response_execute(
     params: Sh2responseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Sh2responseOutputs:
     """
     Generate an appropriate response function from the image data for spherical
@@ -290,10 +290,12 @@ def sh2response_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Sh2responseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SH2RESPONSE_METADATA)
     params = execution.params(params)
     cargs = sh2response_cargs(params, execution)
     ret = sh2response_outputs(params, execution)
@@ -362,8 +364,6 @@ def sh2response(
     Returns:
         NamedTuple of outputs (described in `Sh2responseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SH2RESPONSE_METADATA)
     params = sh2response_params(
         lmax=lmax,
         dump=dump,
@@ -380,7 +380,7 @@ def sh2response(
         directions=directions,
         response=response,
     )
-    return sh2response_execute(params, execution)
+    return sh2response_execute(params, runner)
 
 
 __all__ = [
@@ -389,10 +389,7 @@ __all__ = [
     "Sh2responseOutputs",
     "Sh2responseParameters",
     "sh2response",
-    "sh2response_cargs",
-    "sh2response_config_cargs",
     "sh2response_config_params",
     "sh2response_execute",
-    "sh2response_outputs",
     "sh2response_params",
 ]

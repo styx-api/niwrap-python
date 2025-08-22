@@ -129,7 +129,7 @@ def print_header_outputs(
 
 def print_header_execute(
     params: PrintHeaderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PrintHeaderOutputs:
     """
     A utility to print header information from an image file.
@@ -140,10 +140,12 @@ def print_header_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PrintHeaderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PRINT_HEADER_METADATA)
     params = execution.params(params)
     cargs = print_header_cargs(params, execution)
     ret = print_header_outputs(params, execution)
@@ -172,13 +174,11 @@ def print_header(
     Returns:
         NamedTuple of outputs (described in `PrintHeaderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PRINT_HEADER_METADATA)
     params = print_header_params(
         image=image,
         what_information=what_information,
     )
-    return print_header_execute(params, execution)
+    return print_header_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "PrintHeaderOutputs",
     "PrintHeaderParameters",
     "print_header",
-    "print_header_cargs",
     "print_header_execute",
-    "print_header_outputs",
     "print_header_params",
 ]

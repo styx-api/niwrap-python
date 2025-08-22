@@ -251,7 +251,7 @@ def fsl_sbca_outputs(
 
 def fsl_sbca_execute(
     params: FslSbcaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslSbcaOutputs:
     """
     Performs seed-based correlation analysis on FMRI data using either a single seed
@@ -263,10 +263,12 @@ def fsl_sbca_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslSbcaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_SBCA_METADATA)
     params = execution.params(params)
     cargs = fsl_sbca_cargs(params, execution)
     ret = fsl_sbca_outputs(params, execution)
@@ -329,8 +331,6 @@ def fsl_sbca(
     Returns:
         NamedTuple of outputs (described in `FslSbcaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_SBCA_METADATA)
     params = fsl_sbca_params(
         infile=infile,
         seed=seed,
@@ -350,7 +350,7 @@ def fsl_sbca(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return fsl_sbca_execute(params, execution)
+    return fsl_sbca_execute(params, runner)
 
 
 __all__ = [
@@ -358,8 +358,6 @@ __all__ = [
     "FslSbcaOutputs",
     "FslSbcaParameters",
     "fsl_sbca",
-    "fsl_sbca_cargs",
     "fsl_sbca_execute",
-    "fsl_sbca_outputs",
     "fsl_sbca_params",
 ]

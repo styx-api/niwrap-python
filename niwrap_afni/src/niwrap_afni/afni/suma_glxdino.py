@@ -117,7 +117,7 @@ def suma_glxdino_outputs(
 
 def suma_glxdino_execute(
     params: SumaGlxdinoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SumaGlxdinoOutputs:
     """
     A simple openGL test program using GLX. If it does not run, then SUMA certainly
@@ -129,10 +129,12 @@ def suma_glxdino_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SumaGlxdinoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SUMA_GLXDINO_METADATA)
     params = execution.params(params)
     cargs = suma_glxdino_cargs(params, execution)
     ret = suma_glxdino_outputs(params, execution)
@@ -158,12 +160,10 @@ def suma_glxdino(
     Returns:
         NamedTuple of outputs (described in `SumaGlxdinoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SUMA_GLXDINO_METADATA)
     params = suma_glxdino_params(
         verbose=verbose,
     )
-    return suma_glxdino_execute(params, execution)
+    return suma_glxdino_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "SumaGlxdinoOutputs",
     "SumaGlxdinoParameters",
     "suma_glxdino",
-    "suma_glxdino_cargs",
     "suma_glxdino_execute",
-    "suma_glxdino_outputs",
     "suma_glxdino_params",
 ]

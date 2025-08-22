@@ -466,7 +466,7 @@ def scene_capture_image_outputs(
 
 def scene_capture_image_execute(
     params: SceneCaptureImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SceneCaptureImageOutputs:
     """
     Offscreen rendering of scene to an image file.
@@ -530,10 +530,12 @@ def scene_capture_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SceneCaptureImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SCENE_CAPTURE_IMAGE_METADATA)
     params = execution.params(params)
     cargs = scene_capture_image_cargs(params, execution)
     ret = scene_capture_image_outputs(params, execution)
@@ -673,8 +675,6 @@ def scene_capture_image(
     Returns:
         NamedTuple of outputs (described in `SceneCaptureImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SCENE_CAPTURE_IMAGE_METADATA)
     params = scene_capture_image_params(
         scene_file=scene_file,
         scene_name_or_number=scene_name_or_number,
@@ -694,7 +694,7 @@ def scene_capture_image(
         opt_renderer_renderer=opt_renderer_renderer,
         opt_print_image_info=opt_print_image_info,
     )
-    return scene_capture_image_execute(params, execution)
+    return scene_capture_image_execute(params, runner)
 
 
 __all__ = [
@@ -706,16 +706,10 @@ __all__ = [
     "SceneCaptureImageSetMapYokeParameters",
     "SceneCaptureImageSizeWidthHeightParameters",
     "scene_capture_image",
-    "scene_capture_image_cargs",
-    "scene_capture_image_conn_db_login_cargs",
     "scene_capture_image_conn_db_login_params",
     "scene_capture_image_execute",
-    "scene_capture_image_outputs",
     "scene_capture_image_params",
-    "scene_capture_image_resolution_cargs",
     "scene_capture_image_resolution_params",
-    "scene_capture_image_set_map_yoke_cargs",
     "scene_capture_image_set_map_yoke_params",
-    "scene_capture_image_size_width_height_cargs",
     "scene_capture_image_size_width_height_params",
 ]

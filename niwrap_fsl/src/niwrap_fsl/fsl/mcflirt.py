@@ -314,7 +314,7 @@ def mcflirt_outputs(
 
 def mcflirt_execute(
     params: McflirtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> McflirtOutputs:
     """
     MCFLIRT is an intra-modal motion correction tool designed for use on fMRI time
@@ -328,10 +328,12 @@ def mcflirt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `McflirtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MCFLIRT_METADATA)
     params = execution.params(params)
     cargs = mcflirt_cargs(params, execution)
     ret = mcflirt_outputs(params, execution)
@@ -401,8 +403,6 @@ def mcflirt(
     Returns:
         NamedTuple of outputs (described in `McflirtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MCFLIRT_METADATA)
     params = mcflirt_params(
         in_file=in_file,
         bins=bins,
@@ -426,7 +426,7 @@ def mcflirt(
         use_contour=use_contour,
         use_gradient=use_gradient,
     )
-    return mcflirt_execute(params, execution)
+    return mcflirt_execute(params, runner)
 
 
 __all__ = [
@@ -434,8 +434,6 @@ __all__ = [
     "McflirtOutputs",
     "McflirtParameters",
     "mcflirt",
-    "mcflirt_cargs",
     "mcflirt_execute",
-    "mcflirt_outputs",
     "mcflirt_params",
 ]

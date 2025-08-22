@@ -349,7 +349,7 @@ def first_utils_outputs(
 
 def first_utils_execute(
     params: FirstUtilsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FirstUtilsOutputs:
     """
     Utilities for handling FIRST's input and output files.
@@ -360,10 +360,12 @@ def first_utils_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FirstUtilsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIRST_UTILS_METADATA)
     params = execution.params(params)
     cargs = first_utils_cargs(params, execution)
     ret = first_utils_outputs(params, execution)
@@ -452,8 +454,6 @@ def first_utils(
     Returns:
         NamedTuple of outputs (described in `FirstUtilsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIRST_UTILS_METADATA)
     params = first_utils_params(
         input_file=input_file,
         output_name=output_name,
@@ -488,7 +488,7 @@ def first_utils(
         debug_mode=debug_mode,
         help_=help_,
     )
-    return first_utils_execute(params, execution)
+    return first_utils_execute(params, runner)
 
 
 __all__ = [
@@ -496,8 +496,6 @@ __all__ = [
     "FirstUtilsOutputs",
     "FirstUtilsParameters",
     "first_utils",
-    "first_utils_cargs",
     "first_utils_execute",
-    "first_utils_outputs",
     "first_utils_params",
 ]

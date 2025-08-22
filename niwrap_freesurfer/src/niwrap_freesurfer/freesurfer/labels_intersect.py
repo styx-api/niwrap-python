@@ -130,7 +130,7 @@ def labels_intersect_outputs(
 
 def labels_intersect_execute(
     params: LabelsIntersectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelsIntersectOutputs:
     """
     Tool to find the intersection of two label files.
@@ -141,10 +141,12 @@ def labels_intersect_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelsIntersectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABELS_INTERSECT_METADATA)
     params = execution.params(params)
     cargs = labels_intersect_cargs(params, execution)
     ret = labels_intersect_outputs(params, execution)
@@ -173,14 +175,12 @@ def labels_intersect(
     Returns:
         NamedTuple of outputs (described in `LabelsIntersectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABELS_INTERSECT_METADATA)
     params = labels_intersect_params(
         label1=label1,
         label2=label2,
         outputname=outputname,
     )
-    return labels_intersect_execute(params, execution)
+    return labels_intersect_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "LabelsIntersectOutputs",
     "LabelsIntersectParameters",
     "labels_intersect",
-    "labels_intersect_cargs",
     "labels_intersect_execute",
-    "labels_intersect_outputs",
     "labels_intersect_params",
 ]

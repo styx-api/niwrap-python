@@ -178,7 +178,7 @@ def tbss_non_fa_outputs(
 
 def tbss_non_fa_execute(
     params: TbssNonFaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TbssNonFaOutputs:
     """
     TBSS processing for non-FA images.
@@ -189,10 +189,12 @@ def tbss_non_fa_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TbssNonFaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_NON_FA_METADATA)
     params = execution.params(params)
     cargs = tbss_non_fa_cargs(params, execution)
     ret = tbss_non_fa_outputs(params, execution)
@@ -236,8 +238,6 @@ def tbss_non_fa(
     Returns:
         NamedTuple of outputs (described in `TbssNonFaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_NON_FA_METADATA)
     params = tbss_non_fa_params(
         concat_auto=concat_auto,
         output_file=output_file,
@@ -249,7 +249,7 @@ def tbss_non_fa(
         concat_tr=concat_tr,
         volume_number=volume_number,
     )
-    return tbss_non_fa_execute(params, execution)
+    return tbss_non_fa_execute(params, runner)
 
 
 __all__ = [
@@ -257,8 +257,6 @@ __all__ = [
     "TbssNonFaOutputs",
     "TbssNonFaParameters",
     "tbss_non_fa",
-    "tbss_non_fa_cargs",
     "tbss_non_fa_execute",
-    "tbss_non_fa_outputs",
     "tbss_non_fa_params",
 ]

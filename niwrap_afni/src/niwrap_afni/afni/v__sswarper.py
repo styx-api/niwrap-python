@@ -333,7 +333,7 @@ def v__sswarper_outputs(
 
 def v__sswarper_execute(
     params: VSswarperParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSswarperOutputs:
     """
     Dual purposes for processing a given subject's anatomical volume: skull-strip
@@ -345,10 +345,12 @@ def v__sswarper_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSswarperOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SSWARPER_METADATA)
     params = execution.params(params)
     cargs = v__sswarper_cargs(params, execution)
     ret = v__sswarper_outputs(params, execution)
@@ -426,8 +428,6 @@ def v__sswarper(
     Returns:
         NamedTuple of outputs (described in `VSswarperOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SSWARPER_METADATA)
     params = v__sswarper_params(
         input_file=input_file,
         base_template=base_template,
@@ -453,7 +453,7 @@ def v__sswarper(
         verbose=verbose,
         noclean=noclean,
     )
-    return v__sswarper_execute(params, execution)
+    return v__sswarper_execute(params, runner)
 
 
 __all__ = [
@@ -461,8 +461,6 @@ __all__ = [
     "VSswarperParameters",
     "V__SSWARPER_METADATA",
     "v__sswarper",
-    "v__sswarper_cargs",
     "v__sswarper_execute",
-    "v__sswarper_outputs",
     "v__sswarper_params",
 ]

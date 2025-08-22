@@ -175,7 +175,7 @@ def makerot_outputs(
 
 def makerot_execute(
     params: MakerotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakerotOutputs:
     """
     Tool to create a rotation matrix for a given angle and axis of rotation.
@@ -186,10 +186,12 @@ def makerot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakerotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKEROT_METADATA)
     params = execution.params(params)
     cargs = makerot_cargs(params, execution)
     ret = makerot_outputs(params, execution)
@@ -226,8 +228,6 @@ def makerot(
     Returns:
         NamedTuple of outputs (described in `MakerotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKEROT_METADATA)
     params = makerot_params(
         axis=axis,
         cov=cov,
@@ -237,7 +237,7 @@ def makerot(
         help_flag=help_flag,
         theta=theta,
     )
-    return makerot_execute(params, execution)
+    return makerot_execute(params, runner)
 
 
 __all__ = [
@@ -245,8 +245,6 @@ __all__ = [
     "MakerotOutputs",
     "MakerotParameters",
     "makerot",
-    "makerot_cargs",
     "makerot_execute",
-    "makerot_outputs",
     "makerot_params",
 ]

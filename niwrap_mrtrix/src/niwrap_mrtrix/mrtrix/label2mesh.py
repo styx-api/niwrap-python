@@ -238,7 +238,7 @@ def label2mesh_outputs(
 
 def label2mesh_execute(
     params: Label2meshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Label2meshOutputs:
     """
     Generate meshes from a label image.
@@ -255,10 +255,12 @@ def label2mesh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Label2meshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL2MESH_METADATA)
     params = execution.params(params)
     cargs = label2mesh_cargs(params, execution)
     ret = label2mesh_outputs(params, execution)
@@ -314,8 +316,6 @@ def label2mesh(
     Returns:
         NamedTuple of outputs (described in `Label2meshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL2MESH_METADATA)
     params = label2mesh_params(
         blocky=blocky,
         info=info,
@@ -329,7 +329,7 @@ def label2mesh(
         nodes_in=nodes_in,
         mesh_out=mesh_out,
     )
-    return label2mesh_execute(params, execution)
+    return label2mesh_execute(params, runner)
 
 
 __all__ = [
@@ -338,10 +338,7 @@ __all__ = [
     "Label2meshOutputs",
     "Label2meshParameters",
     "label2mesh",
-    "label2mesh_cargs",
-    "label2mesh_config_cargs",
     "label2mesh_config_params",
     "label2mesh_execute",
-    "label2mesh_outputs",
     "label2mesh_params",
 ]

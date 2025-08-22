@@ -552,7 +552,7 @@ def mri_nl_align_outputs(
 
 def mri_nl_align_execute(
     params: MriNlAlignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriNlAlignOutputs:
     """
     mri_nl_align aligns two images using nonlinear registration.
@@ -563,10 +563,12 @@ def mri_nl_align_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriNlAlignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_NL_ALIGN_METADATA)
     params = execution.params(params)
     cargs = mri_nl_align_cargs(params, execution)
     ret = mri_nl_align_outputs(params, execution)
@@ -685,8 +687,6 @@ def mri_nl_align(
     Returns:
         NamedTuple of outputs (described in `MriNlAlignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_NL_ALIGN_METADATA)
     params = mri_nl_align_params(
         source=source,
         target=target,
@@ -737,7 +737,7 @@ def mri_nl_align(
         exp_k=exp_k,
         diagnostics=diagnostics,
     )
-    return mri_nl_align_execute(params, execution)
+    return mri_nl_align_execute(params, runner)
 
 
 __all__ = [
@@ -745,8 +745,6 @@ __all__ = [
     "MriNlAlignOutputs",
     "MriNlAlignParameters",
     "mri_nl_align",
-    "mri_nl_align_cargs",
     "mri_nl_align_execute",
-    "mri_nl_align_outputs",
     "mri_nl_align_params",
 ]

@@ -170,7 +170,7 @@ def v_3d_tnorm_outputs(
 
 def v_3d_tnorm_execute(
     params: V3dTnormParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTnormOutputs:
     """
     Normalizes each voxel time series by multiplicative scaling.
@@ -181,10 +181,12 @@ def v_3d_tnorm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTnormOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TNORM_METADATA)
     params = execution.params(params)
     cargs = v_3d_tnorm_cargs(params, execution)
     ret = v_3d_tnorm_outputs(params, execution)
@@ -223,8 +225,6 @@ def v_3d_tnorm(
     Returns:
         NamedTuple of outputs (described in `V3dTnormOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TNORM_METADATA)
     params = v_3d_tnorm_params(
         prefix=prefix,
         norm2=norm2,
@@ -235,7 +235,7 @@ def v_3d_tnorm(
         l1fit=l1fit,
         input_dataset=input_dataset,
     )
-    return v_3d_tnorm_execute(params, execution)
+    return v_3d_tnorm_execute(params, runner)
 
 
 __all__ = [
@@ -243,8 +243,6 @@ __all__ = [
     "V3dTnormParameters",
     "V_3D_TNORM_METADATA",
     "v_3d_tnorm",
-    "v_3d_tnorm_cargs",
     "v_3d_tnorm_execute",
-    "v_3d_tnorm_outputs",
     "v_3d_tnorm_params",
 ]

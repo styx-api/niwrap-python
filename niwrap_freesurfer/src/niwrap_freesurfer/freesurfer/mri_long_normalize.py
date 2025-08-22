@@ -202,7 +202,7 @@ def mri_long_normalize_outputs(
 
 def mri_long_normalize_execute(
     params: MriLongNormalizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLongNormalizeOutputs:
     """
     Tool to normalize the white-matter of MRI volumes, optionally based on control
@@ -214,10 +214,12 @@ def mri_long_normalize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLongNormalizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LONG_NORMALIZE_METADATA)
     params = execution.params(params)
     cargs = mri_long_normalize_cargs(params, execution)
     ret = mri_long_normalize_outputs(params, execution)
@@ -263,8 +265,6 @@ def mri_long_normalize(
     Returns:
         NamedTuple of outputs (described in `MriLongNormalizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LONG_NORMALIZE_METADATA)
     params = mri_long_normalize_params(
         input_vol=input_vol,
         base_tp_file=base_tp_file,
@@ -278,7 +278,7 @@ def mri_long_normalize(
         reading=reading,
         print_usage=print_usage,
     )
-    return mri_long_normalize_execute(params, execution)
+    return mri_long_normalize_execute(params, runner)
 
 
 __all__ = [
@@ -286,8 +286,6 @@ __all__ = [
     "MriLongNormalizeOutputs",
     "MriLongNormalizeParameters",
     "mri_long_normalize",
-    "mri_long_normalize_cargs",
     "mri_long_normalize_execute",
-    "mri_long_normalize_outputs",
     "mri_long_normalize_params",
 ]

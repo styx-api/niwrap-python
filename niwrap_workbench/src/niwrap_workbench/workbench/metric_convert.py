@@ -298,7 +298,7 @@ def metric_convert_outputs(
 
 def metric_convert_execute(
     params: MetricConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricConvertOutputs:
     """
     Convert metric file to fake nifti.
@@ -313,10 +313,12 @@ def metric_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_CONVERT_METADATA)
     params = execution.params(params)
     cargs = metric_convert_cargs(params, execution)
     ret = metric_convert_outputs(params, execution)
@@ -347,13 +349,11 @@ def metric_convert(
     Returns:
         NamedTuple of outputs (described in `MetricConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_CONVERT_METADATA)
     params = metric_convert_params(
         to_nifti=to_nifti,
         from_nifti=from_nifti,
     )
-    return metric_convert_execute(params, execution)
+    return metric_convert_execute(params, runner)
 
 
 __all__ = [
@@ -365,14 +365,8 @@ __all__ = [
     "MetricConvertToNiftiOutputs",
     "MetricConvertToNiftiParameters",
     "metric_convert",
-    "metric_convert_cargs",
     "metric_convert_execute",
-    "metric_convert_from_nifti_cargs",
-    "metric_convert_from_nifti_outputs",
     "metric_convert_from_nifti_params",
-    "metric_convert_outputs",
     "metric_convert_params",
-    "metric_convert_to_nifti_cargs",
-    "metric_convert_to_nifti_outputs",
     "metric_convert_to_nifti_params",
 ]

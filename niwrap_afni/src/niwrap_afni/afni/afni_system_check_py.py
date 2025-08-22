@@ -191,7 +191,7 @@ def afni_system_check_py_outputs(
 
 def afni_system_check_py_execute(
     params: AfniSystemCheckPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniSystemCheckPyOutputs:
     """
     Perform various system checks for figuring out AFNI installation issues.
@@ -202,10 +202,12 @@ def afni_system_check_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniSystemCheckPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_SYSTEM_CHECK_PY_METADATA)
     params = execution.params(params)
     cargs = afni_system_check_py_cargs(params, execution)
     ret = afni_system_check_py_outputs(params, execution)
@@ -248,8 +250,6 @@ def afni_system_check_py(
     Returns:
         NamedTuple of outputs (described in `AfniSystemCheckPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_SYSTEM_CHECK_PY_METADATA)
     params = afni_system_check_py_params(
         check_all=check_all,
         find_prog=find_prog,
@@ -262,7 +262,7 @@ def afni_system_check_py(
         casematch=casematch,
         data_root=data_root,
     )
-    return afni_system_check_py_execute(params, execution)
+    return afni_system_check_py_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "AfniSystemCheckPyOutputs",
     "AfniSystemCheckPyParameters",
     "afni_system_check_py",
-    "afni_system_check_py_cargs",
     "afni_system_check_py_execute",
-    "afni_system_check_py_outputs",
     "afni_system_check_py_params",
 ]

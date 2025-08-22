@@ -238,7 +238,7 @@ def v__measure_erosion_thick_outputs(
 
 def v__measure_erosion_thick_execute(
     params: VMeasureErosionThickParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VMeasureErosionThickOutputs:
     """
     Compute thickness of mask using erosion method.
@@ -249,10 +249,12 @@ def v__measure_erosion_thick_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VMeasureErosionThickOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__MEASURE_EROSION_THICK_METADATA)
     params = execution.params(params)
     cargs = v__measure_erosion_thick_cargs(params, execution)
     ret = v__measure_erosion_thick_outputs(params, execution)
@@ -302,8 +304,6 @@ def v__measure_erosion_thick(
     Returns:
         NamedTuple of outputs (described in `VMeasureErosionThickOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__MEASURE_EROSION_THICK_METADATA)
     params = v__measure_erosion_thick_params(
         maskset=maskset,
         surfset=surfset,
@@ -316,7 +316,7 @@ def v__measure_erosion_thick(
         keep_temp_files=keep_temp_files,
         surfsmooth_method=surfsmooth_method,
     )
-    return v__measure_erosion_thick_execute(params, execution)
+    return v__measure_erosion_thick_execute(params, runner)
 
 
 __all__ = [
@@ -324,8 +324,6 @@ __all__ = [
     "VMeasureErosionThickParameters",
     "V__MEASURE_EROSION_THICK_METADATA",
     "v__measure_erosion_thick",
-    "v__measure_erosion_thick_cargs",
     "v__measure_erosion_thick_execute",
-    "v__measure_erosion_thick_outputs",
     "v__measure_erosion_thick_params",
 ]

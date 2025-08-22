@@ -253,7 +253,7 @@ def warpcorrect_outputs(
 
 def warpcorrect_execute(
     params: WarpcorrectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WarpcorrectOutputs:
     """
     Replaces voxels in a deformation field that point to a specific out of bounds
@@ -273,10 +273,12 @@ def warpcorrect_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WarpcorrectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WARPCORRECT_METADATA)
     params = execution.params(params)
     cargs = warpcorrect_cargs(params, execution)
     ret = warpcorrect_outputs(params, execution)
@@ -338,8 +340,6 @@ def warpcorrect(
     Returns:
         NamedTuple of outputs (described in `WarpcorrectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WARPCORRECT_METADATA)
     params = warpcorrect_params(
         marker=marker,
         tolerance=tolerance,
@@ -354,7 +354,7 @@ def warpcorrect(
         in_=in_,
         out=out,
     )
-    return warpcorrect_execute(params, execution)
+    return warpcorrect_execute(params, runner)
 
 
 __all__ = [
@@ -363,10 +363,7 @@ __all__ = [
     "WarpcorrectOutputs",
     "WarpcorrectParameters",
     "warpcorrect",
-    "warpcorrect_cargs",
-    "warpcorrect_config_cargs",
     "warpcorrect_config_params",
     "warpcorrect_execute",
-    "warpcorrect_outputs",
     "warpcorrect_params",
 ]

@@ -136,7 +136,7 @@ def mris_thickness_comparison_outputs(
 
 def mris_thickness_comparison_execute(
     params: MrisThicknessComparisonParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisThicknessComparisonOutputs:
     """
     Tool to compare cortical thickness measurements between two or more specified
@@ -148,10 +148,12 @@ def mris_thickness_comparison_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisThicknessComparisonOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_THICKNESS_COMPARISON_METADATA)
     params = execution.params(params)
     cargs = mris_thickness_comparison_cargs(params, execution)
     ret = mris_thickness_comparison_outputs(params, execution)
@@ -185,8 +187,6 @@ def mris_thickness_comparison(
     Returns:
         NamedTuple of outputs (described in `MrisThicknessComparisonOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_THICKNESS_COMPARISON_METADATA)
     params = mris_thickness_comparison_params(
         subject=subject,
         hemi=hemi,
@@ -194,7 +194,7 @@ def mris_thickness_comparison(
         w_file=w_file,
         labels=labels,
     )
-    return mris_thickness_comparison_execute(params, execution)
+    return mris_thickness_comparison_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "MrisThicknessComparisonOutputs",
     "MrisThicknessComparisonParameters",
     "mris_thickness_comparison",
-    "mris_thickness_comparison_cargs",
     "mris_thickness_comparison_execute",
-    "mris_thickness_comparison_outputs",
     "mris_thickness_comparison_params",
 ]

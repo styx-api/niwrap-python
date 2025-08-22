@@ -306,7 +306,7 @@ def cifti_average_roi_correlation_outputs(
 
 def cifti_average_roi_correlation_execute(
     params: CiftiAverageRoiCorrelationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiAverageRoiCorrelationOutputs:
     """
     Correlate roi average with all rows then average across subjects.
@@ -326,10 +326,12 @@ def cifti_average_roi_correlation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiAverageRoiCorrelationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_AVERAGE_ROI_CORRELATION_METADATA)
     params = execution.params(params)
     cargs = cifti_average_roi_correlation_cargs(params, execution)
     ret = cifti_average_roi_correlation_outputs(params, execution)
@@ -387,8 +389,6 @@ def cifti_average_roi_correlation(
     Returns:
         NamedTuple of outputs (described in `CiftiAverageRoiCorrelationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_AVERAGE_ROI_CORRELATION_METADATA)
     params = cifti_average_roi_correlation_params(
         cifti_out=cifti_out,
         cifti_roi=cifti_roi,
@@ -401,7 +401,7 @@ def cifti_average_roi_correlation(
         opt_cerebellum_area_surf_cerebellum_surf=opt_cerebellum_area_surf_cerebellum_surf,
         cifti=cifti,
     )
-    return cifti_average_roi_correlation_execute(params, execution)
+    return cifti_average_roi_correlation_execute(params, runner)
 
 
 __all__ = [
@@ -411,12 +411,8 @@ __all__ = [
     "CiftiAverageRoiCorrelationOutputs",
     "CiftiAverageRoiCorrelationParameters",
     "cifti_average_roi_correlation",
-    "cifti_average_roi_correlation_cargs",
-    "cifti_average_roi_correlation_cifti_cargs",
     "cifti_average_roi_correlation_cifti_params",
-    "cifti_average_roi_correlation_cifti_roi_cargs",
     "cifti_average_roi_correlation_cifti_roi_params",
     "cifti_average_roi_correlation_execute",
-    "cifti_average_roi_correlation_outputs",
     "cifti_average_roi_correlation_params",
 ]

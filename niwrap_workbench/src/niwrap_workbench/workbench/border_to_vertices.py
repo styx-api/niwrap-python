@@ -141,7 +141,7 @@ def border_to_vertices_outputs(
 
 def border_to_vertices_execute(
     params: BorderToVerticesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BorderToVerticesOutputs:
     """
     Draw borders as vertices in a metric file.
@@ -155,10 +155,12 @@ def border_to_vertices_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderToVerticesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BORDER_TO_VERTICES_METADATA)
     params = execution.params(params)
     cargs = border_to_vertices_cargs(params, execution)
     ret = border_to_vertices_outputs(params, execution)
@@ -192,15 +194,13 @@ def border_to_vertices(
     Returns:
         NamedTuple of outputs (described in `BorderToVerticesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BORDER_TO_VERTICES_METADATA)
     params = border_to_vertices_params(
         surface=surface,
         border_file=border_file,
         metric_out=metric_out,
         opt_border_name=opt_border_name,
     )
-    return border_to_vertices_execute(params, execution)
+    return border_to_vertices_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "BorderToVerticesOutputs",
     "BorderToVerticesParameters",
     "border_to_vertices",
-    "border_to_vertices_cargs",
     "border_to_vertices_execute",
-    "border_to_vertices_outputs",
     "border_to_vertices_params",
 ]

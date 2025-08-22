@@ -145,7 +145,7 @@ def mris_annot_to_segmentation_outputs(
 
 def mris_annot_to_segmentation_execute(
     params: MrisAnnotToSegmentationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisAnnotToSegmentationOutputs:
     """
     Converts annotation files to segmentation volumes in FreeSurfer.
@@ -156,10 +156,12 @@ def mris_annot_to_segmentation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAnnotToSegmentationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ANNOT_TO_SEGMENTATION_METADATA)
     params = execution.params(params)
     cargs = mris_annot_to_segmentation_cargs(params, execution)
     ret = mris_annot_to_segmentation_outputs(params, execution)
@@ -194,8 +196,6 @@ def mris_annot_to_segmentation(
     Returns:
         NamedTuple of outputs (described in `MrisAnnotToSegmentationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ANNOT_TO_SEGMENTATION_METADATA)
     params = mris_annot_to_segmentation_params(
         subject_name=subject_name,
         hemi=hemi,
@@ -204,7 +204,7 @@ def mris_annot_to_segmentation(
         color_table=color_table,
         output_volume=output_volume,
     )
-    return mris_annot_to_segmentation_execute(params, execution)
+    return mris_annot_to_segmentation_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "MrisAnnotToSegmentationOutputs",
     "MrisAnnotToSegmentationParameters",
     "mris_annot_to_segmentation",
-    "mris_annot_to_segmentation_cargs",
     "mris_annot_to_segmentation_execute",
-    "mris_annot_to_segmentation_outputs",
     "mris_annot_to_segmentation_params",
 ]

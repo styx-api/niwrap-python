@@ -135,7 +135,7 @@ def mri_remove_neck_outputs(
 
 def mri_remove_neck_execute(
     params: MriRemoveNeckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRemoveNeckOutputs:
     """
     Tool for removing neck from MRI volumes.
@@ -146,10 +146,12 @@ def mri_remove_neck_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRemoveNeckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_REMOVE_NECK_METADATA)
     params = execution.params(params)
     cargs = mri_remove_neck_cargs(params, execution)
     ret = mri_remove_neck_outputs(params, execution)
@@ -180,15 +182,13 @@ def mri_remove_neck(
     Returns:
         NamedTuple of outputs (described in `MriRemoveNeckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_REMOVE_NECK_METADATA)
     params = mri_remove_neck_params(
         input_volume=input_volume,
         transform=transform,
         gca=gca,
         output_volume=output_volume,
     )
-    return mri_remove_neck_execute(params, execution)
+    return mri_remove_neck_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MriRemoveNeckOutputs",
     "MriRemoveNeckParameters",
     "mri_remove_neck",
-    "mri_remove_neck_cargs",
     "mri_remove_neck_execute",
-    "mri_remove_neck_outputs",
     "mri_remove_neck_params",
 ]

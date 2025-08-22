@@ -226,7 +226,7 @@ def reg_aladin_outputs(
 
 def reg_aladin_execute(
     params: RegAladinParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegAladinOutputs:
     """
     Block Matching algorithm for global registration based on "Reconstructing a 3D
@@ -238,10 +238,12 @@ def reg_aladin_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegAladinOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_ALADIN_METADATA)
     params = execution.params(params)
     cargs = reg_aladin_cargs(params, execution)
     ret = reg_aladin_outputs(params, execution)
@@ -292,8 +294,6 @@ def reg_aladin(
     Returns:
         NamedTuple of outputs (described in `RegAladinOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_ALADIN_METADATA)
     params = reg_aladin_params(
         reference_image=reference_image,
         floating_image=floating_image,
@@ -309,7 +309,7 @@ def reg_aladin(
         percent_block=percent_block,
         percent_inlier=percent_inlier,
     )
-    return reg_aladin_execute(params, execution)
+    return reg_aladin_execute(params, runner)
 
 
 __all__ = [
@@ -317,8 +317,6 @@ __all__ = [
     "RegAladinOutputs",
     "RegAladinParameters",
     "reg_aladin",
-    "reg_aladin_cargs",
     "reg_aladin_execute",
-    "reg_aladin_outputs",
     "reg_aladin_params",
 ]

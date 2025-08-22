@@ -221,7 +221,7 @@ def train_gcs_atlas_outputs(
 
 def train_gcs_atlas_execute(
     params: TrainGcsAtlasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TrainGcsAtlasOutputs:
     """
     Script to train a surface-based gaussian classifier for cortical surface
@@ -233,10 +233,12 @@ def train_gcs_atlas_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TrainGcsAtlasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRAIN_GCS_ATLAS_METADATA)
     params = execution.params(params)
     cargs = train_gcs_atlas_cargs(params, execution)
     ret = train_gcs_atlas_outputs(params, execution)
@@ -284,8 +286,6 @@ def train_gcs_atlas(
     Returns:
         NamedTuple of outputs (described in `TrainGcsAtlasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRAIN_GCS_ATLAS_METADATA)
     params = train_gcs_atlas_params(
         manual_parcellation=manual_parcellation,
         subjlist_file=subjlist_file,
@@ -300,7 +300,7 @@ def train_gcs_atlas(
         aseg_filename=aseg_filename,
         threads=threads,
     )
-    return train_gcs_atlas_execute(params, execution)
+    return train_gcs_atlas_execute(params, runner)
 
 
 __all__ = [
@@ -308,8 +308,6 @@ __all__ = [
     "TrainGcsAtlasOutputs",
     "TrainGcsAtlasParameters",
     "train_gcs_atlas",
-    "train_gcs_atlas_cargs",
     "train_gcs_atlas_execute",
-    "train_gcs_atlas_outputs",
     "train_gcs_atlas_params",
 ]

@@ -233,7 +233,7 @@ def v_3dmask_tool_outputs(
 
 def v_3dmask_tool_execute(
     params: V3dmaskToolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmaskToolOutputs:
     """
     3dmask_tool - for combining/dilating/eroding/filling masks.
@@ -244,10 +244,12 @@ def v_3dmask_tool_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmaskToolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMASK_TOOL_METADATA)
     params = execution.params(params)
     cargs = v_3dmask_tool_cargs(params, execution)
     ret = v_3dmask_tool_outputs(params, execution)
@@ -305,8 +307,6 @@ def v_3dmask_tool(
     Returns:
         NamedTuple of outputs (described in `V3dmaskToolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMASK_TOOL_METADATA)
     params = v_3dmask_tool_params(
         count=count,
         datum=datum,
@@ -322,7 +322,7 @@ def v_3dmask_tool(
         union=union,
         verbose=verbose,
     )
-    return v_3dmask_tool_execute(params, execution)
+    return v_3dmask_tool_execute(params, runner)
 
 
 __all__ = [
@@ -330,8 +330,6 @@ __all__ = [
     "V3dmaskToolParameters",
     "V_3DMASK_TOOL_METADATA",
     "v_3dmask_tool",
-    "v_3dmask_tool_cargs",
     "v_3dmask_tool_execute",
-    "v_3dmask_tool_outputs",
     "v_3dmask_tool_params",
 ]

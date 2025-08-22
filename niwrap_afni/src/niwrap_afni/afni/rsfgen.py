@@ -234,7 +234,7 @@ def rsfgen_outputs(
 
 def rsfgen_execute(
     params: RsfgenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RsfgenOutputs:
     """
     Program to generate random stimulus functions.
@@ -245,10 +245,12 @@ def rsfgen_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RsfgenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RSFGEN_METADATA)
     params = execution.params(params)
     cargs = rsfgen_cargs(params, execution)
     ret = rsfgen_outputs(params, execution)
@@ -301,8 +303,6 @@ def rsfgen(
     Returns:
         NamedTuple of outputs (described in `RsfgenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RSFGEN_METADATA)
     params = rsfgen_params(
         length=length,
         num_experimental_conditions=num_experimental_conditions,
@@ -318,7 +318,7 @@ def rsfgen(
         prob_zero=prob_zero,
         input_table=input_table,
     )
-    return rsfgen_execute(params, execution)
+    return rsfgen_execute(params, runner)
 
 
 __all__ = [
@@ -326,8 +326,6 @@ __all__ = [
     "RsfgenOutputs",
     "RsfgenParameters",
     "rsfgen",
-    "rsfgen_cargs",
     "rsfgen_execute",
-    "rsfgen_outputs",
     "rsfgen_params",
 ]

@@ -323,7 +323,7 @@ def extract_region_from_image_outputs(
 
 def extract_region_from_image_execute(
     params: ExtractRegionFromImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ExtractRegionFromImageOutputs:
     """
     ExtractRegionFromImage can be used to extract a specific region from a given
@@ -335,10 +335,12 @@ def extract_region_from_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ExtractRegionFromImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EXTRACT_REGION_FROM_IMAGE_METADATA)
     params = execution.params(params)
     cargs = extract_region_from_image_cargs(params, execution)
     ret = extract_region_from_image_outputs(params, execution)
@@ -373,15 +375,13 @@ def extract_region_from_image(
     Returns:
         NamedTuple of outputs (described in `ExtractRegionFromImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EXTRACT_REGION_FROM_IMAGE_METADATA)
     params = extract_region_from_image_params(
         image_dimension=image_dimension,
         input_image=input_image,
         output_image=output_image,
         region_specification=region_specification,
     )
-    return extract_region_from_image_execute(params, execution)
+    return extract_region_from_image_execute(params, runner)
 
 
 __all__ = [
@@ -393,16 +393,10 @@ __all__ = [
     "ExtractRegionFromImageRegionLabelWithImageParameters",
     "ExtractRegionFromImageRegionMinMaxIndexParameters",
     "extract_region_from_image",
-    "extract_region_from_image_cargs",
     "extract_region_from_image_execute",
-    "extract_region_from_image_outputs",
     "extract_region_from_image_params",
-    "extract_region_from_image_region_domain_image_cargs",
     "extract_region_from_image_region_domain_image_params",
-    "extract_region_from_image_region_label_cargs",
     "extract_region_from_image_region_label_params",
-    "extract_region_from_image_region_label_with_image_cargs",
     "extract_region_from_image_region_label_with_image_params",
-    "extract_region_from_image_region_min_max_index_cargs",
     "extract_region_from_image_region_min_max_index_params",
 ]

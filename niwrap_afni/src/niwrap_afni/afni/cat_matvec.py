@@ -138,7 +138,7 @@ def cat_matvec_outputs(
 
 def cat_matvec_execute(
     params: CatMatvecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CatMatvecOutputs:
     """
     Catenates 3D rotation+shift matrix+vector transformations.
@@ -149,10 +149,12 @@ def cat_matvec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CatMatvecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CAT_MATVEC_METADATA)
     params = execution.params(params)
     cargs = cat_matvec_cargs(params, execution)
     ret = cat_matvec_outputs(params, execution)
@@ -187,15 +189,13 @@ def cat_matvec(
     Returns:
         NamedTuple of outputs (described in `CatMatvecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CAT_MATVEC_METADATA)
     params = cat_matvec_params(
         matrix_format=matrix_format,
         oneline_format=oneline_format,
         four_by_four_format=four_by_four_format,
         matvec_spec=matvec_spec,
     )
-    return cat_matvec_execute(params, execution)
+    return cat_matvec_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "CatMatvecOutputs",
     "CatMatvecParameters",
     "cat_matvec",
-    "cat_matvec_cargs",
     "cat_matvec_execute",
-    "cat_matvec_outputs",
     "cat_matvec_params",
 ]

@@ -139,7 +139,7 @@ def reregister_subject_mixed_outputs(
 
 def reregister_subject_mixed_execute(
     params: ReregisterSubjectMixedParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReregisterSubjectMixedOutputs:
     """
     Tool for re-registering a subject's MRI volumes using Freesurfer.
@@ -150,10 +150,12 @@ def reregister_subject_mixed_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReregisterSubjectMixedOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REREGISTER_SUBJECT_MIXED_METADATA)
     params = execution.params(params)
     cargs = reregister_subject_mixed_cargs(params, execution)
     ret = reregister_subject_mixed_outputs(params, execution)
@@ -183,14 +185,12 @@ def reregister_subject_mixed(
     Returns:
         NamedTuple of outputs (described in `ReregisterSubjectMixedOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REREGISTER_SUBJECT_MIXED_METADATA)
     params = reregister_subject_mixed_params(
         input_volume=input_volume,
         output_directory=output_directory,
         threads=threads,
     )
-    return reregister_subject_mixed_execute(params, execution)
+    return reregister_subject_mixed_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "ReregisterSubjectMixedOutputs",
     "ReregisterSubjectMixedParameters",
     "reregister_subject_mixed",
-    "reregister_subject_mixed_cargs",
     "reregister_subject_mixed_execute",
-    "reregister_subject_mixed_outputs",
     "reregister_subject_mixed_params",
 ]

@@ -162,7 +162,7 @@ def metric_vector_operation_outputs(
 
 def metric_vector_operation_execute(
     params: MetricVectorOperationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricVectorOperationOutputs:
     """
     Do a vector operation on metric files.
@@ -185,10 +185,12 @@ def metric_vector_operation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricVectorOperationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_VECTOR_OPERATION_METADATA)
     params = execution.params(params)
     cargs = metric_vector_operation_cargs(params, execution)
     ret = metric_vector_operation_outputs(params, execution)
@@ -241,8 +243,6 @@ def metric_vector_operation(
     Returns:
         NamedTuple of outputs (described in `MetricVectorOperationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_VECTOR_OPERATION_METADATA)
     params = metric_vector_operation_params(
         vectors_a=vectors_a,
         vectors_b=vectors_b,
@@ -253,7 +253,7 @@ def metric_vector_operation(
         opt_normalize_output=opt_normalize_output,
         opt_magnitude=opt_magnitude,
     )
-    return metric_vector_operation_execute(params, execution)
+    return metric_vector_operation_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "MetricVectorOperationOutputs",
     "MetricVectorOperationParameters",
     "metric_vector_operation",
-    "metric_vector_operation_cargs",
     "metric_vector_operation_execute",
-    "metric_vector_operation_outputs",
     "metric_vector_operation_params",
 ]

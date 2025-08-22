@@ -131,7 +131,7 @@ def fslvbm_1_bet_outputs(
 
 def fslvbm_1_bet_execute(
     params: Fslvbm1BetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fslvbm1BetOutputs:
     """
     Brain extraction for VBM using FSL BET.
@@ -142,10 +142,12 @@ def fslvbm_1_bet_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fslvbm1BetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLVBM_1_BET_METADATA)
     params = execution.params(params)
     cargs = fslvbm_1_bet_cargs(params, execution)
     ret = fslvbm_1_bet_outputs(params, execution)
@@ -175,14 +177,12 @@ def fslvbm_1_bet(
     Returns:
         NamedTuple of outputs (described in `Fslvbm1BetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLVBM_1_BET_METADATA)
     params = fslvbm_1_bet_params(
         default_bet=default_bet,
         increased_robustness=increased_robustness,
         bet_parameters=bet_parameters,
     )
-    return fslvbm_1_bet_execute(params, execution)
+    return fslvbm_1_bet_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "Fslvbm1BetOutputs",
     "Fslvbm1BetParameters",
     "fslvbm_1_bet",
-    "fslvbm_1_bet_cargs",
     "fslvbm_1_bet_execute",
-    "fslvbm_1_bet_outputs",
     "fslvbm_1_bet_params",
 ]

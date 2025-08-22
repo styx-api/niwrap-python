@@ -133,7 +133,7 @@ def apsearch_outputs(
 
 def apsearch_execute(
     params: ApsearchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ApsearchOutputs:
     """
     A tool for searching applications.
@@ -144,10 +144,12 @@ def apsearch_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ApsearchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APSEARCH_METADATA)
     params = execution.params(params)
     cargs = apsearch_cargs(params, execution)
     ret = apsearch_outputs(params, execution)
@@ -176,14 +178,12 @@ def apsearch(
     Returns:
         NamedTuple of outputs (described in `ApsearchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APSEARCH_METADATA)
     params = apsearch_params(
         search_term=search_term,
         file_output=file_output,
         verbose=verbose,
     )
-    return apsearch_execute(params, execution)
+    return apsearch_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "ApsearchOutputs",
     "ApsearchParameters",
     "apsearch",
-    "apsearch_cargs",
     "apsearch_execute",
-    "apsearch_outputs",
     "apsearch_params",
 ]

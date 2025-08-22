@@ -121,7 +121,7 @@ def v__check_for_afni_dset_outputs(
 
 def v__check_for_afni_dset_execute(
     params: VCheckForAfniDsetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VCheckForAfniDsetOutputs:
     """
     Check for the existence of AFNI datasets.
@@ -132,10 +132,12 @@ def v__check_for_afni_dset_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VCheckForAfniDsetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__CHECK_FOR_AFNI_DSET_METADATA)
     params = execution.params(params)
     cargs = v__check_for_afni_dset_cargs(params, execution)
     ret = v__check_for_afni_dset_outputs(params, execution)
@@ -161,12 +163,10 @@ def v__check_for_afni_dset(
     Returns:
         NamedTuple of outputs (described in `VCheckForAfniDsetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__CHECK_FOR_AFNI_DSET_METADATA)
     params = v__check_for_afni_dset_params(
         dataset_name=dataset_name,
     )
-    return v__check_for_afni_dset_execute(params, execution)
+    return v__check_for_afni_dset_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "VCheckForAfniDsetParameters",
     "V__CHECK_FOR_AFNI_DSET_METADATA",
     "v__check_for_afni_dset",
-    "v__check_for_afni_dset_cargs",
     "v__check_for_afni_dset_execute",
-    "v__check_for_afni_dset_outputs",
     "v__check_for_afni_dset_params",
 ]

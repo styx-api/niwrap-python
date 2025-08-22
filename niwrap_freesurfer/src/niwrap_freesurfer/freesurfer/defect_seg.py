@@ -153,7 +153,7 @@ def defect_seg_outputs(
 
 def defect_seg_execute(
     params: DefectSegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DefectSegOutputs:
     """
     This program creates some files that allows the user to visualize and evaluate
@@ -166,10 +166,12 @@ def defect_seg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DefectSegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DEFECT_SEG_METADATA)
     params = execution.params(params)
     cargs = defect_seg_cargs(params, execution)
     ret = defect_seg_outputs(params, execution)
@@ -200,14 +202,12 @@ def defect_seg(
     Returns:
         NamedTuple of outputs (described in `DefectSegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DEFECT_SEG_METADATA)
     params = defect_seg_params(
         subject=subject,
         lh_only=lh_only,
         rh_only=rh_only,
     )
-    return defect_seg_execute(params, execution)
+    return defect_seg_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "DefectSegOutputs",
     "DefectSegParameters",
     "defect_seg",
-    "defect_seg_cargs",
     "defect_seg_execute",
-    "defect_seg_outputs",
     "defect_seg_params",
 ]

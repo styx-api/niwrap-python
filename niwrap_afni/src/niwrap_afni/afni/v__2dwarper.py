@@ -120,7 +120,7 @@ def v__2dwarper_outputs(
 
 def v__2dwarper_execute(
     params: V2dwarperParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V2dwarperOutputs:
     """
     2D image warping tool.
@@ -131,10 +131,12 @@ def v__2dwarper_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V2dwarperOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__2DWARPER_METADATA)
     params = execution.params(params)
     cargs = v__2dwarper_cargs(params, execution)
     ret = v__2dwarper_outputs(params, execution)
@@ -159,12 +161,10 @@ def v__2dwarper(
     Returns:
         NamedTuple of outputs (described in `V2dwarperOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__2DWARPER_METADATA)
     params = v__2dwarper_params(
         input_dataset=input_dataset,
     )
-    return v__2dwarper_execute(params, execution)
+    return v__2dwarper_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "V2dwarperParameters",
     "V__2DWARPER_METADATA",
     "v__2dwarper",
-    "v__2dwarper_cargs",
     "v__2dwarper_execute",
-    "v__2dwarper_outputs",
     "v__2dwarper_params",
 ]

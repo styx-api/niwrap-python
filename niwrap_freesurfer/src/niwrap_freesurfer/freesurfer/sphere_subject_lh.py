@@ -119,7 +119,7 @@ def sphere_subject_lh_outputs(
 
 def sphere_subject_lh_execute(
     params: SphereSubjectLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SphereSubjectLhOutputs:
     """
     Tool for processing spherical representations in FreeSurfer.
@@ -130,10 +130,12 @@ def sphere_subject_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SphereSubjectLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPHERE_SUBJECT_LH_METADATA)
     params = execution.params(params)
     cargs = sphere_subject_lh_cargs(params, execution)
     ret = sphere_subject_lh_outputs(params, execution)
@@ -158,12 +160,10 @@ def sphere_subject_lh(
     Returns:
         NamedTuple of outputs (described in `SphereSubjectLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPHERE_SUBJECT_LH_METADATA)
     params = sphere_subject_lh_params(
         license_file=license_file,
     )
-    return sphere_subject_lh_execute(params, execution)
+    return sphere_subject_lh_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "SphereSubjectLhOutputs",
     "SphereSubjectLhParameters",
     "sphere_subject_lh",
-    "sphere_subject_lh_cargs",
     "sphere_subject_lh_execute",
-    "sphere_subject_lh_outputs",
     "sphere_subject_lh_params",
 ]

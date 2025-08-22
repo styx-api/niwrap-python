@@ -280,7 +280,7 @@ def vol2subfield_outputs(
 
 def vol2subfield_execute(
     params: Vol2subfieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Vol2subfieldOutputs:
     """
     A tool for integrating arbitrary volumes with volumes that share a RAS space
@@ -292,10 +292,12 @@ def vol2subfield_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Vol2subfieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOL2SUBFIELD_METADATA)
     params = execution.params(params)
     cargs = vol2subfield_cargs(params, execution)
     ret = vol2subfield_outputs(params, execution)
@@ -362,8 +364,6 @@ def vol2subfield(
     Returns:
         NamedTuple of outputs (described in `Vol2subfieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOL2SUBFIELD_METADATA)
     params = vol2subfield_params(
         input_volume=input_volume,
         subfield_volume=subfield_volume,
@@ -385,7 +385,7 @@ def vol2subfield(
         preset_subfield_thalamus=preset_subfield_thalamus,
         preset_subfield_brainstem=preset_subfield_brainstem,
     )
-    return vol2subfield_execute(params, execution)
+    return vol2subfield_execute(params, runner)
 
 
 __all__ = [
@@ -393,8 +393,6 @@ __all__ = [
     "Vol2subfieldOutputs",
     "Vol2subfieldParameters",
     "vol2subfield",
-    "vol2subfield_cargs",
     "vol2subfield_execute",
-    "vol2subfield_outputs",
     "vol2subfield_params",
 ]

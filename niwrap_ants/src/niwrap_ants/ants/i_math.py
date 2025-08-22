@@ -143,7 +143,7 @@ def i_math_outputs(
 
 def i_math_execute(
     params: IMathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IMathOutputs:
     """
     iMath is a tool for performing various image mathematical operations on medical
@@ -155,10 +155,12 @@ def i_math_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IMathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(I_MATH_METADATA)
     params = execution.params(params)
     cargs = i_math_cargs(params, execution)
     ret = i_math_outputs(params, execution)
@@ -193,8 +195,6 @@ def i_math(
     Returns:
         NamedTuple of outputs (described in `IMathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(I_MATH_METADATA)
     params = i_math_params(
         image_dimension=image_dimension,
         output_image=output_image,
@@ -202,7 +202,7 @@ def i_math(
         image1=image1,
         image2=image2,
     )
-    return i_math_execute(params, execution)
+    return i_math_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "IMathParameters",
     "I_MATH_METADATA",
     "i_math",
-    "i_math_cargs",
     "i_math_execute",
-    "i_math_outputs",
     "i_math_params",
 ]

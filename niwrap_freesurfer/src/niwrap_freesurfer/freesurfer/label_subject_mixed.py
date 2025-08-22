@@ -143,7 +143,7 @@ def label_subject_mixed_outputs(
 
 def label_subject_mixed_execute(
     params: LabelSubjectMixedParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelSubjectMixedOutputs:
     """
     Automatic labeling of brain regions using a Gaussian classifier array.
@@ -154,10 +154,12 @@ def label_subject_mixed_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelSubjectMixedOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_SUBJECT_MIXED_METADATA)
     params = execution.params(params)
     cargs = label_subject_mixed_cargs(params, execution)
     ret = label_subject_mixed_outputs(params, execution)
@@ -190,8 +192,6 @@ def label_subject_mixed(
     Returns:
         NamedTuple of outputs (described in `LabelSubjectMixedOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_SUBJECT_MIXED_METADATA)
     params = label_subject_mixed_params(
         brain_mask=brain_mask,
         norm_volume=norm_volume,
@@ -199,7 +199,7 @@ def label_subject_mixed(
         gca_file=gca_file,
         aseg_output=aseg_output,
     )
-    return label_subject_mixed_execute(params, execution)
+    return label_subject_mixed_execute(params, runner)
 
 
 __all__ = [
@@ -207,8 +207,6 @@ __all__ = [
     "LabelSubjectMixedOutputs",
     "LabelSubjectMixedParameters",
     "label_subject_mixed",
-    "label_subject_mixed_cargs",
     "label_subject_mixed_execute",
-    "label_subject_mixed_outputs",
     "label_subject_mixed_params",
 ]

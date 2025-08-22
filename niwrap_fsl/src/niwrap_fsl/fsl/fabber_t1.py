@@ -388,7 +388,7 @@ def fabber_t1_outputs(
 
 def fabber_t1_execute(
     params: FabberT1Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberT1Outputs:
     """
     Fabber is a tool for performing model-based analysis of fMRI data, using
@@ -400,10 +400,12 @@ def fabber_t1_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberT1Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_T1_METADATA)
     params = execution.params(params)
     cargs = fabber_t1_cargs(params, execution)
     ret = fabber_t1_outputs(params, execution)
@@ -498,8 +500,6 @@ def fabber_t1(
     Returns:
         NamedTuple of outputs (described in `FabberT1Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_T1_METADATA)
     params = fabber_t1_params(
         output=output,
         method=method,
@@ -532,7 +532,7 @@ def fabber_t1(
         optfile=optfile,
         debug=debug,
     )
-    return fabber_t1_execute(params, execution)
+    return fabber_t1_execute(params, runner)
 
 
 __all__ = [
@@ -540,8 +540,6 @@ __all__ = [
     "FabberT1Outputs",
     "FabberT1Parameters",
     "fabber_t1",
-    "fabber_t1_cargs",
     "fabber_t1_execute",
-    "fabber_t1_outputs",
     "fabber_t1_params",
 ]

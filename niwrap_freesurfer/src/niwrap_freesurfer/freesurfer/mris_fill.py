@@ -142,7 +142,7 @@ def mris_fill_outputs(
 
 def mris_fill_execute(
     params: MrisFillParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisFillOutputs:
     """
     A tool that floodfills the interior of a surface and writes the results into a
@@ -154,10 +154,12 @@ def mris_fill_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisFillOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_FILL_METADATA)
     params = execution.params(params)
     cargs = mris_fill_cargs(params, execution)
     ret = mris_fill_outputs(params, execution)
@@ -190,15 +192,13 @@ def mris_fill(
     Returns:
         NamedTuple of outputs (described in `MrisFillOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_FILL_METADATA)
     params = mris_fill_params(
         resolution=resolution,
         conform=conform,
         input_surface=input_surface,
         output_volume=output_volume,
     )
-    return mris_fill_execute(params, execution)
+    return mris_fill_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "MrisFillOutputs",
     "MrisFillParameters",
     "mris_fill",
-    "mris_fill_cargs",
     "mris_fill_execute",
-    "mris_fill_outputs",
     "mris_fill_params",
 ]

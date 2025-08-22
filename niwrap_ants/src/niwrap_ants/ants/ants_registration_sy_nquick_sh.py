@@ -164,7 +164,7 @@ def ants_registration_sy_nquick_sh_outputs(
 
 def ants_registration_sy_nquick_sh_execute(
     params: AntsRegistrationSyNquickShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsRegistrationSyNquickShOutputs:
     """
     A script to quickly compute a SyN-based registration between two images using
@@ -176,10 +176,12 @@ def ants_registration_sy_nquick_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationSyNquickShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_REGISTRATION_SY_NQUICK_SH_METADATA)
     params = execution.params(params)
     cargs = ants_registration_sy_nquick_sh_cargs(params, execution)
     ret = ants_registration_sy_nquick_sh_outputs(params, execution)
@@ -214,8 +216,6 @@ def ants_registration_sy_nquick_sh(
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationSyNquickShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_REGISTRATION_SY_NQUICK_SH_METADATA)
     params = ants_registration_sy_nquick_sh_params(
         dimensionality=dimensionality,
         fixed_image=fixed_image,
@@ -223,7 +223,7 @@ def ants_registration_sy_nquick_sh(
         output_prefix=output_prefix,
         transform_type=transform_type,
     )
-    return ants_registration_sy_nquick_sh_execute(params, execution)
+    return ants_registration_sy_nquick_sh_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "AntsRegistrationSyNquickShOutputs",
     "AntsRegistrationSyNquickShParameters",
     "ants_registration_sy_nquick_sh",
-    "ants_registration_sy_nquick_sh_cargs",
     "ants_registration_sy_nquick_sh_execute",
-    "ants_registration_sy_nquick_sh_outputs",
     "ants_registration_sy_nquick_sh_params",
 ]

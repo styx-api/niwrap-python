@@ -180,7 +180,7 @@ def v_3d_mepfm_outputs(
 
 def v_3d_mepfm_execute(
     params: V3dMepfmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMepfmOutputs:
     """
     Voxelwise deconvolution of Multiecho fMRI data to yield time-varying estimates
@@ -193,10 +193,12 @@ def v_3d_mepfm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMepfmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MEPFM_METADATA)
     params = execution.params(params)
     cargs = v_3d_mepfm_cargs(params, execution)
     ret = v_3d_mepfm_outputs(params, execution)
@@ -234,8 +236,6 @@ def v_3d_mepfm(
     Returns:
         NamedTuple of outputs (described in `V3dMepfmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MEPFM_METADATA)
     params = v_3d_mepfm_params(
         input_files=input_files,
         dbg_args=dbg_args,
@@ -243,7 +243,7 @@ def v_3d_mepfm(
         hrf_model=hrf_model,
         verbosity=verbosity,
     )
-    return v_3d_mepfm_execute(params, execution)
+    return v_3d_mepfm_execute(params, runner)
 
 
 __all__ = [
@@ -251,8 +251,6 @@ __all__ = [
     "V3dMepfmParameters",
     "V_3D_MEPFM_METADATA",
     "v_3d_mepfm",
-    "v_3d_mepfm_cargs",
     "v_3d_mepfm_execute",
-    "v_3d_mepfm_outputs",
     "v_3d_mepfm_params",
 ]

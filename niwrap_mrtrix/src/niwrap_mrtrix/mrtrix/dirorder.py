@@ -238,7 +238,7 @@ def dirorder_outputs(
 
 def dirorder_execute(
     params: DirorderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DirorderOutputs:
     """
     Reorder a set of directions to ensure near-uniformity upon truncation.
@@ -257,10 +257,12 @@ def dirorder_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DirorderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DIRORDER_METADATA)
     params = execution.params(params)
     cargs = dirorder_cargs(params, execution)
     ret = dirorder_outputs(params, execution)
@@ -318,8 +320,6 @@ def dirorder(
     Returns:
         NamedTuple of outputs (described in `DirorderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DIRORDER_METADATA)
     params = dirorder_params(
         cartesian=cartesian,
         info=info,
@@ -333,7 +333,7 @@ def dirorder(
         input_=input_,
         output=output,
     )
-    return dirorder_execute(params, execution)
+    return dirorder_execute(params, runner)
 
 
 __all__ = [
@@ -342,10 +342,7 @@ __all__ = [
     "DirorderOutputs",
     "DirorderParameters",
     "dirorder",
-    "dirorder_cargs",
-    "dirorder_config_cargs",
     "dirorder_config_params",
     "dirorder_execute",
-    "dirorder_outputs",
     "dirorder_params",
 ]

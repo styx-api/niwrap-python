@@ -228,7 +228,7 @@ def tckinfo_outputs(
 
 def tckinfo_execute(
     params: TckinfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckinfoOutputs:
     """
     Print out information about a track file.
@@ -245,10 +245,12 @@ def tckinfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckinfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKINFO_METADATA)
     params = execution.params(params)
     cargs = tckinfo_cargs(params, execution)
     ret = tckinfo_outputs(params, execution)
@@ -301,8 +303,6 @@ def tckinfo(
     Returns:
         NamedTuple of outputs (described in `TckinfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKINFO_METADATA)
     params = tckinfo_params(
         count=count,
         info=info,
@@ -315,7 +315,7 @@ def tckinfo(
         version=version,
         tracks=tracks,
     )
-    return tckinfo_execute(params, execution)
+    return tckinfo_execute(params, runner)
 
 
 __all__ = [
@@ -324,10 +324,7 @@ __all__ = [
     "TckinfoOutputs",
     "TckinfoParameters",
     "tckinfo",
-    "tckinfo_cargs",
-    "tckinfo_config_cargs",
     "tckinfo_config_params",
     "tckinfo_execute",
-    "tckinfo_outputs",
     "tckinfo_params",
 ]

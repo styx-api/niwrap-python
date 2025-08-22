@@ -181,7 +181,7 @@ def unpackmincdir_outputs(
 
 def unpackmincdir_execute(
     params: UnpackmincdirParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnpackmincdirOutputs:
     """
     Tool for unpacking directories with MINC files.
@@ -192,10 +192,12 @@ def unpackmincdir_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnpackmincdirOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNPACKMINCDIR_METADATA)
     params = execution.params(params)
     cargs = unpackmincdir_cargs(params, execution)
     ret = unpackmincdir_outputs(params, execution)
@@ -236,8 +238,6 @@ def unpackmincdir(
     Returns:
         NamedTuple of outputs (described in `UnpackmincdirOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNPACKMINCDIR_METADATA)
     params = unpackmincdir_params(
         source_directory=source_directory,
         target_directory=target_directory,
@@ -248,7 +248,7 @@ def unpackmincdir(
         no_copy=no_copy,
         umask=umask,
     )
-    return unpackmincdir_execute(params, execution)
+    return unpackmincdir_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "UnpackmincdirOutputs",
     "UnpackmincdirParameters",
     "unpackmincdir",
-    "unpackmincdir_cargs",
     "unpackmincdir_execute",
-    "unpackmincdir_outputs",
     "unpackmincdir_params",
 ]

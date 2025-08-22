@@ -166,7 +166,7 @@ def v_3d_dteig_outputs(
 
 def v_3d_dteig_execute(
     params: V3dDteigParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDteigOutputs:
     """
     Computes eigenvalues and eigenvectors for an input dataset of tensors.
@@ -177,10 +177,12 @@ def v_3d_dteig_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDteigOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DTEIG_METADATA)
     params = execution.params(params)
     cargs = v_3d_dteig_cargs(params, execution)
     ret = v_3d_dteig_outputs(params, execution)
@@ -215,8 +217,6 @@ def v_3d_dteig(
     Returns:
         NamedTuple of outputs (described in `V3dDteigOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DTEIG_METADATA)
     params = v_3d_dteig_params(
         input_dataset=input_dataset,
         prefix=prefix,
@@ -224,7 +224,7 @@ def v_3d_dteig(
         sep_dsets=sep_dsets,
         uddata=uddata,
     )
-    return v_3d_dteig_execute(params, execution)
+    return v_3d_dteig_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "V3dDteigParameters",
     "V_3D_DTEIG_METADATA",
     "v_3d_dteig",
-    "v_3d_dteig_cargs",
     "v_3d_dteig_execute",
-    "v_3d_dteig_outputs",
     "v_3d_dteig_params",
 ]

@@ -217,7 +217,7 @@ def fat_proc_map_to_dti_outputs(
 
 def fat_proc_map_to_dti_execute(
     params: FatProcMapToDtiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcMapToDtiOutputs:
     """
     A program for mapping data sets into DWI space, suitable for aligning anatomical
@@ -229,10 +229,12 @@ def fat_proc_map_to_dti_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcMapToDtiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_MAP_TO_DTI_METADATA)
     params = execution.params(params)
     cargs = fat_proc_map_to_dti_cargs(params, execution)
     ret = fat_proc_map_to_dti_outputs(params, execution)
@@ -280,8 +282,6 @@ def fat_proc_map_to_dti(
     Returns:
         NamedTuple of outputs (described in `FatProcMapToDtiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_MAP_TO_DTI_METADATA)
     params = fat_proc_map_to_dti_params(
         source=source,
         base=base,
@@ -296,7 +296,7 @@ def fat_proc_map_to_dti(
         no_cmd_out=no_cmd_out,
         no_clean=no_clean,
     )
-    return fat_proc_map_to_dti_execute(params, execution)
+    return fat_proc_map_to_dti_execute(params, runner)
 
 
 __all__ = [
@@ -304,8 +304,6 @@ __all__ = [
     "FatProcMapToDtiOutputs",
     "FatProcMapToDtiParameters",
     "fat_proc_map_to_dti",
-    "fat_proc_map_to_dti_cargs",
     "fat_proc_map_to_dti_execute",
-    "fat_proc_map_to_dti_outputs",
     "fat_proc_map_to_dti_params",
 ]

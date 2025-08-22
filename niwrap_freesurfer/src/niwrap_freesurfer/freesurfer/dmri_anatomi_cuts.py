@@ -172,7 +172,7 @@ def dmri_anatomi_cuts_outputs(
 
 def dmri_anatomi_cuts_execute(
     params: DmriAnatomiCutsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriAnatomiCutsOutputs:
     """
     AnatomiCuts tool for DTI fibers segmentation.
@@ -183,10 +183,12 @@ def dmri_anatomi_cuts_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriAnatomiCutsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_ANATOMI_CUTS_METADATA)
     params = execution.params(params)
     cargs = dmri_anatomi_cuts_cargs(params, execution)
     ret = dmri_anatomi_cuts_outputs(params, execution)
@@ -224,8 +226,6 @@ def dmri_anatomi_cuts(
     Returns:
         NamedTuple of outputs (described in `DmriAnatomiCutsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_ANATOMI_CUTS_METADATA)
     params = dmri_anatomi_cuts_params(
         segmentation_file=segmentation_file,
         fiber_file=fiber_file,
@@ -235,7 +235,7 @@ def dmri_anatomi_cuts(
         output_folder=output_folder,
         direction_flag=direction_flag,
     )
-    return dmri_anatomi_cuts_execute(params, execution)
+    return dmri_anatomi_cuts_execute(params, runner)
 
 
 __all__ = [
@@ -243,8 +243,6 @@ __all__ = [
     "DmriAnatomiCutsOutputs",
     "DmriAnatomiCutsParameters",
     "dmri_anatomi_cuts",
-    "dmri_anatomi_cuts_cargs",
     "dmri_anatomi_cuts_execute",
-    "dmri_anatomi_cuts_outputs",
     "dmri_anatomi_cuts_params",
 ]

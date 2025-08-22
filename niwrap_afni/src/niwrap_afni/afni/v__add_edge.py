@@ -243,7 +243,7 @@ def v__add_edge_outputs(
 
 def v__add_edge_execute(
     params: VAddEdgeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAddEdgeOutputs:
     """
     A script to create composite edge-enhanced datasets and drive the AFNI interface
@@ -255,10 +255,12 @@ def v__add_edge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAddEdgeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ADD_EDGE_METADATA)
     params = execution.params(params)
     cargs = v__add_edge_cargs(params, execution)
     ret = v__add_edge_outputs(params, execution)
@@ -313,8 +315,6 @@ def v__add_edge(
     Returns:
         NamedTuple of outputs (described in `VAddEdgeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ADD_EDGE_METADATA)
     params = v__add_edge_params(
         input_files=input_files,
         examine_list=examine_list,
@@ -332,7 +332,7 @@ def v__add_edge(
         auto=auto,
         no_auto=no_auto,
     )
-    return v__add_edge_execute(params, execution)
+    return v__add_edge_execute(params, runner)
 
 
 __all__ = [
@@ -340,8 +340,6 @@ __all__ = [
     "VAddEdgeParameters",
     "V__ADD_EDGE_METADATA",
     "v__add_edge",
-    "v__add_edge_cargs",
     "v__add_edge_execute",
-    "v__add_edge_outputs",
     "v__add_edge_params",
 ]

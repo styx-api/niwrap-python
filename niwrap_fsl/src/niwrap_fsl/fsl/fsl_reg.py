@@ -168,7 +168,7 @@ def fsl_reg_outputs(
 
 def fsl_reg_execute(
     params: FslRegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslRegOutputs:
     """
     Image registration using FSL tools.
@@ -179,10 +179,12 @@ def fsl_reg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslRegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_REG_METADATA)
     params = execution.params(params)
     cargs = fsl_reg_cargs(params, execution)
     ret = fsl_reg_outputs(params, execution)
@@ -221,8 +223,6 @@ def fsl_reg(
     Returns:
         NamedTuple of outputs (described in `FslRegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_REG_METADATA)
     params = fsl_reg_params(
         input_file=input_file,
         reference_file=reference_file,
@@ -233,7 +233,7 @@ def fsl_reg(
         flirt_options=flirt_options,
         fnirt_options=fnirt_options,
     )
-    return fsl_reg_execute(params, execution)
+    return fsl_reg_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "FslRegOutputs",
     "FslRegParameters",
     "fsl_reg",
-    "fsl_reg_cargs",
     "fsl_reg_execute",
-    "fsl_reg_outputs",
     "fsl_reg_params",
 ]

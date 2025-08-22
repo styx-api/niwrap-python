@@ -121,7 +121,7 @@ def mris_map_cuts_outputs(
 
 def mris_map_cuts_execute(
     params: MrisMapCutsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMapCutsOutputs:
     """
     Tool for mapping cortical surface data onto cuts.
@@ -132,10 +132,12 @@ def mris_map_cuts_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMapCutsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MAP_CUTS_METADATA)
     params = execution.params(params)
     cargs = mris_map_cuts_cargs(params, execution)
     ret = mris_map_cuts_outputs(params, execution)
@@ -162,13 +164,11 @@ def mris_map_cuts(
     Returns:
         NamedTuple of outputs (described in `MrisMapCutsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MAP_CUTS_METADATA)
     params = mris_map_cuts_params(
         input_patch=input_patch,
         output_patch=output_patch,
     )
-    return mris_map_cuts_execute(params, execution)
+    return mris_map_cuts_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "MrisMapCutsOutputs",
     "MrisMapCutsParameters",
     "mris_map_cuts",
-    "mris_map_cuts_cargs",
     "mris_map_cuts_execute",
-    "mris_map_cuts_outputs",
     "mris_map_cuts_params",
 ]

@@ -258,7 +258,7 @@ def fat_proc_convert_dcm_dwis_outputs(
 
 def fat_proc_convert_dcm_dwis_execute(
     params: FatProcConvertDcmDwisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcConvertDcmDwisOutputs:
     """
     Convert sets of DWIs in DICOM format into 'nicer' volume+grad format, reorient
@@ -270,10 +270,12 @@ def fat_proc_convert_dcm_dwis_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcConvertDcmDwisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_CONVERT_DCM_DWIS_METADATA)
     params = execution.params(params)
     cargs = fat_proc_convert_dcm_dwis_cargs(params, execution)
     ret = fat_proc_convert_dcm_dwis_outputs(params, execution)
@@ -340,8 +342,6 @@ def fat_proc_convert_dcm_dwis(
     Returns:
         NamedTuple of outputs (described in `FatProcConvertDcmDwisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_CONVERT_DCM_DWIS_METADATA)
     params = fat_proc_convert_dcm_dwis_params(
         dicom_dir=dicom_dir,
         output_prefix=output_prefix,
@@ -362,7 +362,7 @@ def fat_proc_convert_dcm_dwis(
         no_qc_view=no_qc_view,
         do_movie=do_movie,
     )
-    return fat_proc_convert_dcm_dwis_execute(params, execution)
+    return fat_proc_convert_dcm_dwis_execute(params, runner)
 
 
 __all__ = [
@@ -370,8 +370,6 @@ __all__ = [
     "FatProcConvertDcmDwisOutputs",
     "FatProcConvertDcmDwisParameters",
     "fat_proc_convert_dcm_dwis",
-    "fat_proc_convert_dcm_dwis_cargs",
     "fat_proc_convert_dcm_dwis_execute",
-    "fat_proc_convert_dcm_dwis_outputs",
     "fat_proc_convert_dcm_dwis_params",
 ]

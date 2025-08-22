@@ -209,7 +209,7 @@ def distancemap_outputs(
 
 def distancemap_execute(
     params: DistancemapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DistancemapOutputs:
     """
     A tool to calculate distance maps using FSL.
@@ -220,10 +220,12 @@ def distancemap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DistancemapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DISTANCEMAP_METADATA)
     params = execution.params(params)
     cargs = distancemap_cargs(params, execution)
     ret = distancemap_outputs(params, execution)
@@ -270,8 +272,6 @@ def distancemap(
     Returns:
         NamedTuple of outputs (described in `DistancemapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DISTANCEMAP_METADATA)
     params = distancemap_params(
         input_image=input_image,
         output_image=output_image,
@@ -284,7 +284,7 @@ def distancemap(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return distancemap_execute(params, execution)
+    return distancemap_execute(params, runner)
 
 
 __all__ = [
@@ -292,8 +292,6 @@ __all__ = [
     "DistancemapOutputs",
     "DistancemapParameters",
     "distancemap",
-    "distancemap_cargs",
     "distancemap_execute",
-    "distancemap_outputs",
     "distancemap_params",
 ]

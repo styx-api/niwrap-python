@@ -156,7 +156,7 @@ def histo_register_block_outputs(
 
 def histo_register_block_execute(
     params: HistoRegisterBlockParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HistoRegisterBlockOutputs:
     """
     A tool to align a histological slice with a block face image.
@@ -167,10 +167,12 @@ def histo_register_block_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HistoRegisterBlockOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HISTO_REGISTER_BLOCK_METADATA)
     params = execution.params(params)
     cargs = histo_register_block_cargs(params, execution)
     ret = histo_register_block_outputs(params, execution)
@@ -207,8 +209,6 @@ def histo_register_block(
     Returns:
         NamedTuple of outputs (described in `HistoRegisterBlockOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HISTO_REGISTER_BLOCK_METADATA)
     params = histo_register_block_params(
         seg_time1=seg_time1,
         seg_time2=seg_time2,
@@ -218,7 +218,7 @@ def histo_register_block(
         out_like=out_like,
         invert_transform=invert_transform,
     )
-    return histo_register_block_execute(params, execution)
+    return histo_register_block_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "HistoRegisterBlockOutputs",
     "HistoRegisterBlockParameters",
     "histo_register_block",
-    "histo_register_block_cargs",
     "histo_register_block_execute",
-    "histo_register_block_outputs",
     "histo_register_block_params",
 ]

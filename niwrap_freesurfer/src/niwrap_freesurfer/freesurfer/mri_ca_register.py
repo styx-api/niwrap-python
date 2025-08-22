@@ -443,7 +443,7 @@ def mri_ca_register_outputs(
 
 def mri_ca_register_execute(
     params: MriCaRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCaRegisterOutputs:
     """
     Generates a multi-dimensional talairach transform from a gca file and
@@ -455,10 +455,12 @@ def mri_ca_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCaRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CA_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mri_ca_register_cargs(params, execution)
     ret = mri_ca_register_outputs(params, execution)
@@ -561,8 +563,6 @@ def mri_ca_register(
     Returns:
         NamedTuple of outputs (described in `MriCaRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CA_REGISTER_METADATA)
     params = mri_ca_register_params(
         input_volume=input_volume,
         template=template,
@@ -604,7 +604,7 @@ def mri_ca_register(
         second_pass_renorm=second_pass_renorm,
         threads=threads,
     )
-    return mri_ca_register_execute(params, execution)
+    return mri_ca_register_execute(params, runner)
 
 
 __all__ = [
@@ -612,8 +612,6 @@ __all__ = [
     "MriCaRegisterOutputs",
     "MriCaRegisterParameters",
     "mri_ca_register",
-    "mri_ca_register_cargs",
     "mri_ca_register_execute",
-    "mri_ca_register_outputs",
     "mri_ca_register_params",
 ]

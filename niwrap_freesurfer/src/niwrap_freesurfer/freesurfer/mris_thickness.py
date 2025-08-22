@@ -170,7 +170,7 @@ def mris_thickness_outputs(
 
 def mris_thickness_execute(
     params: MrisThicknessParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisThicknessOutputs:
     """
     Measures the thickness of the cortical surface.
@@ -181,10 +181,12 @@ def mris_thickness_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisThicknessOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_THICKNESS_METADATA)
     params = execution.params(params)
     cargs = mris_thickness_cargs(params, execution)
     ret = mris_thickness_outputs(params, execution)
@@ -225,8 +227,6 @@ def mris_thickness(
     Returns:
         NamedTuple of outputs (described in `MrisThicknessOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_THICKNESS_METADATA)
     params = mris_thickness_params(
         subject_name=subject_name,
         hemi=hemi,
@@ -236,7 +236,7 @@ def mris_thickness(
         thickness_from_seg=thickness_from_seg,
         vector=vector,
     )
-    return mris_thickness_execute(params, execution)
+    return mris_thickness_execute(params, runner)
 
 
 __all__ = [
@@ -244,8 +244,6 @@ __all__ = [
     "MrisThicknessOutputs",
     "MrisThicknessParameters",
     "mris_thickness",
-    "mris_thickness_cargs",
     "mris_thickness_execute",
-    "mris_thickness_outputs",
     "mris_thickness_params",
 ]

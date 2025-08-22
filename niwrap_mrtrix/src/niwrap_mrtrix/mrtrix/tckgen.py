@@ -1402,7 +1402,7 @@ def tckgen_outputs(
 
 def tckgen_execute(
     params: TckgenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckgenOutputs:
     """
     Perform streamlines tractography.
@@ -1547,10 +1547,12 @@ def tckgen_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckgenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKGEN_METADATA)
     params = execution.params(params)
     cargs = tckgen_cargs(params, execution)
     ret = tckgen_outputs(params, execution)
@@ -1885,8 +1887,6 @@ def tckgen(
     Returns:
         NamedTuple of outputs (described in `TckgenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKGEN_METADATA)
     params = tckgen_params(
         algorithm=algorithm,
         select_=select_,
@@ -1935,7 +1935,7 @@ def tckgen(
         source=source,
         tracks=tracks,
     )
-    return tckgen_execute(params, execution)
+    return tckgen_execute(params, runner)
 
 
 __all__ = [
@@ -1961,44 +1961,24 @@ __all__ = [
     "TckgenVariousString2Parameters",
     "TckgenVariousStringParameters",
     "tckgen",
-    "tckgen_cargs",
-    "tckgen_config_cargs",
     "tckgen_config_params",
-    "tckgen_exclude_cargs",
     "tckgen_exclude_params",
     "tckgen_execute",
-    "tckgen_fslgrad_cargs",
     "tckgen_fslgrad_params",
-    "tckgen_include_cargs",
-    "tckgen_include_ordered_cargs",
     "tckgen_include_ordered_params",
     "tckgen_include_params",
-    "tckgen_mask_cargs",
     "tckgen_mask_params",
-    "tckgen_outputs",
     "tckgen_params",
-    "tckgen_seed_gmwmi_cargs",
     "tckgen_seed_gmwmi_params",
-    "tckgen_seed_grid_per_voxel_cargs",
     "tckgen_seed_grid_per_voxel_params",
-    "tckgen_seed_image_cargs",
     "tckgen_seed_image_params",
-    "tckgen_seed_random_per_voxel_cargs",
     "tckgen_seed_random_per_voxel_params",
-    "tckgen_seed_rejection_cargs",
     "tckgen_seed_rejection_params",
-    "tckgen_seed_sphere_cargs",
     "tckgen_seed_sphere_params",
-    "tckgen_various_file_1_cargs",
     "tckgen_various_file_1_params",
-    "tckgen_various_file_2_cargs",
     "tckgen_various_file_2_params",
-    "tckgen_various_file_cargs",
     "tckgen_various_file_params",
-    "tckgen_various_string_1_cargs",
     "tckgen_various_string_1_params",
-    "tckgen_various_string_2_cargs",
     "tckgen_various_string_2_params",
-    "tckgen_various_string_cargs",
     "tckgen_various_string_params",
 ]

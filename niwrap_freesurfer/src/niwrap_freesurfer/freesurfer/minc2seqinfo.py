@@ -125,7 +125,7 @@ def minc2seqinfo_outputs(
 
 def minc2seqinfo_execute(
     params: Minc2seqinfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Minc2seqinfoOutputs:
     """
     Tool for extracting sequence information from MINC files.
@@ -136,10 +136,12 @@ def minc2seqinfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Minc2seqinfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MINC2SEQINFO_METADATA)
     params = execution.params(params)
     cargs = minc2seqinfo_cargs(params, execution)
     ret = minc2seqinfo_outputs(params, execution)
@@ -166,13 +168,11 @@ def minc2seqinfo(
     Returns:
         NamedTuple of outputs (described in `Minc2seqinfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MINC2SEQINFO_METADATA)
     params = minc2seqinfo_params(
         mincfile=mincfile,
         seqinfofile=seqinfofile,
     )
-    return minc2seqinfo_execute(params, execution)
+    return minc2seqinfo_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "Minc2seqinfoOutputs",
     "Minc2seqinfoParameters",
     "minc2seqinfo",
-    "minc2seqinfo_cargs",
     "minc2seqinfo_execute",
-    "minc2seqinfo_outputs",
     "minc2seqinfo_params",
 ]

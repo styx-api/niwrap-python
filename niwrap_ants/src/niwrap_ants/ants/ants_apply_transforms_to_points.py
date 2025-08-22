@@ -256,7 +256,7 @@ def ants_apply_transforms_to_points_outputs(
 
 def ants_apply_transforms_to_points_execute(
     params: AntsApplyTransformsToPointsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsApplyTransformsToPointsOutputs:
     """
     antsApplyTransformsToPoints, applied to an input image, transforms it according
@@ -271,10 +271,12 @@ def ants_apply_transforms_to_points_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsApplyTransformsToPointsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA)
     params = execution.params(params)
     cargs = ants_apply_transforms_to_points_cargs(params, execution)
     ret = ants_apply_transforms_to_points_outputs(params, execution)
@@ -316,8 +318,6 @@ def ants_apply_transforms_to_points(
     Returns:
         NamedTuple of outputs (described in `AntsApplyTransformsToPointsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_APPLY_TRANSFORMS_TO_POINTS_METADATA)
     params = ants_apply_transforms_to_points_params(
         dimensionality=dimensionality,
         precision=precision,
@@ -326,7 +326,7 @@ def ants_apply_transforms_to_points(
         output=output,
         transform=transform,
     )
-    return ants_apply_transforms_to_points_execute(params, execution)
+    return ants_apply_transforms_to_points_execute(params, runner)
 
 
 __all__ = [
@@ -336,12 +336,8 @@ __all__ = [
     "AntsApplyTransformsToPointsParameters",
     "AntsApplyTransformsToPointsSingleTransformParameters",
     "ants_apply_transforms_to_points",
-    "ants_apply_transforms_to_points_cargs",
     "ants_apply_transforms_to_points_execute",
-    "ants_apply_transforms_to_points_inverse_transform_cargs",
     "ants_apply_transforms_to_points_inverse_transform_params",
-    "ants_apply_transforms_to_points_outputs",
     "ants_apply_transforms_to_points_params",
-    "ants_apply_transforms_to_points_single_transform_cargs",
     "ants_apply_transforms_to_points_single_transform_params",
 ]

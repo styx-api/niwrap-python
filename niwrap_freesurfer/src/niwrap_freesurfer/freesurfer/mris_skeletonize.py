@@ -252,7 +252,7 @@ def mris_skeletonize_outputs(
 
 def mris_skeletonize_execute(
     params: MrisSkeletonizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSkeletonizeOutputs:
     """
     Computes the skeleton of gyri (ie, the crowns) or sulci (ie, the fundi).
@@ -263,10 +263,12 @@ def mris_skeletonize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSkeletonizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SKELETONIZE_METADATA)
     params = execution.params(params)
     cargs = mris_skeletonize_cargs(params, execution)
     ret = mris_skeletonize_outputs(params, execution)
@@ -322,8 +324,6 @@ def mris_skeletonize(
     Returns:
         NamedTuple of outputs (described in `MrisSkeletonizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SKELETONIZE_METADATA)
     params = mris_skeletonize_params(
         surface=surface,
         surfvals=surfvals,
@@ -341,7 +341,7 @@ def mris_skeletonize(
         cluster=cluster,
         fwhm=fwhm,
     )
-    return mris_skeletonize_execute(params, execution)
+    return mris_skeletonize_execute(params, runner)
 
 
 __all__ = [
@@ -349,8 +349,6 @@ __all__ = [
     "MrisSkeletonizeOutputs",
     "MrisSkeletonizeParameters",
     "mris_skeletonize",
-    "mris_skeletonize_cargs",
     "mris_skeletonize_execute",
-    "mris_skeletonize_outputs",
     "mris_skeletonize_params",
 ]

@@ -157,7 +157,7 @@ def mri_create_t2combined_outputs(
 
 def mri_create_t2combined_execute(
     params: MriCreateT2combinedParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCreateT2combinedOutputs:
     """
     Utility to combine two or three T2* 7T partial-brain volumes into one volume,
@@ -169,10 +169,12 @@ def mri_create_t2combined_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCreateT2combinedOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CREATE_T2COMBINED_METADATA)
     params = execution.params(params)
     cargs = mri_create_t2combined_cargs(params, execution)
     ret = mri_create_t2combined_outputs(params, execution)
@@ -211,8 +213,6 @@ def mri_create_t2combined(
     Returns:
         NamedTuple of outputs (described in `MriCreateT2combinedOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CREATE_T2COMBINED_METADATA)
     params = mri_create_t2combined_params(
         subjid=subjid,
         t1wb=t1wb,
@@ -222,7 +222,7 @@ def mri_create_t2combined(
         t2combined=t2combined,
         show=show,
     )
-    return mri_create_t2combined_execute(params, execution)
+    return mri_create_t2combined_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "MriCreateT2combinedOutputs",
     "MriCreateT2combinedParameters",
     "mri_create_t2combined",
-    "mri_create_t2combined_cargs",
     "mri_create_t2combined_execute",
-    "mri_create_t2combined_outputs",
     "mri_create_t2combined_params",
 ]

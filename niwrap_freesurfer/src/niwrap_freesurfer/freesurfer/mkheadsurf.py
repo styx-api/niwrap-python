@@ -354,7 +354,7 @@ def mkheadsurf_outputs(
 
 def mkheadsurf_execute(
     params: MkheadsurfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MkheadsurfOutputs:
     """
     Segment and create a surface representation of the head for visualization and
@@ -366,10 +366,12 @@ def mkheadsurf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MkheadsurfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MKHEADSURF_METADATA)
     params = execution.params(params)
     cargs = mkheadsurf_cargs(params, execution)
     ret = mkheadsurf_outputs(params, execution)
@@ -448,8 +450,6 @@ def mkheadsurf(
     Returns:
         NamedTuple of outputs (described in `MkheadsurfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MKHEADSURF_METADATA)
     params = mkheadsurf_params(
         input_vol=input_vol,
         output_vol=output_vol,
@@ -479,7 +479,7 @@ def mkheadsurf(
         umask=umask,
         logfile=logfile,
     )
-    return mkheadsurf_execute(params, execution)
+    return mkheadsurf_execute(params, runner)
 
 
 __all__ = [
@@ -487,8 +487,6 @@ __all__ = [
     "MkheadsurfOutputs",
     "MkheadsurfParameters",
     "mkheadsurf",
-    "mkheadsurf_cargs",
     "mkheadsurf_execute",
-    "mkheadsurf_outputs",
     "mkheadsurf_params",
 ]

@@ -340,7 +340,7 @@ def v_3d_group_in_corr_outputs(
 
 def v_3d_group_in_corr_execute(
     params: V3dGroupInCorrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dGroupInCorrOutputs:
     """
     Functional connectivity analysis in group of subjects.
@@ -351,10 +351,12 @@ def v_3d_group_in_corr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dGroupInCorrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_GROUP_IN_CORR_METADATA)
     params = execution.params(params)
     cargs = v_3d_group_in_corr_cargs(params, execution)
     ret = v_3d_group_in_corr_outputs(params, execution)
@@ -440,8 +442,6 @@ def v_3d_group_in_corr(
     Returns:
         NamedTuple of outputs (described in `V3dGroupInCorrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_GROUP_IN_CORR_METADATA)
     params = v_3d_group_in_corr_params(
         set_a=set_a,
         set_b=set_b,
@@ -472,7 +472,7 @@ def v_3d_group_in_corr(
         debug=debug,
         batch=batch,
     )
-    return v_3d_group_in_corr_execute(params, execution)
+    return v_3d_group_in_corr_execute(params, runner)
 
 
 __all__ = [
@@ -480,8 +480,6 @@ __all__ = [
     "V3dGroupInCorrParameters",
     "V_3D_GROUP_IN_CORR_METADATA",
     "v_3d_group_in_corr",
-    "v_3d_group_in_corr_cargs",
     "v_3d_group_in_corr_execute",
-    "v_3d_group_in_corr_outputs",
     "v_3d_group_in_corr_params",
 ]

@@ -142,7 +142,7 @@ def cifti_label_modify_keys_outputs(
 
 def cifti_label_modify_keys_execute(
     params: CiftiLabelModifyKeysParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
     """
     Change key values in a dlabel file.
@@ -167,10 +167,12 @@ def cifti_label_modify_keys_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelModifyKeysOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_LABEL_MODIFY_KEYS_METADATA)
     params = execution.params(params)
     cargs = cifti_label_modify_keys_cargs(params, execution)
     ret = cifti_label_modify_keys_outputs(params, execution)
@@ -216,15 +218,13 @@ def cifti_label_modify_keys(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelModifyKeysOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_LABEL_MODIFY_KEYS_METADATA)
     params = cifti_label_modify_keys_params(
         cifti_in=cifti_in,
         remap_file=remap_file,
         cifti_out=cifti_out,
         opt_column_column=opt_column_column,
     )
-    return cifti_label_modify_keys_execute(params, execution)
+    return cifti_label_modify_keys_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "CiftiLabelModifyKeysOutputs",
     "CiftiLabelModifyKeysParameters",
     "cifti_label_modify_keys",
-    "cifti_label_modify_keys_cargs",
     "cifti_label_modify_keys_execute",
-    "cifti_label_modify_keys_outputs",
     "cifti_label_modify_keys_params",
 ]

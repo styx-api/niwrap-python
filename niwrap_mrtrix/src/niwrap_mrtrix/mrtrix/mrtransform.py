@@ -744,7 +744,7 @@ def mrtransform_outputs(
 
 def mrtransform_execute(
     params: MrtransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrtransformOutputs:
     """
     Apply spatial transformations to an image.
@@ -794,10 +794,12 @@ def mrtransform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrtransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRTRANSFORM_METADATA)
     params = execution.params(params)
     cargs = mrtransform_cargs(params, execution)
     ret = mrtransform_outputs(params, execution)
@@ -1000,8 +1002,6 @@ def mrtransform(
     Returns:
         NamedTuple of outputs (described in `MrtransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRTRANSFORM_METADATA)
     params = mrtransform_params(
         linear=linear,
         flip=flip,
@@ -1038,7 +1038,7 @@ def mrtransform(
         input_=input_,
         output=output,
     )
-    return mrtransform_execute(params, execution)
+    return mrtransform_execute(params, runner)
 
 
 __all__ = [
@@ -1052,19 +1052,11 @@ __all__ = [
     "MrtransformVariousFileParameters",
     "MrtransformVariousStringParameters",
     "mrtransform",
-    "mrtransform_cargs",
-    "mrtransform_config_cargs",
     "mrtransform_config_params",
     "mrtransform_execute",
-    "mrtransform_export_grad_fsl_cargs",
-    "mrtransform_export_grad_fsl_outputs",
     "mrtransform_export_grad_fsl_params",
-    "mrtransform_fslgrad_cargs",
     "mrtransform_fslgrad_params",
-    "mrtransform_outputs",
     "mrtransform_params",
-    "mrtransform_various_file_cargs",
     "mrtransform_various_file_params",
-    "mrtransform_various_string_cargs",
     "mrtransform_various_string_params",
 ]

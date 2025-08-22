@@ -151,7 +151,7 @@ def bianca_overlap_measures_outputs(
 
 def bianca_overlap_measures_execute(
     params: BiancaOverlapMeasuresParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BiancaOverlapMeasuresOutputs:
     """
     BIANCA overlap measures script for FSL.
@@ -162,10 +162,12 @@ def bianca_overlap_measures_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BiancaOverlapMeasuresOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BIANCA_OVERLAP_MEASURES_METADATA)
     params = execution.params(params)
     cargs = bianca_overlap_measures_cargs(params, execution)
     ret = bianca_overlap_measures_outputs(params, execution)
@@ -194,14 +196,12 @@ def bianca_overlap_measures(
     Returns:
         NamedTuple of outputs (described in `BiancaOverlapMeasuresOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BIANCA_OVERLAP_MEASURES_METADATA)
     params = bianca_overlap_measures_params(
         lesion_mask=lesion_mask,
         manual_mask=manual_mask,
         output_dir=output_dir,
     )
-    return bianca_overlap_measures_execute(params, execution)
+    return bianca_overlap_measures_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "BiancaOverlapMeasuresOutputs",
     "BiancaOverlapMeasuresParameters",
     "bianca_overlap_measures",
-    "bianca_overlap_measures_cargs",
     "bianca_overlap_measures_execute",
-    "bianca_overlap_measures_outputs",
     "bianca_overlap_measures_params",
 ]

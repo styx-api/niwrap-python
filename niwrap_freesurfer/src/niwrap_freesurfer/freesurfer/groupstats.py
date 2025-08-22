@@ -244,7 +244,7 @@ def groupstats_outputs(
 
 def groupstats_execute(
     params: GroupstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GroupstatsOutputs:
     """
     A script for comprehensive group analysis on both maps and ROI results within
@@ -256,10 +256,12 @@ def groupstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GroupstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GROUPSTATS_METADATA)
     params = execution.params(params)
     cargs = groupstats_cargs(params, execution)
     ret = groupstats_outputs(params, execution)
@@ -318,8 +320,6 @@ def groupstats(
     Returns:
         NamedTuple of outputs (described in `GroupstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GROUPSTATS_METADATA)
     params = groupstats_params(
         outdir=outdir,
         group_fsgd=group_fsgd,
@@ -339,7 +339,7 @@ def groupstats(
         base=base,
         keep53=keep53,
     )
-    return groupstats_execute(params, execution)
+    return groupstats_execute(params, runner)
 
 
 __all__ = [
@@ -347,8 +347,6 @@ __all__ = [
     "GroupstatsOutputs",
     "GroupstatsParameters",
     "groupstats",
-    "groupstats_cargs",
     "groupstats_execute",
-    "groupstats_outputs",
     "groupstats_params",
 ]

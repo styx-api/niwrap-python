@@ -146,7 +146,7 @@ def fsvglrun_outputs(
 
 def fsvglrun_execute(
     params: FsvglrunParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsvglrunOutputs:
     """
     A tool to execute a command, replacing the shell with the specified program,
@@ -158,10 +158,12 @@ def fsvglrun_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsvglrunOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSVGLRUN_METADATA)
     params = execution.params(params)
     cargs = fsvglrun_cargs(params, execution)
     ret = fsvglrun_outputs(params, execution)
@@ -196,8 +198,6 @@ def fsvglrun(
     Returns:
         NamedTuple of outputs (described in `FsvglrunOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSVGLRUN_METADATA)
     params = fsvglrun_params(
         zeroth_arg_name=zeroth_arg_name,
         empty_env=empty_env,
@@ -205,7 +205,7 @@ def fsvglrun(
         command=command,
         command_args=command_args,
     )
-    return fsvglrun_execute(params, execution)
+    return fsvglrun_execute(params, runner)
 
 
 __all__ = [
@@ -213,8 +213,6 @@ __all__ = [
     "FsvglrunOutputs",
     "FsvglrunParameters",
     "fsvglrun",
-    "fsvglrun_cargs",
     "fsvglrun_execute",
-    "fsvglrun_outputs",
     "fsvglrun_params",
 ]

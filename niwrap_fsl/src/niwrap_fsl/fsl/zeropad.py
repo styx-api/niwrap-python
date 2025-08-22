@@ -125,7 +125,7 @@ def zeropad_outputs(
 
 def zeropad_execute(
     params: ZeropadParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ZeropadOutputs:
     """
     Tool for zero-padding numbers to a specified length.
@@ -136,10 +136,12 @@ def zeropad_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ZeropadOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ZEROPAD_METADATA)
     params = execution.params(params)
     cargs = zeropad_cargs(params, execution)
     ret = zeropad_outputs(params, execution)
@@ -166,13 +168,11 @@ def zeropad(
     Returns:
         NamedTuple of outputs (described in `ZeropadOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ZEROPAD_METADATA)
     params = zeropad_params(
         input_number=input_number,
         length=length,
     )
-    return zeropad_execute(params, execution)
+    return zeropad_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "ZeropadOutputs",
     "ZeropadParameters",
     "zeropad",
-    "zeropad_cargs",
     "zeropad_execute",
-    "zeropad_outputs",
     "zeropad_params",
 ]

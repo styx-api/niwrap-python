@@ -132,7 +132,7 @@ def asegstatsdiff_outputs(
 
 def asegstatsdiff_execute(
     params: AsegstatsdiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AsegstatsdiffOutputs:
     """
     Compute and report percentage differences in aseg morphometry data between two
@@ -144,10 +144,12 @@ def asegstatsdiff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AsegstatsdiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ASEGSTATSDIFF_METADATA)
     params = execution.params(params)
     cargs = asegstatsdiff_cargs(params, execution)
     ret = asegstatsdiff_outputs(params, execution)
@@ -178,14 +180,12 @@ def asegstatsdiff(
     Returns:
         NamedTuple of outputs (described in `AsegstatsdiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ASEGSTATSDIFF_METADATA)
     params = asegstatsdiff_params(
         subject1=subject1,
         subject2=subject2,
         outdir=outdir,
     )
-    return asegstatsdiff_execute(params, execution)
+    return asegstatsdiff_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "AsegstatsdiffOutputs",
     "AsegstatsdiffParameters",
     "asegstatsdiff",
-    "asegstatsdiff_cargs",
     "asegstatsdiff_execute",
-    "asegstatsdiff_outputs",
     "asegstatsdiff_params",
 ]

@@ -166,7 +166,7 @@ def surface_geodesic_distance_all_to_all_outputs(
 
 def surface_geodesic_distance_all_to_all_execute(
     params: SurfaceGeodesicDistanceAllToAllParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
     """
     Compute geodesic distances from all vertices.
@@ -197,10 +197,12 @@ def surface_geodesic_distance_all_to_all_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceAllToAllOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA)
     params = execution.params(params)
     cargs = surface_geodesic_distance_all_to_all_cargs(params, execution)
     ret = surface_geodesic_distance_all_to_all_outputs(params, execution)
@@ -259,8 +261,6 @@ def surface_geodesic_distance_all_to_all(
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceAllToAllOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_GEODESIC_DISTANCE_ALL_TO_ALL_METADATA)
     params = surface_geodesic_distance_all_to_all_params(
         surface=surface,
         cifti_out=cifti_out,
@@ -269,7 +269,7 @@ def surface_geodesic_distance_all_to_all(
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
         opt_naive=opt_naive,
     )
-    return surface_geodesic_distance_all_to_all_execute(params, execution)
+    return surface_geodesic_distance_all_to_all_execute(params, runner)
 
 
 __all__ = [
@@ -277,8 +277,6 @@ __all__ = [
     "SurfaceGeodesicDistanceAllToAllOutputs",
     "SurfaceGeodesicDistanceAllToAllParameters",
     "surface_geodesic_distance_all_to_all",
-    "surface_geodesic_distance_all_to_all_cargs",
     "surface_geodesic_distance_all_to_all_execute",
-    "surface_geodesic_distance_all_to_all_outputs",
     "surface_geodesic_distance_all_to_all_params",
 ]

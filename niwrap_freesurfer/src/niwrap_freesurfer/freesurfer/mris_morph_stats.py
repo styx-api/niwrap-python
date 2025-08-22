@@ -136,7 +136,7 @@ def mris_morph_stats_outputs(
 
 def mris_morph_stats_execute(
     params: MrisMorphStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMorphStatsOutputs:
     """
     This program generates statistics which characterize a surface-based deformation
@@ -148,10 +148,12 @@ def mris_morph_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMorphStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MORPH_STATS_METADATA)
     params = execution.params(params)
     cargs = mris_morph_stats_cargs(params, execution)
     ret = mris_morph_stats_outputs(params, execution)
@@ -184,15 +186,13 @@ def mris_morph_stats(
     Returns:
         NamedTuple of outputs (described in `MrisMorphStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MORPH_STATS_METADATA)
     params = mris_morph_stats_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
         morphed_surface=morphed_surface,
         output_name=output_name,
     )
-    return mris_morph_stats_execute(params, execution)
+    return mris_morph_stats_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "MrisMorphStatsOutputs",
     "MrisMorphStatsParameters",
     "mris_morph_stats",
-    "mris_morph_stats_cargs",
     "mris_morph_stats_execute",
-    "mris_morph_stats_outputs",
     "mris_morph_stats_params",
 ]

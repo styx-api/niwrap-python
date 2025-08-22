@@ -160,7 +160,7 @@ def surface_geodesic_distance_outputs(
 
 def surface_geodesic_distance_execute(
     params: SurfaceGeodesicDistanceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
     Compute geodesic distance from one vertex to the entire surface.
@@ -187,10 +187,12 @@ def surface_geodesic_distance_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_GEODESIC_DISTANCE_METADATA)
     params = execution.params(params)
     cargs = surface_geodesic_distance_cargs(params, execution)
     ret = surface_geodesic_distance_outputs(params, execution)
@@ -244,8 +246,6 @@ def surface_geodesic_distance(
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicDistanceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_GEODESIC_DISTANCE_METADATA)
     params = surface_geodesic_distance_params(
         surface=surface,
         vertex=vertex,
@@ -254,7 +254,7 @@ def surface_geodesic_distance(
         opt_limit_limit_mm=opt_limit_limit_mm,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return surface_geodesic_distance_execute(params, execution)
+    return surface_geodesic_distance_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "SurfaceGeodesicDistanceOutputs",
     "SurfaceGeodesicDistanceParameters",
     "surface_geodesic_distance",
-    "surface_geodesic_distance_cargs",
     "surface_geodesic_distance_execute",
-    "surface_geodesic_distance_outputs",
     "surface_geodesic_distance_params",
 ]

@@ -199,7 +199,7 @@ def v__fast_roi_outputs(
 
 def v__fast_roi_execute(
     params: VFastRoiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VFastRoiOutputs:
     """
     Creates Atlas-based ROI masked in ANAT's original space. The script executes
@@ -211,10 +211,12 @@ def v__fast_roi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VFastRoiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__FAST_ROI_METADATA)
     params = execution.params(params)
     cargs = v__fast_roi_cargs(params, execution)
     ret = v__fast_roi_outputs(params, execution)
@@ -264,8 +266,6 @@ def v__fast_roi(
     Returns:
         NamedTuple of outputs (described in `VFastRoiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__FAST_ROI_METADATA)
     params = v__fast_roi_params(
         region=region,
         drawn_roi=drawn_roi,
@@ -278,7 +278,7 @@ def v__fast_roi(
         twopass=twopass,
         help_=help_,
     )
-    return v__fast_roi_execute(params, execution)
+    return v__fast_roi_execute(params, runner)
 
 
 __all__ = [
@@ -286,8 +286,6 @@ __all__ = [
     "VFastRoiParameters",
     "V__FAST_ROI_METADATA",
     "v__fast_roi",
-    "v__fast_roi_cargs",
     "v__fast_roi_execute",
-    "v__fast_roi_outputs",
     "v__fast_roi_params",
 ]

@@ -119,7 +119,7 @@ def morph_subject_lh_outputs(
 
 def morph_subject_lh_execute(
     params: MorphSubjectLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphSubjectLhOutputs:
     """
     A tool for morphing subject's left hemisphere.
@@ -130,10 +130,12 @@ def morph_subject_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphSubjectLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_SUBJECT_LH_METADATA)
     params = execution.params(params)
     cargs = morph_subject_lh_cargs(params, execution)
     ret = morph_subject_lh_outputs(params, execution)
@@ -158,12 +160,10 @@ def morph_subject_lh(
     Returns:
         NamedTuple of outputs (described in `MorphSubjectLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_SUBJECT_LH_METADATA)
     params = morph_subject_lh_params(
         subject_id=subject_id,
     )
-    return morph_subject_lh_execute(params, execution)
+    return morph_subject_lh_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "MorphSubjectLhOutputs",
     "MorphSubjectLhParameters",
     "morph_subject_lh",
-    "morph_subject_lh_cargs",
     "morph_subject_lh_execute",
-    "morph_subject_lh_outputs",
     "morph_subject_lh_params",
 ]

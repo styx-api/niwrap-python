@@ -227,7 +227,7 @@ def tedana_wrapper_py_outputs(
 
 def tedana_wrapper_py_execute(
     params: TedanaWrapperPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TedanaWrapperPyOutputs:
     """
     Internal wrapper to run tedana.py, typically used within afni_proc.py.
@@ -238,10 +238,12 @@ def tedana_wrapper_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TedanaWrapperPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TEDANA_WRAPPER_PY_METADATA)
     params = execution.params(params)
     cargs = tedana_wrapper_py_cargs(params, execution)
     ret = tedana_wrapper_py_outputs(params, execution)
@@ -295,8 +297,6 @@ def tedana_wrapper_py(
     Returns:
         NamedTuple of outputs (described in `TedanaWrapperPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TEDANA_WRAPPER_PY_METADATA)
     params = tedana_wrapper_py_params(
         input_files=input_files,
         echo_times=echo_times,
@@ -312,7 +312,7 @@ def tedana_wrapper_py(
         help_=help_,
         detailed_help=detailed_help,
     )
-    return tedana_wrapper_py_execute(params, execution)
+    return tedana_wrapper_py_execute(params, runner)
 
 
 __all__ = [
@@ -320,8 +320,6 @@ __all__ = [
     "TedanaWrapperPyOutputs",
     "TedanaWrapperPyParameters",
     "tedana_wrapper_py",
-    "tedana_wrapper_py_cargs",
     "tedana_wrapper_py_execute",
-    "tedana_wrapper_py_outputs",
     "tedana_wrapper_py_params",
 ]

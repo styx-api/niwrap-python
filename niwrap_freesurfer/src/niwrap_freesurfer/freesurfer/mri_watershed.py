@@ -359,7 +359,7 @@ def mri_watershed_outputs(
 
 def mri_watershed_execute(
     params: MriWatershedParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriWatershedOutputs:
     """
     A tool for stripping skull and other non-brain tissues to produce brain volume
@@ -371,10 +371,12 @@ def mri_watershed_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriWatershedOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_WATERSHED_METADATA)
     params = execution.params(params)
     cargs = mri_watershed_cargs(params, execution)
     ret = mri_watershed_outputs(params, execution)
@@ -465,8 +467,6 @@ def mri_watershed(
     Returns:
         NamedTuple of outputs (described in `MriWatershedOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_WATERSHED_METADATA)
     params = mri_watershed_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -500,7 +500,7 @@ def mri_watershed(
         xthresh=xthresh,
         mask_flag=mask_flag,
     )
-    return mri_watershed_execute(params, execution)
+    return mri_watershed_execute(params, runner)
 
 
 __all__ = [
@@ -508,8 +508,6 @@ __all__ = [
     "MriWatershedOutputs",
     "MriWatershedParameters",
     "mri_watershed",
-    "mri_watershed_cargs",
     "mri_watershed_execute",
-    "mri_watershed_outputs",
     "mri_watershed_params",
 ]

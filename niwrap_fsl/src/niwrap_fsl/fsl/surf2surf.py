@@ -196,7 +196,7 @@ def surf2surf_outputs(
 
 def surf2surf_execute(
     params: Surf2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Surf2surfOutputs:
     """
     Conversions between surface formats and/or conventions.
@@ -207,10 +207,12 @@ def surf2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Surf2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF2SURF_METADATA)
     params = execution.params(params)
     cargs = surf2surf_cargs(params, execution)
     ret = surf2surf_outputs(params, execution)
@@ -256,8 +258,6 @@ def surf2surf(
     Returns:
         NamedTuple of outputs (described in `Surf2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF2SURF_METADATA)
     params = surf2surf_params(
         input_surface=input_surface,
         output_surface=output_surface,
@@ -269,7 +269,7 @@ def surf2surf(
         output_type=output_type,
         output_values=output_values,
     )
-    return surf2surf_execute(params, execution)
+    return surf2surf_execute(params, runner)
 
 
 __all__ = [
@@ -277,8 +277,6 @@ __all__ = [
     "Surf2surfOutputs",
     "Surf2surfParameters",
     "surf2surf",
-    "surf2surf_cargs",
     "surf2surf_execute",
-    "surf2surf_outputs",
     "surf2surf_params",
 ]

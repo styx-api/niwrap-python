@@ -136,7 +136,7 @@ def mris_find_flat_regions_outputs(
 
 def mris_find_flat_regions_execute(
     params: MrisFindFlatRegionsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisFindFlatRegionsOutputs:
     """
     Compute regions in which the surface is almost perpendicular to one of the
@@ -148,10 +148,12 @@ def mris_find_flat_regions_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisFindFlatRegionsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_FIND_FLAT_REGIONS_METADATA)
     params = execution.params(params)
     cargs = mris_find_flat_regions_cargs(params, execution)
     ret = mris_find_flat_regions_outputs(params, execution)
@@ -181,14 +183,12 @@ def mris_find_flat_regions(
     Returns:
         NamedTuple of outputs (described in `MrisFindFlatRegionsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_FIND_FLAT_REGIONS_METADATA)
     params = mris_find_flat_regions_params(
         surface=surface,
         wfile=wfile,
         threshold=threshold,
     )
-    return mris_find_flat_regions_execute(params, execution)
+    return mris_find_flat_regions_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MrisFindFlatRegionsOutputs",
     "MrisFindFlatRegionsParameters",
     "mris_find_flat_regions",
-    "mris_find_flat_regions_cargs",
     "mris_find_flat_regions_execute",
-    "mris_find_flat_regions_outputs",
     "mris_find_flat_regions_params",
 ]

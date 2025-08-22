@@ -132,7 +132,7 @@ def inflate_subject_sc_outputs(
 
 def inflate_subject_sc_execute(
     params: InflateSubjectScParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InflateSubjectScOutputs:
     """
     Inferred description: Tool for inflating subject surfaces, specific details
@@ -144,10 +144,12 @@ def inflate_subject_sc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectScOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INFLATE_SUBJECT_SC_METADATA)
     params = execution.params(params)
     cargs = inflate_subject_sc_cargs(params, execution)
     ret = inflate_subject_sc_outputs(params, execution)
@@ -177,14 +179,12 @@ def inflate_subject_sc(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectScOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INFLATE_SUBJECT_SC_METADATA)
     params = inflate_subject_sc_params(
         subject_dir=subject_dir,
         verbose=verbose,
         debug=debug,
     )
-    return inflate_subject_sc_execute(params, execution)
+    return inflate_subject_sc_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "InflateSubjectScOutputs",
     "InflateSubjectScParameters",
     "inflate_subject_sc",
-    "inflate_subject_sc_cargs",
     "inflate_subject_sc_execute",
-    "inflate_subject_sc_outputs",
     "inflate_subject_sc_params",
 ]

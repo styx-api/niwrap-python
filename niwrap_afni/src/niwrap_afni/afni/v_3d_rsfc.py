@@ -302,7 +302,7 @@ def v_3d_rsfc_outputs(
 
 def v_3d_rsfc_execute(
     params: V3dRsfcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRsfcOutputs:
     """
     Program to calculate common resting state functional connectivity (RSFC)
@@ -314,10 +314,12 @@ def v_3d_rsfc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRsfcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_RSFC_METADATA)
     params = execution.params(params)
     cargs = v_3d_rsfc_cargs(params, execution)
     ret = v_3d_rsfc_outputs(params, execution)
@@ -392,8 +394,6 @@ def v_3d_rsfc(
     Returns:
         NamedTuple of outputs (described in `V3dRsfcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_RSFC_METADATA)
     params = v_3d_rsfc_params(
         fbot=fbot,
         ftop=ftop,
@@ -420,7 +420,7 @@ def v_3d_rsfc(
         notrans=notrans,
         nosat=nosat,
     )
-    return v_3d_rsfc_execute(params, execution)
+    return v_3d_rsfc_execute(params, runner)
 
 
 __all__ = [
@@ -428,8 +428,6 @@ __all__ = [
     "V3dRsfcParameters",
     "V_3D_RSFC_METADATA",
     "v_3d_rsfc",
-    "v_3d_rsfc_cargs",
     "v_3d_rsfc_execute",
-    "v_3d_rsfc_outputs",
     "v_3d_rsfc_params",
 ]

@@ -157,7 +157,7 @@ def gauss_4dfp_outputs(
 
 def gauss_4dfp_execute(
     params: Gauss4dfpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Gauss4dfpOutputs:
     """
     Applies a Gaussian filter to 4dfp or conc input files.
@@ -168,10 +168,12 @@ def gauss_4dfp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Gauss4dfpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GAUSS_4DFP_METADATA)
     params = execution.params(params)
     cargs = gauss_4dfp_cargs(params, execution)
     ret = gauss_4dfp_outputs(params, execution)
@@ -209,8 +211,6 @@ def gauss_4dfp(
     Returns:
         NamedTuple of outputs (described in `Gauss4dfpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GAUSS_4DFP_METADATA)
     params = gauss_4dfp_params(
         input_file=input_file,
         f_half=f_half,
@@ -219,7 +219,7 @@ def gauss_4dfp(
         wrap_flag=wrap_flag,
         differentiate_flag=differentiate_flag,
     )
-    return gauss_4dfp_execute(params, execution)
+    return gauss_4dfp_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "Gauss4dfpOutputs",
     "Gauss4dfpParameters",
     "gauss_4dfp",
-    "gauss_4dfp_cargs",
     "gauss_4dfp_execute",
-    "gauss_4dfp_outputs",
     "gauss_4dfp_params",
 ]

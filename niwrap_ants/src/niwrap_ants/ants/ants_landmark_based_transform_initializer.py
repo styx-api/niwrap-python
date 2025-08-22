@@ -181,7 +181,7 @@ def ants_landmark_based_transform_initializer_outputs(
 
 def ants_landmark_based_transform_initializer_execute(
     params: AntsLandmarkBasedTransformInitializerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsLandmarkBasedTransformInitializerOutputs:
     """
     This tool initializes a transform between two images based on corresponding
@@ -193,10 +193,12 @@ def ants_landmark_based_transform_initializer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsLandmarkBasedTransformInitializerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA)
     params = execution.params(params)
     cargs = ants_landmark_based_transform_initializer_cargs(params, execution)
     ret = ants_landmark_based_transform_initializer_outputs(params, execution)
@@ -246,8 +248,6 @@ def ants_landmark_based_transform_initializer(
     Returns:
         NamedTuple of outputs (described in `AntsLandmarkBasedTransformInitializerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_LANDMARK_BASED_TRANSFORM_INITIALIZER_METADATA)
     params = ants_landmark_based_transform_initializer_params(
         dimension=dimension,
         fixed_image=fixed_image,
@@ -260,7 +260,7 @@ def ants_landmark_based_transform_initializer(
         enforce_stationary_boundaries=enforce_stationary_boundaries,
         landmark_weights=landmark_weights,
     )
-    return ants_landmark_based_transform_initializer_execute(params, execution)
+    return ants_landmark_based_transform_initializer_execute(params, runner)
 
 
 __all__ = [
@@ -268,8 +268,6 @@ __all__ = [
     "AntsLandmarkBasedTransformInitializerOutputs",
     "AntsLandmarkBasedTransformInitializerParameters",
     "ants_landmark_based_transform_initializer",
-    "ants_landmark_based_transform_initializer_cargs",
     "ants_landmark_based_transform_initializer_execute",
-    "ants_landmark_based_transform_initializer_outputs",
     "ants_landmark_based_transform_initializer_params",
 ]

@@ -151,7 +151,7 @@ def jkgcatrain_outputs(
 
 def jkgcatrain_execute(
     params: JkgcatrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> JkgcatrainOutputs:
     """
     Jackknife training of GCA using existing output from gcatrain.
@@ -162,10 +162,12 @@ def jkgcatrain_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `JkgcatrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(JKGCATRAIN_METADATA)
     params = execution.params(params)
     cargs = jkgcatrain_cargs(params, execution)
     ret = jkgcatrain_outputs(params, execution)
@@ -198,8 +200,6 @@ def jkgcatrain(
     Returns:
         NamedTuple of outputs (described in `JkgcatrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(JKGCATRAIN_METADATA)
     params = jkgcatrain_params(
         gca_directory=gca_directory,
         iteration_number=iteration_number,
@@ -207,7 +207,7 @@ def jkgcatrain(
         no_submit=no_submit,
         mail_flag=mail_flag,
     )
-    return jkgcatrain_execute(params, execution)
+    return jkgcatrain_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "JkgcatrainOutputs",
     "JkgcatrainParameters",
     "jkgcatrain",
-    "jkgcatrain_cargs",
     "jkgcatrain_execute",
-    "jkgcatrain_outputs",
     "jkgcatrain_params",
 ]

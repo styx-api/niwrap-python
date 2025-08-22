@@ -240,7 +240,7 @@ def ccops_outputs(
 
 def ccops_execute(
     params: CcopsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CcopsOutputs:
     """
     ccops - Clustering of Connectomes Using Probabilistic Tractography.
@@ -251,10 +251,12 @@ def ccops_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CcopsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CCOPS_METADATA)
     params = execution.params(params)
     cargs = ccops_cargs(params, execution)
     ret = ccops_outputs(params, execution)
@@ -308,8 +310,6 @@ def ccops(
     Returns:
         NamedTuple of outputs (described in `CcopsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CCOPS_METADATA)
     params = ccops_params(
         basename=basename,
         infile=infile,
@@ -326,7 +326,7 @@ def ccops(
         nclusters=nclusters,
         help_=help_,
     )
-    return ccops_execute(params, execution)
+    return ccops_execute(params, runner)
 
 
 __all__ = [
@@ -334,8 +334,6 @@ __all__ = [
     "CcopsOutputs",
     "CcopsParameters",
     "ccops",
-    "ccops_cargs",
     "ccops_execute",
-    "ccops_outputs",
     "ccops_params",
 ]

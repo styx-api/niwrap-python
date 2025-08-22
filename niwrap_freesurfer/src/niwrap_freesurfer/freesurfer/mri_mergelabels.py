@@ -141,7 +141,7 @@ def mri_mergelabels_outputs(
 
 def mri_mergelabels_execute(
     params: MriMergelabelsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMergelabelsOutputs:
     """
     A tool to merge two or more label files by concatenating them together.
@@ -152,10 +152,12 @@ def mri_mergelabels_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMergelabelsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MERGELABELS_METADATA)
     params = execution.params(params)
     cargs = mri_mergelabels_cargs(params, execution)
     ret = mri_mergelabels_outputs(params, execution)
@@ -184,14 +186,12 @@ def mri_mergelabels(
     Returns:
         NamedTuple of outputs (described in `MriMergelabelsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MERGELABELS_METADATA)
     params = mri_mergelabels_params(
         input_labels=input_labels,
         output_label=output_label,
         input_directory=input_directory,
     )
-    return mri_mergelabels_execute(params, execution)
+    return mri_mergelabels_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "MriMergelabelsOutputs",
     "MriMergelabelsParameters",
     "mri_mergelabels",
-    "mri_mergelabels_cargs",
     "mri_mergelabels_execute",
-    "mri_mergelabels_outputs",
     "mri_mergelabels_params",
 ]

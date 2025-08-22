@@ -401,7 +401,7 @@ def file_tool_outputs(
 
 def file_tool_execute(
     params: FileToolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FileToolOutputs:
     """
     Program to display or modify sections of a file.
@@ -412,10 +412,12 @@ def file_tool_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FileToolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FILE_TOOL_METADATA)
     params = execution.params(params)
     cargs = file_tool_cargs(params, execution)
     ret = file_tool_outputs(params, execution)
@@ -522,8 +524,6 @@ def file_tool(
     Returns:
         NamedTuple of outputs (described in `FileToolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FILE_TOOL_METADATA)
     params = file_tool_params(
         help_=help_,
         version=version,
@@ -568,7 +568,7 @@ def file_tool(
         disp_real4=disp_real4,
         swap_bytes=swap_bytes,
     )
-    return file_tool_execute(params, execution)
+    return file_tool_execute(params, runner)
 
 
 __all__ = [
@@ -576,8 +576,6 @@ __all__ = [
     "FileToolOutputs",
     "FileToolParameters",
     "file_tool",
-    "file_tool_cargs",
     "file_tool_execute",
-    "file_tool_outputs",
     "file_tool_params",
 ]

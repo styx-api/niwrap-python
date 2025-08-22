@@ -125,7 +125,7 @@ def plot_structure_stats_tcl_outputs(
 
 def plot_structure_stats_tcl_execute(
     params: PlotStructureStatsTclParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PlotStructureStatsTclOutputs:
     """
     Script to plot structural statistics.
@@ -136,10 +136,12 @@ def plot_structure_stats_tcl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PlotStructureStatsTclOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PLOT_STRUCTURE_STATS_TCL_METADATA)
     params = execution.params(params)
     cargs = plot_structure_stats_tcl_cargs(params, execution)
     ret = plot_structure_stats_tcl_outputs(params, execution)
@@ -166,13 +168,11 @@ def plot_structure_stats_tcl(
     Returns:
         NamedTuple of outputs (described in `PlotStructureStatsTclOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PLOT_STRUCTURE_STATS_TCL_METADATA)
     params = plot_structure_stats_tcl_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return plot_structure_stats_tcl_execute(params, execution)
+    return plot_structure_stats_tcl_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "PlotStructureStatsTclOutputs",
     "PlotStructureStatsTclParameters",
     "plot_structure_stats_tcl",
-    "plot_structure_stats_tcl_cargs",
     "plot_structure_stats_tcl_execute",
-    "plot_structure_stats_tcl_outputs",
     "plot_structure_stats_tcl_params",
 ]

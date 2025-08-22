@@ -173,7 +173,7 @@ def extract_seg_waveform_outputs(
 
 def extract_seg_waveform_execute(
     params: ExtractSegWaveformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ExtractSegWaveformOutputs:
     """
     This program extracts an average waveform from an input volume where the average
@@ -188,10 +188,12 @@ def extract_seg_waveform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ExtractSegWaveformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EXTRACT_SEG_WAVEFORM_METADATA)
     params = execution.params(params)
     cargs = extract_seg_waveform_cargs(params, execution)
     ret = extract_seg_waveform_outputs(params, execution)
@@ -234,8 +236,6 @@ def extract_seg_waveform(
     Returns:
         NamedTuple of outputs (described in `ExtractSegWaveformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EXTRACT_SEG_WAVEFORM_METADATA)
     params = extract_seg_waveform_params(
         seg_file=seg_file,
         seg_indices=seg_indices,
@@ -246,7 +246,7 @@ def extract_seg_waveform(
         demean_flag=demean_flag,
         output_file=output_file,
     )
-    return extract_seg_waveform_execute(params, execution)
+    return extract_seg_waveform_execute(params, runner)
 
 
 __all__ = [
@@ -254,8 +254,6 @@ __all__ = [
     "ExtractSegWaveformOutputs",
     "ExtractSegWaveformParameters",
     "extract_seg_waveform",
-    "extract_seg_waveform_cargs",
     "extract_seg_waveform_execute",
-    "extract_seg_waveform_outputs",
     "extract_seg_waveform_params",
 ]

@@ -156,7 +156,7 @@ def convert_xfm_outputs(
 
 def convert_xfm_execute(
     params: ConvertXfmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertXfmOutputs:
     """
     convert_xfm is a utility that is used to convert between different
@@ -170,10 +170,12 @@ def convert_xfm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertXfmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_XFM_METADATA)
     params = execution.params(params)
     cargs = convert_xfm_cargs(params, execution)
     ret = convert_xfm_outputs(params, execution)
@@ -209,8 +211,6 @@ def convert_xfm(
     Returns:
         NamedTuple of outputs (described in `ConvertXfmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_XFM_METADATA)
     params = convert_xfm_params(
         out_file=out_file,
         invert_xfm=invert_xfm,
@@ -218,7 +218,7 @@ def convert_xfm(
         fix_scale_skew=fix_scale_skew,
         in_file=in_file,
     )
-    return convert_xfm_execute(params, execution)
+    return convert_xfm_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "ConvertXfmOutputs",
     "ConvertXfmParameters",
     "convert_xfm",
-    "convert_xfm_cargs",
     "convert_xfm_execute",
-    "convert_xfm_outputs",
     "convert_xfm_params",
 ]

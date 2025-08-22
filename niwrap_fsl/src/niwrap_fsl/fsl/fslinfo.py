@@ -116,7 +116,7 @@ def fslinfo_outputs(
 
 def fslinfo_execute(
     params: FslinfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslinfoOutputs:
     """
     Display information about NIFTI-1 image file.
@@ -127,10 +127,12 @@ def fslinfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslinfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLINFO_METADATA)
     params = execution.params(params)
     cargs = fslinfo_cargs(params, execution)
     ret = fslinfo_outputs(params, execution)
@@ -155,12 +157,10 @@ def fslinfo(
     Returns:
         NamedTuple of outputs (described in `FslinfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLINFO_METADATA)
     params = fslinfo_params(
         filename=filename,
     )
-    return fslinfo_execute(params, execution)
+    return fslinfo_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "FslinfoOutputs",
     "FslinfoParameters",
     "fslinfo",
-    "fslinfo_cargs",
     "fslinfo_execute",
-    "fslinfo_outputs",
     "fslinfo_params",
 ]

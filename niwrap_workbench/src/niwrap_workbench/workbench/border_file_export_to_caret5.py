@@ -174,7 +174,7 @@ def border_file_export_to_caret5_outputs(
 
 def border_file_export_to_caret5_execute(
     params: BorderFileExportToCaret5Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BorderFileExportToCaret5Outputs:
     """
     Export border file to caret5 file format.
@@ -210,10 +210,12 @@ def border_file_export_to_caret5_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderFileExportToCaret5Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BORDER_FILE_EXPORT_TO_CARET5_METADATA)
     params = execution.params(params)
     cargs = border_file_export_to_caret5_cargs(params, execution)
     ret = border_file_export_to_caret5_outputs(params, execution)
@@ -268,14 +270,12 @@ def border_file_export_to_caret5(
     Returns:
         NamedTuple of outputs (described in `BorderFileExportToCaret5Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BORDER_FILE_EXPORT_TO_CARET5_METADATA)
     params = border_file_export_to_caret5_params(
         border_file=border_file,
         output_file_prefix=output_file_prefix,
         surface=surface,
     )
-    return border_file_export_to_caret5_execute(params, execution)
+    return border_file_export_to_caret5_execute(params, runner)
 
 
 __all__ = [
@@ -284,10 +284,7 @@ __all__ = [
     "BorderFileExportToCaret5Parameters",
     "BorderFileExportToCaret5SurfaceParameters",
     "border_file_export_to_caret5",
-    "border_file_export_to_caret5_cargs",
     "border_file_export_to_caret5_execute",
-    "border_file_export_to_caret5_outputs",
     "border_file_export_to_caret5_params",
-    "border_file_export_to_caret5_surface_cargs",
     "border_file_export_to_caret5_surface_params",
 ]

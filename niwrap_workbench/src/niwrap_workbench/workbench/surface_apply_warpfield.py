@@ -142,7 +142,7 @@ def surface_apply_warpfield_outputs(
 
 def surface_apply_warpfield_execute(
     params: SurfaceApplyWarpfieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
     Apply warpfield to surface file.
@@ -161,10 +161,12 @@ def surface_apply_warpfield_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyWarpfieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_APPLY_WARPFIELD_METADATA)
     params = execution.params(params)
     cargs = surface_apply_warpfield_cargs(params, execution)
     ret = surface_apply_warpfield_outputs(params, execution)
@@ -204,15 +206,13 @@ def surface_apply_warpfield(
     Returns:
         NamedTuple of outputs (described in `SurfaceApplyWarpfieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_APPLY_WARPFIELD_METADATA)
     params = surface_apply_warpfield_params(
         in_surf=in_surf,
         warpfield=warpfield,
         out_surf=out_surf,
         opt_fnirt_forward_warp=opt_fnirt_forward_warp,
     )
-    return surface_apply_warpfield_execute(params, execution)
+    return surface_apply_warpfield_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "SurfaceApplyWarpfieldOutputs",
     "SurfaceApplyWarpfieldParameters",
     "surface_apply_warpfield",
-    "surface_apply_warpfield_cargs",
     "surface_apply_warpfield_execute",
-    "surface_apply_warpfield_outputs",
     "surface_apply_warpfield_params",
 ]

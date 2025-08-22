@@ -121,7 +121,7 @@ def tbss_x_outputs(
 
 def tbss_x_execute(
     params: TbssXParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TbssXOutputs:
     """
     TBSS cross-subject script for processing scalar and vector directories.
@@ -132,10 +132,12 @@ def tbss_x_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TbssXOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_X_METADATA)
     params = execution.params(params)
     cargs = tbss_x_cargs(params, execution)
     ret = tbss_x_outputs(params, execution)
@@ -162,13 +164,11 @@ def tbss_x(
     Returns:
         NamedTuple of outputs (described in `TbssXOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_X_METADATA)
     params = tbss_x_params(
         scalar_dirs=scalar_dirs,
         vector_dirs=vector_dirs,
     )
-    return tbss_x_execute(params, execution)
+    return tbss_x_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "TbssXOutputs",
     "TbssXParameters",
     "tbss_x",
-    "tbss_x_cargs",
     "tbss_x_execute",
-    "tbss_x_outputs",
     "tbss_x_params",
 ]

@@ -126,7 +126,7 @@ def mkima_index_tcl_outputs(
 
 def mkima_index_tcl_execute(
     params: MkimaIndexTclParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MkimaIndexTclOutputs:
     """
     A command-line tool for handling mkima index operations.
@@ -137,10 +137,12 @@ def mkima_index_tcl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MkimaIndexTclOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MKIMA_INDEX_TCL_METADATA)
     params = execution.params(params)
     cargs = mkima_index_tcl_cargs(params, execution)
     ret = mkima_index_tcl_outputs(params, execution)
@@ -167,13 +169,11 @@ def mkima_index_tcl(
     Returns:
         NamedTuple of outputs (described in `MkimaIndexTclOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MKIMA_INDEX_TCL_METADATA)
     params = mkima_index_tcl_params(
         input_file=input_file,
         output_flag=output_flag,
     )
-    return mkima_index_tcl_execute(params, execution)
+    return mkima_index_tcl_execute(params, runner)
 
 
 __all__ = [
@@ -181,8 +181,6 @@ __all__ = [
     "MkimaIndexTclOutputs",
     "MkimaIndexTclParameters",
     "mkima_index_tcl",
-    "mkima_index_tcl_cargs",
     "mkima_index_tcl_execute",
-    "mkima_index_tcl_outputs",
     "mkima_index_tcl_params",
 ]

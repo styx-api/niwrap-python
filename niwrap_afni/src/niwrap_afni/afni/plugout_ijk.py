@@ -206,7 +206,7 @@ def plugout_ijk_outputs(
 
 def plugout_ijk_execute(
     params: PlugoutIjkParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PlugoutIjkOutputs:
     """
     Connects to AFNI and sends (i,j,k) dataset indices to control the viewpoint.
@@ -217,10 +217,12 @@ def plugout_ijk_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PlugoutIjkOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PLUGOUT_IJK_METADATA)
     params = execution.params(params)
     cargs = plugout_ijk_cargs(params, execution)
     ret = plugout_ijk_outputs(params, execution)
@@ -270,8 +272,6 @@ def plugout_ijk(
     Returns:
         NamedTuple of outputs (described in `PlugoutIjkOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PLUGOUT_IJK_METADATA)
     params = plugout_ijk_params(
         host=host,
         verbose=verbose,
@@ -285,7 +285,7 @@ def plugout_ijk(
         num_assigned_ports=num_assigned_ports,
         num_assigned_ports_quiet=num_assigned_ports_quiet,
     )
-    return plugout_ijk_execute(params, execution)
+    return plugout_ijk_execute(params, runner)
 
 
 __all__ = [
@@ -293,8 +293,6 @@ __all__ = [
     "PlugoutIjkOutputs",
     "PlugoutIjkParameters",
     "plugout_ijk",
-    "plugout_ijk_cargs",
     "plugout_ijk_execute",
-    "plugout_ijk_outputs",
     "plugout_ijk_params",
 ]

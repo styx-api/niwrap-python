@@ -167,7 +167,7 @@ def v_3d_afnito_nifti_outputs(
 
 def v_3d_afnito_nifti_execute(
     params: V3dAfnitoNiftiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAfnitoNiftiOutputs:
     """
     Converts an AFNI dataset to a NIfTI-1.1 file.
@@ -178,10 +178,12 @@ def v_3d_afnito_nifti_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoNiftiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AFNITO_NIFTI_METADATA)
     params = execution.params(params)
     cargs = v_3d_afnito_nifti_cargs(params, execution)
     ret = v_3d_afnito_nifti_outputs(params, execution)
@@ -221,8 +223,6 @@ def v_3d_afnito_nifti(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoNiftiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AFNITO_NIFTI_METADATA)
     params = v_3d_afnito_nifti_params(
         input_dataset=input_dataset,
         prefix=prefix,
@@ -233,7 +233,7 @@ def v_3d_afnito_nifti(
         oldid=oldid,
         newid=newid,
     )
-    return v_3d_afnito_nifti_execute(params, execution)
+    return v_3d_afnito_nifti_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "V3dAfnitoNiftiParameters",
     "V_3D_AFNITO_NIFTI_METADATA",
     "v_3d_afnito_nifti",
-    "v_3d_afnito_nifti_cargs",
     "v_3d_afnito_nifti_execute",
-    "v_3d_afnito_nifti_outputs",
     "v_3d_afnito_nifti_params",
 ]

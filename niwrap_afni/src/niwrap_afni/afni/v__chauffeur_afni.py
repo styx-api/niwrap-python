@@ -275,7 +275,7 @@ def v__chauffeur_afni_outputs(
 
 def v__chauffeur_afni_execute(
     params: VChauffeurAfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VChauffeurAfniOutputs:
     """
     Automated QC snapshots generator in AFNI.
@@ -286,10 +286,12 @@ def v__chauffeur_afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VChauffeurAfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__CHAUFFEUR_AFNI_METADATA)
     params = execution.params(params)
     cargs = v__chauffeur_afni_cargs(params, execution)
     ret = v__chauffeur_afni_outputs(params, execution)
@@ -352,8 +354,6 @@ def v__chauffeur_afni(
     Returns:
         NamedTuple of outputs (described in `VChauffeurAfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__CHAUFFEUR_AFNI_METADATA)
     params = v__chauffeur_afni_params(
         ulay=ulay,
         olay=olay,
@@ -374,7 +374,7 @@ def v__chauffeur_afni(
         help_=help_,
         version=version,
     )
-    return v__chauffeur_afni_execute(params, execution)
+    return v__chauffeur_afni_execute(params, runner)
 
 
 __all__ = [
@@ -382,8 +382,6 @@ __all__ = [
     "VChauffeurAfniParameters",
     "V__CHAUFFEUR_AFNI_METADATA",
     "v__chauffeur_afni",
-    "v__chauffeur_afni_cargs",
     "v__chauffeur_afni_execute",
-    "v__chauffeur_afni_outputs",
     "v__chauffeur_afni_params",
 ]

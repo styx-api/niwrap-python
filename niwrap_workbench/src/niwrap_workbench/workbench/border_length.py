@@ -147,7 +147,7 @@ def border_length_outputs(
 
 def border_length_execute(
     params: BorderLengthParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BorderLengthOutputs:
     """
     Report length of borders.
@@ -166,10 +166,12 @@ def border_length_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderLengthOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BORDER_LENGTH_METADATA)
     params = execution.params(params)
     cargs = border_length_cargs(params, execution)
     ret = border_length_outputs(params, execution)
@@ -213,8 +215,6 @@ def border_length(
     Returns:
         NamedTuple of outputs (described in `BorderLengthOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BORDER_LENGTH_METADATA)
     params = border_length_params(
         border=border,
         surface=surface,
@@ -222,7 +222,7 @@ def border_length(
         opt_separate_pieces=opt_separate_pieces,
         opt_hide_border_name=opt_hide_border_name,
     )
-    return border_length_execute(params, execution)
+    return border_length_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "BorderLengthOutputs",
     "BorderLengthParameters",
     "border_length",
-    "border_length_cargs",
     "border_length_execute",
-    "border_length_outputs",
     "border_length_params",
 ]

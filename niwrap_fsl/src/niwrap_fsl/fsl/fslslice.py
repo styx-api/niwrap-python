@@ -127,7 +127,7 @@ def fslslice_outputs(
 
 def fslslice_execute(
     params: FslsliceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslsliceOutputs:
     """
     Tool to extract all slices from a 3D volume and store as 2D images.
@@ -138,10 +138,12 @@ def fslslice_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslsliceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSLICE_METADATA)
     params = execution.params(params)
     cargs = fslslice_cargs(params, execution)
     ret = fslslice_outputs(params, execution)
@@ -168,13 +170,11 @@ def fslslice(
     Returns:
         NamedTuple of outputs (described in `FslsliceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSLICE_METADATA)
     params = fslslice_params(
         volume=volume,
         output_basename=output_basename,
     )
-    return fslslice_execute(params, execution)
+    return fslslice_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "FslsliceOutputs",
     "FslsliceParameters",
     "fslslice",
-    "fslslice_cargs",
     "fslslice_execute",
-    "fslslice_outputs",
     "fslslice_params",
 ]

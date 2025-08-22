@@ -271,7 +271,7 @@ def annot2std_outputs(
 
 def annot2std_execute(
     params: Annot2stdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Annot2stdOutputs:
     """
     Creates an average annotation in a standard space based on transforming the
@@ -284,10 +284,12 @@ def annot2std_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Annot2stdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANNOT2STD_METADATA)
     params = execution.params(params)
     cargs = annot2std_cargs(params, execution)
     ret = annot2std_outputs(params, execution)
@@ -350,8 +352,6 @@ def annot2std(
     Returns:
         NamedTuple of outputs (described in `Annot2stdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANNOT2STD_METADATA)
     params = annot2std_params(
         output_annot_path=output_annot_path,
         subjects=subjects,
@@ -372,7 +372,7 @@ def annot2std(
         help_=help_,
         version=version,
     )
-    return annot2std_execute(params, execution)
+    return annot2std_execute(params, runner)
 
 
 __all__ = [
@@ -380,8 +380,6 @@ __all__ = [
     "Annot2stdOutputs",
     "Annot2stdParameters",
     "annot2std",
-    "annot2std_cargs",
     "annot2std_execute",
-    "annot2std_outputs",
     "annot2std_params",
 ]

@@ -134,7 +134,7 @@ def v__find_afni_dset_path_outputs(
 
 def v__find_afni_dset_path_execute(
     params: VFindAfniDsetPathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VFindAfniDsetPathOutputs:
     """
     Searches various AFNI directories for a specified dataset and returns its path.
@@ -145,10 +145,12 @@ def v__find_afni_dset_path_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VFindAfniDsetPathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__FIND_AFNI_DSET_PATH_METADATA)
     params = execution.params(params)
     cargs = v__find_afni_dset_path_cargs(params, execution)
     ret = v__find_afni_dset_path_outputs(params, execution)
@@ -179,15 +181,13 @@ def v__find_afni_dset_path(
     Returns:
         NamedTuple of outputs (described in `VFindAfniDsetPathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__FIND_AFNI_DSET_PATH_METADATA)
     params = v__find_afni_dset_path_params(
         dsetname=dsetname,
         append_file=append_file,
         full_path=full_path,
         help_=help_,
     )
-    return v__find_afni_dset_path_execute(params, execution)
+    return v__find_afni_dset_path_execute(params, runner)
 
 
 __all__ = [
@@ -195,8 +195,6 @@ __all__ = [
     "VFindAfniDsetPathParameters",
     "V__FIND_AFNI_DSET_PATH_METADATA",
     "v__find_afni_dset_path",
-    "v__find_afni_dset_path_cargs",
     "v__find_afni_dset_path_execute",
-    "v__find_afni_dset_path_outputs",
     "v__find_afni_dset_path_params",
 ]

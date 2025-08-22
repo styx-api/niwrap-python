@@ -177,7 +177,7 @@ def v__roi_decluster_outputs(
 
 def v__roi_decluster_execute(
     params: VRoiDeclusterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VRoiDeclusterOutputs:
     """
     Script to remove small clusters or standalone voxels from an ROI/atlas dataset.
@@ -188,10 +188,12 @@ def v__roi_decluster_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VRoiDeclusterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ROI_DECLUSTER_METADATA)
     params = execution.params(params)
     cargs = v__roi_decluster_cargs(params, execution)
     ret = v__roi_decluster_outputs(params, execution)
@@ -230,8 +232,6 @@ def v__roi_decluster(
     Returns:
         NamedTuple of outputs (described in `VRoiDeclusterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ROI_DECLUSTER_METADATA)
     params = v__roi_decluster_params(
         input_dset=input_dset,
         output_dir=output_dir,
@@ -240,7 +240,7 @@ def v__roi_decluster(
         prefix=prefix,
         neighborhood_type=neighborhood_type,
     )
-    return v__roi_decluster_execute(params, execution)
+    return v__roi_decluster_execute(params, runner)
 
 
 __all__ = [
@@ -248,8 +248,6 @@ __all__ = [
     "VRoiDeclusterParameters",
     "V__ROI_DECLUSTER_METADATA",
     "v__roi_decluster",
-    "v__roi_decluster_cargs",
     "v__roi_decluster_execute",
-    "v__roi_decluster_outputs",
     "v__roi_decluster_params",
 ]

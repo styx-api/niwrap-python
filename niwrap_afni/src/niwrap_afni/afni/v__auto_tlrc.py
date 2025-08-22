@@ -444,7 +444,7 @@ def v__auto_tlrc_outputs(
 
 def v__auto_tlrc_execute(
     params: VAutoTlrcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAutoTlrcOutputs:
     """
     A script to transform an anatomical dataset to align with some standard space
@@ -457,10 +457,12 @@ def v__auto_tlrc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAutoTlrcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AUTO_TLRC_METADATA)
     params = execution.params(params)
     cargs = v__auto_tlrc_cargs(params, execution)
     ret = v__auto_tlrc_outputs(params, execution)
@@ -587,8 +589,6 @@ def v__auto_tlrc(
     Returns:
         NamedTuple of outputs (described in `VAutoTlrcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AUTO_TLRC_METADATA)
     params = v__auto_tlrc_params(
         base_template=base_template,
         input_anat=input_anat,
@@ -630,7 +630,7 @@ def v__auto_tlrc(
         use_gz=use_gz,
         verb=verb,
     )
-    return v__auto_tlrc_execute(params, execution)
+    return v__auto_tlrc_execute(params, runner)
 
 
 __all__ = [
@@ -638,8 +638,6 @@ __all__ = [
     "VAutoTlrcParameters",
     "V__AUTO_TLRC_METADATA",
     "v__auto_tlrc",
-    "v__auto_tlrc_cargs",
     "v__auto_tlrc_execute",
-    "v__auto_tlrc_outputs",
     "v__auto_tlrc_params",
 ]

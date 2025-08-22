@@ -117,7 +117,7 @@ def ms_refine_subject_outputs(
 
 def ms_refine_subject_execute(
     params: MsRefineSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MsRefineSubjectOutputs:
     """
     Unknown.
@@ -128,10 +128,12 @@ def ms_refine_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MsRefineSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MS_REFINE_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = ms_refine_subject_cargs(params, execution)
     ret = ms_refine_subject_outputs(params, execution)
@@ -157,12 +159,10 @@ def ms_refine_subject(
     Returns:
         NamedTuple of outputs (described in `MsRefineSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MS_REFINE_SUBJECT_METADATA)
     params = ms_refine_subject_params(
         subjects_dir=subjects_dir,
     )
-    return ms_refine_subject_execute(params, execution)
+    return ms_refine_subject_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "MsRefineSubjectOutputs",
     "MsRefineSubjectParameters",
     "ms_refine_subject",
-    "ms_refine_subject_cargs",
     "ms_refine_subject_execute",
-    "ms_refine_subject_outputs",
     "ms_refine_subject_params",
 ]

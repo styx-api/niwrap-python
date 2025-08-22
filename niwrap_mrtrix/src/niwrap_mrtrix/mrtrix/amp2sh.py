@@ -471,7 +471,7 @@ def amp2sh_outputs(
 
 def amp2sh_execute(
     params: Amp2shParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Amp2shOutputs:
     """
     Convert a set of amplitudes (defined along a set of corresponding directions) to
@@ -502,10 +502,12 @@ def amp2sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Amp2shOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AMP2SH_METADATA)
     params = execution.params(params)
     cargs = amp2sh_cargs(params, execution)
     ret = amp2sh_outputs(params, execution)
@@ -614,8 +616,6 @@ def amp2sh(
     Returns:
         NamedTuple of outputs (described in `Amp2shOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AMP2SH_METADATA)
     params = amp2sh_params(
         lmax=lmax,
         normalise=normalise,
@@ -636,7 +636,7 @@ def amp2sh(
         amp=amp,
         sh=sh,
     )
-    return amp2sh_execute(params, execution)
+    return amp2sh_execute(params, runner)
 
 
 __all__ = [
@@ -648,16 +648,10 @@ __all__ = [
     "Amp2shVariousFileParameters",
     "Amp2shVariousStringParameters",
     "amp2sh",
-    "amp2sh_cargs",
-    "amp2sh_config_cargs",
     "amp2sh_config_params",
     "amp2sh_execute",
-    "amp2sh_fslgrad_cargs",
     "amp2sh_fslgrad_params",
-    "amp2sh_outputs",
     "amp2sh_params",
-    "amp2sh_various_file_cargs",
     "amp2sh_various_file_params",
-    "amp2sh_various_string_cargs",
     "amp2sh_various_string_params",
 ]

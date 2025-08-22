@@ -207,7 +207,7 @@ def featquery_outputs(
 
 def featquery_execute(
     params: FeatqueryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FeatqueryOutputs:
     """
     Tool to extract statistics and/or time series from FEAT directories.
@@ -218,10 +218,12 @@ def featquery_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FeatqueryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FEATQUERY_METADATA)
     params = execution.params(params)
     cargs = featquery_cargs(params, execution)
     ret = featquery_outputs(params, execution)
@@ -274,8 +276,6 @@ def featquery(
     Returns:
         NamedTuple of outputs (described in `FeatqueryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FEATQUERY_METADATA)
     params = featquery_params(
         n_featdirs=n_featdirs,
         featdirs=featdirs,
@@ -292,7 +292,7 @@ def featquery(
         mask_file=mask_file,
         coords=coords,
     )
-    return featquery_execute(params, execution)
+    return featquery_execute(params, runner)
 
 
 __all__ = [
@@ -300,8 +300,6 @@ __all__ = [
     "FeatqueryOutputs",
     "FeatqueryParameters",
     "featquery",
-    "featquery_cargs",
     "featquery_execute",
-    "featquery_outputs",
     "featquery_params",
 ]

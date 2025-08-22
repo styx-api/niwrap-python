@@ -180,7 +180,7 @@ def v_3d_anhist_outputs(
 
 def v_3d_anhist_execute(
     params: V3dAnhistParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAnhistOutputs:
     """
     Tool to analyze histogram peaks in a T1-weighted high-res brain image dataset.
@@ -191,10 +191,12 @@ def v_3d_anhist_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAnhistOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ANHIST_METADATA)
     params = execution.params(params)
     cargs = v_3d_anhist_cargs(params, execution)
     ret = v_3d_anhist_outputs(params, execution)
@@ -236,8 +238,6 @@ def v_3d_anhist(
     Returns:
         NamedTuple of outputs (described in `V3dAnhistOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ANHIST_METADATA)
     params = v_3d_anhist_params(
         dataset=dataset,
         quiet=quiet,
@@ -248,7 +248,7 @@ def v_3d_anhist(
         label=label,
         filename=filename,
     )
-    return v_3d_anhist_execute(params, execution)
+    return v_3d_anhist_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "V3dAnhistParameters",
     "V_3D_ANHIST_METADATA",
     "v_3d_anhist",
-    "v_3d_anhist_cargs",
     "v_3d_anhist_execute",
-    "v_3d_anhist_outputs",
     "v_3d_anhist_params",
 ]

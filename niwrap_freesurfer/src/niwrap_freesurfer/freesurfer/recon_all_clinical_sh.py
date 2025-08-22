@@ -134,7 +134,7 @@ def recon_all_clinical_sh_outputs(
 
 def recon_all_clinical_sh_execute(
     params: ReconAllClinicalShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReconAllClinicalShOutputs:
     """
     Recon-all-like stream for processing clinical brain MRI scans of arbitrary
@@ -146,10 +146,12 @@ def recon_all_clinical_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReconAllClinicalShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RECON_ALL_CLINICAL_SH_METADATA)
     params = execution.params(params)
     cargs = recon_all_clinical_sh_cargs(params, execution)
     ret = recon_all_clinical_sh_outputs(params, execution)
@@ -182,15 +184,13 @@ def recon_all_clinical_sh(
     Returns:
         NamedTuple of outputs (described in `ReconAllClinicalShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RECON_ALL_CLINICAL_SH_METADATA)
     params = recon_all_clinical_sh_params(
         input_scan=input_scan,
         subject_id=subject_id,
         threads=threads,
         subject_dir=subject_dir,
     )
-    return recon_all_clinical_sh_execute(params, execution)
+    return recon_all_clinical_sh_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "ReconAllClinicalShOutputs",
     "ReconAllClinicalShParameters",
     "recon_all_clinical_sh",
-    "recon_all_clinical_sh_cargs",
     "recon_all_clinical_sh_execute",
-    "recon_all_clinical_sh_outputs",
     "recon_all_clinical_sh_params",
 ]

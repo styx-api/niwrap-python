@@ -255,7 +255,7 @@ def v__measure_bb_thick_outputs(
 
 def v__measure_bb_thick_execute(
     params: VMeasureBbThickParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VMeasureBbThickOutputs:
     """
     Compute thickness of mask using ball and box method.
@@ -266,10 +266,12 @@ def v__measure_bb_thick_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VMeasureBbThickOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__MEASURE_BB_THICK_METADATA)
     params = execution.params(params)
     cargs = v__measure_bb_thick_cargs(params, execution)
     ret = v__measure_bb_thick_outputs(params, execution)
@@ -324,8 +326,6 @@ def v__measure_bb_thick(
     Returns:
         NamedTuple of outputs (described in `VMeasureBbThickOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__MEASURE_BB_THICK_METADATA)
     params = v__measure_bb_thick_params(
         maskset=maskset,
         surfset=surfset,
@@ -340,7 +340,7 @@ def v__measure_bb_thick(
         balls_only=balls_only,
         surfsmooth_method=surfsmooth_method,
     )
-    return v__measure_bb_thick_execute(params, execution)
+    return v__measure_bb_thick_execute(params, runner)
 
 
 __all__ = [
@@ -348,8 +348,6 @@ __all__ = [
     "VMeasureBbThickParameters",
     "V__MEASURE_BB_THICK_METADATA",
     "v__measure_bb_thick",
-    "v__measure_bb_thick_cargs",
     "v__measure_bb_thick_execute",
-    "v__measure_bb_thick_outputs",
     "v__measure_bb_thick_params",
 ]

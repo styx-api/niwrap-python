@@ -275,7 +275,7 @@ def surf_smooth_outputs(
 
 def surf_smooth_execute(
     params: SurfSmoothParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfSmoothOutputs:
     """
     Tool for smoothing data on surfaces using various methods.
@@ -286,10 +286,12 @@ def surf_smooth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfSmoothOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_SMOOTH_METADATA)
     params = execution.params(params)
     cargs = surf_smooth_cargs(params, execution)
     ret = surf_smooth_outputs(params, execution)
@@ -356,8 +358,6 @@ def surf_smooth(
     Returns:
         NamedTuple of outputs (described in `SurfSmoothOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_SMOOTH_METADATA)
     params = surf_smooth_params(
         surface=surface,
         method=method,
@@ -376,7 +376,7 @@ def surf_smooth(
         talk_suma=talk_suma,
         refresh_rate=refresh_rate,
     )
-    return surf_smooth_execute(params, execution)
+    return surf_smooth_execute(params, runner)
 
 
 __all__ = [
@@ -384,8 +384,6 @@ __all__ = [
     "SurfSmoothOutputs",
     "SurfSmoothParameters",
     "surf_smooth",
-    "surf_smooth_cargs",
     "surf_smooth_execute",
-    "surf_smooth_outputs",
     "surf_smooth_params",
 ]

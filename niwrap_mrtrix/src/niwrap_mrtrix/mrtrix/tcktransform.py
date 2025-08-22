@@ -236,7 +236,7 @@ def tcktransform_outputs(
 
 def tcktransform_execute(
     params: TcktransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TcktransformOutputs:
     """
     Apply a spatial transformation to a tracks file.
@@ -253,10 +253,12 @@ def tcktransform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TcktransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKTRANSFORM_METADATA)
     params = execution.params(params)
     cargs = tcktransform_cargs(params, execution)
     ret = tcktransform_outputs(params, execution)
@@ -311,8 +313,6 @@ def tcktransform(
     Returns:
         NamedTuple of outputs (described in `TcktransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKTRANSFORM_METADATA)
     params = tcktransform_params(
         info=info,
         quiet=quiet,
@@ -326,7 +326,7 @@ def tcktransform(
         transform=transform,
         output=output,
     )
-    return tcktransform_execute(params, execution)
+    return tcktransform_execute(params, runner)
 
 
 __all__ = [
@@ -335,10 +335,7 @@ __all__ = [
     "TcktransformOutputs",
     "TcktransformParameters",
     "tcktransform",
-    "tcktransform_cargs",
-    "tcktransform_config_cargs",
     "tcktransform_config_params",
     "tcktransform_execute",
-    "tcktransform_outputs",
     "tcktransform_params",
 ]

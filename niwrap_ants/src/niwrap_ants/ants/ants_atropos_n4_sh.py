@@ -430,7 +430,7 @@ def ants_atropos_n4_sh_outputs(
 
 def ants_atropos_n4_sh_execute(
     params: AntsAtroposN4ShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsAtroposN4ShOutputs:
     """
     antsAtroposN4.sh iterates between N4 <-> Atropos to improve segmentation
@@ -442,10 +442,12 @@ def ants_atropos_n4_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsAtroposN4ShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_ATROPOS_N4_SH_METADATA)
     params = execution.params(params)
     cargs = ants_atropos_n4_sh_cargs(params, execution)
     ret = ants_atropos_n4_sh_outputs(params, execution)
@@ -553,8 +555,6 @@ def ants_atropos_n4_sh(
     Returns:
         NamedTuple of outputs (described in `AntsAtroposN4ShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_ATROPOS_N4_SH_METADATA)
     params = ants_atropos_n4_sh_params(
         image_dimension=image_dimension,
         input_image=input_image,
@@ -580,7 +580,7 @@ def ants_atropos_n4_sh(
         atropos_segmentation_use_euclidean_distance=atropos_segmentation_use_euclidean_distance,
         test_debug_mode=test_debug_mode,
     )
-    return ants_atropos_n4_sh_execute(params, execution)
+    return ants_atropos_n4_sh_execute(params, runner)
 
 
 __all__ = [
@@ -589,10 +589,7 @@ __all__ = [
     "AntsAtroposN4ShParameters",
     "AntsAtroposN4ShSegmentationPriorsParameters",
     "ants_atropos_n4_sh",
-    "ants_atropos_n4_sh_cargs",
     "ants_atropos_n4_sh_execute",
-    "ants_atropos_n4_sh_outputs",
     "ants_atropos_n4_sh_params",
-    "ants_atropos_n4_sh_segmentation_priors_cargs",
     "ants_atropos_n4_sh_segmentation_priors_params",
 ]

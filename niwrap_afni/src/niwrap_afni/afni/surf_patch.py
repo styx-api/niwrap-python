@@ -283,7 +283,7 @@ def surf_patch_outputs(
 
 def surf_patch_execute(
     params: SurfPatchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfPatchOutputs:
     """
     Creates a patch of surface formed by nodes in a nodefile and optionally
@@ -295,10 +295,12 @@ def surf_patch_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfPatchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_PATCH_METADATA)
     params = execution.params(params)
     cargs = surf_patch_cargs(params, execution)
     ret = surf_patch_outputs(params, execution)
@@ -375,8 +377,6 @@ def surf_patch(
     Returns:
         NamedTuple of outputs (described in `SurfPatchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_PATCH_METADATA)
     params = surf_patch_params(
         spec_file=spec_file,
         surf_a=surf_a,
@@ -400,7 +400,7 @@ def surf_patch(
         flip_orientation=flip_orientation,
         verbosity=verbosity,
     )
-    return surf_patch_execute(params, execution)
+    return surf_patch_execute(params, runner)
 
 
 __all__ = [
@@ -408,8 +408,6 @@ __all__ = [
     "SurfPatchOutputs",
     "SurfPatchParameters",
     "surf_patch",
-    "surf_patch_cargs",
     "surf_patch_execute",
-    "surf_patch_outputs",
     "surf_patch_params",
 ]

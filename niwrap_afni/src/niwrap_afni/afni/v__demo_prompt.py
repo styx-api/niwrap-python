@@ -120,7 +120,7 @@ def v__demo_prompt_outputs(
 
 def v__demo_prompt_execute(
     params: VDemoPromptParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDemoPromptOutputs:
     """
     Prompts user with a message and waits for acknowledgment.
@@ -131,10 +131,12 @@ def v__demo_prompt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDemoPromptOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DEMO_PROMPT_METADATA)
     params = execution.params(params)
     cargs = v__demo_prompt_cargs(params, execution)
     ret = v__demo_prompt_outputs(params, execution)
@@ -159,12 +161,10 @@ def v__demo_prompt(
     Returns:
         NamedTuple of outputs (described in `VDemoPromptOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DEMO_PROMPT_METADATA)
     params = v__demo_prompt_params(
         message=message,
     )
-    return v__demo_prompt_execute(params, execution)
+    return v__demo_prompt_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "VDemoPromptParameters",
     "V__DEMO_PROMPT_METADATA",
     "v__demo_prompt",
-    "v__demo_prompt_cargs",
     "v__demo_prompt_execute",
-    "v__demo_prompt_outputs",
     "v__demo_prompt_params",
 ]

@@ -154,7 +154,7 @@ def suma_change_spec_outputs(
 
 def suma_change_spec_execute(
     params: SumaChangeSpecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SumaChangeSpecOutputs:
     """
     This program changes SUMA's surface specification (Spec) files.
@@ -165,10 +165,12 @@ def suma_change_spec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SumaChangeSpecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SUMA_CHANGE_SPEC_METADATA)
     params = execution.params(params)
     cargs = suma_change_spec_cargs(params, execution)
     ret = suma_change_spec_outputs(params, execution)
@@ -203,8 +205,6 @@ def suma_change_spec(
     Returns:
         NamedTuple of outputs (described in `SumaChangeSpecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SUMA_CHANGE_SPEC_METADATA)
     params = suma_change_spec_params(
         input_=input_,
         state=state,
@@ -213,7 +213,7 @@ def suma_change_spec(
         remove=remove,
         anatomical=anatomical,
     )
-    return suma_change_spec_execute(params, execution)
+    return suma_change_spec_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "SumaChangeSpecOutputs",
     "SumaChangeSpecParameters",
     "suma_change_spec",
-    "suma_change_spec_cargs",
     "suma_change_spec_execute",
-    "suma_change_spec_outputs",
     "suma_change_spec_params",
 ]

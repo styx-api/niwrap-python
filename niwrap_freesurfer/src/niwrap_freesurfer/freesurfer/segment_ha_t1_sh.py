@@ -151,7 +151,7 @@ def segment_ha_t1_sh_outputs(
 
 def segment_ha_t1_sh_execute(
     params: SegmentHaT1ShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentHaT1ShOutputs:
     """
     Tool for hippocampal/amygdalar subfield segmentation.
@@ -162,10 +162,12 @@ def segment_ha_t1_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentHaT1ShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_HA_T1_SH_METADATA)
     params = execution.params(params)
     cargs = segment_ha_t1_sh_cargs(params, execution)
     ret = segment_ha_t1_sh_outputs(params, execution)
@@ -199,8 +201,6 @@ def segment_ha_t1_sh(
     Returns:
         NamedTuple of outputs (described in `SegmentHaT1ShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_HA_T1_SH_METADATA)
     params = segment_ha_t1_sh_params(
         input_image=input_image,
         output_directory=output_directory,
@@ -208,7 +208,7 @@ def segment_ha_t1_sh(
         verbose=verbose,
         debug=debug,
     )
-    return segment_ha_t1_sh_execute(params, execution)
+    return segment_ha_t1_sh_execute(params, runner)
 
 
 __all__ = [
@@ -216,8 +216,6 @@ __all__ = [
     "SegmentHaT1ShOutputs",
     "SegmentHaT1ShParameters",
     "segment_ha_t1_sh",
-    "segment_ha_t1_sh_cargs",
     "segment_ha_t1_sh_execute",
-    "segment_ha_t1_sh_outputs",
     "segment_ha_t1_sh_params",
 ]

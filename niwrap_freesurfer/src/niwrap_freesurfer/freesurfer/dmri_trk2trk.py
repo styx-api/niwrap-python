@@ -367,7 +367,7 @@ def dmri_trk2trk_outputs(
 
 def dmri_trk2trk_execute(
     params: DmriTrk2trkParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriTrk2trkOutputs:
     """
     A tool for transforming and analyzing tractography data.
@@ -378,10 +378,12 @@ def dmri_trk2trk_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriTrk2trkOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_TRK2TRK_METADATA)
     params = execution.params(params)
     cargs = dmri_trk2trk_cargs(params, execution)
     ret = dmri_trk2trk_outputs(params, execution)
@@ -464,8 +466,6 @@ def dmri_trk2trk(
     Returns:
         NamedTuple of outputs (described in `DmriTrk2trkOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_TRK2TRK_METADATA)
     params = dmri_trk2trk_params(
         in_trk=in_trk,
         in_asc=in_asc,
@@ -495,7 +495,7 @@ def dmri_trk2trk(
         debug_flag=debug_flag,
         check_opts=check_opts,
     )
-    return dmri_trk2trk_execute(params, execution)
+    return dmri_trk2trk_execute(params, runner)
 
 
 __all__ = [
@@ -503,8 +503,6 @@ __all__ = [
     "DmriTrk2trkOutputs",
     "DmriTrk2trkParameters",
     "dmri_trk2trk",
-    "dmri_trk2trk_cargs",
     "dmri_trk2trk_execute",
-    "dmri_trk2trk_outputs",
     "dmri_trk2trk_params",
 ]

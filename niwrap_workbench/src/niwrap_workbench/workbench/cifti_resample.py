@@ -1093,7 +1093,7 @@ def cifti_resample_outputs(
 
 def cifti_resample_execute(
     params: CiftiResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiResampleOutputs:
     """
     Resample a cifti file to a new cifti space.
@@ -1137,10 +1137,12 @@ def cifti_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = cifti_resample_cargs(params, execution)
     ret = cifti_resample_outputs(params, execution)
@@ -1229,8 +1231,6 @@ def cifti_resample(
     Returns:
         NamedTuple of outputs (described in `CiftiResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_RESAMPLE_METADATA)
     params = cifti_resample_params(
         cifti_in=cifti_in,
         direction=direction,
@@ -1248,7 +1248,7 @@ def cifti_resample(
         right_spheres=right_spheres,
         cerebellum_spheres=cerebellum_spheres,
     )
-    return cifti_resample_execute(params, execution)
+    return cifti_resample_execute(params, runner)
 
 
 __all__ = [
@@ -1272,40 +1272,22 @@ __all__ = [
     "CiftiResampleWeighted1Parameters",
     "CiftiResampleWeightedParameters",
     "cifti_resample",
-    "cifti_resample_affine_cargs",
     "cifti_resample_affine_params",
-    "cifti_resample_cargs",
-    "cifti_resample_cerebellum_area_metrics_cargs",
     "cifti_resample_cerebellum_area_metrics_params",
-    "cifti_resample_cerebellum_area_surfs_cargs",
     "cifti_resample_cerebellum_area_surfs_params",
-    "cifti_resample_cerebellum_spheres_cargs",
     "cifti_resample_cerebellum_spheres_params",
     "cifti_resample_execute",
-    "cifti_resample_flirt_cargs",
     "cifti_resample_flirt_params",
-    "cifti_resample_left_area_metrics_cargs",
     "cifti_resample_left_area_metrics_params",
-    "cifti_resample_left_area_surfs_cargs",
     "cifti_resample_left_area_surfs_params",
-    "cifti_resample_left_spheres_cargs",
     "cifti_resample_left_spheres_params",
-    "cifti_resample_outputs",
     "cifti_resample_params",
-    "cifti_resample_right_area_metrics_cargs",
     "cifti_resample_right_area_metrics_params",
-    "cifti_resample_right_area_surfs_cargs",
     "cifti_resample_right_area_surfs_params",
-    "cifti_resample_right_spheres_cargs",
     "cifti_resample_right_spheres_params",
-    "cifti_resample_surface_postdilate_cargs",
     "cifti_resample_surface_postdilate_params",
-    "cifti_resample_volume_predilate_cargs",
     "cifti_resample_volume_predilate_params",
-    "cifti_resample_warpfield_cargs",
     "cifti_resample_warpfield_params",
-    "cifti_resample_weighted_1_cargs",
     "cifti_resample_weighted_1_params",
-    "cifti_resample_weighted_cargs",
     "cifti_resample_weighted_params",
 ]

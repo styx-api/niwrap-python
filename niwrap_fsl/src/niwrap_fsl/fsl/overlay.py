@@ -192,7 +192,7 @@ def overlay_outputs(
 
 def overlay_execute(
     params: OverlayParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> OverlayOutputs:
     """
     Use FSL's overlay command to combine background and statistical images into one
@@ -204,10 +204,12 @@ def overlay_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `OverlayOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(OVERLAY_METADATA)
     params = execution.params(params)
     cargs = overlay_cargs(params, execution)
     ret = overlay_outputs(params, execution)
@@ -259,8 +261,6 @@ def overlay(
     Returns:
         NamedTuple of outputs (described in `OverlayOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(OVERLAY_METADATA)
     params = overlay_params(
         auto_thresh_bg=auto_thresh_bg,
         background_image=background_image,
@@ -275,7 +275,7 @@ def overlay(
         stat_thresh2=stat_thresh2,
         use_checkerboard=use_checkerboard,
     )
-    return overlay_execute(params, execution)
+    return overlay_execute(params, runner)
 
 
 __all__ = [
@@ -283,8 +283,6 @@ __all__ = [
     "OverlayOutputs",
     "OverlayParameters",
     "overlay",
-    "overlay_cargs",
     "overlay_execute",
-    "overlay_outputs",
     "overlay_params",
 ]

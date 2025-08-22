@@ -127,7 +127,7 @@ def add_to_spec_file_outputs(
 
 def add_to_spec_file_execute(
     params: AddToSpecFileParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AddToSpecFileOutputs:
     """
     Add a file to a specification file.
@@ -177,10 +177,12 @@ def add_to_spec_file_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AddToSpecFileOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADD_TO_SPEC_FILE_METADATA)
     params = execution.params(params)
     cargs = add_to_spec_file_cargs(params, execution)
     ret = add_to_spec_file_outputs(params, execution)
@@ -248,14 +250,12 @@ def add_to_spec_file(
     Returns:
         NamedTuple of outputs (described in `AddToSpecFileOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADD_TO_SPEC_FILE_METADATA)
     params = add_to_spec_file_params(
         specfile=specfile,
         structure=structure,
         filename=filename,
     )
-    return add_to_spec_file_execute(params, execution)
+    return add_to_spec_file_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "AddToSpecFileOutputs",
     "AddToSpecFileParameters",
     "add_to_spec_file",
-    "add_to_spec_file_cargs",
     "add_to_spec_file_execute",
-    "add_to_spec_file_outputs",
     "add_to_spec_file_params",
 ]

@@ -125,7 +125,7 @@ def irepifitvol_outputs(
 
 def irepifitvol_execute(
     params: IrepifitvolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IrepifitvolOutputs:
     """
     A tool for 3D volume fitting.
@@ -136,10 +136,12 @@ def irepifitvol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IrepifitvolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IREPIFITVOL_METADATA)
     params = execution.params(params)
     cargs = irepifitvol_cargs(params, execution)
     ret = irepifitvol_outputs(params, execution)
@@ -166,13 +168,11 @@ def irepifitvol(
     Returns:
         NamedTuple of outputs (described in `IrepifitvolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IREPIFITVOL_METADATA)
     params = irepifitvol_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return irepifitvol_execute(params, execution)
+    return irepifitvol_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "IrepifitvolOutputs",
     "IrepifitvolParameters",
     "irepifitvol",
-    "irepifitvol_cargs",
     "irepifitvol_execute",
-    "irepifitvol_outputs",
     "irepifitvol_params",
 ]

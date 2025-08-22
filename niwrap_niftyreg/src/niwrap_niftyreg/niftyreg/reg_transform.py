@@ -391,7 +391,7 @@ def reg_transform_outputs(
 
 def reg_transform_execute(
     params: RegTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegTransformOutputs:
     """
     Tool for performing various transformation operations on medical images
@@ -404,10 +404,12 @@ def reg_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = reg_transform_cargs(params, execution)
     ret = reg_transform_outputs(params, execution)
@@ -504,8 +506,6 @@ def reg_transform(
     Returns:
         NamedTuple of outputs (described in `RegTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_TRANSFORM_METADATA)
     params = reg_transform_params(
         reference_image=reference_image,
         cpp2def_input=cpp2def_input,
@@ -536,7 +536,7 @@ def reg_transform(
         comp_aff_2nd=comp_aff_2nd,
         comp_aff_output=comp_aff_output,
     )
-    return reg_transform_execute(params, execution)
+    return reg_transform_execute(params, runner)
 
 
 __all__ = [
@@ -544,8 +544,6 @@ __all__ = [
     "RegTransformOutputs",
     "RegTransformParameters",
     "reg_transform",
-    "reg_transform_cargs",
     "reg_transform_execute",
-    "reg_transform_outputs",
     "reg_transform_params",
 ]

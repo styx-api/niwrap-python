@@ -153,7 +153,7 @@ def resample_image_outputs(
 
 def resample_image_execute(
     params: ResampleImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ResampleImageOutputs:
     """
     ResampleImage is a tool used to resample images to specified sizes and spacings,
@@ -165,10 +165,12 @@ def resample_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ResampleImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RESAMPLE_IMAGE_METADATA)
     params = execution.params(params)
     cargs = resample_image_cargs(params, execution)
     ret = resample_image_outputs(params, execution)
@@ -208,8 +210,6 @@ def resample_image(
     Returns:
         NamedTuple of outputs (described in `ResampleImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RESAMPLE_IMAGE_METADATA)
     params = resample_image_params(
         image_dimension=image_dimension,
         input_image=input_image,
@@ -218,7 +218,7 @@ def resample_image(
         interpolate_type=interpolate_type,
         pixeltype=pixeltype,
     )
-    return resample_image_execute(params, execution)
+    return resample_image_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "ResampleImageOutputs",
     "ResampleImageParameters",
     "resample_image",
-    "resample_image_cargs",
     "resample_image_execute",
-    "resample_image_outputs",
     "resample_image_params",
 ]

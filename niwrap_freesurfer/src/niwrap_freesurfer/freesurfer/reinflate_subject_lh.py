@@ -123,7 +123,7 @@ def reinflate_subject_lh_outputs(
 
 def reinflate_subject_lh_execute(
     params: ReinflateSubjectLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReinflateSubjectLhOutputs:
     """
     Utility to reinflate cortical surfaces for left hemisphere in FreeSurfer.
@@ -134,10 +134,12 @@ def reinflate_subject_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReinflateSubjectLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REINFLATE_SUBJECT_LH_METADATA)
     params = execution.params(params)
     cargs = reinflate_subject_lh_cargs(params, execution)
     ret = reinflate_subject_lh_outputs(params, execution)
@@ -162,12 +164,10 @@ def reinflate_subject_lh(
     Returns:
         NamedTuple of outputs (described in `ReinflateSubjectLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REINFLATE_SUBJECT_LH_METADATA)
     params = reinflate_subject_lh_params(
         subject_id=subject_id,
     )
-    return reinflate_subject_lh_execute(params, execution)
+    return reinflate_subject_lh_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "ReinflateSubjectLhOutputs",
     "ReinflateSubjectLhParameters",
     "reinflate_subject_lh",
-    "reinflate_subject_lh_cargs",
     "reinflate_subject_lh_execute",
-    "reinflate_subject_lh_outputs",
     "reinflate_subject_lh_params",
 ]

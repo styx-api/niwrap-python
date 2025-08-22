@@ -157,7 +157,7 @@ def split_parts_gpu_outputs(
 
 def split_parts_gpu_execute(
     params: SplitPartsGpuParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SplitPartsGpuOutputs:
     """
     Splits parts of data for GPU processing.
@@ -168,10 +168,12 @@ def split_parts_gpu_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SplitPartsGpuOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPLIT_PARTS_GPU_METADATA)
     params = execution.params(params)
     cargs = split_parts_gpu_cargs(params, execution)
     ret = split_parts_gpu_outputs(params, execution)
@@ -210,8 +212,6 @@ def split_parts_gpu(
     Returns:
         NamedTuple of outputs (described in `SplitPartsGpuOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPLIT_PARTS_GPU_METADATA)
     params = split_parts_gpu_params(
         datafile=datafile,
         maskfile=maskfile,
@@ -222,7 +222,7 @@ def split_parts_gpu(
         total_num_parts=total_num_parts,
         output_directory=output_directory,
     )
-    return split_parts_gpu_execute(params, execution)
+    return split_parts_gpu_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "SplitPartsGpuOutputs",
     "SplitPartsGpuParameters",
     "split_parts_gpu",
-    "split_parts_gpu_cargs",
     "split_parts_gpu_execute",
-    "split_parts_gpu_outputs",
     "split_parts_gpu_params",
 ]

@@ -160,7 +160,7 @@ def mri_synthsr_hyperfine_outputs(
 
 def mri_synthsr_hyperfine_execute(
     params: MriSynthsrHyperfineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSynthsrHyperfineOutputs:
     """
     Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a pair of
@@ -172,10 +172,12 @@ def mri_synthsr_hyperfine_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSynthsrHyperfineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SYNTHSR_HYPERFINE_METADATA)
     params = execution.params(params)
     cargs = mri_synthsr_hyperfine_cargs(params, execution)
     ret = mri_synthsr_hyperfine_outputs(params, execution)
@@ -214,8 +216,6 @@ def mri_synthsr_hyperfine(
     Returns:
         NamedTuple of outputs (described in `MriSynthsrHyperfineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SYNTHSR_HYPERFINE_METADATA)
     params = mri_synthsr_hyperfine_params(
         t1_image=t1_image,
         t2_image=t2_image,
@@ -223,7 +223,7 @@ def mri_synthsr_hyperfine(
         threads=threads,
         cpu=cpu,
     )
-    return mri_synthsr_hyperfine_execute(params, execution)
+    return mri_synthsr_hyperfine_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "MriSynthsrHyperfineOutputs",
     "MriSynthsrHyperfineParameters",
     "mri_synthsr_hyperfine",
-    "mri_synthsr_hyperfine_cargs",
     "mri_synthsr_hyperfine_execute",
-    "mri_synthsr_hyperfine_outputs",
     "mri_synthsr_hyperfine_params",
 ]

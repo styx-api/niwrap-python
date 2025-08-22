@@ -145,7 +145,7 @@ def v_1d_marry_outputs(
 
 def v_1d_marry_execute(
     params: V1dMarryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dMarryOutputs:
     """
     Joins together 2 (or more) ragged-right .1D files, for use with 3dDeconvolve
@@ -158,10 +158,12 @@ def v_1d_marry_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dMarryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_MARRY_METADATA)
     params = execution.params(params)
     cargs = v_1d_marry_cargs(params, execution)
     ret = v_1d_marry_outputs(params, execution)
@@ -194,14 +196,12 @@ def v_1d_marry(
     Returns:
         NamedTuple of outputs (described in `V1dMarryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_MARRY_METADATA)
     params = v_1d_marry_params(
         sep=sep,
         divorce=divorce,
         files=files,
     )
-    return v_1d_marry_execute(params, execution)
+    return v_1d_marry_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "V1dMarryParameters",
     "V_1D_MARRY_METADATA",
     "v_1d_marry",
-    "v_1d_marry_cargs",
     "v_1d_marry_execute",
-    "v_1d_marry_outputs",
     "v_1d_marry_params",
 ]

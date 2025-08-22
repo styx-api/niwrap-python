@@ -239,7 +239,7 @@ def v_3dpc_outputs(
 
 def v_3dpc_execute(
     params: V3dpcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dpcOutputs:
     """
     Principal Component Analysis of 3D Datasets.
@@ -250,10 +250,12 @@ def v_3dpc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dpcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DPC_METADATA)
     params = execution.params(params)
     cargs = v_3dpc_cargs(params, execution)
     ret = v_3dpc_outputs(params, execution)
@@ -309,8 +311,6 @@ def v_3dpc(
     Returns:
         NamedTuple of outputs (described in `V3dpcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DPC_METADATA)
     params = v_3dpc_params(
         datasets=datasets,
         dmean=dmean,
@@ -328,7 +328,7 @@ def v_3dpc(
         float_=float_,
         mask=mask,
     )
-    return v_3dpc_execute(params, execution)
+    return v_3dpc_execute(params, runner)
 
 
 __all__ = [
@@ -336,8 +336,6 @@ __all__ = [
     "V3dpcParameters",
     "V_3DPC_METADATA",
     "v_3dpc",
-    "v_3dpc_cargs",
     "v_3dpc_execute",
-    "v_3dpc_outputs",
     "v_3dpc_params",
 ]

@@ -272,7 +272,7 @@ def metric_regression_outputs(
 
 def metric_regression_execute(
     params: MetricRegressionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricRegressionOutputs:
     """
     Regress spatial map out of a metric file.
@@ -289,10 +289,12 @@ def metric_regression_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRegressionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_REGRESSION_METADATA)
     params = execution.params(params)
     cargs = metric_regression_cargs(params, execution)
     ret = metric_regression_outputs(params, execution)
@@ -335,8 +337,6 @@ def metric_regression(
     Returns:
         NamedTuple of outputs (described in `MetricRegressionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_REGRESSION_METADATA)
     params = metric_regression_params(
         metric_in=metric_in,
         metric_out=metric_out,
@@ -345,7 +345,7 @@ def metric_regression(
         remove=remove,
         keep=keep,
     )
-    return metric_regression_execute(params, execution)
+    return metric_regression_execute(params, runner)
 
 
 __all__ = [
@@ -355,12 +355,8 @@ __all__ = [
     "MetricRegressionParameters",
     "MetricRegressionRemoveParameters",
     "metric_regression",
-    "metric_regression_cargs",
     "metric_regression_execute",
-    "metric_regression_keep_cargs",
     "metric_regression_keep_params",
-    "metric_regression_outputs",
     "metric_regression_params",
-    "metric_regression_remove_cargs",
     "metric_regression_remove_params",
 ]

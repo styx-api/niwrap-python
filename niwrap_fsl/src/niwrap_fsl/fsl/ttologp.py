@@ -146,7 +146,7 @@ def ttologp_outputs(
 
 def ttologp_execute(
     params: TtologpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TtologpOutputs:
     """
     Tool for computing logp.
@@ -157,10 +157,12 @@ def ttologp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TtologpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TTOLOGP_METADATA)
     params = execution.params(params)
     cargs = ttologp_cargs(params, execution)
     ret = ttologp_outputs(params, execution)
@@ -193,8 +195,6 @@ def ttologp(
     Returns:
         NamedTuple of outputs (described in `TtologpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TTOLOGP_METADATA)
     params = ttologp_params(
         varsfile=varsfile,
         cbsfile=cbsfile,
@@ -202,7 +202,7 @@ def ttologp(
         outputvol=outputvol,
         help_flag=help_flag,
     )
-    return ttologp_execute(params, execution)
+    return ttologp_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "TtologpOutputs",
     "TtologpParameters",
     "ttologp",
-    "ttologp_cargs",
     "ttologp_execute",
-    "ttologp_outputs",
     "ttologp_params",
 ]

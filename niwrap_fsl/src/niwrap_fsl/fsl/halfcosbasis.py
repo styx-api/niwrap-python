@@ -262,7 +262,7 @@ def halfcosbasis_outputs(
 
 def halfcosbasis_execute(
     params: HalfcosbasisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HalfcosbasisOutputs:
     """
     Tool for handling half-cosine basis functions in FSL.
@@ -273,10 +273,12 @@ def halfcosbasis_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HalfcosbasisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HALFCOSBASIS_METADATA)
     params = execution.params(params)
     cargs = halfcosbasis_cargs(params, execution)
     ret = halfcosbasis_outputs(params, execution)
@@ -334,8 +336,6 @@ def halfcosbasis(
     Returns:
         NamedTuple of outputs (described in `HalfcosbasisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HALFCOSBASIS_METADATA)
     params = halfcosbasis_params(
         hrf_param_file=hrf_param_file,
         hrf_param_file_hf=hrf_param_file_hf,
@@ -355,7 +355,7 @@ def halfcosbasis(
         help_flag=help_flag,
         help_flag_long=help_flag_long,
     )
-    return halfcosbasis_execute(params, execution)
+    return halfcosbasis_execute(params, runner)
 
 
 __all__ = [
@@ -363,8 +363,6 @@ __all__ = [
     "HalfcosbasisOutputs",
     "HalfcosbasisParameters",
     "halfcosbasis",
-    "halfcosbasis_cargs",
     "halfcosbasis_execute",
-    "halfcosbasis_outputs",
     "halfcosbasis_params",
 ]

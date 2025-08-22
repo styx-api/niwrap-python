@@ -187,7 +187,7 @@ def v_3d_blur_to_fwhm_outputs(
 
 def v_3d_blur_to_fwhm_execute(
     params: V3dBlurToFwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dBlurToFwhmOutputs:
     """
     Blurs a 'master' dataset until it reaches a specified FWHM smoothness
@@ -199,10 +199,12 @@ def v_3d_blur_to_fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dBlurToFwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_BLUR_TO_FWHM_METADATA)
     params = execution.params(params)
     cargs = v_3d_blur_to_fwhm_cargs(params, execution)
     ret = v_3d_blur_to_fwhm_outputs(params, execution)
@@ -243,8 +245,6 @@ def v_3d_blur_to_fwhm(
     Returns:
         NamedTuple of outputs (described in `V3dBlurToFwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_BLUR_TO_FWHM_METADATA)
     params = v_3d_blur_to_fwhm_params(
         automask=automask,
         blurmaster=blurmaster,
@@ -255,7 +255,7 @@ def v_3d_blur_to_fwhm(
         outputtype=outputtype,
         prefix=prefix,
     )
-    return v_3d_blur_to_fwhm_execute(params, execution)
+    return v_3d_blur_to_fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "V3dBlurToFwhmParameters",
     "V_3D_BLUR_TO_FWHM_METADATA",
     "v_3d_blur_to_fwhm",
-    "v_3d_blur_to_fwhm_cargs",
     "v_3d_blur_to_fwhm_execute",
-    "v_3d_blur_to_fwhm_outputs",
     "v_3d_blur_to_fwhm_params",
 ]

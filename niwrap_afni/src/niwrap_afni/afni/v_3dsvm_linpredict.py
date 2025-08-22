@@ -138,7 +138,7 @@ def v_3dsvm_linpredict_outputs(
 
 def v_3dsvm_linpredict_execute(
     params: V3dsvmLinpredictParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dsvmLinpredictOutputs:
     """
     Linear prediction for weights from 3dsvm.
@@ -149,10 +149,12 @@ def v_3dsvm_linpredict_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dsvmLinpredictOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DSVM_LINPREDICT_METADATA)
     params = execution.params(params)
     cargs = v_3dsvm_linpredict_cargs(params, execution)
     ret = v_3dsvm_linpredict_outputs(params, execution)
@@ -184,14 +186,12 @@ def v_3dsvm_linpredict(
     Returns:
         NamedTuple of outputs (described in `V3dsvmLinpredictOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DSVM_LINPREDICT_METADATA)
     params = v_3dsvm_linpredict_params(
         mask_dataset=mask_dataset,
         weight_vector=weight_vector,
         input_dataset=input_dataset,
     )
-    return v_3dsvm_linpredict_execute(params, execution)
+    return v_3dsvm_linpredict_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "V3dsvmLinpredictParameters",
     "V_3DSVM_LINPREDICT_METADATA",
     "v_3dsvm_linpredict",
-    "v_3dsvm_linpredict_cargs",
     "v_3dsvm_linpredict_execute",
-    "v_3dsvm_linpredict_outputs",
     "v_3dsvm_linpredict_params",
 ]

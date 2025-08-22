@@ -138,7 +138,7 @@ def mri_mc_outputs(
 
 def mri_mc_execute(
     params: MriMcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMcOutputs:
     """
     Extract a surface from a label volume using Marching Cubes algorithm.
@@ -149,10 +149,12 @@ def mri_mc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MC_METADATA)
     params = execution.params(params)
     cargs = mri_mc_cargs(params, execution)
     ret = mri_mc_outputs(params, execution)
@@ -185,15 +187,13 @@ def mri_mc(
     Returns:
         NamedTuple of outputs (described in `MriMcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MC_METADATA)
     params = mri_mc_params(
         input_volume=input_volume,
         label_value=label_value,
         output_surface=output_surface,
         connectivity=connectivity,
     )
-    return mri_mc_execute(params, execution)
+    return mri_mc_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "MriMcOutputs",
     "MriMcParameters",
     "mri_mc",
-    "mri_mc_cargs",
     "mri_mc_execute",
-    "mri_mc_outputs",
     "mri_mc_params",
 ]

@@ -122,7 +122,7 @@ def pngappend_outputs(
 
 def pngappend_execute(
     params: PngappendParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PngappendOutputs:
     """
     Append PNG files horizontally and/or vertically into a new PNG (or GIF) file.
@@ -133,10 +133,12 @@ def pngappend_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PngappendOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PNGAPPEND_METADATA)
     params = execution.params(params)
     cargs = pngappend_cargs(params, execution)
     ret = pngappend_outputs(params, execution)
@@ -164,13 +166,11 @@ def pngappend(
     Returns:
         NamedTuple of outputs (described in `PngappendOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PNGAPPEND_METADATA)
     params = pngappend_params(
         input_files_and_options=input_files_and_options,
         output_file=output_file,
     )
-    return pngappend_execute(params, execution)
+    return pngappend_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "PngappendOutputs",
     "PngappendParameters",
     "pngappend",
-    "pngappend_cargs",
     "pngappend_execute",
-    "pngappend_outputs",
     "pngappend_params",
 ]

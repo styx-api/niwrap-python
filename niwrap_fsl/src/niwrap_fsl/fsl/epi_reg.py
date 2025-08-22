@@ -239,7 +239,7 @@ def epi_reg_outputs(
 
 def epi_reg_execute(
     params: EpiRegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EpiRegOutputs:
     """
     Runs FSL epi_reg script for simultaneous coregistration and fieldmap unwarping.
@@ -250,10 +250,12 @@ def epi_reg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EpiRegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EPI_REG_METADATA)
     params = execution.params(params)
     cargs = epi_reg_cargs(params, execution)
     ret = epi_reg_outputs(params, execution)
@@ -306,8 +308,6 @@ def epi_reg(
     Returns:
         NamedTuple of outputs (described in `EpiRegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EPI_REG_METADATA)
     params = epi_reg_params(
         epi=epi,
         t1_head=t1_head,
@@ -323,7 +323,7 @@ def epi_reg(
         weight_image=weight_image,
         wmseg=wmseg,
     )
-    return epi_reg_execute(params, execution)
+    return epi_reg_execute(params, runner)
 
 
 __all__ = [
@@ -331,8 +331,6 @@ __all__ = [
     "EpiRegOutputs",
     "EpiRegParameters",
     "epi_reg",
-    "epi_reg_cargs",
     "epi_reg_execute",
-    "epi_reg_outputs",
     "epi_reg_params",
 ]

@@ -269,7 +269,7 @@ def surf_info_outputs(
 
 def surf_info_execute(
     params: SurfInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfInfoOutputs:
     """
     Tool to gather information about surface files.
@@ -280,10 +280,12 @@ def surf_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_INFO_METADATA)
     params = execution.params(params)
     cargs = surf_info_cargs(params, execution)
     ret = surf_info_outputs(params, execution)
@@ -349,8 +351,6 @@ def surf_info(
     Returns:
         NamedTuple of outputs (described in `SurfInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_INFO_METADATA)
     params = surf_info_params(
         surface=surface,
         com=com,
@@ -373,7 +373,7 @@ def surf_info(
         nomall=nomall,
         yesmall=yesmall,
     )
-    return surf_info_execute(params, execution)
+    return surf_info_execute(params, runner)
 
 
 __all__ = [
@@ -381,8 +381,6 @@ __all__ = [
     "SurfInfoOutputs",
     "SurfInfoParameters",
     "surf_info",
-    "surf_info_cargs",
     "surf_info_execute",
-    "surf_info_outputs",
     "surf_info_params",
 ]

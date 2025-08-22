@@ -160,7 +160,7 @@ def volume_parcel_smoothing_outputs(
 
 def volume_parcel_smoothing_execute(
     params: VolumeParcelSmoothingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeParcelSmoothingOutputs:
     """
     Smooth parcels in a volume separately.
@@ -176,10 +176,12 @@ def volume_parcel_smoothing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeParcelSmoothingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_PARCEL_SMOOTHING_METADATA)
     params = execution.params(params)
     cargs = volume_parcel_smoothing_cargs(params, execution)
     ret = volume_parcel_smoothing_outputs(params, execution)
@@ -223,8 +225,6 @@ def volume_parcel_smoothing(
     Returns:
         NamedTuple of outputs (described in `VolumeParcelSmoothingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_PARCEL_SMOOTHING_METADATA)
     params = volume_parcel_smoothing_params(
         data_volume=data_volume,
         label_volume=label_volume,
@@ -234,7 +234,7 @@ def volume_parcel_smoothing(
         opt_fix_zeros=opt_fix_zeros,
         opt_subvolume_subvol=opt_subvolume_subvol,
     )
-    return volume_parcel_smoothing_execute(params, execution)
+    return volume_parcel_smoothing_execute(params, runner)
 
 
 __all__ = [
@@ -242,8 +242,6 @@ __all__ = [
     "VolumeParcelSmoothingOutputs",
     "VolumeParcelSmoothingParameters",
     "volume_parcel_smoothing",
-    "volume_parcel_smoothing_cargs",
     "volume_parcel_smoothing_execute",
-    "volume_parcel_smoothing_outputs",
     "volume_parcel_smoothing_params",
 ]

@@ -212,7 +212,7 @@ def reg_resample_outputs(
 
 def reg_resample_execute(
     params: RegResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegResampleOutputs:
     """
     Tool for resampling floating images to the reference image space using different
@@ -224,10 +224,12 @@ def reg_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = reg_resample_cargs(params, execution)
     ret = reg_resample_outputs(params, execution)
@@ -277,8 +279,6 @@ def reg_resample(
     Returns:
         NamedTuple of outputs (described in `RegResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_RESAMPLE_METADATA)
     params = reg_resample_params(
         reference_image=reference_image,
         floating_image=floating_image,
@@ -291,7 +291,7 @@ def reg_resample(
         nearest_neighbor=nearest_neighbor,
         linear_interpolation=linear_interpolation,
     )
-    return reg_resample_execute(params, execution)
+    return reg_resample_execute(params, runner)
 
 
 __all__ = [
@@ -299,8 +299,6 @@ __all__ = [
     "RegResampleOutputs",
     "RegResampleParameters",
     "reg_resample",
-    "reg_resample_cargs",
     "reg_resample_execute",
-    "reg_resample_outputs",
     "reg_resample_params",
 ]

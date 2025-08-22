@@ -181,7 +181,7 @@ def vecwarp_outputs(
 
 def vecwarp_execute(
     params: VecwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VecwarpOutputs:
     """
     Transforms (warps) a list of 3-vectors into another list of 3-vectors according
@@ -193,10 +193,12 @@ def vecwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VecwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VECWARP_METADATA)
     params = execution.params(params)
     cargs = vecwarp_cargs(params, execution)
     ret = vecwarp_outputs(params, execution)
@@ -242,8 +244,6 @@ def vecwarp(
     Returns:
         NamedTuple of outputs (described in `VecwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VECWARP_METADATA)
     params = vecwarp_params(
         apar=apar,
         matvec=matvec,
@@ -253,7 +253,7 @@ def vecwarp(
         output=output,
         force=force,
     )
-    return vecwarp_execute(params, execution)
+    return vecwarp_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "VecwarpOutputs",
     "VecwarpParameters",
     "vecwarp",
-    "vecwarp_cargs",
     "vecwarp_execute",
-    "vecwarp_outputs",
     "vecwarp_params",
 ]

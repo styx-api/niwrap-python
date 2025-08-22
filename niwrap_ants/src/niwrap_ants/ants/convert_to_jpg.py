@@ -125,7 +125,7 @@ def convert_to_jpg_outputs(
 
 def convert_to_jpg_execute(
     params: ConvertToJpgParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertToJpgOutputs:
     """
     A tool to convert NIfTI images to JPG format.
@@ -136,10 +136,12 @@ def convert_to_jpg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertToJpgOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_TO_JPG_METADATA)
     params = execution.params(params)
     cargs = convert_to_jpg_cargs(params, execution)
     ret = convert_to_jpg_outputs(params, execution)
@@ -166,13 +168,11 @@ def convert_to_jpg(
     Returns:
         NamedTuple of outputs (described in `ConvertToJpgOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_TO_JPG_METADATA)
     params = convert_to_jpg_params(
         infile=infile,
         outfile=outfile,
     )
-    return convert_to_jpg_execute(params, execution)
+    return convert_to_jpg_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "ConvertToJpgOutputs",
     "ConvertToJpgParameters",
     "convert_to_jpg",
-    "convert_to_jpg_cargs",
     "convert_to_jpg_execute",
-    "convert_to_jpg_outputs",
     "convert_to_jpg_params",
 ]

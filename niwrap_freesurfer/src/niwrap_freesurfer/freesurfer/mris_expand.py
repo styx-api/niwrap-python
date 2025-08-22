@@ -168,7 +168,7 @@ def mris_expand_outputs(
 
 def mris_expand_execute(
     params: MrisExpandParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisExpandOutputs:
     """
     Expand a given surface by a specified distance.
@@ -179,10 +179,12 @@ def mris_expand_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisExpandOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_EXPAND_METADATA)
     params = execution.params(params)
     cargs = mris_expand_cargs(params, execution)
     ret = mris_expand_outputs(params, execution)
@@ -221,8 +223,6 @@ def mris_expand(
     Returns:
         NamedTuple of outputs (described in `MrisExpandOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_EXPAND_METADATA)
     params = mris_expand_params(
         input_surface=input_surface,
         expansion_distance=expansion_distance,
@@ -232,7 +232,7 @@ def mris_expand(
         tmap=tmap,
         tmap_random=tmap_random,
     )
-    return mris_expand_execute(params, execution)
+    return mris_expand_execute(params, runner)
 
 
 __all__ = [
@@ -240,8 +240,6 @@ __all__ = [
     "MrisExpandOutputs",
     "MrisExpandParameters",
     "mris_expand",
-    "mris_expand_cargs",
     "mris_expand_execute",
-    "mris_expand_outputs",
     "mris_expand_params",
 ]

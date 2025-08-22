@@ -214,7 +214,7 @@ def v_3d_multi_thresh_outputs(
 
 def v_3d_multi_thresh_execute(
     params: V3dMultiThreshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMultiThreshOutputs:
     """
     Program to apply a multi-threshold (mthresh) dataset to an input dataset.
@@ -225,10 +225,12 @@ def v_3d_multi_thresh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMultiThreshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MULTI_THRESH_METADATA)
     params = execution.params(params)
     cargs = v_3d_multi_thresh_cargs(params, execution)
     ret = v_3d_multi_thresh_outputs(params, execution)
@@ -279,8 +281,6 @@ def v_3d_multi_thresh(
     Returns:
         NamedTuple of outputs (described in `V3dMultiThreshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MULTI_THRESH_METADATA)
     params = v_3d_multi_thresh_params(
         mthresh_file=mthresh_file,
         input_file=input_file,
@@ -294,7 +294,7 @@ def v_3d_multi_thresh(
         no_zero_flag=no_zero_flag,
         quiet_flag=quiet_flag,
     )
-    return v_3d_multi_thresh_execute(params, execution)
+    return v_3d_multi_thresh_execute(params, runner)
 
 
 __all__ = [
@@ -302,8 +302,6 @@ __all__ = [
     "V3dMultiThreshParameters",
     "V_3D_MULTI_THRESH_METADATA",
     "v_3d_multi_thresh",
-    "v_3d_multi_thresh_cargs",
     "v_3d_multi_thresh_execute",
-    "v_3d_multi_thresh_outputs",
     "v_3d_multi_thresh_params",
 ]

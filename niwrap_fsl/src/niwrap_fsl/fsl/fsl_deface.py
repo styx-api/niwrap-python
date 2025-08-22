@@ -255,7 +255,7 @@ def fsl_deface_outputs(
 
 def fsl_deface_execute(
     params: FslDefaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslDefaceOutputs:
     """
     Tool to deface a structural T1w image.
@@ -266,10 +266,12 @@ def fsl_deface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslDefaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_DEFACE_METADATA)
     params = execution.params(params)
     cargs = fsl_deface_cargs(params, execution)
     ret = fsl_deface_outputs(params, execution)
@@ -325,8 +327,6 @@ def fsl_deface(
     Returns:
         NamedTuple of outputs (described in `FslDefaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_DEFACE_METADATA)
     params = fsl_deface_params(
         infile=infile,
         outfile=outfile,
@@ -342,7 +342,7 @@ def fsl_deface(
         center_of_gravity=center_of_gravity,
         qc_images=qc_images,
     )
-    return fsl_deface_execute(params, execution)
+    return fsl_deface_execute(params, runner)
 
 
 __all__ = [
@@ -350,8 +350,6 @@ __all__ = [
     "FslDefaceOutputs",
     "FslDefaceParameters",
     "fsl_deface",
-    "fsl_deface_cargs",
     "fsl_deface_execute",
-    "fsl_deface_outputs",
     "fsl_deface_params",
 ]

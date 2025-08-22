@@ -136,7 +136,7 @@ def cifti_reorder_outputs(
 
 def cifti_reorder_execute(
     params: CiftiReorderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiReorderOutputs:
     """
     Reorder the parcels or scalar/label maps in a cifti file.
@@ -156,10 +156,12 @@ def cifti_reorder_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiReorderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_REORDER_METADATA)
     params = execution.params(params)
     cargs = cifti_reorder_cargs(params, execution)
     ret = cifti_reorder_outputs(params, execution)
@@ -199,15 +201,13 @@ def cifti_reorder(
     Returns:
         NamedTuple of outputs (described in `CiftiReorderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_REORDER_METADATA)
     params = cifti_reorder_params(
         cifti_in=cifti_in,
         direction=direction,
         reorder_list=reorder_list,
         cifti_out=cifti_out,
     )
-    return cifti_reorder_execute(params, execution)
+    return cifti_reorder_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "CiftiReorderOutputs",
     "CiftiReorderParameters",
     "cifti_reorder",
-    "cifti_reorder_cargs",
     "cifti_reorder_execute",
-    "cifti_reorder_outputs",
     "cifti_reorder_params",
 ]

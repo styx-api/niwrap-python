@@ -194,7 +194,7 @@ def quickspec_sl_outputs(
 
 def quickspec_sl_execute(
     params: QuickspecSlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QuickspecSlOutputs:
     """
     This program makes a *.spec file after a set of intermediate surfaces have been
@@ -207,10 +207,12 @@ def quickspec_sl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QuickspecSlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QUICKSPEC_SL_METADATA)
     params = execution.params(params)
     cargs = quickspec_sl_cargs(params, execution)
     ret = quickspec_sl_outputs(params, execution)
@@ -258,8 +260,6 @@ def quickspec_sl(
     Returns:
         NamedTuple of outputs (described in `QuickspecSlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QUICKSPEC_SL_METADATA)
     params = quickspec_sl_params(
         surf_a=surf_a,
         surf_b=surf_b,
@@ -270,7 +270,7 @@ def quickspec_sl(
         both_lr_flag=both_lr_flag,
         out_spec=out_spec,
     )
-    return quickspec_sl_execute(params, execution)
+    return quickspec_sl_execute(params, runner)
 
 
 __all__ = [
@@ -278,8 +278,6 @@ __all__ = [
     "QuickspecSlOutputs",
     "QuickspecSlParameters",
     "quickspec_sl",
-    "quickspec_sl_cargs",
     "quickspec_sl_execute",
-    "quickspec_sl_outputs",
     "quickspec_sl_params",
 ]

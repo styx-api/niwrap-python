@@ -1138,7 +1138,7 @@ def dwi2response_outputs(
 
 def dwi2response_execute(
     params: Dwi2responseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dwi2responseOutputs:
     """
     Estimate response function(s) for spherical deconvolution.
@@ -1156,10 +1156,12 @@ def dwi2response_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dwi2responseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWI2RESPONSE_METADATA)
     params = execution.params(params)
     cargs = dwi2response_cargs(params, execution)
     ret = dwi2response_outputs(params, execution)
@@ -1239,8 +1241,6 @@ def dwi2response(
     Returns:
         NamedTuple of outputs (described in `Dwi2responseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWI2RESPONSE_METADATA)
     params = dwi2response_params(
         algorithm=algorithm,
         grad=grad,
@@ -1261,7 +1261,7 @@ def dwi2response(
         help_=help_,
         version=version,
     )
-    return dwi2response_execute(params, execution)
+    return dwi2response_execute(params, runner)
 
 
 __all__ = [
@@ -1283,30 +1283,14 @@ __all__ = [
     "Dwi2responseTournierOutputs",
     "Dwi2responseTournierParameters",
     "dwi2response",
-    "dwi2response_cargs",
-    "dwi2response_config_cargs",
     "dwi2response_config_params",
-    "dwi2response_dhollander_cargs",
-    "dwi2response_dhollander_outputs",
     "dwi2response_dhollander_params",
     "dwi2response_execute",
-    "dwi2response_fa_cargs",
-    "dwi2response_fa_outputs",
     "dwi2response_fa_params",
-    "dwi2response_fslgrad_cargs",
     "dwi2response_fslgrad_params",
-    "dwi2response_manual_cargs",
-    "dwi2response_manual_outputs",
     "dwi2response_manual_params",
-    "dwi2response_msmt_5tt_cargs",
-    "dwi2response_msmt_5tt_outputs",
     "dwi2response_msmt_5tt_params",
-    "dwi2response_outputs",
     "dwi2response_params",
-    "dwi2response_tax_cargs",
-    "dwi2response_tax_outputs",
     "dwi2response_tax_params",
-    "dwi2response_tournier_cargs",
-    "dwi2response_tournier_outputs",
     "dwi2response_tournier_params",
 ]

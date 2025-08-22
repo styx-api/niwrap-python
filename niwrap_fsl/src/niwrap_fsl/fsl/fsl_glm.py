@@ -374,7 +374,7 @@ def fsl_glm_outputs(
 
 def fsl_glm_execute(
     params: FslGlmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslGlmOutputs:
     """
     Simple GLM allowing temporal or spatial regression on either text data or
@@ -386,10 +386,12 @@ def fsl_glm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslGlmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_GLM_METADATA)
     params = execution.params(params)
     cargs = fsl_glm_cargs(params, execution)
     ret = fsl_glm_outputs(params, execution)
@@ -470,8 +472,6 @@ def fsl_glm(
     Returns:
         NamedTuple of outputs (described in `FslGlmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_GLM_METADATA)
     params = fsl_glm_params(
         input_file=input_file,
         design_matrix=design_matrix,
@@ -498,7 +498,7 @@ def fsl_glm(
         vx_images=vx_images,
         help_flag=help_flag,
     )
-    return fsl_glm_execute(params, execution)
+    return fsl_glm_execute(params, runner)
 
 
 __all__ = [
@@ -506,8 +506,6 @@ __all__ = [
     "FslGlmOutputs",
     "FslGlmParameters",
     "fsl_glm",
-    "fsl_glm_cargs",
     "fsl_glm_execute",
-    "fsl_glm_outputs",
     "fsl_glm_params",
 ]

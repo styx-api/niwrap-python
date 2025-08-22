@@ -294,7 +294,7 @@ def v__radial_correlate_outputs(
 
 def v__radial_correlate_execute(
     params: VRadialCorrelateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VRadialCorrelateOutputs:
     """
     Check datasets for correlation artifacts.
@@ -305,10 +305,12 @@ def v__radial_correlate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VRadialCorrelateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__RADIAL_CORRELATE_METADATA)
     params = execution.params(params)
     cargs = v__radial_correlate_cargs(params, execution)
     ret = v__radial_correlate_outputs(params, execution)
@@ -371,8 +373,6 @@ def v__radial_correlate(
     Returns:
         NamedTuple of outputs (described in `VRadialCorrelateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__RADIAL_CORRELATE_METADATA)
     params = v__radial_correlate_params(
         input_files=input_files,
         results_dir=results_dir,
@@ -395,7 +395,7 @@ def v__radial_correlate(
         polort=polort,
         merge_frad=merge_frad,
     )
-    return v__radial_correlate_execute(params, execution)
+    return v__radial_correlate_execute(params, runner)
 
 
 __all__ = [
@@ -403,8 +403,6 @@ __all__ = [
     "VRadialCorrelateParameters",
     "V__RADIAL_CORRELATE_METADATA",
     "v__radial_correlate",
-    "v__radial_correlate_cargs",
     "v__radial_correlate_execute",
-    "v__radial_correlate_outputs",
     "v__radial_correlate_params",
 ]

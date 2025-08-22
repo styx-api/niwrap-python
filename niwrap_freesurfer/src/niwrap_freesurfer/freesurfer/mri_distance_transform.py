@@ -143,7 +143,7 @@ def mri_distance_transform_outputs(
 
 def mri_distance_transform_execute(
     params: MriDistanceTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriDistanceTransformOutputs:
     """
     Tool to compute distance transforms on MRI volumes.
@@ -154,10 +154,12 @@ def mri_distance_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriDistanceTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_DISTANCE_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = mri_distance_transform_cargs(params, execution)
     ret = mri_distance_transform_outputs(params, execution)
@@ -191,8 +193,6 @@ def mri_distance_transform(
     Returns:
         NamedTuple of outputs (described in `MriDistanceTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_DISTANCE_TRANSFORM_METADATA)
     params = mri_distance_transform_params(
         input_volume=input_volume,
         label=label,
@@ -200,7 +200,7 @@ def mri_distance_transform(
         mode=mode,
         output_volume=output_volume,
     )
-    return mri_distance_transform_execute(params, execution)
+    return mri_distance_transform_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "MriDistanceTransformOutputs",
     "MriDistanceTransformParameters",
     "mri_distance_transform",
-    "mri_distance_transform_cargs",
     "mri_distance_transform_execute",
-    "mri_distance_transform_outputs",
     "mri_distance_transform_params",
 ]

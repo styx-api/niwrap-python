@@ -151,7 +151,7 @@ def label2surf_outputs(
 
 def label2surf_execute(
     params: Label2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Label2surfOutputs:
     """
     Transform a group of labels into a surface.
@@ -162,10 +162,12 @@ def label2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Label2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL2SURF_METADATA)
     params = execution.params(params)
     cargs = label2surf_cargs(params, execution)
     ret = label2surf_outputs(params, execution)
@@ -198,8 +200,6 @@ def label2surf(
     Returns:
         NamedTuple of outputs (described in `Label2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL2SURF_METADATA)
     params = label2surf_params(
         input_surface=input_surface,
         output_surface=output_surface,
@@ -207,7 +207,7 @@ def label2surf(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return label2surf_execute(params, execution)
+    return label2surf_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "Label2surfOutputs",
     "Label2surfParameters",
     "label2surf",
-    "label2surf_cargs",
     "label2surf_execute",
-    "label2surf_outputs",
     "label2surf_params",
 ]

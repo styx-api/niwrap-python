@@ -126,7 +126,7 @@ def ifh2hdr_outputs(
 
 def ifh2hdr_execute(
     params: Ifh2hdrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Ifh2hdrOutputs:
     """
     Tool for converting IFH (Interfile Header) to HDR (Header) format in 4dfp
@@ -138,10 +138,12 @@ def ifh2hdr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Ifh2hdrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IFH2HDR_METADATA)
     params = execution.params(params)
     cargs = ifh2hdr_cargs(params, execution)
     ret = ifh2hdr_outputs(params, execution)
@@ -169,13 +171,11 @@ def ifh2hdr(
     Returns:
         NamedTuple of outputs (described in `Ifh2hdrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IFH2HDR_METADATA)
     params = ifh2hdr_params(
         input_file=input_file,
         range_=range_,
     )
-    return ifh2hdr_execute(params, execution)
+    return ifh2hdr_execute(params, runner)
 
 
 __all__ = [
@@ -183,8 +183,6 @@ __all__ = [
     "Ifh2hdrOutputs",
     "Ifh2hdrParameters",
     "ifh2hdr",
-    "ifh2hdr_cargs",
     "ifh2hdr_execute",
-    "ifh2hdr_outputs",
     "ifh2hdr_params",
 ]

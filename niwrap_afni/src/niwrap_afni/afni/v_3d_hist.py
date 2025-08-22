@@ -300,7 +300,7 @@ def v_3d_hist_outputs(
 
 def v_3d_hist_execute(
     params: V3dHistParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dHistOutputs:
     """
     Computes histograms using functions for generating priors.
@@ -311,10 +311,12 @@ def v_3d_hist_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dHistOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_HIST_METADATA)
     params = execution.params(params)
     cargs = v_3d_hist_cargs(params, execution)
     ret = v_3d_hist_outputs(params, execution)
@@ -383,8 +385,6 @@ def v_3d_hist(
     Returns:
         NamedTuple of outputs (described in `V3dHistOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_HIST_METADATA)
     params = v_3d_hist_params(
         input_=input_,
         dind_subbrick=dind_subbrick,
@@ -407,7 +407,7 @@ def v_3d_hist(
         val_at=val_at,
         quiet=quiet,
     )
-    return v_3d_hist_execute(params, execution)
+    return v_3d_hist_execute(params, runner)
 
 
 __all__ = [
@@ -415,8 +415,6 @@ __all__ = [
     "V3dHistParameters",
     "V_3D_HIST_METADATA",
     "v_3d_hist",
-    "v_3d_hist_cargs",
     "v_3d_hist_execute",
-    "v_3d_hist_outputs",
     "v_3d_hist_params",
 ]

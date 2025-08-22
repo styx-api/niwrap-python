@@ -119,7 +119,7 @@ def apqc_make_html_outputs(
 
 def apqc_make_html_execute(
     params: ApqcMakeHtmlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ApqcMakeHtmlOutputs:
     """
     Tool to generate HTML reports.
@@ -130,10 +130,12 @@ def apqc_make_html_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ApqcMakeHtmlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APQC_MAKE_HTML_METADATA)
     params = execution.params(params)
     cargs = apqc_make_html_cargs(params, execution)
     ret = apqc_make_html_outputs(params, execution)
@@ -158,12 +160,10 @@ def apqc_make_html(
     Returns:
         NamedTuple of outputs (described in `ApqcMakeHtmlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APQC_MAKE_HTML_METADATA)
     params = apqc_make_html_params(
         qc_dir=qc_dir,
     )
-    return apqc_make_html_execute(params, execution)
+    return apqc_make_html_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "ApqcMakeHtmlOutputs",
     "ApqcMakeHtmlParameters",
     "apqc_make_html",
-    "apqc_make_html_cargs",
     "apqc_make_html_execute",
-    "apqc_make_html_outputs",
     "apqc_make_html_params",
 ]

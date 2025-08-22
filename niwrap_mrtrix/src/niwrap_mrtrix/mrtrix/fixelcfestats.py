@@ -601,7 +601,7 @@ def fixelcfestats_outputs(
 
 def fixelcfestats_execute(
     params: FixelcfestatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixelcfestatsOutputs:
     """
     Fixel-based analysis using connectivity-based fixel enhancement and
@@ -656,10 +656,12 @@ def fixelcfestats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixelcfestatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXELCFESTATS_METADATA)
     params = execution.params(params)
     cargs = fixelcfestats_cargs(params, execution)
     ret = fixelcfestats_outputs(params, execution)
@@ -834,8 +836,6 @@ def fixelcfestats(
     Returns:
         NamedTuple of outputs (described in `FixelcfestatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXELCFESTATS_METADATA)
     params = fixelcfestats_params(
         mask=mask,
         notest=notest,
@@ -873,7 +873,7 @@ def fixelcfestats(
         connectivity=connectivity,
         out_fixel_directory=out_fixel_directory,
     )
-    return fixelcfestats_execute(params, execution)
+    return fixelcfestats_execute(params, runner)
 
 
 __all__ = [
@@ -885,16 +885,10 @@ __all__ = [
     "FixelcfestatsVariousFileParameters",
     "FixelcfestatsVariousStringParameters",
     "fixelcfestats",
-    "fixelcfestats_cargs",
-    "fixelcfestats_column_cargs",
     "fixelcfestats_column_params",
-    "fixelcfestats_config_cargs",
     "fixelcfestats_config_params",
     "fixelcfestats_execute",
-    "fixelcfestats_outputs",
     "fixelcfestats_params",
-    "fixelcfestats_various_file_cargs",
     "fixelcfestats_various_file_params",
-    "fixelcfestats_various_string_cargs",
     "fixelcfestats_various_string_params",
 ]

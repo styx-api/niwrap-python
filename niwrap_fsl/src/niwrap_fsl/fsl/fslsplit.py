@@ -151,7 +151,7 @@ def fslsplit_outputs(
 
 def fslsplit_execute(
     params: FslsplitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslsplitOutputs:
     """
     Split a 4D image into separate volumes or a 3D image into separate slices.
@@ -162,10 +162,12 @@ def fslsplit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslsplitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSPLIT_METADATA)
     params = execution.params(params)
     cargs = fslsplit_cargs(params, execution)
     ret = fslsplit_outputs(params, execution)
@@ -200,8 +202,6 @@ def fslsplit(
     Returns:
         NamedTuple of outputs (described in `FslsplitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSPLIT_METADATA)
     params = fslsplit_params(
         infile=infile,
         output_basename=output_basename,
@@ -210,7 +210,7 @@ def fslsplit(
         separation_z=separation_z,
         separation_time=separation_time,
     )
-    return fslsplit_execute(params, execution)
+    return fslsplit_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "FslsplitOutputs",
     "FslsplitParameters",
     "fslsplit",
-    "fslsplit_cargs",
     "fslsplit_execute",
-    "fslsplit_outputs",
     "fslsplit_params",
 ]

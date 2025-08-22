@@ -132,7 +132,7 @@ def labels_disjoint_outputs(
 
 def labels_disjoint_execute(
     params: LabelsDisjointParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelsDisjointOutputs:
     """
     Subtracts one label file from another, effectively creating a label that
@@ -144,10 +144,12 @@ def labels_disjoint_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelsDisjointOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABELS_DISJOINT_METADATA)
     params = execution.params(params)
     cargs = labels_disjoint_cargs(params, execution)
     ret = labels_disjoint_outputs(params, execution)
@@ -179,14 +181,12 @@ def labels_disjoint(
     Returns:
         NamedTuple of outputs (described in `LabelsDisjointOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABELS_DISJOINT_METADATA)
     params = labels_disjoint_params(
         label1=label1,
         label2=label2,
         outputname=outputname,
     )
-    return labels_disjoint_execute(params, execution)
+    return labels_disjoint_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "LabelsDisjointOutputs",
     "LabelsDisjointParameters",
     "labels_disjoint",
-    "labels_disjoint_cargs",
     "labels_disjoint_execute",
-    "labels_disjoint_outputs",
     "labels_disjoint_params",
 ]

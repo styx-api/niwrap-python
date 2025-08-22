@@ -160,7 +160,7 @@ def register_elderly_subject_outputs(
 
 def register_elderly_subject_execute(
     params: RegisterElderlySubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegisterElderlySubjectOutputs:
     """
     Tool for registering MRI images of elderly subjects using Freesurfer's
@@ -172,10 +172,12 @@ def register_elderly_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegisterElderlySubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REGISTER_ELDERLY_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = register_elderly_subject_cargs(params, execution)
     ret = register_elderly_subject_outputs(params, execution)
@@ -212,8 +214,6 @@ def register_elderly_subject(
     Returns:
         NamedTuple of outputs (described in `RegisterElderlySubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REGISTER_ELDERLY_SUBJECT_METADATA)
     params = register_elderly_subject_params(
         sampling_percentage=sampling_percentage,
         output_fsamples=output_fsamples,
@@ -222,7 +222,7 @@ def register_elderly_subject(
         gca_file=gca_file,
         transform_file=transform_file,
     )
-    return register_elderly_subject_execute(params, execution)
+    return register_elderly_subject_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "RegisterElderlySubjectOutputs",
     "RegisterElderlySubjectParameters",
     "register_elderly_subject",
-    "register_elderly_subject_cargs",
     "register_elderly_subject_execute",
-    "register_elderly_subject_outputs",
     "register_elderly_subject_params",
 ]

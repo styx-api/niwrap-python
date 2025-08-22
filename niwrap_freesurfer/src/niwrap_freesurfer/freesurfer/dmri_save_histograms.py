@@ -150,7 +150,7 @@ def dmri_save_histograms_outputs(
 
 def dmri_save_histograms_execute(
     params: DmriSaveHistogramsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriSaveHistogramsOutputs:
     """
     A tool to save histograms from diffusion MRI tractography data.
@@ -161,10 +161,12 @@ def dmri_save_histograms_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriSaveHistogramsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_SAVE_HISTOGRAMS_METADATA)
     params = execution.params(params)
     cargs = dmri_save_histograms_cargs(params, execution)
     ret = dmri_save_histograms_outputs(params, execution)
@@ -197,8 +199,6 @@ def dmri_save_histograms(
     Returns:
         NamedTuple of outputs (described in `DmriSaveHistogramsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_SAVE_HISTOGRAMS_METADATA)
     params = dmri_save_histograms_params(
         parcellation=parcellation,
         number_of_bundles=number_of_bundles,
@@ -206,7 +206,7 @@ def dmri_save_histograms(
         output_csv=output_csv,
         brain_bundle_flag=brain_bundle_flag,
     )
-    return dmri_save_histograms_execute(params, execution)
+    return dmri_save_histograms_execute(params, runner)
 
 
 __all__ = [
@@ -214,8 +214,6 @@ __all__ = [
     "DmriSaveHistogramsOutputs",
     "DmriSaveHistogramsParameters",
     "dmri_save_histograms",
-    "dmri_save_histograms_cargs",
     "dmri_save_histograms_execute",
-    "dmri_save_histograms_outputs",
     "dmri_save_histograms_params",
 ]

@@ -146,7 +146,7 @@ def mris_rf_label_outputs(
 
 def mris_rf_label_execute(
     params: MrisRfLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRfLabelOutputs:
     """
     A tool for labeling regions of a surface using random forest classification.
@@ -157,10 +157,12 @@ def mris_rf_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRfLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_RF_LABEL_METADATA)
     params = execution.params(params)
     cargs = mris_rf_label_cargs(params, execution)
     ret = mris_rf_label_outputs(params, execution)
@@ -193,8 +195,6 @@ def mris_rf_label(
     Returns:
         NamedTuple of outputs (described in `MrisRfLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_RF_LABEL_METADATA)
     params = mris_rf_label_params(
         subject=subject,
         rf_classifier=rf_classifier,
@@ -202,7 +202,7 @@ def mris_rf_label(
         hemi=hemi,
         surf=surf,
     )
-    return mris_rf_label_execute(params, execution)
+    return mris_rf_label_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "MrisRfLabelOutputs",
     "MrisRfLabelParameters",
     "mris_rf_label",
-    "mris_rf_label_cargs",
     "mris_rf_label_execute",
-    "mris_rf_label_outputs",
     "mris_rf_label_params",
 ]

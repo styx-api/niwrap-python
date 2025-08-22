@@ -132,7 +132,7 @@ def sphere_subject_outputs(
 
 def sphere_subject_execute(
     params: SphereSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SphereSubjectOutputs:
     """
     A FreeSurfer tool for processing subject data.
@@ -143,10 +143,12 @@ def sphere_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SphereSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPHERE_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = sphere_subject_cargs(params, execution)
     ret = sphere_subject_outputs(params, execution)
@@ -175,14 +177,12 @@ def sphere_subject(
     Returns:
         NamedTuple of outputs (described in `SphereSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPHERE_SUBJECT_METADATA)
     params = sphere_subject_params(
         input_dir=input_dir,
         output_file=output_file,
         license_file=license_file,
     )
-    return sphere_subject_execute(params, execution)
+    return sphere_subject_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "SphereSubjectOutputs",
     "SphereSubjectParameters",
     "sphere_subject",
-    "sphere_subject_cargs",
     "sphere_subject_execute",
-    "sphere_subject_outputs",
     "sphere_subject_params",
 ]

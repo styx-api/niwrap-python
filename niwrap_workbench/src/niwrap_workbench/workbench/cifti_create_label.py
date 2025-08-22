@@ -364,7 +364,7 @@ def cifti_create_label_outputs(
 
 def cifti_create_label_execute(
     params: CiftiCreateLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCreateLabelOutputs:
     """
     Create a cifti label file.
@@ -423,10 +423,12 @@ def cifti_create_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCreateLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CREATE_LABEL_METADATA)
     params = execution.params(params)
     cargs = cifti_create_label_cargs(params, execution)
     ret = cifti_create_label_outputs(params, execution)
@@ -507,8 +509,6 @@ def cifti_create_label(
     Returns:
         NamedTuple of outputs (described in `CiftiCreateLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CREATE_LABEL_METADATA)
     params = cifti_create_label_params(
         cifti_out=cifti_out,
         volume=volume,
@@ -516,7 +516,7 @@ def cifti_create_label(
         right_label=right_label,
         cerebellum_label=cerebellum_label,
     )
-    return cifti_create_label_execute(params, execution)
+    return cifti_create_label_execute(params, runner)
 
 
 __all__ = [
@@ -528,16 +528,10 @@ __all__ = [
     "CiftiCreateLabelRightLabelParameters",
     "CiftiCreateLabelVolumeParameters",
     "cifti_create_label",
-    "cifti_create_label_cargs",
-    "cifti_create_label_cerebellum_label_cargs",
     "cifti_create_label_cerebellum_label_params",
     "cifti_create_label_execute",
-    "cifti_create_label_left_label_cargs",
     "cifti_create_label_left_label_params",
-    "cifti_create_label_outputs",
     "cifti_create_label_params",
-    "cifti_create_label_right_label_cargs",
     "cifti_create_label_right_label_params",
-    "cifti_create_label_volume_cargs",
     "cifti_create_label_volume_params",
 ]

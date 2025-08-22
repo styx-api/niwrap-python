@@ -251,7 +251,7 @@ def v__suma_make_spec_fs_outputs(
 
 def v__suma_make_spec_fs_execute(
     params: VSumaMakeSpecFsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaMakeSpecFsOutputs:
     """
     Prepare for surface viewing in SUMA.
@@ -262,10 +262,12 @@ def v__suma_make_spec_fs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecFsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_MAKE_SPEC_FS_METADATA)
     params = execution.params(params)
     cargs = v__suma_make_spec_fs_cargs(params, execution)
     ret = v__suma_make_spec_fs_outputs(params, execution)
@@ -326,8 +328,6 @@ def v__suma_make_spec_fs(
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecFsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_MAKE_SPEC_FS_METADATA)
     params = v__suma_make_spec_fs_params(
         subject_id=subject_id,
         debug=debug,
@@ -346,7 +346,7 @@ def v__suma_make_spec_fs(
         ldpref=ldpref,
         no_ld=no_ld,
     )
-    return v__suma_make_spec_fs_execute(params, execution)
+    return v__suma_make_spec_fs_execute(params, runner)
 
 
 __all__ = [
@@ -354,8 +354,6 @@ __all__ = [
     "VSumaMakeSpecFsParameters",
     "V__SUMA_MAKE_SPEC_FS_METADATA",
     "v__suma_make_spec_fs",
-    "v__suma_make_spec_fs_cargs",
     "v__suma_make_spec_fs_execute",
-    "v__suma_make_spec_fs_outputs",
     "v__suma_make_spec_fs_params",
 ]

@@ -228,7 +228,7 @@ def make_average_volume_outputs(
 
 def make_average_volume_execute(
     params: MakeAverageVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeAverageVolumeOutputs:
     """
     Creates average volumes from a set of subjects.
@@ -239,10 +239,12 @@ def make_average_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeAverageVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_AVERAGE_VOLUME_METADATA)
     params = execution.params(params)
     cargs = make_average_volume_cargs(params, execution)
     ret = make_average_volume_outputs(params, execution)
@@ -296,8 +298,6 @@ def make_average_volume(
     Returns:
         NamedTuple of outputs (described in `MakeAverageVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_AVERAGE_VOLUME_METADATA)
     params = make_average_volume_params(
         subjects=subjects,
         fsgd=fsgd,
@@ -315,7 +315,7 @@ def make_average_volume(
         debug_flag=debug_flag,
         nocleanup_flag=nocleanup_flag,
     )
-    return make_average_volume_execute(params, execution)
+    return make_average_volume_execute(params, runner)
 
 
 __all__ = [
@@ -323,8 +323,6 @@ __all__ = [
     "MakeAverageVolumeOutputs",
     "MakeAverageVolumeParameters",
     "make_average_volume",
-    "make_average_volume_cargs",
     "make_average_volume_execute",
-    "make_average_volume_outputs",
     "make_average_volume_params",
 ]

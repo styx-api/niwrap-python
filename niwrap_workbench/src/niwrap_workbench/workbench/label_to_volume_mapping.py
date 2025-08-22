@@ -228,7 +228,7 @@ def label_to_volume_mapping_outputs(
 
 def label_to_volume_mapping_execute(
     params: LabelToVolumeMappingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
     Map label file to volume.
@@ -245,10 +245,12 @@ def label_to_volume_mapping_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelToVolumeMappingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_TO_VOLUME_MAPPING_METADATA)
     params = execution.params(params)
     cargs = label_to_volume_mapping_cargs(params, execution)
     ret = label_to_volume_mapping_outputs(params, execution)
@@ -291,8 +293,6 @@ def label_to_volume_mapping(
     Returns:
         NamedTuple of outputs (described in `LabelToVolumeMappingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_TO_VOLUME_MAPPING_METADATA)
     params = label_to_volume_mapping_params(
         label=label,
         surface=surface,
@@ -301,7 +301,7 @@ def label_to_volume_mapping(
         opt_nearest_vertex_distance=opt_nearest_vertex_distance,
         ribbon_constrained=ribbon_constrained,
     )
-    return label_to_volume_mapping_execute(params, execution)
+    return label_to_volume_mapping_execute(params, runner)
 
 
 __all__ = [
@@ -310,10 +310,7 @@ __all__ = [
     "LabelToVolumeMappingParameters",
     "LabelToVolumeMappingRibbonConstrainedParameters",
     "label_to_volume_mapping",
-    "label_to_volume_mapping_cargs",
     "label_to_volume_mapping_execute",
-    "label_to_volume_mapping_outputs",
     "label_to_volume_mapping_params",
-    "label_to_volume_mapping_ribbon_constrained_cargs",
     "label_to_volume_mapping_ribbon_constrained_params",
 ]

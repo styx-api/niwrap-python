@@ -138,7 +138,7 @@ def antsuse_landmark_images_to_get_affine_transform_outputs(
 
 def antsuse_landmark_images_to_get_affine_transform_execute(
     params: AntsuseLandmarkImagesToGetAffineTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsuseLandmarkImagesToGetAffineTransformOutputs:
     """
     This tool computes an affine transform (rigid or affine) from labeled landmark
@@ -153,10 +153,12 @@ def antsuse_landmark_images_to_get_affine_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsuseLandmarkImagesToGetAffineTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = antsuse_landmark_images_to_get_affine_transform_cargs(params, execution)
     ret = antsuse_landmark_images_to_get_affine_transform_outputs(params, execution)
@@ -194,15 +196,13 @@ def antsuse_landmark_images_to_get_affine_transform(
     Returns:
         NamedTuple of outputs (described in `AntsuseLandmarkImagesToGetAffineTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTSUSE_LANDMARK_IMAGES_TO_GET_AFFINE_TRANSFORM_METADATA)
     params = antsuse_landmark_images_to_get_affine_transform_params(
         fixed_image=fixed_image,
         moving_image=moving_image,
         transform_type=transform_type,
         output_affine=output_affine,
     )
-    return antsuse_landmark_images_to_get_affine_transform_execute(params, execution)
+    return antsuse_landmark_images_to_get_affine_transform_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "AntsuseLandmarkImagesToGetAffineTransformOutputs",
     "AntsuseLandmarkImagesToGetAffineTransformParameters",
     "antsuse_landmark_images_to_get_affine_transform",
-    "antsuse_landmark_images_to_get_affine_transform_cargs",
     "antsuse_landmark_images_to_get_affine_transform_execute",
-    "antsuse_landmark_images_to_get_affine_transform_outputs",
     "antsuse_landmark_images_to_get_affine_transform_params",
 ]

@@ -217,7 +217,7 @@ def mri_modify_outputs(
 
 def mri_modify_execute(
     params: MriModifyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriModifyOutputs:
     """
     Tool for modifying MRI image headers.
@@ -228,10 +228,12 @@ def mri_modify_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriModifyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MODIFY_METADATA)
     params = execution.params(params)
     cargs = mri_modify_cargs(params, execution)
     ret = mri_modify_outputs(params, execution)
@@ -282,8 +284,6 @@ def mri_modify(
     Returns:
         NamedTuple of outputs (described in `MriModifyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MODIFY_METADATA)
     params = mri_modify_params(
         x_ras=x_ras,
         y_ras=y_ras,
@@ -300,7 +300,7 @@ def mri_modify(
         input_volume=input_volume,
         output_volume=output_volume,
     )
-    return mri_modify_execute(params, execution)
+    return mri_modify_execute(params, runner)
 
 
 __all__ = [
@@ -308,8 +308,6 @@ __all__ = [
     "MriModifyOutputs",
     "MriModifyParameters",
     "mri_modify",
-    "mri_modify_cargs",
     "mri_modify_execute",
-    "mri_modify_outputs",
     "mri_modify_params",
 ]

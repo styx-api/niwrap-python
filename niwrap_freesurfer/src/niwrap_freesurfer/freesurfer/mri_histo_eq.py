@@ -121,7 +121,7 @@ def mri_histo_eq_outputs(
 
 def mri_histo_eq_execute(
     params: MriHistoEqParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriHistoEqOutputs:
     """
     MRI histogram equalization tool from Freesurfer.
@@ -132,10 +132,12 @@ def mri_histo_eq_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriHistoEqOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_HISTO_EQ_METADATA)
     params = execution.params(params)
     cargs = mri_histo_eq_cargs(params, execution)
     ret = mri_histo_eq_outputs(params, execution)
@@ -162,13 +164,11 @@ def mri_histo_eq(
     Returns:
         NamedTuple of outputs (described in `MriHistoEqOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_HISTO_EQ_METADATA)
     params = mri_histo_eq_params(
         input_volume_1=input_volume_1,
         input_volume_2=input_volume_2,
     )
-    return mri_histo_eq_execute(params, execution)
+    return mri_histo_eq_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "MriHistoEqOutputs",
     "MriHistoEqParameters",
     "mri_histo_eq",
-    "mri_histo_eq_cargs",
     "mri_histo_eq_execute",
-    "mri_histo_eq_outputs",
     "mri_histo_eq_params",
 ]

@@ -151,7 +151,7 @@ def v__suma_renumber_fs_outputs(
 
 def v__suma_renumber_fs_execute(
     params: VSumaRenumberFsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaRenumberFsOutputs:
     """
     This script processes FreeSurfer-generated parcellation files and produces
@@ -163,10 +163,12 @@ def v__suma_renumber_fs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaRenumberFsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_RENUMBER_FS_METADATA)
     params = execution.params(params)
     cargs = v__suma_renumber_fs_cargs(params, execution)
     ret = v__suma_renumber_fs_outputs(params, execution)
@@ -192,12 +194,10 @@ def v__suma_renumber_fs(
     Returns:
         NamedTuple of outputs (described in `VSumaRenumberFsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_RENUMBER_FS_METADATA)
     params = v__suma_renumber_fs_params(
         sumadir=sumadir,
     )
-    return v__suma_renumber_fs_execute(params, execution)
+    return v__suma_renumber_fs_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "VSumaRenumberFsParameters",
     "V__SUMA_RENUMBER_FS_METADATA",
     "v__suma_renumber_fs",
-    "v__suma_renumber_fs_cargs",
     "v__suma_renumber_fs_execute",
-    "v__suma_renumber_fs_outputs",
     "v__suma_renumber_fs_params",
 ]

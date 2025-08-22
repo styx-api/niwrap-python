@@ -605,7 +605,7 @@ def mris_make_surfaces_outputs(
 
 def mris_make_surfaces_execute(
     params: MrisMakeSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMakeSurfacesOutputs:
     """
     Positions the tessellation of the cortical surface at the white matter surface,
@@ -618,10 +618,12 @@ def mris_make_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMakeSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MAKE_SURFACES_METADATA)
     params = execution.params(params)
     cargs = mris_make_surfaces_cargs(params, execution)
     ret = mris_make_surfaces_outputs(params, execution)
@@ -770,8 +772,6 @@ def mris_make_surfaces(
     Returns:
         NamedTuple of outputs (described in `MrisMakeSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MAKE_SURFACES_METADATA)
     params = mris_make_surfaces_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -827,7 +827,7 @@ def mris_make_surfaces(
         min_gray_csf_border=min_gray_csf_border,
         max_csf=max_csf,
     )
-    return mris_make_surfaces_execute(params, execution)
+    return mris_make_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -835,8 +835,6 @@ __all__ = [
     "MrisMakeSurfacesOutputs",
     "MrisMakeSurfacesParameters",
     "mris_make_surfaces",
-    "mris_make_surfaces_cargs",
     "mris_make_surfaces_execute",
-    "mris_make_surfaces_outputs",
     "mris_make_surfaces_params",
 ]

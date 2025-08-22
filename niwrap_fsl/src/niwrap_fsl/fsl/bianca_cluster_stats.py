@@ -133,7 +133,7 @@ def bianca_cluster_stats_outputs(
 
 def bianca_cluster_stats_execute(
     params: BiancaClusterStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BiancaClusterStatsOutputs:
     """
     Calculate number of clusters and WMH volume in a BIANCA output map.
@@ -144,10 +144,12 @@ def bianca_cluster_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BiancaClusterStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BIANCA_CLUSTER_STATS_METADATA)
     params = execution.params(params)
     cargs = bianca_cluster_stats_cargs(params, execution)
     ret = bianca_cluster_stats_outputs(params, execution)
@@ -178,15 +180,13 @@ def bianca_cluster_stats(
     Returns:
         NamedTuple of outputs (described in `BiancaClusterStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BIANCA_CLUSTER_STATS_METADATA)
     params = bianca_cluster_stats_params(
         bianca_output_map=bianca_output_map,
         threshold=threshold,
         min_cluster_size=min_cluster_size,
         mask=mask,
     )
-    return bianca_cluster_stats_execute(params, execution)
+    return bianca_cluster_stats_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "BiancaClusterStatsOutputs",
     "BiancaClusterStatsParameters",
     "bianca_cluster_stats",
-    "bianca_cluster_stats_cargs",
     "bianca_cluster_stats_execute",
-    "bianca_cluster_stats_outputs",
     "bianca_cluster_stats_params",
 ]

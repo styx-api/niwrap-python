@@ -362,7 +362,7 @@ def mri_ca_normalize_outputs(
 
 def mri_ca_normalize_execute(
     params: MriCaNormalizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCaNormalizeOutputs:
     """
     This program creates a normalized volume using the brain volume and an input gca
@@ -374,10 +374,12 @@ def mri_ca_normalize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCaNormalizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CA_NORMALIZE_METADATA)
     params = execution.params(params)
     cargs = mri_ca_normalize_cargs(params, execution)
     ret = mri_ca_normalize_outputs(params, execution)
@@ -460,8 +462,6 @@ def mri_ca_normalize(
     Returns:
         NamedTuple of outputs (described in `MriCaNormalizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CA_NORMALIZE_METADATA)
     params = mri_ca_normalize_params(
         input_brain_volumes=input_brain_volumes,
         atlas_file=atlas_file,
@@ -491,7 +491,7 @@ def mri_ca_normalize(
         renorm_file=renorm_file,
         flash_flag=flash_flag,
     )
-    return mri_ca_normalize_execute(params, execution)
+    return mri_ca_normalize_execute(params, runner)
 
 
 __all__ = [
@@ -499,8 +499,6 @@ __all__ = [
     "MriCaNormalizeOutputs",
     "MriCaNormalizeParameters",
     "mri_ca_normalize",
-    "mri_ca_normalize_cargs",
     "mri_ca_normalize_execute",
-    "mri_ca_normalize_outputs",
     "mri_ca_normalize_params",
 ]

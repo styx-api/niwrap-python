@@ -494,7 +494,7 @@ def reg_f3d_outputs(
 
 def reg_f3d_execute(
     params: RegF3dParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegF3dOutputs:
     """
     Fast Free-Form Deformation algorithm for non-rigid registration based on
@@ -506,10 +506,12 @@ def reg_f3d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegF3dOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_F3D_METADATA)
     params = execution.params(params)
     cargs = reg_f3d_cargs(params, execution)
     ret = reg_f3d_outputs(params, execution)
@@ -629,8 +631,6 @@ def reg_f3d(
     Returns:
         NamedTuple of outputs (described in `RegF3dOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_F3D_METADATA)
     params = reg_f3d_params(
         reference_image=reference_image,
         floating_image=floating_image,
@@ -673,7 +673,7 @@ def reg_f3d(
         padding_value=padding_value,
         verbose_off=verbose_off,
     )
-    return reg_f3d_execute(params, execution)
+    return reg_f3d_execute(params, runner)
 
 
 __all__ = [
@@ -681,8 +681,6 @@ __all__ = [
     "RegF3dOutputs",
     "RegF3dParameters",
     "reg_f3d",
-    "reg_f3d_cargs",
     "reg_f3d_execute",
-    "reg_f3d_outputs",
     "reg_f3d_params",
 ]

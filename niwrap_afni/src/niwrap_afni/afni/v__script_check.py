@@ -139,7 +139,7 @@ def v__script_check_outputs(
 
 def v__script_check_execute(
     params: VScriptCheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VScriptCheckOutputs:
     """
     Checks scripts for improperly terminated lines and optionally cleans them.
@@ -150,10 +150,12 @@ def v__script_check_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VScriptCheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SCRIPT_CHECK_METADATA)
     params = execution.params(params)
     cargs = v__script_check_cargs(params, execution)
     ret = v__script_check_outputs(params, execution)
@@ -182,14 +184,12 @@ def v__script_check(
     Returns:
         NamedTuple of outputs (described in `VScriptCheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SCRIPT_CHECK_METADATA)
     params = v__script_check_params(
         clean=clean,
         suffix=suffix,
         scripts=scripts,
     )
-    return v__script_check_execute(params, execution)
+    return v__script_check_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "VScriptCheckParameters",
     "V__SCRIPT_CHECK_METADATA",
     "v__script_check",
-    "v__script_check_cargs",
     "v__script_check_execute",
-    "v__script_check_outputs",
     "v__script_check_params",
 ]

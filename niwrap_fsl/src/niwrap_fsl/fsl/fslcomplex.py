@@ -144,7 +144,7 @@ def fslcomplex_outputs(
 
 def fslcomplex_execute(
     params: FslcomplexParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslcomplexOutputs:
     """
     Tool for manipulating complex-valued MR data.
@@ -155,10 +155,12 @@ def fslcomplex_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslcomplexOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLCOMPLEX_METADATA)
     params = execution.params(params)
     cargs = fslcomplex_cargs(params, execution)
     ret = fslcomplex_outputs(params, execution)
@@ -191,8 +193,6 @@ def fslcomplex(
     Returns:
         NamedTuple of outputs (described in `FslcomplexOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLCOMPLEX_METADATA)
     params = fslcomplex_params(
         input_file=input_file,
         output_file=output_file,
@@ -200,7 +200,7 @@ def fslcomplex(
         start_vol=start_vol,
         end_vol=end_vol,
     )
-    return fslcomplex_execute(params, execution)
+    return fslcomplex_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "FslcomplexOutputs",
     "FslcomplexParameters",
     "fslcomplex",
-    "fslcomplex_cargs",
     "fslcomplex_execute",
-    "fslcomplex_outputs",
     "fslcomplex_params",
 ]

@@ -428,7 +428,7 @@ def surf_clust_outputs(
 
 def surf_clust_execute(
     params: SurfClustParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfClustOutputs:
     """
     A program to perform clustering analysis surfaces.
@@ -439,10 +439,12 @@ def surf_clust_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfClustOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_CLUST_METADATA)
     params = execution.params(params)
     cargs = surf_clust_cargs(params, execution)
     ret = surf_clust_outputs(params, execution)
@@ -556,8 +558,6 @@ def surf_clust(
     Returns:
         NamedTuple of outputs (described in `SurfClustOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_CLUST_METADATA)
     params = surf_clust_params(
         specfile=specfile,
         input_surface=input_surface,
@@ -599,7 +599,7 @@ def surf_clust(
         spx_help=spx_help,
         aspx_help=aspx_help,
     )
-    return surf_clust_execute(params, execution)
+    return surf_clust_execute(params, runner)
 
 
 __all__ = [
@@ -607,8 +607,6 @@ __all__ = [
     "SurfClustOutputs",
     "SurfClustParameters",
     "surf_clust",
-    "surf_clust_cargs",
     "surf_clust_execute",
-    "surf_clust_outputs",
     "surf_clust_params",
 ]

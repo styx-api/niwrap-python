@@ -368,7 +368,7 @@ def volume_set_space_outputs(
 
 def volume_set_space_execute(
     params: VolumeSetSpaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeSetSpaceOutputs:
     """
     Change volume space information.
@@ -384,10 +384,12 @@ def volume_set_space_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeSetSpaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_SET_SPACE_METADATA)
     params = execution.params(params)
     cargs = volume_set_space_cargs(params, execution)
     ret = volume_set_space_outputs(params, execution)
@@ -425,8 +427,6 @@ def volume_set_space(
     Returns:
         NamedTuple of outputs (described in `VolumeSetSpaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_SET_SPACE_METADATA)
     params = volume_set_space_params(
         volume_in=volume_in,
         volume_out=volume_out,
@@ -434,7 +434,7 @@ def volume_set_space(
         sform=sform,
         file=file,
     )
-    return volume_set_space_execute(params, execution)
+    return volume_set_space_execute(params, runner)
 
 
 __all__ = [
@@ -445,14 +445,9 @@ __all__ = [
     "VolumeSetSpacePlumbParameters",
     "VolumeSetSpaceSformParameters",
     "volume_set_space",
-    "volume_set_space_cargs",
     "volume_set_space_execute",
-    "volume_set_space_file_cargs",
     "volume_set_space_file_params",
-    "volume_set_space_outputs",
     "volume_set_space_params",
-    "volume_set_space_plumb_cargs",
     "volume_set_space_plumb_params",
-    "volume_set_space_sform_cargs",
     "volume_set_space_sform_params",
 ]

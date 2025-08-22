@@ -130,7 +130,7 @@ def compute_vox2vox_outputs(
 
 def compute_vox2vox_execute(
     params: ComputeVox2voxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ComputeVox2voxOutputs:
     """
     Tool for computing voxel-to-voxel transformations.
@@ -141,10 +141,12 @@ def compute_vox2vox_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ComputeVox2voxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(COMPUTE_VOX2VOX_METADATA)
     params = execution.params(params)
     cargs = compute_vox2vox_cargs(params, execution)
     ret = compute_vox2vox_outputs(params, execution)
@@ -173,14 +175,12 @@ def compute_vox2vox(
     Returns:
         NamedTuple of outputs (described in `ComputeVox2voxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(COMPUTE_VOX2VOX_METADATA)
     params = compute_vox2vox_params(
         source=source,
         t4file=t4file,
         target=target,
     )
-    return compute_vox2vox_execute(params, execution)
+    return compute_vox2vox_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "ComputeVox2voxOutputs",
     "ComputeVox2voxParameters",
     "compute_vox2vox",
-    "compute_vox2vox_cargs",
     "compute_vox2vox_execute",
-    "compute_vox2vox_outputs",
     "compute_vox2vox_params",
 ]

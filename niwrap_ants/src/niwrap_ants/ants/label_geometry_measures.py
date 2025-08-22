@@ -142,7 +142,7 @@ def label_geometry_measures_outputs(
 
 def label_geometry_measures_execute(
     params: LabelGeometryMeasuresParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelGeometryMeasuresOutputs:
     """
     This tool computes various geometry measures on a label image, optionally using
@@ -154,10 +154,12 @@ def label_geometry_measures_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelGeometryMeasuresOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_GEOMETRY_MEASURES_METADATA)
     params = execution.params(params)
     cargs = label_geometry_measures_cargs(params, execution)
     ret = label_geometry_measures_outputs(params, execution)
@@ -192,15 +194,13 @@ def label_geometry_measures(
     Returns:
         NamedTuple of outputs (described in `LabelGeometryMeasuresOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_GEOMETRY_MEASURES_METADATA)
     params = label_geometry_measures_params(
         image_dimension=image_dimension,
         label_image=label_image,
         intensity_image=intensity_image,
         csv_file=csv_file,
     )
-    return label_geometry_measures_execute(params, execution)
+    return label_geometry_measures_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "LabelGeometryMeasuresOutputs",
     "LabelGeometryMeasuresParameters",
     "label_geometry_measures",
-    "label_geometry_measures_cargs",
     "label_geometry_measures_execute",
-    "label_geometry_measures_outputs",
     "label_geometry_measures_params",
 ]

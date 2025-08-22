@@ -135,7 +135,7 @@ def rca_base_init_outputs(
 
 def rca_base_init_execute(
     params: RcaBaseInitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RcaBaseInitOutputs:
     """
     Initialize base subject for recon-all processing.
@@ -146,10 +146,12 @@ def rca_base_init_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RcaBaseInitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RCA_BASE_INIT_METADATA)
     params = execution.params(params)
     cargs = rca_base_init_cargs(params, execution)
     ret = rca_base_init_outputs(params, execution)
@@ -178,14 +180,12 @@ def rca_base_init(
     Returns:
         NamedTuple of outputs (described in `RcaBaseInitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RCA_BASE_INIT_METADATA)
     params = rca_base_init_params(
         log_file=log_file,
         status_file=status_file,
         cmd_file=cmd_file,
     )
-    return rca_base_init_execute(params, execution)
+    return rca_base_init_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "RcaBaseInitOutputs",
     "RcaBaseInitParameters",
     "rca_base_init",
-    "rca_base_init_cargs",
     "rca_base_init_execute",
-    "rca_base_init_outputs",
     "rca_base_init_params",
 ]

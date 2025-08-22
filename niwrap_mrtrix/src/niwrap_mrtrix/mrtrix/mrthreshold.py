@@ -334,7 +334,7 @@ def mrthreshold_outputs(
 
 def mrthreshold_execute(
     params: MrthresholdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrthresholdOutputs:
     """
     Create bitwise image by thresholding image intensity.
@@ -386,10 +386,12 @@ def mrthreshold_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrthresholdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRTHRESHOLD_METADATA)
     params = execution.params(params)
     cargs = mrthreshold_cargs(params, execution)
     ret = mrthreshold_outputs(params, execution)
@@ -510,8 +512,6 @@ def mrthreshold(
     Returns:
         NamedTuple of outputs (described in `MrthresholdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRTHRESHOLD_METADATA)
     params = mrthreshold_params(
         abs_=abs_,
         percentile=percentile,
@@ -535,7 +535,7 @@ def mrthreshold(
         input_=input_,
         output=output,
     )
-    return mrthreshold_execute(params, execution)
+    return mrthreshold_execute(params, runner)
 
 
 __all__ = [
@@ -544,10 +544,7 @@ __all__ = [
     "MrthresholdOutputs",
     "MrthresholdParameters",
     "mrthreshold",
-    "mrthreshold_cargs",
-    "mrthreshold_config_cargs",
     "mrthreshold_config_params",
     "mrthreshold_execute",
-    "mrthreshold_outputs",
     "mrthreshold_params",
 ]

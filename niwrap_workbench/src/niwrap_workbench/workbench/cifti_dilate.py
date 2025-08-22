@@ -362,7 +362,7 @@ def cifti_dilate_outputs(
 
 def cifti_dilate_execute(
     params: CiftiDilateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiDilateOutputs:
     """
     Dilate a cifti file.
@@ -389,10 +389,12 @@ def cifti_dilate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiDilateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_DILATE_METADATA)
     params = execution.params(params)
     cargs = cifti_dilate_cargs(params, execution)
     ret = cifti_dilate_outputs(params, execution)
@@ -459,8 +461,6 @@ def cifti_dilate(
     Returns:
         NamedTuple of outputs (described in `CiftiDilateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_DILATE_METADATA)
     params = cifti_dilate_params(
         cifti_in=cifti_in,
         direction=direction,
@@ -475,7 +475,7 @@ def cifti_dilate(
         opt_merged_volume=opt_merged_volume,
         opt_legacy_mode=opt_legacy_mode,
     )
-    return cifti_dilate_execute(params, execution)
+    return cifti_dilate_execute(params, runner)
 
 
 __all__ = [
@@ -486,14 +486,9 @@ __all__ = [
     "CiftiDilateParameters",
     "CiftiDilateRightSurfaceParameters",
     "cifti_dilate",
-    "cifti_dilate_cargs",
-    "cifti_dilate_cerebellum_surface_cargs",
     "cifti_dilate_cerebellum_surface_params",
     "cifti_dilate_execute",
-    "cifti_dilate_left_surface_cargs",
     "cifti_dilate_left_surface_params",
-    "cifti_dilate_outputs",
     "cifti_dilate_params",
-    "cifti_dilate_right_surface_cargs",
     "cifti_dilate_right_surface_params",
 ]

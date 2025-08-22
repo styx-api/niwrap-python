@@ -199,7 +199,7 @@ def film_cifti_outputs(
 
 def film_cifti_execute(
     params: FilmCiftiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FilmCiftiOutputs:
     """
     A tool for statistical analysis of CIFTI files using FILM.
@@ -210,10 +210,12 @@ def film_cifti_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FilmCiftiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FILM_CIFTI_METADATA)
     params = execution.params(params)
     cargs = film_cifti_cargs(params, execution)
     ret = film_cifti_outputs(params, execution)
@@ -256,8 +258,6 @@ def film_cifti(
     Returns:
         NamedTuple of outputs (described in `FilmCiftiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FILM_CIFTI_METADATA)
     params = film_cifti_params(
         input_filename=input_filename,
         basename=basename,
@@ -269,7 +269,7 @@ def film_cifti(
         surface_extent=surface_extent,
         film_options=film_options,
     )
-    return film_cifti_execute(params, execution)
+    return film_cifti_execute(params, runner)
 
 
 __all__ = [
@@ -277,8 +277,6 @@ __all__ = [
     "FilmCiftiOutputs",
     "FilmCiftiParameters",
     "film_cifti",
-    "film_cifti_cargs",
     "film_cifti_execute",
-    "film_cifti_outputs",
     "film_cifti_params",
 ]

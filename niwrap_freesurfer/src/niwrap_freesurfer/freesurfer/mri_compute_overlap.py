@@ -194,7 +194,7 @@ def mri_compute_overlap_outputs(
 
 def mri_compute_overlap_execute(
     params: MriComputeOverlapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeOverlapOutputs:
     """
     Computes three different types of overlap measures for labels in input volumes.
@@ -205,10 +205,12 @@ def mri_compute_overlap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeOverlapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_OVERLAP_METADATA)
     params = execution.params(params)
     cargs = mri_compute_overlap_cargs(params, execution)
     ret = mri_compute_overlap_outputs(params, execution)
@@ -258,8 +260,6 @@ def mri_compute_overlap(
     Returns:
         NamedTuple of outputs (described in `MriComputeOverlapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_OVERLAP_METADATA)
     params = mri_compute_overlap_params(
         volumes=volumes,
         label_numbers=label_numbers,
@@ -273,7 +273,7 @@ def mri_compute_overlap(
         translate_label=translate_label,
         help_=help_,
     )
-    return mri_compute_overlap_execute(params, execution)
+    return mri_compute_overlap_execute(params, runner)
 
 
 __all__ = [
@@ -281,8 +281,6 @@ __all__ = [
     "MriComputeOverlapOutputs",
     "MriComputeOverlapParameters",
     "mri_compute_overlap",
-    "mri_compute_overlap_cargs",
     "mri_compute_overlap_execute",
-    "mri_compute_overlap_outputs",
     "mri_compute_overlap_params",
 ]

@@ -191,7 +191,7 @@ def mri_fdr_outputs(
 
 def mri_fdr_execute(
     params: MriFdrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFdrOutputs:
     """
     A program that performs False Discovery Rate correction.
@@ -202,10 +202,12 @@ def mri_fdr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFdrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FDR_METADATA)
     params = execution.params(params)
     cargs = mri_fdr_cargs(params, execution)
     ret = mri_fdr_outputs(params, execution)
@@ -249,8 +251,6 @@ def mri_fdr(
     Returns:
         NamedTuple of outputs (described in `MriFdrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FDR_METADATA)
     params = mri_fdr_params(
         input_files=input_files,
         fdr_value=fdr_value,
@@ -263,7 +263,7 @@ def mri_fdr(
         debug=debug,
         check_options=check_options,
     )
-    return mri_fdr_execute(params, execution)
+    return mri_fdr_execute(params, runner)
 
 
 __all__ = [
@@ -271,8 +271,6 @@ __all__ = [
     "MriFdrOutputs",
     "MriFdrParameters",
     "mri_fdr",
-    "mri_fdr_cargs",
     "mri_fdr_execute",
-    "mri_fdr_outputs",
     "mri_fdr_params",
 ]

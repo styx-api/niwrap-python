@@ -189,7 +189,7 @@ def swap_voxelwise_outputs(
 
 def swap_voxelwise_execute(
     params: SwapVoxelwiseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SwapVoxelwiseOutputs:
     """
     Reordering of vectors with direction preservation.
@@ -200,10 +200,12 @@ def swap_voxelwise_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SwapVoxelwiseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SWAP_VOXELWISE_METADATA)
     params = execution.params(params)
     cargs = swap_voxelwise_cargs(params, execution)
     ret = swap_voxelwise_outputs(params, execution)
@@ -244,8 +246,6 @@ def swap_voxelwise(
     Returns:
         NamedTuple of outputs (described in `SwapVoxelwiseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SWAP_VOXELWISE_METADATA)
     params = swap_voxelwise_params(
         vectors_file_list=vectors_file_list,
         scalars_file_list=scalars_file_list,
@@ -256,7 +256,7 @@ def swap_voxelwise(
         crossing_thresh=crossing_thresh,
         verbose_flag=verbose_flag,
     )
-    return swap_voxelwise_execute(params, execution)
+    return swap_voxelwise_execute(params, runner)
 
 
 __all__ = [
@@ -264,8 +264,6 @@ __all__ = [
     "SwapVoxelwiseOutputs",
     "SwapVoxelwiseParameters",
     "swap_voxelwise",
-    "swap_voxelwise_cargs",
     "swap_voxelwise_execute",
-    "swap_voxelwise_outputs",
     "swap_voxelwise_params",
 ]

@@ -266,7 +266,7 @@ def mris_volmask_novtk_outputs(
 
 def mris_volmask_novtk_execute(
     params: MrisVolmaskNovtkParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisVolmaskNovtkOutputs:
     """
     Computes a volume mask at the same resolution as <subject>/mri/brain.mgz and
@@ -278,10 +278,12 @@ def mris_volmask_novtk_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisVolmaskNovtkOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_VOLMASK_NOVTK_METADATA)
     params = execution.params(params)
     cargs = mris_volmask_novtk_cargs(params, execution)
     ret = mris_volmask_novtk_outputs(params, execution)
@@ -345,8 +347,6 @@ def mris_volmask_novtk(
     Returns:
         NamedTuple of outputs (described in `MrisVolmaskNovtkOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_VOLMASK_NOVTK_METADATA)
     params = mris_volmask_novtk_params(
         io_=io_,
         cap_distance=cap_distance,
@@ -367,7 +367,7 @@ def mris_volmask_novtk(
         edit_aseg=edit_aseg,
         save_ribbon=save_ribbon,
     )
-    return mris_volmask_novtk_execute(params, execution)
+    return mris_volmask_novtk_execute(params, runner)
 
 
 __all__ = [
@@ -375,8 +375,6 @@ __all__ = [
     "MrisVolmaskNovtkOutputs",
     "MrisVolmaskNovtkParameters",
     "mris_volmask_novtk",
-    "mris_volmask_novtk_cargs",
     "mris_volmask_novtk_execute",
-    "mris_volmask_novtk_outputs",
     "mris_volmask_novtk_params",
 ]

@@ -390,7 +390,7 @@ def fabber_dualecho_outputs(
 
 def fabber_dualecho_execute(
     params: FabberDualechoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberDualechoOutputs:
     """
     FMRIB's Advanced Bayesian Estimation and Inference tool for FMRI analysis.
@@ -401,10 +401,12 @@ def fabber_dualecho_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberDualechoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_DUALECHO_METADATA)
     params = execution.params(params)
     cargs = fabber_dualecho_cargs(params, execution)
     ret = fabber_dualecho_outputs(params, execution)
@@ -520,8 +522,6 @@ def fabber_dualecho(
     Returns:
         NamedTuple of outputs (described in `FabberDualechoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_DUALECHO_METADATA)
     params = fabber_dualecho_params(
         output_directory=output_directory,
         method=method,
@@ -559,7 +559,7 @@ def fabber_dualecho(
         save_free_energy_flag=save_free_energy_flag,
         debug_flag=debug_flag,
     )
-    return fabber_dualecho_execute(params, execution)
+    return fabber_dualecho_execute(params, runner)
 
 
 __all__ = [
@@ -567,8 +567,6 @@ __all__ = [
     "FabberDualechoOutputs",
     "FabberDualechoParameters",
     "fabber_dualecho",
-    "fabber_dualecho_cargs",
     "fabber_dualecho_execute",
-    "fabber_dualecho_outputs",
     "fabber_dualecho_params",
 ]

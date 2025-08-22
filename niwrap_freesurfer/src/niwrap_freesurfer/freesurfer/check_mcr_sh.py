@@ -117,7 +117,7 @@ def check_mcr_sh_outputs(
 
 def check_mcr_sh_execute(
     params: CheckMcrShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CheckMcrShOutputs:
     """
     Script to check for the presence of Matlab Compiler Runtime (MCR) for Matlab
@@ -129,10 +129,12 @@ def check_mcr_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CheckMcrShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CHECK_MCR_SH_METADATA)
     params = execution.params(params)
     cargs = check_mcr_sh_cargs(params, execution)
     ret = check_mcr_sh_outputs(params, execution)
@@ -158,12 +160,10 @@ def check_mcr_sh(
     Returns:
         NamedTuple of outputs (described in `CheckMcrShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CHECK_MCR_SH_METADATA)
     params = check_mcr_sh_params(
         help_=help_,
     )
-    return check_mcr_sh_execute(params, execution)
+    return check_mcr_sh_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "CheckMcrShOutputs",
     "CheckMcrShParameters",
     "check_mcr_sh",
-    "check_mcr_sh_cargs",
     "check_mcr_sh_execute",
-    "check_mcr_sh_outputs",
     "check_mcr_sh_params",
 ]

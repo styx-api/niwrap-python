@@ -172,7 +172,7 @@ def samsegmesh2surf_outputs(
 
 def samsegmesh2surf_execute(
     params: Samsegmesh2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Samsegmesh2surfOutputs:
     """
     Generate Freesurfer surface from a SAMSEG atlas mesh file and generate priors at
@@ -184,10 +184,12 @@ def samsegmesh2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Samsegmesh2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SAMSEGMESH2SURF_METADATA)
     params = execution.params(params)
     cargs = samsegmesh2surf_cargs(params, execution)
     ret = samsegmesh2surf_outputs(params, execution)
@@ -223,8 +225,6 @@ def samsegmesh2surf(
     Returns:
         NamedTuple of outputs (described in `Samsegmesh2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SAMSEGMESH2SURF_METADATA)
     params = samsegmesh2surf_params(
         atlas_mesh=atlas_mesh,
         template=template,
@@ -233,7 +233,7 @@ def samsegmesh2surf(
         output_priors=output_priors,
         invert_flag=invert_flag,
     )
-    return samsegmesh2surf_execute(params, execution)
+    return samsegmesh2surf_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "Samsegmesh2surfOutputs",
     "Samsegmesh2surfParameters",
     "samsegmesh2surf",
-    "samsegmesh2surf_cargs",
     "samsegmesh2surf_execute",
-    "samsegmesh2surf_outputs",
     "samsegmesh2surf_params",
 ]

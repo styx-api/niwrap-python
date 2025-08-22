@@ -120,7 +120,7 @@ def create_lut_outputs(
 
 def create_lut_execute(
     params: CreateLutParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateLutOutputs:
     """
     A tool to create lookup tables.
@@ -131,10 +131,12 @@ def create_lut_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateLutOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_LUT_METADATA)
     params = execution.params(params)
     cargs = create_lut_cargs(params, execution)
     ret = create_lut_outputs(params, execution)
@@ -159,12 +161,10 @@ def create_lut(
     Returns:
         NamedTuple of outputs (described in `CreateLutOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_LUT_METADATA)
     params = create_lut_params(
         output_file_root=output_file_root,
     )
-    return create_lut_execute(params, execution)
+    return create_lut_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "CreateLutOutputs",
     "CreateLutParameters",
     "create_lut",
-    "create_lut_cargs",
     "create_lut_execute",
-    "create_lut_outputs",
     "create_lut_params",
 ]

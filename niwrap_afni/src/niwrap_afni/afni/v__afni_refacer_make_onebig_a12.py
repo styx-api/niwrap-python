@@ -120,7 +120,7 @@ def v__afni_refacer_make_onebig_a12_outputs(
 
 def v__afni_refacer_make_onebig_a12_execute(
     params: VAfniRefacerMakeOnebigA12Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniRefacerMakeOnebigA12Outputs:
     """
     Script to align a single T1w dataset to the MNI template and expand it to a
@@ -132,10 +132,12 @@ def v__afni_refacer_make_onebig_a12_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerMakeOnebigA12Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA)
     params = execution.params(params)
     cargs = v__afni_refacer_make_onebig_a12_cargs(params, execution)
     ret = v__afni_refacer_make_onebig_a12_outputs(params, execution)
@@ -161,12 +163,10 @@ def v__afni_refacer_make_onebig_a12(
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerMakeOnebigA12Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA)
     params = v__afni_refacer_make_onebig_a12_params(
         t1w_dataset=t1w_dataset,
     )
-    return v__afni_refacer_make_onebig_a12_execute(params, execution)
+    return v__afni_refacer_make_onebig_a12_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "VAfniRefacerMakeOnebigA12Parameters",
     "V__AFNI_REFACER_MAKE_ONEBIG_A12_METADATA",
     "v__afni_refacer_make_onebig_a12",
-    "v__afni_refacer_make_onebig_a12_cargs",
     "v__afni_refacer_make_onebig_a12_execute",
-    "v__afni_refacer_make_onebig_a12_outputs",
     "v__afni_refacer_make_onebig_a12_params",
 ]

@@ -343,7 +343,7 @@ def make_random_timing_py_outputs(
 
 def make_random_timing_py_execute(
     params: MakeRandomTimingPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeRandomTimingPyOutputs:
     """
     Create random stimulus timing files for use with AFNI 3dDeconvolve.
@@ -354,10 +354,12 @@ def make_random_timing_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeRandomTimingPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_RANDOM_TIMING_PY_METADATA)
     params = execution.params(params)
     cargs = make_random_timing_py_cargs(params, execution)
     ret = make_random_timing_py_outputs(params, execution)
@@ -430,8 +432,6 @@ def make_random_timing_py(
     Returns:
         NamedTuple of outputs (described in `MakeRandomTimingPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_RANDOM_TIMING_PY_METADATA)
     params = make_random_timing_py_params(
         num_runs=num_runs,
         run_time=run_time,
@@ -459,7 +459,7 @@ def make_random_timing_py(
         verb=verb,
         show_timing_stats=show_timing_stats,
     )
-    return make_random_timing_py_execute(params, execution)
+    return make_random_timing_py_execute(params, runner)
 
 
 __all__ = [
@@ -467,8 +467,6 @@ __all__ = [
     "MakeRandomTimingPyOutputs",
     "MakeRandomTimingPyParameters",
     "make_random_timing_py",
-    "make_random_timing_py_cargs",
     "make_random_timing_py_execute",
-    "make_random_timing_py_outputs",
     "make_random_timing_py_params",
 ]

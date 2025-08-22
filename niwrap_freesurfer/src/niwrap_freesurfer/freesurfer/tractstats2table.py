@@ -191,7 +191,7 @@ def tractstats2table_outputs(
 
 def tractstats2table_execute(
     params: Tractstats2tableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tractstats2tableOutputs:
     """
     Converts a track overall stats file created by tracula into a table used for
@@ -203,10 +203,12 @@ def tractstats2table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tractstats2tableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRACTSTATS2TABLE_METADATA)
     params = execution.params(params)
     cargs = tractstats2table_cargs(params, execution)
     ret = tractstats2table_outputs(params, execution)
@@ -252,8 +254,6 @@ def tractstats2table(
     Returns:
         NamedTuple of outputs (described in `Tractstats2tableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRACTSTATS2TABLE_METADATA)
     params = tractstats2table_params(
         inputs=inputs,
         load_pathstats_from_file=load_pathstats_from_file,
@@ -265,7 +265,7 @@ def tractstats2table(
         transpose=transpose,
         debug=debug,
     )
-    return tractstats2table_execute(params, execution)
+    return tractstats2table_execute(params, runner)
 
 
 __all__ = [
@@ -273,8 +273,6 @@ __all__ = [
     "Tractstats2tableOutputs",
     "Tractstats2tableParameters",
     "tractstats2table",
-    "tractstats2table_cargs",
     "tractstats2table_execute",
-    "tractstats2table_outputs",
     "tractstats2table_params",
 ]

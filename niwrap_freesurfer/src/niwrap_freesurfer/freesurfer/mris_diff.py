@@ -351,7 +351,7 @@ def mris_diff_outputs(
 
 def mris_diff_execute(
     params: MrisDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisDiffOutputs:
     """
     A tool for comparing differences between surface files in FreeSurfer.
@@ -362,10 +362,12 @@ def mris_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_DIFF_METADATA)
     params = execution.params(params)
     cargs = mris_diff_cargs(params, execution)
     ret = mris_diff_outputs(params, execution)
@@ -448,8 +450,6 @@ def mris_diff(
     Returns:
         NamedTuple of outputs (described in `MrisDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_DIFF_METADATA)
     params = mris_diff_params(
         surface1=surface1,
         surface2=surface2,
@@ -481,7 +481,7 @@ def mris_diff(
         help_=help_,
         version=version,
     )
-    return mris_diff_execute(params, execution)
+    return mris_diff_execute(params, runner)
 
 
 __all__ = [
@@ -489,8 +489,6 @@ __all__ = [
     "MrisDiffOutputs",
     "MrisDiffParameters",
     "mris_diff",
-    "mris_diff_cargs",
     "mris_diff_execute",
-    "mris_diff_outputs",
     "mris_diff_params",
 ]

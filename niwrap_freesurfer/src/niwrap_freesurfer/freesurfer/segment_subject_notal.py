@@ -116,7 +116,7 @@ def segment_subject_notal_outputs(
 
 def segment_subject_notal_execute(
     params: SegmentSubjectNotalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubjectNotalOutputs:
     """
     A script to segment subjects (notal).
@@ -127,10 +127,12 @@ def segment_subject_notal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectNotalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBJECT_NOTAL_METADATA)
     params = execution.params(params)
     cargs = segment_subject_notal_cargs(params, execution)
     ret = segment_subject_notal_outputs(params, execution)
@@ -155,12 +157,10 @@ def segment_subject_notal(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectNotalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBJECT_NOTAL_METADATA)
     params = segment_subject_notal_params(
         subject_path=subject_path,
     )
-    return segment_subject_notal_execute(params, execution)
+    return segment_subject_notal_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "SegmentSubjectNotalOutputs",
     "SegmentSubjectNotalParameters",
     "segment_subject_notal",
-    "segment_subject_notal_cargs",
     "segment_subject_notal_execute",
-    "segment_subject_notal_outputs",
     "segment_subject_notal_params",
 ]

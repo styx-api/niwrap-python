@@ -525,7 +525,7 @@ def volume_to_surface_mapping_outputs(
 
 def volume_to_surface_mapping_execute(
     params: VolumeToSurfaceMappingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
     Map volume to surface.
@@ -574,10 +574,12 @@ def volume_to_surface_mapping_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeToSurfaceMappingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_TO_SURFACE_MAPPING_METADATA)
     params = execution.params(params)
     cargs = volume_to_surface_mapping_cargs(params, execution)
     ret = volume_to_surface_mapping_outputs(params, execution)
@@ -657,8 +659,6 @@ def volume_to_surface_mapping(
     Returns:
         NamedTuple of outputs (described in `VolumeToSurfaceMappingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_TO_SURFACE_MAPPING_METADATA)
     params = volume_to_surface_mapping_params(
         volume=volume,
         surface=surface,
@@ -670,7 +670,7 @@ def volume_to_surface_mapping(
         myelin_style=myelin_style,
         opt_subvol_select_subvol=opt_subvol_select_subvol,
     )
-    return volume_to_surface_mapping_execute(params, execution)
+    return volume_to_surface_mapping_execute(params, runner)
 
 
 __all__ = [
@@ -684,18 +684,10 @@ __all__ = [
     "VolumeToSurfaceMappingRibbonConstrainedParameters",
     "VolumeToSurfaceMappingVolumeRoiParameters",
     "volume_to_surface_mapping",
-    "volume_to_surface_mapping_cargs",
     "volume_to_surface_mapping_execute",
-    "volume_to_surface_mapping_myelin_style_cargs",
     "volume_to_surface_mapping_myelin_style_params",
-    "volume_to_surface_mapping_output_weights_cargs",
-    "volume_to_surface_mapping_output_weights_outputs",
     "volume_to_surface_mapping_output_weights_params",
-    "volume_to_surface_mapping_outputs",
     "volume_to_surface_mapping_params",
-    "volume_to_surface_mapping_ribbon_constrained_cargs",
-    "volume_to_surface_mapping_ribbon_constrained_outputs",
     "volume_to_surface_mapping_ribbon_constrained_params",
-    "volume_to_surface_mapping_volume_roi_cargs",
     "volume_to_surface_mapping_volume_roi_params",
 ]

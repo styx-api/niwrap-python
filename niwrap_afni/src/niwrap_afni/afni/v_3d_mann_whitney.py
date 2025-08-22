@@ -163,7 +163,7 @@ def v_3d_mann_whitney_outputs(
 
 def v_3d_mann_whitney_execute(
     params: V3dMannWhitneyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMannWhitneyOutputs:
     """
     Performs nonparametric Mann-Whitney two-sample test.
@@ -174,10 +174,12 @@ def v_3d_mann_whitney_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMannWhitneyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MANN_WHITNEY_METADATA)
     params = execution.params(params)
     cargs = v_3d_mann_whitney_cargs(params, execution)
     ret = v_3d_mann_whitney_outputs(params, execution)
@@ -213,8 +215,6 @@ def v_3d_mann_whitney(
     Returns:
         NamedTuple of outputs (described in `V3dMannWhitneyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MANN_WHITNEY_METADATA)
     params = v_3d_mann_whitney_params(
         dset1_x=dset1_x,
         dset2_y=dset2_y,
@@ -222,7 +222,7 @@ def v_3d_mann_whitney(
         workmem=workmem,
         voxel_num=voxel_num,
     )
-    return v_3d_mann_whitney_execute(params, execution)
+    return v_3d_mann_whitney_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "V3dMannWhitneyParameters",
     "V_3D_MANN_WHITNEY_METADATA",
     "v_3d_mann_whitney",
-    "v_3d_mann_whitney_cargs",
     "v_3d_mann_whitney_execute",
-    "v_3d_mann_whitney_outputs",
     "v_3d_mann_whitney_params",
 ]

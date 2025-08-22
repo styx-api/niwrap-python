@@ -198,7 +198,7 @@ def analyze_trace_outputs(
 
 def analyze_trace_execute(
     params: AnalyzeTraceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AnalyzeTraceOutputs:
     """
     A program to analyze SUMA (and AFNI's perhaps) stack output for functions that
@@ -210,10 +210,12 @@ def analyze_trace_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AnalyzeTraceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANALYZE_TRACE_METADATA)
     params = execution.params(params)
     cargs = analyze_trace_cargs(params, execution)
     ret = analyze_trace_outputs(params, execution)
@@ -265,8 +267,6 @@ def analyze_trace(
     Returns:
         NamedTuple of outputs (described in `AnalyzeTraceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANALYZE_TRACE_METADATA)
     params = analyze_trace_params(
         tracefile=tracefile,
         max_func_lines=max_func_lines,
@@ -280,7 +280,7 @@ def analyze_trace(
         nomall=nomall,
         yesmall=yesmall,
     )
-    return analyze_trace_execute(params, execution)
+    return analyze_trace_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "AnalyzeTraceOutputs",
     "AnalyzeTraceParameters",
     "analyze_trace",
-    "analyze_trace_cargs",
     "analyze_trace_execute",
-    "analyze_trace_outputs",
     "analyze_trace_params",
 ]

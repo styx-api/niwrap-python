@@ -140,7 +140,7 @@ def v_3d_aboverlap_outputs(
 
 def v_3d_aboverlap_execute(
     params: V3dAboverlapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAboverlapOutputs:
     """
     Counts various metrics about how the automasks of datasets A and B overlap or
@@ -152,10 +152,12 @@ def v_3d_aboverlap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAboverlapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ABOVERLAP_METADATA)
     params = execution.params(params)
     cargs = v_3d_aboverlap_cargs(params, execution)
     ret = v_3d_aboverlap_outputs(params, execution)
@@ -190,8 +192,6 @@ def v_3d_aboverlap(
     Returns:
         NamedTuple of outputs (described in `V3dAboverlapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ABOVERLAP_METADATA)
     params = v_3d_aboverlap_params(
         dataset_a=dataset_a,
         dataset_b=dataset_b,
@@ -199,7 +199,7 @@ def v_3d_aboverlap(
         quiet=quiet,
         verbose=verbose,
     )
-    return v_3d_aboverlap_execute(params, execution)
+    return v_3d_aboverlap_execute(params, runner)
 
 
 __all__ = [
@@ -207,8 +207,6 @@ __all__ = [
     "V3dAboverlapParameters",
     "V_3D_ABOVERLAP_METADATA",
     "v_3d_aboverlap",
-    "v_3d_aboverlap_cargs",
     "v_3d_aboverlap_execute",
-    "v_3d_aboverlap_outputs",
     "v_3d_aboverlap_params",
 ]

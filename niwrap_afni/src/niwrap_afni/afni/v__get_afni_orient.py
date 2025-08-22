@@ -126,7 +126,7 @@ def v__get_afni_orient_outputs(
 
 def v__get_afni_orient_execute(
     params: VGetAfniOrientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGetAfniOrientOutputs:
     """
     Returns the orient code of AFNI datasets.
@@ -137,10 +137,12 @@ def v__get_afni_orient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGetAfniOrientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GET_AFNI_ORIENT_METADATA)
     params = execution.params(params)
     cargs = v__get_afni_orient_cargs(params, execution)
     ret = v__get_afni_orient_outputs(params, execution)
@@ -167,13 +169,11 @@ def v__get_afni_orient(
     Returns:
         NamedTuple of outputs (described in `VGetAfniOrientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GET_AFNI_ORIENT_METADATA)
     params = v__get_afni_orient_params(
         exploratory=exploratory,
         infile=infile,
     )
-    return v__get_afni_orient_execute(params, execution)
+    return v__get_afni_orient_execute(params, runner)
 
 
 __all__ = [
@@ -181,8 +181,6 @@ __all__ = [
     "VGetAfniOrientParameters",
     "V__GET_AFNI_ORIENT_METADATA",
     "v__get_afni_orient",
-    "v__get_afni_orient_cargs",
     "v__get_afni_orient_execute",
-    "v__get_afni_orient_outputs",
     "v__get_afni_orient_params",
 ]

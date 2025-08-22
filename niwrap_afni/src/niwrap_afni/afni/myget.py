@@ -136,7 +136,7 @@ def myget_outputs(
 
 def myget_execute(
     params: MygetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MygetOutputs:
     """
     A simple file downloader from a URL.
@@ -147,10 +147,12 @@ def myget_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MygetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MYGET_METADATA)
     params = execution.params(params)
     cargs = myget_cargs(params, execution)
     ret = myget_outputs(params, execution)
@@ -180,14 +182,12 @@ def myget(
     Returns:
         NamedTuple of outputs (described in `MygetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MYGET_METADATA)
     params = myget_params(
         protocol_version=protocol_version,
         url=url,
         output_file=output_file,
     )
-    return myget_execute(params, execution)
+    return myget_execute(params, runner)
 
 
 __all__ = [
@@ -195,8 +195,6 @@ __all__ = [
     "MygetOutputs",
     "MygetParameters",
     "myget",
-    "myget_cargs",
     "myget_execute",
-    "myget_outputs",
     "myget_params",
 ]

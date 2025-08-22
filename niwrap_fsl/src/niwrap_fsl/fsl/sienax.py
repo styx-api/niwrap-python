@@ -213,7 +213,7 @@ def sienax_outputs(
 
 def sienax_execute(
     params: SienaxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SienaxOutputs:
     """
     A tool to estimate brain tissue volume from a single MR image and to compare it
@@ -225,10 +225,12 @@ def sienax_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SienaxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIENAX_METADATA)
     params = execution.params(params)
     cargs = sienax_cargs(params, execution)
     ret = sienax_outputs(params, execution)
@@ -280,8 +282,6 @@ def sienax(
     Returns:
         NamedTuple of outputs (described in `SienaxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIENAX_METADATA)
     params = sienax_params(
         infile=infile,
         output_dir=output_dir,
@@ -295,7 +295,7 @@ def sienax(
         lesion_mask=lesion_mask,
         fast_options=fast_options,
     )
-    return sienax_execute(params, execution)
+    return sienax_execute(params, runner)
 
 
 __all__ = [
@@ -303,8 +303,6 @@ __all__ = [
     "SienaxOutputs",
     "SienaxParameters",
     "sienax",
-    "sienax_cargs",
     "sienax_execute",
-    "sienax_outputs",
     "sienax_params",
 ]

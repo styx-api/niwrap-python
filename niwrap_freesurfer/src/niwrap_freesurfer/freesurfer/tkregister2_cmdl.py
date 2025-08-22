@@ -625,7 +625,7 @@ def tkregister2_cmdl_outputs(
 
 def tkregister2_cmdl_execute(
     params: Tkregister2CmdlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tkregister2CmdlOutputs:
     """
     tkregister2 is a tool to assist in the manual tuning of the linear registration
@@ -638,10 +638,12 @@ def tkregister2_cmdl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tkregister2CmdlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TKREGISTER2_CMDL_METADATA)
     params = execution.params(params)
     cargs = tkregister2_cmdl_cargs(params, execution)
     ret = tkregister2_cmdl_outputs(params, execution)
@@ -788,8 +790,6 @@ def tkregister2_cmdl(
     Returns:
         NamedTuple of outputs (described in `Tkregister2CmdlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TKREGISTER2_CMDL_METADATA)
     params = tkregister2_cmdl_params(
         movable_volume=movable_volume,
         target_volume=target_volume,
@@ -852,7 +852,7 @@ def tkregister2_cmdl(
         rot=rot,
         conf_targ_flag=conf_targ_flag,
     )
-    return tkregister2_cmdl_execute(params, execution)
+    return tkregister2_cmdl_execute(params, runner)
 
 
 __all__ = [
@@ -860,8 +860,6 @@ __all__ = [
     "Tkregister2CmdlOutputs",
     "Tkregister2CmdlParameters",
     "tkregister2_cmdl",
-    "tkregister2_cmdl_cargs",
     "tkregister2_cmdl_execute",
-    "tkregister2_cmdl_outputs",
     "tkregister2_cmdl_params",
 ]

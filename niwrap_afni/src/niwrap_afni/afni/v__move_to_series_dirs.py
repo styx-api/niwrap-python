@@ -173,7 +173,7 @@ def v__move_to_series_dirs_outputs(
 
 def v__move_to_series_dirs_execute(
     params: VMoveToSeriesDirsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VMoveToSeriesDirsOutputs:
     """
     Partition DICOM files into series directories by copying or moving them to new
@@ -185,10 +185,12 @@ def v__move_to_series_dirs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VMoveToSeriesDirsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__MOVE_TO_SERIES_DIRS_METADATA)
     params = execution.params(params)
     cargs = v__move_to_series_dirs_cargs(params, execution)
     ret = v__move_to_series_dirs_outputs(params, execution)
@@ -231,8 +233,6 @@ def v__move_to_series_dirs(
     Returns:
         NamedTuple of outputs (described in `VMoveToSeriesDirsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__MOVE_TO_SERIES_DIRS_METADATA)
     params = v__move_to_series_dirs_params(
         action=action,
         dprefix=dprefix,
@@ -243,7 +243,7 @@ def v__move_to_series_dirs(
         ver=ver,
         dicom_files=dicom_files,
     )
-    return v__move_to_series_dirs_execute(params, execution)
+    return v__move_to_series_dirs_execute(params, runner)
 
 
 __all__ = [
@@ -251,8 +251,6 @@ __all__ = [
     "VMoveToSeriesDirsParameters",
     "V__MOVE_TO_SERIES_DIRS_METADATA",
     "v__move_to_series_dirs",
-    "v__move_to_series_dirs_cargs",
     "v__move_to_series_dirs_execute",
-    "v__move_to_series_dirs_outputs",
     "v__move_to_series_dirs_params",
 ]

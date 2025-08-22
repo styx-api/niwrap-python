@@ -180,7 +180,7 @@ def v_3d_local_svd_outputs(
 
 def v_3d_local_svd_execute(
     params: V3dLocalSvdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLocalSvdOutputs:
     """
     Computes the SVD of time series from a neighborhood of each voxel.
@@ -191,10 +191,12 @@ def v_3d_local_svd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLocalSvdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LOCAL_SVD_METADATA)
     params = execution.params(params)
     cargs = v_3d_local_svd_cargs(params, execution)
     ret = v_3d_local_svd_outputs(params, execution)
@@ -234,8 +236,6 @@ def v_3d_local_svd(
     Returns:
         NamedTuple of outputs (described in `V3dLocalSvdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LOCAL_SVD_METADATA)
     params = v_3d_local_svd_params(
         auto_mask=auto_mask,
         input_file=input_file,
@@ -246,7 +246,7 @@ def v_3d_local_svd(
         vnorm=vnorm,
         vproj=vproj,
     )
-    return v_3d_local_svd_execute(params, execution)
+    return v_3d_local_svd_execute(params, runner)
 
 
 __all__ = [
@@ -254,8 +254,6 @@ __all__ = [
     "V3dLocalSvdParameters",
     "V_3D_LOCAL_SVD_METADATA",
     "v_3d_local_svd",
-    "v_3d_local_svd_cargs",
     "v_3d_local_svd_execute",
-    "v_3d_local_svd_outputs",
     "v_3d_local_svd_params",
 ]

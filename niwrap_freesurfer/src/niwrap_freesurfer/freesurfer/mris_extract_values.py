@@ -163,7 +163,7 @@ def mris_extract_values_outputs(
 
 def mris_extract_values_execute(
     params: MrisExtractValuesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisExtractValuesOutputs:
     """
     Extracts values from surface, overlay, and annotation files and outputs them to
@@ -175,10 +175,12 @@ def mris_extract_values_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisExtractValuesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_EXTRACT_VALUES_METADATA)
     params = execution.params(params)
     cargs = mris_extract_values_cargs(params, execution)
     ret = mris_extract_values_outputs(params, execution)
@@ -214,8 +216,6 @@ def mris_extract_values(
     Returns:
         NamedTuple of outputs (described in `MrisExtractValuesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_EXTRACT_VALUES_METADATA)
     params = mris_extract_values_params(
         surface=surface,
         overlay=overlay,
@@ -224,7 +224,7 @@ def mris_extract_values(
         num_images=num_images,
         image_files=image_files,
     )
-    return mris_extract_values_execute(params, execution)
+    return mris_extract_values_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "MrisExtractValuesOutputs",
     "MrisExtractValuesParameters",
     "mris_extract_values",
-    "mris_extract_values_cargs",
     "mris_extract_values_execute",
-    "mris_extract_values_outputs",
     "mris_extract_values_params",
 ]

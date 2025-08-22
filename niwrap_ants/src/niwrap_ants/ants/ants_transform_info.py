@@ -124,7 +124,7 @@ def ants_transform_info_outputs(
 
 def ants_transform_info_execute(
     params: AntsTransformInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsTransformInfoOutputs:
     """
     Provide information about an ITK transform file.
@@ -135,10 +135,12 @@ def ants_transform_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsTransformInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_TRANSFORM_INFO_METADATA)
     params = execution.params(params)
     cargs = ants_transform_info_cargs(params, execution)
     ret = ants_transform_info_outputs(params, execution)
@@ -164,12 +166,10 @@ def ants_transform_info(
     Returns:
         NamedTuple of outputs (described in `AntsTransformInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_TRANSFORM_INFO_METADATA)
     params = ants_transform_info_params(
         transform_file=transform_file,
     )
-    return ants_transform_info_execute(params, execution)
+    return ants_transform_info_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "AntsTransformInfoOutputs",
     "AntsTransformInfoParameters",
     "ants_transform_info",
-    "ants_transform_info_cargs",
     "ants_transform_info_execute",
-    "ants_transform_info_outputs",
     "ants_transform_info_params",
 ]

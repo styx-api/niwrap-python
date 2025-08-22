@@ -196,7 +196,7 @@ def v_3d_local_unifize_outputs(
 
 def v_3d_local_unifize_execute(
     params: V3dLocalUnifizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLocalUnifizeOutputs:
     """
     This program generates a 'unifized' output volume by estimating the median in
@@ -209,10 +209,12 @@ def v_3d_local_unifize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLocalUnifizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LOCAL_UNIFIZE_METADATA)
     params = execution.params(params)
     cargs = v_3d_local_unifize_cargs(params, execution)
     ret = v_3d_local_unifize_outputs(params, execution)
@@ -261,8 +263,6 @@ def v_3d_local_unifize(
     Returns:
         NamedTuple of outputs (described in `V3dLocalUnifizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LOCAL_UNIFIZE_METADATA)
     params = v_3d_local_unifize_params(
         input_=input_,
         output=output,
@@ -274,7 +274,7 @@ def v_3d_local_unifize(
         local_mask=local_mask,
         filter_thr=filter_thr,
     )
-    return v_3d_local_unifize_execute(params, execution)
+    return v_3d_local_unifize_execute(params, runner)
 
 
 __all__ = [
@@ -282,8 +282,6 @@ __all__ = [
     "V3dLocalUnifizeParameters",
     "V_3D_LOCAL_UNIFIZE_METADATA",
     "v_3d_local_unifize",
-    "v_3d_local_unifize_cargs",
     "v_3d_local_unifize_execute",
-    "v_3d_local_unifize_outputs",
     "v_3d_local_unifize_params",
 ]

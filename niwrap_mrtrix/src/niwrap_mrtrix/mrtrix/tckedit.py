@@ -817,7 +817,7 @@ def tckedit_outputs(
 
 def tckedit_execute(
     params: TckeditParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckeditOutputs:
     """
     Perform various editing operations on track files.
@@ -836,10 +836,12 @@ def tckedit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckeditOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKEDIT_METADATA)
     params = execution.params(params)
     cargs = tckedit_cargs(params, execution)
     ret = tckedit_outputs(params, execution)
@@ -941,8 +943,6 @@ def tckedit(
     Returns:
         NamedTuple of outputs (described in `TckeditOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKEDIT_METADATA)
     params = tckedit_params(
         include=include,
         include_ordered=include_ordered,
@@ -969,7 +969,7 @@ def tckedit(
         tracks_in=tracks_in,
         tracks_out=tracks_out,
     )
-    return tckedit_execute(params, execution)
+    return tckedit_execute(params, runner)
 
 
 __all__ = [
@@ -988,30 +988,17 @@ __all__ = [
     "TckeditVariousString2Parameters",
     "TckeditVariousStringParameters",
     "tckedit",
-    "tckedit_cargs",
-    "tckedit_config_cargs",
     "tckedit_config_params",
-    "tckedit_exclude_cargs",
     "tckedit_exclude_params",
     "tckedit_execute",
-    "tckedit_include_cargs",
-    "tckedit_include_ordered_cargs",
     "tckedit_include_ordered_params",
     "tckedit_include_params",
-    "tckedit_mask_cargs",
     "tckedit_mask_params",
-    "tckedit_outputs",
     "tckedit_params",
-    "tckedit_various_file_1_cargs",
     "tckedit_various_file_1_params",
-    "tckedit_various_file_2_cargs",
     "tckedit_various_file_2_params",
-    "tckedit_various_file_cargs",
     "tckedit_various_file_params",
-    "tckedit_various_string_1_cargs",
     "tckedit_various_string_1_params",
-    "tckedit_various_string_2_cargs",
     "tckedit_various_string_2_params",
-    "tckedit_various_string_cargs",
     "tckedit_various_string_params",
 ]

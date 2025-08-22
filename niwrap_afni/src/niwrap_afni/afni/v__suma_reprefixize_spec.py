@@ -153,7 +153,7 @@ def v__suma_reprefixize_spec_outputs(
 
 def v__suma_reprefixize_spec_execute(
     params: VSumaReprefixizeSpecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaReprefixizeSpecOutputs:
     """
     A tool for prefixing and working with SUMA specification files.
@@ -164,10 +164,12 @@ def v__suma_reprefixize_spec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaReprefixizeSpecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_REPREFIXIZE_SPEC_METADATA)
     params = execution.params(params)
     cargs = v__suma_reprefixize_spec_cargs(params, execution)
     ret = v__suma_reprefixize_spec_outputs(params, execution)
@@ -200,8 +202,6 @@ def v__suma_reprefixize_spec(
     Returns:
         NamedTuple of outputs (described in `VSumaReprefixizeSpecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_REPREFIXIZE_SPEC_METADATA)
     params = v__suma_reprefixize_spec_params(
         input_file=input_file,
         prefix=prefix,
@@ -209,7 +209,7 @@ def v__suma_reprefixize_spec(
         work_dir=work_dir,
         no_clean=no_clean,
     )
-    return v__suma_reprefixize_spec_execute(params, execution)
+    return v__suma_reprefixize_spec_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "VSumaReprefixizeSpecParameters",
     "V__SUMA_REPREFIXIZE_SPEC_METADATA",
     "v__suma_reprefixize_spec",
-    "v__suma_reprefixize_spec_cargs",
     "v__suma_reprefixize_spec_execute",
-    "v__suma_reprefixize_spec_outputs",
     "v__suma_reprefixize_spec_params",
 ]

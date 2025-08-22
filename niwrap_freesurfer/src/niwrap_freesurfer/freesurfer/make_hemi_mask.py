@@ -131,7 +131,7 @@ def make_hemi_mask_outputs(
 
 def make_hemi_mask_execute(
     params: MakeHemiMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeHemiMaskOutputs:
     """
     Generates a hemisphere mask by registering input to the left/right reversed
@@ -143,10 +143,12 @@ def make_hemi_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeHemiMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_HEMI_MASK_METADATA)
     params = execution.params(params)
     cargs = make_hemi_mask_cargs(params, execution)
     ret = make_hemi_mask_outputs(params, execution)
@@ -177,14 +179,12 @@ def make_hemi_mask(
     Returns:
         NamedTuple of outputs (described in `MakeHemiMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_HEMI_MASK_METADATA)
     params = make_hemi_mask_params(
         hemi=hemi,
         input_file=input_file,
         output_file=output_file,
     )
-    return make_hemi_mask_execute(params, execution)
+    return make_hemi_mask_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "MakeHemiMaskOutputs",
     "MakeHemiMaskParameters",
     "make_hemi_mask",
-    "make_hemi_mask_cargs",
     "make_hemi_mask_execute",
-    "make_hemi_mask_outputs",
     "make_hemi_mask_params",
 ]

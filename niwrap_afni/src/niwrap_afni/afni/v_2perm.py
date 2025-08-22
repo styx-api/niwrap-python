@@ -160,7 +160,7 @@ def v_2perm_outputs(
 
 def v_2perm_execute(
     params: V2permParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V2permOutputs:
     """
     Generates two random non-overlapping subsets of a given set of integers.
@@ -171,10 +171,12 @@ def v_2perm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V2permOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_2PERM_METADATA)
     params = execution.params(params)
     cargs = v_2perm_cargs(params, execution)
     ret = v_2perm_outputs(params, execution)
@@ -211,8 +213,6 @@ def v_2perm(
     Returns:
         NamedTuple of outputs (described in `V2permOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_2PERM_METADATA)
     params = v_2perm_params(
         prefix=prefix,
         comma=comma,
@@ -221,7 +221,7 @@ def v_2perm(
         subset1_size=subset1_size,
         subset2_size=subset2_size,
     )
-    return v_2perm_execute(params, execution)
+    return v_2perm_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "V2permParameters",
     "V_2PERM_METADATA",
     "v_2perm",
-    "v_2perm_cargs",
     "v_2perm_execute",
-    "v_2perm_outputs",
     "v_2perm_params",
 ]

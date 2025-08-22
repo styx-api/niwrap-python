@@ -227,7 +227,7 @@ def tsfvalidate_outputs(
 
 def tsfvalidate_execute(
     params: TsfvalidateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TsfvalidateOutputs:
     """
     Validate a track scalar file against the corresponding track data.
@@ -244,10 +244,12 @@ def tsfvalidate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TsfvalidateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TSFVALIDATE_METADATA)
     params = execution.params(params)
     cargs = tsfvalidate_cargs(params, execution)
     ret = tsfvalidate_outputs(params, execution)
@@ -300,8 +302,6 @@ def tsfvalidate(
     Returns:
         NamedTuple of outputs (described in `TsfvalidateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TSFVALIDATE_METADATA)
     params = tsfvalidate_params(
         info=info,
         quiet=quiet,
@@ -314,7 +314,7 @@ def tsfvalidate(
         tsf=tsf,
         tracks=tracks,
     )
-    return tsfvalidate_execute(params, execution)
+    return tsfvalidate_execute(params, runner)
 
 
 __all__ = [
@@ -323,10 +323,7 @@ __all__ = [
     "TsfvalidateOutputs",
     "TsfvalidateParameters",
     "tsfvalidate",
-    "tsfvalidate_cargs",
-    "tsfvalidate_config_cargs",
     "tsfvalidate_config_params",
     "tsfvalidate_execute",
-    "tsfvalidate_outputs",
     "tsfvalidate_params",
 ]

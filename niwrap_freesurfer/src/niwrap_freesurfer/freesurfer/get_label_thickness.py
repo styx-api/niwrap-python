@@ -116,7 +116,7 @@ def get_label_thickness_outputs(
 
 def get_label_thickness_execute(
     params: GetLabelThicknessParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GetLabelThicknessOutputs:
     """
     Tool to calculate label thickness.
@@ -127,10 +127,12 @@ def get_label_thickness_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GetLabelThicknessOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GET_LABEL_THICKNESS_METADATA)
     params = execution.params(params)
     cargs = get_label_thickness_cargs(params, execution)
     ret = get_label_thickness_outputs(params, execution)
@@ -155,12 +157,10 @@ def get_label_thickness(
     Returns:
         NamedTuple of outputs (described in `GetLabelThicknessOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GET_LABEL_THICKNESS_METADATA)
     params = get_label_thickness_params(
         infile=infile,
     )
-    return get_label_thickness_execute(params, execution)
+    return get_label_thickness_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "GetLabelThicknessOutputs",
     "GetLabelThicknessParameters",
     "get_label_thickness",
-    "get_label_thickness_cargs",
     "get_label_thickness_execute",
-    "get_label_thickness_outputs",
     "get_label_thickness_params",
 ]

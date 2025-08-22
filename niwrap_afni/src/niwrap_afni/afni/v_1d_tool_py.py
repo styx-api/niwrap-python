@@ -227,7 +227,7 @@ def v_1d_tool_py_outputs(
 
 def v_1d_tool_py_execute(
     params: V1dToolPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dToolPyOutputs:
     """
     A tool for manipulating and evaluating 1D files.
@@ -238,10 +238,12 @@ def v_1d_tool_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dToolPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_TOOL_PY_METADATA)
     params = execution.params(params)
     cargs = v_1d_tool_py_cargs(params, execution)
     ret = v_1d_tool_py_outputs(params, execution)
@@ -290,8 +292,6 @@ def v_1d_tool_py(
     Returns:
         NamedTuple of outputs (described in `V1dToolPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_TOOL_PY_METADATA)
     params = v_1d_tool_py_params(
         infile=infile,
         write=write,
@@ -307,7 +307,7 @@ def v_1d_tool_py(
         reverse=reverse,
         show_max_displace=show_max_displace,
     )
-    return v_1d_tool_py_execute(params, execution)
+    return v_1d_tool_py_execute(params, runner)
 
 
 __all__ = [
@@ -315,8 +315,6 @@ __all__ = [
     "V1dToolPyParameters",
     "V_1D_TOOL_PY_METADATA",
     "v_1d_tool_py",
-    "v_1d_tool_py_cargs",
     "v_1d_tool_py_execute",
-    "v_1d_tool_py_outputs",
     "v_1d_tool_py_params",
 ]

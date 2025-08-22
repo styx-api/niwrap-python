@@ -190,7 +190,7 @@ def warp_tensor_image_multi_transform_outputs(
 
 def warp_tensor_image_multi_transform_execute(
     params: WarpTensorImageMultiTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WarpTensorImageMultiTransformOutputs:
     """
     WarpTensorImageMultiTransform is used to apply transformations including affine
@@ -203,10 +203,12 @@ def warp_tensor_image_multi_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WarpTensorImageMultiTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = warp_tensor_image_multi_transform_cargs(params, execution)
     ret = warp_tensor_image_multi_transform_outputs(params, execution)
@@ -258,8 +260,6 @@ def warp_tensor_image_multi_transform(
     Returns:
         NamedTuple of outputs (described in `WarpTensorImageMultiTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WARP_TENSOR_IMAGE_MULTI_TRANSFORM_METADATA)
     params = warp_tensor_image_multi_transform_params(
         image_dimension=image_dimension,
         moving_image=moving_image,
@@ -272,7 +272,7 @@ def warp_tensor_image_multi_transform(
         ants_prefix=ants_prefix,
         ants_prefix_invert=ants_prefix_invert,
     )
-    return warp_tensor_image_multi_transform_execute(params, execution)
+    return warp_tensor_image_multi_transform_execute(params, runner)
 
 
 __all__ = [
@@ -280,8 +280,6 @@ __all__ = [
     "WarpTensorImageMultiTransformOutputs",
     "WarpTensorImageMultiTransformParameters",
     "warp_tensor_image_multi_transform",
-    "warp_tensor_image_multi_transform_cargs",
     "warp_tensor_image_multi_transform_execute",
-    "warp_tensor_image_multi_transform_outputs",
     "warp_tensor_image_multi_transform_params",
 ]

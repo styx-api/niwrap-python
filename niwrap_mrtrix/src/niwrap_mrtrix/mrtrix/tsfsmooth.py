@@ -242,7 +242,7 @@ def tsfsmooth_outputs(
 
 def tsfsmooth_execute(
     params: TsfsmoothParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TsfsmoothOutputs:
     """
     Gaussian filter a track scalar file.
@@ -259,10 +259,12 @@ def tsfsmooth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TsfsmoothOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TSFSMOOTH_METADATA)
     params = execution.params(params)
     cargs = tsfsmooth_cargs(params, execution)
     ret = tsfsmooth_outputs(params, execution)
@@ -318,8 +320,6 @@ def tsfsmooth(
     Returns:
         NamedTuple of outputs (described in `TsfsmoothOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TSFSMOOTH_METADATA)
     params = tsfsmooth_params(
         stdev=stdev,
         info=info,
@@ -333,7 +333,7 @@ def tsfsmooth(
         input_=input_,
         output=output,
     )
-    return tsfsmooth_execute(params, execution)
+    return tsfsmooth_execute(params, runner)
 
 
 __all__ = [
@@ -342,10 +342,7 @@ __all__ = [
     "TsfsmoothOutputs",
     "TsfsmoothParameters",
     "tsfsmooth",
-    "tsfsmooth_cargs",
-    "tsfsmooth_config_cargs",
     "tsfsmooth_config_params",
     "tsfsmooth_execute",
-    "tsfsmooth_outputs",
     "tsfsmooth_params",
 ]

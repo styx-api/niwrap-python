@@ -177,7 +177,7 @@ def mris_reposition_surface_outputs(
 
 def mris_reposition_surface_execute(
     params: MrisRepositionSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRepositionSurfaceOutputs:
     """
     Reposition a surface based on the given control points (in JSON format).
@@ -188,10 +188,12 @@ def mris_reposition_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRepositionSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REPOSITION_SURFACE_METADATA)
     params = execution.params(params)
     cargs = mris_reposition_surface_cargs(params, execution)
     ret = mris_reposition_surface_outputs(params, execution)
@@ -228,8 +230,6 @@ def mris_reposition_surface(
     Returns:
         NamedTuple of outputs (described in `MrisRepositionSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REPOSITION_SURFACE_METADATA)
     params = mris_reposition_surface_params(
         surf=surf,
         volume=volume,
@@ -239,7 +239,7 @@ def mris_reposition_surface(
         sigma=sigma,
         iterations=iterations,
     )
-    return mris_reposition_surface_execute(params, execution)
+    return mris_reposition_surface_execute(params, runner)
 
 
 __all__ = [
@@ -247,8 +247,6 @@ __all__ = [
     "MrisRepositionSurfaceOutputs",
     "MrisRepositionSurfaceParameters",
     "mris_reposition_surface",
-    "mris_reposition_surface_cargs",
     "mris_reposition_surface_execute",
-    "mris_reposition_surface_outputs",
     "mris_reposition_surface_params",
 ]

@@ -180,7 +180,7 @@ def long_stats_tps_outputs(
 
 def long_stats_tps_execute(
     params: LongStatsTpsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongStatsTpsOutputs:
     """
     Stack results for individual time points based on longitudinal qdec table.
@@ -191,10 +191,12 @@ def long_stats_tps_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongStatsTpsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_STATS_TPS_METADATA)
     params = execution.params(params)
     cargs = long_stats_tps_cargs(params, execution)
     ret = long_stats_tps_outputs(params, execution)
@@ -234,8 +236,6 @@ def long_stats_tps(
     Returns:
         NamedTuple of outputs (described in `LongStatsTpsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_STATS_TPS_METADATA)
     params = long_stats_tps_params(
         qdec_table=qdec_table,
         stats_file=stats_file,
@@ -246,7 +246,7 @@ def long_stats_tps(
         qcolumn=qcolumn,
         cross_sectional=cross_sectional,
     )
-    return long_stats_tps_execute(params, execution)
+    return long_stats_tps_execute(params, runner)
 
 
 __all__ = [
@@ -254,8 +254,6 @@ __all__ = [
     "LongStatsTpsOutputs",
     "LongStatsTpsParameters",
     "long_stats_tps",
-    "long_stats_tps_cargs",
     "long_stats_tps_execute",
-    "long_stats_tps_outputs",
     "long_stats_tps_params",
 ]

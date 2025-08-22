@@ -276,7 +276,7 @@ def scene_file_merge_outputs(
 
 def scene_file_merge_execute(
     params: SceneFileMergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SceneFileMergeOutputs:
     """
     Rearrange scenes into a new file.
@@ -296,10 +296,12 @@ def scene_file_merge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SceneFileMergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SCENE_FILE_MERGE_METADATA)
     params = execution.params(params)
     cargs = scene_file_merge_cargs(params, execution)
     ret = scene_file_merge_outputs(params, execution)
@@ -335,13 +337,11 @@ def scene_file_merge(
     Returns:
         NamedTuple of outputs (described in `SceneFileMergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SCENE_FILE_MERGE_METADATA)
     params = scene_file_merge_params(
         scene_file_out=scene_file_out,
         scene_file=scene_file,
     )
-    return scene_file_merge_execute(params, execution)
+    return scene_file_merge_execute(params, runner)
 
 
 __all__ = [
@@ -352,14 +352,9 @@ __all__ = [
     "SceneFileMergeSceneParameters",
     "SceneFileMergeUpToParameters",
     "scene_file_merge",
-    "scene_file_merge_cargs",
     "scene_file_merge_execute",
-    "scene_file_merge_outputs",
     "scene_file_merge_params",
-    "scene_file_merge_scene_cargs",
-    "scene_file_merge_scene_file_cargs",
     "scene_file_merge_scene_file_params",
     "scene_file_merge_scene_params",
-    "scene_file_merge_up_to_cargs",
     "scene_file_merge_up_to_params",
 ]

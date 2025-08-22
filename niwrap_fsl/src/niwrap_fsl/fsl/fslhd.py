@@ -122,7 +122,7 @@ def fslhd_outputs(
 
 def fslhd_execute(
     params: FslhdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslhdOutputs:
     """
     Display header information from a NIFTI file.
@@ -133,10 +133,12 @@ def fslhd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslhdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLHD_METADATA)
     params = execution.params(params)
     cargs = fslhd_cargs(params, execution)
     ret = fslhd_outputs(params, execution)
@@ -163,13 +165,11 @@ def fslhd(
     Returns:
         NamedTuple of outputs (described in `FslhdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLHD_METADATA)
     params = fslhd_params(
         xml_flag=xml_flag,
         input_file=input_file,
     )
-    return fslhd_execute(params, execution)
+    return fslhd_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "FslhdOutputs",
     "FslhdParameters",
     "fslhd",
-    "fslhd_cargs",
     "fslhd_execute",
-    "fslhd_outputs",
     "fslhd_params",
 ]

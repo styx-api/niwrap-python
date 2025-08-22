@@ -284,7 +284,7 @@ def v__update_afni_binaries_outputs(
 
 def v__update_afni_binaries_execute(
     params: VUpdateAfniBinariesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VUpdateAfniBinariesOutputs:
     """
     Install or update AFNI binaries.
@@ -295,10 +295,12 @@ def v__update_afni_binaries_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VUpdateAfniBinariesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__UPDATE_AFNI_BINARIES_METADATA)
     params = execution.params(params)
     cargs = v__update_afni_binaries_cargs(params, execution)
     ret = v__update_afni_binaries_outputs(params, execution)
@@ -370,8 +372,6 @@ def v__update_afni_binaries(
     Returns:
         NamedTuple of outputs (described in `VUpdateAfniBinariesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__UPDATE_AFNI_BINARIES_METADATA)
     params = v__update_afni_binaries_params(
         defaults_flag=defaults_flag,
         help_flag=help_flag,
@@ -398,7 +398,7 @@ def v__update_afni_binaries(
         prog_list=prog_list,
         package=package,
     )
-    return v__update_afni_binaries_execute(params, execution)
+    return v__update_afni_binaries_execute(params, runner)
 
 
 __all__ = [
@@ -406,8 +406,6 @@ __all__ = [
     "VUpdateAfniBinariesParameters",
     "V__UPDATE_AFNI_BINARIES_METADATA",
     "v__update_afni_binaries",
-    "v__update_afni_binaries_cargs",
     "v__update_afni_binaries_execute",
-    "v__update_afni_binaries_outputs",
     "v__update_afni_binaries_params",
 ]

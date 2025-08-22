@@ -153,7 +153,7 @@ def v_3dmaskave_outputs(
 
 def v_3dmaskave_execute(
     params: V3dmaskaveParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmaskaveOutputs:
     """
     Computes average of all voxels in the input dataset which satisfy the criterion
@@ -165,10 +165,12 @@ def v_3dmaskave_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmaskaveOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMASKAVE_METADATA)
     params = execution.params(params)
     cargs = v_3dmaskave_cargs(params, execution)
     ret = v_3dmaskave_outputs(params, execution)
@@ -202,8 +204,6 @@ def v_3dmaskave(
     Returns:
         NamedTuple of outputs (described in `V3dmaskaveOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMASKAVE_METADATA)
     params = v_3dmaskave_params(
         in_file=in_file,
         mask=mask,
@@ -211,7 +211,7 @@ def v_3dmaskave(
         outputtype=outputtype,
         quiet=quiet,
     )
-    return v_3dmaskave_execute(params, execution)
+    return v_3dmaskave_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "V3dmaskaveParameters",
     "V_3DMASKAVE_METADATA",
     "v_3dmaskave",
-    "v_3dmaskave_cargs",
     "v_3dmaskave_execute",
-    "v_3dmaskave_outputs",
     "v_3dmaskave_params",
 ]

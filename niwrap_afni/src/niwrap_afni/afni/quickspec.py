@@ -180,7 +180,7 @@ def quickspec_outputs(
 
 def quickspec_execute(
     params: QuickspecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QuickspecOutputs:
     """
     A quick and dirty way of loading a surface into SUMA or command line programs
@@ -192,10 +192,12 @@ def quickspec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QuickspecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QUICKSPEC_METADATA)
     params = execution.params(params)
     cargs = quickspec_cargs(params, execution)
     ret = quickspec_outputs(params, execution)
@@ -236,8 +238,6 @@ def quickspec(
     Returns:
         NamedTuple of outputs (described in `QuickspecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QUICKSPEC_METADATA)
     params = quickspec_params(
         tn=tn,
         tsn=tsn,
@@ -247,7 +247,7 @@ def quickspec(
         spec=spec,
         help_=help_,
     )
-    return quickspec_execute(params, execution)
+    return quickspec_execute(params, runner)
 
 
 __all__ = [
@@ -255,8 +255,6 @@ __all__ = [
     "QuickspecOutputs",
     "QuickspecParameters",
     "quickspec",
-    "quickspec_cargs",
     "quickspec_execute",
-    "quickspec_outputs",
     "quickspec_params",
 ]

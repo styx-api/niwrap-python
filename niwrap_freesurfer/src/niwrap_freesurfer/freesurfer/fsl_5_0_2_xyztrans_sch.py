@@ -133,7 +133,7 @@ def fsl_5_0_2_xyztrans_sch_outputs(
 
 def fsl_5_0_2_xyztrans_sch_execute(
     params: Fsl502XyztransSchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fsl502XyztransSchOutputs:
     """
     A script with unclear functionality, potentially related to terminal operations.
@@ -144,10 +144,12 @@ def fsl_5_0_2_xyztrans_sch_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fsl502XyztransSchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_5_0_2_XYZTRANS_SCH_METADATA)
     params = execution.params(params)
     cargs = fsl_5_0_2_xyztrans_sch_cargs(params, execution)
     ret = fsl_5_0_2_xyztrans_sch_outputs(params, execution)
@@ -176,14 +178,12 @@ def fsl_5_0_2_xyztrans_sch(
     Returns:
         NamedTuple of outputs (described in `Fsl502XyztransSchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_5_0_2_XYZTRANS_SCH_METADATA)
     params = fsl_5_0_2_xyztrans_sch_params(
         term_option=term_option,
         version_flag=version_flag,
         no_scrollback_flag=no_scrollback_flag,
     )
-    return fsl_5_0_2_xyztrans_sch_execute(params, execution)
+    return fsl_5_0_2_xyztrans_sch_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "Fsl502XyztransSchOutputs",
     "Fsl502XyztransSchParameters",
     "fsl_5_0_2_xyztrans_sch",
-    "fsl_5_0_2_xyztrans_sch_cargs",
     "fsl_5_0_2_xyztrans_sch_execute",
-    "fsl_5_0_2_xyztrans_sch_outputs",
     "fsl_5_0_2_xyztrans_sch_params",
 ]

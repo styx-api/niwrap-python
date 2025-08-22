@@ -309,7 +309,7 @@ def fsl_rigid_register_outputs(
 
 def fsl_rigid_register_execute(
     params: FslRigidRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslRigidRegisterOutputs:
     """
     A front-end tool for FSL's FLIRT that computes a rigid registration matrix and
@@ -321,10 +321,12 @@ def fsl_rigid_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslRigidRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_RIGID_REGISTER_METADATA)
     params = execution.params(params)
     cargs = fsl_rigid_register_cargs(params, execution)
     ret = fsl_rigid_register_outputs(params, execution)
@@ -396,8 +398,6 @@ def fsl_rigid_register(
     Returns:
         NamedTuple of outputs (described in `FslRigidRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_RIGID_REGISTER_METADATA)
     params = fsl_rigid_register_params(
         refvol=refvol,
         inputvol=inputvol,
@@ -422,7 +422,7 @@ def fsl_rigid_register(
         version=version,
         help_=help_,
     )
-    return fsl_rigid_register_execute(params, execution)
+    return fsl_rigid_register_execute(params, runner)
 
 
 __all__ = [
@@ -430,8 +430,6 @@ __all__ = [
     "FslRigidRegisterOutputs",
     "FslRigidRegisterParameters",
     "fsl_rigid_register",
-    "fsl_rigid_register_cargs",
     "fsl_rigid_register_execute",
-    "fsl_rigid_register_outputs",
     "fsl_rigid_register_params",
 ]

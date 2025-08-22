@@ -223,7 +223,7 @@ def v__anaticor_outputs(
 
 def v__anaticor_execute(
     params: VAnaticorParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAnaticorOutputs:
     """
     Script to produce a residual time series cleaned by ANATICOR model.
@@ -234,10 +234,12 @@ def v__anaticor_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAnaticorOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ANATICOR_METADATA)
     params = execution.params(params)
     cargs = v__anaticor_cargs(params, execution)
     ret = v__anaticor_outputs(params, execution)
@@ -296,8 +298,6 @@ def v__anaticor(
     Returns:
         NamedTuple of outputs (described in `VAnaticorOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ANATICOR_METADATA)
     params = v__anaticor_params(
         ts=ts,
         polort=polort,
@@ -314,7 +314,7 @@ def v__anaticor(
         dirty=dirty,
         echo=echo,
     )
-    return v__anaticor_execute(params, execution)
+    return v__anaticor_execute(params, runner)
 
 
 __all__ = [
@@ -322,8 +322,6 @@ __all__ = [
     "VAnaticorParameters",
     "V__ANATICOR_METADATA",
     "v__anaticor",
-    "v__anaticor_cargs",
     "v__anaticor_execute",
-    "v__anaticor_outputs",
     "v__anaticor_params",
 ]

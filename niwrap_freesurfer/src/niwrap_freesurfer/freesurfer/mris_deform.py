@@ -135,7 +135,7 @@ def mris_deform_outputs(
 
 def mris_deform_execute(
     params: MrisDeformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisDeformOutputs:
     """
     A tool for deforming surface meshes using volumetric information from an
@@ -147,10 +147,12 @@ def mris_deform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDeformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_DEFORM_METADATA)
     params = execution.params(params)
     cargs = mris_deform_cargs(params, execution)
     ret = mris_deform_outputs(params, execution)
@@ -182,15 +184,13 @@ def mris_deform(
     Returns:
         NamedTuple of outputs (described in `MrisDeformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_DEFORM_METADATA)
     params = mris_deform_params(
         input_surface=input_surface,
         input_volume=input_volume,
         xform=xform,
         output_surface=output_surface,
     )
-    return mris_deform_execute(params, execution)
+    return mris_deform_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MrisDeformOutputs",
     "MrisDeformParameters",
     "mris_deform",
-    "mris_deform_cargs",
     "mris_deform_execute",
-    "mris_deform_outputs",
     "mris_deform_params",
 ]

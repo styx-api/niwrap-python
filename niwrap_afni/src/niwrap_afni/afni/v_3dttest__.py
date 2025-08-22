@@ -317,7 +317,7 @@ def v_3dttest___outputs(
 
 def v_3dttest___execute(
     params: V3dttestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dttestOutputs:
     """
     Gosset (Student) t-test of sets of 3D datasets in AFNI.
@@ -328,10 +328,12 @@ def v_3dttest___execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dttestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DTTEST___METADATA)
     params = execution.params(params)
     cargs = v_3dttest___cargs(params, execution)
     ret = v_3dttest___outputs(params, execution)
@@ -407,8 +409,6 @@ def v_3dttest__(
     Returns:
         NamedTuple of outputs (described in `V3dttestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DTTEST___METADATA)
     params = v_3dttest___params(
         set_a=set_a,
         set_b=set_b,
@@ -432,7 +432,7 @@ def v_3dttest__(
         etac_opt=etac_opt,
         seed=seed,
     )
-    return v_3dttest___execute(params, execution)
+    return v_3dttest___execute(params, runner)
 
 
 __all__ = [
@@ -440,8 +440,6 @@ __all__ = [
     "V3dttestParameters",
     "V_3DTTEST___METADATA",
     "v_3dttest__",
-    "v_3dttest___cargs",
     "v_3dttest___execute",
-    "v_3dttest___outputs",
     "v_3dttest___params",
 ]

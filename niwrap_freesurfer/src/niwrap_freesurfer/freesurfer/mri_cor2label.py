@@ -229,7 +229,7 @@ def mri_cor2label_outputs(
 
 def mri_cor2label_execute(
     params: MriCor2labelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCor2labelOutputs:
     """
     Converts values in a volume or surface overlay to a label. Designed to convert
@@ -241,10 +241,12 @@ def mri_cor2label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCor2labelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COR2LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_cor2label_cargs(params, execution)
     ret = mri_cor2label_outputs(params, execution)
@@ -297,8 +299,6 @@ def mri_cor2label(
     Returns:
         NamedTuple of outputs (described in `MriCor2labelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COR2LABEL_METADATA)
     params = mri_cor2label_params(
         input_file=input_file,
         label_id=label_id,
@@ -313,7 +313,7 @@ def mri_cor2label(
         erode=erode,
         help_=help_,
     )
-    return mri_cor2label_execute(params, execution)
+    return mri_cor2label_execute(params, runner)
 
 
 __all__ = [
@@ -321,8 +321,6 @@ __all__ = [
     "MriCor2labelOutputs",
     "MriCor2labelParameters",
     "mri_cor2label",
-    "mri_cor2label_cargs",
     "mri_cor2label_execute",
-    "mri_cor2label_outputs",
     "mri_cor2label_params",
 ]

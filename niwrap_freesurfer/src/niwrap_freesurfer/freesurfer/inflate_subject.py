@@ -122,7 +122,7 @@ def inflate_subject_outputs(
 
 def inflate_subject_execute(
     params: InflateSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InflateSubjectOutputs:
     """
     Inflate subject script for FreeSurfer.
@@ -133,10 +133,12 @@ def inflate_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INFLATE_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = inflate_subject_cargs(params, execution)
     ret = inflate_subject_outputs(params, execution)
@@ -161,12 +163,10 @@ def inflate_subject(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INFLATE_SUBJECT_METADATA)
     params = inflate_subject_params(
         args=args,
     )
-    return inflate_subject_execute(params, execution)
+    return inflate_subject_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "InflateSubjectOutputs",
     "InflateSubjectParameters",
     "inflate_subject",
-    "inflate_subject_cargs",
     "inflate_subject_execute",
-    "inflate_subject_outputs",
     "inflate_subject_params",
 ]

@@ -135,7 +135,7 @@ def cifti_label_probability_outputs(
 
 def cifti_label_probability_execute(
     params: CiftiLabelProbabilityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiLabelProbabilityOutputs:
     """
     Find frequency of cifti labels.
@@ -150,10 +150,12 @@ def cifti_label_probability_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelProbabilityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_LABEL_PROBABILITY_METADATA)
     params = execution.params(params)
     cargs = cifti_label_probability_cargs(params, execution)
     ret = cifti_label_probability_outputs(params, execution)
@@ -189,14 +191,12 @@ def cifti_label_probability(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelProbabilityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_LABEL_PROBABILITY_METADATA)
     params = cifti_label_probability_params(
         label_maps=label_maps,
         probability_dscalar_out=probability_dscalar_out,
         opt_exclude_unlabeled=opt_exclude_unlabeled,
     )
-    return cifti_label_probability_execute(params, execution)
+    return cifti_label_probability_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "CiftiLabelProbabilityOutputs",
     "CiftiLabelProbabilityParameters",
     "cifti_label_probability",
-    "cifti_label_probability_cargs",
     "cifti_label_probability_execute",
-    "cifti_label_probability_outputs",
     "cifti_label_probability_params",
 ]

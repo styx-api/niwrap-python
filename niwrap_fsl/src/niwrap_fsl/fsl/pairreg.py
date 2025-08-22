@@ -147,7 +147,7 @@ def pairreg_outputs(
 
 def pairreg_execute(
     params: PairregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PairregOutputs:
     """
     Pairwise registration tool.
@@ -158,10 +158,12 @@ def pairreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PairregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PAIRREG_METADATA)
     params = execution.params(params)
     cargs = pairreg_cargs(params, execution)
     ret = pairreg_outputs(params, execution)
@@ -196,8 +198,6 @@ def pairreg(
     Returns:
         NamedTuple of outputs (described in `PairregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PAIRREG_METADATA)
     params = pairreg_params(
         brain1=brain1,
         brain2=brain2,
@@ -206,7 +206,7 @@ def pairreg(
         outputmatrix=outputmatrix,
         extra_flirt_args=extra_flirt_args,
     )
-    return pairreg_execute(params, execution)
+    return pairreg_execute(params, runner)
 
 
 __all__ = [
@@ -214,8 +214,6 @@ __all__ = [
     "PairregOutputs",
     "PairregParameters",
     "pairreg",
-    "pairreg_cargs",
     "pairreg_execute",
-    "pairreg_outputs",
     "pairreg_params",
 ]

@@ -130,7 +130,7 @@ def mri_copy_values_outputs(
 
 def mri_copy_values_execute(
     params: MriCopyValuesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCopyValuesOutputs:
     """
     No description.
@@ -141,10 +141,12 @@ def mri_copy_values_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCopyValuesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COPY_VALUES_METADATA)
     params = execution.params(params)
     cargs = mri_copy_values_cargs(params, execution)
     ret = mri_copy_values_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_copy_values(
     Returns:
         NamedTuple of outputs (described in `MriCopyValuesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COPY_VALUES_METADATA)
     params = mri_copy_values_params(
         source_volume=source_volume,
         target_volume=target_volume,
         output_volume=output_volume,
     )
-    return mri_copy_values_execute(params, execution)
+    return mri_copy_values_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriCopyValuesOutputs",
     "MriCopyValuesParameters",
     "mri_copy_values",
-    "mri_copy_values_cargs",
     "mri_copy_values_execute",
-    "mri_copy_values_outputs",
     "mri_copy_values_params",
 ]

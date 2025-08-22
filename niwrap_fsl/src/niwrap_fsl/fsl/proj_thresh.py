@@ -122,7 +122,7 @@ def proj_thresh_outputs(
 
 def proj_thresh_execute(
     params: ProjThreshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ProjThreshOutputs:
     """
     A tool to apply a threshold to either volumes or surfaces.
@@ -133,10 +133,12 @@ def proj_thresh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ProjThreshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PROJ_THRESH_METADATA)
     params = execution.params(params)
     cargs = proj_thresh_cargs(params, execution)
     ret = proj_thresh_outputs(params, execution)
@@ -164,13 +166,11 @@ def proj_thresh(
     Returns:
         NamedTuple of outputs (described in `ProjThreshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PROJ_THRESH_METADATA)
     params = proj_thresh_params(
         input_paths=input_paths,
         threshold=threshold,
     )
-    return proj_thresh_execute(params, execution)
+    return proj_thresh_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "ProjThreshOutputs",
     "ProjThreshParameters",
     "proj_thresh",
-    "proj_thresh_cargs",
     "proj_thresh_execute",
-    "proj_thresh_outputs",
     "proj_thresh_params",
 ]

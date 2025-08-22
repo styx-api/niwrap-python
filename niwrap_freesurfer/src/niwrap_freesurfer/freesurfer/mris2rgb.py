@@ -120,7 +120,7 @@ def mris2rgb_outputs(
 
 def mris2rgb_execute(
     params: Mris2rgbParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Mris2rgbOutputs:
     """
     A tool from FreeSurfer for converting MRI surface files to RGB images.
@@ -131,10 +131,12 @@ def mris2rgb_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Mris2rgbOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS2RGB_METADATA)
     params = execution.params(params)
     cargs = mris2rgb_cargs(params, execution)
     ret = mris2rgb_outputs(params, execution)
@@ -160,12 +162,10 @@ def mris2rgb(
     Returns:
         NamedTuple of outputs (described in `Mris2rgbOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS2RGB_METADATA)
     params = mris2rgb_params(
         library_path=library_path,
     )
-    return mris2rgb_execute(params, execution)
+    return mris2rgb_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "Mris2rgbOutputs",
     "Mris2rgbParameters",
     "mris2rgb",
-    "mris2rgb_cargs",
     "mris2rgb_execute",
-    "mris2rgb_outputs",
     "mris2rgb_params",
 ]

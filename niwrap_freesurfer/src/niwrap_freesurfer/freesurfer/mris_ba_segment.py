@@ -135,7 +135,7 @@ def mris_ba_segment_outputs(
 
 def mris_ba_segment_execute(
     params: MrisBaSegmentParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisBaSegmentOutputs:
     """
     Segments a Brodmann area (MT currently) from a laminar intensity profile
@@ -147,10 +147,12 @@ def mris_ba_segment_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisBaSegmentOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_BA_SEGMENT_METADATA)
     params = execution.params(params)
     cargs = mris_ba_segment_cargs(params, execution)
     ret = mris_ba_segment_outputs(params, execution)
@@ -182,15 +184,13 @@ def mris_ba_segment(
     Returns:
         NamedTuple of outputs (described in `MrisBaSegmentOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_BA_SEGMENT_METADATA)
     params = mris_ba_segment_params(
         surface=surface,
         profiles=profiles,
         prior_label=prior_label,
         output_label=output_label,
     )
-    return mris_ba_segment_execute(params, execution)
+    return mris_ba_segment_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MrisBaSegmentOutputs",
     "MrisBaSegmentParameters",
     "mris_ba_segment",
-    "mris_ba_segment_cargs",
     "mris_ba_segment_execute",
-    "mris_ba_segment_outputs",
     "mris_ba_segment_params",
 ]

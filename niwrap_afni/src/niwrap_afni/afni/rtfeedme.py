@@ -213,7 +213,7 @@ def rtfeedme_outputs(
 
 def rtfeedme_execute(
     params: RtfeedmeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RtfeedmeOutputs:
     """
     Test the real-time plugin by sending all the bricks in 'dataset' to AFNI.
@@ -224,10 +224,12 @@ def rtfeedme_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RtfeedmeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RTFEEDME_METADATA)
     params = execution.params(params)
     cargs = rtfeedme_cargs(params, execution)
     ret = rtfeedme_outputs(params, execution)
@@ -281,8 +283,6 @@ def rtfeedme(
     Returns:
         NamedTuple of outputs (described in `RtfeedmeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RTFEEDME_METADATA)
     params = rtfeedme_params(
         datasets=datasets,
         host=host,
@@ -296,7 +296,7 @@ def rtfeedme(
         note=note,
         yrange=yrange,
     )
-    return rtfeedme_execute(params, execution)
+    return rtfeedme_execute(params, runner)
 
 
 __all__ = [
@@ -304,8 +304,6 @@ __all__ = [
     "RtfeedmeOutputs",
     "RtfeedmeParameters",
     "rtfeedme",
-    "rtfeedme_cargs",
     "rtfeedme_execute",
-    "rtfeedme_outputs",
     "rtfeedme_params",
 ]

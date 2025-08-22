@@ -334,7 +334,7 @@ def fixel2peaks_outputs(
 
 def fixel2peaks_execute(
     params: Fixel2peaksParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fixel2peaksOutputs:
     """
     Convert data in the fixel directory format into a 4D image of 3-vectors.
@@ -354,10 +354,12 @@ def fixel2peaks_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fixel2peaksOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXEL2PEAKS_METADATA)
     params = execution.params(params)
     cargs = fixel2peaks_cargs(params, execution)
     ret = fixel2peaks_outputs(params, execution)
@@ -418,8 +420,6 @@ def fixel2peaks(
     Returns:
         NamedTuple of outputs (described in `Fixel2peaksOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXEL2PEAKS_METADATA)
     params = fixel2peaks_params(
         number=number,
         nan=nan,
@@ -434,7 +434,7 @@ def fixel2peaks(
         in_=in_,
         out=out,
     )
-    return fixel2peaks_execute(params, execution)
+    return fixel2peaks_execute(params, runner)
 
 
 __all__ = [
@@ -445,14 +445,9 @@ __all__ = [
     "Fixel2peaksVariousFileParameters",
     "Fixel2peaksVariousStringParameters",
     "fixel2peaks",
-    "fixel2peaks_cargs",
-    "fixel2peaks_config_cargs",
     "fixel2peaks_config_params",
     "fixel2peaks_execute",
-    "fixel2peaks_outputs",
     "fixel2peaks_params",
-    "fixel2peaks_various_file_cargs",
     "fixel2peaks_various_file_params",
-    "fixel2peaks_various_string_cargs",
     "fixel2peaks_various_string_params",
 ]

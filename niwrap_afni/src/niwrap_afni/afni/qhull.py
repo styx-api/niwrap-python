@@ -254,7 +254,7 @@ def qhull_outputs(
 
 def qhull_execute(
     params: QhullParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QhullOutputs:
     """
     Tool to compute convex hulls and related structures.
@@ -265,10 +265,12 @@ def qhull_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QhullOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QHULL_METADATA)
     params = execution.params(params)
     cargs = qhull_cargs(params, execution)
     ret = qhull_outputs(params, execution)
@@ -339,8 +341,6 @@ def qhull(
     Returns:
         NamedTuple of outputs (described in `QhullOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QHULL_METADATA)
     params = qhull_params(
         input_coords=input_coords,
         delaunay=delaunay,
@@ -364,7 +364,7 @@ def qhull(
         print_facets=print_facets,
         output_file=output_file,
     )
-    return qhull_execute(params, execution)
+    return qhull_execute(params, runner)
 
 
 __all__ = [
@@ -372,8 +372,6 @@ __all__ = [
     "QhullOutputs",
     "QhullParameters",
     "qhull",
-    "qhull_cargs",
     "qhull_execute",
-    "qhull_outputs",
     "qhull_params",
 ]

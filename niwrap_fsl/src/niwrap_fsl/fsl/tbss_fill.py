@@ -141,7 +141,7 @@ def tbss_fill_outputs(
 
 def tbss_fill_execute(
     params: TbssFillParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TbssFillOutputs:
     """
     Tool for filling skeletonized FA images in TBSS.
@@ -152,10 +152,12 @@ def tbss_fill_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TbssFillOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_FILL_METADATA)
     params = execution.params(params)
     cargs = tbss_fill_cargs(params, execution)
     ret = tbss_fill_outputs(params, execution)
@@ -188,8 +190,6 @@ def tbss_fill(
     Returns:
         NamedTuple of outputs (described in `TbssFillOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_FILL_METADATA)
     params = tbss_fill_params(
         stats_image=stats_image,
         threshold=threshold,
@@ -197,7 +197,7 @@ def tbss_fill(
         output=output,
         include_negative_flag=include_negative_flag,
     )
-    return tbss_fill_execute(params, execution)
+    return tbss_fill_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "TbssFillOutputs",
     "TbssFillParameters",
     "tbss_fill",
-    "tbss_fill_cargs",
     "tbss_fill_execute",
-    "tbss_fill_outputs",
     "tbss_fill_params",
 ]

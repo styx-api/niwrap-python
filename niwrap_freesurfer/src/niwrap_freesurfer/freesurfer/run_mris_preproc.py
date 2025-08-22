@@ -123,7 +123,7 @@ def run_mris_preproc_outputs(
 
 def run_mris_preproc_execute(
     params: RunMrisPreprocParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunMrisPreprocOutputs:
     """
     Utility to create pre-smoothed surface data on a target average subject for Qdec
@@ -135,10 +135,12 @@ def run_mris_preproc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunMrisPreprocOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_MRIS_PREPROC_METADATA)
     params = execution.params(params)
     cargs = run_mris_preproc_cargs(params, execution)
     ret = run_mris_preproc_outputs(params, execution)
@@ -166,13 +168,11 @@ def run_mris_preproc(
     Returns:
         NamedTuple of outputs (described in `RunMrisPreprocOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_MRIS_PREPROC_METADATA)
     params = run_mris_preproc_params(
         qdec_table=qdec_table,
         target_average=target_average,
     )
-    return run_mris_preproc_execute(params, execution)
+    return run_mris_preproc_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "RunMrisPreprocOutputs",
     "RunMrisPreprocParameters",
     "run_mris_preproc",
-    "run_mris_preproc_cargs",
     "run_mris_preproc_execute",
-    "run_mris_preproc_outputs",
     "run_mris_preproc_params",
 ]

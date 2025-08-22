@@ -225,7 +225,7 @@ def volume_label_to_surface_mapping_outputs(
 
 def volume_label_to_surface_mapping_execute(
     params: VolumeLabelToSurfaceMappingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
     Map a label volume to a surface label file.
@@ -253,10 +253,12 @@ def volume_label_to_surface_mapping_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelToSurfaceMappingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA)
     params = execution.params(params)
     cargs = volume_label_to_surface_mapping_cargs(params, execution)
     ret = volume_label_to_surface_mapping_outputs(params, execution)
@@ -307,8 +309,6 @@ def volume_label_to_surface_mapping(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelToSurfaceMappingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_LABEL_TO_SURFACE_MAPPING_METADATA)
     params = volume_label_to_surface_mapping_params(
         volume=volume,
         surface=surface,
@@ -316,7 +316,7 @@ def volume_label_to_surface_mapping(
         ribbon_constrained=ribbon_constrained,
         opt_subvol_select_subvol=opt_subvol_select_subvol,
     )
-    return volume_label_to_surface_mapping_execute(params, execution)
+    return volume_label_to_surface_mapping_execute(params, runner)
 
 
 __all__ = [
@@ -325,10 +325,7 @@ __all__ = [
     "VolumeLabelToSurfaceMappingParameters",
     "VolumeLabelToSurfaceMappingRibbonConstrainedParameters",
     "volume_label_to_surface_mapping",
-    "volume_label_to_surface_mapping_cargs",
     "volume_label_to_surface_mapping_execute",
-    "volume_label_to_surface_mapping_outputs",
     "volume_label_to_surface_mapping_params",
-    "volume_label_to_surface_mapping_ribbon_constrained_cargs",
     "volume_label_to_surface_mapping_ribbon_constrained_params",
 ]

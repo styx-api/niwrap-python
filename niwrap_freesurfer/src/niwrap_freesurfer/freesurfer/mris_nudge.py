@@ -140,7 +140,7 @@ def mris_nudge_outputs(
 
 def mris_nudge_execute(
     params: MrisNudgeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisNudgeOutputs:
     """
     A tool to nudge vertex positions on a surface using a volume.
@@ -151,10 +151,12 @@ def mris_nudge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisNudgeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_NUDGE_METADATA)
     params = execution.params(params)
     cargs = mris_nudge_cargs(params, execution)
     ret = mris_nudge_outputs(params, execution)
@@ -187,8 +189,6 @@ def mris_nudge(
     Returns:
         NamedTuple of outputs (described in `MrisNudgeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_NUDGE_METADATA)
     params = mris_nudge_params(
         input_surface=input_surface,
         input_volume=input_volume,
@@ -196,7 +196,7 @@ def mris_nudge(
         target_val=target_val,
         nbhd=nbhd,
     )
-    return mris_nudge_execute(params, execution)
+    return mris_nudge_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "MrisNudgeOutputs",
     "MrisNudgeParameters",
     "mris_nudge",
-    "mris_nudge_cargs",
     "mris_nudge_execute",
-    "mris_nudge_outputs",
     "mris_nudge_params",
 ]

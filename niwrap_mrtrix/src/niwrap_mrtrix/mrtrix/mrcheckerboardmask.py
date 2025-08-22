@@ -253,7 +253,7 @@ def mrcheckerboardmask_outputs(
 
 def mrcheckerboardmask_execute(
     params: MrcheckerboardmaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrcheckerboardmaskOutputs:
     """
     Create bitwise checkerboard image.
@@ -270,10 +270,12 @@ def mrcheckerboardmask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrcheckerboardmaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRCHECKERBOARDMASK_METADATA)
     params = execution.params(params)
     cargs = mrcheckerboardmask_cargs(params, execution)
     ret = mrcheckerboardmask_outputs(params, execution)
@@ -332,8 +334,6 @@ def mrcheckerboardmask(
     Returns:
         NamedTuple of outputs (described in `MrcheckerboardmaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRCHECKERBOARDMASK_METADATA)
     params = mrcheckerboardmask_params(
         tiles=tiles,
         invert=invert,
@@ -349,7 +349,7 @@ def mrcheckerboardmask(
         input_=input_,
         output=output,
     )
-    return mrcheckerboardmask_execute(params, execution)
+    return mrcheckerboardmask_execute(params, runner)
 
 
 __all__ = [
@@ -358,10 +358,7 @@ __all__ = [
     "MrcheckerboardmaskOutputs",
     "MrcheckerboardmaskParameters",
     "mrcheckerboardmask",
-    "mrcheckerboardmask_cargs",
-    "mrcheckerboardmask_config_cargs",
     "mrcheckerboardmask_config_params",
     "mrcheckerboardmask_execute",
-    "mrcheckerboardmask_outputs",
     "mrcheckerboardmask_params",
 ]

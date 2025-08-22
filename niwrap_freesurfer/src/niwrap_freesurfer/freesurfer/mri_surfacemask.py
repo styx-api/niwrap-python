@@ -131,7 +131,7 @@ def mri_surfacemask_outputs(
 
 def mri_surfacemask_execute(
     params: MriSurfacemaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSurfacemaskOutputs:
     """
     Tool to produce a new volume where all pixels outside the surface are set to
@@ -143,10 +143,12 @@ def mri_surfacemask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSurfacemaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SURFACEMASK_METADATA)
     params = execution.params(params)
     cargs = mri_surfacemask_cargs(params, execution)
     ret = mri_surfacemask_outputs(params, execution)
@@ -177,14 +179,12 @@ def mri_surfacemask(
     Returns:
         NamedTuple of outputs (described in `MriSurfacemaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SURFACEMASK_METADATA)
     params = mri_surfacemask_params(
         input_volume=input_volume,
         input_surface=input_surface,
         output_volume=output_volume,
     )
-    return mri_surfacemask_execute(params, execution)
+    return mri_surfacemask_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "MriSurfacemaskOutputs",
     "MriSurfacemaskParameters",
     "mri_surfacemask",
-    "mri_surfacemask_cargs",
     "mri_surfacemask_execute",
-    "mri_surfacemask_outputs",
     "mri_surfacemask_params",
 ]

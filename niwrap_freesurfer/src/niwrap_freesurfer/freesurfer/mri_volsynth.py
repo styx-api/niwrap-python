@@ -520,7 +520,7 @@ def mri_volsynth_outputs(
 
 def mri_volsynth_execute(
     params: MriVolsynthParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriVolsynthOutputs:
     """
     Synthesizes a volume with specified geometry and probability distribution
@@ -532,10 +532,12 @@ def mri_volsynth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriVolsynthOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_VOLSYNTH_METADATA)
     params = execution.params(params)
     cargs = mri_volsynth_cargs(params, execution)
     ret = mri_volsynth_outputs(params, execution)
@@ -646,8 +648,6 @@ def mri_volsynth(
     Returns:
         NamedTuple of outputs (described in `MriVolsynthOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_VOLSYNTH_METADATA)
     params = mri_volsynth_params(
         output_volid=output_volid,
         template=template,
@@ -693,7 +693,7 @@ def mri_volsynth(
         dim_surf_flag=dim_surf_flag,
         ctab=ctab,
     )
-    return mri_volsynth_execute(params, execution)
+    return mri_volsynth_execute(params, runner)
 
 
 __all__ = [
@@ -701,8 +701,6 @@ __all__ = [
     "MriVolsynthOutputs",
     "MriVolsynthParameters",
     "mri_volsynth",
-    "mri_volsynth_cargs",
     "mri_volsynth_execute",
-    "mri_volsynth_outputs",
     "mri_volsynth_params",
 ]

@@ -132,7 +132,7 @@ def tokens_outputs(
 
 def tokens_execute(
     params: TokensParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TokensOutputs:
     """
     Token counting tool.
@@ -143,10 +143,12 @@ def tokens_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TokensOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TOKENS_METADATA)
     params = execution.params(params)
     cargs = tokens_cargs(params, execution)
     ret = tokens_outputs(params, execution)
@@ -174,13 +176,11 @@ def tokens(
     Returns:
         NamedTuple of outputs (described in `TokensOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TOKENS_METADATA)
     params = tokens_params(
         infile=infile,
         extra_char=extra_char,
     )
-    return tokens_execute(params, execution)
+    return tokens_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "TokensOutputs",
     "TokensParameters",
     "tokens",
-    "tokens_cargs",
     "tokens_execute",
-    "tokens_outputs",
     "tokens_params",
 ]

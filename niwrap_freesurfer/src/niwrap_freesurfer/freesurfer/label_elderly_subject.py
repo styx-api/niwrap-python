@@ -137,7 +137,7 @@ def label_elderly_subject_outputs(
 
 def label_elderly_subject_execute(
     params: LabelElderlySubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelElderlySubjectOutputs:
     """
     Tool for labeling brain structures in MRI images of elderly subjects using
@@ -149,10 +149,12 @@ def label_elderly_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelElderlySubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_ELDERLY_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = label_elderly_subject_cargs(params, execution)
     ret = label_elderly_subject_outputs(params, execution)
@@ -184,15 +186,13 @@ def label_elderly_subject(
     Returns:
         NamedTuple of outputs (described in `LabelElderlySubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_ELDERLY_SUBJECT_METADATA)
     params = label_elderly_subject_params(
         norm_volume=norm_volume,
         transform_lta=transform_lta,
         classifier_array=classifier_array,
         aseg_volume=aseg_volume,
     )
-    return label_elderly_subject_execute(params, execution)
+    return label_elderly_subject_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "LabelElderlySubjectOutputs",
     "LabelElderlySubjectParameters",
     "label_elderly_subject",
-    "label_elderly_subject_cargs",
     "label_elderly_subject_execute",
-    "label_elderly_subject_outputs",
     "label_elderly_subject_params",
 ]

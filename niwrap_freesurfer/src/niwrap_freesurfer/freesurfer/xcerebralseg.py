@@ -203,7 +203,7 @@ def xcerebralseg_outputs(
 
 def xcerebralseg_execute(
     params: XcerebralsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XcerebralsegOutputs:
     """
     Tool for labeling extracerebral structures including sulcal CSF, skull/bone,
@@ -216,10 +216,12 @@ def xcerebralseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XcerebralsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XCEREBRALSEG_METADATA)
     params = execution.params(params)
     cargs = xcerebralseg_cargs(params, execution)
     ret = xcerebralseg_outputs(params, execution)
@@ -266,8 +268,6 @@ def xcerebralseg(
     Returns:
         NamedTuple of outputs (described in `XcerebralsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XCEREBRALSEG_METADATA)
     params = xcerebralseg_params(
         subject=subject,
         output_volume=output_volume,
@@ -280,7 +280,7 @@ def xcerebralseg(
         no_vermis=no_vermis,
         threads=threads,
     )
-    return xcerebralseg_execute(params, execution)
+    return xcerebralseg_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "XcerebralsegOutputs",
     "XcerebralsegParameters",
     "xcerebralseg",
-    "xcerebralseg_cargs",
     "xcerebralseg_execute",
-    "xcerebralseg_outputs",
     "xcerebralseg_params",
 ]

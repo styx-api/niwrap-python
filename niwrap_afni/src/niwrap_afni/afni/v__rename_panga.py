@@ -190,7 +190,7 @@ def v__rename_panga_outputs(
 
 def v__rename_panga_execute(
     params: VRenamePangaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VRenamePangaOutputs:
     """
     Creates AFNI bricks from RealTime GE EPI series.
@@ -201,10 +201,12 @@ def v__rename_panga_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VRenamePangaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__RENAME_PANGA_METADATA)
     params = execution.params(params)
     cargs = v__rename_panga_cargs(params, execution)
     ret = v__rename_panga_outputs(params, execution)
@@ -253,8 +255,6 @@ def v__rename_panga(
     Returns:
         NamedTuple of outputs (described in `VRenamePangaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__RENAME_PANGA_METADATA)
     params = v__rename_panga_params(
         dir_number=dir_number,
         first_image_number=first_image_number,
@@ -267,7 +267,7 @@ def v__rename_panga(
         slice_pattern=slice_pattern,
         output_directory=output_directory,
     )
-    return v__rename_panga_execute(params, execution)
+    return v__rename_panga_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "VRenamePangaParameters",
     "V__RENAME_PANGA_METADATA",
     "v__rename_panga",
-    "v__rename_panga_cargs",
     "v__rename_panga_execute",
-    "v__rename_panga_outputs",
     "v__rename_panga_params",
 ]

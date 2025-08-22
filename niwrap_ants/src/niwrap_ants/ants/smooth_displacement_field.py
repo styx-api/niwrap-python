@@ -170,7 +170,7 @@ def smooth_displacement_field_outputs(
 
 def smooth_displacement_field_execute(
     params: SmoothDisplacementFieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SmoothDisplacementFieldOutputs:
     """
     SmoothDisplacementField applies smoothing to a displacement field over a
@@ -183,10 +183,12 @@ def smooth_displacement_field_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SmoothDisplacementFieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SMOOTH_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)
     cargs = smooth_displacement_field_cargs(params, execution)
     ret = smooth_displacement_field_outputs(params, execution)
@@ -230,8 +232,6 @@ def smooth_displacement_field(
     Returns:
         NamedTuple of outputs (described in `SmoothDisplacementFieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SMOOTH_DISPLACEMENT_FIELD_METADATA)
     params = smooth_displacement_field_params(
         image_dimension=image_dimension,
         input_field=input_field,
@@ -242,7 +242,7 @@ def smooth_displacement_field(
         estimate_inverse=estimate_inverse,
         confidence_image=confidence_image,
     )
-    return smooth_displacement_field_execute(params, execution)
+    return smooth_displacement_field_execute(params, runner)
 
 
 __all__ = [
@@ -250,8 +250,6 @@ __all__ = [
     "SmoothDisplacementFieldOutputs",
     "SmoothDisplacementFieldParameters",
     "smooth_displacement_field",
-    "smooth_displacement_field_cargs",
     "smooth_displacement_field_execute",
-    "smooth_displacement_field_outputs",
     "smooth_displacement_field_params",
 ]

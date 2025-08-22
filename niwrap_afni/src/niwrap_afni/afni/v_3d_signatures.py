@@ -158,7 +158,7 @@ def v_3d_signatures_outputs(
 
 def v_3d_signatures_execute(
     params: V3dSignaturesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSignaturesOutputs:
     """
     3dSignatures analysis tool for 3D genome organization.
@@ -169,10 +169,12 @@ def v_3d_signatures_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSignaturesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SIGNATURES_METADATA)
     params = execution.params(params)
     cargs = v_3d_signatures_cargs(params, execution)
     ret = v_3d_signatures_outputs(params, execution)
@@ -208,8 +210,6 @@ def v_3d_signatures(
     Returns:
         NamedTuple of outputs (described in `V3dSignaturesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SIGNATURES_METADATA)
     params = v_3d_signatures_params(
         infile=infile,
         outfile=outfile,
@@ -218,7 +218,7 @@ def v_3d_signatures(
         threshold=threshold,
         smoothing=smoothing,
     )
-    return v_3d_signatures_execute(params, execution)
+    return v_3d_signatures_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "V3dSignaturesParameters",
     "V_3D_SIGNATURES_METADATA",
     "v_3d_signatures",
-    "v_3d_signatures_cargs",
     "v_3d_signatures_execute",
-    "v_3d_signatures_outputs",
     "v_3d_signatures_params",
 ]

@@ -135,7 +135,7 @@ def xfmrot_outputs(
 
 def xfmrot_execute(
     params: XfmrotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XfmrotOutputs:
     """
     Tool to apply a transformation defined in a transform file to an input vector
@@ -147,10 +147,12 @@ def xfmrot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XfmrotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XFMROT_METADATA)
     params = execution.params(params)
     cargs = xfmrot_cargs(params, execution)
     ret = xfmrot_outputs(params, execution)
@@ -183,14 +185,12 @@ def xfmrot(
     Returns:
         NamedTuple of outputs (described in `XfmrotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XFMROT_METADATA)
     params = xfmrot_params(
         transform_file=transform_file,
         input_vector_file=input_vector_file,
         output_vector_file=output_vector_file,
     )
-    return xfmrot_execute(params, execution)
+    return xfmrot_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "XfmrotOutputs",
     "XfmrotParameters",
     "xfmrot",
-    "xfmrot_cargs",
     "xfmrot_execute",
-    "xfmrot_outputs",
     "xfmrot_params",
 ]

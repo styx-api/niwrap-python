@@ -117,7 +117,7 @@ def renormalize_t1_subject_outputs(
 
 def renormalize_t1_subject_execute(
     params: RenormalizeT1SubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RenormalizeT1SubjectOutputs:
     """
     Renormalize T1 subject images using FreeSurfer scripts.
@@ -128,10 +128,12 @@ def renormalize_t1_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RenormalizeT1SubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RENORMALIZE_T1_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = renormalize_t1_subject_cargs(params, execution)
     ret = renormalize_t1_subject_outputs(params, execution)
@@ -157,12 +159,10 @@ def renormalize_t1_subject(
     Returns:
         NamedTuple of outputs (described in `RenormalizeT1SubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RENORMALIZE_T1_SUBJECT_METADATA)
     params = renormalize_t1_subject_params(
         subject_dir=subject_dir,
     )
-    return renormalize_t1_subject_execute(params, execution)
+    return renormalize_t1_subject_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "RenormalizeT1SubjectOutputs",
     "RenormalizeT1SubjectParameters",
     "renormalize_t1_subject",
-    "renormalize_t1_subject_cargs",
     "renormalize_t1_subject_execute",
-    "renormalize_t1_subject_outputs",
     "renormalize_t1_subject_params",
 ]

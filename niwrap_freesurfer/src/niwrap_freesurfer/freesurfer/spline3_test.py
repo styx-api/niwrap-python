@@ -133,7 +133,7 @@ def spline3_test_outputs(
 
 def spline3_test_execute(
     params: Spline3TestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Spline3TestOutputs:
     """
     A tool for cubic spline interpolation.
@@ -144,10 +144,12 @@ def spline3_test_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Spline3TestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPLINE3_TEST_METADATA)
     params = execution.params(params)
     cargs = spline3_test_cargs(params, execution)
     ret = spline3_test_outputs(params, execution)
@@ -176,14 +178,12 @@ def spline3_test(
     Returns:
         NamedTuple of outputs (described in `Spline3TestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPLINE3_TEST_METADATA)
     params = spline3_test_params(
         x_values=x_values,
         y_values=y_values,
         x_new_values=x_new_values,
     )
-    return spline3_test_execute(params, execution)
+    return spline3_test_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "Spline3TestOutputs",
     "Spline3TestParameters",
     "spline3_test",
-    "spline3_test_cargs",
     "spline3_test_execute",
-    "spline3_test_outputs",
     "spline3_test_params",
 ]

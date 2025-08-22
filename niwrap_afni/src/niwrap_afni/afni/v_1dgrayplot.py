@@ -162,7 +162,7 @@ def v_1dgrayplot_outputs(
 
 def v_1dgrayplot_execute(
     params: V1dgrayplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dgrayplotOutputs:
     """
     Graphs the columns of a *.1D type time series file to the screen in grayscale.
@@ -173,10 +173,12 @@ def v_1dgrayplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dgrayplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DGRAYPLOT_METADATA)
     params = execution.params(params)
     cargs = v_1dgrayplot_cargs(params, execution)
     ret = v_1dgrayplot_outputs(params, execution)
@@ -215,8 +217,6 @@ def v_1dgrayplot(
     Returns:
         NamedTuple of outputs (described in `V1dgrayplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DGRAYPLOT_METADATA)
     params = v_1dgrayplot_params(
         tsfile=tsfile,
         install=install,
@@ -226,7 +226,7 @@ def v_1dgrayplot(
         use=use,
         ps=ps,
     )
-    return v_1dgrayplot_execute(params, execution)
+    return v_1dgrayplot_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "V1dgrayplotParameters",
     "V_1DGRAYPLOT_METADATA",
     "v_1dgrayplot",
-    "v_1dgrayplot_cargs",
     "v_1dgrayplot_execute",
-    "v_1dgrayplot_outputs",
     "v_1dgrayplot_params",
 ]

@@ -516,7 +516,7 @@ def mrfilter_outputs(
 
 def mrfilter_execute(
     params: MrfilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrfilterOutputs:
     """
     Perform filtering operations on 3D / 4D MR images.
@@ -537,10 +537,12 @@ def mrfilter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrfilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRFILTER_METADATA)
     params = execution.params(params)
     cargs = mrfilter_cargs(params, execution)
     ret = mrfilter_outputs(params, execution)
@@ -665,8 +667,6 @@ def mrfilter(
     Returns:
         NamedTuple of outputs (described in `MrfilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRFILTER_METADATA)
     params = mrfilter_params(
         axes=axes,
         inverse=inverse,
@@ -698,7 +698,7 @@ def mrfilter(
         filter_=filter_,
         output=output,
     )
-    return mrfilter_execute(params, execution)
+    return mrfilter_execute(params, runner)
 
 
 __all__ = [
@@ -709,14 +709,9 @@ __all__ = [
     "MrfilterVariousFileParameters",
     "MrfilterVariousStringParameters",
     "mrfilter",
-    "mrfilter_cargs",
-    "mrfilter_config_cargs",
     "mrfilter_config_params",
     "mrfilter_execute",
-    "mrfilter_outputs",
     "mrfilter_params",
-    "mrfilter_various_file_cargs",
     "mrfilter_various_file_params",
-    "mrfilter_various_string_cargs",
     "mrfilter_various_string_params",
 ]

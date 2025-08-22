@@ -121,7 +121,7 @@ def v__get_afni_version_outputs(
 
 def v__get_afni_version_execute(
     params: VGetAfniVersionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGetAfniVersionOutputs:
     """
     Downloads the source code for a specified AFNI version.
@@ -132,10 +132,12 @@ def v__get_afni_version_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGetAfniVersionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GET_AFNI_VERSION_METADATA)
     params = execution.params(params)
     cargs = v__get_afni_version_cargs(params, execution)
     ret = v__get_afni_version_outputs(params, execution)
@@ -160,12 +162,10 @@ def v__get_afni_version(
     Returns:
         NamedTuple of outputs (described in `VGetAfniVersionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GET_AFNI_VERSION_METADATA)
     params = v__get_afni_version_params(
         version=version,
     )
-    return v__get_afni_version_execute(params, execution)
+    return v__get_afni_version_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "VGetAfniVersionParameters",
     "V__GET_AFNI_VERSION_METADATA",
     "v__get_afni_version",
-    "v__get_afni_version_cargs",
     "v__get_afni_version_execute",
-    "v__get_afni_version_outputs",
     "v__get_afni_version_params",
 ]

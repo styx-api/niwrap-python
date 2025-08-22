@@ -159,7 +159,7 @@ def mris_label_mode_outputs(
 
 def mris_label_mode_execute(
     params: MrisLabelModeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisLabelModeOutputs:
     """
     This program will add a template into an average surface.
@@ -170,10 +170,12 @@ def mris_label_mode_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisLabelModeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_LABEL_MODE_METADATA)
     params = execution.params(params)
     cargs = mris_label_mode_cargs(params, execution)
     ret = mris_label_mode_outputs(params, execution)
@@ -212,8 +214,6 @@ def mris_label_mode(
     Returns:
         NamedTuple of outputs (described in `MrisLabelModeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_LABEL_MODE_METADATA)
     params = mris_label_mode_params(
         input_curv_file=input_curv_file,
         hemi=hemi,
@@ -224,7 +224,7 @@ def mris_label_mode(
         statistics_cond=statistics_cond,
         output_directory=output_directory,
     )
-    return mris_label_mode_execute(params, execution)
+    return mris_label_mode_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "MrisLabelModeOutputs",
     "MrisLabelModeParameters",
     "mris_label_mode",
-    "mris_label_mode_cargs",
     "mris_label_mode_execute",
-    "mris_label_mode_outputs",
     "mris_label_mode_params",
 ]

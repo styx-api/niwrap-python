@@ -240,7 +240,7 @@ def ants_ai_outputs(
 
 def ants_ai_execute(
     params: AntsAiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsAiOutputs:
     """
     Program to calculate the optimal linear transform parameters for aligning two
@@ -252,10 +252,12 @@ def ants_ai_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsAiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_AI_METADATA)
     params = execution.params(params)
     cargs = ants_ai_cargs(params, execution)
     ret = ants_ai_outputs(params, execution)
@@ -314,8 +316,6 @@ def ants_ai(
     Returns:
         NamedTuple of outputs (described in `AntsAiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_AI_METADATA)
     params = ants_ai_params(
         dimensionality=dimensionality,
         metric=metric,
@@ -330,7 +330,7 @@ def ants_ai(
         random_seed=random_seed,
         verbose=verbose,
     )
-    return ants_ai_execute(params, execution)
+    return ants_ai_execute(params, runner)
 
 
 __all__ = [
@@ -338,8 +338,6 @@ __all__ = [
     "AntsAiOutputs",
     "AntsAiParameters",
     "ants_ai",
-    "ants_ai_cargs",
     "ants_ai_execute",
-    "ants_ai_outputs",
     "ants_ai_params",
 ]

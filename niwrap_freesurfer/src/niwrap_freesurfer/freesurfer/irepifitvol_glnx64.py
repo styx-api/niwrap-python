@@ -125,7 +125,7 @@ def irepifitvol_glnx64_outputs(
 
 def irepifitvol_glnx64_execute(
     params: IrepifitvolGlnx64Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IrepifitvolGlnx64Outputs:
     """
     This tool is a part of the FreeSurfer toolkit, designed for certain volume
@@ -137,10 +137,12 @@ def irepifitvol_glnx64_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IrepifitvolGlnx64Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IREPIFITVOL_GLNX64_METADATA)
     params = execution.params(params)
     cargs = irepifitvol_glnx64_cargs(params, execution)
     ret = irepifitvol_glnx64_outputs(params, execution)
@@ -168,13 +170,11 @@ def irepifitvol_glnx64(
     Returns:
         NamedTuple of outputs (described in `IrepifitvolGlnx64Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IREPIFITVOL_GLNX64_METADATA)
     params = irepifitvol_glnx64_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return irepifitvol_glnx64_execute(params, execution)
+    return irepifitvol_glnx64_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "IrepifitvolGlnx64Outputs",
     "IrepifitvolGlnx64Parameters",
     "irepifitvol_glnx64",
-    "irepifitvol_glnx64_cargs",
     "irepifitvol_glnx64_execute",
-    "irepifitvol_glnx64_outputs",
     "irepifitvol_glnx64_params",
 ]

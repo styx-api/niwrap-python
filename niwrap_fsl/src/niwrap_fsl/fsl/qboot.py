@@ -302,7 +302,7 @@ def qboot_outputs(
 
 def qboot_execute(
     params: QbootParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QbootOutputs:
     """
     Tool for computing q-ball ODFs using bootstrap samples.
@@ -313,10 +313,12 @@ def qboot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QbootOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QBOOT_METADATA)
     params = execution.params(params)
     cargs = qboot_cargs(params, execution)
     ret = qboot_outputs(params, execution)
@@ -390,8 +392,6 @@ def qboot(
     Returns:
         NamedTuple of outputs (described in `QbootOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QBOOT_METADATA)
     params = qboot_params(
         data_file=data_file,
         mask_file=mask_file,
@@ -415,7 +415,7 @@ def qboot(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return qboot_execute(params, execution)
+    return qboot_execute(params, runner)
 
 
 __all__ = [
@@ -423,8 +423,6 @@ __all__ = [
     "QbootOutputs",
     "QbootParameters",
     "qboot",
-    "qboot_cargs",
     "qboot_execute",
-    "qboot_outputs",
     "qboot_params",
 ]

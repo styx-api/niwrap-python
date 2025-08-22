@@ -124,7 +124,7 @@ def mri_or_outputs(
 
 def mri_or_execute(
     params: MriOrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriOrOutputs:
     """
     Performs a logical voxel-wise OR on a series of volumes.
@@ -135,10 +135,12 @@ def mri_or_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriOrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_OR_METADATA)
     params = execution.params(params)
     cargs = mri_or_cargs(params, execution)
     ret = mri_or_outputs(params, execution)
@@ -167,13 +169,11 @@ def mri_or(
     Returns:
         NamedTuple of outputs (described in `MriOrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_OR_METADATA)
     params = mri_or_params(
         original_labels=original_labels,
         input_files=input_files,
     )
-    return mri_or_execute(params, execution)
+    return mri_or_execute(params, runner)
 
 
 __all__ = [
@@ -181,8 +181,6 @@ __all__ = [
     "MriOrOutputs",
     "MriOrParameters",
     "mri_or",
-    "mri_or_cargs",
     "mri_or_execute",
-    "mri_or_outputs",
     "mri_or_params",
 ]

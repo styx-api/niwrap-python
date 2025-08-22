@@ -179,7 +179,7 @@ def mkxsubjreg_outputs(
 
 def mkxsubjreg_execute(
     params: MkxsubjregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MkxsubjregOutputs:
     """
     Creates a new registration matrix that maps from the functional volume of the
@@ -192,10 +192,12 @@ def mkxsubjreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MkxsubjregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MKXSUBJREG_METADATA)
     params = execution.params(params)
     cargs = mkxsubjreg_cargs(params, execution)
     ret = mkxsubjreg_outputs(params, execution)
@@ -236,8 +238,6 @@ def mkxsubjreg(
     Returns:
         NamedTuple of outputs (described in `MkxsubjregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MKXSUBJREG_METADATA)
     params = mkxsubjreg_params(
         srcreg=srcreg,
         targreg=targreg,
@@ -248,7 +248,7 @@ def mkxsubjreg(
         help_=help_,
         version=version,
     )
-    return mkxsubjreg_execute(params, execution)
+    return mkxsubjreg_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "MkxsubjregOutputs",
     "MkxsubjregParameters",
     "mkxsubjreg",
-    "mkxsubjreg_cargs",
     "mkxsubjreg_execute",
-    "mkxsubjreg_outputs",
     "mkxsubjreg_params",
 ]

@@ -251,7 +251,7 @@ def fixelcorrespondence_outputs(
 
 def fixelcorrespondence_execute(
     params: FixelcorrespondenceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixelcorrespondenceOutputs:
     """
     Obtain fixel-fixel correpondence between a subject fixel image and a template
@@ -271,10 +271,12 @@ def fixelcorrespondence_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixelcorrespondenceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXELCORRESPONDENCE_METADATA)
     params = execution.params(params)
     cargs = fixelcorrespondence_cargs(params, execution)
     ret = fixelcorrespondence_outputs(params, execution)
@@ -340,8 +342,6 @@ def fixelcorrespondence(
     Returns:
         NamedTuple of outputs (described in `FixelcorrespondenceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXELCORRESPONDENCE_METADATA)
     params = fixelcorrespondence_params(
         angle=angle,
         info=info,
@@ -357,7 +357,7 @@ def fixelcorrespondence(
         output_directory=output_directory,
         output_data=output_data,
     )
-    return fixelcorrespondence_execute(params, execution)
+    return fixelcorrespondence_execute(params, runner)
 
 
 __all__ = [
@@ -366,10 +366,7 @@ __all__ = [
     "FixelcorrespondenceOutputs",
     "FixelcorrespondenceParameters",
     "fixelcorrespondence",
-    "fixelcorrespondence_cargs",
-    "fixelcorrespondence_config_cargs",
     "fixelcorrespondence_config_params",
     "fixelcorrespondence_execute",
-    "fixelcorrespondence_outputs",
     "fixelcorrespondence_params",
 ]

@@ -116,7 +116,7 @@ def mpr2mni305_outputs(
 
 def mpr2mni305_execute(
     params: Mpr2mni305Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Mpr2mni305Outputs:
     """
     Tool for transforming MPRAGE dataset to MNI305 coordinate space.
@@ -127,10 +127,12 @@ def mpr2mni305_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Mpr2mni305Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MPR2MNI305_METADATA)
     params = execution.params(params)
     cargs = mpr2mni305_cargs(params, execution)
     ret = mpr2mni305_outputs(params, execution)
@@ -155,12 +157,10 @@ def mpr2mni305(
     Returns:
         NamedTuple of outputs (described in `Mpr2mni305Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MPR2MNI305_METADATA)
     params = mpr2mni305_params(
         mpr_anat=mpr_anat,
     )
-    return mpr2mni305_execute(params, execution)
+    return mpr2mni305_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "Mpr2mni305Outputs",
     "Mpr2mni305Parameters",
     "mpr2mni305",
-    "mpr2mni305_cargs",
     "mpr2mni305_execute",
-    "mpr2mni305_outputs",
     "mpr2mni305_params",
 ]

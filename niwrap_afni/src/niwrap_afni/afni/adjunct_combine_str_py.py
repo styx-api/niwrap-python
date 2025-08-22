@@ -132,7 +132,7 @@ def adjunct_combine_str_py_outputs(
 
 def adjunct_combine_str_py_execute(
     params: AdjunctCombineStrPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctCombineStrPyOutputs:
     """
     A simple helper function for fat_proc* scripts that processes string selectors
@@ -144,10 +144,12 @@ def adjunct_combine_str_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctCombineStrPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_COMBINE_STR_PY_METADATA)
     params = execution.params(params)
     cargs = adjunct_combine_str_py_cargs(params, execution)
     ret = adjunct_combine_str_py_outputs(params, execution)
@@ -179,14 +181,12 @@ def adjunct_combine_str_py(
     Returns:
         NamedTuple of outputs (described in `AdjunctCombineStrPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_COMBINE_STR_PY_METADATA)
     params = adjunct_combine_str_py_params(
         output_file=output_file,
         upper_index=upper_index,
         string_selectors=string_selectors,
     )
-    return adjunct_combine_str_py_execute(params, execution)
+    return adjunct_combine_str_py_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "AdjunctCombineStrPyOutputs",
     "AdjunctCombineStrPyParameters",
     "adjunct_combine_str_py",
-    "adjunct_combine_str_py_cargs",
     "adjunct_combine_str_py_execute",
-    "adjunct_combine_str_py_outputs",
     "adjunct_combine_str_py_params",
 ]

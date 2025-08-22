@@ -143,7 +143,7 @@ def metric_remove_islands_outputs(
 
 def metric_remove_islands_execute(
     params: MetricRemoveIslandsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricRemoveIslandsOutputs:
     """
     Remove islands from an roi metric.
@@ -157,10 +157,12 @@ def metric_remove_islands_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRemoveIslandsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_REMOVE_ISLANDS_METADATA)
     params = execution.params(params)
     cargs = metric_remove_islands_cargs(params, execution)
     ret = metric_remove_islands_outputs(params, execution)
@@ -196,15 +198,13 @@ def metric_remove_islands(
     Returns:
         NamedTuple of outputs (described in `MetricRemoveIslandsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_REMOVE_ISLANDS_METADATA)
     params = metric_remove_islands_params(
         surface=surface,
         metric_in=metric_in,
         metric_out=metric_out,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return metric_remove_islands_execute(params, execution)
+    return metric_remove_islands_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "MetricRemoveIslandsOutputs",
     "MetricRemoveIslandsParameters",
     "metric_remove_islands",
-    "metric_remove_islands_cargs",
     "metric_remove_islands_execute",
-    "metric_remove_islands_outputs",
     "metric_remove_islands_params",
 ]

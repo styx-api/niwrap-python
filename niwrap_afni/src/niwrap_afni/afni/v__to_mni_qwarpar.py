@@ -127,7 +127,7 @@ def v__to_mni_qwarpar_outputs(
 
 def v__to_mni_qwarpar_execute(
     params: VToMniQwarparParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VToMniQwarparOutputs:
     """
     Transforms datasets to MNI space, then collectively re-transforms them to
@@ -139,10 +139,12 @@ def v__to_mni_qwarpar_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VToMniQwarparOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__TO_MNI_QWARPAR_METADATA)
     params = execution.params(params)
     cargs = v__to_mni_qwarpar_cargs(params, execution)
     ret = v__to_mni_qwarpar_outputs(params, execution)
@@ -172,13 +174,11 @@ def v__to_mni_qwarpar(
     Returns:
         NamedTuple of outputs (described in `VToMniQwarparOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__TO_MNI_QWARPAR_METADATA)
     params = v__to_mni_qwarpar_params(
         numcpu=numcpu,
         numjob=numjob,
     )
-    return v__to_mni_qwarpar_execute(params, execution)
+    return v__to_mni_qwarpar_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "VToMniQwarparParameters",
     "V__TO_MNI_QWARPAR_METADATA",
     "v__to_mni_qwarpar",
-    "v__to_mni_qwarpar_cargs",
     "v__to_mni_qwarpar_execute",
-    "v__to_mni_qwarpar_outputs",
     "v__to_mni_qwarpar_params",
 ]

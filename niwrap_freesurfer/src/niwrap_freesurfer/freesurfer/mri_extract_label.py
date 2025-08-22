@@ -178,7 +178,7 @@ def mri_extract_label_outputs(
 
 def mri_extract_label_execute(
     params: MriExtractLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriExtractLabelOutputs:
     """
     Extracts a set of labeled voxels from an image.
@@ -189,10 +189,12 @@ def mri_extract_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriExtractLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EXTRACT_LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_extract_label_cargs(params, execution)
     ret = mri_extract_label_outputs(params, execution)
@@ -233,8 +235,6 @@ def mri_extract_label(
     Returns:
         NamedTuple of outputs (described in `MriExtractLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EXTRACT_LABEL_METADATA)
     params = mri_extract_label_params(
         input_volume=input_volume,
         labels=labels,
@@ -245,7 +245,7 @@ def mri_extract_label(
         dilate=dilate,
         erode=erode,
     )
-    return mri_extract_label_execute(params, execution)
+    return mri_extract_label_execute(params, runner)
 
 
 __all__ = [
@@ -253,8 +253,6 @@ __all__ = [
     "MriExtractLabelOutputs",
     "MriExtractLabelParameters",
     "mri_extract_label",
-    "mri_extract_label_cargs",
     "mri_extract_label_execute",
-    "mri_extract_label_outputs",
     "mri_extract_label_params",
 ]

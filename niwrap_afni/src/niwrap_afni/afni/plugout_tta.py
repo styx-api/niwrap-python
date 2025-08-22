@@ -197,7 +197,7 @@ def plugout_tta_outputs(
 
 def plugout_tta_execute(
     params: PlugoutTtaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PlugoutTtaOutputs:
     """
     Connects to AFNI and receives notification whenever the user changes Talairach
@@ -210,10 +210,12 @@ def plugout_tta_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PlugoutTtaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PLUGOUT_TTA_METADATA)
     params = execution.params(params)
     cargs = plugout_tta_cargs(params, execution)
     ret = plugout_tta_outputs(params, execution)
@@ -264,8 +266,6 @@ def plugout_tta(
     Returns:
         NamedTuple of outputs (described in `PlugoutTtaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PLUGOUT_TTA_METADATA)
     params = plugout_tta_params(
         host=host,
         port=port,
@@ -278,7 +278,7 @@ def plugout_tta(
         num_assigned_ports=num_assigned_ports,
         num_assigned_ports_quiet=num_assigned_ports_quiet,
     )
-    return plugout_tta_execute(params, execution)
+    return plugout_tta_execute(params, runner)
 
 
 __all__ = [
@@ -286,8 +286,6 @@ __all__ = [
     "PlugoutTtaOutputs",
     "PlugoutTtaParameters",
     "plugout_tta",
-    "plugout_tta_cargs",
     "plugout_tta_execute",
-    "plugout_tta_outputs",
     "plugout_tta_params",
 ]

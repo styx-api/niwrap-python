@@ -152,7 +152,7 @@ def mris_mef_surfaces_outputs(
 
 def mris_mef_surfaces_execute(
     params: MrisMefSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMefSurfacesOutputs:
     """
     Positions the tessellation of the cortical surface at the white matter surface,
@@ -166,10 +166,12 @@ def mris_mef_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMefSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MEF_SURFACES_METADATA)
     params = execution.params(params)
     cargs = mris_mef_surfaces_cargs(params, execution)
     ret = mris_mef_surfaces_outputs(params, execution)
@@ -210,8 +212,6 @@ def mris_mef_surfaces(
     Returns:
         NamedTuple of outputs (described in `MrisMefSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MEF_SURFACES_METADATA)
     params = mris_mef_surfaces_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -220,7 +220,7 @@ def mris_mef_surfaces(
         average_curvature=average_curvature,
         white_only=white_only,
     )
-    return mris_mef_surfaces_execute(params, execution)
+    return mris_mef_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "MrisMefSurfacesOutputs",
     "MrisMefSurfacesParameters",
     "mris_mef_surfaces",
-    "mris_mef_surfaces_cargs",
     "mris_mef_surfaces_execute",
-    "mris_mef_surfaces_outputs",
     "mris_mef_surfaces_params",
 ]

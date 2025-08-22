@@ -223,7 +223,7 @@ def mri_funcvits_outputs(
 
 def mri_funcvits_execute(
     params: MriFuncvitsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFuncvitsOutputs:
     """
     Tool for functional volume to surface conversion in neuroimaging analysis.
@@ -234,10 +234,12 @@ def mri_funcvits_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFuncvitsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FUNCVITS_METADATA)
     params = execution.params(params)
     cargs = mri_funcvits_cargs(params, execution)
     ret = mri_funcvits_outputs(params, execution)
@@ -284,8 +286,6 @@ def mri_funcvits(
     Returns:
         NamedTuple of outputs (described in `MriFuncvitsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FUNCVITS_METADATA)
     params = mri_funcvits_params(
         stem=stem,
         outdir=outdir,
@@ -300,7 +300,7 @@ def mri_funcvits(
         mail=mail,
         noforce=noforce,
     )
-    return mri_funcvits_execute(params, execution)
+    return mri_funcvits_execute(params, runner)
 
 
 __all__ = [
@@ -308,8 +308,6 @@ __all__ = [
     "MriFuncvitsOutputs",
     "MriFuncvitsParameters",
     "mri_funcvits",
-    "mri_funcvits_cargs",
     "mri_funcvits_execute",
-    "mri_funcvits_outputs",
     "mri_funcvits_params",
 ]

@@ -136,7 +136,7 @@ def mri_strip_nonwhite_outputs(
 
 def mri_strip_nonwhite_execute(
     params: MriStripNonwhiteParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriStripNonwhiteOutputs:
     """
     Tool for processing MRI images, transforming volumetric data using provided
@@ -148,10 +148,12 @@ def mri_strip_nonwhite_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriStripNonwhiteOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_STRIP_NONWHITE_METADATA)
     params = execution.params(params)
     cargs = mri_strip_nonwhite_cargs(params, execution)
     ret = mri_strip_nonwhite_outputs(params, execution)
@@ -184,15 +186,13 @@ def mri_strip_nonwhite(
     Returns:
         NamedTuple of outputs (described in `MriStripNonwhiteOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_STRIP_NONWHITE_METADATA)
     params = mri_strip_nonwhite_params(
         input_volume=input_volume,
         transform=transform,
         template_volume=template_volume,
         output_volume=output_volume,
     )
-    return mri_strip_nonwhite_execute(params, execution)
+    return mri_strip_nonwhite_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "MriStripNonwhiteOutputs",
     "MriStripNonwhiteParameters",
     "mri_strip_nonwhite",
-    "mri_strip_nonwhite_cargs",
     "mri_strip_nonwhite_execute",
-    "mri_strip_nonwhite_outputs",
     "mri_strip_nonwhite_params",
 ]

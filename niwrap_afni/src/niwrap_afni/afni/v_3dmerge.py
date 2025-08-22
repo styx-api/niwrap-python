@@ -211,7 +211,7 @@ def v_3dmerge_outputs(
 
 def v_3dmerge_execute(
     params: V3dmergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmergeOutputs:
     """
     3dmerge edits and merges 3D datasets by applying various operations like
@@ -223,10 +223,12 @@ def v_3dmerge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMERGE_METADATA)
     params = execution.params(params)
     cargs = v_3dmerge_cargs(params, execution)
     ret = v_3dmerge_outputs(params, execution)
@@ -277,8 +279,6 @@ def v_3dmerge(
     Returns:
         NamedTuple of outputs (described in `V3dmergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMERGE_METADATA)
     params = v_3dmerge_params(
         input_files=input_files,
         output_file=output_file,
@@ -293,7 +293,7 @@ def v_3dmerge(
         gmax=gmax,
         quiet=quiet,
     )
-    return v_3dmerge_execute(params, execution)
+    return v_3dmerge_execute(params, runner)
 
 
 __all__ = [
@@ -301,8 +301,6 @@ __all__ = [
     "V3dmergeParameters",
     "V_3DMERGE_METADATA",
     "v_3dmerge",
-    "v_3dmerge_cargs",
     "v_3dmerge_execute",
-    "v_3dmerge_outputs",
     "v_3dmerge_params",
 ]

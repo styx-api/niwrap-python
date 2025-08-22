@@ -171,7 +171,7 @@ def mri_fuse_segmentations_outputs(
 
 def mri_fuse_segmentations_execute(
     params: MriFuseSegmentationsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFuseSegmentationsOutputs:
     """
     Fuse a set of segmentations (asegs) into an initial estimate of a longitudinal
@@ -183,10 +183,12 @@ def mri_fuse_segmentations_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFuseSegmentationsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FUSE_SEGMENTATIONS_METADATA)
     params = execution.params(params)
     cargs = mri_fuse_segmentations_cargs(params, execution)
     ret = mri_fuse_segmentations_outputs(params, execution)
@@ -226,8 +228,6 @@ def mri_fuse_segmentations(
     Returns:
         NamedTuple of outputs (described in `MriFuseSegmentationsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FUSE_SEGMENTATIONS_METADATA)
     params = mri_fuse_segmentations_params(
         asegs=asegs,
         nocc_asegs=nocc_asegs,
@@ -237,7 +237,7 @@ def mri_fuse_segmentations(
         input_file=input_file,
         output_file=output_file,
     )
-    return mri_fuse_segmentations_execute(params, execution)
+    return mri_fuse_segmentations_execute(params, runner)
 
 
 __all__ = [
@@ -245,8 +245,6 @@ __all__ = [
     "MriFuseSegmentationsOutputs",
     "MriFuseSegmentationsParameters",
     "mri_fuse_segmentations",
-    "mri_fuse_segmentations_cargs",
     "mri_fuse_segmentations_execute",
-    "mri_fuse_segmentations_outputs",
     "mri_fuse_segmentations_params",
 ]

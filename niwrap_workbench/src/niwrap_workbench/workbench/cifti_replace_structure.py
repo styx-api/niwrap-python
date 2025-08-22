@@ -372,7 +372,7 @@ def cifti_replace_structure_outputs(
 
 def cifti_replace_structure_execute(
     params: CiftiReplaceStructureParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
     Replace data in a structure in a cifti file.
@@ -429,10 +429,12 @@ def cifti_replace_structure_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiReplaceStructureOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_REPLACE_STRUCTURE_METADATA)
     params = execution.params(params)
     cargs = cifti_replace_structure_cargs(params, execution)
     ret = cifti_replace_structure_outputs(params, execution)
@@ -520,8 +522,6 @@ def cifti_replace_structure(
     Returns:
         NamedTuple of outputs (described in `CiftiReplaceStructureOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_REPLACE_STRUCTURE_METADATA)
     params = cifti_replace_structure_params(
         cifti=cifti,
         direction=direction,
@@ -532,7 +532,7 @@ def cifti_replace_structure(
         metric=metric,
         volume=volume,
     )
-    return cifti_replace_structure_execute(params, execution)
+    return cifti_replace_structure_execute(params, runner)
 
 
 __all__ = [
@@ -544,16 +544,10 @@ __all__ = [
     "CiftiReplaceStructureVolumeAllParameters",
     "CiftiReplaceStructureVolumeParameters",
     "cifti_replace_structure",
-    "cifti_replace_structure_cargs",
     "cifti_replace_structure_execute",
-    "cifti_replace_structure_label_cargs",
     "cifti_replace_structure_label_params",
-    "cifti_replace_structure_metric_cargs",
     "cifti_replace_structure_metric_params",
-    "cifti_replace_structure_outputs",
     "cifti_replace_structure_params",
-    "cifti_replace_structure_volume_all_cargs",
     "cifti_replace_structure_volume_all_params",
-    "cifti_replace_structure_volume_cargs",
     "cifti_replace_structure_volume_params",
 ]

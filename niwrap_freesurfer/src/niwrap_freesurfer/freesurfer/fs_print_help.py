@@ -118,7 +118,7 @@ def fs_print_help_outputs(
 
 def fs_print_help_execute(
     params: FsPrintHelpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsPrintHelpOutputs:
     """
     fsPrintHelp - A tool that attempts to provide help documentation for FreeSurfer
@@ -130,10 +130,12 @@ def fs_print_help_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsPrintHelpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_PRINT_HELP_METADATA)
     params = execution.params(params)
     cargs = fs_print_help_cargs(params, execution)
     ret = fs_print_help_outputs(params, execution)
@@ -159,12 +161,10 @@ def fs_print_help(
     Returns:
         NamedTuple of outputs (described in `FsPrintHelpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_PRINT_HELP_METADATA)
     params = fs_print_help_params(
         arguments=arguments,
     )
-    return fs_print_help_execute(params, execution)
+    return fs_print_help_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "FsPrintHelpOutputs",
     "FsPrintHelpParameters",
     "fs_print_help",
-    "fs_print_help_cargs",
     "fs_print_help_execute",
-    "fs_print_help_outputs",
     "fs_print_help_params",
 ]

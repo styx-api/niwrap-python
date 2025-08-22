@@ -189,7 +189,7 @@ def cifti_merge_dense_outputs(
 
 def cifti_merge_dense_execute(
     params: CiftiMergeDenseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiMergeDenseOutputs:
     """
     Merge cifti files along dense dimension.
@@ -204,10 +204,12 @@ def cifti_merge_dense_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiMergeDenseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_MERGE_DENSE_METADATA)
     params = execution.params(params)
     cargs = cifti_merge_dense_cargs(params, execution)
     ret = cifti_merge_dense_outputs(params, execution)
@@ -244,15 +246,13 @@ def cifti_merge_dense(
     Returns:
         NamedTuple of outputs (described in `CiftiMergeDenseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_MERGE_DENSE_METADATA)
     params = cifti_merge_dense_params(
         direction=direction,
         cifti_out=cifti_out,
         opt_label_collision_action=opt_label_collision_action,
         cifti=cifti,
     )
-    return cifti_merge_dense_execute(params, execution)
+    return cifti_merge_dense_execute(params, runner)
 
 
 __all__ = [
@@ -261,10 +261,7 @@ __all__ = [
     "CiftiMergeDenseOutputs",
     "CiftiMergeDenseParameters",
     "cifti_merge_dense",
-    "cifti_merge_dense_cargs",
-    "cifti_merge_dense_cifti_cargs",
     "cifti_merge_dense_cifti_params",
     "cifti_merge_dense_execute",
-    "cifti_merge_dense_outputs",
     "cifti_merge_dense_params",
 ]

@@ -280,7 +280,7 @@ def label_merge_outputs(
 
 def label_merge_execute(
     params: LabelMergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelMergeOutputs:
     """
     Merge label files into a new file.
@@ -301,10 +301,12 @@ def label_merge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelMergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_MERGE_METADATA)
     params = execution.params(params)
     cargs = label_merge_cargs(params, execution)
     ret = label_merge_outputs(params, execution)
@@ -341,13 +343,11 @@ def label_merge(
     Returns:
         NamedTuple of outputs (described in `LabelMergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_MERGE_METADATA)
     params = label_merge_params(
         label_out=label_out,
         label=label,
     )
-    return label_merge_execute(params, execution)
+    return label_merge_execute(params, runner)
 
 
 __all__ = [
@@ -358,14 +358,9 @@ __all__ = [
     "LabelMergeParameters",
     "LabelMergeUpToParameters",
     "label_merge",
-    "label_merge_cargs",
-    "label_merge_column_cargs",
     "label_merge_column_params",
     "label_merge_execute",
-    "label_merge_label_cargs",
     "label_merge_label_params",
-    "label_merge_outputs",
     "label_merge_params",
-    "label_merge_up_to_cargs",
     "label_merge_up_to_params",
 ]

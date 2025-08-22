@@ -135,7 +135,7 @@ def dmri_group_by_endpoints_outputs(
 
 def dmri_group_by_endpoints_execute(
     params: DmriGroupByEndpointsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriGroupByEndpointsOutputs:
     """
     A tool to group streamlines by their endpoints using diffusion MRI data.
@@ -146,10 +146,12 @@ def dmri_group_by_endpoints_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriGroupByEndpointsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_GROUP_BY_ENDPOINTS_METADATA)
     params = execution.params(params)
     cargs = dmri_group_by_endpoints_cargs(params, execution)
     ret = dmri_group_by_endpoints_outputs(params, execution)
@@ -178,14 +180,12 @@ def dmri_group_by_endpoints(
     Returns:
         NamedTuple of outputs (described in `DmriGroupByEndpointsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_GROUP_BY_ENDPOINTS_METADATA)
     params = dmri_group_by_endpoints_params(
         streamline_file=streamline_file,
         image_file=image_file,
         output_directory=output_directory,
     )
-    return dmri_group_by_endpoints_execute(params, execution)
+    return dmri_group_by_endpoints_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "DmriGroupByEndpointsOutputs",
     "DmriGroupByEndpointsParameters",
     "dmri_group_by_endpoints",
-    "dmri_group_by_endpoints_cargs",
     "dmri_group_by_endpoints_execute",
-    "dmri_group_by_endpoints_outputs",
     "dmri_group_by_endpoints_params",
 ]

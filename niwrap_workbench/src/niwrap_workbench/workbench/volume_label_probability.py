@@ -134,7 +134,7 @@ def volume_label_probability_outputs(
 
 def volume_label_probability_execute(
     params: VolumeLabelProbabilityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeLabelProbabilityOutputs:
     """
     Find frequency of volume labels.
@@ -149,10 +149,12 @@ def volume_label_probability_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelProbabilityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_LABEL_PROBABILITY_METADATA)
     params = execution.params(params)
     cargs = volume_label_probability_cargs(params, execution)
     ret = volume_label_probability_outputs(params, execution)
@@ -187,14 +189,12 @@ def volume_label_probability(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelProbabilityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_LABEL_PROBABILITY_METADATA)
     params = volume_label_probability_params(
         label_maps=label_maps,
         probability_out=probability_out,
         opt_exclude_unlabeled=opt_exclude_unlabeled,
     )
-    return volume_label_probability_execute(params, execution)
+    return volume_label_probability_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "VolumeLabelProbabilityOutputs",
     "VolumeLabelProbabilityParameters",
     "volume_label_probability",
-    "volume_label_probability_cargs",
     "volume_label_probability_execute",
-    "volume_label_probability_outputs",
     "volume_label_probability_params",
 ]

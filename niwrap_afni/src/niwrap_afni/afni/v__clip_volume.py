@@ -274,7 +274,7 @@ def v__clip_volume_outputs(
 
 def v__clip_volume_execute(
     params: VClipVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VClipVolumeOutputs:
     """
     A tool to clip regions of a volume in various ways, such as above/below certain
@@ -286,10 +286,12 @@ def v__clip_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VClipVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__CLIP_VOLUME_METADATA)
     params = execution.params(params)
     cargs = v__clip_volume_cargs(params, execution)
     ret = v__clip_volume_outputs(params, execution)
@@ -354,8 +356,6 @@ def v__clip_volume(
     Returns:
         NamedTuple of outputs (described in `VClipVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__CLIP_VOLUME_METADATA)
     params = v__clip_volume_params(
         input_volume=input_volume,
         below_zmm=below_zmm,
@@ -376,7 +376,7 @@ def v__clip_volume(
         output_prefix=output_prefix,
         followers=followers,
     )
-    return v__clip_volume_execute(params, execution)
+    return v__clip_volume_execute(params, runner)
 
 
 __all__ = [
@@ -384,8 +384,6 @@ __all__ = [
     "VClipVolumeParameters",
     "V__CLIP_VOLUME_METADATA",
     "v__clip_volume",
-    "v__clip_volume_cargs",
     "v__clip_volume_execute",
-    "v__clip_volume_outputs",
     "v__clip_volume_params",
 ]

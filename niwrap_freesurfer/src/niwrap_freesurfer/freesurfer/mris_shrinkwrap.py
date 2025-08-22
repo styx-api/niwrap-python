@@ -142,7 +142,7 @@ def mris_shrinkwrap_outputs(
 
 def mris_shrinkwrap_execute(
     params: MrisShrinkwrapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisShrinkwrapOutputs:
     """
     Generate shrink-wrapped tessellations of the input volume.
@@ -153,10 +153,12 @@ def mris_shrinkwrap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisShrinkwrapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SHRINKWRAP_METADATA)
     params = execution.params(params)
     cargs = mris_shrinkwrap_cargs(params, execution)
     ret = mris_shrinkwrap_outputs(params, execution)
@@ -186,14 +188,12 @@ def mris_shrinkwrap(
     Returns:
         NamedTuple of outputs (described in `MrisShrinkwrapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SHRINKWRAP_METADATA)
     params = mris_shrinkwrap_params(
         volume=volume,
         output_name=output_name,
         threshold=threshold,
     )
-    return mris_shrinkwrap_execute(params, execution)
+    return mris_shrinkwrap_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "MrisShrinkwrapOutputs",
     "MrisShrinkwrapParameters",
     "mris_shrinkwrap",
-    "mris_shrinkwrap_cargs",
     "mris_shrinkwrap_execute",
-    "mris_shrinkwrap_outputs",
     "mris_shrinkwrap_params",
 ]

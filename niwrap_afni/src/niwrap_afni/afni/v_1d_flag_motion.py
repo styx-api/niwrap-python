@@ -144,7 +144,7 @@ def v_1d_flag_motion_outputs(
 
 def v_1d_flag_motion_execute(
     params: V1dFlagMotionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dFlagMotionOutputs:
     """
     Produces a list of time points with excessive motion relative to the previous
@@ -156,10 +156,12 @@ def v_1d_flag_motion_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dFlagMotionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_FLAG_MOTION_METADATA)
     params = execution.params(params)
     cargs = v_1d_flag_motion_cargs(params, execution)
     ret = v_1d_flag_motion_outputs(params, execution)
@@ -193,14 +195,12 @@ def v_1d_flag_motion(
     Returns:
         NamedTuple of outputs (described in `V1dFlagMotionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_FLAG_MOTION_METADATA)
     params = v_1d_flag_motion_params(
         input_motion_file=input_motion_file,
         max_translation=max_translation,
         max_rotation=max_rotation,
     )
-    return v_1d_flag_motion_execute(params, execution)
+    return v_1d_flag_motion_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "V1dFlagMotionParameters",
     "V_1D_FLAG_MOTION_METADATA",
     "v_1d_flag_motion",
-    "v_1d_flag_motion_cargs",
     "v_1d_flag_motion_execute",
-    "v_1d_flag_motion_outputs",
     "v_1d_flag_motion_params",
 ]

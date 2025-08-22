@@ -418,7 +418,7 @@ def mredit_outputs(
 
 def mredit_execute(
     params: MreditParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MreditOutputs:
     """
     Directly edit the intensities within an image from the command-line.
@@ -439,10 +439,12 @@ def mredit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MreditOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MREDIT_METADATA)
     params = execution.params(params)
     cargs = mredit_cargs(params, execution)
     ret = mredit_outputs(params, execution)
@@ -508,8 +510,6 @@ def mredit(
     Returns:
         NamedTuple of outputs (described in `MreditOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MREDIT_METADATA)
     params = mredit_params(
         plane=plane,
         sphere=sphere,
@@ -526,7 +526,7 @@ def mredit(
         input_=input_,
         output=output,
     )
-    return mredit_execute(params, execution)
+    return mredit_execute(params, runner)
 
 
 __all__ = [
@@ -538,16 +538,10 @@ __all__ = [
     "MreditSphereParameters",
     "MreditVoxelParameters",
     "mredit",
-    "mredit_cargs",
-    "mredit_config_cargs",
     "mredit_config_params",
     "mredit_execute",
-    "mredit_outputs",
     "mredit_params",
-    "mredit_plane_cargs",
     "mredit_plane_params",
-    "mredit_sphere_cargs",
     "mredit_sphere_params",
-    "mredit_voxel_cargs",
     "mredit_voxel_params",
 ]

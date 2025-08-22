@@ -130,7 +130,7 @@ def mri_dist_surf_label_outputs(
 
 def mri_dist_surf_label_execute(
     params: MriDistSurfLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriDistSurfLabelOutputs:
     """
     Computes distances from input surface to label points or waypoints.
@@ -141,10 +141,12 @@ def mri_dist_surf_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriDistSurfLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_DIST_SURF_LABEL_METADATA)
     params = execution.params(params)
     cargs = mri_dist_surf_label_cargs(params, execution)
     ret = mri_dist_surf_label_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_dist_surf_label(
     Returns:
         NamedTuple of outputs (described in `MriDistSurfLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_DIST_SURF_LABEL_METADATA)
     params = mri_dist_surf_label_params(
         surface=surface,
         label_file=label_file,
         output=output,
     )
-    return mri_dist_surf_label_execute(params, execution)
+    return mri_dist_surf_label_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriDistSurfLabelOutputs",
     "MriDistSurfLabelParameters",
     "mri_dist_surf_label",
-    "mri_dist_surf_label_cargs",
     "mri_dist_surf_label_execute",
-    "mri_dist_surf_label_outputs",
     "mri_dist_surf_label_params",
 ]

@@ -119,7 +119,7 @@ def morph_rgb_rh_outputs(
 
 def morph_rgb_rh_execute(
     params: MorphRgbRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphRgbRhOutputs:
     """
     Morphs RGB values onto a FreeSurfer right hemisphere surface.
@@ -130,10 +130,12 @@ def morph_rgb_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphRgbRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_RGB_RH_METADATA)
     params = execution.params(params)
     cargs = morph_rgb_rh_cargs(params, execution)
     ret = morph_rgb_rh_outputs(params, execution)
@@ -158,12 +160,10 @@ def morph_rgb_rh(
     Returns:
         NamedTuple of outputs (described in `MorphRgbRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_RGB_RH_METADATA)
     params = morph_rgb_rh_params(
         subject_id=subject_id,
     )
-    return morph_rgb_rh_execute(params, execution)
+    return morph_rgb_rh_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "MorphRgbRhOutputs",
     "MorphRgbRhParameters",
     "morph_rgb_rh",
-    "morph_rgb_rh_cargs",
     "morph_rgb_rh_execute",
-    "morph_rgb_rh_outputs",
     "morph_rgb_rh_params",
 ]

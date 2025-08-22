@@ -249,7 +249,7 @@ def v_3d_allineate_outputs(
 
 def v_3d_allineate_execute(
     params: V3dAllineateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAllineateOutputs:
     """
     Program to align one dataset (the 'source') to a 'base' dataset using an affine
@@ -261,10 +261,12 @@ def v_3d_allineate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAllineateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ALLINEATE_METADATA)
     params = execution.params(params)
     cargs = v_3d_allineate_cargs(params, execution)
     ret = v_3d_allineate_outputs(params, execution)
@@ -320,8 +322,6 @@ def v_3d_allineate(
     Returns:
         NamedTuple of outputs (described in `V3dAllineateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ALLINEATE_METADATA)
     params = v_3d_allineate_params(
         source=source,
         base=base,
@@ -338,7 +338,7 @@ def v_3d_allineate(
         verbose=verbose,
         quiet=quiet,
     )
-    return v_3d_allineate_execute(params, execution)
+    return v_3d_allineate_execute(params, runner)
 
 
 __all__ = [
@@ -346,8 +346,6 @@ __all__ = [
     "V3dAllineateParameters",
     "V_3D_ALLINEATE_METADATA",
     "v_3d_allineate",
-    "v_3d_allineate_cargs",
     "v_3d_allineate_execute",
-    "v_3d_allineate_outputs",
     "v_3d_allineate_params",
 ]

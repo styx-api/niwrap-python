@@ -182,7 +182,7 @@ def v_3d_spat_norm_outputs(
 
 def v_3d_spat_norm_execute(
     params: V3dSpatNormParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSpatNormOutputs:
     """
     An obsolete tool for spatial normalization.
@@ -193,10 +193,12 @@ def v_3d_spat_norm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSpatNormOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SPAT_NORM_METADATA)
     params = execution.params(params)
     cargs = v_3d_spat_norm_cargs(params, execution)
     ret = v_3d_spat_norm_outputs(params, execution)
@@ -240,8 +242,6 @@ def v_3d_spat_norm(
     Returns:
         NamedTuple of outputs (described in `V3dSpatNormOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SPAT_NORM_METADATA)
     params = v_3d_spat_norm_params(
         dataset=dataset,
         prefix=prefix,
@@ -253,7 +253,7 @@ def v_3d_spat_norm(
         human=human,
         bottom_cuts=bottom_cuts,
     )
-    return v_3d_spat_norm_execute(params, execution)
+    return v_3d_spat_norm_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "V3dSpatNormParameters",
     "V_3D_SPAT_NORM_METADATA",
     "v_3d_spat_norm",
-    "v_3d_spat_norm_cargs",
     "v_3d_spat_norm_execute",
-    "v_3d_spat_norm_outputs",
     "v_3d_spat_norm_params",
 ]

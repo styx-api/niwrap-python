@@ -188,7 +188,7 @@ def tfim_outputs(
 
 def tfim_execute(
     params: TfimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TfimOutputs:
     """
     MCW TFIM: t-tests on sets of functional images.
@@ -199,10 +199,12 @@ def tfim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TfimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TFIM_METADATA)
     params = execution.params(params)
     cargs = tfim_cargs(params, execution)
     ret = tfim_outputs(params, execution)
@@ -244,8 +246,6 @@ def tfim(
     Returns:
         NamedTuple of outputs (described in `TfimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TFIM_METADATA)
     params = tfim_params(
         prefix=prefix,
         pthresh=pthresh,
@@ -255,7 +255,7 @@ def tfim(
         set2_images=set2_images,
         base1_value=base1_value,
     )
-    return tfim_execute(params, execution)
+    return tfim_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "TfimOutputs",
     "TfimParameters",
     "tfim",
-    "tfim_cargs",
     "tfim_execute",
-    "tfim_outputs",
     "tfim_params",
 ]

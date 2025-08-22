@@ -136,7 +136,7 @@ def tal_compare_outputs(
 
 def tal_compare_execute(
     params: TalCompareParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TalCompareOutputs:
     """
     Tool for comparing TAL databases.
@@ -147,10 +147,12 @@ def tal_compare_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TalCompareOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TAL_COMPARE_METADATA)
     params = execution.params(params)
     cargs = tal_compare_cargs(params, execution)
     ret = tal_compare_outputs(params, execution)
@@ -181,15 +183,13 @@ def tal_compare(
     Returns:
         NamedTuple of outputs (described in `TalCompareOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TAL_COMPARE_METADATA)
     params = tal_compare_params(
         ref_file=ref_file,
         moving_file=moving_file,
         output_file=output_file,
         verbose=verbose,
     )
-    return tal_compare_execute(params, execution)
+    return tal_compare_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "TalCompareOutputs",
     "TalCompareParameters",
     "tal_compare",
-    "tal_compare_cargs",
     "tal_compare_execute",
-    "tal_compare_outputs",
     "tal_compare_params",
 ]

@@ -133,7 +133,7 @@ def perfusion_subtract_outputs(
 
 def perfusion_subtract_execute(
     params: PerfusionSubtractParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PerfusionSubtractOutputs:
     """
     Subtract control images from tag images in 4D perfusion data.
@@ -144,10 +144,12 @@ def perfusion_subtract_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PerfusionSubtractOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PERFUSION_SUBTRACT_METADATA)
     params = execution.params(params)
     cargs = perfusion_subtract_cargs(params, execution)
     ret = perfusion_subtract_outputs(params, execution)
@@ -178,14 +180,12 @@ def perfusion_subtract(
     Returns:
         NamedTuple of outputs (described in `PerfusionSubtractOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PERFUSION_SUBTRACT_METADATA)
     params = perfusion_subtract_params(
         four_d_input=four_d_input,
         four_d_output=four_d_output,
         control_first_flag=control_first_flag,
     )
-    return perfusion_subtract_execute(params, execution)
+    return perfusion_subtract_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "PerfusionSubtractOutputs",
     "PerfusionSubtractParameters",
     "perfusion_subtract",
-    "perfusion_subtract_cargs",
     "perfusion_subtract_execute",
-    "perfusion_subtract_outputs",
     "perfusion_subtract_params",
 ]

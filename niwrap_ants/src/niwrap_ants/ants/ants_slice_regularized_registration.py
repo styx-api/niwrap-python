@@ -212,7 +212,7 @@ def ants_slice_regularized_registration_outputs(
 
 def ants_slice_regularized_registration_execute(
     params: AntsSliceRegularizedRegistrationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsSliceRegularizedRegistrationOutputs:
     """
     This program is a user-level application for slice-by-slice translation
@@ -230,10 +230,12 @@ def ants_slice_regularized_registration_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsSliceRegularizedRegistrationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA)
     params = execution.params(params)
     cargs = ants_slice_regularized_registration_cargs(params, execution)
     ret = ants_slice_regularized_registration_outputs(params, execution)
@@ -291,8 +293,6 @@ def ants_slice_regularized_registration(
     Returns:
         NamedTuple of outputs (described in `AntsSliceRegularizedRegistrationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_SLICE_REGULARIZED_REGISTRATION_METADATA)
     params = ants_slice_regularized_registration_params(
         polydegree=polydegree,
         output=output,
@@ -305,7 +305,7 @@ def ants_slice_regularized_registration(
         interpolation=interpolation,
         verbose=verbose,
     )
-    return ants_slice_regularized_registration_execute(params, execution)
+    return ants_slice_regularized_registration_execute(params, runner)
 
 
 __all__ = [
@@ -313,8 +313,6 @@ __all__ = [
     "AntsSliceRegularizedRegistrationOutputs",
     "AntsSliceRegularizedRegistrationParameters",
     "ants_slice_regularized_registration",
-    "ants_slice_regularized_registration_cargs",
     "ants_slice_regularized_registration_execute",
-    "ants_slice_regularized_registration_outputs",
     "ants_slice_regularized_registration_params",
 ]

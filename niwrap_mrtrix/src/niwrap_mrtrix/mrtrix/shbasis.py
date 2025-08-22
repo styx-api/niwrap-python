@@ -233,7 +233,7 @@ def shbasis_outputs(
 
 def shbasis_execute(
     params: ShbasisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ShbasisOutputs:
     """
     Examine the values in spherical harmonic images to estimate (and optionally
@@ -269,10 +269,12 @@ def shbasis_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ShbasisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SHBASIS_METADATA)
     params = execution.params(params)
     cargs = shbasis_cargs(params, execution)
     ret = shbasis_outputs(params, execution)
@@ -345,8 +347,6 @@ def shbasis(
     Returns:
         NamedTuple of outputs (described in `ShbasisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SHBASIS_METADATA)
     params = shbasis_params(
         convert=convert,
         info=info,
@@ -359,7 +359,7 @@ def shbasis(
         version=version,
         sh=sh,
     )
-    return shbasis_execute(params, execution)
+    return shbasis_execute(params, runner)
 
 
 __all__ = [
@@ -368,10 +368,7 @@ __all__ = [
     "ShbasisOutputs",
     "ShbasisParameters",
     "shbasis",
-    "shbasis_cargs",
-    "shbasis_config_cargs",
     "shbasis_config_params",
     "shbasis_execute",
-    "shbasis_outputs",
     "shbasis_params",
 ]

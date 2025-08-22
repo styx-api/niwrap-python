@@ -159,7 +159,7 @@ def un_warp_epi_py_outputs(
 
 def un_warp_epi_py_execute(
     params: UnWarpEpiPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnWarpEpiPyOutputs:
     """
     Routine to unwarp EPI data set using another data set with opposite polarity.
@@ -170,10 +170,12 @@ def un_warp_epi_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnWarpEpiPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UN_WARP_EPI_PY_METADATA)
     params = execution.params(params)
     cargs = un_warp_epi_py_cargs(params, execution)
     ret = un_warp_epi_py_outputs(params, execution)
@@ -210,8 +212,6 @@ def un_warp_epi_py(
     Returns:
         NamedTuple of outputs (described in `UnWarpEpiPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UN_WARP_EPI_PY_METADATA)
     params = un_warp_epi_py_params(
         forward=forward,
         reverse=reverse,
@@ -220,7 +220,7 @@ def un_warp_epi_py(
         subj_id=subj_id,
         giant_move=giant_move,
     )
-    return un_warp_epi_py_execute(params, execution)
+    return un_warp_epi_py_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "UnWarpEpiPyOutputs",
     "UnWarpEpiPyParameters",
     "un_warp_epi_py",
-    "un_warp_epi_py_cargs",
     "un_warp_epi_py_execute",
-    "un_warp_epi_py_outputs",
     "un_warp_epi_py_params",
 ]

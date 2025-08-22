@@ -144,7 +144,7 @@ def v_3d_zcutup_outputs(
 
 def v_3d_zcutup_execute(
     params: V3dZcutupParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dZcutupOutputs:
     """
     Cut slices off a dataset in its z-direction and write a new dataset.
@@ -155,10 +155,12 @@ def v_3d_zcutup_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dZcutupOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ZCUTUP_METADATA)
     params = execution.params(params)
     cargs = v_3d_zcutup_cargs(params, execution)
     ret = v_3d_zcutup_outputs(params, execution)
@@ -190,14 +192,12 @@ def v_3d_zcutup(
     Returns:
         NamedTuple of outputs (described in `V3dZcutupOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ZCUTUP_METADATA)
     params = v_3d_zcutup_params(
         keep_slices=keep_slices,
         prefix=prefix,
         dataset=dataset,
     )
-    return v_3d_zcutup_execute(params, execution)
+    return v_3d_zcutup_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "V3dZcutupParameters",
     "V_3D_ZCUTUP_METADATA",
     "v_3d_zcutup",
-    "v_3d_zcutup_cargs",
     "v_3d_zcutup_execute",
-    "v_3d_zcutup_outputs",
     "v_3d_zcutup_params",
 ]

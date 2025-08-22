@@ -417,7 +417,7 @@ def dcmunpack_outputs(
 
 def dcmunpack_execute(
     params: DcmunpackParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DcmunpackOutputs:
     """
     Sorts and converts a directory of DICOM files (Siemens, GE, Philips) into an
@@ -429,10 +429,12 @@ def dcmunpack_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DcmunpackOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCMUNPACK_METADATA)
     params = execution.params(params)
     cargs = dcmunpack_cargs(params, execution)
     ret = dcmunpack_outputs(params, execution)
@@ -540,8 +542,6 @@ def dcmunpack(
     Returns:
         NamedTuple of outputs (described in `DcmunpackOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCMUNPACK_METADATA)
     params = dcmunpack_params(
         src=src,
         targ=targ,
@@ -582,7 +582,7 @@ def dcmunpack(
         log=log,
         debug=debug,
     )
-    return dcmunpack_execute(params, execution)
+    return dcmunpack_execute(params, runner)
 
 
 __all__ = [
@@ -590,8 +590,6 @@ __all__ = [
     "DcmunpackOutputs",
     "DcmunpackParameters",
     "dcmunpack",
-    "dcmunpack_cargs",
     "dcmunpack_execute",
-    "dcmunpack_outputs",
     "dcmunpack_params",
 ]

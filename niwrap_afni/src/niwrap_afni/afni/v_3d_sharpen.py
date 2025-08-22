@@ -140,7 +140,7 @@ def v_3d_sharpen_outputs(
 
 def v_3d_sharpen_execute(
     params: V3dSharpenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSharpenOutputs:
     """
     Applies a simple 3D sharpening filter to the positive values in the #0 volume of
@@ -152,10 +152,12 @@ def v_3d_sharpen_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSharpenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SHARPEN_METADATA)
     params = execution.params(params)
     cargs = v_3d_sharpen_cargs(params, execution)
     ret = v_3d_sharpen_outputs(params, execution)
@@ -187,14 +189,12 @@ def v_3d_sharpen(
     Returns:
         NamedTuple of outputs (described in `V3dSharpenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SHARPEN_METADATA)
     params = v_3d_sharpen_params(
         sharpening_factor=sharpening_factor,
         input_dataset=input_dataset,
         output_prefix=output_prefix,
     )
-    return v_3d_sharpen_execute(params, execution)
+    return v_3d_sharpen_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "V3dSharpenParameters",
     "V_3D_SHARPEN_METADATA",
     "v_3d_sharpen",
-    "v_3d_sharpen_cargs",
     "v_3d_sharpen_execute",
-    "v_3d_sharpen_outputs",
     "v_3d_sharpen_params",
 ]

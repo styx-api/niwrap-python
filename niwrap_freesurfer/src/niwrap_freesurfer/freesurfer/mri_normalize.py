@@ -416,7 +416,7 @@ def mri_normalize_outputs(
 
 def mri_normalize_execute(
     params: MriNormalizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriNormalizeOutputs:
     """
     Normalize the white-matter, optionally based on control points. The input volume
@@ -429,10 +429,12 @@ def mri_normalize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriNormalizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_NORMALIZE_METADATA)
     params = execution.params(params)
     cargs = mri_normalize_cargs(params, execution)
     ret = mri_normalize_outputs(params, execution)
@@ -533,8 +535,6 @@ def mri_normalize(
     Returns:
         NamedTuple of outputs (described in `MriNormalizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_NORMALIZE_METADATA)
     params = mri_normalize_params(
         input_vol=input_vol,
         output_vol=output_vol,
@@ -571,7 +571,7 @@ def mri_normalize(
         seed_value=seed_value,
         print_help=print_help,
     )
-    return mri_normalize_execute(params, execution)
+    return mri_normalize_execute(params, runner)
 
 
 __all__ = [
@@ -579,8 +579,6 @@ __all__ = [
     "MriNormalizeOutputs",
     "MriNormalizeParameters",
     "mri_normalize",
-    "mri_normalize_cargs",
     "mri_normalize_execute",
-    "mri_normalize_outputs",
     "mri_normalize_params",
 ]

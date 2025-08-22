@@ -193,7 +193,7 @@ def afni_proc_py_outputs(
 
 def afni_proc_py_execute(
     params: AfniProcPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniProcPyOutputs:
     """
     Generate a tcsh script for an AFNI single subject processing stream.
@@ -204,10 +204,12 @@ def afni_proc_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniProcPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_PROC_PY_METADATA)
     params = execution.params(params)
     cargs = afni_proc_py_cargs(params, execution)
     ret = afni_proc_py_outputs(params, execution)
@@ -256,8 +258,6 @@ def afni_proc_py(
     Returns:
         NamedTuple of outputs (described in `AfniProcPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_PROC_PY_METADATA)
     params = afni_proc_py_params(
         dsets=dsets,
         subj_id=subj_id,
@@ -271,7 +271,7 @@ def afni_proc_py(
         copy_anat=copy_anat,
         regress_params=regress_params,
     )
-    return afni_proc_py_execute(params, execution)
+    return afni_proc_py_execute(params, runner)
 
 
 __all__ = [
@@ -279,8 +279,6 @@ __all__ = [
     "AfniProcPyOutputs",
     "AfniProcPyParameters",
     "afni_proc_py",
-    "afni_proc_py_cargs",
     "afni_proc_py_execute",
-    "afni_proc_py_outputs",
     "afni_proc_py_params",
 ]

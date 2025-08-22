@@ -247,7 +247,7 @@ def iso_surface_outputs(
 
 def iso_surface_execute(
     params: IsoSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IsoSurfaceOutputs:
     """
     A program to perform isosurface extraction from a volume.
@@ -258,10 +258,12 @@ def iso_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IsoSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ISO_SURFACE_METADATA)
     params = execution.params(params)
     cargs = iso_surface_cargs(params, execution)
     ret = iso_surface_outputs(params, execution)
@@ -314,8 +316,6 @@ def iso_surface(
     Returns:
         NamedTuple of outputs (described in `IsoSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ISO_SURFACE_METADATA)
     params = iso_surface_params(
         input_vol=input_vol,
         shape_spec=shape_spec,
@@ -332,7 +332,7 @@ def iso_surface(
         novolreg=novolreg,
         noxform=noxform,
     )
-    return iso_surface_execute(params, execution)
+    return iso_surface_execute(params, runner)
 
 
 __all__ = [
@@ -340,8 +340,6 @@ __all__ = [
     "IsoSurfaceOutputs",
     "IsoSurfaceParameters",
     "iso_surface",
-    "iso_surface_cargs",
     "iso_surface_execute",
-    "iso_surface_outputs",
     "iso_surface_params",
 ]

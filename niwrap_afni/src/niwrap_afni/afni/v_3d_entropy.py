@@ -122,7 +122,7 @@ def v_3d_entropy_outputs(
 
 def v_3d_entropy_execute(
     params: V3dEntropyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dEntropyOutputs:
     """
     Computes entropy for a 3D dataset.
@@ -133,10 +133,12 @@ def v_3d_entropy_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dEntropyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ENTROPY_METADATA)
     params = execution.params(params)
     cargs = v_3d_entropy_cargs(params, execution)
     ret = v_3d_entropy_outputs(params, execution)
@@ -163,13 +165,11 @@ def v_3d_entropy(
     Returns:
         NamedTuple of outputs (described in `V3dEntropyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ENTROPY_METADATA)
     params = v_3d_entropy_params(
         zskip=zskip,
         input_dataset=input_dataset,
     )
-    return v_3d_entropy_execute(params, execution)
+    return v_3d_entropy_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "V3dEntropyParameters",
     "V_3D_ENTROPY_METADATA",
     "v_3d_entropy",
-    "v_3d_entropy_cargs",
     "v_3d_entropy_execute",
-    "v_3d_entropy_outputs",
     "v_3d_entropy_params",
 ]

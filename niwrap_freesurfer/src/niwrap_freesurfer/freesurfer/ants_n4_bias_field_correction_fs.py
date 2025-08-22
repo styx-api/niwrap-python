@@ -186,7 +186,7 @@ def ants_n4_bias_field_correction_fs_outputs(
 
 def ants_n4_bias_field_correction_fs_execute(
     params: AntsN4BiasFieldCorrectionFsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsN4BiasFieldCorrectionFsOutputs:
     """
     Runs N4 (nonparameteric, nonuniform normalization) retrospective bias correction
@@ -199,10 +199,12 @@ def ants_n4_bias_field_correction_fs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsN4BiasFieldCorrectionFsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA)
     params = execution.params(params)
     cargs = ants_n4_bias_field_correction_fs_cargs(params, execution)
     ret = ants_n4_bias_field_correction_fs_outputs(params, execution)
@@ -246,8 +248,6 @@ def ants_n4_bias_field_correction_fs(
     Returns:
         NamedTuple of outputs (described in `AntsN4BiasFieldCorrectionFsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA)
     params = ants_n4_bias_field_correction_fs_params(
         input_file=input_file,
         output_file=output_file,
@@ -257,7 +257,7 @@ def ants_n4_bias_field_correction_fs(
         output_dtype=output_dtype,
         replace_zeros=replace_zeros,
     )
-    return ants_n4_bias_field_correction_fs_execute(params, execution)
+    return ants_n4_bias_field_correction_fs_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "AntsN4BiasFieldCorrectionFsOutputs",
     "AntsN4BiasFieldCorrectionFsParameters",
     "ants_n4_bias_field_correction_fs",
-    "ants_n4_bias_field_correction_fs_cargs",
     "ants_n4_bias_field_correction_fs_execute",
-    "ants_n4_bias_field_correction_fs_outputs",
     "ants_n4_bias_field_correction_fs_params",
 ]

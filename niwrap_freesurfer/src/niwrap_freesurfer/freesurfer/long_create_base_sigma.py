@@ -121,7 +121,7 @@ def long_create_base_sigma_outputs(
 
 def long_create_base_sigma_execute(
     params: LongCreateBaseSigmaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongCreateBaseSigmaOutputs:
     """
     Performs a joint normalization and atlas renormalization at a specific sigma
@@ -134,10 +134,12 @@ def long_create_base_sigma_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongCreateBaseSigmaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_CREATE_BASE_SIGMA_METADATA)
     params = execution.params(params)
     cargs = long_create_base_sigma_cargs(params, execution)
     ret = long_create_base_sigma_outputs(params, execution)
@@ -166,13 +168,11 @@ def long_create_base_sigma(
     Returns:
         NamedTuple of outputs (described in `LongCreateBaseSigmaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_CREATE_BASE_SIGMA_METADATA)
     params = long_create_base_sigma_params(
         base_id=base_id,
         sigma=sigma,
     )
-    return long_create_base_sigma_execute(params, execution)
+    return long_create_base_sigma_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "LongCreateBaseSigmaOutputs",
     "LongCreateBaseSigmaParameters",
     "long_create_base_sigma",
-    "long_create_base_sigma_cargs",
     "long_create_base_sigma_execute",
-    "long_create_base_sigma_outputs",
     "long_create_base_sigma_params",
 ]

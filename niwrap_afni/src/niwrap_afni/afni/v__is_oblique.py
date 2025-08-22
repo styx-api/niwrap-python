@@ -120,7 +120,7 @@ def v__is_oblique_outputs(
 
 def v__is_oblique_execute(
     params: VIsObliqueParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VIsObliqueOutputs:
     """
     Determine if a file is oblique or plumb.
@@ -131,10 +131,12 @@ def v__is_oblique_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VIsObliqueOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__IS_OBLIQUE_METADATA)
     params = execution.params(params)
     cargs = v__is_oblique_cargs(params, execution)
     ret = v__is_oblique_outputs(params, execution)
@@ -159,12 +161,10 @@ def v__is_oblique(
     Returns:
         NamedTuple of outputs (described in `VIsObliqueOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__IS_OBLIQUE_METADATA)
     params = v__is_oblique_params(
         infile=infile,
     )
-    return v__is_oblique_execute(params, execution)
+    return v__is_oblique_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "VIsObliqueParameters",
     "V__IS_OBLIQUE_METADATA",
     "v__is_oblique",
-    "v__is_oblique_cargs",
     "v__is_oblique_execute",
-    "v__is_oblique_outputs",
     "v__is_oblique_params",
 ]

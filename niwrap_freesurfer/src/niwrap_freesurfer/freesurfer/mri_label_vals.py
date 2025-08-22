@@ -134,7 +134,7 @@ def mri_label_vals_outputs(
 
 def mri_label_vals_execute(
     params: MriLabelValsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLabelValsOutputs:
     """
     Extract values at label coordinates from a volume.
@@ -145,10 +145,12 @@ def mri_label_vals_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLabelValsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LABEL_VALS_METADATA)
     params = execution.params(params)
     cargs = mri_label_vals_cargs(params, execution)
     ret = mri_label_vals_outputs(params, execution)
@@ -180,15 +182,13 @@ def mri_label_vals(
     Returns:
         NamedTuple of outputs (described in `MriLabelValsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LABEL_VALS_METADATA)
     params = mri_label_vals_params(
         volume=volume,
         label_file=label_file,
         cras_flag=cras_flag,
         help_flag=help_flag,
     )
-    return mri_label_vals_execute(params, execution)
+    return mri_label_vals_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MriLabelValsOutputs",
     "MriLabelValsParameters",
     "mri_label_vals",
-    "mri_label_vals_cargs",
     "mri_label_vals_execute",
-    "mri_label_vals_outputs",
     "mri_label_vals_params",
 ]

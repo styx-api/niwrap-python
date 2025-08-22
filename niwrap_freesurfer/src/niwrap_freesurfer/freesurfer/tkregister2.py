@@ -160,7 +160,7 @@ def tkregister2_outputs(
 
 def tkregister2_execute(
     params: Tkregister2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tkregister2Outputs:
     """
     tkregister2 is a tool from FreeSurfer used for registration of MRI images.
@@ -171,10 +171,12 @@ def tkregister2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tkregister2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TKREGISTER2_METADATA)
     params = execution.params(params)
     cargs = tkregister2_cargs(params, execution)
     ret = tkregister2_outputs(params, execution)
@@ -213,8 +215,6 @@ def tkregister2(
     Returns:
         NamedTuple of outputs (described in `Tkregister2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TKREGISTER2_METADATA)
     params = tkregister2_params(
         fixed_volume=fixed_volume,
         moving_volume=moving_volume,
@@ -225,7 +225,7 @@ def tkregister2(
         reg_only=reg_only,
         help_=help_,
     )
-    return tkregister2_execute(params, execution)
+    return tkregister2_execute(params, runner)
 
 
 __all__ = [
@@ -233,8 +233,6 @@ __all__ = [
     "Tkregister2Outputs",
     "Tkregister2Parameters",
     "tkregister2",
-    "tkregister2_cargs",
     "tkregister2_execute",
-    "tkregister2_outputs",
     "tkregister2_params",
 ]

@@ -125,7 +125,7 @@ def morph_only_subject_rh_outputs(
 
 def morph_only_subject_rh_execute(
     params: MorphOnlySubjectRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphOnlySubjectRhOutputs:
     """
     This tool processes morph-specific operations for the right hemisphere of the
@@ -137,10 +137,12 @@ def morph_only_subject_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_ONLY_SUBJECT_RH_METADATA)
     params = execution.params(params)
     cargs = morph_only_subject_rh_cargs(params, execution)
     ret = morph_only_subject_rh_outputs(params, execution)
@@ -167,12 +169,10 @@ def morph_only_subject_rh(
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_ONLY_SUBJECT_RH_METADATA)
     params = morph_only_subject_rh_params(
         subject_dir=subject_dir,
     )
-    return morph_only_subject_rh_execute(params, execution)
+    return morph_only_subject_rh_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MorphOnlySubjectRhOutputs",
     "MorphOnlySubjectRhParameters",
     "morph_only_subject_rh",
-    "morph_only_subject_rh_cargs",
     "morph_only_subject_rh_execute",
-    "morph_only_subject_rh_outputs",
     "morph_only_subject_rh_params",
 ]

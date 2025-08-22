@@ -230,7 +230,7 @@ def reg_tools_outputs(
 
 def reg_tools_execute(
     params: RegToolsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegToolsOutputs:
     """
     A versatile tool for manipulating and processing medical images.
@@ -241,10 +241,12 @@ def reg_tools_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegToolsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_TOOLS_METADATA)
     params = execution.params(params)
     cargs = reg_tools_cargs(params, execution)
     ret = reg_tools_outputs(params, execution)
@@ -292,8 +294,6 @@ def reg_tools(
     Returns:
         NamedTuple of outputs (described in `RegToolsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_TOOLS_METADATA)
     params = reg_tools_params(
         input_image=input_image,
         output_image=output_image,
@@ -308,7 +308,7 @@ def reg_tools(
         threshold_value=threshold_value,
         nan_mask_image=nan_mask_image,
     )
-    return reg_tools_execute(params, execution)
+    return reg_tools_execute(params, runner)
 
 
 __all__ = [
@@ -316,8 +316,6 @@ __all__ = [
     "RegToolsOutputs",
     "RegToolsParameters",
     "reg_tools",
-    "reg_tools_cargs",
     "reg_tools_execute",
-    "reg_tools_outputs",
     "reg_tools_params",
 ]

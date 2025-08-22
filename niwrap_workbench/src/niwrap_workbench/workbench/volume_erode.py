@@ -153,7 +153,7 @@ def volume_erode_outputs(
 
 def volume_erode_execute(
     params: VolumeErodeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeErodeOutputs:
     """
     Erode a volume file.
@@ -168,10 +168,12 @@ def volume_erode_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeErodeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_ERODE_METADATA)
     params = execution.params(params)
     cargs = volume_erode_cargs(params, execution)
     ret = volume_erode_outputs(params, execution)
@@ -210,8 +212,6 @@ def volume_erode(
     Returns:
         NamedTuple of outputs (described in `VolumeErodeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_ERODE_METADATA)
     params = volume_erode_params(
         volume=volume,
         distance=distance,
@@ -219,7 +219,7 @@ def volume_erode(
         opt_roi_roi_volume=opt_roi_roi_volume,
         opt_subvolume_subvol=opt_subvolume_subvol,
     )
-    return volume_erode_execute(params, execution)
+    return volume_erode_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "VolumeErodeOutputs",
     "VolumeErodeParameters",
     "volume_erode",
-    "volume_erode_cargs",
     "volume_erode_execute",
-    "volume_erode_outputs",
     "volume_erode_params",
 ]

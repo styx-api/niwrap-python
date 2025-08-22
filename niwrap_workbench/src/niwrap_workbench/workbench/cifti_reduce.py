@@ -205,7 +205,7 @@ def cifti_reduce_outputs(
 
 def cifti_reduce_execute(
     params: CiftiReduceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiReduceOutputs:
     """
     Perform reduction operation on a cifti file.
@@ -238,10 +238,12 @@ def cifti_reduce_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiReduceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_REDUCE_METADATA)
     params = execution.params(params)
     cargs = cifti_reduce_cargs(params, execution)
     ret = cifti_reduce_outputs(params, execution)
@@ -300,8 +302,6 @@ def cifti_reduce(
     Returns:
         NamedTuple of outputs (described in `CiftiReduceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_REDUCE_METADATA)
     params = cifti_reduce_params(
         cifti_in=cifti_in,
         operation=operation,
@@ -310,7 +310,7 @@ def cifti_reduce(
         exclude_outliers=exclude_outliers,
         opt_only_numeric=opt_only_numeric,
     )
-    return cifti_reduce_execute(params, execution)
+    return cifti_reduce_execute(params, runner)
 
 
 __all__ = [
@@ -319,10 +319,7 @@ __all__ = [
     "CiftiReduceOutputs",
     "CiftiReduceParameters",
     "cifti_reduce",
-    "cifti_reduce_cargs",
-    "cifti_reduce_exclude_outliers_cargs",
     "cifti_reduce_exclude_outliers_params",
     "cifti_reduce_execute",
-    "cifti_reduce_outputs",
     "cifti_reduce_params",
 ]

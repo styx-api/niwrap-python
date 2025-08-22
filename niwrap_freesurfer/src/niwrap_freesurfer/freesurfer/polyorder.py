@@ -135,7 +135,7 @@ def polyorder_outputs(
 
 def polyorder_execute(
     params: PolyorderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PolyorderOutputs:
     """
     Computes the order of polynomial regressors needed to achieve a highpass filter
@@ -147,10 +147,12 @@ def polyorder_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PolyorderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POLYORDER_METADATA)
     params = execution.params(params)
     cargs = polyorder_cargs(params, execution)
     ret = polyorder_outputs(params, execution)
@@ -180,14 +182,12 @@ def polyorder(
     Returns:
         NamedTuple of outputs (described in `PolyorderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POLYORDER_METADATA)
     params = polyorder_params(
         ntp=ntp,
         tr=tr,
         cutoff=cutoff,
     )
-    return polyorder_execute(params, execution)
+    return polyorder_execute(params, runner)
 
 
 __all__ = [
@@ -195,8 +195,6 @@ __all__ = [
     "PolyorderOutputs",
     "PolyorderParameters",
     "polyorder",
-    "polyorder_cargs",
     "polyorder_execute",
-    "polyorder_outputs",
     "polyorder_params",
 ]

@@ -127,7 +127,7 @@ def surface_affine_regression_outputs(
 
 def surface_affine_regression_execute(
     params: SurfaceAffineRegressionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceAffineRegressionOutputs:
     """
     Regress the affine transform between surfaces on the same mesh.
@@ -144,10 +144,12 @@ def surface_affine_regression_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceAffineRegressionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_AFFINE_REGRESSION_METADATA)
     params = execution.params(params)
     cargs = surface_affine_regression_cargs(params, execution)
     ret = surface_affine_regression_outputs(params, execution)
@@ -182,14 +184,12 @@ def surface_affine_regression(
     Returns:
         NamedTuple of outputs (described in `SurfaceAffineRegressionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_AFFINE_REGRESSION_METADATA)
     params = surface_affine_regression_params(
         source=source,
         target=target,
         affine_out=affine_out,
     )
-    return surface_affine_regression_execute(params, execution)
+    return surface_affine_regression_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "SurfaceAffineRegressionOutputs",
     "SurfaceAffineRegressionParameters",
     "surface_affine_regression",
-    "surface_affine_regression_cargs",
     "surface_affine_regression_execute",
-    "surface_affine_regression_outputs",
     "surface_affine_regression_params",
 ]

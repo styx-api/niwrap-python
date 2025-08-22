@@ -257,7 +257,7 @@ def mri_label_volume_outputs(
 
 def mri_label_volume_execute(
     params: MriLabelVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLabelVolumeOutputs:
     """
     A tool to compute volumes of labeled voxels within MRI images, often used in
@@ -269,10 +269,12 @@ def mri_label_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLabelVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LABEL_VOLUME_METADATA)
     params = execution.params(params)
     cargs = mri_label_volume_cargs(params, execution)
     ret = mri_label_volume_outputs(params, execution)
@@ -334,8 +336,6 @@ def mri_label_volume(
     Returns:
         NamedTuple of outputs (described in `MriLabelVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LABEL_VOLUME_METADATA)
     params = mri_label_volume_params(
         volume=volume,
         labels=labels,
@@ -354,7 +354,7 @@ def mri_label_volume(
         etiv_scalefactor=etiv_scalefactor,
         etiv_subject=etiv_subject,
     )
-    return mri_label_volume_execute(params, execution)
+    return mri_label_volume_execute(params, runner)
 
 
 __all__ = [
@@ -362,8 +362,6 @@ __all__ = [
     "MriLabelVolumeOutputs",
     "MriLabelVolumeParameters",
     "mri_label_volume",
-    "mri_label_volume_cargs",
     "mri_label_volume_execute",
-    "mri_label_volume_outputs",
     "mri_label_volume_params",
 ]

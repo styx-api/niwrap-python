@@ -205,7 +205,7 @@ def adwarp_outputs(
 
 def adwarp_execute(
     params: AdwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdwarpOutputs:
     """
     Resamples a 'data parent' dataset to the grid defined by an 'anat parent'
@@ -217,10 +217,12 @@ def adwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADWARP_METADATA)
     params = execution.params(params)
     cargs = adwarp_cargs(params, execution)
     ret = adwarp_outputs(params, execution)
@@ -271,8 +273,6 @@ def adwarp(
     Returns:
         NamedTuple of outputs (described in `AdwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADWARP_METADATA)
     params = adwarp_params(
         apar=apar,
         dpar=dpar,
@@ -284,7 +284,7 @@ def adwarp(
         thr=thr,
         func=func,
     )
-    return adwarp_execute(params, execution)
+    return adwarp_execute(params, runner)
 
 
 __all__ = [
@@ -292,8 +292,6 @@ __all__ = [
     "AdwarpOutputs",
     "AdwarpParameters",
     "adwarp",
-    "adwarp_cargs",
     "adwarp_execute",
-    "adwarp_outputs",
     "adwarp_params",
 ]

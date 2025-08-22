@@ -200,7 +200,7 @@ def mri_nlfilter_outputs(
 
 def mri_nlfilter_execute(
     params: MriNlfilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriNlfilterOutputs:
     """
     This program processes an image using a nonlocal filter and writes the results
@@ -213,10 +213,12 @@ def mri_nlfilter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriNlfilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_NLFILTER_METADATA)
     params = execution.params(params)
     cargs = mri_nlfilter_cargs(params, execution)
     ret = mri_nlfilter_outputs(params, execution)
@@ -268,8 +270,6 @@ def mri_nlfilter(
     Returns:
         NamedTuple of outputs (described in `MriNlfilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_NLFILTER_METADATA)
     params = mri_nlfilter_params(
         input_image=input_image,
         output_image=output_image,
@@ -284,7 +284,7 @@ def mri_nlfilter(
         version_flag=version_flag,
         help_flag=help_flag,
     )
-    return mri_nlfilter_execute(params, execution)
+    return mri_nlfilter_execute(params, runner)
 
 
 __all__ = [
@@ -292,8 +292,6 @@ __all__ = [
     "MriNlfilterOutputs",
     "MriNlfilterParameters",
     "mri_nlfilter",
-    "mri_nlfilter_cargs",
     "mri_nlfilter_execute",
-    "mri_nlfilter_outputs",
     "mri_nlfilter_params",
 ]

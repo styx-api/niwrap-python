@@ -198,7 +198,7 @@ def wmsaseg_outputs(
 
 def wmsaseg_execute(
     params: WmsasegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WmsasegOutputs:
     """
     White Matter Hyperintensity Segmentation Tool.
@@ -209,10 +209,12 @@ def wmsaseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WmsasegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WMSASEG_METADATA)
     params = execution.params(params)
     cargs = wmsaseg_cargs(params, execution)
     ret = wmsaseg_outputs(params, execution)
@@ -257,8 +259,6 @@ def wmsaseg(
     Returns:
         NamedTuple of outputs (described in `WmsasegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WMSASEG_METADATA)
     params = wmsaseg_params(
         subject=subject,
         source_orig=source_orig,
@@ -272,7 +272,7 @@ def wmsaseg(
         halo1=halo1,
         halo2=halo2,
     )
-    return wmsaseg_execute(params, execution)
+    return wmsaseg_execute(params, runner)
 
 
 __all__ = [
@@ -280,8 +280,6 @@ __all__ = [
     "WmsasegOutputs",
     "WmsasegParameters",
     "wmsaseg",
-    "wmsaseg_cargs",
     "wmsaseg_execute",
-    "wmsaseg_outputs",
     "wmsaseg_params",
 ]

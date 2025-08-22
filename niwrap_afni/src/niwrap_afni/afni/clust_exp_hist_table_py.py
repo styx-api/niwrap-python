@@ -150,7 +150,7 @@ def clust_exp_hist_table_py_outputs(
 
 def clust_exp_hist_table_py_execute(
     params: ClustExpHistTablePyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ClustExpHistTablePyOutputs:
     """
     Script to extract the data table from history of datasets from 3dttest++, 3dMVM,
@@ -162,10 +162,12 @@ def clust_exp_hist_table_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ClustExpHistTablePyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CLUST_EXP_HIST_TABLE_PY_METADATA)
     params = execution.params(params)
     cargs = clust_exp_hist_table_py_cargs(params, execution)
     ret = clust_exp_hist_table_py_outputs(params, execution)
@@ -198,15 +200,13 @@ def clust_exp_hist_table_py(
     Returns:
         NamedTuple of outputs (described in `ClustExpHistTablePyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CLUST_EXP_HIST_TABLE_PY_METADATA)
     params = clust_exp_hist_table_py_params(
         stat_dset=stat_dset,
         prefix=prefix,
         session=session,
         overwrite=overwrite,
     )
-    return clust_exp_hist_table_py_execute(params, execution)
+    return clust_exp_hist_table_py_execute(params, runner)
 
 
 __all__ = [
@@ -214,8 +214,6 @@ __all__ = [
     "ClustExpHistTablePyOutputs",
     "ClustExpHistTablePyParameters",
     "clust_exp_hist_table_py",
-    "clust_exp_hist_table_py_cargs",
     "clust_exp_hist_table_py_execute",
-    "clust_exp_hist_table_py_outputs",
     "clust_exp_hist_table_py_params",
 ]

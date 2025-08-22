@@ -127,7 +127,7 @@ def volume_label_export_table_outputs(
 
 def volume_label_export_table_execute(
     params: VolumeLabelExportTableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeLabelExportTableOutputs:
     """
     Export label table from volume as text.
@@ -141,10 +141,12 @@ def volume_label_export_table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelExportTableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_LABEL_EXPORT_TABLE_METADATA)
     params = execution.params(params)
     cargs = volume_label_export_table_cargs(params, execution)
     ret = volume_label_export_table_outputs(params, execution)
@@ -176,14 +178,12 @@ def volume_label_export_table(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelExportTableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_LABEL_EXPORT_TABLE_METADATA)
     params = volume_label_export_table_params(
         label_in=label_in,
         map_=map_,
         table_out=table_out,
     )
-    return volume_label_export_table_execute(params, execution)
+    return volume_label_export_table_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "VolumeLabelExportTableOutputs",
     "VolumeLabelExportTableParameters",
     "volume_label_export_table",
-    "volume_label_export_table_cargs",
     "volume_label_export_table_execute",
-    "volume_label_export_table_outputs",
     "volume_label_export_table_params",
 ]

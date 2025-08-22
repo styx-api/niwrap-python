@@ -178,7 +178,7 @@ def fsl_schurprod_outputs(
 
 def fsl_schurprod_execute(
     params: FslSchurprodParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslSchurprodOutputs:
     """
     Generates element-wise matrix products or product of matrices against vectors
@@ -190,10 +190,12 @@ def fsl_schurprod_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslSchurprodOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_SCHURPROD_METADATA)
     params = execution.params(params)
     cargs = fsl_schurprod_cargs(params, execution)
     ret = fsl_schurprod_outputs(params, execution)
@@ -234,8 +236,6 @@ def fsl_schurprod(
     Returns:
         NamedTuple of outputs (described in `FslSchurprodOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_SCHURPROD_METADATA)
     params = fsl_schurprod_params(
         input_file=input_file,
         design_file=design_file,
@@ -246,7 +246,7 @@ def fsl_schurprod(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return fsl_schurprod_execute(params, execution)
+    return fsl_schurprod_execute(params, runner)
 
 
 __all__ = [
@@ -254,8 +254,6 @@ __all__ = [
     "FslSchurprodOutputs",
     "FslSchurprodParameters",
     "fsl_schurprod",
-    "fsl_schurprod_cargs",
     "fsl_schurprod_execute",
-    "fsl_schurprod_outputs",
     "fsl_schurprod_params",
 ]

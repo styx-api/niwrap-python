@@ -209,7 +209,7 @@ def test_tutorials_sh_outputs(
 
 def test_tutorials_sh_execute(
     params: TestTutorialsShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TestTutorialsShOutputs:
     """
     A script to run various tutorial commands, with options for skipping GUI
@@ -221,10 +221,12 @@ def test_tutorials_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TestTutorialsShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TEST_TUTORIALS_SH_METADATA)
     params = execution.params(params)
     cargs = test_tutorials_sh_cargs(params, execution)
     ret = test_tutorials_sh_outputs(params, execution)
@@ -282,8 +284,6 @@ def test_tutorials_sh(
     Returns:
         NamedTuple of outputs (described in `TestTutorialsShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TEST_TUTORIALS_SH_METADATA)
     params = test_tutorials_sh_params(
         all_tutorials=all_tutorials,
         quick_test=quick_test,
@@ -302,7 +302,7 @@ def test_tutorials_sh(
         fsfast=fsfast,
         multimodal=multimodal,
     )
-    return test_tutorials_sh_execute(params, execution)
+    return test_tutorials_sh_execute(params, runner)
 
 
 __all__ = [
@@ -310,8 +310,6 @@ __all__ = [
     "TestTutorialsShOutputs",
     "TestTutorialsShParameters",
     "test_tutorials_sh",
-    "test_tutorials_sh_cargs",
     "test_tutorials_sh_execute",
-    "test_tutorials_sh_outputs",
     "test_tutorials_sh_params",
 ]

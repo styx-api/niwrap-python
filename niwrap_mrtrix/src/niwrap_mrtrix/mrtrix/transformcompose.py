@@ -324,7 +324,7 @@ def transformcompose_outputs(
 
 def transformcompose_execute(
     params: TransformcomposeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TransformcomposeOutputs:
     """
     Compose any number of linear transformations and/or warps into a single
@@ -357,10 +357,12 @@ def transformcompose_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TransformcomposeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRANSFORMCOMPOSE_METADATA)
     params = execution.params(params)
     cargs = transformcompose_cargs(params, execution)
     ret = transformcompose_outputs(params, execution)
@@ -432,8 +434,6 @@ def transformcompose(
     Returns:
         NamedTuple of outputs (described in `TransformcomposeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRANSFORMCOMPOSE_METADATA)
     params = transformcompose_params(
         template=template,
         info=info,
@@ -447,7 +447,7 @@ def transformcompose(
         input_=input_,
         output=output,
     )
-    return transformcompose_execute(params, execution)
+    return transformcompose_execute(params, runner)
 
 
 __all__ = [
@@ -458,14 +458,9 @@ __all__ = [
     "TransformcomposeVariousFileParameters",
     "TransformcomposeVariousStringParameters",
     "transformcompose",
-    "transformcompose_cargs",
-    "transformcompose_config_cargs",
     "transformcompose_config_params",
     "transformcompose_execute",
-    "transformcompose_outputs",
     "transformcompose_params",
-    "transformcompose_various_file_cargs",
     "transformcompose_various_file_params",
-    "transformcompose_various_string_cargs",
     "transformcompose_various_string_params",
 ]

@@ -176,7 +176,7 @@ def v_3d_zcat_outputs(
 
 def v_3d_zcat_execute(
     params: V3dZcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dZcatOutputs:
     """
     Concatenates datasets in the slice (z) direction.
@@ -187,10 +187,12 @@ def v_3d_zcat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dZcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ZCAT_METADATA)
     params = execution.params(params)
     cargs = v_3d_zcat_cargs(params, execution)
     ret = v_3d_zcat_outputs(params, execution)
@@ -236,8 +238,6 @@ def v_3d_zcat(
     Returns:
         NamedTuple of outputs (described in `V3dZcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ZCAT_METADATA)
     params = v_3d_zcat_params(
         prefix=prefix,
         datum=datum,
@@ -247,7 +247,7 @@ def v_3d_zcat(
         frugal=frugal,
         input_files=input_files,
     )
-    return v_3d_zcat_execute(params, execution)
+    return v_3d_zcat_execute(params, runner)
 
 
 __all__ = [
@@ -255,8 +255,6 @@ __all__ = [
     "V3dZcatParameters",
     "V_3D_ZCAT_METADATA",
     "v_3d_zcat",
-    "v_3d_zcat_cargs",
     "v_3d_zcat_execute",
-    "v_3d_zcat_outputs",
     "v_3d_zcat_params",
 ]

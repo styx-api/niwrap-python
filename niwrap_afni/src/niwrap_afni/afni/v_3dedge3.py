@@ -186,7 +186,7 @@ def v_3dedge3_outputs(
 
 def v_3dedge3_execute(
     params: V3dedge3Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dedge3Outputs:
     """
     Does 3D Edge detection using the library 3DEdge.
@@ -197,10 +197,12 @@ def v_3dedge3_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dedge3Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DEDGE3_METADATA)
     params = execution.params(params)
     cargs = v_3dedge3_cargs(params, execution)
     ret = v_3dedge3_outputs(params, execution)
@@ -244,8 +246,6 @@ def v_3dedge3(
     Returns:
         NamedTuple of outputs (described in `V3dedge3Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DEDGE3_METADATA)
     params = v_3dedge3_params(
         input_file=input_file,
         verbose=verbose,
@@ -257,7 +257,7 @@ def v_3dedge3(
         scale_floats=scale_floats,
         automask=automask,
     )
-    return v_3dedge3_execute(params, execution)
+    return v_3dedge3_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "V3dedge3Parameters",
     "V_3DEDGE3_METADATA",
     "v_3dedge3",
-    "v_3dedge3_cargs",
     "v_3dedge3_execute",
-    "v_3dedge3_outputs",
     "v_3dedge3_params",
 ]

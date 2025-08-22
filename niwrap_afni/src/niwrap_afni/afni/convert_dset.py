@@ -299,7 +299,7 @@ def convert_dset_outputs(
 
 def convert_dset_execute(
     params: ConvertDsetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertDsetOutputs:
     """
     Converts a surface dataset from one format to another.
@@ -310,10 +310,12 @@ def convert_dset_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertDsetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_DSET_METADATA)
     params = execution.params(params)
     cargs = convert_dset_cargs(params, execution)
     ret = convert_dset_outputs(params, execution)
@@ -384,8 +386,6 @@ def convert_dset(
     Returns:
         NamedTuple of outputs (described in `ConvertDsetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_DSET_METADATA)
     params = convert_dset_params(
         output_type=output_type,
         input_dataset=input_dataset,
@@ -409,7 +409,7 @@ def convert_dset(
         split=split,
         no_history=no_history,
     )
-    return convert_dset_execute(params, execution)
+    return convert_dset_execute(params, runner)
 
 
 __all__ = [
@@ -417,8 +417,6 @@ __all__ = [
     "ConvertDsetOutputs",
     "ConvertDsetParameters",
     "convert_dset",
-    "convert_dset_cargs",
     "convert_dset_execute",
-    "convert_dset_outputs",
     "convert_dset_params",
 ]

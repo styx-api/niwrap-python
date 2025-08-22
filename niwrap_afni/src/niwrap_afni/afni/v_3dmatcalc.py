@@ -154,7 +154,7 @@ def v_3dmatcalc_outputs(
 
 def v_3dmatcalc_execute(
     params: V3dmatcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmatcalcOutputs:
     """
     Apply a matrix to a dataset, voxel-by-voxel, to produce a new dataset.
@@ -165,10 +165,12 @@ def v_3dmatcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmatcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMATCALC_METADATA)
     params = execution.params(params)
     cargs = v_3dmatcalc_cargs(params, execution)
     ret = v_3dmatcalc_outputs(params, execution)
@@ -201,15 +203,13 @@ def v_3dmatcalc(
     Returns:
         NamedTuple of outputs (described in `V3dmatcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMATCALC_METADATA)
     params = v_3dmatcalc_params(
         input_dataset=input_dataset,
         input_matrix=input_matrix,
         output_dataset=output_dataset,
         mask=mask,
     )
-    return v_3dmatcalc_execute(params, execution)
+    return v_3dmatcalc_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "V3dmatcalcParameters",
     "V_3DMATCALC_METADATA",
     "v_3dmatcalc",
-    "v_3dmatcalc_cargs",
     "v_3dmatcalc_execute",
-    "v_3dmatcalc_outputs",
     "v_3dmatcalc_params",
 ]

@@ -119,7 +119,7 @@ def check_recons_sh_outputs(
 
 def check_recons_sh_execute(
     params: CheckReconsShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CheckReconsShOutputs:
     """
     Checks the status of subjects being processed by recon-all in the SUBJECTS_DIR
@@ -131,10 +131,12 @@ def check_recons_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CheckReconsShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CHECK_RECONS_SH_METADATA)
     params = execution.params(params)
     cargs = check_recons_sh_cargs(params, execution)
     ret = check_recons_sh_outputs(params, execution)
@@ -161,12 +163,10 @@ def check_recons_sh(
     Returns:
         NamedTuple of outputs (described in `CheckReconsShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CHECK_RECONS_SH_METADATA)
     params = check_recons_sh_params(
         subject_directory=subject_directory,
     )
-    return check_recons_sh_execute(params, execution)
+    return check_recons_sh_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "CheckReconsShOutputs",
     "CheckReconsShParameters",
     "check_recons_sh",
-    "check_recons_sh_cargs",
     "check_recons_sh_execute",
-    "check_recons_sh_outputs",
     "check_recons_sh_params",
 ]

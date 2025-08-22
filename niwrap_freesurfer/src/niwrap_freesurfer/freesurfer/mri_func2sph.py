@@ -183,7 +183,7 @@ def mri_func2sph_outputs(
 
 def mri_func2sph_execute(
     params: MriFunc2sphParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFunc2sphOutputs:
     """
     Maps functional data from volume space to spherical surface space.
@@ -194,10 +194,12 @@ def mri_func2sph_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFunc2sphOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FUNC2SPH_METADATA)
     params = execution.params(params)
     cargs = mri_func2sph_cargs(params, execution)
     ret = mri_func2sph_outputs(params, execution)
@@ -236,8 +238,6 @@ def mri_func2sph(
     Returns:
         NamedTuple of outputs (described in `MriFunc2sphOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FUNC2SPH_METADATA)
     params = mri_func2sph_params(
         instem=instem,
         outstem=outstem,
@@ -248,7 +248,7 @@ def mri_func2sph(
         input_type=input_type,
         umask=umask,
     )
-    return mri_func2sph_execute(params, execution)
+    return mri_func2sph_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "MriFunc2sphOutputs",
     "MriFunc2sphParameters",
     "mri_func2sph",
-    "mri_func2sph_cargs",
     "mri_func2sph_execute",
-    "mri_func2sph_outputs",
     "mri_func2sph_params",
 ]

@@ -155,7 +155,7 @@ def v_3d_clust_count_outputs(
 
 def v_3d_clust_count_execute(
     params: V3dClustCountParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dClustCountOutputs:
     """
     This program takes as input 1 or more datasets, thresholds them at various
@@ -167,10 +167,12 @@ def v_3d_clust_count_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dClustCountOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CLUST_COUNT_METADATA)
     params = execution.params(params)
     cargs = v_3d_clust_count_cargs(params, execution)
     ret = v_3d_clust_count_outputs(params, execution)
@@ -209,15 +211,13 @@ def v_3d_clust_count(
     Returns:
         NamedTuple of outputs (described in `V3dClustCountOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CLUST_COUNT_METADATA)
     params = v_3d_clust_count_params(
         datasets=datasets,
         prefix=prefix,
         final=final,
         quiet=quiet,
     )
-    return v_3d_clust_count_execute(params, execution)
+    return v_3d_clust_count_execute(params, runner)
 
 
 __all__ = [
@@ -225,8 +225,6 @@ __all__ = [
     "V3dClustCountParameters",
     "V_3D_CLUST_COUNT_METADATA",
     "v_3d_clust_count",
-    "v_3d_clust_count_cargs",
     "v_3d_clust_count_execute",
-    "v_3d_clust_count_outputs",
     "v_3d_clust_count_params",
 ]

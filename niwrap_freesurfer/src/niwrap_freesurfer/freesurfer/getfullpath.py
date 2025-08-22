@@ -116,7 +116,7 @@ def getfullpath_outputs(
 
 def getfullpath_execute(
     params: GetfullpathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GetfullpathOutputs:
     """
     A utility to retrieve the full path of a specified file or directory.
@@ -127,10 +127,12 @@ def getfullpath_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GetfullpathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GETFULLPATH_METADATA)
     params = execution.params(params)
     cargs = getfullpath_cargs(params, execution)
     ret = getfullpath_outputs(params, execution)
@@ -155,12 +157,10 @@ def getfullpath(
     Returns:
         NamedTuple of outputs (described in `GetfullpathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GETFULLPATH_METADATA)
     params = getfullpath_params(
         filename=filename,
     )
-    return getfullpath_execute(params, execution)
+    return getfullpath_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "GetfullpathOutputs",
     "GetfullpathParameters",
     "getfullpath",
-    "getfullpath_cargs",
     "getfullpath_execute",
-    "getfullpath_outputs",
     "getfullpath_params",
 ]

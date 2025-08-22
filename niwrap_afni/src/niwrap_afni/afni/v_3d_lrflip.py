@@ -167,7 +167,7 @@ def v_3d_lrflip_outputs(
 
 def v_3d_lrflip_execute(
     params: V3dLrflipParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLrflipOutputs:
     """
     Flips the rows of a dataset along one of the three axes to correct dataset
@@ -179,10 +179,12 @@ def v_3d_lrflip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLrflipOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LRFLIP_METADATA)
     params = execution.params(params)
     cargs = v_3d_lrflip_cargs(params, execution)
     ret = v_3d_lrflip_outputs(params, execution)
@@ -223,8 +225,6 @@ def v_3d_lrflip(
     Returns:
         NamedTuple of outputs (described in `V3dLrflipOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LRFLIP_METADATA)
     params = v_3d_lrflip_params(
         flip_lr=flip_lr,
         flip_ap=flip_ap,
@@ -235,7 +235,7 @@ def v_3d_lrflip(
         output_prefix=output_prefix,
         datasets=datasets,
     )
-    return v_3d_lrflip_execute(params, execution)
+    return v_3d_lrflip_execute(params, runner)
 
 
 __all__ = [
@@ -243,8 +243,6 @@ __all__ = [
     "V3dLrflipParameters",
     "V_3D_LRFLIP_METADATA",
     "v_3d_lrflip",
-    "v_3d_lrflip_cargs",
     "v_3d_lrflip_execute",
-    "v_3d_lrflip_outputs",
     "v_3d_lrflip_params",
 ]

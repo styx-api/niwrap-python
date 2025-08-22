@@ -210,7 +210,7 @@ def trac_paths_outputs(
 
 def trac_paths_execute(
     params: TracPathsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TracPathsOutputs:
     """
     Tractography for a single subject.
@@ -221,10 +221,12 @@ def trac_paths_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TracPathsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRAC_PATHS_METADATA)
     params = execution.params(params)
     cargs = trac_paths_cargs(params, execution)
     ret = trac_paths_outputs(params, execution)
@@ -276,8 +278,6 @@ def trac_paths(
     Returns:
         NamedTuple of outputs (described in `TracPathsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRAC_PATHS_METADATA)
     params = trac_paths_params(
         dmrirc_file=dmrirc_file,
         log_file=log_file,
@@ -293,7 +293,7 @@ def trac_paths(
         version=version,
         help_=help_,
     )
-    return trac_paths_execute(params, execution)
+    return trac_paths_execute(params, runner)
 
 
 __all__ = [
@@ -301,8 +301,6 @@ __all__ = [
     "TracPathsOutputs",
     "TracPathsParameters",
     "trac_paths",
-    "trac_paths_cargs",
     "trac_paths_execute",
-    "trac_paths_outputs",
     "trac_paths_params",
 ]

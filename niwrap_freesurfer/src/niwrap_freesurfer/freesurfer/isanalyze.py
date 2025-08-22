@@ -116,7 +116,7 @@ def isanalyze_outputs(
 
 def isanalyze_execute(
     params: IsanalyzeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IsanalyzeOutputs:
     """
     A tool to analyze and process IS files.
@@ -127,10 +127,12 @@ def isanalyze_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IsanalyzeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ISANALYZE_METADATA)
     params = execution.params(params)
     cargs = isanalyze_cargs(params, execution)
     ret = isanalyze_outputs(params, execution)
@@ -155,12 +157,10 @@ def isanalyze(
     Returns:
         NamedTuple of outputs (described in `IsanalyzeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ISANALYZE_METADATA)
     params = isanalyze_params(
         input_file=input_file,
     )
-    return isanalyze_execute(params, execution)
+    return isanalyze_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "IsanalyzeOutputs",
     "IsanalyzeParameters",
     "isanalyze",
-    "isanalyze_cargs",
     "isanalyze_execute",
-    "isanalyze_outputs",
     "isanalyze_params",
 ]

@@ -144,7 +144,7 @@ def image_math_outputs(
 
 def image_math_execute(
     params: ImageMathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImageMathOutputs:
     """
     A versatile tool for performing various mathematical and manipulation operations
@@ -156,10 +156,12 @@ def image_math_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImageMathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMAGE_MATH_METADATA)
     params = execution.params(params)
     cargs = image_math_cargs(params, execution)
     ret = image_math_outputs(params, execution)
@@ -195,8 +197,6 @@ def image_math(
     Returns:
         NamedTuple of outputs (described in `ImageMathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMAGE_MATH_METADATA)
     params = image_math_params(
         image_dimension=image_dimension,
         output_image=output_image,
@@ -204,7 +204,7 @@ def image_math(
         image1=image1,
         image2=image2,
     )
-    return image_math_execute(params, execution)
+    return image_math_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "ImageMathOutputs",
     "ImageMathParameters",
     "image_math",
-    "image_math_cargs",
     "image_math_execute",
-    "image_math_outputs",
     "image_math_params",
 ]

@@ -169,7 +169,7 @@ def applyxfm4_d_outputs(
 
 def applyxfm4_d_execute(
     params: Applyxfm4DParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Applyxfm4DOutputs:
     """
     Applies 4D transformation matrices to 4D volumes.
@@ -180,10 +180,12 @@ def applyxfm4_d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Applyxfm4DOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APPLYXFM4_D_METADATA)
     params = execution.params(params)
     cargs = applyxfm4_d_cargs(params, execution)
     ret = applyxfm4_d_outputs(params, execution)
@@ -224,8 +226,6 @@ def applyxfm4_d(
     Returns:
         NamedTuple of outputs (described in `Applyxfm4DOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APPLYXFM4_D_METADATA)
     params = applyxfm4_d_params(
         input_volume=input_volume,
         ref_volume=ref_volume,
@@ -236,7 +236,7 @@ def applyxfm4_d(
         four_digit_flag=four_digit_flag,
         user_prefix=user_prefix,
     )
-    return applyxfm4_d_execute(params, execution)
+    return applyxfm4_d_execute(params, runner)
 
 
 __all__ = [
@@ -244,8 +244,6 @@ __all__ = [
     "Applyxfm4DOutputs",
     "Applyxfm4DParameters",
     "applyxfm4_d",
-    "applyxfm4_d_cargs",
     "applyxfm4_d_execute",
-    "applyxfm4_d_outputs",
     "applyxfm4_d_params",
 ]

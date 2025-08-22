@@ -320,7 +320,7 @@ def fvcompare_outputs(
 
 def fvcompare_execute(
     params: FvcompareParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FvcompareOutputs:
     """
     Simultaneously loads volume, segmentation, and surface data from two subjects in
@@ -332,10 +332,12 @@ def fvcompare_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FvcompareOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FVCOMPARE_METADATA)
     params = execution.params(params)
     cargs = fvcompare_cargs(params, execution)
     ret = fvcompare_outputs(params, execution)
@@ -412,8 +414,6 @@ def fvcompare(
     Returns:
         NamedTuple of outputs (described in `FvcompareOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FVCOMPARE_METADATA)
     params = fvcompare_params(
         subject1=subject1,
         subject2=subject2,
@@ -441,7 +441,7 @@ def fvcompare(
         pointset=pointset,
         wot2=wot2,
     )
-    return fvcompare_execute(params, execution)
+    return fvcompare_execute(params, runner)
 
 
 __all__ = [
@@ -449,8 +449,6 @@ __all__ = [
     "FvcompareOutputs",
     "FvcompareParameters",
     "fvcompare",
-    "fvcompare_cargs",
     "fvcompare_execute",
-    "fvcompare_outputs",
     "fvcompare_params",
 ]

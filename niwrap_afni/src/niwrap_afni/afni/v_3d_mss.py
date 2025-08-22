@@ -279,7 +279,7 @@ def v_3d_mss_outputs(
 
 def v_3d_mss_execute(
     params: V3dMssParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMssOutputs:
     """
     Voxelwise Multilevel Smoothing Spline (MSS) Analysis.
@@ -290,10 +290,12 @@ def v_3d_mss_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMssOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MSS_METADATA)
     params = execution.params(params)
     cargs = v_3d_mss_cargs(params, execution)
     ret = v_3d_mss_outputs(params, execution)
@@ -363,8 +365,6 @@ def v_3d_mss(
     Returns:
         NamedTuple of outputs (described in `V3dMssOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MSS_METADATA)
     params = v_3d_mss_params(
         prefix=prefix,
         jobs=jobs,
@@ -385,7 +385,7 @@ def v_3d_mss(
         sdiff_vars=sdiff_vars,
         vt_formula=vt_formula,
     )
-    return v_3d_mss_execute(params, execution)
+    return v_3d_mss_execute(params, runner)
 
 
 __all__ = [
@@ -393,8 +393,6 @@ __all__ = [
     "V3dMssParameters",
     "V_3D_MSS_METADATA",
     "v_3d_mss",
-    "v_3d_mss_cargs",
     "v_3d_mss_execute",
-    "v_3d_mss_outputs",
     "v_3d_mss_params",
 ]

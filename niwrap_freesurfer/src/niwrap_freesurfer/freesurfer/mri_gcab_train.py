@@ -120,7 +120,7 @@ def mri_gcab_train_outputs(
 
 def mri_gcab_train_execute(
     params: MriGcabTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGcabTrainOutputs:
     """
     Previously used command in FreeSurfer for training with Gaussian Classifier
@@ -132,10 +132,12 @@ def mri_gcab_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGcabTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GCAB_TRAIN_METADATA)
     params = execution.params(params)
     cargs = mri_gcab_train_cargs(params, execution)
     ret = mri_gcab_train_outputs(params, execution)
@@ -163,12 +165,10 @@ def mri_gcab_train(
     Returns:
         NamedTuple of outputs (described in `MriGcabTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GCAB_TRAIN_METADATA)
     params = mri_gcab_train_params(
         removed_info=removed_info,
     )
-    return mri_gcab_train_execute(params, execution)
+    return mri_gcab_train_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "MriGcabTrainOutputs",
     "MriGcabTrainParameters",
     "mri_gcab_train",
-    "mri_gcab_train_cargs",
     "mri_gcab_train_execute",
-    "mri_gcab_train_outputs",
     "mri_gcab_train_params",
 ]

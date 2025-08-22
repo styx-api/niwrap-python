@@ -325,7 +325,7 @@ def adjunct_apqc_tsnr_general_outputs(
 
 def adjunct_apqc_tsnr_general_execute(
     params: AdjunctApqcTsnrGeneralParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctApqcTsnrGeneralOutputs:
     """
     An adjunct program for making TSNR plots for APQC.
@@ -336,10 +336,12 @@ def adjunct_apqc_tsnr_general_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctApqcTsnrGeneralOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_APQC_TSNR_GENERAL_METADATA)
     params = execution.params(params)
     cargs = adjunct_apqc_tsnr_general_cargs(params, execution)
     ret = adjunct_apqc_tsnr_general_outputs(params, execution)
@@ -408,8 +410,6 @@ def adjunct_apqc_tsnr_general(
     Returns:
         NamedTuple of outputs (described in `AdjunctApqcTsnrGeneralOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_APQC_TSNR_GENERAL_METADATA)
     params = adjunct_apqc_tsnr_general_params(
         montgap=montgap,
         montcolor=montcolor,
@@ -435,7 +435,7 @@ def adjunct_apqc_tsnr_general(
         no_axi=no_axi,
         echo=echo,
     )
-    return adjunct_apqc_tsnr_general_execute(params, execution)
+    return adjunct_apqc_tsnr_general_execute(params, runner)
 
 
 __all__ = [
@@ -443,8 +443,6 @@ __all__ = [
     "AdjunctApqcTsnrGeneralOutputs",
     "AdjunctApqcTsnrGeneralParameters",
     "adjunct_apqc_tsnr_general",
-    "adjunct_apqc_tsnr_general_cargs",
     "adjunct_apqc_tsnr_general_execute",
-    "adjunct_apqc_tsnr_general_outputs",
     "adjunct_apqc_tsnr_general_params",
 ]

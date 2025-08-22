@@ -155,7 +155,7 @@ def dmri_stats_ac_outputs(
 
 def dmri_stats_ac_execute(
     params: DmriStatsAcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriStatsAcOutputs:
     """
     The tool 'dmri_stats_ac' performs statistical analysis on dMRI data.
@@ -166,10 +166,12 @@ def dmri_stats_ac_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriStatsAcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_STATS_AC_METADATA)
     params = execution.params(params)
     cargs = dmri_stats_ac_cargs(params, execution)
     ret = dmri_stats_ac_outputs(params, execution)
@@ -202,8 +204,6 @@ def dmri_stats_ac(
     Returns:
         NamedTuple of outputs (described in `DmriStatsAcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_STATS_AC_METADATA)
     params = dmri_stats_ac_params(
         anatomicuts_folder=anatomicuts_folder,
         num_clusters=num_clusters,
@@ -211,7 +211,7 @@ def dmri_stats_ac(
         measures=measures,
         output_file=output_file,
     )
-    return dmri_stats_ac_execute(params, execution)
+    return dmri_stats_ac_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "DmriStatsAcOutputs",
     "DmriStatsAcParameters",
     "dmri_stats_ac",
-    "dmri_stats_ac_cargs",
     "dmri_stats_ac_execute",
-    "dmri_stats_ac_outputs",
     "dmri_stats_ac_params",
 ]

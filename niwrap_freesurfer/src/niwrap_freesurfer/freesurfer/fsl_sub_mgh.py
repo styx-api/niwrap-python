@@ -237,7 +237,7 @@ def fsl_sub_mgh_outputs(
 
 def fsl_sub_mgh_execute(
     params: FslSubMghParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslSubMghOutputs:
     """
     Wrapper for job control system such as SGE, modified for compatibility with the
@@ -249,10 +249,12 @@ def fsl_sub_mgh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslSubMghOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_SUB_MGH_METADATA)
     params = execution.params(params)
     cargs = fsl_sub_mgh_cargs(params, execution)
     ret = fsl_sub_mgh_outputs(params, execution)
@@ -306,8 +308,6 @@ def fsl_sub_mgh(
     Returns:
         NamedTuple of outputs (described in `FslSubMghOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_SUB_MGH_METADATA)
     params = fsl_sub_mgh_params(
         estimated_time=estimated_time,
         queue_name=queue_name,
@@ -323,7 +323,7 @@ def fsl_sub_mgh(
         verbose=verbose,
         shell_path=shell_path,
     )
-    return fsl_sub_mgh_execute(params, execution)
+    return fsl_sub_mgh_execute(params, runner)
 
 
 __all__ = [
@@ -331,8 +331,6 @@ __all__ = [
     "FslSubMghOutputs",
     "FslSubMghParameters",
     "fsl_sub_mgh",
-    "fsl_sub_mgh_cargs",
     "fsl_sub_mgh_execute",
-    "fsl_sub_mgh_outputs",
     "fsl_sub_mgh_params",
 ]

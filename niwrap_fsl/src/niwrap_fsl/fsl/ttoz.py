@@ -146,7 +146,7 @@ def ttoz_outputs(
 
 def ttoz_execute(
     params: TtozParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TtozOutputs:
     """
     Tool to convert a T-statistic image to a Z-statistic image.
@@ -157,10 +157,12 @@ def ttoz_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TtozOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TTOZ_METADATA)
     params = execution.params(params)
     cargs = ttoz_cargs(params, execution)
     ret = ttoz_outputs(params, execution)
@@ -193,8 +195,6 @@ def ttoz(
     Returns:
         NamedTuple of outputs (described in `TtozOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TTOZ_METADATA)
     params = ttoz_params(
         varsfile=varsfile,
         cbsfile=cbsfile,
@@ -202,7 +202,7 @@ def ttoz(
         outputvol=outputvol,
         help_flag=help_flag,
     )
-    return ttoz_execute(params, execution)
+    return ttoz_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "TtozOutputs",
     "TtozParameters",
     "ttoz",
-    "ttoz_cargs",
     "ttoz_execute",
-    "ttoz_outputs",
     "ttoz_params",
 ]

@@ -236,7 +236,7 @@ def mri_segment_hypothalamic_subunits_outputs(
 
 def mri_segment_hypothalamic_subunits_execute(
     params: MriSegmentHypothalamicSubunitsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegmentHypothalamicSubunitsOutputs:
     """
     This module segments hypothalamic subunits and can be run in two modes: on
@@ -249,10 +249,12 @@ def mri_segment_hypothalamic_subunits_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegmentHypothalamicSubunitsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA)
     params = execution.params(params)
     cargs = mri_segment_hypothalamic_subunits_cargs(params, execution)
     ret = mri_segment_hypothalamic_subunits_outputs(params, execution)
@@ -309,8 +311,6 @@ def mri_segment_hypothalamic_subunits(
     Returns:
         NamedTuple of outputs (described in `MriSegmentHypothalamicSubunitsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEGMENT_HYPOTHALAMIC_SUBUNITS_METADATA)
     params = mri_segment_hypothalamic_subunits_params(
         subjects=subjects,
         subjects_dir=subjects_dir,
@@ -324,7 +324,7 @@ def mri_segment_hypothalamic_subunits(
         threads=threads,
         cpu=cpu,
     )
-    return mri_segment_hypothalamic_subunits_execute(params, execution)
+    return mri_segment_hypothalamic_subunits_execute(params, runner)
 
 
 __all__ = [
@@ -332,8 +332,6 @@ __all__ = [
     "MriSegmentHypothalamicSubunitsOutputs",
     "MriSegmentHypothalamicSubunitsParameters",
     "mri_segment_hypothalamic_subunits",
-    "mri_segment_hypothalamic_subunits_cargs",
     "mri_segment_hypothalamic_subunits_execute",
-    "mri_segment_hypothalamic_subunits_outputs",
     "mri_segment_hypothalamic_subunits_params",
 ]

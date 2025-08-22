@@ -128,7 +128,7 @@ def v_3dnvals_outputs(
 
 def v_3dnvals_execute(
     params: V3dnvalsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dnvalsOutputs:
     """
     Tool to print the number of sub-bricks in a 3D dataset.
@@ -139,10 +139,12 @@ def v_3dnvals_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dnvalsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DNVALS_METADATA)
     params = execution.params(params)
     cargs = v_3dnvals_cargs(params, execution)
     ret = v_3dnvals_outputs(params, execution)
@@ -171,14 +173,12 @@ def v_3dnvals(
     Returns:
         NamedTuple of outputs (described in `V3dnvalsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DNVALS_METADATA)
     params = v_3dnvals_params(
         datasets=datasets,
         all_flag=all_flag,
         verbose_flag=verbose_flag,
     )
-    return v_3dnvals_execute(params, execution)
+    return v_3dnvals_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "V3dnvalsParameters",
     "V_3DNVALS_METADATA",
     "v_3dnvals",
-    "v_3dnvals_cargs",
     "v_3dnvals_execute",
-    "v_3dnvals_outputs",
     "v_3dnvals_params",
 ]

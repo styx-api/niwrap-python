@@ -231,7 +231,7 @@ def v__afni_refacer_run_outputs(
 
 def v__afni_refacer_run_execute(
     params: VAfniRefacerRunParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniRefacerRunOutputs:
     """
     This script re-faces one input dataset, using a master shell dataset to write
@@ -243,10 +243,12 @@ def v__afni_refacer_run_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerRunOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_REFACER_RUN_METADATA)
     params = execution.params(params)
     cargs = v__afni_refacer_run_cargs(params, execution)
     ret = v__afni_refacer_run_outputs(params, execution)
@@ -310,8 +312,6 @@ def v__afni_refacer_run(
     Returns:
         NamedTuple of outputs (described in `VAfniRefacerRunOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_REFACER_RUN_METADATA)
     params = v__afni_refacer_run_params(
         input_file=input_file,
         mode_deface=mode_deface,
@@ -327,7 +327,7 @@ def v__afni_refacer_run(
         overwrite=overwrite,
         verbose=verbose,
     )
-    return v__afni_refacer_run_execute(params, execution)
+    return v__afni_refacer_run_execute(params, runner)
 
 
 __all__ = [
@@ -335,8 +335,6 @@ __all__ = [
     "VAfniRefacerRunParameters",
     "V__AFNI_REFACER_RUN_METADATA",
     "v__afni_refacer_run",
-    "v__afni_refacer_run_cargs",
     "v__afni_refacer_run_execute",
-    "v__afni_refacer_run_outputs",
     "v__afni_refacer_run_params",
 ]

@@ -279,7 +279,7 @@ def mri_gtmseg_outputs(
 
 def mri_gtmseg_execute(
     params: MriGtmsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGtmsegOutputs:
     """
     Creates a segmentation that can be used with the geometric transfer matrix
@@ -291,10 +291,12 @@ def mri_gtmseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGtmsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GTMSEG_METADATA)
     params = execution.params(params)
     cargs = mri_gtmseg_cargs(params, execution)
     ret = mri_gtmseg_outputs(params, execution)
@@ -366,8 +368,6 @@ def mri_gtmseg(
     Returns:
         NamedTuple of outputs (described in `MriGtmsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GTMSEG_METADATA)
     params = mri_gtmseg_params(
         output_volume=output_volume,
         source_subject=source_subject,
@@ -389,7 +389,7 @@ def mri_gtmseg(
         debug=debug,
         check_opts=check_opts,
     )
-    return mri_gtmseg_execute(params, execution)
+    return mri_gtmseg_execute(params, runner)
 
 
 __all__ = [
@@ -397,8 +397,6 @@ __all__ = [
     "MriGtmsegOutputs",
     "MriGtmsegParameters",
     "mri_gtmseg",
-    "mri_gtmseg_cargs",
     "mri_gtmseg_execute",
-    "mri_gtmseg_outputs",
     "mri_gtmseg_params",
 ]

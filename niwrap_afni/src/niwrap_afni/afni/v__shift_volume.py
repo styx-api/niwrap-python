@@ -163,7 +163,7 @@ def v__shift_volume_outputs(
 
 def v__shift_volume_execute(
     params: VShiftVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VShiftVolumeOutputs:
     """
     Tool to shift a dataset in the RAI coordinate system or between MNI anatomical
@@ -175,10 +175,12 @@ def v__shift_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VShiftVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SHIFT_VOLUME_METADATA)
     params = execution.params(params)
     cargs = v__shift_volume_cargs(params, execution)
     ret = v__shift_volume_outputs(params, execution)
@@ -218,8 +220,6 @@ def v__shift_volume(
     Returns:
         NamedTuple of outputs (described in `VShiftVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SHIFT_VOLUME_METADATA)
     params = v__shift_volume_params(
         rai_shift_vector=rai_shift_vector,
         mni_anat_to_mni=mni_anat_to_mni,
@@ -228,7 +228,7 @@ def v__shift_volume(
         no_cp=no_cp,
         prefix=prefix,
     )
-    return v__shift_volume_execute(params, execution)
+    return v__shift_volume_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "VShiftVolumeParameters",
     "V__SHIFT_VOLUME_METADATA",
     "v__shift_volume",
-    "v__shift_volume_cargs",
     "v__shift_volume_execute",
-    "v__shift_volume_outputs",
     "v__shift_volume_params",
 ]

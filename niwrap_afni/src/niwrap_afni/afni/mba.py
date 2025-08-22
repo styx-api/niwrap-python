@@ -259,7 +259,7 @@ def mba_outputs(
 
 def mba_execute(
     params: MbaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MbaOutputs:
     """
     Matrix-Based Analysis Program through Bayesian Multilevel Modeling.
@@ -270,10 +270,12 @@ def mba_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MbaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MBA_METADATA)
     params = execution.params(params)
     cargs = mba_cargs(params, execution)
     ret = mba_outputs(params, execution)
@@ -329,8 +331,6 @@ def mba(
     Returns:
         NamedTuple of outputs (described in `MbaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MBA_METADATA)
     params = mba_params(
         prefix=prefix,
         chains=chains,
@@ -348,7 +348,7 @@ def mba(
         dbg_args=dbg_args,
         help_=help_,
     )
-    return mba_execute(params, execution)
+    return mba_execute(params, runner)
 
 
 __all__ = [
@@ -356,8 +356,6 @@ __all__ = [
     "MbaOutputs",
     "MbaParameters",
     "mba",
-    "mba_cargs",
     "mba_execute",
-    "mba_outputs",
     "mba_params",
 ]

@@ -156,7 +156,7 @@ def ants_align_origin_outputs(
 
 def ants_align_origin_execute(
     params: AntsAlignOriginParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsAlignOriginOutputs:
     """
     antsAlignOrigin, applied to an input image, transforms it according to a
@@ -168,10 +168,12 @@ def ants_align_origin_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsAlignOriginOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_ALIGN_ORIGIN_METADATA)
     params = execution.params(params)
     cargs = ants_align_origin_cargs(params, execution)
     ret = ants_align_origin_outputs(params, execution)
@@ -210,15 +212,13 @@ def ants_align_origin(
     Returns:
         NamedTuple of outputs (described in `AntsAlignOriginOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_ALIGN_ORIGIN_METADATA)
     params = ants_align_origin_params(
         dimensionality=dimensionality,
         input_=input_,
         reference_image=reference_image,
         output=output,
     )
-    return ants_align_origin_execute(params, execution)
+    return ants_align_origin_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "AntsAlignOriginOutputs",
     "AntsAlignOriginParameters",
     "ants_align_origin",
-    "ants_align_origin_cargs",
     "ants_align_origin_execute",
-    "ants_align_origin_outputs",
     "ants_align_origin_params",
 ]

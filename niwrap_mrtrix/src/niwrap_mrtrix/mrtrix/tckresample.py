@@ -425,7 +425,7 @@ def tckresample_outputs(
 
 def tckresample_execute(
     params: TckresampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckresampleOutputs:
     """
     Resample each streamline in a track file to a new set of vertices.
@@ -453,10 +453,12 @@ def tckresample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckresampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKRESAMPLE_METADATA)
     params = execution.params(params)
     cargs = tckresample_cargs(params, execution)
     ret = tckresample_outputs(params, execution)
@@ -541,8 +543,6 @@ def tckresample(
     Returns:
         NamedTuple of outputs (described in `TckresampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKRESAMPLE_METADATA)
     params = tckresample_params(
         upsample=upsample,
         downsample=downsample,
@@ -562,7 +562,7 @@ def tckresample(
         in_tracks=in_tracks,
         out_tracks=out_tracks,
     )
-    return tckresample_execute(params, execution)
+    return tckresample_execute(params, runner)
 
 
 __all__ = [
@@ -573,14 +573,9 @@ __all__ = [
     "TckresampleOutputs",
     "TckresampleParameters",
     "tckresample",
-    "tckresample_arc_cargs",
     "tckresample_arc_params",
-    "tckresample_cargs",
-    "tckresample_config_cargs",
     "tckresample_config_params",
     "tckresample_execute",
-    "tckresample_line_cargs",
     "tckresample_line_params",
-    "tckresample_outputs",
     "tckresample_params",
 ]

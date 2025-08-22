@@ -310,7 +310,7 @@ def dcmedit_outputs(
 
 def dcmedit_execute(
     params: DcmeditParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DcmeditOutputs:
     """
     Edit DICOM file in-place.
@@ -332,10 +332,12 @@ def dcmedit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DcmeditOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCMEDIT_METADATA)
     params = execution.params(params)
     cargs = dcmedit_cargs(params, execution)
     ret = dcmedit_outputs(params, execution)
@@ -408,8 +410,6 @@ def dcmedit(
     Returns:
         NamedTuple of outputs (described in `DcmeditOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCMEDIT_METADATA)
     params = dcmedit_params(
         anonymise=anonymise,
         id_=id_,
@@ -424,7 +424,7 @@ def dcmedit(
         version=version,
         file=file,
     )
-    return dcmedit_execute(params, execution)
+    return dcmedit_execute(params, runner)
 
 
 __all__ = [
@@ -434,12 +434,8 @@ __all__ = [
     "DcmeditParameters",
     "DcmeditTagParameters",
     "dcmedit",
-    "dcmedit_cargs",
-    "dcmedit_config_cargs",
     "dcmedit_config_params",
     "dcmedit_execute",
-    "dcmedit_outputs",
     "dcmedit_params",
-    "dcmedit_tag_cargs",
     "dcmedit_tag_params",
 ]

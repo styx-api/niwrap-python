@@ -214,7 +214,7 @@ def metric_find_clusters_outputs(
 
 def metric_find_clusters_execute(
     params: MetricFindClustersParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
     Filter clusters by surface area.
@@ -234,10 +234,12 @@ def metric_find_clusters_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFindClustersOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_FIND_CLUSTERS_METADATA)
     params = execution.params(params)
     cargs = metric_find_clusters_cargs(params, execution)
     ret = metric_find_clusters_outputs(params, execution)
@@ -300,8 +302,6 @@ def metric_find_clusters(
     Returns:
         NamedTuple of outputs (described in `MetricFindClustersOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_FIND_CLUSTERS_METADATA)
     params = metric_find_clusters_params(
         surface=surface,
         metric_in=metric_in,
@@ -316,7 +316,7 @@ def metric_find_clusters(
         opt_distance_distance=opt_distance_distance,
         opt_start_startval=opt_start_startval,
     )
-    return metric_find_clusters_execute(params, execution)
+    return metric_find_clusters_execute(params, runner)
 
 
 __all__ = [
@@ -324,8 +324,6 @@ __all__ = [
     "MetricFindClustersOutputs",
     "MetricFindClustersParameters",
     "metric_find_clusters",
-    "metric_find_clusters_cargs",
     "metric_find_clusters_execute",
-    "metric_find_clusters_outputs",
     "metric_find_clusters_params",
 ]

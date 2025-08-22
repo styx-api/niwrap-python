@@ -161,7 +161,7 @@ def v_1d_bandpass_outputs(
 
 def v_1d_bandpass_execute(
     params: V1dBandpassParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dBandpassOutputs:
     """
     Bandpass filtering of time series data in AFNI *.1D files.
@@ -172,10 +172,12 @@ def v_1d_bandpass_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dBandpassOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_BANDPASS_METADATA)
     params = execution.params(params)
     cargs = v_1d_bandpass_cargs(params, execution)
     ret = v_1d_bandpass_outputs(params, execution)
@@ -215,8 +217,6 @@ def v_1d_bandpass(
     Returns:
         NamedTuple of outputs (described in `V1dBandpassOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_BANDPASS_METADATA)
     params = v_1d_bandpass_params(
         fbot=fbot,
         ftop=ftop,
@@ -226,7 +226,7 @@ def v_1d_bandpass(
         nodetrend=nodetrend,
         norm=norm,
     )
-    return v_1d_bandpass_execute(params, execution)
+    return v_1d_bandpass_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "V1dBandpassParameters",
     "V_1D_BANDPASS_METADATA",
     "v_1d_bandpass",
-    "v_1d_bandpass_cargs",
     "v_1d_bandpass_execute",
-    "v_1d_bandpass_outputs",
     "v_1d_bandpass_params",
 ]

@@ -166,7 +166,7 @@ def v__afni_r_package_install_outputs(
 
 def v__afni_r_package_install_execute(
     params: VAfniRPackageInstallParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniRPackageInstallOutputs:
     """
     Helper script to install R packages for various afni-ish purposes.
@@ -177,10 +177,12 @@ def v__afni_r_package_install_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniRPackageInstallOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_R_PACKAGE_INSTALL_METADATA)
     params = execution.params(params)
     cargs = v__afni_r_package_install_cargs(params, execution)
     ret = v__afni_r_package_install_outputs(params, execution)
@@ -218,8 +220,6 @@ def v__afni_r_package_install(
     Returns:
         NamedTuple of outputs (described in `VAfniRPackageInstallOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_R_PACKAGE_INSTALL_METADATA)
     params = v__afni_r_package_install_params(
         afni=afni,
         shiny=shiny,
@@ -229,7 +229,7 @@ def v__afni_r_package_install(
         mirror=mirror,
         help_=help_,
     )
-    return v__afni_r_package_install_execute(params, execution)
+    return v__afni_r_package_install_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "VAfniRPackageInstallParameters",
     "V__AFNI_R_PACKAGE_INSTALL_METADATA",
     "v__afni_r_package_install",
-    "v__afni_r_package_install_cargs",
     "v__afni_r_package_install_execute",
-    "v__afni_r_package_install_outputs",
     "v__afni_r_package_install_params",
 ]

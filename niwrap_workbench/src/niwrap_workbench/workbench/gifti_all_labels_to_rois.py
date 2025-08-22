@@ -131,7 +131,7 @@ def gifti_all_labels_to_rois_outputs(
 
 def gifti_all_labels_to_rois_execute(
     params: GiftiAllLabelsToRoisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
     Make rois from all labels in a gifti column.
@@ -146,10 +146,12 @@ def gifti_all_labels_to_rois_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiAllLabelsToRoisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GIFTI_ALL_LABELS_TO_ROIS_METADATA)
     params = execution.params(params)
     cargs = gifti_all_labels_to_rois_cargs(params, execution)
     ret = gifti_all_labels_to_rois_outputs(params, execution)
@@ -182,14 +184,12 @@ def gifti_all_labels_to_rois(
     Returns:
         NamedTuple of outputs (described in `GiftiAllLabelsToRoisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GIFTI_ALL_LABELS_TO_ROIS_METADATA)
     params = gifti_all_labels_to_rois_params(
         label_in=label_in,
         map_=map_,
         metric_out=metric_out,
     )
-    return gifti_all_labels_to_rois_execute(params, execution)
+    return gifti_all_labels_to_rois_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "GiftiAllLabelsToRoisOutputs",
     "GiftiAllLabelsToRoisParameters",
     "gifti_all_labels_to_rois",
-    "gifti_all_labels_to_rois_cargs",
     "gifti_all_labels_to_rois_execute",
-    "gifti_all_labels_to_rois_outputs",
     "gifti_all_labels_to_rois_params",
 ]

@@ -170,7 +170,7 @@ def v__suma_make_spec_caret_outputs(
 
 def v__suma_make_spec_caret_execute(
     params: VSumaMakeSpecCaretParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaMakeSpecCaretOutputs:
     """
     Prepare surfaces for viewing in SUMA, tested with Caret-5.2 surfaces.
@@ -181,10 +181,12 @@ def v__suma_make_spec_caret_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecCaretOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_MAKE_SPEC_CARET_METADATA)
     params = execution.params(params)
     cargs = v__suma_make_spec_caret_cargs(params, execution)
     ret = v__suma_make_spec_caret_outputs(params, execution)
@@ -221,8 +223,6 @@ def v__suma_make_spec_caret(
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecCaretOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_MAKE_SPEC_CARET_METADATA)
     params = v__suma_make_spec_caret_params(
         subject_id=subject_id,
         help_=help_,
@@ -231,7 +231,7 @@ def v__suma_make_spec_caret(
         surface_path=surface_path,
         side_labels_style=side_labels_style,
     )
-    return v__suma_make_spec_caret_execute(params, execution)
+    return v__suma_make_spec_caret_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "VSumaMakeSpecCaretParameters",
     "V__SUMA_MAKE_SPEC_CARET_METADATA",
     "v__suma_make_spec_caret",
-    "v__suma_make_spec_caret_cargs",
     "v__suma_make_spec_caret_execute",
-    "v__suma_make_spec_caret_outputs",
     "v__suma_make_spec_caret_params",
 ]

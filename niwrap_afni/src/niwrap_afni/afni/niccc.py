@@ -209,7 +209,7 @@ def niccc_outputs(
 
 def niccc_execute(
     params: NicccParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NicccOutputs:
     """
     A program for conducting certain NIML tests on input from streamspec and write
@@ -221,10 +221,12 @@ def niccc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NicccOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NICCC_METADATA)
     params = execution.params(params)
     cargs = niccc_cargs(params, execution)
     ret = niccc_outputs(params, execution)
@@ -279,8 +281,6 @@ def niccc(
     Returns:
         NamedTuple of outputs (described in `NicccOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NICCC_METADATA)
     params = niccc_params(
         streamspec=streamspec,
         duplicate=duplicate,
@@ -295,7 +295,7 @@ def niccc(
         find_attr=find_attr,
         skip_attr=skip_attr,
     )
-    return niccc_execute(params, execution)
+    return niccc_execute(params, runner)
 
 
 __all__ = [
@@ -303,8 +303,6 @@ __all__ = [
     "NicccOutputs",
     "NicccParameters",
     "niccc",
-    "niccc_cargs",
     "niccc_execute",
-    "niccc_outputs",
     "niccc_params",
 ]

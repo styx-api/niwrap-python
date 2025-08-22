@@ -131,7 +131,7 @@ def volume_all_labels_to_rois_outputs(
 
 def volume_all_labels_to_rois_execute(
     params: VolumeAllLabelsToRoisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeAllLabelsToRoisOutputs:
     """
     Make rois from all labels in a volume frame.
@@ -146,10 +146,12 @@ def volume_all_labels_to_rois_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeAllLabelsToRoisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_ALL_LABELS_TO_ROIS_METADATA)
     params = execution.params(params)
     cargs = volume_all_labels_to_rois_cargs(params, execution)
     ret = volume_all_labels_to_rois_outputs(params, execution)
@@ -182,14 +184,12 @@ def volume_all_labels_to_rois(
     Returns:
         NamedTuple of outputs (described in `VolumeAllLabelsToRoisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_ALL_LABELS_TO_ROIS_METADATA)
     params = volume_all_labels_to_rois_params(
         label_in=label_in,
         map_=map_,
         volume_out=volume_out,
     )
-    return volume_all_labels_to_rois_execute(params, execution)
+    return volume_all_labels_to_rois_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "VolumeAllLabelsToRoisOutputs",
     "VolumeAllLabelsToRoisParameters",
     "volume_all_labels_to_rois",
-    "volume_all_labels_to_rois_cargs",
     "volume_all_labels_to_rois_execute",
-    "volume_all_labels_to_rois_outputs",
     "volume_all_labels_to_rois_params",
 ]

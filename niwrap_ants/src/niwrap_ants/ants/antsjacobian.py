@@ -154,7 +154,7 @@ def antsjacobian_outputs(
 
 def antsjacobian_execute(
     params: AntsjacobianParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsjacobianOutputs:
     """
     Calculate the Jacobian determinant of a transformation using ANTs. WARNING:
@@ -167,10 +167,12 @@ def antsjacobian_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsjacobianOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTSJACOBIAN_METADATA)
     params = execution.params(params)
     cargs = antsjacobian_cargs(params, execution)
     ret = antsjacobian_outputs(params, execution)
@@ -211,8 +213,6 @@ def antsjacobian(
     Returns:
         NamedTuple of outputs (described in `AntsjacobianOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTSJACOBIAN_METADATA)
     params = antsjacobian_params(
         imagedim=imagedim,
         gwarp=gwarp,
@@ -222,7 +222,7 @@ def antsjacobian(
         normbytotalbool=normbytotalbool,
         projectionvector=projectionvector,
     )
-    return antsjacobian_execute(params, execution)
+    return antsjacobian_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "AntsjacobianOutputs",
     "AntsjacobianParameters",
     "antsjacobian",
-    "antsjacobian_cargs",
     "antsjacobian_execute",
-    "antsjacobian_outputs",
     "antsjacobian_params",
 ]

@@ -279,7 +279,7 @@ def make_average_surface_outputs(
 
 def make_average_surface_execute(
     params: MakeAverageSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeAverageSurfaceOutputs:
     """
     Creates average surfaces and curvatures from a set of subjects.
@@ -290,10 +290,12 @@ def make_average_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeAverageSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_AVERAGE_SURFACE_METADATA)
     params = execution.params(params)
     cargs = make_average_surface_cargs(params, execution)
     ret = make_average_surface_outputs(params, execution)
@@ -361,8 +363,6 @@ def make_average_surface(
     Returns:
         NamedTuple of outputs (described in `MakeAverageSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_AVERAGE_SURFACE_METADATA)
     params = make_average_surface_params(
         subjects=subjects,
         fsgd_file=fsgd_file,
@@ -387,7 +387,7 @@ def make_average_surface(
         version=version,
         echo=echo,
     )
-    return make_average_surface_execute(params, execution)
+    return make_average_surface_execute(params, runner)
 
 
 __all__ = [
@@ -395,8 +395,6 @@ __all__ = [
     "MakeAverageSurfaceOutputs",
     "MakeAverageSurfaceParameters",
     "make_average_surface",
-    "make_average_surface_cargs",
     "make_average_surface_execute",
-    "make_average_surface_outputs",
     "make_average_surface_params",
 ]

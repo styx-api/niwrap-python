@@ -420,7 +420,7 @@ def popp_outputs(
 
 def popp_execute(
     params: PoppParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PoppOutputs:
     """
     Physiological data processing tool of FSL.
@@ -431,10 +431,12 @@ def popp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PoppOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POPP_METADATA)
     params = execution.params(params)
     cargs = popp_cargs(params, execution)
     ret = popp_outputs(params, execution)
@@ -533,8 +535,6 @@ def popp(
     Returns:
         NamedTuple of outputs (described in `PoppOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POPP_METADATA)
     params = popp_params(
         input_file=input_file,
         output_basename=output_basename,
@@ -570,7 +570,7 @@ def popp(
         debug_flag=debug_flag,
         help_flag=help_flag,
     )
-    return popp_execute(params, execution)
+    return popp_execute(params, runner)
 
 
 __all__ = [
@@ -578,8 +578,6 @@ __all__ = [
     "PoppOutputs",
     "PoppParameters",
     "popp",
-    "popp_cargs",
     "popp_execute",
-    "popp_outputs",
     "popp_params",
 ]

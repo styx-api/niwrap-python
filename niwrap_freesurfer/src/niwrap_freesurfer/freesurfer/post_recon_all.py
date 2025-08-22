@@ -237,7 +237,7 @@ def post_recon_all_outputs(
 
 def post_recon_all_execute(
     params: PostReconAllParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PostReconAllOutputs:
     """
     Post-processing script typically run after recon-all in FreeSurfer.
@@ -248,10 +248,12 @@ def post_recon_all_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PostReconAllOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POST_RECON_ALL_METADATA)
     params = execution.params(params)
     cargs = post_recon_all_cargs(params, execution)
     ret = post_recon_all_outputs(params, execution)
@@ -314,8 +316,6 @@ def post_recon_all(
     Returns:
         NamedTuple of outputs (described in `PostReconAllOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POST_RECON_ALL_METADATA)
     params = post_recon_all_params(
         subject=subject,
         subfields=subfields,
@@ -338,7 +338,7 @@ def post_recon_all(
         force=force,
         exit_on_error=exit_on_error,
     )
-    return post_recon_all_execute(params, execution)
+    return post_recon_all_execute(params, runner)
 
 
 __all__ = [
@@ -346,8 +346,6 @@ __all__ = [
     "PostReconAllOutputs",
     "PostReconAllParameters",
     "post_recon_all",
-    "post_recon_all_cargs",
     "post_recon_all_execute",
-    "post_recon_all_outputs",
     "post_recon_all_params",
 ]

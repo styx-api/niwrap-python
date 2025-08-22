@@ -270,7 +270,7 @@ def fsl_regfilt_outputs(
 
 def fsl_regfilt_execute(
     params: FslRegfiltParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslRegfiltOutputs:
     """
     Data de-noising by regressing out part of a design matrix using simple OLS
@@ -282,10 +282,12 @@ def fsl_regfilt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslRegfiltOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_REGFILT_METADATA)
     params = execution.params(params)
     cargs = fsl_regfilt_cargs(params, execution)
     ret = fsl_regfilt_outputs(params, execution)
@@ -349,8 +351,6 @@ def fsl_regfilt(
     Returns:
         NamedTuple of outputs (described in `FslRegfiltOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_REGFILT_METADATA)
     params = fsl_regfilt_params(
         infile=infile,
         designfile=designfile,
@@ -370,7 +370,7 @@ def fsl_regfilt(
         out_mix=out_mix,
         out_vnscales=out_vnscales,
     )
-    return fsl_regfilt_execute(params, execution)
+    return fsl_regfilt_execute(params, runner)
 
 
 __all__ = [
@@ -378,8 +378,6 @@ __all__ = [
     "FslRegfiltOutputs",
     "FslRegfiltParameters",
     "fsl_regfilt",
-    "fsl_regfilt_cargs",
     "fsl_regfilt_execute",
-    "fsl_regfilt_outputs",
     "fsl_regfilt_params",
 ]

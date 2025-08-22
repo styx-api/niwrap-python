@@ -130,7 +130,7 @@ def v_3d_detrend_outputs(
 
 def v_3d_detrend_execute(
     params: V3dDetrendParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDetrendOutputs:
     """
     This program removes components from voxel time series using linear least
@@ -142,10 +142,12 @@ def v_3d_detrend_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDetrendOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DETREND_METADATA)
     params = execution.params(params)
     cargs = v_3d_detrend_cargs(params, execution)
     ret = v_3d_detrend_outputs(params, execution)
@@ -173,13 +175,11 @@ def v_3d_detrend(
     Returns:
         NamedTuple of outputs (described in `V3dDetrendOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DETREND_METADATA)
     params = v_3d_detrend_params(
         in_file=in_file,
         outputtype=outputtype,
     )
-    return v_3d_detrend_execute(params, execution)
+    return v_3d_detrend_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "V3dDetrendParameters",
     "V_3D_DETREND_METADATA",
     "v_3d_detrend",
-    "v_3d_detrend_cargs",
     "v_3d_detrend_execute",
-    "v_3d_detrend_outputs",
     "v_3d_detrend_params",
 ]

@@ -130,7 +130,7 @@ def mris_segment_outputs(
 
 def mris_segment_execute(
     params: MrisSegmentParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSegmentOutputs:
     """
     A command-line tool for segmenting surfaces in FreeSurfer.
@@ -141,10 +141,12 @@ def mris_segment_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSegmentOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SEGMENT_METADATA)
     params = execution.params(params)
     cargs = mris_segment_cargs(params, execution)
     ret = mris_segment_outputs(params, execution)
@@ -173,14 +175,12 @@ def mris_segment(
     Returns:
         NamedTuple of outputs (described in `MrisSegmentOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SEGMENT_METADATA)
     params = mris_segment_params(
         subjects=subjects,
         output_subject=output_subject,
         output_file=output_file,
     )
-    return mris_segment_execute(params, execution)
+    return mris_segment_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MrisSegmentOutputs",
     "MrisSegmentParameters",
     "mris_segment",
-    "mris_segment_cargs",
     "mris_segment_execute",
-    "mris_segment_outputs",
     "mris_segment_params",
 ]

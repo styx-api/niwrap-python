@@ -140,7 +140,7 @@ def fs_lib_check_outputs(
 
 def fs_lib_check_execute(
     params: FsLibCheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsLibCheckOutputs:
     """
     Checks if the operating system has the necessary system libraries required to
@@ -152,10 +152,12 @@ def fs_lib_check_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsLibCheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_LIB_CHECK_METADATA)
     params = execution.params(params)
     cargs = fs_lib_check_cargs(params, execution)
     ret = fs_lib_check_outputs(params, execution)
@@ -192,15 +194,13 @@ def fs_lib_check(
     Returns:
         NamedTuple of outputs (described in `FsLibCheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_LIB_CHECK_METADATA)
     params = fs_lib_check_params(
         use_ldconfig=use_ldconfig,
         use_rpm=use_rpm,
         show_help=show_help,
         show_version=show_version,
     )
-    return fs_lib_check_execute(params, execution)
+    return fs_lib_check_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "FsLibCheckOutputs",
     "FsLibCheckParameters",
     "fs_lib_check",
-    "fs_lib_check_cargs",
     "fs_lib_check_execute",
-    "fs_lib_check_outputs",
     "fs_lib_check_params",
 ]

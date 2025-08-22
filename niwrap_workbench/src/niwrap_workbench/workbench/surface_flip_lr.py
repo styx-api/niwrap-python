@@ -126,7 +126,7 @@ def surface_flip_lr_outputs(
 
 def surface_flip_lr_execute(
     params: SurfaceFlipLrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceFlipLrOutputs:
     """
     Mirror a surface through the yz plane.
@@ -143,10 +143,12 @@ def surface_flip_lr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceFlipLrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_FLIP_LR_METADATA)
     params = execution.params(params)
     cargs = surface_flip_lr_cargs(params, execution)
     ret = surface_flip_lr_outputs(params, execution)
@@ -179,13 +181,11 @@ def surface_flip_lr(
     Returns:
         NamedTuple of outputs (described in `SurfaceFlipLrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_FLIP_LR_METADATA)
     params = surface_flip_lr_params(
         surface=surface,
         surface_out=surface_out,
     )
-    return surface_flip_lr_execute(params, execution)
+    return surface_flip_lr_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "SurfaceFlipLrOutputs",
     "SurfaceFlipLrParameters",
     "surface_flip_lr",
-    "surface_flip_lr_cargs",
     "surface_flip_lr_execute",
-    "surface_flip_lr_outputs",
     "surface_flip_lr_params",
 ]

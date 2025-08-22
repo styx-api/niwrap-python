@@ -179,7 +179,7 @@ def dcmsplit_outputs(
 
 def dcmsplit_execute(
     params: DcmsplitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DcmsplitOutputs:
     """
     Splits DICOM files into separate folders based on a unique identifier (UID).
@@ -190,10 +190,12 @@ def dcmsplit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DcmsplitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCMSPLIT_METADATA)
     params = execution.params(params)
     cargs = dcmsplit_cargs(params, execution)
     ret = dcmsplit_outputs(params, execution)
@@ -236,8 +238,6 @@ def dcmsplit(
     Returns:
         NamedTuple of outputs (described in `DcmsplitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCMSPLIT_METADATA)
     params = dcmsplit_params(
         dcm_dir=dcm_dir,
         out_dir=out_dir,
@@ -250,7 +250,7 @@ def dcmsplit(
         dicom_tag=dicom_tag,
         study_description=study_description,
     )
-    return dcmsplit_execute(params, execution)
+    return dcmsplit_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "DcmsplitOutputs",
     "DcmsplitParameters",
     "dcmsplit",
-    "dcmsplit_cargs",
     "dcmsplit_execute",
-    "dcmsplit_outputs",
     "dcmsplit_params",
 ]

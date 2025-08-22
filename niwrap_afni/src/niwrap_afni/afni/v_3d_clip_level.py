@@ -143,7 +143,7 @@ def v_3d_clip_level_outputs(
 
 def v_3d_clip_level_execute(
     params: V3dClipLevelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dClipLevelOutputs:
     """
     Estimates the value at which to clip the anatomical dataset so that background
@@ -155,10 +155,12 @@ def v_3d_clip_level_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dClipLevelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CLIP_LEVEL_METADATA)
     params = execution.params(params)
     cargs = v_3d_clip_level_cargs(params, execution)
     ret = v_3d_clip_level_outputs(params, execution)
@@ -191,15 +193,13 @@ def v_3d_clip_level(
     Returns:
         NamedTuple of outputs (described in `V3dClipLevelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CLIP_LEVEL_METADATA)
     params = v_3d_clip_level_params(
         dataset=dataset,
         mfrac=mfrac,
         doall=doall,
         grad=grad,
     )
-    return v_3d_clip_level_execute(params, execution)
+    return v_3d_clip_level_execute(params, runner)
 
 
 __all__ = [
@@ -207,8 +207,6 @@ __all__ = [
     "V3dClipLevelParameters",
     "V_3D_CLIP_LEVEL_METADATA",
     "v_3d_clip_level",
-    "v_3d_clip_level_cargs",
     "v_3d_clip_level_execute",
-    "v_3d_clip_level_outputs",
     "v_3d_clip_level_params",
 ]

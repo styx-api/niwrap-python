@@ -138,7 +138,7 @@ def volume_copy_extensions_outputs(
 
 def volume_copy_extensions_execute(
     params: VolumeCopyExtensionsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeCopyExtensionsOutputs:
     """
     Copy extended data to another volume file.
@@ -154,10 +154,12 @@ def volume_copy_extensions_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeCopyExtensionsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_COPY_EXTENSIONS_METADATA)
     params = execution.params(params)
     cargs = volume_copy_extensions_cargs(params, execution)
     ret = volume_copy_extensions_outputs(params, execution)
@@ -194,15 +196,13 @@ def volume_copy_extensions(
     Returns:
         NamedTuple of outputs (described in `VolumeCopyExtensionsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_COPY_EXTENSIONS_METADATA)
     params = volume_copy_extensions_params(
         data_volume=data_volume,
         extension_volume=extension_volume,
         volume_out=volume_out,
         opt_drop_unknown=opt_drop_unknown,
     )
-    return volume_copy_extensions_execute(params, execution)
+    return volume_copy_extensions_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "VolumeCopyExtensionsOutputs",
     "VolumeCopyExtensionsParameters",
     "volume_copy_extensions",
-    "volume_copy_extensions_cargs",
     "volume_copy_extensions_execute",
-    "volume_copy_extensions_outputs",
     "volume_copy_extensions_params",
 ]

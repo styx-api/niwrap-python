@@ -168,7 +168,7 @@ def xcorr_outputs(
 
 def xcorr_execute(
     params: XcorrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XcorrOutputs:
     """
     Computes the voxel-for-voxel correlation coefficient between two volumes.
@@ -179,10 +179,12 @@ def xcorr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XcorrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XCORR_METADATA)
     params = execution.params(params)
     cargs = xcorr_cargs(params, execution)
     ret = xcorr_outputs(params, execution)
@@ -217,8 +219,6 @@ def xcorr(
     Returns:
         NamedTuple of outputs (described in `XcorrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XCORR_METADATA)
     params = xcorr_params(
         input1=input1,
         input2=input2,
@@ -227,7 +227,7 @@ def xcorr(
         tmp_dir=tmp_dir,
         no_cleanup=no_cleanup,
     )
-    return xcorr_execute(params, execution)
+    return xcorr_execute(params, runner)
 
 
 __all__ = [
@@ -235,8 +235,6 @@ __all__ = [
     "XcorrOutputs",
     "XcorrParameters",
     "xcorr",
-    "xcorr_cargs",
     "xcorr_execute",
-    "xcorr_outputs",
     "xcorr_params",
 ]

@@ -173,7 +173,7 @@ def pointflirt_outputs(
 
 def pointflirt_execute(
     params: PointflirtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PointflirtOutputs:
     """
     A tool to align point coordinates between volumes and compute affine
@@ -185,10 +185,12 @@ def pointflirt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PointflirtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POINTFLIRT_METADATA)
     params = execution.params(params)
     cargs = pointflirt_cargs(params, execution)
     ret = pointflirt_outputs(params, execution)
@@ -226,8 +228,6 @@ def pointflirt(
     Returns:
         NamedTuple of outputs (described in `PointflirtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POINTFLIRT_METADATA)
     params = pointflirt_params(
         invol_coords=invol_coords,
         refvol_coords=refvol_coords,
@@ -237,7 +237,7 @@ def pointflirt(
         vol_ref=vol_ref,
         verbose_flag=verbose_flag,
     )
-    return pointflirt_execute(params, execution)
+    return pointflirt_execute(params, runner)
 
 
 __all__ = [
@@ -245,8 +245,6 @@ __all__ = [
     "PointflirtOutputs",
     "PointflirtParameters",
     "pointflirt",
-    "pointflirt_cargs",
     "pointflirt_execute",
-    "pointflirt_outputs",
     "pointflirt_params",
 ]

@@ -147,7 +147,7 @@ def zip_spec_file_outputs(
 
 def zip_spec_file_execute(
     params: ZipSpecFileParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ZipSpecFileOutputs:
     """
     Zip a spec file and its data files.
@@ -165,10 +165,12 @@ def zip_spec_file_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ZipSpecFileOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ZIP_SPEC_FILE_METADATA)
     params = execution.params(params)
     cargs = zip_spec_file_cargs(params, execution)
     ret = zip_spec_file_outputs(params, execution)
@@ -212,8 +214,6 @@ def zip_spec_file(
     Returns:
         NamedTuple of outputs (described in `ZipSpecFileOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ZIP_SPEC_FILE_METADATA)
     params = zip_spec_file_params(
         spec_file=spec_file,
         extract_folder=extract_folder,
@@ -221,7 +221,7 @@ def zip_spec_file(
         opt_base_dir_directory=opt_base_dir_directory,
         opt_skip_missing=opt_skip_missing,
     )
-    return zip_spec_file_execute(params, execution)
+    return zip_spec_file_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "ZipSpecFileOutputs",
     "ZipSpecFileParameters",
     "zip_spec_file",
-    "zip_spec_file_cargs",
     "zip_spec_file_execute",
-    "zip_spec_file_outputs",
     "zip_spec_file_params",
 ]

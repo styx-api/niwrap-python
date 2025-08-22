@@ -178,7 +178,7 @@ def surf_mesh_outputs(
 
 def surf_mesh_execute(
     params: SurfMeshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfMeshOutputs:
     """
     Surface mesh manipulation tool.
@@ -189,10 +189,12 @@ def surf_mesh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfMeshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_MESH_METADATA)
     params = execution.params(params)
     cargs = surf_mesh_cargs(params, execution)
     ret = surf_mesh_outputs(params, execution)
@@ -232,8 +234,6 @@ def surf_mesh(
     Returns:
         NamedTuple of outputs (described in `SurfMeshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_MESH_METADATA)
     params = surf_mesh_params(
         input_surface=input_surface,
         output_surface=output_surface,
@@ -244,7 +244,7 @@ def surf_mesh(
         no_volume_registration=no_volume_registration,
         set_env=set_env,
     )
-    return surf_mesh_execute(params, execution)
+    return surf_mesh_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "SurfMeshOutputs",
     "SurfMeshParameters",
     "surf_mesh",
-    "surf_mesh_cargs",
     "surf_mesh_execute",
-    "surf_mesh_outputs",
     "surf_mesh_params",
 ]

@@ -141,7 +141,7 @@ def pointset2label_outputs(
 
 def pointset2label_execute(
     params: Pointset2labelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Pointset2labelOutputs:
     """
     Tool for applying waypoint labels to a volume.
@@ -152,10 +152,12 @@ def pointset2label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Pointset2labelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POINTSET2LABEL_METADATA)
     params = execution.params(params)
     cargs = pointset2label_cargs(params, execution)
     ret = pointset2label_outputs(params, execution)
@@ -188,8 +190,6 @@ def pointset2label(
     Returns:
         NamedTuple of outputs (described in `Pointset2labelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POINTSET2LABEL_METADATA)
     params = pointset2label_params(
         waypoint_file=waypoint_file,
         input_volume=input_volume,
@@ -197,7 +197,7 @@ def pointset2label(
         output_volume=output_volume,
         clear_option=clear_option,
     )
-    return pointset2label_execute(params, execution)
+    return pointset2label_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "Pointset2labelOutputs",
     "Pointset2labelParameters",
     "pointset2label",
-    "pointset2label_cargs",
     "pointset2label_execute",
-    "pointset2label_outputs",
     "pointset2label_params",
 ]

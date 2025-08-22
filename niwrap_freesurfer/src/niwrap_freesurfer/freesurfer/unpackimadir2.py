@@ -116,7 +116,7 @@ def unpackimadir2_outputs(
 
 def unpackimadir2_execute(
     params: Unpackimadir2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Unpackimadir2Outputs:
     """
     Tool to unpack image directories, from FreeSurfer suite.
@@ -127,10 +127,12 @@ def unpackimadir2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Unpackimadir2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNPACKIMADIR2_METADATA)
     params = execution.params(params)
     cargs = unpackimadir2_cargs(params, execution)
     ret = unpackimadir2_outputs(params, execution)
@@ -155,12 +157,10 @@ def unpackimadir2(
     Returns:
         NamedTuple of outputs (described in `Unpackimadir2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNPACKIMADIR2_METADATA)
     params = unpackimadir2_params(
         directory=directory,
     )
-    return unpackimadir2_execute(params, execution)
+    return unpackimadir2_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "Unpackimadir2Outputs",
     "Unpackimadir2Parameters",
     "unpackimadir2",
-    "unpackimadir2_cargs",
     "unpackimadir2_execute",
-    "unpackimadir2_outputs",
     "unpackimadir2_params",
 ]

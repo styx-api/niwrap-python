@@ -130,7 +130,7 @@ def histo_compute_joint_density_outputs(
 
 def histo_compute_joint_density_execute(
     params: HistoComputeJointDensityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HistoComputeJointDensityOutputs:
     """
     A tool to compute the joint density of two volumes.
@@ -141,10 +141,12 @@ def histo_compute_joint_density_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HistoComputeJointDensityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HISTO_COMPUTE_JOINT_DENSITY_METADATA)
     params = execution.params(params)
     cargs = histo_compute_joint_density_cargs(params, execution)
     ret = histo_compute_joint_density_outputs(params, execution)
@@ -173,14 +175,12 @@ def histo_compute_joint_density(
     Returns:
         NamedTuple of outputs (described in `HistoComputeJointDensityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HISTO_COMPUTE_JOINT_DENSITY_METADATA)
     params = histo_compute_joint_density_params(
         volume1=volume1,
         volume2=volume2,
         joint_density_file=joint_density_file,
     )
-    return histo_compute_joint_density_execute(params, execution)
+    return histo_compute_joint_density_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "HistoComputeJointDensityOutputs",
     "HistoComputeJointDensityParameters",
     "histo_compute_joint_density",
-    "histo_compute_joint_density_cargs",
     "histo_compute_joint_density_execute",
-    "histo_compute_joint_density_outputs",
     "histo_compute_joint_density_params",
 ]

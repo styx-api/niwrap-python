@@ -259,7 +259,7 @@ def fsl_anat_outputs(
 
 def fsl_anat_execute(
     params: FslAnatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslAnatOutputs:
     """
     A wrapper for FSL tools to process anatomical scans.
@@ -270,10 +270,12 @@ def fsl_anat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslAnatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_ANAT_METADATA)
     params = execution.params(params)
     cargs = fsl_anat_cargs(params, execution)
     ret = fsl_anat_outputs(params, execution)
@@ -344,8 +346,6 @@ def fsl_anat(
     Returns:
         NamedTuple of outputs (described in `FslAnatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_ANAT_METADATA)
     params = fsl_anat_params(
         structural_image=structural_image,
         existing_anat_dir=existing_anat_dir,
@@ -366,7 +366,7 @@ def fsl_anat(
         bet_f_param=bet_f_param,
         nocleanup_flag=nocleanup_flag,
     )
-    return fsl_anat_execute(params, execution)
+    return fsl_anat_execute(params, runner)
 
 
 __all__ = [
@@ -374,8 +374,6 @@ __all__ = [
     "FslAnatOutputs",
     "FslAnatParameters",
     "fsl_anat",
-    "fsl_anat_cargs",
     "fsl_anat_execute",
-    "fsl_anat_outputs",
     "fsl_anat_params",
 ]

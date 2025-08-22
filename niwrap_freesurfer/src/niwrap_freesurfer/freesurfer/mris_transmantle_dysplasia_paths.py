@@ -157,7 +157,7 @@ def mris_transmantle_dysplasia_paths_outputs(
 
 def mris_transmantle_dysplasia_paths_execute(
     params: MrisTransmantleDysplasiaPathsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisTransmantleDysplasiaPathsOutputs:
     """
     Tool for transmantle dysplasia path computation.
@@ -168,10 +168,12 @@ def mris_transmantle_dysplasia_paths_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisTransmantleDysplasiaPathsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA)
     params = execution.params(params)
     cargs = mris_transmantle_dysplasia_paths_cargs(params, execution)
     ret = mris_transmantle_dysplasia_paths_outputs(params, execution)
@@ -209,8 +211,6 @@ def mris_transmantle_dysplasia_paths(
     Returns:
         NamedTuple of outputs (described in `MrisTransmantleDysplasiaPathsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_TRANSMANTLE_DYSPLASIA_PATHS_METADATA)
     params = mris_transmantle_dysplasia_paths_params(
         surface=surface,
         aseg_volume=aseg_volume,
@@ -220,7 +220,7 @@ def mris_transmantle_dysplasia_paths(
         filter_=filter_,
         noise_sensitivity=noise_sensitivity,
     )
-    return mris_transmantle_dysplasia_paths_execute(params, execution)
+    return mris_transmantle_dysplasia_paths_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "MrisTransmantleDysplasiaPathsOutputs",
     "MrisTransmantleDysplasiaPathsParameters",
     "mris_transmantle_dysplasia_paths",
-    "mris_transmantle_dysplasia_paths_cargs",
     "mris_transmantle_dysplasia_paths_execute",
-    "mris_transmantle_dysplasia_paths_outputs",
     "mris_transmantle_dysplasia_paths_params",
 ]

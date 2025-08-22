@@ -128,7 +128,7 @@ def v__center_distance_outputs(
 
 def v__center_distance_execute(
     params: VCenterDistanceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VCenterDistanceOutputs:
     """
     Tool to calculate the distance between the centers of two datasets.
@@ -139,10 +139,12 @@ def v__center_distance_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VCenterDistanceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__CENTER_DISTANCE_METADATA)
     params = execution.params(params)
     cargs = v__center_distance_cargs(params, execution)
     ret = v__center_distance_outputs(params, execution)
@@ -169,13 +171,11 @@ def v__center_distance(
     Returns:
         NamedTuple of outputs (described in `VCenterDistanceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__CENTER_DISTANCE_METADATA)
     params = v__center_distance_params(
         dset1=dset1,
         dset2=dset2,
     )
-    return v__center_distance_execute(params, execution)
+    return v__center_distance_execute(params, runner)
 
 
 __all__ = [
@@ -183,8 +183,6 @@ __all__ = [
     "VCenterDistanceParameters",
     "V__CENTER_DISTANCE_METADATA",
     "v__center_distance",
-    "v__center_distance_cargs",
     "v__center_distance_execute",
-    "v__center_distance_outputs",
     "v__center_distance_params",
 ]

@@ -137,7 +137,7 @@ def mri_ca_tissue_parms_outputs(
 
 def mri_ca_tissue_parms_execute(
     params: MriCaTissueParmsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCaTissueParmsOutputs:
     """
     Tool for computing tissue parameters in canonical space.
@@ -148,10 +148,12 @@ def mri_ca_tissue_parms_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCaTissueParmsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CA_TISSUE_PARMS_METADATA)
     params = execution.params(params)
     cargs = mri_ca_tissue_parms_cargs(params, execution)
     ret = mri_ca_tissue_parms_outputs(params, execution)
@@ -182,15 +184,13 @@ def mri_ca_tissue_parms(
     Returns:
         NamedTuple of outputs (described in `MriCaTissueParmsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CA_TISSUE_PARMS_METADATA)
     params = mri_ca_tissue_parms_params(
         subjects=subjects,
         output_file=output_file,
         spacing_flag=spacing_flag,
         gradient_flag=gradient_flag,
     )
-    return mri_ca_tissue_parms_execute(params, execution)
+    return mri_ca_tissue_parms_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MriCaTissueParmsOutputs",
     "MriCaTissueParmsParameters",
     "mri_ca_tissue_parms",
-    "mri_ca_tissue_parms_cargs",
     "mri_ca_tissue_parms_execute",
-    "mri_ca_tissue_parms_outputs",
     "mri_ca_tissue_parms_params",
 ]

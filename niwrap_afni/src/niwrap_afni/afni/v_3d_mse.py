@@ -199,7 +199,7 @@ def v_3d_mse_outputs(
 
 def v_3d_mse_execute(
     params: V3dMseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMseOutputs:
     """
     Computes voxelwise multi-scale entropy.
@@ -210,10 +210,12 @@ def v_3d_mse_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MSE_METADATA)
     params = execution.params(params)
     cargs = v_3d_mse_cargs(params, execution)
     ret = v_3d_mse_outputs(params, execution)
@@ -258,8 +260,6 @@ def v_3d_mse(
     Returns:
         NamedTuple of outputs (described in `V3dMseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MSE_METADATA)
     params = v_3d_mse_params(
         polynomial_order=polynomial_order,
         autoclip=autoclip,
@@ -271,7 +271,7 @@ def v_3d_mse(
         rthresh=rthresh,
         dset=dset,
     )
-    return v_3d_mse_execute(params, execution)
+    return v_3d_mse_execute(params, runner)
 
 
 __all__ = [
@@ -279,8 +279,6 @@ __all__ = [
     "V3dMseParameters",
     "V_3D_MSE_METADATA",
     "v_3d_mse",
-    "v_3d_mse_cargs",
     "v_3d_mse_execute",
-    "v_3d_mse_outputs",
     "v_3d_mse_params",
 ]

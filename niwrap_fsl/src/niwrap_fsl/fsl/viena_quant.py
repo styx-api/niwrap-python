@@ -130,7 +130,7 @@ def viena_quant_outputs(
 
 def viena_quant_execute(
     params: VienaQuantParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VienaQuantOutputs:
     """
     Automated brain ventricle quantification tool.
@@ -141,10 +141,12 @@ def viena_quant_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VienaQuantOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VIENA_QUANT_METADATA)
     params = execution.params(params)
     cargs = viena_quant_cargs(params, execution)
     ret = viena_quant_outputs(params, execution)
@@ -173,14 +175,12 @@ def viena_quant(
     Returns:
         NamedTuple of outputs (described in `VienaQuantOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VIENA_QUANT_METADATA)
     params = viena_quant_params(
         input1=input1,
         input2=input2,
         ventricle_mask=ventricle_mask,
     )
-    return viena_quant_execute(params, execution)
+    return viena_quant_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "VienaQuantOutputs",
     "VienaQuantParameters",
     "viena_quant",
-    "viena_quant_cargs",
     "viena_quant_execute",
-    "viena_quant_outputs",
     "viena_quant_params",
 ]

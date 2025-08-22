@@ -148,7 +148,7 @@ def v_3d_compare_affine_outputs(
 
 def v_3d_compare_affine_execute(
     params: V3dCompareAffineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dCompareAffineOutputs:
     """
     Compares two (or more) affine spatial transformations on a dataset and outputs
@@ -160,10 +160,12 @@ def v_3d_compare_affine_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dCompareAffineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_COMPARE_AFFINE_METADATA)
     params = execution.params(params)
     cargs = v_3d_compare_affine_cargs(params, execution)
     ret = v_3d_compare_affine_outputs(params, execution)
@@ -196,14 +198,12 @@ def v_3d_compare_affine(
     Returns:
         NamedTuple of outputs (described in `V3dCompareAffineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_COMPARE_AFFINE_METADATA)
     params = v_3d_compare_affine_params(
         mask=mask,
         dset=dset,
         affine=affine,
     )
-    return v_3d_compare_affine_execute(params, execution)
+    return v_3d_compare_affine_execute(params, runner)
 
 
 __all__ = [
@@ -211,8 +211,6 @@ __all__ = [
     "V3dCompareAffineParameters",
     "V_3D_COMPARE_AFFINE_METADATA",
     "v_3d_compare_affine",
-    "v_3d_compare_affine_cargs",
     "v_3d_compare_affine_execute",
-    "v_3d_compare_affine_outputs",
     "v_3d_compare_affine_params",
 ]

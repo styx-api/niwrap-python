@@ -325,7 +325,7 @@ def volume_weighted_stats_outputs(
 
 def volume_weighted_stats_execute(
     params: VolumeWeightedStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeWeightedStatsOutputs:
     """
     Weighted spatial statistics on a volume file.
@@ -347,10 +347,12 @@ def volume_weighted_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeWeightedStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_WEIGHTED_STATS_METADATA)
     params = execution.params(params)
     cargs = volume_weighted_stats_cargs(params, execution)
     ret = volume_weighted_stats_outputs(params, execution)
@@ -404,8 +406,6 @@ def volume_weighted_stats(
     Returns:
         NamedTuple of outputs (described in `VolumeWeightedStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_WEIGHTED_STATS_METADATA)
     params = volume_weighted_stats_params(
         volume_in=volume_in,
         weight_volume=weight_volume,
@@ -417,7 +417,7 @@ def volume_weighted_stats(
         opt_sum=opt_sum,
         opt_show_map_name=opt_show_map_name,
     )
-    return volume_weighted_stats_execute(params, execution)
+    return volume_weighted_stats_execute(params, runner)
 
 
 __all__ = [
@@ -428,14 +428,9 @@ __all__ = [
     "VolumeWeightedStatsStdevParameters",
     "VolumeWeightedStatsWeightVolumeParameters",
     "volume_weighted_stats",
-    "volume_weighted_stats_cargs",
     "volume_weighted_stats_execute",
-    "volume_weighted_stats_outputs",
     "volume_weighted_stats_params",
-    "volume_weighted_stats_roi_cargs",
     "volume_weighted_stats_roi_params",
-    "volume_weighted_stats_stdev_cargs",
     "volume_weighted_stats_stdev_params",
-    "volume_weighted_stats_weight_volume_cargs",
     "volume_weighted_stats_weight_volume_params",
 ]

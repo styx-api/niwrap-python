@@ -195,7 +195,7 @@ def wmedits2surf_outputs(
 
 def wmedits2surf_execute(
     params: Wmedits2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Wmedits2surfOutputs:
     """
     Computes binary maps of surface locations where the wm.mgz has been edited.
@@ -207,10 +207,12 @@ def wmedits2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Wmedits2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WMEDITS2SURF_METADATA)
     params = execution.params(params)
     cargs = wmedits2surf_cargs(params, execution)
     ret = wmedits2surf_outputs(params, execution)
@@ -253,8 +255,6 @@ def wmedits2surf(
     Returns:
         NamedTuple of outputs (described in `Wmedits2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WMEDITS2SURF_METADATA)
     params = wmedits2surf_params(
         subject=subject,
         self=self,
@@ -267,7 +267,7 @@ def wmedits2surf(
         rh=rh,
         no_surfs=no_surfs,
     )
-    return wmedits2surf_execute(params, execution)
+    return wmedits2surf_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "Wmedits2surfOutputs",
     "Wmedits2surfParameters",
     "wmedits2surf",
-    "wmedits2surf_cargs",
     "wmedits2surf_execute",
-    "wmedits2surf_outputs",
     "wmedits2surf_params",
 ]

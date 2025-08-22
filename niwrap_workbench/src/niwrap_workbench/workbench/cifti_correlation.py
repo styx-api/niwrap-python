@@ -268,7 +268,7 @@ def cifti_correlation_outputs(
 
 def cifti_correlation_execute(
     params: CiftiCorrelationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCorrelationOutputs:
     """
     Generate correlation of rows in a cifti file.
@@ -294,10 +294,12 @@ def cifti_correlation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CORRELATION_METADATA)
     params = execution.params(params)
     cargs = cifti_correlation_cargs(params, execution)
     ret = cifti_correlation_outputs(params, execution)
@@ -355,8 +357,6 @@ def cifti_correlation(
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CORRELATION_METADATA)
     params = cifti_correlation_params(
         cifti=cifti,
         cifti_out=cifti_out,
@@ -367,7 +367,7 @@ def cifti_correlation(
         opt_covariance=opt_covariance,
         opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
     )
-    return cifti_correlation_execute(params, execution)
+    return cifti_correlation_execute(params, runner)
 
 
 __all__ = [
@@ -376,10 +376,7 @@ __all__ = [
     "CiftiCorrelationParameters",
     "CiftiCorrelationRoiOverrideParameters",
     "cifti_correlation",
-    "cifti_correlation_cargs",
     "cifti_correlation_execute",
-    "cifti_correlation_outputs",
     "cifti_correlation_params",
-    "cifti_correlation_roi_override_cargs",
     "cifti_correlation_roi_override_params",
 ]

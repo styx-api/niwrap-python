@@ -133,7 +133,7 @@ def v_3dto_xdataset_outputs(
 
 def v_3dto_xdataset_execute(
     params: V3dtoXdatasetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dtoXdatasetOutputs:
     """
     Convert input datasets to the format needed for 3dClustSimX.
@@ -144,10 +144,12 @@ def v_3dto_xdataset_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dtoXdatasetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DTO_XDATASET_METADATA)
     params = execution.params(params)
     cargs = v_3dto_xdataset_cargs(params, execution)
     ret = v_3dto_xdataset_outputs(params, execution)
@@ -176,14 +178,12 @@ def v_3dto_xdataset(
     Returns:
         NamedTuple of outputs (described in `V3dtoXdatasetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DTO_XDATASET_METADATA)
     params = v_3dto_xdataset_params(
         prefix=prefix,
         mask=mask,
         input_files=input_files,
     )
-    return v_3dto_xdataset_execute(params, execution)
+    return v_3dto_xdataset_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "V3dtoXdatasetParameters",
     "V_3DTO_XDATASET_METADATA",
     "v_3dto_xdataset",
-    "v_3dto_xdataset_cargs",
     "v_3dto_xdataset_execute",
-    "v_3dto_xdataset_outputs",
     "v_3dto_xdataset_params",
 ]

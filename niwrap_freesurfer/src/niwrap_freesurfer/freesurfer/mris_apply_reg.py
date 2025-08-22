@@ -307,7 +307,7 @@ def mris_apply_reg_outputs(
 
 def mris_apply_reg_execute(
     params: MrisApplyRegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisApplyRegOutputs:
     """
     Apply surface registration in FreeSurfer.
@@ -318,10 +318,12 @@ def mris_apply_reg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisApplyRegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_APPLY_REG_METADATA)
     params = execution.params(params)
     cargs = mris_apply_reg_cargs(params, execution)
     ret = mris_apply_reg_outputs(params, execution)
@@ -390,8 +392,6 @@ def mris_apply_reg(
     Returns:
         NamedTuple of outputs (described in `MrisApplyRegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_APPLY_REG_METADATA)
     params = mris_apply_reg_params(
         src_input=src_input,
         trg_output=trg_output,
@@ -417,7 +417,7 @@ def mris_apply_reg(
         debug_mode=debug_mode,
         check_options=check_options,
     )
-    return mris_apply_reg_execute(params, execution)
+    return mris_apply_reg_execute(params, runner)
 
 
 __all__ = [
@@ -425,8 +425,6 @@ __all__ = [
     "MrisApplyRegOutputs",
     "MrisApplyRegParameters",
     "mris_apply_reg",
-    "mris_apply_reg_cargs",
     "mris_apply_reg_execute",
-    "mris_apply_reg_outputs",
     "mris_apply_reg_params",
 ]

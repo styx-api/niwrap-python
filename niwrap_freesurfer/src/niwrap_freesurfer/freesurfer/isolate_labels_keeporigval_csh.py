@@ -154,7 +154,7 @@ def isolate_labels_keeporigval_csh_outputs(
 
 def isolate_labels_keeporigval_csh_execute(
     params: IsolateLabelsKeeporigvalCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IsolateLabelsKeeporigvalCshOutputs:
     """
     Separates out a particular or all labels into individual binary files keeping
@@ -166,10 +166,12 @@ def isolate_labels_keeporigval_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IsolateLabelsKeeporigvalCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ISOLATE_LABELS_KEEPORIGVAL_CSH_METADATA)
     params = execution.params(params)
     cargs = isolate_labels_keeporigval_csh_cargs(params, execution)
     ret = isolate_labels_keeporigval_csh_outputs(params, execution)
@@ -204,8 +206,6 @@ def isolate_labels_keeporigval_csh(
     Returns:
         NamedTuple of outputs (described in `IsolateLabelsKeeporigvalCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ISOLATE_LABELS_KEEPORIGVAL_CSH_METADATA)
     params = isolate_labels_keeporigval_csh_params(
         vol=vol,
         outprefix=outprefix,
@@ -213,7 +213,7 @@ def isolate_labels_keeporigval_csh(
         version=version,
         help_=help_,
     )
-    return isolate_labels_keeporigval_csh_execute(params, execution)
+    return isolate_labels_keeporigval_csh_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "IsolateLabelsKeeporigvalCshOutputs",
     "IsolateLabelsKeeporigvalCshParameters",
     "isolate_labels_keeporigval_csh",
-    "isolate_labels_keeporigval_csh_cargs",
     "isolate_labels_keeporigval_csh_execute",
-    "isolate_labels_keeporigval_csh_outputs",
     "isolate_labels_keeporigval_csh_params",
 ]

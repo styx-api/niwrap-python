@@ -192,7 +192,7 @@ def v_3d_lss_outputs(
 
 def v_3d_lss_execute(
     params: V3dLssParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLssOutputs:
     """
     Least-Squares-Sum (LSS) estimation tool from a -stim_times_IM matrix for
@@ -204,10 +204,12 @@ def v_3d_lss_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLssOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LSS_METADATA)
     params = execution.params(params)
     cargs = v_3d_lss_cargs(params, execution)
     ret = v_3d_lss_outputs(params, execution)
@@ -254,8 +256,6 @@ def v_3d_lss(
     Returns:
         NamedTuple of outputs (described in `V3dLssOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LSS_METADATA)
     params = v_3d_lss_params(
         matrix=matrix,
         input_=input_,
@@ -266,7 +266,7 @@ def v_3d_lss(
         save1_d=save1_d,
         verbose=verbose,
     )
-    return v_3d_lss_execute(params, execution)
+    return v_3d_lss_execute(params, runner)
 
 
 __all__ = [
@@ -274,8 +274,6 @@ __all__ = [
     "V3dLssParameters",
     "V_3D_LSS_METADATA",
     "v_3d_lss",
-    "v_3d_lss_cargs",
     "v_3d_lss_execute",
-    "v_3d_lss_outputs",
     "v_3d_lss_params",
 ]

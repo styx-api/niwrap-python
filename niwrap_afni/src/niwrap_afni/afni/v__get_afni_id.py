@@ -120,7 +120,7 @@ def v__get_afni_id_outputs(
 
 def v__get_afni_id_execute(
     params: VGetAfniIdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGetAfniIdOutputs:
     """
     Returns the unique identifier of a dataset.
@@ -131,10 +131,12 @@ def v__get_afni_id_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGetAfniIdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GET_AFNI_ID_METADATA)
     params = execution.params(params)
     cargs = v__get_afni_id_cargs(params, execution)
     ret = v__get_afni_id_outputs(params, execution)
@@ -159,12 +161,10 @@ def v__get_afni_id(
     Returns:
         NamedTuple of outputs (described in `VGetAfniIdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GET_AFNI_ID_METADATA)
     params = v__get_afni_id_params(
         dset=dset,
     )
-    return v__get_afni_id_execute(params, execution)
+    return v__get_afni_id_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "VGetAfniIdParameters",
     "V__GET_AFNI_ID_METADATA",
     "v__get_afni_id",
-    "v__get_afni_id_cargs",
     "v__get_afni_id_execute",
-    "v__get_afni_id_outputs",
     "v__get_afni_id_params",
 ]

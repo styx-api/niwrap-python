@@ -265,7 +265,7 @@ def surf_measures_outputs(
 
 def surf_measures_execute(
     params: SurfMeasuresParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfMeasuresOutputs:
     """
     Compute measures from surface dataset(s).
@@ -276,10 +276,12 @@ def surf_measures_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfMeasuresOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_MEASURES_METADATA)
     params = execution.params(params)
     cargs = surf_measures_cargs(params, execution)
     ret = surf_measures_outputs(params, execution)
@@ -339,8 +341,6 @@ def surf_measures(
     Returns:
         NamedTuple of outputs (described in `SurfMeasuresOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_MEASURES_METADATA)
     params = surf_measures_params(
         spec_file=spec_file,
         surf_a=surf_a,
@@ -361,7 +361,7 @@ def surf_measures(
         info_volg=info_volg,
         ver=ver,
     )
-    return surf_measures_execute(params, execution)
+    return surf_measures_execute(params, runner)
 
 
 __all__ = [
@@ -369,8 +369,6 @@ __all__ = [
     "SurfMeasuresOutputs",
     "SurfMeasuresParameters",
     "surf_measures",
-    "surf_measures_cargs",
     "surf_measures_execute",
-    "surf_measures_outputs",
     "surf_measures_params",
 ]

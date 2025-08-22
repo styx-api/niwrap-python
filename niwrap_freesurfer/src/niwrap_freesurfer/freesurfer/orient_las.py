@@ -132,7 +132,7 @@ def orient_las_outputs(
 
 def orient_las_execute(
     params: OrientLasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> OrientLasOutputs:
     """
     Convert image to LAS orientation.
@@ -143,10 +143,12 @@ def orient_las_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `OrientLasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ORIENT_LAS_METADATA)
     params = execution.params(params)
     cargs = orient_las_cargs(params, execution)
     ret = orient_las_outputs(params, execution)
@@ -176,14 +178,12 @@ def orient_las(
     Returns:
         NamedTuple of outputs (described in `OrientLasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ORIENT_LAS_METADATA)
     params = orient_las_params(
         input_image=input_image,
         output_image=output_image,
         check=check,
     )
-    return orient_las_execute(params, execution)
+    return orient_las_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "OrientLasOutputs",
     "OrientLasParameters",
     "orient_las",
-    "orient_las_cargs",
     "orient_las_execute",
-    "orient_las_outputs",
     "orient_las_params",
 ]

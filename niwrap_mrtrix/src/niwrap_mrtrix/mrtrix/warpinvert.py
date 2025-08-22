@@ -248,7 +248,7 @@ def warpinvert_outputs(
 
 def warpinvert_execute(
     params: WarpinvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WarpinvertOutputs:
     """
     Invert a non-linear warp field.
@@ -272,10 +272,12 @@ def warpinvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WarpinvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WARPINVERT_METADATA)
     params = execution.params(params)
     cargs = warpinvert_cargs(params, execution)
     ret = warpinvert_outputs(params, execution)
@@ -340,8 +342,6 @@ def warpinvert(
     Returns:
         NamedTuple of outputs (described in `WarpinvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WARPINVERT_METADATA)
     params = warpinvert_params(
         template=template,
         displacement=displacement,
@@ -356,7 +356,7 @@ def warpinvert(
         in_=in_,
         out=out,
     )
-    return warpinvert_execute(params, execution)
+    return warpinvert_execute(params, runner)
 
 
 __all__ = [
@@ -365,10 +365,7 @@ __all__ = [
     "WarpinvertOutputs",
     "WarpinvertParameters",
     "warpinvert",
-    "warpinvert_cargs",
-    "warpinvert_config_cargs",
     "warpinvert_config_params",
     "warpinvert_execute",
-    "warpinvert_outputs",
     "warpinvert_params",
 ]

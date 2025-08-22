@@ -138,7 +138,7 @@ def tile_images_outputs(
 
 def tile_images_execute(
     params: TileImagesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TileImagesOutputs:
     """
     TileImages allows assembling images into a multi-dimensional array, producing a
@@ -151,10 +151,12 @@ def tile_images_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TileImagesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TILE_IMAGES_METADATA)
     params = execution.params(params)
     cargs = tile_images_cargs(params, execution)
     ret = tile_images_outputs(params, execution)
@@ -190,15 +192,13 @@ def tile_images(
     Returns:
         NamedTuple of outputs (described in `TileImagesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TILE_IMAGES_METADATA)
     params = tile_images_params(
         image_dimension=image_dimension,
         output_image=output_image,
         layout=layout,
         input_images=input_images,
     )
-    return tile_images_execute(params, execution)
+    return tile_images_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "TileImagesOutputs",
     "TileImagesParameters",
     "tile_images",
-    "tile_images_cargs",
     "tile_images_execute",
-    "tile_images_outputs",
     "tile_images_params",
 ]

@@ -214,7 +214,7 @@ def mri_gradunwarp_outputs(
 
 def mri_gradunwarp_execute(
     params: MriGradunwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGradunwarpOutputs:
     """
     Tool to correct gradient non-linearity distortions in MRI images.
@@ -225,10 +225,12 @@ def mri_gradunwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGradunwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GRADUNWARP_METADATA)
     params = execution.params(params)
     cargs = mri_gradunwarp_cargs(params, execution)
     ret = mri_gradunwarp_outputs(params, execution)
@@ -277,8 +279,6 @@ def mri_gradunwarp(
     Returns:
         NamedTuple of outputs (described in `MriGradunwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GRADUNWARP_METADATA)
     params = mri_gradunwarp_params(
         gradient_coeff=gradient_coeff,
         load_transtbl=load_transtbl,
@@ -292,7 +292,7 @@ def mri_gradunwarp(
         version=version,
         help_=help_,
     )
-    return mri_gradunwarp_execute(params, execution)
+    return mri_gradunwarp_execute(params, runner)
 
 
 __all__ = [
@@ -300,8 +300,6 @@ __all__ = [
     "MriGradunwarpOutputs",
     "MriGradunwarpParameters",
     "mri_gradunwarp",
-    "mri_gradunwarp_cargs",
     "mri_gradunwarp_execute",
-    "mri_gradunwarp_outputs",
     "mri_gradunwarp_params",
 ]

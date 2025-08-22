@@ -131,7 +131,7 @@ def unconfound_outputs(
 
 def unconfound_execute(
     params: UnconfoundParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnconfoundOutputs:
     """
     Removing confounds from 4D fMRI data.
@@ -142,10 +142,12 @@ def unconfound_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnconfoundOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNCONFOUND_METADATA)
     params = execution.params(params)
     cargs = unconfound_cargs(params, execution)
     ret = unconfound_outputs(params, execution)
@@ -175,14 +177,12 @@ def unconfound(
     Returns:
         NamedTuple of outputs (described in `UnconfoundOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNCONFOUND_METADATA)
     params = unconfound_params(
         in4d=in4d,
         out4d=out4d,
         confound_mat=confound_mat,
     )
-    return unconfound_execute(params, execution)
+    return unconfound_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "UnconfoundOutputs",
     "UnconfoundParameters",
     "unconfound",
-    "unconfound_cargs",
     "unconfound_execute",
-    "unconfound_outputs",
     "unconfound_params",
 ]

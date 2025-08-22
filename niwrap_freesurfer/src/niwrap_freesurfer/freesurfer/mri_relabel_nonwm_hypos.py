@@ -161,7 +161,7 @@ def mri_relabel_nonwm_hypos_outputs(
 
 def mri_relabel_nonwm_hypos_execute(
     params: MriRelabelNonwmHyposParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRelabelNonwmHyposOutputs:
     """
     Relabels non-WM hypointensities based on proximity to a nearby label.
@@ -172,10 +172,12 @@ def mri_relabel_nonwm_hypos_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRelabelNonwmHyposOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RELABEL_NONWM_HYPOS_METADATA)
     params = execution.params(params)
     cargs = mri_relabel_nonwm_hypos_cargs(params, execution)
     ret = mri_relabel_nonwm_hypos_outputs(params, execution)
@@ -212,8 +214,6 @@ def mri_relabel_nonwm_hypos(
     Returns:
         NamedTuple of outputs (described in `MriRelabelNonwmHyposOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RELABEL_NONWM_HYPOS_METADATA)
     params = mri_relabel_nonwm_hypos_params(
         inputseg=inputseg,
         outputseg=outputseg,
@@ -222,7 +222,7 @@ def mri_relabel_nonwm_hypos(
         debug=debug,
         checkopts=checkopts,
     )
-    return mri_relabel_nonwm_hypos_execute(params, execution)
+    return mri_relabel_nonwm_hypos_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "MriRelabelNonwmHyposOutputs",
     "MriRelabelNonwmHyposParameters",
     "mri_relabel_nonwm_hypos",
-    "mri_relabel_nonwm_hypos_cargs",
     "mri_relabel_nonwm_hypos_execute",
-    "mri_relabel_nonwm_hypos_outputs",
     "mri_relabel_nonwm_hypos_params",
 ]

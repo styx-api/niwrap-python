@@ -116,7 +116,7 @@ def mri_and_outputs(
 
 def mri_and_execute(
     params: MriAndParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAndOutputs:
     """
     Performs a logical voxel-wise AND on a series of volumes.
@@ -127,10 +127,12 @@ def mri_and_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAndOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_AND_METADATA)
     params = execution.params(params)
     cargs = mri_and_cargs(params, execution)
     ret = mri_and_outputs(params, execution)
@@ -155,12 +157,10 @@ def mri_and(
     Returns:
         NamedTuple of outputs (described in `MriAndOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_AND_METADATA)
     params = mri_and_params(
         input_files=input_files,
     )
-    return mri_and_execute(params, execution)
+    return mri_and_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "MriAndOutputs",
     "MriAndParameters",
     "mri_and",
-    "mri_and_cargs",
     "mri_and_execute",
-    "mri_and_outputs",
     "mri_and_params",
 ]

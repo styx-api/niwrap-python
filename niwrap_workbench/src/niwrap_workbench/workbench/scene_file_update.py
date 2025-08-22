@@ -323,7 +323,7 @@ def scene_file_update_outputs(
 
 def scene_file_update_execute(
     params: SceneFileUpdateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SceneFileUpdateOutputs:
     """
     Update scene file.
@@ -362,10 +362,12 @@ def scene_file_update_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SceneFileUpdateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SCENE_FILE_UPDATE_METADATA)
     params = execution.params(params)
     cargs = scene_file_update_cargs(params, execution)
     ret = scene_file_update_outputs(params, execution)
@@ -440,8 +442,6 @@ def scene_file_update(
     Returns:
         NamedTuple of outputs (described in `SceneFileUpdateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SCENE_FILE_UPDATE_METADATA)
     params = scene_file_update_params(
         input_scene_file=input_scene_file,
         output_scene_file=output_scene_file,
@@ -454,7 +454,7 @@ def scene_file_update(
         data_file_add=data_file_add,
         data_file_remove=data_file_remove,
     )
-    return scene_file_update_execute(params, execution)
+    return scene_file_update_execute(params, runner)
 
 
 __all__ = [
@@ -465,14 +465,9 @@ __all__ = [
     "SceneFileUpdateOutputs",
     "SceneFileUpdateParameters",
     "scene_file_update",
-    "scene_file_update_cargs",
-    "scene_file_update_copy_map_one_palette_cargs",
     "scene_file_update_copy_map_one_palette_params",
-    "scene_file_update_data_file_add_cargs",
     "scene_file_update_data_file_add_params",
-    "scene_file_update_data_file_remove_cargs",
     "scene_file_update_data_file_remove_params",
     "scene_file_update_execute",
-    "scene_file_update_outputs",
     "scene_file_update_params",
 ]

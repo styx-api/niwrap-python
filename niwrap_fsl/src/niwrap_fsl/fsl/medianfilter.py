@@ -126,7 +126,7 @@ def medianfilter_outputs(
 
 def medianfilter_execute(
     params: MedianfilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MedianfilterOutputs:
     """
     A tool to perform 26 neighbourhood median filtering on an input image.
@@ -137,10 +137,12 @@ def medianfilter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MedianfilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MEDIANFILTER_METADATA)
     params = execution.params(params)
     cargs = medianfilter_cargs(params, execution)
     ret = medianfilter_outputs(params, execution)
@@ -168,13 +170,11 @@ def medianfilter(
     Returns:
         NamedTuple of outputs (described in `MedianfilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MEDIANFILTER_METADATA)
     params = medianfilter_params(
         infile=infile,
         outfile=outfile,
     )
-    return medianfilter_execute(params, execution)
+    return medianfilter_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "MedianfilterOutputs",
     "MedianfilterParameters",
     "medianfilter",
-    "medianfilter_cargs",
     "medianfilter_execute",
-    "medianfilter_outputs",
     "medianfilter_params",
 ]

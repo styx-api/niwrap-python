@@ -137,7 +137,7 @@ def ants_denoise_image_fs_outputs(
 
 def ants_denoise_image_fs_execute(
     params: AntsDenoiseImageFsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsDenoiseImageFsOutputs:
     """
     Denoises an image with a spatially adaptive filter. This program wraps the
@@ -149,10 +149,12 @@ def ants_denoise_image_fs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsDenoiseImageFsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_DENOISE_IMAGE_FS_METADATA)
     params = execution.params(params)
     cargs = ants_denoise_image_fs_cargs(params, execution)
     ret = ants_denoise_image_fs_outputs(params, execution)
@@ -182,14 +184,12 @@ def ants_denoise_image_fs(
     Returns:
         NamedTuple of outputs (described in `AntsDenoiseImageFsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_DENOISE_IMAGE_FS_METADATA)
     params = ants_denoise_image_fs_params(
         input_image=input_image,
         output_image=output_image,
         rician_flag=rician_flag,
     )
-    return ants_denoise_image_fs_execute(params, execution)
+    return ants_denoise_image_fs_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "AntsDenoiseImageFsOutputs",
     "AntsDenoiseImageFsParameters",
     "ants_denoise_image_fs",
-    "ants_denoise_image_fs_cargs",
     "ants_denoise_image_fs_execute",
-    "ants_denoise_image_fs_outputs",
     "ants_denoise_image_fs_params",
 ]

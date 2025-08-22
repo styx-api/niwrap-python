@@ -119,7 +119,7 @@ def anatomi_cuts_utils_outputs(
 
 def anatomi_cuts_utils_execute(
     params: AnatomiCutsUtilsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AnatomiCutsUtilsOutputs:
     """
     A tool for anatomical segmentation using graph-based methods.
@@ -130,10 +130,12 @@ def anatomi_cuts_utils_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AnatomiCutsUtilsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANATOMI_CUTS_UTILS_METADATA)
     params = execution.params(params)
     cargs = anatomi_cuts_utils_cargs(params, execution)
     ret = anatomi_cuts_utils_outputs(params, execution)
@@ -159,12 +161,10 @@ def anatomi_cuts_utils(
     Returns:
         NamedTuple of outputs (described in `AnatomiCutsUtilsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANATOMI_CUTS_UTILS_METADATA)
     params = anatomi_cuts_utils_params(
         modules=modules,
     )
-    return anatomi_cuts_utils_execute(params, execution)
+    return anatomi_cuts_utils_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "AnatomiCutsUtilsOutputs",
     "AnatomiCutsUtilsParameters",
     "anatomi_cuts_utils",
-    "anatomi_cuts_utils_cargs",
     "anatomi_cuts_utils_execute",
-    "anatomi_cuts_utils_outputs",
     "anatomi_cuts_utils_params",
 ]

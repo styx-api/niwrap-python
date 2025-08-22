@@ -167,7 +167,7 @@ def table2map_outputs(
 
 def table2map_execute(
     params: Table2mapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Table2mapOutputs:
     """
     A tool to map data from a table onto an output map, optionally using
@@ -179,10 +179,12 @@ def table2map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Table2mapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TABLE2MAP_METADATA)
     params = execution.params(params)
     cargs = table2map_cargs(params, execution)
     ret = table2map_outputs(params, execution)
@@ -218,8 +220,6 @@ def table2map(
     Returns:
         NamedTuple of outputs (described in `Table2mapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TABLE2MAP_METADATA)
     params = table2map_params(
         input_table=input_table,
         output_map=output_map,
@@ -228,7 +228,7 @@ def table2map(
         columns=columns,
         lookup_table=lookup_table,
     )
-    return table2map_execute(params, execution)
+    return table2map_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "Table2mapOutputs",
     "Table2mapParameters",
     "table2map",
-    "table2map_cargs",
     "table2map_execute",
-    "table2map_outputs",
     "table2map_params",
 ]

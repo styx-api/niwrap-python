@@ -143,7 +143,7 @@ def fslswapdim_outputs(
 
 def fslswapdim_execute(
     params: FslswapdimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslswapdimOutputs:
     """
     Swap dimensions of an image volume.
@@ -154,10 +154,12 @@ def fslswapdim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslswapdimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSWAPDIM_METADATA)
     params = execution.params(params)
     cargs = fslswapdim_cargs(params, execution)
     ret = fslswapdim_outputs(params, execution)
@@ -191,8 +193,6 @@ def fslswapdim(
     Returns:
         NamedTuple of outputs (described in `FslswapdimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSWAPDIM_METADATA)
     params = fslswapdim_params(
         input_file=input_file,
         axis_a=axis_a,
@@ -200,7 +200,7 @@ def fslswapdim(
         axis_c=axis_c,
         output_file=output_file,
     )
-    return fslswapdim_execute(params, execution)
+    return fslswapdim_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "FslswapdimOutputs",
     "FslswapdimParameters",
     "fslswapdim",
-    "fslswapdim_cargs",
     "fslswapdim_execute",
-    "fslswapdim_outputs",
     "fslswapdim_params",
 ]

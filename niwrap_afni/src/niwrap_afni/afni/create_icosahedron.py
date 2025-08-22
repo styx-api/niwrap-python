@@ -197,7 +197,7 @@ def create_icosahedron_outputs(
 
 def create_icosahedron_execute(
     params: CreateIcosahedronParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateIcosahedronOutputs:
     """
     Tool to create an icosahedron with optional tessellation.
@@ -208,10 +208,12 @@ def create_icosahedron_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateIcosahedronOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_ICOSAHEDRON_METADATA)
     params = execution.params(params)
     cargs = create_icosahedron_cargs(params, execution)
     ret = create_icosahedron_outputs(params, execution)
@@ -256,8 +258,6 @@ def create_icosahedron(
     Returns:
         NamedTuple of outputs (described in `CreateIcosahedronOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_ICOSAHEDRON_METADATA)
     params = create_icosahedron_params(
         rad=rad,
         rec_depth=rec_depth,
@@ -270,7 +270,7 @@ def create_icosahedron(
         output_prefix=output_prefix,
         help_=help_,
     )
-    return create_icosahedron_execute(params, execution)
+    return create_icosahedron_execute(params, runner)
 
 
 __all__ = [
@@ -278,8 +278,6 @@ __all__ = [
     "CreateIcosahedronOutputs",
     "CreateIcosahedronParameters",
     "create_icosahedron",
-    "create_icosahedron_cargs",
     "create_icosahedron_execute",
-    "create_icosahedron_outputs",
     "create_icosahedron_params",
 ]

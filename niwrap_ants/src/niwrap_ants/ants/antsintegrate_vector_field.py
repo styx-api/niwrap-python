@@ -140,7 +140,7 @@ def antsintegrate_vector_field_outputs(
 
 def antsintegrate_vector_field_execute(
     params: AntsintegrateVectorFieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsintegrateVectorFieldOutputs:
     """
     This tool integrates a vector field, where vectors are voxels, using a region of
@@ -153,10 +153,12 @@ def antsintegrate_vector_field_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsintegrateVectorFieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTSINTEGRATE_VECTOR_FIELD_METADATA)
     params = execution.params(params)
     cargs = antsintegrate_vector_field_cargs(params, execution)
     ret = antsintegrate_vector_field_outputs(params, execution)
@@ -191,15 +193,13 @@ def antsintegrate_vector_field(
     Returns:
         NamedTuple of outputs (described in `AntsintegrateVectorFieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTSINTEGRATE_VECTOR_FIELD_METADATA)
     params = antsintegrate_vector_field_params(
         vector_field_input=vector_field_input,
         roi_mask_input=roi_mask_input,
         fibers_output=fibers_output,
         length_image_output=length_image_output,
     )
-    return antsintegrate_vector_field_execute(params, execution)
+    return antsintegrate_vector_field_execute(params, runner)
 
 
 __all__ = [
@@ -207,8 +207,6 @@ __all__ = [
     "AntsintegrateVectorFieldOutputs",
     "AntsintegrateVectorFieldParameters",
     "antsintegrate_vector_field",
-    "antsintegrate_vector_field_cargs",
     "antsintegrate_vector_field_execute",
-    "antsintegrate_vector_field_outputs",
     "antsintegrate_vector_field_params",
 ]

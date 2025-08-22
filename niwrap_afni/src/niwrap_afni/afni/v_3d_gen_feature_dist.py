@@ -222,7 +222,7 @@ def v_3d_gen_feature_dist_outputs(
 
 def v_3d_gen_feature_dist_execute(
     params: V3dGenFeatureDistParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dGenFeatureDistOutputs:
     """
     3dGenFeatureDist produces histogram volume (hives) from input data.
@@ -233,10 +233,12 @@ def v_3d_gen_feature_dist_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dGenFeatureDistOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_GEN_FEATURE_DIST_METADATA)
     params = execution.params(params)
     cargs = v_3d_gen_feature_dist_cargs(params, execution)
     ret = v_3d_gen_feature_dist_outputs(params, execution)
@@ -286,8 +288,6 @@ def v_3d_gen_feature_dist(
     Returns:
         NamedTuple of outputs (described in `V3dGenFeatureDistOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_GEN_FEATURE_DIST_METADATA)
     params = v_3d_gen_feature_dist_params(
         features_string=features_string,
         class_string=class_string,
@@ -302,7 +302,7 @@ def v_3d_gen_feature_dist(
         labeltable=labeltable,
         show_histograms=show_histograms,
     )
-    return v_3d_gen_feature_dist_execute(params, execution)
+    return v_3d_gen_feature_dist_execute(params, runner)
 
 
 __all__ = [
@@ -310,8 +310,6 @@ __all__ = [
     "V3dGenFeatureDistParameters",
     "V_3D_GEN_FEATURE_DIST_METADATA",
     "v_3d_gen_feature_dist",
-    "v_3d_gen_feature_dist_cargs",
     "v_3d_gen_feature_dist_execute",
-    "v_3d_gen_feature_dist_outputs",
     "v_3d_gen_feature_dist_params",
 ]

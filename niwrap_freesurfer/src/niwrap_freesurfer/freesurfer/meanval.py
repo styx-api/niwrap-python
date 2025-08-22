@@ -145,7 +145,7 @@ def meanval_outputs(
 
 def meanval_execute(
     params: MeanvalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MeanvalOutputs:
     """
     Tool to calculate the mean value of an image within a mask.
@@ -156,10 +156,12 @@ def meanval_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MeanvalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MEANVAL_METADATA)
     params = execution.params(params)
     cargs = meanval_cargs(params, execution)
     ret = meanval_outputs(params, execution)
@@ -190,15 +192,13 @@ def meanval(
     Returns:
         NamedTuple of outputs (described in `MeanvalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MEANVAL_METADATA)
     params = meanval_params(
         input_file=input_file,
         mask_file=mask_file,
         output_file=output_file,
         avgwf_flag=avgwf_flag,
     )
-    return meanval_execute(params, execution)
+    return meanval_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "MeanvalOutputs",
     "MeanvalParameters",
     "meanval",
-    "meanval_cargs",
     "meanval_execute",
-    "meanval_outputs",
     "meanval_params",
 ]

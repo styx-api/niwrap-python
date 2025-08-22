@@ -157,7 +157,7 @@ def talairach_avi_outputs(
 
 def talairach_avi_execute(
     params: TalairachAviParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TalairachAviOutputs:
     """
     Front-end for Avi Snyder's image registration tool. Computes the Talairach
@@ -169,10 +169,12 @@ def talairach_avi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TalairachAviOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TALAIRACH_AVI_METADATA)
     params = execution.params(params)
     cargs = talairach_avi_cargs(params, execution)
     ret = talairach_avi_outputs(params, execution)
@@ -206,8 +208,6 @@ def talairach_avi(
     Returns:
         NamedTuple of outputs (described in `TalairachAviOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TALAIRACH_AVI_METADATA)
     params = talairach_avi_params(
         input_file=input_file,
         output_xfm=output_xfm,
@@ -215,7 +215,7 @@ def talairach_avi(
         log=log,
         debug=debug,
     )
-    return talairach_avi_execute(params, execution)
+    return talairach_avi_execute(params, runner)
 
 
 __all__ = [
@@ -223,8 +223,6 @@ __all__ = [
     "TalairachAviOutputs",
     "TalairachAviParameters",
     "talairach_avi",
-    "talairach_avi_cargs",
     "talairach_avi_execute",
-    "talairach_avi_outputs",
     "talairach_avi_params",
 ]

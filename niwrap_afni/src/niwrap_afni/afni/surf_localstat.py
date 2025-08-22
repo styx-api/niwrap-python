@@ -169,7 +169,7 @@ def surf_localstat_outputs(
 
 def surf_localstat_execute(
     params: SurfLocalstatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfLocalstatOutputs:
     """
     Compute local statistics on a surface mesh.
@@ -180,10 +180,12 @@ def surf_localstat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfLocalstatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_LOCALSTAT_METADATA)
     params = execution.params(params)
     cargs = surf_localstat_cargs(params, execution)
     ret = surf_localstat_outputs(params, execution)
@@ -220,8 +222,6 @@ def surf_localstat(
     Returns:
         NamedTuple of outputs (described in `SurfLocalstatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_LOCALSTAT_METADATA)
     params = surf_localstat_params(
         hood=hood,
         nbhd_rad=nbhd_rad,
@@ -230,7 +230,7 @@ def surf_localstat(
         input_dataset=input_dataset,
         surface=surface,
     )
-    return surf_localstat_execute(params, execution)
+    return surf_localstat_execute(params, runner)
 
 
 __all__ = [
@@ -238,8 +238,6 @@ __all__ = [
     "SurfLocalstatOutputs",
     "SurfLocalstatParameters",
     "surf_localstat",
-    "surf_localstat_cargs",
     "surf_localstat_execute",
-    "surf_localstat_outputs",
     "surf_localstat_params",
 ]

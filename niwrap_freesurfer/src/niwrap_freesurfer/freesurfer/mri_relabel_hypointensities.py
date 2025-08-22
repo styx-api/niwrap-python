@@ -130,7 +130,7 @@ def mri_relabel_hypointensities_outputs(
 
 def mri_relabel_hypointensities_execute(
     params: MriRelabelHypointensitiesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRelabelHypointensitiesOutputs:
     """
     Tool for relabeling hypointensities in FreeSurfer's aseg files.
@@ -141,10 +141,12 @@ def mri_relabel_hypointensities_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRelabelHypointensitiesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RELABEL_HYPOINTENSITIES_METADATA)
     params = execution.params(params)
     cargs = mri_relabel_hypointensities_cargs(params, execution)
     ret = mri_relabel_hypointensities_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_relabel_hypointensities(
     Returns:
         NamedTuple of outputs (described in `MriRelabelHypointensitiesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RELABEL_HYPOINTENSITIES_METADATA)
     params = mri_relabel_hypointensities_params(
         input_aseg=input_aseg,
         surface_directory=surface_directory,
         output_aseg=output_aseg,
     )
-    return mri_relabel_hypointensities_execute(params, execution)
+    return mri_relabel_hypointensities_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriRelabelHypointensitiesOutputs",
     "MriRelabelHypointensitiesParameters",
     "mri_relabel_hypointensities",
-    "mri_relabel_hypointensities_cargs",
     "mri_relabel_hypointensities_execute",
-    "mri_relabel_hypointensities_outputs",
     "mri_relabel_hypointensities_params",
 ]

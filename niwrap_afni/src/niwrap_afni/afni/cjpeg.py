@@ -159,7 +159,7 @@ def cjpeg_outputs(
 
 def cjpeg_execute(
     params: CjpegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CjpegOutputs:
     """
     Compresses an image file to a JPEG file.
@@ -170,10 +170,12 @@ def cjpeg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CjpegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CJPEG_METADATA)
     params = execution.params(params)
     cargs = cjpeg_cargs(params, execution)
     ret = cjpeg_outputs(params, execution)
@@ -210,8 +212,6 @@ def cjpeg(
     Returns:
         NamedTuple of outputs (described in `CjpegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CJPEG_METADATA)
     params = cjpeg_params(
         quality=quality,
         grayscale=grayscale,
@@ -221,7 +221,7 @@ def cjpeg(
         outfile=outfile,
         infile=infile,
     )
-    return cjpeg_execute(params, execution)
+    return cjpeg_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "CjpegOutputs",
     "CjpegParameters",
     "cjpeg",
-    "cjpeg_cargs",
     "cjpeg_execute",
-    "cjpeg_outputs",
     "cjpeg_params",
 ]

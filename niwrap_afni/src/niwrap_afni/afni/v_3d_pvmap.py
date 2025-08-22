@@ -152,7 +152,7 @@ def v_3d_pvmap_outputs(
 
 def v_3d_pvmap_execute(
     params: V3dPvmapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dPvmapOutputs:
     """
     Computes the first two principal component vectors of a time series dataset,
@@ -165,10 +165,12 @@ def v_3d_pvmap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPvmapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_PVMAP_METADATA)
     params = execution.params(params)
     cargs = v_3d_pvmap_cargs(params, execution)
     ret = v_3d_pvmap_outputs(params, execution)
@@ -201,15 +203,13 @@ def v_3d_pvmap(
     Returns:
         NamedTuple of outputs (described in `V3dPvmapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_PVMAP_METADATA)
     params = v_3d_pvmap_params(
         prefix=prefix,
         mask=mask,
         automask=automask,
         inputdataset=inputdataset,
     )
-    return v_3d_pvmap_execute(params, execution)
+    return v_3d_pvmap_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "V3dPvmapParameters",
     "V_3D_PVMAP_METADATA",
     "v_3d_pvmap",
-    "v_3d_pvmap_cargs",
     "v_3d_pvmap_execute",
-    "v_3d_pvmap_outputs",
     "v_3d_pvmap_params",
 ]

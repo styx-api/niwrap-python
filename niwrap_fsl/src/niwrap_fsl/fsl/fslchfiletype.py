@@ -134,7 +134,7 @@ def fslchfiletype_outputs(
 
 def fslchfiletype_execute(
     params: FslchfiletypeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslchfiletypeOutputs:
     """
     Tool to change the file type of an image file or copy it to a new file.
@@ -145,10 +145,12 @@ def fslchfiletype_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslchfiletypeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLCHFILETYPE_METADATA)
     params = execution.params(params)
     cargs = fslchfiletype_cargs(params, execution)
     ret = fslchfiletype_outputs(params, execution)
@@ -179,14 +181,12 @@ def fslchfiletype(
     Returns:
         NamedTuple of outputs (described in `FslchfiletypeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLCHFILETYPE_METADATA)
     params = fslchfiletype_params(
         filetype=filetype,
         filename=filename,
         filename2=filename2,
     )
-    return fslchfiletype_execute(params, execution)
+    return fslchfiletype_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "FslchfiletypeOutputs",
     "FslchfiletypeParameters",
     "fslchfiletype",
-    "fslchfiletype_cargs",
     "fslchfiletype_execute",
-    "fslchfiletype_outputs",
     "fslchfiletype_params",
 ]

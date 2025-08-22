@@ -154,7 +154,7 @@ def zip_scene_file_outputs(
 
 def zip_scene_file_execute(
     params: ZipSceneFileParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ZipSceneFileOutputs:
     """
     Zip a scene file and its data files.
@@ -170,10 +170,12 @@ def zip_scene_file_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ZipSceneFileOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ZIP_SCENE_FILE_METADATA)
     params = execution.params(params)
     cargs = zip_scene_file_cargs(params, execution)
     ret = zip_scene_file_outputs(params, execution)
@@ -218,8 +220,6 @@ def zip_scene_file(
     Returns:
         NamedTuple of outputs (described in `ZipSceneFileOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ZIP_SCENE_FILE_METADATA)
     params = zip_scene_file_params(
         scene_file=scene_file,
         extract_folder=extract_folder,
@@ -228,7 +228,7 @@ def zip_scene_file(
         opt_skip_missing=opt_skip_missing,
         opt_write_scene_file=opt_write_scene_file,
     )
-    return zip_scene_file_execute(params, execution)
+    return zip_scene_file_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "ZipSceneFileOutputs",
     "ZipSceneFileParameters",
     "zip_scene_file",
-    "zip_scene_file_cargs",
     "zip_scene_file_execute",
-    "zip_scene_file_outputs",
     "zip_scene_file_params",
 ]

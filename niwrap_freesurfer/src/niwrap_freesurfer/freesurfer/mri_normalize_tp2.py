@@ -211,7 +211,7 @@ def mri_normalize_tp2_outputs(
 
 def mri_normalize_tp2_execute(
     params: MriNormalizeTp2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriNormalizeTp2Outputs:
     """
     Normalize the input volume using control points of tp1 to help normalize tp2.
@@ -222,10 +222,12 @@ def mri_normalize_tp2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriNormalizeTp2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_NORMALIZE_TP2_METADATA)
     params = execution.params(params)
     cargs = mri_normalize_tp2_cargs(params, execution)
     ret = mri_normalize_tp2_outputs(params, execution)
@@ -270,8 +272,6 @@ def mri_normalize_tp2(
     Returns:
         NamedTuple of outputs (described in `MriNormalizeTp2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_NORMALIZE_TP2_METADATA)
     params = mri_normalize_tp2_params(
         input_vol=input_vol,
         normalized_vol=normalized_vol,
@@ -285,7 +285,7 @@ def mri_normalize_tp2(
         lta_src=lta_src,
         lta_dst=lta_dst,
     )
-    return mri_normalize_tp2_execute(params, execution)
+    return mri_normalize_tp2_execute(params, runner)
 
 
 __all__ = [
@@ -293,8 +293,6 @@ __all__ = [
     "MriNormalizeTp2Outputs",
     "MriNormalizeTp2Parameters",
     "mri_normalize_tp2",
-    "mri_normalize_tp2_cargs",
     "mri_normalize_tp2_execute",
-    "mri_normalize_tp2_outputs",
     "mri_normalize_tp2_params",
 ]

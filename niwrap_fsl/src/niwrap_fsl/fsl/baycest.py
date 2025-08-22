@@ -157,7 +157,7 @@ def baycest_outputs(
 
 def baycest_execute(
     params: BaycestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BaycestOutputs:
     """
     Bayesian analysis for chemical exchange saturation transfer z-spectra.
@@ -168,10 +168,12 @@ def baycest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BaycestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BAYCEST_METADATA)
     params = execution.params(params)
     cargs = baycest_cargs(params, execution)
     ret = baycest_outputs(params, execution)
@@ -210,8 +212,6 @@ def baycest(
     Returns:
         NamedTuple of outputs (described in `BaycestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BAYCEST_METADATA)
     params = baycest_params(
         data_file=data_file,
         mask_file=mask_file,
@@ -222,7 +222,7 @@ def baycest(
         spatial_flag=spatial_flag,
         t12prior_flag=t12prior_flag,
     )
-    return baycest_execute(params, execution)
+    return baycest_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "BaycestOutputs",
     "BaycestParameters",
     "baycest",
-    "baycest_cargs",
     "baycest_execute",
-    "baycest_outputs",
     "baycest_params",
 ]

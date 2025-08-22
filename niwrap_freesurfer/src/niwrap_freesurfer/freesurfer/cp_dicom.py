@@ -133,7 +133,7 @@ def cp_dicom_outputs(
 
 def cp_dicom_execute(
     params: CpDicomParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CpDicomOutputs:
     """
     Copies DICOM files into separate directories for each series based on DICOM
@@ -145,10 +145,12 @@ def cp_dicom_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CpDicomOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CP_DICOM_METADATA)
     params = execution.params(params)
     cargs = cp_dicom_cargs(params, execution)
     ret = cp_dicom_outputs(params, execution)
@@ -178,14 +180,12 @@ def cp_dicom(
     Returns:
         NamedTuple of outputs (described in `CpDicomOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CP_DICOM_METADATA)
     params = cp_dicom_params(
         dicom_dir=dicom_dir,
         output_dir=output_dir,
         debug=debug,
     )
-    return cp_dicom_execute(params, execution)
+    return cp_dicom_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "CpDicomOutputs",
     "CpDicomParameters",
     "cp_dicom",
-    "cp_dicom_cargs",
     "cp_dicom_execute",
-    "cp_dicom_outputs",
     "cp_dicom_params",
 ]

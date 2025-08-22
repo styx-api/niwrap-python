@@ -116,7 +116,7 @@ def v__afni_orient2_raimap_outputs(
 
 def v__afni_orient2_raimap_execute(
     params: VAfniOrient2RaimapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniOrient2RaimapOutputs:
     """
     Returns the index map for the RAI directions.
@@ -127,10 +127,12 @@ def v__afni_orient2_raimap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniOrient2RaimapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_ORIENT2_RAIMAP_METADATA)
     params = execution.params(params)
     cargs = v__afni_orient2_raimap_cargs(params, execution)
     ret = v__afni_orient2_raimap_outputs(params, execution)
@@ -155,12 +157,10 @@ def v__afni_orient2_raimap(
     Returns:
         NamedTuple of outputs (described in `VAfniOrient2RaimapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_ORIENT2_RAIMAP_METADATA)
     params = v__afni_orient2_raimap_params(
         orientation_code=orientation_code,
     )
-    return v__afni_orient2_raimap_execute(params, execution)
+    return v__afni_orient2_raimap_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "VAfniOrient2RaimapParameters",
     "V__AFNI_ORIENT2_RAIMAP_METADATA",
     "v__afni_orient2_raimap",
-    "v__afni_orient2_raimap_cargs",
     "v__afni_orient2_raimap_execute",
-    "v__afni_orient2_raimap_outputs",
     "v__afni_orient2_raimap_params",
 ]

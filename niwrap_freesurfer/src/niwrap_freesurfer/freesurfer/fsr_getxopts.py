@@ -117,7 +117,7 @@ def fsr_getxopts_outputs(
 
 def fsr_getxopts_execute(
     params: FsrGetxoptsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsrGetxoptsOutputs:
     """
     Tool to retrieve extended options for a specific context or configuration.
@@ -128,10 +128,12 @@ def fsr_getxopts_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsrGetxoptsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSR_GETXOPTS_METADATA)
     params = execution.params(params)
     cargs = fsr_getxopts_cargs(params, execution)
     ret = fsr_getxopts_outputs(params, execution)
@@ -156,12 +158,10 @@ def fsr_getxopts(
     Returns:
         NamedTuple of outputs (described in `FsrGetxoptsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSR_GETXOPTS_METADATA)
     params = fsr_getxopts_params(
         help_=help_,
     )
-    return fsr_getxopts_execute(params, execution)
+    return fsr_getxopts_execute(params, runner)
 
 
 __all__ = [
@@ -169,8 +169,6 @@ __all__ = [
     "FsrGetxoptsOutputs",
     "FsrGetxoptsParameters",
     "fsr_getxopts",
-    "fsr_getxopts_cargs",
     "fsr_getxopts_execute",
-    "fsr_getxopts_outputs",
     "fsr_getxopts_params",
 ]

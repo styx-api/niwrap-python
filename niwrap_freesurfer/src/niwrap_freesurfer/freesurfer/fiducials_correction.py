@@ -126,7 +126,7 @@ def fiducials_correction_outputs(
 
 def fiducials_correction_execute(
     params: FiducialsCorrectionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FiducialsCorrectionOutputs:
     """
     A tool for correcting fiducial markers in imaging data. Note: This command has
@@ -139,10 +139,12 @@ def fiducials_correction_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FiducialsCorrectionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIDUCIALS_CORRECTION_METADATA)
     params = execution.params(params)
     cargs = fiducials_correction_cargs(params, execution)
     ret = fiducials_correction_outputs(params, execution)
@@ -172,13 +174,11 @@ def fiducials_correction(
     Returns:
         NamedTuple of outputs (described in `FiducialsCorrectionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIDUCIALS_CORRECTION_METADATA)
     params = fiducials_correction_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return fiducials_correction_execute(params, execution)
+    return fiducials_correction_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "FiducialsCorrectionOutputs",
     "FiducialsCorrectionParameters",
     "fiducials_correction",
-    "fiducials_correction_cargs",
     "fiducials_correction_execute",
-    "fiducials_correction_outputs",
     "fiducials_correction_params",
 ]

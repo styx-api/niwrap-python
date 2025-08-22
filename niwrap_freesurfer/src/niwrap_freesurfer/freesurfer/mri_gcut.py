@@ -155,7 +155,7 @@ def mri_gcut_outputs(
 
 def mri_gcut_execute(
     params: MriGcutParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGcutOutputs:
     """
     Skull stripping algorithm based on graph cuts.
@@ -166,10 +166,12 @@ def mri_gcut_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGcutOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GCUT_METADATA)
     params = execution.params(params)
     cargs = mri_gcut_cargs(params, execution)
     ret = mri_gcut_outputs(params, execution)
@@ -206,8 +208,6 @@ def mri_gcut(
     Returns:
         NamedTuple of outputs (described in `MriGcutOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GCUT_METADATA)
     params = mri_gcut_params(
         wmmask_110=wmmask_110,
         mult_file=mult_file,
@@ -215,7 +215,7 @@ def mri_gcut(
         infile=infile,
         outfile=outfile,
     )
-    return mri_gcut_execute(params, execution)
+    return mri_gcut_execute(params, runner)
 
 
 __all__ = [
@@ -223,8 +223,6 @@ __all__ = [
     "MriGcutOutputs",
     "MriGcutParameters",
     "mri_gcut",
-    "mri_gcut_cargs",
     "mri_gcut_execute",
-    "mri_gcut_outputs",
     "mri_gcut_params",
 ]

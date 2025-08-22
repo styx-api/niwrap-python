@@ -217,7 +217,7 @@ def v_3d_depth_map_outputs(
 
 def v_3d_depth_map_execute(
     params: V3dDepthMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDepthMapOutputs:
     """
     Calculates the Euclidean Distance Transform (EDT) for 3D volumes, allowing
@@ -230,10 +230,12 @@ def v_3d_depth_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDepthMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DEPTH_MAP_METADATA)
     params = execution.params(params)
     cargs = v_3d_depth_map_cargs(params, execution)
     ret = v_3d_depth_map_outputs(params, execution)
@@ -288,8 +290,6 @@ def v_3d_depth_map(
     Returns:
         NamedTuple of outputs (described in `V3dDepthMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DEPTH_MAP_METADATA)
     params = v_3d_depth_map_params(
         input_dataset=input_dataset,
         output_prefix=output_prefix,
@@ -305,7 +305,7 @@ def v_3d_depth_map(
         binary_only=binary_only,
         verbosity=verbosity,
     )
-    return v_3d_depth_map_execute(params, execution)
+    return v_3d_depth_map_execute(params, runner)
 
 
 __all__ = [
@@ -313,8 +313,6 @@ __all__ = [
     "V3dDepthMapParameters",
     "V_3D_DEPTH_MAP_METADATA",
     "v_3d_depth_map",
-    "v_3d_depth_map_cargs",
     "v_3d_depth_map_execute",
-    "v_3d_depth_map_outputs",
     "v_3d_depth_map_params",
 ]

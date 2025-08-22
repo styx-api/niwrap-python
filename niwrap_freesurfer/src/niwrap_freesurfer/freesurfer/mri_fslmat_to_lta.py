@@ -136,7 +136,7 @@ def mri_fslmat_to_lta_outputs(
 
 def mri_fslmat_to_lta_execute(
     params: MriFslmatToLtaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFslmatToLtaOutputs:
     """
     This program creates the LTA transformation file using information from the src
@@ -148,10 +148,12 @@ def mri_fslmat_to_lta_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFslmatToLtaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FSLMAT_TO_LTA_METADATA)
     params = execution.params(params)
     cargs = mri_fslmat_to_lta_cargs(params, execution)
     ret = mri_fslmat_to_lta_outputs(params, execution)
@@ -183,15 +185,13 @@ def mri_fslmat_to_lta(
     Returns:
         NamedTuple of outputs (described in `MriFslmatToLtaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FSLMAT_TO_LTA_METADATA)
     params = mri_fslmat_to_lta_params(
         src_vol=src_vol,
         target_vol=target_vol,
         fslmat_file=fslmat_file,
         lta_file=lta_file,
     )
-    return mri_fslmat_to_lta_execute(params, execution)
+    return mri_fslmat_to_lta_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "MriFslmatToLtaOutputs",
     "MriFslmatToLtaParameters",
     "mri_fslmat_to_lta",
-    "mri_fslmat_to_lta_cargs",
     "mri_fslmat_to_lta_execute",
-    "mri_fslmat_to_lta_outputs",
     "mri_fslmat_to_lta_params",
 ]

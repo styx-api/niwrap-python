@@ -229,7 +229,7 @@ def fsread_annot_outputs(
 
 def fsread_annot_execute(
     params: FsreadAnnotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsreadAnnotOutputs:
     """
     Reads a FreeSurfer annotation file and outputs an equivalent ROI file and/or a
@@ -241,10 +241,12 @@ def fsread_annot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsreadAnnotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSREAD_ANNOT_METADATA)
     params = execution.params(params)
     cargs = fsread_annot_cargs(params, execution)
     ret = fsread_annot_outputs(params, execution)
@@ -295,8 +297,6 @@ def fsread_annot(
     Returns:
         NamedTuple of outputs (described in `FsreadAnnotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSREAD_ANNOT_METADATA)
     params = fsread_annot_params(
         infile=infile,
         hemi=hemi,
@@ -310,7 +310,7 @@ def fsread_annot(
         dset=dset,
         help_=help_,
     )
-    return fsread_annot_execute(params, execution)
+    return fsread_annot_execute(params, runner)
 
 
 __all__ = [
@@ -318,8 +318,6 @@ __all__ = [
     "FsreadAnnotOutputs",
     "FsreadAnnotParameters",
     "fsread_annot",
-    "fsread_annot_cargs",
     "fsread_annot_execute",
-    "fsread_annot_outputs",
     "fsread_annot_params",
 ]

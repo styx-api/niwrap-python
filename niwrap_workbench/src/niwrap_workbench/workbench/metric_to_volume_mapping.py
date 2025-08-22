@@ -228,7 +228,7 @@ def metric_to_volume_mapping_outputs(
 
 def metric_to_volume_mapping_execute(
     params: MetricToVolumeMappingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricToVolumeMappingOutputs:
     """
     Map metric file to volume.
@@ -247,10 +247,12 @@ def metric_to_volume_mapping_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricToVolumeMappingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_TO_VOLUME_MAPPING_METADATA)
     params = execution.params(params)
     cargs = metric_to_volume_mapping_cargs(params, execution)
     ret = metric_to_volume_mapping_outputs(params, execution)
@@ -295,8 +297,6 @@ def metric_to_volume_mapping(
     Returns:
         NamedTuple of outputs (described in `MetricToVolumeMappingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_TO_VOLUME_MAPPING_METADATA)
     params = metric_to_volume_mapping_params(
         metric=metric,
         surface=surface,
@@ -305,7 +305,7 @@ def metric_to_volume_mapping(
         opt_nearest_vertex_distance=opt_nearest_vertex_distance,
         ribbon_constrained=ribbon_constrained,
     )
-    return metric_to_volume_mapping_execute(params, execution)
+    return metric_to_volume_mapping_execute(params, runner)
 
 
 __all__ = [
@@ -314,10 +314,7 @@ __all__ = [
     "MetricToVolumeMappingParameters",
     "MetricToVolumeMappingRibbonConstrainedParameters",
     "metric_to_volume_mapping",
-    "metric_to_volume_mapping_cargs",
     "metric_to_volume_mapping_execute",
-    "metric_to_volume_mapping_outputs",
     "metric_to_volume_mapping_params",
-    "metric_to_volume_mapping_ribbon_constrained_cargs",
     "metric_to_volume_mapping_ribbon_constrained_params",
 ]

@@ -169,7 +169,7 @@ def cblumwmgyri_outputs(
 
 def cblumwmgyri_execute(
     params: CblumwmgyriParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CblumwmgyriOutputs:
     """
     Segments cerebellar white matter into gyral and core components using
@@ -181,10 +181,12 @@ def cblumwmgyri_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CblumwmgyriOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CBLUMWMGYRI_METADATA)
     params = execution.params(params)
     cargs = cblumwmgyri_cargs(params, execution)
     ret = cblumwmgyri_outputs(params, execution)
@@ -220,8 +222,6 @@ def cblumwmgyri(
     Returns:
         NamedTuple of outputs (described in `CblumwmgyriOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CBLUMWMGYRI_METADATA)
     params = cblumwmgyri_params(
         subject=subject,
         source_seg=source_seg,
@@ -230,7 +230,7 @@ def cblumwmgyri(
         no_segstats=no_segstats,
         subjects_dir=subjects_dir,
     )
-    return cblumwmgyri_execute(params, execution)
+    return cblumwmgyri_execute(params, runner)
 
 
 __all__ = [
@@ -238,8 +238,6 @@ __all__ = [
     "CblumwmgyriOutputs",
     "CblumwmgyriParameters",
     "cblumwmgyri",
-    "cblumwmgyri_cargs",
     "cblumwmgyri_execute",
-    "cblumwmgyri_outputs",
     "cblumwmgyri_params",
 ]

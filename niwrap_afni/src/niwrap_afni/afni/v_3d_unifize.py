@@ -252,7 +252,7 @@ def v_3d_unifize_outputs(
 
 def v_3d_unifize_execute(
     params: V3dUnifizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dUnifizeOutputs:
     """
     3dUnifize - for uniformizing image intensity
@@ -280,10 +280,12 @@ def v_3d_unifize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dUnifizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_UNIFIZE_METADATA)
     params = execution.params(params)
     cargs = v_3d_unifize_cargs(params, execution)
     ret = v_3d_unifize_outputs(params, execution)
@@ -373,8 +375,6 @@ def v_3d_unifize(
     Returns:
         NamedTuple of outputs (described in `V3dUnifizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_UNIFIZE_METADATA)
     params = v_3d_unifize_params(
         cl_frac=cl_frac,
         epi=epi,
@@ -391,7 +391,7 @@ def v_3d_unifize(
         urad=urad,
         in_file=in_file,
     )
-    return v_3d_unifize_execute(params, execution)
+    return v_3d_unifize_execute(params, runner)
 
 
 __all__ = [
@@ -399,8 +399,6 @@ __all__ = [
     "V3dUnifizeParameters",
     "V_3D_UNIFIZE_METADATA",
     "v_3d_unifize",
-    "v_3d_unifize_cargs",
     "v_3d_unifize_execute",
-    "v_3d_unifize_outputs",
     "v_3d_unifize_params",
 ]

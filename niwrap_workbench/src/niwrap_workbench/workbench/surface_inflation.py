@@ -151,7 +151,7 @@ def surface_inflation_outputs(
 
 def surface_inflation_execute(
     params: SurfaceInflationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceInflationOutputs:
     """
     Surface inflation.
@@ -165,10 +165,12 @@ def surface_inflation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceInflationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_INFLATION_METADATA)
     params = execution.params(params)
     cargs = surface_inflation_cargs(params, execution)
     ret = surface_inflation_outputs(params, execution)
@@ -208,8 +210,6 @@ def surface_inflation(
     Returns:
         NamedTuple of outputs (described in `SurfaceInflationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_INFLATION_METADATA)
     params = surface_inflation_params(
         anatomical_surface_in=anatomical_surface_in,
         surface_in=surface_in,
@@ -219,7 +219,7 @@ def surface_inflation(
         inflation_factor=inflation_factor,
         surface_out=surface_out,
     )
-    return surface_inflation_execute(params, execution)
+    return surface_inflation_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "SurfaceInflationOutputs",
     "SurfaceInflationParameters",
     "surface_inflation",
-    "surface_inflation_cargs",
     "surface_inflation_execute",
-    "surface_inflation_outputs",
     "surface_inflation_params",
 ]

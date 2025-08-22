@@ -121,7 +121,7 @@ def mri_strip_subject_info_outputs(
 
 def mri_strip_subject_info_execute(
     params: MriStripSubjectInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriStripSubjectInfoOutputs:
     """
     A tool to strip subject information from MRI data files.
@@ -132,10 +132,12 @@ def mri_strip_subject_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriStripSubjectInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_STRIP_SUBJECT_INFO_METADATA)
     params = execution.params(params)
     cargs = mri_strip_subject_info_cargs(params, execution)
     ret = mri_strip_subject_info_outputs(params, execution)
@@ -162,13 +164,11 @@ def mri_strip_subject_info(
     Returns:
         NamedTuple of outputs (described in `MriStripSubjectInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_STRIP_SUBJECT_INFO_METADATA)
     params = mri_strip_subject_info_params(
         input_files=input_files,
         output_directory=output_directory,
     )
-    return mri_strip_subject_info_execute(params, execution)
+    return mri_strip_subject_info_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "MriStripSubjectInfoOutputs",
     "MriStripSubjectInfoParameters",
     "mri_strip_subject_info",
-    "mri_strip_subject_info_cargs",
     "mri_strip_subject_info_execute",
-    "mri_strip_subject_info_outputs",
     "mri_strip_subject_info_params",
 ]

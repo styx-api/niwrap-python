@@ -441,7 +441,7 @@ def mri_robust_template_outputs(
 
 def mri_robust_template_execute(
     params: MriRobustTemplateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRobustTemplateOutputs:
     """
     Constructs an unbiased robust template for longitudinal volumes using an
@@ -453,10 +453,12 @@ def mri_robust_template_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRobustTemplateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_ROBUST_TEMPLATE_METADATA)
     params = execution.params(params)
     cargs = mri_robust_template_cargs(params, execution)
     ret = mri_robust_template_outputs(params, execution)
@@ -569,8 +571,6 @@ def mri_robust_template(
     Returns:
         NamedTuple of outputs (described in `MriRobustTemplateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_ROBUST_TEMPLATE_METADATA)
     params = mri_robust_template_params(
         mov_files=mov_files,
         template_file=template_file,
@@ -610,7 +610,7 @@ def mri_robust_template(
         frobnorm_thresh=frobnorm_thresh,
         debug_flag=debug_flag,
     )
-    return mri_robust_template_execute(params, execution)
+    return mri_robust_template_execute(params, runner)
 
 
 __all__ = [
@@ -618,8 +618,6 @@ __all__ = [
     "MriRobustTemplateOutputs",
     "MriRobustTemplateParameters",
     "mri_robust_template",
-    "mri_robust_template_cargs",
     "mri_robust_template_execute",
-    "mri_robust_template_outputs",
     "mri_robust_template_params",
 ]

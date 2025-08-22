@@ -470,7 +470,7 @@ def fixelfilter_outputs(
 
 def fixelfilter_execute(
     params: FixelfilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixelfilterOutputs:
     """
     Perform filtering operations on fixel-based data.
@@ -491,10 +491,12 @@ def fixelfilter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixelfilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXELFILTER_METADATA)
     params = execution.params(params)
     cargs = fixelfilter_cargs(params, execution)
     ret = fixelfilter_outputs(params, execution)
@@ -573,8 +575,6 @@ def fixelfilter(
     Returns:
         NamedTuple of outputs (described in `FixelfilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXELFILTER_METADATA)
     params = fixelfilter_params(
         matrix=matrix,
         threshold_value=threshold_value,
@@ -594,7 +594,7 @@ def fixelfilter(
         filter_=filter_,
         output=output,
     )
-    return fixelfilter_execute(params, execution)
+    return fixelfilter_execute(params, runner)
 
 
 __all__ = [
@@ -607,18 +607,11 @@ __all__ = [
     "FixelfilterVariousString1Parameters",
     "FixelfilterVariousStringParameters",
     "fixelfilter",
-    "fixelfilter_cargs",
-    "fixelfilter_config_cargs",
     "fixelfilter_config_params",
     "fixelfilter_execute",
-    "fixelfilter_outputs",
     "fixelfilter_params",
-    "fixelfilter_various_file_1_cargs",
     "fixelfilter_various_file_1_params",
-    "fixelfilter_various_file_cargs",
     "fixelfilter_various_file_params",
-    "fixelfilter_various_string_1_cargs",
     "fixelfilter_various_string_1_params",
-    "fixelfilter_various_string_cargs",
     "fixelfilter_various_string_params",
 ]

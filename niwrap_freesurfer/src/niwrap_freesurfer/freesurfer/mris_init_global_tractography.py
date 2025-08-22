@@ -126,7 +126,7 @@ def mris_init_global_tractography_outputs(
 
 def mris_init_global_tractography_execute(
     params: MrisInitGlobalTractographyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisInitGlobalTractographyOutputs:
     """
     Initializes global tractography for a given subject and parcellation.
@@ -137,10 +137,12 @@ def mris_init_global_tractography_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisInitGlobalTractographyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA)
     params = execution.params(params)
     cargs = mris_init_global_tractography_cargs(params, execution)
     ret = mris_init_global_tractography_outputs(params, execution)
@@ -169,14 +171,12 @@ def mris_init_global_tractography(
     Returns:
         NamedTuple of outputs (described in `MrisInitGlobalTractographyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_INIT_GLOBAL_TRACTOGRAPHY_METADATA)
     params = mris_init_global_tractography_params(
         subject=subject,
         parcellation=parcellation,
         output_volume=output_volume,
     )
-    return mris_init_global_tractography_execute(params, execution)
+    return mris_init_global_tractography_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "MrisInitGlobalTractographyOutputs",
     "MrisInitGlobalTractographyParameters",
     "mris_init_global_tractography",
-    "mris_init_global_tractography_cargs",
     "mris_init_global_tractography_execute",
-    "mris_init_global_tractography_outputs",
     "mris_init_global_tractography_params",
 ]

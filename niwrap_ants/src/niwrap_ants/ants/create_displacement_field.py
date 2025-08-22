@@ -141,7 +141,7 @@ def create_displacement_field_outputs(
 
 def create_displacement_field_execute(
     params: CreateDisplacementFieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateDisplacementFieldOutputs:
     """
     Create an itkImage of itkVector pixels (NOT an itkVectorImage), using each
@@ -158,10 +158,12 @@ def create_displacement_field_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateDisplacementFieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)
     cargs = create_displacement_field_cargs(params, execution)
     ret = create_displacement_field_outputs(params, execution)
@@ -203,15 +205,13 @@ def create_displacement_field(
     Returns:
         NamedTuple of outputs (described in `CreateDisplacementFieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_DISPLACEMENT_FIELD_METADATA)
     params = create_displacement_field_params(
         image_dimension=image_dimension,
         enforce_zero_boundary_flag=enforce_zero_boundary_flag,
         component_images=component_images,
         output_image=output_image,
     )
-    return create_displacement_field_execute(params, execution)
+    return create_displacement_field_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "CreateDisplacementFieldOutputs",
     "CreateDisplacementFieldParameters",
     "create_displacement_field",
-    "create_displacement_field_cargs",
     "create_displacement_field_execute",
-    "create_displacement_field_outputs",
     "create_displacement_field_params",
 ]

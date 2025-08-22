@@ -181,7 +181,7 @@ def v_1dcat_outputs(
 
 def v_1dcat_execute(
     params: V1dcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dcatOutputs:
     """
     Concatenates columns of multiple 1D or TSV/CSV files.
@@ -192,10 +192,12 @@ def v_1dcat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DCAT_METADATA)
     params = execution.params(params)
     cargs = v_1dcat_cargs(params, execution)
     ret = v_1dcat_outputs(params, execution)
@@ -241,8 +243,6 @@ def v_1dcat(
     Returns:
         NamedTuple of outputs (described in `V1dcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DCAT_METADATA)
     params = v_1dcat_params(
         input_files=input_files,
         tsv_output=tsv_output,
@@ -254,7 +254,7 @@ def v_1dcat(
         column_row_selection=column_row_selection,
         ok_empty=ok_empty,
     )
-    return v_1dcat_execute(params, execution)
+    return v_1dcat_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "V1dcatParameters",
     "V_1DCAT_METADATA",
     "v_1dcat",
-    "v_1dcat_cargs",
     "v_1dcat_execute",
-    "v_1dcat_outputs",
     "v_1dcat_params",
 ]

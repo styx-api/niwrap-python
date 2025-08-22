@@ -162,7 +162,7 @@ def v_3d_wilcoxon_outputs(
 
 def v_3d_wilcoxon_execute(
     params: V3dWilcoxonParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dWilcoxonOutputs:
     """
     Nonparametric Wilcoxon signed-rank test for paired comparisons of two samples.
@@ -173,10 +173,12 @@ def v_3d_wilcoxon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dWilcoxonOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_WILCOXON_METADATA)
     params = execution.params(params)
     cargs = v_3d_wilcoxon_cargs(params, execution)
     ret = v_3d_wilcoxon_outputs(params, execution)
@@ -212,8 +214,6 @@ def v_3d_wilcoxon(
     Returns:
         NamedTuple of outputs (described in `V3dWilcoxonOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_WILCOXON_METADATA)
     params = v_3d_wilcoxon_params(
         workmem=workmem,
         voxel=voxel,
@@ -221,7 +221,7 @@ def v_3d_wilcoxon(
         dset2_y=dset2_y,
         output_prefix=output_prefix,
     )
-    return v_3d_wilcoxon_execute(params, execution)
+    return v_3d_wilcoxon_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "V3dWilcoxonParameters",
     "V_3D_WILCOXON_METADATA",
     "v_3d_wilcoxon",
-    "v_3d_wilcoxon_cargs",
     "v_3d_wilcoxon_execute",
-    "v_3d_wilcoxon_outputs",
     "v_3d_wilcoxon_params",
 ]

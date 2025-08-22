@@ -118,7 +118,7 @@ def reinflate_subject_outputs(
 
 def reinflate_subject_execute(
     params: ReinflateSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReinflateSubjectOutputs:
     """
     Tool for reinflating brain surfaces.
@@ -129,10 +129,12 @@ def reinflate_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReinflateSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REINFLATE_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = reinflate_subject_cargs(params, execution)
     ret = reinflate_subject_outputs(params, execution)
@@ -157,12 +159,10 @@ def reinflate_subject(
     Returns:
         NamedTuple of outputs (described in `ReinflateSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REINFLATE_SUBJECT_METADATA)
     params = reinflate_subject_params(
         args=args,
     )
-    return reinflate_subject_execute(params, execution)
+    return reinflate_subject_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "ReinflateSubjectOutputs",
     "ReinflateSubjectParameters",
     "reinflate_subject",
-    "reinflate_subject_cargs",
     "reinflate_subject_execute",
-    "reinflate_subject_outputs",
     "reinflate_subject_params",
 ]

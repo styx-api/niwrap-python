@@ -148,7 +148,7 @@ def fslsmoothfill_outputs(
 
 def fslsmoothfill_execute(
     params: FslsmoothfillParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslsmoothfillOutputs:
     """
     Smoothfill is a tool designed to fill in holes in images by smoothly
@@ -160,10 +160,12 @@ def fslsmoothfill_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslsmoothfillOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSMOOTHFILL_METADATA)
     params = execution.params(params)
     cargs = fslsmoothfill_cargs(params, execution)
     ret = fslsmoothfill_outputs(params, execution)
@@ -199,8 +201,6 @@ def fslsmoothfill(
     Returns:
         NamedTuple of outputs (described in `FslsmoothfillOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSMOOTHFILL_METADATA)
     params = fslsmoothfill_params(
         input_image=input_image,
         mask_image=mask_image,
@@ -209,7 +209,7 @@ def fslsmoothfill(
         debug_flag=debug_flag,
         verbose_flag=verbose_flag,
     )
-    return fslsmoothfill_execute(params, execution)
+    return fslsmoothfill_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "FslsmoothfillOutputs",
     "FslsmoothfillParameters",
     "fslsmoothfill",
-    "fslsmoothfill_cargs",
     "fslsmoothfill_execute",
-    "fslsmoothfill_outputs",
     "fslsmoothfill_params",
 ]

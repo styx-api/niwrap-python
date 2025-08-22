@@ -130,7 +130,7 @@ def mri_dct_align_binary_outputs(
 
 def mri_dct_align_binary_execute(
     params: MriDctAlignBinaryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriDctAlignBinaryOutputs:
     """
     A binary tool for aligning MRI images using DCT.
@@ -141,10 +141,12 @@ def mri_dct_align_binary_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriDctAlignBinaryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_DCT_ALIGN_BINARY_METADATA)
     params = execution.params(params)
     cargs = mri_dct_align_binary_cargs(params, execution)
     ret = mri_dct_align_binary_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_dct_align_binary(
     Returns:
         NamedTuple of outputs (described in `MriDctAlignBinaryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_DCT_ALIGN_BINARY_METADATA)
     params = mri_dct_align_binary_params(
         source_image=source_image,
         destination_image=destination_image,
         output_transformation=output_transformation,
     )
-    return mri_dct_align_binary_execute(params, execution)
+    return mri_dct_align_binary_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriDctAlignBinaryOutputs",
     "MriDctAlignBinaryParameters",
     "mri_dct_align_binary",
-    "mri_dct_align_binary_cargs",
     "mri_dct_align_binary_execute",
-    "mri_dct_align_binary_outputs",
     "mri_dct_align_binary_params",
 ]

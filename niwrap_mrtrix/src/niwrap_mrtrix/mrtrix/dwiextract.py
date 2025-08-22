@@ -645,7 +645,7 @@ def dwiextract_outputs(
 
 def dwiextract_execute(
     params: DwiextractParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DwiextractOutputs:
     """
     Extract diffusion-weighted volumes, b=0 volumes, or certain shells from a DWI
@@ -663,10 +663,12 @@ def dwiextract_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DwiextractOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWIEXTRACT_METADATA)
     params = execution.params(params)
     cargs = dwiextract_cargs(params, execution)
     ret = dwiextract_outputs(params, execution)
@@ -774,8 +776,6 @@ def dwiextract(
     Returns:
         NamedTuple of outputs (described in `DwiextractOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWIEXTRACT_METADATA)
     params = dwiextract_params(
         bzero=bzero,
         no_bzero=no_bzero,
@@ -800,7 +800,7 @@ def dwiextract(
         input_=input_,
         output=output,
     )
-    return dwiextract_execute(params, execution)
+    return dwiextract_execute(params, runner)
 
 
 __all__ = [
@@ -815,21 +815,12 @@ __all__ = [
     "DwiextractVariousFileParameters",
     "DwiextractVariousStringParameters",
     "dwiextract",
-    "dwiextract_cargs",
-    "dwiextract_config_cargs",
     "dwiextract_config_params",
     "dwiextract_execute",
-    "dwiextract_export_grad_fsl_cargs",
-    "dwiextract_export_grad_fsl_outputs",
     "dwiextract_export_grad_fsl_params",
-    "dwiextract_fslgrad_cargs",
     "dwiextract_fslgrad_params",
-    "dwiextract_import_pe_eddy_cargs",
     "dwiextract_import_pe_eddy_params",
-    "dwiextract_outputs",
     "dwiextract_params",
-    "dwiextract_various_file_cargs",
     "dwiextract_various_file_params",
-    "dwiextract_various_string_cargs",
     "dwiextract_various_string_params",
 ]

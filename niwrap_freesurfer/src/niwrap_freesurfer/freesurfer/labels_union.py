@@ -131,7 +131,7 @@ def labels_union_outputs(
 
 def labels_union_execute(
     params: LabelsUnionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelsUnionOutputs:
     """
     Utility to create the union of two label files.
@@ -142,10 +142,12 @@ def labels_union_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelsUnionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABELS_UNION_METADATA)
     params = execution.params(params)
     cargs = labels_union_cargs(params, execution)
     ret = labels_union_outputs(params, execution)
@@ -175,14 +177,12 @@ def labels_union(
     Returns:
         NamedTuple of outputs (described in `LabelsUnionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABELS_UNION_METADATA)
     params = labels_union_params(
         label1=label1,
         label2=label2,
         outputname=outputname,
     )
-    return labels_union_execute(params, execution)
+    return labels_union_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "LabelsUnionOutputs",
     "LabelsUnionParameters",
     "labels_union",
-    "labels_union_cargs",
     "labels_union_execute",
-    "labels_union_outputs",
     "labels_union_params",
 ]

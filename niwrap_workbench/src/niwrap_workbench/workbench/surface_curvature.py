@@ -145,7 +145,7 @@ def surface_curvature_outputs(
 
 def surface_curvature_execute(
     params: SurfaceCurvatureParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
     Calculate curvature of surface.
@@ -160,10 +160,12 @@ def surface_curvature_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_CURVATURE_METADATA)
     params = execution.params(params)
     cargs = surface_curvature_cargs(params, execution)
     ret = surface_curvature_outputs(params, execution)
@@ -197,14 +199,12 @@ def surface_curvature(
     Returns:
         NamedTuple of outputs (described in `SurfaceCurvatureOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_CURVATURE_METADATA)
     params = surface_curvature_params(
         surface=surface,
         opt_mean_mean_out=opt_mean_mean_out,
         opt_gauss_gauss_out=opt_gauss_gauss_out,
     )
-    return surface_curvature_execute(params, execution)
+    return surface_curvature_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "SurfaceCurvatureOutputs",
     "SurfaceCurvatureParameters",
     "surface_curvature",
-    "surface_curvature_cargs",
     "surface_curvature_execute",
-    "surface_curvature_outputs",
     "surface_curvature_params",
 ]

@@ -358,7 +358,7 @@ def fod2fixel_outputs(
 
 def fod2fixel_execute(
     params: Fod2fixelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fod2fixelOutputs:
     """
     Perform segmentation of continuous Fibre Orientation Distributions (FODs) to
@@ -385,10 +385,12 @@ def fod2fixel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fod2fixelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FOD2FIXEL_METADATA)
     params = execution.params(params)
     cargs = fod2fixel_cargs(params, execution)
     ret = fod2fixel_outputs(params, execution)
@@ -491,8 +493,6 @@ def fod2fixel(
     Returns:
         NamedTuple of outputs (described in `Fod2fixelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FOD2FIXEL_METADATA)
     params = fod2fixel_params(
         afd=afd,
         peak_amp=peak_amp,
@@ -516,7 +516,7 @@ def fod2fixel(
         fod=fod,
         fixel_directory=fixel_directory,
     )
-    return fod2fixel_execute(params, execution)
+    return fod2fixel_execute(params, runner)
 
 
 __all__ = [
@@ -525,10 +525,7 @@ __all__ = [
     "Fod2fixelOutputs",
     "Fod2fixelParameters",
     "fod2fixel",
-    "fod2fixel_cargs",
-    "fod2fixel_config_cargs",
     "fod2fixel_config_params",
     "fod2fixel_execute",
-    "fod2fixel_outputs",
     "fod2fixel_params",
 ]

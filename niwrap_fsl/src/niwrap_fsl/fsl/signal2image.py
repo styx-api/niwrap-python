@@ -223,7 +223,7 @@ def signal2image_outputs(
 
 def signal2image_execute(
     params: Signal2imageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Signal2imageOutputs:
     """
     A tool for converting MR signal data to images using specified k-space
@@ -235,10 +235,12 @@ def signal2image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Signal2imageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIGNAL2IMAGE_METADATA)
     params = execution.params(params)
     cargs = signal2image_cargs(params, execution)
     ret = signal2image_outputs(params, execution)
@@ -289,8 +291,6 @@ def signal2image(
     Returns:
         NamedTuple of outputs (described in `Signal2imageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIGNAL2IMAGE_METADATA)
     params = signal2image_params(
         pulse_sequence=pulse_sequence,
         input_signal=input_signal,
@@ -306,7 +306,7 @@ def signal2image(
         save_flag=save_flag,
         help_flag=help_flag,
     )
-    return signal2image_execute(params, execution)
+    return signal2image_execute(params, runner)
 
 
 __all__ = [
@@ -314,8 +314,6 @@ __all__ = [
     "Signal2imageOutputs",
     "Signal2imageParameters",
     "signal2image",
-    "signal2image_cargs",
     "signal2image_execute",
-    "signal2image_outputs",
     "signal2image_params",
 ]

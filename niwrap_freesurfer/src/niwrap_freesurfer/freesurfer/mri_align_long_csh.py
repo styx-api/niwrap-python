@@ -123,7 +123,7 @@ def mri_align_long_csh_outputs(
 
 def mri_align_long_csh_execute(
     params: MriAlignLongCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAlignLongCshOutputs:
     """
     Aligns all longitudinal norm and aseg files to the base space in FreeSurfer
@@ -135,10 +135,12 @@ def mri_align_long_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAlignLongCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_ALIGN_LONG_CSH_METADATA)
     params = execution.params(params)
     cargs = mri_align_long_csh_cargs(params, execution)
     ret = mri_align_long_csh_outputs(params, execution)
@@ -164,12 +166,10 @@ def mri_align_long_csh(
     Returns:
         NamedTuple of outputs (described in `MriAlignLongCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_ALIGN_LONG_CSH_METADATA)
     params = mri_align_long_csh_params(
         base_id=base_id,
     )
-    return mri_align_long_csh_execute(params, execution)
+    return mri_align_long_csh_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "MriAlignLongCshOutputs",
     "MriAlignLongCshParameters",
     "mri_align_long_csh",
-    "mri_align_long_csh_cargs",
     "mri_align_long_csh_execute",
-    "mri_align_long_csh_outputs",
     "mri_align_long_csh_params",
 ]

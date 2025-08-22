@@ -116,7 +116,7 @@ def morph_subject_outputs(
 
 def morph_subject_execute(
     params: MorphSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphSubjectOutputs:
     """
     A morphological processing tool for Freesurfer subjects. The specific operations
@@ -128,10 +128,12 @@ def morph_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = morph_subject_cargs(params, execution)
     ret = morph_subject_outputs(params, execution)
@@ -157,12 +159,10 @@ def morph_subject(
     Returns:
         NamedTuple of outputs (described in `MorphSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_SUBJECT_METADATA)
     params = morph_subject_params(
         subjid=subjid,
     )
-    return morph_subject_execute(params, execution)
+    return morph_subject_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "MorphSubjectOutputs",
     "MorphSubjectParameters",
     "morph_subject",
-    "morph_subject_cargs",
     "morph_subject_execute",
-    "morph_subject_outputs",
     "morph_subject_params",
 ]

@@ -163,7 +163,7 @@ def adjunct_make_script_and_rst_py_outputs(
 
 def adjunct_make_script_and_rst_py_execute(
     params: AdjunctMakeScriptAndRstPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctMakeScriptAndRstPyOutputs:
     """
     Program to take a script with some special markup and turn it into both an RST
@@ -175,10 +175,12 @@ def adjunct_make_script_and_rst_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctMakeScriptAndRstPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA)
     params = execution.params(params)
     cargs = adjunct_make_script_and_rst_py_cargs(params, execution)
     ret = adjunct_make_script_and_rst_py_outputs(params, execution)
@@ -216,8 +218,6 @@ def adjunct_make_script_and_rst_py(
     Returns:
         NamedTuple of outputs (described in `AdjunctMakeScriptAndRstPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_MAKE_SCRIPT_AND_RST_PY_METADATA)
     params = adjunct_make_script_and_rst_py_params(
         input_script=input_script,
         prefix_rst=prefix_rst,
@@ -225,7 +225,7 @@ def adjunct_make_script_and_rst_py(
         reflink=reflink,
         execute_script=execute_script,
     )
-    return adjunct_make_script_and_rst_py_execute(params, execution)
+    return adjunct_make_script_and_rst_py_execute(params, runner)
 
 
 __all__ = [
@@ -233,8 +233,6 @@ __all__ = [
     "AdjunctMakeScriptAndRstPyOutputs",
     "AdjunctMakeScriptAndRstPyParameters",
     "adjunct_make_script_and_rst_py",
-    "adjunct_make_script_and_rst_py_cargs",
     "adjunct_make_script_and_rst_py_execute",
-    "adjunct_make_script_and_rst_py_outputs",
     "adjunct_make_script_and_rst_py_params",
 ]

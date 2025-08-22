@@ -240,7 +240,7 @@ def bianca_outputs(
 
 def bianca_execute(
     params: BiancaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BiancaOutputs:
     """
     BIANCA: Brain Intensity AbNormality Classification Algorithm.
@@ -251,10 +251,12 @@ def bianca_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BiancaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BIANCA_METADATA)
     params = execution.params(params)
     cargs = bianca_cargs(params, execution)
     ret = bianca_outputs(params, execution)
@@ -324,8 +326,6 @@ def bianca(
     Returns:
         NamedTuple of outputs (described in `BiancaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BIANCA_METADATA)
     params = bianca_params(
         master_file=master_file,
         label_feature_num=label_feature_num,
@@ -345,7 +345,7 @@ def bianca(
         verbose_flag=verbose_flag,
         out_name=out_name,
     )
-    return bianca_execute(params, execution)
+    return bianca_execute(params, runner)
 
 
 __all__ = [
@@ -353,8 +353,6 @@ __all__ = [
     "BiancaOutputs",
     "BiancaParameters",
     "bianca",
-    "bianca_cargs",
     "bianca_execute",
-    "bianca_outputs",
     "bianca_params",
 ]

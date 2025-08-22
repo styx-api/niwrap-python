@@ -378,7 +378,7 @@ def mideface_outputs(
 
 def mideface_execute(
     params: MidefaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MidefaceOutputs:
     """
     Minimally invasive defacing tool.
@@ -389,10 +389,12 @@ def mideface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MidefaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MIDEFACE_METADATA)
     params = execution.params(params)
     cargs = mideface_cargs(params, execution)
     ret = mideface_outputs(params, execution)
@@ -475,8 +477,6 @@ def mideface(
     Returns:
         NamedTuple of outputs (described in `MidefaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MIDEFACE_METADATA)
     params = mideface_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -509,7 +509,7 @@ def mideface(
         check_volume=check_volume,
         check_output_file=check_output_file,
     )
-    return mideface_execute(params, execution)
+    return mideface_execute(params, runner)
 
 
 __all__ = [
@@ -517,8 +517,6 @@ __all__ = [
     "MidefaceOutputs",
     "MidefaceParameters",
     "mideface",
-    "mideface_cargs",
     "mideface_execute",
-    "mideface_outputs",
     "mideface_params",
 ]

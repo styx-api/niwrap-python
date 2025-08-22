@@ -120,7 +120,7 @@ def uniq_images_outputs(
 
 def uniq_images_execute(
     params: UniqImagesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UniqImagesOutputs:
     """
     Simple program to read in a list of image filenames, determine which files have
@@ -133,10 +133,12 @@ def uniq_images_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UniqImagesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNIQ_IMAGES_METADATA)
     params = execution.params(params)
     cargs = uniq_images_cargs(params, execution)
     ret = uniq_images_outputs(params, execution)
@@ -163,12 +165,10 @@ def uniq_images(
     Returns:
         NamedTuple of outputs (described in `UniqImagesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNIQ_IMAGES_METADATA)
     params = uniq_images_params(
         input_files=input_files,
     )
-    return uniq_images_execute(params, execution)
+    return uniq_images_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "UniqImagesOutputs",
     "UniqImagesParameters",
     "uniq_images",
-    "uniq_images_cargs",
     "uniq_images_execute",
-    "uniq_images_outputs",
     "uniq_images_params",
 ]

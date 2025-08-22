@@ -165,7 +165,7 @@ def v_3d_slice_ndice_outputs(
 
 def v_3d_slice_ndice_execute(
     params: V3dSliceNdiceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSliceNdiceOutputs:
     """
     Calculates the Dice coefficient between two volumes on a slice-by-slice basis.
@@ -176,10 +176,12 @@ def v_3d_slice_ndice_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSliceNdiceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SLICE_NDICE_METADATA)
     params = execution.params(params)
     cargs = v_3d_slice_ndice_cargs(params, execution)
     ret = v_3d_slice_ndice_outputs(params, execution)
@@ -214,8 +216,6 @@ def v_3d_slice_ndice(
     Returns:
         NamedTuple of outputs (described in `V3dSliceNdiceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SLICE_NDICE_METADATA)
     params = v_3d_slice_ndice_params(
         infile_a=infile_a,
         infile_b=infile_b,
@@ -223,7 +223,7 @@ def v_3d_slice_ndice(
         out_domain=out_domain,
         no_cmd_echo=no_cmd_echo,
     )
-    return v_3d_slice_ndice_execute(params, execution)
+    return v_3d_slice_ndice_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "V3dSliceNdiceParameters",
     "V_3D_SLICE_NDICE_METADATA",
     "v_3d_slice_ndice",
-    "v_3d_slice_ndice_cargs",
     "v_3d_slice_ndice_execute",
-    "v_3d_slice_ndice_outputs",
     "v_3d_slice_ndice_params",
 ]

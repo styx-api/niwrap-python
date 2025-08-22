@@ -298,7 +298,7 @@ def make_color_map_outputs(
 
 def make_color_map_execute(
     params: MakeColorMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeColorMapOutputs:
     """
     Utility for creating and modifying colormaps with various formats and fiducial
@@ -310,10 +310,12 @@ def make_color_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeColorMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_COLOR_MAP_METADATA)
     params = execution.params(params)
     cargs = make_color_map_cargs(params, execution)
     ret = make_color_map_outputs(params, execution)
@@ -381,8 +383,6 @@ def make_color_map(
     Returns:
         NamedTuple of outputs (described in `MakeColorMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_COLOR_MAP_METADATA)
     params = make_color_map_params(
         fiducials_ncol=fiducials_ncol,
         fiducials=fiducials,
@@ -405,7 +405,7 @@ def make_color_map(
         help_full_flag=help_full_flag,
         flip_map_updside_down=flip_map_updside_down,
     )
-    return make_color_map_execute(params, execution)
+    return make_color_map_execute(params, runner)
 
 
 __all__ = [
@@ -413,8 +413,6 @@ __all__ = [
     "MakeColorMapOutputs",
     "MakeColorMapParameters",
     "make_color_map",
-    "make_color_map_cargs",
     "make_color_map_execute",
-    "make_color_map_outputs",
     "make_color_map_params",
 ]

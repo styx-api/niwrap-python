@@ -140,7 +140,7 @@ def mris_left_right_register_outputs(
 
 def mris_left_right_register_execute(
     params: MrisLeftRightRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisLeftRightRegisterOutputs:
     """
     Register left and right hemisphere spherical surfaces.
@@ -151,10 +151,12 @@ def mris_left_right_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisLeftRightRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_LEFT_RIGHT_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mris_left_right_register_cargs(params, execution)
     ret = mris_left_right_register_outputs(params, execution)
@@ -187,15 +189,13 @@ def mris_left_right_register(
     Returns:
         NamedTuple of outputs (described in `MrisLeftRightRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_LEFT_RIGHT_REGISTER_METADATA)
     params = mris_left_right_register_params(
         lh_sphere=lh_sphere,
         rh_sphere=rh_sphere,
         lh_sphere_left_right=lh_sphere_left_right,
         rh_sphere_left_right=rh_sphere_left_right,
     )
-    return mris_left_right_register_execute(params, execution)
+    return mris_left_right_register_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "MrisLeftRightRegisterOutputs",
     "MrisLeftRightRegisterParameters",
     "mris_left_right_register",
-    "mris_left_right_register_cargs",
     "mris_left_right_register_execute",
-    "mris_left_right_register_outputs",
     "mris_left_right_register_params",
 ]

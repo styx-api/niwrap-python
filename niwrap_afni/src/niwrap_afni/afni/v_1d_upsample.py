@@ -132,7 +132,7 @@ def v_1d_upsample_outputs(
 
 def v_1d_upsample_execute(
     params: V1dUpsampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dUpsampleOutputs:
     """
     Upsamples a 1D time series to a finer time grid.
@@ -143,10 +143,12 @@ def v_1d_upsample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dUpsampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_UPSAMPLE_METADATA)
     params = execution.params(params)
     cargs = v_1d_upsample_cargs(params, execution)
     ret = v_1d_upsample_outputs(params, execution)
@@ -176,14 +178,12 @@ def v_1d_upsample(
     Returns:
         NamedTuple of outputs (described in `V1dUpsampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_UPSAMPLE_METADATA)
     params = v_1d_upsample_params(
         upsample_factor=upsample_factor,
         input_file=input_file,
         linear_interpolation=linear_interpolation,
     )
-    return v_1d_upsample_execute(params, execution)
+    return v_1d_upsample_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "V1dUpsampleParameters",
     "V_1D_UPSAMPLE_METADATA",
     "v_1d_upsample",
-    "v_1d_upsample_cargs",
     "v_1d_upsample_execute",
-    "v_1d_upsample_outputs",
     "v_1d_upsample_params",
 ]

@@ -155,7 +155,7 @@ def mris_defects_pointset_outputs(
 
 def mris_defects_pointset_execute(
     params: MrisDefectsPointsetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisDefectsPointsetOutputs:
     """
     Produces a pointset file containing the locations of each topological defect in
@@ -167,10 +167,12 @@ def mris_defects_pointset_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDefectsPointsetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_DEFECTS_POINTSET_METADATA)
     params = execution.params(params)
     cargs = mris_defects_pointset_cargs(params, execution)
     ret = mris_defects_pointset_outputs(params, execution)
@@ -204,8 +206,6 @@ def mris_defects_pointset(
     Returns:
         NamedTuple of outputs (described in `MrisDefectsPointsetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_DEFECTS_POINTSET_METADATA)
     params = mris_defects_pointset_params(
         surface=surface,
         defects=defects,
@@ -213,7 +213,7 @@ def mris_defects_pointset(
         label=label,
         control=control,
     )
-    return mris_defects_pointset_execute(params, execution)
+    return mris_defects_pointset_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "MrisDefectsPointsetOutputs",
     "MrisDefectsPointsetParameters",
     "mris_defects_pointset",
-    "mris_defects_pointset_cargs",
     "mris_defects_pointset_execute",
-    "mris_defects_pointset_outputs",
     "mris_defects_pointset_params",
 ]

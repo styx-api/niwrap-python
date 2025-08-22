@@ -256,7 +256,7 @@ def build_afni_py_outputs(
 
 def build_afni_py_execute(
     params: BuildAfniPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BuildAfniPyOutputs:
     """
     Compile an AFNI package from the git repository.
@@ -267,10 +267,12 @@ def build_afni_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BuildAfniPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BUILD_AFNI_PY_METADATA)
     params = execution.params(params)
     cargs = build_afni_py_cargs(params, execution)
     ret = build_afni_py_outputs(params, execution)
@@ -325,8 +327,6 @@ def build_afni_py(
     Returns:
         NamedTuple of outputs (described in `BuildAfniPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BUILD_AFNI_PY_METADATA)
     params = build_afni_py_params(
         build_root=build_root,
         clean_root=clean_root,
@@ -345,7 +345,7 @@ def build_afni_py(
         show_valid_opts=show_valid_opts,
         version=version,
     )
-    return build_afni_py_execute(params, execution)
+    return build_afni_py_execute(params, runner)
 
 
 __all__ = [
@@ -353,8 +353,6 @@ __all__ = [
     "BuildAfniPyOutputs",
     "BuildAfniPyParameters",
     "build_afni_py",
-    "build_afni_py_cargs",
     "build_afni_py_execute",
-    "build_afni_py_outputs",
     "build_afni_py_params",
 ]

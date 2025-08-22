@@ -145,7 +145,7 @@ def setlabelstat_outputs(
 
 def setlabelstat_execute(
     params: SetlabelstatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SetlabelstatOutputs:
     """
     Replaces the stat values in a label file with the single stat value supplied on
@@ -157,10 +157,12 @@ def setlabelstat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetlabelstatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SETLABELSTAT_METADATA)
     params = execution.params(params)
     cargs = setlabelstat_cargs(params, execution)
     ret = setlabelstat_outputs(params, execution)
@@ -192,15 +194,13 @@ def setlabelstat(
     Returns:
         NamedTuple of outputs (described in `SetlabelstatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SETLABELSTAT_METADATA)
     params = setlabelstat_params(
         inlabelfile=inlabelfile,
         outlabelfile=outlabelfile,
         statval=statval,
         help_=help_,
     )
-    return setlabelstat_execute(params, execution)
+    return setlabelstat_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "SetlabelstatOutputs",
     "SetlabelstatParameters",
     "setlabelstat",
-    "setlabelstat_cargs",
     "setlabelstat_execute",
-    "setlabelstat_outputs",
     "setlabelstat_params",
 ]

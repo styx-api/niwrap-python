@@ -147,7 +147,7 @@ def slicedelay_outputs(
 
 def slicedelay_execute(
     params: SlicedelayParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SlicedelayOutputs:
     """
     Creates an FSL custom slice delay file for use with slicetimer for slice-time
@@ -159,10 +159,12 @@ def slicedelay_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SlicedelayOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICEDELAY_METADATA)
     params = execution.params(params)
     cargs = slicedelay_cargs(params, execution)
     ret = slicedelay_outputs(params, execution)
@@ -194,15 +196,13 @@ def slicedelay(
     Returns:
         NamedTuple of outputs (described in `SlicedelayOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICEDELAY_METADATA)
     params = slicedelay_params(
         slicedelayfile=slicedelayfile,
         nslices=nslices,
         order=order,
         ngroups=ngroups,
     )
-    return slicedelay_execute(params, execution)
+    return slicedelay_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "SlicedelayOutputs",
     "SlicedelayParameters",
     "slicedelay",
-    "slicedelay_cargs",
     "slicedelay_execute",
-    "slicedelay_outputs",
     "slicedelay_params",
 ]

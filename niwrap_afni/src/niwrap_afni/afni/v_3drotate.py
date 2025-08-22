@@ -334,7 +334,7 @@ def v_3drotate_outputs(
 
 def v_3drotate_execute(
     params: V3drotateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3drotateOutputs:
     """
     Rotates and/or translates all bricks from an AFNI dataset.
@@ -345,10 +345,12 @@ def v_3drotate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3drotateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DROTATE_METADATA)
     params = execution.params(params)
     cargs = v_3drotate_cargs(params, execution)
     ret = v_3drotate_outputs(params, execution)
@@ -436,8 +438,6 @@ def v_3drotate(
     Returns:
         NamedTuple of outputs (described in `V3drotateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DROTATE_METADATA)
     params = v_3drotate_params(
         dataset=dataset,
         prefix=prefix,
@@ -465,7 +465,7 @@ def v_3drotate(
         noclip=noclip,
         zpad=zpad,
     )
-    return v_3drotate_execute(params, execution)
+    return v_3drotate_execute(params, runner)
 
 
 __all__ = [
@@ -473,8 +473,6 @@ __all__ = [
     "V3drotateParameters",
     "V_3DROTATE_METADATA",
     "v_3drotate",
-    "v_3drotate_cargs",
     "v_3drotate_execute",
-    "v_3drotate_outputs",
     "v_3drotate_params",
 ]

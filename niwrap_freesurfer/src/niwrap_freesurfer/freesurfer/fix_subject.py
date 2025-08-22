@@ -119,7 +119,7 @@ def fix_subject_outputs(
 
 def fix_subject_execute(
     params: FixSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixSubjectOutputs:
     """
     Tool to fix subjects in FreeSurfer, encountered errors due to incorrect path
@@ -131,10 +131,12 @@ def fix_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIX_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = fix_subject_cargs(params, execution)
     ret = fix_subject_outputs(params, execution)
@@ -161,12 +163,10 @@ def fix_subject(
     Returns:
         NamedTuple of outputs (described in `FixSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIX_SUBJECT_METADATA)
     params = fix_subject_params(
         arguments=arguments,
     )
-    return fix_subject_execute(params, execution)
+    return fix_subject_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "FixSubjectOutputs",
     "FixSubjectParameters",
     "fix_subject",
-    "fix_subject_cargs",
     "fix_subject_execute",
-    "fix_subject_outputs",
     "fix_subject_params",
 ]

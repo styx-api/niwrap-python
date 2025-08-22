@@ -193,7 +193,7 @@ def v__roi_corr_mat_outputs(
 
 def v__roi_corr_mat_execute(
     params: VRoiCorrMatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VRoiCorrMatOutputs:
     """
     Script to produce an NxN ROI correlation matrix of N ROIs.
@@ -204,10 +204,12 @@ def v__roi_corr_mat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VRoiCorrMatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ROI_CORR_MAT_METADATA)
     params = execution.params(params)
     cargs = v__roi_corr_mat_cargs(params, execution)
     ret = v__roi_corr_mat_outputs(params, execution)
@@ -251,8 +253,6 @@ def v__roi_corr_mat(
     Returns:
         NamedTuple of outputs (described in `VRoiCorrMatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ROI_CORR_MAT_METADATA)
     params = v__roi_corr_mat_params(
         ts_vol=ts_vol,
         roi_vol=roi_vol,
@@ -265,7 +265,7 @@ def v__roi_corr_mat(
         echo=echo,
         verb=verb,
     )
-    return v__roi_corr_mat_execute(params, execution)
+    return v__roi_corr_mat_execute(params, runner)
 
 
 __all__ = [
@@ -273,8 +273,6 @@ __all__ = [
     "VRoiCorrMatParameters",
     "V__ROI_CORR_MAT_METADATA",
     "v__roi_corr_mat",
-    "v__roi_corr_mat_cargs",
     "v__roi_corr_mat_execute",
-    "v__roi_corr_mat_outputs",
     "v__roi_corr_mat_params",
 ]

@@ -130,7 +130,7 @@ def morph_tables_lh_outputs(
 
 def morph_tables_lh_execute(
     params: MorphTablesLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphTablesLhOutputs:
     """
     Morphological analysis tool for left hemisphere in Freesurfer.
@@ -141,10 +141,12 @@ def morph_tables_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphTablesLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_TABLES_LH_METADATA)
     params = execution.params(params)
     cargs = morph_tables_lh_cargs(params, execution)
     ret = morph_tables_lh_outputs(params, execution)
@@ -172,13 +174,11 @@ def morph_tables_lh(
     Returns:
         NamedTuple of outputs (described in `MorphTablesLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_TABLES_LH_METADATA)
     params = morph_tables_lh_params(
         input_file=input_file,
         some_flag=some_flag,
     )
-    return morph_tables_lh_execute(params, execution)
+    return morph_tables_lh_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "MorphTablesLhOutputs",
     "MorphTablesLhParameters",
     "morph_tables_lh",
-    "morph_tables_lh_cargs",
     "morph_tables_lh_execute",
-    "morph_tables_lh_outputs",
     "morph_tables_lh_params",
 ]

@@ -233,7 +233,7 @@ def maskdump_outputs(
 
 def maskdump_execute(
     params: MaskdumpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MaskdumpOutputs:
     """
     Print out the locations of all non-zero voxels in a mask image.
@@ -251,10 +251,12 @@ def maskdump_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MaskdumpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MASKDUMP_METADATA)
     params = execution.params(params)
     cargs = maskdump_cargs(params, execution)
     ret = maskdump_outputs(params, execution)
@@ -308,8 +310,6 @@ def maskdump(
     Returns:
         NamedTuple of outputs (described in `MaskdumpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MASKDUMP_METADATA)
     params = maskdump_params(
         info=info,
         quiet=quiet,
@@ -322,7 +322,7 @@ def maskdump(
         input_=input_,
         output=output,
     )
-    return maskdump_execute(params, execution)
+    return maskdump_execute(params, runner)
 
 
 __all__ = [
@@ -331,10 +331,7 @@ __all__ = [
     "MaskdumpOutputs",
     "MaskdumpParameters",
     "maskdump",
-    "maskdump_cargs",
-    "maskdump_config_cargs",
     "maskdump_config_params",
     "maskdump_execute",
-    "maskdump_outputs",
     "maskdump_params",
 ]

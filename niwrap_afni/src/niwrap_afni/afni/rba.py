@@ -370,7 +370,7 @@ def rba_outputs(
 
 def rba_execute(
     params: RbaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RbaOutputs:
     """
     Region-Based Analysis Program through Bayesian Multilevel Modeling.
@@ -381,10 +381,12 @@ def rba_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RbaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RBA_METADATA)
     params = execution.params(params)
     cargs = rba_cargs(params, execution)
     ret = rba_outputs(params, execution)
@@ -466,8 +468,6 @@ def rba(
     Returns:
         NamedTuple of outputs (described in `RbaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RBA_METADATA)
     params = rba_params(
         prefix=prefix,
         data_table=data_table,
@@ -496,7 +496,7 @@ def rba(
         md=md,
         r2z=r2z,
     )
-    return rba_execute(params, execution)
+    return rba_execute(params, runner)
 
 
 __all__ = [
@@ -504,8 +504,6 @@ __all__ = [
     "RbaOutputs",
     "RbaParameters",
     "rba",
-    "rba_cargs",
     "rba_execute",
-    "rba_outputs",
     "rba_params",
 ]

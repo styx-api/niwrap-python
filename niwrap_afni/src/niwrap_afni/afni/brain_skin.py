@@ -271,7 +271,7 @@ def brain_skin_outputs(
 
 def brain_skin_execute(
     params: BrainSkinParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BrainSkinOutputs:
     """
     A program to create an unfolded surface that wraps the brain (skin) and
@@ -283,10 +283,12 @@ def brain_skin_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BrainSkinOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BRAIN_SKIN_METADATA)
     params = execution.params(params)
     cargs = brain_skin_cargs(params, execution)
     ret = brain_skin_outputs(params, execution)
@@ -344,8 +346,6 @@ def brain_skin(
     Returns:
         NamedTuple of outputs (described in `BrainSkinOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BRAIN_SKIN_METADATA)
     params = brain_skin_params(
         surface=surface,
         skingrid_volume=skingrid_volume,
@@ -361,7 +361,7 @@ def brain_skin(
         no_zero_attraction=no_zero_attraction,
         node_dbg=node_dbg,
     )
-    return brain_skin_execute(params, execution)
+    return brain_skin_execute(params, runner)
 
 
 __all__ = [
@@ -369,8 +369,6 @@ __all__ = [
     "BrainSkinOutputs",
     "BrainSkinParameters",
     "brain_skin",
-    "brain_skin_cargs",
     "brain_skin_execute",
-    "brain_skin_outputs",
     "brain_skin_params",
 ]

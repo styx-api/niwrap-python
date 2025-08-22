@@ -291,7 +291,7 @@ def mri_mask_outputs(
 
 def mri_mask_execute(
     params: MriMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMaskOutputs:
     """
     Applies a mask volume (typically skull stripped).
@@ -302,10 +302,12 @@ def mri_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MASK_METADATA)
     params = execution.params(params)
     cargs = mri_mask_cargs(params, execution)
     ret = mri_mask_outputs(params, execution)
@@ -383,8 +385,6 @@ def mri_mask(
     Returns:
         NamedTuple of outputs (described in `MriMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MASK_METADATA)
     params = mri_mask_params(
         input_volume=input_volume,
         mask_volume=mask_volume,
@@ -408,7 +408,7 @@ def mri_mask(
         keep_mask_deletion_edits=keep_mask_deletion_edits,
         samseg=samseg,
     )
-    return mri_mask_execute(params, execution)
+    return mri_mask_execute(params, runner)
 
 
 __all__ = [
@@ -416,8 +416,6 @@ __all__ = [
     "MriMaskOutputs",
     "MriMaskParameters",
     "mri_mask",
-    "mri_mask_cargs",
     "mri_mask_execute",
-    "mri_mask_outputs",
     "mri_mask_params",
 ]

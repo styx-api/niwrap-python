@@ -209,7 +209,7 @@ def gen_epi_review_py_outputs(
 
 def gen_epi_review_py_execute(
     params: GenEpiReviewPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GenEpiReviewPyOutputs:
     """
     Generate an AFNI processing script to review EPI data.
@@ -220,10 +220,12 @@ def gen_epi_review_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GenEpiReviewPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GEN_EPI_REVIEW_PY_METADATA)
     params = execution.params(params)
     cargs = gen_epi_review_py_cargs(params, execution)
     ret = gen_epi_review_py_outputs(params, execution)
@@ -266,8 +268,6 @@ def gen_epi_review_py(
     Returns:
         NamedTuple of outputs (described in `GenEpiReviewPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GEN_EPI_REVIEW_PY_METADATA)
     params = gen_epi_review_py_params(
         datasets=datasets,
         script_name=script_name,
@@ -280,7 +280,7 @@ def gen_epi_review_py(
         graph_xoffset=graph_xoffset,
         graph_yoffset=graph_yoffset,
     )
-    return gen_epi_review_py_execute(params, execution)
+    return gen_epi_review_py_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "GenEpiReviewPyOutputs",
     "GenEpiReviewPyParameters",
     "gen_epi_review_py",
-    "gen_epi_review_py_cargs",
     "gen_epi_review_py_execute",
-    "gen_epi_review_py_outputs",
     "gen_epi_review_py_params",
 ]

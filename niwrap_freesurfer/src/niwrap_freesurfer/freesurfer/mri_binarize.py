@@ -399,7 +399,7 @@ def mri_binarize_outputs(
 
 def mri_binarize_execute(
     params: MriBinarizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriBinarizeOutputs:
     """
     A program to binarize a volume or volume-encoded surface file, with options to
@@ -411,10 +411,12 @@ def mri_binarize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriBinarizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_BINARIZE_METADATA)
     params = execution.params(params)
     cargs = mri_binarize_cargs(params, execution)
     ret = mri_binarize_outputs(params, execution)
@@ -510,8 +512,6 @@ def mri_binarize(
     Returns:
         NamedTuple of outputs (described in `MriBinarizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_BINARIZE_METADATA)
     params = mri_binarize_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -548,7 +548,7 @@ def mri_binarize(
         noverbose_flag=noverbose_flag,
         debug_flag=debug_flag,
     )
-    return mri_binarize_execute(params, execution)
+    return mri_binarize_execute(params, runner)
 
 
 __all__ = [
@@ -556,8 +556,6 @@ __all__ = [
     "MriBinarizeOutputs",
     "MriBinarizeParameters",
     "mri_binarize",
-    "mri_binarize_cargs",
     "mri_binarize_execute",
-    "mri_binarize_outputs",
     "mri_binarize_params",
 ]

@@ -122,7 +122,7 @@ def fs_tutorial_data_outputs(
 
 def fs_tutorial_data_execute(
     params: FsTutorialDataParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsTutorialDataOutputs:
     """
     Tool to download and install FreeSurfer tutorial data.
@@ -133,10 +133,12 @@ def fs_tutorial_data_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsTutorialDataOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_TUTORIAL_DATA_METADATA)
     params = execution.params(params)
     cargs = fs_tutorial_data_cargs(params, execution)
     ret = fs_tutorial_data_outputs(params, execution)
@@ -161,12 +163,10 @@ def fs_tutorial_data(
     Returns:
         NamedTuple of outputs (described in `FsTutorialDataOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_TUTORIAL_DATA_METADATA)
     params = fs_tutorial_data_params(
         rsync_options=rsync_options,
     )
-    return fs_tutorial_data_execute(params, execution)
+    return fs_tutorial_data_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "FsTutorialDataOutputs",
     "FsTutorialDataParameters",
     "fs_tutorial_data",
-    "fs_tutorial_data_cargs",
     "fs_tutorial_data_execute",
-    "fs_tutorial_data_outputs",
     "fs_tutorial_data_params",
 ]

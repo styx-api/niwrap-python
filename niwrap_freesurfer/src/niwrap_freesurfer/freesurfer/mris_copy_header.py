@@ -131,7 +131,7 @@ def mris_copy_header_outputs(
 
 def mris_copy_header_execute(
     params: MrisCopyHeaderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisCopyHeaderOutputs:
     """
     Tool to copy the header from a template surface to an input surface and save as
@@ -143,10 +143,12 @@ def mris_copy_header_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisCopyHeaderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_COPY_HEADER_METADATA)
     params = execution.params(params)
     cargs = mris_copy_header_cargs(params, execution)
     ret = mris_copy_header_outputs(params, execution)
@@ -177,14 +179,12 @@ def mris_copy_header(
     Returns:
         NamedTuple of outputs (described in `MrisCopyHeaderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_COPY_HEADER_METADATA)
     params = mris_copy_header_params(
         input_surface=input_surface,
         template_surface=template_surface,
         output_surface=output_surface,
     )
-    return mris_copy_header_execute(params, execution)
+    return mris_copy_header_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "MrisCopyHeaderOutputs",
     "MrisCopyHeaderParameters",
     "mris_copy_header",
-    "mris_copy_header_cargs",
     "mris_copy_header_execute",
-    "mris_copy_header_outputs",
     "mris_copy_header_params",
 ]

@@ -145,7 +145,7 @@ def mris_compute_acorr_outputs(
 
 def mris_compute_acorr_execute(
     params: MrisComputeAcorrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisComputeAcorrOutputs:
     """
     Compute the autocorrelation function of a curvature file on a spherical surface.
@@ -156,10 +156,12 @@ def mris_compute_acorr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisComputeAcorrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_COMPUTE_ACORR_METADATA)
     params = execution.params(params)
     cargs = mris_compute_acorr_cargs(params, execution)
     ret = mris_compute_acorr_outputs(params, execution)
@@ -195,8 +197,6 @@ def mris_compute_acorr(
     Returns:
         NamedTuple of outputs (described in `MrisComputeAcorrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_COMPUTE_ACORR_METADATA)
     params = mris_compute_acorr_params(
         output_subject=output_subject,
         hemi=hemi,
@@ -205,7 +205,7 @@ def mris_compute_acorr(
         c1_subjects=c1_subjects,
         c2_subjects=c2_subjects,
     )
-    return mris_compute_acorr_execute(params, execution)
+    return mris_compute_acorr_execute(params, runner)
 
 
 __all__ = [
@@ -213,8 +213,6 @@ __all__ = [
     "MrisComputeAcorrOutputs",
     "MrisComputeAcorrParameters",
     "mris_compute_acorr",
-    "mris_compute_acorr_cargs",
     "mris_compute_acorr_execute",
-    "mris_compute_acorr_outputs",
     "mris_compute_acorr_params",
 ]

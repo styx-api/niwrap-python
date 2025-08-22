@@ -413,7 +413,7 @@ def tckconvert_outputs(
 
 def tckconvert_execute(
     params: TckconvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckconvertOutputs:
     """
     Convert between different track file formats.
@@ -442,10 +442,12 @@ def tckconvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckconvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKCONVERT_METADATA)
     params = execution.params(params)
     cargs = tckconvert_cargs(params, execution)
     ret = tckconvert_outputs(params, execution)
@@ -538,8 +540,6 @@ def tckconvert(
     Returns:
         NamedTuple of outputs (described in `TckconvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKCONVERT_METADATA)
     params = tckconvert_params(
         scanner2voxel=scanner2voxel,
         scanner2image=scanner2image,
@@ -562,7 +562,7 @@ def tckconvert(
         input_=input_,
         output=output,
     )
-    return tckconvert_execute(params, execution)
+    return tckconvert_execute(params, runner)
 
 
 __all__ = [
@@ -573,14 +573,9 @@ __all__ = [
     "TckconvertVariousFileParameters",
     "TckconvertVariousStringParameters",
     "tckconvert",
-    "tckconvert_cargs",
-    "tckconvert_config_cargs",
     "tckconvert_config_params",
     "tckconvert_execute",
-    "tckconvert_outputs",
     "tckconvert_params",
-    "tckconvert_various_file_cargs",
     "tckconvert_various_file_params",
-    "tckconvert_various_string_cargs",
     "tckconvert_various_string_params",
 ]

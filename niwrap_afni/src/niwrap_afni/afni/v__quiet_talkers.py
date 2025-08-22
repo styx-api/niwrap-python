@@ -177,7 +177,7 @@ def v__quiet_talkers_outputs(
 
 def v__quiet_talkers_execute(
     params: VQuietTalkersParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VQuietTalkersOutputs:
     """
     A script to find and kill AFNI processes.
@@ -188,10 +188,12 @@ def v__quiet_talkers_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VQuietTalkersOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__QUIET_TALKERS_METADATA)
     params = execution.params(params)
     cargs = v__quiet_talkers_cargs(params, execution)
     ret = v__quiet_talkers_outputs(params, execution)
@@ -232,8 +234,6 @@ def v__quiet_talkers(
     Returns:
         NamedTuple of outputs (described in `VQuietTalkersOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__QUIET_TALKERS_METADATA)
     params = v__quiet_talkers_params(
         sudo=sudo,
         prog=prog,
@@ -244,7 +244,7 @@ def v__quiet_talkers(
         list_=list_,
         quiet=quiet,
     )
-    return v__quiet_talkers_execute(params, execution)
+    return v__quiet_talkers_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "VQuietTalkersParameters",
     "V__QUIET_TALKERS_METADATA",
     "v__quiet_talkers",
-    "v__quiet_talkers_cargs",
     "v__quiet_talkers_execute",
-    "v__quiet_talkers_outputs",
     "v__quiet_talkers_params",
 ]

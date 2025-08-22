@@ -178,7 +178,7 @@ def gps_outputs(
 
 def gps_execute(
     params: GpsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GpsOutputs:
     """
     Generate set of diffusion gradient directions.
@@ -189,10 +189,12 @@ def gps_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GpsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GPS_METADATA)
     params = execution.params(params)
     cargs = gps_cargs(params, execution)
     ret = gps_outputs(params, execution)
@@ -232,8 +234,6 @@ def gps(
     Returns:
         NamedTuple of outputs (described in `GpsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GPS_METADATA)
     params = gps_params(
         ndir=ndir,
         optws=optws,
@@ -244,7 +244,7 @@ def gps(
         verbose=verbose,
         help_=help_,
     )
-    return gps_execute(params, execution)
+    return gps_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "GpsOutputs",
     "GpsParameters",
     "gps",
-    "gps_cargs",
     "gps_execute",
-    "gps_outputs",
     "gps_params",
 ]

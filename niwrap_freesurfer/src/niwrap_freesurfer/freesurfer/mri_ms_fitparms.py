@@ -411,7 +411,7 @@ def mri_ms_fitparms_outputs(
 
 def mri_ms_fitparms_execute(
     params: MriMsFitparmsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMsFitparmsOutputs:
     """
     Tool for estimating T1 and PD values from FLASH images and applying
@@ -423,10 +423,12 @@ def mri_ms_fitparms_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMsFitparmsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MS_FITPARMS_METADATA)
     params = execution.params(params)
     cargs = mri_ms_fitparms_cargs(params, execution)
     ret = mri_ms_fitparms_outputs(params, execution)
@@ -525,8 +527,6 @@ def mri_ms_fitparms(
     Returns:
         NamedTuple of outputs (described in `MriMsFitparmsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MS_FITPARMS_METADATA)
     params = mri_ms_fitparms_params(
         volumes=volumes,
         output_dir=output_dir,
@@ -565,7 +565,7 @@ def mri_ms_fitparms(
         extract_subimage=extract_subimage,
         window_flag=window_flag,
     )
-    return mri_ms_fitparms_execute(params, execution)
+    return mri_ms_fitparms_execute(params, runner)
 
 
 __all__ = [
@@ -573,8 +573,6 @@ __all__ = [
     "MriMsFitparmsOutputs",
     "MriMsFitparmsParameters",
     "mri_ms_fitparms",
-    "mri_ms_fitparms_cargs",
     "mri_ms_fitparms_execute",
-    "mri_ms_fitparms_outputs",
     "mri_ms_fitparms_params",
 ]

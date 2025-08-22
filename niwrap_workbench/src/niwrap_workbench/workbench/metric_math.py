@@ -209,7 +209,7 @@ def metric_math_outputs(
 
 def metric_math_execute(
     params: MetricMathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
     Evaluate expression on metric files.
@@ -290,10 +290,12 @@ def metric_math_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricMathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_MATH_METADATA)
     params = execution.params(params)
     cargs = metric_math_cargs(params, execution)
     ret = metric_math_outputs(params, execution)
@@ -395,15 +397,13 @@ def metric_math(
     Returns:
         NamedTuple of outputs (described in `MetricMathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_MATH_METADATA)
     params = metric_math_params(
         expression=expression,
         metric_out=metric_out,
         opt_fixnan_replace=opt_fixnan_replace,
         var=var,
     )
-    return metric_math_execute(params, execution)
+    return metric_math_execute(params, runner)
 
 
 __all__ = [
@@ -412,10 +412,7 @@ __all__ = [
     "MetricMathParameters",
     "MetricMathVarParameters",
     "metric_math",
-    "metric_math_cargs",
     "metric_math_execute",
-    "metric_math_outputs",
     "metric_math_params",
-    "metric_math_var_cargs",
     "metric_math_var_params",
 ]

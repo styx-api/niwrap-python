@@ -173,7 +173,7 @@ def v_3daxialize_outputs(
 
 def v_3daxialize_execute(
     params: V3daxializeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3daxializeOutputs:
     """
     Read and write dataset as new dataset with data brick oriented as axial slices.
@@ -184,10 +184,12 @@ def v_3daxialize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3daxializeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DAXIALIZE_METADATA)
     params = execution.params(params)
     cargs = v_3daxialize_cargs(params, execution)
     ret = v_3daxialize_outputs(params, execution)
@@ -229,8 +231,6 @@ def v_3daxialize(
     Returns:
         NamedTuple of outputs (described in `V3daxializeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DAXIALIZE_METADATA)
     params = v_3daxialize_params(
         infile=infile,
         prefix=prefix,
@@ -241,7 +241,7 @@ def v_3daxialize(
         orient_code=orient_code,
         frugal=frugal,
     )
-    return v_3daxialize_execute(params, execution)
+    return v_3daxialize_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "V3daxializeParameters",
     "V_3DAXIALIZE_METADATA",
     "v_3daxialize",
-    "v_3daxialize_cargs",
     "v_3daxialize_execute",
-    "v_3daxialize_outputs",
     "v_3daxialize_params",
 ]

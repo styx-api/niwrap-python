@@ -151,7 +151,7 @@ def mri_xvolavg_outputs(
 
 def mri_xvolavg_execute(
     params: MriXvolavgParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriXvolavgOutputs:
     """
     Tool to average multiple volumes together (including 4D volumes).
@@ -162,10 +162,12 @@ def mri_xvolavg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriXvolavgOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_XVOLAVG_METADATA)
     params = execution.params(params)
     cargs = mri_xvolavg_cargs(params, execution)
     ret = mri_xvolavg_outputs(params, execution)
@@ -198,15 +200,13 @@ def mri_xvolavg(
     Returns:
         NamedTuple of outputs (described in `MriXvolavgOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_XVOLAVG_METADATA)
     params = mri_xvolavg_params(
         input_volumes=input_volumes,
         vol_type=vol_type,
         output_volume=output_volume,
         output_type=output_type,
     )
-    return mri_xvolavg_execute(params, execution)
+    return mri_xvolavg_execute(params, runner)
 
 
 __all__ = [
@@ -214,8 +214,6 @@ __all__ = [
     "MriXvolavgOutputs",
     "MriXvolavgParameters",
     "mri_xvolavg",
-    "mri_xvolavg_cargs",
     "mri_xvolavg_execute",
-    "mri_xvolavg_outputs",
     "mri_xvolavg_params",
 ]

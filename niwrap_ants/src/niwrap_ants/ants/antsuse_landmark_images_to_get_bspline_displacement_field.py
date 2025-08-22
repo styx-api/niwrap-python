@@ -167,7 +167,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_outputs(
 
 def antsuse_landmark_images_to_get_bspline_displacement_field_execute(
     params: AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs:
     """
     We expect the input images to be (1) N-ary (2) in the same physical space as the
@@ -184,10 +184,12 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA)
     params = execution.params(params)
     cargs = antsuse_landmark_images_to_get_bspline_displacement_field_cargs(params, execution)
     ret = antsuse_landmark_images_to_get_bspline_displacement_field_outputs(params, execution)
@@ -238,8 +240,6 @@ def antsuse_landmark_images_to_get_bspline_displacement_field(
     Returns:
         NamedTuple of outputs (described in `AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA)
     params = antsuse_landmark_images_to_get_bspline_displacement_field_params(
         fixed_image_with_labeled_landmarks=fixed_image_with_labeled_landmarks,
         moving_image_with_labeled_landmarks=moving_image_with_labeled_landmarks,
@@ -250,7 +250,7 @@ def antsuse_landmark_images_to_get_bspline_displacement_field(
         enforce_stationary_boundaries=enforce_stationary_boundaries,
         landmark_weights=landmark_weights,
     )
-    return antsuse_landmark_images_to_get_bspline_displacement_field_execute(params, execution)
+    return antsuse_landmark_images_to_get_bspline_displacement_field_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs",
     "AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters",
     "antsuse_landmark_images_to_get_bspline_displacement_field",
-    "antsuse_landmark_images_to_get_bspline_displacement_field_cargs",
     "antsuse_landmark_images_to_get_bspline_displacement_field_execute",
-    "antsuse_landmark_images_to_get_bspline_displacement_field_outputs",
     "antsuse_landmark_images_to_get_bspline_displacement_field_params",
 ]

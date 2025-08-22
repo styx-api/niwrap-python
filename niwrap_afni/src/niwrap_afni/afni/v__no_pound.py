@@ -117,7 +117,7 @@ def v__no_pound_outputs(
 
 def v__no_pound_execute(
     params: VNoPoundParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VNoPoundOutputs:
     """
     Replaces all # characters in AFNI filenames with a -.
@@ -128,10 +128,12 @@ def v__no_pound_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VNoPoundOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__NO_POUND_METADATA)
     params = execution.params(params)
     cargs = v__no_pound_cargs(params, execution)
     ret = v__no_pound_outputs(params, execution)
@@ -157,12 +159,10 @@ def v__no_pound(
     Returns:
         NamedTuple of outputs (described in `VNoPoundOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__NO_POUND_METADATA)
     params = v__no_pound_params(
         afni_files=afni_files,
     )
-    return v__no_pound_execute(params, execution)
+    return v__no_pound_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "VNoPoundParameters",
     "V__NO_POUND_METADATA",
     "v__no_pound",
-    "v__no_pound_cargs",
     "v__no_pound_execute",
-    "v__no_pound_outputs",
     "v__no_pound_params",
 ]

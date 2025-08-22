@@ -123,7 +123,7 @@ def fix_subject_corrected_rh_outputs(
 
 def fix_subject_corrected_rh_execute(
     params: FixSubjectCorrectedRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixSubjectCorrectedRhOutputs:
     """
     A tool related to FreeSurfer subject correction.
@@ -134,10 +134,12 @@ def fix_subject_corrected_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixSubjectCorrectedRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIX_SUBJECT_CORRECTED_RH_METADATA)
     params = execution.params(params)
     cargs = fix_subject_corrected_rh_cargs(params, execution)
     ret = fix_subject_corrected_rh_outputs(params, execution)
@@ -162,12 +164,10 @@ def fix_subject_corrected_rh(
     Returns:
         NamedTuple of outputs (described in `FixSubjectCorrectedRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIX_SUBJECT_CORRECTED_RH_METADATA)
     params = fix_subject_corrected_rh_params(
         subject_dir=subject_dir,
     )
-    return fix_subject_corrected_rh_execute(params, execution)
+    return fix_subject_corrected_rh_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "FixSubjectCorrectedRhOutputs",
     "FixSubjectCorrectedRhParameters",
     "fix_subject_corrected_rh",
-    "fix_subject_corrected_rh_cargs",
     "fix_subject_corrected_rh_execute",
-    "fix_subject_corrected_rh_outputs",
     "fix_subject_corrected_rh_params",
 ]

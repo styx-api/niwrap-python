@@ -128,7 +128,7 @@ def long_create_orig_outputs(
 
 def long_create_orig_execute(
     params: LongCreateOrigParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongCreateOrigOutputs:
     """
     Maps, conforms and averages (motioncorrect) raw inputs from cross-sectional
@@ -140,10 +140,12 @@ def long_create_orig_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongCreateOrigOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_CREATE_ORIG_METADATA)
     params = execution.params(params)
     cargs = long_create_orig_cargs(params, execution)
     ret = long_create_orig_outputs(params, execution)
@@ -171,13 +173,11 @@ def long_create_orig(
     Returns:
         NamedTuple of outputs (described in `LongCreateOrigOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_CREATE_ORIG_METADATA)
     params = long_create_orig_params(
         base_id=base_id,
         tp_id=tp_id,
     )
-    return long_create_orig_execute(params, execution)
+    return long_create_orig_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "LongCreateOrigOutputs",
     "LongCreateOrigParameters",
     "long_create_orig",
-    "long_create_orig_cargs",
     "long_create_orig_execute",
-    "long_create_orig_outputs",
     "long_create_orig_params",
 ]

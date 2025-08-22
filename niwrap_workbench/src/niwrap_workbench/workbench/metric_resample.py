@@ -295,7 +295,7 @@ def metric_resample_outputs(
 
 def metric_resample_execute(
     params: MetricResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricResampleOutputs:
     """
     Resample a metric file to a different mesh.
@@ -330,10 +330,12 @@ def metric_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = metric_resample_cargs(params, execution)
     ret = metric_resample_outputs(params, execution)
@@ -408,8 +410,6 @@ def metric_resample(
     Returns:
         NamedTuple of outputs (described in `MetricResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_RESAMPLE_METADATA)
     params = metric_resample_params(
         metric_in=metric_in,
         current_sphere=current_sphere,
@@ -423,7 +423,7 @@ def metric_resample(
         opt_largest=opt_largest,
         opt_bypass_sphere_check=opt_bypass_sphere_check,
     )
-    return metric_resample_execute(params, execution)
+    return metric_resample_execute(params, runner)
 
 
 __all__ = [
@@ -433,12 +433,8 @@ __all__ = [
     "MetricResampleOutputs",
     "MetricResampleParameters",
     "metric_resample",
-    "metric_resample_area_metrics_cargs",
     "metric_resample_area_metrics_params",
-    "metric_resample_area_surfs_cargs",
     "metric_resample_area_surfs_params",
-    "metric_resample_cargs",
     "metric_resample_execute",
-    "metric_resample_outputs",
     "metric_resample_params",
 ]

@@ -155,7 +155,7 @@ def mri_tessellate_outputs(
 
 def mri_tessellate_execute(
     params: MriTessellateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriTessellateOutputs:
     """
     This program creates a surface by tessellating a given input volume.
@@ -166,10 +166,12 @@ def mri_tessellate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriTessellateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_TESSELLATE_METADATA)
     params = execution.params(params)
     cargs = mri_tessellate_cargs(params, execution)
     ret = mri_tessellate_outputs(params, execution)
@@ -207,8 +209,6 @@ def mri_tessellate(
     Returns:
         NamedTuple of outputs (described in `MriTessellateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_TESSELLATE_METADATA)
     params = mri_tessellate_params(
         input_volume=input_volume,
         label_value=label_value,
@@ -217,7 +217,7 @@ def mri_tessellate(
         max_vertices=max_vertices,
         real_ras=real_ras,
     )
-    return mri_tessellate_execute(params, execution)
+    return mri_tessellate_execute(params, runner)
 
 
 __all__ = [
@@ -225,8 +225,6 @@ __all__ = [
     "MriTessellateOutputs",
     "MriTessellateParameters",
     "mri_tessellate",
-    "mri_tessellate_cargs",
     "mri_tessellate_execute",
-    "mri_tessellate_outputs",
     "mri_tessellate_params",
 ]

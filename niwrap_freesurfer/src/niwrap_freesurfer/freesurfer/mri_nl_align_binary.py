@@ -130,7 +130,7 @@ def mri_nl_align_binary_outputs(
 
 def mri_nl_align_binary_execute(
     params: MriNlAlignBinaryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriNlAlignBinaryOutputs:
     """
     Non-linear alignment tool for MRI data.
@@ -141,10 +141,12 @@ def mri_nl_align_binary_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriNlAlignBinaryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_NL_ALIGN_BINARY_METADATA)
     params = execution.params(params)
     cargs = mri_nl_align_binary_cargs(params, execution)
     ret = mri_nl_align_binary_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_nl_align_binary(
     Returns:
         NamedTuple of outputs (described in `MriNlAlignBinaryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_NL_ALIGN_BINARY_METADATA)
     params = mri_nl_align_binary_params(
         source_file=source_file,
         target_file=target_file,
         warp_file=warp_file,
     )
-    return mri_nl_align_binary_execute(params, execution)
+    return mri_nl_align_binary_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriNlAlignBinaryOutputs",
     "MriNlAlignBinaryParameters",
     "mri_nl_align_binary",
-    "mri_nl_align_binary_cargs",
     "mri_nl_align_binary_execute",
-    "mri_nl_align_binary_outputs",
     "mri_nl_align_binary_params",
 ]

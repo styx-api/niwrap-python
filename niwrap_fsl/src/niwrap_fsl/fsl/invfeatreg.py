@@ -116,7 +116,7 @@ def invfeatreg_outputs(
 
 def invfeatreg_execute(
     params: InvfeatregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InvfeatregOutputs:
     """
     Inverse warp image using FNIRT.
@@ -127,10 +127,12 @@ def invfeatreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InvfeatregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INVFEATREG_METADATA)
     params = execution.params(params)
     cargs = invfeatreg_cargs(params, execution)
     ret = invfeatreg_outputs(params, execution)
@@ -155,12 +157,10 @@ def invfeatreg(
     Returns:
         NamedTuple of outputs (described in `InvfeatregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INVFEATREG_METADATA)
     params = invfeatreg_params(
         feat_directory=feat_directory,
     )
-    return invfeatreg_execute(params, execution)
+    return invfeatreg_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "InvfeatregOutputs",
     "InvfeatregParameters",
     "invfeatreg",
-    "invfeatreg_cargs",
     "invfeatreg_execute",
-    "invfeatreg_outputs",
     "invfeatreg_params",
 ]

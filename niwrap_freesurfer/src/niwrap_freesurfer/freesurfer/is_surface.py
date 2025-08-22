@@ -119,7 +119,7 @@ def is_surface_outputs(
 
 def is_surface_execute(
     params: IsSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IsSurfaceOutputs:
     """
     Determines whether a file is a volume-encoded surface file by examining its
@@ -131,10 +131,12 @@ def is_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IsSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IS_SURFACE_METADATA)
     params = execution.params(params)
     cargs = is_surface_cargs(params, execution)
     ret = is_surface_outputs(params, execution)
@@ -160,12 +162,10 @@ def is_surface(
     Returns:
         NamedTuple of outputs (described in `IsSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IS_SURFACE_METADATA)
     params = is_surface_params(
         infile=infile,
     )
-    return is_surface_execute(params, execution)
+    return is_surface_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "IsSurfaceOutputs",
     "IsSurfaceParameters",
     "is_surface",
-    "is_surface_cargs",
     "is_surface_execute",
-    "is_surface_outputs",
     "is_surface_params",
 ]

@@ -311,7 +311,7 @@ def lta_convert_outputs(
 
 def lta_convert_execute(
     params: LtaConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LtaConvertOutputs:
     """
     This program converts between different linear transform formats.
@@ -322,10 +322,12 @@ def lta_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LtaConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LTA_CONVERT_METADATA)
     params = execution.params(params)
     cargs = lta_convert_cargs(params, execution)
     ret = lta_convert_outputs(params, execution)
@@ -392,8 +394,6 @@ def lta_convert(
     Returns:
         NamedTuple of outputs (described in `LtaConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LTA_CONVERT_METADATA)
     params = lta_convert_params(
         in_lta=in_lta,
         in_fsl=in_fsl,
@@ -417,7 +417,7 @@ def lta_convert(
         trg_conform=trg_conform,
         subject_name=subject_name,
     )
-    return lta_convert_execute(params, execution)
+    return lta_convert_execute(params, runner)
 
 
 __all__ = [
@@ -425,8 +425,6 @@ __all__ = [
     "LtaConvertOutputs",
     "LtaConvertParameters",
     "lta_convert",
-    "lta_convert_cargs",
     "lta_convert_execute",
-    "lta_convert_outputs",
     "lta_convert_params",
 ]

@@ -133,7 +133,7 @@ def test_orientation_planes_from_parcellation_outputs(
 
 def test_orientation_planes_from_parcellation_execute(
     params: TestOrientationPlanesFromParcellationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TestOrientationPlanesFromParcellationOutputs:
     """
     Tests orientation planes from a given parcellation using FreeSurfer.
@@ -144,10 +144,12 @@ def test_orientation_planes_from_parcellation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TestOrientationPlanesFromParcellationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA)
     params = execution.params(params)
     cargs = test_orientation_planes_from_parcellation_cargs(params, execution)
     ret = test_orientation_planes_from_parcellation_outputs(params, execution)
@@ -176,14 +178,12 @@ def test_orientation_planes_from_parcellation(
     Returns:
         NamedTuple of outputs (described in `TestOrientationPlanesFromParcellationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TEST_ORIENTATION_PLANES_FROM_PARCELLATION_METADATA)
     params = test_orientation_planes_from_parcellation_params(
         input_file=input_file,
         output_file=output_file,
         bb_flag=bb_flag,
     )
-    return test_orientation_planes_from_parcellation_execute(params, execution)
+    return test_orientation_planes_from_parcellation_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "TestOrientationPlanesFromParcellationOutputs",
     "TestOrientationPlanesFromParcellationParameters",
     "test_orientation_planes_from_parcellation",
-    "test_orientation_planes_from_parcellation_cargs",
     "test_orientation_planes_from_parcellation_execute",
-    "test_orientation_planes_from_parcellation_outputs",
     "test_orientation_planes_from_parcellation_params",
 ]

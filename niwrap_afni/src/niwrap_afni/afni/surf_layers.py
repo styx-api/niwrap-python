@@ -215,7 +215,7 @@ def surf_layers_outputs(
 
 def surf_layers_execute(
     params: SurfLayersParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfLayersOutputs:
     """
     Compute intermediate equi-distant surfaces between two boundary surfaces.
@@ -226,10 +226,12 @@ def surf_layers_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfLayersOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_LAYERS_METADATA)
     params = execution.params(params)
     cargs = surf_layers_cargs(params, execution)
     ret = surf_layers_outputs(params, execution)
@@ -274,8 +276,6 @@ def surf_layers(
     Returns:
         NamedTuple of outputs (described in `SurfLayersOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_LAYERS_METADATA)
     params = surf_layers_params(
         spec_dset=spec_dset,
         outdir=outdir,
@@ -288,7 +288,7 @@ def surf_layers(
         echo=echo,
         no_clean=no_clean,
     )
-    return surf_layers_execute(params, execution)
+    return surf_layers_execute(params, runner)
 
 
 __all__ = [
@@ -296,8 +296,6 @@ __all__ = [
     "SurfLayersOutputs",
     "SurfLayersParameters",
     "surf_layers",
-    "surf_layers_cargs",
     "surf_layers_execute",
-    "surf_layers_outputs",
     "surf_layers_params",
 ]

@@ -220,7 +220,7 @@ def volume_gradient_outputs(
 
 def volume_gradient_execute(
     params: VolumeGradientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
     Gradient of a volume file.
@@ -238,10 +238,12 @@ def volume_gradient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeGradientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_GRADIENT_METADATA)
     params = execution.params(params)
     cargs = volume_gradient_cargs(params, execution)
     ret = volume_gradient_outputs(params, execution)
@@ -286,8 +288,6 @@ def volume_gradient(
     Returns:
         NamedTuple of outputs (described in `VolumeGradientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_GRADIENT_METADATA)
     params = volume_gradient_params(
         volume_in=volume_in,
         volume_out=volume_out,
@@ -296,7 +296,7 @@ def volume_gradient(
         opt_vectors_vector_volume_out=opt_vectors_vector_volume_out,
         opt_subvolume_subvol=opt_subvolume_subvol,
     )
-    return volume_gradient_execute(params, execution)
+    return volume_gradient_execute(params, runner)
 
 
 __all__ = [
@@ -305,10 +305,7 @@ __all__ = [
     "VolumeGradientParameters",
     "VolumeGradientPresmoothParameters",
     "volume_gradient",
-    "volume_gradient_cargs",
     "volume_gradient_execute",
-    "volume_gradient_outputs",
     "volume_gradient_params",
-    "volume_gradient_presmooth_cargs",
     "volume_gradient_presmooth_params",
 ]

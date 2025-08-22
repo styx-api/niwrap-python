@@ -1214,7 +1214,7 @@ def mrregister_outputs(
 
 def mrregister_execute(
     params: MrregisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrregisterOutputs:
     """
     Register two images together using a symmetric rigid, affine or non-linear
@@ -1260,10 +1260,12 @@ def mrregister_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrregisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRREGISTER_METADATA)
     params = execution.params(params)
     cargs = mrregister_cargs(params, execution)
     ret = mrregister_outputs(params, execution)
@@ -1581,8 +1583,6 @@ def mrregister(
     Returns:
         NamedTuple of outputs (described in `MrregisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRREGISTER_METADATA)
     params = mrregister_params(
         type_=type_,
         transformed=transformed,
@@ -1653,7 +1653,7 @@ def mrregister(
         image1_image2=image1_image2,
         contrast1_contrast2=contrast1_contrast2,
     )
-    return mrregister_execute(params, execution)
+    return mrregister_execute(params, runner)
 
 
 __all__ = [
@@ -1668,19 +1668,10 @@ __all__ = [
     "MrregisterTransformedOutputs",
     "MrregisterTransformedParameters",
     "mrregister",
-    "mrregister_cargs",
-    "mrregister_config_cargs",
     "mrregister_config_params",
     "mrregister_execute",
-    "mrregister_nl_warp_cargs",
-    "mrregister_nl_warp_outputs",
     "mrregister_nl_warp_params",
-    "mrregister_outputs",
     "mrregister_params",
-    "mrregister_transformed_cargs",
-    "mrregister_transformed_midway_cargs",
-    "mrregister_transformed_midway_outputs",
     "mrregister_transformed_midway_params",
-    "mrregister_transformed_outputs",
     "mrregister_transformed_params",
 ]

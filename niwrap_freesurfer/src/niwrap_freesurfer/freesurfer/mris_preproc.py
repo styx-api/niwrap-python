@@ -538,7 +538,7 @@ def mris_preproc_outputs(
 
 def mris_preproc_execute(
     params: MrisPreprocParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisPreprocOutputs:
     """
     Script to prepare surface-based data for high-level analysis by resampling
@@ -551,10 +551,12 @@ def mris_preproc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisPreprocOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_PREPROC_METADATA)
     params = execution.params(params)
     cargs = mris_preproc_cargs(params, execution)
     ret = mris_preproc_outputs(params, execution)
@@ -688,8 +690,6 @@ def mris_preproc(
     Returns:
         NamedTuple of outputs (described in `MrisPreprocOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_PREPROC_METADATA)
     params = mris_preproc_params(
         outfile=outfile,
         target_subject=target_subject,
@@ -741,7 +741,7 @@ def mris_preproc(
         nolog_flag=nolog_flag,
         debug_flag=debug_flag,
     )
-    return mris_preproc_execute(params, execution)
+    return mris_preproc_execute(params, runner)
 
 
 __all__ = [
@@ -749,8 +749,6 @@ __all__ = [
     "MrisPreprocOutputs",
     "MrisPreprocParameters",
     "mris_preproc",
-    "mris_preproc_cargs",
     "mris_preproc_execute",
-    "mris_preproc_outputs",
     "mris_preproc_params",
 ]

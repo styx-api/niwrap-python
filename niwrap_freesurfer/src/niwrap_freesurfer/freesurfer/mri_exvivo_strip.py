@@ -227,7 +227,7 @@ def mri_exvivo_strip_outputs(
 
 def mri_exvivo_strip_execute(
     params: MriExvivoStripParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriExvivoStripOutputs:
     """
     Tool for processing MRI volumes for ex vivo data.
@@ -238,10 +238,12 @@ def mri_exvivo_strip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriExvivoStripOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EXVIVO_STRIP_METADATA)
     params = execution.params(params)
     cargs = mri_exvivo_strip_cargs(params, execution)
     ret = mri_exvivo_strip_outputs(params, execution)
@@ -288,8 +290,6 @@ def mri_exvivo_strip(
     Returns:
         NamedTuple of outputs (described in `MriExvivoStripOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EXVIVO_STRIP_METADATA)
     params = mri_exvivo_strip_params(
         invol=invol,
         outvol=outvol,
@@ -304,7 +304,7 @@ def mri_exvivo_strip(
         wts=wts,
         gpu=gpu,
     )
-    return mri_exvivo_strip_execute(params, execution)
+    return mri_exvivo_strip_execute(params, runner)
 
 
 __all__ = [
@@ -312,8 +312,6 @@ __all__ = [
     "MriExvivoStripOutputs",
     "MriExvivoStripParameters",
     "mri_exvivo_strip",
-    "mri_exvivo_strip_cargs",
     "mri_exvivo_strip_execute",
-    "mri_exvivo_strip_outputs",
     "mri_exvivo_strip_params",
 ]

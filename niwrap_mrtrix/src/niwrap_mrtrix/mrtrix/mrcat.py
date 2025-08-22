@@ -264,7 +264,7 @@ def mrcat_outputs(
 
 def mrcat_execute(
     params: MrcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrcatOutputs:
     """
     Concatenate several images into one.
@@ -281,10 +281,12 @@ def mrcat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRCAT_METADATA)
     params = execution.params(params)
     cargs = mrcat_cargs(params, execution)
     ret = mrcat_outputs(params, execution)
@@ -351,8 +353,6 @@ def mrcat(
     Returns:
         NamedTuple of outputs (described in `MrcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRCAT_METADATA)
     params = mrcat_params(
         axis=axis,
         datatype=datatype,
@@ -368,7 +368,7 @@ def mrcat(
         image2=image2,
         output=output,
     )
-    return mrcat_execute(params, execution)
+    return mrcat_execute(params, runner)
 
 
 __all__ = [
@@ -377,10 +377,7 @@ __all__ = [
     "MrcatOutputs",
     "MrcatParameters",
     "mrcat",
-    "mrcat_cargs",
-    "mrcat_config_cargs",
     "mrcat_config_params",
     "mrcat_execute",
-    "mrcat_outputs",
     "mrcat_params",
 ]

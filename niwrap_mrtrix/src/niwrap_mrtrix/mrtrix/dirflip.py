@@ -248,7 +248,7 @@ def dirflip_outputs(
 
 def dirflip_execute(
     params: DirflipParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DirflipOutputs:
     """
     Invert the polarity of individual directions so as to optimise a unipolar
@@ -268,10 +268,12 @@ def dirflip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DirflipOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DIRFLIP_METADATA)
     params = execution.params(params)
     cargs = dirflip_cargs(params, execution)
     ret = dirflip_outputs(params, execution)
@@ -332,8 +334,6 @@ def dirflip(
     Returns:
         NamedTuple of outputs (described in `DirflipOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DIRFLIP_METADATA)
     params = dirflip_params(
         permutations=permutations,
         cartesian=cartesian,
@@ -348,7 +348,7 @@ def dirflip(
         in_=in_,
         out=out,
     )
-    return dirflip_execute(params, execution)
+    return dirflip_execute(params, runner)
 
 
 __all__ = [
@@ -357,10 +357,7 @@ __all__ = [
     "DirflipOutputs",
     "DirflipParameters",
     "dirflip",
-    "dirflip_cargs",
-    "dirflip_config_cargs",
     "dirflip_config_params",
     "dirflip_execute",
-    "dirflip_outputs",
     "dirflip_params",
 ]

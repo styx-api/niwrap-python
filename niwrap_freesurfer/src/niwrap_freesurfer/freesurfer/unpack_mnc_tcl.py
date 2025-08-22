@@ -141,7 +141,7 @@ def unpack_mnc_tcl_outputs(
 
 def unpack_mnc_tcl_execute(
     params: UnpackMncTclParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnpackMncTclOutputs:
     """
     A tool for unpacking MINC format images.
@@ -152,10 +152,12 @@ def unpack_mnc_tcl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnpackMncTclOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNPACK_MNC_TCL_METADATA)
     params = execution.params(params)
     cargs = unpack_mnc_tcl_cargs(params, execution)
     ret = unpack_mnc_tcl_outputs(params, execution)
@@ -184,14 +186,12 @@ def unpack_mnc_tcl(
     Returns:
         NamedTuple of outputs (described in `UnpackMncTclOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNPACK_MNC_TCL_METADATA)
     params = unpack_mnc_tcl_params(
         verbose=verbose,
         output_dir=output_dir,
         input_file=input_file,
     )
-    return unpack_mnc_tcl_execute(params, execution)
+    return unpack_mnc_tcl_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "UnpackMncTclOutputs",
     "UnpackMncTclParameters",
     "unpack_mnc_tcl",
-    "unpack_mnc_tcl_cargs",
     "unpack_mnc_tcl_execute",
-    "unpack_mnc_tcl_outputs",
     "unpack_mnc_tcl_params",
 ]

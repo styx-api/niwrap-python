@@ -194,7 +194,7 @@ def dmri_spline_outputs(
 
 def dmri_spline_execute(
     params: DmriSplineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriSplineOutputs:
     """
     Tool for interpolating and analyzing splines within a defined mask.
@@ -205,10 +205,12 @@ def dmri_spline_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriSplineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_SPLINE_METADATA)
     params = execution.params(params)
     cargs = dmri_spline_cargs(params, execution)
     ret = dmri_spline_outputs(params, execution)
@@ -250,8 +252,6 @@ def dmri_spline(
     Returns:
         NamedTuple of outputs (described in `DmriSplineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_SPLINE_METADATA)
     params = dmri_spline_params(
         control_points_file=control_points_file,
         mask_volume=mask_volume,
@@ -262,7 +262,7 @@ def dmri_spline(
         debug=debug,
         check_options=check_options,
     )
-    return dmri_spline_execute(params, execution)
+    return dmri_spline_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "DmriSplineOutputs",
     "DmriSplineParameters",
     "dmri_spline",
-    "dmri_spline_cargs",
     "dmri_spline_execute",
-    "dmri_spline_outputs",
     "dmri_spline_params",
 ]

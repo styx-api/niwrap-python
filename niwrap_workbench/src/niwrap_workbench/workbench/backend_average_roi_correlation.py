@@ -123,7 +123,7 @@ def backend_average_roi_correlation_outputs(
 
 def backend_average_roi_correlation_execute(
     params: BackendAverageRoiCorrelationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BackendAverageRoiCorrelationOutputs:
     """
     Connectome db backend command for cifti average roi correlation.
@@ -139,10 +139,12 @@ def backend_average_roi_correlation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BackendAverageRoiCorrelationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BACKEND_AVERAGE_ROI_CORRELATION_METADATA)
     params = execution.params(params)
     cargs = backend_average_roi_correlation_cargs(params, execution)
     ret = backend_average_roi_correlation_outputs(params, execution)
@@ -175,13 +177,11 @@ def backend_average_roi_correlation(
     Returns:
         NamedTuple of outputs (described in `BackendAverageRoiCorrelationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BACKEND_AVERAGE_ROI_CORRELATION_METADATA)
     params = backend_average_roi_correlation_params(
         index_list=index_list,
         out_file=out_file,
     )
-    return backend_average_roi_correlation_execute(params, execution)
+    return backend_average_roi_correlation_execute(params, runner)
 
 
 __all__ = [
@@ -189,8 +189,6 @@ __all__ = [
     "BackendAverageRoiCorrelationOutputs",
     "BackendAverageRoiCorrelationParameters",
     "backend_average_roi_correlation",
-    "backend_average_roi_correlation_cargs",
     "backend_average_roi_correlation_execute",
-    "backend_average_roi_correlation_outputs",
     "backend_average_roi_correlation_params",
 ]

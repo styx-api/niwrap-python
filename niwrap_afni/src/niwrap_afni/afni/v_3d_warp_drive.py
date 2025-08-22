@@ -409,7 +409,7 @@ def v_3d_warp_drive_outputs(
 
 def v_3d_warp_drive_execute(
     params: V3dWarpDriveParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dWarpDriveOutputs:
     """
     Warp a dataset to match another one (the base) using an affine transformation.
@@ -420,10 +420,12 @@ def v_3d_warp_drive_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dWarpDriveOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_WARP_DRIVE_METADATA)
     params = execution.params(params)
     cargs = v_3d_warp_drive_cargs(params, execution)
     ret = v_3d_warp_drive_outputs(params, execution)
@@ -544,8 +546,6 @@ def v_3d_warp_drive(
     Returns:
         NamedTuple of outputs (described in `V3dWarpDriveOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_WARP_DRIVE_METADATA)
     params = v_3d_warp_drive_params(
         dataset=dataset,
         base_dataset=base_dataset,
@@ -584,7 +584,7 @@ def v_3d_warp_drive(
         ashift=ashift,
         bshift=bshift,
     )
-    return v_3d_warp_drive_execute(params, execution)
+    return v_3d_warp_drive_execute(params, runner)
 
 
 __all__ = [
@@ -592,8 +592,6 @@ __all__ = [
     "V3dWarpDriveParameters",
     "V_3D_WARP_DRIVE_METADATA",
     "v_3d_warp_drive",
-    "v_3d_warp_drive_cargs",
     "v_3d_warp_drive_execute",
-    "v_3d_warp_drive_outputs",
     "v_3d_warp_drive_params",
 ]

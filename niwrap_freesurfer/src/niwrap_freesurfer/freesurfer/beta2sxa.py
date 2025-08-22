@@ -149,7 +149,7 @@ def beta2sxa_outputs(
 
 def beta2sxa_execute(
     params: Beta2sxaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Beta2sxaOutputs:
     """
     A script to create files for plotting in tkmedit or tksurfer based on tabular
@@ -161,10 +161,12 @@ def beta2sxa_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Beta2sxaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BETA2SXA_METADATA)
     params = execution.params(params)
     cargs = beta2sxa_cargs(params, execution)
     ret = beta2sxa_outputs(params, execution)
@@ -196,15 +198,13 @@ def beta2sxa(
     Returns:
         NamedTuple of outputs (described in `Beta2sxaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BETA2SXA_METADATA)
     params = beta2sxa_params(
         beta_files=beta_files,
         number_of_conditions=number_of_conditions,
         number_of_per_subjects=number_of_per_subjects,
         sxa_output=sxa_output,
     )
-    return beta2sxa_execute(params, execution)
+    return beta2sxa_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "Beta2sxaOutputs",
     "Beta2sxaParameters",
     "beta2sxa",
-    "beta2sxa_cargs",
     "beta2sxa_execute",
-    "beta2sxa_outputs",
     "beta2sxa_params",
 ]

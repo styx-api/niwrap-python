@@ -264,7 +264,7 @@ def conf2hires_outputs(
 
 def conf2hires_execute(
     params: Conf2hiresParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Conf2hiresOutputs:
     """
     Places the surfaces on high resolution T1 (and maybe T2) volumes based on an
@@ -276,10 +276,12 @@ def conf2hires_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Conf2hiresOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONF2HIRES_METADATA)
     params = execution.params(params)
     cargs = conf2hires_cargs(params, execution)
     ret = conf2hires_outputs(params, execution)
@@ -350,8 +352,6 @@ def conf2hires(
     Returns:
         NamedTuple of outputs (described in `Conf2hiresOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONF2HIRES_METADATA)
     params = conf2hires_params(
         subject=subject,
         t2=t2,
@@ -375,7 +375,7 @@ def conf2hires(
         expert=expert,
         force_update=force_update,
     )
-    return conf2hires_execute(params, execution)
+    return conf2hires_execute(params, runner)
 
 
 __all__ = [
@@ -383,8 +383,6 @@ __all__ = [
     "Conf2hiresOutputs",
     "Conf2hiresParameters",
     "conf2hires",
-    "conf2hires_cargs",
     "conf2hires_execute",
-    "conf2hires_outputs",
     "conf2hires_params",
 ]

@@ -139,7 +139,7 @@ def v_3d_tfilter_outputs(
 
 def v_3d_tfilter_execute(
     params: V3dTfilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTfilterOutputs:
     """
     3dTfilter filters the time series in each voxel according to the user-specified
@@ -151,10 +151,12 @@ def v_3d_tfilter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTfilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TFILTER_METADATA)
     params = execution.params(params)
     cargs = v_3d_tfilter_cargs(params, execution)
     ret = v_3d_tfilter_outputs(params, execution)
@@ -184,14 +186,12 @@ def v_3d_tfilter(
     Returns:
         NamedTuple of outputs (described in `V3dTfilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TFILTER_METADATA)
     params = v_3d_tfilter_params(
         inputdataset=inputdataset,
         outputdataset=outputdataset,
         filters=filters,
     )
-    return v_3d_tfilter_execute(params, execution)
+    return v_3d_tfilter_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "V3dTfilterParameters",
     "V_3D_TFILTER_METADATA",
     "v_3d_tfilter",
-    "v_3d_tfilter_cargs",
     "v_3d_tfilter_execute",
-    "v_3d_tfilter_outputs",
     "v_3d_tfilter_params",
 ]

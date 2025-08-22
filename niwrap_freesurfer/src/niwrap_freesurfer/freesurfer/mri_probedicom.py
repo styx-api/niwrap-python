@@ -140,7 +140,7 @@ def mri_probedicom_outputs(
 
 def mri_probedicom_execute(
     params: MriProbedicomParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriProbedicomOutputs:
     """
     Utility to probe DICOM files for information.
@@ -151,10 +151,12 @@ def mri_probedicom_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriProbedicomOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_PROBEDICOM_METADATA)
     params = execution.params(params)
     cargs = mri_probedicom_cargs(params, execution)
     ret = mri_probedicom_outputs(params, execution)
@@ -183,14 +185,12 @@ def mri_probedicom(
     Returns:
         NamedTuple of outputs (described in `MriProbedicomOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_PROBEDICOM_METADATA)
     params = mri_probedicom_params(
         dicom_file=dicom_file,
         option1=option1,
         option2=option2,
     )
-    return mri_probedicom_execute(params, execution)
+    return mri_probedicom_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MriProbedicomOutputs",
     "MriProbedicomParameters",
     "mri_probedicom",
-    "mri_probedicom_cargs",
     "mri_probedicom_execute",
-    "mri_probedicom_outputs",
     "mri_probedicom_params",
 ]

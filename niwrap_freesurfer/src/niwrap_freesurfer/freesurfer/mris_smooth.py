@@ -217,7 +217,7 @@ def mris_smooth_outputs(
 
 def mris_smooth_execute(
     params: MrisSmoothParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSmoothOutputs:
     """
     This program smooths the tessellation of a cortical surface and writes out the
@@ -229,10 +229,12 @@ def mris_smooth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSmoothOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SMOOTH_METADATA)
     params = execution.params(params)
     cargs = mris_smooth_cargs(params, execution)
     ret = mris_smooth_outputs(params, execution)
@@ -282,8 +284,6 @@ def mris_smooth(
     Returns:
         NamedTuple of outputs (described in `MrisSmoothOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SMOOTH_METADATA)
     params = mris_smooth_params(
         input_surface=input_surface,
         output_surface=output_surface,
@@ -297,7 +297,7 @@ def mris_smooth(
         momentum=momentum,
         snapshot_interval=snapshot_interval,
     )
-    return mris_smooth_execute(params, execution)
+    return mris_smooth_execute(params, runner)
 
 
 __all__ = [
@@ -305,8 +305,6 @@ __all__ = [
     "MrisSmoothOutputs",
     "MrisSmoothParameters",
     "mris_smooth",
-    "mris_smooth_cargs",
     "mris_smooth_execute",
-    "mris_smooth_outputs",
     "mris_smooth_params",
 ]

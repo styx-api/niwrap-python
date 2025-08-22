@@ -123,7 +123,7 @@ def renormalize_subject_keep_editting_outputs(
 
 def renormalize_subject_keep_editting_execute(
     params: RenormalizeSubjectKeepEdittingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RenormalizeSubjectKeepEdittingOutputs:
     """
     A placeholder for the renormalize_subject_keep_editting tool, details not
@@ -135,10 +135,12 @@ def renormalize_subject_keep_editting_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RenormalizeSubjectKeepEdittingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA)
     params = execution.params(params)
     cargs = renormalize_subject_keep_editting_cargs(params, execution)
     ret = renormalize_subject_keep_editting_outputs(params, execution)
@@ -165,12 +167,10 @@ def renormalize_subject_keep_editting(
     Returns:
         NamedTuple of outputs (described in `RenormalizeSubjectKeepEdittingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RENORMALIZE_SUBJECT_KEEP_EDITTING_METADATA)
     params = renormalize_subject_keep_editting_params(
         placeholder_input=placeholder_input,
     )
-    return renormalize_subject_keep_editting_execute(params, execution)
+    return renormalize_subject_keep_editting_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "RenormalizeSubjectKeepEdittingOutputs",
     "RenormalizeSubjectKeepEdittingParameters",
     "renormalize_subject_keep_editting",
-    "renormalize_subject_keep_editting_cargs",
     "renormalize_subject_keep_editting_execute",
-    "renormalize_subject_keep_editting_outputs",
     "renormalize_subject_keep_editting_params",
 ]

@@ -157,7 +157,7 @@ def dsetstat2p_outputs(
 
 def dsetstat2p_execute(
     params: Dsetstat2pParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dsetstat2pOutputs:
     """
     Converts a statistic to a p-value with reference to a particular dataset.
@@ -168,10 +168,12 @@ def dsetstat2p_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dsetstat2pOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DSETSTAT2P_METADATA)
     params = execution.params(params)
     cargs = dsetstat2p_cargs(params, execution)
     ret = dsetstat2p_outputs(params, execution)
@@ -214,8 +216,6 @@ def dsetstat2p(
     Returns:
         NamedTuple of outputs (described in `Dsetstat2pOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DSETSTAT2P_METADATA)
     params = dsetstat2p_params(
         dataset=dataset,
         statval=statval,
@@ -224,7 +224,7 @@ def dsetstat2p(
         one_sided=one_sided,
         quiet=quiet,
     )
-    return dsetstat2p_execute(params, execution)
+    return dsetstat2p_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "Dsetstat2pOutputs",
     "Dsetstat2pParameters",
     "dsetstat2p",
-    "dsetstat2p_cargs",
     "dsetstat2p_execute",
-    "dsetstat2p_outputs",
     "dsetstat2p_params",
 ]

@@ -125,7 +125,7 @@ def segment_subject_t1_auto_estimate_alveus_ml_outputs(
 
 def segment_subject_t1_auto_estimate_alveus_ml_execute(
     params: SegmentSubjectT1AutoEstimateAlveusMlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubjectT1AutoEstimateAlveusMlOutputs:
     """
     A tool that segments T1-weighted MRI data and automatically estimates the
@@ -137,10 +137,12 @@ def segment_subject_t1_auto_estimate_alveus_ml_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT1AutoEstimateAlveusMlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = execution.params(params)
     cargs = segment_subject_t1_auto_estimate_alveus_ml_cargs(params, execution)
     ret = segment_subject_t1_auto_estimate_alveus_ml_outputs(params, execution)
@@ -168,13 +170,11 @@ def segment_subject_t1_auto_estimate_alveus_ml(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT1AutoEstimateAlveusMlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBJECT_T1_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = segment_subject_t1_auto_estimate_alveus_ml_params(
         t1_file=t1_file,
         output_folder=output_folder,
     )
-    return segment_subject_t1_auto_estimate_alveus_ml_execute(params, execution)
+    return segment_subject_t1_auto_estimate_alveus_ml_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "SegmentSubjectT1AutoEstimateAlveusMlOutputs",
     "SegmentSubjectT1AutoEstimateAlveusMlParameters",
     "segment_subject_t1_auto_estimate_alveus_ml",
-    "segment_subject_t1_auto_estimate_alveus_ml_cargs",
     "segment_subject_t1_auto_estimate_alveus_ml_execute",
-    "segment_subject_t1_auto_estimate_alveus_ml_outputs",
     "segment_subject_t1_auto_estimate_alveus_ml_params",
 ]

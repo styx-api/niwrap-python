@@ -285,7 +285,7 @@ def ants_motion_corr_outputs(
 
 def ants_motion_corr_execute(
     params: AntsMotionCorrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsMotionCorrOutputs:
     """
     ANTS Motion Correction application to perform motion correction on 4D time
@@ -297,10 +297,12 @@ def ants_motion_corr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_MOTION_CORR_METADATA)
     params = execution.params(params)
     cargs = ants_motion_corr_cargs(params, execution)
     ret = ants_motion_corr_outputs(params, execution)
@@ -372,8 +374,6 @@ def ants_motion_corr(
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_MOTION_CORR_METADATA)
     params = ants_motion_corr_params(
         dimensionality=dimensionality,
         n_images=n_images,
@@ -392,7 +392,7 @@ def ants_motion_corr(
         interpolation=interpolation,
         verbose=verbose,
     )
-    return ants_motion_corr_execute(params, execution)
+    return ants_motion_corr_execute(params, runner)
 
 
 __all__ = [
@@ -400,8 +400,6 @@ __all__ = [
     "AntsMotionCorrOutputs",
     "AntsMotionCorrParameters",
     "ants_motion_corr",
-    "ants_motion_corr_cargs",
     "ants_motion_corr_execute",
-    "ants_motion_corr_outputs",
     "ants_motion_corr_params",
 ]

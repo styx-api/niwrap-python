@@ -120,7 +120,7 @@ def v_1d_astrip_outputs(
 
 def v_1d_astrip_execute(
     params: V1dAstripParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dAstripOutputs:
     """
     Strips non-numeric characters from a file.
@@ -131,10 +131,12 @@ def v_1d_astrip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dAstripOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_ASTRIP_METADATA)
     params = execution.params(params)
     cargs = v_1d_astrip_cargs(params, execution)
     ret = v_1d_astrip_outputs(params, execution)
@@ -159,12 +161,10 @@ def v_1d_astrip(
     Returns:
         NamedTuple of outputs (described in `V1dAstripOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_ASTRIP_METADATA)
     params = v_1d_astrip_params(
         infile=infile,
     )
-    return v_1d_astrip_execute(params, execution)
+    return v_1d_astrip_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "V1dAstripParameters",
     "V_1D_ASTRIP_METADATA",
     "v_1d_astrip",
-    "v_1d_astrip_cargs",
     "v_1d_astrip_execute",
-    "v_1d_astrip_outputs",
     "v_1d_astrip_params",
 ]

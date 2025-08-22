@@ -122,7 +122,7 @@ def v_2swap_outputs(
 
 def v_2swap_execute(
     params: V2swapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V2swapOutputs:
     """
     Swaps byte pairs on the files listed.
@@ -133,10 +133,12 @@ def v_2swap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V2swapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_2SWAP_METADATA)
     params = execution.params(params)
     cargs = v_2swap_cargs(params, execution)
     ret = v_2swap_outputs(params, execution)
@@ -163,13 +165,11 @@ def v_2swap(
     Returns:
         NamedTuple of outputs (described in `V2swapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_2SWAP_METADATA)
     params = v_2swap_params(
         quiet=quiet,
         input_files=input_files,
     )
-    return v_2swap_execute(params, execution)
+    return v_2swap_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "V2swapParameters",
     "V_2SWAP_METADATA",
     "v_2swap",
-    "v_2swap_cargs",
     "v_2swap_execute",
-    "v_2swap_outputs",
     "v_2swap_params",
 ]

@@ -285,7 +285,7 @@ def mean_outputs(
 
 def mean_execute(
     params: MeanParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MeanOutputs:
     """
     Diagnostic tool for analyzing and computing mean values for FSL data.
@@ -296,10 +296,12 @@ def mean_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MeanOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MEAN_METADATA)
     params = execution.params(params)
     cargs = mean_cargs(params, execution)
     ret = mean_outputs(params, execution)
@@ -364,8 +366,6 @@ def mean(
     Returns:
         NamedTuple of outputs (described in `MeanOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MEAN_METADATA)
     params = mean_params(
         datafile=datafile,
         maskfile=maskfile,
@@ -387,7 +387,7 @@ def mean(
         prior_std=prior_std,
         help_flag=help_flag,
     )
-    return mean_execute(params, execution)
+    return mean_execute(params, runner)
 
 
 __all__ = [
@@ -395,8 +395,6 @@ __all__ = [
     "MeanOutputs",
     "MeanParameters",
     "mean",
-    "mean_cargs",
     "mean_execute",
-    "mean_outputs",
     "mean_params",
 ]

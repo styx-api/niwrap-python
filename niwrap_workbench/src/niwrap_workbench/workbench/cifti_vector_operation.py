@@ -162,7 +162,7 @@ def cifti_vector_operation_outputs(
 
 def cifti_vector_operation_execute(
     params: CiftiVectorOperationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiVectorOperationOutputs:
     """
     Do a vector operation on cifti files.
@@ -185,10 +185,12 @@ def cifti_vector_operation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiVectorOperationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_VECTOR_OPERATION_METADATA)
     params = execution.params(params)
     cargs = cifti_vector_operation_cargs(params, execution)
     ret = cifti_vector_operation_outputs(params, execution)
@@ -241,8 +243,6 @@ def cifti_vector_operation(
     Returns:
         NamedTuple of outputs (described in `CiftiVectorOperationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_VECTOR_OPERATION_METADATA)
     params = cifti_vector_operation_params(
         vectors_a=vectors_a,
         vectors_b=vectors_b,
@@ -253,7 +253,7 @@ def cifti_vector_operation(
         opt_normalize_output=opt_normalize_output,
         opt_magnitude=opt_magnitude,
     )
-    return cifti_vector_operation_execute(params, execution)
+    return cifti_vector_operation_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "CiftiVectorOperationOutputs",
     "CiftiVectorOperationParameters",
     "cifti_vector_operation",
-    "cifti_vector_operation_cargs",
     "cifti_vector_operation_execute",
-    "cifti_vector_operation_outputs",
     "cifti_vector_operation_params",
 ]

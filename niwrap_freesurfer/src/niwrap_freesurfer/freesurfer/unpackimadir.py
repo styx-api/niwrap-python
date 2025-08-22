@@ -128,7 +128,7 @@ def unpackimadir_outputs(
 
 def unpackimadir_execute(
     params: UnpackimadirParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnpackimadirOutputs:
     """
     Unpack image directories.
@@ -139,10 +139,12 @@ def unpackimadir_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnpackimadirOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNPACKIMADIR_METADATA)
     params = execution.params(params)
     cargs = unpackimadir_cargs(params, execution)
     ret = unpackimadir_outputs(params, execution)
@@ -170,13 +172,11 @@ def unpackimadir(
     Returns:
         NamedTuple of outputs (described in `UnpackimadirOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNPACKIMADIR_METADATA)
     params = unpackimadir_params(
         source_directory=source_directory,
         target_directory=target_directory,
     )
-    return unpackimadir_execute(params, execution)
+    return unpackimadir_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "UnpackimadirOutputs",
     "UnpackimadirParameters",
     "unpackimadir",
-    "unpackimadir_cargs",
     "unpackimadir_execute",
-    "unpackimadir_outputs",
     "unpackimadir_params",
 ]

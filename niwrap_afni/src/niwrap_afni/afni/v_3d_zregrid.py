@@ -170,7 +170,7 @@ def v_3d_zregrid_outputs(
 
 def v_3d_zregrid_execute(
     params: V3dZregridParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dZregridOutputs:
     """
     Alters the input dataset's slice thickness and/or number.
@@ -181,10 +181,12 @@ def v_3d_zregrid_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dZregridOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ZREGRID_METADATA)
     params = execution.params(params)
     cargs = v_3d_zregrid_cargs(params, execution)
     ret = v_3d_zregrid_outputs(params, execution)
@@ -220,8 +222,6 @@ def v_3d_zregrid(
     Returns:
         NamedTuple of outputs (described in `V3dZregridOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ZREGRID_METADATA)
     params = v_3d_zregrid_params(
         z_thickness=z_thickness,
         slice_count=slice_count,
@@ -230,7 +230,7 @@ def v_3d_zregrid(
         infile=infile,
         verbose=verbose,
     )
-    return v_3d_zregrid_execute(params, execution)
+    return v_3d_zregrid_execute(params, runner)
 
 
 __all__ = [
@@ -238,8 +238,6 @@ __all__ = [
     "V3dZregridParameters",
     "V_3D_ZREGRID_METADATA",
     "v_3d_zregrid",
-    "v_3d_zregrid_cargs",
     "v_3d_zregrid_execute",
-    "v_3d_zregrid_outputs",
     "v_3d_zregrid_params",
 ]

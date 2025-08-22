@@ -356,7 +356,7 @@ def sh2peaks_outputs(
 
 def sh2peaks_execute(
     params: Sh2peaksParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Sh2peaksOutputs:
     """
     Extract the peaks of a spherical harmonic function in each voxel.
@@ -381,10 +381,12 @@ def sh2peaks_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Sh2peaksOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SH2PEAKS_METADATA)
     params = execution.params(params)
     cargs = sh2peaks_cargs(params, execution)
     ret = sh2peaks_outputs(params, execution)
@@ -468,8 +470,6 @@ def sh2peaks(
     Returns:
         NamedTuple of outputs (described in `Sh2peaksOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SH2PEAKS_METADATA)
     params = sh2peaks_params(
         num=num,
         direction=direction,
@@ -489,7 +489,7 @@ def sh2peaks(
         sh=sh,
         output=output,
     )
-    return sh2peaks_execute(params, execution)
+    return sh2peaks_execute(params, runner)
 
 
 __all__ = [
@@ -499,12 +499,8 @@ __all__ = [
     "Sh2peaksOutputs",
     "Sh2peaksParameters",
     "sh2peaks",
-    "sh2peaks_cargs",
-    "sh2peaks_config_cargs",
     "sh2peaks_config_params",
-    "sh2peaks_direction_cargs",
     "sh2peaks_direction_params",
     "sh2peaks_execute",
-    "sh2peaks_outputs",
     "sh2peaks_params",
 ]

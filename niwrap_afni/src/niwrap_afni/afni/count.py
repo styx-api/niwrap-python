@@ -230,7 +230,7 @@ def count_outputs(
 
 def count_execute(
     params: CountParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CountOutputs:
     """
     Numbered copies generator with custom format support and random sequence
@@ -242,10 +242,12 @@ def count_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CountOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(COUNT_METADATA)
     params = execution.params(params)
     cargs = count_cargs(params, execution)
     ret = count_outputs(params, execution)
@@ -297,8 +299,6 @@ def count(
     Returns:
         NamedTuple of outputs (described in `CountOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(COUNT_METADATA)
     params = count_params(
         bot=bot,
         top=top,
@@ -315,7 +315,7 @@ def count(
         comma=comma,
         skipnmodm=skipnmodm,
     )
-    return count_execute(params, execution)
+    return count_execute(params, runner)
 
 
 __all__ = [
@@ -323,8 +323,6 @@ __all__ = [
     "CountOutputs",
     "CountParameters",
     "count",
-    "count_cargs",
     "count_execute",
-    "count_outputs",
     "count_params",
 ]

@@ -177,7 +177,7 @@ def v_3d_tqual_outputs(
 
 def v_3d_tqual_execute(
     params: V3dTqualParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTqualOutputs:
     """
     Computes a quality index for each sub-brick in a 3D+time dataset.
@@ -188,10 +188,12 @@ def v_3d_tqual_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTqualOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TQUAL_METADATA)
     params = execution.params(params)
     cargs = v_3d_tqual_cargs(params, execution)
     ret = v_3d_tqual_outputs(params, execution)
@@ -237,8 +239,6 @@ def v_3d_tqual(
     Returns:
         NamedTuple of outputs (described in `V3dTqualOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TQUAL_METADATA)
     params = v_3d_tqual_params(
         dataset=dataset,
         spearman=spearman,
@@ -249,7 +249,7 @@ def v_3d_tqual(
         mask=mask,
         range_=range_,
     )
-    return v_3d_tqual_execute(params, execution)
+    return v_3d_tqual_execute(params, runner)
 
 
 __all__ = [
@@ -257,8 +257,6 @@ __all__ = [
     "V3dTqualParameters",
     "V_3D_TQUAL_METADATA",
     "v_3d_tqual",
-    "v_3d_tqual_cargs",
     "v_3d_tqual_execute",
-    "v_3d_tqual_outputs",
     "v_3d_tqual_params",
 ]

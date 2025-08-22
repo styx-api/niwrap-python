@@ -116,7 +116,7 @@ def tbss_1_preproc_outputs(
 
 def tbss_1_preproc_execute(
     params: Tbss1PreprocParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tbss1PreprocOutputs:
     """
     TBSS (Tract-Based Spatial Statistics) - Step 1: Preprocessing.
@@ -127,10 +127,12 @@ def tbss_1_preproc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tbss1PreprocOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_1_PREPROC_METADATA)
     params = execution.params(params)
     cargs = tbss_1_preproc_cargs(params, execution)
     ret = tbss_1_preproc_outputs(params, execution)
@@ -155,12 +157,10 @@ def tbss_1_preproc(
     Returns:
         NamedTuple of outputs (described in `Tbss1PreprocOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_1_PREPROC_METADATA)
     params = tbss_1_preproc_params(
         images=images,
     )
-    return tbss_1_preproc_execute(params, execution)
+    return tbss_1_preproc_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "Tbss1PreprocOutputs",
     "Tbss1PreprocParameters",
     "tbss_1_preproc",
-    "tbss_1_preproc_cargs",
     "tbss_1_preproc_execute",
-    "tbss_1_preproc_outputs",
     "tbss_1_preproc_params",
 ]

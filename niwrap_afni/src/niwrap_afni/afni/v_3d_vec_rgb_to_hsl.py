@@ -155,7 +155,7 @@ def v_3d_vec_rgb_to_hsl_outputs(
 
 def v_3d_vec_rgb_to_hsl_execute(
     params: V3dVecRgbToHslParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dVecRgbToHslOutputs:
     """
     Convert a 3-brick RGB (red, green, blue) data set to an HSL (hue, saturation,
@@ -167,10 +167,12 @@ def v_3d_vec_rgb_to_hsl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dVecRgbToHslOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_VEC_RGB_TO_HSL_METADATA)
     params = execution.params(params)
     cargs = v_3d_vec_rgb_to_hsl_cargs(params, execution)
     ret = v_3d_vec_rgb_to_hsl_outputs(params, execution)
@@ -206,15 +208,13 @@ def v_3d_vec_rgb_to_hsl(
     Returns:
         NamedTuple of outputs (described in `V3dVecRgbToHslOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_VEC_RGB_TO_HSL_METADATA)
     params = v_3d_vec_rgb_to_hsl_params(
         prefix=prefix,
         in_vec=in_vec,
         mask=mask,
         in_scal=in_scal,
     )
-    return v_3d_vec_rgb_to_hsl_execute(params, execution)
+    return v_3d_vec_rgb_to_hsl_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "V3dVecRgbToHslParameters",
     "V_3D_VEC_RGB_TO_HSL_METADATA",
     "v_3d_vec_rgb_to_hsl",
-    "v_3d_vec_rgb_to_hsl_cargs",
     "v_3d_vec_rgb_to_hsl_execute",
-    "v_3d_vec_rgb_to_hsl_outputs",
     "v_3d_vec_rgb_to_hsl_params",
 ]

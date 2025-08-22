@@ -239,7 +239,7 @@ def bayesian_group_ana_py_outputs(
 
 def bayesian_group_ana_py_execute(
     params: BayesianGroupAnaPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BayesianGroupAnaPyOutputs:
     """
     This program conducts Bayesian Group Analysis (BGA) on a list of regions of
@@ -252,10 +252,12 @@ def bayesian_group_ana_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BayesianGroupAnaPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BAYESIAN_GROUP_ANA_PY_METADATA)
     params = execution.params(params)
     cargs = bayesian_group_ana_py_cargs(params, execution)
     ret = bayesian_group_ana_py_outputs(params, execution)
@@ -312,8 +314,6 @@ def bayesian_group_ana_py(
     Returns:
         NamedTuple of outputs (described in `BayesianGroupAnaPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BAYESIAN_GROUP_ANA_PY_METADATA)
     params = bayesian_group_ana_py_params(
         data_table=data_table,
         y_variable=y_variable,
@@ -330,7 +330,7 @@ def bayesian_group_ana_py(
         overwrite=overwrite,
         help_=help_,
     )
-    return bayesian_group_ana_py_execute(params, execution)
+    return bayesian_group_ana_py_execute(params, runner)
 
 
 __all__ = [
@@ -338,8 +338,6 @@ __all__ = [
     "BayesianGroupAnaPyOutputs",
     "BayesianGroupAnaPyParameters",
     "bayesian_group_ana_py",
-    "bayesian_group_ana_py_cargs",
     "bayesian_group_ana_py_execute",
-    "bayesian_group_ana_py_outputs",
     "bayesian_group_ana_py_params",
 ]

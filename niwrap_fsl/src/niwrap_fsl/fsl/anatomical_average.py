@@ -188,7 +188,7 @@ def anatomical_average_outputs(
 
 def anatomical_average_execute(
     params: AnatomicalAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AnatomicalAverageOutputs:
     """
     Tool to create an anatomical average of input brain images.
@@ -199,10 +199,12 @@ def anatomical_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AnatomicalAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANATOMICAL_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = anatomical_average_cargs(params, execution)
     ret = anatomical_average_outputs(params, execution)
@@ -245,8 +247,6 @@ def anatomical_average(
     Returns:
         NamedTuple of outputs (described in `AnatomicalAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANATOMICAL_AVERAGE_METADATA)
     params = anatomical_average_params(
         output_basename=output_basename,
         input_images=input_images,
@@ -258,7 +258,7 @@ def anatomical_average(
         noclean_flag=noclean_flag,
         verbose_flag=verbose_flag,
     )
-    return anatomical_average_execute(params, execution)
+    return anatomical_average_execute(params, runner)
 
 
 __all__ = [
@@ -266,8 +266,6 @@ __all__ = [
     "AnatomicalAverageOutputs",
     "AnatomicalAverageParameters",
     "anatomical_average",
-    "anatomical_average_cargs",
     "anatomical_average_execute",
-    "anatomical_average_outputs",
     "anatomical_average_params",
 ]

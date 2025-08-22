@@ -220,7 +220,7 @@ def v__surf_to_vol_spackle_outputs(
 
 def v__surf_to_vol_spackle_execute(
     params: VSurfToVolSpackleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSurfToVolSpackleOutputs:
     """
     Project data from a surface dataset into a volume primarily using 3dSurf2Vol but
@@ -232,10 +232,12 @@ def v__surf_to_vol_spackle_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSurfToVolSpackleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SURF_TO_VOL_SPACKLE_METADATA)
     params = execution.params(params)
     cargs = v__surf_to_vol_spackle_cargs(params, execution)
     ret = v__surf_to_vol_spackle_outputs(params, execution)
@@ -292,8 +294,6 @@ def v__surf_to_vol_spackle(
     Returns:
         NamedTuple of outputs (described in `VSurfToVolSpackleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SURF_TO_VOL_SPACKLE_METADATA)
     params = v__surf_to_vol_spackle_params(
         maskset=maskset,
         spec=spec,
@@ -310,7 +310,7 @@ def v__surf_to_vol_spackle(
         datum_type=datum_type,
         ignore_unknown_options=ignore_unknown_options,
     )
-    return v__surf_to_vol_spackle_execute(params, execution)
+    return v__surf_to_vol_spackle_execute(params, runner)
 
 
 __all__ = [
@@ -318,8 +318,6 @@ __all__ = [
     "VSurfToVolSpackleParameters",
     "V__SURF_TO_VOL_SPACKLE_METADATA",
     "v__surf_to_vol_spackle",
-    "v__surf_to_vol_spackle_cargs",
     "v__surf_to_vol_spackle_execute",
-    "v__surf_to_vol_spackle_outputs",
     "v__surf_to_vol_spackle_params",
 ]

@@ -193,7 +193,7 @@ def tbss_skeleton_outputs(
 
 def tbss_skeleton_execute(
     params: TbssSkeletonParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TbssSkeletonOutputs:
     """
     A tool for defining a 'skeleton' of white matter tracts in the brain to help
@@ -205,10 +205,12 @@ def tbss_skeleton_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TbssSkeletonOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_SKELETON_METADATA)
     params = execution.params(params)
     cargs = tbss_skeleton_cargs(params, execution)
     ret = tbss_skeleton_outputs(params, execution)
@@ -248,8 +250,6 @@ def tbss_skeleton(
     Returns:
         NamedTuple of outputs (described in `TbssSkeletonOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_SKELETON_METADATA)
     params = tbss_skeleton_params(
         input_image=input_image,
         output_image=output_image,
@@ -259,7 +259,7 @@ def tbss_skeleton(
         debug_flag=debug_flag,
         debug2_flag=debug2_flag,
     )
-    return tbss_skeleton_execute(params, execution)
+    return tbss_skeleton_execute(params, runner)
 
 
 __all__ = [
@@ -267,8 +267,6 @@ __all__ = [
     "TbssSkeletonOutputs",
     "TbssSkeletonParameters",
     "tbss_skeleton",
-    "tbss_skeleton_cargs",
     "tbss_skeleton_execute",
-    "tbss_skeleton_outputs",
     "tbss_skeleton_params",
 ]

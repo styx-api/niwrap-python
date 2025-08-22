@@ -191,7 +191,7 @@ def cifti_tool_outputs(
 
 def cifti_tool_execute(
     params: CiftiToolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiToolOutputs:
     """
     Example tool for reading/writing CIFTI-2 datasets.
@@ -202,10 +202,12 @@ def cifti_tool_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiToolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_TOOL_METADATA)
     params = execution.params(params)
     cargs = cifti_tool_cargs(params, execution)
     ret = cifti_tool_outputs(params, execution)
@@ -246,8 +248,6 @@ def cifti_tool(
     Returns:
         NamedTuple of outputs (described in `CiftiToolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_TOOL_METADATA)
     params = cifti_tool_params(
         input_file=input_file,
         as_cext=as_cext,
@@ -259,7 +259,7 @@ def cifti_tool(
         verbose_read_level=verbose_read_level,
         both_verbose_levels=both_verbose_levels,
     )
-    return cifti_tool_execute(params, execution)
+    return cifti_tool_execute(params, runner)
 
 
 __all__ = [
@@ -267,8 +267,6 @@ __all__ = [
     "CiftiToolOutputs",
     "CiftiToolParameters",
     "cifti_tool",
-    "cifti_tool_cargs",
     "cifti_tool_execute",
-    "cifti_tool_outputs",
     "cifti_tool_params",
 ]

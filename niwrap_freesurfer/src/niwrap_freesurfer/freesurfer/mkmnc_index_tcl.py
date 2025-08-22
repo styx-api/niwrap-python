@@ -125,7 +125,7 @@ def mkmnc_index_tcl_outputs(
 
 def mkmnc_index_tcl_execute(
     params: MkmncIndexTclParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MkmncIndexTclOutputs:
     """
     A tool for creating MINC indices.
@@ -136,10 +136,12 @@ def mkmnc_index_tcl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MkmncIndexTclOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MKMNC_INDEX_TCL_METADATA)
     params = execution.params(params)
     cargs = mkmnc_index_tcl_cargs(params, execution)
     ret = mkmnc_index_tcl_outputs(params, execution)
@@ -166,13 +168,11 @@ def mkmnc_index_tcl(
     Returns:
         NamedTuple of outputs (described in `MkmncIndexTclOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MKMNC_INDEX_TCL_METADATA)
     params = mkmnc_index_tcl_params(
         infile=infile,
         outfile=outfile,
     )
-    return mkmnc_index_tcl_execute(params, execution)
+    return mkmnc_index_tcl_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MkmncIndexTclOutputs",
     "MkmncIndexTclParameters",
     "mkmnc_index_tcl",
-    "mkmnc_index_tcl_cargs",
     "mkmnc_index_tcl_execute",
-    "mkmnc_index_tcl_outputs",
     "mkmnc_index_tcl_params",
 ]

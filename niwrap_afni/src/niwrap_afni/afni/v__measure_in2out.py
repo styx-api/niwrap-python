@@ -256,7 +256,7 @@ def v__measure_in2out_outputs(
 
 def v__measure_in2out_execute(
     params: VMeasureIn2outParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VMeasureIn2outOutputs:
     """
     Compute thickness of mask using in2out method.
@@ -267,10 +267,12 @@ def v__measure_in2out_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VMeasureIn2outOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__MEASURE_IN2OUT_METADATA)
     params = execution.params(params)
     cargs = v__measure_in2out_cargs(params, execution)
     ret = v__measure_in2out_outputs(params, execution)
@@ -327,8 +329,6 @@ def v__measure_in2out(
     Returns:
         NamedTuple of outputs (described in `VMeasureIn2outOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__MEASURE_IN2OUT_METADATA)
     params = v__measure_in2out_params(
         maskset=maskset,
         surfset=surfset,
@@ -343,7 +343,7 @@ def v__measure_in2out(
         surfsmooth_method=surfsmooth_method,
         fs_cort_dir=fs_cort_dir,
     )
-    return v__measure_in2out_execute(params, execution)
+    return v__measure_in2out_execute(params, runner)
 
 
 __all__ = [
@@ -351,8 +351,6 @@ __all__ = [
     "VMeasureIn2outParameters",
     "V__MEASURE_IN2OUT_METADATA",
     "v__measure_in2out",
-    "v__measure_in2out_cargs",
     "v__measure_in2out_execute",
-    "v__measure_in2out_outputs",
     "v__measure_in2out_params",
 ]

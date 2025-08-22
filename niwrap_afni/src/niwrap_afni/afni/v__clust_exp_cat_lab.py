@@ -138,7 +138,7 @@ def v__clust_exp_cat_lab_outputs(
 
 def v__clust_exp_cat_lab_execute(
     params: VClustExpCatLabParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VClustExpCatLabOutputs:
     """
     Helper script to concatenate and label a group of data sets.
@@ -149,10 +149,12 @@ def v__clust_exp_cat_lab_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VClustExpCatLabOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__CLUST_EXP_CAT_LAB_METADATA)
     params = execution.params(params)
     cargs = v__clust_exp_cat_lab_cargs(params, execution)
     ret = v__clust_exp_cat_lab_outputs(params, execution)
@@ -182,14 +184,12 @@ def v__clust_exp_cat_lab(
     Returns:
         NamedTuple of outputs (described in `VClustExpCatLabOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__CLUST_EXP_CAT_LAB_METADATA)
     params = v__clust_exp_cat_lab_params(
         prefix=prefix,
         input_file=input_file,
         help_=help_,
     )
-    return v__clust_exp_cat_lab_execute(params, execution)
+    return v__clust_exp_cat_lab_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "VClustExpCatLabParameters",
     "V__CLUST_EXP_CAT_LAB_METADATA",
     "v__clust_exp_cat_lab",
-    "v__clust_exp_cat_lab_cargs",
     "v__clust_exp_cat_lab_execute",
-    "v__clust_exp_cat_lab_outputs",
     "v__clust_exp_cat_lab_params",
 ]

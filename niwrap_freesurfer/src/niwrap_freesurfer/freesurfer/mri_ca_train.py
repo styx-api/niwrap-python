@@ -238,7 +238,7 @@ def mri_ca_train_outputs(
 
 def mri_ca_train_execute(
     params: MriCaTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCaTrainOutputs:
     """
     Trains GCA data with multiple subjects using provided segmentation volumes and
@@ -250,10 +250,12 @@ def mri_ca_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCaTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CA_TRAIN_METADATA)
     params = execution.params(params)
     cargs = mri_ca_train_cargs(params, execution)
     ret = mri_ca_train_outputs(params, execution)
@@ -312,8 +314,6 @@ def mri_ca_train(
     Returns:
         NamedTuple of outputs (described in `MriCaTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CA_TRAIN_METADATA)
     params = mri_ca_train_params(
         subjects=subjects,
         output_gca=output_gca,
@@ -330,7 +330,7 @@ def mri_ca_train(
         threads=threads,
         done_file=done_file,
     )
-    return mri_ca_train_execute(params, execution)
+    return mri_ca_train_execute(params, runner)
 
 
 __all__ = [
@@ -338,8 +338,6 @@ __all__ = [
     "MriCaTrainOutputs",
     "MriCaTrainParameters",
     "mri_ca_train",
-    "mri_ca_train_cargs",
     "mri_ca_train_execute",
-    "mri_ca_train_outputs",
     "mri_ca_train_params",
 ]

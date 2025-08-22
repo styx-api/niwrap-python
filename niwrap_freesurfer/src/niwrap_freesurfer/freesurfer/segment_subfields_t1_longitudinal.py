@@ -130,7 +130,7 @@ def segment_subfields_t1_longitudinal_outputs(
 
 def segment_subfields_t1_longitudinal_execute(
     params: SegmentSubfieldsT1LongitudinalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubfieldsT1LongitudinalOutputs:
     """
     FreeSurfer tool for segmenting subfields in longitudinal T1-weighted images.
@@ -141,10 +141,12 @@ def segment_subfields_t1_longitudinal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubfieldsT1LongitudinalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA)
     params = execution.params(params)
     cargs = segment_subfields_t1_longitudinal_cargs(params, execution)
     ret = segment_subfields_t1_longitudinal_outputs(params, execution)
@@ -173,14 +175,12 @@ def segment_subfields_t1_longitudinal(
     Returns:
         NamedTuple of outputs (described in `SegmentSubfieldsT1LongitudinalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBFIELDS_T1_LONGITUDINAL_METADATA)
     params = segment_subfields_t1_longitudinal_params(
         subject_id=subject_id,
         input_image=input_image,
         output_dir=output_dir,
     )
-    return segment_subfields_t1_longitudinal_execute(params, execution)
+    return segment_subfields_t1_longitudinal_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "SegmentSubfieldsT1LongitudinalOutputs",
     "SegmentSubfieldsT1LongitudinalParameters",
     "segment_subfields_t1_longitudinal",
-    "segment_subfields_t1_longitudinal_cargs",
     "segment_subfields_t1_longitudinal_execute",
-    "segment_subfields_t1_longitudinal_outputs",
     "segment_subfields_t1_longitudinal_params",
 ]

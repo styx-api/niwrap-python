@@ -117,7 +117,7 @@ def nmovie_qt_outputs(
 
 def nmovie_qt_execute(
     params: NmovieQtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NmovieQtOutputs:
     """
     An image viewer using Qt for displaying images in sequence.
@@ -128,10 +128,12 @@ def nmovie_qt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NmovieQtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NMOVIE_QT_METADATA)
     params = execution.params(params)
     cargs = nmovie_qt_cargs(params, execution)
     ret = nmovie_qt_outputs(params, execution)
@@ -157,12 +159,10 @@ def nmovie_qt(
     Returns:
         NamedTuple of outputs (described in `NmovieQtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NMOVIE_QT_METADATA)
     params = nmovie_qt_params(
         images=images,
     )
-    return nmovie_qt_execute(params, execution)
+    return nmovie_qt_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "NmovieQtOutputs",
     "NmovieQtParameters",
     "nmovie_qt",
-    "nmovie_qt_cargs",
     "nmovie_qt_execute",
-    "nmovie_qt_outputs",
     "nmovie_qt_params",
 ]

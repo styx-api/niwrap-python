@@ -161,7 +161,7 @@ def segpons_outputs(
 
 def segpons_execute(
     params: SegponsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegponsOutputs:
     """
     Approximate segmentation of pons using MNI152 space registration.
@@ -172,10 +172,12 @@ def segpons_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegponsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGPONS_METADATA)
     params = execution.params(params)
     cargs = segpons_cargs(params, execution)
     ret = segpons_outputs(params, execution)
@@ -210,8 +212,6 @@ def segpons(
     Returns:
         NamedTuple of outputs (described in `SegponsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGPONS_METADATA)
     params = segpons_params(
         subject=subject,
         aseg=aseg,
@@ -220,7 +220,7 @@ def segpons(
         no_refine=no_refine,
         pons152_mask=pons152_mask,
     )
-    return segpons_execute(params, execution)
+    return segpons_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "SegponsOutputs",
     "SegponsParameters",
     "segpons",
-    "segpons_cargs",
     "segpons_execute",
-    "segpons_outputs",
     "segpons_params",
 ]

@@ -253,7 +253,7 @@ def v_3d_roistats_outputs(
 
 def v_3d_roistats_execute(
     params: V3dRoistatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRoistatsOutputs:
     """
     Display statistics over masked regions.
@@ -264,10 +264,12 @@ def v_3d_roistats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRoistatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ROISTATS_METADATA)
     params = execution.params(params)
     cargs = v_3d_roistats_cargs(params, execution)
     ret = v_3d_roistats_outputs(params, execution)
@@ -348,8 +350,6 @@ def v_3d_roistats(
     Returns:
         NamedTuple of outputs (described in `V3dRoistatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ROISTATS_METADATA)
     params = v_3d_roistats_params(
         in_file=in_file,
         mask=mask,
@@ -366,7 +366,7 @@ def v_3d_roistats(
         stat_=stat_,
         zerofill=zerofill,
     )
-    return v_3d_roistats_execute(params, execution)
+    return v_3d_roistats_execute(params, runner)
 
 
 __all__ = [
@@ -374,8 +374,6 @@ __all__ = [
     "V3dRoistatsParameters",
     "V_3D_ROISTATS_METADATA",
     "v_3d_roistats",
-    "v_3d_roistats_cargs",
     "v_3d_roistats_execute",
-    "v_3d_roistats_outputs",
     "v_3d_roistats_params",
 ]

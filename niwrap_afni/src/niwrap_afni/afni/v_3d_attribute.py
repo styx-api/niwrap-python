@@ -170,7 +170,7 @@ def v_3d_attribute_outputs(
 
 def v_3d_attribute_execute(
     params: V3dAttributeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAttributeOutputs:
     """
     Prints the value of the attribute 'aname' from the header of the dataset 'dset'.
@@ -181,10 +181,12 @@ def v_3d_attribute_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAttributeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ATTRIBUTE_METADATA)
     params = execution.params(params)
     cargs = v_3d_attribute_cargs(params, execution)
     ret = v_3d_attribute_outputs(params, execution)
@@ -224,8 +226,6 @@ def v_3d_attribute(
     Returns:
         NamedTuple of outputs (described in `V3dAttributeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ATTRIBUTE_METADATA)
     params = v_3d_attribute_params(
         all_=all_,
         name=name,
@@ -236,7 +236,7 @@ def v_3d_attribute(
         aname=aname,
         dset=dset,
     )
-    return v_3d_attribute_execute(params, execution)
+    return v_3d_attribute_execute(params, runner)
 
 
 __all__ = [
@@ -244,8 +244,6 @@ __all__ = [
     "V3dAttributeParameters",
     "V_3D_ATTRIBUTE_METADATA",
     "v_3d_attribute",
-    "v_3d_attribute_cargs",
     "v_3d_attribute_execute",
-    "v_3d_attribute_outputs",
     "v_3d_attribute_params",
 ]

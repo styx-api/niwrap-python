@@ -199,7 +199,7 @@ def mmppsp_outputs(
 
 def mmppsp_execute(
     params: MmppspParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MmppspOutputs:
     """
     MultiModal Posterior Probability Surface Placement.
@@ -210,10 +210,12 @@ def mmppsp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MmppspOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MMPPSP_METADATA)
     params = execution.params(params)
     cargs = mmppsp_cargs(params, execution)
     ret = mmppsp_outputs(params, execution)
@@ -260,8 +262,6 @@ def mmppsp(
     Returns:
         NamedTuple of outputs (described in `MmppspOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MMPPSP_METADATA)
     params = mmppsp_params(
         samseg_dir=samseg_dir,
         outdir=outdir,
@@ -275,7 +275,7 @@ def mmppsp(
         stop_after=stop_after,
         wexpanddist=wexpanddist,
     )
-    return mmppsp_execute(params, execution)
+    return mmppsp_execute(params, runner)
 
 
 __all__ = [
@@ -283,8 +283,6 @@ __all__ = [
     "MmppspOutputs",
     "MmppspParameters",
     "mmppsp",
-    "mmppsp_cargs",
     "mmppsp_execute",
-    "mmppsp_outputs",
     "mmppsp_params",
 ]

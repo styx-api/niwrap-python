@@ -361,7 +361,7 @@ def randomise_outputs(
 
 def randomise_execute(
     params: RandomiseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RandomiseOutputs:
     """
     FSL Randomise: feeds the 4D projected FA data into GLM modelling and
@@ -373,10 +373,12 @@ def randomise_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RandomiseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RANDOMISE_METADATA)
     params = execution.params(params)
     cargs = randomise_cargs(params, execution)
     ret = randomise_outputs(params, execution)
@@ -464,8 +466,6 @@ def randomise(
     Returns:
         NamedTuple of outputs (described in `RandomiseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RANDOMISE_METADATA)
     params = randomise_params(
         in_file=in_file,
         base_name=base_name,
@@ -496,7 +496,7 @@ def randomise(
         vox_p_values=vox_p_values,
         x_block_labels=x_block_labels,
     )
-    return randomise_execute(params, execution)
+    return randomise_execute(params, runner)
 
 
 __all__ = [
@@ -504,8 +504,6 @@ __all__ = [
     "RandomiseOutputs",
     "RandomiseParameters",
     "randomise",
-    "randomise_cargs",
     "randomise_execute",
-    "randomise_outputs",
     "randomise_params",
 ]

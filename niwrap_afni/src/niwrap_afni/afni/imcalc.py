@@ -162,7 +162,7 @@ def imcalc_outputs(
 
 def imcalc_execute(
     params: ImcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImcalcOutputs:
     """
     Tool for arithmetic operations on 2D images, pixel-by-pixel.
@@ -173,10 +173,12 @@ def imcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMCALC_METADATA)
     params = execution.params(params)
     cargs = imcalc_cargs(params, execution)
     ret = imcalc_outputs(params, execution)
@@ -215,15 +217,13 @@ def imcalc(
     Returns:
         NamedTuple of outputs (described in `ImcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMCALC_METADATA)
     params = imcalc_params(
         datum_type=datum_type,
         image_inputs=image_inputs,
         expression=expression,
         output_name=output_name,
     )
-    return imcalc_execute(params, execution)
+    return imcalc_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "ImcalcOutputs",
     "ImcalcParameters",
     "imcalc",
-    "imcalc_cargs",
     "imcalc_execute",
-    "imcalc_outputs",
     "imcalc_params",
 ]

@@ -116,7 +116,7 @@ def fslnvols_outputs(
 
 def fslnvols_execute(
     params: FslnvolsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslnvolsOutputs:
     """
     Retrieve the number of volumes in a 4D NIfTI file.
@@ -127,10 +127,12 @@ def fslnvols_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslnvolsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLNVOLS_METADATA)
     params = execution.params(params)
     cargs = fslnvols_cargs(params, execution)
     ret = fslnvols_outputs(params, execution)
@@ -155,12 +157,10 @@ def fslnvols(
     Returns:
         NamedTuple of outputs (described in `FslnvolsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLNVOLS_METADATA)
     params = fslnvols_params(
         infile=infile,
     )
-    return fslnvols_execute(params, execution)
+    return fslnvols_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "FslnvolsOutputs",
     "FslnvolsParameters",
     "fslnvols",
-    "fslnvols_cargs",
     "fslnvols_execute",
-    "fslnvols_outputs",
     "fslnvols_params",
 ]

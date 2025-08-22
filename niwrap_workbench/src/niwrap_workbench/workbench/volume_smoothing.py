@@ -166,7 +166,7 @@ def volume_smoothing_outputs(
 
 def volume_smoothing_execute(
     params: VolumeSmoothingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
     Smooth a volume file.
@@ -189,10 +189,12 @@ def volume_smoothing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeSmoothingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_SMOOTHING_METADATA)
     params = execution.params(params)
     cargs = volume_smoothing_cargs(params, execution)
     ret = volume_smoothing_outputs(params, execution)
@@ -244,8 +246,6 @@ def volume_smoothing(
     Returns:
         NamedTuple of outputs (described in `VolumeSmoothingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_SMOOTHING_METADATA)
     params = volume_smoothing_params(
         volume_in=volume_in,
         kernel=kernel,
@@ -255,7 +255,7 @@ def volume_smoothing(
         opt_fix_zeros=opt_fix_zeros,
         opt_subvolume_subvol=opt_subvolume_subvol,
     )
-    return volume_smoothing_execute(params, execution)
+    return volume_smoothing_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "VolumeSmoothingOutputs",
     "VolumeSmoothingParameters",
     "volume_smoothing",
-    "volume_smoothing_cargs",
     "volume_smoothing_execute",
-    "volume_smoothing_outputs",
     "volume_smoothing_params",
 ]

@@ -494,7 +494,7 @@ def samseg_outputs(
 
 def samseg_execute(
     params: SamsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SamsegOutputs:
     """
     SAMSEG (Statistical and Algorithmic Methods for Segmentation) is a tool for
@@ -506,10 +506,12 @@ def samseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SamsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SAMSEG_METADATA)
     params = execution.params(params)
     cargs = samseg_cargs(params, execution)
     ret = samseg_outputs(params, execution)
@@ -635,8 +637,6 @@ def samseg(
     Returns:
         NamedTuple of outputs (described in `SamsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SAMSEG_METADATA)
     params = samseg_params(
         input_files=input_files,
         t1w_files=t1w_files,
@@ -683,7 +683,7 @@ def samseg(
         smooth_wm_cortex=smooth_wm_cortex,
         profile_file=profile_file,
     )
-    return samseg_execute(params, execution)
+    return samseg_execute(params, runner)
 
 
 __all__ = [
@@ -691,8 +691,6 @@ __all__ = [
     "SamsegOutputs",
     "SamsegParameters",
     "samseg",
-    "samseg_cargs",
     "samseg_execute",
-    "samseg_outputs",
     "samseg_params",
 ]

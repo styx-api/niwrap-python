@@ -130,7 +130,7 @@ def mri_make_bem_surfaces_outputs(
 
 def mri_make_bem_surfaces_execute(
     params: MriMakeBemSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMakeBemSurfacesOutputs:
     """
     Tool to create Boundary Element Method (BEM) surfaces.
@@ -141,10 +141,12 @@ def mri_make_bem_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMakeBemSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MAKE_BEM_SURFACES_METADATA)
     params = execution.params(params)
     cargs = mri_make_bem_surfaces_cargs(params, execution)
     ret = mri_make_bem_surfaces_outputs(params, execution)
@@ -171,13 +173,11 @@ def mri_make_bem_surfaces(
     Returns:
         NamedTuple of outputs (described in `MriMakeBemSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MAKE_BEM_SURFACES_METADATA)
     params = mri_make_bem_surfaces_params(
         name=name,
         mfile=mfile,
     )
-    return mri_make_bem_surfaces_execute(params, execution)
+    return mri_make_bem_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "MriMakeBemSurfacesOutputs",
     "MriMakeBemSurfacesParameters",
     "mri_make_bem_surfaces",
-    "mri_make_bem_surfaces_cargs",
     "mri_make_bem_surfaces_execute",
-    "mri_make_bem_surfaces_outputs",
     "mri_make_bem_surfaces_params",
 ]

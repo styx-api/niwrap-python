@@ -394,7 +394,7 @@ def maskfilter_outputs(
 
 def maskfilter_execute(
     params: MaskfilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MaskfilterOutputs:
     """
     Perform filtering operations on 3D / 4D mask images.
@@ -413,10 +413,12 @@ def maskfilter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MaskfilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MASKFILTER_METADATA)
     params = execution.params(params)
     cargs = maskfilter_cargs(params, execution)
     ret = maskfilter_outputs(params, execution)
@@ -497,8 +499,6 @@ def maskfilter(
     Returns:
         NamedTuple of outputs (described in `MaskfilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MASKFILTER_METADATA)
     params = maskfilter_params(
         scale=scale,
         axes=axes,
@@ -519,7 +519,7 @@ def maskfilter(
         filter_=filter_,
         output=output,
     )
-    return maskfilter_execute(params, execution)
+    return maskfilter_execute(params, runner)
 
 
 __all__ = [
@@ -530,14 +530,9 @@ __all__ = [
     "MaskfilterVariousFileParameters",
     "MaskfilterVariousStringParameters",
     "maskfilter",
-    "maskfilter_cargs",
-    "maskfilter_config_cargs",
     "maskfilter_config_params",
     "maskfilter_execute",
-    "maskfilter_outputs",
     "maskfilter_params",
-    "maskfilter_various_file_cargs",
     "maskfilter_various_file_params",
-    "maskfilter_various_string_cargs",
     "maskfilter_various_string_params",
 ]

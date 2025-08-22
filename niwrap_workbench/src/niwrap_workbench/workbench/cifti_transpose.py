@@ -137,7 +137,7 @@ def cifti_transpose_outputs(
 
 def cifti_transpose_execute(
     params: CiftiTransposeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
     """
     Transpose a cifti file.
@@ -151,10 +151,12 @@ def cifti_transpose_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiTransposeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_TRANSPOSE_METADATA)
     params = execution.params(params)
     cargs = cifti_transpose_cargs(params, execution)
     ret = cifti_transpose_outputs(params, execution)
@@ -187,14 +189,12 @@ def cifti_transpose(
     Returns:
         NamedTuple of outputs (described in `CiftiTransposeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_TRANSPOSE_METADATA)
     params = cifti_transpose_params(
         cifti_in=cifti_in,
         cifti_out=cifti_out,
         opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
     )
-    return cifti_transpose_execute(params, execution)
+    return cifti_transpose_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "CiftiTransposeOutputs",
     "CiftiTransposeParameters",
     "cifti_transpose",
-    "cifti_transpose_cargs",
     "cifti_transpose_execute",
-    "cifti_transpose_outputs",
     "cifti_transpose_params",
 ]

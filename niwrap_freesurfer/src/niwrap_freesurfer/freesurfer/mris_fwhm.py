@@ -372,7 +372,7 @@ def mris_fwhm_outputs(
 
 def mris_fwhm_execute(
     params: MrisFwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisFwhmOutputs:
     """
     Smooths surface data and/or estimates FWHM.
@@ -383,10 +383,12 @@ def mris_fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisFwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_FWHM_METADATA)
     params = execution.params(params)
     cargs = mris_fwhm_cargs(params, execution)
     ret = mris_fwhm_outputs(params, execution)
@@ -474,8 +476,6 @@ def mris_fwhm(
     Returns:
         NamedTuple of outputs (described in `MrisFwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_FWHM_METADATA)
     params = mris_fwhm_params(
         input_file=input_file,
         subject=subject,
@@ -509,7 +509,7 @@ def mris_fwhm(
         checkopts_flag=checkopts_flag,
         version_flag=version_flag,
     )
-    return mris_fwhm_execute(params, execution)
+    return mris_fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -517,8 +517,6 @@ __all__ = [
     "MrisFwhmOutputs",
     "MrisFwhmParameters",
     "mris_fwhm",
-    "mris_fwhm_cargs",
     "mris_fwhm_execute",
-    "mris_fwhm_outputs",
     "mris_fwhm_params",
 ]

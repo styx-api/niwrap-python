@@ -203,7 +203,7 @@ def v__fs_roi_label_outputs(
 
 def v__fs_roi_label_execute(
     params: VFsRoiLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VFsRoiLabelOutputs:
     """
     Tool to get labels associated with FreeSurfer's parcellation and annotation
@@ -215,10 +215,12 @@ def v__fs_roi_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VFsRoiLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__FS_ROI_LABEL_METADATA)
     params = execution.params(params)
     cargs = v__fs_roi_label_cargs(params, execution)
     ret = v__fs_roi_label_outputs(params, execution)
@@ -265,8 +267,6 @@ def v__fs_roi_label(
     Returns:
         NamedTuple of outputs (described in `VFsRoiLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__FS_ROI_LABEL_METADATA)
     params = v__fs_roi_label_params(
         label_int=label_int,
         lab_flag=lab_flag,
@@ -278,7 +278,7 @@ def v__fs_roi_label(
         slab_int=slab_int,
         sname_name=sname_name,
     )
-    return v__fs_roi_label_execute(params, execution)
+    return v__fs_roi_label_execute(params, runner)
 
 
 __all__ = [
@@ -286,8 +286,6 @@ __all__ = [
     "VFsRoiLabelParameters",
     "V__FS_ROI_LABEL_METADATA",
     "v__fs_roi_label",
-    "v__fs_roi_label_cargs",
     "v__fs_roi_label_execute",
-    "v__fs_roi_label_outputs",
     "v__fs_roi_label_params",
 ]

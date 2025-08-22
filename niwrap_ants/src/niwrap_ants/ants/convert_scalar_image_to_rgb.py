@@ -186,7 +186,7 @@ def convert_scalar_image_to_rgb_outputs(
 
 def convert_scalar_image_to_rgb_execute(
     params: ConvertScalarImageToRgbParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertScalarImageToRgbOutputs:
     """
     Converts a scalar image to an RGB image using specified parameters. Supports
@@ -198,10 +198,12 @@ def convert_scalar_image_to_rgb_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertScalarImageToRgbOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_SCALAR_IMAGE_TO_RGB_METADATA)
     params = execution.params(params)
     cargs = convert_scalar_image_to_rgb_cargs(params, execution)
     ret = convert_scalar_image_to_rgb_outputs(params, execution)
@@ -251,8 +253,6 @@ def convert_scalar_image_to_rgb(
     Returns:
         NamedTuple of outputs (described in `ConvertScalarImageToRgbOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_SCALAR_IMAGE_TO_RGB_METADATA)
     params = convert_scalar_image_to_rgb_params(
         image_dimension=image_dimension,
         input_image=input_image,
@@ -266,7 +266,7 @@ def convert_scalar_image_to_rgb(
         maximum_rgb_output=maximum_rgb_output,
         vtk_lookup_table=vtk_lookup_table,
     )
-    return convert_scalar_image_to_rgb_execute(params, execution)
+    return convert_scalar_image_to_rgb_execute(params, runner)
 
 
 __all__ = [
@@ -274,8 +274,6 @@ __all__ = [
     "ConvertScalarImageToRgbOutputs",
     "ConvertScalarImageToRgbParameters",
     "convert_scalar_image_to_rgb",
-    "convert_scalar_image_to_rgb_cargs",
     "convert_scalar_image_to_rgb_execute",
-    "convert_scalar_image_to_rgb_outputs",
     "convert_scalar_image_to_rgb_params",
 ]

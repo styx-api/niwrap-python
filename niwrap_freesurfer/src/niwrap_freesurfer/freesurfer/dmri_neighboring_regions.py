@@ -125,7 +125,7 @@ def dmri_neighboring_regions_outputs(
 
 def dmri_neighboring_regions_execute(
     params: DmriNeighboringRegionsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriNeighboringRegionsOutputs:
     """
     A tool for diffusion MRI analysis involving neighboring regions.
@@ -136,10 +136,12 @@ def dmri_neighboring_regions_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriNeighboringRegionsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_NEIGHBORING_REGIONS_METADATA)
     params = execution.params(params)
     cargs = dmri_neighboring_regions_cargs(params, execution)
     ret = dmri_neighboring_regions_outputs(params, execution)
@@ -166,13 +168,11 @@ def dmri_neighboring_regions(
     Returns:
         NamedTuple of outputs (described in `DmriNeighboringRegionsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_NEIGHBORING_REGIONS_METADATA)
     params = dmri_neighboring_regions_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return dmri_neighboring_regions_execute(params, execution)
+    return dmri_neighboring_regions_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "DmriNeighboringRegionsOutputs",
     "DmriNeighboringRegionsParameters",
     "dmri_neighboring_regions",
-    "dmri_neighboring_regions_cargs",
     "dmri_neighboring_regions_execute",
-    "dmri_neighboring_regions_outputs",
     "dmri_neighboring_regions_params",
 ]

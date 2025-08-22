@@ -138,7 +138,7 @@ def surface_cut_resample_outputs(
 
 def surface_cut_resample_execute(
     params: SurfaceCutResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceCutResampleOutputs:
     """
     Resample a cut surface.
@@ -153,10 +153,12 @@ def surface_cut_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCutResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_CUT_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = surface_cut_resample_cargs(params, execution)
     ret = surface_cut_resample_outputs(params, execution)
@@ -193,15 +195,13 @@ def surface_cut_resample(
     Returns:
         NamedTuple of outputs (described in `SurfaceCutResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_CUT_RESAMPLE_METADATA)
     params = surface_cut_resample_params(
         surface_in=surface_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
         surface_out=surface_out,
     )
-    return surface_cut_resample_execute(params, execution)
+    return surface_cut_resample_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "SurfaceCutResampleOutputs",
     "SurfaceCutResampleParameters",
     "surface_cut_resample",
-    "surface_cut_resample_cargs",
     "surface_cut_resample_execute",
-    "surface_cut_resample_outputs",
     "surface_cut_resample_params",
 ]

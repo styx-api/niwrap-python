@@ -194,7 +194,7 @@ def pta_outputs(
 
 def pta_execute(
     params: PtaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PtaOutputs:
     """
     Program for Profile Tracking Analysis - estimates nonlinear trajectories through
@@ -206,10 +206,12 @@ def pta_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PtaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PTA_METADATA)
     params = execution.params(params)
     cargs = pta_cargs(params, execution)
     ret = pta_outputs(params, execution)
@@ -255,8 +257,6 @@ def pta(
     Returns:
         NamedTuple of outputs (described in `PtaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PTA_METADATA)
     params = pta_params(
         prefix=prefix,
         input_file=input_file,
@@ -267,7 +267,7 @@ def pta(
         response_var=response_var,
         dbg_args=dbg_args,
     )
-    return pta_execute(params, execution)
+    return pta_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "PtaOutputs",
     "PtaParameters",
     "pta",
-    "pta_cargs",
     "pta_execute",
-    "pta_outputs",
     "pta_params",
 ]

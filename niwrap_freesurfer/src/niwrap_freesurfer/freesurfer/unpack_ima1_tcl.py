@@ -127,7 +127,7 @@ def unpack_ima1_tcl_outputs(
 
 def unpack_ima1_tcl_execute(
     params: UnpackIma1TclParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnpackIma1TclOutputs:
     """
     A tool for unpacking images using FreeSurfer.
@@ -138,10 +138,12 @@ def unpack_ima1_tcl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnpackIma1TclOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNPACK_IMA1_TCL_METADATA)
     params = execution.params(params)
     cargs = unpack_ima1_tcl_cargs(params, execution)
     ret = unpack_ima1_tcl_outputs(params, execution)
@@ -170,13 +172,11 @@ def unpack_ima1_tcl(
     Returns:
         NamedTuple of outputs (described in `UnpackIma1TclOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNPACK_IMA1_TCL_METADATA)
     params = unpack_ima1_tcl_params(
         input_directory=input_directory,
         output_directory=output_directory,
     )
-    return unpack_ima1_tcl_execute(params, execution)
+    return unpack_ima1_tcl_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "UnpackIma1TclOutputs",
     "UnpackIma1TclParameters",
     "unpack_ima1_tcl",
-    "unpack_ima1_tcl_cargs",
     "unpack_ima1_tcl_execute",
-    "unpack_ima1_tcl_outputs",
     "unpack_ima1_tcl_params",
 ]

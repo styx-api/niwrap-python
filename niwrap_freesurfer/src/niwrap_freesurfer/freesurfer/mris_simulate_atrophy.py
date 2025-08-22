@@ -160,7 +160,7 @@ def mris_simulate_atrophy_outputs(
 
 def mris_simulate_atrophy_execute(
     params: MrisSimulateAtrophyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSimulateAtrophyOutputs:
     """
     Simulate atrophy on brain structures.
@@ -171,10 +171,12 @@ def mris_simulate_atrophy_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSimulateAtrophyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SIMULATE_ATROPHY_METADATA)
     params = execution.params(params)
     cargs = mris_simulate_atrophy_cargs(params, execution)
     ret = mris_simulate_atrophy_outputs(params, execution)
@@ -211,8 +213,6 @@ def mris_simulate_atrophy(
     Returns:
         NamedTuple of outputs (described in `MrisSimulateAtrophyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SIMULATE_ATROPHY_METADATA)
     params = mris_simulate_atrophy_params(
         subject=subject,
         hemi=hemi,
@@ -222,7 +222,7 @@ def mris_simulate_atrophy(
         atrophy_percent=atrophy_percent,
         noise_level=noise_level,
     )
-    return mris_simulate_atrophy_execute(params, execution)
+    return mris_simulate_atrophy_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "MrisSimulateAtrophyOutputs",
     "MrisSimulateAtrophyParameters",
     "mris_simulate_atrophy",
-    "mris_simulate_atrophy_cargs",
     "mris_simulate_atrophy_execute",
-    "mris_simulate_atrophy_outputs",
     "mris_simulate_atrophy_params",
 ]

@@ -116,7 +116,7 @@ def bedpostx_datacheck_outputs(
 
 def bedpostx_datacheck_execute(
     params: BedpostxDatacheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BedpostxDatacheckOutputs:
     """
     Check the data directory for BEDPOSTX compatibility.
@@ -127,10 +127,12 @@ def bedpostx_datacheck_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BedpostxDatacheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BEDPOSTX_DATACHECK_METADATA)
     params = execution.params(params)
     cargs = bedpostx_datacheck_cargs(params, execution)
     ret = bedpostx_datacheck_outputs(params, execution)
@@ -155,12 +157,10 @@ def bedpostx_datacheck(
     Returns:
         NamedTuple of outputs (described in `BedpostxDatacheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BEDPOSTX_DATACHECK_METADATA)
     params = bedpostx_datacheck_params(
         data_dir=data_dir,
     )
-    return bedpostx_datacheck_execute(params, execution)
+    return bedpostx_datacheck_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "BedpostxDatacheckOutputs",
     "BedpostxDatacheckParameters",
     "bedpostx_datacheck",
-    "bedpostx_datacheck_cargs",
     "bedpostx_datacheck_execute",
-    "bedpostx_datacheck_outputs",
     "bedpostx_datacheck_params",
 ]

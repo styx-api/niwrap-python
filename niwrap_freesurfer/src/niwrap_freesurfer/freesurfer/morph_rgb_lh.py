@@ -121,7 +121,7 @@ def morph_rgb_lh_outputs(
 
 def morph_rgb_lh_execute(
     params: MorphRgbLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphRgbLhOutputs:
     """
     Tool for working with and generating RGB images of morphometric data for the
@@ -133,10 +133,12 @@ def morph_rgb_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphRgbLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_RGB_LH_METADATA)
     params = execution.params(params)
     cargs = morph_rgb_lh_cargs(params, execution)
     ret = morph_rgb_lh_outputs(params, execution)
@@ -164,12 +166,10 @@ def morph_rgb_lh(
     Returns:
         NamedTuple of outputs (described in `MorphRgbLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_RGB_LH_METADATA)
     params = morph_rgb_lh_params(
         subject_id=subject_id,
     )
-    return morph_rgb_lh_execute(params, execution)
+    return morph_rgb_lh_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "MorphRgbLhOutputs",
     "MorphRgbLhParameters",
     "morph_rgb_lh",
-    "morph_rgb_lh_cargs",
     "morph_rgb_lh_execute",
-    "morph_rgb_lh_outputs",
     "morph_rgb_lh_params",
 ]

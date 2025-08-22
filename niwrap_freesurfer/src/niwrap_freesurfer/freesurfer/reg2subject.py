@@ -119,7 +119,7 @@ def reg2subject_outputs(
 
 def reg2subject_execute(
     params: Reg2subjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Reg2subjectOutputs:
     """
     Returns the name of the subject in the registration file, whether it is an LTA
@@ -131,10 +131,12 @@ def reg2subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Reg2subjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG2SUBJECT_METADATA)
     params = execution.params(params)
     cargs = reg2subject_cargs(params, execution)
     ret = reg2subject_outputs(params, execution)
@@ -160,12 +162,10 @@ def reg2subject(
     Returns:
         NamedTuple of outputs (described in `Reg2subjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG2SUBJECT_METADATA)
     params = reg2subject_params(
         regfile=regfile,
     )
-    return reg2subject_execute(params, execution)
+    return reg2subject_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "Reg2subjectOutputs",
     "Reg2subjectParameters",
     "reg2subject",
-    "reg2subject_cargs",
     "reg2subject_execute",
-    "reg2subject_outputs",
     "reg2subject_params",
 ]

@@ -136,7 +136,7 @@ def ico_supersample_outputs(
 
 def ico_supersample_execute(
     params: IcoSupersampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> IcoSupersampleOutputs:
     """
     A tool for refining icosahedron meshes with user-specified parameters.
@@ -147,10 +147,12 @@ def ico_supersample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `IcoSupersampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ICO_SUPERSAMPLE_METADATA)
     params = execution.params(params)
     cargs = ico_supersample_cargs(params, execution)
     ret = ico_supersample_outputs(params, execution)
@@ -180,14 +182,12 @@ def ico_supersample(
     Returns:
         NamedTuple of outputs (described in `IcoSupersampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ICO_SUPERSAMPLE_METADATA)
     params = ico_supersample_params(
         refine=refine,
         radius=radius,
         projection_point=projection_point,
     )
-    return ico_supersample_execute(params, execution)
+    return ico_supersample_execute(params, runner)
 
 
 __all__ = [
@@ -195,8 +195,6 @@ __all__ = [
     "IcoSupersampleOutputs",
     "IcoSupersampleParameters",
     "ico_supersample",
-    "ico_supersample_cargs",
     "ico_supersample_execute",
-    "ico_supersample_outputs",
     "ico_supersample_params",
 ]

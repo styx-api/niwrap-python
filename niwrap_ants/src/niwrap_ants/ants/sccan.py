@@ -391,7 +391,7 @@ def sccan_outputs(
 
 def sccan_execute(
     params: SccanParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SccanOutputs:
     """
     A tool for sparse statistical analysis on images : scca, pscca (with options),
@@ -403,10 +403,12 @@ def sccan_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SccanOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SCCAN_METADATA)
     params = execution.params(params)
     cargs = sccan_cargs(params, execution)
     ret = sccan_outputs(params, execution)
@@ -494,8 +496,6 @@ def sccan(
     Returns:
         NamedTuple of outputs (described in `SccanOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SCCAN_METADATA)
     params = sccan_params(
         output=output,
         n_permutations=n_permutations,
@@ -525,7 +525,7 @@ def sccan(
         scca=scca,
         svd=svd,
     )
-    return sccan_execute(params, execution)
+    return sccan_execute(params, runner)
 
 
 __all__ = [
@@ -533,8 +533,6 @@ __all__ = [
     "SccanOutputs",
     "SccanParameters",
     "sccan",
-    "sccan_cargs",
     "sccan_execute",
-    "sccan_outputs",
     "sccan_params",
 ]

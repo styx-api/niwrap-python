@@ -127,7 +127,7 @@ def cifti_label_export_table_outputs(
 
 def cifti_label_export_table_execute(
     params: CiftiLabelExportTableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiLabelExportTableOutputs:
     """
     Export label table from cifti as text.
@@ -141,10 +141,12 @@ def cifti_label_export_table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelExportTableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_LABEL_EXPORT_TABLE_METADATA)
     params = execution.params(params)
     cargs = cifti_label_export_table_cargs(params, execution)
     ret = cifti_label_export_table_outputs(params, execution)
@@ -176,14 +178,12 @@ def cifti_label_export_table(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelExportTableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_LABEL_EXPORT_TABLE_METADATA)
     params = cifti_label_export_table_params(
         label_in=label_in,
         map_=map_,
         table_out=table_out,
     )
-    return cifti_label_export_table_execute(params, execution)
+    return cifti_label_export_table_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "CiftiLabelExportTableOutputs",
     "CiftiLabelExportTableParameters",
     "cifti_label_export_table",
-    "cifti_label_export_table_cargs",
     "cifti_label_export_table_execute",
-    "cifti_label_export_table_outputs",
     "cifti_label_export_table_params",
 ]

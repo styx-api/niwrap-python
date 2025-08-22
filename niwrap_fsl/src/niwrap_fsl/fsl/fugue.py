@@ -346,7 +346,7 @@ def fugue_outputs(
 
 def fugue_execute(
     params: FugueParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FugueOutputs:
     """
     FMRIB's Utility for Geometric Unwarping of EPIs.
@@ -357,10 +357,12 @@ def fugue_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FugueOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FUGUE_METADATA)
     params = execution.params(params)
     cargs = fugue_cargs(params, execution)
     ret = fugue_outputs(params, execution)
@@ -454,8 +456,6 @@ def fugue(
     Returns:
         NamedTuple of outputs (described in `FugueOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FUGUE_METADATA)
     params = fugue_params(
         asym_se_time=asym_se_time,
         despike_2dfilter=despike_2dfilter,
@@ -491,7 +491,7 @@ def fugue(
         unwarped_file=unwarped_file,
         warped_file=warped_file,
     )
-    return fugue_execute(params, execution)
+    return fugue_execute(params, runner)
 
 
 __all__ = [
@@ -499,8 +499,6 @@ __all__ = [
     "FugueOutputs",
     "FugueParameters",
     "fugue",
-    "fugue_cargs",
     "fugue_execute",
-    "fugue_outputs",
     "fugue_params",
 ]

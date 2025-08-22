@@ -170,7 +170,7 @@ def v_3d_upsample_outputs(
 
 def v_3d_upsample_execute(
     params: V3dUpsampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dUpsampleOutputs:
     """
     Upsamples a 3D+time dataset in the time direction by a specified factor.
@@ -181,10 +181,12 @@ def v_3d_upsample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dUpsampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_UPSAMPLE_METADATA)
     params = execution.params(params)
     cargs = v_3d_upsample_cargs(params, execution)
     ret = v_3d_upsample_outputs(params, execution)
@@ -223,8 +225,6 @@ def v_3d_upsample(
     Returns:
         NamedTuple of outputs (described in `V3dUpsampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_UPSAMPLE_METADATA)
     params = v_3d_upsample_params(
         upsample_factor=upsample_factor,
         input_dataset=input_dataset,
@@ -233,7 +233,7 @@ def v_3d_upsample(
         verbose_flag=verbose_flag,
         datatype=datatype,
     )
-    return v_3d_upsample_execute(params, execution)
+    return v_3d_upsample_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "V3dUpsampleParameters",
     "V_3D_UPSAMPLE_METADATA",
     "v_3d_upsample",
-    "v_3d_upsample_cargs",
     "v_3d_upsample_execute",
-    "v_3d_upsample_outputs",
     "v_3d_upsample_params",
 ]

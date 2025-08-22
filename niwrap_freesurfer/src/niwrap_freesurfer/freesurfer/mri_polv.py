@@ -133,7 +133,7 @@ def mri_polv_outputs(
 
 def mri_polv_execute(
     params: MriPolvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriPolvOutputs:
     """
     Calculate an image specifying the plane of least variance at each point in the
@@ -145,10 +145,12 @@ def mri_polv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriPolvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_POLV_METADATA)
     params = execution.params(params)
     cargs = mri_polv_cargs(params, execution)
     ret = mri_polv_outputs(params, execution)
@@ -180,14 +182,12 @@ def mri_polv(
     Returns:
         NamedTuple of outputs (described in `MriPolvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_POLV_METADATA)
     params = mri_polv_params(
         window_size=window_size,
         input_image=input_image,
         output_image=output_image,
     )
-    return mri_polv_execute(params, execution)
+    return mri_polv_execute(params, runner)
 
 
 __all__ = [
@@ -195,8 +195,6 @@ __all__ = [
     "MriPolvOutputs",
     "MriPolvParameters",
     "mri_polv",
-    "mri_polv_cargs",
     "mri_polv_execute",
-    "mri_polv_outputs",
     "mri_polv_params",
 ]

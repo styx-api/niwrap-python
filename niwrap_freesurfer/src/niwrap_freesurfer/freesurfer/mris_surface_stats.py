@@ -250,7 +250,7 @@ def mris_surface_stats_outputs(
 
 def mris_surface_stats_execute(
     params: MrisSurfaceStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSurfaceStatsOutputs:
     """
     Computes the group-wise mean and standard deviation of thickness differences at
@@ -262,10 +262,12 @@ def mris_surface_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSurfaceStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SURFACE_STATS_METADATA)
     params = execution.params(params)
     cargs = mris_surface_stats_cargs(params, execution)
     ret = mris_surface_stats_outputs(params, execution)
@@ -317,8 +319,6 @@ def mris_surface_stats(
     Returns:
         NamedTuple of outputs (described in `MrisSurfaceStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SURFACE_STATS_METADATA)
     params = mris_surface_stats_params(
         nsmooth=nsmooth,
         surf_name=surf_name,
@@ -334,7 +334,7 @@ def mris_surface_stats(
         debug=debug,
         data_files=data_files,
     )
-    return mris_surface_stats_execute(params, execution)
+    return mris_surface_stats_execute(params, runner)
 
 
 __all__ = [
@@ -342,8 +342,6 @@ __all__ = [
     "MrisSurfaceStatsOutputs",
     "MrisSurfaceStatsParameters",
     "mris_surface_stats",
-    "mris_surface_stats_cargs",
     "mris_surface_stats_execute",
-    "mris_surface_stats_outputs",
     "mris_surface_stats_params",
 ]

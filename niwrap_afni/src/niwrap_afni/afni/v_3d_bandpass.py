@@ -261,7 +261,7 @@ def v_3d_bandpass_outputs(
 
 def v_3d_bandpass_execute(
     params: V3dBandpassParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dBandpassOutputs:
     """
     Program to lowpass and/or highpass each voxel time series in a dataset, offering
@@ -273,10 +273,12 @@ def v_3d_bandpass_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dBandpassOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_BANDPASS_METADATA)
     params = execution.params(params)
     cargs = v_3d_bandpass_cargs(params, execution)
     ret = v_3d_bandpass_outputs(params, execution)
@@ -348,8 +350,6 @@ def v_3d_bandpass(
     Returns:
         NamedTuple of outputs (described in `V3dBandpassOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_BANDPASS_METADATA)
     params = v_3d_bandpass_params(
         prefix=prefix,
         automask=automask,
@@ -369,7 +369,7 @@ def v_3d_bandpass(
         outputtype=outputtype,
         tr=tr,
     )
-    return v_3d_bandpass_execute(params, execution)
+    return v_3d_bandpass_execute(params, runner)
 
 
 __all__ = [
@@ -377,8 +377,6 @@ __all__ = [
     "V3dBandpassParameters",
     "V_3D_BANDPASS_METADATA",
     "v_3d_bandpass",
-    "v_3d_bandpass_cargs",
     "v_3d_bandpass_execute",
-    "v_3d_bandpass_outputs",
     "v_3d_bandpass_params",
 ]

@@ -183,7 +183,7 @@ def long_submit_postproc_outputs(
 
 def long_submit_postproc_execute(
     params: LongSubmitPostprocParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongSubmitPostprocOutputs:
     """
     Submits jobs to the cluster (either seychelles or launchpad at NMR) for
@@ -195,10 +195,12 @@ def long_submit_postproc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongSubmitPostprocOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_SUBMIT_POSTPROC_METADATA)
     params = execution.params(params)
     cargs = long_submit_postproc_cargs(params, execution)
     ret = long_submit_postproc_outputs(params, execution)
@@ -238,8 +240,6 @@ def long_submit_postproc(
     Returns:
         NamedTuple of outputs (described in `LongSubmitPostprocOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_SUBMIT_POSTPROC_METADATA)
     params = long_submit_postproc_params(
         qdec=qdec,
         prog=prog,
@@ -250,7 +250,7 @@ def long_submit_postproc(
         max_=max_,
         queue_=queue_,
     )
-    return long_submit_postproc_execute(params, execution)
+    return long_submit_postproc_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "LongSubmitPostprocOutputs",
     "LongSubmitPostprocParameters",
     "long_submit_postproc",
-    "long_submit_postproc_cargs",
     "long_submit_postproc_execute",
-    "long_submit_postproc_outputs",
     "long_submit_postproc_params",
 ]

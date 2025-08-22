@@ -283,7 +283,7 @@ def asl_mfree_outputs(
 
 def asl_mfree_execute(
     params: AslMfreeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AslMfreeOutputs:
     """
     ASL model-free analysis tool.
@@ -294,10 +294,12 @@ def asl_mfree_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AslMfreeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ASL_MFREE_METADATA)
     params = execution.params(params)
     cargs = asl_mfree_cargs(params, execution)
     ret = asl_mfree_outputs(params, execution)
@@ -363,8 +365,6 @@ def asl_mfree(
     Returns:
         NamedTuple of outputs (described in `AslMfreeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ASL_MFREE_METADATA)
     params = asl_mfree_params(
         datafile=datafile,
         mask=mask,
@@ -386,7 +386,7 @@ def asl_mfree(
         shift_factor=shift_factor,
         verbose=verbose,
     )
-    return asl_mfree_execute(params, execution)
+    return asl_mfree_execute(params, runner)
 
 
 __all__ = [
@@ -394,8 +394,6 @@ __all__ = [
     "AslMfreeOutputs",
     "AslMfreeParameters",
     "asl_mfree",
-    "asl_mfree_cargs",
     "asl_mfree_execute",
-    "asl_mfree_outputs",
     "asl_mfree_params",
 ]

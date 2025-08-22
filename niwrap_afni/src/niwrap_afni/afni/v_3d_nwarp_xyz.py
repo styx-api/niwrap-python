@@ -139,7 +139,7 @@ def v_3d_nwarp_xyz_outputs(
 
 def v_3d_nwarp_xyz_execute(
     params: V3dNwarpXyzParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNwarpXyzOutputs:
     """
     Transforms the DICOM xyz coordinates in the input XYZfile.1D based on specified
@@ -151,10 +151,12 @@ def v_3d_nwarp_xyz_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNwarpXyzOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NWARP_XYZ_METADATA)
     params = execution.params(params)
     cargs = v_3d_nwarp_xyz_cargs(params, execution)
     ret = v_3d_nwarp_xyz_outputs(params, execution)
@@ -186,15 +188,13 @@ def v_3d_nwarp_xyz(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpXyzOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NWARP_XYZ_METADATA)
     params = v_3d_nwarp_xyz_params(
         xyzfile=xyzfile,
         warp_spec=warp_spec,
         iwarp=iwarp,
         output_file=output_file,
     )
-    return v_3d_nwarp_xyz_execute(params, execution)
+    return v_3d_nwarp_xyz_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "V3dNwarpXyzParameters",
     "V_3D_NWARP_XYZ_METADATA",
     "v_3d_nwarp_xyz",
-    "v_3d_nwarp_xyz_cargs",
     "v_3d_nwarp_xyz_execute",
-    "v_3d_nwarp_xyz_outputs",
     "v_3d_nwarp_xyz_params",
 ]

@@ -268,7 +268,7 @@ def msm_outputs(
 
 def msm_execute(
     params: MsmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MsmOutputs:
     """
     MSM (Multimodal Surface Matching) is a tool for aligning brain surface scans
@@ -280,10 +280,12 @@ def msm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MsmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MSM_METADATA)
     params = execution.params(params)
     cargs = msm_cargs(params, execution)
     ret = msm_outputs(params, execution)
@@ -354,8 +356,6 @@ def msm(
     Returns:
         NamedTuple of outputs (described in `MsmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MSM_METADATA)
     params = msm_params(
         inmesh=inmesh,
         out=out,
@@ -374,7 +374,7 @@ def msm(
         verbose=verbose,
         printoptions=printoptions,
     )
-    return msm_execute(params, execution)
+    return msm_execute(params, runner)
 
 
 __all__ = [
@@ -382,8 +382,6 @@ __all__ = [
     "MsmOutputs",
     "MsmParameters",
     "msm",
-    "msm_cargs",
     "msm_execute",
-    "msm_outputs",
     "msm_params",
 ]

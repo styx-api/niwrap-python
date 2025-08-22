@@ -255,7 +255,7 @@ def v_1d_sem_outputs(
 
 def v_1d_sem_execute(
     params: V1dSemParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dSemOutputs:
     """
     Computes path coefficients for connection matrix in Structural Equation Modeling
@@ -267,10 +267,12 @@ def v_1d_sem_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dSemOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_SEM_METADATA)
     params = execution.params(params)
     cargs = v_1d_sem_cargs(params, execution)
     ret = v_1d_sem_outputs(params, execution)
@@ -338,8 +340,6 @@ def v_1d_sem(
     Returns:
         NamedTuple of outputs (described in `V1dSemOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_SEM_METADATA)
     params = v_1d_sem_params(
         theta=theta,
         correlation_matrix=correlation_matrix,
@@ -358,7 +358,7 @@ def v_1d_sem(
         grow_all=grow_all,
         leafpicker=leafpicker,
     )
-    return v_1d_sem_execute(params, execution)
+    return v_1d_sem_execute(params, runner)
 
 
 __all__ = [
@@ -366,8 +366,6 @@ __all__ = [
     "V1dSemParameters",
     "V_1D_SEM_METADATA",
     "v_1d_sem",
-    "v_1d_sem_cargs",
     "v_1d_sem_execute",
-    "v_1d_sem_outputs",
     "v_1d_sem_params",
 ]

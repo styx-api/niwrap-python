@@ -202,7 +202,7 @@ def from3d_outputs(
 
 def from3d_execute(
     params: From3dParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> From3dOutputs:
     """
     Extract 2D image files from a 3D AFNI dataset.
@@ -213,10 +213,12 @@ def from3d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `From3dOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FROM3D_METADATA)
     params = execution.params(params)
     cargs = from3d_cargs(params, execution)
     ret = from3d_outputs(params, execution)
@@ -266,8 +268,6 @@ def from3d(
     Returns:
         NamedTuple of outputs (described in `From3dOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FROM3D_METADATA)
     params = from3d_params(
         verbose=verbose,
         nsize=nsize,
@@ -280,7 +280,7 @@ def from3d(
         input_=input_,
         prefix=prefix,
     )
-    return from3d_execute(params, execution)
+    return from3d_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "From3dOutputs",
     "From3dParameters",
     "from3d",
-    "from3d_cargs",
     "from3d_execute",
-    "from3d_outputs",
     "from3d_params",
 ]

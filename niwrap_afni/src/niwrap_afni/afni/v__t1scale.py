@@ -227,7 +227,7 @@ def v__t1scale_outputs(
 
 def v__t1scale_execute(
     params: VT1scaleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VT1scaleOutputs:
     """
     Fix bias field shading in T1 by scaling it with PD image. You can also get a
@@ -239,10 +239,12 @@ def v__t1scale_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VT1scaleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__T1SCALE_METADATA)
     params = execution.params(params)
     cargs = v__t1scale_cargs(params, execution)
     ret = v__t1scale_outputs(params, execution)
@@ -298,8 +300,6 @@ def v__t1scale(
     Returns:
         NamedTuple of outputs (described in `VT1scaleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__T1SCALE_METADATA)
     params = v__t1scale_params(
         t1_volume=t1_volume,
         pd_volume=pd_volume,
@@ -316,7 +316,7 @@ def v__t1scale(
         all_opts=all_opts,
         h_find_word=h_find_word,
     )
-    return v__t1scale_execute(params, execution)
+    return v__t1scale_execute(params, runner)
 
 
 __all__ = [
@@ -324,8 +324,6 @@ __all__ = [
     "VT1scaleParameters",
     "V__T1SCALE_METADATA",
     "v__t1scale",
-    "v__t1scale_cargs",
     "v__t1scale_execute",
-    "v__t1scale_outputs",
     "v__t1scale_params",
 ]

@@ -231,7 +231,7 @@ def warpinit_outputs(
 
 def warpinit_execute(
     params: WarpinitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WarpinitOutputs:
     """
     Create an initial warp image, representing an identity transformation.
@@ -260,10 +260,12 @@ def warpinit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WarpinitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WARPINIT_METADATA)
     params = execution.params(params)
     cargs = warpinit_cargs(params, execution)
     ret = warpinit_outputs(params, execution)
@@ -328,8 +330,6 @@ def warpinit(
     Returns:
         NamedTuple of outputs (described in `WarpinitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WARPINIT_METADATA)
     params = warpinit_params(
         info=info,
         quiet=quiet,
@@ -342,7 +342,7 @@ def warpinit(
         template=template,
         warp=warp,
     )
-    return warpinit_execute(params, execution)
+    return warpinit_execute(params, runner)
 
 
 __all__ = [
@@ -351,10 +351,7 @@ __all__ = [
     "WarpinitOutputs",
     "WarpinitParameters",
     "warpinit",
-    "warpinit_cargs",
-    "warpinit_config_cargs",
     "warpinit_config_params",
     "warpinit_execute",
-    "warpinit_outputs",
     "warpinit_params",
 ]

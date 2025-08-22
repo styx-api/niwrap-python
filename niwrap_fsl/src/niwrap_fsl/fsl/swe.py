@@ -418,7 +418,7 @@ def swe_outputs(
 
 def swe_execute(
     params: SweParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SweOutputs:
     """
     SwE (summary statistics and voxelwise statistical analyses tool for FSL).
@@ -429,10 +429,12 @@ def swe_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SweOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SWE_METADATA)
     params = execution.params(params)
     cargs = swe_cargs(params, execution)
     ret = swe_outputs(params, execution)
@@ -535,8 +537,6 @@ def swe(
     Returns:
         NamedTuple of outputs (described in `SweOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SWE_METADATA)
     params = swe_params(
         input_file=input_file,
         output_root=output_root,
@@ -573,7 +573,7 @@ def swe(
         voxelwise_evs=voxelwise_evs,
         glm_output=glm_output,
     )
-    return swe_execute(params, execution)
+    return swe_execute(params, runner)
 
 
 __all__ = [
@@ -581,8 +581,6 @@ __all__ = [
     "SweOutputs",
     "SweParameters",
     "swe",
-    "swe_cargs",
     "swe_execute",
-    "swe_outputs",
     "swe_params",
 ]

@@ -316,7 +316,7 @@ def mris_info_outputs(
 
 def mris_info_execute(
     params: MrisInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisInfoOutputs:
     """
     Prints out information about a surface file.
@@ -327,10 +327,12 @@ def mris_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_INFO_METADATA)
     params = execution.params(params)
     cargs = mris_info_cargs(params, execution)
     ret = mris_info_outputs(params, execution)
@@ -404,8 +406,6 @@ def mris_info(
     Returns:
         NamedTuple of outputs (described in `MrisInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_INFO_METADATA)
     params = mris_info_params(
         surfacefile=surfacefile,
         outfile=outfile,
@@ -431,7 +431,7 @@ def mris_info(
         version_flag=version_flag,
         help_flag=help_flag,
     )
-    return mris_info_execute(params, execution)
+    return mris_info_execute(params, runner)
 
 
 __all__ = [
@@ -439,8 +439,6 @@ __all__ = [
     "MrisInfoOutputs",
     "MrisInfoParameters",
     "mris_info",
-    "mris_info_cargs",
     "mris_info_execute",
-    "mris_info_outputs",
     "mris_info_params",
 ]

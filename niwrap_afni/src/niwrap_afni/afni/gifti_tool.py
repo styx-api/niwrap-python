@@ -307,7 +307,7 @@ def gifti_tool_outputs(
 
 def gifti_tool_execute(
     params: GiftiToolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GiftiToolOutputs:
     """
     Tool for creating, displaying, modifying, or comparing GIFTI datasets.
@@ -318,10 +318,12 @@ def gifti_tool_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GiftiToolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GIFTI_TOOL_METADATA)
     params = execution.params(params)
     cargs = gifti_tool_cargs(params, execution)
     ret = gifti_tool_outputs(params, execution)
@@ -388,8 +390,6 @@ def gifti_tool(
     Returns:
         NamedTuple of outputs (described in `GiftiToolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GIFTI_TOOL_METADATA)
     params = gifti_tool_params(
         infile=infile,
         new_numda=new_numda,
@@ -414,7 +414,7 @@ def gifti_tool(
         compare_verb=compare_verb,
         approx_gifti=approx_gifti,
     )
-    return gifti_tool_execute(params, execution)
+    return gifti_tool_execute(params, runner)
 
 
 __all__ = [
@@ -422,8 +422,6 @@ __all__ = [
     "GiftiToolOutputs",
     "GiftiToolParameters",
     "gifti_tool",
-    "gifti_tool_cargs",
     "gifti_tool_execute",
-    "gifti_tool_outputs",
     "gifti_tool_params",
 ]

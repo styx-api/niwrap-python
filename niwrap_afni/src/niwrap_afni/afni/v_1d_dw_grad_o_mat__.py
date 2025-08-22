@@ -297,7 +297,7 @@ def v_1d_dw_grad_o_mat___outputs(
 
 def v_1d_dw_grad_o_mat___execute(
     params: V1dDwGradOMatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dDwGradOMatOutputs:
     """
     Manipulation of diffusion-weighted (DW) gradient vector files, b-value files,
@@ -309,10 +309,12 @@ def v_1d_dw_grad_o_mat___execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dDwGradOMatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_DW_GRAD_O_MAT___METADATA)
     params = execution.params(params)
     cargs = v_1d_dw_grad_o_mat___cargs(params, execution)
     ret = v_1d_dw_grad_o_mat___outputs(params, execution)
@@ -392,8 +394,6 @@ def v_1d_dw_grad_o_mat__(
     Returns:
         NamedTuple of outputs (described in `V1dDwGradOMatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_DW_GRAD_O_MAT___METADATA)
     params = v_1d_dw_grad_o_mat___params(
         in_row_vec=in_row_vec,
         in_col_vec=in_col_vec,
@@ -417,7 +417,7 @@ def v_1d_dw_grad_o_mat__(
         put_zeros_top=put_zeros_top,
         bmax_ref=bmax_ref,
     )
-    return v_1d_dw_grad_o_mat___execute(params, execution)
+    return v_1d_dw_grad_o_mat___execute(params, runner)
 
 
 __all__ = [
@@ -425,8 +425,6 @@ __all__ = [
     "V1dDwGradOMatParameters",
     "V_1D_DW_GRAD_O_MAT___METADATA",
     "v_1d_dw_grad_o_mat__",
-    "v_1d_dw_grad_o_mat___cargs",
     "v_1d_dw_grad_o_mat___execute",
-    "v_1d_dw_grad_o_mat___outputs",
     "v_1d_dw_grad_o_mat___params",
 ]

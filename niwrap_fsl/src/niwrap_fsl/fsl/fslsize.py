@@ -122,7 +122,7 @@ def fslsize_outputs(
 
 def fslsize_execute(
     params: FslsizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslsizeOutputs:
     """
     Tool to output the size of an image file in FSL.
@@ -133,10 +133,12 @@ def fslsize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslsizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSIZE_METADATA)
     params = execution.params(params)
     cargs = fslsize_cargs(params, execution)
     ret = fslsize_outputs(params, execution)
@@ -163,13 +165,11 @@ def fslsize(
     Returns:
         NamedTuple of outputs (described in `FslsizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSIZE_METADATA)
     params = fslsize_params(
         input_file=input_file,
         short_format_flag=short_format_flag,
     )
-    return fslsize_execute(params, execution)
+    return fslsize_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "FslsizeOutputs",
     "FslsizeParameters",
     "fslsize",
-    "fslsize_cargs",
     "fslsize_execute",
-    "fslsize_outputs",
     "fslsize_params",
 ]

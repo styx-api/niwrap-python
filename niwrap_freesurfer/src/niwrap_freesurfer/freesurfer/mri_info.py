@@ -436,7 +436,7 @@ def mri_info_outputs(
 
 def mri_info_execute(
     params: MriInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriInfoOutputs:
     """
     Tool to extract metadata from MRI volumes.
@@ -447,10 +447,12 @@ def mri_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_INFO_METADATA)
     params = execution.params(params)
     cargs = mri_info_cargs(params, execution)
     ret = mri_info_outputs(params, execution)
@@ -578,8 +580,6 @@ def mri_info(
     Returns:
         NamedTuple of outputs (described in `MriInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_INFO_METADATA)
     params = mri_info_params(
         input1=input1,
         input2=input2,
@@ -634,7 +634,7 @@ def mri_info(
         orig_ras2vox=orig_ras2vox,
         in_type=in_type,
     )
-    return mri_info_execute(params, execution)
+    return mri_info_execute(params, runner)
 
 
 __all__ = [
@@ -642,8 +642,6 @@ __all__ = [
     "MriInfoOutputs",
     "MriInfoParameters",
     "mri_info",
-    "mri_info_cargs",
     "mri_info_execute",
-    "mri_info_outputs",
     "mri_info_params",
 ]

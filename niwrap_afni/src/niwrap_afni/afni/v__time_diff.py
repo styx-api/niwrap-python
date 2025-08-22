@@ -121,7 +121,7 @@ def v__time_diff_outputs(
 
 def v__time_diff_execute(
     params: VTimeDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VTimeDiffOutputs:
     """
     A tool to compare the modification times of two files.
@@ -132,10 +132,12 @@ def v__time_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VTimeDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__TIME_DIFF_METADATA)
     params = execution.params(params)
     cargs = v__time_diff_cargs(params, execution)
     ret = v__time_diff_outputs(params, execution)
@@ -162,13 +164,11 @@ def v__time_diff(
     Returns:
         NamedTuple of outputs (described in `VTimeDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__TIME_DIFF_METADATA)
     params = v__time_diff_params(
         file1=file1,
         file2=file2,
     )
-    return v__time_diff_execute(params, execution)
+    return v__time_diff_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "VTimeDiffParameters",
     "V__TIME_DIFF_METADATA",
     "v__time_diff",
-    "v__time_diff_cargs",
     "v__time_diff_execute",
-    "v__time_diff_outputs",
     "v__time_diff_params",
 ]

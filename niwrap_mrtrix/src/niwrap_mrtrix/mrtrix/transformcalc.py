@@ -238,7 +238,7 @@ def transformcalc_outputs(
 
 def transformcalc_execute(
     params: TransformcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TransformcalcOutputs:
     """
     Perform calculations on linear transformation matrices.
@@ -255,10 +255,12 @@ def transformcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TransformcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRANSFORMCALC_METADATA)
     params = execution.params(params)
     cargs = transformcalc_cargs(params, execution)
     ret = transformcalc_outputs(params, execution)
@@ -315,8 +317,6 @@ def transformcalc(
     Returns:
         NamedTuple of outputs (described in `TransformcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRANSFORMCALC_METADATA)
     params = transformcalc_params(
         info=info,
         quiet=quiet,
@@ -330,7 +330,7 @@ def transformcalc(
         operation=operation,
         output=output,
     )
-    return transformcalc_execute(params, execution)
+    return transformcalc_execute(params, runner)
 
 
 __all__ = [
@@ -339,10 +339,7 @@ __all__ = [
     "TransformcalcOutputs",
     "TransformcalcParameters",
     "transformcalc",
-    "transformcalc_cargs",
-    "transformcalc_config_cargs",
     "transformcalc_config_params",
     "transformcalc_execute",
-    "transformcalc_outputs",
     "transformcalc_params",
 ]

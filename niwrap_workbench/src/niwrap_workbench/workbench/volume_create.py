@@ -324,7 +324,7 @@ def volume_create_outputs(
 
 def volume_create_execute(
     params: VolumeCreateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeCreateOutputs:
     """
     Create a blank volume file.
@@ -338,10 +338,12 @@ def volume_create_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeCreateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_CREATE_METADATA)
     params = execution.params(params)
     cargs = volume_create_cargs(params, execution)
     ret = volume_create_outputs(params, execution)
@@ -379,8 +381,6 @@ def volume_create(
     Returns:
         NamedTuple of outputs (described in `VolumeCreateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_CREATE_METADATA)
     params = volume_create_params(
         i_dim=i_dim,
         j_dim=j_dim,
@@ -389,7 +389,7 @@ def volume_create(
         plumb=plumb,
         sform=sform,
     )
-    return volume_create_execute(params, execution)
+    return volume_create_execute(params, runner)
 
 
 __all__ = [
@@ -399,12 +399,8 @@ __all__ = [
     "VolumeCreatePlumbParameters",
     "VolumeCreateSformParameters",
     "volume_create",
-    "volume_create_cargs",
     "volume_create_execute",
-    "volume_create_outputs",
     "volume_create_params",
-    "volume_create_plumb_cargs",
     "volume_create_plumb_params",
-    "volume_create_sform_cargs",
     "volume_create_sform_params",
 ]

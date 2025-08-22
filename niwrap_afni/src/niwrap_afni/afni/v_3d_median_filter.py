@@ -165,7 +165,7 @@ def v_3d_median_filter_outputs(
 
 def v_3d_median_filter_execute(
     params: V3dMedianFilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMedianFilterOutputs:
     """
     Computes the median in a spherical neighborhood around each point in the input
@@ -177,10 +177,12 @@ def v_3d_median_filter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMedianFilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MEDIAN_FILTER_METADATA)
     params = execution.params(params)
     cargs = v_3d_median_filter_cargs(params, execution)
     ret = v_3d_median_filter_outputs(params, execution)
@@ -216,8 +218,6 @@ def v_3d_median_filter(
     Returns:
         NamedTuple of outputs (described in `V3dMedianFilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MEDIAN_FILTER_METADATA)
     params = v_3d_median_filter_params(
         irad=irad,
         iter_=iter_,
@@ -226,7 +226,7 @@ def v_3d_median_filter(
         automask=automask,
         dataset=dataset,
     )
-    return v_3d_median_filter_execute(params, execution)
+    return v_3d_median_filter_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "V3dMedianFilterParameters",
     "V_3D_MEDIAN_FILTER_METADATA",
     "v_3d_median_filter",
-    "v_3d_median_filter_cargs",
     "v_3d_median_filter_execute",
-    "v_3d_median_filter_outputs",
     "v_3d_median_filter_params",
 ]

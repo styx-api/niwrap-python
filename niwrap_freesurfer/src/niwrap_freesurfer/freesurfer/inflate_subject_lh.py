@@ -125,7 +125,7 @@ def inflate_subject_lh_outputs(
 
 def inflate_subject_lh_execute(
     params: InflateSubjectLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InflateSubjectLhOutputs:
     """
     A tool to process and inflate left hemisphere subject data in FreeSurfer.
@@ -136,10 +136,12 @@ def inflate_subject_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INFLATE_SUBJECT_LH_METADATA)
     params = execution.params(params)
     cargs = inflate_subject_lh_cargs(params, execution)
     ret = inflate_subject_lh_outputs(params, execution)
@@ -166,13 +168,11 @@ def inflate_subject_lh(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INFLATE_SUBJECT_LH_METADATA)
     params = inflate_subject_lh_params(
         input_folder=input_folder,
         hostname_flag=hostname_flag,
     )
-    return inflate_subject_lh_execute(params, execution)
+    return inflate_subject_lh_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "InflateSubjectLhOutputs",
     "InflateSubjectLhParameters",
     "inflate_subject_lh",
-    "inflate_subject_lh_cargs",
     "inflate_subject_lh_execute",
-    "inflate_subject_lh_outputs",
     "inflate_subject_lh_params",
 ]

@@ -311,7 +311,7 @@ def gen_ss_review_scripts_outputs(
 
 def gen_ss_review_scripts_execute(
     params: GenSsReviewScriptsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GenSsReviewScriptsOutputs:
     """
     Generate single subject analysis review scripts.
@@ -322,10 +322,12 @@ def gen_ss_review_scripts_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GenSsReviewScriptsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GEN_SS_REVIEW_SCRIPTS_METADATA)
     params = execution.params(params)
     cargs = gen_ss_review_scripts_cargs(params, execution)
     ret = gen_ss_review_scripts_outputs(params, execution)
@@ -386,8 +388,6 @@ def gen_ss_review_scripts(
     Returns:
         NamedTuple of outputs (described in `GenSsReviewScriptsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GEN_SS_REVIEW_SCRIPTS_METADATA)
     params = gen_ss_review_scripts_params(
         subject_id=subject_id,
         rm_trs=rm_trs,
@@ -409,7 +409,7 @@ def gen_ss_review_scripts(
         uvars_json=uvars_json,
         init_uvars_json=init_uvars_json,
     )
-    return gen_ss_review_scripts_execute(params, execution)
+    return gen_ss_review_scripts_execute(params, runner)
 
 
 __all__ = [
@@ -417,8 +417,6 @@ __all__ = [
     "GenSsReviewScriptsOutputs",
     "GenSsReviewScriptsParameters",
     "gen_ss_review_scripts",
-    "gen_ss_review_scripts_cargs",
     "gen_ss_review_scripts_execute",
-    "gen_ss_review_scripts_outputs",
     "gen_ss_review_scripts_params",
 ]

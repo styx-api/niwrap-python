@@ -158,7 +158,7 @@ def spharm_rm_outputs(
 
 def spharm_rm_execute(
     params: SpharmRmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SpharmRmOutputs:
     """
     Part of FSL - Spherical harmonics removal tool to process neuroimaging data.
@@ -169,10 +169,12 @@ def spharm_rm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SpharmRmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPHARM_RM_METADATA)
     params = execution.params(params)
     cargs = spharm_rm_cargs(params, execution)
     ret = spharm_rm_outputs(params, execution)
@@ -206,8 +208,6 @@ def spharm_rm(
     Returns:
         NamedTuple of outputs (described in `SpharmRmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPHARM_RM_METADATA)
     params = spharm_rm_params(
         input_file=input_file,
         output_file=output_file,
@@ -215,7 +215,7 @@ def spharm_rm(
         number_of_terms=number_of_terms,
         verbose_flag=verbose_flag,
     )
-    return spharm_rm_execute(params, execution)
+    return spharm_rm_execute(params, runner)
 
 
 __all__ = [
@@ -223,8 +223,6 @@ __all__ = [
     "SpharmRmOutputs",
     "SpharmRmParameters",
     "spharm_rm",
-    "spharm_rm_cargs",
     "spharm_rm_execute",
-    "spharm_rm_outputs",
     "spharm_rm_params",
 ]

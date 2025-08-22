@@ -161,7 +161,7 @@ def wfilemask_outputs(
 
 def wfilemask_execute(
     params: WfilemaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WfilemaskOutputs:
     """
     Zero-out regions of a surface value file (.w file) using a label.
@@ -172,10 +172,12 @@ def wfilemask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WfilemaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WFILEMASK_METADATA)
     params = execution.params(params)
     cargs = wfilemask_cargs(params, execution)
     ret = wfilemask_outputs(params, execution)
@@ -210,8 +212,6 @@ def wfilemask(
     Returns:
         NamedTuple of outputs (described in `WfilemaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WFILEMASK_METADATA)
     params = wfilemask_params(
         w_file=w_file,
         label_file=label_file,
@@ -220,7 +220,7 @@ def wfilemask(
         help_flag=help_flag,
         version_flag=version_flag,
     )
-    return wfilemask_execute(params, execution)
+    return wfilemask_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "WfilemaskOutputs",
     "WfilemaskParameters",
     "wfilemask",
-    "wfilemask_cargs",
     "wfilemask_execute",
-    "wfilemask_outputs",
     "wfilemask_params",
 ]

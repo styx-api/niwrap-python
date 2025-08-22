@@ -180,7 +180,7 @@ def metric_rois_from_extrema_outputs(
 
 def metric_rois_from_extrema_execute(
     params: MetricRoisFromExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
     Create metric roi maps from extrema maps.
@@ -200,10 +200,12 @@ def metric_rois_from_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisFromExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_ROIS_FROM_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = metric_rois_from_extrema_cargs(params, execution)
     ret = metric_rois_from_extrema_outputs(params, execution)
@@ -255,8 +257,6 @@ def metric_rois_from_extrema(
     Returns:
         NamedTuple of outputs (described in `MetricRoisFromExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_ROIS_FROM_EXTREMA_METADATA)
     params = metric_rois_from_extrema_params(
         surface=surface,
         metric=metric,
@@ -267,7 +267,7 @@ def metric_rois_from_extrema(
         opt_overlap_logic_method=opt_overlap_logic_method,
         opt_column_column=opt_column_column,
     )
-    return metric_rois_from_extrema_execute(params, execution)
+    return metric_rois_from_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "MetricRoisFromExtremaOutputs",
     "MetricRoisFromExtremaParameters",
     "metric_rois_from_extrema",
-    "metric_rois_from_extrema_cargs",
     "metric_rois_from_extrema_execute",
-    "metric_rois_from_extrema_outputs",
     "metric_rois_from_extrema_params",
 ]

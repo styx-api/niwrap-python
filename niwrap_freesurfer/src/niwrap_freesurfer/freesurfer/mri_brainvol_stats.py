@@ -159,7 +159,7 @@ def mri_brainvol_stats_outputs(
 
 def mri_brainvol_stats_execute(
     params: MriBrainvolStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriBrainvolStatsOutputs:
     """
     Tool for computing brain volume statistics with FreeSurfer.
@@ -170,10 +170,12 @@ def mri_brainvol_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriBrainvolStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_BRAINVOL_STATS_METADATA)
     params = execution.params(params)
     cargs = mri_brainvol_stats_cargs(params, execution)
     ret = mri_brainvol_stats_outputs(params, execution)
@@ -210,8 +212,6 @@ def mri_brainvol_stats(
     Returns:
         NamedTuple of outputs (described in `MriBrainvolStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_BRAINVOL_STATS_METADATA)
     params = mri_brainvol_stats_params(
         subject_id=subject_id,
         xml_string=xml_string,
@@ -219,7 +219,7 @@ def mri_brainvol_stats(
         include_segmentation=include_segmentation,
         output_file=output_file,
     )
-    return mri_brainvol_stats_execute(params, execution)
+    return mri_brainvol_stats_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "MriBrainvolStatsOutputs",
     "MriBrainvolStatsParameters",
     "mri_brainvol_stats",
-    "mri_brainvol_stats_cargs",
     "mri_brainvol_stats_execute",
-    "mri_brainvol_stats_outputs",
     "mri_brainvol_stats_params",
 ]

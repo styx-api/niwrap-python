@@ -155,7 +155,7 @@ def r_pkgs_install_outputs(
 
 def r_pkgs_install_execute(
     params: RPkgsInstallParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RPkgsInstallOutputs:
     """
     A tool for installing, checking, updating, or removing R packages for AFNI.
@@ -166,10 +166,12 @@ def r_pkgs_install_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RPkgsInstallOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(R_PKGS_INSTALL_METADATA)
     params = execution.params(params)
     cargs = r_pkgs_install_cargs(params, execution)
     ret = r_pkgs_install_outputs(params, execution)
@@ -206,8 +208,6 @@ def r_pkgs_install(
     Returns:
         NamedTuple of outputs (described in `RPkgsInstallOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(R_PKGS_INSTALL_METADATA)
     params = r_pkgs_install_params(
         packages=packages,
         download_site=download_site,
@@ -215,7 +215,7 @@ def r_pkgs_install(
         update_=update_,
         remove=remove,
     )
-    return r_pkgs_install_execute(params, execution)
+    return r_pkgs_install_execute(params, runner)
 
 
 __all__ = [
@@ -223,8 +223,6 @@ __all__ = [
     "RPkgsInstallParameters",
     "R_PKGS_INSTALL_METADATA",
     "r_pkgs_install",
-    "r_pkgs_install_cargs",
     "r_pkgs_install_execute",
-    "r_pkgs_install_outputs",
     "r_pkgs_install_params",
 ]

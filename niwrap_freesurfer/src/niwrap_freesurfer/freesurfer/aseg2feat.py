@@ -184,7 +184,7 @@ def aseg2feat_outputs(
 
 def aseg2feat_execute(
     params: Aseg2featParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Aseg2featOutputs:
     """
     Resamples the FreeSurfer automatic subcortical segmentation (aseg) to the FEAT
@@ -196,10 +196,12 @@ def aseg2feat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Aseg2featOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ASEG2FEAT_METADATA)
     params = execution.params(params)
     cargs = aseg2feat_cargs(params, execution)
     ret = aseg2feat_outputs(params, execution)
@@ -243,8 +245,6 @@ def aseg2feat(
     Returns:
         NamedTuple of outputs (described in `Aseg2featOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ASEG2FEAT_METADATA)
     params = aseg2feat_params(
         feat=feat,
         featdirfile=featdirfile,
@@ -256,7 +256,7 @@ def aseg2feat(
         help_=help_,
         version=version,
     )
-    return aseg2feat_execute(params, execution)
+    return aseg2feat_execute(params, runner)
 
 
 __all__ = [
@@ -264,8 +264,6 @@ __all__ = [
     "Aseg2featOutputs",
     "Aseg2featParameters",
     "aseg2feat",
-    "aseg2feat_cargs",
     "aseg2feat_execute",
-    "aseg2feat_outputs",
     "aseg2feat_params",
 ]

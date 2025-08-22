@@ -246,7 +246,7 @@ def run_mesh_utils_outputs(
 
 def run_mesh_utils_execute(
     params: RunMeshUtilsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunMeshUtilsOutputs:
     """
     A tool for various mesh operations as part of FSL.
@@ -257,10 +257,12 @@ def run_mesh_utils_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunMeshUtilsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_MESH_UTILS_METADATA)
     params = execution.params(params)
     cargs = run_mesh_utils_cargs(params, execution)
     ret = run_mesh_utils_outputs(params, execution)
@@ -317,8 +319,6 @@ def run_mesh_utils(
     Returns:
         NamedTuple of outputs (described in `RunMeshUtilsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_MESH_UTILS_METADATA)
     params = run_mesh_utils_params(
         base_mesh=base_mesh,
         output_image=output_image,
@@ -338,7 +338,7 @@ def run_mesh_utils(
         verbose=verbose,
         help_=help_,
     )
-    return run_mesh_utils_execute(params, execution)
+    return run_mesh_utils_execute(params, runner)
 
 
 __all__ = [
@@ -346,8 +346,6 @@ __all__ = [
     "RunMeshUtilsOutputs",
     "RunMeshUtilsParameters",
     "run_mesh_utils",
-    "run_mesh_utils_cargs",
     "run_mesh_utils_execute",
-    "run_mesh_utils_outputs",
     "run_mesh_utils_params",
 ]

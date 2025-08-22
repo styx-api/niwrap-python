@@ -222,7 +222,7 @@ def mri_fit_bias_outputs(
 
 def mri_fit_bias_execute(
     params: MriFitBiasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFitBiasOutputs:
     """
     A tool for intensity normalization and bias correction in MRI images.
@@ -233,10 +233,12 @@ def mri_fit_bias_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFitBiasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FIT_BIAS_METADATA)
     params = execution.params(params)
     cargs = mri_fit_bias_cargs(params, execution)
     ret = mri_fit_bias_outputs(params, execution)
@@ -285,8 +287,6 @@ def mri_fit_bias(
     Returns:
         NamedTuple of outputs (described in `MriFitBiasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FIT_BIAS_METADATA)
     params = mri_fit_bias_params(
         inputvol=inputvol,
         lpf_cutoff=lpf_cutoff,
@@ -301,7 +301,7 @@ def mri_fit_bias(
         debug=debug,
         checkopts=checkopts,
     )
-    return mri_fit_bias_execute(params, execution)
+    return mri_fit_bias_execute(params, runner)
 
 
 __all__ = [
@@ -309,8 +309,6 @@ __all__ = [
     "MriFitBiasOutputs",
     "MriFitBiasParameters",
     "mri_fit_bias",
-    "mri_fit_bias_cargs",
     "mri_fit_bias_execute",
-    "mri_fit_bias_outputs",
     "mri_fit_bias_params",
 ]

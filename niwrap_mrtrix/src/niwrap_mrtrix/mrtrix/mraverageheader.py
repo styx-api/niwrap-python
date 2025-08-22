@@ -275,7 +275,7 @@ def mraverageheader_outputs(
 
 def mraverageheader_execute(
     params: MraverageheaderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MraverageheaderOutputs:
     """
     Calculate the average (unbiased) coordinate space of all input images.
@@ -292,10 +292,12 @@ def mraverageheader_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MraverageheaderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRAVERAGEHEADER_METADATA)
     params = execution.params(params)
     cargs = mraverageheader_cargs(params, execution)
     ret = mraverageheader_outputs(params, execution)
@@ -364,8 +366,6 @@ def mraverageheader(
     Returns:
         NamedTuple of outputs (described in `MraverageheaderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRAVERAGEHEADER_METADATA)
     params = mraverageheader_params(
         padding=padding,
         resolution=resolution,
@@ -382,7 +382,7 @@ def mraverageheader(
         input_=input_,
         output=output,
     )
-    return mraverageheader_execute(params, execution)
+    return mraverageheader_execute(params, runner)
 
 
 __all__ = [
@@ -391,10 +391,7 @@ __all__ = [
     "MraverageheaderOutputs",
     "MraverageheaderParameters",
     "mraverageheader",
-    "mraverageheader_cargs",
-    "mraverageheader_config_cargs",
     "mraverageheader_config_params",
     "mraverageheader_execute",
-    "mraverageheader_outputs",
     "mraverageheader_params",
 ]

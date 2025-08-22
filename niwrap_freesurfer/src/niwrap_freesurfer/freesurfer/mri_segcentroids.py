@@ -173,7 +173,7 @@ def mri_segcentroids_outputs(
 
 def mri_segcentroids_execute(
     params: MriSegcentroidsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegcentroidsOutputs:
     """
     Computes the center of mass for individual structures in a segmentation.
@@ -184,10 +184,12 @@ def mri_segcentroids_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegcentroidsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEGCENTROIDS_METADATA)
     params = execution.params(params)
     cargs = mri_segcentroids_cargs(params, execution)
     ret = mri_segcentroids_outputs(params, execution)
@@ -224,8 +226,6 @@ def mri_segcentroids(
     Returns:
         NamedTuple of outputs (described in `MriSegcentroidsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEGCENTROIDS_METADATA)
     params = mri_segcentroids_params(
         input_segmentation=input_segmentation,
         output_file=output_file,
@@ -235,7 +235,7 @@ def mri_segcentroids(
         lut_file=lut_file,
         default_lut_flag=default_lut_flag,
     )
-    return mri_segcentroids_execute(params, execution)
+    return mri_segcentroids_execute(params, runner)
 
 
 __all__ = [
@@ -243,8 +243,6 @@ __all__ = [
     "MriSegcentroidsOutputs",
     "MriSegcentroidsParameters",
     "mri_segcentroids",
-    "mri_segcentroids_cargs",
     "mri_segcentroids_execute",
-    "mri_segcentroids_outputs",
     "mri_segcentroids_params",
 ]

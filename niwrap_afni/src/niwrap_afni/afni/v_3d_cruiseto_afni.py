@@ -226,7 +226,7 @@ def v_3d_cruiseto_afni_outputs(
 
 def v_3d_cruiseto_afni_execute(
     params: V3dCruisetoAfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dCruisetoAfniOutputs:
     """
     Converts a CRUISE dataset defined by a header in OpenDX format.
@@ -237,10 +237,12 @@ def v_3d_cruiseto_afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dCruisetoAfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CRUISETO_AFNI_METADATA)
     params = execution.params(params)
     cargs = v_3d_cruiseto_afni_cargs(params, execution)
     ret = v_3d_cruiseto_afni_outputs(params, execution)
@@ -284,8 +286,6 @@ def v_3d_cruiseto_afni(
     Returns:
         NamedTuple of outputs (described in `V3dCruisetoAfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CRUISETO_AFNI_METADATA)
     params = v_3d_cruiseto_afni_params(
         input_=input_,
         novolreg=novolreg,
@@ -297,7 +297,7 @@ def v_3d_cruiseto_afni(
         help_=help_,
         h=h,
     )
-    return v_3d_cruiseto_afni_execute(params, execution)
+    return v_3d_cruiseto_afni_execute(params, runner)
 
 
 __all__ = [
@@ -306,10 +306,7 @@ __all__ = [
     "V3dCruisetoAfniTraceParameters",
     "V_3D_CRUISETO_AFNI_METADATA",
     "v_3d_cruiseto_afni",
-    "v_3d_cruiseto_afni_cargs",
     "v_3d_cruiseto_afni_execute",
-    "v_3d_cruiseto_afni_outputs",
     "v_3d_cruiseto_afni_params",
-    "v_3d_cruiseto_afni_trace_cargs",
     "v_3d_cruiseto_afni_trace_params",
 ]

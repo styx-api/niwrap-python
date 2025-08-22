@@ -126,7 +126,7 @@ def surface_vertex_areas_outputs(
 
 def surface_vertex_areas_execute(
     params: SurfaceVertexAreasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceVertexAreasOutputs:
     """
     Measure surface area each vertex is responsible for.
@@ -140,10 +140,12 @@ def surface_vertex_areas_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceVertexAreasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_VERTEX_AREAS_METADATA)
     params = execution.params(params)
     cargs = surface_vertex_areas_cargs(params, execution)
     ret = surface_vertex_areas_outputs(params, execution)
@@ -173,13 +175,11 @@ def surface_vertex_areas(
     Returns:
         NamedTuple of outputs (described in `SurfaceVertexAreasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_VERTEX_AREAS_METADATA)
     params = surface_vertex_areas_params(
         surface=surface,
         metric=metric,
     )
-    return surface_vertex_areas_execute(params, execution)
+    return surface_vertex_areas_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "SurfaceVertexAreasOutputs",
     "SurfaceVertexAreasParameters",
     "surface_vertex_areas",
-    "surface_vertex_areas_cargs",
     "surface_vertex_areas_execute",
-    "surface_vertex_areas_outputs",
     "surface_vertex_areas_params",
 ]

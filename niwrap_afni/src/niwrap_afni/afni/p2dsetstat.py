@@ -159,7 +159,7 @@ def p2dsetstat_outputs(
 
 def p2dsetstat_execute(
     params: P2dsetstatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> P2dsetstatOutputs:
     """
     Convert a p-value to a statistic of choice with reference to a specific dataset.
@@ -170,10 +170,12 @@ def p2dsetstat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `P2dsetstatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(P2DSETSTAT_METADATA)
     params = execution.params(params)
     cargs = p2dsetstat_cargs(params, execution)
     ret = p2dsetstat_outputs(params, execution)
@@ -212,8 +214,6 @@ def p2dsetstat(
     Returns:
         NamedTuple of outputs (described in `P2dsetstatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(P2DSETSTAT_METADATA)
     params = p2dsetstat_params(
         dataset=dataset,
         pvalue=pvalue,
@@ -222,7 +222,7 @@ def p2dsetstat(
         onesided=onesided,
         quiet=quiet,
     )
-    return p2dsetstat_execute(params, execution)
+    return p2dsetstat_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "P2dsetstatOutputs",
     "P2dsetstatParameters",
     "p2dsetstat",
-    "p2dsetstat_cargs",
     "p2dsetstat_execute",
-    "p2dsetstat_outputs",
     "p2dsetstat_params",
 ]

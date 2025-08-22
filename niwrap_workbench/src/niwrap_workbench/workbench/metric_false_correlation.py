@@ -168,7 +168,7 @@ def metric_false_correlation_outputs(
 
 def metric_false_correlation_execute(
     params: MetricFalseCorrelationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricFalseCorrelationOutputs:
     """
     Compare correlation locally and across/through sulci/gyri.
@@ -186,10 +186,12 @@ def metric_false_correlation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFalseCorrelationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_FALSE_CORRELATION_METADATA)
     params = execution.params(params)
     cargs = metric_false_correlation_cargs(params, execution)
     ret = metric_false_correlation_outputs(params, execution)
@@ -237,8 +239,6 @@ def metric_false_correlation(
     Returns:
         NamedTuple of outputs (described in `MetricFalseCorrelationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_FALSE_CORRELATION_METADATA)
     params = metric_false_correlation_params(
         surface=surface,
         metric_in=metric_in,
@@ -249,7 +249,7 @@ def metric_false_correlation(
         opt_roi_roi_metric=opt_roi_roi_metric,
         opt_dump_text_text_out=opt_dump_text_text_out,
     )
-    return metric_false_correlation_execute(params, execution)
+    return metric_false_correlation_execute(params, runner)
 
 
 __all__ = [
@@ -257,8 +257,6 @@ __all__ = [
     "MetricFalseCorrelationOutputs",
     "MetricFalseCorrelationParameters",
     "metric_false_correlation",
-    "metric_false_correlation_cargs",
     "metric_false_correlation_execute",
-    "metric_false_correlation_outputs",
     "metric_false_correlation_params",
 ]

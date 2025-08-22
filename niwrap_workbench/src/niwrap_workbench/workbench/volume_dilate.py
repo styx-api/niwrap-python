@@ -295,7 +295,7 @@ def volume_dilate_outputs(
 
 def volume_dilate_execute(
     params: VolumeDilateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeDilateOutputs:
     """
     Dilate a volume file.
@@ -324,10 +324,12 @@ def volume_dilate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeDilateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_DILATE_METADATA)
     params = execution.params(params)
     cargs = volume_dilate_cargs(params, execution)
     ret = volume_dilate_outputs(params, execution)
@@ -396,8 +398,6 @@ def volume_dilate(
     Returns:
         NamedTuple of outputs (described in `VolumeDilateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_DILATE_METADATA)
     params = volume_dilate_params(
         volume=volume,
         distance=distance,
@@ -410,7 +410,7 @@ def volume_dilate(
         opt_legacy_cutoff=opt_legacy_cutoff,
         grad_extrapolate=grad_extrapolate,
     )
-    return volume_dilate_execute(params, execution)
+    return volume_dilate_execute(params, runner)
 
 
 __all__ = [
@@ -420,12 +420,8 @@ __all__ = [
     "VolumeDilateParameters",
     "VolumeDilatePresmoothParameters",
     "volume_dilate",
-    "volume_dilate_cargs",
     "volume_dilate_execute",
-    "volume_dilate_grad_extrapolate_cargs",
     "volume_dilate_grad_extrapolate_params",
-    "volume_dilate_outputs",
     "volume_dilate_params",
-    "volume_dilate_presmooth_cargs",
     "volume_dilate_presmooth_params",
 ]

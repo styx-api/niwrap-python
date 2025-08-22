@@ -155,7 +155,7 @@ def convert_transform_file_outputs(
 
 def convert_transform_file_execute(
     params: ConvertTransformFileParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertTransformFileOutputs:
     """
     Utility to read in a transform file (presumed to be in binary format) and output
@@ -169,10 +169,12 @@ def convert_transform_file_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertTransformFileOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_TRANSFORM_FILE_METADATA)
     params = execution.params(params)
     cargs = convert_transform_file_cargs(params, execution)
     ret = convert_transform_file_outputs(params, execution)
@@ -217,8 +219,6 @@ def convert_transform_file(
     Returns:
         NamedTuple of outputs (described in `ConvertTransformFileOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_TRANSFORM_FILE_METADATA)
     params = convert_transform_file_params(
         dimensions=dimensions,
         input_transform_file=input_transform_file,
@@ -228,7 +228,7 @@ def convert_transform_file(
         ras=ras,
         convert_to_affine_type=convert_to_affine_type,
     )
-    return convert_transform_file_execute(params, execution)
+    return convert_transform_file_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "ConvertTransformFileOutputs",
     "ConvertTransformFileParameters",
     "convert_transform_file",
-    "convert_transform_file_cargs",
     "convert_transform_file_execute",
-    "convert_transform_file_outputs",
     "convert_transform_file_params",
 ]

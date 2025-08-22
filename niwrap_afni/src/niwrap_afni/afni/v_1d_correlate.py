@@ -173,7 +173,7 @@ def v_1d_correlate_outputs(
 
 def v_1d_correlate_execute(
     params: V1dCorrelateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dCorrelateOutputs:
     """
     1dCorrelate calculates the correlation coefficients between columns of input 1D
@@ -185,10 +185,12 @@ def v_1d_correlate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dCorrelateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_CORRELATE_METADATA)
     params = execution.params(params)
     cargs = v_1d_correlate_cargs(params, execution)
     ret = v_1d_correlate_outputs(params, execution)
@@ -231,8 +233,6 @@ def v_1d_correlate(
     Returns:
         NamedTuple of outputs (described in `V1dCorrelateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_CORRELATE_METADATA)
     params = v_1d_correlate_params(
         ktaub=ktaub,
         nboot=nboot,
@@ -244,7 +244,7 @@ def v_1d_correlate(
         quadrant=quadrant,
         input_files=input_files,
     )
-    return v_1d_correlate_execute(params, execution)
+    return v_1d_correlate_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "V1dCorrelateParameters",
     "V_1D_CORRELATE_METADATA",
     "v_1d_correlate",
-    "v_1d_correlate_cargs",
     "v_1d_correlate_execute",
-    "v_1d_correlate_outputs",
     "v_1d_correlate_params",
 ]

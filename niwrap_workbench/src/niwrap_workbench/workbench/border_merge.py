@@ -280,7 +280,7 @@ def border_merge_outputs(
 
 def border_merge_execute(
     params: BorderMergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BorderMergeOutputs:
     """
     Merge border files into a new file.
@@ -300,10 +300,12 @@ def border_merge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderMergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BORDER_MERGE_METADATA)
     params = execution.params(params)
     cargs = border_merge_cargs(params, execution)
     ret = border_merge_outputs(params, execution)
@@ -339,13 +341,11 @@ def border_merge(
     Returns:
         NamedTuple of outputs (described in `BorderMergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BORDER_MERGE_METADATA)
     params = border_merge_params(
         border_file_out=border_file_out,
         border=border,
     )
-    return border_merge_execute(params, execution)
+    return border_merge_execute(params, runner)
 
 
 __all__ = [
@@ -356,14 +356,9 @@ __all__ = [
     "BorderMergeSelectParameters",
     "BorderMergeUpToParameters",
     "border_merge",
-    "border_merge_border_cargs",
     "border_merge_border_params",
-    "border_merge_cargs",
     "border_merge_execute",
-    "border_merge_outputs",
     "border_merge_params",
-    "border_merge_select_cargs",
     "border_merge_select_params",
-    "border_merge_up_to_cargs",
     "border_merge_up_to_params",
 ]

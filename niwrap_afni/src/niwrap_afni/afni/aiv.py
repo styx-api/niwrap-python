@@ -158,7 +158,7 @@ def aiv_outputs(
 
 def aiv_execute(
     params: AivParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AivOutputs:
     """
     AFNI Image Viewer program. Shows the 2D images on the command line in an
@@ -170,10 +170,12 @@ def aiv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AivOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AIV_METADATA)
     params = execution.params(params)
     cargs = aiv_cargs(params, execution)
     ret = aiv_outputs(params, execution)
@@ -209,8 +211,6 @@ def aiv(
     Returns:
         NamedTuple of outputs (described in `AivOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AIV_METADATA)
     params = aiv_params(
         verbose=verbose,
         quiet=quiet,
@@ -219,7 +219,7 @@ def aiv(
         pad=pad,
         input_images=input_images,
     )
-    return aiv_execute(params, execution)
+    return aiv_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "AivOutputs",
     "AivParameters",
     "aiv",
-    "aiv_cargs",
     "aiv_execute",
-    "aiv_outputs",
     "aiv_params",
 ]

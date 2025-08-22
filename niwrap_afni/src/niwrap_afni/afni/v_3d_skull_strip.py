@@ -140,7 +140,7 @@ def v_3d_skull_strip_outputs(
 
 def v_3d_skull_strip_execute(
     params: V3dSkullStripParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSkullStripOutputs:
     """
     A program to extract the brain from surrounding tissue from MRI T1-weighted
@@ -152,10 +152,12 @@ def v_3d_skull_strip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSkullStripOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SKULL_STRIP_METADATA)
     params = execution.params(params)
     cargs = v_3d_skull_strip_cargs(params, execution)
     ret = v_3d_skull_strip_outputs(params, execution)
@@ -185,14 +187,12 @@ def v_3d_skull_strip(
     Returns:
         NamedTuple of outputs (described in `V3dSkullStripOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SKULL_STRIP_METADATA)
     params = v_3d_skull_strip_params(
         in_file=in_file,
         num_threads=num_threads,
         outputtype=outputtype,
     )
-    return v_3d_skull_strip_execute(params, execution)
+    return v_3d_skull_strip_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "V3dSkullStripParameters",
     "V_3D_SKULL_STRIP_METADATA",
     "v_3d_skull_strip",
-    "v_3d_skull_strip_cargs",
     "v_3d_skull_strip_execute",
-    "v_3d_skull_strip_outputs",
     "v_3d_skull_strip_params",
 ]

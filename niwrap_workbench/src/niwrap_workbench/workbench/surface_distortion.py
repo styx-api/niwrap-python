@@ -253,7 +253,7 @@ def surface_distortion_outputs(
 
 def surface_distortion_execute(
     params: SurfaceDistortionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """
     Measure distortion between surfaces.
@@ -284,10 +284,12 @@ def surface_distortion_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceDistortionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_DISTORTION_METADATA)
     params = execution.params(params)
     cargs = surface_distortion_cargs(params, execution)
     ret = surface_distortion_outputs(params, execution)
@@ -345,8 +347,6 @@ def surface_distortion(
     Returns:
         NamedTuple of outputs (described in `SurfaceDistortionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_DISTORTION_METADATA)
     params = surface_distortion_params(
         surface_reference=surface_reference,
         surface_distorted=surface_distorted,
@@ -356,7 +356,7 @@ def surface_distortion(
         opt_edge_method=opt_edge_method,
         local_affine_method=local_affine_method,
     )
-    return surface_distortion_execute(params, execution)
+    return surface_distortion_execute(params, runner)
 
 
 __all__ = [
@@ -366,12 +366,8 @@ __all__ = [
     "SurfaceDistortionParameters",
     "SurfaceDistortionSmoothParameters",
     "surface_distortion",
-    "surface_distortion_cargs",
     "surface_distortion_execute",
-    "surface_distortion_local_affine_method_cargs",
     "surface_distortion_local_affine_method_params",
-    "surface_distortion_outputs",
     "surface_distortion_params",
-    "surface_distortion_smooth_cargs",
     "surface_distortion_smooth_params",
 ]

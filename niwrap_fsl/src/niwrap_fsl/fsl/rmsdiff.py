@@ -133,7 +133,7 @@ def rmsdiff_outputs(
 
 def rmsdiff_execute(
     params: RmsdiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RmsdiffOutputs:
     """
     Outputs RMS deviation between matrices (in mm).
@@ -144,10 +144,12 @@ def rmsdiff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RmsdiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RMSDIFF_METADATA)
     params = execution.params(params)
     cargs = rmsdiff_cargs(params, execution)
     ret = rmsdiff_outputs(params, execution)
@@ -178,15 +180,13 @@ def rmsdiff(
     Returns:
         NamedTuple of outputs (described in `RmsdiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RMSDIFF_METADATA)
     params = rmsdiff_params(
         matrixfile1=matrixfile1,
         matrixfile2=matrixfile2,
         refvol=refvol,
         mask=mask,
     )
-    return rmsdiff_execute(params, execution)
+    return rmsdiff_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "RmsdiffOutputs",
     "RmsdiffParameters",
     "rmsdiff",
-    "rmsdiff_cargs",
     "rmsdiff_execute",
-    "rmsdiff_outputs",
     "rmsdiff_params",
 ]

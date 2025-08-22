@@ -327,7 +327,7 @@ def long_submit_jobs_outputs(
 
 def long_submit_jobs_execute(
     params: LongSubmitJobsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongSubmitJobsOutputs:
     """
     Submits longitudinal processing jobs to the NMR cluster (seychelles or
@@ -339,10 +339,12 @@ def long_submit_jobs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongSubmitJobsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_SUBMIT_JOBS_METADATA)
     params = execution.params(params)
     cargs = long_submit_jobs_cargs(params, execution)
     ret = long_submit_jobs_outputs(params, execution)
@@ -418,8 +420,6 @@ def long_submit_jobs(
     Returns:
         NamedTuple of outputs (described in `LongSubmitJobsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_SUBMIT_JOBS_METADATA)
     params = long_submit_jobs_params(
         qdec=qdec,
         cdir=cdir,
@@ -447,7 +447,7 @@ def long_submit_jobs(
         bnodes=bnodes,
         lnodes=lnodes,
     )
-    return long_submit_jobs_execute(params, execution)
+    return long_submit_jobs_execute(params, runner)
 
 
 __all__ = [
@@ -455,8 +455,6 @@ __all__ = [
     "LongSubmitJobsOutputs",
     "LongSubmitJobsParameters",
     "long_submit_jobs",
-    "long_submit_jobs_cargs",
     "long_submit_jobs_execute",
-    "long_submit_jobs_outputs",
     "long_submit_jobs_params",
 ]

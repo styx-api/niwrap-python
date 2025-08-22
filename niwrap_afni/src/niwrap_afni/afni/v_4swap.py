@@ -122,7 +122,7 @@ def v_4swap_outputs(
 
 def v_4swap_execute(
     params: V4swapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V4swapOutputs:
     """
     Swaps byte quadruples on the listed files.
@@ -133,10 +133,12 @@ def v_4swap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V4swapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_4SWAP_METADATA)
     params = execution.params(params)
     cargs = v_4swap_cargs(params, execution)
     ret = v_4swap_outputs(params, execution)
@@ -163,13 +165,11 @@ def v_4swap(
     Returns:
         NamedTuple of outputs (described in `V4swapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_4SWAP_METADATA)
     params = v_4swap_params(
         files=files,
         quiet=quiet,
     )
-    return v_4swap_execute(params, execution)
+    return v_4swap_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "V4swapParameters",
     "V_4SWAP_METADATA",
     "v_4swap",
-    "v_4swap_cargs",
     "v_4swap_execute",
-    "v_4swap_outputs",
     "v_4swap_params",
 ]

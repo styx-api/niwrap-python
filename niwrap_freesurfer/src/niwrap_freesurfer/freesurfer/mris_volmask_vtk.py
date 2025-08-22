@@ -286,7 +286,7 @@ def mris_volmask_vtk_outputs(
 
 def mris_volmask_vtk_execute(
     params: MrisVolmaskVtkParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisVolmaskVtkOutputs:
     """
     Computes a volume mask at the resolution of the brain.mgz file, containing
@@ -298,10 +298,12 @@ def mris_volmask_vtk_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisVolmaskVtkOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_VOLMASK_VTK_METADATA)
     params = execution.params(params)
     cargs = mris_volmask_vtk_cargs(params, execution)
     ret = mris_volmask_vtk_outputs(params, execution)
@@ -366,8 +368,6 @@ def mris_volmask_vtk(
     Returns:
         NamedTuple of outputs (described in `MrisVolmaskVtkOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_VOLMASK_VTK_METADATA)
     params = mris_volmask_vtk_params(
         cap_distance=cap_distance,
         label_background=label_background,
@@ -388,7 +388,7 @@ def mris_volmask_vtk(
         save_ribbon=save_ribbon,
         io_param=io_param,
     )
-    return mris_volmask_vtk_execute(params, execution)
+    return mris_volmask_vtk_execute(params, runner)
 
 
 __all__ = [
@@ -396,8 +396,6 @@ __all__ = [
     "MrisVolmaskVtkOutputs",
     "MrisVolmaskVtkParameters",
     "mris_volmask_vtk",
-    "mris_volmask_vtk_cargs",
     "mris_volmask_vtk_execute",
-    "mris_volmask_vtk_outputs",
     "mris_volmask_vtk_params",
 ]

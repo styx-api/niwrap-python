@@ -156,7 +156,7 @@ def cifti_label_import_outputs(
 
 def cifti_label_import_execute(
     params: CiftiLabelImportParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiLabelImportOutputs:
     """
     Make a cifti label file from a cifti file.
@@ -191,10 +191,12 @@ def cifti_label_import_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelImportOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_LABEL_IMPORT_METADATA)
     params = execution.params(params)
     cargs = cifti_label_import_cargs(params, execution)
     ret = cifti_label_import_outputs(params, execution)
@@ -256,8 +258,6 @@ def cifti_label_import(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelImportOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_LABEL_IMPORT_METADATA)
     params = cifti_label_import_params(
         input_=input_,
         label_list_file=label_list_file,
@@ -266,7 +266,7 @@ def cifti_label_import(
         opt_unlabeled_value_value=opt_unlabeled_value_value,
         opt_drop_unused_labels=opt_drop_unused_labels,
     )
-    return cifti_label_import_execute(params, execution)
+    return cifti_label_import_execute(params, runner)
 
 
 __all__ = [
@@ -274,8 +274,6 @@ __all__ = [
     "CiftiLabelImportOutputs",
     "CiftiLabelImportParameters",
     "cifti_label_import",
-    "cifti_label_import_cargs",
     "cifti_label_import_execute",
-    "cifti_label_import_outputs",
     "cifti_label_import_params",
 ]

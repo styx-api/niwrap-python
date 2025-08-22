@@ -180,7 +180,7 @@ def v_3dresample_outputs(
 
 def v_3dresample_execute(
     params: V3dresampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dresampleOutputs:
     """
     Resample or reorient an image using AFNI 3dresample command.
@@ -191,10 +191,12 @@ def v_3dresample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dresampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DRESAMPLE_METADATA)
     params = execution.params(params)
     cargs = v_3dresample_cargs(params, execution)
     ret = v_3dresample_outputs(params, execution)
@@ -233,8 +235,6 @@ def v_3dresample(
     Returns:
         NamedTuple of outputs (described in `V3dresampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DRESAMPLE_METADATA)
     params = v_3dresample_params(
         in_file=in_file,
         master=master,
@@ -244,7 +244,7 @@ def v_3dresample(
         resample_mode=resample_mode,
         voxel_size=voxel_size,
     )
-    return v_3dresample_execute(params, execution)
+    return v_3dresample_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "V3dresampleParameters",
     "V_3DRESAMPLE_METADATA",
     "v_3dresample",
-    "v_3dresample_cargs",
     "v_3dresample_execute",
-    "v_3dresample_outputs",
     "v_3dresample_params",
 ]

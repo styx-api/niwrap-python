@@ -233,7 +233,7 @@ def v_3d_tsgen_outputs(
 
 def v_3d_tsgen_execute(
     params: V3dTsgenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTsgenOutputs:
     """
     This program generates an AFNI 3d+time data set based on user-specified signal
@@ -245,10 +245,12 @@ def v_3d_tsgen_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTsgenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TSGEN_METADATA)
     params = execution.params(params)
     cargs = v_3d_tsgen_cargs(params, execution)
     ret = v_3d_tsgen_outputs(params, execution)
@@ -307,8 +309,6 @@ def v_3d_tsgen(
     Returns:
         NamedTuple of outputs (described in `V3dTsgenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TSGEN_METADATA)
     params = v_3d_tsgen_params(
         input_file=input_file,
         in_tr_flag=in_tr_flag,
@@ -324,7 +324,7 @@ def v_3d_tsgen(
         bucket_config=bucket_config,
         brick_config=brick_config,
     )
-    return v_3d_tsgen_execute(params, execution)
+    return v_3d_tsgen_execute(params, runner)
 
 
 __all__ = [
@@ -332,8 +332,6 @@ __all__ = [
     "V3dTsgenParameters",
     "V_3D_TSGEN_METADATA",
     "v_3d_tsgen",
-    "v_3d_tsgen_cargs",
     "v_3d_tsgen_execute",
-    "v_3d_tsgen_outputs",
     "v_3d_tsgen_params",
 ]

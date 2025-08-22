@@ -173,7 +173,7 @@ def mri_extract_largest_cc_outputs(
 
 def mri_extract_largest_cc_execute(
     params: MriExtractLargestCcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriExtractLargestCcOutputs:
     """
     This program extracts the largest connected component of the input volume.
@@ -184,10 +184,12 @@ def mri_extract_largest_cc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriExtractLargestCcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EXTRACT_LARGEST_CC_METADATA)
     params = execution.params(params)
     cargs = mri_extract_largest_cc_cargs(params, execution)
     ret = mri_extract_largest_cc_outputs(params, execution)
@@ -226,8 +228,6 @@ def mri_extract_largest_cc(
     Returns:
         NamedTuple of outputs (described in `MriExtractLargestCcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EXTRACT_LARGEST_CC_METADATA)
     params = mri_extract_largest_cc_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -237,7 +237,7 @@ def mri_extract_largest_cc(
         original_volume=original_volume,
         label_value=label_value,
     )
-    return mri_extract_largest_cc_execute(params, execution)
+    return mri_extract_largest_cc_execute(params, runner)
 
 
 __all__ = [
@@ -245,8 +245,6 @@ __all__ = [
     "MriExtractLargestCcOutputs",
     "MriExtractLargestCcParameters",
     "mri_extract_largest_cc",
-    "mri_extract_largest_cc_cargs",
     "mri_extract_largest_cc_execute",
-    "mri_extract_largest_cc_outputs",
     "mri_extract_largest_cc_params",
 ]

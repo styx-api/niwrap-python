@@ -188,7 +188,7 @@ def swi_preprocess_outputs(
 
 def swi_preprocess_execute(
     params: SwiPreprocessParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SwiPreprocessOutputs:
     """
     Pre-process the Susceptibility-weighted images and write out nifti files for
@@ -200,10 +200,12 @@ def swi_preprocess_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SwiPreprocessOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SWI_PREPROCESS_METADATA)
     params = execution.params(params)
     cargs = swi_preprocess_cargs(params, execution)
     ret = swi_preprocess_outputs(params, execution)
@@ -247,8 +249,6 @@ def swi_preprocess(
     Returns:
         NamedTuple of outputs (described in `SwiPreprocessOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SWI_PREPROCESS_METADATA)
     params = swi_preprocess_params(
         scanner=scanner,
         ge_file=ge_file,
@@ -258,7 +258,7 @@ def swi_preprocess(
         out_magnitude=out_magnitude,
         out_phase=out_phase,
     )
-    return swi_preprocess_execute(params, execution)
+    return swi_preprocess_execute(params, runner)
 
 
 __all__ = [
@@ -266,8 +266,6 @@ __all__ = [
     "SwiPreprocessOutputs",
     "SwiPreprocessParameters",
     "swi_preprocess",
-    "swi_preprocess_cargs",
     "swi_preprocess_execute",
-    "swi_preprocess_outputs",
     "swi_preprocess_params",
 ]

@@ -258,7 +258,7 @@ def b0calc_outputs(
 
 def b0calc_execute(
     params: B0calcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> B0calcOutputs:
     """
     B0 field calculation program.
@@ -269,10 +269,12 @@ def b0calc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `B0calcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(B0CALC_METADATA)
     params = execution.params(params)
     cargs = b0calc_cargs(params, execution)
     ret = b0calc_outputs(params, execution)
@@ -329,8 +331,6 @@ def b0calc(
     Returns:
         NamedTuple of outputs (described in `B0calcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(B0CALC_METADATA)
     params = b0calc_params(
         input_file=input_file,
         output_file=output_file,
@@ -348,7 +348,7 @@ def b0calc(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return b0calc_execute(params, execution)
+    return b0calc_execute(params, runner)
 
 
 __all__ = [
@@ -356,8 +356,6 @@ __all__ = [
     "B0calcOutputs",
     "B0calcParameters",
     "b0calc",
-    "b0calc_cargs",
     "b0calc_execute",
-    "b0calc_outputs",
     "b0calc_params",
 ]

@@ -151,7 +151,7 @@ def mris_watershed_outputs(
 
 def mris_watershed_execute(
     params: MrisWatershedParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisWatershedOutputs:
     """
     This program computes the watershed transform on the surface of an intensity
@@ -163,10 +163,12 @@ def mris_watershed_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisWatershedOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_WATERSHED_METADATA)
     params = execution.params(params)
     cargs = mris_watershed_cargs(params, execution)
     ret = mris_watershed_outputs(params, execution)
@@ -201,8 +203,6 @@ def mris_watershed(
     Returns:
         NamedTuple of outputs (described in `MrisWatershedOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_WATERSHED_METADATA)
     params = mris_watershed_params(
         input_surface=input_surface,
         input_gradient_field=input_gradient_field,
@@ -210,7 +210,7 @@ def mris_watershed(
         max_clusters=max_clusters,
         mask_label=mask_label,
     )
-    return mris_watershed_execute(params, execution)
+    return mris_watershed_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "MrisWatershedOutputs",
     "MrisWatershedParameters",
     "mris_watershed",
-    "mris_watershed_cargs",
     "mris_watershed_execute",
-    "mris_watershed_outputs",
     "mris_watershed_params",
 ]

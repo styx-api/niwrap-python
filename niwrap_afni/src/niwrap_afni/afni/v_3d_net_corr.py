@@ -274,7 +274,7 @@ def v_3d_net_corr_outputs(
 
 def v_3d_net_corr_execute(
     params: V3dNetCorrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNetCorrOutputs:
     """
     Compute correlation matrix of a set of ROIs based on mean time series.
@@ -285,10 +285,12 @@ def v_3d_net_corr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNetCorrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NET_CORR_METADATA)
     params = execution.params(params)
     cargs = v_3d_net_corr_cargs(params, execution)
     ret = v_3d_net_corr_outputs(params, execution)
@@ -362,8 +364,6 @@ def v_3d_net_corr(
     Returns:
         NamedTuple of outputs (described in `V3dNetCorrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NET_CORR_METADATA)
     params = v_3d_net_corr_params(
         prefix=prefix,
         inset=inset,
@@ -386,7 +386,7 @@ def v_3d_net_corr(
         automask_off=automask_off,
         ignore_lt=ignore_lt,
     )
-    return v_3d_net_corr_execute(params, execution)
+    return v_3d_net_corr_execute(params, runner)
 
 
 __all__ = [
@@ -394,8 +394,6 @@ __all__ = [
     "V3dNetCorrParameters",
     "V_3D_NET_CORR_METADATA",
     "v_3d_net_corr",
-    "v_3d_net_corr_cargs",
     "v_3d_net_corr_execute",
-    "v_3d_net_corr_outputs",
     "v_3d_net_corr_params",
 ]

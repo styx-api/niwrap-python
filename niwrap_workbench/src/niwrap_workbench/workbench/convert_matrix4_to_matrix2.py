@@ -241,7 +241,7 @@ def convert_matrix4_to_matrix2_outputs(
 
 def convert_matrix4_to_matrix2_execute(
     params: ConvertMatrix4ToMatrix2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
     Generates a matrix2 cifti from matrix4 wbsparse.
@@ -258,10 +258,12 @@ def convert_matrix4_to_matrix2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToMatrix2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_MATRIX4_TO_MATRIX2_METADATA)
     params = execution.params(params)
     cargs = convert_matrix4_to_matrix2_cargs(params, execution)
     ret = convert_matrix4_to_matrix2_outputs(params, execution)
@@ -299,15 +301,13 @@ def convert_matrix4_to_matrix2(
     Returns:
         NamedTuple of outputs (described in `ConvertMatrix4ToMatrix2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_MATRIX4_TO_MATRIX2_METADATA)
     params = convert_matrix4_to_matrix2_params(
         matrix4_wbsparse=matrix4_wbsparse,
         counts_out=counts_out,
         opt_distances_distance_out=opt_distances_distance_out,
         individual_fibers=individual_fibers,
     )
-    return convert_matrix4_to_matrix2_execute(params, execution)
+    return convert_matrix4_to_matrix2_execute(params, runner)
 
 
 __all__ = [
@@ -317,11 +317,7 @@ __all__ = [
     "ConvertMatrix4ToMatrix2Outputs",
     "ConvertMatrix4ToMatrix2Parameters",
     "convert_matrix4_to_matrix2",
-    "convert_matrix4_to_matrix2_cargs",
     "convert_matrix4_to_matrix2_execute",
-    "convert_matrix4_to_matrix2_individual_fibers_cargs",
-    "convert_matrix4_to_matrix2_individual_fibers_outputs",
     "convert_matrix4_to_matrix2_individual_fibers_params",
-    "convert_matrix4_to_matrix2_outputs",
     "convert_matrix4_to_matrix2_params",
 ]

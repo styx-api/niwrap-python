@@ -141,7 +141,7 @@ def v_3d_normality_test_outputs(
 
 def v_3d_normality_test_execute(
     params: V3dNormalityTestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNormalityTestOutputs:
     """
     This program tests the input values at each voxel for normality using the
@@ -153,10 +153,12 @@ def v_3d_normality_test_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNormalityTestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NORMALITY_TEST_METADATA)
     params = execution.params(params)
     cargs = v_3d_normality_test_cargs(params, execution)
     ret = v_3d_normality_test_outputs(params, execution)
@@ -189,15 +191,13 @@ def v_3d_normality_test(
     Returns:
         NamedTuple of outputs (described in `V3dNormalityTestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NORMALITY_TEST_METADATA)
     params = v_3d_normality_test_params(
         input_=input_,
         prefix=prefix,
         noexp=noexp,
         pval=pval,
     )
-    return v_3d_normality_test_execute(params, execution)
+    return v_3d_normality_test_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "V3dNormalityTestParameters",
     "V_3D_NORMALITY_TEST_METADATA",
     "v_3d_normality_test",
-    "v_3d_normality_test_cargs",
     "v_3d_normality_test_execute",
-    "v_3d_normality_test_outputs",
     "v_3d_normality_test_params",
 ]

@@ -125,7 +125,7 @@ def cor_to_minc_outputs(
 
 def cor_to_minc_execute(
     params: CorToMincParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CorToMincOutputs:
     """
     Converts a directory of COR files to a MINC file.
@@ -136,10 +136,12 @@ def cor_to_minc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CorToMincOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(COR_TO_MINC_METADATA)
     params = execution.params(params)
     cargs = cor_to_minc_cargs(params, execution)
     ret = cor_to_minc_outputs(params, execution)
@@ -166,13 +168,11 @@ def cor_to_minc(
     Returns:
         NamedTuple of outputs (described in `CorToMincOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(COR_TO_MINC_METADATA)
     params = cor_to_minc_params(
         cor_directory=cor_directory,
         minc_file=minc_file,
     )
-    return cor_to_minc_execute(params, execution)
+    return cor_to_minc_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "CorToMincOutputs",
     "CorToMincParameters",
     "cor_to_minc",
-    "cor_to_minc_cargs",
     "cor_to_minc_execute",
-    "cor_to_minc_outputs",
     "cor_to_minc_params",
 ]

@@ -119,7 +119,7 @@ def gcainit_outputs(
 
 def gcainit_execute(
     params: GcainitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GcainitOutputs:
     """
     Initializes the GCA for brain processing tasks.
@@ -130,10 +130,12 @@ def gcainit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GcainitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GCAINIT_METADATA)
     params = execution.params(params)
     cargs = gcainit_cargs(params, execution)
     ret = gcainit_outputs(params, execution)
@@ -158,12 +160,10 @@ def gcainit(
     Returns:
         NamedTuple of outputs (described in `GcainitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GCAINIT_METADATA)
     params = gcainit_params(
         gcadir=gcadir,
     )
-    return gcainit_execute(params, execution)
+    return gcainit_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "GcainitOutputs",
     "GcainitParameters",
     "gcainit",
-    "gcainit_cargs",
     "gcainit_execute",
-    "gcainit_outputs",
     "gcainit_params",
 ]

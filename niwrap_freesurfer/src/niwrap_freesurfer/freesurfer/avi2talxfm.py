@@ -135,7 +135,7 @@ def avi2talxfm_outputs(
 
 def avi2talxfm_execute(
     params: Avi2talxfmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Avi2talxfmOutputs:
     """
     Convert voxel-to-voxel transform to MNI transform.
@@ -146,10 +146,12 @@ def avi2talxfm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Avi2talxfmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AVI2TALXFM_METADATA)
     params = execution.params(params)
     cargs = avi2talxfm_cargs(params, execution)
     ret = avi2talxfm_outputs(params, execution)
@@ -180,15 +182,13 @@ def avi2talxfm(
     Returns:
         NamedTuple of outputs (described in `Avi2talxfmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AVI2TALXFM_METADATA)
     params = avi2talxfm_params(
         input_volume=input_volume,
         target_volume=target_volume,
         vox2vox_transform=vox2vox_transform,
         output_xfm=output_xfm,
     )
-    return avi2talxfm_execute(params, execution)
+    return avi2talxfm_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "Avi2talxfmOutputs",
     "Avi2talxfmParameters",
     "avi2talxfm",
-    "avi2talxfm_cargs",
     "avi2talxfm_execute",
-    "avi2talxfm_outputs",
     "avi2talxfm_params",
 ]

@@ -186,7 +186,7 @@ def mri_edit_segmentation_with_surfaces_outputs(
 
 def mri_edit_segmentation_with_surfaces_execute(
     params: MriEditSegmentationWithSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEditSegmentationWithSurfacesOutputs:
     """
     This program edits an aseg with the surface.
@@ -197,10 +197,12 @@ def mri_edit_segmentation_with_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEditSegmentationWithSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA)
     params = execution.params(params)
     cargs = mri_edit_segmentation_with_surfaces_cargs(params, execution)
     ret = mri_edit_segmentation_with_surfaces_outputs(params, execution)
@@ -242,8 +244,6 @@ def mri_edit_segmentation_with_surfaces(
     Returns:
         NamedTuple of outputs (described in `MriEditSegmentationWithSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EDIT_SEGMENTATION_WITH_SURFACES_METADATA)
     params = mri_edit_segmentation_with_surfaces_params(
         aseg_name=aseg_name,
         surface_dir=surface_dir,
@@ -255,7 +255,7 @@ def mri_edit_segmentation_with_surfaces(
         cortex_flag=cortex_flag,
         annotation_file=annotation_file,
     )
-    return mri_edit_segmentation_with_surfaces_execute(params, execution)
+    return mri_edit_segmentation_with_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "MriEditSegmentationWithSurfacesOutputs",
     "MriEditSegmentationWithSurfacesParameters",
     "mri_edit_segmentation_with_surfaces",
-    "mri_edit_segmentation_with_surfaces_cargs",
     "mri_edit_segmentation_with_surfaces_execute",
-    "mri_edit_segmentation_with_surfaces_outputs",
     "mri_edit_segmentation_with_surfaces_params",
 ]

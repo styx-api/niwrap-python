@@ -167,7 +167,7 @@ def paste_image_into_image_outputs(
 
 def paste_image_into_image_execute(
     params: PasteImageIntoImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PasteImageIntoImageOutputs:
     """
     Paste the input image into the input canvas image. Depending on parameters, it
@@ -179,10 +179,12 @@ def paste_image_into_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PasteImageIntoImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PASTE_IMAGE_INTO_IMAGE_METADATA)
     params = execution.params(params)
     cargs = paste_image_into_image_cargs(params, execution)
     ret = paste_image_into_image_outputs(params, execution)
@@ -228,8 +230,6 @@ def paste_image_into_image(
     Returns:
         NamedTuple of outputs (described in `PasteImageIntoImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PASTE_IMAGE_INTO_IMAGE_METADATA)
     params = paste_image_into_image_params(
         image_dimension=image_dimension,
         input_canvas_image=input_canvas_image,
@@ -240,7 +240,7 @@ def paste_image_into_image(
         paint_over_non_background_voxels=paint_over_non_background_voxels,
         conflict_label=conflict_label,
     )
-    return paste_image_into_image_execute(params, execution)
+    return paste_image_into_image_execute(params, runner)
 
 
 __all__ = [
@@ -248,8 +248,6 @@ __all__ = [
     "PasteImageIntoImageOutputs",
     "PasteImageIntoImageParameters",
     "paste_image_into_image",
-    "paste_image_into_image_cargs",
     "paste_image_into_image_execute",
-    "paste_image_into_image_outputs",
     "paste_image_into_image_params",
 ]

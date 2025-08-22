@@ -130,7 +130,7 @@ def label_subject_outputs(
 
 def label_subject_execute(
     params: LabelSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelSubjectOutputs:
     """
     A tool for labeling subject MRI data in FreeSurfer.
@@ -141,10 +141,12 @@ def label_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = label_subject_cargs(params, execution)
     ret = label_subject_outputs(params, execution)
@@ -172,13 +174,11 @@ def label_subject(
     Returns:
         NamedTuple of outputs (described in `LabelSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_SUBJECT_METADATA)
     params = label_subject_params(
         nu_file=nu_file,
         orig_dir=orig_dir,
     )
-    return label_subject_execute(params, execution)
+    return label_subject_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "LabelSubjectOutputs",
     "LabelSubjectParameters",
     "label_subject",
-    "label_subject_cargs",
     "label_subject_execute",
-    "label_subject_outputs",
     "label_subject_params",
 ]

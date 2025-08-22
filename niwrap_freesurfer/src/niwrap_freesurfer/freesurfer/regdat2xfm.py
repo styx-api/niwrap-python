@@ -121,7 +121,7 @@ def regdat2xfm_outputs(
 
 def regdat2xfm_execute(
     params: Regdat2xfmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Regdat2xfmOutputs:
     """
     This tool has been removed from the current version of FreeSurfer.
@@ -132,10 +132,12 @@ def regdat2xfm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Regdat2xfmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REGDAT2XFM_METADATA)
     params = execution.params(params)
     cargs = regdat2xfm_cargs(params, execution)
     ret = regdat2xfm_outputs(params, execution)
@@ -162,13 +164,11 @@ def regdat2xfm(
     Returns:
         NamedTuple of outputs (described in `Regdat2xfmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REGDAT2XFM_METADATA)
     params = regdat2xfm_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return regdat2xfm_execute(params, execution)
+    return regdat2xfm_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "Regdat2xfmOutputs",
     "Regdat2xfmParameters",
     "regdat2xfm",
-    "regdat2xfm_cargs",
     "regdat2xfm_execute",
-    "regdat2xfm_outputs",
     "regdat2xfm_params",
 ]

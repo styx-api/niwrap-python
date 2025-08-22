@@ -500,7 +500,7 @@ def mris_place_surface_outputs(
 
 def mris_place_surface_execute(
     params: MrisPlaceSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisPlaceSurfaceOutputs:
     """
     This program positions the triangular mesh representing a cortical surface,
@@ -513,10 +513,12 @@ def mris_place_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisPlaceSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_PLACE_SURFACE_METADATA)
     params = execution.params(params)
     cargs = mris_place_surface_cargs(params, execution)
     ret = mris_place_surface_outputs(params, execution)
@@ -652,8 +654,6 @@ def mris_place_surface(
     Returns:
         NamedTuple of outputs (described in `MrisPlaceSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_PLACE_SURFACE_METADATA)
     params = mris_place_surface_params(
         output_surface=output_surface,
         input_surface=input_surface,
@@ -700,7 +700,7 @@ def mris_place_surface(
         white_border_low_factor=white_border_low_factor,
         fill_lateral_ventricles=fill_lateral_ventricles,
     )
-    return mris_place_surface_execute(params, execution)
+    return mris_place_surface_execute(params, runner)
 
 
 __all__ = [
@@ -708,8 +708,6 @@ __all__ = [
     "MrisPlaceSurfaceOutputs",
     "MrisPlaceSurfaceParameters",
     "mris_place_surface",
-    "mris_place_surface_cargs",
     "mris_place_surface_execute",
-    "mris_place_surface_outputs",
     "mris_place_surface_params",
 ]

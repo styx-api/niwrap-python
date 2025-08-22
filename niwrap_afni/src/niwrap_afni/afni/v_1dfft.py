@@ -184,7 +184,7 @@ def v_1dfft_outputs(
 
 def v_1dfft_execute(
     params: V1dfftParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dfftOutputs:
     """
     Compute the absolute value of the FFT of input columns from an AFNI 1D file.
@@ -195,10 +195,12 @@ def v_1dfft_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dfftOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DFFT_METADATA)
     params = execution.params(params)
     cargs = v_1dfft_cargs(params, execution)
     ret = v_1dfft_outputs(params, execution)
@@ -244,8 +246,6 @@ def v_1dfft(
     Returns:
         NamedTuple of outputs (described in `V1dfftOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DFFT_METADATA)
     params = v_1dfft_params(
         infile=infile,
         outfile=outfile,
@@ -257,7 +257,7 @@ def v_1dfft(
         hilbert=hilbert,
         nodetrend=nodetrend,
     )
-    return v_1dfft_execute(params, execution)
+    return v_1dfft_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "V1dfftParameters",
     "V_1DFFT_METADATA",
     "v_1dfft",
-    "v_1dfft_cargs",
     "v_1dfft_execute",
-    "v_1dfft_outputs",
     "v_1dfft_params",
 ]

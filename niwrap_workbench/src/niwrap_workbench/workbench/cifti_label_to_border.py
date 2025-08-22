@@ -230,7 +230,7 @@ def cifti_label_to_border_outputs(
 
 def cifti_label_to_border_execute(
     params: CiftiLabelToBorderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiLabelToBorderOutputs:
     """
     Draw borders around cifti labels.
@@ -245,10 +245,12 @@ def cifti_label_to_border_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelToBorderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_LABEL_TO_BORDER_METADATA)
     params = execution.params(params)
     cargs = cifti_label_to_border_cargs(params, execution)
     ret = cifti_label_to_border_outputs(params, execution)
@@ -284,15 +286,13 @@ def cifti_label_to_border(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelToBorderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_LABEL_TO_BORDER_METADATA)
     params = cifti_label_to_border_params(
         cifti_in=cifti_in,
         opt_placement_fraction=opt_placement_fraction,
         opt_column_column=opt_column_column,
         border=border,
     )
-    return cifti_label_to_border_execute(params, execution)
+    return cifti_label_to_border_execute(params, runner)
 
 
 __all__ = [
@@ -302,11 +302,7 @@ __all__ = [
     "CiftiLabelToBorderOutputs",
     "CiftiLabelToBorderParameters",
     "cifti_label_to_border",
-    "cifti_label_to_border_border_cargs",
-    "cifti_label_to_border_border_outputs",
     "cifti_label_to_border_border_params",
-    "cifti_label_to_border_cargs",
     "cifti_label_to_border_execute",
-    "cifti_label_to_border_outputs",
     "cifti_label_to_border_params",
 ]

@@ -119,7 +119,7 @@ def run_qdec_glm_outputs(
 
 def run_qdec_glm_execute(
     params: RunQdecGlmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunQdecGlmOutputs:
     """
     QDEC GLM (General Linear Model) execution tool for statistical analysis.
@@ -130,10 +130,12 @@ def run_qdec_glm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunQdecGlmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_QDEC_GLM_METADATA)
     params = execution.params(params)
     cargs = run_qdec_glm_cargs(params, execution)
     ret = run_qdec_glm_outputs(params, execution)
@@ -158,12 +160,10 @@ def run_qdec_glm(
     Returns:
         NamedTuple of outputs (described in `RunQdecGlmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_QDEC_GLM_METADATA)
     params = run_qdec_glm_params(
         qdec_directory=qdec_directory,
     )
-    return run_qdec_glm_execute(params, execution)
+    return run_qdec_glm_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "RunQdecGlmOutputs",
     "RunQdecGlmParameters",
     "run_qdec_glm",
-    "run_qdec_glm_cargs",
     "run_qdec_glm_execute",
-    "run_qdec_glm_outputs",
     "run_qdec_glm_params",
 ]

@@ -152,7 +152,7 @@ def v_3d_rank_outputs(
 
 def v_3d_rank_execute(
     params: V3dRankParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRankOutputs:
     """
     Replaces voxel values by their rank in the set of values collected over all
@@ -164,10 +164,12 @@ def v_3d_rank_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRankOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_RANK_METADATA)
     params = execution.params(params)
     cargs = v_3d_rank_cargs(params, execution)
     ret = v_3d_rank_outputs(params, execution)
@@ -202,15 +204,13 @@ def v_3d_rank(
     Returns:
         NamedTuple of outputs (described in `V3dRankOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_RANK_METADATA)
     params = v_3d_rank_params(
         input_datasets=input_datasets,
         output_prefix=output_prefix,
         version_info=version_info,
         help_info=help_info,
     )
-    return v_3d_rank_execute(params, execution)
+    return v_3d_rank_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "V3dRankParameters",
     "V_3D_RANK_METADATA",
     "v_3d_rank",
-    "v_3d_rank_cargs",
     "v_3d_rank_execute",
-    "v_3d_rank_outputs",
     "v_3d_rank_params",
 ]

@@ -929,7 +929,7 @@ def cifti_convert_outputs(
 
 def cifti_convert_execute(
     params: CiftiConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiConvertOutputs:
     """
     Dump cifti matrix into other formats.
@@ -969,10 +969,12 @@ def cifti_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CONVERT_METADATA)
     params = execution.params(params)
     cargs = cifti_convert_cargs(params, execution)
     ret = cifti_convert_outputs(params, execution)
@@ -1038,8 +1040,6 @@ def cifti_convert(
     Returns:
         NamedTuple of outputs (described in `CiftiConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CONVERT_METADATA)
     params = cifti_convert_params(
         to_gifti_ext=to_gifti_ext,
         from_gifti_ext=from_gifti_ext,
@@ -1048,7 +1048,7 @@ def cifti_convert(
         to_text=to_text,
         from_text=from_text,
     )
-    return cifti_convert_execute(params, execution)
+    return cifti_convert_execute(params, runner)
 
 
 __all__ = [
@@ -1070,32 +1070,16 @@ __all__ = [
     "CiftiConvertToNiftiParameters",
     "CiftiConvertToTextParameters",
     "cifti_convert",
-    "cifti_convert_cargs",
     "cifti_convert_execute",
-    "cifti_convert_from_gifti_ext_cargs",
-    "cifti_convert_from_gifti_ext_outputs",
     "cifti_convert_from_gifti_ext_params",
-    "cifti_convert_from_nifti_cargs",
-    "cifti_convert_from_nifti_outputs",
     "cifti_convert_from_nifti_params",
-    "cifti_convert_from_text_cargs",
-    "cifti_convert_from_text_outputs",
     "cifti_convert_from_text_params",
-    "cifti_convert_outputs",
     "cifti_convert_params",
-    "cifti_convert_replace_binary_cargs",
     "cifti_convert_replace_binary_params",
-    "cifti_convert_reset_timepoints_1_cargs",
     "cifti_convert_reset_timepoints_1_params",
-    "cifti_convert_reset_timepoints_2_cargs",
     "cifti_convert_reset_timepoints_2_params",
-    "cifti_convert_reset_timepoints_cargs",
     "cifti_convert_reset_timepoints_params",
-    "cifti_convert_to_gifti_ext_cargs",
     "cifti_convert_to_gifti_ext_params",
-    "cifti_convert_to_nifti_cargs",
-    "cifti_convert_to_nifti_outputs",
     "cifti_convert_to_nifti_params",
-    "cifti_convert_to_text_cargs",
     "cifti_convert_to_text_params",
 ]

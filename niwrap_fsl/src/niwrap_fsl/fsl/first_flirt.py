@@ -179,7 +179,7 @@ def first_flirt_outputs(
 
 def first_flirt_execute(
     params: FirstFlirtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FirstFlirtOutputs:
     """
     FLIRT-based image registration tool with additional options for brain extraction
@@ -191,10 +191,12 @@ def first_flirt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FirstFlirtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIRST_FLIRT_METADATA)
     params = execution.params(params)
     cargs = first_flirt_cargs(params, execution)
     ret = first_flirt_outputs(params, execution)
@@ -238,8 +240,6 @@ def first_flirt(
     Returns:
         NamedTuple of outputs (described in `FirstFlirtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIRST_FLIRT_METADATA)
     params = first_flirt_params(
         input_image=input_image,
         output_basename=output_basename,
@@ -250,7 +250,7 @@ def first_flirt(
         cort_flag=cort_flag,
         cost_function=cost_function,
     )
-    return first_flirt_execute(params, execution)
+    return first_flirt_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "FirstFlirtOutputs",
     "FirstFlirtParameters",
     "first_flirt",
-    "first_flirt_cargs",
     "first_flirt_execute",
-    "first_flirt_outputs",
     "first_flirt_params",
 ]

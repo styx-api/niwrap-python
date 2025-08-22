@@ -137,7 +137,7 @@ def cifti_parcel_mapping_to_label_outputs(
 
 def cifti_parcel_mapping_to_label_execute(
     params: CiftiParcelMappingToLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
     Create dlabel from parcellated file.
@@ -154,10 +154,12 @@ def cifti_parcel_mapping_to_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiParcelMappingToLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA)
     params = execution.params(params)
     cargs = cifti_parcel_mapping_to_label_cargs(params, execution)
     ret = cifti_parcel_mapping_to_label_outputs(params, execution)
@@ -195,15 +197,13 @@ def cifti_parcel_mapping_to_label(
     Returns:
         NamedTuple of outputs (described in `CiftiParcelMappingToLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_PARCEL_MAPPING_TO_LABEL_METADATA)
     params = cifti_parcel_mapping_to_label_params(
         cifti_in=cifti_in,
         direction=direction,
         template_cifti=template_cifti,
         dlabel_out=dlabel_out,
     )
-    return cifti_parcel_mapping_to_label_execute(params, execution)
+    return cifti_parcel_mapping_to_label_execute(params, runner)
 
 
 __all__ = [
@@ -211,8 +211,6 @@ __all__ = [
     "CiftiParcelMappingToLabelOutputs",
     "CiftiParcelMappingToLabelParameters",
     "cifti_parcel_mapping_to_label",
-    "cifti_parcel_mapping_to_label_cargs",
     "cifti_parcel_mapping_to_label_execute",
-    "cifti_parcel_mapping_to_label_outputs",
     "cifti_parcel_mapping_to_label_params",
 ]

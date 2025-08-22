@@ -172,7 +172,7 @@ def convert_cdiflist_to_grads_outputs(
 
 def convert_cdiflist_to_grads_execute(
     params: ConvertCdiflistToGradsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertCdiflistToGradsOutputs:
     """
     This program reads in a GE cdiflist and outputs gradient file and file of
@@ -184,10 +184,12 @@ def convert_cdiflist_to_grads_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertCdiflistToGradsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_CDIFLIST_TO_GRADS_METADATA)
     params = execution.params(params)
     cargs = convert_cdiflist_to_grads_cargs(params, execution)
     ret = convert_cdiflist_to_grads_outputs(params, execution)
@@ -228,8 +230,6 @@ def convert_cdiflist_to_grads(
     Returns:
         NamedTuple of outputs (described in `ConvertCdiflistToGradsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_CDIFLIST_TO_GRADS_METADATA)
     params = convert_cdiflist_to_grads_params(
         cdiflist=cdiflist,
         bval_max=bval_max,
@@ -239,7 +239,7 @@ def convert_cdiflist_to_grads(
         help_=help_,
         hview=hview,
     )
-    return convert_cdiflist_to_grads_execute(params, execution)
+    return convert_cdiflist_to_grads_execute(params, runner)
 
 
 __all__ = [
@@ -247,8 +247,6 @@ __all__ = [
     "ConvertCdiflistToGradsOutputs",
     "ConvertCdiflistToGradsParameters",
     "convert_cdiflist_to_grads",
-    "convert_cdiflist_to_grads_cargs",
     "convert_cdiflist_to_grads_execute",
-    "convert_cdiflist_to_grads_outputs",
     "convert_cdiflist_to_grads_params",
 ]

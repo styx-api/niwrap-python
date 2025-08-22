@@ -165,7 +165,7 @@ def volume_parcel_resampling_generic_outputs(
 
 def volume_parcel_resampling_generic_execute(
     params: VolumeParcelResamplingGenericParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeParcelResamplingGenericOutputs:
     """
     Smooth and resample volume parcels from different volume space.
@@ -186,10 +186,12 @@ def volume_parcel_resampling_generic_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeParcelResamplingGenericOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA)
     params = execution.params(params)
     cargs = volume_parcel_resampling_generic_cargs(params, execution)
     ret = volume_parcel_resampling_generic_outputs(params, execution)
@@ -240,8 +242,6 @@ def volume_parcel_resampling_generic(
     Returns:
         NamedTuple of outputs (described in `VolumeParcelResamplingGenericOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_PARCEL_RESAMPLING_GENERIC_METADATA)
     params = volume_parcel_resampling_generic_params(
         volume_in=volume_in,
         cur_parcels=cur_parcels,
@@ -252,7 +252,7 @@ def volume_parcel_resampling_generic(
         opt_fix_zeros=opt_fix_zeros,
         opt_subvolume_subvol=opt_subvolume_subvol,
     )
-    return volume_parcel_resampling_generic_execute(params, execution)
+    return volume_parcel_resampling_generic_execute(params, runner)
 
 
 __all__ = [
@@ -260,8 +260,6 @@ __all__ = [
     "VolumeParcelResamplingGenericOutputs",
     "VolumeParcelResamplingGenericParameters",
     "volume_parcel_resampling_generic",
-    "volume_parcel_resampling_generic_cargs",
     "volume_parcel_resampling_generic_execute",
-    "volume_parcel_resampling_generic_outputs",
     "volume_parcel_resampling_generic_params",
 ]

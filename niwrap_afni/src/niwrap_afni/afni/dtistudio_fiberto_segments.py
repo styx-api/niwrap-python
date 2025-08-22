@@ -136,7 +136,7 @@ def dtistudio_fiberto_segments_outputs(
 
 def dtistudio_fiberto_segments_execute(
     params: DtistudioFibertoSegmentsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DtistudioFibertoSegmentsOutputs:
     """
     Convert a DTIStudio Fiber file to a SUMA segment file.
@@ -147,10 +147,12 @@ def dtistudio_fiberto_segments_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DtistudioFibertoSegmentsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DTISTUDIO_FIBERTO_SEGMENTS_METADATA)
     params = execution.params(params)
     cargs = dtistudio_fiberto_segments_cargs(params, execution)
     ret = dtistudio_fiberto_segments_outputs(params, execution)
@@ -179,14 +181,12 @@ def dtistudio_fiberto_segments(
     Returns:
         NamedTuple of outputs (described in `DtistudioFibertoSegmentsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DTISTUDIO_FIBERTO_SEGMENTS_METADATA)
     params = dtistudio_fiberto_segments_params(
         dataset=dataset,
         output_file=output_file,
         swap_flag=swap_flag,
     )
-    return dtistudio_fiberto_segments_execute(params, execution)
+    return dtistudio_fiberto_segments_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "DtistudioFibertoSegmentsOutputs",
     "DtistudioFibertoSegmentsParameters",
     "dtistudio_fiberto_segments",
-    "dtistudio_fiberto_segments_cargs",
     "dtistudio_fiberto_segments_execute",
-    "dtistudio_fiberto_segments_outputs",
     "dtistudio_fiberto_segments_params",
 ]

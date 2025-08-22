@@ -160,7 +160,7 @@ def cifti_cross_correlation_outputs(
 
 def cifti_cross_correlation_execute(
     params: CiftiCrossCorrelationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCrossCorrelationOutputs:
     """
     Correlate a cifti file with another cifti file.
@@ -180,10 +180,12 @@ def cifti_cross_correlation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCrossCorrelationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CROSS_CORRELATION_METADATA)
     params = execution.params(params)
     cargs = cifti_cross_correlation_cargs(params, execution)
     ret = cifti_cross_correlation_outputs(params, execution)
@@ -230,8 +232,6 @@ def cifti_cross_correlation(
     Returns:
         NamedTuple of outputs (described in `CiftiCrossCorrelationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CROSS_CORRELATION_METADATA)
     params = cifti_cross_correlation_params(
         cifti_a=cifti_a,
         cifti_b=cifti_b,
@@ -240,7 +240,7 @@ def cifti_cross_correlation(
         opt_fisher_z=opt_fisher_z,
         opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
     )
-    return cifti_cross_correlation_execute(params, execution)
+    return cifti_cross_correlation_execute(params, runner)
 
 
 __all__ = [
@@ -248,8 +248,6 @@ __all__ = [
     "CiftiCrossCorrelationOutputs",
     "CiftiCrossCorrelationParameters",
     "cifti_cross_correlation",
-    "cifti_cross_correlation_cargs",
     "cifti_cross_correlation_execute",
-    "cifti_cross_correlation_outputs",
     "cifti_cross_correlation_params",
 ]

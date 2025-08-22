@@ -126,7 +126,7 @@ def fslmodhd_outputs(
 
 def fslmodhd_execute(
     params: FslmodhdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslmodhdOutputs:
     """
     A tool for modifying header information of NIfTI images.
@@ -137,10 +137,12 @@ def fslmodhd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslmodhdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLMODHD_METADATA)
     params = execution.params(params)
     cargs = fslmodhd_cargs(params, execution)
     ret = fslmodhd_outputs(params, execution)
@@ -169,14 +171,12 @@ def fslmodhd(
     Returns:
         NamedTuple of outputs (described in `FslmodhdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLMODHD_METADATA)
     params = fslmodhd_params(
         image=image,
         keyword_=keyword_,
         value=value,
     )
-    return fslmodhd_execute(params, execution)
+    return fslmodhd_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "FslmodhdOutputs",
     "FslmodhdParameters",
     "fslmodhd",
-    "fslmodhd_cargs",
     "fslmodhd_execute",
-    "fslmodhd_outputs",
     "fslmodhd_params",
 ]

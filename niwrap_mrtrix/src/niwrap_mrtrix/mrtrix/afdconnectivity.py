@@ -265,7 +265,7 @@ def afdconnectivity_outputs(
 
 def afdconnectivity_execute(
     params: AfdconnectivityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfdconnectivityOutputs:
     """
     Obtain an estimate of fibre connectivity between two regions using AFD and
@@ -313,10 +313,12 @@ def afdconnectivity_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfdconnectivityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFDCONNECTIVITY_METADATA)
     params = execution.params(params)
     cargs = afdconnectivity_cargs(params, execution)
     ret = afdconnectivity_outputs(params, execution)
@@ -414,8 +416,6 @@ def afdconnectivity(
     Returns:
         NamedTuple of outputs (described in `AfdconnectivityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFDCONNECTIVITY_METADATA)
     params = afdconnectivity_params(
         wbft=wbft,
         afd_map=afd_map,
@@ -431,7 +431,7 @@ def afdconnectivity(
         image=image,
         tracks=tracks,
     )
-    return afdconnectivity_execute(params, execution)
+    return afdconnectivity_execute(params, runner)
 
 
 __all__ = [
@@ -440,10 +440,7 @@ __all__ = [
     "AfdconnectivityOutputs",
     "AfdconnectivityParameters",
     "afdconnectivity",
-    "afdconnectivity_cargs",
-    "afdconnectivity_config_cargs",
     "afdconnectivity_config_params",
     "afdconnectivity_execute",
-    "afdconnectivity_outputs",
     "afdconnectivity_params",
 ]

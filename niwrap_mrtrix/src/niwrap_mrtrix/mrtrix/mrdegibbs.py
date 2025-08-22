@@ -286,7 +286,7 @@ def mrdegibbs_outputs(
 
 def mrdegibbs_execute(
     params: MrdegibbsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrdegibbsOutputs:
     """
     Remove Gibbs Ringing Artifacts.
@@ -321,10 +321,12 @@ def mrdegibbs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrdegibbsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRDEGIBBS_METADATA)
     params = execution.params(params)
     cargs = mrdegibbs_cargs(params, execution)
     ret = mrdegibbs_outputs(params, execution)
@@ -410,8 +412,6 @@ def mrdegibbs(
     Returns:
         NamedTuple of outputs (described in `MrdegibbsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRDEGIBBS_METADATA)
     params = mrdegibbs_params(
         axes=axes,
         nshifts=nshifts,
@@ -429,7 +429,7 @@ def mrdegibbs(
         in_=in_,
         out=out,
     )
-    return mrdegibbs_execute(params, execution)
+    return mrdegibbs_execute(params, runner)
 
 
 __all__ = [
@@ -438,10 +438,7 @@ __all__ = [
     "MrdegibbsOutputs",
     "MrdegibbsParameters",
     "mrdegibbs",
-    "mrdegibbs_cargs",
-    "mrdegibbs_config_cargs",
     "mrdegibbs_config_params",
     "mrdegibbs_execute",
-    "mrdegibbs_outputs",
     "mrdegibbs_params",
 ]

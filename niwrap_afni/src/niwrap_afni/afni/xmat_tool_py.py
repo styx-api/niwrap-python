@@ -265,7 +265,7 @@ def xmat_tool_py_outputs(
 
 def xmat_tool_py_execute(
     params: XmatToolPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XmatToolPyOutputs:
     """
     A tool for evaluating an AFNI X-matrix.
@@ -276,10 +276,12 @@ def xmat_tool_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XmatToolPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XMAT_TOOL_PY_METADATA)
     params = execution.params(params)
     cargs = xmat_tool_py_cargs(params, execution)
     ret = xmat_tool_py_outputs(params, execution)
@@ -344,8 +346,6 @@ def xmat_tool_py(
     Returns:
         NamedTuple of outputs (described in `XmatToolPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XMAT_TOOL_PY_METADATA)
     params = xmat_tool_py_params(
         no_gui=no_gui,
         load_xmat=load_xmat,
@@ -369,7 +369,7 @@ def xmat_tool_py(
         show_1d=show_1d,
         gui_plot_xmat_as_one=gui_plot_xmat_as_one,
     )
-    return xmat_tool_py_execute(params, execution)
+    return xmat_tool_py_execute(params, runner)
 
 
 __all__ = [
@@ -377,8 +377,6 @@ __all__ = [
     "XmatToolPyOutputs",
     "XmatToolPyParameters",
     "xmat_tool_py",
-    "xmat_tool_py_cargs",
     "xmat_tool_py_execute",
-    "xmat_tool_py_outputs",
     "xmat_tool_py_params",
 ]

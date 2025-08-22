@@ -250,7 +250,7 @@ def clust_exp_stat_parse_py_outputs(
 
 def clust_exp_stat_parse_py_execute(
     params: ClustExpStatParsePyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ClustExpStatParsePyOutputs:
     """
     Parser for statistical data sets and subject data sets, generating several
@@ -262,10 +262,12 @@ def clust_exp_stat_parse_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ClustExpStatParsePyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CLUST_EXP_STAT_PARSE_PY_METADATA)
     params = execution.params(params)
     cargs = clust_exp_stat_parse_py_cargs(params, execution)
     ret = clust_exp_stat_parse_py_outputs(params, execution)
@@ -317,8 +319,6 @@ def clust_exp_stat_parse_py(
     Returns:
         NamedTuple of outputs (described in `ClustExpStatParsePyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CLUST_EXP_STAT_PARSE_PY_METADATA)
     params = clust_exp_stat_parse_py_params(
         statdset=statdset,
         meanbrik=meanbrik,
@@ -334,7 +334,7 @@ def clust_exp_stat_parse_py(
         noshiny=noshiny,
         overwrite=overwrite,
     )
-    return clust_exp_stat_parse_py_execute(params, execution)
+    return clust_exp_stat_parse_py_execute(params, runner)
 
 
 __all__ = [
@@ -342,8 +342,6 @@ __all__ = [
     "ClustExpStatParsePyOutputs",
     "ClustExpStatParsePyParameters",
     "clust_exp_stat_parse_py",
-    "clust_exp_stat_parse_py_cargs",
     "clust_exp_stat_parse_py_execute",
-    "clust_exp_stat_parse_py_outputs",
     "clust_exp_stat_parse_py_params",
 ]

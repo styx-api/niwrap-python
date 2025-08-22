@@ -242,7 +242,7 @@ def tsfthreshold_outputs(
 
 def tsfthreshold_execute(
     params: TsfthresholdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TsfthresholdOutputs:
     """
     Threshold and invert track scalar files.
@@ -259,10 +259,12 @@ def tsfthreshold_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TsfthresholdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TSFTHRESHOLD_METADATA)
     params = execution.params(params)
     cargs = tsfthreshold_cargs(params, execution)
     ret = tsfthreshold_outputs(params, execution)
@@ -319,8 +321,6 @@ def tsfthreshold(
     Returns:
         NamedTuple of outputs (described in `TsfthresholdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TSFTHRESHOLD_METADATA)
     params = tsfthreshold_params(
         invert=invert,
         info=info,
@@ -335,7 +335,7 @@ def tsfthreshold(
         t=t,
         output=output,
     )
-    return tsfthreshold_execute(params, execution)
+    return tsfthreshold_execute(params, runner)
 
 
 __all__ = [
@@ -344,10 +344,7 @@ __all__ = [
     "TsfthresholdOutputs",
     "TsfthresholdParameters",
     "tsfthreshold",
-    "tsfthreshold_cargs",
-    "tsfthreshold_config_cargs",
     "tsfthreshold_config_params",
     "tsfthreshold_execute",
-    "tsfthreshold_outputs",
     "tsfthreshold_params",
 ]

@@ -122,7 +122,7 @@ def v__4_daverage_outputs(
 
 def v__4_daverage_execute(
     params: V4DaverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V4DaverageOutputs:
     """
     Script for computing average 3D+time bricks using 3Dcalc.
@@ -133,10 +133,12 @@ def v__4_daverage_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V4DaverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__4_DAVERAGE_METADATA)
     params = execution.params(params)
     cargs = v__4_daverage_cargs(params, execution)
     ret = v__4_daverage_outputs(params, execution)
@@ -164,13 +166,11 @@ def v__4_daverage(
     Returns:
         NamedTuple of outputs (described in `V4DaverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__4_DAVERAGE_METADATA)
     params = v__4_daverage_params(
         output_prefix=output_prefix,
         input_files=input_files,
     )
-    return v__4_daverage_execute(params, execution)
+    return v__4_daverage_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "V4DaverageParameters",
     "V__4_DAVERAGE_METADATA",
     "v__4_daverage",
-    "v__4_daverage_cargs",
     "v__4_daverage_execute",
-    "v__4_daverage_outputs",
     "v__4_daverage_params",
 ]

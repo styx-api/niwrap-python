@@ -268,7 +268,7 @@ def feat2segstats_outputs(
 
 def feat2segstats_execute(
     params: Feat2segstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Feat2segstatsOutputs:
     """
     Computes segmentation summaries and stores output in
@@ -280,10 +280,12 @@ def feat2segstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Feat2segstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FEAT2SEGSTATS_METADATA)
     params = execution.params(params)
     cargs = feat2segstats_cargs(params, execution)
     ret = feat2segstats_outputs(params, execution)
@@ -348,8 +350,6 @@ def feat2segstats(
     Returns:
         NamedTuple of outputs (described in `Feat2segstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FEAT2SEGSTATS_METADATA)
     params = feat2segstats_params(
         feat_dir=feat_dir,
         featdirfile=featdirfile,
@@ -372,7 +372,7 @@ def feat2segstats(
         debug_flag=debug_flag,
         nolog_flag=nolog_flag,
     )
-    return feat2segstats_execute(params, execution)
+    return feat2segstats_execute(params, runner)
 
 
 __all__ = [
@@ -380,8 +380,6 @@ __all__ = [
     "Feat2segstatsOutputs",
     "Feat2segstatsParameters",
     "feat2segstats",
-    "feat2segstats_cargs",
     "feat2segstats_execute",
-    "feat2segstats_outputs",
     "feat2segstats_params",
 ]

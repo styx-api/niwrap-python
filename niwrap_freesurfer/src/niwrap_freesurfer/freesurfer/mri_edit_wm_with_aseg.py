@@ -216,7 +216,7 @@ def mri_edit_wm_with_aseg_outputs(
 
 def mri_edit_wm_with_aseg_execute(
     params: MriEditWmWithAsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEditWmWithAsegOutputs:
     """
     A tool for editing white matter with anatomical segmentation.
@@ -227,10 +227,12 @@ def mri_edit_wm_with_aseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEditWmWithAsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EDIT_WM_WITH_ASEG_METADATA)
     params = execution.params(params)
     cargs = mri_edit_wm_with_aseg_cargs(params, execution)
     ret = mri_edit_wm_with_aseg_outputs(params, execution)
@@ -282,8 +284,6 @@ def mri_edit_wm_with_aseg(
     Returns:
         NamedTuple of outputs (described in `MriEditWmWithAsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EDIT_WM_WITH_ASEG_METADATA)
     params = mri_edit_wm_with_aseg_params(
         input_wm=input_wm,
         input_t1_brain=input_t1_brain,
@@ -300,7 +300,7 @@ def mri_edit_wm_with_aseg(
         sa_fix_ento_wm=sa_fix_ento_wm,
         debug_voxel=debug_voxel,
     )
-    return mri_edit_wm_with_aseg_execute(params, execution)
+    return mri_edit_wm_with_aseg_execute(params, runner)
 
 
 __all__ = [
@@ -308,8 +308,6 @@ __all__ = [
     "MriEditWmWithAsegOutputs",
     "MriEditWmWithAsegParameters",
     "mri_edit_wm_with_aseg",
-    "mri_edit_wm_with_aseg_cargs",
     "mri_edit_wm_with_aseg_execute",
-    "mri_edit_wm_with_aseg_outputs",
     "mri_edit_wm_with_aseg_params",
 ]

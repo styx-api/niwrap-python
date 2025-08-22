@@ -183,7 +183,7 @@ def foci_create_outputs(
 
 def foci_create_execute(
     params: FociCreateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FociCreateOutputs:
     """
     Create a foci file.
@@ -213,10 +213,12 @@ def foci_create_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociCreateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FOCI_CREATE_METADATA)
     params = execution.params(params)
     cargs = foci_create_cargs(params, execution)
     ret = foci_create_outputs(params, execution)
@@ -262,13 +264,11 @@ def foci_create(
     Returns:
         NamedTuple of outputs (described in `FociCreateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FOCI_CREATE_METADATA)
     params = foci_create_params(
         output=output,
         class_=class_,
     )
-    return foci_create_execute(params, execution)
+    return foci_create_execute(params, runner)
 
 
 __all__ = [
@@ -277,10 +277,7 @@ __all__ = [
     "FociCreateOutputs",
     "FociCreateParameters",
     "foci_create",
-    "foci_create_cargs",
-    "foci_create_class_cargs",
     "foci_create_class_params",
     "foci_create_execute",
-    "foci_create_outputs",
     "foci_create_params",
 ]

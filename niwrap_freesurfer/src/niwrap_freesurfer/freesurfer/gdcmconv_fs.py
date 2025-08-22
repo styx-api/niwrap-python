@@ -397,7 +397,7 @@ def gdcmconv_fs_outputs(
 
 def gdcmconv_fs_execute(
     params: GdcmconvFsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GdcmconvFsOutputs:
     """
     Convert a DICOM file into another DICOM file.
@@ -408,10 +408,12 @@ def gdcmconv_fs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GdcmconvFsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GDCMCONV_FS_METADATA)
     params = execution.params(params)
     cargs = gdcmconv_fs_cargs(params, execution)
     ret = gdcmconv_fs_outputs(params, execution)
@@ -518,8 +520,6 @@ def gdcmconv_fs(
     Returns:
         NamedTuple of outputs (described in `GdcmconvFsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GDCMCONV_FS_METADATA)
     params = gdcmconv_fs_params(
         input_file=input_file,
         output_file=output_file,
@@ -562,7 +562,7 @@ def gdcmconv_fs(
         irreversible_flag=irreversible_flag,
         ignore_errors_flag=ignore_errors_flag,
     )
-    return gdcmconv_fs_execute(params, execution)
+    return gdcmconv_fs_execute(params, runner)
 
 
 __all__ = [
@@ -570,8 +570,6 @@ __all__ = [
     "GdcmconvFsOutputs",
     "GdcmconvFsParameters",
     "gdcmconv_fs",
-    "gdcmconv_fs_cargs",
     "gdcmconv_fs_execute",
-    "gdcmconv_fs_outputs",
     "gdcmconv_fs_params",
 ]

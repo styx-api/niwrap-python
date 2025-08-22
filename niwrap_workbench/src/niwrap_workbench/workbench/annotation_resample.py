@@ -181,7 +181,7 @@ def annotation_resample_outputs(
 
 def annotation_resample_execute(
     params: AnnotationResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AnnotationResampleOutputs:
     """
     Resample an annotation file to different meshes.
@@ -198,10 +198,12 @@ def annotation_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AnnotationResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANNOTATION_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = annotation_resample_cargs(params, execution)
     ret = annotation_resample_outputs(params, execution)
@@ -237,14 +239,12 @@ def annotation_resample(
     Returns:
         NamedTuple of outputs (described in `AnnotationResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANNOTATION_RESAMPLE_METADATA)
     params = annotation_resample_params(
         annotation_in=annotation_in,
         annotation_out=annotation_out,
         surface_pair=surface_pair,
     )
-    return annotation_resample_execute(params, execution)
+    return annotation_resample_execute(params, runner)
 
 
 __all__ = [
@@ -253,10 +253,7 @@ __all__ = [
     "AnnotationResampleParameters",
     "AnnotationResampleSurfacePairParameters",
     "annotation_resample",
-    "annotation_resample_cargs",
     "annotation_resample_execute",
-    "annotation_resample_outputs",
     "annotation_resample_params",
-    "annotation_resample_surface_pair_cargs",
     "annotation_resample_surface_pair_params",
 ]

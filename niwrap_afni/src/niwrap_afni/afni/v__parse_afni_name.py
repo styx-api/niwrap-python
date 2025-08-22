@@ -129,7 +129,7 @@ def v__parse_afni_name_outputs(
 
 def v__parse_afni_name_execute(
     params: VParseAfniNameParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VParseAfniNameOutputs:
     """
     A script to parse an AFNI name, outputting the path, prefix, view, and sub-brick
@@ -141,10 +141,12 @@ def v__parse_afni_name_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VParseAfniNameOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__PARSE_AFNI_NAME_METADATA)
     params = execution.params(params)
     cargs = v__parse_afni_name_cargs(params, execution)
     ret = v__parse_afni_name_outputs(params, execution)
@@ -170,12 +172,10 @@ def v__parse_afni_name(
     Returns:
         NamedTuple of outputs (described in `VParseAfniNameOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__PARSE_AFNI_NAME_METADATA)
     params = v__parse_afni_name_params(
         afni_name=afni_name,
     )
-    return v__parse_afni_name_execute(params, execution)
+    return v__parse_afni_name_execute(params, runner)
 
 
 __all__ = [
@@ -183,8 +183,6 @@ __all__ = [
     "VParseAfniNameParameters",
     "V__PARSE_AFNI_NAME_METADATA",
     "v__parse_afni_name",
-    "v__parse_afni_name_cargs",
     "v__parse_afni_name_execute",
-    "v__parse_afni_name_outputs",
     "v__parse_afni_name_params",
 ]

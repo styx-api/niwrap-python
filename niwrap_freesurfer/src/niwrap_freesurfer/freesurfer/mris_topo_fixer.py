@@ -125,7 +125,7 @@ def mris_topo_fixer_outputs(
 
 def mris_topo_fixer_execute(
     params: MrisTopoFixerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisTopoFixerOutputs:
     """
     FreeSurfer tool for fixing topological defects in cortical surface meshes.
@@ -136,10 +136,12 @@ def mris_topo_fixer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisTopoFixerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_TOPO_FIXER_METADATA)
     params = execution.params(params)
     cargs = mris_topo_fixer_cargs(params, execution)
     ret = mris_topo_fixer_outputs(params, execution)
@@ -166,13 +168,11 @@ def mris_topo_fixer(
     Returns:
         NamedTuple of outputs (described in `MrisTopoFixerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_TOPO_FIXER_METADATA)
     params = mris_topo_fixer_params(
         input_surface=input_surface,
         output_surface=output_surface,
     )
-    return mris_topo_fixer_execute(params, execution)
+    return mris_topo_fixer_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MrisTopoFixerOutputs",
     "MrisTopoFixerParameters",
     "mris_topo_fixer",
-    "mris_topo_fixer_cargs",
     "mris_topo_fixer_execute",
-    "mris_topo_fixer_outputs",
     "mris_topo_fixer_params",
 ]

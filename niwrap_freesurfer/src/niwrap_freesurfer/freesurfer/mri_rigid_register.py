@@ -130,7 +130,7 @@ def mri_rigid_register_outputs(
 
 def mri_rigid_register_execute(
     params: MriRigidRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRigidRegisterOutputs:
     """
     Rigid registration tool for MRI volumes.
@@ -141,10 +141,12 @@ def mri_rigid_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRigidRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RIGID_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mri_rigid_register_cargs(params, execution)
     ret = mri_rigid_register_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_rigid_register(
     Returns:
         NamedTuple of outputs (described in `MriRigidRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RIGID_REGISTER_METADATA)
     params = mri_rigid_register_params(
         source_volume=source_volume,
         target_volume=target_volume,
         transform_output=transform_output,
     )
-    return mri_rigid_register_execute(params, execution)
+    return mri_rigid_register_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriRigidRegisterOutputs",
     "MriRigidRegisterParameters",
     "mri_rigid_register",
-    "mri_rigid_register_cargs",
     "mri_rigid_register_execute",
-    "mri_rigid_register_outputs",
     "mri_rigid_register_params",
 ]

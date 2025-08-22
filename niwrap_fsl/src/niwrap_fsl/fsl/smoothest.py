@@ -155,7 +155,7 @@ def smoothest_outputs(
 
 def smoothest_execute(
     params: SmoothestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SmoothestOutputs:
     """
     Tool to estimate smoothness of data from FSL.
@@ -166,10 +166,12 @@ def smoothest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SmoothestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SMOOTHEST_METADATA)
     params = execution.params(params)
     cargs = smoothest_cargs(params, execution)
     ret = smoothest_outputs(params, execution)
@@ -202,8 +204,6 @@ def smoothest(
     Returns:
         NamedTuple of outputs (described in `SmoothestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SMOOTHEST_METADATA)
     params = smoothest_params(
         dof=dof,
         residual_fit_image=residual_fit_image,
@@ -211,7 +211,7 @@ def smoothest(
         mask=mask,
         verbose_flag=verbose_flag,
     )
-    return smoothest_execute(params, execution)
+    return smoothest_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "SmoothestOutputs",
     "SmoothestParameters",
     "smoothest",
-    "smoothest_cargs",
     "smoothest_execute",
-    "smoothest_outputs",
     "smoothest_params",
 ]

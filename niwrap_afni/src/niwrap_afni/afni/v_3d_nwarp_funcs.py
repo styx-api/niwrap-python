@@ -157,7 +157,7 @@ def v_3d_nwarp_funcs_outputs(
 
 def v_3d_nwarp_funcs_execute(
     params: V3dNwarpFuncsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNwarpFuncsOutputs:
     """
     Compute functions of 3D warp displacements, such as bulk volume change, shear
@@ -169,10 +169,12 @@ def v_3d_nwarp_funcs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNwarpFuncsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NWARP_FUNCS_METADATA)
     params = execution.params(params)
     cargs = v_3d_nwarp_funcs_cargs(params, execution)
     ret = v_3d_nwarp_funcs_outputs(params, execution)
@@ -210,8 +212,6 @@ def v_3d_nwarp_funcs(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpFuncsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NWARP_FUNCS_METADATA)
     params = v_3d_nwarp_funcs_params(
         input_warp=input_warp,
         output_prefix=output_prefix,
@@ -220,7 +220,7 @@ def v_3d_nwarp_funcs(
         vorticity_flag=vorticity_flag,
         all_flag=all_flag,
     )
-    return v_3d_nwarp_funcs_execute(params, execution)
+    return v_3d_nwarp_funcs_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "V3dNwarpFuncsParameters",
     "V_3D_NWARP_FUNCS_METADATA",
     "v_3d_nwarp_funcs",
-    "v_3d_nwarp_funcs_cargs",
     "v_3d_nwarp_funcs_execute",
-    "v_3d_nwarp_funcs_outputs",
     "v_3d_nwarp_funcs_params",
 ]

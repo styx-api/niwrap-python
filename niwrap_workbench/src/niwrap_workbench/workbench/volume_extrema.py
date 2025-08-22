@@ -294,7 +294,7 @@ def volume_extrema_outputs(
 
 def volume_extrema_execute(
     params: VolumeExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
     Find extrema in a volume file.
@@ -326,10 +326,12 @@ def volume_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = volume_extrema_cargs(params, execution)
     ret = volume_extrema_outputs(params, execution)
@@ -400,8 +402,6 @@ def volume_extrema(
     Returns:
         NamedTuple of outputs (described in `VolumeExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_EXTREMA_METADATA)
     params = volume_extrema_params(
         volume_in=volume_in,
         distance=distance,
@@ -415,7 +415,7 @@ def volume_extrema(
         opt_only_minima=opt_only_minima,
         opt_subvolume_subvolume=opt_subvolume_subvolume,
     )
-    return volume_extrema_execute(params, execution)
+    return volume_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -425,12 +425,8 @@ __all__ = [
     "VolumeExtremaPresmoothParameters",
     "VolumeExtremaThresholdParameters",
     "volume_extrema",
-    "volume_extrema_cargs",
     "volume_extrema_execute",
-    "volume_extrema_outputs",
     "volume_extrema_params",
-    "volume_extrema_presmooth_cargs",
     "volume_extrema_presmooth_params",
-    "volume_extrema_threshold_cargs",
     "volume_extrema_threshold_params",
 ]

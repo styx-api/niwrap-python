@@ -121,7 +121,7 @@ def ants_multivariate_template_construction2_sh_outputs(
 
 def ants_multivariate_template_construction2_sh_execute(
     params: AntsMultivariateTemplateConstruction2ShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsMultivariateTemplateConstruction2ShOutputs:
     """
     The antsMultivariateTemplateConstruction2.sh script is part of the Advanced
@@ -134,10 +134,12 @@ def ants_multivariate_template_construction2_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsMultivariateTemplateConstruction2ShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA)
     params = execution.params(params)
     cargs = ants_multivariate_template_construction2_sh_cargs(params, execution)
     ret = ants_multivariate_template_construction2_sh_outputs(params, execution)
@@ -165,12 +167,10 @@ def ants_multivariate_template_construction2_sh(
     Returns:
         NamedTuple of outputs (described in `AntsMultivariateTemplateConstruction2ShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_MULTIVARIATE_TEMPLATE_CONSTRUCTION2_SH_METADATA)
     params = ants_multivariate_template_construction2_sh_params(
         input_=input_,
     )
-    return ants_multivariate_template_construction2_sh_execute(params, execution)
+    return ants_multivariate_template_construction2_sh_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "AntsMultivariateTemplateConstruction2ShOutputs",
     "AntsMultivariateTemplateConstruction2ShParameters",
     "ants_multivariate_template_construction2_sh",
-    "ants_multivariate_template_construction2_sh_cargs",
     "ants_multivariate_template_construction2_sh_execute",
-    "ants_multivariate_template_construction2_sh_outputs",
     "ants_multivariate_template_construction2_sh_params",
 ]

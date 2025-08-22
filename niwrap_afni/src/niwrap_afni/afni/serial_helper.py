@@ -209,7 +209,7 @@ def serial_helper_outputs(
 
 def serial_helper_execute(
     params: SerialHelperParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SerialHelperOutputs:
     """
     Passes motion parameters from socket to serial port.
@@ -220,10 +220,12 @@ def serial_helper_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SerialHelperOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SERIAL_HELPER_METADATA)
     params = execution.params(params)
     cargs = serial_helper_cargs(params, execution)
     ret = serial_helper_outputs(params, execution)
@@ -270,8 +272,6 @@ def serial_helper(
     Returns:
         NamedTuple of outputs (described in `SerialHelperOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SERIAL_HELPER_METADATA)
     params = serial_helper_params(
         serial_port=serial_port,
         sock_num=sock_num,
@@ -286,7 +286,7 @@ def serial_helper(
         no_serial=no_serial,
         version=version,
     )
-    return serial_helper_execute(params, execution)
+    return serial_helper_execute(params, runner)
 
 
 __all__ = [
@@ -294,8 +294,6 @@ __all__ = [
     "SerialHelperOutputs",
     "SerialHelperParameters",
     "serial_helper",
-    "serial_helper_cargs",
     "serial_helper_execute",
-    "serial_helper_outputs",
     "serial_helper_params",
 ]

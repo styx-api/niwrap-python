@@ -258,7 +258,7 @@ def c3d_affine_tool_outputs(
 
 def c3d_affine_tool_execute(
     params: C3dAffineToolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> C3dAffineToolOutputs:
     """
     RAS affine transform tool.
@@ -269,10 +269,12 @@ def c3d_affine_tool_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `C3dAffineToolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(C3D_AFFINE_TOOL_METADATA)
     params = execution.params(params)
     cargs = c3d_affine_tool_cargs(params, execution)
     ret = c3d_affine_tool_outputs(params, execution)
@@ -331,8 +333,6 @@ def c3d_affine_tool(
     Returns:
         NamedTuple of outputs (described in `C3dAffineToolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(C3D_AFFINE_TOOL_METADATA)
     params = c3d_affine_tool_params(
         transform_file=transform_file,
         reference_file=reference_file,
@@ -352,7 +352,7 @@ def c3d_affine_tool(
         info=info,
         info_full=info_full,
     )
-    return c3d_affine_tool_execute(params, execution)
+    return c3d_affine_tool_execute(params, runner)
 
 
 __all__ = [
@@ -360,8 +360,6 @@ __all__ = [
     "C3dAffineToolOutputs",
     "C3dAffineToolParameters",
     "c3d_affine_tool",
-    "c3d_affine_tool_cargs",
     "c3d_affine_tool_execute",
-    "c3d_affine_tool_outputs",
     "c3d_affine_tool_params",
 ]

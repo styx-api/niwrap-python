@@ -119,7 +119,7 @@ def gcatrainskull_outputs(
 
 def gcatrainskull_execute(
     params: GcatrainskullParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GcatrainskullOutputs:
     """
     GCA train skull stripping tool.
@@ -130,10 +130,12 @@ def gcatrainskull_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GcatrainskullOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GCATRAINSKULL_METADATA)
     params = execution.params(params)
     cargs = gcatrainskull_cargs(params, execution)
     ret = gcatrainskull_outputs(params, execution)
@@ -158,12 +160,10 @@ def gcatrainskull(
     Returns:
         NamedTuple of outputs (described in `GcatrainskullOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GCATRAINSKULL_METADATA)
     params = gcatrainskull_params(
         gcatrain_dir=gcatrain_dir,
     )
-    return gcatrainskull_execute(params, execution)
+    return gcatrainskull_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "GcatrainskullOutputs",
     "GcatrainskullParameters",
     "gcatrainskull",
-    "gcatrainskull_cargs",
     "gcatrainskull_execute",
-    "gcatrainskull_outputs",
     "gcatrainskull_params",
 ]

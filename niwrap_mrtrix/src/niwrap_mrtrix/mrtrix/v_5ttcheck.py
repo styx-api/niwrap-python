@@ -233,7 +233,7 @@ def v_5ttcheck_outputs(
 
 def v_5ttcheck_execute(
     params: V5ttcheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V5ttcheckOutputs:
     """
     Thoroughly check that one or more images conform to the expected ACT
@@ -251,10 +251,12 @@ def v_5ttcheck_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V5ttcheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_5TTCHECK_METADATA)
     params = execution.params(params)
     cargs = v_5ttcheck_cargs(params, execution)
     ret = v_5ttcheck_outputs(params, execution)
@@ -309,8 +311,6 @@ def v_5ttcheck(
     Returns:
         NamedTuple of outputs (described in `V5ttcheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_5TTCHECK_METADATA)
     params = v_5ttcheck_params(
         voxels=voxels,
         info=info,
@@ -323,7 +323,7 @@ def v_5ttcheck(
         version=version,
         input_=input_,
     )
-    return v_5ttcheck_execute(params, execution)
+    return v_5ttcheck_execute(params, runner)
 
 
 __all__ = [
@@ -332,10 +332,7 @@ __all__ = [
     "V5ttcheckParameters",
     "V_5TTCHECK_METADATA",
     "v_5ttcheck",
-    "v_5ttcheck_cargs",
-    "v_5ttcheck_config_cargs",
     "v_5ttcheck_config_params",
     "v_5ttcheck_execute",
-    "v_5ttcheck_outputs",
     "v_5ttcheck_params",
 ]

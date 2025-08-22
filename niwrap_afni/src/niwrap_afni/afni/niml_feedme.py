@@ -177,7 +177,7 @@ def niml_feedme_outputs(
 
 def niml_feedme_execute(
     params: NimlFeedmeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NimlFeedmeOutputs:
     """
     Sends volumes from the dataset to AFNI via the NIML socket interface.
@@ -188,10 +188,12 @@ def niml_feedme_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NimlFeedmeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NIML_FEEDME_METADATA)
     params = execution.params(params)
     cargs = niml_feedme_cargs(params, execution)
     ret = niml_feedme_outputs(params, execution)
@@ -237,8 +239,6 @@ def niml_feedme(
     Returns:
         NamedTuple of outputs (described in `NimlFeedmeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NIML_FEEDME_METADATA)
     params = niml_feedme_params(
         host=host,
         interval=interval,
@@ -248,7 +248,7 @@ def niml_feedme(
         drive_cmds=drive_cmds,
         dataset=dataset,
     )
-    return niml_feedme_execute(params, execution)
+    return niml_feedme_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "NimlFeedmeOutputs",
     "NimlFeedmeParameters",
     "niml_feedme",
-    "niml_feedme_cargs",
     "niml_feedme_execute",
-    "niml_feedme_outputs",
     "niml_feedme_params",
 ]

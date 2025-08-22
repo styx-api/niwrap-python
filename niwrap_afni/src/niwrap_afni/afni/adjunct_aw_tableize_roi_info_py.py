@@ -148,7 +148,7 @@ def adjunct_aw_tableize_roi_info_py_outputs(
 
 def adjunct_aw_tableize_roi_info_py_execute(
     params: AdjunctAwTableizeRoiInfoPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctAwTableizeRoiInfoPyOutputs:
     """
     A simple helper function for the fat_proc scripts that generates a text file
@@ -160,10 +160,12 @@ def adjunct_aw_tableize_roi_info_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctAwTableizeRoiInfoPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA)
     params = execution.params(params)
     cargs = adjunct_aw_tableize_roi_info_py_cargs(params, execution)
     ret = adjunct_aw_tableize_roi_info_py_outputs(params, execution)
@@ -202,8 +204,6 @@ def adjunct_aw_tableize_roi_info_py(
     Returns:
         NamedTuple of outputs (described in `AdjunctAwTableizeRoiInfoPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_AW_TABLEIZE_ROI_INFO_PY_METADATA)
     params = adjunct_aw_tableize_roi_info_py_params(
         output_file=output_file,
         warped_atlas=warped_atlas,
@@ -212,7 +212,7 @@ def adjunct_aw_tableize_roi_info_py(
         reference_mask=reference_mask,
         modesmooth_value=modesmooth_value,
     )
-    return adjunct_aw_tableize_roi_info_py_execute(params, execution)
+    return adjunct_aw_tableize_roi_info_py_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "AdjunctAwTableizeRoiInfoPyOutputs",
     "AdjunctAwTableizeRoiInfoPyParameters",
     "adjunct_aw_tableize_roi_info_py",
-    "adjunct_aw_tableize_roi_info_py_cargs",
     "adjunct_aw_tableize_roi_info_py_execute",
-    "adjunct_aw_tableize_roi_info_py_outputs",
     "adjunct_aw_tableize_roi_info_py_params",
 ]

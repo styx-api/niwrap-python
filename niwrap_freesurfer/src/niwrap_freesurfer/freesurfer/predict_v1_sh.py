@@ -155,7 +155,7 @@ def predict_v1_sh_outputs(
 
 def predict_v1_sh_execute(
     params: PredictV1ShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PredictV1ShOutputs:
     """
     A script for predicting brain images using registration.
@@ -166,10 +166,12 @@ def predict_v1_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PredictV1ShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PREDICT_V1_SH_METADATA)
     params = execution.params(params)
     cargs = predict_v1_sh_cargs(params, execution)
     ret = predict_v1_sh_outputs(params, execution)
@@ -205,8 +207,6 @@ def predict_v1_sh(
     Returns:
         NamedTuple of outputs (described in `PredictV1ShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PREDICT_V1_SH_METADATA)
     params = predict_v1_sh_params(
         template=template,
         inflated_surface_flag=inflated_surface_flag,
@@ -215,7 +215,7 @@ def predict_v1_sh(
         subjects=subjects,
         usage_flag=usage_flag,
     )
-    return predict_v1_sh_execute(params, execution)
+    return predict_v1_sh_execute(params, runner)
 
 
 __all__ = [
@@ -223,8 +223,6 @@ __all__ = [
     "PredictV1ShOutputs",
     "PredictV1ShParameters",
     "predict_v1_sh",
-    "predict_v1_sh_cargs",
     "predict_v1_sh_execute",
-    "predict_v1_sh_outputs",
     "predict_v1_sh_params",
 ]

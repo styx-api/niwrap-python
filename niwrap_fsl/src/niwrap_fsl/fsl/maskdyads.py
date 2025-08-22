@@ -131,7 +131,7 @@ def maskdyads_outputs(
 
 def maskdyads_execute(
     params: MaskdyadsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MaskdyadsOutputs:
     """
     Tool to mask dyads with threshold.
@@ -142,10 +142,12 @@ def maskdyads_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MaskdyadsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MASKDYADS_METADATA)
     params = execution.params(params)
     cargs = maskdyads_cargs(params, execution)
     ret = maskdyads_outputs(params, execution)
@@ -174,14 +176,12 @@ def maskdyads(
     Returns:
         NamedTuple of outputs (described in `MaskdyadsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MASKDYADS_METADATA)
     params = maskdyads_params(
         dyads=dyads,
         fsamples=fsamples,
         threshold=threshold,
     )
-    return maskdyads_execute(params, execution)
+    return maskdyads_execute(params, runner)
 
 
 __all__ = [
@@ -189,8 +189,6 @@ __all__ = [
     "MaskdyadsOutputs",
     "MaskdyadsParameters",
     "maskdyads",
-    "maskdyads_cargs",
     "maskdyads_execute",
-    "maskdyads_outputs",
     "maskdyads_params",
 ]

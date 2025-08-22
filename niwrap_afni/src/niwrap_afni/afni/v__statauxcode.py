@@ -121,7 +121,7 @@ def v__statauxcode_outputs(
 
 def v__statauxcode_execute(
     params: VStatauxcodeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VStatauxcodeOutputs:
     """
     Returns the name or number of a statistics code based on specified mappings.
@@ -132,10 +132,12 @@ def v__statauxcode_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VStatauxcodeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__STATAUXCODE_METADATA)
     params = execution.params(params)
     cargs = v__statauxcode_cargs(params, execution)
     ret = v__statauxcode_outputs(params, execution)
@@ -161,12 +163,10 @@ def v__statauxcode(
     Returns:
         NamedTuple of outputs (described in `VStatauxcodeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__STATAUXCODE_METADATA)
     params = v__statauxcode_params(
         code_=code_,
     )
-    return v__statauxcode_execute(params, execution)
+    return v__statauxcode_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "VStatauxcodeParameters",
     "V__STATAUXCODE_METADATA",
     "v__statauxcode",
-    "v__statauxcode_cargs",
     "v__statauxcode_execute",
-    "v__statauxcode_outputs",
     "v__statauxcode_params",
 ]

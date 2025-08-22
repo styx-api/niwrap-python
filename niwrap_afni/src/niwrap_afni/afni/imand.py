@@ -137,7 +137,7 @@ def imand_outputs(
 
 def imand_execute(
     params: ImandParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImandOutputs:
     """
     Image AND operation tool. Only pixels nonzero in all input images (and above the
@@ -149,10 +149,12 @@ def imand_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImandOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMAND_METADATA)
     params = execution.params(params)
     cargs = imand_cargs(params, execution)
     ret = imand_outputs(params, execution)
@@ -184,14 +186,12 @@ def imand(
     Returns:
         NamedTuple of outputs (described in `ImandOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMAND_METADATA)
     params = imand_params(
         threshold=threshold,
         input_images=input_images,
         output_image=output_image,
     )
-    return imand_execute(params, execution)
+    return imand_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "ImandOutputs",
     "ImandParameters",
     "imand",
-    "imand_cargs",
     "imand_execute",
-    "imand_outputs",
     "imand_params",
 ]

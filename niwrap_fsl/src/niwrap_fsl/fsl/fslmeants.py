@@ -227,7 +227,7 @@ def fslmeants_outputs(
 
 def fslmeants_execute(
     params: FslmeantsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslmeantsOutputs:
     """
     Prints average timeseries (intensities) to the screen (or saves to a file).
@@ -238,10 +238,12 @@ def fslmeants_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslmeantsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLMEANTS_METADATA)
     params = execution.params(params)
     cargs = fslmeants_cargs(params, execution)
     ret = fslmeants_outputs(params, execution)
@@ -298,8 +300,6 @@ def fslmeants(
     Returns:
         NamedTuple of outputs (described in `FslmeantsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLMEANTS_METADATA)
     params = fslmeants_params(
         input_image=input_image,
         output=output,
@@ -316,7 +316,7 @@ def fslmeants(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return fslmeants_execute(params, execution)
+    return fslmeants_execute(params, runner)
 
 
 __all__ = [
@@ -324,8 +324,6 @@ __all__ = [
     "FslmeantsOutputs",
     "FslmeantsParameters",
     "fslmeants",
-    "fslmeants_cargs",
     "fslmeants_execute",
-    "fslmeants_outputs",
     "fslmeants_params",
 ]

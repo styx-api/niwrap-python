@@ -343,7 +343,7 @@ def v_3d_pfm_outputs(
 
 def v_3d_pfm_execute(
     params: V3dPfmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dPfmOutputs:
     """
     Program for identifying brief BOLD events in fMRI time series using Paradigm
@@ -355,10 +355,12 @@ def v_3d_pfm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPfmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_PFM_METADATA)
     params = execution.params(params)
     cargs = v_3d_pfm_cargs(params, execution)
     ret = v_3d_pfm_outputs(params, execution)
@@ -415,8 +417,6 @@ def v_3d_pfm(
     Returns:
         NamedTuple of outputs (described in `V3dPfmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_PFM_METADATA)
     params = v_3d_pfm_params(
         input_=input_,
         mask=mask,
@@ -434,7 +434,7 @@ def v_3d_pfm(
         n_seg=n_seg,
         verb=verb,
     )
-    return v_3d_pfm_execute(params, execution)
+    return v_3d_pfm_execute(params, runner)
 
 
 __all__ = [
@@ -442,8 +442,6 @@ __all__ = [
     "V3dPfmParameters",
     "V_3D_PFM_METADATA",
     "v_3d_pfm",
-    "v_3d_pfm_cargs",
     "v_3d_pfm_execute",
-    "v_3d_pfm_outputs",
     "v_3d_pfm_params",
 ]

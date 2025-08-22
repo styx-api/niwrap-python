@@ -154,7 +154,7 @@ def mri_cvs_check_outputs(
 
 def mri_cvs_check_execute(
     params: MriCvsCheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCvsCheckOutputs:
     """
     Checks whether the files required for mri_cvs_register all exist.
@@ -165,10 +165,12 @@ def mri_cvs_check_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCvsCheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CVS_CHECK_METADATA)
     params = execution.params(params)
     cargs = mri_cvs_check_cargs(params, execution)
     ret = mri_cvs_check_outputs(params, execution)
@@ -204,8 +206,6 @@ def mri_cvs_check(
     Returns:
         NamedTuple of outputs (described in `MriCvsCheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CVS_CHECK_METADATA)
     params = mri_cvs_check_params(
         mov_subjid=mov_subjid,
         template_subjid=template_subjid,
@@ -213,7 +213,7 @@ def mri_cvs_check(
         help_=help_,
         version=version,
     )
-    return mri_cvs_check_execute(params, execution)
+    return mri_cvs_check_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "MriCvsCheckOutputs",
     "MriCvsCheckParameters",
     "mri_cvs_check",
-    "mri_cvs_check_cargs",
     "mri_cvs_check_execute",
-    "mri_cvs_check_outputs",
     "mri_cvs_check_params",
 ]

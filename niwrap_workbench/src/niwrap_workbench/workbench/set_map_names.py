@@ -195,7 +195,7 @@ def set_map_names_outputs(
 
 def set_map_names_execute(
     params: SetMapNamesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
     Set the name of one or more maps in a file.
@@ -211,10 +211,12 @@ def set_map_names_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetMapNamesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SET_MAP_NAMES_METADATA)
     params = execution.params(params)
     cargs = set_map_names_cargs(params, execution)
     ret = set_map_names_outputs(params, execution)
@@ -252,15 +254,13 @@ def set_map_names(
     Returns:
         NamedTuple of outputs (described in `SetMapNamesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SET_MAP_NAMES_METADATA)
     params = set_map_names_params(
         data_file=data_file,
         opt_name_file_file=opt_name_file_file,
         opt_from_data_file_file=opt_from_data_file_file,
         map_=map_,
     )
-    return set_map_names_execute(params, execution)
+    return set_map_names_execute(params, runner)
 
 
 __all__ = [
@@ -269,10 +269,7 @@ __all__ = [
     "SetMapNamesOutputs",
     "SetMapNamesParameters",
     "set_map_names",
-    "set_map_names_cargs",
     "set_map_names_execute",
-    "set_map_names_map_cargs",
     "set_map_names_map_params",
-    "set_map_names_outputs",
     "set_map_names_params",
 ]

@@ -260,7 +260,7 @@ def v_3d_mvm_outputs(
 
 def v_3d_mvm_execute(
     params: V3dMvmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMvmOutputs:
     """
     AFNI Group Analysis Program with Multi-Variate Modeling Approach.
@@ -271,10 +271,12 @@ def v_3d_mvm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMvmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MVM_METADATA)
     params = execution.params(params)
     cargs = v_3d_mvm_cargs(params, execution)
     ret = v_3d_mvm_outputs(params, execution)
@@ -328,8 +330,6 @@ def v_3d_mvm(
     Returns:
         NamedTuple of outputs (described in `V3dMvmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MVM_METADATA)
     params = v_3d_mvm_params(
         dbg_args=dbg_args,
         prefix=prefix,
@@ -347,7 +347,7 @@ def v_3d_mvm(
         glf_code=glf_code,
         data_table=data_table,
     )
-    return v_3d_mvm_execute(params, execution)
+    return v_3d_mvm_execute(params, runner)
 
 
 __all__ = [
@@ -355,8 +355,6 @@ __all__ = [
     "V3dMvmParameters",
     "V_3D_MVM_METADATA",
     "v_3d_mvm",
-    "v_3d_mvm_cargs",
     "v_3d_mvm_execute",
-    "v_3d_mvm_outputs",
     "v_3d_mvm_params",
 ]

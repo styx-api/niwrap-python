@@ -371,7 +371,7 @@ def mris_register_to_volume_outputs(
 
 def mris_register_to_volume_execute(
     params: MrisRegisterToVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRegisterToVolumeOutputs:
     """
     Aligns cortical surfaces to a volumetric template.
@@ -382,10 +382,12 @@ def mris_register_to_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRegisterToVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REGISTER_TO_VOLUME_METADATA)
     params = execution.params(params)
     cargs = mris_register_to_volume_cargs(params, execution)
     ret = mris_register_to_volume_outputs(params, execution)
@@ -464,8 +466,6 @@ def mris_register_to_volume(
     Returns:
         NamedTuple of outputs (described in `MrisRegisterToVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REGISTER_TO_VOLUME_METADATA)
     params = mris_register_to_volume_params(
         surface=surface,
         pial=pial,
@@ -496,7 +496,7 @@ def mris_register_to_volume(
         label=label,
         out_reg=out_reg,
     )
-    return mris_register_to_volume_execute(params, execution)
+    return mris_register_to_volume_execute(params, runner)
 
 
 __all__ = [
@@ -504,8 +504,6 @@ __all__ = [
     "MrisRegisterToVolumeOutputs",
     "MrisRegisterToVolumeParameters",
     "mris_register_to_volume",
-    "mris_register_to_volume_cargs",
     "mris_register_to_volume_execute",
-    "mris_register_to_volume_outputs",
     "mris_register_to_volume_params",
 ]

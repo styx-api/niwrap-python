@@ -140,7 +140,7 @@ def mri_cal_renormalize_gca_outputs(
 
 def mri_cal_renormalize_gca_execute(
     params: MriCalRenormalizeGcaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCalRenormalizeGcaOutputs:
     """
     Tool for atlas renormalization in FreeSurfer.
@@ -151,10 +151,12 @@ def mri_cal_renormalize_gca_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCalRenormalizeGcaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CAL_RENORMALIZE_GCA_METADATA)
     params = execution.params(params)
     cargs = mri_cal_renormalize_gca_cargs(params, execution)
     ret = mri_cal_renormalize_gca_outputs(params, execution)
@@ -187,8 +189,6 @@ def mri_cal_renormalize_gca(
     Returns:
         NamedTuple of outputs (described in `MriCalRenormalizeGcaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CAL_RENORMALIZE_GCA_METADATA)
     params = mri_cal_renormalize_gca_params(
         timepoint_file=timepoint_file,
         in_vol=in_vol,
@@ -196,7 +196,7 @@ def mri_cal_renormalize_gca(
         transform_file=transform_file,
         output_atlas=output_atlas,
     )
-    return mri_cal_renormalize_gca_execute(params, execution)
+    return mri_cal_renormalize_gca_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "MriCalRenormalizeGcaOutputs",
     "MriCalRenormalizeGcaParameters",
     "mri_cal_renormalize_gca",
-    "mri_cal_renormalize_gca_cargs",
     "mri_cal_renormalize_gca_execute",
-    "mri_cal_renormalize_gca_outputs",
     "mri_cal_renormalize_gca_params",
 ]

@@ -214,7 +214,7 @@ def v_3d_brain_voyagerto_afni_outputs(
 
 def v_3d_brain_voyagerto_afni_execute(
     params: V3dBrainVoyagertoAfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dBrainVoyagertoAfniOutputs:
     """
     Converts a BrainVoyager vmr dataset to AFNI's BRIK format based on information
@@ -226,10 +226,12 @@ def v_3d_brain_voyagerto_afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dBrainVoyagertoAfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_BRAIN_VOYAGERTO_AFNI_METADATA)
     params = execution.params(params)
     cargs = v_3d_brain_voyagerto_afni_cargs(params, execution)
     ret = v_3d_brain_voyagerto_afni_outputs(params, execution)
@@ -283,8 +285,6 @@ def v_3d_brain_voyagerto_afni(
     Returns:
         NamedTuple of outputs (described in `V3dBrainVoyagertoAfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_BRAIN_VOYAGERTO_AFNI_METADATA)
     params = v_3d_brain_voyagerto_afni_params(
         input_file=input_file,
         force_byte_swap=force_byte_swap,
@@ -301,7 +301,7 @@ def v_3d_brain_voyagerto_afni(
         turn_off_memory_tracing=turn_off_memory_tracing,
         turn_on_memory_tracing=turn_on_memory_tracing,
     )
-    return v_3d_brain_voyagerto_afni_execute(params, execution)
+    return v_3d_brain_voyagerto_afni_execute(params, runner)
 
 
 __all__ = [
@@ -309,8 +309,6 @@ __all__ = [
     "V3dBrainVoyagertoAfniParameters",
     "V_3D_BRAIN_VOYAGERTO_AFNI_METADATA",
     "v_3d_brain_voyagerto_afni",
-    "v_3d_brain_voyagerto_afni_cargs",
     "v_3d_brain_voyagerto_afni_execute",
-    "v_3d_brain_voyagerto_afni_outputs",
     "v_3d_brain_voyagerto_afni_params",
 ]

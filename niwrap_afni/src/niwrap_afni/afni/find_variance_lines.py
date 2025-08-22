@@ -253,7 +253,7 @@ def find_variance_lines_outputs(
 
 def find_variance_lines_execute(
     params: FindVarianceLinesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FindVarianceLinesOutputs:
     """
     Look for bars of high variance that might suggest scanner interference in EPI
@@ -265,10 +265,12 @@ def find_variance_lines_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FindVarianceLinesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIND_VARIANCE_LINES_METADATA)
     params = execution.params(params)
     cargs = find_variance_lines_cargs(params, execution)
     ret = find_variance_lines_outputs(params, execution)
@@ -322,8 +324,6 @@ def find_variance_lines(
     Returns:
         NamedTuple of outputs (described in `FindVarianceLinesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIND_VARIANCE_LINES_METADATA)
     params = find_variance_lines_params(
         input_files=input_files,
         mask=mask,
@@ -341,7 +341,7 @@ def find_variance_lines(
         hist=hist,
         ver=ver,
     )
-    return find_variance_lines_execute(params, execution)
+    return find_variance_lines_execute(params, runner)
 
 
 __all__ = [
@@ -349,8 +349,6 @@ __all__ = [
     "FindVarianceLinesOutputs",
     "FindVarianceLinesParameters",
     "find_variance_lines",
-    "find_variance_lines_cargs",
     "find_variance_lines_execute",
-    "find_variance_lines_outputs",
     "find_variance_lines_params",
 ]

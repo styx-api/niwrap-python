@@ -207,7 +207,7 @@ def map_icosahedron_outputs(
 
 def map_icosahedron_execute(
     params: MapIcosahedronParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MapIcosahedronOutputs:
     """
     Creates new versions of original-mesh surfaces using the mesh of an icosahedron.
@@ -218,10 +218,12 @@ def map_icosahedron_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MapIcosahedronOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAP_ICOSAHEDRON_METADATA)
     params = execution.params(params)
     cargs = map_icosahedron_cargs(params, execution)
     ret = map_icosahedron_outputs(params, execution)
@@ -269,8 +271,6 @@ def map_icosahedron(
     Returns:
         NamedTuple of outputs (described in `MapIcosahedronOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAP_ICOSAHEDRON_METADATA)
     params = map_icosahedron_params(
         spec_file=spec_file,
         rec_depth=rec_depth,
@@ -284,7 +284,7 @@ def map_icosahedron(
         verbosity=verbosity,
         help_=help_,
     )
-    return map_icosahedron_execute(params, execution)
+    return map_icosahedron_execute(params, runner)
 
 
 __all__ = [
@@ -292,8 +292,6 @@ __all__ = [
     "MapIcosahedronOutputs",
     "MapIcosahedronParameters",
     "map_icosahedron",
-    "map_icosahedron_cargs",
     "map_icosahedron_execute",
-    "map_icosahedron_outputs",
     "map_icosahedron_params",
 ]

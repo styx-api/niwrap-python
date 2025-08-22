@@ -123,7 +123,7 @@ def feat_model_outputs(
 
 def feat_model_execute(
     params: FeatModelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FeatModelOutputs:
     """
     Generate design matrices for use by FEAT.
@@ -134,10 +134,12 @@ def feat_model_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FeatModelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FEAT_MODEL_METADATA)
     params = execution.params(params)
     cargs = feat_model_cargs(params, execution)
     ret = feat_model_outputs(params, execution)
@@ -164,13 +166,11 @@ def feat_model(
     Returns:
         NamedTuple of outputs (described in `FeatModelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FEAT_MODEL_METADATA)
     params = feat_model_params(
         design_name_root=design_name_root,
         confound_matrix=confound_matrix,
     )
-    return feat_model_execute(params, execution)
+    return feat_model_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "FeatModelOutputs",
     "FeatModelParameters",
     "feat_model",
-    "feat_model_cargs",
     "feat_model_execute",
-    "feat_model_outputs",
     "feat_model_params",
 ]

@@ -146,7 +146,7 @@ def oct_register_mosaic_outputs(
 
 def oct_register_mosaic_execute(
     params: OctRegisterMosaicParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> OctRegisterMosaicOutputs:
     """
     Tool for registering multiple OCT (Optical Coherence Tomography) tiles or a
@@ -158,10 +158,12 @@ def oct_register_mosaic_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `OctRegisterMosaicOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(OCT_REGISTER_MOSAIC_METADATA)
     params = execution.params(params)
     cargs = oct_register_mosaic_cargs(params, execution)
     ret = oct_register_mosaic_outputs(params, execution)
@@ -194,15 +196,13 @@ def oct_register_mosaic(
     Returns:
         NamedTuple of outputs (described in `OctRegisterMosaicOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(OCT_REGISTER_MOSAIC_METADATA)
     params = oct_register_mosaic_params(
         tiles_or_mosaic_list=tiles_or_mosaic_list,
         output_volume=output_volume,
         downsample=downsample,
         weight_file=weight_file,
     )
-    return oct_register_mosaic_execute(params, execution)
+    return oct_register_mosaic_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "OctRegisterMosaicOutputs",
     "OctRegisterMosaicParameters",
     "oct_register_mosaic",
-    "oct_register_mosaic_cargs",
     "oct_register_mosaic_execute",
-    "oct_register_mosaic_outputs",
     "oct_register_mosaic_params",
 ]

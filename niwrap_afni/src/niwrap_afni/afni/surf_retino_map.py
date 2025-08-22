@@ -155,7 +155,7 @@ def surf_retino_map_outputs(
 
 def surf_retino_map_execute(
     params: SurfRetinoMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfRetinoMapOutputs:
     """
     Tool for retinotopic mapping on cortical surfaces.
@@ -166,10 +166,12 @@ def surf_retino_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfRetinoMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_RETINO_MAP_METADATA)
     params = execution.params(params)
     cargs = surf_retino_map_cargs(params, execution)
     ret = surf_retino_map_outputs(params, execution)
@@ -204,8 +206,6 @@ def surf_retino_map(
     Returns:
         NamedTuple of outputs (described in `SurfRetinoMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_RETINO_MAP_METADATA)
     params = surf_retino_map_params(
         surface=surface,
         polar=polar,
@@ -213,7 +213,7 @@ def surf_retino_map(
         prefix=prefix,
         node_debug=node_debug,
     )
-    return surf_retino_map_execute(params, execution)
+    return surf_retino_map_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "SurfRetinoMapOutputs",
     "SurfRetinoMapParameters",
     "surf_retino_map",
-    "surf_retino_map_cargs",
     "surf_retino_map_execute",
-    "surf_retino_map_outputs",
     "surf_retino_map_params",
 ]

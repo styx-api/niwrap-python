@@ -143,7 +143,7 @@ def label_subject_flash_outputs(
 
 def label_subject_flash_execute(
     params: LabelSubjectFlashParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelSubjectFlashOutputs:
     """
     A tool for labeling brain structures in an MRI dataset using FLASH sequences and
@@ -155,10 +155,12 @@ def label_subject_flash_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelSubjectFlashOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_SUBJECT_FLASH_METADATA)
     params = execution.params(params)
     cargs = label_subject_flash_cargs(params, execution)
     ret = label_subject_flash_outputs(params, execution)
@@ -192,8 +194,6 @@ def label_subject_flash(
     Returns:
         NamedTuple of outputs (described in `LabelSubjectFlashOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_SUBJECT_FLASH_METADATA)
     params = label_subject_flash_params(
         tissue_params=tissue_params,
         norm_volume=norm_volume,
@@ -201,7 +201,7 @@ def label_subject_flash(
         classifier_array=classifier_array,
         aseg_output=aseg_output,
     )
-    return label_subject_flash_execute(params, execution)
+    return label_subject_flash_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "LabelSubjectFlashOutputs",
     "LabelSubjectFlashParameters",
     "label_subject_flash",
-    "label_subject_flash_cargs",
     "label_subject_flash_execute",
-    "label_subject_flash_outputs",
     "label_subject_flash_params",
 ]

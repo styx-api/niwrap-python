@@ -245,7 +245,7 @@ def v_3d_tcorrelate_outputs(
 
 def v_3d_tcorrelate_execute(
     params: V3dTcorrelateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTcorrelateOutputs:
     """
     3dTcorrelate. Computes the correlation coefficient between corresponding voxel
@@ -257,10 +257,12 @@ def v_3d_tcorrelate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTcorrelateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TCORRELATE_METADATA)
     params = execution.params(params)
     cargs = v_3d_tcorrelate_cargs(params, execution)
     ret = v_3d_tcorrelate_outputs(params, execution)
@@ -336,8 +338,6 @@ def v_3d_tcorrelate(
     Returns:
         NamedTuple of outputs (described in `V3dTcorrelateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TCORRELATE_METADATA)
     params = v_3d_tcorrelate_params(
         xset=xset,
         yset=yset,
@@ -356,7 +356,7 @@ def v_3d_tcorrelate(
         zcensor=zcensor,
         prefix=prefix,
     )
-    return v_3d_tcorrelate_execute(params, execution)
+    return v_3d_tcorrelate_execute(params, runner)
 
 
 __all__ = [
@@ -364,8 +364,6 @@ __all__ = [
     "V3dTcorrelateParameters",
     "V_3D_TCORRELATE_METADATA",
     "v_3d_tcorrelate",
-    "v_3d_tcorrelate_cargs",
     "v_3d_tcorrelate_execute",
-    "v_3d_tcorrelate_outputs",
     "v_3d_tcorrelate_params",
 ]

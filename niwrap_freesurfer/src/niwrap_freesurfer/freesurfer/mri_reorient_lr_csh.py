@@ -162,7 +162,7 @@ def mri_reorient_lr_csh_outputs(
 
 def mri_reorient_lr_csh_execute(
     params: MriReorientLrCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriReorientLrCshOutputs:
     """
     A script to reorient MRI volumes from left-right orientation.
@@ -173,10 +173,12 @@ def mri_reorient_lr_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriReorientLrCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_REORIENT_LR_CSH_METADATA)
     params = execution.params(params)
     cargs = mri_reorient_lr_csh_cargs(params, execution)
     ret = mri_reorient_lr_csh_outputs(params, execution)
@@ -214,8 +216,6 @@ def mri_reorient_lr_csh(
     Returns:
         NamedTuple of outputs (described in `MriReorientLrCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_REORIENT_LR_CSH_METADATA)
     params = mri_reorient_lr_csh_params(
         input_vol=input_vol,
         output_vol=output_vol,
@@ -225,7 +225,7 @@ def mri_reorient_lr_csh(
         version=version,
         help_=help_,
     )
-    return mri_reorient_lr_csh_execute(params, execution)
+    return mri_reorient_lr_csh_execute(params, runner)
 
 
 __all__ = [
@@ -233,8 +233,6 @@ __all__ = [
     "MriReorientLrCshOutputs",
     "MriReorientLrCshParameters",
     "mri_reorient_lr_csh",
-    "mri_reorient_lr_csh_cargs",
     "mri_reorient_lr_csh_execute",
-    "mri_reorient_lr_csh_outputs",
     "mri_reorient_lr_csh_params",
 ]

@@ -116,7 +116,7 @@ def csvprint_outputs(
 
 def csvprint_execute(
     params: CsvprintParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CsvprintOutputs:
     """
     Command-line tool for printing CSV files.
@@ -127,10 +127,12 @@ def csvprint_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CsvprintOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CSVPRINT_METADATA)
     params = execution.params(params)
     cargs = csvprint_cargs(params, execution)
     ret = csvprint_outputs(params, execution)
@@ -155,12 +157,10 @@ def csvprint(
     Returns:
         NamedTuple of outputs (described in `CsvprintOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CSVPRINT_METADATA)
     params = csvprint_params(
         infile=infile,
     )
-    return csvprint_execute(params, execution)
+    return csvprint_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "CsvprintOutputs",
     "CsvprintParameters",
     "csvprint",
-    "csvprint_cargs",
     "csvprint_execute",
-    "csvprint_outputs",
     "csvprint_params",
 ]

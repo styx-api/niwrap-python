@@ -256,7 +256,7 @@ def gcatrain_outputs(
 
 def gcatrain_execute(
     params: GcatrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GcatrainOutputs:
     """
     GCA training tool for building a GCA from a group of manually labeled subjects.
@@ -267,10 +267,12 @@ def gcatrain_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GcatrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GCATRAIN_METADATA)
     params = execution.params(params)
     cargs = gcatrain_cargs(params, execution)
     ret = gcatrain_outputs(params, execution)
@@ -332,8 +334,6 @@ def gcatrain(
     Returns:
         NamedTuple of outputs (described in `GcatrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GCATRAIN_METADATA)
     params = gcatrain_params(
         gcadir=gcadir,
         subjectlistfile=subjectlistfile,
@@ -355,7 +355,7 @@ def gcatrain(
         nu12_flag=nu12_flag,
         no_emreg=no_emreg,
     )
-    return gcatrain_execute(params, execution)
+    return gcatrain_execute(params, runner)
 
 
 __all__ = [
@@ -363,8 +363,6 @@ __all__ = [
     "GcatrainOutputs",
     "GcatrainParameters",
     "gcatrain",
-    "gcatrain_cargs",
     "gcatrain_execute",
-    "gcatrain_outputs",
     "gcatrain_params",
 ]

@@ -135,7 +135,7 @@ def mist_fa_reg_outputs(
 
 def mist_fa_reg_execute(
     params: MistFaRegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MistFaRegOutputs:
     """
     Tool for registering FA volumes to a reference T1 volume.
@@ -146,10 +146,12 @@ def mist_fa_reg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MistFaRegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MIST_FA_REG_METADATA)
     params = execution.params(params)
     cargs = mist_fa_reg_cargs(params, execution)
     ret = mist_fa_reg_outputs(params, execution)
@@ -180,15 +182,13 @@ def mist_fa_reg(
     Returns:
         NamedTuple of outputs (described in `MistFaRegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MIST_FA_REG_METADATA)
     params = mist_fa_reg_params(
         fa_volume=fa_volume,
         s0_volume=s0_volume,
         reference_t1_volume=reference_t1_volume,
         output_filename=output_filename,
     )
-    return mist_fa_reg_execute(params, execution)
+    return mist_fa_reg_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MistFaRegOutputs",
     "MistFaRegParameters",
     "mist_fa_reg",
-    "mist_fa_reg_cargs",
     "mist_fa_reg_execute",
-    "mist_fa_reg_outputs",
     "mist_fa_reg_params",
 ]

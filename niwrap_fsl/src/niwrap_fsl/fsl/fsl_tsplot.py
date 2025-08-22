@@ -268,7 +268,7 @@ def fsl_tsplot_outputs(
 
 def fsl_tsplot_execute(
     params: FslTsplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslTsplotOutputs:
     """
     Timeseries plotting tool from FSL.
@@ -279,10 +279,12 @@ def fsl_tsplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslTsplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_TSPLOT_METADATA)
     params = execution.params(params)
     cargs = fsl_tsplot_cargs(params, execution)
     ret = fsl_tsplot_outputs(params, execution)
@@ -338,8 +340,6 @@ def fsl_tsplot(
     Returns:
         NamedTuple of outputs (described in `FslTsplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_TSPLOT_METADATA)
     params = fsl_tsplot_params(
         input_files=input_files,
         output_file=output_file,
@@ -358,7 +358,7 @@ def fsl_tsplot(
         start_col=start_col,
         end_col=end_col,
     )
-    return fsl_tsplot_execute(params, execution)
+    return fsl_tsplot_execute(params, runner)
 
 
 __all__ = [
@@ -366,8 +366,6 @@ __all__ = [
     "FslTsplotOutputs",
     "FslTsplotParameters",
     "fsl_tsplot",
-    "fsl_tsplot_cargs",
     "fsl_tsplot_execute",
-    "fsl_tsplot_outputs",
     "fsl_tsplot_params",
 ]

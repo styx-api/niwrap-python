@@ -131,7 +131,7 @@ def surface_set_coordinates_outputs(
 
 def surface_set_coordinates_execute(
     params: SurfaceSetCoordinatesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceSetCoordinatesOutputs:
     """
     Modify coordinates of a surface.
@@ -148,10 +148,12 @@ def surface_set_coordinates_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSetCoordinatesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_SET_COORDINATES_METADATA)
     params = execution.params(params)
     cargs = surface_set_coordinates_cargs(params, execution)
     ret = surface_set_coordinates_outputs(params, execution)
@@ -186,14 +188,12 @@ def surface_set_coordinates(
     Returns:
         NamedTuple of outputs (described in `SurfaceSetCoordinatesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_SET_COORDINATES_METADATA)
     params = surface_set_coordinates_params(
         surface_in=surface_in,
         coord_metric=coord_metric,
         surface_out=surface_out,
     )
-    return surface_set_coordinates_execute(params, execution)
+    return surface_set_coordinates_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "SurfaceSetCoordinatesOutputs",
     "SurfaceSetCoordinatesParameters",
     "surface_set_coordinates",
-    "surface_set_coordinates_cargs",
     "surface_set_coordinates_execute",
-    "surface_set_coordinates_outputs",
     "surface_set_coordinates_params",
 ]

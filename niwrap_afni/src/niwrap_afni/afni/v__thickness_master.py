@@ -149,7 +149,7 @@ def v__thickness_master_outputs(
 
 def v__thickness_master_execute(
     params: VThicknessMasterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VThicknessMasterOutputs:
     """
     Compute cortical thickness using mask and surface datasets.
@@ -160,10 +160,12 @@ def v__thickness_master_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VThicknessMasterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__THICKNESS_MASTER_METADATA)
     params = execution.params(params)
     cargs = v__thickness_master_cargs(params, execution)
     ret = v__thickness_master_outputs(params, execution)
@@ -194,14 +196,12 @@ def v__thickness_master(
     Returns:
         NamedTuple of outputs (described in `VThicknessMasterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__THICKNESS_MASTER_METADATA)
     params = v__thickness_master_params(
         maskset=maskset,
         surfset=surfset,
         outdir=outdir,
     )
-    return v__thickness_master_execute(params, execution)
+    return v__thickness_master_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "VThicknessMasterParameters",
     "V__THICKNESS_MASTER_METADATA",
     "v__thickness_master",
-    "v__thickness_master_cargs",
     "v__thickness_master_execute",
-    "v__thickness_master_outputs",
     "v__thickness_master_params",
 ]

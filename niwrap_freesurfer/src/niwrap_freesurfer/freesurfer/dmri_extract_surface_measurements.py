@@ -227,7 +227,7 @@ def dmri_extract_surface_measurements_outputs(
 
 def dmri_extract_surface_measurements_execute(
     params: DmriExtractSurfaceMeasurementsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriExtractSurfaceMeasurementsOutputs:
     """
     A tool for extracting surface measurements from diffusion MRI data.
@@ -238,10 +238,12 @@ def dmri_extract_surface_measurements_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriExtractSurfaceMeasurementsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA)
     params = execution.params(params)
     cargs = dmri_extract_surface_measurements_cargs(params, execution)
     ret = dmri_extract_surface_measurements_outputs(params, execution)
@@ -292,8 +294,6 @@ def dmri_extract_surface_measurements(
     Returns:
         NamedTuple of outputs (described in `DmriExtractSurfaceMeasurementsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_EXTRACT_SURFACE_MEASUREMENTS_METADATA)
     params = dmri_extract_surface_measurements_params(
         streamline_file=streamline_file,
         lh_surface_file=lh_surface_file,
@@ -309,7 +309,7 @@ def dmri_extract_surface_measurements(
         annotation_file=annotation_file,
         fa_options=fa_options,
     )
-    return dmri_extract_surface_measurements_execute(params, execution)
+    return dmri_extract_surface_measurements_execute(params, runner)
 
 
 __all__ = [
@@ -317,8 +317,6 @@ __all__ = [
     "DmriExtractSurfaceMeasurementsOutputs",
     "DmriExtractSurfaceMeasurementsParameters",
     "dmri_extract_surface_measurements",
-    "dmri_extract_surface_measurements_cargs",
     "dmri_extract_surface_measurements_execute",
-    "dmri_extract_surface_measurements_outputs",
     "dmri_extract_surface_measurements_params",
 ]

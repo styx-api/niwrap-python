@@ -257,7 +257,7 @@ def v_3dclust_outputs(
 
 def v_3dclust_execute(
     params: V3dclustParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dclustOutputs:
     """
     Performs simple-minded cluster detection in 3D datasets.
@@ -268,10 +268,12 @@ def v_3dclust_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dclustOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DCLUST_METADATA)
     params = execution.params(params)
     cargs = v_3dclust_cargs(params, execution)
     ret = v_3dclust_outputs(params, execution)
@@ -344,8 +346,6 @@ def v_3dclust(
     Returns:
         NamedTuple of outputs (described in `V3dclustOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DCLUST_METADATA)
     params = v_3dclust_params(
         rmm=rmm,
         vmul=vmul,
@@ -368,7 +368,7 @@ def v_3dclust(
         savemask=savemask,
         binary=binary,
     )
-    return v_3dclust_execute(params, execution)
+    return v_3dclust_execute(params, runner)
 
 
 __all__ = [
@@ -376,8 +376,6 @@ __all__ = [
     "V3dclustParameters",
     "V_3DCLUST_METADATA",
     "v_3dclust",
-    "v_3dclust_cargs",
     "v_3dclust_execute",
-    "v_3dclust_outputs",
     "v_3dclust_params",
 ]

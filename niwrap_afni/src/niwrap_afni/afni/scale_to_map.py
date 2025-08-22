@@ -382,7 +382,7 @@ def scale_to_map_outputs(
 
 def scale_to_map_execute(
     params: ScaleToMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ScaleToMapOutputs:
     """
     Tool to scale values to a color map.
@@ -393,10 +393,12 @@ def scale_to_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ScaleToMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SCALE_TO_MAP_METADATA)
     params = execution.params(params)
     cargs = scale_to_map_cargs(params, execution)
     ret = scale_to_map_outputs(params, execution)
@@ -481,8 +483,6 @@ def scale_to_map(
     Returns:
         NamedTuple of outputs (described in `ScaleToMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SCALE_TO_MAP_METADATA)
     params = scale_to_map_params(
         input_file=input_file,
         icol=icol,
@@ -514,7 +514,7 @@ def scale_to_map(
         nomall=nomall,
         yesmall=yesmall,
     )
-    return scale_to_map_execute(params, execution)
+    return scale_to_map_execute(params, runner)
 
 
 __all__ = [
@@ -523,10 +523,7 @@ __all__ = [
     "ScaleToMapParameters",
     "ScaleToMapTraceParameters",
     "scale_to_map",
-    "scale_to_map_cargs",
     "scale_to_map_execute",
-    "scale_to_map_outputs",
     "scale_to_map_params",
-    "scale_to_map_trace_cargs",
     "scale_to_map_trace_params",
 ]

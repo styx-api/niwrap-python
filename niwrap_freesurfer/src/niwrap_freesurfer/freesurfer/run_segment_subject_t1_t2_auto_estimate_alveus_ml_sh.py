@@ -125,7 +125,7 @@ def run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_outputs(
 
 def run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_execute(
     params: RunSegmentSubjectT1T2AutoEstimateAlveusMlShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunSegmentSubjectT1T2AutoEstimateAlveusMlShOutputs:
     """
     Automated segmentation tool for T1 and T2 weighted images to estimate the
@@ -137,10 +137,12 @@ def run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubjectT1T2AutoEstimateAlveusMlShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_SEGMENT_SUBJECT_T1_T2_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA)
     params = execution.params(params)
     cargs = run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_cargs(params, execution)
     ret = run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_outputs(params, execution)
@@ -170,13 +172,11 @@ def run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh(
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubjectT1T2AutoEstimateAlveusMlShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_SEGMENT_SUBJECT_T1_T2_AUTO_ESTIMATE_ALVEUS_ML_SH_METADATA)
     params = run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_params(
         deployed_mcr_root=deployed_mcr_root,
         additional_args=additional_args,
     )
-    return run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_execute(params, execution)
+    return run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "RunSegmentSubjectT1T2AutoEstimateAlveusMlShOutputs",
     "RunSegmentSubjectT1T2AutoEstimateAlveusMlShParameters",
     "run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh",
-    "run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_cargs",
     "run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_execute",
-    "run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_outputs",
     "run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_params",
 ]

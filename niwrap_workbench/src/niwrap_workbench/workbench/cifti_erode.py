@@ -337,7 +337,7 @@ def cifti_erode_outputs(
 
 def cifti_erode_execute(
     params: CiftiErodeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiErodeOutputs:
     """
     Erode a cifti file.
@@ -357,10 +357,12 @@ def cifti_erode_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiErodeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_ERODE_METADATA)
     params = execution.params(params)
     cargs = cifti_erode_cargs(params, execution)
     ret = cifti_erode_outputs(params, execution)
@@ -411,8 +413,6 @@ def cifti_erode(
     Returns:
         NamedTuple of outputs (described in `CiftiErodeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_ERODE_METADATA)
     params = cifti_erode_params(
         cifti_in=cifti_in,
         direction=direction,
@@ -424,7 +424,7 @@ def cifti_erode(
         cerebellum_surface=cerebellum_surface,
         opt_merged_volume=opt_merged_volume,
     )
-    return cifti_erode_execute(params, execution)
+    return cifti_erode_execute(params, runner)
 
 
 __all__ = [
@@ -435,14 +435,9 @@ __all__ = [
     "CiftiErodeParameters",
     "CiftiErodeRightSurfaceParameters",
     "cifti_erode",
-    "cifti_erode_cargs",
-    "cifti_erode_cerebellum_surface_cargs",
     "cifti_erode_cerebellum_surface_params",
     "cifti_erode_execute",
-    "cifti_erode_left_surface_cargs",
     "cifti_erode_left_surface_params",
-    "cifti_erode_outputs",
     "cifti_erode_params",
-    "cifti_erode_right_surface_cargs",
     "cifti_erode_right_surface_params",
 ]

@@ -125,7 +125,7 @@ def tbss_3_postreg_outputs(
 
 def tbss_3_postreg_execute(
     params: Tbss3PostregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tbss3PostregOutputs:
     """
     TBSS post-registration processing.
@@ -136,10 +136,12 @@ def tbss_3_postreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tbss3PostregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_3_POSTREG_METADATA)
     params = execution.params(params)
     cargs = tbss_3_postreg_cargs(params, execution)
     ret = tbss_3_postreg_outputs(params, execution)
@@ -168,13 +170,11 @@ def tbss_3_postreg(
     Returns:
         NamedTuple of outputs (described in `Tbss3PostregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_3_POSTREG_METADATA)
     params = tbss_3_postreg_params(
         derive_mean_from_study=derive_mean_from_study,
         use_fmrib58=use_fmrib58,
     )
-    return tbss_3_postreg_execute(params, execution)
+    return tbss_3_postreg_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "Tbss3PostregOutputs",
     "Tbss3PostregParameters",
     "tbss_3_postreg",
-    "tbss_3_postreg_cargs",
     "tbss_3_postreg_execute",
-    "tbss_3_postreg_outputs",
     "tbss_3_postreg_params",
 ]

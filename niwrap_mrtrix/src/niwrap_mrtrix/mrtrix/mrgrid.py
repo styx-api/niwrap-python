@@ -573,7 +573,7 @@ def mrgrid_outputs(
 
 def mrgrid_execute(
     params: MrgridParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrgridOutputs:
     """
     Modify the grid of an image without interpolation (cropping or padding) or by
@@ -613,10 +613,12 @@ def mrgrid_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrgridOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRGRID_METADATA)
     params = execution.params(params)
     cargs = mrgrid_cargs(params, execution)
     ret = mrgrid_outputs(params, execution)
@@ -769,8 +771,6 @@ def mrgrid(
     Returns:
         NamedTuple of outputs (described in `MrgridOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRGRID_METADATA)
     params = mrgrid_params(
         template=template,
         size=size,
@@ -799,7 +799,7 @@ def mrgrid(
         operation=operation,
         output=output,
     )
-    return mrgrid_execute(params, execution)
+    return mrgrid_execute(params, runner)
 
 
 __all__ = [
@@ -811,16 +811,10 @@ __all__ = [
     "MrgridVariousFileParameters",
     "MrgridVariousStringParameters",
     "mrgrid",
-    "mrgrid_axis_cargs",
     "mrgrid_axis_params",
-    "mrgrid_cargs",
-    "mrgrid_config_cargs",
     "mrgrid_config_params",
     "mrgrid_execute",
-    "mrgrid_outputs",
     "mrgrid_params",
-    "mrgrid_various_file_cargs",
     "mrgrid_various_file_params",
-    "mrgrid_various_string_cargs",
     "mrgrid_various_string_params",
 ]

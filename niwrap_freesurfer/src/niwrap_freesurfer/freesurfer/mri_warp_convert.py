@@ -251,7 +251,7 @@ def mri_warp_convert_outputs(
 
 def mri_warp_convert_execute(
     params: MriWarpConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriWarpConvertOutputs:
     """
     This program converts non-linear deformation field warp file formats.
@@ -262,10 +262,12 @@ def mri_warp_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriWarpConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_WARP_CONVERT_METADATA)
     params = execution.params(params)
     cargs = mri_warp_convert_cargs(params, execution)
     ret = mri_warp_convert_outputs(params, execution)
@@ -316,8 +318,6 @@ def mri_warp_convert(
     Returns:
         NamedTuple of outputs (described in `MriWarpConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_WARP_CONVERT_METADATA)
     params = mri_warp_convert_params(
         inm3z=inm3z,
         infsl=infsl,
@@ -334,7 +334,7 @@ def mri_warp_convert(
         insrcgeom=insrcgeom,
         downsample=downsample,
     )
-    return mri_warp_convert_execute(params, execution)
+    return mri_warp_convert_execute(params, runner)
 
 
 __all__ = [
@@ -342,8 +342,6 @@ __all__ = [
     "MriWarpConvertOutputs",
     "MriWarpConvertParameters",
     "mri_warp_convert",
-    "mri_warp_convert_cargs",
     "mri_warp_convert_execute",
-    "mri_warp_convert_outputs",
     "mri_warp_convert_params",
 ]

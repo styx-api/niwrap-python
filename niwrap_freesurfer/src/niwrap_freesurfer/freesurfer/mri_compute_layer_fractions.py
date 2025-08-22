@@ -226,7 +226,7 @@ def mri_compute_layer_fractions_outputs(
 
 def mri_compute_layer_fractions_execute(
     params: MriComputeLayerFractionsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeLayerFractionsOutputs:
     """
     This program computes volumetric partial volume fractions from laminar surfaces
@@ -238,10 +238,12 @@ def mri_compute_layer_fractions_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeLayerFractionsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_LAYER_FRACTIONS_METADATA)
     params = execution.params(params)
     cargs = mri_compute_layer_fractions_cargs(params, execution)
     ret = mri_compute_layer_fractions_outputs(params, execution)
@@ -294,8 +296,6 @@ def mri_compute_layer_fractions(
     Returns:
         NamedTuple of outputs (described in `MriComputeLayerFractionsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_LAYER_FRACTIONS_METADATA)
     params = mri_compute_layer_fractions_params(
         reg_file=reg_file,
         input_volume=input_volume,
@@ -312,7 +312,7 @@ def mri_compute_layer_fractions(
         random_file=random_file,
         identity_file=identity_file,
     )
-    return mri_compute_layer_fractions_execute(params, execution)
+    return mri_compute_layer_fractions_execute(params, runner)
 
 
 __all__ = [
@@ -320,8 +320,6 @@ __all__ = [
     "MriComputeLayerFractionsOutputs",
     "MriComputeLayerFractionsParameters",
     "mri_compute_layer_fractions",
-    "mri_compute_layer_fractions_cargs",
     "mri_compute_layer_fractions_execute",
-    "mri_compute_layer_fractions_outputs",
     "mri_compute_layer_fractions_params",
 ]

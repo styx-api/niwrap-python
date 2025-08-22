@@ -275,7 +275,7 @@ def warpconvert_outputs(
 
 def warpconvert_execute(
     params: WarpconvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WarpconvertOutputs:
     """
     Convert between different representations of a non-linear warp.
@@ -297,10 +297,12 @@ def warpconvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WarpconvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WARPCONVERT_METADATA)
     params = execution.params(params)
     cargs = warpconvert_cargs(params, execution)
     ret = warpconvert_outputs(params, execution)
@@ -379,8 +381,6 @@ def warpconvert(
     Returns:
         NamedTuple of outputs (described in `WarpconvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WARPCONVERT_METADATA)
     params = warpconvert_params(
         template=template,
         midway_space=midway_space,
@@ -397,7 +397,7 @@ def warpconvert(
         type_=type_,
         out=out,
     )
-    return warpconvert_execute(params, execution)
+    return warpconvert_execute(params, runner)
 
 
 __all__ = [
@@ -406,10 +406,7 @@ __all__ = [
     "WarpconvertOutputs",
     "WarpconvertParameters",
     "warpconvert",
-    "warpconvert_cargs",
-    "warpconvert_config_cargs",
     "warpconvert_config_params",
     "warpconvert_execute",
-    "warpconvert_outputs",
     "warpconvert_params",
 ]

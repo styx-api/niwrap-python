@@ -176,7 +176,7 @@ def mris_exvivo_surfaces_outputs(
 
 def mris_exvivo_surfaces_execute(
     params: MrisExvivoSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisExvivoSurfacesOutputs:
     """
     FreeSurfer tool to position tessellation of the cortical surface at the white
@@ -188,10 +188,12 @@ def mris_exvivo_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisExvivoSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_EXVIVO_SURFACES_METADATA)
     params = execution.params(params)
     cargs = mris_exvivo_surfaces_cargs(params, execution)
     ret = mris_exvivo_surfaces_outputs(params, execution)
@@ -233,8 +235,6 @@ def mris_exvivo_surfaces(
     Returns:
         NamedTuple of outputs (described in `MrisExvivoSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_EXVIVO_SURFACES_METADATA)
     params = mris_exvivo_surfaces_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -244,7 +244,7 @@ def mris_exvivo_surfaces(
         white_only=white_only,
         formalin=formalin,
     )
-    return mris_exvivo_surfaces_execute(params, execution)
+    return mris_exvivo_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -252,8 +252,6 @@ __all__ = [
     "MrisExvivoSurfacesOutputs",
     "MrisExvivoSurfacesParameters",
     "mris_exvivo_surfaces",
-    "mris_exvivo_surfaces_cargs",
     "mris_exvivo_surfaces_execute",
-    "mris_exvivo_surfaces_outputs",
     "mris_exvivo_surfaces_params",
 ]

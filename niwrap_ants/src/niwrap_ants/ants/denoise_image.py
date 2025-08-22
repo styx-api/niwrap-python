@@ -370,7 +370,7 @@ def denoise_image_outputs(
 
 def denoise_image_execute(
     params: DenoiseImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DenoiseImageOutputs:
     """
     Denoise an image using a spatially adaptive filter originally described in J. V.
@@ -384,10 +384,12 @@ def denoise_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DenoiseImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DENOISE_IMAGE_METADATA)
     params = execution.params(params)
     cargs = denoise_image_cargs(params, execution)
     ret = denoise_image_outputs(params, execution)
@@ -442,8 +444,6 @@ def denoise_image(
     Returns:
         NamedTuple of outputs (described in `DenoiseImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DENOISE_IMAGE_METADATA)
     params = denoise_image_params(
         image_dimensionality=image_dimensionality,
         noise_model=noise_model,
@@ -455,7 +455,7 @@ def denoise_image(
         input_image=input_image,
         output=output,
     )
-    return denoise_image_execute(params, execution)
+    return denoise_image_execute(params, runner)
 
 
 __all__ = [
@@ -467,14 +467,8 @@ __all__ = [
     "DenoiseImageOutputs",
     "DenoiseImageParameters",
     "denoise_image",
-    "denoise_image_cargs",
-    "denoise_image_corrected_output_cargs",
-    "denoise_image_corrected_output_noise_cargs",
-    "denoise_image_corrected_output_noise_outputs",
     "denoise_image_corrected_output_noise_params",
-    "denoise_image_corrected_output_outputs",
     "denoise_image_corrected_output_params",
     "denoise_image_execute",
-    "denoise_image_outputs",
     "denoise_image_params",
 ]

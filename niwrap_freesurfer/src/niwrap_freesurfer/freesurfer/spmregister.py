@@ -227,7 +227,7 @@ def spmregister_outputs(
 
 def spmregister_execute(
     params: SpmregisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SpmregisterOutputs:
     """
     Registers a volume to its FreeSurfer anatomical using SPM's spm_coreg.
@@ -238,10 +238,12 @@ def spmregister_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SpmregisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPMREGISTER_METADATA)
     params = execution.params(params)
     cargs = spmregister_cargs(params, execution)
     ret = spmregister_outputs(params, execution)
@@ -295,8 +297,6 @@ def spmregister(
     Returns:
         NamedTuple of outputs (described in `SpmregisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPMREGISTER_METADATA)
     params = spmregister_params(
         subjid=subjid,
         mov=mov,
@@ -312,7 +312,7 @@ def spmregister(
         version=version,
         help_=help_,
     )
-    return spmregister_execute(params, execution)
+    return spmregister_execute(params, runner)
 
 
 __all__ = [
@@ -320,8 +320,6 @@ __all__ = [
     "SpmregisterOutputs",
     "SpmregisterParameters",
     "spmregister",
-    "spmregister_cargs",
     "spmregister_execute",
-    "spmregister_outputs",
     "spmregister_params",
 ]

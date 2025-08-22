@@ -152,7 +152,7 @@ def v__spharm_examples_outputs(
 
 def v__spharm_examples_execute(
     params: VSpharmExamplesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSpharmExamplesOutputs:
     """
     A script to demonstrate the usage of spherical harmonics decomposition with
@@ -164,10 +164,12 @@ def v__spharm_examples_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSpharmExamplesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SPHARM_EXAMPLES_METADATA)
     params = execution.params(params)
     cargs = v__spharm_examples_cargs(params, execution)
     ret = v__spharm_examples_outputs(params, execution)
@@ -204,8 +206,6 @@ def v__spharm_examples(
     Returns:
         NamedTuple of outputs (described in `VSpharmExamplesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SPHARM_EXAMPLES_METADATA)
     params = v__spharm_examples_params(
         help_web=help_web,
         help_web_alias=help_web_alias,
@@ -214,7 +214,7 @@ def v__spharm_examples(
         all_opts=all_opts,
         help_find=help_find,
     )
-    return v__spharm_examples_execute(params, execution)
+    return v__spharm_examples_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "VSpharmExamplesParameters",
     "V__SPHARM_EXAMPLES_METADATA",
     "v__spharm_examples",
-    "v__spharm_examples_cargs",
     "v__spharm_examples_execute",
-    "v__spharm_examples_outputs",
     "v__spharm_examples_params",
 ]

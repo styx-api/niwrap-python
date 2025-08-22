@@ -236,7 +236,7 @@ def first_outputs(
 
 def first_execute(
     params: FirstParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FirstOutputs:
     """
     A command-line tool for segmenting subcortical structures in MRI images using
@@ -248,10 +248,12 @@ def first_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FirstOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIRST_METADATA)
     params = execution.params(params)
     cargs = first_cargs(params, execution)
     ret = first_outputs(params, execution)
@@ -312,8 +314,6 @@ def first(
     Returns:
         NamedTuple of outputs (described in `FirstOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIRST_METADATA)
     params = first_params(
         input_file=input_file,
         output_name=output_name,
@@ -331,7 +331,7 @@ def first(
         shcond=shcond,
         loadbvars=loadbvars,
     )
-    return first_execute(params, execution)
+    return first_execute(params, runner)
 
 
 __all__ = [
@@ -339,8 +339,6 @@ __all__ = [
     "FirstOutputs",
     "FirstParameters",
     "first",
-    "first_cargs",
     "first_execute",
-    "first_outputs",
     "first_params",
 ]

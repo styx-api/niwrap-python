@@ -129,7 +129,7 @@ def quantify_brainstem_structures_sh_outputs(
 
 def quantify_brainstem_structures_sh_execute(
     params: QuantifyBrainstemStructuresShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QuantifyBrainstemStructuresShOutputs:
     """
     A script to gather results from FreeSurfer brainstem processing and write them
@@ -141,10 +141,12 @@ def quantify_brainstem_structures_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QuantifyBrainstemStructuresShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA)
     params = execution.params(params)
     cargs = quantify_brainstem_structures_sh_cargs(params, execution)
     ret = quantify_brainstem_structures_sh_outputs(params, execution)
@@ -174,13 +176,11 @@ def quantify_brainstem_structures_sh(
     Returns:
         NamedTuple of outputs (described in `QuantifyBrainstemStructuresShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA)
     params = quantify_brainstem_structures_sh_params(
         output_file=output_file,
         subjects_directory=subjects_directory,
     )
-    return quantify_brainstem_structures_sh_execute(params, execution)
+    return quantify_brainstem_structures_sh_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "QuantifyBrainstemStructuresShOutputs",
     "QuantifyBrainstemStructuresShParameters",
     "quantify_brainstem_structures_sh",
-    "quantify_brainstem_structures_sh_cargs",
     "quantify_brainstem_structures_sh_execute",
-    "quantify_brainstem_structures_sh_outputs",
     "quantify_brainstem_structures_sh_params",
 ]

@@ -129,7 +129,7 @@ def run_segment_subject_sh_outputs(
 
 def run_segment_subject_sh_execute(
     params: RunSegmentSubjectShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunSegmentSubjectShOutputs:
     """
     A command-line tool for subject segmentation in Freesurfer.
@@ -140,10 +140,12 @@ def run_segment_subject_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubjectShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_SEGMENT_SUBJECT_SH_METADATA)
     params = execution.params(params)
     cargs = run_segment_subject_sh_cargs(params, execution)
     ret = run_segment_subject_sh_outputs(params, execution)
@@ -172,13 +174,11 @@ def run_segment_subject_sh(
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubjectShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_SEGMENT_SUBJECT_SH_METADATA)
     params = run_segment_subject_sh_params(
         deployed_mcrroot=deployed_mcrroot,
         arguments=arguments,
     )
-    return run_segment_subject_sh_execute(params, execution)
+    return run_segment_subject_sh_execute(params, runner)
 
 
 __all__ = [
@@ -186,8 +186,6 @@ __all__ = [
     "RunSegmentSubjectShOutputs",
     "RunSegmentSubjectShParameters",
     "run_segment_subject_sh",
-    "run_segment_subject_sh_cargs",
     "run_segment_subject_sh_execute",
-    "run_segment_subject_sh_outputs",
     "run_segment_subject_sh_params",
 ]

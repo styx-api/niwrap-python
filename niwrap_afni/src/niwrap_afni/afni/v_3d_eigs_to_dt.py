@@ -186,7 +186,7 @@ def v_3d_eigs_to_dt_outputs(
 
 def v_3d_eigs_to_dt_execute(
     params: V3dEigsToDtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dEigsToDtOutputs:
     """
     Convert set of DTI eigenvectors and eigenvalues to a diffusion tensor, with
@@ -198,10 +198,12 @@ def v_3d_eigs_to_dt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dEigsToDtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_EIGS_TO_DT_METADATA)
     params = execution.params(params)
     cargs = v_3d_eigs_to_dt_cargs(params, execution)
     ret = v_3d_eigs_to_dt_outputs(params, execution)
@@ -247,8 +249,6 @@ def v_3d_eigs_to_dt(
     Returns:
         NamedTuple of outputs (described in `V3dEigsToDtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_EIGS_TO_DT_METADATA)
     params = v_3d_eigs_to_dt_params(
         eig_vals=eig_vals,
         eig_vecs=eig_vecs,
@@ -259,7 +259,7 @@ def v_3d_eigs_to_dt(
         flip_z=flip_z,
         scale_eigs=scale_eigs,
     )
-    return v_3d_eigs_to_dt_execute(params, execution)
+    return v_3d_eigs_to_dt_execute(params, runner)
 
 
 __all__ = [
@@ -267,8 +267,6 @@ __all__ = [
     "V3dEigsToDtParameters",
     "V_3D_EIGS_TO_DT_METADATA",
     "v_3d_eigs_to_dt",
-    "v_3d_eigs_to_dt_cargs",
     "v_3d_eigs_to_dt_execute",
-    "v_3d_eigs_to_dt_outputs",
     "v_3d_eigs_to_dt_params",
 ]

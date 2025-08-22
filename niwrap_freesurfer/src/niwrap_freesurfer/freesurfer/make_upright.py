@@ -130,7 +130,7 @@ def make_upright_outputs(
 
 def make_upright_execute(
     params: MakeUprightParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeUprightOutputs:
     """
     Registers MRI input to the left/right reversed version using mri_robust_register
@@ -143,10 +143,12 @@ def make_upright_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeUprightOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_UPRIGHT_METADATA)
     params = execution.params(params)
     cargs = make_upright_cargs(params, execution)
     ret = make_upright_outputs(params, execution)
@@ -177,14 +179,12 @@ def make_upright(
     Returns:
         NamedTuple of outputs (described in `MakeUprightOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_UPRIGHT_METADATA)
     params = make_upright_params(
         input_image=input_image,
         output_image=output_image,
         transformation_map=transformation_map,
     )
-    return make_upright_execute(params, execution)
+    return make_upright_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "MakeUprightOutputs",
     "MakeUprightParameters",
     "make_upright",
-    "make_upright_cargs",
     "make_upright_execute",
-    "make_upright_outputs",
     "make_upright_params",
 ]

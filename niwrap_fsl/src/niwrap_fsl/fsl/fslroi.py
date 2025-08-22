@@ -181,7 +181,7 @@ def fslroi_outputs(
 
 def fslroi_execute(
     params: FslroiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslroiOutputs:
     """
     Extracts a region of interest (ROI) from an image.
@@ -192,10 +192,12 @@ def fslroi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslroiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLROI_METADATA)
     params = execution.params(params)
     cargs = fslroi_cargs(params, execution)
     ret = fslroi_outputs(params, execution)
@@ -238,8 +240,6 @@ def fslroi(
     Returns:
         NamedTuple of outputs (described in `FslroiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLROI_METADATA)
     params = fslroi_params(
         infile=infile,
         outfile=outfile,
@@ -252,7 +252,7 @@ def fslroi(
         tmin=tmin,
         tsize=tsize,
     )
-    return fslroi_execute(params, execution)
+    return fslroi_execute(params, runner)
 
 
 __all__ = [
@@ -260,8 +260,6 @@ __all__ = [
     "FslroiOutputs",
     "FslroiParameters",
     "fslroi",
-    "fslroi_cargs",
     "fslroi_execute",
-    "fslroi_outputs",
     "fslroi_params",
 ]

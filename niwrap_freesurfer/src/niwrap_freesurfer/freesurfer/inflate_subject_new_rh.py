@@ -121,7 +121,7 @@ def inflate_subject_new_rh_outputs(
 
 def inflate_subject_new_rh_execute(
     params: InflateSubjectNewRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InflateSubjectNewRhOutputs:
     """
     This is a placeholder descriptor for the 'inflate_subject_new-rh' command. The
@@ -134,10 +134,12 @@ def inflate_subject_new_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectNewRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INFLATE_SUBJECT_NEW_RH_METADATA)
     params = execution.params(params)
     cargs = inflate_subject_new_rh_cargs(params, execution)
     ret = inflate_subject_new_rh_outputs(params, execution)
@@ -164,12 +166,10 @@ def inflate_subject_new_rh(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectNewRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INFLATE_SUBJECT_NEW_RH_METADATA)
     params = inflate_subject_new_rh_params(
         args=args,
     )
-    return inflate_subject_new_rh_execute(params, execution)
+    return inflate_subject_new_rh_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "InflateSubjectNewRhOutputs",
     "InflateSubjectNewRhParameters",
     "inflate_subject_new_rh",
-    "inflate_subject_new_rh_cargs",
     "inflate_subject_new_rh_execute",
-    "inflate_subject_new_rh_outputs",
     "inflate_subject_new_rh_params",
 ]

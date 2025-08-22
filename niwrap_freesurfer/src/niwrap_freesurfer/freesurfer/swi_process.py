@@ -221,7 +221,7 @@ def swi_process_outputs(
 
 def swi_process_execute(
     params: SwiProcessParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SwiProcessOutputs:
     """
     Process the Susceptibility-weighted images. Ensure the inputs are post-phase
@@ -233,10 +233,12 @@ def swi_process_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SwiProcessOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SWI_PROCESS_METADATA)
     params = execution.params(params)
     cargs = swi_process_cargs(params, execution)
     ret = swi_process_outputs(params, execution)
@@ -293,8 +295,6 @@ def swi_process(
     Returns:
         NamedTuple of outputs (described in `SwiProcessOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SWI_PROCESS_METADATA)
     params = swi_process_params(
         magnitude_image=magnitude_image,
         phase_image=phase_image,
@@ -308,7 +308,7 @@ def swi_process(
         mip_level=mip_level,
         phase_mask_method=phase_mask_method,
     )
-    return swi_process_execute(params, execution)
+    return swi_process_execute(params, runner)
 
 
 __all__ = [
@@ -316,8 +316,6 @@ __all__ = [
     "SwiProcessOutputs",
     "SwiProcessParameters",
     "swi_process",
-    "swi_process_cargs",
     "swi_process_execute",
-    "swi_process_outputs",
     "swi_process_params",
 ]

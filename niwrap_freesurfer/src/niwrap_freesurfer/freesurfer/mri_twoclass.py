@@ -156,7 +156,7 @@ def mri_twoclass_outputs(
 
 def mri_twoclass_execute(
     params: MriTwoclassParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriTwoclassOutputs:
     """
     Compute cross-subject statistics of two sets of labels.
@@ -167,10 +167,12 @@ def mri_twoclass_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriTwoclassOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_TWOCLASS_METADATA)
     params = execution.params(params)
     cargs = mri_twoclass_cargs(params, execution)
     ret = mri_twoclass_outputs(params, execution)
@@ -207,8 +209,6 @@ def mri_twoclass(
     Returns:
         NamedTuple of outputs (described in `MriTwoclassOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_TWOCLASS_METADATA)
     params = mri_twoclass_params(
         segmentation_volume=segmentation_volume,
         output_subject=output_subject,
@@ -218,7 +218,7 @@ def mri_twoclass(
         f_threshold=f_threshold,
         bonferroni_correction=bonferroni_correction,
     )
-    return mri_twoclass_execute(params, execution)
+    return mri_twoclass_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "MriTwoclassOutputs",
     "MriTwoclassParameters",
     "mri_twoclass",
-    "mri_twoclass_cargs",
     "mri_twoclass_execute",
-    "mri_twoclass_outputs",
     "mri_twoclass_params",
 ]

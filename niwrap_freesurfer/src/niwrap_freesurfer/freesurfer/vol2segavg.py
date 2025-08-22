@@ -234,7 +234,7 @@ def vol2segavg_outputs(
 
 def vol2segavg_execute(
     params: Vol2segavgParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Vol2segavgOutputs:
     """
     Computes the average of a volume inside a given segment of a segmentation
@@ -246,10 +246,12 @@ def vol2segavg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Vol2segavgOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOL2SEGAVG_METADATA)
     params = execution.params(params)
     cargs = vol2segavg_cargs(params, execution)
     ret = vol2segavg_outputs(params, execution)
@@ -304,8 +306,6 @@ def vol2segavg(
     Returns:
         NamedTuple of outputs (described in `Vol2segavgOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOL2SEGAVG_METADATA)
     params = vol2segavg_params(
         output_file=output_file,
         input_volume=input_volume,
@@ -323,7 +323,7 @@ def vol2segavg(
         xcsf_flag=xcsf_flag,
         remove_mean_flag=remove_mean_flag,
     )
-    return vol2segavg_execute(params, execution)
+    return vol2segavg_execute(params, runner)
 
 
 __all__ = [
@@ -331,8 +331,6 @@ __all__ = [
     "Vol2segavgOutputs",
     "Vol2segavgParameters",
     "vol2segavg",
-    "vol2segavg_cargs",
     "vol2segavg_execute",
-    "vol2segavg_outputs",
     "vol2segavg_params",
 ]

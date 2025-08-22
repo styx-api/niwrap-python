@@ -147,7 +147,7 @@ def get_afni_model_prf_6_outputs(
 
 def get_afni_model_prf_6_execute(
     params: GetAfniModelPrf6Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GetAfniModelPrf6Outputs:
     """
     A command to invoke AFNI's population receptive field (pRF) model.
@@ -158,10 +158,12 @@ def get_afni_model_prf_6_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrf6Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GET_AFNI_MODEL_PRF_6_METADATA)
     params = execution.params(params)
     cargs = get_afni_model_prf_6_cargs(params, execution)
     ret = get_afni_model_prf_6_outputs(params, execution)
@@ -199,8 +201,6 @@ def get_afni_model_prf_6(
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrf6Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GET_AFNI_MODEL_PRF_6_METADATA)
     params = get_afni_model_prf_6_params(
         nt_=nt_,
         amp=amp,
@@ -210,7 +210,7 @@ def get_afni_model_prf_6(
         sigrat=sigrat,
         theta=theta,
     )
-    return get_afni_model_prf_6_execute(params, execution)
+    return get_afni_model_prf_6_execute(params, runner)
 
 
 __all__ = [
@@ -218,8 +218,6 @@ __all__ = [
     "GetAfniModelPrf6Outputs",
     "GetAfniModelPrf6Parameters",
     "get_afni_model_prf_6",
-    "get_afni_model_prf_6_cargs",
     "get_afni_model_prf_6_execute",
-    "get_afni_model_prf_6_outputs",
     "get_afni_model_prf_6_params",
 ]

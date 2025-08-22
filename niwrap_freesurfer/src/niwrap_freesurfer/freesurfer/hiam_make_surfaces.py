@@ -122,7 +122,7 @@ def hiam_make_surfaces_outputs(
 
 def hiam_make_surfaces_execute(
     params: HiamMakeSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HiamMakeSurfacesOutputs:
     """
     Surface creation tool for specified brain structures.
@@ -133,10 +133,12 @@ def hiam_make_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HiamMakeSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HIAM_MAKE_SURFACES_METADATA)
     params = execution.params(params)
     cargs = hiam_make_surfaces_cargs(params, execution)
     ret = hiam_make_surfaces_outputs(params, execution)
@@ -164,13 +166,11 @@ def hiam_make_surfaces(
     Returns:
         NamedTuple of outputs (described in `HiamMakeSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HIAM_MAKE_SURFACES_METADATA)
     params = hiam_make_surfaces_params(
         subject_name=subject_name,
         structure=structure,
     )
-    return hiam_make_surfaces_execute(params, execution)
+    return hiam_make_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "HiamMakeSurfacesOutputs",
     "HiamMakeSurfacesParameters",
     "hiam_make_surfaces",
-    "hiam_make_surfaces_cargs",
     "hiam_make_surfaces_execute",
-    "hiam_make_surfaces_outputs",
     "hiam_make_surfaces_params",
 ]

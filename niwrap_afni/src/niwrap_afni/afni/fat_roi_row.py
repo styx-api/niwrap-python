@@ -156,7 +156,7 @@ def fat_roi_row_outputs(
 
 def fat_roi_row_execute(
     params: FatRoiRowParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatRoiRowOutputs:
     """
     Select a single ROI's row out of a connectivity matrix file (*.grid or *.netcc)
@@ -168,10 +168,12 @@ def fat_roi_row_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatRoiRowOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_ROI_ROW_METADATA)
     params = execution.params(params)
     cargs = fat_roi_row_cargs(params, execution)
     ret = fat_roi_row_outputs(params, execution)
@@ -210,15 +212,13 @@ def fat_roi_row(
     Returns:
         NamedTuple of outputs (described in `FatRoiRowOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_ROI_ROW_METADATA)
     params = fat_roi_row_params(
         roi=roi,
         matrix_files=matrix_files,
         list_file=list_file,
         extern_labs_no=extern_labs_no,
     )
-    return fat_roi_row_execute(params, execution)
+    return fat_roi_row_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "FatRoiRowOutputs",
     "FatRoiRowParameters",
     "fat_roi_row",
-    "fat_roi_row_cargs",
     "fat_roi_row_execute",
-    "fat_roi_row_outputs",
     "fat_roi_row_params",
 ]

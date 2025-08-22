@@ -188,7 +188,7 @@ def v_3d_brain_sync_outputs(
 
 def v_3d_brain_sync_execute(
     params: V3dBrainSyncParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dBrainSyncOutputs:
     """
     'Synchronizes' the -inset2 dataset to match the -inset1 dataset, using
@@ -200,10 +200,12 @@ def v_3d_brain_sync_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dBrainSyncOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_BRAIN_SYNC_METADATA)
     params = execution.params(params)
     cargs = v_3d_brain_sync_cargs(params, execution)
     ret = v_3d_brain_sync_outputs(params, execution)
@@ -244,8 +246,6 @@ def v_3d_brain_sync(
     Returns:
         NamedTuple of outputs (described in `V3dBrainSyncOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_BRAIN_SYNC_METADATA)
     params = v_3d_brain_sync_params(
         inset1=inset1,
         inset2=inset2,
@@ -255,7 +255,7 @@ def v_3d_brain_sync(
         mask=mask,
         verb=verb,
     )
-    return v_3d_brain_sync_execute(params, execution)
+    return v_3d_brain_sync_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "V3dBrainSyncParameters",
     "V_3D_BRAIN_SYNC_METADATA",
     "v_3d_brain_sync",
-    "v_3d_brain_sync_cargs",
     "v_3d_brain_sync_execute",
-    "v_3d_brain_sync_outputs",
     "v_3d_brain_sync_params",
 ]

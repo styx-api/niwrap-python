@@ -127,7 +127,7 @@ def v__no_ext_outputs(
 
 def v__no_ext_execute(
     params: VNoExtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VNoExtOutputs:
     """
     Tool for removing specified extensions from filenames.
@@ -138,10 +138,12 @@ def v__no_ext_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VNoExtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__NO_EXT_METADATA)
     params = execution.params(params)
     cargs = v__no_ext_cargs(params, execution)
     ret = v__no_ext_outputs(params, execution)
@@ -168,13 +170,11 @@ def v__no_ext(
     Returns:
         NamedTuple of outputs (described in `VNoExtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__NO_EXT_METADATA)
     params = v__no_ext_params(
         inputfile=inputfile,
         extensions=extensions,
     )
-    return v__no_ext_execute(params, execution)
+    return v__no_ext_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "VNoExtParameters",
     "V__NO_EXT_METADATA",
     "v__no_ext",
-    "v__no_ext_cargs",
     "v__no_ext_execute",
-    "v__no_ext_outputs",
     "v__no_ext_params",
 ]

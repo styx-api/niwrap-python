@@ -189,7 +189,7 @@ def v_3d_dtto_noisy_dwi_outputs(
 
 def v_3d_dtto_noisy_dwi_execute(
     params: V3dDttoNoisyDwiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dDttoNoisyDwiOutputs:
     """
     Generate a synthetic set of DWI measures with a given SNR from an AFNI-style DT
@@ -201,10 +201,12 @@ def v_3d_dtto_noisy_dwi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dDttoNoisyDwiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_DTTO_NOISY_DWI_METADATA)
     params = execution.params(params)
     cargs = v_3d_dtto_noisy_dwi_cargs(params, execution)
     ret = v_3d_dtto_noisy_dwi_outputs(params, execution)
@@ -251,8 +253,6 @@ def v_3d_dtto_noisy_dwi(
     Returns:
         NamedTuple of outputs (described in `V3dDttoNoisyDwiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_DTTO_NOISY_DWI_METADATA)
     params = v_3d_dtto_noisy_dwi_params(
         dt_file=dt_file,
         grad_file=grad_file,
@@ -263,7 +263,7 @@ def v_3d_dtto_noisy_dwi(
         bval=bval,
         s0=s0,
     )
-    return v_3d_dtto_noisy_dwi_execute(params, execution)
+    return v_3d_dtto_noisy_dwi_execute(params, runner)
 
 
 __all__ = [
@@ -271,8 +271,6 @@ __all__ = [
     "V3dDttoNoisyDwiParameters",
     "V_3D_DTTO_NOISY_DWI_METADATA",
     "v_3d_dtto_noisy_dwi",
-    "v_3d_dtto_noisy_dwi_cargs",
     "v_3d_dtto_noisy_dwi_execute",
-    "v_3d_dtto_noisy_dwi_outputs",
     "v_3d_dtto_noisy_dwi_params",
 ]

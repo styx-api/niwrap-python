@@ -194,7 +194,7 @@ def reg_jacobian_outputs(
 
 def reg_jacobian_execute(
     params: RegJacobianParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegJacobianOutputs:
     """
     Tool to compute the Jacobian determinant map from a deformation field or control
@@ -206,10 +206,12 @@ def reg_jacobian_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegJacobianOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_JACOBIAN_METADATA)
     params = execution.params(params)
     cargs = reg_jacobian_cargs(params, execution)
     ret = reg_jacobian_outputs(params, execution)
@@ -252,8 +254,6 @@ def reg_jacobian(
     Returns:
         NamedTuple of outputs (described in `RegJacobianOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_JACOBIAN_METADATA)
     params = reg_jacobian_params(
         reference_image=reference_image,
         deformation_field=deformation_field,
@@ -263,7 +263,7 @@ def reg_jacobian(
         output_log_jacobian=output_log_jacobian,
         affine_matrix=affine_matrix,
     )
-    return reg_jacobian_execute(params, execution)
+    return reg_jacobian_execute(params, runner)
 
 
 __all__ = [
@@ -271,8 +271,6 @@ __all__ = [
     "RegJacobianOutputs",
     "RegJacobianParameters",
     "reg_jacobian",
-    "reg_jacobian_cargs",
     "reg_jacobian_execute",
-    "reg_jacobian_outputs",
     "reg_jacobian_params",
 ]

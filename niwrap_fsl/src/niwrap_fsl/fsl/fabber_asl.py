@@ -360,7 +360,7 @@ def fabber_asl_outputs(
 
 def fabber_asl_execute(
     params: FabberAslParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberAslOutputs:
     """
     Fabber is a tool for automated model fitting of time series data.
@@ -371,10 +371,12 @@ def fabber_asl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberAslOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_ASL_METADATA)
     params = execution.params(params)
     cargs = fabber_asl_cargs(params, execution)
     ret = fabber_asl_outputs(params, execution)
@@ -478,8 +480,6 @@ def fabber_asl(
     Returns:
         NamedTuple of outputs (described in `FabberAslOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_ASL_METADATA)
     params = fabber_asl_params(
         listmethods=listmethods,
         listmodels=listmodels,
@@ -514,7 +514,7 @@ def fabber_asl(
         optfile=optfile,
         debug=debug,
     )
-    return fabber_asl_execute(params, execution)
+    return fabber_asl_execute(params, runner)
 
 
 __all__ = [
@@ -522,8 +522,6 @@ __all__ = [
     "FabberAslOutputs",
     "FabberAslParameters",
     "fabber_asl",
-    "fabber_asl_cargs",
     "fabber_asl_execute",
-    "fabber_asl_outputs",
     "fabber_asl_params",
 ]

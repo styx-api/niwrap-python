@@ -130,7 +130,7 @@ def mri_linear_register_outputs(
 
 def mri_linear_register_execute(
     params: MriLinearRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLinearRegisterOutputs:
     """
     A tool for linear registration of MRI brain images to a template.
@@ -141,10 +141,12 @@ def mri_linear_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLinearRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LINEAR_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mri_linear_register_cargs(params, execution)
     ret = mri_linear_register_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_linear_register(
     Returns:
         NamedTuple of outputs (described in `MriLinearRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LINEAR_REGISTER_METADATA)
     params = mri_linear_register_params(
         input_brain=input_brain,
         template=template,
         output_file=output_file,
     )
-    return mri_linear_register_execute(params, execution)
+    return mri_linear_register_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriLinearRegisterOutputs",
     "MriLinearRegisterParameters",
     "mri_linear_register",
-    "mri_linear_register_cargs",
     "mri_linear_register_execute",
-    "mri_linear_register_outputs",
     "mri_linear_register_params",
 ]

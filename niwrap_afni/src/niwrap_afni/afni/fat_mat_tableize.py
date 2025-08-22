@@ -200,7 +200,7 @@ def fat_mat_tableize_outputs(
 
 def fat_mat_tableize_execute(
     params: FatMatTableizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatMatTableizeOutputs:
     """
     Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and
@@ -213,10 +213,12 @@ def fat_mat_tableize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatMatTableizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_MAT_TABLEIZE_METADATA)
     params = execution.params(params)
     cargs = fat_mat_tableize_cargs(params, execution)
     ret = fat_mat_tableize_outputs(params, execution)
@@ -266,8 +268,6 @@ def fat_mat_tableize(
     Returns:
         NamedTuple of outputs (described in `FatMatTableizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MAT_TABLEIZE_METADATA)
     params = fat_mat_tableize_params(
         input_matrices=input_matrices,
         input_csv=input_csv,
@@ -280,7 +280,7 @@ def fat_mat_tableize(
         help_short=help_short,
         help_view=help_view,
     )
-    return fat_mat_tableize_execute(params, execution)
+    return fat_mat_tableize_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "FatMatTableizeOutputs",
     "FatMatTableizeParameters",
     "fat_mat_tableize",
-    "fat_mat_tableize_cargs",
     "fat_mat_tableize_execute",
-    "fat_mat_tableize_outputs",
     "fat_mat_tableize_params",
 ]

@@ -116,7 +116,7 @@ def v__surf_smooth_heat_07_examples_outputs(
 
 def v__surf_smooth_heat_07_examples_execute(
     params: VSurfSmoothHeat07ExamplesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSurfSmoothHeat07ExamplesOutputs:
     """
     A script to illustrate controlled blurring of data on the surface.
@@ -127,10 +127,12 @@ def v__surf_smooth_heat_07_examples_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSurfSmoothHeat07ExamplesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA)
     params = execution.params(params)
     cargs = v__surf_smooth_heat_07_examples_cargs(params, execution)
     ret = v__surf_smooth_heat_07_examples_outputs(params, execution)
@@ -155,12 +157,10 @@ def v__surf_smooth_heat_07_examples(
     Returns:
         NamedTuple of outputs (described in `VSurfSmoothHeat07ExamplesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA)
     params = v__surf_smooth_heat_07_examples_params(
         path_to_suma_demo=path_to_suma_demo,
     )
-    return v__surf_smooth_heat_07_examples_execute(params, execution)
+    return v__surf_smooth_heat_07_examples_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "VSurfSmoothHeat07ExamplesParameters",
     "V__SURF_SMOOTH_HEAT_07_EXAMPLES_METADATA",
     "v__surf_smooth_heat_07_examples",
-    "v__surf_smooth_heat_07_examples_cargs",
     "v__surf_smooth_heat_07_examples_execute",
-    "v__surf_smooth_heat_07_examples_outputs",
     "v__surf_smooth_heat_07_examples_params",
 ]

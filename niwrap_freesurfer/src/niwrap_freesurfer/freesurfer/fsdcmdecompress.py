@@ -155,7 +155,7 @@ def fsdcmdecompress_outputs(
 
 def fsdcmdecompress_execute(
     params: FsdcmdecompressParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsdcmdecompressOutputs:
     """
     A tool for decompressing DICOM files using GDCM or DCMTK.
@@ -166,10 +166,12 @@ def fsdcmdecompress_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsdcmdecompressOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSDCMDECOMPRESS_METADATA)
     params = execution.params(params)
     cargs = fsdcmdecompress_cargs(params, execution)
     ret = fsdcmdecompress_outputs(params, execution)
@@ -204,8 +206,6 @@ def fsdcmdecompress(
     Returns:
         NamedTuple of outputs (described in `FsdcmdecompressOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSDCMDECOMPRESS_METADATA)
     params = fsdcmdecompress_params(
         indcmfile=indcmfile,
         outdcmfile=outdcmfile,
@@ -214,7 +214,7 @@ def fsdcmdecompress(
         rle=rle,
         gdcm=gdcm,
     )
-    return fsdcmdecompress_execute(params, execution)
+    return fsdcmdecompress_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "FsdcmdecompressOutputs",
     "FsdcmdecompressParameters",
     "fsdcmdecompress",
-    "fsdcmdecompress_cargs",
     "fsdcmdecompress_execute",
-    "fsdcmdecompress_outputs",
     "fsdcmdecompress_params",
 ]

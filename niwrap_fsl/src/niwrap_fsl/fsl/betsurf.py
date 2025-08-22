@@ -196,7 +196,7 @@ def betsurf_outputs(
 
 def betsurf_execute(
     params: BetsurfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BetsurfOutputs:
     """
     BET Surface Finder to extract brain surfaces using T1 and T2 images.
@@ -207,10 +207,12 @@ def betsurf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BetsurfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BETSURF_METADATA)
     params = execution.params(params)
     cargs = betsurf_cargs(params, execution)
     ret = betsurf_outputs(params, execution)
@@ -259,8 +261,6 @@ def betsurf(
     Returns:
         NamedTuple of outputs (described in `BetsurfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BETSURF_METADATA)
     params = betsurf_params(
         t1_image=t1_image,
         t2_image=t2_image,
@@ -275,7 +275,7 @@ def betsurf(
         skull_mask_flag=skull_mask_flag,
         increased_precision=increased_precision,
     )
-    return betsurf_execute(params, execution)
+    return betsurf_execute(params, runner)
 
 
 __all__ = [
@@ -283,8 +283,6 @@ __all__ = [
     "BetsurfOutputs",
     "BetsurfParameters",
     "betsurf",
-    "betsurf_cargs",
     "betsurf_execute",
-    "betsurf_outputs",
     "betsurf_params",
 ]

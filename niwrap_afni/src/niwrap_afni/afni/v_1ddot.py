@@ -168,7 +168,7 @@ def v_1ddot_outputs(
 
 def v_1ddot_execute(
     params: V1ddotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1ddotOutputs:
     """
     Computes the correlation matrix of the input 1D files and their inverse
@@ -180,10 +180,12 @@ def v_1ddot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1ddotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DDOT_METADATA)
     params = execution.params(params)
     cargs = v_1ddot_cargs(params, execution)
     ret = v_1ddot_outputs(params, execution)
@@ -226,8 +228,6 @@ def v_1ddot(
     Returns:
         NamedTuple of outputs (described in `V1ddotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DDOT_METADATA)
     params = v_1ddot_params(
         one_flag=one_flag,
         dem_flag=dem_flag,
@@ -238,7 +238,7 @@ def v_1ddot(
         okzero_flag=okzero_flag,
         input_files=input_files,
     )
-    return v_1ddot_execute(params, execution)
+    return v_1ddot_execute(params, runner)
 
 
 __all__ = [
@@ -246,8 +246,6 @@ __all__ = [
     "V1ddotParameters",
     "V_1DDOT_METADATA",
     "v_1ddot",
-    "v_1ddot_cargs",
     "v_1ddot_execute",
-    "v_1ddot_outputs",
     "v_1ddot_params",
 ]

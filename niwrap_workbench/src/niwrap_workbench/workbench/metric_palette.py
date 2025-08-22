@@ -486,7 +486,7 @@ def metric_palette_outputs(
 
 def metric_palette_execute(
     params: MetricPaletteParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
     Set the palette of a metric file.
@@ -573,10 +573,12 @@ def metric_palette_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricPaletteOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_PALETTE_METADATA)
     params = execution.params(params)
     cargs = metric_palette_cargs(params, execution)
     ret = metric_palette_outputs(params, execution)
@@ -707,8 +709,6 @@ def metric_palette(
     Returns:
         NamedTuple of outputs (described in `MetricPaletteOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_PALETTE_METADATA)
     params = metric_palette_params(
         metric=metric,
         mode=mode,
@@ -725,7 +725,7 @@ def metric_palette(
         thresholding=thresholding,
         opt_inversion_type=opt_inversion_type,
     )
-    return metric_palette_execute(params, execution)
+    return metric_palette_execute(params, runner)
 
 
 __all__ = [
@@ -738,18 +738,11 @@ __all__ = [
     "MetricPalettePosUserParameters",
     "MetricPaletteThresholdingParameters",
     "metric_palette",
-    "metric_palette_cargs",
     "metric_palette_execute",
-    "metric_palette_neg_percent_cargs",
     "metric_palette_neg_percent_params",
-    "metric_palette_neg_user_cargs",
     "metric_palette_neg_user_params",
-    "metric_palette_outputs",
     "metric_palette_params",
-    "metric_palette_pos_percent_cargs",
     "metric_palette_pos_percent_params",
-    "metric_palette_pos_user_cargs",
     "metric_palette_pos_user_params",
-    "metric_palette_thresholding_cargs",
     "metric_palette_thresholding_params",
 ]

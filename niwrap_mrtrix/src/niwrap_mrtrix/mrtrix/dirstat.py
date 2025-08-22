@@ -333,7 +333,7 @@ def dirstat_outputs(
 
 def dirstat_execute(
     params: DirstatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DirstatOutputs:
     """
     Report statistics on a direction set.
@@ -383,10 +383,12 @@ def dirstat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DirstatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DIRSTAT_METADATA)
     params = execution.params(params)
     cargs = dirstat_cargs(params, execution)
     ret = dirstat_outputs(params, execution)
@@ -497,8 +499,6 @@ def dirstat(
     Returns:
         NamedTuple of outputs (described in `DirstatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DIRSTAT_METADATA)
     params = dirstat_params(
         output=output,
         shells=shells,
@@ -514,7 +514,7 @@ def dirstat(
         version=version,
         dirs=dirs,
     )
-    return dirstat_execute(params, execution)
+    return dirstat_execute(params, runner)
 
 
 __all__ = [
@@ -524,12 +524,8 @@ __all__ = [
     "DirstatOutputs",
     "DirstatParameters",
     "dirstat",
-    "dirstat_cargs",
-    "dirstat_config_cargs",
     "dirstat_config_params",
     "dirstat_execute",
-    "dirstat_fslgrad_cargs",
     "dirstat_fslgrad_params",
-    "dirstat_outputs",
     "dirstat_params",
 ]

@@ -291,7 +291,7 @@ def v_5tt2vis_outputs(
 
 def v_5tt2vis_execute(
     params: V5tt2visParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V5tt2visOutputs:
     """
     Generate an image for visualisation purposes from an ACT 5TT segmented
@@ -309,10 +309,12 @@ def v_5tt2vis_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V5tt2visOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_5TT2VIS_METADATA)
     params = execution.params(params)
     cargs = v_5tt2vis_cargs(params, execution)
     ret = v_5tt2vis_outputs(params, execution)
@@ -378,8 +380,6 @@ def v_5tt2vis(
     Returns:
         NamedTuple of outputs (described in `V5tt2visOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_5TT2VIS_METADATA)
     params = v_5tt2vis_params(
         bg=bg,
         cgm=cgm,
@@ -398,7 +398,7 @@ def v_5tt2vis(
         input_=input_,
         output=output,
     )
-    return v_5tt2vis_execute(params, execution)
+    return v_5tt2vis_execute(params, runner)
 
 
 __all__ = [
@@ -407,10 +407,7 @@ __all__ = [
     "V5tt2visParameters",
     "V_5TT2VIS_METADATA",
     "v_5tt2vis",
-    "v_5tt2vis_cargs",
-    "v_5tt2vis_config_cargs",
     "v_5tt2vis_config_params",
     "v_5tt2vis_execute",
-    "v_5tt2vis_outputs",
     "v_5tt2vis_params",
 ]

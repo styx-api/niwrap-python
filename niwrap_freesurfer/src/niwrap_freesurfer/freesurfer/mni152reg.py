@@ -154,7 +154,7 @@ def mni152reg_outputs(
 
 def mni152reg_execute(
     params: Mni152regParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Mni152regOutputs:
     """
     Registers the FreeSurfer subject to the FSL MNI 152 brain to create a
@@ -166,10 +166,12 @@ def mni152reg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Mni152regOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MNI152REG_METADATA)
     params = execution.params(params)
     cargs = mni152reg_cargs(params, execution)
     ret = mni152reg_outputs(params, execution)
@@ -203,8 +205,6 @@ def mni152reg(
     Returns:
         NamedTuple of outputs (described in `Mni152regOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MNI152REG_METADATA)
     params = mni152reg_params(
         subject=subject,
         register_1mm=register_1mm,
@@ -212,7 +212,7 @@ def mni152reg(
         symmetric=symmetric,
         save_volume=save_volume,
     )
-    return mni152reg_execute(params, execution)
+    return mni152reg_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "Mni152regOutputs",
     "Mni152regParameters",
     "mni152reg",
-    "mni152reg_cargs",
     "mni152reg_execute",
-    "mni152reg_outputs",
     "mni152reg_params",
 ]

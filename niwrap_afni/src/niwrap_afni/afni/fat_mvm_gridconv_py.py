@@ -142,7 +142,7 @@ def fat_mvm_gridconv_py_outputs(
 
 def fat_mvm_gridconv_py_execute(
     params: FatMvmGridconvPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatMvmGridconvPyOutputs:
     """
     Preprocess 'old school' *.grid files for statistical modeling using 3dMVM.
@@ -153,10 +153,12 @@ def fat_mvm_gridconv_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatMvmGridconvPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_MVM_GRIDCONV_PY_METADATA)
     params = execution.params(params)
     cargs = fat_mvm_gridconv_py_cargs(params, execution)
     ret = fat_mvm_gridconv_py_outputs(params, execution)
@@ -189,13 +191,11 @@ def fat_mvm_gridconv_py(
     Returns:
         NamedTuple of outputs (described in `FatMvmGridconvPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MVM_GRIDCONV_PY_METADATA)
     params = fat_mvm_gridconv_py_params(
         matrix_files=matrix_files,
         list_file=list_file,
     )
-    return fat_mvm_gridconv_py_execute(params, execution)
+    return fat_mvm_gridconv_py_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "FatMvmGridconvPyOutputs",
     "FatMvmGridconvPyParameters",
     "fat_mvm_gridconv_py",
-    "fat_mvm_gridconv_py_cargs",
     "fat_mvm_gridconv_py_execute",
-    "fat_mvm_gridconv_py_outputs",
     "fat_mvm_gridconv_py_params",
 ]

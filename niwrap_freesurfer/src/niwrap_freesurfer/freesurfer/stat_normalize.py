@@ -179,7 +179,7 @@ def stat_normalize_outputs(
 
 def stat_normalize_execute(
     params: StatNormalizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> StatNormalizeOutputs:
     """
     This program will convert and average a sequence of volume-based statistics in
@@ -191,10 +191,12 @@ def stat_normalize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `StatNormalizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(STAT_NORMALIZE_METADATA)
     params = execution.params(params)
     cargs = stat_normalize_cargs(params, execution)
     ret = stat_normalize_outputs(params, execution)
@@ -236,8 +238,6 @@ def stat_normalize(
     Returns:
         NamedTuple of outputs (described in `StatNormalizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(STAT_NORMALIZE_METADATA)
     params = stat_normalize_params(
         input_sv_prefix=input_sv_prefix,
         output_sv_prefix=output_sv_prefix,
@@ -248,7 +248,7 @@ def stat_normalize(
         fix_xfm_flag=fix_xfm_flag,
         float2int_option=float2int_option,
     )
-    return stat_normalize_execute(params, execution)
+    return stat_normalize_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "StatNormalizeOutputs",
     "StatNormalizeParameters",
     "stat_normalize",
-    "stat_normalize_cargs",
     "stat_normalize_execute",
-    "stat_normalize_outputs",
     "stat_normalize_params",
 ]

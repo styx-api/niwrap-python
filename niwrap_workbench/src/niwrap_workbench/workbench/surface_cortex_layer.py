@@ -151,7 +151,7 @@ def surface_cortex_layer_outputs(
 
 def surface_cortex_layer_execute(
     params: SurfaceCortexLayerParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
     Create surface approximating a cortical layer.
@@ -169,10 +169,12 @@ def surface_cortex_layer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCortexLayerOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_CORTEX_LAYER_METADATA)
     params = execution.params(params)
     cargs = surface_cortex_layer_cargs(params, execution)
     ret = surface_cortex_layer_outputs(params, execution)
@@ -213,8 +215,6 @@ def surface_cortex_layer(
     Returns:
         NamedTuple of outputs (described in `SurfaceCortexLayerOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_CORTEX_LAYER_METADATA)
     params = surface_cortex_layer_params(
         white_surface=white_surface,
         pial_surface=pial_surface,
@@ -222,7 +222,7 @@ def surface_cortex_layer(
         out_surface=out_surface,
         opt_placement_out_placement_metric=opt_placement_out_placement_metric,
     )
-    return surface_cortex_layer_execute(params, execution)
+    return surface_cortex_layer_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "SurfaceCortexLayerOutputs",
     "SurfaceCortexLayerParameters",
     "surface_cortex_layer",
-    "surface_cortex_layer_cargs",
     "surface_cortex_layer_execute",
-    "surface_cortex_layer_outputs",
     "surface_cortex_layer_params",
 ]

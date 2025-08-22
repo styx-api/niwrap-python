@@ -184,7 +184,7 @@ def v_1dsvd_outputs(
 
 def v_1dsvd_execute(
     params: V1dsvdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dsvdOutputs:
     """
     Computes SVD of the matrix formed by the 1D file(s) and outputs the result on
@@ -196,10 +196,12 @@ def v_1dsvd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dsvdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DSVD_METADATA)
     params = execution.params(params)
     cargs = v_1dsvd_cargs(params, execution)
     ret = v_1dsvd_outputs(params, execution)
@@ -245,8 +247,6 @@ def v_1dsvd(
     Returns:
         NamedTuple of outputs (described in `V1dsvdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DSVD_METADATA)
     params = v_1dsvd_params(
         one=one,
         vmean=vmean,
@@ -260,7 +260,7 @@ def v_1dsvd(
         num_eigenvectors=num_eigenvectors,
         input_files=input_files,
     )
-    return v_1dsvd_execute(params, execution)
+    return v_1dsvd_execute(params, runner)
 
 
 __all__ = [
@@ -268,8 +268,6 @@ __all__ = [
     "V1dsvdParameters",
     "V_1DSVD_METADATA",
     "v_1dsvd",
-    "v_1dsvd_cargs",
     "v_1dsvd_execute",
-    "v_1dsvd_outputs",
     "v_1dsvd_params",
 ]

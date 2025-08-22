@@ -120,7 +120,7 @@ def v__np_outputs(
 
 def v__np_execute(
     params: VNpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VNpOutputs:
     """
     Finds an appropriate new prefix to use, given the files you already have in your
@@ -133,10 +133,12 @@ def v__np_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VNpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__NP_METADATA)
     params = execution.params(params)
     cargs = v__np_cargs(params, execution)
     ret = v__np_outputs(params, execution)
@@ -163,12 +165,10 @@ def v__np(
     Returns:
         NamedTuple of outputs (described in `VNpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__NP_METADATA)
     params = v__np_params(
         prefix=prefix,
     )
-    return v__np_execute(params, execution)
+    return v__np_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "VNpParameters",
     "V__NP_METADATA",
     "v__np",
-    "v__np_cargs",
     "v__np_execute",
-    "v__np_outputs",
     "v__np_params",
 ]

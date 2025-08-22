@@ -121,7 +121,7 @@ def feat_gm_prepare_outputs(
 
 def feat_gm_prepare_execute(
     params: FeatGmPrepareParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FeatGmPrepareOutputs:
     """
     Prepare 4D grey matter files for higher-level analysis in FEAT.
@@ -132,10 +132,12 @@ def feat_gm_prepare_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FeatGmPrepareOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FEAT_GM_PREPARE_METADATA)
     params = execution.params(params)
     cargs = feat_gm_prepare_cargs(params, execution)
     ret = feat_gm_prepare_outputs(params, execution)
@@ -162,13 +164,11 @@ def feat_gm_prepare(
     Returns:
         NamedTuple of outputs (described in `FeatGmPrepareOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FEAT_GM_PREPARE_METADATA)
     params = feat_gm_prepare_params(
         gm_output=gm_output,
         feat_dirs_list=feat_dirs_list,
     )
-    return feat_gm_prepare_execute(params, execution)
+    return feat_gm_prepare_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "FeatGmPrepareOutputs",
     "FeatGmPrepareParameters",
     "feat_gm_prepare",
-    "feat_gm_prepare_cargs",
     "feat_gm_prepare_execute",
-    "feat_gm_prepare_outputs",
     "feat_gm_prepare_params",
 ]

@@ -280,7 +280,7 @@ def volume_merge_outputs(
 
 def volume_merge_execute(
     params: VolumeMergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeMergeOutputs:
     """
     Merge volume files into a new file.
@@ -301,10 +301,12 @@ def volume_merge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeMergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_MERGE_METADATA)
     params = execution.params(params)
     cargs = volume_merge_cargs(params, execution)
     ret = volume_merge_outputs(params, execution)
@@ -341,13 +343,11 @@ def volume_merge(
     Returns:
         NamedTuple of outputs (described in `VolumeMergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_MERGE_METADATA)
     params = volume_merge_params(
         volume_out=volume_out,
         volume=volume,
     )
-    return volume_merge_execute(params, execution)
+    return volume_merge_execute(params, runner)
 
 
 __all__ = [
@@ -358,14 +358,9 @@ __all__ = [
     "VolumeMergeUpToParameters",
     "VolumeMergeVolumeParameters",
     "volume_merge",
-    "volume_merge_cargs",
     "volume_merge_execute",
-    "volume_merge_outputs",
     "volume_merge_params",
-    "volume_merge_subvolume_cargs",
     "volume_merge_subvolume_params",
-    "volume_merge_up_to_cargs",
     "volume_merge_up_to_params",
-    "volume_merge_volume_cargs",
     "volume_merge_volume_params",
 ]

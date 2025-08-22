@@ -127,7 +127,7 @@ def reinflate_subject_rh_outputs(
 
 def reinflate_subject_rh_execute(
     params: ReinflateSubjectRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReinflateSubjectRhOutputs:
     """
     A tool for reinflating the cortical surfaces for a given subject in FreeSurfer,
@@ -139,10 +139,12 @@ def reinflate_subject_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReinflateSubjectRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REINFLATE_SUBJECT_RH_METADATA)
     params = execution.params(params)
     cargs = reinflate_subject_rh_cargs(params, execution)
     ret = reinflate_subject_rh_outputs(params, execution)
@@ -171,13 +173,11 @@ def reinflate_subject_rh(
     Returns:
         NamedTuple of outputs (described in `ReinflateSubjectRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REINFLATE_SUBJECT_RH_METADATA)
     params = reinflate_subject_rh_params(
         subject_dir=subject_dir,
         additional_options=additional_options,
     )
-    return reinflate_subject_rh_execute(params, execution)
+    return reinflate_subject_rh_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "ReinflateSubjectRhOutputs",
     "ReinflateSubjectRhParameters",
     "reinflate_subject_rh",
-    "reinflate_subject_rh_cargs",
     "reinflate_subject_rh_execute",
-    "reinflate_subject_rh_outputs",
     "reinflate_subject_rh_params",
 ]

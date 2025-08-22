@@ -847,7 +847,7 @@ def v_3dinfo_outputs(
 
 def v_3dinfo_execute(
     params: V3dinfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dinfoOutputs:
     """
     Prints out sort-of-useful information from a 3D dataset's header.
@@ -858,10 +858,12 @@ def v_3dinfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dinfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DINFO_METADATA)
     params = execution.params(params)
     cargs = v_3dinfo_cargs(params, execution)
     ret = v_3dinfo_outputs(params, execution)
@@ -1142,8 +1144,6 @@ def v_3dinfo(
     Returns:
         NamedTuple of outputs (described in `V3dinfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DINFO_METADATA)
     params = v_3dinfo_params(
         orient=orient,
         lextent=lextent,
@@ -1259,7 +1259,7 @@ def v_3dinfo(
         monog_pairs=monog_pairs,
         dataset=dataset,
     )
-    return v_3dinfo_execute(params, execution)
+    return v_3dinfo_execute(params, runner)
 
 
 __all__ = [
@@ -1267,8 +1267,6 @@ __all__ = [
     "V3dinfoParameters",
     "V_3DINFO_METADATA",
     "v_3dinfo",
-    "v_3dinfo_cargs",
     "v_3dinfo_execute",
-    "v_3dinfo_outputs",
     "v_3dinfo_params",
 ]

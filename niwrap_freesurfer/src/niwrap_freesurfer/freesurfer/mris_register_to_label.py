@@ -221,7 +221,7 @@ def mris_register_to_label_outputs(
 
 def mris_register_to_label_execute(
     params: MrisRegisterToLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRegisterToLabelOutputs:
     """
     Register a surface to a volume using a label.
@@ -232,10 +232,12 @@ def mris_register_to_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRegisterToLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REGISTER_TO_LABEL_METADATA)
     params = execution.params(params)
     cargs = mris_register_to_label_cargs(params, execution)
     ret = mris_register_to_label_outputs(params, execution)
@@ -282,8 +284,6 @@ def mris_register_to_label(
     Returns:
         NamedTuple of outputs (described in `MrisRegisterToLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REGISTER_TO_LABEL_METADATA)
     params = mris_register_to_label_params(
         surface=surface,
         regfile=regfile,
@@ -298,7 +298,7 @@ def mris_register_to_label(
         downsample=downsample,
         cost_file=cost_file,
     )
-    return mris_register_to_label_execute(params, execution)
+    return mris_register_to_label_execute(params, runner)
 
 
 __all__ = [
@@ -306,8 +306,6 @@ __all__ = [
     "MrisRegisterToLabelOutputs",
     "MrisRegisterToLabelParameters",
     "mris_register_to_label",
-    "mris_register_to_label_cargs",
     "mris_register_to_label_execute",
-    "mris_register_to_label_outputs",
     "mris_register_to_label_params",
 ]

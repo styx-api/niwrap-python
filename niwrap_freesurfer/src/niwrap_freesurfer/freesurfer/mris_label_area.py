@@ -162,7 +162,7 @@ def mris_label_area_outputs(
 
 def mris_label_area_execute(
     params: MrisLabelAreaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisLabelAreaOutputs:
     """
     Compute the area of specific labels on a surface of a brain hemisphere in
@@ -174,10 +174,12 @@ def mris_label_area_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisLabelAreaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_LABEL_AREA_METADATA)
     params = execution.params(params)
     cargs = mris_label_area_cargs(params, execution)
     ret = mris_label_area_outputs(params, execution)
@@ -217,8 +219,6 @@ def mris_label_area(
     Returns:
         NamedTuple of outputs (described in `MrisLabelAreaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_LABEL_AREA_METADATA)
     params = mris_label_area_params(
         pct_flag=pct_flag,
         log_file=log_file,
@@ -229,7 +229,7 @@ def mris_label_area(
         annot_name=annot_name,
         labels=labels,
     )
-    return mris_label_area_execute(params, execution)
+    return mris_label_area_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "MrisLabelAreaOutputs",
     "MrisLabelAreaParameters",
     "mris_label_area",
-    "mris_label_area_cargs",
     "mris_label_area_execute",
-    "mris_label_area_outputs",
     "mris_label_area_params",
 ]

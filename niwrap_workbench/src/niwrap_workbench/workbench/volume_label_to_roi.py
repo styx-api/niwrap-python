@@ -158,7 +158,7 @@ def volume_label_to_roi_outputs(
 
 def volume_label_to_roi_execute(
     params: VolumeLabelToRoiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeLabelToRoiOutputs:
     """
     Make a volume label into an roi volume.
@@ -174,10 +174,12 @@ def volume_label_to_roi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelToRoiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_LABEL_TO_ROI_METADATA)
     params = execution.params(params)
     cargs = volume_label_to_roi_cargs(params, execution)
     ret = volume_label_to_roi_outputs(params, execution)
@@ -217,8 +219,6 @@ def volume_label_to_roi(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelToRoiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_LABEL_TO_ROI_METADATA)
     params = volume_label_to_roi_params(
         label_in=label_in,
         volume_out=volume_out,
@@ -226,7 +226,7 @@ def volume_label_to_roi(
         opt_key_label_key=opt_key_label_key,
         opt_map_map=opt_map_map,
     )
-    return volume_label_to_roi_execute(params, execution)
+    return volume_label_to_roi_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "VolumeLabelToRoiOutputs",
     "VolumeLabelToRoiParameters",
     "volume_label_to_roi",
-    "volume_label_to_roi_cargs",
     "volume_label_to_roi_execute",
-    "volume_label_to_roi_outputs",
     "volume_label_to_roi_params",
 ]

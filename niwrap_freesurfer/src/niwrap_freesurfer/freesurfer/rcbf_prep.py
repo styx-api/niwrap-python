@@ -179,7 +179,7 @@ def rcbf_prep_outputs(
 
 def rcbf_prep_execute(
     params: RcbfPrepParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RcbfPrepOutputs:
     """
     Performs integration of rCBF as produced by Siemens scanners with FreeSurfer
@@ -191,10 +191,12 @@ def rcbf_prep_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RcbfPrepOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RCBF_PREP_METADATA)
     params = execution.params(params)
     cargs = rcbf_prep_cargs(params, execution)
     ret = rcbf_prep_outputs(params, execution)
@@ -232,8 +234,6 @@ def rcbf_prep(
     Returns:
         NamedTuple of outputs (described in `RcbfPrepOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RCBF_PREP_METADATA)
     params = rcbf_prep_params(
         outdir=outdir,
         rcbfvol=rcbfvol,
@@ -242,7 +242,7 @@ def rcbf_prep(
         register=register,
         template=template,
     )
-    return rcbf_prep_execute(params, execution)
+    return rcbf_prep_execute(params, runner)
 
 
 __all__ = [
@@ -250,8 +250,6 @@ __all__ = [
     "RcbfPrepOutputs",
     "RcbfPrepParameters",
     "rcbf_prep",
-    "rcbf_prep_cargs",
     "rcbf_prep_execute",
-    "rcbf_prep_outputs",
     "rcbf_prep_params",
 ]

@@ -121,7 +121,7 @@ def v_3drename_outputs(
 
 def v_3drename_execute(
     params: V3drenameParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3drenameOutputs:
     """
     Tool to rename AFNI datasets by changing the dataset prefix.
@@ -132,10 +132,12 @@ def v_3drename_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3drenameOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DRENAME_METADATA)
     params = execution.params(params)
     cargs = v_3drename_cargs(params, execution)
     ret = v_3drename_outputs(params, execution)
@@ -162,13 +164,11 @@ def v_3drename(
     Returns:
         NamedTuple of outputs (described in `V3drenameOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DRENAME_METADATA)
     params = v_3drename_params(
         old_prefix=old_prefix,
         new_prefix=new_prefix,
     )
-    return v_3drename_execute(params, execution)
+    return v_3drename_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "V3drenameParameters",
     "V_3DRENAME_METADATA",
     "v_3drename",
-    "v_3drename_cargs",
     "v_3drename_execute",
-    "v_3drename_outputs",
     "v_3drename_params",
 ]

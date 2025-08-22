@@ -200,7 +200,7 @@ def eddy_quad_outputs(
 
 def eddy_quad_execute(
     params: EddyQuadParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddyQuadOutputs:
     """
     QUality Assessment for DMRI.
@@ -211,10 +211,12 @@ def eddy_quad_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddyQuadOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_QUAD_METADATA)
     params = execution.params(params)
     cargs = eddy_quad_cargs(params, execution)
     ret = eddy_quad_outputs(params, execution)
@@ -259,8 +261,6 @@ def eddy_quad(
     Returns:
         NamedTuple of outputs (described in `EddyQuadOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_QUAD_METADATA)
     params = eddy_quad_params(
         eddy_base=eddy_base,
         eddy_index=eddy_index,
@@ -273,7 +273,7 @@ def eddy_quad(
         slspec=slspec,
         verbose=verbose,
     )
-    return eddy_quad_execute(params, execution)
+    return eddy_quad_execute(params, runner)
 
 
 __all__ = [
@@ -281,8 +281,6 @@ __all__ = [
     "EddyQuadOutputs",
     "EddyQuadParameters",
     "eddy_quad",
-    "eddy_quad_cargs",
     "eddy_quad_execute",
-    "eddy_quad_outputs",
     "eddy_quad_params",
 ]

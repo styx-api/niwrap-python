@@ -153,7 +153,7 @@ def immask_outputs(
 
 def immask_execute(
     params: ImmaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImmaskOutputs:
     """
     Masks the input image based on specified criteria and produces the output image.
@@ -164,10 +164,12 @@ def immask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImmaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMMASK_METADATA)
     params = execution.params(params)
     cargs = immask_cargs(params, execution)
     ret = immask_outputs(params, execution)
@@ -202,8 +204,6 @@ def immask(
     Returns:
         NamedTuple of outputs (described in `ImmaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMMASK_METADATA)
     params = immask_params(
         threshold=threshold,
         mask_image=mask_image,
@@ -211,7 +211,7 @@ def immask(
         input_image=input_image,
         output_image=output_image,
     )
-    return immask_execute(params, execution)
+    return immask_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "ImmaskOutputs",
     "ImmaskParameters",
     "immask",
-    "immask_cargs",
     "immask_execute",
-    "immask_outputs",
     "immask_params",
 ]

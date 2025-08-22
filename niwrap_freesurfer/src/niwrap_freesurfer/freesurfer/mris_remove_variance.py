@@ -136,7 +136,7 @@ def mris_remove_variance_outputs(
 
 def mris_remove_variance_execute(
     params: MrisRemoveVarianceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRemoveVarianceOutputs:
     """
     This program removes the linear component of the variance accounted for by one
@@ -148,10 +148,12 @@ def mris_remove_variance_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRemoveVarianceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REMOVE_VARIANCE_METADATA)
     params = execution.params(params)
     cargs = mris_remove_variance_cargs(params, execution)
     ret = mris_remove_variance_outputs(params, execution)
@@ -184,15 +186,13 @@ def mris_remove_variance(
     Returns:
         NamedTuple of outputs (described in `MrisRemoveVarianceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REMOVE_VARIANCE_METADATA)
     params = mris_remove_variance_params(
         input_surface_file=input_surface_file,
         curvature_file=curvature_file,
         curvature_file_to_remove=curvature_file_to_remove,
         output_curvature_file=output_curvature_file,
     )
-    return mris_remove_variance_execute(params, execution)
+    return mris_remove_variance_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "MrisRemoveVarianceOutputs",
     "MrisRemoveVarianceParameters",
     "mris_remove_variance",
-    "mris_remove_variance_cargs",
     "mris_remove_variance_execute",
-    "mris_remove_variance_outputs",
     "mris_remove_variance_params",
 ]

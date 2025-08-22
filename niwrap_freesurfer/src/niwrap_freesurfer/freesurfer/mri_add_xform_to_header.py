@@ -142,7 +142,7 @@ def mri_add_xform_to_header_outputs(
 
 def mri_add_xform_to_header_execute(
     params: MriAddXformToHeaderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAddXformToHeaderOutputs:
     """
     Program to add specified transformation to the volume header.
@@ -153,10 +153,12 @@ def mri_add_xform_to_header_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAddXformToHeaderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_ADD_XFORM_TO_HEADER_METADATA)
     params = execution.params(params)
     cargs = mri_add_xform_to_header_cargs(params, execution)
     ret = mri_add_xform_to_header_outputs(params, execution)
@@ -189,8 +191,6 @@ def mri_add_xform_to_header(
     Returns:
         NamedTuple of outputs (described in `MriAddXformToHeaderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_ADD_XFORM_TO_HEADER_METADATA)
     params = mri_add_xform_to_header_params(
         xfm_file=xfm_file,
         input_volume=input_volume,
@@ -198,7 +198,7 @@ def mri_add_xform_to_header(
         verbose=verbose,
         copy_name=copy_name,
     )
-    return mri_add_xform_to_header_execute(params, execution)
+    return mri_add_xform_to_header_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "MriAddXformToHeaderOutputs",
     "MriAddXformToHeaderParameters",
     "mri_add_xform_to_header",
-    "mri_add_xform_to_header_cargs",
     "mri_add_xform_to_header_execute",
-    "mri_add_xform_to_header_outputs",
     "mri_add_xform_to_header_params",
 ]

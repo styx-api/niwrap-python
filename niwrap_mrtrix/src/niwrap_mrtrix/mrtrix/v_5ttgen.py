@@ -673,7 +673,7 @@ def v_5ttgen_outputs(
 
 def v_5ttgen_execute(
     params: V5ttgenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V5ttgenOutputs:
     """
     Generate a 5TT image suitable for ACT.
@@ -695,10 +695,12 @@ def v_5ttgen_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V5ttgenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_5TTGEN_METADATA)
     params = execution.params(params)
     cargs = v_5ttgen_cargs(params, execution)
     ret = v_5ttgen_outputs(params, execution)
@@ -772,8 +774,6 @@ def v_5ttgen(
     Returns:
         NamedTuple of outputs (described in `V5ttgenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_5TTGEN_METADATA)
     params = v_5ttgen_params(
         algorithm=algorithm,
         nocrop=nocrop,
@@ -790,7 +790,7 @@ def v_5ttgen(
         help_=help_,
         version=version,
     )
-    return v_5ttgen_execute(params, execution)
+    return v_5ttgen_execute(params, runner)
 
 
 __all__ = [
@@ -807,22 +807,11 @@ __all__ = [
     "V5ttgenParameters",
     "V_5TTGEN_METADATA",
     "v_5ttgen",
-    "v_5ttgen_cargs",
-    "v_5ttgen_config_cargs",
     "v_5ttgen_config_params",
     "v_5ttgen_execute",
-    "v_5ttgen_freesurfer_cargs",
-    "v_5ttgen_freesurfer_outputs",
     "v_5ttgen_freesurfer_params",
-    "v_5ttgen_fsl_cargs",
-    "v_5ttgen_fsl_outputs",
     "v_5ttgen_fsl_params",
-    "v_5ttgen_gif_cargs",
-    "v_5ttgen_gif_outputs",
     "v_5ttgen_gif_params",
-    "v_5ttgen_hsvs_cargs",
-    "v_5ttgen_hsvs_outputs",
     "v_5ttgen_hsvs_params",
-    "v_5ttgen_outputs",
     "v_5ttgen_params",
 ]

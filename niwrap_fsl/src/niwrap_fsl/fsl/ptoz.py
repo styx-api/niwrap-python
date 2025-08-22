@@ -132,7 +132,7 @@ def ptoz_outputs(
 
 def ptoz_execute(
     params: PtozParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PtozOutputs:
     """
     Convert p-values to z-values.
@@ -143,10 +143,12 @@ def ptoz_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PtozOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PTOZ_METADATA)
     params = execution.params(params)
     cargs = ptoz_cargs(params, execution)
     ret = ptoz_outputs(params, execution)
@@ -175,14 +177,12 @@ def ptoz(
     Returns:
         NamedTuple of outputs (described in `PtozOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PTOZ_METADATA)
     params = ptoz_params(
         p_value=p_value,
         tail_flag=tail_flag,
         grf_flag=grf_flag,
     )
-    return ptoz_execute(params, execution)
+    return ptoz_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "PtozOutputs",
     "PtozParameters",
     "ptoz",
-    "ptoz_cargs",
     "ptoz_execute",
-    "ptoz_outputs",
     "ptoz_params",
 ]

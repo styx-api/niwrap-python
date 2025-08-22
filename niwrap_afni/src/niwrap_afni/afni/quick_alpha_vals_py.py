@@ -130,7 +130,7 @@ def quick_alpha_vals_py_outputs(
 
 def quick_alpha_vals_py_execute(
     params: QuickAlphaValsPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QuickAlphaValsPyOutputs:
     """
     Generate an alpha table from slow_surf_clustsim.py results.
@@ -141,10 +141,12 @@ def quick_alpha_vals_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QuickAlphaValsPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QUICK_ALPHA_VALS_PY_METADATA)
     params = execution.params(params)
     cargs = quick_alpha_vals_py_cargs(params, execution)
     ret = quick_alpha_vals_py_outputs(params, execution)
@@ -171,13 +173,11 @@ def quick_alpha_vals_py(
     Returns:
         NamedTuple of outputs (described in `QuickAlphaValsPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QUICK_ALPHA_VALS_PY_METADATA)
     params = quick_alpha_vals_py_params(
         niter=niter,
         max_file=max_file,
     )
-    return quick_alpha_vals_py_execute(params, execution)
+    return quick_alpha_vals_py_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "QuickAlphaValsPyOutputs",
     "QuickAlphaValsPyParameters",
     "quick_alpha_vals_py",
-    "quick_alpha_vals_py_cargs",
     "quick_alpha_vals_py_execute",
-    "quick_alpha_vals_py_outputs",
     "quick_alpha_vals_py_params",
 ]

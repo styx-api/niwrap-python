@@ -142,7 +142,7 @@ def metric_vector_toward_roi_outputs(
 
 def metric_vector_toward_roi_execute(
     params: MetricVectorTowardRoiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
     """
     Find if vectors point toward an roi.
@@ -156,10 +156,12 @@ def metric_vector_toward_roi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricVectorTowardRoiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_VECTOR_TOWARD_ROI_METADATA)
     params = execution.params(params)
     cargs = metric_vector_toward_roi_cargs(params, execution)
     ret = metric_vector_toward_roi_outputs(params, execution)
@@ -194,15 +196,13 @@ def metric_vector_toward_roi(
     Returns:
         NamedTuple of outputs (described in `MetricVectorTowardRoiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_VECTOR_TOWARD_ROI_METADATA)
     params = metric_vector_toward_roi_params(
         surface=surface,
         target_roi=target_roi,
         metric_out=metric_out,
         opt_roi_roi_metric=opt_roi_roi_metric,
     )
-    return metric_vector_toward_roi_execute(params, execution)
+    return metric_vector_toward_roi_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "MetricVectorTowardRoiOutputs",
     "MetricVectorTowardRoiParameters",
     "metric_vector_toward_roi",
-    "metric_vector_toward_roi_cargs",
     "metric_vector_toward_roi_execute",
-    "metric_vector_toward_roi_outputs",
     "metric_vector_toward_roi_params",
 ]

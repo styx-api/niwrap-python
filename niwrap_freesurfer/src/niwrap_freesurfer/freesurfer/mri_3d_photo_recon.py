@@ -241,7 +241,7 @@ def mri_3d_photo_recon_outputs(
 
 def mri_3d_photo_recon_execute(
     params: Mri3dPhotoReconParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Mri3dPhotoReconOutputs:
     """
     Code for 3D photo reconstruction (Tregidgo, et al., MICCAI 2020).
@@ -252,10 +252,12 @@ def mri_3d_photo_recon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Mri3dPhotoReconOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_3D_PHOTO_RECON_METADATA)
     params = execution.params(params)
     cargs = mri_3d_photo_recon_cargs(params, execution)
     ret = mri_3d_photo_recon_outputs(params, execution)
@@ -315,8 +317,6 @@ def mri_3d_photo_recon(
     Returns:
         NamedTuple of outputs (described in `Mri3dPhotoReconOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_3D_PHOTO_RECON_METADATA)
     params = mri_3d_photo_recon_params(
         input_photo_dir=input_photo_dir,
         input_segmentation_dir=input_segmentation_dir,
@@ -333,7 +333,7 @@ def mri_3d_photo_recon(
         rigid_only_for_photos=rigid_only_for_photos,
         gpu_index=gpu_index,
     )
-    return mri_3d_photo_recon_execute(params, execution)
+    return mri_3d_photo_recon_execute(params, runner)
 
 
 __all__ = [
@@ -341,8 +341,6 @@ __all__ = [
     "Mri3dPhotoReconOutputs",
     "Mri3dPhotoReconParameters",
     "mri_3d_photo_recon",
-    "mri_3d_photo_recon_cargs",
     "mri_3d_photo_recon_execute",
-    "mri_3d_photo_recon_outputs",
     "mri_3d_photo_recon_params",
 ]

@@ -151,7 +151,7 @@ def v_1dnorm_outputs(
 
 def v_1dnorm_execute(
     params: V1dnormParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dnormOutputs:
     """
     Normalize columns of a 1D file (AFNI ASCII list of numbers).
@@ -162,10 +162,12 @@ def v_1dnorm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dnormOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DNORM_METADATA)
     params = execution.params(params)
     cargs = v_1dnorm_cargs(params, execution)
     ret = v_1dnorm_outputs(params, execution)
@@ -202,8 +204,6 @@ def v_1dnorm(
     Returns:
         NamedTuple of outputs (described in `V1dnormOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DNORM_METADATA)
     params = v_1dnorm_params(
         infile=infile,
         outfile=outfile,
@@ -212,7 +212,7 @@ def v_1dnorm(
         demean=demean,
         demed=demed,
     )
-    return v_1dnorm_execute(params, execution)
+    return v_1dnorm_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "V1dnormParameters",
     "V_1DNORM_METADATA",
     "v_1dnorm",
-    "v_1dnorm_cargs",
     "v_1dnorm_execute",
-    "v_1dnorm_outputs",
     "v_1dnorm_params",
 ]

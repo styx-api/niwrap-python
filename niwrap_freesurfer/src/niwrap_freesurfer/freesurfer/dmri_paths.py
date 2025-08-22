@@ -467,7 +467,7 @@ def dmri_paths_outputs(
 
 def dmri_paths_execute(
     params: DmriPathsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriPathsOutputs:
     """
     Tool for diffusion MRI path analysis.
@@ -478,10 +478,12 @@ def dmri_paths_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriPathsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_PATHS_METADATA)
     params = execution.params(params)
     cargs = dmri_paths_cargs(params, execution)
     ret = dmri_paths_outputs(params, execution)
@@ -584,8 +586,6 @@ def dmri_paths(
     Returns:
         NamedTuple of outputs (described in `DmriPathsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_PATHS_METADATA)
     params = dmri_paths_params(
         indir=indir,
         outdir=outdir,
@@ -624,7 +624,7 @@ def dmri_paths(
         checkopts=checkopts,
         version=version,
     )
-    return dmri_paths_execute(params, execution)
+    return dmri_paths_execute(params, runner)
 
 
 __all__ = [
@@ -632,8 +632,6 @@ __all__ = [
     "DmriPathsOutputs",
     "DmriPathsParameters",
     "dmri_paths",
-    "dmri_paths_cargs",
     "dmri_paths_execute",
-    "dmri_paths_outputs",
     "dmri_paths_params",
 ]

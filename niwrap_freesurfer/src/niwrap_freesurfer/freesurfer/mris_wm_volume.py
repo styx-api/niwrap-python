@@ -157,7 +157,7 @@ def mris_wm_volume_outputs(
 
 def mris_wm_volume_execute(
     params: MrisWmVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisWmVolumeOutputs:
     """
     Computes the volume of the enclosed hemisphere white matter surface, ignoring
@@ -169,10 +169,12 @@ def mris_wm_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisWmVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_WM_VOLUME_METADATA)
     params = execution.params(params)
     cargs = mris_wm_volume_cargs(params, execution)
     ret = mris_wm_volume_outputs(params, execution)
@@ -208,8 +210,6 @@ def mris_wm_volume(
     Returns:
         NamedTuple of outputs (described in `MrisWmVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_WM_VOLUME_METADATA)
     params = mris_wm_volume_params(
         subject=subject,
         hemi=hemi,
@@ -218,7 +218,7 @@ def mris_wm_volume(
         asegname=asegname,
         verbose=verbose,
     )
-    return mris_wm_volume_execute(params, execution)
+    return mris_wm_volume_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "MrisWmVolumeOutputs",
     "MrisWmVolumeParameters",
     "mris_wm_volume",
-    "mris_wm_volume_cargs",
     "mris_wm_volume_execute",
-    "mris_wm_volume_outputs",
     "mris_wm_volume_params",
 ]

@@ -235,7 +235,7 @@ def mris_label2annot_outputs(
 
 def mris_label2annot_execute(
     params: MrisLabel2annotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisLabel2annotOutputs:
     """
     Converts a set of surface labels to an annotation file.
@@ -246,10 +246,12 @@ def mris_label2annot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisLabel2annotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_LABEL2ANNOT_METADATA)
     params = execution.params(params)
     cargs = mris_label2annot_cargs(params, execution)
     ret = mris_label2annot_outputs(params, execution)
@@ -300,8 +302,6 @@ def mris_label2annot(
     Returns:
         NamedTuple of outputs (described in `MrisLabel2annotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_LABEL2ANNOT_METADATA)
     params = mris_label2annot_params(
         subject=subject,
         hemi=hemi,
@@ -318,7 +318,7 @@ def mris_label2annot(
         surf=surf,
         subjects_dir=subjects_dir,
     )
-    return mris_label2annot_execute(params, execution)
+    return mris_label2annot_execute(params, runner)
 
 
 __all__ = [
@@ -326,8 +326,6 @@ __all__ = [
     "MrisLabel2annotOutputs",
     "MrisLabel2annotParameters",
     "mris_label2annot",
-    "mris_label2annot_cargs",
     "mris_label2annot_execute",
-    "mris_label2annot_outputs",
     "mris_label2annot_params",
 ]

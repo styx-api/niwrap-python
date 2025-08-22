@@ -136,7 +136,7 @@ def surface_smoothing_outputs(
 
 def surface_smoothing_execute(
     params: SurfaceSmoothingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceSmoothingOutputs:
     """
     Surface smoothing.
@@ -150,10 +150,12 @@ def surface_smoothing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSmoothingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_SMOOTHING_METADATA)
     params = execution.params(params)
     cargs = surface_smoothing_cargs(params, execution)
     ret = surface_smoothing_outputs(params, execution)
@@ -187,15 +189,13 @@ def surface_smoothing(
     Returns:
         NamedTuple of outputs (described in `SurfaceSmoothingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_SMOOTHING_METADATA)
     params = surface_smoothing_params(
         surface_in=surface_in,
         smoothing_strength=smoothing_strength,
         smoothing_iterations=smoothing_iterations,
         surface_out=surface_out,
     )
-    return surface_smoothing_execute(params, execution)
+    return surface_smoothing_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "SurfaceSmoothingOutputs",
     "SurfaceSmoothingParameters",
     "surface_smoothing",
-    "surface_smoothing_cargs",
     "surface_smoothing_execute",
-    "surface_smoothing_outputs",
     "surface_smoothing_params",
 ]

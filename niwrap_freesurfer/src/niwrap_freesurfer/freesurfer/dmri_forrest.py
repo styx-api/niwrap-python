@@ -182,7 +182,7 @@ def dmri_forrest_outputs(
 
 def dmri_forrest_execute(
     params: DmriForrestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriForrestOutputs:
     """
     dmri_forrest is a tool for processing diffusion MRI data using a random
@@ -194,10 +194,12 @@ def dmri_forrest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriForrestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_FORREST_METADATA)
     params = execution.params(params)
     cargs = dmri_forrest_cargs(params, execution)
     ret = dmri_forrest_outputs(params, execution)
@@ -240,8 +242,6 @@ def dmri_forrest(
     Returns:
         NamedTuple of outputs (described in `DmriForrestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_FORREST_METADATA)
     params = dmri_forrest_params(
         test_dir=test_dir,
         train_file=train_file,
@@ -253,7 +253,7 @@ def dmri_forrest(
         checkopts=checkopts,
         help_=help_,
     )
-    return dmri_forrest_execute(params, execution)
+    return dmri_forrest_execute(params, runner)
 
 
 __all__ = [
@@ -261,8 +261,6 @@ __all__ = [
     "DmriForrestOutputs",
     "DmriForrestParameters",
     "dmri_forrest",
-    "dmri_forrest_cargs",
     "dmri_forrest_execute",
-    "dmri_forrest_outputs",
     "dmri_forrest_params",
 ]

@@ -117,7 +117,7 @@ def fname2stem_outputs(
 
 def fname2stem_execute(
     params: Fname2stemParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fname2stemOutputs:
     """
     Converts the name of a file to a stem. Example: f.mgh, f.nii, f.nii.gz would
@@ -129,10 +129,12 @@ def fname2stem_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fname2stemOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FNAME2STEM_METADATA)
     params = execution.params(params)
     cargs = fname2stem_cargs(params, execution)
     ret = fname2stem_outputs(params, execution)
@@ -159,12 +161,10 @@ def fname2stem(
     Returns:
         NamedTuple of outputs (described in `Fname2stemOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FNAME2STEM_METADATA)
     params = fname2stem_params(
         filename=filename,
     )
-    return fname2stem_execute(params, execution)
+    return fname2stem_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "Fname2stemOutputs",
     "Fname2stemParameters",
     "fname2stem",
-    "fname2stem_cargs",
     "fname2stem_execute",
-    "fname2stem_outputs",
     "fname2stem_params",
 ]

@@ -631,7 +631,7 @@ def mri_surf2surf_outputs(
 
 def mri_surf2surf_execute(
     params: MriSurf2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSurf2surfOutputs:
     """
     Resample one surface onto another using FreeSurfer.
@@ -642,10 +642,12 @@ def mri_surf2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSurf2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SURF2SURF_METADATA)
     params = execution.params(params)
     cargs = mri_surf2surf_cargs(params, execution)
     ret = mri_surf2surf_outputs(params, execution)
@@ -785,8 +787,6 @@ def mri_surf2surf(
     Returns:
         NamedTuple of outputs (described in `MriSurf2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SURF2SURF_METADATA)
     params = mri_surf2surf_params(
         src_subject=src_subject,
         sval_path=sval_path,
@@ -845,7 +845,7 @@ def mri_surf2surf(
         rms=rms,
         rms_mask=rms_mask,
     )
-    return mri_surf2surf_execute(params, execution)
+    return mri_surf2surf_execute(params, runner)
 
 
 __all__ = [
@@ -853,8 +853,6 @@ __all__ = [
     "MriSurf2surfOutputs",
     "MriSurf2surfParameters",
     "mri_surf2surf",
-    "mri_surf2surf_cargs",
     "mri_surf2surf_execute",
-    "mri_surf2surf_outputs",
     "mri_surf2surf_params",
 ]

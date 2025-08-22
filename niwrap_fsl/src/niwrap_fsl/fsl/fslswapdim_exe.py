@@ -150,7 +150,7 @@ def fslswapdim_exe_outputs(
 
 def fslswapdim_exe_execute(
     params: FslswapdimExeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslswapdimExeOutputs:
     """
     Tool to swap the x, y, z axes dimensions of an image.
@@ -161,10 +161,12 @@ def fslswapdim_exe_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslswapdimExeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSWAPDIM_EXE_METADATA)
     params = execution.params(params)
     cargs = fslswapdim_exe_cargs(params, execution)
     ret = fslswapdim_exe_outputs(params, execution)
@@ -201,8 +203,6 @@ def fslswapdim_exe(
     Returns:
         NamedTuple of outputs (described in `FslswapdimExeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSWAPDIM_EXE_METADATA)
     params = fslswapdim_exe_params(
         input_file=input_file,
         axis_a=axis_a,
@@ -211,7 +211,7 @@ def fslswapdim_exe(
         output_file=output_file,
         check_lr_flag=check_lr_flag,
     )
-    return fslswapdim_exe_execute(params, execution)
+    return fslswapdim_exe_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "FslswapdimExeOutputs",
     "FslswapdimExeParameters",
     "fslswapdim_exe",
-    "fslswapdim_exe_cargs",
     "fslswapdim_exe_execute",
-    "fslswapdim_exe_outputs",
     "fslswapdim_exe_params",
 ]

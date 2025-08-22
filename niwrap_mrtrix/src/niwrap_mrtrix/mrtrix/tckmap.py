@@ -510,7 +510,7 @@ def tckmap_outputs(
 
 def tckmap_execute(
     params: TckmapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckmapOutputs:
     """
     Use track data as a form of contrast for producing a high-resolution image.
@@ -562,10 +562,12 @@ def tckmap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckmapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKMAP_METADATA)
     params = execution.params(params)
     cargs = tckmap_cargs(params, execution)
     ret = tckmap_outputs(params, execution)
@@ -722,8 +724,6 @@ def tckmap(
     Returns:
         NamedTuple of outputs (described in `TckmapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKMAP_METADATA)
     params = tckmap_params(
         template=template,
         vox=vox,
@@ -754,7 +754,7 @@ def tckmap(
         tracks=tracks,
         output=output,
     )
-    return tckmap_execute(params, execution)
+    return tckmap_execute(params, runner)
 
 
 __all__ = [
@@ -765,14 +765,9 @@ __all__ = [
     "TckmapVariousFileParameters",
     "TckmapVariousStringParameters",
     "tckmap",
-    "tckmap_cargs",
-    "tckmap_config_cargs",
     "tckmap_config_params",
     "tckmap_execute",
-    "tckmap_outputs",
     "tckmap_params",
-    "tckmap_various_file_cargs",
     "tckmap_various_file_params",
-    "tckmap_various_string_cargs",
     "tckmap_various_string_params",
 ]

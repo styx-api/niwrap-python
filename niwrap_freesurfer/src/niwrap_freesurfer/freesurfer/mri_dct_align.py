@@ -130,7 +130,7 @@ def mri_dct_align_outputs(
 
 def mri_dct_align_execute(
     params: MriDctAlignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriDctAlignOutputs:
     """
     MRI DCT alignment tool from FreeSurfer.
@@ -141,10 +141,12 @@ def mri_dct_align_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriDctAlignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_DCT_ALIGN_METADATA)
     params = execution.params(params)
     cargs = mri_dct_align_cargs(params, execution)
     ret = mri_dct_align_outputs(params, execution)
@@ -173,14 +175,12 @@ def mri_dct_align(
     Returns:
         NamedTuple of outputs (described in `MriDctAlignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_DCT_ALIGN_METADATA)
     params = mri_dct_align_params(
         source=source,
         destination=destination,
         output_xform=output_xform,
     )
-    return mri_dct_align_execute(params, execution)
+    return mri_dct_align_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MriDctAlignOutputs",
     "MriDctAlignParameters",
     "mri_dct_align",
-    "mri_dct_align_cargs",
     "mri_dct_align_execute",
-    "mri_dct_align_outputs",
     "mri_dct_align_params",
 ]

@@ -173,7 +173,7 @@ def adjunct_tort_plot_dp_align_outputs(
 
 def adjunct_tort_plot_dp_align_execute(
     params: AdjunctTortPlotDpAlignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctTortPlotDpAlignOutputs:
     """
     Tool to display the rigid-body alignment parameters from TORTOISE's DIFFPREP,
@@ -185,10 +185,12 @@ def adjunct_tort_plot_dp_align_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctTortPlotDpAlignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA)
     params = execution.params(params)
     cargs = adjunct_tort_plot_dp_align_cargs(params, execution)
     ret = adjunct_tort_plot_dp_align_outputs(params, execution)
@@ -227,8 +229,6 @@ def adjunct_tort_plot_dp_align(
     Returns:
         NamedTuple of outputs (described in `AdjunctTortPlotDpAlignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_TORT_PLOT_DP_ALIGN_METADATA)
     params = adjunct_tort_plot_dp_align_params(
         input_file=input_file,
         output_prefix=output_prefix,
@@ -236,7 +236,7 @@ def adjunct_tort_plot_dp_align(
         enorm_hline=enorm_hline,
         no_svg=no_svg,
     )
-    return adjunct_tort_plot_dp_align_execute(params, execution)
+    return adjunct_tort_plot_dp_align_execute(params, runner)
 
 
 __all__ = [
@@ -244,8 +244,6 @@ __all__ = [
     "AdjunctTortPlotDpAlignOutputs",
     "AdjunctTortPlotDpAlignParameters",
     "adjunct_tort_plot_dp_align",
-    "adjunct_tort_plot_dp_align_cargs",
     "adjunct_tort_plot_dp_align_execute",
-    "adjunct_tort_plot_dp_align_outputs",
     "adjunct_tort_plot_dp_align_params",
 ]

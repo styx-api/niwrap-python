@@ -440,7 +440,7 @@ def sh2amp_outputs(
 
 def sh2amp_execute(
     params: Sh2ampParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Sh2ampOutputs:
     """
     Evaluate the amplitude of an image of spherical harmonic functions along
@@ -485,10 +485,12 @@ def sh2amp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Sh2ampOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SH2AMP_METADATA)
     params = execution.params(params)
     cargs = sh2amp_cargs(params, execution)
     ret = sh2amp_outputs(params, execution)
@@ -600,8 +602,6 @@ def sh2amp(
     Returns:
         NamedTuple of outputs (described in `Sh2ampOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SH2AMP_METADATA)
     params = sh2amp_params(
         nonnegative=nonnegative,
         grad=grad,
@@ -620,7 +620,7 @@ def sh2amp(
         directions=directions,
         output=output,
     )
-    return sh2amp_execute(params, execution)
+    return sh2amp_execute(params, runner)
 
 
 __all__ = [
@@ -632,16 +632,10 @@ __all__ = [
     "Sh2ampVariousFileParameters",
     "Sh2ampVariousStringParameters",
     "sh2amp",
-    "sh2amp_cargs",
-    "sh2amp_config_cargs",
     "sh2amp_config_params",
     "sh2amp_execute",
-    "sh2amp_fslgrad_cargs",
     "sh2amp_fslgrad_params",
-    "sh2amp_outputs",
     "sh2amp_params",
-    "sh2amp_various_file_cargs",
     "sh2amp_various_file_params",
-    "sh2amp_various_string_cargs",
     "sh2amp_various_string_params",
 ]

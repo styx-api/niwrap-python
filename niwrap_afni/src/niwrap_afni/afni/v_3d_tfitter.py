@@ -299,7 +299,7 @@ def v_3d_tfitter_outputs(
 
 def v_3d_tfitter_execute(
     params: V3dTfitterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTfitterOutputs:
     """
     * At each voxel, assembles and solves a set of linear equations.
@@ -316,10 +316,12 @@ def v_3d_tfitter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTfitterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TFITTER_METADATA)
     params = execution.params(params)
     cargs = v_3d_tfitter_cargs(params, execution)
     ret = v_3d_tfitter_outputs(params, execution)
@@ -396,8 +398,6 @@ def v_3d_tfitter(
     Returns:
         NamedTuple of outputs (described in `V3dTfitterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TFITTER_METADATA)
     params = v_3d_tfitter_params(
         rhs=rhs,
         lhs=lhs,
@@ -418,7 +418,7 @@ def v_3d_tfitter(
         mask=mask,
         quiet=quiet,
     )
-    return v_3d_tfitter_execute(params, execution)
+    return v_3d_tfitter_execute(params, runner)
 
 
 __all__ = [
@@ -426,8 +426,6 @@ __all__ = [
     "V3dTfitterParameters",
     "V_3D_TFITTER_METADATA",
     "v_3d_tfitter",
-    "v_3d_tfitter_cargs",
     "v_3d_tfitter_execute",
-    "v_3d_tfitter_outputs",
     "v_3d_tfitter_params",
 ]

@@ -280,7 +280,7 @@ def v_3d_tcorr_map_outputs(
 
 def v_3d_tcorr_map_execute(
     params: V3dTcorrMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTcorrMapOutputs:
     """
     AFNI program to compute correlation maps of input time series data.
@@ -291,10 +291,12 @@ def v_3d_tcorr_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTcorrMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TCORR_MAP_METADATA)
     params = execution.params(params)
     cargs = v_3d_tcorr_map_cargs(params, execution)
     ret = v_3d_tcorr_map_outputs(params, execution)
@@ -363,8 +365,6 @@ def v_3d_tcorr_map(
     Returns:
         NamedTuple of outputs (described in `V3dTcorrMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TCORR_MAP_METADATA)
     params = v_3d_tcorr_map_params(
         input_=input_,
         seed=seed,
@@ -384,7 +384,7 @@ def v_3d_tcorr_map(
         sexpr=sexpr,
         hist=hist,
     )
-    return v_3d_tcorr_map_execute(params, execution)
+    return v_3d_tcorr_map_execute(params, runner)
 
 
 __all__ = [
@@ -392,8 +392,6 @@ __all__ = [
     "V3dTcorrMapParameters",
     "V_3D_TCORR_MAP_METADATA",
     "v_3d_tcorr_map",
-    "v_3d_tcorr_map_cargs",
     "v_3d_tcorr_map_execute",
-    "v_3d_tcorr_map_outputs",
     "v_3d_tcorr_map_params",
 ]

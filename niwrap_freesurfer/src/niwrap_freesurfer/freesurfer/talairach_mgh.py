@@ -125,7 +125,7 @@ def talairach_mgh_outputs(
 
 def talairach_mgh_execute(
     params: TalairachMghParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TalairachMghOutputs:
     """
     A tool for aligning brain volume with Talairach reference brain.
@@ -136,10 +136,12 @@ def talairach_mgh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TalairachMghOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TALAIRACH_MGH_METADATA)
     params = execution.params(params)
     cargs = talairach_mgh_cargs(params, execution)
     ret = talairach_mgh_outputs(params, execution)
@@ -166,13 +168,11 @@ def talairach_mgh(
     Returns:
         NamedTuple of outputs (described in `TalairachMghOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TALAIRACH_MGH_METADATA)
     params = talairach_mgh_params(
         input_volume=input_volume,
         output_volume=output_volume,
     )
-    return talairach_mgh_execute(params, execution)
+    return talairach_mgh_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "TalairachMghOutputs",
     "TalairachMghParameters",
     "talairach_mgh",
-    "talairach_mgh_cargs",
     "talairach_mgh_execute",
-    "talairach_mgh_outputs",
     "talairach_mgh_params",
 ]

@@ -351,7 +351,7 @@ def fslvbm_2_template_outputs(
 
 def fslvbm_2_template_execute(
     params: Fslvbm2TemplateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fslvbm2TemplateOutputs:
     """
     FSL-VBM is a Voxel-Based Morphometry style analysis tool for FSL.
@@ -362,10 +362,12 @@ def fslvbm_2_template_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fslvbm2TemplateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLVBM_2_TEMPLATE_METADATA)
     params = execution.params(params)
     cargs = fslvbm_2_template_cargs(params, execution)
     ret = fslvbm_2_template_outputs(params, execution)
@@ -436,8 +438,6 @@ def fslvbm_2_template(
     Returns:
         NamedTuple of outputs (described in `Fslvbm2TemplateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLVBM_2_TEMPLATE_METADATA)
     params = fslvbm_2_template_params(
         arch=arch,
         coprocessor=coprocessor,
@@ -464,7 +464,7 @@ def fslvbm_2_template(
         runtime_limit=runtime_limit,
         job_file=job_file,
     )
-    return fslvbm_2_template_execute(params, execution)
+    return fslvbm_2_template_execute(params, runner)
 
 
 __all__ = [
@@ -472,8 +472,6 @@ __all__ = [
     "Fslvbm2TemplateOutputs",
     "Fslvbm2TemplateParameters",
     "fslvbm_2_template",
-    "fslvbm_2_template_cargs",
     "fslvbm_2_template_execute",
-    "fslvbm_2_template_outputs",
     "fslvbm_2_template_params",
 ]

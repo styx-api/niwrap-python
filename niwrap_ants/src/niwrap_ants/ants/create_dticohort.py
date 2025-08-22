@@ -209,7 +209,7 @@ def create_dticohort_outputs(
 
 def create_dticohort_execute(
     params: CreateDticohortParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateDticohortOutputs:
     """
     CreateDTICohort implements the work of Van Hecke et al. to create simulated DTI
@@ -223,10 +223,12 @@ def create_dticohort_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateDticohortOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_DTICOHORT_METADATA)
     params = execution.params(params)
     cargs = create_dticohort_cargs(params, execution)
     ret = create_dticohort_outputs(params, execution)
@@ -285,8 +287,6 @@ def create_dticohort(
     Returns:
         NamedTuple of outputs (described in `CreateDticohortOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_DTICOHORT_METADATA)
     params = create_dticohort_params(
         image_dimensionality=image_dimensionality,
         dti_atlas=dti_atlas,
@@ -297,7 +297,7 @@ def create_dticohort(
         registered_population=registered_population,
         output=output,
     )
-    return create_dticohort_execute(params, execution)
+    return create_dticohort_execute(params, runner)
 
 
 __all__ = [
@@ -305,8 +305,6 @@ __all__ = [
     "CreateDticohortOutputs",
     "CreateDticohortParameters",
     "create_dticohort",
-    "create_dticohort_cargs",
     "create_dticohort_execute",
-    "create_dticohort_outputs",
     "create_dticohort_params",
 ]

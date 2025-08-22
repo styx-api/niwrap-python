@@ -289,7 +289,7 @@ def metric_weighted_stats_outputs(
 
 def metric_weighted_stats_execute(
     params: MetricWeightedStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricWeightedStatsOutputs:
     """
     Weighted spatial statistics on a metric file.
@@ -314,10 +314,12 @@ def metric_weighted_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricWeightedStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_WEIGHTED_STATS_METADATA)
     params = execution.params(params)
     cargs = metric_weighted_stats_cargs(params, execution)
     ret = metric_weighted_stats_outputs(params, execution)
@@ -378,8 +380,6 @@ def metric_weighted_stats(
     Returns:
         NamedTuple of outputs (described in `MetricWeightedStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_WEIGHTED_STATS_METADATA)
     params = metric_weighted_stats_params(
         metric_in=metric_in,
         opt_area_surface_area_surface=opt_area_surface_area_surface,
@@ -392,7 +392,7 @@ def metric_weighted_stats(
         opt_sum=opt_sum,
         opt_show_map_name=opt_show_map_name,
     )
-    return metric_weighted_stats_execute(params, execution)
+    return metric_weighted_stats_execute(params, runner)
 
 
 __all__ = [
@@ -402,12 +402,8 @@ __all__ = [
     "MetricWeightedStatsRoiParameters",
     "MetricWeightedStatsStdevParameters",
     "metric_weighted_stats",
-    "metric_weighted_stats_cargs",
     "metric_weighted_stats_execute",
-    "metric_weighted_stats_outputs",
     "metric_weighted_stats_params",
-    "metric_weighted_stats_roi_cargs",
     "metric_weighted_stats_roi_params",
-    "metric_weighted_stats_stdev_cargs",
     "metric_weighted_stats_stdev_params",
 ]

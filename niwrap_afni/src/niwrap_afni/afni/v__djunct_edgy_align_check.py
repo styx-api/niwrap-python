@@ -278,7 +278,7 @@ def v__djunct_edgy_align_check_outputs(
 
 def v__djunct_edgy_align_check_execute(
     params: VDjunctEdgyAlignCheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunctEdgyAlignCheckOutputs:
     """
     Helper script for various tasks, heavily modeled on RW Cox's '@snapshot_volreg'
@@ -290,10 +290,12 @@ def v__djunct_edgy_align_check_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunctEdgyAlignCheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_EDGY_ALIGN_CHECK_METADATA)
     params = execution.params(params)
     cargs = v__djunct_edgy_align_check_cargs(params, execution)
     ret = v__djunct_edgy_align_check_outputs(params, execution)
@@ -369,8 +371,6 @@ def v__djunct_edgy_align_check(
     Returns:
         NamedTuple of outputs (described in `VDjunctEdgyAlignCheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_EDGY_ALIGN_CHECK_METADATA)
     params = v__djunct_edgy_align_check_params(
         ulay=ulay,
         olay=olay,
@@ -399,7 +399,7 @@ def v__djunct_edgy_align_check(
         ulay_range_nz=ulay_range_nz,
         ulay_range_am=ulay_range_am,
     )
-    return v__djunct_edgy_align_check_execute(params, execution)
+    return v__djunct_edgy_align_check_execute(params, runner)
 
 
 __all__ = [
@@ -407,8 +407,6 @@ __all__ = [
     "VDjunctEdgyAlignCheckParameters",
     "V__DJUNCT_EDGY_ALIGN_CHECK_METADATA",
     "v__djunct_edgy_align_check",
-    "v__djunct_edgy_align_check_cargs",
     "v__djunct_edgy_align_check_execute",
-    "v__djunct_edgy_align_check_outputs",
     "v__djunct_edgy_align_check_params",
 ]

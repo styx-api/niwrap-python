@@ -230,7 +230,7 @@ def v_3d_tsmooth_outputs(
 
 def v_3d_tsmooth_execute(
     params: V3dTsmoothParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTsmoothOutputs:
     """
     Smooths each voxel time series in a 3D+time dataset and produces as output a new
@@ -242,10 +242,12 @@ def v_3d_tsmooth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTsmoothOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TSMOOTH_METADATA)
     params = execution.params(params)
     cargs = v_3d_tsmooth_cargs(params, execution)
     ret = v_3d_tsmooth_outputs(params, execution)
@@ -301,8 +303,6 @@ def v_3d_tsmooth(
     Returns:
         NamedTuple of outputs (described in `V3dTsmoothOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TSMOOTH_METADATA)
     params = v_3d_tsmooth_params(
         input_dataset=input_dataset,
         prefix=prefix,
@@ -319,7 +319,7 @@ def v_3d_tsmooth(
         trend=trend,
         adaptive=adaptive,
     )
-    return v_3d_tsmooth_execute(params, execution)
+    return v_3d_tsmooth_execute(params, runner)
 
 
 __all__ = [
@@ -327,8 +327,6 @@ __all__ = [
     "V3dTsmoothParameters",
     "V_3D_TSMOOTH_METADATA",
     "v_3d_tsmooth",
-    "v_3d_tsmooth_cargs",
     "v_3d_tsmooth_execute",
-    "v_3d_tsmooth_outputs",
     "v_3d_tsmooth_params",
 ]

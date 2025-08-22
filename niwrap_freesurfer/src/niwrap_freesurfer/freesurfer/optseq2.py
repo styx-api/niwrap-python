@@ -431,7 +431,7 @@ def optseq2_outputs(
 
 def optseq2_execute(
     params: Optseq2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Optseq2Outputs:
     """
     Optseq2 is a tool for automatically scheduling events for rapid-presentation
@@ -443,10 +443,12 @@ def optseq2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Optseq2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(OPTSEQ2_METADATA)
     params = execution.params(params)
     cargs = optseq2_cargs(params, execution)
     ret = optseq2_outputs(params, execution)
@@ -539,8 +541,6 @@ def optseq2(
     Returns:
         NamedTuple of outputs (described in `Optseq2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(OPTSEQ2_METADATA)
     params = optseq2_params(
         ntp=ntp,
         tr=tr,
@@ -575,7 +575,7 @@ def optseq2(
         help_=help_,
         version=version,
     )
-    return optseq2_execute(params, execution)
+    return optseq2_execute(params, runner)
 
 
 __all__ = [
@@ -583,8 +583,6 @@ __all__ = [
     "Optseq2Outputs",
     "Optseq2Parameters",
     "optseq2",
-    "optseq2_cargs",
     "optseq2_execute",
-    "optseq2_outputs",
     "optseq2_params",
 ]

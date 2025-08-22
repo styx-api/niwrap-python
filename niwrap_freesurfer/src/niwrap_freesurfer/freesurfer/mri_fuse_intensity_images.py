@@ -136,7 +136,7 @@ def mri_fuse_intensity_images_outputs(
 
 def mri_fuse_intensity_images_execute(
     params: MriFuseIntensityImagesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFuseIntensityImagesOutputs:
     """
     Fuses intensity images based on given transforms.
@@ -147,10 +147,12 @@ def mri_fuse_intensity_images_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFuseIntensityImagesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FUSE_INTENSITY_IMAGES_METADATA)
     params = execution.params(params)
     cargs = mri_fuse_intensity_images_cargs(params, execution)
     ret = mri_fuse_intensity_images_outputs(params, execution)
@@ -182,15 +184,13 @@ def mri_fuse_intensity_images(
     Returns:
         NamedTuple of outputs (described in `MriFuseIntensityImagesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FUSE_INTENSITY_IMAGES_METADATA)
     params = mri_fuse_intensity_images_params(
         longitudinal_time_point_file=longitudinal_time_point_file,
         input_volume=input_volume,
         transform_file=transform_file,
         output_volume=output_volume,
     )
-    return mri_fuse_intensity_images_execute(params, execution)
+    return mri_fuse_intensity_images_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MriFuseIntensityImagesOutputs",
     "MriFuseIntensityImagesParameters",
     "mri_fuse_intensity_images",
-    "mri_fuse_intensity_images_cargs",
     "mri_fuse_intensity_images_execute",
-    "mri_fuse_intensity_images_outputs",
     "mri_fuse_intensity_images_params",
 ]

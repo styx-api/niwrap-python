@@ -130,7 +130,7 @@ def mris_remove_negative_vertices_outputs(
 
 def mris_remove_negative_vertices_execute(
     params: MrisRemoveNegativeVerticesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRemoveNegativeVerticesOutputs:
     """
     This program adds a template into an average surface.
@@ -141,10 +141,12 @@ def mris_remove_negative_vertices_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRemoveNegativeVerticesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REMOVE_NEGATIVE_VERTICES_METADATA)
     params = execution.params(params)
     cargs = mris_remove_negative_vertices_cargs(params, execution)
     ret = mris_remove_negative_vertices_outputs(params, execution)
@@ -173,14 +175,12 @@ def mris_remove_negative_vertices(
     Returns:
         NamedTuple of outputs (described in `MrisRemoveNegativeVerticesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REMOVE_NEGATIVE_VERTICES_METADATA)
     params = mris_remove_negative_vertices_params(
         surface_file=surface_file,
         patch_file=patch_file,
         output_patch=output_patch,
     )
-    return mris_remove_negative_vertices_execute(params, execution)
+    return mris_remove_negative_vertices_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MrisRemoveNegativeVerticesOutputs",
     "MrisRemoveNegativeVerticesParameters",
     "mris_remove_negative_vertices",
-    "mris_remove_negative_vertices_cargs",
     "mris_remove_negative_vertices_execute",
-    "mris_remove_negative_vertices_outputs",
     "mris_remove_negative_vertices_params",
 ]

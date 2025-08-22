@@ -182,7 +182,7 @@ def dtigen_outputs(
 
 def dtigen_execute(
     params: DtigenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DtigenOutputs:
     """
     Generate diffusion data using tensor model.
@@ -193,10 +193,12 @@ def dtigen_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DtigenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DTIGEN_METADATA)
     params = execution.params(params)
     cargs = dtigen_cargs(params, execution)
     ret = dtigen_outputs(params, execution)
@@ -235,8 +237,6 @@ def dtigen(
     Returns:
         NamedTuple of outputs (described in `DtigenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DTIGEN_METADATA)
     params = dtigen_params(
         tensor=tensor,
         s0=s0,
@@ -247,7 +247,7 @@ def dtigen(
         kurtosis=kurtosis,
         help_=help_,
     )
-    return dtigen_execute(params, execution)
+    return dtigen_execute(params, runner)
 
 
 __all__ = [
@@ -255,8 +255,6 @@ __all__ = [
     "DtigenOutputs",
     "DtigenParameters",
     "dtigen",
-    "dtigen_cargs",
     "dtigen_execute",
-    "dtigen_outputs",
     "dtigen_params",
 ]

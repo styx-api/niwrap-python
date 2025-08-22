@@ -141,7 +141,7 @@ def sratio_outputs(
 
 def sratio_execute(
     params: SratioParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SratioOutputs:
     """
     Tool to compute ratio A/B if A>B, -B/A if B>A, with options for absolute
@@ -153,10 +153,12 @@ def sratio_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SratioOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SRATIO_METADATA)
     params = execution.params(params)
     cargs = sratio_cargs(params, execution)
     ret = sratio_outputs(params, execution)
@@ -188,15 +190,13 @@ def sratio(
     Returns:
         NamedTuple of outputs (described in `SratioOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SRATIO_METADATA)
     params = sratio_params(
         value_a=value_a,
         value_b=value_b,
         abs_flag=abs_flag,
         mask_threshold=mask_threshold,
     )
-    return sratio_execute(params, execution)
+    return sratio_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "SratioOutputs",
     "SratioParameters",
     "sratio",
-    "sratio_cargs",
     "sratio_execute",
-    "sratio_outputs",
     "sratio_params",
 ]

@@ -125,7 +125,7 @@ def imcp_outputs(
 
 def imcp_execute(
     params: ImcpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImcpOutputs:
     """
     Copy images from one location to another.
@@ -136,10 +136,12 @@ def imcp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImcpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMCP_METADATA)
     params = execution.params(params)
     cargs = imcp_cargs(params, execution)
     ret = imcp_outputs(params, execution)
@@ -166,13 +168,11 @@ def imcp(
     Returns:
         NamedTuple of outputs (described in `ImcpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMCP_METADATA)
     params = imcp_params(
         infiles=infiles,
         output_location=output_location,
     )
-    return imcp_execute(params, execution)
+    return imcp_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "ImcpOutputs",
     "ImcpParameters",
     "imcp",
-    "imcp_cargs",
     "imcp_execute",
-    "imcp_outputs",
     "imcp_params",
 ]

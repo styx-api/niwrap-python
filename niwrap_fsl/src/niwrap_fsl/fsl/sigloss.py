@@ -169,7 +169,7 @@ def sigloss_outputs(
 
 def sigloss_execute(
     params: SiglossParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SiglossOutputs:
     """
     Estimates signal loss from a field map (in rad/s).
@@ -180,10 +180,12 @@ def sigloss_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SiglossOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIGLOSS_METADATA)
     params = execution.params(params)
     cargs = sigloss_cargs(params, execution)
     ret = sigloss_outputs(params, execution)
@@ -220,8 +222,6 @@ def sigloss(
     Returns:
         NamedTuple of outputs (described in `SiglossOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIGLOSS_METADATA)
     params = sigloss_params(
         input_b0map=input_b0map,
         output_sigloss=output_sigloss,
@@ -231,7 +231,7 @@ def sigloss(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return sigloss_execute(params, execution)
+    return sigloss_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "SiglossOutputs",
     "SiglossParameters",
     "sigloss",
-    "sigloss_cargs",
     "sigloss_execute",
-    "sigloss_outputs",
     "sigloss_params",
 ]

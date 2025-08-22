@@ -120,7 +120,7 @@ def v__get_afni_dims_outputs(
 
 def v__get_afni_dims_execute(
     params: VGetAfniDimsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGetAfniDimsOutputs:
     """
     A utility tool to return dimensions of AFNI dataset.
@@ -131,10 +131,12 @@ def v__get_afni_dims_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGetAfniDimsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GET_AFNI_DIMS_METADATA)
     params = execution.params(params)
     cargs = v__get_afni_dims_cargs(params, execution)
     ret = v__get_afni_dims_outputs(params, execution)
@@ -159,12 +161,10 @@ def v__get_afni_dims(
     Returns:
         NamedTuple of outputs (described in `VGetAfniDimsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GET_AFNI_DIMS_METADATA)
     params = v__get_afni_dims_params(
         input_dset=input_dset,
     )
-    return v__get_afni_dims_execute(params, execution)
+    return v__get_afni_dims_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "VGetAfniDimsParameters",
     "V__GET_AFNI_DIMS_METADATA",
     "v__get_afni_dims",
-    "v__get_afni_dims_cargs",
     "v__get_afni_dims_execute",
-    "v__get_afni_dims_outputs",
     "v__get_afni_dims_params",
 ]

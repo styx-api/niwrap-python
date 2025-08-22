@@ -133,7 +133,7 @@ def t4img_4dfp_outputs(
 
 def t4img_4dfp_execute(
     params: T4img4dfpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> T4img4dfpOutputs:
     """
     Transforms a 4dfp image using a specified t4 file.
@@ -144,10 +144,12 @@ def t4img_4dfp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `T4img4dfpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(T4IMG_4DFP_METADATA)
     params = execution.params(params)
     cargs = t4img_4dfp_cargs(params, execution)
     ret = t4img_4dfp_outputs(params, execution)
@@ -177,14 +179,12 @@ def t4img_4dfp(
     Returns:
         NamedTuple of outputs (described in `T4img4dfpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(T4IMG_4DFP_METADATA)
     params = t4img_4dfp_params(
         t4file=t4file,
         imgfile=imgfile,
         outfile=outfile,
     )
-    return t4img_4dfp_execute(params, execution)
+    return t4img_4dfp_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "T4img4dfpOutputs",
     "T4img4dfpParameters",
     "t4img_4dfp",
-    "t4img_4dfp_cargs",
     "t4img_4dfp_execute",
-    "t4img_4dfp_outputs",
     "t4img_4dfp_params",
 ]

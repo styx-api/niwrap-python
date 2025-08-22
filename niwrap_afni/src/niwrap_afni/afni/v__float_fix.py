@@ -117,7 +117,7 @@ def v__float_fix_outputs(
 
 def v__float_fix_execute(
     params: VFloatFixParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VFloatFixOutputs:
     """
     Check whether the input files have any IEEE floating point numbers for illegal
@@ -129,10 +129,12 @@ def v__float_fix_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VFloatFixOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__FLOAT_FIX_METADATA)
     params = execution.params(params)
     cargs = v__float_fix_cargs(params, execution)
     ret = v__float_fix_outputs(params, execution)
@@ -159,12 +161,10 @@ def v__float_fix(
     Returns:
         NamedTuple of outputs (described in `VFloatFixOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__FLOAT_FIX_METADATA)
     params = v__float_fix_params(
         input_files=input_files,
     )
-    return v__float_fix_execute(params, execution)
+    return v__float_fix_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "VFloatFixParameters",
     "V__FLOAT_FIX_METADATA",
     "v__float_fix",
-    "v__float_fix_cargs",
     "v__float_fix_execute",
-    "v__float_fix_outputs",
     "v__float_fix_params",
 ]

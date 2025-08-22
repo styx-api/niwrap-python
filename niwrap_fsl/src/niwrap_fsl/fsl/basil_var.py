@@ -127,7 +127,7 @@ def basil_var_outputs(
 
 def basil_var_execute(
     params: BasilVarParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BasilVarOutputs:
     """
     Variance calculator for BASIL.
@@ -138,10 +138,12 @@ def basil_var_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BasilVarOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BASIL_VAR_METADATA)
     params = execution.params(params)
     cargs = basil_var_cargs(params, execution)
     ret = basil_var_outputs(params, execution)
@@ -168,13 +170,11 @@ def basil_var(
     Returns:
         NamedTuple of outputs (described in `BasilVarOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BASIL_VAR_METADATA)
     params = basil_var_params(
         results_dir=results_dir,
         mask_image=mask_image,
     )
-    return basil_var_execute(params, execution)
+    return basil_var_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "BasilVarOutputs",
     "BasilVarParameters",
     "basil_var",
-    "basil_var_cargs",
     "basil_var_execute",
-    "basil_var_outputs",
     "basil_var_params",
 ]

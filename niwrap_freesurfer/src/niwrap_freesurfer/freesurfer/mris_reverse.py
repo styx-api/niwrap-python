@@ -125,7 +125,7 @@ def mris_reverse_outputs(
 
 def mris_reverse_execute(
     params: MrisReverseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisReverseOutputs:
     """
     This tool reverses a cortical surface.
@@ -136,10 +136,12 @@ def mris_reverse_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisReverseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REVERSE_METADATA)
     params = execution.params(params)
     cargs = mris_reverse_cargs(params, execution)
     ret = mris_reverse_outputs(params, execution)
@@ -166,13 +168,11 @@ def mris_reverse(
     Returns:
         NamedTuple of outputs (described in `MrisReverseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REVERSE_METADATA)
     params = mris_reverse_params(
         input_surface=input_surface,
         output_surface=output_surface,
     )
-    return mris_reverse_execute(params, execution)
+    return mris_reverse_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MrisReverseOutputs",
     "MrisReverseParameters",
     "mris_reverse",
-    "mris_reverse_cargs",
     "mris_reverse_execute",
-    "mris_reverse_outputs",
     "mris_reverse_params",
 ]

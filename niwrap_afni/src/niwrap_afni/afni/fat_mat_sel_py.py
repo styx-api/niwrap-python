@@ -331,7 +331,7 @@ def fat_mat_sel_py_outputs(
 
 def fat_mat_sel_py_execute(
     params: FatMatSelPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatMatSelPyOutputs:
     """
     Perform simple matrix plotting operations from outputs of FATCAT programs
@@ -343,10 +343,12 @@ def fat_mat_sel_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatMatSelPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_MAT_SEL_PY_METADATA)
     params = execution.params(params)
     cargs = fat_mat_sel_py_cargs(params, execution)
     ret = fat_mat_sel_py_outputs(params, execution)
@@ -430,8 +432,6 @@ def fat_mat_sel_py(
     Returns:
         NamedTuple of outputs (described in `FatMatSelPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_MAT_SEL_PY_METADATA)
     params = fat_mat_sel_py_params(
         parameters=parameters,
         matr_in=matr_in,
@@ -457,7 +457,7 @@ def fat_mat_sel_py(
         specifier=specifier,
         xtick_lab_off=xtick_lab_off,
     )
-    return fat_mat_sel_py_execute(params, execution)
+    return fat_mat_sel_py_execute(params, runner)
 
 
 __all__ = [
@@ -465,8 +465,6 @@ __all__ = [
     "FatMatSelPyOutputs",
     "FatMatSelPyParameters",
     "fat_mat_sel_py",
-    "fat_mat_sel_py_cargs",
     "fat_mat_sel_py_execute",
-    "fat_mat_sel_py_outputs",
     "fat_mat_sel_py_params",
 ]

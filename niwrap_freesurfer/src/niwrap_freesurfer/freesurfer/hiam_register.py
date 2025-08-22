@@ -131,7 +131,7 @@ def hiam_register_outputs(
 
 def hiam_register_execute(
     params: HiamRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HiamRegisterOutputs:
     """
     This program registers a surface with an average surface.
@@ -142,10 +142,12 @@ def hiam_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HiamRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HIAM_REGISTER_METADATA)
     params = execution.params(params)
     cargs = hiam_register_cargs(params, execution)
     ret = hiam_register_outputs(params, execution)
@@ -175,14 +177,12 @@ def hiam_register(
     Returns:
         NamedTuple of outputs (described in `HiamRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HIAM_REGISTER_METADATA)
     params = hiam_register_params(
         input_surface=input_surface,
         average_surface=average_surface,
         output_surface=output_surface,
     )
-    return hiam_register_execute(params, execution)
+    return hiam_register_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "HiamRegisterOutputs",
     "HiamRegisterParameters",
     "hiam_register",
-    "hiam_register_cargs",
     "hiam_register_execute",
-    "hiam_register_outputs",
     "hiam_register_params",
 ]

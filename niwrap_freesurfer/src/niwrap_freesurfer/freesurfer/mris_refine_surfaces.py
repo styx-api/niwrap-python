@@ -172,7 +172,7 @@ def mris_refine_surfaces_outputs(
 
 def mris_refine_surfaces_execute(
     params: MrisRefineSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRefineSurfacesOutputs:
     """
     Refines cortical surfaces around the region specified by the label file.
@@ -183,10 +183,12 @@ def mris_refine_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRefineSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REFINE_SURFACES_METADATA)
     params = execution.params(params)
     cargs = mris_refine_surfaces_cargs(params, execution)
     ret = mris_refine_surfaces_outputs(params, execution)
@@ -226,8 +228,6 @@ def mris_refine_surfaces(
     Returns:
         NamedTuple of outputs (described in `MrisRefineSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REFINE_SURFACES_METADATA)
     params = mris_refine_surfaces_params(
         subject_name=subject_name,
         hemi=hemi,
@@ -238,7 +238,7 @@ def mris_refine_surfaces(
         use_mgz=use_mgz,
         suffix=suffix,
     )
-    return mris_refine_surfaces_execute(params, execution)
+    return mris_refine_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -246,8 +246,6 @@ __all__ = [
     "MrisRefineSurfacesOutputs",
     "MrisRefineSurfacesParameters",
     "mris_refine_surfaces",
-    "mris_refine_surfaces_cargs",
     "mris_refine_surfaces_execute",
-    "mris_refine_surfaces_outputs",
     "mris_refine_surfaces_params",
 ]

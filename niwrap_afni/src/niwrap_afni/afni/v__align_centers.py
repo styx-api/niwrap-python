@@ -223,7 +223,7 @@ def v__align_centers_outputs(
 
 def v__align_centers_execute(
     params: VAlignCentersParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAlignCentersOutputs:
     """
     Moves the center of a dataset (DSET) to the center of a base volume (BASE) and
@@ -235,10 +235,12 @@ def v__align_centers_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAlignCentersOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ALIGN_CENTERS_METADATA)
     params = execution.params(params)
     cargs = v__align_centers_cargs(params, execution)
     ret = v__align_centers_outputs(params, execution)
@@ -294,8 +296,6 @@ def v__align_centers(
     Returns:
         NamedTuple of outputs (described in `VAlignCentersOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ALIGN_CENTERS_METADATA)
     params = v__align_centers_params(
         base=base,
         dset=dset,
@@ -312,7 +312,7 @@ def v__align_centers(
         shift_xform=shift_xform,
         shift_xform_inv=shift_xform_inv,
     )
-    return v__align_centers_execute(params, execution)
+    return v__align_centers_execute(params, runner)
 
 
 __all__ = [
@@ -320,8 +320,6 @@ __all__ = [
     "VAlignCentersParameters",
     "V__ALIGN_CENTERS_METADATA",
     "v__align_centers",
-    "v__align_centers_cargs",
     "v__align_centers_execute",
-    "v__align_centers_outputs",
     "v__align_centers_params",
 ]

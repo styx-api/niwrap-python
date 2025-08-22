@@ -131,7 +131,7 @@ def get_afni_model_prf_outputs(
 
 def get_afni_model_prf_execute(
     params: GetAfniModelPrfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GetAfniModelPrfOutputs:
     """
     A tool to get AFNI model parameters assuming a PRF framework.
@@ -142,10 +142,12 @@ def get_afni_model_prf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GET_AFNI_MODEL_PRF_METADATA)
     params = execution.params(params)
     cargs = get_afni_model_prf_cargs(params, execution)
     ret = get_afni_model_prf_outputs(params, execution)
@@ -176,15 +178,13 @@ def get_afni_model_prf(
     Returns:
         NamedTuple of outputs (described in `GetAfniModelPrfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GET_AFNI_MODEL_PRF_METADATA)
     params = get_afni_model_prf_params(
         amplitude=amplitude,
         x_coord=x_coord,
         y_coord=y_coord,
         sigma=sigma,
     )
-    return get_afni_model_prf_execute(params, execution)
+    return get_afni_model_prf_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "GetAfniModelPrfOutputs",
     "GetAfniModelPrfParameters",
     "get_afni_model_prf",
-    "get_afni_model_prf_cargs",
     "get_afni_model_prf_execute",
-    "get_afni_model_prf_outputs",
     "get_afni_model_prf_params",
 ]

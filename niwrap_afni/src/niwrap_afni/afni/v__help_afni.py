@@ -153,7 +153,7 @@ def v__help_afni_outputs(
 
 def v__help_afni_execute(
     params: VHelpAfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VHelpAfniOutputs:
     """
     A script to retrieve and search AFNI's help page for all programs.
@@ -164,10 +164,12 @@ def v__help_afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VHelpAfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__HELP_AFNI_METADATA)
     params = execution.params(params)
     cargs = v__help_afni_cargs(params, execution)
     ret = v__help_afni_outputs(params, execution)
@@ -204,8 +206,6 @@ def v__help_afni(
     Returns:
         NamedTuple of outputs (described in `VHelpAfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__HELP_AFNI_METADATA)
     params = v__help_afni_params(
         match=match,
         lynx=lynx,
@@ -214,7 +214,7 @@ def v__help_afni(
         nedit=nedit,
         noview=noview,
     )
-    return v__help_afni_execute(params, execution)
+    return v__help_afni_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "VHelpAfniParameters",
     "V__HELP_AFNI_METADATA",
     "v__help_afni",
-    "v__help_afni_cargs",
     "v__help_afni_execute",
-    "v__help_afni_outputs",
     "v__help_afni_params",
 ]

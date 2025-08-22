@@ -254,7 +254,7 @@ def mris_autodet_gwstats_outputs(
 
 def mris_autodet_gwstats_execute(
     params: MrisAutodetGwstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisAutodetGwstatsOutputs:
     """
     Manages the computation of the gray/white statistics used to place the white and
@@ -266,10 +266,12 @@ def mris_autodet_gwstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAutodetGwstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_AUTODET_GWSTATS_METADATA)
     params = execution.params(params)
     cargs = mris_autodet_gwstats_cargs(params, execution)
     ret = mris_autodet_gwstats_outputs(params, execution)
@@ -324,8 +326,6 @@ def mris_autodet_gwstats(
     Returns:
         NamedTuple of outputs (described in `MrisAutodetGwstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_AUTODET_GWSTATS_METADATA)
     params = mris_autodet_gwstats_params(
         output_file=output_file,
         t1w_volume=t1w_volume,
@@ -343,7 +343,7 @@ def mris_autodet_gwstats(
         min_gray_at_csf_border=min_gray_at_csf_border,
         max_csf=max_csf,
     )
-    return mris_autodet_gwstats_execute(params, execution)
+    return mris_autodet_gwstats_execute(params, runner)
 
 
 __all__ = [
@@ -351,8 +351,6 @@ __all__ = [
     "MrisAutodetGwstatsOutputs",
     "MrisAutodetGwstatsParameters",
     "mris_autodet_gwstats",
-    "mris_autodet_gwstats_cargs",
     "mris_autodet_gwstats_execute",
-    "mris_autodet_gwstats_outputs",
     "mris_autodet_gwstats_params",
 ]

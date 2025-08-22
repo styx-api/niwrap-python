@@ -149,7 +149,7 @@ def imstat_outputs(
 
 def imstat_execute(
     params: ImstatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImstatOutputs:
     """
     Calculation of statistics of one or more images.
@@ -160,10 +160,12 @@ def imstat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImstatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMSTAT_METADATA)
     params = execution.params(params)
     cargs = imstat_cargs(params, execution)
     ret = imstat_outputs(params, execution)
@@ -197,15 +199,13 @@ def imstat(
     Returns:
         NamedTuple of outputs (described in `ImstatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMSTAT_METADATA)
     params = imstat_params(
         no_label=no_label,
         quiet=quiet,
         pixstat_prefix=pixstat_prefix,
         image_files=image_files,
     )
-    return imstat_execute(params, execution)
+    return imstat_execute(params, runner)
 
 
 __all__ = [
@@ -213,8 +213,6 @@ __all__ = [
     "ImstatOutputs",
     "ImstatParameters",
     "imstat",
-    "imstat_cargs",
     "imstat_execute",
-    "imstat_outputs",
     "imstat_params",
 ]

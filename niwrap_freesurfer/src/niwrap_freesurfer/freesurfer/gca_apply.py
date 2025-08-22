@@ -282,7 +282,7 @@ def gca_apply_outputs(
 
 def gca_apply_execute(
     params: GcaApplyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GcaApplyOutputs:
     """
     Applies a GCA, performing the steps of mri_em_register, mri_ca_normalize,
@@ -295,10 +295,12 @@ def gca_apply_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GcaApplyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GCA_APPLY_METADATA)
     params = execution.params(params)
     cargs = gca_apply_cargs(params, execution)
     ret = gca_apply_outputs(params, execution)
@@ -360,8 +362,6 @@ def gca_apply(
     Returns:
         NamedTuple of outputs (described in `GcaApplyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GCA_APPLY_METADATA)
     params = gca_apply_params(
         gcafile=gcafile,
         subject=subject,
@@ -382,7 +382,7 @@ def gca_apply(
         force_update=force_update,
         gcareg_iters=gcareg_iters,
     )
-    return gca_apply_execute(params, execution)
+    return gca_apply_execute(params, runner)
 
 
 __all__ = [
@@ -390,8 +390,6 @@ __all__ = [
     "GcaApplyOutputs",
     "GcaApplyParameters",
     "gca_apply",
-    "gca_apply_cargs",
     "gca_apply_execute",
-    "gca_apply_outputs",
     "gca_apply_params",
 ]

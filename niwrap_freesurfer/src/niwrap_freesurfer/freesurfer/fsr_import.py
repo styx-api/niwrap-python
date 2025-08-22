@@ -191,7 +191,7 @@ def fsr_import_outputs(
 
 def fsr_import_execute(
     params: FsrImportParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsrImportOutputs:
     """
     Copies/converts data into a directory structure for samseg-expected format.
@@ -202,10 +202,12 @@ def fsr_import_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsrImportOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSR_IMPORT_METADATA)
     params = execution.params(params)
     cargs = fsr_import_cargs(params, execution)
     ret = fsr_import_outputs(params, execution)
@@ -245,8 +247,6 @@ def fsr_import(
     Returns:
         NamedTuple of outputs (described in `FsrImportOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSR_IMPORT_METADATA)
     params = fsr_import_params(
         outdir=outdir,
         t1w_input=t1w_input,
@@ -257,7 +257,7 @@ def fsr_import(
         no_conform=no_conform,
         hires=hires,
     )
-    return fsr_import_execute(params, execution)
+    return fsr_import_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "FsrImportOutputs",
     "FsrImportParameters",
     "fsr_import",
-    "fsr_import_cargs",
     "fsr_import_execute",
-    "fsr_import_outputs",
     "fsr_import_params",
 ]

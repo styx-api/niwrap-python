@@ -351,7 +351,7 @@ def v_3d_gen_priors_outputs(
 
 def v_3d_gen_priors_execute(
     params: V3dGenPriorsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dGenPriorsOutputs:
     """
     Produces classification priors based on voxel signatures.
@@ -362,10 +362,12 @@ def v_3d_gen_priors_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dGenPriorsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_GEN_PRIORS_METADATA)
     params = execution.params(params)
     cargs = v_3d_gen_priors_cargs(params, execution)
     ret = v_3d_gen_priors_outputs(params, execution)
@@ -445,8 +447,6 @@ def v_3d_gen_priors(
     Returns:
         NamedTuple of outputs (described in `V3dGenPriorsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_GEN_PRIORS_METADATA)
     params = v_3d_gen_priors_params(
         sigs=sigs,
         tdist=tdist,
@@ -475,7 +475,7 @@ def v_3d_gen_priors(
         fast=fast,
         slow=slow,
     )
-    return v_3d_gen_priors_execute(params, execution)
+    return v_3d_gen_priors_execute(params, runner)
 
 
 __all__ = [
@@ -483,8 +483,6 @@ __all__ = [
     "V3dGenPriorsParameters",
     "V_3D_GEN_PRIORS_METADATA",
     "v_3d_gen_priors",
-    "v_3d_gen_priors_cargs",
     "v_3d_gen_priors_execute",
-    "v_3d_gen_priors_outputs",
     "v_3d_gen_priors_params",
 ]

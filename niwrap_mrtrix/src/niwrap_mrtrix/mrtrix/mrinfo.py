@@ -722,7 +722,7 @@ def mrinfo_outputs(
 
 def mrinfo_execute(
     params: MrinfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrinfoOutputs:
     """
     Display image header information, or extract specific information from the
@@ -770,10 +770,12 @@ def mrinfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrinfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRINFO_METADATA)
     params = execution.params(params)
     cargs = mrinfo_cargs(params, execution)
     ret = mrinfo_outputs(params, execution)
@@ -926,8 +928,6 @@ def mrinfo(
     Returns:
         NamedTuple of outputs (described in `MrinfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRINFO_METADATA)
     params = mrinfo_params(
         all_=all_,
         name=name,
@@ -966,7 +966,7 @@ def mrinfo(
         version=version,
         image=image,
     )
-    return mrinfo_execute(params, execution)
+    return mrinfo_execute(params, runner)
 
 
 __all__ = [
@@ -981,20 +981,11 @@ __all__ = [
     "MrinfoParameters",
     "MrinfoPropertyParameters",
     "mrinfo",
-    "mrinfo_cargs",
-    "mrinfo_config_cargs",
     "mrinfo_config_params",
     "mrinfo_execute",
-    "mrinfo_export_grad_fsl_cargs",
-    "mrinfo_export_grad_fsl_outputs",
     "mrinfo_export_grad_fsl_params",
-    "mrinfo_export_pe_eddy_cargs",
-    "mrinfo_export_pe_eddy_outputs",
     "mrinfo_export_pe_eddy_params",
-    "mrinfo_fslgrad_cargs",
     "mrinfo_fslgrad_params",
-    "mrinfo_outputs",
     "mrinfo_params",
-    "mrinfo_property_cargs",
     "mrinfo_property_params",
 ]

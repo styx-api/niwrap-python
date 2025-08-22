@@ -303,7 +303,7 @@ def ants_registration_sy_n_sh_outputs(
 
 def ants_registration_sy_n_sh_execute(
     params: AntsRegistrationSyNShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsRegistrationSyNShOutputs:
     """
     Script for simplified symmetric image registration using ANTs.
@@ -314,10 +314,12 @@ def ants_registration_sy_n_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationSyNShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_REGISTRATION_SY_N_SH_METADATA)
     params = execution.params(params)
     cargs = ants_registration_sy_n_sh_cargs(params, execution)
     ret = ants_registration_sy_n_sh_outputs(params, execution)
@@ -402,8 +404,6 @@ def ants_registration_sy_n_sh(
     Returns:
         NamedTuple of outputs (described in `AntsRegistrationSyNShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_REGISTRATION_SY_N_SH_METADATA)
     params = ants_registration_sy_n_sh_params(
         image_dimension=image_dimension,
         fixed_image=fixed_image,
@@ -422,7 +422,7 @@ def ants_registration_sy_n_sh(
         collapse_output_transforms=collapse_output_transforms,
         random_seed=random_seed,
     )
-    return ants_registration_sy_n_sh_execute(params, execution)
+    return ants_registration_sy_n_sh_execute(params, runner)
 
 
 __all__ = [
@@ -430,8 +430,6 @@ __all__ = [
     "AntsRegistrationSyNShOutputs",
     "AntsRegistrationSyNShParameters",
     "ants_registration_sy_n_sh",
-    "ants_registration_sy_n_sh_cargs",
     "ants_registration_sy_n_sh_execute",
-    "ants_registration_sy_n_sh_outputs",
     "ants_registration_sy_n_sh_params",
 ]

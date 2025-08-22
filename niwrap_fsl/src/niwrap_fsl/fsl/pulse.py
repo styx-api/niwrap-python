@@ -361,7 +361,7 @@ def pulse_outputs(
 
 def pulse_execute(
     params: PulseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PulseOutputs:
     """
     Generates a pulse sequence matrix for a given digital brain image.
@@ -372,10 +372,12 @@ def pulse_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PulseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PULSE_METADATA)
     params = execution.params(params)
     cargs = pulse_cargs(params, execution)
     ret = pulse_outputs(params, execution)
@@ -456,8 +458,6 @@ def pulse(
     Returns:
         NamedTuple of outputs (described in `PulseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PULSE_METADATA)
     params = pulse_params(
         input_file=input_file,
         output_base=output_base,
@@ -485,7 +485,7 @@ def pulse(
         kcoord_flag=kcoord_flag,
         cover=cover,
     )
-    return pulse_execute(params, execution)
+    return pulse_execute(params, runner)
 
 
 __all__ = [
@@ -493,8 +493,6 @@ __all__ = [
     "PulseOutputs",
     "PulseParameters",
     "pulse",
-    "pulse_cargs",
     "pulse_execute",
-    "pulse_outputs",
     "pulse_params",
 ]

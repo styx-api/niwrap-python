@@ -187,7 +187,7 @@ def long_stats_combine_outputs(
 
 def long_stats_combine_execute(
     params: LongStatsCombineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongStatsCombineOutputs:
     """
     Adds columns from stats into longitudinal qdec table, using longitudinally
@@ -199,10 +199,12 @@ def long_stats_combine_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongStatsCombineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_STATS_COMBINE_METADATA)
     params = execution.params(params)
     cargs = long_stats_combine_cargs(params, execution)
     ret = long_stats_combine_outputs(params, execution)
@@ -245,8 +247,6 @@ def long_stats_combine(
     Returns:
         NamedTuple of outputs (described in `LongStatsCombineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_STATS_COMBINE_METADATA)
     params = long_stats_combine_params(
         qdec=qdec,
         stats=stats,
@@ -257,7 +257,7 @@ def long_stats_combine(
         input_stats=input_stats,
         cross_sectional=cross_sectional,
     )
-    return long_stats_combine_execute(params, execution)
+    return long_stats_combine_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "LongStatsCombineOutputs",
     "LongStatsCombineParameters",
     "long_stats_combine",
-    "long_stats_combine_cargs",
     "long_stats_combine_execute",
-    "long_stats_combine_outputs",
     "long_stats_combine_params",
 ]

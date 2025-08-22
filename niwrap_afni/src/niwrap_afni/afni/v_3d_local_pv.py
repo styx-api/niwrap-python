@@ -221,7 +221,7 @@ def v_3d_local_pv_outputs(
 
 def v_3d_local_pv_execute(
     params: V3dLocalPvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLocalPvOutputs:
     """
     Computes the Singular Value Decomposition (SVD) of the time series from a
@@ -234,10 +234,12 @@ def v_3d_local_pv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLocalPvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LOCAL_PV_METADATA)
     params = execution.params(params)
     cargs = v_3d_local_pv_cargs(params, execution)
     ret = v_3d_local_pv_outputs(params, execution)
@@ -291,8 +293,6 @@ def v_3d_local_pv(
     Returns:
         NamedTuple of outputs (described in `V3dLocalPvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LOCAL_PV_METADATA)
     params = v_3d_local_pv_params(
         input_dataset=input_dataset,
         mask=mask,
@@ -306,7 +306,7 @@ def v_3d_local_pv(
         vnorm=vnorm,
         vproj=vproj,
     )
-    return v_3d_local_pv_execute(params, execution)
+    return v_3d_local_pv_execute(params, runner)
 
 
 __all__ = [
@@ -314,8 +314,6 @@ __all__ = [
     "V3dLocalPvParameters",
     "V_3D_LOCAL_PV_METADATA",
     "v_3d_local_pv",
-    "v_3d_local_pv_cargs",
     "v_3d_local_pv_execute",
-    "v_3d_local_pv_outputs",
     "v_3d_local_pv_params",
 ]

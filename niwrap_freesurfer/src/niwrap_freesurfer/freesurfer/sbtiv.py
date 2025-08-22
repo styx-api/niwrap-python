@@ -141,7 +141,7 @@ def sbtiv_outputs(
 
 def sbtiv_execute(
     params: SbtivParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SbtivOutputs:
     """
     Tool to calculate the total intracranial volume of a subject by summing
@@ -153,10 +153,12 @@ def sbtiv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SbtivOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SBTIV_METADATA)
     params = execution.params(params)
     cargs = sbtiv_cargs(params, execution)
     ret = sbtiv_outputs(params, execution)
@@ -187,14 +189,12 @@ def sbtiv(
     Returns:
         NamedTuple of outputs (described in `SbtivOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SBTIV_METADATA)
     params = sbtiv_params(
         input_file=input_file,
         output_file=output_file,
         labels_file=labels_file,
     )
-    return sbtiv_execute(params, execution)
+    return sbtiv_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "SbtivOutputs",
     "SbtivParameters",
     "sbtiv",
-    "sbtiv_cargs",
     "sbtiv_execute",
-    "sbtiv_outputs",
     "sbtiv_params",
 ]

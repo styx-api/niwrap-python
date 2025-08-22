@@ -296,7 +296,7 @@ def amp2response_outputs(
 
 def amp2response_execute(
     params: Amp2responseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Amp2responseOutputs:
     """
     Estimate response function coefficients based on the DWI signal in single-fibre
@@ -324,10 +324,12 @@ def amp2response_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Amp2responseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AMP2RESPONSE_METADATA)
     params = execution.params(params)
     cargs = amp2response_cargs(params, execution)
     ret = amp2response_outputs(params, execution)
@@ -418,8 +420,6 @@ def amp2response(
     Returns:
         NamedTuple of outputs (described in `Amp2responseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AMP2RESPONSE_METADATA)
     params = amp2response_params(
         isotropic=isotropic,
         noconstraint=noconstraint,
@@ -439,7 +439,7 @@ def amp2response(
         directions_1=directions_1,
         response=response,
     )
-    return amp2response_execute(params, execution)
+    return amp2response_execute(params, runner)
 
 
 __all__ = [
@@ -448,10 +448,7 @@ __all__ = [
     "Amp2responseOutputs",
     "Amp2responseParameters",
     "amp2response",
-    "amp2response_cargs",
-    "amp2response_config_cargs",
     "amp2response_config_params",
     "amp2response_execute",
-    "amp2response_outputs",
     "amp2response_params",
 ]

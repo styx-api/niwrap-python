@@ -132,7 +132,7 @@ def design_ttest2_outputs(
 
 def design_ttest2_execute(
     params: DesignTtest2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DesignTtest2Outputs:
     """
     Command for generating group mean contrasts for a two-sample t-test design.
@@ -143,10 +143,12 @@ def design_ttest2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DesignTtest2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DESIGN_TTEST2_METADATA)
     params = execution.params(params)
     cargs = design_ttest2_cargs(params, execution)
     ret = design_ttest2_outputs(params, execution)
@@ -177,15 +179,13 @@ def design_ttest2(
     Returns:
         NamedTuple of outputs (described in `DesignTtest2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DESIGN_TTEST2_METADATA)
     params = design_ttest2_params(
         design_files_rootname=design_files_rootname,
         ngroupa=ngroupa,
         ngroupb=ngroupb,
         include_mean_contrasts=include_mean_contrasts,
     )
-    return design_ttest2_execute(params, execution)
+    return design_ttest2_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "DesignTtest2Outputs",
     "DesignTtest2Parameters",
     "design_ttest2",
-    "design_ttest2_cargs",
     "design_ttest2_execute",
-    "design_ttest2_outputs",
     "design_ttest2_params",
 ]

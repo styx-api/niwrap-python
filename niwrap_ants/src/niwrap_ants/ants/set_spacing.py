@@ -136,7 +136,7 @@ def set_spacing_outputs(
 
 def set_spacing_execute(
     params: SetSpacingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SetSpacingOutputs:
     """
     A tool to set the spacing of an image in each dimension.
@@ -147,10 +147,12 @@ def set_spacing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SetSpacingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SET_SPACING_METADATA)
     params = execution.params(params)
     cargs = set_spacing_cargs(params, execution)
     ret = set_spacing_outputs(params, execution)
@@ -182,15 +184,13 @@ def set_spacing(
     Returns:
         NamedTuple of outputs (described in `SetSpacingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SET_SPACING_METADATA)
     params = set_spacing_params(
         dimension=dimension,
         input_file=input_file,
         output_file=output_file,
         spacing=spacing,
     )
-    return set_spacing_execute(params, execution)
+    return set_spacing_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "SetSpacingOutputs",
     "SetSpacingParameters",
     "set_spacing",
-    "set_spacing_cargs",
     "set_spacing_execute",
-    "set_spacing_outputs",
     "set_spacing_params",
 ]

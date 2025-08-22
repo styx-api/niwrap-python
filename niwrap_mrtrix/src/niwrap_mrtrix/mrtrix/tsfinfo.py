@@ -239,7 +239,7 @@ def tsfinfo_outputs(
 
 def tsfinfo_execute(
     params: TsfinfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TsfinfoOutputs:
     """
     Print out information about a track scalar file.
@@ -256,10 +256,12 @@ def tsfinfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TsfinfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TSFINFO_METADATA)
     params = execution.params(params)
     cargs = tsfinfo_cargs(params, execution)
     ret = tsfinfo_outputs(params, execution)
@@ -315,8 +317,6 @@ def tsfinfo(
     Returns:
         NamedTuple of outputs (described in `TsfinfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TSFINFO_METADATA)
     params = tsfinfo_params(
         count=count,
         ascii_=ascii_,
@@ -330,7 +330,7 @@ def tsfinfo(
         version=version,
         tracks=tracks,
     )
-    return tsfinfo_execute(params, execution)
+    return tsfinfo_execute(params, runner)
 
 
 __all__ = [
@@ -339,10 +339,7 @@ __all__ = [
     "TsfinfoOutputs",
     "TsfinfoParameters",
     "tsfinfo",
-    "tsfinfo_cargs",
-    "tsfinfo_config_cargs",
     "tsfinfo_config_params",
     "tsfinfo_execute",
-    "tsfinfo_outputs",
     "tsfinfo_params",
 ]

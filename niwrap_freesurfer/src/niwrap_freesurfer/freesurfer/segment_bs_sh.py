@@ -119,7 +119,7 @@ def segment_bs_sh_outputs(
 
 def segment_bs_sh_execute(
     params: SegmentBsShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentBsShOutputs:
     """
     Segmentation tool for hippocampal/amygdala and brainstem modules.
@@ -130,10 +130,12 @@ def segment_bs_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentBsShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_BS_SH_METADATA)
     params = execution.params(params)
     cargs = segment_bs_sh_cargs(params, execution)
     ret = segment_bs_sh_outputs(params, execution)
@@ -159,12 +161,10 @@ def segment_bs_sh(
     Returns:
         NamedTuple of outputs (described in `SegmentBsShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_BS_SH_METADATA)
     params = segment_bs_sh_params(
         matlab_runtime=matlab_runtime,
     )
-    return segment_bs_sh_execute(params, execution)
+    return segment_bs_sh_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "SegmentBsShOutputs",
     "SegmentBsShParameters",
     "segment_bs_sh",
-    "segment_bs_sh_cargs",
     "segment_bs_sh_execute",
-    "segment_bs_sh_outputs",
     "segment_bs_sh_params",
 ]

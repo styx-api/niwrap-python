@@ -143,7 +143,7 @@ def rebase_tensor_image_outputs(
 
 def rebase_tensor_image_execute(
     params: RebaseTensorImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RebaseTensorImageOutputs:
     """
     Rebase Tensor Image using specified dimensionality and method.
@@ -154,10 +154,12 @@ def rebase_tensor_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RebaseTensorImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REBASE_TENSOR_IMAGE_METADATA)
     params = execution.params(params)
     cargs = rebase_tensor_image_cargs(params, execution)
     ret = rebase_tensor_image_outputs(params, execution)
@@ -191,8 +193,6 @@ def rebase_tensor_image(
     Returns:
         NamedTuple of outputs (described in `RebaseTensorImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REBASE_TENSOR_IMAGE_METADATA)
     params = rebase_tensor_image_params(
         dimension=dimension,
         infile=infile,
@@ -200,7 +200,7 @@ def rebase_tensor_image(
         method=method,
         reference=reference,
     )
-    return rebase_tensor_image_execute(params, execution)
+    return rebase_tensor_image_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "RebaseTensorImageOutputs",
     "RebaseTensorImageParameters",
     "rebase_tensor_image",
-    "rebase_tensor_image_cargs",
     "rebase_tensor_image_execute",
-    "rebase_tensor_image_outputs",
     "rebase_tensor_image_params",
 ]

@@ -148,7 +148,7 @@ def possum_sum_outputs(
 
 def possum_sum_execute(
     params: PossumSumParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PossumSumOutputs:
     """
     Sum of output signals from multiple possum processors.
@@ -159,10 +159,12 @@ def possum_sum_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PossumSumOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POSSUM_SUM_METADATA)
     params = execution.params(params)
     cargs = possum_sum_cargs(params, execution)
     ret = possum_sum_outputs(params, execution)
@@ -194,15 +196,13 @@ def possum_sum(
     Returns:
         NamedTuple of outputs (described in `PossumSumOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POSSUM_SUM_METADATA)
     params = possum_sum_params(
         input_signal=input_signal,
         output_signal=output_signal,
         num_processors=num_processors,
         verbose_flag=verbose_flag,
     )
-    return possum_sum_execute(params, execution)
+    return possum_sum_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "PossumSumOutputs",
     "PossumSumParameters",
     "possum_sum",
-    "possum_sum_cargs",
     "possum_sum_execute",
-    "possum_sum_outputs",
     "possum_sum_params",
 ]

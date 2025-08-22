@@ -163,7 +163,7 @@ def v_3d_tortoiseto_here_outputs(
 
 def v_3d_tortoiseto_here_execute(
     params: V3dTortoisetoHereParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTortoisetoHereOutputs:
     """
     Convert standard TORTOISE DTs (diagonal-first format) to standard AFNI (lower
@@ -175,10 +175,12 @@ def v_3d_tortoiseto_here_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTortoisetoHereOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TORTOISETO_HERE_METADATA)
     params = execution.params(params)
     cargs = v_3d_tortoiseto_here_cargs(params, execution)
     ret = v_3d_tortoiseto_here_outputs(params, execution)
@@ -217,8 +219,6 @@ def v_3d_tortoiseto_here(
     Returns:
         NamedTuple of outputs (described in `V3dTortoisetoHereOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TORTOISETO_HERE_METADATA)
     params = v_3d_tortoiseto_here_params(
         dt_tort=dt_tort,
         prefix=prefix,
@@ -227,7 +227,7 @@ def v_3d_tortoiseto_here(
         flip_y=flip_y,
         flip_z=flip_z,
     )
-    return v_3d_tortoiseto_here_execute(params, execution)
+    return v_3d_tortoiseto_here_execute(params, runner)
 
 
 __all__ = [
@@ -235,8 +235,6 @@ __all__ = [
     "V3dTortoisetoHereParameters",
     "V_3D_TORTOISETO_HERE_METADATA",
     "v_3d_tortoiseto_here",
-    "v_3d_tortoiseto_here_cargs",
     "v_3d_tortoiseto_here_execute",
-    "v_3d_tortoiseto_here_outputs",
     "v_3d_tortoiseto_here_params",
 ]

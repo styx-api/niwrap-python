@@ -455,7 +455,7 @@ def fixelconvert_outputs(
 
 def fixelconvert_execute(
     params: FixelconvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixelconvertOutputs:
     """
     Convert between the old format fixel image (.msf / .msh) and the new fixel
@@ -473,10 +473,12 @@ def fixelconvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixelconvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXELCONVERT_METADATA)
     params = execution.params(params)
     cargs = fixelconvert_cargs(params, execution)
     ret = fixelconvert_outputs(params, execution)
@@ -546,8 +548,6 @@ def fixelconvert(
     Returns:
         NamedTuple of outputs (described in `FixelconvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXELCONVERT_METADATA)
     params = fixelconvert_params(
         name=name,
         nii=nii,
@@ -566,7 +566,7 @@ def fixelconvert(
         fixel_in=fixel_in,
         fixel_out=fixel_out,
     )
-    return fixelconvert_execute(params, execution)
+    return fixelconvert_execute(params, runner)
 
 
 __all__ = [
@@ -579,18 +579,11 @@ __all__ = [
     "FixelconvertVariousString1Parameters",
     "FixelconvertVariousStringParameters",
     "fixelconvert",
-    "fixelconvert_cargs",
-    "fixelconvert_config_cargs",
     "fixelconvert_config_params",
     "fixelconvert_execute",
-    "fixelconvert_outputs",
     "fixelconvert_params",
-    "fixelconvert_various_file_1_cargs",
     "fixelconvert_various_file_1_params",
-    "fixelconvert_various_file_cargs",
     "fixelconvert_various_file_params",
-    "fixelconvert_various_string_1_cargs",
     "fixelconvert_various_string_1_params",
-    "fixelconvert_various_string_cargs",
     "fixelconvert_various_string_params",
 ]

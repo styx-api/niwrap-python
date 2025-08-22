@@ -137,7 +137,7 @@ def surface_modify_sphere_outputs(
 
 def surface_modify_sphere_execute(
     params: SurfaceModifySphereParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceModifySphereOutputs:
     """
     Change radius and optionally recenter a sphere.
@@ -157,10 +157,12 @@ def surface_modify_sphere_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceModifySphereOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_MODIFY_SPHERE_METADATA)
     params = execution.params(params)
     cargs = surface_modify_sphere_cargs(params, execution)
     ret = surface_modify_sphere_outputs(params, execution)
@@ -200,15 +202,13 @@ def surface_modify_sphere(
     Returns:
         NamedTuple of outputs (described in `SurfaceModifySphereOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_MODIFY_SPHERE_METADATA)
     params = surface_modify_sphere_params(
         sphere_in=sphere_in,
         radius=radius,
         sphere_out=sphere_out,
         opt_recenter=opt_recenter,
     )
-    return surface_modify_sphere_execute(params, execution)
+    return surface_modify_sphere_execute(params, runner)
 
 
 __all__ = [
@@ -216,8 +216,6 @@ __all__ = [
     "SurfaceModifySphereOutputs",
     "SurfaceModifySphereParameters",
     "surface_modify_sphere",
-    "surface_modify_sphere_cargs",
     "surface_modify_sphere_execute",
-    "surface_modify_sphere_outputs",
     "surface_modify_sphere_params",
 ]

@@ -142,7 +142,7 @@ def mris_rf_train_outputs(
 
 def mris_rf_train_execute(
     params: MrisRfTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRfTrainOutputs:
     """
     Tool for training a random forest classifier using MRIS surface data.
@@ -153,10 +153,12 @@ def mris_rf_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRfTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_RF_TRAIN_METADATA)
     params = execution.params(params)
     cargs = mris_rf_train_cargs(params, execution)
     ret = mris_rf_train_outputs(params, execution)
@@ -188,15 +190,13 @@ def mris_rf_train(
     Returns:
         NamedTuple of outputs (described in `MrisRfTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_RF_TRAIN_METADATA)
     params = mris_rf_train_params(
         subjects=subjects,
         output_name=output_name,
         hemi=hemi,
         surf=surf,
     )
-    return mris_rf_train_execute(params, execution)
+    return mris_rf_train_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "MrisRfTrainOutputs",
     "MrisRfTrainParameters",
     "mris_rf_train",
-    "mris_rf_train_cargs",
     "mris_rf_train_execute",
-    "mris_rf_train_outputs",
     "mris_rf_train_params",
 ]

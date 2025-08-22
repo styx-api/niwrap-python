@@ -121,7 +121,7 @@ def mri_correct_segmentations_outputs(
 
 def mri_correct_segmentations_execute(
     params: MriCorrectSegmentationsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriCorrectSegmentationsOutputs:
     """
     Tool for correcting automated infant segmentations.
@@ -132,10 +132,12 @@ def mri_correct_segmentations_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriCorrectSegmentationsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CORRECT_SEGMENTATIONS_METADATA)
     params = execution.params(params)
     cargs = mri_correct_segmentations_cargs(params, execution)
     ret = mri_correct_segmentations_outputs(params, execution)
@@ -162,13 +164,11 @@ def mri_correct_segmentations(
     Returns:
         NamedTuple of outputs (described in `MriCorrectSegmentationsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CORRECT_SEGMENTATIONS_METADATA)
     params = mri_correct_segmentations_params(
         input_file_1=input_file_1,
         input_file_2=input_file_2,
     )
-    return mri_correct_segmentations_execute(params, execution)
+    return mri_correct_segmentations_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "MriCorrectSegmentationsOutputs",
     "MriCorrectSegmentationsParameters",
     "mri_correct_segmentations",
-    "mri_correct_segmentations_cargs",
     "mri_correct_segmentations_execute",
-    "mri_correct_segmentations_outputs",
     "mri_correct_segmentations_params",
 ]

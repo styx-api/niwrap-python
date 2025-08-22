@@ -136,7 +136,7 @@ def mris_merge_parcellations_outputs(
 
 def mris_merge_parcellations_execute(
     params: MrisMergeParcellationsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMergeParcellationsOutputs:
     """
     This program computes the Hausdorff distance between two labels on the surface.
@@ -147,10 +147,12 @@ def mris_merge_parcellations_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMergeParcellationsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MERGE_PARCELLATIONS_METADATA)
     params = execution.params(params)
     cargs = mris_merge_parcellations_cargs(params, execution)
     ret = mris_merge_parcellations_outputs(params, execution)
@@ -181,15 +183,13 @@ def mris_merge_parcellations(
     Returns:
         NamedTuple of outputs (described in `MrisMergeParcellationsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MERGE_PARCELLATIONS_METADATA)
     params = mris_merge_parcellations_params(
         surface=surface,
         label1=label1,
         label2=label2,
         annot_name=annot_name,
     )
-    return mris_merge_parcellations_execute(params, execution)
+    return mris_merge_parcellations_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "MrisMergeParcellationsOutputs",
     "MrisMergeParcellationsParameters",
     "mris_merge_parcellations",
-    "mris_merge_parcellations_cargs",
     "mris_merge_parcellations_execute",
-    "mris_merge_parcellations_outputs",
     "mris_merge_parcellations_params",
 ]

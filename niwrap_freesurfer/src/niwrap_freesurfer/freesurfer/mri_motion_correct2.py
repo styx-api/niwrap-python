@@ -192,7 +192,7 @@ def mri_motion_correct2_outputs(
 
 def mri_motion_correct2_execute(
     params: MriMotionCorrect2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMotionCorrect2Outputs:
     """
     Aligns and averages two or more volumes using minctracc for alignment and
@@ -204,10 +204,12 @@ def mri_motion_correct2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMotionCorrect2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MOTION_CORRECT2_METADATA)
     params = execution.params(params)
     cargs = mri_motion_correct2_cargs(params, execution)
     ret = mri_motion_correct2_outputs(params, execution)
@@ -252,8 +254,6 @@ def mri_motion_correct2(
     Returns:
         NamedTuple of outputs (described in `MriMotionCorrect2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MOTION_CORRECT2_METADATA)
     params = mri_motion_correct2_params(
         output_spec=output_spec,
         input_files=input_files,
@@ -266,7 +266,7 @@ def mri_motion_correct2(
         version=version,
         debug=debug,
     )
-    return mri_motion_correct2_execute(params, execution)
+    return mri_motion_correct2_execute(params, runner)
 
 
 __all__ = [
@@ -274,8 +274,6 @@ __all__ = [
     "MriMotionCorrect2Outputs",
     "MriMotionCorrect2Parameters",
     "mri_motion_correct2",
-    "mri_motion_correct2_cargs",
     "mri_motion_correct2_execute",
-    "mri_motion_correct2_outputs",
     "mri_motion_correct2_params",
 ]

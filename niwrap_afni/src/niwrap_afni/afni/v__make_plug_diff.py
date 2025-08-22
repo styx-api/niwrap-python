@@ -163,7 +163,7 @@ def v__make_plug_diff_outputs(
 
 def v__make_plug_diff_execute(
     params: VMakePlugDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VMakePlugDiffOutputs:
     """
     Compiles AFNI's diffusion plugin.
@@ -174,10 +174,12 @@ def v__make_plug_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VMakePlugDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__MAKE_PLUG_DIFF_METADATA)
     params = execution.params(params)
     cargs = v__make_plug_diff_cargs(params, execution)
     ret = v__make_plug_diff_outputs(params, execution)
@@ -214,8 +216,6 @@ def v__make_plug_diff(
     Returns:
         NamedTuple of outputs (described in `VMakePlugDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__MAKE_PLUG_DIFF_METADATA)
     params = v__make_plug_diff_params(
         vtk_dir=vtk_dir,
         xm_dir=xm_dir,
@@ -225,7 +225,7 @@ def v__make_plug_diff(
         linux=linux,
         diff_dir=diff_dir,
     )
-    return v__make_plug_diff_execute(params, execution)
+    return v__make_plug_diff_execute(params, runner)
 
 
 __all__ = [
@@ -233,8 +233,6 @@ __all__ = [
     "VMakePlugDiffParameters",
     "V__MAKE_PLUG_DIFF_METADATA",
     "v__make_plug_diff",
-    "v__make_plug_diff_cargs",
     "v__make_plug_diff_execute",
-    "v__make_plug_diff_outputs",
     "v__make_plug_diff_params",
 ]

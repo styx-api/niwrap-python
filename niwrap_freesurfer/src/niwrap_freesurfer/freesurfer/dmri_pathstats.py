@@ -293,7 +293,7 @@ def dmri_pathstats_outputs(
 
 def dmri_pathstats_execute(
     params: DmriPathstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriPathstatsOutputs:
     """
     Compute path statistics for diffusion MRI data based on input .trk file and
@@ -305,10 +305,12 @@ def dmri_pathstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriPathstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_PATHSTATS_METADATA)
     params = execution.params(params)
     cargs = dmri_pathstats_cargs(params, execution)
     ret = dmri_pathstats_outputs(params, execution)
@@ -372,8 +374,6 @@ def dmri_pathstats(
     Returns:
         NamedTuple of outputs (described in `DmriPathstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_PATHSTATS_METADATA)
     params = dmri_pathstats_params(
         intrk=intrk,
         rois=rois,
@@ -395,7 +395,7 @@ def dmri_pathstats(
         help_=help_,
         version=version,
     )
-    return dmri_pathstats_execute(params, execution)
+    return dmri_pathstats_execute(params, runner)
 
 
 __all__ = [
@@ -403,8 +403,6 @@ __all__ = [
     "DmriPathstatsOutputs",
     "DmriPathstatsParameters",
     "dmri_pathstats",
-    "dmri_pathstats_cargs",
     "dmri_pathstats_execute",
-    "dmri_pathstats_outputs",
     "dmri_pathstats_params",
 ]

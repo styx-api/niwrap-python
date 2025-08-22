@@ -415,7 +415,7 @@ def v_1dplot_py_outputs(
 
 def v_1dplot_py_execute(
     params: V1dplotPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dplotPyOutputs:
     """
     This program is for making images to visualize columns of numbers from 1D text
@@ -427,10 +427,12 @@ def v_1dplot_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dplotPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DPLOT_PY_METADATA)
     params = execution.params(params)
     cargs = v_1dplot_py_cargs(params, execution)
     ret = v_1dplot_py_outputs(params, execution)
@@ -530,8 +532,6 @@ def v_1dplot_py(
     Returns:
         NamedTuple of outputs (described in `V1dplotPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DPLOT_PY_METADATA)
     params = v_1dplot_py_params(
         infiles=infiles,
         prefix=prefix,
@@ -566,7 +566,7 @@ def v_1dplot_py(
         censor_rgb=censor_rgb,
         bkgd_color=bkgd_color,
     )
-    return v_1dplot_py_execute(params, execution)
+    return v_1dplot_py_execute(params, runner)
 
 
 __all__ = [
@@ -574,8 +574,6 @@ __all__ = [
     "V1dplotPyParameters",
     "V_1DPLOT_PY_METADATA",
     "v_1dplot_py",
-    "v_1dplot_py_cargs",
     "v_1dplot_py_execute",
-    "v_1dplot_py_outputs",
     "v_1dplot_py_params",
 ]

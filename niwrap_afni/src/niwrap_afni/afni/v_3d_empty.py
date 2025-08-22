@@ -157,7 +157,7 @@ def v_3d_empty_outputs(
 
 def v_3d_empty_execute(
     params: V3dEmptyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dEmptyOutputs:
     """
     Tool to create an 'empty' dataset .HEAD file.
@@ -168,10 +168,12 @@ def v_3d_empty_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dEmptyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_EMPTY_METADATA)
     params = execution.params(params)
     cargs = v_3d_empty_cargs(params, execution)
     ret = v_3d_empty_outputs(params, execution)
@@ -204,15 +206,13 @@ def v_3d_empty(
     Returns:
         NamedTuple of outputs (described in `V3dEmptyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_EMPTY_METADATA)
     params = v_3d_empty_params(
         prefix=prefix,
         geometry=geometry,
         nxyz=nxyz,
         nt_=nt_,
     )
-    return v_3d_empty_execute(params, execution)
+    return v_3d_empty_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "V3dEmptyParameters",
     "V_3D_EMPTY_METADATA",
     "v_3d_empty",
-    "v_3d_empty_cargs",
     "v_3d_empty_execute",
-    "v_3d_empty_outputs",
     "v_3d_empty_params",
 ]

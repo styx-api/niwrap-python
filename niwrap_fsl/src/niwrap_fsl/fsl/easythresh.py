@@ -151,7 +151,7 @@ def easythresh_outputs(
 
 def easythresh_execute(
     params: EasythreshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EasythreshOutputs:
     """
     Cluster-based statistical thresholding tool from FSL.
@@ -162,10 +162,12 @@ def easythresh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EasythreshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EASYTHRESH_METADATA)
     params = execution.params(params)
     cargs = easythresh_cargs(params, execution)
     ret = easythresh_outputs(params, execution)
@@ -202,8 +204,6 @@ def easythresh(
     Returns:
         NamedTuple of outputs (described in `EasythreshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EASYTHRESH_METADATA)
     params = easythresh_params(
         raw_zstat_input=raw_zstat_input,
         brain_mask_input=brain_mask_input,
@@ -213,7 +213,7 @@ def easythresh(
         output_root=output_root,
         mm_flag=mm_flag,
     )
-    return easythresh_execute(params, execution)
+    return easythresh_execute(params, runner)
 
 
 __all__ = [
@@ -221,8 +221,6 @@ __all__ = [
     "EasythreshOutputs",
     "EasythreshParameters",
     "easythresh",
-    "easythresh_cargs",
     "easythresh_execute",
-    "easythresh_outputs",
     "easythresh_params",
 ]

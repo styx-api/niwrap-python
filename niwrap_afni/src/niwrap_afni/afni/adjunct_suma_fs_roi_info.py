@@ -158,7 +158,7 @@ def adjunct_suma_fs_roi_info_outputs(
 
 def adjunct_suma_fs_roi_info_execute(
     params: AdjunctSumaFsRoiInfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctSumaFsRoiInfoOutputs:
     """
     Script for making ROI stats for the SUMA/ directory created by
@@ -170,10 +170,12 @@ def adjunct_suma_fs_roi_info_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctSumaFsRoiInfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_SUMA_FS_ROI_INFO_METADATA)
     params = execution.params(params)
     cargs = adjunct_suma_fs_roi_info_cargs(params, execution)
     ret = adjunct_suma_fs_roi_info_outputs(params, execution)
@@ -207,8 +209,6 @@ def adjunct_suma_fs_roi_info(
     Returns:
         NamedTuple of outputs (described in `AdjunctSumaFsRoiInfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_SUMA_FS_ROI_INFO_METADATA)
     params = adjunct_suma_fs_roi_info_params(
         subject_id=subject_id,
         suma_directory=suma_directory,
@@ -216,7 +216,7 @@ def adjunct_suma_fs_roi_info(
         hview=hview,
         version=version,
     )
-    return adjunct_suma_fs_roi_info_execute(params, execution)
+    return adjunct_suma_fs_roi_info_execute(params, runner)
 
 
 __all__ = [
@@ -224,8 +224,6 @@ __all__ = [
     "AdjunctSumaFsRoiInfoOutputs",
     "AdjunctSumaFsRoiInfoParameters",
     "adjunct_suma_fs_roi_info",
-    "adjunct_suma_fs_roi_info_cargs",
     "adjunct_suma_fs_roi_info_execute",
-    "adjunct_suma_fs_roi_info_outputs",
     "adjunct_suma_fs_roi_info_params",
 ]

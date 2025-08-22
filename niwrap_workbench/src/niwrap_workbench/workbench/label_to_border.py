@@ -152,7 +152,7 @@ def label_to_border_outputs(
 
 def label_to_border_execute(
     params: LabelToBorderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
     Draw borders around labels.
@@ -168,10 +168,12 @@ def label_to_border_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelToBorderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_TO_BORDER_METADATA)
     params = execution.params(params)
     cargs = label_to_border_cargs(params, execution)
     ret = label_to_border_outputs(params, execution)
@@ -210,8 +212,6 @@ def label_to_border(
     Returns:
         NamedTuple of outputs (described in `LabelToBorderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_TO_BORDER_METADATA)
     params = label_to_border_params(
         surface=surface,
         label_in=label_in,
@@ -219,7 +219,7 @@ def label_to_border(
         opt_placement_fraction=opt_placement_fraction,
         opt_column_column=opt_column_column,
     )
-    return label_to_border_execute(params, execution)
+    return label_to_border_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "LabelToBorderOutputs",
     "LabelToBorderParameters",
     "label_to_border",
-    "label_to_border_cargs",
     "label_to_border_execute",
-    "label_to_border_outputs",
     "label_to_border_params",
 ]

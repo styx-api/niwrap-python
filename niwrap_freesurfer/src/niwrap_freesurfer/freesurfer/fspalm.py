@@ -213,7 +213,7 @@ def fspalm_outputs(
 
 def fspalm_execute(
     params: FspalmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FspalmOutputs:
     """
     Prepares and analyzes the output of mri_glmfit for Permutation Analysis of
@@ -225,10 +225,12 @@ def fspalm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FspalmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSPALM_METADATA)
     params = execution.params(params)
     cargs = fspalm_cargs(params, execution)
     ret = fspalm_outputs(params, execution)
@@ -280,8 +282,6 @@ def fspalm(
     Returns:
         NamedTuple of outputs (described in `FspalmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSPALM_METADATA)
     params = fspalm_params(
         glmdir=glmdir,
         cft=cft,
@@ -298,7 +298,7 @@ def fspalm(
         v_3spaces=v_3spaces,
         pargs=pargs,
     )
-    return fspalm_execute(params, execution)
+    return fspalm_execute(params, runner)
 
 
 __all__ = [
@@ -306,8 +306,6 @@ __all__ = [
     "FspalmOutputs",
     "FspalmParameters",
     "fspalm",
-    "fspalm_cargs",
     "fspalm_execute",
-    "fspalm_outputs",
     "fspalm_params",
 ]

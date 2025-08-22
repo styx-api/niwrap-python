@@ -271,7 +271,7 @@ def tcksample_outputs(
 
 def tcksample_execute(
     params: TcksampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TcksampleOutputs:
     """
     Sample values of an associated image along tracks.
@@ -293,10 +293,12 @@ def tcksample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TcksampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKSAMPLE_METADATA)
     params = execution.params(params)
     cargs = tcksample_cargs(params, execution)
     ret = tcksample_outputs(params, execution)
@@ -371,8 +373,6 @@ def tcksample(
     Returns:
         NamedTuple of outputs (described in `TcksampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKSAMPLE_METADATA)
     params = tcksample_params(
         stat_tck=stat_tck,
         nointerp=nointerp,
@@ -390,7 +390,7 @@ def tcksample(
         image=image,
         values_=values_,
     )
-    return tcksample_execute(params, execution)
+    return tcksample_execute(params, runner)
 
 
 __all__ = [
@@ -399,10 +399,7 @@ __all__ = [
     "TcksampleOutputs",
     "TcksampleParameters",
     "tcksample",
-    "tcksample_cargs",
-    "tcksample_config_cargs",
     "tcksample_config_params",
     "tcksample_execute",
-    "tcksample_outputs",
     "tcksample_params",
 ]

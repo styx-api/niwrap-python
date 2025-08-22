@@ -408,7 +408,7 @@ def mri_segment_outputs(
 
 def mri_segment_execute(
     params: MriSegmentParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegmentOutputs:
     """
     Segments white matter from the input volume.
@@ -419,10 +419,12 @@ def mri_segment_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegmentOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEGMENT_METADATA)
     params = execution.params(params)
     cargs = mri_segment_cargs(params, execution)
     ret = mri_segment_outputs(params, execution)
@@ -513,8 +515,6 @@ def mri_segment(
     Returns:
         NamedTuple of outputs (described in `MriSegmentOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEGMENT_METADATA)
     params = mri_segment_params(
         in_vol=in_vol,
         out_vol=out_vol,
@@ -551,7 +551,7 @@ def mri_segment(
         diag_write=diag_write,
         diag_verbose=diag_verbose,
     )
-    return mri_segment_execute(params, execution)
+    return mri_segment_execute(params, runner)
 
 
 __all__ = [
@@ -559,8 +559,6 @@ __all__ = [
     "MriSegmentOutputs",
     "MriSegmentParameters",
     "mri_segment",
-    "mri_segment_cargs",
     "mri_segment_execute",
-    "mri_segment_outputs",
     "mri_segment_params",
 ]

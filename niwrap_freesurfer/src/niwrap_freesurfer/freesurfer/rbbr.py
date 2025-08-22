@@ -299,7 +299,7 @@ def rbbr_outputs(
 
 def rbbr_execute(
     params: RbbrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RbbrOutputs:
     """
     Robust version of bbregister.
@@ -310,10 +310,12 @@ def rbbr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RbbrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RBBR_METADATA)
     params = execution.params(params)
     cargs = rbbr_cargs(params, execution)
     ret = rbbr_outputs(params, execution)
@@ -380,8 +382,6 @@ def rbbr(
     Returns:
         NamedTuple of outputs (described in `RbbrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RBBR_METADATA)
     params = rbbr_params(
         subject=subject,
         moving_image=moving_image,
@@ -406,7 +406,7 @@ def rbbr(
         output_template=output_template,
         no_merge=no_merge,
     )
-    return rbbr_execute(params, execution)
+    return rbbr_execute(params, runner)
 
 
 __all__ = [
@@ -414,8 +414,6 @@ __all__ = [
     "RbbrOutputs",
     "RbbrParameters",
     "rbbr",
-    "rbbr_cargs",
     "rbbr_execute",
-    "rbbr_outputs",
     "rbbr_params",
 ]

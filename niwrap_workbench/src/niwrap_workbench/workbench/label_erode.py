@@ -170,7 +170,7 @@ def label_erode_outputs(
 
 def label_erode_execute(
     params: LabelErodeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
     Erode a label file.
@@ -188,10 +188,12 @@ def label_erode_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelErodeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_ERODE_METADATA)
     params = execution.params(params)
     cargs = label_erode_cargs(params, execution)
     ret = label_erode_outputs(params, execution)
@@ -239,8 +241,6 @@ def label_erode(
     Returns:
         NamedTuple of outputs (described in `LabelErodeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_ERODE_METADATA)
     params = label_erode_params(
         label=label,
         surface=surface,
@@ -250,7 +250,7 @@ def label_erode(
         opt_column_column=opt_column_column,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return label_erode_execute(params, execution)
+    return label_erode_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "LabelErodeOutputs",
     "LabelErodeParameters",
     "label_erode",
-    "label_erode_cargs",
     "label_erode_execute",
-    "label_erode_outputs",
     "label_erode_params",
 ]

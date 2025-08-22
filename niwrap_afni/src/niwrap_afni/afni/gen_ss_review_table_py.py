@@ -229,7 +229,7 @@ def gen_ss_review_table_py_outputs(
 
 def gen_ss_review_table_py_execute(
     params: GenSsReviewTablePyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GenSsReviewTablePyOutputs:
     """
     Generate a table from ss_review_basic output files.
@@ -240,10 +240,12 @@ def gen_ss_review_table_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GenSsReviewTablePyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GEN_SS_REVIEW_TABLE_PY_METADATA)
     params = execution.params(params)
     cargs = gen_ss_review_table_py_cargs(params, execution)
     ret = gen_ss_review_table_py_outputs(params, execution)
@@ -294,8 +296,6 @@ def gen_ss_review_table_py(
     Returns:
         NamedTuple of outputs (described in `GenSsReviewTablePyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GEN_SS_REVIEW_TABLE_PY_METADATA)
     params = gen_ss_review_table_py_params(
         infiles=infiles,
         write_table=write_table,
@@ -312,7 +312,7 @@ def gen_ss_review_table_py(
         show_missing=show_missing,
         verbosity=verbosity,
     )
-    return gen_ss_review_table_py_execute(params, execution)
+    return gen_ss_review_table_py_execute(params, runner)
 
 
 __all__ = [
@@ -320,8 +320,6 @@ __all__ = [
     "GenSsReviewTablePyOutputs",
     "GenSsReviewTablePyParameters",
     "gen_ss_review_table_py",
-    "gen_ss_review_table_py_cargs",
     "gen_ss_review_table_py_execute",
-    "gen_ss_review_table_py_outputs",
     "gen_ss_review_table_py_params",
 ]

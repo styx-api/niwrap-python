@@ -466,7 +466,7 @@ def cifti_correlation_gradient_outputs(
 
 def cifti_correlation_gradient_execute(
     params: CiftiCorrelationGradientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
     Correlate cifti rows and take gradient.
@@ -482,10 +482,12 @@ def cifti_correlation_gradient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationGradientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CORRELATION_GRADIENT_METADATA)
     params = execution.params(params)
     cargs = cifti_correlation_gradient_cargs(params, execution)
     ret = cifti_correlation_gradient_outputs(params, execution)
@@ -553,8 +555,6 @@ def cifti_correlation_gradient(
     Returns:
         NamedTuple of outputs (described in `CiftiCorrelationGradientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CORRELATION_GRADIENT_METADATA)
     params = cifti_correlation_gradient_params(
         cifti=cifti,
         cifti_out=cifti_out,
@@ -572,7 +572,7 @@ def cifti_correlation_gradient(
         opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
         double_correlation=double_correlation,
     )
-    return cifti_correlation_gradient_execute(params, execution)
+    return cifti_correlation_gradient_execute(params, runner)
 
 
 __all__ = [
@@ -584,16 +584,10 @@ __all__ = [
     "CiftiCorrelationGradientParameters",
     "CiftiCorrelationGradientRightSurfaceParameters",
     "cifti_correlation_gradient",
-    "cifti_correlation_gradient_cargs",
-    "cifti_correlation_gradient_cerebellum_surface_cargs",
     "cifti_correlation_gradient_cerebellum_surface_params",
-    "cifti_correlation_gradient_double_correlation_cargs",
     "cifti_correlation_gradient_double_correlation_params",
     "cifti_correlation_gradient_execute",
-    "cifti_correlation_gradient_left_surface_cargs",
     "cifti_correlation_gradient_left_surface_params",
-    "cifti_correlation_gradient_outputs",
     "cifti_correlation_gradient_params",
-    "cifti_correlation_gradient_right_surface_cargs",
     "cifti_correlation_gradient_right_surface_params",
 ]

@@ -122,7 +122,7 @@ def fsrealpath_outputs(
 
 def fsrealpath_execute(
     params: FsrealpathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsrealpathOutputs:
     """
     Resolve symbolic links in a path.
@@ -133,10 +133,12 @@ def fsrealpath_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsrealpathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSREALPATH_METADATA)
     params = execution.params(params)
     cargs = fsrealpath_cargs(params, execution)
     ret = fsrealpath_outputs(params, execution)
@@ -163,13 +165,11 @@ def fsrealpath(
     Returns:
         NamedTuple of outputs (described in `FsrealpathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSREALPATH_METADATA)
     params = fsrealpath_params(
         path=path,
         help_=help_,
     )
-    return fsrealpath_execute(params, execution)
+    return fsrealpath_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "FsrealpathOutputs",
     "FsrealpathParameters",
     "fsrealpath",
-    "fsrealpath_cargs",
     "fsrealpath_execute",
-    "fsrealpath_outputs",
     "fsrealpath_params",
 ]

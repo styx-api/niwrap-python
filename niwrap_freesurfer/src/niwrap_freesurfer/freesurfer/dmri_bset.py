@@ -212,7 +212,7 @@ def dmri_bset_outputs(
 
 def dmri_bset_execute(
     params: DmriBsetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriBsetOutputs:
     """
     This tool extracts a subset of volumes, b-values, and gradient directions from a
@@ -224,10 +224,12 @@ def dmri_bset_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriBsetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_BSET_METADATA)
     params = execution.params(params)
     cargs = dmri_bset_cargs(params, execution)
     ret = dmri_bset_outputs(params, execution)
@@ -276,8 +278,6 @@ def dmri_bset(
     Returns:
         NamedTuple of outputs (described in `DmriBsetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_BSET_METADATA)
     params = dmri_bset_params(
         input_dwi=input_dwi,
         output_dwi=output_dwi,
@@ -290,7 +290,7 @@ def dmri_bset(
         output_b_table=output_b_table,
         output_g_table=output_g_table,
     )
-    return dmri_bset_execute(params, execution)
+    return dmri_bset_execute(params, runner)
 
 
 __all__ = [
@@ -298,8 +298,6 @@ __all__ = [
     "DmriBsetOutputs",
     "DmriBsetParameters",
     "dmri_bset",
-    "dmri_bset_cargs",
     "dmri_bset_execute",
-    "dmri_bset_outputs",
     "dmri_bset_params",
 ]

@@ -272,7 +272,7 @@ def v_3d_zipper_zapper_outputs(
 
 def v_3d_zipper_zapper_execute(
     params: V3dZipperZapperParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dZipperZapperOutputs:
     """
     A basic program to highlight problematic volumes in data sets, especially
@@ -284,10 +284,12 @@ def v_3d_zipper_zapper_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dZipperZapperOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ZIPPER_ZAPPER_METADATA)
     params = execution.params(params)
     cargs = v_3d_zipper_zapper_cargs(params, execution)
     ret = v_3d_zipper_zapper_outputs(params, execution)
@@ -356,8 +358,6 @@ def v_3d_zipper_zapper(
     Returns:
         NamedTuple of outputs (described in `V3dZipperZapperOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ZIPPER_ZAPPER_METADATA)
     params = v_3d_zipper_zapper_params(
         input_file=input_file,
         output_prefix=output_prefix,
@@ -376,7 +376,7 @@ def v_3d_zipper_zapper(
         min_corr_len=min_corr_len,
         min_corr_corr=min_corr_corr,
     )
-    return v_3d_zipper_zapper_execute(params, execution)
+    return v_3d_zipper_zapper_execute(params, runner)
 
 
 __all__ = [
@@ -384,8 +384,6 @@ __all__ = [
     "V3dZipperZapperParameters",
     "V_3D_ZIPPER_ZAPPER_METADATA",
     "v_3d_zipper_zapper",
-    "v_3d_zipper_zapper_cargs",
     "v_3d_zipper_zapper_execute",
-    "v_3d_zipper_zapper_outputs",
     "v_3d_zipper_zapper_params",
 ]

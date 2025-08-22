@@ -403,7 +403,7 @@ def fslvbm_3_proc_outputs(
 
 def fslvbm_3_proc_execute(
     params: Fslvbm3ProcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fslvbm3ProcOutputs:
     """
     Pipeline for voxel-based morphometry analysis using FSL tools.
@@ -414,10 +414,12 @@ def fslvbm_3_proc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fslvbm3ProcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLVBM_3_PROC_METADATA)
     params = execution.params(params)
     cargs = fslvbm_3_proc_cargs(params, execution)
     ret = fslvbm_3_proc_outputs(params, execution)
@@ -504,8 +506,6 @@ def fslvbm_3_proc(
     Returns:
         NamedTuple of outputs (described in `Fslvbm3ProcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLVBM_3_PROC_METADATA)
     params = fslvbm_3_proc_params(
         arch=arch,
         coprocessor=coprocessor,
@@ -540,7 +540,7 @@ def fslvbm_3_proc(
         version=version,
         config_file=config_file,
     )
-    return fslvbm_3_proc_execute(params, execution)
+    return fslvbm_3_proc_execute(params, runner)
 
 
 __all__ = [
@@ -548,8 +548,6 @@ __all__ = [
     "Fslvbm3ProcOutputs",
     "Fslvbm3ProcParameters",
     "fslvbm_3_proc",
-    "fslvbm_3_proc_cargs",
     "fslvbm_3_proc_execute",
-    "fslvbm_3_proc_outputs",
     "fslvbm_3_proc_params",
 ]

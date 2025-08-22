@@ -154,7 +154,7 @@ def v__command_globb_outputs(
 
 def v__command_globb_execute(
     params: VCommandGlobbParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VCommandGlobbOutputs:
     """
     A command-line tool to execute a specified program command line on a list of
@@ -166,10 +166,12 @@ def v__command_globb_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VCommandGlobbOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__COMMAND_GLOBB_METADATA)
     params = execution.params(params)
     cargs = v__command_globb_cargs(params, execution)
     ret = v__command_globb_outputs(params, execution)
@@ -206,15 +208,13 @@ def v__command_globb(
     Returns:
         NamedTuple of outputs (described in `VCommandGlobbOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__COMMAND_GLOBB_METADATA)
     params = v__command_globb_params(
         program_command=program_command,
         output_dir=output_dir,
         extension=extension,
         brick_list=brick_list,
     )
-    return v__command_globb_execute(params, execution)
+    return v__command_globb_execute(params, runner)
 
 
 __all__ = [
@@ -222,8 +222,6 @@ __all__ = [
     "VCommandGlobbParameters",
     "V__COMMAND_GLOBB_METADATA",
     "v__command_globb",
-    "v__command_globb_cargs",
     "v__command_globb_execute",
-    "v__command_globb_outputs",
     "v__command_globb_params",
 ]

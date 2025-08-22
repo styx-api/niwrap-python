@@ -182,7 +182,7 @@ def surface_geodesic_rois_outputs(
 
 def surface_geodesic_rois_execute(
     params: SurfaceGeodesicRoisParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceGeodesicRoisOutputs:
     """
     Draw geodesic limited rois at vertices.
@@ -206,10 +206,12 @@ def surface_geodesic_rois_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicRoisOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_GEODESIC_ROIS_METADATA)
     params = execution.params(params)
     cargs = surface_geodesic_rois_cargs(params, execution)
     ret = surface_geodesic_rois_outputs(params, execution)
@@ -267,8 +269,6 @@ def surface_geodesic_rois(
     Returns:
         NamedTuple of outputs (described in `SurfaceGeodesicRoisOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_GEODESIC_ROIS_METADATA)
     params = surface_geodesic_rois_params(
         surface=surface,
         limit=limit,
@@ -279,7 +279,7 @@ def surface_geodesic_rois(
         opt_names_name_list_file=opt_names_name_list_file,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return surface_geodesic_rois_execute(params, execution)
+    return surface_geodesic_rois_execute(params, runner)
 
 
 __all__ = [
@@ -287,8 +287,6 @@ __all__ = [
     "SurfaceGeodesicRoisOutputs",
     "SurfaceGeodesicRoisParameters",
     "surface_geodesic_rois",
-    "surface_geodesic_rois_cargs",
     "surface_geodesic_rois_execute",
-    "surface_geodesic_rois_outputs",
     "surface_geodesic_rois_params",
 ]

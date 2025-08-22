@@ -239,7 +239,7 @@ def mris_anatomical_stats_outputs(
 
 def mris_anatomical_stats_execute(
     params: MrisAnatomicalStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisAnatomicalStatsOutputs:
     """
     This program computes a number of anatomical properties.
@@ -250,10 +250,12 @@ def mris_anatomical_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAnatomicalStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ANATOMICAL_STATS_METADATA)
     params = execution.params(params)
     cargs = mris_anatomical_stats_cargs(params, execution)
     ret = mris_anatomical_stats_outputs(params, execution)
@@ -307,8 +309,6 @@ def mris_anatomical_stats(
     Returns:
         NamedTuple of outputs (described in `MrisAnatomicalStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ANATOMICAL_STATS_METADATA)
     params = mris_anatomical_stats_params(
         subjectname=subjectname,
         hemisphere=hemisphere,
@@ -325,7 +325,7 @@ def mris_anatomical_stats(
         noglobal=noglobal,
         th3_computation=th3_computation,
     )
-    return mris_anatomical_stats_execute(params, execution)
+    return mris_anatomical_stats_execute(params, runner)
 
 
 __all__ = [
@@ -333,8 +333,6 @@ __all__ = [
     "MrisAnatomicalStatsOutputs",
     "MrisAnatomicalStatsParameters",
     "mris_anatomical_stats",
-    "mris_anatomical_stats_cargs",
     "mris_anatomical_stats_execute",
-    "mris_anatomical_stats_outputs",
     "mris_anatomical_stats_params",
 ]

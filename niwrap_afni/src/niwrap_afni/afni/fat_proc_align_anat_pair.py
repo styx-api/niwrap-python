@@ -222,7 +222,7 @@ def fat_proc_align_anat_pair_outputs(
 
 def fat_proc_align_anat_pair_execute(
     params: FatProcAlignAnatPairParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcAlignAnatPairOutputs:
     """
     A tool for aligning a T1w anatomical image to a T2w anatomical image using
@@ -234,10 +234,12 @@ def fat_proc_align_anat_pair_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcAlignAnatPairOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_ALIGN_ANAT_PAIR_METADATA)
     params = execution.params(params)
     cargs = fat_proc_align_anat_pair_cargs(params, execution)
     ret = fat_proc_align_anat_pair_outputs(params, execution)
@@ -288,8 +290,6 @@ def fat_proc_align_anat_pair(
     Returns:
         NamedTuple of outputs (described in `FatProcAlignAnatPairOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_ALIGN_ANAT_PAIR_METADATA)
     params = fat_proc_align_anat_pair_params(
         input_t1w=input_t1w,
         input_t2w=input_t2w,
@@ -304,7 +304,7 @@ def fat_proc_align_anat_pair(
         no_cmd_out=no_cmd_out,
         no_clean=no_clean,
     )
-    return fat_proc_align_anat_pair_execute(params, execution)
+    return fat_proc_align_anat_pair_execute(params, runner)
 
 
 __all__ = [
@@ -312,8 +312,6 @@ __all__ = [
     "FatProcAlignAnatPairOutputs",
     "FatProcAlignAnatPairParameters",
     "fat_proc_align_anat_pair",
-    "fat_proc_align_anat_pair_cargs",
     "fat_proc_align_anat_pair_execute",
-    "fat_proc_align_anat_pair_outputs",
     "fat_proc_align_anat_pair_params",
 ]

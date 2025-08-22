@@ -199,7 +199,7 @@ def bmedits2surf_outputs(
 
 def bmedits2surf_execute(
     params: Bmedits2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Bmedits2surfOutputs:
     """
     Computes a binary map of surface locations where the brainmask.mgz has been
@@ -211,10 +211,12 @@ def bmedits2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Bmedits2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BMEDITS2SURF_METADATA)
     params = execution.params(params)
     cargs = bmedits2surf_cargs(params, execution)
     ret = bmedits2surf_outputs(params, execution)
@@ -257,8 +259,6 @@ def bmedits2surf(
     Returns:
         NamedTuple of outputs (described in `Bmedits2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BMEDITS2SURF_METADATA)
     params = bmedits2surf_params(
         subject=subject,
         self=self,
@@ -271,7 +271,7 @@ def bmedits2surf(
         right_hemisphere=right_hemisphere,
         no_surfs=no_surfs,
     )
-    return bmedits2surf_execute(params, execution)
+    return bmedits2surf_execute(params, runner)
 
 
 __all__ = [
@@ -279,8 +279,6 @@ __all__ = [
     "Bmedits2surfOutputs",
     "Bmedits2surfParameters",
     "bmedits2surf",
-    "bmedits2surf_cargs",
     "bmedits2surf_execute",
-    "bmedits2surf_outputs",
     "bmedits2surf_params",
 ]

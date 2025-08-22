@@ -136,7 +136,7 @@ def ztop_outputs(
 
 def ztop_execute(
     params: ZtopParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ZtopOutputs:
     """
     Converts a z-score to a p-value.
@@ -147,10 +147,12 @@ def ztop_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ZtopOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ZTOP_METADATA)
     params = execution.params(params)
     cargs = ztop_cargs(params, execution)
     ret = ztop_outputs(params, execution)
@@ -182,15 +184,13 @@ def ztop(
     Returns:
         NamedTuple of outputs (described in `ZtopOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ZTOP_METADATA)
     params = ztop_params(
         z_score=z_score,
         tail_flag=tail_flag,
         grf_flag=grf_flag,
         number_of_resels=number_of_resels,
     )
-    return ztop_execute(params, execution)
+    return ztop_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "ZtopOutputs",
     "ZtopParameters",
     "ztop",
-    "ztop_cargs",
     "ztop_execute",
-    "ztop_outputs",
     "ztop_params",
 ]

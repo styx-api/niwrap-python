@@ -379,7 +379,7 @@ def dwi2tensor_outputs(
 
 def dwi2tensor_execute(
     params: Dwi2tensorParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dwi2tensorOutputs:
     """
     Diffusion (kurtosis) tensor estimation.
@@ -431,10 +431,12 @@ def dwi2tensor_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dwi2tensorOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWI2TENSOR_METADATA)
     params = execution.params(params)
     cargs = dwi2tensor_cargs(params, execution)
     ret = dwi2tensor_outputs(params, execution)
@@ -549,8 +551,6 @@ def dwi2tensor(
     Returns:
         NamedTuple of outputs (described in `Dwi2tensorOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWI2TENSOR_METADATA)
     params = dwi2tensor_params(
         ols=ols,
         mask=mask,
@@ -571,7 +571,7 @@ def dwi2tensor(
         dwi=dwi,
         dt=dt,
     )
-    return dwi2tensor_execute(params, execution)
+    return dwi2tensor_execute(params, runner)
 
 
 __all__ = [
@@ -581,12 +581,8 @@ __all__ = [
     "Dwi2tensorOutputs",
     "Dwi2tensorParameters",
     "dwi2tensor",
-    "dwi2tensor_cargs",
-    "dwi2tensor_config_cargs",
     "dwi2tensor_config_params",
     "dwi2tensor_execute",
-    "dwi2tensor_fslgrad_cargs",
     "dwi2tensor_fslgrad_params",
-    "dwi2tensor_outputs",
     "dwi2tensor_params",
 ]

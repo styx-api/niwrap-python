@@ -237,7 +237,7 @@ def mesh2voxel_outputs(
 
 def mesh2voxel_execute(
     params: Mesh2voxelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Mesh2voxelOutputs:
     """
     Convert a mesh surface to a partial volume estimation image.
@@ -257,10 +257,12 @@ def mesh2voxel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Mesh2voxelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MESH2VOXEL_METADATA)
     params = execution.params(params)
     cargs = mesh2voxel_cargs(params, execution)
     ret = mesh2voxel_outputs(params, execution)
@@ -319,8 +321,6 @@ def mesh2voxel(
     Returns:
         NamedTuple of outputs (described in `Mesh2voxelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MESH2VOXEL_METADATA)
     params = mesh2voxel_params(
         info=info,
         quiet=quiet,
@@ -334,7 +334,7 @@ def mesh2voxel(
         template=template,
         output=output,
     )
-    return mesh2voxel_execute(params, execution)
+    return mesh2voxel_execute(params, runner)
 
 
 __all__ = [
@@ -343,10 +343,7 @@ __all__ = [
     "Mesh2voxelOutputs",
     "Mesh2voxelParameters",
     "mesh2voxel",
-    "mesh2voxel_cargs",
-    "mesh2voxel_config_cargs",
     "mesh2voxel_config_params",
     "mesh2voxel_execute",
-    "mesh2voxel_outputs",
     "mesh2voxel_params",
 ]

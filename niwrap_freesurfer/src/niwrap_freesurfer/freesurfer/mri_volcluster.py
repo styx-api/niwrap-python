@@ -567,7 +567,7 @@ def mri_volcluster_outputs(
 
 def mri_volcluster_execute(
     params: MriVolclusterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriVolclusterOutputs:
     """
     A tool for finding clusters in a volume, useful for analyzing MRI data.
@@ -578,10 +578,12 @@ def mri_volcluster_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriVolclusterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_VOLCLUSTER_METADATA)
     params = execution.params(params)
     cargs = mri_volcluster_cargs(params, execution)
     ret = mri_volcluster_outputs(params, execution)
@@ -701,8 +703,6 @@ def mri_volcluster(
     Returns:
         NamedTuple of outputs (described in `MriVolclusterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_VOLCLUSTER_METADATA)
     params = mri_volcluster_params(
         input_file=input_file,
         summary_file=summary_file,
@@ -753,7 +753,7 @@ def mri_volcluster(
         fill_params=fill_params,
         help_flag=help_flag,
     )
-    return mri_volcluster_execute(params, execution)
+    return mri_volcluster_execute(params, runner)
 
 
 __all__ = [
@@ -761,8 +761,6 @@ __all__ = [
     "MriVolclusterOutputs",
     "MriVolclusterParameters",
     "mri_volcluster",
-    "mri_volcluster_cargs",
     "mri_volcluster_execute",
-    "mri_volcluster_outputs",
     "mri_volcluster_params",
 ]

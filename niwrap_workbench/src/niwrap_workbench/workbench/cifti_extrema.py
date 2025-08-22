@@ -295,7 +295,7 @@ def cifti_extrema_outputs(
 
 def cifti_extrema_execute(
     params: CiftiExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiExtremaOutputs:
     """
     Find extrema in a cifti file.
@@ -312,10 +312,12 @@ def cifti_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = cifti_extrema_cargs(params, execution)
     ret = cifti_extrema_outputs(params, execution)
@@ -390,8 +392,6 @@ def cifti_extrema(
     Returns:
         NamedTuple of outputs (described in `CiftiExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_EXTREMA_METADATA)
     params = cifti_extrema_params(
         cifti=cifti,
         surface_distance=surface_distance,
@@ -411,7 +411,7 @@ def cifti_extrema(
         opt_only_maxima=opt_only_maxima,
         opt_only_minima=opt_only_minima,
     )
-    return cifti_extrema_execute(params, execution)
+    return cifti_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -420,10 +420,7 @@ __all__ = [
     "CiftiExtremaParameters",
     "CiftiExtremaThresholdParameters",
     "cifti_extrema",
-    "cifti_extrema_cargs",
     "cifti_extrema_execute",
-    "cifti_extrema_outputs",
     "cifti_extrema_params",
-    "cifti_extrema_threshold_cargs",
     "cifti_extrema_threshold_params",
 ]

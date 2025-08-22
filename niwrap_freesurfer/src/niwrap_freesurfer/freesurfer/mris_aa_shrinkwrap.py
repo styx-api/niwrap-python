@@ -157,7 +157,7 @@ def mris_aa_shrinkwrap_outputs(
 
 def mris_aa_shrinkwrap_execute(
     params: MrisAaShrinkwrapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisAaShrinkwrapOutputs:
     """
     This program positions the tessellation of the cortical surface at the white
@@ -171,10 +171,12 @@ def mris_aa_shrinkwrap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisAaShrinkwrapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_AA_SHRINKWRAP_METADATA)
     params = execution.params(params)
     cargs = mris_aa_shrinkwrap_cargs(params, execution)
     ret = mris_aa_shrinkwrap_outputs(params, execution)
@@ -217,8 +219,6 @@ def mris_aa_shrinkwrap(
     Returns:
         NamedTuple of outputs (described in `MrisAaShrinkwrapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_AA_SHRINKWRAP_METADATA)
     params = mris_aa_shrinkwrap_params(
         t1_vol=t1_vol,
         pd_vol=pd_vol,
@@ -228,7 +228,7 @@ def mris_aa_shrinkwrap(
         average_curvature=average_curvature,
         white_only=white_only,
     )
-    return mris_aa_shrinkwrap_execute(params, execution)
+    return mris_aa_shrinkwrap_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "MrisAaShrinkwrapOutputs",
     "MrisAaShrinkwrapParameters",
     "mris_aa_shrinkwrap",
-    "mris_aa_shrinkwrap_cargs",
     "mris_aa_shrinkwrap_execute",
-    "mris_aa_shrinkwrap_outputs",
     "mris_aa_shrinkwrap_params",
 ]

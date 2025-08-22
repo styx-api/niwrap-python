@@ -182,7 +182,7 @@ def v_3d_automask_outputs(
 
 def v_3d_automask_execute(
     params: V3dAutomaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAutomaskOutputs:
     """
     Create a brain-only mask of the image using AFNI 3dAutomask command.
@@ -193,10 +193,12 @@ def v_3d_automask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAutomaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AUTOMASK_METADATA)
     params = execution.params(params)
     cargs = v_3d_automask_cargs(params, execution)
     ret = v_3d_automask_outputs(params, execution)
@@ -235,8 +237,6 @@ def v_3d_automask(
     Returns:
         NamedTuple of outputs (described in `V3dAutomaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AUTOMASK_METADATA)
     params = v_3d_automask_params(
         prefix=prefix,
         apply_prefix=apply_prefix,
@@ -246,7 +246,7 @@ def v_3d_automask(
         outputtype=outputtype,
         in_file=in_file,
     )
-    return v_3d_automask_execute(params, execution)
+    return v_3d_automask_execute(params, runner)
 
 
 __all__ = [
@@ -254,8 +254,6 @@ __all__ = [
     "V3dAutomaskParameters",
     "V_3D_AUTOMASK_METADATA",
     "v_3d_automask",
-    "v_3d_automask_cargs",
     "v_3d_automask_execute",
-    "v_3d_automask_outputs",
     "v_3d_automask_params",
 ]

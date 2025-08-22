@@ -149,7 +149,7 @@ def parse_fs_lt_log_py_outputs(
 
 def parse_fs_lt_log_py_execute(
     params: ParseFsLtLogPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ParseFsLtLogPyOutputs:
     """
     Parses FreeSurfer labeltable log file and retrieves labeltable indices.
@@ -160,10 +160,12 @@ def parse_fs_lt_log_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ParseFsLtLogPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PARSE_FS_LT_LOG_PY_METADATA)
     params = execution.params(params)
     cargs = parse_fs_lt_log_py_cargs(params, execution)
     ret = parse_fs_lt_log_py_outputs(params, execution)
@@ -196,8 +198,6 @@ def parse_fs_lt_log_py(
     Returns:
         NamedTuple of outputs (described in `ParseFsLtLogPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PARSE_FS_LT_LOG_PY_METADATA)
     params = parse_fs_lt_log_py_params(
         logfile=logfile,
         labels=labels,
@@ -205,7 +205,7 @@ def parse_fs_lt_log_py(
         show_all_orig=show_all_orig,
         verbosity=verbosity,
     )
-    return parse_fs_lt_log_py_execute(params, execution)
+    return parse_fs_lt_log_py_execute(params, runner)
 
 
 __all__ = [
@@ -213,8 +213,6 @@ __all__ = [
     "ParseFsLtLogPyOutputs",
     "ParseFsLtLogPyParameters",
     "parse_fs_lt_log_py",
-    "parse_fs_lt_log_py_cargs",
     "parse_fs_lt_log_py_execute",
-    "parse_fs_lt_log_py_outputs",
     "parse_fs_lt_log_py_params",
 ]

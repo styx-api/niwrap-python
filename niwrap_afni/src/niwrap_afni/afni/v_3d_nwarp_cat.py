@@ -194,7 +194,7 @@ def v_3d_nwarp_cat_outputs(
 
 def v_3d_nwarp_cat_execute(
     params: V3dNwarpCatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNwarpCatOutputs:
     """
     Catenates (composes) 3D warps defined on a grid or via a matrix.
@@ -205,10 +205,12 @@ def v_3d_nwarp_cat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNwarpCatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NWARP_CAT_METADATA)
     params = execution.params(params)
     cargs = v_3d_nwarp_cat_cargs(params, execution)
     ret = v_3d_nwarp_cat_outputs(params, execution)
@@ -252,8 +254,6 @@ def v_3d_nwarp_cat(
     Returns:
         NamedTuple of outputs (described in `V3dNwarpCatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NWARP_CAT_METADATA)
     params = v_3d_nwarp_cat_params(
         interpolation=interpolation,
         verbosity=verbosity,
@@ -265,7 +265,7 @@ def v_3d_nwarp_cat(
         invert_final_warp=invert_final_warp,
         extra_padding=extra_padding,
     )
-    return v_3d_nwarp_cat_execute(params, execution)
+    return v_3d_nwarp_cat_execute(params, runner)
 
 
 __all__ = [
@@ -273,8 +273,6 @@ __all__ = [
     "V3dNwarpCatParameters",
     "V_3D_NWARP_CAT_METADATA",
     "v_3d_nwarp_cat",
-    "v_3d_nwarp_cat_cargs",
     "v_3d_nwarp_cat_execute",
-    "v_3d_nwarp_cat_outputs",
     "v_3d_nwarp_cat_params",
 ]

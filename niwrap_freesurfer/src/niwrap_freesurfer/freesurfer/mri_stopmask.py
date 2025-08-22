@@ -209,7 +209,7 @@ def mri_stopmask_outputs(
 
 def mri_stopmask_execute(
     params: MriStopmaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriStopmaskOutputs:
     """
     This program creates a mask used to stop the search for the maximum gradient in
@@ -222,10 +222,12 @@ def mri_stopmask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriStopmaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_STOPMASK_METADATA)
     params = execution.params(params)
     cargs = mri_stopmask_cargs(params, execution)
     ret = mri_stopmask_outputs(params, execution)
@@ -278,8 +280,6 @@ def mri_stopmask(
     Returns:
         NamedTuple of outputs (described in `MriStopmaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_STOPMASK_METADATA)
     params = mri_stopmask_params(
         output_mask=output_mask,
         filled=filled,
@@ -294,7 +294,7 @@ def mri_stopmask(
         no_wm=no_wm,
         no_bfs=no_bfs,
     )
-    return mri_stopmask_execute(params, execution)
+    return mri_stopmask_execute(params, runner)
 
 
 __all__ = [
@@ -302,8 +302,6 @@ __all__ = [
     "MriStopmaskOutputs",
     "MriStopmaskParameters",
     "mri_stopmask",
-    "mri_stopmask_cargs",
     "mri_stopmask_execute",
-    "mri_stopmask_outputs",
     "mri_stopmask_params",
 ]

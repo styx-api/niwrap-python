@@ -140,7 +140,7 @@ def mris_make_face_parcellation_outputs(
 
 def mris_make_face_parcellation_execute(
     params: MrisMakeFaceParcellationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMakeFaceParcellationOutputs:
     """
     Generates a parcellation based on which icosahedral face each vertex maps to.
@@ -151,10 +151,12 @@ def mris_make_face_parcellation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMakeFaceParcellationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MAKE_FACE_PARCELLATION_METADATA)
     params = execution.params(params)
     cargs = mris_make_face_parcellation_cargs(params, execution)
     ret = mris_make_face_parcellation_outputs(params, execution)
@@ -185,15 +187,13 @@ def mris_make_face_parcellation(
     Returns:
         NamedTuple of outputs (described in `MrisMakeFaceParcellationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MAKE_FACE_PARCELLATION_METADATA)
     params = mris_make_face_parcellation_params(
         input_surface=input_surface,
         ico_file=ico_file,
         output_annot=output_annot,
         colortable=colortable,
     )
-    return mris_make_face_parcellation_execute(params, execution)
+    return mris_make_face_parcellation_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "MrisMakeFaceParcellationOutputs",
     "MrisMakeFaceParcellationParameters",
     "mris_make_face_parcellation",
-    "mris_make_face_parcellation_cargs",
     "mris_make_face_parcellation_execute",
-    "mris_make_face_parcellation_outputs",
     "mris_make_face_parcellation_params",
 ]

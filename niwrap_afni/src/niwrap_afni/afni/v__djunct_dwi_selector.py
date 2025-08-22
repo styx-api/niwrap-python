@@ -130,7 +130,7 @@ def v__djunct_dwi_selector_outputs(
 
 def v__djunct_dwi_selector_execute(
     params: VDjunctDwiSelectorParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunctDwiSelectorOutputs:
     """
     Selects DWI data and creates a representative image.
@@ -141,10 +141,12 @@ def v__djunct_dwi_selector_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunctDwiSelectorOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_DWI_SELECTOR_METADATA)
     params = execution.params(params)
     cargs = v__djunct_dwi_selector_cargs(params, execution)
     ret = v__djunct_dwi_selector_outputs(params, execution)
@@ -173,14 +175,12 @@ def v__djunct_dwi_selector(
     Returns:
         NamedTuple of outputs (described in `VDjunctDwiSelectorOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_DWI_SELECTOR_METADATA)
     params = v__djunct_dwi_selector_params(
         dwi=dwi,
         png=png,
         outfile=outfile,
     )
-    return v__djunct_dwi_selector_execute(params, execution)
+    return v__djunct_dwi_selector_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "VDjunctDwiSelectorParameters",
     "V__DJUNCT_DWI_SELECTOR_METADATA",
     "v__djunct_dwi_selector",
-    "v__djunct_dwi_selector_cargs",
     "v__djunct_dwi_selector_execute",
-    "v__djunct_dwi_selector_outputs",
     "v__djunct_dwi_selector_params",
 ]

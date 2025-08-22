@@ -211,7 +211,7 @@ def v_3d_lomb_scargle_outputs(
 
 def v_3d_lomb_scargle_execute(
     params: V3dLombScargleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLombScargleOutputs:
     """
     Make a periodogram or amplitude-spectrum of a time series that has a
@@ -223,10 +223,12 @@ def v_3d_lomb_scargle_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLombScargleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LOMB_SCARGLE_METADATA)
     params = execution.params(params)
     cargs = v_3d_lomb_scargle_cargs(params, execution)
     ret = v_3d_lomb_scargle_outputs(params, execution)
@@ -283,8 +285,6 @@ def v_3d_lomb_scargle(
     Returns:
         NamedTuple of outputs (described in `V3dLombScargleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LOMB_SCARGLE_METADATA)
     params = v_3d_lomb_scargle_params(
         prefix=prefix,
         inset=inset,
@@ -295,7 +295,7 @@ def v_3d_lomb_scargle(
         nyquist_multiplier=nyquist_multiplier,
         nifti=nifti,
     )
-    return v_3d_lomb_scargle_execute(params, execution)
+    return v_3d_lomb_scargle_execute(params, runner)
 
 
 __all__ = [
@@ -303,8 +303,6 @@ __all__ = [
     "V3dLombScargleParameters",
     "V_3D_LOMB_SCARGLE_METADATA",
     "v_3d_lomb_scargle",
-    "v_3d_lomb_scargle_cargs",
     "v_3d_lomb_scargle_execute",
-    "v_3d_lomb_scargle_outputs",
     "v_3d_lomb_scargle_params",
 ]

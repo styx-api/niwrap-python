@@ -338,7 +338,7 @@ def dmri_train_outputs(
 
 def dmri_train_execute(
     params: DmriTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriTrainOutputs:
     """
     DMRI training tool for processing diffusion MRI data in FreeSurfer.
@@ -349,10 +349,12 @@ def dmri_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_TRAIN_METADATA)
     params = execution.params(params)
     cargs = dmri_train_cargs(params, execution)
     ret = dmri_train_outputs(params, execution)
@@ -432,8 +434,6 @@ def dmri_train(
     Returns:
         NamedTuple of outputs (described in `DmriTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_TRAIN_METADATA)
     params = dmri_train_params(
         slist=slist,
         trk_files=trk_files,
@@ -464,7 +464,7 @@ def dmri_train(
         help_=help_,
         version=version,
     )
-    return dmri_train_execute(params, execution)
+    return dmri_train_execute(params, runner)
 
 
 __all__ = [
@@ -472,8 +472,6 @@ __all__ = [
     "DmriTrainOutputs",
     "DmriTrainParameters",
     "dmri_train",
-    "dmri_train_cargs",
     "dmri_train_execute",
-    "dmri_train_outputs",
     "dmri_train_params",
 ]

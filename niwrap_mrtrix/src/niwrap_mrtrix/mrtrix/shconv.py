@@ -345,7 +345,7 @@ def shconv_outputs(
 
 def shconv_execute(
     params: ShconvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ShconvOutputs:
     """
     Perform spherical convolution.
@@ -379,10 +379,12 @@ def shconv_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ShconvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SHCONV_METADATA)
     params = execution.params(params)
     cargs = shconv_cargs(params, execution)
     ret = shconv_outputs(params, execution)
@@ -464,8 +466,6 @@ def shconv(
     Returns:
         NamedTuple of outputs (described in `ShconvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SHCONV_METADATA)
     params = shconv_params(
         datatype=datatype,
         strides=strides,
@@ -480,7 +480,7 @@ def shconv(
         odf_response=odf_response,
         sh_out=sh_out,
     )
-    return shconv_execute(params, execution)
+    return shconv_execute(params, runner)
 
 
 __all__ = [
@@ -491,14 +491,9 @@ __all__ = [
     "ShconvVariousFileParameters",
     "ShconvVariousStringParameters",
     "shconv",
-    "shconv_cargs",
-    "shconv_config_cargs",
     "shconv_config_params",
     "shconv_execute",
-    "shconv_outputs",
     "shconv_params",
-    "shconv_various_file_cargs",
     "shconv_various_file_params",
-    "shconv_various_string_cargs",
     "shconv_various_string_params",
 ]

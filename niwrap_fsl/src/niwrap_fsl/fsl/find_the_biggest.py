@@ -125,7 +125,7 @@ def find_the_biggest_outputs(
 
 def find_the_biggest_execute(
     params: FindTheBiggestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FindTheBiggestOutputs:
     """
     Tool to find the largest volume or surface from a set of inputs.
@@ -136,10 +136,12 @@ def find_the_biggest_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FindTheBiggestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIND_THE_BIGGEST_METADATA)
     params = execution.params(params)
     cargs = find_the_biggest_cargs(params, execution)
     ret = find_the_biggest_outputs(params, execution)
@@ -166,13 +168,11 @@ def find_the_biggest(
     Returns:
         NamedTuple of outputs (described in `FindTheBiggestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIND_THE_BIGGEST_METADATA)
     params = find_the_biggest_params(
         volumes_surfaces=volumes_surfaces,
         output_index=output_index,
     )
-    return find_the_biggest_execute(params, execution)
+    return find_the_biggest_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "FindTheBiggestOutputs",
     "FindTheBiggestParameters",
     "find_the_biggest",
-    "find_the_biggest_cargs",
     "find_the_biggest_execute",
-    "find_the_biggest_outputs",
     "find_the_biggest_params",
 ]

@@ -297,7 +297,7 @@ def v__suma_align_to_experiment_outputs(
 
 def v__suma_align_to_experiment_execute(
     params: VSumaAlignToExperimentParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaAlignToExperimentOutputs:
     """
     Creates a version of Surface Anatomy that is registered to Experiment Anatomy.
@@ -308,10 +308,12 @@ def v__suma_align_to_experiment_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaAlignToExperimentOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_ALIGN_TO_EXPERIMENT_METADATA)
     params = execution.params(params)
     cargs = v__suma_align_to_experiment_cargs(params, execution)
     ret = v__suma_align_to_experiment_outputs(params, execution)
@@ -385,8 +387,6 @@ def v__suma_align_to_experiment(
     Returns:
         NamedTuple of outputs (described in `VSumaAlignToExperimentOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_ALIGN_TO_EXPERIMENT_METADATA)
     params = v__suma_align_to_experiment_params(
         exp_anat=exp_anat,
         surf_anat=surf_anat,
@@ -409,7 +409,7 @@ def v__suma_align_to_experiment(
         keep_tmp=keep_tmp,
         overwrite_resp=overwrite_resp,
     )
-    return v__suma_align_to_experiment_execute(params, execution)
+    return v__suma_align_to_experiment_execute(params, runner)
 
 
 __all__ = [
@@ -417,8 +417,6 @@ __all__ = [
     "VSumaAlignToExperimentParameters",
     "V__SUMA_ALIGN_TO_EXPERIMENT_METADATA",
     "v__suma_align_to_experiment",
-    "v__suma_align_to_experiment_cargs",
     "v__suma_align_to_experiment_execute",
-    "v__suma_align_to_experiment_outputs",
     "v__suma_align_to_experiment_params",
 ]

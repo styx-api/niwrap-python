@@ -313,7 +313,7 @@ def mris_fix_topology_outputs(
 
 def mris_fix_topology_execute(
     params: MrisFixTopologyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisFixTopologyOutputs:
     """
     Computes a mapping from the unit sphere onto the cortical surface, ensuring a
@@ -325,10 +325,12 @@ def mris_fix_topology_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisFixTopologyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_FIX_TOPOLOGY_METADATA)
     params = execution.params(params)
     cargs = mris_fix_topology_cargs(params, execution)
     ret = mris_fix_topology_outputs(params, execution)
@@ -404,8 +406,6 @@ def mris_fix_topology(
     Returns:
         NamedTuple of outputs (described in `MrisFixTopologyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_FIX_TOPOLOGY_METADATA)
     params = mris_fix_topology_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -434,7 +434,7 @@ def mris_fix_topology(
         diagnostic_level=diagnostic_level,
         threads=threads,
     )
-    return mris_fix_topology_execute(params, execution)
+    return mris_fix_topology_execute(params, runner)
 
 
 __all__ = [
@@ -442,8 +442,6 @@ __all__ = [
     "MrisFixTopologyOutputs",
     "MrisFixTopologyParameters",
     "mris_fix_topology",
-    "mris_fix_topology_cargs",
     "mris_fix_topology_execute",
-    "mris_fix_topology_outputs",
     "mris_fix_topology_params",
 ]

@@ -151,7 +151,7 @@ def make_cortex_label_outputs(
 
 def make_cortex_label_execute(
     params: MakeCortexLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeCortexLabelOutputs:
     """
     A tool to create cortical labels.
@@ -162,10 +162,12 @@ def make_cortex_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeCortexLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_CORTEX_LABEL_METADATA)
     params = execution.params(params)
     cargs = make_cortex_label_cargs(params, execution)
     ret = make_cortex_label_outputs(params, execution)
@@ -198,15 +200,13 @@ def make_cortex_label(
     Returns:
         NamedTuple of outputs (described in `MakeCortexLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_CORTEX_LABEL_METADATA)
     params = make_cortex_label_params(
         subject=subject,
         hemi=hemi,
         use_a2009s=use_a2009s,
         output_name=output_name,
     )
-    return make_cortex_label_execute(params, execution)
+    return make_cortex_label_execute(params, runner)
 
 
 __all__ = [
@@ -214,8 +214,6 @@ __all__ = [
     "MakeCortexLabelOutputs",
     "MakeCortexLabelParameters",
     "make_cortex_label",
-    "make_cortex_label_cargs",
     "make_cortex_label_execute",
-    "make_cortex_label_outputs",
     "make_cortex_label_params",
 ]

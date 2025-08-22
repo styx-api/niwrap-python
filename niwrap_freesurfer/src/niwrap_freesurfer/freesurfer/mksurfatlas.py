@@ -187,7 +187,7 @@ def mksurfatlas_outputs(
 
 def mksurfatlas_execute(
     params: MksurfatlasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MksurfatlasOutputs:
     """
     Creates an atlas using mris_make_template. The atlas can then be used to create
@@ -199,10 +199,12 @@ def mksurfatlas_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MksurfatlasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MKSURFATLAS_METADATA)
     params = execution.params(params)
     cargs = mksurfatlas_cargs(params, execution)
     ret = mksurfatlas_outputs(params, execution)
@@ -246,8 +248,6 @@ def mksurfatlas(
     Returns:
         NamedTuple of outputs (described in `MksurfatlasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MKSURFATLAS_METADATA)
     params = mksurfatlas_params(
         atlas=atlas,
         hemi=hemi,
@@ -259,7 +259,7 @@ def mksurfatlas(
         version=version,
         help_=help_,
     )
-    return mksurfatlas_execute(params, execution)
+    return mksurfatlas_execute(params, runner)
 
 
 __all__ = [
@@ -267,8 +267,6 @@ __all__ = [
     "MksurfatlasOutputs",
     "MksurfatlasParameters",
     "mksurfatlas",
-    "mksurfatlas_cargs",
     "mksurfatlas_execute",
-    "mksurfatlas_outputs",
     "mksurfatlas_params",
 ]

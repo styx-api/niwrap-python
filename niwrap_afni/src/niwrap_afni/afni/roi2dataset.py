@@ -215,7 +215,7 @@ def roi2dataset_outputs(
 
 def roi2dataset_execute(
     params: Roi2datasetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Roi2datasetOutputs:
     """
     Transforms a series of ROI files to a node dataset.
@@ -226,10 +226,12 @@ def roi2dataset_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Roi2datasetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ROI2DATASET_METADATA)
     params = execution.params(params)
     cargs = roi2dataset_cargs(params, execution)
     ret = roi2dataset_outputs(params, execution)
@@ -283,8 +285,6 @@ def roi2dataset(
     Returns:
         NamedTuple of outputs (described in `Roi2datasetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ROI2DATASET_METADATA)
     params = roi2dataset_params(
         prefix=prefix,
         input_rois=input_rois,
@@ -298,7 +298,7 @@ def roi2dataset(
         pad_to_node=pad_to_node,
         pad_label=pad_label,
     )
-    return roi2dataset_execute(params, execution)
+    return roi2dataset_execute(params, runner)
 
 
 __all__ = [
@@ -306,8 +306,6 @@ __all__ = [
     "Roi2datasetOutputs",
     "Roi2datasetParameters",
     "roi2dataset",
-    "roi2dataset_cargs",
     "roi2dataset_execute",
-    "roi2dataset_outputs",
     "roi2dataset_params",
 ]

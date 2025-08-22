@@ -190,7 +190,7 @@ def roigrow_outputs(
 
 def roigrow_execute(
     params: RoigrowParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RoigrowOutputs:
     """
     A program to expand an ROI on the surface.
@@ -201,10 +201,12 @@ def roigrow_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RoigrowOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ROIGROW_METADATA)
     params = execution.params(params)
     cargs = roigrow_cargs(params, execution)
     ret = roigrow_outputs(params, execution)
@@ -252,8 +254,6 @@ def roigrow(
     Returns:
         NamedTuple of outputs (described in `RoigrowOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ROIGROW_METADATA)
     params = roigrow_params(
         input_surface=input_surface,
         roi_labels=roi_labels,
@@ -264,7 +264,7 @@ def roigrow(
         insphere_diameter=insphere_diameter,
         inbox_edges=inbox_edges,
     )
-    return roigrow_execute(params, execution)
+    return roigrow_execute(params, runner)
 
 
 __all__ = [
@@ -272,8 +272,6 @@ __all__ = [
     "RoigrowOutputs",
     "RoigrowParameters",
     "roigrow",
-    "roigrow_cargs",
     "roigrow_execute",
-    "roigrow_outputs",
     "roigrow_params",
 ]

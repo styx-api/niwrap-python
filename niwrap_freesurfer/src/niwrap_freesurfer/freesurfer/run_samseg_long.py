@@ -303,7 +303,7 @@ def run_samseg_long_outputs(
 
 def run_samseg_long_execute(
     params: RunSamsegLongParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunSamsegLongOutputs:
     """
     Longitudinal image segmentation using SAMSEG.
@@ -314,10 +314,12 @@ def run_samseg_long_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunSamsegLongOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_SAMSEG_LONG_METADATA)
     params = execution.params(params)
     cargs = run_samseg_long_cargs(params, execution)
     ret = run_samseg_long_outputs(params, execution)
@@ -392,8 +394,6 @@ def run_samseg_long(
     Returns:
         NamedTuple of outputs (described in `RunSamsegLongOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_SAMSEG_LONG_METADATA)
     params = run_samseg_long_params(
         timepoint=timepoint,
         output=output,
@@ -418,7 +418,7 @@ def run_samseg_long(
         showfigs=showfigs,
         movie=movie,
     )
-    return run_samseg_long_execute(params, execution)
+    return run_samseg_long_execute(params, runner)
 
 
 __all__ = [
@@ -426,8 +426,6 @@ __all__ = [
     "RunSamsegLongOutputs",
     "RunSamsegLongParameters",
     "run_samseg_long",
-    "run_samseg_long_cargs",
     "run_samseg_long_execute",
-    "run_samseg_long_outputs",
     "run_samseg_long_params",
 ]

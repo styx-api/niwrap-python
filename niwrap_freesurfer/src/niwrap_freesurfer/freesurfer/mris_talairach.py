@@ -116,7 +116,7 @@ def mris_talairach_outputs(
 
 def mris_talairach_execute(
     params: MrisTalairachParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisTalairachOutputs:
     """
     Transforms an MRI surface into Talairach space.
@@ -127,10 +127,12 @@ def mris_talairach_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisTalairachOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_TALAIRACH_METADATA)
     params = execution.params(params)
     cargs = mris_talairach_cargs(params, execution)
     ret = mris_talairach_outputs(params, execution)
@@ -155,12 +157,10 @@ def mris_talairach(
     Returns:
         NamedTuple of outputs (described in `MrisTalairachOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_TALAIRACH_METADATA)
     params = mris_talairach_params(
         input_image=input_image,
     )
-    return mris_talairach_execute(params, execution)
+    return mris_talairach_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "MrisTalairachOutputs",
     "MrisTalairachParameters",
     "mris_talairach",
-    "mris_talairach_cargs",
     "mris_talairach_execute",
-    "mris_talairach_outputs",
     "mris_talairach_params",
 ]

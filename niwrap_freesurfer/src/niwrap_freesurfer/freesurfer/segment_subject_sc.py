@@ -147,7 +147,7 @@ def segment_subject_sc_outputs(
 
 def segment_subject_sc_execute(
     params: SegmentSubjectScParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubjectScOutputs:
     """
     Front-end for MINC's mritotal. Computes the Talairach transform for mapping the
@@ -159,10 +159,12 @@ def segment_subject_sc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectScOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBJECT_SC_METADATA)
     params = execution.params(params)
     cargs = segment_subject_sc_cargs(params, execution)
     ret = segment_subject_sc_outputs(params, execution)
@@ -194,15 +196,13 @@ def segment_subject_sc(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectScOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBJECT_SC_METADATA)
     params = segment_subject_sc_params(
         invol=invol,
         outxfm=outxfm,
         log=log,
         debug=debug,
     )
-    return segment_subject_sc_execute(params, execution)
+    return segment_subject_sc_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "SegmentSubjectScOutputs",
     "SegmentSubjectScParameters",
     "segment_subject_sc",
-    "segment_subject_sc_cargs",
     "segment_subject_sc_execute",
-    "segment_subject_sc_outputs",
     "segment_subject_sc_params",
 ]

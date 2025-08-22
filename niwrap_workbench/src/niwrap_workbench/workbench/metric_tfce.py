@@ -278,7 +278,7 @@ def metric_tfce_outputs(
 
 def metric_tfce_execute(
     params: MetricTfceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
     Do tfce on a metric file.
@@ -314,10 +314,12 @@ def metric_tfce_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricTfceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_TFCE_METADATA)
     params = execution.params(params)
     cargs = metric_tfce_cargs(params, execution)
     ret = metric_tfce_outputs(params, execution)
@@ -384,8 +386,6 @@ def metric_tfce(
     Returns:
         NamedTuple of outputs (described in `MetricTfceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_TFCE_METADATA)
     params = metric_tfce_params(
         surface=surface,
         metric_in=metric_in,
@@ -396,7 +396,7 @@ def metric_tfce(
         opt_column_column=opt_column_column,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return metric_tfce_execute(params, execution)
+    return metric_tfce_execute(params, runner)
 
 
 __all__ = [
@@ -406,12 +406,8 @@ __all__ = [
     "MetricTfceParametersParameters",
     "MetricTfcePresmoothParameters",
     "metric_tfce",
-    "metric_tfce_cargs",
     "metric_tfce_execute",
-    "metric_tfce_outputs",
-    "metric_tfce_parameters_cargs",
     "metric_tfce_parameters_params",
     "metric_tfce_params",
-    "metric_tfce_presmooth_cargs",
     "metric_tfce_presmooth_params",
 ]

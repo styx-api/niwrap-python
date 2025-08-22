@@ -261,7 +261,7 @@ def v_3d_xclust_sim_outputs(
 
 def v_3d_xclust_sim_execute(
     params: V3dXclustSimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dXclustSimOutputs:
     """
     ETAC processing tool to find cluster figure of merit (FOM) thresholds.
@@ -272,10 +272,12 @@ def v_3d_xclust_sim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dXclustSimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_XCLUST_SIM_METADATA)
     params = execution.params(params)
     cargs = v_3d_xclust_sim_cargs(params, execution)
     ret = v_3d_xclust_sim_outputs(params, execution)
@@ -336,8 +338,6 @@ def v_3d_xclust_sim(
     Returns:
         NamedTuple of outputs (described in `V3dXclustSimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_XCLUST_SIM_METADATA)
     params = v_3d_xclust_sim_params(
         inset=inset,
         insdat=insdat,
@@ -358,7 +358,7 @@ def v_3d_xclust_sim(
         verbose=verbose,
         quiet=quiet,
     )
-    return v_3d_xclust_sim_execute(params, execution)
+    return v_3d_xclust_sim_execute(params, runner)
 
 
 __all__ = [
@@ -366,8 +366,6 @@ __all__ = [
     "V3dXclustSimParameters",
     "V_3D_XCLUST_SIM_METADATA",
     "v_3d_xclust_sim",
-    "v_3d_xclust_sim_cargs",
     "v_3d_xclust_sim_execute",
-    "v_3d_xclust_sim_outputs",
     "v_3d_xclust_sim_params",
 ]

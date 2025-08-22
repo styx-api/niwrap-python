@@ -237,7 +237,7 @@ def transformconvert_outputs(
 
 def transformconvert_execute(
     params: TransformconvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TransformconvertOutputs:
     """
     Convert linear transformation matrices.
@@ -256,10 +256,12 @@ def transformconvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TransformconvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRANSFORMCONVERT_METADATA)
     params = execution.params(params)
     cargs = transformconvert_cargs(params, execution)
     ret = transformconvert_outputs(params, execution)
@@ -317,8 +319,6 @@ def transformconvert(
     Returns:
         NamedTuple of outputs (described in `TransformconvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRANSFORMCONVERT_METADATA)
     params = transformconvert_params(
         info=info,
         quiet=quiet,
@@ -332,7 +332,7 @@ def transformconvert(
         operation=operation,
         output=output,
     )
-    return transformconvert_execute(params, execution)
+    return transformconvert_execute(params, runner)
 
 
 __all__ = [
@@ -341,10 +341,7 @@ __all__ = [
     "TransformconvertOutputs",
     "TransformconvertParameters",
     "transformconvert",
-    "transformconvert_cargs",
-    "transformconvert_config_cargs",
     "transformconvert_config_params",
     "transformconvert_execute",
-    "transformconvert_outputs",
     "transformconvert_params",
 ]

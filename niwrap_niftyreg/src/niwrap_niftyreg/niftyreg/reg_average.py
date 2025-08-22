@@ -126,7 +126,7 @@ def reg_average_outputs(
 
 def reg_average_execute(
     params: RegAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegAverageOutputs:
     """
     Command line program to average either images or affine transformations.
@@ -137,10 +137,12 @@ def reg_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REG_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = reg_average_cargs(params, execution)
     ret = reg_average_outputs(params, execution)
@@ -168,13 +170,11 @@ def reg_average(
     Returns:
         NamedTuple of outputs (described in `RegAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REG_AVERAGE_METADATA)
     params = reg_average_params(
         output_file=output_file,
         input_files=input_files,
     )
-    return reg_average_execute(params, execution)
+    return reg_average_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "RegAverageOutputs",
     "RegAverageParameters",
     "reg_average",
-    "reg_average_cargs",
     "reg_average_execute",
-    "reg_average_outputs",
     "reg_average_params",
 ]

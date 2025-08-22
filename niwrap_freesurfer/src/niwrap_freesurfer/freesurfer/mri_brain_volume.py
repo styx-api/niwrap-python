@@ -143,7 +143,7 @@ def mri_brain_volume_outputs(
 
 def mri_brain_volume_execute(
     params: MriBrainVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriBrainVolumeOutputs:
     """
     Tool to calculate brain volume from MRI scans.
@@ -154,10 +154,12 @@ def mri_brain_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriBrainVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_BRAIN_VOLUME_METADATA)
     params = execution.params(params)
     cargs = mri_brain_volume_cargs(params, execution)
     ret = mri_brain_volume_outputs(params, execution)
@@ -188,15 +190,13 @@ def mri_brain_volume(
     Returns:
         NamedTuple of outputs (described in `MriBrainVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_BRAIN_VOLUME_METADATA)
     params = mri_brain_volume_params(
         input_file=input_file,
         output_file=output_file,
         force_param=force_param,
         version=version,
     )
-    return mri_brain_volume_execute(params, execution)
+    return mri_brain_volume_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "MriBrainVolumeOutputs",
     "MriBrainVolumeParameters",
     "mri_brain_volume",
-    "mri_brain_volume_cargs",
     "mri_brain_volume_execute",
-    "mri_brain_volume_outputs",
     "mri_brain_volume_params",
 ]

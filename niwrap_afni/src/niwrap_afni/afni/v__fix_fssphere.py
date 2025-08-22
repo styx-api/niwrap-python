@@ -164,7 +164,7 @@ def v__fix_fssphere_outputs(
 
 def v__fix_fssphere_execute(
     params: VFixFssphereParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VFixFssphereOutputs:
     """
     Tool for fixing errors in FreeSurfer spherical surfaces.
@@ -175,10 +175,12 @@ def v__fix_fssphere_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VFixFssphereOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__FIX_FSSPHERE_METADATA)
     params = execution.params(params)
     cargs = v__fix_fssphere_cargs(params, execution)
     ret = v__fix_fssphere_outputs(params, execution)
@@ -214,8 +216,6 @@ def v__fix_fssphere(
     Returns:
         NamedTuple of outputs (described in `VFixFssphereOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__FIX_FSSPHERE_METADATA)
     params = v__fix_fssphere_params(
         spec_file=spec_file,
         sphere_file=sphere_file,
@@ -224,7 +224,7 @@ def v__fix_fssphere(
         project_first=project_first,
         keep_temp=keep_temp,
     )
-    return v__fix_fssphere_execute(params, execution)
+    return v__fix_fssphere_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "VFixFssphereParameters",
     "V__FIX_FSSPHERE_METADATA",
     "v__fix_fssphere",
-    "v__fix_fssphere_cargs",
     "v__fix_fssphere_execute",
-    "v__fix_fssphere_outputs",
     "v__fix_fssphere_params",
 ]

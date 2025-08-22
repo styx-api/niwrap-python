@@ -126,7 +126,7 @@ def surface_coordinates_to_metric_outputs(
 
 def surface_coordinates_to_metric_execute(
     params: SurfaceCoordinatesToMetricParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
     Make metric file of surface coordinates.
@@ -139,10 +139,12 @@ def surface_coordinates_to_metric_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCoordinatesToMetricOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_COORDINATES_TO_METRIC_METADATA)
     params = execution.params(params)
     cargs = surface_coordinates_to_metric_cargs(params, execution)
     ret = surface_coordinates_to_metric_outputs(params, execution)
@@ -171,13 +173,11 @@ def surface_coordinates_to_metric(
     Returns:
         NamedTuple of outputs (described in `SurfaceCoordinatesToMetricOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_COORDINATES_TO_METRIC_METADATA)
     params = surface_coordinates_to_metric_params(
         surface=surface,
         metric_out=metric_out,
     )
-    return surface_coordinates_to_metric_execute(params, execution)
+    return surface_coordinates_to_metric_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "SurfaceCoordinatesToMetricOutputs",
     "SurfaceCoordinatesToMetricParameters",
     "surface_coordinates_to_metric",
-    "surface_coordinates_to_metric_cargs",
     "surface_coordinates_to_metric_execute",
-    "surface_coordinates_to_metric_outputs",
     "surface_coordinates_to_metric_params",
 ]

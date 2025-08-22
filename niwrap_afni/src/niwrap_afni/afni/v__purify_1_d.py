@@ -138,7 +138,7 @@ def v__purify_1_d_outputs(
 
 def v__purify_1_d_execute(
     params: VPurify1DParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VPurify1DOutputs:
     """
     Purifies a series of 1D files for faster I/O into matlab.
@@ -149,10 +149,12 @@ def v__purify_1_d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VPurify1DOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__PURIFY_1_D_METADATA)
     params = execution.params(params)
     cargs = v__purify_1_d_cargs(params, execution)
     ret = v__purify_1_d_outputs(params, execution)
@@ -183,14 +185,12 @@ def v__purify_1_d(
     Returns:
         NamedTuple of outputs (described in `VPurify1DOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__PURIFY_1_D_METADATA)
     params = v__purify_1_d_params(
         sub_brick=sub_brick,
         suffix=suffix,
         input_files=input_files,
     )
-    return v__purify_1_d_execute(params, execution)
+    return v__purify_1_d_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "VPurify1DParameters",
     "V__PURIFY_1_D_METADATA",
     "v__purify_1_d",
-    "v__purify_1_d_cargs",
     "v__purify_1_d_execute",
-    "v__purify_1_d_outputs",
     "v__purify_1_d_params",
 ]

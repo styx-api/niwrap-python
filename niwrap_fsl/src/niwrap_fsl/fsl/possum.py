@@ -327,7 +327,7 @@ def possum_outputs(
 
 def possum_execute(
     params: PossumParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PossumOutputs:
     """
     Positron emission tomography (PET) simulation tool as part of FSL suite.
@@ -338,10 +338,12 @@ def possum_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PossumOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(POSSUM_METADATA)
     params = execution.params(params)
     cargs = possum_cargs(params, execution)
     ret = possum_outputs(params, execution)
@@ -418,8 +420,6 @@ def possum(
     Returns:
         NamedTuple of outputs (described in `PossumOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(POSSUM_METADATA)
     params = possum_params(
         input_volume=input_volume,
         mr_parameters=mr_parameters,
@@ -446,7 +446,7 @@ def possum(
         no_speedup=no_speedup,
         rf_average=rf_average,
     )
-    return possum_execute(params, execution)
+    return possum_execute(params, runner)
 
 
 __all__ = [
@@ -454,8 +454,6 @@ __all__ = [
     "PossumOutputs",
     "PossumParameters",
     "possum",
-    "possum_cargs",
     "possum_execute",
-    "possum_outputs",
     "possum_params",
 ]

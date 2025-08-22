@@ -130,7 +130,7 @@ def mris_sample_label_outputs(
 
 def mris_sample_label_execute(
     params: MrisSampleLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSampleLabelOutputs:
     """
     This tool samples a label onto a surface model.
@@ -141,10 +141,12 @@ def mris_sample_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSampleLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SAMPLE_LABEL_METADATA)
     params = execution.params(params)
     cargs = mris_sample_label_cargs(params, execution)
     ret = mris_sample_label_outputs(params, execution)
@@ -173,14 +175,12 @@ def mris_sample_label(
     Returns:
         NamedTuple of outputs (described in `MrisSampleLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SAMPLE_LABEL_METADATA)
     params = mris_sample_label_params(
         input_label_file=input_label_file,
         input_surface_file=input_surface_file,
         output_label_file=output_label_file,
     )
-    return mris_sample_label_execute(params, execution)
+    return mris_sample_label_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MrisSampleLabelOutputs",
     "MrisSampleLabelParameters",
     "mris_sample_label",
-    "mris_sample_label_cargs",
     "mris_sample_label_execute",
-    "mris_sample_label_outputs",
     "mris_sample_label_params",
 ]

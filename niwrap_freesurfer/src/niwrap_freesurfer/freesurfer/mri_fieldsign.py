@@ -305,7 +305,7 @@ def mri_fieldsign_outputs(
 
 def mri_fieldsign_execute(
     params: MriFieldsignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFieldsignOutputs:
     """
     Field Sign Mapping Tool from FreeSurfer.
@@ -316,10 +316,12 @@ def mri_fieldsign_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFieldsignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FIELDSIGN_METADATA)
     params = execution.params(params)
     cargs = mri_fieldsign_cargs(params, execution)
     ret = mri_fieldsign_outputs(params, execution)
@@ -390,8 +392,6 @@ def mri_fieldsign(
     Returns:
         NamedTuple of outputs (described in `MriFieldsignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FIELDSIGN_METADATA)
     params = mri_fieldsign_params(
         fieldsign_file=fieldsign_file,
         eccen_values=eccen_values,
@@ -418,7 +418,7 @@ def mri_fieldsign(
         help_flag=help_flag,
         version_flag=version_flag,
     )
-    return mri_fieldsign_execute(params, execution)
+    return mri_fieldsign_execute(params, runner)
 
 
 __all__ = [
@@ -426,8 +426,6 @@ __all__ = [
     "MriFieldsignOutputs",
     "MriFieldsignParameters",
     "mri_fieldsign",
-    "mri_fieldsign_cargs",
     "mri_fieldsign_execute",
-    "mri_fieldsign_outputs",
     "mri_fieldsign_params",
 ]

@@ -189,7 +189,7 @@ def fslcreatehd_outputs(
 
 def fslcreatehd_execute(
     params: FslcreatehdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslcreatehdOutputs:
     """
     Tool to create a new NIfTI header.
@@ -200,10 +200,12 @@ def fslcreatehd_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslcreatehdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLCREATEHD_METADATA)
     params = execution.params(params)
     cargs = fslcreatehd_cargs(params, execution)
     ret = fslcreatehd_outputs(params, execution)
@@ -256,8 +258,6 @@ def fslcreatehd(
     Returns:
         NamedTuple of outputs (described in `FslcreatehdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLCREATEHD_METADATA)
     params = fslcreatehd_params(
         xsize=xsize,
         ysize=ysize,
@@ -274,7 +274,7 @@ def fslcreatehd(
         headername=headername,
         nifti_xml_file=nifti_xml_file,
     )
-    return fslcreatehd_execute(params, execution)
+    return fslcreatehd_execute(params, runner)
 
 
 __all__ = [
@@ -282,8 +282,6 @@ __all__ = [
     "FslcreatehdOutputs",
     "FslcreatehdParameters",
     "fslcreatehd",
-    "fslcreatehd_cargs",
     "fslcreatehd_execute",
-    "fslcreatehd_outputs",
     "fslcreatehd_params",
 ]

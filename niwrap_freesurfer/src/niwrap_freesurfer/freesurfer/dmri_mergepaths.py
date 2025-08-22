@@ -163,7 +163,7 @@ def dmri_mergepaths_outputs(
 
 def dmri_mergepaths_execute(
     params: DmriMergepathsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriMergepathsOutputs:
     """
     A tool for merging diffusion MRI path data.
@@ -174,10 +174,12 @@ def dmri_mergepaths_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriMergepathsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_MERGEPATHS_METADATA)
     params = execution.params(params)
     cargs = dmri_mergepaths_cargs(params, execution)
     ret = dmri_mergepaths_outputs(params, execution)
@@ -215,8 +217,6 @@ def dmri_mergepaths(
     Returns:
         NamedTuple of outputs (described in `DmriMergepathsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_MERGEPATHS_METADATA)
     params = dmri_mergepaths_params(
         input_volumes=input_volumes,
         input_directory=input_directory,
@@ -226,7 +226,7 @@ def dmri_mergepaths(
         debug=debug,
         check_opts=check_opts,
     )
-    return dmri_mergepaths_execute(params, execution)
+    return dmri_mergepaths_execute(params, runner)
 
 
 __all__ = [
@@ -234,8 +234,6 @@ __all__ = [
     "DmriMergepathsOutputs",
     "DmriMergepathsParameters",
     "dmri_mergepaths",
-    "dmri_mergepaths_cargs",
     "dmri_mergepaths_execute",
-    "dmri_mergepaths_outputs",
     "dmri_mergepaths_params",
 ]

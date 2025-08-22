@@ -152,7 +152,7 @@ def texture_cooccurrence_features_outputs(
 
 def texture_cooccurrence_features_execute(
     params: TextureCooccurrenceFeaturesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TextureCooccurrenceFeaturesOutputs:
     """
     Calculates texture co-occurrence features such as Energy, Entropy, Inverse
@@ -165,10 +165,12 @@ def texture_cooccurrence_features_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TextureCooccurrenceFeaturesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TEXTURE_COOCCURRENCE_FEATURES_METADATA)
     params = execution.params(params)
     cargs = texture_cooccurrence_features_cargs(params, execution)
     ret = texture_cooccurrence_features_outputs(params, execution)
@@ -208,8 +210,6 @@ def texture_cooccurrence_features(
     Returns:
         NamedTuple of outputs (described in `TextureCooccurrenceFeaturesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TEXTURE_COOCCURRENCE_FEATURES_METADATA)
     params = texture_cooccurrence_features_params(
         image_dimension=image_dimension,
         input_image=input_image,
@@ -217,7 +217,7 @@ def texture_cooccurrence_features(
         mask_image=mask_image,
         mask_label=mask_label,
     )
-    return texture_cooccurrence_features_execute(params, execution)
+    return texture_cooccurrence_features_execute(params, runner)
 
 
 __all__ = [
@@ -225,8 +225,6 @@ __all__ = [
     "TextureCooccurrenceFeaturesOutputs",
     "TextureCooccurrenceFeaturesParameters",
     "texture_cooccurrence_features",
-    "texture_cooccurrence_features_cargs",
     "texture_cooccurrence_features_execute",
-    "texture_cooccurrence_features_outputs",
     "texture_cooccurrence_features_params",
 ]

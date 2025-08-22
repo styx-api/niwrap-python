@@ -144,7 +144,7 @@ def v__suma_make_spec_sf_outputs(
 
 def v__suma_make_spec_sf_execute(
     params: VSumaMakeSpecSfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaMakeSpecSfOutputs:
     """
     Prepare for surface viewing in SUMA.
@@ -155,10 +155,12 @@ def v__suma_make_spec_sf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecSfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_MAKE_SPEC_SF_METADATA)
     params = execution.params(params)
     cargs = v__suma_make_spec_sf_cargs(params, execution)
     ret = v__suma_make_spec_sf_outputs(params, execution)
@@ -188,14 +190,12 @@ def v__suma_make_spec_sf(
     Returns:
         NamedTuple of outputs (described in `VSumaMakeSpecSfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_MAKE_SPEC_SF_METADATA)
     params = v__suma_make_spec_sf_params(
         debug_level=debug_level,
         surface_path=surface_path,
         subject_id=subject_id,
     )
-    return v__suma_make_spec_sf_execute(params, execution)
+    return v__suma_make_spec_sf_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "VSumaMakeSpecSfParameters",
     "V__SUMA_MAKE_SPEC_SF_METADATA",
     "v__suma_make_spec_sf",
-    "v__suma_make_spec_sf_cargs",
     "v__suma_make_spec_sf_execute",
-    "v__suma_make_spec_sf_outputs",
     "v__suma_make_spec_sf_params",
 ]

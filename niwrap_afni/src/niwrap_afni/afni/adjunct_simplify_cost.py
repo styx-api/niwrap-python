@@ -116,7 +116,7 @@ def adjunct_simplify_cost_outputs(
 
 def adjunct_simplify_cost_execute(
     params: AdjunctSimplifyCostParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctSimplifyCostOutputs:
     """
     Simplifies a cost function name by removing the '+' and anything following it.
@@ -127,10 +127,12 @@ def adjunct_simplify_cost_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctSimplifyCostOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_SIMPLIFY_COST_METADATA)
     params = execution.params(params)
     cargs = adjunct_simplify_cost_cargs(params, execution)
     ret = adjunct_simplify_cost_outputs(params, execution)
@@ -155,12 +157,10 @@ def adjunct_simplify_cost(
     Returns:
         NamedTuple of outputs (described in `AdjunctSimplifyCostOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_SIMPLIFY_COST_METADATA)
     params = adjunct_simplify_cost_params(
         cost_function=cost_function,
     )
-    return adjunct_simplify_cost_execute(params, execution)
+    return adjunct_simplify_cost_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "AdjunctSimplifyCostOutputs",
     "AdjunctSimplifyCostParameters",
     "adjunct_simplify_cost",
-    "adjunct_simplify_cost_cargs",
     "adjunct_simplify_cost_execute",
-    "adjunct_simplify_cost_outputs",
     "adjunct_simplify_cost_params",
 ]

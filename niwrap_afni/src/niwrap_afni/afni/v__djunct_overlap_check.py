@@ -305,7 +305,7 @@ def v__djunct_overlap_check_outputs(
 
 def v__djunct_overlap_check_execute(
     params: VDjunctOverlapCheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunctOverlapCheckOutputs:
     """
     A helper script for visualizing overlap between datasets in AFNI.
@@ -316,10 +316,12 @@ def v__djunct_overlap_check_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunctOverlapCheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_OVERLAP_CHECK_METADATA)
     params = execution.params(params)
     cargs = v__djunct_overlap_check_cargs(params, execution)
     ret = v__djunct_overlap_check_outputs(params, execution)
@@ -390,8 +392,6 @@ def v__djunct_overlap_check(
     Returns:
         NamedTuple of outputs (described in `VDjunctOverlapCheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_OVERLAP_CHECK_METADATA)
     params = v__djunct_overlap_check_params(
         ulay=ulay,
         olay=olay,
@@ -418,7 +418,7 @@ def v__djunct_overlap_check(
         no_sag=no_sag,
         no_clean=no_clean,
     )
-    return v__djunct_overlap_check_execute(params, execution)
+    return v__djunct_overlap_check_execute(params, runner)
 
 
 __all__ = [
@@ -426,8 +426,6 @@ __all__ = [
     "VDjunctOverlapCheckParameters",
     "V__DJUNCT_OVERLAP_CHECK_METADATA",
     "v__djunct_overlap_check",
-    "v__djunct_overlap_check_cargs",
     "v__djunct_overlap_check_execute",
-    "v__djunct_overlap_check_outputs",
     "v__djunct_overlap_check_params",
 ]

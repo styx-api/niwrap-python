@@ -126,7 +126,7 @@ def surface_flip_normals_outputs(
 
 def surface_flip_normals_execute(
     params: SurfaceFlipNormalsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceFlipNormalsOutputs:
     """
     Flip all tiles on a surface.
@@ -144,10 +144,12 @@ def surface_flip_normals_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceFlipNormalsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_FLIP_NORMALS_METADATA)
     params = execution.params(params)
     cargs = surface_flip_normals_cargs(params, execution)
     ret = surface_flip_normals_outputs(params, execution)
@@ -181,13 +183,11 @@ def surface_flip_normals(
     Returns:
         NamedTuple of outputs (described in `SurfaceFlipNormalsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_FLIP_NORMALS_METADATA)
     params = surface_flip_normals_params(
         surface=surface,
         surface_out=surface_out,
     )
-    return surface_flip_normals_execute(params, execution)
+    return surface_flip_normals_execute(params, runner)
 
 
 __all__ = [
@@ -195,8 +195,6 @@ __all__ = [
     "SurfaceFlipNormalsOutputs",
     "SurfaceFlipNormalsParameters",
     "surface_flip_normals",
-    "surface_flip_normals_cargs",
     "surface_flip_normals_execute",
-    "surface_flip_normals_outputs",
     "surface_flip_normals_params",
 ]

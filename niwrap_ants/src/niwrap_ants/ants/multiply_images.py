@@ -154,7 +154,7 @@ def multiply_images_outputs(
 
 def multiply_images_execute(
     params: MultiplyImagesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MultiplyImagesOutputs:
     """
     Multiply 2 images; 2nd image file may also be floating point numerical value,
@@ -167,10 +167,12 @@ def multiply_images_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MultiplyImagesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MULTIPLY_IMAGES_METADATA)
     params = execution.params(params)
     cargs = multiply_images_cargs(params, execution)
     ret = multiply_images_outputs(params, execution)
@@ -210,8 +212,6 @@ def multiply_images(
     Returns:
         NamedTuple of outputs (described in `MultiplyImagesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MULTIPLY_IMAGES_METADATA)
     params = multiply_images_params(
         dimension=dimension,
         first_input=first_input,
@@ -220,7 +220,7 @@ def multiply_images(
         output_product_image=output_product_image,
         num_threads=num_threads,
     )
-    return multiply_images_execute(params, execution)
+    return multiply_images_execute(params, runner)
 
 
 __all__ = [
@@ -228,8 +228,6 @@ __all__ = [
     "MultiplyImagesOutputs",
     "MultiplyImagesParameters",
     "multiply_images",
-    "multiply_images_cargs",
     "multiply_images_execute",
-    "multiply_images_outputs",
     "multiply_images_params",
 ]

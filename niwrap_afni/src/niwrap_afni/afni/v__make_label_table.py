@@ -437,7 +437,7 @@ def v__make_label_table_outputs(
 
 def v__make_label_table_execute(
     params: VMakeLabelTableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VMakeLabelTableOutputs:
     """
     Script used to create, modify, and transform label tables.
@@ -448,10 +448,12 @@ def v__make_label_table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VMakeLabelTableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__MAKE_LABEL_TABLE_METADATA)
     params = execution.params(params)
     cargs = v__make_label_table_cargs(params, execution)
     ret = v__make_label_table_outputs(params, execution)
@@ -549,8 +551,6 @@ def v__make_label_table(
     Returns:
         NamedTuple of outputs (described in `VMakeLabelTableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__MAKE_LABEL_TABLE_METADATA)
     params = v__make_label_table_params(
         labeltable=labeltable,
         atlas_pointlist=atlas_pointlist,
@@ -588,7 +588,7 @@ def v__make_label_table(
         all_opts=all_opts,
         h_find=h_find,
     )
-    return v__make_label_table_execute(params, execution)
+    return v__make_label_table_execute(params, runner)
 
 
 __all__ = [
@@ -596,8 +596,6 @@ __all__ = [
     "VMakeLabelTableParameters",
     "V__MAKE_LABEL_TABLE_METADATA",
     "v__make_label_table",
-    "v__make_label_table_cargs",
     "v__make_label_table_execute",
-    "v__make_label_table_outputs",
     "v__make_label_table_params",
 ]

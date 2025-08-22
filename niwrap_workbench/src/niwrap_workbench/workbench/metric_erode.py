@@ -170,7 +170,7 @@ def metric_erode_outputs(
 
 def metric_erode_execute(
     params: MetricErodeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
     Erode a metric file.
@@ -188,10 +188,12 @@ def metric_erode_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricErodeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_ERODE_METADATA)
     params = execution.params(params)
     cargs = metric_erode_cargs(params, execution)
     ret = metric_erode_outputs(params, execution)
@@ -239,8 +241,6 @@ def metric_erode(
     Returns:
         NamedTuple of outputs (described in `MetricErodeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_ERODE_METADATA)
     params = metric_erode_params(
         metric=metric,
         surface=surface,
@@ -250,7 +250,7 @@ def metric_erode(
         opt_column_column=opt_column_column,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return metric_erode_execute(params, execution)
+    return metric_erode_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "MetricErodeOutputs",
     "MetricErodeParameters",
     "metric_erode",
-    "metric_erode_cargs",
     "metric_erode_execute",
-    "metric_erode_outputs",
     "metric_erode_params",
 ]

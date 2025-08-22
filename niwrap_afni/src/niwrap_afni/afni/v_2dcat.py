@@ -350,7 +350,7 @@ def v_2dcat_outputs(
 
 def v_2dcat_execute(
     params: V2dcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V2dcatOutputs:
     """
     Puts a set of images into an image matrix montage of NX by NY images.
@@ -361,10 +361,12 @@ def v_2dcat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V2dcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_2DCAT_METADATA)
     params = execution.params(params)
     cargs = v_2dcat_cargs(params, execution)
     ret = v_2dcat_outputs(params, execution)
@@ -455,8 +457,6 @@ def v_2dcat(
     Returns:
         NamedTuple of outputs (described in `V2dcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_2DCAT_METADATA)
     params = v_2dcat_params(
         filenames=filenames,
         scale_image=scale_image,
@@ -484,7 +484,7 @@ def v_2dcat(
         gap=gap,
         gap_col=gap_col,
     )
-    return v_2dcat_execute(params, execution)
+    return v_2dcat_execute(params, runner)
 
 
 __all__ = [
@@ -492,8 +492,6 @@ __all__ = [
     "V2dcatParameters",
     "V_2DCAT_METADATA",
     "v_2dcat",
-    "v_2dcat_cargs",
     "v_2dcat_execute",
-    "v_2dcat_outputs",
     "v_2dcat_params",
 ]

@@ -277,7 +277,7 @@ def mri_average_outputs(
 
 def mri_average_execute(
     params: MriAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriAverageOutputs:
     """
     Averages multiple volumes with various options for alignment, interpolation, and
@@ -289,10 +289,12 @@ def mri_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = mri_average_cargs(params, execution)
     ret = mri_average_outputs(params, execution)
@@ -360,8 +362,6 @@ def mri_average(
     Returns:
         NamedTuple of outputs (described in `MriAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_AVERAGE_METADATA)
     params = mri_average_params(
         input_volumes=input_volumes,
         output_volume=output_volume,
@@ -385,7 +385,7 @@ def mri_average(
         binarize=binarize,
         absolute=absolute,
     )
-    return mri_average_execute(params, execution)
+    return mri_average_execute(params, runner)
 
 
 __all__ = [
@@ -393,8 +393,6 @@ __all__ = [
     "MriAverageOutputs",
     "MriAverageParameters",
     "mri_average",
-    "mri_average_cargs",
     "mri_average_execute",
-    "mri_average_outputs",
     "mri_average_params",
 ]

@@ -170,7 +170,7 @@ def fs_temp_file_outputs(
 
 def fs_temp_file_execute(
     params: FsTempFileParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsTempFileOutputs:
     """
     Generates and creates an empty temporary file, printing the resulting path to
@@ -182,10 +182,12 @@ def fs_temp_file_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsTempFileOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_TEMP_FILE_METADATA)
     params = execution.params(params)
     cargs = fs_temp_file_cargs(params, execution)
     ret = fs_temp_file_outputs(params, execution)
@@ -224,8 +226,6 @@ def fs_temp_file(
     Returns:
         NamedTuple of outputs (described in `FsTempFileOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_TEMP_FILE_METADATA)
     params = fs_temp_file_params(
         base_dir=base_dir,
         base_dir_alt=base_dir_alt,
@@ -235,7 +235,7 @@ def fs_temp_file(
         help_=help_,
         help_alt=help_alt,
     )
-    return fs_temp_file_execute(params, execution)
+    return fs_temp_file_execute(params, runner)
 
 
 __all__ = [
@@ -243,8 +243,6 @@ __all__ = [
     "FsTempFileOutputs",
     "FsTempFileParameters",
     "fs_temp_file",
-    "fs_temp_file_cargs",
     "fs_temp_file_execute",
-    "fs_temp_file_outputs",
     "fs_temp_file_params",
 ]

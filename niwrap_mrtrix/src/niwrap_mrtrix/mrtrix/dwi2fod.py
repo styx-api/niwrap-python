@@ -649,7 +649,7 @@ def dwi2fod_outputs(
 
 def dwi2fod_execute(
     params: Dwi2fodParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dwi2fodOutputs:
     """
     Estimate fibre orientation distributions from diffusion data using spherical
@@ -681,10 +681,12 @@ def dwi2fod_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dwi2fodOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWI2FOD_METADATA)
     params = execution.params(params)
     cargs = dwi2fod_cargs(params, execution)
     ret = dwi2fod_outputs(params, execution)
@@ -826,8 +828,6 @@ def dwi2fod(
     Returns:
         NamedTuple of outputs (described in `Dwi2fodOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWI2FOD_METADATA)
     params = dwi2fod_params(
         grad=grad,
         fslgrad=fslgrad,
@@ -856,7 +856,7 @@ def dwi2fod(
         dwi=dwi,
         response_odf=response_odf,
     )
-    return dwi2fod_execute(params, execution)
+    return dwi2fod_execute(params, runner)
 
 
 __all__ = [
@@ -870,19 +870,11 @@ __all__ = [
     "Dwi2fodVariousFileParameters",
     "Dwi2fodVariousStringParameters",
     "dwi2fod",
-    "dwi2fod_cargs",
-    "dwi2fod_config_cargs",
     "dwi2fod_config_params",
     "dwi2fod_execute",
-    "dwi2fod_fslgrad_cargs",
     "dwi2fod_fslgrad_params",
-    "dwi2fod_outputs",
     "dwi2fod_params",
-    "dwi2fod_response_odf_cargs",
-    "dwi2fod_response_odf_outputs",
     "dwi2fod_response_odf_params",
-    "dwi2fod_various_file_cargs",
     "dwi2fod_various_file_params",
-    "dwi2fod_various_string_cargs",
     "dwi2fod_various_string_params",
 ]

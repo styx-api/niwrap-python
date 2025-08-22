@@ -147,7 +147,7 @@ def antsuse_deformation_field_to_get_affine_transform_outputs(
 
 def antsuse_deformation_field_to_get_affine_transform_execute(
     params: AntsuseDeformationFieldToGetAffineTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsuseDeformationFieldToGetAffineTransformOutputs:
     """
     Extracts an affine transform from a deformation field. The input deformation
@@ -160,10 +160,12 @@ def antsuse_deformation_field_to_get_affine_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsuseDeformationFieldToGetAffineTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = antsuse_deformation_field_to_get_affine_transform_cargs(params, execution)
     ret = antsuse_deformation_field_to_get_affine_transform_outputs(params, execution)
@@ -203,8 +205,6 @@ def antsuse_deformation_field_to_get_affine_transform(
     Returns:
         NamedTuple of outputs (described in `AntsuseDeformationFieldToGetAffineTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTSUSE_DEFORMATION_FIELD_TO_GET_AFFINE_TRANSFORM_METADATA)
     params = antsuse_deformation_field_to_get_affine_transform_params(
         deformation_field=deformation_field,
         load_ratio=load_ratio,
@@ -212,7 +212,7 @@ def antsuse_deformation_field_to_get_affine_transform(
         output_affine=output_affine,
         mask=mask,
     )
-    return antsuse_deformation_field_to_get_affine_transform_execute(params, execution)
+    return antsuse_deformation_field_to_get_affine_transform_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "AntsuseDeformationFieldToGetAffineTransformOutputs",
     "AntsuseDeformationFieldToGetAffineTransformParameters",
     "antsuse_deformation_field_to_get_affine_transform",
-    "antsuse_deformation_field_to_get_affine_transform_cargs",
     "antsuse_deformation_field_to_get_affine_transform_execute",
-    "antsuse_deformation_field_to_get_affine_transform_outputs",
     "antsuse_deformation_field_to_get_affine_transform_params",
 ]

@@ -321,7 +321,7 @@ def atropos_outputs(
 
 def atropos_execute(
     params: AtroposParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AtroposOutputs:
     """
     Atropos is a finite mixture modeling (FMM) segmentation approach that allows for
@@ -334,10 +334,12 @@ def atropos_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AtroposOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ATROPOS_METADATA)
     params = execution.params(params)
     cargs = atropos_cargs(params, execution)
     ret = atropos_outputs(params, execution)
@@ -424,8 +426,6 @@ def atropos(
     Returns:
         NamedTuple of outputs (described in `AtroposOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ATROPOS_METADATA)
     params = atropos_params(
         image_dimensionality=image_dimensionality,
         intensity_image=intensity_image,
@@ -447,7 +447,7 @@ def atropos(
         label_propagation=label_propagation,
         verbose=verbose,
     )
-    return atropos_execute(params, execution)
+    return atropos_execute(params, runner)
 
 
 __all__ = [
@@ -455,8 +455,6 @@ __all__ = [
     "AtroposOutputs",
     "AtroposParameters",
     "atropos",
-    "atropos_cargs",
     "atropos_execute",
-    "atropos_outputs",
     "atropos_params",
 ]

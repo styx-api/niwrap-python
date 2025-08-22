@@ -268,7 +268,7 @@ def v_3d_re_ho_outputs(
 
 def v_3d_re_ho_execute(
     params: V3dReHoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dReHoOutputs:
     """
     3dReHo calculates Kendall's W per voxel using neighborhood voxels from 4D time
@@ -280,10 +280,12 @@ def v_3d_re_ho_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dReHoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_RE_HO_METADATA)
     params = execution.params(params)
     cargs = v_3d_re_ho_cargs(params, execution)
     ret = v_3d_re_ho_outputs(params, execution)
@@ -346,8 +348,6 @@ def v_3d_re_ho(
     Returns:
         NamedTuple of outputs (described in `V3dReHoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_RE_HO_METADATA)
     params = v_3d_re_ho_params(
         prefix=prefix,
         inset=inset,
@@ -364,7 +364,7 @@ def v_3d_re_ho(
         box_z=box_z,
         in_rois=in_rois,
     )
-    return v_3d_re_ho_execute(params, execution)
+    return v_3d_re_ho_execute(params, runner)
 
 
 __all__ = [
@@ -372,8 +372,6 @@ __all__ = [
     "V3dReHoParameters",
     "V_3D_RE_HO_METADATA",
     "v_3d_re_ho",
-    "v_3d_re_ho_cargs",
     "v_3d_re_ho_execute",
-    "v_3d_re_ho_outputs",
     "v_3d_re_ho_params",
 ]

@@ -143,7 +143,7 @@ def surface_based_smoothing_outputs(
 
 def surface_based_smoothing_execute(
     params: SurfaceBasedSmoothingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceBasedSmoothingOutputs:
     """
     Surface-based smoothing applied to ImageToSmooth using a geodesic neighbourhood
@@ -155,10 +155,12 @@ def surface_based_smoothing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceBasedSmoothingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_BASED_SMOOTHING_METADATA)
     params = execution.params(params)
     cargs = surface_based_smoothing_cargs(params, execution)
     ret = surface_based_smoothing_outputs(params, execution)
@@ -193,8 +195,6 @@ def surface_based_smoothing(
     Returns:
         NamedTuple of outputs (described in `SurfaceBasedSmoothingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_BASED_SMOOTHING_METADATA)
     params = surface_based_smoothing_params(
         image_to_smooth=image_to_smooth,
         sigma=sigma,
@@ -202,7 +202,7 @@ def surface_based_smoothing(
         outname=outname,
         num_repeats=num_repeats,
     )
-    return surface_based_smoothing_execute(params, execution)
+    return surface_based_smoothing_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "SurfaceBasedSmoothingOutputs",
     "SurfaceBasedSmoothingParameters",
     "surface_based_smoothing",
-    "surface_based_smoothing_cargs",
     "surface_based_smoothing_execute",
-    "surface_based_smoothing_outputs",
     "surface_based_smoothing_params",
 ]

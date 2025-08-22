@@ -159,7 +159,7 @@ def flirt_average_outputs(
 
 def flirt_average_execute(
     params: FlirtAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FlirtAverageOutputs:
     """
     Averages multiple input images after linear registration (FLIRT).
@@ -170,10 +170,12 @@ def flirt_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FlirtAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FLIRT_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = flirt_average_cargs(params, execution)
     ret = flirt_average_outputs(params, execution)
@@ -210,8 +212,6 @@ def flirt_average(
     Returns:
         NamedTuple of outputs (described in `FlirtAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FLIRT_AVERAGE_METADATA)
     params = flirt_average_params(
         ninputs=ninputs,
         input1=input1,
@@ -221,7 +221,7 @@ def flirt_average(
         reference_image=reference_image,
         flirt_options=flirt_options,
     )
-    return flirt_average_execute(params, execution)
+    return flirt_average_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "FlirtAverageOutputs",
     "FlirtAverageParameters",
     "flirt_average",
-    "flirt_average_cargs",
     "flirt_average_execute",
-    "flirt_average_outputs",
     "flirt_average_params",
 ]

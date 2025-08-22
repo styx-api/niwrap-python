@@ -135,7 +135,7 @@ def recon_all_exvivo_outputs(
 
 def recon_all_exvivo_execute(
     params: ReconAllExvivoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReconAllExvivoOutputs:
     """
     A script to perform an ex vivo reconstruction with FreeSurfer.
@@ -146,10 +146,12 @@ def recon_all_exvivo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReconAllExvivoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RECON_ALL_EXVIVO_METADATA)
     params = execution.params(params)
     cargs = recon_all_exvivo_cargs(params, execution)
     ret = recon_all_exvivo_outputs(params, execution)
@@ -178,14 +180,12 @@ def recon_all_exvivo(
     Returns:
         NamedTuple of outputs (described in `ReconAllExvivoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RECON_ALL_EXVIVO_METADATA)
     params = recon_all_exvivo_params(
         subject_id=subject_id,
         hemisphere=hemisphere,
         nocerebellum=nocerebellum,
     )
-    return recon_all_exvivo_execute(params, execution)
+    return recon_all_exvivo_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "ReconAllExvivoOutputs",
     "ReconAllExvivoParameters",
     "recon_all_exvivo",
-    "recon_all_exvivo_cargs",
     "recon_all_exvivo_execute",
-    "recon_all_exvivo_outputs",
     "recon_all_exvivo_params",
 ]

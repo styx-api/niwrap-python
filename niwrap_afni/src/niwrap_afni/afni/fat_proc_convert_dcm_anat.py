@@ -205,7 +205,7 @@ def fat_proc_convert_dcm_anat_outputs(
 
 def fat_proc_convert_dcm_anat_execute(
     params: FatProcConvertDcmAnatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcConvertDcmAnatOutputs:
     """
     Converts an anatomical dataset from DICOM files into a volume, specifically
@@ -217,10 +217,12 @@ def fat_proc_convert_dcm_anat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcConvertDcmAnatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_CONVERT_DCM_ANAT_METADATA)
     params = execution.params(params)
     cargs = fat_proc_convert_dcm_anat_cargs(params, execution)
     ret = fat_proc_convert_dcm_anat_outputs(params, execution)
@@ -272,8 +274,6 @@ def fat_proc_convert_dcm_anat(
     Returns:
         NamedTuple of outputs (described in `FatProcConvertDcmAnatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_CONVERT_DCM_ANAT_METADATA)
     params = fat_proc_convert_dcm_anat_params(
         dicom_directory=dicom_directory,
         nifti_input=nifti_input,
@@ -286,7 +286,7 @@ def fat_proc_convert_dcm_anat(
         no_cmd_out=no_cmd_out,
         no_qc_view=no_qc_view,
     )
-    return fat_proc_convert_dcm_anat_execute(params, execution)
+    return fat_proc_convert_dcm_anat_execute(params, runner)
 
 
 __all__ = [
@@ -294,8 +294,6 @@ __all__ = [
     "FatProcConvertDcmAnatOutputs",
     "FatProcConvertDcmAnatParameters",
     "fat_proc_convert_dcm_anat",
-    "fat_proc_convert_dcm_anat_cargs",
     "fat_proc_convert_dcm_anat_execute",
-    "fat_proc_convert_dcm_anat_outputs",
     "fat_proc_convert_dcm_anat_params",
 ]

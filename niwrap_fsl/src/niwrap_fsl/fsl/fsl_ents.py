@@ -152,7 +152,7 @@ def fsl_ents_outputs(
 
 def fsl_ents_execute(
     params: FslEntsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslEntsOutputs:
     """
     Extract component time series from a MELODIC .ica directory.
@@ -163,10 +163,12 @@ def fsl_ents_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslEntsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_ENTS_METADATA)
     params = execution.params(params)
     cargs = fsl_ents_cargs(params, execution)
     ret = fsl_ents_outputs(params, execution)
@@ -200,8 +202,6 @@ def fsl_ents(
     Returns:
         NamedTuple of outputs (described in `FslEntsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_ENTS_METADATA)
     params = fsl_ents_params(
         icadir=icadir,
         components=components,
@@ -209,7 +209,7 @@ def fsl_ents(
         overwrite=overwrite,
         conffile=conffile,
     )
-    return fsl_ents_execute(params, execution)
+    return fsl_ents_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "FslEntsOutputs",
     "FslEntsParameters",
     "fsl_ents",
-    "fsl_ents_cargs",
     "fsl_ents_execute",
-    "fsl_ents_outputs",
     "fsl_ents_params",
 ]

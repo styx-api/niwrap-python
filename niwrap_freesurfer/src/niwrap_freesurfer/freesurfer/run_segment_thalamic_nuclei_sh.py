@@ -124,7 +124,7 @@ def run_segment_thalamic_nuclei_sh_outputs(
 
 def run_segment_thalamic_nuclei_sh_execute(
     params: RunSegmentThalamicNucleiShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunSegmentThalamicNucleiShOutputs:
     """
     Script for segmenting thalamic nuclei using FreeSurfer.
@@ -135,10 +135,12 @@ def run_segment_thalamic_nuclei_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunSegmentThalamicNucleiShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA)
     params = execution.params(params)
     cargs = run_segment_thalamic_nuclei_sh_cargs(params, execution)
     ret = run_segment_thalamic_nuclei_sh_outputs(params, execution)
@@ -166,13 +168,11 @@ def run_segment_thalamic_nuclei_sh(
     Returns:
         NamedTuple of outputs (described in `RunSegmentThalamicNucleiShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_SEGMENT_THALAMIC_NUCLEI_SH_METADATA)
     params = run_segment_thalamic_nuclei_sh_params(
         mcr_root=mcr_root,
         args=args,
     )
-    return run_segment_thalamic_nuclei_sh_execute(params, execution)
+    return run_segment_thalamic_nuclei_sh_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "RunSegmentThalamicNucleiShOutputs",
     "RunSegmentThalamicNucleiShParameters",
     "run_segment_thalamic_nuclei_sh",
-    "run_segment_thalamic_nuclei_sh_cargs",
     "run_segment_thalamic_nuclei_sh_execute",
-    "run_segment_thalamic_nuclei_sh_outputs",
     "run_segment_thalamic_nuclei_sh_params",
 ]

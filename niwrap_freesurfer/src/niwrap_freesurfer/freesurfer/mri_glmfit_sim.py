@@ -385,7 +385,7 @@ def mri_glmfit_sim_outputs(
 
 def mri_glmfit_sim_execute(
     params: MriGlmfitSimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGlmfitSimOutputs:
     """
     A tool to run corrections for multiple comparisons on volumes or surfaces, using
@@ -398,10 +398,12 @@ def mri_glmfit_sim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGlmfitSimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GLMFIT_SIM_METADATA)
     params = execution.params(params)
     cargs = mri_glmfit_sim_cargs(params, execution)
     ret = mri_glmfit_sim_outputs(params, execution)
@@ -492,8 +494,6 @@ def mri_glmfit_sim(
     Returns:
         NamedTuple of outputs (described in `MriGlmfitSimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GLMFIT_SIM_METADATA)
     params = mri_glmfit_sim_params(
         glmdir=glmdir,
         cwp=cwp,
@@ -525,7 +525,7 @@ def mri_glmfit_sim(
         spatial_sum=spatial_sum,
         help_=help_,
     )
-    return mri_glmfit_sim_execute(params, execution)
+    return mri_glmfit_sim_execute(params, runner)
 
 
 __all__ = [
@@ -533,8 +533,6 @@ __all__ = [
     "MriGlmfitSimOutputs",
     "MriGlmfitSimParameters",
     "mri_glmfit_sim",
-    "mri_glmfit_sim_cargs",
     "mri_glmfit_sim_execute",
-    "mri_glmfit_sim_outputs",
     "mri_glmfit_sim_params",
 ]

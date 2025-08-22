@@ -130,7 +130,7 @@ def mri_compute_volume_intensities_outputs(
 
 def mri_compute_volume_intensities_execute(
     params: MriComputeVolumeIntensitiesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeVolumeIntensitiesOutputs:
     """
     A tool to compute volume intensities for a given input intensity volume and
@@ -142,10 +142,12 @@ def mri_compute_volume_intensities_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeVolumeIntensitiesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_VOLUME_INTENSITIES_METADATA)
     params = execution.params(params)
     cargs = mri_compute_volume_intensities_cargs(params, execution)
     ret = mri_compute_volume_intensities_outputs(params, execution)
@@ -175,14 +177,12 @@ def mri_compute_volume_intensities(
     Returns:
         NamedTuple of outputs (described in `MriComputeVolumeIntensitiesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_VOLUME_INTENSITIES_METADATA)
     params = mri_compute_volume_intensities_params(
         input_intensity=input_intensity,
         volume_fraction_stem=volume_fraction_stem,
         output_volume=output_volume,
     )
-    return mri_compute_volume_intensities_execute(params, execution)
+    return mri_compute_volume_intensities_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "MriComputeVolumeIntensitiesOutputs",
     "MriComputeVolumeIntensitiesParameters",
     "mri_compute_volume_intensities",
-    "mri_compute_volume_intensities_cargs",
     "mri_compute_volume_intensities_execute",
-    "mri_compute_volume_intensities_outputs",
     "mri_compute_volume_intensities_params",
 ]

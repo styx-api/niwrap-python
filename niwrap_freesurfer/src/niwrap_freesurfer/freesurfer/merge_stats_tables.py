@@ -247,7 +247,7 @@ def merge_stats_tables_outputs(
 
 def merge_stats_tables_execute(
     params: MergeStatsTablesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MergeStatsTablesOutputs:
     """
     Merges a set of stats table files into a single stats table where each line is a
@@ -259,10 +259,12 @@ def merge_stats_tables_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MergeStatsTablesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MERGE_STATS_TABLES_METADATA)
     params = execution.params(params)
     cargs = merge_stats_tables_cargs(params, execution)
     ret = merge_stats_tables_outputs(params, execution)
@@ -322,8 +324,6 @@ def merge_stats_tables(
     Returns:
         NamedTuple of outputs (described in `MergeStatsTablesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MERGE_STATS_TABLES_METADATA)
     params = merge_stats_tables_params(
         subjects=subjects,
         subject=subject,
@@ -341,7 +341,7 @@ def merge_stats_tables(
         skip=skip,
         debug=debug,
     )
-    return merge_stats_tables_execute(params, execution)
+    return merge_stats_tables_execute(params, runner)
 
 
 __all__ = [
@@ -349,8 +349,6 @@ __all__ = [
     "MergeStatsTablesOutputs",
     "MergeStatsTablesParameters",
     "merge_stats_tables",
-    "merge_stats_tables_cargs",
     "merge_stats_tables_execute",
-    "merge_stats_tables_outputs",
     "merge_stats_tables_params",
 ]

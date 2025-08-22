@@ -234,7 +234,7 @@ def mris_thickness_diff_outputs(
 
 def mris_thickness_diff_execute(
     params: MrisThicknessDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisThicknessDiffOutputs:
     """
     Computes the difference of two surface data sets defined on two surface meshes.
@@ -245,10 +245,12 @@ def mris_thickness_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisThicknessDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_THICKNESS_DIFF_METADATA)
     params = execution.params(params)
     cargs = mris_thickness_diff_cargs(params, execution)
     ret = mris_thickness_diff_outputs(params, execution)
@@ -297,8 +299,6 @@ def mris_thickness_diff(
     Returns:
         NamedTuple of outputs (described in `MrisThicknessDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_THICKNESS_DIFF_METADATA)
     params = mris_thickness_diff_params(
         src_type=src_type,
         trg_type=trg_type,
@@ -314,7 +314,7 @@ def mris_thickness_diff(
         log_file=log_file,
         subject_name=subject_name,
     )
-    return mris_thickness_diff_execute(params, execution)
+    return mris_thickness_diff_execute(params, runner)
 
 
 __all__ = [
@@ -322,8 +322,6 @@ __all__ = [
     "MrisThicknessDiffOutputs",
     "MrisThicknessDiffParameters",
     "mris_thickness_diff",
-    "mris_thickness_diff_cargs",
     "mris_thickness_diff_execute",
-    "mris_thickness_diff_outputs",
     "mris_thickness_diff_params",
 ]

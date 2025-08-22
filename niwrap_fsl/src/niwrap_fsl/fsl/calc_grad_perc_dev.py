@@ -139,7 +139,7 @@ def calc_grad_perc_dev_outputs(
 
 def calc_grad_perc_dev_execute(
     params: CalcGradPercDevParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CalcGradPercDevOutputs:
     """
     Compute the gradient percent deviation based on a full warp image from
@@ -151,10 +151,12 @@ def calc_grad_perc_dev_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CalcGradPercDevOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CALC_GRAD_PERC_DEV_METADATA)
     params = execution.params(params)
     cargs = calc_grad_perc_dev_cargs(params, execution)
     ret = calc_grad_perc_dev_outputs(params, execution)
@@ -186,15 +188,13 @@ def calc_grad_perc_dev(
     Returns:
         NamedTuple of outputs (described in `CalcGradPercDevOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CALC_GRAD_PERC_DEV_METADATA)
     params = calc_grad_perc_dev_params(
         fullwarp_image=fullwarp_image,
         out_basename=out_basename,
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return calc_grad_perc_dev_execute(params, execution)
+    return calc_grad_perc_dev_execute(params, runner)
 
 
 __all__ = [
@@ -202,8 +202,6 @@ __all__ = [
     "CalcGradPercDevOutputs",
     "CalcGradPercDevParameters",
     "calc_grad_perc_dev",
-    "calc_grad_perc_dev_cargs",
     "calc_grad_perc_dev_execute",
-    "calc_grad_perc_dev_outputs",
     "calc_grad_perc_dev_params",
 ]

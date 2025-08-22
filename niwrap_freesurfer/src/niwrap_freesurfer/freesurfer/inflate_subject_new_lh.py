@@ -123,7 +123,7 @@ def inflate_subject_new_lh_outputs(
 
 def inflate_subject_new_lh_execute(
     params: InflateSubjectNewLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InflateSubjectNewLhOutputs:
     """
     Tool for inflating the left hemisphere of a subject in FreeSurfer.
@@ -134,10 +134,12 @@ def inflate_subject_new_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectNewLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INFLATE_SUBJECT_NEW_LH_METADATA)
     params = execution.params(params)
     cargs = inflate_subject_new_lh_cargs(params, execution)
     ret = inflate_subject_new_lh_outputs(params, execution)
@@ -162,12 +164,10 @@ def inflate_subject_new_lh(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectNewLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INFLATE_SUBJECT_NEW_LH_METADATA)
     params = inflate_subject_new_lh_params(
         subject_dir=subject_dir,
     )
-    return inflate_subject_new_lh_execute(params, execution)
+    return inflate_subject_new_lh_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "InflateSubjectNewLhOutputs",
     "InflateSubjectNewLhParameters",
     "inflate_subject_new_lh",
-    "inflate_subject_new_lh_cargs",
     "inflate_subject_new_lh_execute",
-    "inflate_subject_new_lh_outputs",
     "inflate_subject_new_lh_params",
 ]

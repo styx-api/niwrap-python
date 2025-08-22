@@ -167,7 +167,7 @@ def wpng_outputs(
 
 def wpng_execute(
     params: WpngParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WpngOutputs:
     """
     Simple PGM/PPM/PAM to PNG Converter.
@@ -178,10 +178,12 @@ def wpng_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WpngOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WPNG_METADATA)
     params = execution.params(params)
     cargs = wpng_cargs(params, execution)
     ret = wpng_outputs(params, execution)
@@ -223,8 +225,6 @@ def wpng(
     Returns:
         NamedTuple of outputs (described in `WpngOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WPNG_METADATA)
     params = wpng_params(
         input_file=input_file,
         gamma=gamma,
@@ -233,7 +233,7 @@ def wpng(
         time_flag=time_flag,
         interlace_flag=interlace_flag,
     )
-    return wpng_execute(params, execution)
+    return wpng_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "WpngOutputs",
     "WpngParameters",
     "wpng",
-    "wpng_cargs",
     "wpng_execute",
-    "wpng_outputs",
     "wpng_params",
 ]

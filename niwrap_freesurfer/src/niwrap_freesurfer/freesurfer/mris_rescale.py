@@ -125,7 +125,7 @@ def mris_rescale_outputs(
 
 def mris_rescale_execute(
     params: MrisRescaleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRescaleOutputs:
     """
     This program will rescale a surface representation.
@@ -136,10 +136,12 @@ def mris_rescale_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRescaleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_RESCALE_METADATA)
     params = execution.params(params)
     cargs = mris_rescale_cargs(params, execution)
     ret = mris_rescale_outputs(params, execution)
@@ -166,13 +168,11 @@ def mris_rescale(
     Returns:
         NamedTuple of outputs (described in `MrisRescaleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_RESCALE_METADATA)
     params = mris_rescale_params(
         input_surface=input_surface,
         output_surface=output_surface,
     )
-    return mris_rescale_execute(params, execution)
+    return mris_rescale_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MrisRescaleOutputs",
     "MrisRescaleParameters",
     "mris_rescale",
-    "mris_rescale_cargs",
     "mris_rescale_execute",
-    "mris_rescale_outputs",
     "mris_rescale_params",
 ]

@@ -246,7 +246,7 @@ def v_3d_mean_outputs(
 
 def v_3d_mean_execute(
     params: V3dMeanParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dMeanOutputs:
     """
     Takes the voxel-by-voxel mean of all input datasets; designed to be faster than
@@ -258,10 +258,12 @@ def v_3d_mean_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dMeanOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_MEAN_METADATA)
     params = execution.params(params)
     cargs = v_3d_mean_cargs(params, execution)
     ret = v_3d_mean_outputs(params, execution)
@@ -329,8 +331,6 @@ def v_3d_mean(
     Returns:
         NamedTuple of outputs (described in `V3dMeanOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_MEAN_METADATA)
     params = v_3d_mean_params(
         input_files=input_files,
         verbose=verbose,
@@ -352,7 +352,7 @@ def v_3d_mean(
         mask_union=mask_union,
         weightset=weightset,
     )
-    return v_3d_mean_execute(params, execution)
+    return v_3d_mean_execute(params, runner)
 
 
 __all__ = [
@@ -360,8 +360,6 @@ __all__ = [
     "V3dMeanParameters",
     "V_3D_MEAN_METADATA",
     "v_3d_mean",
-    "v_3d_mean_cargs",
     "v_3d_mean_execute",
-    "v_3d_mean_outputs",
     "v_3d_mean_params",
 ]

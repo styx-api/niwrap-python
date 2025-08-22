@@ -171,7 +171,7 @@ def whirlgif_outputs(
 
 def whirlgif_execute(
     params: WhirlgifParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WhirlgifOutputs:
     """
     GIF animation tool.
@@ -182,10 +182,12 @@ def whirlgif_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WhirlgifOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WHIRLGIF_METADATA)
     params = execution.params(params)
     cargs = whirlgif_cargs(params, execution)
     ret = whirlgif_outputs(params, execution)
@@ -221,8 +223,6 @@ def whirlgif(
     Returns:
         NamedTuple of outputs (described in `WhirlgifOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WHIRLGIF_METADATA)
     params = whirlgif_params(
         outfile=outfile,
         loop_count=loop_count,
@@ -231,7 +231,7 @@ def whirlgif(
         list_file=list_file,
         input_files=input_files,
     )
-    return whirlgif_execute(params, execution)
+    return whirlgif_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "WhirlgifOutputs",
     "WhirlgifParameters",
     "whirlgif",
-    "whirlgif_cargs",
     "whirlgif_execute",
-    "whirlgif_outputs",
     "whirlgif_params",
 ]

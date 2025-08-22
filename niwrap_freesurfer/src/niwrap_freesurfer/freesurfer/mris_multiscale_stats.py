@@ -144,7 +144,7 @@ def mris_multiscale_stats_outputs(
 
 def mris_multiscale_stats_execute(
     params: MrisMultiscaleStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMultiscaleStatsOutputs:
     """
     Compute the autocorrelation function of a curvature file using multiscale
@@ -156,10 +156,12 @@ def mris_multiscale_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMultiscaleStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MULTISCALE_STATS_METADATA)
     params = execution.params(params)
     cargs = mris_multiscale_stats_cargs(params, execution)
     ret = mris_multiscale_stats_outputs(params, execution)
@@ -195,8 +197,6 @@ def mris_multiscale_stats(
     Returns:
         NamedTuple of outputs (described in `MrisMultiscaleStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MULTISCALE_STATS_METADATA)
     params = mris_multiscale_stats_params(
         output_subject=output_subject,
         hemi=hemi,
@@ -205,7 +205,7 @@ def mris_multiscale_stats(
         class1_subjects=class1_subjects,
         class2_subjects=class2_subjects,
     )
-    return mris_multiscale_stats_execute(params, execution)
+    return mris_multiscale_stats_execute(params, runner)
 
 
 __all__ = [
@@ -213,8 +213,6 @@ __all__ = [
     "MrisMultiscaleStatsOutputs",
     "MrisMultiscaleStatsParameters",
     "mris_multiscale_stats",
-    "mris_multiscale_stats_cargs",
     "mris_multiscale_stats_execute",
-    "mris_multiscale_stats_outputs",
     "mris_multiscale_stats_params",
 ]

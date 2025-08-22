@@ -130,7 +130,7 @@ def mris_sphere_outputs(
 
 def mris_sphere_execute(
     params: MrisSphereParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSphereOutputs:
     """
     This program will add a template into an average surface.
@@ -141,10 +141,12 @@ def mris_sphere_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSphereOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SPHERE_METADATA)
     params = execution.params(params)
     cargs = mris_sphere_cargs(params, execution)
     ret = mris_sphere_outputs(params, execution)
@@ -173,14 +175,12 @@ def mris_sphere(
     Returns:
         NamedTuple of outputs (described in `MrisSphereOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SPHERE_METADATA)
     params = mris_sphere_params(
         surface_file=surface_file,
         patch_file=patch_file,
         output_patch=output_patch,
     )
-    return mris_sphere_execute(params, execution)
+    return mris_sphere_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "MrisSphereOutputs",
     "MrisSphereParameters",
     "mris_sphere",
-    "mris_sphere_cargs",
     "mris_sphere_execute",
-    "mris_sphere_outputs",
     "mris_sphere_params",
 ]

@@ -126,7 +126,7 @@ def surface_create_sphere_outputs(
 
 def surface_create_sphere_execute(
     params: SurfaceCreateSphereParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceCreateSphereOutputs:
     """
     Generate a sphere with consistent vertex areas.
@@ -149,10 +149,12 @@ def surface_create_sphere_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceCreateSphereOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_CREATE_SPHERE_METADATA)
     params = execution.params(params)
     cargs = surface_create_sphere_cargs(params, execution)
     ret = surface_create_sphere_outputs(params, execution)
@@ -191,13 +193,11 @@ def surface_create_sphere(
     Returns:
         NamedTuple of outputs (described in `SurfaceCreateSphereOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_CREATE_SPHERE_METADATA)
     params = surface_create_sphere_params(
         num_vertices=num_vertices,
         sphere_out=sphere_out,
     )
-    return surface_create_sphere_execute(params, execution)
+    return surface_create_sphere_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "SurfaceCreateSphereOutputs",
     "SurfaceCreateSphereParameters",
     "surface_create_sphere",
-    "surface_create_sphere_cargs",
     "surface_create_sphere_execute",
-    "surface_create_sphere_outputs",
     "surface_create_sphere_params",
 ]

@@ -123,7 +123,7 @@ def v__get_afni_prefix_outputs(
 
 def v__get_afni_prefix_execute(
     params: VGetAfniPrefixParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGetAfniPrefixOutputs:
     """
     A tool to extract AFNI prefix from a given file path.
@@ -134,10 +134,12 @@ def v__get_afni_prefix_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGetAfniPrefixOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GET_AFNI_PREFIX_METADATA)
     params = execution.params(params)
     cargs = v__get_afni_prefix_cargs(params, execution)
     ret = v__get_afni_prefix_outputs(params, execution)
@@ -164,13 +166,11 @@ def v__get_afni_prefix(
     Returns:
         NamedTuple of outputs (described in `VGetAfniPrefixOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GET_AFNI_PREFIX_METADATA)
     params = v__get_afni_prefix_params(
         name=name,
         suffix=suffix,
     )
-    return v__get_afni_prefix_execute(params, execution)
+    return v__get_afni_prefix_execute(params, runner)
 
 
 __all__ = [
@@ -178,8 +178,6 @@ __all__ = [
     "VGetAfniPrefixParameters",
     "V__GET_AFNI_PREFIX_METADATA",
     "v__get_afni_prefix",
-    "v__get_afni_prefix_cargs",
     "v__get_afni_prefix_execute",
-    "v__get_afni_prefix_outputs",
     "v__get_afni_prefix_params",
 ]

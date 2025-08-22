@@ -171,7 +171,7 @@ def samseg_long_outputs(
 
 def samseg_long_execute(
     params: SamsegLongParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SamsegLongOutputs:
     """
     Longitudinal analysis tool using SAMSEG in FreeSurfer.
@@ -182,10 +182,12 @@ def samseg_long_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SamsegLongOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SAMSEG_LONG_METADATA)
     params = execution.params(params)
     cargs = samseg_long_cargs(params, execution)
     ret = samseg_long_outputs(params, execution)
@@ -222,8 +224,6 @@ def samseg_long(
     Returns:
         NamedTuple of outputs (described in `SamsegLongOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SAMSEG_LONG_METADATA)
     params = samseg_long_params(
         output_dir=output_dir,
         input_files=input_files,
@@ -233,7 +233,7 @@ def samseg_long(
         save_posteriors=save_posteriors,
         force_update=force_update,
     )
-    return samseg_long_execute(params, execution)
+    return samseg_long_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "SamsegLongOutputs",
     "SamsegLongParameters",
     "samseg_long",
-    "samseg_long_cargs",
     "samseg_long_execute",
-    "samseg_long_outputs",
     "samseg_long_params",
 ]

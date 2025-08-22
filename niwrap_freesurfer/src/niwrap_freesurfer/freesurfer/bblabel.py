@@ -207,7 +207,7 @@ def bblabel_outputs(
 
 def bblabel_execute(
     params: BblabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BblabelOutputs:
     """
     Applies a bounding box to a label, copying only the label points within the
@@ -219,10 +219,12 @@ def bblabel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BblabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BBLABEL_METADATA)
     params = execution.params(params)
     cargs = bblabel_cargs(params, execution)
     ret = bblabel_outputs(params, execution)
@@ -266,8 +268,6 @@ def bblabel(
     Returns:
         NamedTuple of outputs (described in `BblabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BBLABEL_METADATA)
     params = bblabel_params(
         labelfile=labelfile,
         xmin=xmin,
@@ -280,7 +280,7 @@ def bblabel(
         debug=debug,
         umask=umask,
     )
-    return bblabel_execute(params, execution)
+    return bblabel_execute(params, runner)
 
 
 __all__ = [
@@ -288,8 +288,6 @@ __all__ = [
     "BblabelOutputs",
     "BblabelParameters",
     "bblabel",
-    "bblabel_cargs",
     "bblabel_execute",
-    "bblabel_outputs",
     "bblabel_params",
 ]

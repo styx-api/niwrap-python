@@ -125,7 +125,7 @@ def fsl_gen_3_d_outputs(
 
 def fsl_gen_3_d_execute(
     params: FslGen3DParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslGen3DOutputs:
     """
     Tool to generate a 3D snapshot of a structural image.
@@ -136,10 +136,12 @@ def fsl_gen_3_d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslGen3DOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_GEN_3_D_METADATA)
     params = execution.params(params)
     cargs = fsl_gen_3_d_cargs(params, execution)
     ret = fsl_gen_3_d_outputs(params, execution)
@@ -166,13 +168,11 @@ def fsl_gen_3_d(
     Returns:
         NamedTuple of outputs (described in `FslGen3DOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_GEN_3_D_METADATA)
     params = fsl_gen_3_d_params(
         infile=infile,
         outfile=outfile,
     )
-    return fsl_gen_3_d_execute(params, execution)
+    return fsl_gen_3_d_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "FslGen3DOutputs",
     "FslGen3DParameters",
     "fsl_gen_3_d",
-    "fsl_gen_3_d_cargs",
     "fsl_gen_3_d_execute",
-    "fsl_gen_3_d_outputs",
     "fsl_gen_3_d_params",
 ]

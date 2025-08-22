@@ -141,7 +141,7 @@ def imgreg_4dfp_outputs(
 
 def imgreg_4dfp_execute(
     params: Imgreg4dfpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Imgreg4dfpOutputs:
     """
     Image registration utility using 4dfp.
@@ -152,10 +152,12 @@ def imgreg_4dfp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Imgreg4dfpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMGREG_4DFP_METADATA)
     params = execution.params(params)
     cargs = imgreg_4dfp_cargs(params, execution)
     ret = imgreg_4dfp_outputs(params, execution)
@@ -190,8 +192,6 @@ def imgreg_4dfp(
     Returns:
         NamedTuple of outputs (described in `Imgreg4dfpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMGREG_4DFP_METADATA)
     params = imgreg_4dfp_params(
         target_image=target_image,
         target_mask=target_mask,
@@ -200,7 +200,7 @@ def imgreg_4dfp(
         t4file=t4file,
         mode=mode,
     )
-    return imgreg_4dfp_execute(params, execution)
+    return imgreg_4dfp_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "Imgreg4dfpOutputs",
     "Imgreg4dfpParameters",
     "imgreg_4dfp",
-    "imgreg_4dfp_cargs",
     "imgreg_4dfp_execute",
-    "imgreg_4dfp_outputs",
     "imgreg_4dfp_params",
 ]

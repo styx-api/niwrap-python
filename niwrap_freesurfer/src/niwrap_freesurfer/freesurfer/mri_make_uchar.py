@@ -182,7 +182,7 @@ def mri_make_uchar_outputs(
 
 def mri_make_uchar_execute(
     params: MriMakeUcharParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMakeUcharOutputs:
     """
     Tool to adjust intensity of brain MRI images using a Talairach transformation.
@@ -193,10 +193,12 @@ def mri_make_uchar_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMakeUcharOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MAKE_UCHAR_METADATA)
     params = execution.params(params)
     cargs = mri_make_uchar_cargs(params, execution)
     ret = mri_make_uchar_outputs(params, execution)
@@ -237,8 +239,6 @@ def mri_make_uchar(
     Returns:
         NamedTuple of outputs (described in `MriMakeUcharOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MAKE_UCHAR_METADATA)
     params = mri_make_uchar_params(
         input_volume=input_volume,
         talairach_xform=talairach_xform,
@@ -249,7 +249,7 @@ def mri_make_uchar(
         cumulative_histo=cumulative_histo,
         vradvol=vradvol,
     )
-    return mri_make_uchar_execute(params, execution)
+    return mri_make_uchar_execute(params, runner)
 
 
 __all__ = [
@@ -257,8 +257,6 @@ __all__ = [
     "MriMakeUcharOutputs",
     "MriMakeUcharParameters",
     "mri_make_uchar",
-    "mri_make_uchar_cargs",
     "mri_make_uchar_execute",
-    "mri_make_uchar_outputs",
     "mri_make_uchar_params",
 ]

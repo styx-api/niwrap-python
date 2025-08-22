@@ -200,7 +200,7 @@ def mri_vol2surf_outputs(
 
 def mri_vol2surf_execute(
     params: MriVol2surfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriVol2surfOutputs:
     """
     This program resamples a volume onto a surface of a subject or the sphere. The
@@ -213,10 +213,12 @@ def mri_vol2surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriVol2surfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_VOL2SURF_METADATA)
     params = execution.params(params)
     cargs = mri_vol2surf_cargs(params, execution)
     ret = mri_vol2surf_outputs(params, execution)
@@ -264,8 +266,6 @@ def mri_vol2surf(
     Returns:
         NamedTuple of outputs (described in `MriVol2surfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_VOL2SURF_METADATA)
     params = mri_vol2surf_params(
         input_volume=input_volume,
         registration_file=registration_file,
@@ -277,7 +277,7 @@ def mri_vol2surf(
         hemisphere=hemisphere,
         surface=surface,
     )
-    return mri_vol2surf_execute(params, execution)
+    return mri_vol2surf_execute(params, runner)
 
 
 __all__ = [
@@ -285,8 +285,6 @@ __all__ = [
     "MriVol2surfOutputs",
     "MriVol2surfParameters",
     "mri_vol2surf",
-    "mri_vol2surf_cargs",
     "mri_vol2surf_execute",
-    "mri_vol2surf_outputs",
     "mri_vol2surf_params",
 ]

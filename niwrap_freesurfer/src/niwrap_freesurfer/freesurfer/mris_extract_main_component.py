@@ -125,7 +125,7 @@ def mris_extract_main_component_outputs(
 
 def mris_extract_main_component_execute(
     params: MrisExtractMainComponentParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisExtractMainComponentOutputs:
     """
     Tool for extracting the main component from a surface input.
@@ -136,10 +136,12 @@ def mris_extract_main_component_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisExtractMainComponentOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_EXTRACT_MAIN_COMPONENT_METADATA)
     params = execution.params(params)
     cargs = mris_extract_main_component_cargs(params, execution)
     ret = mris_extract_main_component_outputs(params, execution)
@@ -166,13 +168,11 @@ def mris_extract_main_component(
     Returns:
         NamedTuple of outputs (described in `MrisExtractMainComponentOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_EXTRACT_MAIN_COMPONENT_METADATA)
     params = mris_extract_main_component_params(
         input_surface=input_surface,
         output_surface=output_surface,
     )
-    return mris_extract_main_component_execute(params, execution)
+    return mris_extract_main_component_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MrisExtractMainComponentOutputs",
     "MrisExtractMainComponentParameters",
     "mris_extract_main_component",
-    "mris_extract_main_component_cargs",
     "mris_extract_main_component_execute",
-    "mris_extract_main_component_outputs",
     "mris_extract_main_component_params",
 ]

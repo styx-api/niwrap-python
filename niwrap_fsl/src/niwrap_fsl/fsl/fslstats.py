@@ -326,7 +326,7 @@ def fslstats_outputs(
 
 def fslstats_execute(
     params: FslstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslstatsOutputs:
     """
     FSL tool for calculating statistics on image data.
@@ -337,10 +337,12 @@ def fslstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLSTATS_METADATA)
     params = execution.params(params)
     cargs = fslstats_cargs(params, execution)
     ret = fslstats_outputs(params, execution)
@@ -427,8 +429,6 @@ def fslstats(
     Returns:
         NamedTuple of outputs (described in `FslstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLSTATS_METADATA)
     params = fslstats_params(
         input_file=input_file,
         index_mask=index_mask,
@@ -459,7 +459,7 @@ def fslstats(
         mean_entropy_flag=mean_entropy_flag,
         nonzero_mean_entropy_flag=nonzero_mean_entropy_flag,
     )
-    return fslstats_execute(params, execution)
+    return fslstats_execute(params, runner)
 
 
 __all__ = [
@@ -467,8 +467,6 @@ __all__ = [
     "FslstatsOutputs",
     "FslstatsParameters",
     "fslstats",
-    "fslstats_cargs",
     "fslstats_execute",
-    "fslstats_outputs",
     "fslstats_params",
 ]

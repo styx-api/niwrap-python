@@ -731,7 +731,7 @@ def mri_glmfit_outputs(
 
 def mri_glmfit_execute(
     params: MriGlmfitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGlmfitOutputs:
     """
     Performs general linear model (GLM) analysis in the volume or the surface.
@@ -742,10 +742,12 @@ def mri_glmfit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGlmfitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GLMFIT_METADATA)
     params = execution.params(params)
     cargs = mri_glmfit_cargs(params, execution)
     ret = mri_glmfit_outputs(params, execution)
@@ -935,8 +937,6 @@ def mri_glmfit(
     Returns:
         NamedTuple of outputs (described in `MriGlmfitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GLMFIT_METADATA)
     params = mri_glmfit_params(
         glmdir=glmdir,
         y_input=y_input,
@@ -1011,7 +1011,7 @@ def mri_glmfit(
         sim_done_file=sim_done_file,
         no_sig_double_flag=no_sig_double_flag,
     )
-    return mri_glmfit_execute(params, execution)
+    return mri_glmfit_execute(params, runner)
 
 
 __all__ = [
@@ -1019,8 +1019,6 @@ __all__ = [
     "MriGlmfitOutputs",
     "MriGlmfitParameters",
     "mri_glmfit",
-    "mri_glmfit_cargs",
     "mri_glmfit_execute",
-    "mri_glmfit_outputs",
     "mri_glmfit_params",
 ]

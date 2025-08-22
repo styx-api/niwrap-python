@@ -131,7 +131,7 @@ def mris_gradient_outputs(
 
 def mris_gradient_execute(
     params: MrisGradientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisGradientOutputs:
     """
     This program computes the gradient of an intensity profile of the cortical
@@ -143,10 +143,12 @@ def mris_gradient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisGradientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_GRADIENT_METADATA)
     params = execution.params(params)
     cargs = mris_gradient_cargs(params, execution)
     ret = mris_gradient_outputs(params, execution)
@@ -177,14 +179,12 @@ def mris_gradient(
     Returns:
         NamedTuple of outputs (described in `MrisGradientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_GRADIENT_METADATA)
     params = mris_gradient_params(
         input_surface=input_surface,
         input_vector_field=input_vector_field,
         output_gradient_file=output_gradient_file,
     )
-    return mris_gradient_execute(params, execution)
+    return mris_gradient_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "MrisGradientOutputs",
     "MrisGradientParameters",
     "mris_gradient",
-    "mris_gradient_cargs",
     "mris_gradient_execute",
-    "mris_gradient_outputs",
     "mris_gradient_params",
 ]

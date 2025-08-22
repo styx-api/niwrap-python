@@ -135,7 +135,7 @@ def v_3d_afnito_raw_outputs(
 
 def v_3d_afnito_raw_execute(
     params: V3dAfnitoRawParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAfnitoRawOutputs:
     """
     Convert an AFNI brik file with multiple sub-briks to a raw file with each
@@ -147,10 +147,12 @@ def v_3d_afnito_raw_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoRawOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_AFNITO_RAW_METADATA)
     params = execution.params(params)
     cargs = v_3d_afnito_raw_cargs(params, execution)
     ret = v_3d_afnito_raw_outputs(params, execution)
@@ -183,14 +185,12 @@ def v_3d_afnito_raw(
     Returns:
         NamedTuple of outputs (described in `V3dAfnitoRawOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_AFNITO_RAW_METADATA)
     params = v_3d_afnito_raw_params(
         output_file=output_file,
         force_float=force_float,
         dataset=dataset,
     )
-    return v_3d_afnito_raw_execute(params, execution)
+    return v_3d_afnito_raw_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "V3dAfnitoRawParameters",
     "V_3D_AFNITO_RAW_METADATA",
     "v_3d_afnito_raw",
-    "v_3d_afnito_raw_cargs",
     "v_3d_afnito_raw_execute",
-    "v_3d_afnito_raw_outputs",
     "v_3d_afnito_raw_params",
 ]

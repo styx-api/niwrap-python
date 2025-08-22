@@ -234,7 +234,7 @@ def mris_make_average_surface_outputs(
 
 def mris_make_average_surface_execute(
     params: MrisMakeAverageSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMakeAverageSurfaceOutputs:
     """
     A program to average the orig surfaces from the given subject list into a single
@@ -246,10 +246,12 @@ def mris_make_average_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMakeAverageSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MAKE_AVERAGE_SURFACE_METADATA)
     params = execution.params(params)
     cargs = mris_make_average_surface_cargs(params, execution)
     ret = mris_make_average_surface_outputs(params, execution)
@@ -305,8 +307,6 @@ def mris_make_average_surface(
     Returns:
         NamedTuple of outputs (described in `MrisMakeAverageSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MAKE_AVERAGE_SURFACE_METADATA)
     params = mris_make_average_surface_params(
         hemi=hemi,
         outsurfname=outsurfname,
@@ -324,7 +324,7 @@ def mris_make_average_surface(
         simple=simple,
         diagno=diagno,
     )
-    return mris_make_average_surface_execute(params, execution)
+    return mris_make_average_surface_execute(params, runner)
 
 
 __all__ = [
@@ -332,8 +332,6 @@ __all__ = [
     "MrisMakeAverageSurfaceOutputs",
     "MrisMakeAverageSurfaceParameters",
     "mris_make_average_surface",
-    "mris_make_average_surface_cargs",
     "mris_make_average_surface_execute",
-    "mris_make_average_surface_outputs",
     "mris_make_average_surface_params",
 ]

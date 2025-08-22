@@ -347,7 +347,7 @@ def mri_surf2volseg_outputs(
 
 def mri_surf2volseg_execute(
     params: MriSurf2volsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSurf2volsegOutputs:
     """
     Tool that cleans up presurf aseg cortex and WM, maps cortical labels from an
@@ -359,10 +359,12 @@ def mri_surf2volseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSurf2volsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SURF2VOLSEG_METADATA)
     params = execution.params(params)
     cargs = mri_surf2volseg_cargs(params, execution)
     ret = mri_surf2volseg_outputs(params, execution)
@@ -446,8 +448,6 @@ def mri_surf2volseg(
     Returns:
         NamedTuple of outputs (described in `MriSurf2volsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SURF2VOLSEG_METADATA)
     params = mri_surf2volseg_params(
         input_segmentation=input_segmentation,
         output_segmentation=output_segmentation,
@@ -475,7 +475,7 @@ def mri_surf2volseg(
         ctab_file=ctab_file,
         threads_number=threads_number,
     )
-    return mri_surf2volseg_execute(params, execution)
+    return mri_surf2volseg_execute(params, runner)
 
 
 __all__ = [
@@ -483,8 +483,6 @@ __all__ = [
     "MriSurf2volsegOutputs",
     "MriSurf2volsegParameters",
     "mri_surf2volseg",
-    "mri_surf2volseg_cargs",
     "mri_surf2volseg_execute",
-    "mri_surf2volseg_outputs",
     "mri_surf2volseg_params",
 ]

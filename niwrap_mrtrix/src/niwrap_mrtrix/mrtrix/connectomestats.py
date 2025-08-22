@@ -491,7 +491,7 @@ def connectomestats_outputs(
 
 def connectomestats_execute(
     params: ConnectomestatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConnectomestatsOutputs:
     """
     Connectome group-wise statistics at the edge level using non-parametric
@@ -546,10 +546,12 @@ def connectomestats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConnectomestatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONNECTOMESTATS_METADATA)
     params = execution.params(params)
     cargs = connectomestats_cargs(params, execution)
     ret = connectomestats_outputs(params, execution)
@@ -715,8 +717,6 @@ def connectomestats(
     Returns:
         NamedTuple of outputs (described in `ConnectomestatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONNECTOMESTATS_METADATA)
     params = connectomestats_params(
         notest=notest,
         errors=errors,
@@ -751,7 +751,7 @@ def connectomestats(
         contrast=contrast,
         output=output,
     )
-    return connectomestats_execute(params, execution)
+    return connectomestats_execute(params, runner)
 
 
 __all__ = [
@@ -761,12 +761,8 @@ __all__ = [
     "ConnectomestatsOutputs",
     "ConnectomestatsParameters",
     "connectomestats",
-    "connectomestats_cargs",
-    "connectomestats_column_cargs",
     "connectomestats_column_params",
-    "connectomestats_config_cargs",
     "connectomestats_config_params",
     "connectomestats_execute",
-    "connectomestats_outputs",
     "connectomestats_params",
 ]

@@ -206,7 +206,7 @@ def make_segvol_table_outputs(
 
 def make_segvol_table_execute(
     params: MakeSegvolTableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeSegvolTableOutputs:
     """
     Creates a table of volumes of subcortical structures for a given list of
@@ -218,10 +218,12 @@ def make_segvol_table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeSegvolTableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_SEGVOL_TABLE_METADATA)
     params = execution.params(params)
     cargs = make_segvol_table_cargs(params, execution)
     ret = make_segvol_table_outputs(params, execution)
@@ -269,8 +271,6 @@ def make_segvol_table(
     Returns:
         NamedTuple of outputs (described in `MakeSegvolTableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_SEGVOL_TABLE_METADATA)
     params = make_segvol_table_params(
         subjects=subjects,
         subject_file=subject_file,
@@ -283,7 +283,7 @@ def make_segvol_table(
         version=version,
         help_=help_,
     )
-    return make_segvol_table_execute(params, execution)
+    return make_segvol_table_execute(params, runner)
 
 
 __all__ = [
@@ -291,8 +291,6 @@ __all__ = [
     "MakeSegvolTableOutputs",
     "MakeSegvolTableParameters",
     "make_segvol_table",
-    "make_segvol_table_cargs",
     "make_segvol_table_execute",
-    "make_segvol_table_outputs",
     "make_segvol_table_params",
 ]

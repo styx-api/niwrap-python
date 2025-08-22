@@ -138,7 +138,7 @@ def siena_flow2std_outputs(
 
 def siena_flow2std_execute(
     params: SienaFlow2stdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SienaFlow2stdOutputs:
     """
     Convert edge flow to standard space.
@@ -149,10 +149,12 @@ def siena_flow2std_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SienaFlow2stdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIENA_FLOW2STD_METADATA)
     params = execution.params(params)
     cargs = siena_flow2std_cargs(params, execution)
     ret = siena_flow2std_outputs(params, execution)
@@ -184,15 +186,13 @@ def siena_flow2std(
     Returns:
         NamedTuple of outputs (described in `SienaFlow2stdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIENA_FLOW2STD_METADATA)
     params = siena_flow2std_params(
         fileroot1=fileroot1,
         fileroot2=fileroot2,
         sigma=sigma,
         debug_flag=debug_flag,
     )
-    return siena_flow2std_execute(params, execution)
+    return siena_flow2std_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "SienaFlow2stdOutputs",
     "SienaFlow2stdParameters",
     "siena_flow2std",
-    "siena_flow2std_cargs",
     "siena_flow2std_execute",
-    "siena_flow2std_outputs",
     "siena_flow2std_params",
 ]

@@ -146,7 +146,7 @@ def mris_label_calc_outputs(
 
 def mris_label_calc_execute(
     params: MrisLabelCalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisLabelCalcOutputs:
     """
     Tool for surface label calculations.
@@ -157,10 +157,12 @@ def mris_label_calc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisLabelCalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_LABEL_CALC_METADATA)
     params = execution.params(params)
     cargs = mris_label_calc_cargs(params, execution)
     ret = mris_label_calc_outputs(params, execution)
@@ -194,8 +196,6 @@ def mris_label_calc(
     Returns:
         NamedTuple of outputs (described in `MrisLabelCalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_LABEL_CALC_METADATA)
     params = mris_label_calc_params(
         command=command,
         input1=input1,
@@ -203,7 +203,7 @@ def mris_label_calc(
         output=output,
         iterations=iterations,
     )
-    return mris_label_calc_execute(params, execution)
+    return mris_label_calc_execute(params, runner)
 
 
 __all__ = [
@@ -211,8 +211,6 @@ __all__ = [
     "MrisLabelCalcOutputs",
     "MrisLabelCalcParameters",
     "mris_label_calc",
-    "mris_label_calc_cargs",
     "mris_label_calc_execute",
-    "mris_label_calc_outputs",
     "mris_label_calc_params",
 ]

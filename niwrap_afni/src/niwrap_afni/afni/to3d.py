@@ -463,7 +463,7 @@ def to3d_outputs(
 
 def to3d_execute(
     params: To3dParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> To3dOutputs:
     """
     Creates 3D datasets for use with AFNI from 2D image files.
@@ -474,10 +474,12 @@ def to3d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `To3dOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TO3D_METADATA)
     params = execution.params(params)
     cargs = to3d_cargs(params, execution)
     ret = to3d_outputs(params, execution)
@@ -587,8 +589,6 @@ def to3d(
     Returns:
         NamedTuple of outputs (described in `To3dOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TO3D_METADATA)
     params = to3d_params(
         input_files=input_files,
         type_=type_,
@@ -631,7 +631,7 @@ def to3d(
         xtwarns_flag=xtwarns_flag,
         quit_on_err_flag=quit_on_err_flag,
     )
-    return to3d_execute(params, execution)
+    return to3d_execute(params, runner)
 
 
 __all__ = [
@@ -639,8 +639,6 @@ __all__ = [
     "To3dOutputs",
     "To3dParameters",
     "to3d",
-    "to3d_cargs",
     "to3d_execute",
-    "to3d_outputs",
     "to3d_params",
 ]

@@ -202,7 +202,7 @@ def create_signed_distance_volume_outputs(
 
 def create_signed_distance_volume_execute(
     params: CreateSignedDistanceVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
     Create signed distance volume from surface.
@@ -232,10 +232,12 @@ def create_signed_distance_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CreateSignedDistanceVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CREATE_SIGNED_DISTANCE_VOLUME_METADATA)
     params = execution.params(params)
     cargs = create_signed_distance_volume_cargs(params, execution)
     ret = create_signed_distance_volume_outputs(params, execution)
@@ -302,8 +304,6 @@ def create_signed_distance_volume(
     Returns:
         NamedTuple of outputs (described in `CreateSignedDistanceVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CREATE_SIGNED_DISTANCE_VOLUME_METADATA)
     params = create_signed_distance_volume_params(
         surface=surface,
         refspace=refspace,
@@ -315,7 +315,7 @@ def create_signed_distance_volume(
         opt_approx_neighborhood_num=opt_approx_neighborhood_num,
         opt_winding_method=opt_winding_method,
     )
-    return create_signed_distance_volume_execute(params, execution)
+    return create_signed_distance_volume_execute(params, runner)
 
 
 __all__ = [
@@ -323,8 +323,6 @@ __all__ = [
     "CreateSignedDistanceVolumeOutputs",
     "CreateSignedDistanceVolumeParameters",
     "create_signed_distance_volume",
-    "create_signed_distance_volume_cargs",
     "create_signed_distance_volume_execute",
-    "create_signed_distance_volume_outputs",
     "create_signed_distance_volume_params",
 ]

@@ -125,7 +125,7 @@ def imln_outputs(
 
 def imln_execute(
     params: ImlnParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImlnOutputs:
     """
     Creates a link (called file2) to file1.
@@ -136,10 +136,12 @@ def imln_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImlnOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMLN_METADATA)
     params = execution.params(params)
     cargs = imln_cargs(params, execution)
     ret = imln_outputs(params, execution)
@@ -166,13 +168,11 @@ def imln(
     Returns:
         NamedTuple of outputs (described in `ImlnOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMLN_METADATA)
     params = imln_params(
         input_file=input_file,
         link_name=link_name,
     )
-    return imln_execute(params, execution)
+    return imln_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "ImlnOutputs",
     "ImlnParameters",
     "imln",
-    "imln_cargs",
     "imln_execute",
-    "imln_outputs",
     "imln_params",
 ]

@@ -135,7 +135,7 @@ def mris_surface_to_vol_distances_outputs(
 
 def mris_surface_to_vol_distances_execute(
     params: MrisSurfaceToVolDistancesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSurfaceToVolDistancesOutputs:
     """
     Tool from FreeSurfer to calculate surface-to-volume distances.
@@ -146,10 +146,12 @@ def mris_surface_to_vol_distances_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSurfaceToVolDistancesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SURFACE_TO_VOL_DISTANCES_METADATA)
     params = execution.params(params)
     cargs = mris_surface_to_vol_distances_cargs(params, execution)
     ret = mris_surface_to_vol_distances_outputs(params, execution)
@@ -180,15 +182,13 @@ def mris_surface_to_vol_distances(
     Returns:
         NamedTuple of outputs (described in `MrisSurfaceToVolDistancesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SURFACE_TO_VOL_DISTANCES_METADATA)
     params = mris_surface_to_vol_distances_params(
         average_subject=average_subject,
         hemisphere=hemisphere,
         subjects=subjects,
         output_prefix=output_prefix,
     )
-    return mris_surface_to_vol_distances_execute(params, execution)
+    return mris_surface_to_vol_distances_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MrisSurfaceToVolDistancesOutputs",
     "MrisSurfaceToVolDistancesParameters",
     "mris_surface_to_vol_distances",
-    "mris_surface_to_vol_distances_cargs",
     "mris_surface_to_vol_distances_execute",
-    "mris_surface_to_vol_distances_outputs",
     "mris_surface_to_vol_distances_params",
 ]

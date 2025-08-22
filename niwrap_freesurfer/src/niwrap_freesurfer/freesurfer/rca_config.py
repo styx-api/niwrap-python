@@ -137,7 +137,7 @@ def rca_config_outputs(
 
 def rca_config_execute(
     params: RcaConfigParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RcaConfigOutputs:
     """
     A command-line tool that processes configuration files and arguments.
@@ -148,10 +148,12 @@ def rca_config_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RcaConfigOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RCA_CONFIG_METADATA)
     params = execution.params(params)
     cargs = rca_config_cargs(params, execution)
     ret = rca_config_outputs(params, execution)
@@ -183,15 +185,13 @@ def rca_config(
     Returns:
         NamedTuple of outputs (described in `RcaConfigOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RCA_CONFIG_METADATA)
     params = rca_config_params(
         source_config=source_config,
         updated_config=updated_config,
         unknown_args_file=unknown_args_file,
         args=args,
     )
-    return rca_config_execute(params, execution)
+    return rca_config_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "RcaConfigOutputs",
     "RcaConfigParameters",
     "rca_config",
-    "rca_config_cargs",
     "rca_config_execute",
-    "rca_config_outputs",
     "rca_config_params",
 ]

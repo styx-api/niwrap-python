@@ -195,7 +195,7 @@ def test_recon_all_csh_outputs(
 
 def test_recon_all_csh_execute(
     params: TestReconAllCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TestReconAllCshOutputs:
     """
     Script for testing recon-all and other utilities with FreeSurfer.
@@ -206,10 +206,12 @@ def test_recon_all_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TestReconAllCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TEST_RECON_ALL_CSH_METADATA)
     params = execution.params(params)
     cargs = test_recon_all_csh_cargs(params, execution)
     ret = test_recon_all_csh_outputs(params, execution)
@@ -244,8 +246,6 @@ def test_recon_all_csh(
     Returns:
         NamedTuple of outputs (described in `TestReconAllCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TEST_RECON_ALL_CSH_METADATA)
     params = test_recon_all_csh_params(
         reference_subj_source_dir=reference_subj_source_dir,
         reference_subjid=reference_subjid,
@@ -254,7 +254,7 @@ def test_recon_all_csh(
         freesurfer_home=freesurfer_home,
         norecon=norecon,
     )
-    return test_recon_all_csh_execute(params, execution)
+    return test_recon_all_csh_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "TestReconAllCshOutputs",
     "TestReconAllCshParameters",
     "test_recon_all_csh",
-    "test_recon_all_csh_cargs",
     "test_recon_all_csh_execute",
-    "test_recon_all_csh_outputs",
     "test_recon_all_csh_params",
 ]

@@ -324,7 +324,7 @@ def dwi2mask_outputs(
 
 def dwi2mask_execute(
     params: Dwi2maskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dwi2maskOutputs:
     """
     Generates a whole brain mask from a DWI image.
@@ -349,10 +349,12 @@ def dwi2mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dwi2maskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWI2MASK_METADATA)
     params = execution.params(params)
     cargs = dwi2mask_cargs(params, execution)
     ret = dwi2mask_outputs(params, execution)
@@ -430,8 +432,6 @@ def dwi2mask(
     Returns:
         NamedTuple of outputs (described in `Dwi2maskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWI2MASK_METADATA)
     params = dwi2mask_params(
         clean_scale=clean_scale,
         grad=grad,
@@ -447,7 +447,7 @@ def dwi2mask(
         input_=input_,
         output=output,
     )
-    return dwi2mask_execute(params, execution)
+    return dwi2mask_execute(params, runner)
 
 
 __all__ = [
@@ -457,12 +457,8 @@ __all__ = [
     "Dwi2maskOutputs",
     "Dwi2maskParameters",
     "dwi2mask",
-    "dwi2mask_cargs",
-    "dwi2mask_config_cargs",
     "dwi2mask_config_params",
     "dwi2mask_execute",
-    "dwi2mask_fslgrad_cargs",
     "dwi2mask_fslgrad_params",
-    "dwi2mask_outputs",
     "dwi2mask_params",
 ]

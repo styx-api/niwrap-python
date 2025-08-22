@@ -118,7 +118,7 @@ def freeview_outputs(
 
 def freeview_execute(
     params: FreeviewParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FreeviewOutputs:
     """
     Freeview is a 3D/2D brain visualization tool.
@@ -129,10 +129,12 @@ def freeview_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FreeviewOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FREEVIEW_METADATA)
     params = execution.params(params)
     cargs = freeview_cargs(params, execution)
     ret = freeview_outputs(params, execution)
@@ -157,12 +159,10 @@ def freeview(
     Returns:
         NamedTuple of outputs (described in `FreeviewOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FREEVIEW_METADATA)
     params = freeview_params(
         args=args,
     )
-    return freeview_execute(params, execution)
+    return freeview_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "FreeviewOutputs",
     "FreeviewParameters",
     "freeview",
-    "freeview_cargs",
     "freeview_execute",
-    "freeview_outputs",
     "freeview_params",
 ]

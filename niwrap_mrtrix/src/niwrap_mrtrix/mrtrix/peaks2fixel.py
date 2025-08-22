@@ -243,7 +243,7 @@ def peaks2fixel_outputs(
 
 def peaks2fixel_execute(
     params: Peaks2fixelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Peaks2fixelOutputs:
     """
     Convert peak directions image to a fixel directory.
@@ -260,10 +260,12 @@ def peaks2fixel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Peaks2fixelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PEAKS2FIXEL_METADATA)
     params = execution.params(params)
     cargs = peaks2fixel_cargs(params, execution)
     ret = peaks2fixel_outputs(params, execution)
@@ -320,8 +322,6 @@ def peaks2fixel(
     Returns:
         NamedTuple of outputs (described in `Peaks2fixelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PEAKS2FIXEL_METADATA)
     params = peaks2fixel_params(
         dataname=dataname,
         info=info,
@@ -335,7 +335,7 @@ def peaks2fixel(
         directions=directions,
         fixels=fixels,
     )
-    return peaks2fixel_execute(params, execution)
+    return peaks2fixel_execute(params, runner)
 
 
 __all__ = [
@@ -344,10 +344,7 @@ __all__ = [
     "Peaks2fixelOutputs",
     "Peaks2fixelParameters",
     "peaks2fixel",
-    "peaks2fixel_cargs",
-    "peaks2fixel_config_cargs",
     "peaks2fixel_config_params",
     "peaks2fixel_execute",
-    "peaks2fixel_outputs",
     "peaks2fixel_params",
 ]

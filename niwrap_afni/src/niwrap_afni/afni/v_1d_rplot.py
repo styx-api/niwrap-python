@@ -295,7 +295,7 @@ def v_1d_rplot_outputs(
 
 def v_1d_rplot_execute(
     params: V1dRplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dRplotOutputs:
     """
     Program for plotting a 1D file.
@@ -306,10 +306,12 @@ def v_1d_rplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dRplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_RPLOT_METADATA)
     params = execution.params(params)
     cargs = v_1d_rplot_cargs(params, execution)
     ret = v_1d_rplot_outputs(params, execution)
@@ -374,8 +376,6 @@ def v_1d_rplot(
     Returns:
         NamedTuple of outputs (described in `V1dRplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_RPLOT_METADATA)
     params = v_1d_rplot_params(
         input_file=input_file,
         output_prefix=output_prefix,
@@ -397,7 +397,7 @@ def v_1d_rplot(
         save_plot=save_plot,
         column_name_show=column_name_show,
     )
-    return v_1d_rplot_execute(params, execution)
+    return v_1d_rplot_execute(params, runner)
 
 
 __all__ = [
@@ -405,8 +405,6 @@ __all__ = [
     "V1dRplotParameters",
     "V_1D_RPLOT_METADATA",
     "v_1d_rplot",
-    "v_1d_rplot_cargs",
     "v_1d_rplot_execute",
-    "v_1d_rplot_outputs",
     "v_1d_rplot_params",
 ]

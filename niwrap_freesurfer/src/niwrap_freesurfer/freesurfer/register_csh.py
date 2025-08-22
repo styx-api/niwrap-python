@@ -132,7 +132,7 @@ def register_csh_outputs(
 
 def register_csh_execute(
     params: RegisterCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegisterCshOutputs:
     """
     A script for registering MRI images.
@@ -143,10 +143,12 @@ def register_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegisterCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REGISTER_CSH_METADATA)
     params = execution.params(params)
     cargs = register_csh_cargs(params, execution)
     ret = register_csh_outputs(params, execution)
@@ -175,14 +177,12 @@ def register_csh(
     Returns:
         NamedTuple of outputs (described in `RegisterCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REGISTER_CSH_METADATA)
     params = register_csh_params(
         base_image=base_image,
         new_image=new_image,
         options=options,
     )
-    return register_csh_execute(params, execution)
+    return register_csh_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "RegisterCshOutputs",
     "RegisterCshParameters",
     "register_csh",
-    "register_csh_cargs",
     "register_csh_execute",
-    "register_csh_outputs",
     "register_csh_params",
 ]

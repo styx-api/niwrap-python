@@ -235,7 +235,7 @@ def fsl_mvlm_outputs(
 
 def fsl_mvlm_execute(
     params: FslMvlmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslMvlmOutputs:
     """
     Multivariate Linear Model regression on time courses and/or 3D/4D images using
@@ -247,10 +247,12 @@ def fsl_mvlm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslMvlmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_MVLM_METADATA)
     params = execution.params(params)
     cargs = fsl_mvlm_cargs(params, execution)
     ret = fsl_mvlm_outputs(params, execution)
@@ -304,8 +306,6 @@ def fsl_mvlm(
     Returns:
         NamedTuple of outputs (described in `FslMvlmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_MVLM_METADATA)
     params = fsl_mvlm_params(
         input_file=input_file,
         basename_output_files=basename_output_files,
@@ -321,7 +321,7 @@ def fsl_mvlm(
         out_data=out_data,
         out_vnscales=out_vnscales,
     )
-    return fsl_mvlm_execute(params, execution)
+    return fsl_mvlm_execute(params, runner)
 
 
 __all__ = [
@@ -329,8 +329,6 @@ __all__ = [
     "FslMvlmOutputs",
     "FslMvlmParameters",
     "fsl_mvlm",
-    "fsl_mvlm_cargs",
     "fsl_mvlm_execute",
-    "fsl_mvlm_outputs",
     "fsl_mvlm_params",
 ]

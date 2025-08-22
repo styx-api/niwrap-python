@@ -561,7 +561,7 @@ def v_3d_anova3_outputs(
 
 def v_3d_anova3_execute(
     params: V3dAnova3Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAnova3Outputs:
     """
     Performs three-factor ANOVA on 3D data sets.
@@ -572,10 +572,12 @@ def v_3d_anova3_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAnova3Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ANOVA3_METADATA)
     params = execution.params(params)
     cargs = v_3d_anova3_cargs(params, execution)
     ret = v_3d_anova3_outputs(params, execution)
@@ -672,8 +674,6 @@ def v_3d_anova3(
     Returns:
         NamedTuple of outputs (described in `V3dAnova3Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ANOVA3_METADATA)
     params = v_3d_anova3_params(
         type_=type_,
         alevels=alevels,
@@ -707,7 +707,7 @@ def v_3d_anova3(
         outfile_bucket=outfile_bucket,
         anova_options=anova_options,
     )
-    return v_3d_anova3_execute(params, execution)
+    return v_3d_anova3_execute(params, runner)
 
 
 __all__ = [
@@ -717,12 +717,8 @@ __all__ = [
     "V3dAnova3Parameters",
     "V_3D_ANOVA3_METADATA",
     "v_3d_anova3",
-    "v_3d_anova3_cargs",
     "v_3d_anova3_execute",
-    "v_3d_anova3_outfile_abcontr_1_cargs",
     "v_3d_anova3_outfile_abcontr_1_params",
-    "v_3d_anova3_outfile_abcontr_cargs",
     "v_3d_anova3_outfile_abcontr_params",
-    "v_3d_anova3_outputs",
     "v_3d_anova3_params",
 ]

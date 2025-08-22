@@ -394,7 +394,7 @@ def dwibiascorrect_outputs(
 
 def dwibiascorrect_execute(
     params: DwibiascorrectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DwibiascorrectOutputs:
     """
     Perform B1 field inhomogeneity correction for a DWI volume series using either
@@ -406,10 +406,12 @@ def dwibiascorrect_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DwibiascorrectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWIBIASCORRECT_METADATA)
     params = execution.params(params)
     cargs = dwibiascorrect_cargs(params, execution)
     ret = dwibiascorrect_outputs(params, execution)
@@ -486,8 +488,6 @@ def dwibiascorrect(
     Returns:
         NamedTuple of outputs (described in `DwibiascorrectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWIBIASCORRECT_METADATA)
     params = dwibiascorrect_params(
         algorithm=algorithm,
         input_image=input_image,
@@ -511,7 +511,7 @@ def dwibiascorrect(
         ants_c=ants_c,
         ants_s=ants_s,
     )
-    return dwibiascorrect_execute(params, execution)
+    return dwibiascorrect_execute(params, runner)
 
 
 __all__ = [
@@ -521,12 +521,8 @@ __all__ = [
     "DwibiascorrectOutputs",
     "DwibiascorrectParameters",
     "dwibiascorrect",
-    "dwibiascorrect_cargs",
-    "dwibiascorrect_config_cargs",
     "dwibiascorrect_config_params",
     "dwibiascorrect_execute",
-    "dwibiascorrect_fslgrad_cargs",
     "dwibiascorrect_fslgrad_params",
-    "dwibiascorrect_outputs",
     "dwibiascorrect_params",
 ]

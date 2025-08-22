@@ -311,7 +311,7 @@ def dwi2adc_outputs(
 
 def dwi2adc_execute(
     params: Dwi2adcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Dwi2adcOutputs:
     """
     Convert mean dwi (trace-weighted) images to mean ADC maps.
@@ -328,10 +328,12 @@ def dwi2adc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Dwi2adcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DWI2ADC_METADATA)
     params = execution.params(params)
     cargs = dwi2adc_cargs(params, execution)
     ret = dwi2adc_outputs(params, execution)
@@ -396,8 +398,6 @@ def dwi2adc(
     Returns:
         NamedTuple of outputs (described in `Dwi2adcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DWI2ADC_METADATA)
     params = dwi2adc_params(
         grad=grad,
         fslgrad=fslgrad,
@@ -412,7 +412,7 @@ def dwi2adc(
         input_=input_,
         output=output,
     )
-    return dwi2adc_execute(params, execution)
+    return dwi2adc_execute(params, runner)
 
 
 __all__ = [
@@ -422,12 +422,8 @@ __all__ = [
     "Dwi2adcOutputs",
     "Dwi2adcParameters",
     "dwi2adc",
-    "dwi2adc_cargs",
-    "dwi2adc_config_cargs",
     "dwi2adc_config_params",
     "dwi2adc_execute",
-    "dwi2adc_fslgrad_cargs",
     "dwi2adc_fslgrad_params",
-    "dwi2adc_outputs",
     "dwi2adc_params",
 ]

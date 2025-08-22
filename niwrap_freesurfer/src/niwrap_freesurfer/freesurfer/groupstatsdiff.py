@@ -257,7 +257,7 @@ def groupstatsdiff_outputs(
 
 def groupstatsdiff_execute(
     params: GroupstatsdiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GroupstatsdiffOutputs:
     """
     Evaluate the differences between two groupstats outputs from recon-all analyses
@@ -269,10 +269,12 @@ def groupstatsdiff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GroupstatsdiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GROUPSTATSDIFF_METADATA)
     params = execution.params(params)
     cargs = groupstatsdiff_cargs(params, execution)
     ret = groupstatsdiff_outputs(params, execution)
@@ -340,8 +342,6 @@ def groupstatsdiff(
     Returns:
         NamedTuple of outputs (described in `GroupstatsdiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GROUPSTATSDIFF_METADATA)
     params = groupstatsdiff_params(
         group1_dir=group1_dir,
         group2_dir=group2_dir,
@@ -364,7 +364,7 @@ def groupstatsdiff(
         no_dice=no_dice,
         dice_ctab=dice_ctab,
     )
-    return groupstatsdiff_execute(params, execution)
+    return groupstatsdiff_execute(params, runner)
 
 
 __all__ = [
@@ -372,8 +372,6 @@ __all__ = [
     "GroupstatsdiffOutputs",
     "GroupstatsdiffParameters",
     "groupstatsdiff",
-    "groupstatsdiff_cargs",
     "groupstatsdiff_execute",
-    "groupstatsdiff_outputs",
     "groupstatsdiff_params",
 ]

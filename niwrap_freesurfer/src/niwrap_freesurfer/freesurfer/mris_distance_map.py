@@ -125,7 +125,7 @@ def mris_distance_map_outputs(
 
 def mris_distance_map_execute(
     params: MrisDistanceMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisDistanceMapOutputs:
     """
     Tool to compute a distance map of each point on the surface to a reference
@@ -137,10 +137,12 @@ def mris_distance_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDistanceMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_DISTANCE_MAP_METADATA)
     params = execution.params(params)
     cargs = mris_distance_map_cargs(params, execution)
     ret = mris_distance_map_outputs(params, execution)
@@ -168,13 +170,11 @@ def mris_distance_map(
     Returns:
         NamedTuple of outputs (described in `MrisDistanceMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_DISTANCE_MAP_METADATA)
     params = mris_distance_map_params(
         input_surface_file=input_surface_file,
         output_scalar_field=output_scalar_field,
     )
-    return mris_distance_map_execute(params, execution)
+    return mris_distance_map_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "MrisDistanceMapOutputs",
     "MrisDistanceMapParameters",
     "mris_distance_map",
-    "mris_distance_map_cargs",
     "mris_distance_map_execute",
-    "mris_distance_map_outputs",
     "mris_distance_map_params",
 ]

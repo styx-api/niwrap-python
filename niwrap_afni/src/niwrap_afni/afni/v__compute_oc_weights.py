@@ -214,7 +214,7 @@ def v__compute_oc_weights_outputs(
 
 def v__compute_oc_weights_execute(
     params: VComputeOcWeightsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VComputeOcWeightsOutputs:
     """
     Compute optimal combined weights dataset for multi-echo EPI data.
@@ -225,10 +225,12 @@ def v__compute_oc_weights_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VComputeOcWeightsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__COMPUTE_OC_WEIGHTS_METADATA)
     params = execution.params(params)
     cargs = v__compute_oc_weights_cargs(params, execution)
     ret = v__compute_oc_weights_outputs(params, execution)
@@ -276,8 +278,6 @@ def v__compute_oc_weights(
     Returns:
         NamedTuple of outputs (described in `VComputeOcWeightsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__COMPUTE_OC_WEIGHTS_METADATA)
     params = v__compute_oc_weights_params(
         echo_times=echo_times,
         echo_times_file=echo_times_file,
@@ -290,7 +290,7 @@ def v__compute_oc_weights(
         work_dir=work_dir,
         verbosity=verbosity,
     )
-    return v__compute_oc_weights_execute(params, execution)
+    return v__compute_oc_weights_execute(params, runner)
 
 
 __all__ = [
@@ -298,8 +298,6 @@ __all__ = [
     "VComputeOcWeightsParameters",
     "V__COMPUTE_OC_WEIGHTS_METADATA",
     "v__compute_oc_weights",
-    "v__compute_oc_weights_cargs",
     "v__compute_oc_weights_execute",
-    "v__compute_oc_weights_outputs",
     "v__compute_oc_weights_params",
 ]

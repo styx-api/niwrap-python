@@ -155,7 +155,7 @@ def warp_time_series_image_multi_transform_outputs(
 
 def warp_time_series_image_multi_transform_execute(
     params: WarpTimeSeriesImageMultiTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WarpTimeSeriesImageMultiTransformOutputs:
     """
     WarpTimeSeriesImageMultiTransform is a tool used to apply a series of
@@ -168,10 +168,12 @@ def warp_time_series_image_multi_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WarpTimeSeriesImageMultiTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = warp_time_series_image_multi_transform_cargs(params, execution)
     ret = warp_time_series_image_multi_transform_outputs(params, execution)
@@ -213,8 +215,6 @@ def warp_time_series_image_multi_transform(
     Returns:
         NamedTuple of outputs (described in `WarpTimeSeriesImageMultiTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WARP_TIME_SERIES_IMAGE_MULTI_TRANSFORM_METADATA)
     params = warp_time_series_image_multi_transform_params(
         image_dimension=image_dimension,
         moving_image=moving_image,
@@ -223,7 +223,7 @@ def warp_time_series_image_multi_transform(
         transforms=transforms,
         interpolation=interpolation,
     )
-    return warp_time_series_image_multi_transform_execute(params, execution)
+    return warp_time_series_image_multi_transform_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "WarpTimeSeriesImageMultiTransformOutputs",
     "WarpTimeSeriesImageMultiTransformParameters",
     "warp_time_series_image_multi_transform",
-    "warp_time_series_image_multi_transform_cargs",
     "warp_time_series_image_multi_transform_execute",
-    "warp_time_series_image_multi_transform_outputs",
     "warp_time_series_image_multi_transform_params",
 ]

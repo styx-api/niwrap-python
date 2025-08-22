@@ -161,7 +161,7 @@ def v_1dsum_outputs(
 
 def v_1dsum_execute(
     params: V1dsumParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dsumOutputs:
     """
     Sum or average columns of ASCII files with numbers arranged in rows and columns.
@@ -172,10 +172,12 @@ def v_1dsum_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dsumOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DSUM_METADATA)
     params = execution.params(params)
     cargs = v_1dsum_cargs(params, execution)
     ret = v_1dsum_outputs(params, execution)
@@ -213,8 +215,6 @@ def v_1dsum(
     Returns:
         NamedTuple of outputs (described in `V1dsumOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DSUM_METADATA)
     params = v_1dsum_params(
         input_files=input_files,
         ignore_rows=ignore_rows,
@@ -223,7 +223,7 @@ def v_1dsum(
         nocomment_flag=nocomment_flag,
         okempty_flag=okempty_flag,
     )
-    return v_1dsum_execute(params, execution)
+    return v_1dsum_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "V1dsumParameters",
     "V_1DSUM_METADATA",
     "v_1dsum",
-    "v_1dsum_cargs",
     "v_1dsum_execute",
-    "v_1dsum_outputs",
     "v_1dsum_params",
 ]

@@ -205,7 +205,7 @@ def mrisp_write_outputs(
 
 def mrisp_write_execute(
     params: MrispWriteParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrispWriteOutputs:
     """
     This tool converts a surface overlay on a sphere into spherical coordinates.
@@ -216,10 +216,12 @@ def mrisp_write_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrispWriteOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRISP_WRITE_METADATA)
     params = execution.params(params)
     cargs = mrisp_write_cargs(params, execution)
     ret = mrisp_write_outputs(params, execution)
@@ -266,8 +268,6 @@ def mrisp_write(
     Returns:
         NamedTuple of outputs (described in `MrispWriteOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRISP_WRITE_METADATA)
     params = mrisp_write_params(
         input_surface=input_surface,
         overlay_filename=overlay_filename,
@@ -281,7 +281,7 @@ def mrisp_write(
         verbose_vertex=verbose_vertex,
         write_diagnostics=write_diagnostics,
     )
-    return mrisp_write_execute(params, execution)
+    return mrisp_write_execute(params, runner)
 
 
 __all__ = [
@@ -289,8 +289,6 @@ __all__ = [
     "MrispWriteOutputs",
     "MrispWriteParameters",
     "mrisp_write",
-    "mrisp_write_cargs",
     "mrisp_write_execute",
-    "mrisp_write_outputs",
     "mrisp_write_params",
 ]

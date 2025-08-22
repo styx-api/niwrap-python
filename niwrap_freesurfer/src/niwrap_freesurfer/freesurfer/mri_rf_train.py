@@ -186,7 +186,7 @@ def mri_rf_train_outputs(
 
 def mri_rf_train_execute(
     params: MriRfTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRfTrainOutputs:
     """
     Trains GCA data with multiple subjects using MRI data.
@@ -197,10 +197,12 @@ def mri_rf_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRfTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RF_TRAIN_METADATA)
     params = execution.params(params)
     cargs = mri_rf_train_cargs(params, execution)
     ret = mri_rf_train_outputs(params, execution)
@@ -244,8 +246,6 @@ def mri_rf_train(
     Returns:
         NamedTuple of outputs (described in `MriRfTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RF_TRAIN_METADATA)
     params = mri_rf_train_params(
         seg_volume=seg_volume,
         atlas_transform=atlas_transform,
@@ -257,7 +257,7 @@ def mri_rf_train(
         subjects=subjects,
         output_rfa=output_rfa,
     )
-    return mri_rf_train_execute(params, execution)
+    return mri_rf_train_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "MriRfTrainOutputs",
     "MriRfTrainParameters",
     "mri_rf_train",
-    "mri_rf_train_cargs",
     "mri_rf_train_execute",
-    "mri_rf_train_outputs",
     "mri_rf_train_params",
 ]

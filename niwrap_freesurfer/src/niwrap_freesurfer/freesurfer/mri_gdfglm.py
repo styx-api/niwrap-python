@@ -124,7 +124,7 @@ def mri_gdfglm_outputs(
 
 def mri_gdfglm_execute(
     params: MriGdfglmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriGdfglmOutputs:
     """
     The mri_gdfglm command has been removed from the current version of FreeSurfer.
@@ -135,10 +135,12 @@ def mri_gdfglm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriGdfglmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_GDFGLM_METADATA)
     params = execution.params(params)
     cargs = mri_gdfglm_cargs(params, execution)
     ret = mri_gdfglm_outputs(params, execution)
@@ -164,12 +166,10 @@ def mri_gdfglm(
     Returns:
         NamedTuple of outputs (described in `MriGdfglmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_GDFGLM_METADATA)
     params = mri_gdfglm_params(
         inputs=inputs,
     )
-    return mri_gdfglm_execute(params, execution)
+    return mri_gdfglm_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "MriGdfglmOutputs",
     "MriGdfglmParameters",
     "mri_gdfglm",
-    "mri_gdfglm_cargs",
     "mri_gdfglm_execute",
-    "mri_gdfglm_outputs",
     "mri_gdfglm_params",
 ]

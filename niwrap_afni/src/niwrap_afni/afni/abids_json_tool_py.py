@@ -216,7 +216,7 @@ def abids_json_tool_py_outputs(
 
 def abids_json_tool_py_execute(
     params: AbidsJsonToolPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AbidsJsonToolPyOutputs:
     """
     This script helps to manipulate json files in various ways.
@@ -227,10 +227,12 @@ def abids_json_tool_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AbidsJsonToolPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ABIDS_JSON_TOOL_PY_METADATA)
     params = execution.params(params)
     cargs = abids_json_tool_py_cargs(params, execution)
     ret = abids_json_tool_py_outputs(params, execution)
@@ -286,8 +288,6 @@ def abids_json_tool_py(
     Returns:
         NamedTuple of outputs (described in `AbidsJsonToolPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ABIDS_JSON_TOOL_PY_METADATA)
     params = abids_json_tool_py_params(
         input_file=input_file,
         prefix=prefix,
@@ -303,7 +303,7 @@ def abids_json_tool_py(
         literal_keys=literal_keys,
         values_stay_str=values_stay_str,
     )
-    return abids_json_tool_py_execute(params, execution)
+    return abids_json_tool_py_execute(params, runner)
 
 
 __all__ = [
@@ -311,8 +311,6 @@ __all__ = [
     "AbidsJsonToolPyOutputs",
     "AbidsJsonToolPyParameters",
     "abids_json_tool_py",
-    "abids_json_tool_py_cargs",
     "abids_json_tool_py_execute",
-    "abids_json_tool_py_outputs",
     "abids_json_tool_py_params",
 ]

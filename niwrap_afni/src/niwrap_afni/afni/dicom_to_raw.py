@@ -120,7 +120,7 @@ def dicom_to_raw_outputs(
 
 def dicom_to_raw_execute(
     params: DicomToRawParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DicomToRawOutputs:
     """
     Reads images from DICOM file and writes them to raw file(s).
@@ -131,10 +131,12 @@ def dicom_to_raw_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DicomToRawOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DICOM_TO_RAW_METADATA)
     params = execution.params(params)
     cargs = dicom_to_raw_cargs(params, execution)
     ret = dicom_to_raw_outputs(params, execution)
@@ -159,12 +161,10 @@ def dicom_to_raw(
     Returns:
         NamedTuple of outputs (described in `DicomToRawOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DICOM_TO_RAW_METADATA)
     params = dicom_to_raw_params(
         input_dicom=input_dicom,
     )
-    return dicom_to_raw_execute(params, execution)
+    return dicom_to_raw_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "DicomToRawOutputs",
     "DicomToRawParameters",
     "dicom_to_raw",
-    "dicom_to_raw_cargs",
     "dicom_to_raw_execute",
-    "dicom_to_raw_outputs",
     "dicom_to_raw_params",
 ]

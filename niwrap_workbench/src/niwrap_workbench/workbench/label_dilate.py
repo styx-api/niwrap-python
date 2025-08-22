@@ -171,7 +171,7 @@ def label_dilate_outputs(
 
 def label_dilate_execute(
     params: LabelDilateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
     Dilate a label file.
@@ -188,10 +188,12 @@ def label_dilate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelDilateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_DILATE_METADATA)
     params = execution.params(params)
     cargs = label_dilate_cargs(params, execution)
     ret = label_dilate_outputs(params, execution)
@@ -239,8 +241,6 @@ def label_dilate(
     Returns:
         NamedTuple of outputs (described in `LabelDilateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_DILATE_METADATA)
     params = label_dilate_params(
         label=label,
         surface=surface,
@@ -250,7 +250,7 @@ def label_dilate(
         opt_column_column=opt_column_column,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return label_dilate_execute(params, execution)
+    return label_dilate_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "LabelDilateOutputs",
     "LabelDilateParameters",
     "label_dilate",
-    "label_dilate_cargs",
     "label_dilate_execute",
-    "label_dilate_outputs",
     "label_dilate_params",
 ]

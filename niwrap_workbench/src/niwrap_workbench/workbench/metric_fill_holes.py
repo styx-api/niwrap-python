@@ -143,7 +143,7 @@ def metric_fill_holes_outputs(
 
 def metric_fill_holes_execute(
     params: MetricFillHolesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricFillHolesOutputs:
     """
     Fill holes in an roi metric.
@@ -157,10 +157,12 @@ def metric_fill_holes_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricFillHolesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_FILL_HOLES_METADATA)
     params = execution.params(params)
     cargs = metric_fill_holes_cargs(params, execution)
     ret = metric_fill_holes_outputs(params, execution)
@@ -196,15 +198,13 @@ def metric_fill_holes(
     Returns:
         NamedTuple of outputs (described in `MetricFillHolesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_FILL_HOLES_METADATA)
     params = metric_fill_holes_params(
         surface=surface,
         metric_in=metric_in,
         metric_out=metric_out,
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
     )
-    return metric_fill_holes_execute(params, execution)
+    return metric_fill_holes_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "MetricFillHolesOutputs",
     "MetricFillHolesParameters",
     "metric_fill_holes",
-    "metric_fill_holes_cargs",
     "metric_fill_holes_execute",
-    "metric_fill_holes_outputs",
     "metric_fill_holes_params",
 ]

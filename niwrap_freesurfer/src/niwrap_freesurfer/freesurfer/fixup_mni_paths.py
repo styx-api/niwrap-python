@@ -157,7 +157,7 @@ def fixup_mni_paths_outputs(
 
 def fixup_mni_paths_execute(
     params: FixupMniPathsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixupMniPathsOutputs:
     """
     A utility for patching MNI tools to ensure correct paths are used.
@@ -168,10 +168,12 @@ def fixup_mni_paths_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixupMniPathsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXUP_MNI_PATHS_METADATA)
     params = execution.params(params)
     cargs = fixup_mni_paths_cargs(params, execution)
     ret = fixup_mni_paths_outputs(params, execution)
@@ -196,12 +198,10 @@ def fixup_mni_paths(
     Returns:
         NamedTuple of outputs (described in `FixupMniPathsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXUP_MNI_PATHS_METADATA)
     params = fixup_mni_paths_params(
         verbose=verbose,
     )
-    return fixup_mni_paths_execute(params, execution)
+    return fixup_mni_paths_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "FixupMniPathsOutputs",
     "FixupMniPathsParameters",
     "fixup_mni_paths",
-    "fixup_mni_paths_cargs",
     "fixup_mni_paths_execute",
-    "fixup_mni_paths_outputs",
     "fixup_mni_paths_params",
 ]

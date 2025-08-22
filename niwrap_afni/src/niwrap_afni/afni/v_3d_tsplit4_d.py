@@ -144,7 +144,7 @@ def v_3d_tsplit4_d_outputs(
 
 def v_3d_tsplit4_d_execute(
     params: V3dTsplit4DParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTsplit4DOutputs:
     """
     Convert a 3D+time dataset into multiple 3D single-brick files.
@@ -155,10 +155,12 @@ def v_3d_tsplit4_d_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTsplit4DOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TSPLIT4_D_METADATA)
     params = execution.params(params)
     cargs = v_3d_tsplit4_d_cargs(params, execution)
     ret = v_3d_tsplit4_d_outputs(params, execution)
@@ -189,15 +191,13 @@ def v_3d_tsplit4_d(
     Returns:
         NamedTuple of outputs (described in `V3dTsplit4DOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TSPLIT4_D_METADATA)
     params = v_3d_tsplit4_d_params(
         prefix=prefix,
         infile=infile,
         keep_datum=keep_datum,
         digits=digits,
     )
-    return v_3d_tsplit4_d_execute(params, execution)
+    return v_3d_tsplit4_d_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "V3dTsplit4DParameters",
     "V_3D_TSPLIT4_D_METADATA",
     "v_3d_tsplit4_d",
-    "v_3d_tsplit4_d_cargs",
     "v_3d_tsplit4_d_execute",
-    "v_3d_tsplit4_d_outputs",
     "v_3d_tsplit4_d_params",
 ]

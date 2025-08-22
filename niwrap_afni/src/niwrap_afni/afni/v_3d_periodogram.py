@@ -153,7 +153,7 @@ def v_3d_periodogram_outputs(
 
 def v_3d_periodogram_execute(
     params: V3dPeriodogramParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dPeriodogramOutputs:
     """
     Computes the periodogram of each voxel time series. The periodogram is a crude
@@ -165,10 +165,12 @@ def v_3d_periodogram_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPeriodogramOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_PERIODOGRAM_METADATA)
     params = execution.params(params)
     cargs = v_3d_periodogram_cargs(params, execution)
     ret = v_3d_periodogram_outputs(params, execution)
@@ -200,15 +202,13 @@ def v_3d_periodogram(
     Returns:
         NamedTuple of outputs (described in `V3dPeriodogramOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_PERIODOGRAM_METADATA)
     params = v_3d_periodogram_params(
         prefix=prefix,
         taper=taper,
         nfft=nfft,
         dataset=dataset,
     )
-    return v_3d_periodogram_execute(params, execution)
+    return v_3d_periodogram_execute(params, runner)
 
 
 __all__ = [
@@ -216,8 +216,6 @@ __all__ = [
     "V3dPeriodogramParameters",
     "V_3D_PERIODOGRAM_METADATA",
     "v_3d_periodogram",
-    "v_3d_periodogram_cargs",
     "v_3d_periodogram_execute",
-    "v_3d_periodogram_outputs",
     "v_3d_periodogram_params",
 ]

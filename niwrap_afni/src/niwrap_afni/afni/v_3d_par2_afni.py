@@ -185,7 +185,7 @@ def v_3d_par2_afni_outputs(
 
 def v_3d_par2_afni_execute(
     params: V3dPar2AfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dPar2AfniOutputs:
     """
     Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format.
@@ -196,10 +196,12 @@ def v_3d_par2_afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dPar2AfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_PAR2_AFNI_METADATA)
     params = execution.params(params)
     cargs = v_3d_par2_afni_cargs(params, execution)
     ret = v_3d_par2_afni_outputs(params, execution)
@@ -249,8 +251,6 @@ def v_3d_par2_afni(
     Returns:
         NamedTuple of outputs (described in `V3dPar2AfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_PAR2_AFNI_METADATA)
     params = v_3d_par2_afni_params(
         input_file=input_file,
         skip_outliers_test=skip_outliers_test,
@@ -263,7 +263,7 @@ def v_3d_par2_afni(
         byte_swap_4=byte_swap_4,
         help_flag=help_flag,
     )
-    return v_3d_par2_afni_execute(params, execution)
+    return v_3d_par2_afni_execute(params, runner)
 
 
 __all__ = [
@@ -271,8 +271,6 @@ __all__ = [
     "V3dPar2AfniParameters",
     "V_3D_PAR2_AFNI_METADATA",
     "v_3d_par2_afni",
-    "v_3d_par2_afni_cargs",
     "v_3d_par2_afni_execute",
-    "v_3d_par2_afni_outputs",
     "v_3d_par2_afni_params",
 ]

@@ -315,7 +315,7 @@ def mri_mcsim_outputs(
 
 def mri_mcsim_execute(
     params: MriMcsimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMcsimOutputs:
     """
     Monte Carlo simulation tool for surface-based multiple comparisons.
@@ -326,10 +326,12 @@ def mri_mcsim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMcsimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MCSIM_METADATA)
     params = execution.params(params)
     cargs = mri_mcsim_cargs(params, execution)
     ret = mri_mcsim_outputs(params, execution)
@@ -399,8 +401,6 @@ def mri_mcsim(
     Returns:
         NamedTuple of outputs (described in `MriMcsimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MCSIM_METADATA)
     params = mri_mcsim_params(
         top_output_dir=top_output_dir,
         base_name=base_name,
@@ -426,7 +426,7 @@ def mri_mcsim(
         help_=help_,
         version=version,
     )
-    return mri_mcsim_execute(params, execution)
+    return mri_mcsim_execute(params, runner)
 
 
 __all__ = [
@@ -434,8 +434,6 @@ __all__ = [
     "MriMcsimOutputs",
     "MriMcsimParameters",
     "mri_mcsim",
-    "mri_mcsim_cargs",
     "mri_mcsim_execute",
-    "mri_mcsim_outputs",
     "mri_mcsim_params",
 ]

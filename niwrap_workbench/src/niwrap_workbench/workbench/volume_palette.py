@@ -487,7 +487,7 @@ def volume_palette_outputs(
 
 def volume_palette_execute(
     params: VolumePaletteParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumePaletteOutputs:
     """
     Set the palette of a volume file.
@@ -574,10 +574,12 @@ def volume_palette_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumePaletteOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_PALETTE_METADATA)
     params = execution.params(params)
     cargs = volume_palette_cargs(params, execution)
     ret = volume_palette_outputs(params, execution)
@@ -709,8 +711,6 @@ def volume_palette(
     Returns:
         NamedTuple of outputs (described in `VolumePaletteOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_PALETTE_METADATA)
     params = volume_palette_params(
         volume=volume,
         mode=mode,
@@ -727,7 +727,7 @@ def volume_palette(
         thresholding=thresholding,
         opt_inversion_type=opt_inversion_type,
     )
-    return volume_palette_execute(params, execution)
+    return volume_palette_execute(params, runner)
 
 
 __all__ = [
@@ -740,18 +740,11 @@ __all__ = [
     "VolumePalettePosUserParameters",
     "VolumePaletteThresholdingParameters",
     "volume_palette",
-    "volume_palette_cargs",
     "volume_palette_execute",
-    "volume_palette_neg_percent_cargs",
     "volume_palette_neg_percent_params",
-    "volume_palette_neg_user_cargs",
     "volume_palette_neg_user_params",
-    "volume_palette_outputs",
     "volume_palette_params",
-    "volume_palette_pos_percent_cargs",
     "volume_palette_pos_percent_params",
-    "volume_palette_pos_user_cargs",
     "volume_palette_pos_user_params",
-    "volume_palette_thresholding_cargs",
     "volume_palette_thresholding_params",
 ]

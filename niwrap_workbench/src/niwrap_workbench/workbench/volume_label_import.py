@@ -167,7 +167,7 @@ def volume_label_import_outputs(
 
 def volume_label_import_execute(
     params: VolumeLabelImportParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
     Import a label volume to workbench format.
@@ -204,10 +204,12 @@ def volume_label_import_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeLabelImportOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_LABEL_IMPORT_METADATA)
     params = execution.params(params)
     cargs = volume_label_import_cargs(params, execution)
     ret = volume_label_import_outputs(params, execution)
@@ -274,8 +276,6 @@ def volume_label_import(
     Returns:
         NamedTuple of outputs (described in `VolumeLabelImportOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_LABEL_IMPORT_METADATA)
     params = volume_label_import_params(
         input_=input_,
         label_list_file=label_list_file,
@@ -285,7 +285,7 @@ def volume_label_import(
         opt_subvolume_subvol=opt_subvolume_subvol,
         opt_drop_unused_labels=opt_drop_unused_labels,
     )
-    return volume_label_import_execute(params, execution)
+    return volume_label_import_execute(params, runner)
 
 
 __all__ = [
@@ -293,8 +293,6 @@ __all__ = [
     "VolumeLabelImportOutputs",
     "VolumeLabelImportParameters",
     "volume_label_import",
-    "volume_label_import_cargs",
     "volume_label_import_execute",
-    "volume_label_import_outputs",
     "volume_label_import_params",
 ]

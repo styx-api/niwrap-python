@@ -940,7 +940,7 @@ def fslmaths_outputs(
 
 def fslmaths_execute(
     params: FslmathsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslmathsOutputs:
     """
     FSL utility for image arithmetic, statistics, and mathematical operations.
@@ -951,10 +951,12 @@ def fslmaths_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslmathsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLMATHS_METADATA)
     params = execution.params(params)
     cargs = fslmaths_cargs(params, execution)
     ret = fslmaths_outputs(params, execution)
@@ -987,8 +989,6 @@ def fslmaths(
     Returns:
         NamedTuple of outputs (described in `FslmathsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLMATHS_METADATA)
     params = fslmaths_params(
         datatype_internal=datatype_internal,
         input_files=input_files,
@@ -996,7 +996,7 @@ def fslmaths(
         output=output,
         output_datatype=output_datatype,
     )
-    return fslmaths_execute(params, execution)
+    return fslmaths_execute(params, runner)
 
 
 __all__ = [
@@ -1005,10 +1005,7 @@ __all__ = [
     "FslmathsOutputs",
     "FslmathsParameters",
     "fslmaths",
-    "fslmaths_cargs",
     "fslmaths_execute",
-    "fslmaths_operation_cargs",
     "fslmaths_operation_params",
-    "fslmaths_outputs",
     "fslmaths_params",
 ]

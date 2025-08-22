@@ -302,7 +302,7 @@ def dcminfo_outputs(
 
 def dcminfo_execute(
     params: DcminfoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DcminfoOutputs:
     """
     Output DICOM fields in human-readable format.
@@ -319,10 +319,12 @@ def dcminfo_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DcminfoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCMINFO_METADATA)
     params = execution.params(params)
     cargs = dcminfo_cargs(params, execution)
     ret = dcminfo_outputs(params, execution)
@@ -383,8 +385,6 @@ def dcminfo(
     Returns:
         NamedTuple of outputs (described in `DcminfoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCMINFO_METADATA)
     params = dcminfo_params(
         all_=all_,
         csa=csa,
@@ -400,7 +400,7 @@ def dcminfo(
         version=version,
         file=file,
     )
-    return dcminfo_execute(params, execution)
+    return dcminfo_execute(params, runner)
 
 
 __all__ = [
@@ -410,12 +410,8 @@ __all__ = [
     "DcminfoParameters",
     "DcminfoTagParameters",
     "dcminfo",
-    "dcminfo_cargs",
-    "dcminfo_config_cargs",
     "dcminfo_config_params",
     "dcminfo_execute",
-    "dcminfo_outputs",
     "dcminfo_params",
-    "dcminfo_tag_cargs",
     "dcminfo_tag_params",
 ]

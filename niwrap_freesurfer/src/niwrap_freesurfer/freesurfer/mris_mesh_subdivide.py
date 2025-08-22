@@ -153,7 +153,7 @@ def mris_mesh_subdivide_outputs(
 
 def mris_mesh_subdivide_execute(
     params: MrisMeshSubdivideParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMeshSubdivideOutputs:
     """
     This program will subdivide a triangular mesh surface.
@@ -164,10 +164,12 @@ def mris_mesh_subdivide_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMeshSubdivideOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MESH_SUBDIVIDE_METADATA)
     params = execution.params(params)
     cargs = mris_mesh_subdivide_cargs(params, execution)
     ret = mris_mesh_subdivide_outputs(params, execution)
@@ -200,15 +202,13 @@ def mris_mesh_subdivide(
     Returns:
         NamedTuple of outputs (described in `MrisMeshSubdivideOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MESH_SUBDIVIDE_METADATA)
     params = mris_mesh_subdivide_params(
         input_surface=input_surface,
         output_surface=output_surface,
         subdivision_method=subdivision_method,
         iterations=iterations,
     )
-    return mris_mesh_subdivide_execute(params, execution)
+    return mris_mesh_subdivide_execute(params, runner)
 
 
 __all__ = [
@@ -216,8 +216,6 @@ __all__ = [
     "MrisMeshSubdivideOutputs",
     "MrisMeshSubdivideParameters",
     "mris_mesh_subdivide",
-    "mris_mesh_subdivide_cargs",
     "mris_mesh_subdivide_execute",
-    "mris_mesh_subdivide_outputs",
     "mris_mesh_subdivide_params",
 ]

@@ -307,7 +307,7 @@ def file_convert_outputs(
 
 def file_convert_execute(
     params: FileConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FileConvertOutputs:
     """
     Change version of file format.
@@ -320,10 +320,12 @@ def file_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FileConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FILE_CONVERT_METADATA)
     params = execution.params(params)
     cargs = file_convert_cargs(params, execution)
     ret = file_convert_outputs(params, execution)
@@ -354,14 +356,12 @@ def file_convert(
     Returns:
         NamedTuple of outputs (described in `FileConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FILE_CONVERT_METADATA)
     params = file_convert_params(
         border_version_convert=border_version_convert,
         nifti_version_convert=nifti_version_convert,
         cifti_version_convert=cifti_version_convert,
     )
-    return file_convert_execute(params, execution)
+    return file_convert_execute(params, runner)
 
 
 __all__ = [
@@ -372,14 +372,9 @@ __all__ = [
     "FileConvertOutputs",
     "FileConvertParameters",
     "file_convert",
-    "file_convert_border_version_convert_cargs",
     "file_convert_border_version_convert_params",
-    "file_convert_cargs",
-    "file_convert_cifti_version_convert_cargs",
     "file_convert_cifti_version_convert_params",
     "file_convert_execute",
-    "file_convert_nifti_version_convert_cargs",
     "file_convert_nifti_version_convert_params",
-    "file_convert_outputs",
     "file_convert_params",
 ]

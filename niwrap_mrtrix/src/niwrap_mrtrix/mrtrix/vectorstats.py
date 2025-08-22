@@ -397,7 +397,7 @@ def vectorstats_outputs(
 
 def vectorstats_execute(
     params: VectorstatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VectorstatsOutputs:
     """
     Statistical testing of vector data using non-parametric permutation testing.
@@ -428,10 +428,12 @@ def vectorstats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VectorstatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VECTORSTATS_METADATA)
     params = execution.params(params)
     cargs = vectorstats_cargs(params, execution)
     ret = vectorstats_outputs(params, execution)
@@ -542,8 +544,6 @@ def vectorstats(
     Returns:
         NamedTuple of outputs (described in `VectorstatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VECTORSTATS_METADATA)
     params = vectorstats_params(
         notest=notest,
         errors=errors,
@@ -569,7 +569,7 @@ def vectorstats(
         contrast=contrast,
         output=output,
     )
-    return vectorstats_execute(params, execution)
+    return vectorstats_execute(params, runner)
 
 
 __all__ = [
@@ -579,12 +579,8 @@ __all__ = [
     "VectorstatsOutputs",
     "VectorstatsParameters",
     "vectorstats",
-    "vectorstats_cargs",
-    "vectorstats_column_cargs",
     "vectorstats_column_params",
-    "vectorstats_config_cargs",
     "vectorstats_config_params",
     "vectorstats_execute",
-    "vectorstats_outputs",
     "vectorstats_params",
 ]

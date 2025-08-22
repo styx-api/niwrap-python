@@ -145,7 +145,7 @@ def bugr_outputs(
 
 def bugr_execute(
     params: BugrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BugrOutputs:
     """
     Utility for generating and reporting FreeSurfer bugs.
@@ -156,10 +156,12 @@ def bugr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BugrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BUGR_METADATA)
     params = execution.params(params)
     cargs = bugr_cargs(params, execution)
     ret = bugr_outputs(params, execution)
@@ -190,15 +192,13 @@ def bugr(
     Returns:
         NamedTuple of outputs (described in `BugrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BUGR_METADATA)
     params = bugr_params(
         subject_name=subject_name,
         command_line=command_line,
         error_message=error_message,
         log_file=log_file,
     )
-    return bugr_execute(params, execution)
+    return bugr_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "BugrOutputs",
     "BugrParameters",
     "bugr",
-    "bugr_cargs",
     "bugr_execute",
-    "bugr_outputs",
     "bugr_params",
 ]

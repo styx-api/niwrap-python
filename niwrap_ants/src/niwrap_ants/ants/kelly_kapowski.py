@@ -320,7 +320,7 @@ def kelly_kapowski_outputs(
 
 def kelly_kapowski_execute(
     params: KellyKapowskiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> KellyKapowskiOutputs:
     """
     DiReCT is a registration based estimate of cortical thickness. It was published
@@ -333,10 +333,12 @@ def kelly_kapowski_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `KellyKapowskiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(KELLY_KAPOWSKI_METADATA)
     params = execution.params(params)
     cargs = kelly_kapowski_cargs(params, execution)
     ret = kelly_kapowski_outputs(params, execution)
@@ -424,8 +426,6 @@ def kelly_kapowski(
     Returns:
         NamedTuple of outputs (described in `KellyKapowskiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(KELLY_KAPOWSKI_METADATA)
     params = kelly_kapowski_params(
         image_dimensionality=image_dimensionality,
         segmentation_image=segmentation_image,
@@ -446,7 +446,7 @@ def kelly_kapowski(
         output=output,
         verbose=verbose,
     )
-    return kelly_kapowski_execute(params, execution)
+    return kelly_kapowski_execute(params, runner)
 
 
 __all__ = [
@@ -454,8 +454,6 @@ __all__ = [
     "KellyKapowskiOutputs",
     "KellyKapowskiParameters",
     "kelly_kapowski",
-    "kelly_kapowski_cargs",
     "kelly_kapowski_execute",
-    "kelly_kapowski_outputs",
     "kelly_kapowski_params",
 ]

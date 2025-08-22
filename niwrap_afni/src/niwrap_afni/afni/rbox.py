@@ -271,7 +271,7 @@ def rbox_outputs(
 
 def rbox_execute(
     params: RboxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RboxOutputs:
     """
     Generate various point distributions. Default is random in cube.
@@ -282,10 +282,12 @@ def rbox_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RboxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RBOX_METADATA)
     params = execution.params(params)
     cargs = rbox_cargs(params, execution)
     ret = rbox_outputs(params, execution)
@@ -356,8 +358,6 @@ def rbox(
     Returns:
         NamedTuple of outputs (described in `RboxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RBOX_METADATA)
     params = rbox_params(
         number_points=number_points,
         dimension=dimension,
@@ -381,7 +381,7 @@ def rbox(
         user_seed=user_seed,
         mesh_lattice=mesh_lattice,
     )
-    return rbox_execute(params, execution)
+    return rbox_execute(params, runner)
 
 
 __all__ = [
@@ -389,8 +389,6 @@ __all__ = [
     "RboxOutputs",
     "RboxParameters",
     "rbox",
-    "rbox_cargs",
     "rbox_execute",
-    "rbox_outputs",
     "rbox_params",
 ]

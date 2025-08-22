@@ -214,7 +214,7 @@ def cifti_stats_outputs(
 
 def cifti_stats_execute(
     params: CiftiStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
     """
     Statistics along cifti columns.
@@ -252,10 +252,12 @@ def cifti_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_STATS_METADATA)
     params = execution.params(params)
     cargs = cifti_stats_cargs(params, execution)
     ret = cifti_stats_outputs(params, execution)
@@ -320,8 +322,6 @@ def cifti_stats(
     Returns:
         NamedTuple of outputs (described in `CiftiStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_STATS_METADATA)
     params = cifti_stats_params(
         cifti_in=cifti_in,
         opt_reduce_operation=opt_reduce_operation,
@@ -330,7 +330,7 @@ def cifti_stats(
         roi=roi,
         opt_show_map_name=opt_show_map_name,
     )
-    return cifti_stats_execute(params, execution)
+    return cifti_stats_execute(params, runner)
 
 
 __all__ = [
@@ -339,10 +339,7 @@ __all__ = [
     "CiftiStatsParameters",
     "CiftiStatsRoiParameters",
     "cifti_stats",
-    "cifti_stats_cargs",
     "cifti_stats_execute",
-    "cifti_stats_outputs",
     "cifti_stats_params",
-    "cifti_stats_roi_cargs",
     "cifti_stats_roi_params",
 ]

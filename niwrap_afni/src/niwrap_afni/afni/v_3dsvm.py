@@ -372,7 +372,7 @@ def v_3dsvm_outputs(
 
 def v_3dsvm_execute(
     params: V3dsvmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dsvmOutputs:
     """
     Support vector machine analysis of brain data using the SVM-light package.
@@ -383,10 +383,12 @@ def v_3dsvm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dsvmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DSVM_METADATA)
     params = execution.params(params)
     cargs = v_3dsvm_cargs(params, execution)
     ret = v_3dsvm_outputs(params, execution)
@@ -475,8 +477,6 @@ def v_3dsvm(
     Returns:
         NamedTuple of outputs (described in `V3dsvmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DSVM_METADATA)
     params = v_3dsvm_params(
         train_vol=train_vol,
         train_labels=train_labels,
@@ -506,7 +506,7 @@ def v_3dsvm(
         help_=help_,
         version=version,
     )
-    return v_3dsvm_execute(params, execution)
+    return v_3dsvm_execute(params, runner)
 
 
 __all__ = [
@@ -514,8 +514,6 @@ __all__ = [
     "V3dsvmParameters",
     "V_3DSVM_METADATA",
     "v_3dsvm",
-    "v_3dsvm_cargs",
     "v_3dsvm_execute",
-    "v_3dsvm_outputs",
     "v_3dsvm_params",
 ]

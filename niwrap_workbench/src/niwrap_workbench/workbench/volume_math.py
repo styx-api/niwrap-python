@@ -210,7 +210,7 @@ def volume_math_outputs(
 
 def volume_math_execute(
     params: VolumeMathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
     Evaluate expression on volume files.
@@ -290,10 +290,12 @@ def volume_math_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeMathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_MATH_METADATA)
     params = execution.params(params)
     cargs = volume_math_cargs(params, execution)
     ret = volume_math_outputs(params, execution)
@@ -394,15 +396,13 @@ def volume_math(
     Returns:
         NamedTuple of outputs (described in `VolumeMathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_MATH_METADATA)
     params = volume_math_params(
         expression=expression,
         volume_out=volume_out,
         opt_fixnan_replace=opt_fixnan_replace,
         var=var,
     )
-    return volume_math_execute(params, execution)
+    return volume_math_execute(params, runner)
 
 
 __all__ = [
@@ -411,10 +411,7 @@ __all__ = [
     "VolumeMathParameters",
     "VolumeMathVarParameters",
     "volume_math",
-    "volume_math_cargs",
     "volume_math_execute",
-    "volume_math_outputs",
     "volume_math_params",
-    "volume_math_var_cargs",
     "volume_math_var_params",
 ]

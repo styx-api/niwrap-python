@@ -493,7 +493,7 @@ def fabber_outputs(
 
 def fabber_execute(
     params: FabberParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberOutputs:
     """
     Fabber is a tool for model-based Bayesian analysis of time-series data.
@@ -504,10 +504,12 @@ def fabber_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_METADATA)
     params = execution.params(params)
     cargs = fabber_cargs(params, execution)
     ret = fabber_outputs(params, execution)
@@ -622,8 +624,6 @@ def fabber(
     Returns:
         NamedTuple of outputs (described in `FabberOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_METADATA)
     params = fabber_params(
         output=output,
         method=method,
@@ -662,7 +662,7 @@ def fabber(
         list_outputs=list_outputs,
         old_optfile=old_optfile,
     )
-    return fabber_execute(params, execution)
+    return fabber_execute(params, runner)
 
 
 __all__ = [
@@ -671,10 +671,7 @@ __all__ = [
     "FabberOutputs",
     "FabberParameters",
     "fabber",
-    "fabber_cargs",
     "fabber_execute",
-    "fabber_optfile_cargs",
     "fabber_optfile_params",
-    "fabber_outputs",
     "fabber_params",
 ]

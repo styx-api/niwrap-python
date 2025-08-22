@@ -214,7 +214,7 @@ def volume_stats_outputs(
 
 def volume_stats_execute(
     params: VolumeStatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
     """
     Spatial statistics on a volume file.
@@ -252,10 +252,12 @@ def volume_stats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeStatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_STATS_METADATA)
     params = execution.params(params)
     cargs = volume_stats_cargs(params, execution)
     ret = volume_stats_outputs(params, execution)
@@ -320,8 +322,6 @@ def volume_stats(
     Returns:
         NamedTuple of outputs (described in `VolumeStatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_STATS_METADATA)
     params = volume_stats_params(
         volume_in=volume_in,
         opt_reduce_operation=opt_reduce_operation,
@@ -330,7 +330,7 @@ def volume_stats(
         roi=roi,
         opt_show_map_name=opt_show_map_name,
     )
-    return volume_stats_execute(params, execution)
+    return volume_stats_execute(params, runner)
 
 
 __all__ = [
@@ -339,10 +339,7 @@ __all__ = [
     "VolumeStatsParameters",
     "VolumeStatsRoiParameters",
     "volume_stats",
-    "volume_stats_cargs",
     "volume_stats_execute",
-    "volume_stats_outputs",
     "volume_stats_params",
-    "volume_stats_roi_cargs",
     "volume_stats_roi_params",
 ]

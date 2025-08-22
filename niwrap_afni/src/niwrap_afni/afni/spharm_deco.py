@@ -196,7 +196,7 @@ def spharm_deco_outputs(
 
 def spharm_deco_execute(
     params: SpharmDecoParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SpharmDecoOutputs:
     """
     Spherical Harmonics Decomposition of a surface's coordinates or data.
@@ -207,10 +207,12 @@ def spharm_deco_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SpharmDecoOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPHARM_DECO_METADATA)
     params = execution.params(params)
     cargs = spharm_deco_cargs(params, execution)
     ret = spharm_deco_outputs(params, execution)
@@ -258,8 +260,6 @@ def spharm_deco(
     Returns:
         NamedTuple of outputs (described in `SpharmDecoOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPHARM_DECO_METADATA)
     params = spharm_deco_params(
         i_type_s=i_type_s,
         unit_sph_label=unit_sph_label,
@@ -272,7 +272,7 @@ def spharm_deco(
         debug=debug,
         sigma=sigma,
     )
-    return spharm_deco_execute(params, execution)
+    return spharm_deco_execute(params, runner)
 
 
 __all__ = [
@@ -280,8 +280,6 @@ __all__ = [
     "SpharmDecoOutputs",
     "SpharmDecoParameters",
     "spharm_deco",
-    "spharm_deco_cargs",
     "spharm_deco_execute",
-    "spharm_deco_outputs",
     "spharm_deco_params",
 ]

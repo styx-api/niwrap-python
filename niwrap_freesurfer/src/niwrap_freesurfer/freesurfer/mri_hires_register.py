@@ -135,7 +135,7 @@ def mri_hires_register_outputs(
 
 def mri_hires_register_execute(
     params: MriHiresRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriHiresRegisterOutputs:
     """
     A tool for high-resolution registration for Freesurfer images.
@@ -146,10 +146,12 @@ def mri_hires_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriHiresRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_HIRES_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mri_hires_register_cargs(params, execution)
     ret = mri_hires_register_outputs(params, execution)
@@ -180,15 +182,13 @@ def mri_hires_register(
     Returns:
         NamedTuple of outputs (described in `MriHiresRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_HIRES_REGISTER_METADATA)
     params = mri_hires_register_params(
         hires_labeling=hires_labeling,
         input_intensity=input_intensity,
         input_aseg=input_aseg,
         output_xform=output_xform,
     )
-    return mri_hires_register_execute(params, execution)
+    return mri_hires_register_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "MriHiresRegisterOutputs",
     "MriHiresRegisterParameters",
     "mri_hires_register",
-    "mri_hires_register_cargs",
     "mri_hires_register_execute",
-    "mri_hires_register_outputs",
     "mri_hires_register_params",
 ]

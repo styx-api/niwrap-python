@@ -280,7 +280,7 @@ def surf2vol_outputs(
 
 def surf2vol_execute(
     params: Surf2volParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Surf2volOutputs:
     """
     Diffuse surface deformation to volumes using surface and MRI data.
@@ -291,10 +291,12 @@ def surf2vol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Surf2volOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF2VOL_METADATA)
     params = execution.params(params)
     cargs = surf2vol_cargs(params, execution)
     ret = surf2vol_outputs(params, execution)
@@ -355,8 +357,6 @@ def surf2vol(
     Returns:
         NamedTuple of outputs (described in `Surf2volOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF2VOL_METADATA)
     params = surf2vol_params(
         fixed_surface=fixed_surface,
         moving_surface=moving_surface,
@@ -376,7 +376,7 @@ def surf2vol(
         debug_output=debug_output,
         cache_transform=cache_transform,
     )
-    return surf2vol_execute(params, execution)
+    return surf2vol_execute(params, runner)
 
 
 __all__ = [
@@ -384,8 +384,6 @@ __all__ = [
     "Surf2volOutputs",
     "Surf2volParameters",
     "surf2vol",
-    "surf2vol_cargs",
     "surf2vol_execute",
-    "surf2vol_outputs",
     "surf2vol_params",
 ]

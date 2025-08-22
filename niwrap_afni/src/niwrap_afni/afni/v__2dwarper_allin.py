@@ -143,7 +143,7 @@ def v__2dwarper_allin_outputs(
 
 def v__2dwarper_allin_execute(
     params: V2dwarperAllinParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V2dwarperAllinOutputs:
     """
     Perform 2D registration on each slice of a 3D+time dataset, and combine the
@@ -155,10 +155,12 @@ def v__2dwarper_allin_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V2dwarperAllinOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__2DWARPER_ALLIN_METADATA)
     params = execution.params(params)
     cargs = v__2dwarper_allin_cargs(params, execution)
     ret = v__2dwarper_allin_outputs(params, execution)
@@ -188,14 +190,12 @@ def v__2dwarper_allin(
     Returns:
         NamedTuple of outputs (described in `V2dwarperAllinOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__2DWARPER_ALLIN_METADATA)
     params = v__2dwarper_allin_params(
         input_prefix=input_prefix,
         mask_prefix=mask_prefix,
         output_prefix=output_prefix,
     )
-    return v__2dwarper_allin_execute(params, execution)
+    return v__2dwarper_allin_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "V2dwarperAllinParameters",
     "V__2DWARPER_ALLIN_METADATA",
     "v__2dwarper_allin",
-    "v__2dwarper_allin_cargs",
     "v__2dwarper_allin_execute",
-    "v__2dwarper_allin_outputs",
     "v__2dwarper_allin_params",
 ]

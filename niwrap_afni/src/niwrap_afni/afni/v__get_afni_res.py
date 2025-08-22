@@ -124,7 +124,7 @@ def v__get_afni_res_outputs(
 
 def v__get_afni_res_execute(
     params: VGetAfniResParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGetAfniResOutputs:
     """
     Tool to return the voxel resolution of a dataset.
@@ -135,10 +135,12 @@ def v__get_afni_res_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGetAfniResOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GET_AFNI_RES_METADATA)
     params = execution.params(params)
     cargs = v__get_afni_res_cargs(params, execution)
     ret = v__get_afni_res_outputs(params, execution)
@@ -166,13 +168,11 @@ def v__get_afni_res(
     Returns:
         NamedTuple of outputs (described in `VGetAfniResOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GET_AFNI_RES_METADATA)
     params = v__get_afni_res_params(
         output_type=output_type,
         input_dataset=input_dataset,
     )
-    return v__get_afni_res_execute(params, execution)
+    return v__get_afni_res_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "VGetAfniResParameters",
     "V__GET_AFNI_RES_METADATA",
     "v__get_afni_res",
-    "v__get_afni_res_cargs",
     "v__get_afni_res_execute",
-    "v__get_afni_res_outputs",
     "v__get_afni_res_params",
 ]

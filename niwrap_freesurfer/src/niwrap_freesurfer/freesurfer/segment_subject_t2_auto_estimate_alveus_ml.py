@@ -117,7 +117,7 @@ def segment_subject_t2_auto_estimate_alveus_ml_outputs(
 
 def segment_subject_t2_auto_estimate_alveus_ml_execute(
     params: SegmentSubjectT2AutoEstimateAlveusMlParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubjectT2AutoEstimateAlveusMlOutputs:
     """
     A Freesurfer tool to segment T2 subjects with automatic alveus ML estimation.
@@ -128,10 +128,12 @@ def segment_subject_t2_auto_estimate_alveus_ml_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT2AutoEstimateAlveusMlOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = execution.params(params)
     cargs = segment_subject_t2_auto_estimate_alveus_ml_cargs(params, execution)
     ret = segment_subject_t2_auto_estimate_alveus_ml_outputs(params, execution)
@@ -157,12 +159,10 @@ def segment_subject_t2_auto_estimate_alveus_ml(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectT2AutoEstimateAlveusMlOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBJECT_T2_AUTO_ESTIMATE_ALVEUS_ML_METADATA)
     params = segment_subject_t2_auto_estimate_alveus_ml_params(
         missing_library=missing_library,
     )
-    return segment_subject_t2_auto_estimate_alveus_ml_execute(params, execution)
+    return segment_subject_t2_auto_estimate_alveus_ml_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "SegmentSubjectT2AutoEstimateAlveusMlOutputs",
     "SegmentSubjectT2AutoEstimateAlveusMlParameters",
     "segment_subject_t2_auto_estimate_alveus_ml",
-    "segment_subject_t2_auto_estimate_alveus_ml_cargs",
     "segment_subject_t2_auto_estimate_alveus_ml_execute",
-    "segment_subject_t2_auto_estimate_alveus_ml_outputs",
     "segment_subject_t2_auto_estimate_alveus_ml_params",
 ]

@@ -171,7 +171,7 @@ def v_1d_apar2mat_outputs(
 
 def v_1d_apar2mat_execute(
     params: V1dApar2matParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dApar2matOutputs:
     """
     Computes the affine transformation matrix from the set of 3dAllineate
@@ -183,10 +183,12 @@ def v_1d_apar2mat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dApar2matOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_APAR2MAT_METADATA)
     params = execution.params(params)
     cargs = v_1d_apar2mat_cargs(params, execution)
     ret = v_1d_apar2mat_outputs(params, execution)
@@ -234,8 +236,6 @@ def v_1d_apar2mat(
     Returns:
         NamedTuple of outputs (described in `V1dApar2matOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_APAR2MAT_METADATA)
     params = v_1d_apar2mat_params(
         x_shift=x_shift,
         y_shift=y_shift,
@@ -250,7 +250,7 @@ def v_1d_apar2mat(
         z_x_shear=z_x_shear,
         z_y_shear=z_y_shear,
     )
-    return v_1d_apar2mat_execute(params, execution)
+    return v_1d_apar2mat_execute(params, runner)
 
 
 __all__ = [
@@ -258,8 +258,6 @@ __all__ = [
     "V1dApar2matParameters",
     "V_1D_APAR2MAT_METADATA",
     "v_1d_apar2mat",
-    "v_1d_apar2mat_cargs",
     "v_1d_apar2mat_execute",
-    "v_1d_apar2mat_outputs",
     "v_1d_apar2mat_params",
 ]

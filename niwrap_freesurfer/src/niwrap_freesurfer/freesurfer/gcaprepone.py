@@ -155,7 +155,7 @@ def gcaprepone_outputs(
 
 def gcaprepone_execute(
     params: GcapreponeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GcapreponeOutputs:
     """
     Tool for preparing FreeSurfer subjects for use with group-wise template
@@ -167,10 +167,12 @@ def gcaprepone_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GcapreponeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GCAPREPONE_METADATA)
     params = execution.params(params)
     cargs = gcaprepone_cargs(params, execution)
     ret = gcaprepone_outputs(params, execution)
@@ -206,8 +208,6 @@ def gcaprepone(
     Returns:
         NamedTuple of outputs (described in `GcapreponeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GCAPREPONE_METADATA)
     params = gcaprepone_params(
         gcadir=gcadir,
         subject=subject,
@@ -216,7 +216,7 @@ def gcaprepone(
         done_file=done_file,
         no_emreg=no_emreg,
     )
-    return gcaprepone_execute(params, execution)
+    return gcaprepone_execute(params, runner)
 
 
 __all__ = [
@@ -224,8 +224,6 @@ __all__ = [
     "GcapreponeOutputs",
     "GcapreponeParameters",
     "gcaprepone",
-    "gcaprepone_cargs",
     "gcaprepone_execute",
-    "gcaprepone_outputs",
     "gcaprepone_params",
 ]

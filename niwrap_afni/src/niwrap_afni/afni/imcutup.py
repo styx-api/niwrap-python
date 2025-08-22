@@ -164,7 +164,7 @@ def imcutup_outputs(
 
 def imcutup_execute(
     params: ImcutupParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImcutupOutputs:
     """
     Breaks up larger images into smaller image files of user-defined size.
@@ -175,10 +175,12 @@ def imcutup_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImcutupOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMCUTUP_METADATA)
     params = execution.params(params)
     cargs = imcutup_cargs(params, execution)
     ret = imcutup_outputs(params, execution)
@@ -217,8 +219,6 @@ def imcutup(
     Returns:
         NamedTuple of outputs (described in `ImcutupOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMCUTUP_METADATA)
     params = imcutup_params(
         prefix=prefix,
         xynum=xynum,
@@ -229,7 +229,7 @@ def imcutup(
         ny=ny,
         input_file=input_file,
     )
-    return imcutup_execute(params, execution)
+    return imcutup_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "ImcutupOutputs",
     "ImcutupParameters",
     "imcutup",
-    "imcutup_cargs",
     "imcutup_execute",
-    "imcutup_outputs",
     "imcutup_params",
 ]

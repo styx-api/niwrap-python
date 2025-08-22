@@ -408,7 +408,7 @@ def tcksift_outputs(
 
 def tcksift_execute(
     params: TcksiftParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TcksiftOutputs:
     """
     Filter a whole-brain fibre-tracking data set such that the streamline densities
@@ -428,10 +428,12 @@ def tcksift_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TcksiftOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKSIFT_METADATA)
     params = execution.params(params)
     cargs = tcksift_cargs(params, execution)
     ret = tcksift_outputs(params, execution)
@@ -547,8 +549,6 @@ def tcksift(
     Returns:
         NamedTuple of outputs (described in `TcksiftOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKSIFT_METADATA)
     params = tcksift_params(
         nofilter=nofilter,
         output_at_counts=output_at_counts,
@@ -578,7 +578,7 @@ def tcksift(
         in_fod=in_fod,
         out_tracks=out_tracks,
     )
-    return tcksift_execute(params, execution)
+    return tcksift_execute(params, runner)
 
 
 __all__ = [
@@ -587,10 +587,7 @@ __all__ = [
     "TcksiftOutputs",
     "TcksiftParameters",
     "tcksift",
-    "tcksift_cargs",
-    "tcksift_config_cargs",
     "tcksift_config_params",
     "tcksift_execute",
-    "tcksift_outputs",
     "tcksift_params",
 ]

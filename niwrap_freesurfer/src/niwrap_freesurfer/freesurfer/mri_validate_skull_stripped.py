@@ -126,7 +126,7 @@ def mri_validate_skull_stripped_outputs(
 
 def mri_validate_skull_stripped_execute(
     params: MriValidateSkullStrippedParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriValidateSkullStrippedOutputs:
     """
     Tool to validate skull stripped MRI images.
@@ -137,10 +137,12 @@ def mri_validate_skull_stripped_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriValidateSkullStrippedOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_VALIDATE_SKULL_STRIPPED_METADATA)
     params = execution.params(params)
     cargs = mri_validate_skull_stripped_cargs(params, execution)
     ret = mri_validate_skull_stripped_outputs(params, execution)
@@ -169,14 +171,12 @@ def mri_validate_skull_stripped(
     Returns:
         NamedTuple of outputs (described in `MriValidateSkullStrippedOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_VALIDATE_SKULL_STRIPPED_METADATA)
     params = mri_validate_skull_stripped_params(
         mri_reference=mri_reference,
         mri_test=mri_test,
         weight=weight,
     )
-    return mri_validate_skull_stripped_execute(params, execution)
+    return mri_validate_skull_stripped_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "MriValidateSkullStrippedOutputs",
     "MriValidateSkullStrippedParameters",
     "mri_validate_skull_stripped",
-    "mri_validate_skull_stripped_cargs",
     "mri_validate_skull_stripped_execute",
-    "mri_validate_skull_stripped_outputs",
     "mri_validate_skull_stripped_params",
 ]

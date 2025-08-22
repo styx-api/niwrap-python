@@ -335,7 +335,7 @@ def fim2_outputs(
 
 def fim2_execute(
     params: Fim2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fim2Outputs:
     """
     Functional Imaging Mapping Tool.
@@ -346,10 +346,12 @@ def fim2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fim2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIM2_METADATA)
     params = execution.params(params)
     cargs = fim2_cargs(params, execution)
     ret = fim2_outputs(params, execution)
@@ -426,8 +428,6 @@ def fim2(
     Returns:
         NamedTuple of outputs (described in `Fim2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIM2_METADATA)
     params = fim2_params(
         image_files=image_files,
         pcnt=pcnt,
@@ -453,7 +453,7 @@ def fim2(
         dfspace=dfspace,
         regbase=regbase,
     )
-    return fim2_execute(params, execution)
+    return fim2_execute(params, runner)
 
 
 __all__ = [
@@ -461,8 +461,6 @@ __all__ = [
     "Fim2Outputs",
     "Fim2Parameters",
     "fim2",
-    "fim2_cargs",
     "fim2_execute",
-    "fim2_outputs",
     "fim2_params",
 ]

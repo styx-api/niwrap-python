@@ -291,7 +291,7 @@ def afni_history_outputs(
 
 def afni_history_execute(
     params: AfniHistoryParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AfniHistoryOutputs:
     """
     Show AFNI updates per user, dates, or levels.
@@ -302,10 +302,12 @@ def afni_history_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AfniHistoryOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AFNI_HISTORY_METADATA)
     params = execution.params(params)
     cargs = afni_history_cargs(params, execution)
     ret = afni_history_outputs(params, execution)
@@ -376,8 +378,6 @@ def afni_history(
     Returns:
         NamedTuple of outputs (described in `AfniHistoryOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AFNI_HISTORY_METADATA)
     params = afni_history_params(
         verb_level=verb_level,
         check_date=check_date,
@@ -401,7 +401,7 @@ def afni_history(
         show_field=show_field,
         show_field_names=show_field_names,
     )
-    return afni_history_execute(params, execution)
+    return afni_history_execute(params, runner)
 
 
 __all__ = [
@@ -409,8 +409,6 @@ __all__ = [
     "AfniHistoryOutputs",
     "AfniHistoryParameters",
     "afni_history",
-    "afni_history_cargs",
     "afni_history_execute",
-    "afni_history_outputs",
     "afni_history_params",
 ]

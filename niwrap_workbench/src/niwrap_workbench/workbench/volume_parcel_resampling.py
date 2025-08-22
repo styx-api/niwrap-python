@@ -165,7 +165,7 @@ def volume_parcel_resampling_outputs(
 
 def volume_parcel_resampling_execute(
     params: VolumeParcelResamplingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeParcelResamplingOutputs:
     """
     Smooth and resample volume parcels.
@@ -187,10 +187,12 @@ def volume_parcel_resampling_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeParcelResamplingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_PARCEL_RESAMPLING_METADATA)
     params = execution.params(params)
     cargs = volume_parcel_resampling_cargs(params, execution)
     ret = volume_parcel_resampling_outputs(params, execution)
@@ -242,8 +244,6 @@ def volume_parcel_resampling(
     Returns:
         NamedTuple of outputs (described in `VolumeParcelResamplingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_PARCEL_RESAMPLING_METADATA)
     params = volume_parcel_resampling_params(
         volume_in=volume_in,
         cur_parcels=cur_parcels,
@@ -254,7 +254,7 @@ def volume_parcel_resampling(
         opt_fwhm=opt_fwhm,
         opt_subvolume_subvol=opt_subvolume_subvol,
     )
-    return volume_parcel_resampling_execute(params, execution)
+    return volume_parcel_resampling_execute(params, runner)
 
 
 __all__ = [
@@ -262,8 +262,6 @@ __all__ = [
     "VolumeParcelResamplingOutputs",
     "VolumeParcelResamplingParameters",
     "volume_parcel_resampling",
-    "volume_parcel_resampling_cargs",
     "volume_parcel_resampling_execute",
-    "volume_parcel_resampling_outputs",
     "volume_parcel_resampling_params",
 ]

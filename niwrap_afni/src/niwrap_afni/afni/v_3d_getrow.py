@@ -170,7 +170,7 @@ def v_3d_getrow_outputs(
 
 def v_3d_getrow_execute(
     params: V3dGetrowParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dGetrowOutputs:
     """
     Program to extract 1 row from a dataset and write it as a .1D file.
@@ -181,10 +181,12 @@ def v_3d_getrow_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dGetrowOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_GETROW_METADATA)
     params = execution.params(params)
     cargs = v_3d_getrow_cargs(params, execution)
     ret = v_3d_getrow_outputs(params, execution)
@@ -222,8 +224,6 @@ def v_3d_getrow(
     Returns:
         NamedTuple of outputs (described in `V3dGetrowOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_GETROW_METADATA)
     params = v_3d_getrow_params(
         xrow=xrow,
         yrow=yrow,
@@ -231,7 +231,7 @@ def v_3d_getrow(
         input_file=input_file,
         output_file=output_file,
     )
-    return v_3d_getrow_execute(params, execution)
+    return v_3d_getrow_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "V3dGetrowParameters",
     "V_3D_GETROW_METADATA",
     "v_3d_getrow",
-    "v_3d_getrow_cargs",
     "v_3d_getrow_execute",
-    "v_3d_getrow_outputs",
     "v_3d_getrow_params",
 ]

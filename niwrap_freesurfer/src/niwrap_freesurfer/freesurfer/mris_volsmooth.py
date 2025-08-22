@@ -238,7 +238,7 @@ def mris_volsmooth_outputs(
 
 def mris_volsmooth_execute(
     params: MrisVolsmoothParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisVolsmoothOutputs:
     """
     Performs surface-based smoothing inside a volume by sampling a volume to a
@@ -251,10 +251,12 @@ def mris_volsmooth_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisVolsmoothOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_VOLSMOOTH_METADATA)
     params = execution.params(params)
     cargs = mris_volsmooth_cargs(params, execution)
     ret = mris_volsmooth_outputs(params, execution)
@@ -310,8 +312,6 @@ def mris_volsmooth(
     Returns:
         NamedTuple of outputs (described in `MrisVolsmoothOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_VOLSMOOTH_METADATA)
     params = mris_volsmooth_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -327,7 +327,7 @@ def mris_volsmooth(
         nocleanup=nocleanup,
         debug=debug,
     )
-    return mris_volsmooth_execute(params, execution)
+    return mris_volsmooth_execute(params, runner)
 
 
 __all__ = [
@@ -335,8 +335,6 @@ __all__ = [
     "MrisVolsmoothOutputs",
     "MrisVolsmoothParameters",
     "mris_volsmooth",
-    "mris_volsmooth_cargs",
     "mris_volsmooth_execute",
-    "mris_volsmooth_outputs",
     "mris_volsmooth_params",
 ]

@@ -154,7 +154,7 @@ def abids_tool_outputs(
 
 def abids_tool_execute(
     params: AbidsToolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AbidsToolOutputs:
     """
     A tool to work with BIDS formatted datasets created with dcm2niix_afni or
@@ -167,10 +167,12 @@ def abids_tool_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AbidsToolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ABIDS_TOOL_METADATA)
     params = execution.params(params)
     cargs = abids_tool_cargs(params, execution)
     ret = abids_tool_outputs(params, execution)
@@ -211,8 +213,6 @@ def abids_tool(
     Returns:
         NamedTuple of outputs (described in `AbidsToolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ABIDS_TOOL_METADATA)
     params = abids_tool_params(
         input_files=input_files,
         tr_match=tr_match,
@@ -221,7 +221,7 @@ def abids_tool(
         copy_prefix=copy_prefix,
         help_flag=help_flag,
     )
-    return abids_tool_execute(params, execution)
+    return abids_tool_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "AbidsToolOutputs",
     "AbidsToolParameters",
     "abids_tool",
-    "abids_tool_cargs",
     "abids_tool_execute",
-    "abids_tool_outputs",
     "abids_tool_params",
 ]

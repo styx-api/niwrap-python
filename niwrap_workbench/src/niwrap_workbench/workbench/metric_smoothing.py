@@ -241,7 +241,7 @@ def metric_smoothing_outputs(
 
 def metric_smoothing_execute(
     params: MetricSmoothingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
     """
     Smooth a metric file.
@@ -296,10 +296,12 @@ def metric_smoothing_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricSmoothingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_SMOOTHING_METADATA)
     params = execution.params(params)
     cargs = metric_smoothing_cargs(params, execution)
     ret = metric_smoothing_outputs(params, execution)
@@ -391,8 +393,6 @@ def metric_smoothing(
     Returns:
         NamedTuple of outputs (described in `MetricSmoothingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_SMOOTHING_METADATA)
     params = metric_smoothing_params(
         surface=surface,
         metric_in=metric_in,
@@ -405,7 +405,7 @@ def metric_smoothing(
         opt_corrected_areas_area_metric=opt_corrected_areas_area_metric,
         opt_method_method=opt_method_method,
     )
-    return metric_smoothing_execute(params, execution)
+    return metric_smoothing_execute(params, runner)
 
 
 __all__ = [
@@ -414,10 +414,7 @@ __all__ = [
     "MetricSmoothingParameters",
     "MetricSmoothingRoiParameters",
     "metric_smoothing",
-    "metric_smoothing_cargs",
     "metric_smoothing_execute",
-    "metric_smoothing_outputs",
     "metric_smoothing_params",
-    "metric_smoothing_roi_cargs",
     "metric_smoothing_roi_params",
 ]

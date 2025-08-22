@@ -197,7 +197,7 @@ def convert_surface_outputs(
 
 def convert_surface_execute(
     params: ConvertSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertSurfaceOutputs:
     """
     Reads in a surface and writes it out in another format. Only fields pertinent to
@@ -209,10 +209,12 @@ def convert_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_SURFACE_METADATA)
     params = execution.params(params)
     cargs = convert_surface_cargs(params, execution)
     ret = convert_surface_outputs(params, execution)
@@ -258,8 +260,6 @@ def convert_surface(
     Returns:
         NamedTuple of outputs (described in `ConvertSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_SURFACE_METADATA)
     params = convert_surface_params(
         input_surface=input_surface,
         output_surface=output_surface,
@@ -272,7 +272,7 @@ def convert_surface(
         seed=seed,
         native=native,
     )
-    return convert_surface_execute(params, execution)
+    return convert_surface_execute(params, runner)
 
 
 __all__ = [
@@ -280,8 +280,6 @@ __all__ = [
     "ConvertSurfaceOutputs",
     "ConvertSurfaceParameters",
     "convert_surface",
-    "convert_surface_cargs",
     "convert_surface_execute",
-    "convert_surface_outputs",
     "convert_surface_params",
 ]

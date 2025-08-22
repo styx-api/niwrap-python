@@ -122,7 +122,7 @@ def inflate_subject_rh_outputs(
 
 def inflate_subject_rh_execute(
     params: InflateSubjectRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InflateSubjectRhOutputs:
     """
     Freesurfer command to perform an operation on the right hemisphere of a
@@ -134,10 +134,12 @@ def inflate_subject_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InflateSubjectRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INFLATE_SUBJECT_RH_METADATA)
     params = execution.params(params)
     cargs = inflate_subject_rh_cargs(params, execution)
     ret = inflate_subject_rh_outputs(params, execution)
@@ -164,12 +166,10 @@ def inflate_subject_rh(
     Returns:
         NamedTuple of outputs (described in `InflateSubjectRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INFLATE_SUBJECT_RH_METADATA)
     params = inflate_subject_rh_params(
         arguments=arguments,
     )
-    return inflate_subject_rh_execute(params, execution)
+    return inflate_subject_rh_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "InflateSubjectRhOutputs",
     "InflateSubjectRhParameters",
     "inflate_subject_rh",
-    "inflate_subject_rh_cargs",
     "inflate_subject_rh_execute",
-    "inflate_subject_rh_outputs",
     "inflate_subject_rh_params",
 ]

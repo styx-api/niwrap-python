@@ -321,7 +321,7 @@ def v_3d_clusterize_outputs(
 
 def v_3d_clusterize_execute(
     params: V3dClusterizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dClusterizeOutputs:
     """
     A tool for voxelwise thresholding and clusterizing of datasets.
@@ -332,10 +332,12 @@ def v_3d_clusterize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dClusterizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_CLUSTERIZE_METADATA)
     params = execution.params(params)
     cargs = v_3d_clusterize_cargs(params, execution)
     ret = v_3d_clusterize_outputs(params, execution)
@@ -408,8 +410,6 @@ def v_3d_clusterize(
     Returns:
         NamedTuple of outputs (described in `V3dClusterizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_CLUSTERIZE_METADATA)
     params = v_3d_clusterize_params(
         inset=inset,
         mask=mask,
@@ -436,7 +436,7 @@ def v_3d_clusterize(
         abs_table_data=abs_table_data,
         binary=binary,
     )
-    return v_3d_clusterize_execute(params, execution)
+    return v_3d_clusterize_execute(params, runner)
 
 
 __all__ = [
@@ -444,8 +444,6 @@ __all__ = [
     "V3dClusterizeParameters",
     "V_3D_CLUSTERIZE_METADATA",
     "v_3d_clusterize",
-    "v_3d_clusterize_cargs",
     "v_3d_clusterize_execute",
-    "v_3d_clusterize_outputs",
     "v_3d_clusterize_params",
 ]

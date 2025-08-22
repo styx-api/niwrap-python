@@ -161,7 +161,7 @@ def register_subject_outputs(
 
 def register_subject_execute(
     params: RegisterSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RegisterSubjectOutputs:
     """
     Tool for registering brain MR volumes.
@@ -172,10 +172,12 @@ def register_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RegisterSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(REGISTER_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = register_subject_cargs(params, execution)
     ret = register_subject_outputs(params, execution)
@@ -211,8 +213,6 @@ def register_subject(
     Returns:
         NamedTuple of outputs (described in `RegisterSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(REGISTER_SUBJECT_METADATA)
     params = register_subject_params(
         input_volume=input_volume,
         mask_volume=mask_volume,
@@ -221,7 +221,7 @@ def register_subject(
         log_file=log_file,
         gca_file=gca_file,
     )
-    return register_subject_execute(params, execution)
+    return register_subject_execute(params, runner)
 
 
 __all__ = [
@@ -229,8 +229,6 @@ __all__ = [
     "RegisterSubjectOutputs",
     "RegisterSubjectParameters",
     "register_subject",
-    "register_subject_cargs",
     "register_subject_execute",
-    "register_subject_outputs",
     "register_subject_params",
 ]

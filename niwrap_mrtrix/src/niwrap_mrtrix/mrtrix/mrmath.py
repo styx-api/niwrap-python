@@ -269,7 +269,7 @@ def mrmath_outputs(
 
 def mrmath_execute(
     params: MrmathParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrmathOutputs:
     """
     Compute summary statistic on image intensities either across images, or along a
@@ -298,10 +298,12 @@ def mrmath_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrmathOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRMATH_METADATA)
     params = execution.params(params)
     cargs = mrmath_cargs(params, execution)
     ret = mrmath_outputs(params, execution)
@@ -381,8 +383,6 @@ def mrmath(
     Returns:
         NamedTuple of outputs (described in `MrmathOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRMATH_METADATA)
     params = mrmath_params(
         axis=axis,
         keep_unary_axes=keep_unary_axes,
@@ -399,7 +399,7 @@ def mrmath(
         operation=operation,
         output=output,
     )
-    return mrmath_execute(params, execution)
+    return mrmath_execute(params, runner)
 
 
 __all__ = [
@@ -408,10 +408,7 @@ __all__ = [
     "MrmathOutputs",
     "MrmathParameters",
     "mrmath",
-    "mrmath_cargs",
-    "mrmath_config_cargs",
     "mrmath_config_params",
     "mrmath_execute",
-    "mrmath_outputs",
     "mrmath_params",
 ]

@@ -135,7 +135,7 @@ def mris_compute_layer_intensities_outputs(
 
 def mris_compute_layer_intensities_execute(
     params: MrisComputeLayerIntensitiesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisComputeLayerIntensitiesOutputs:
     """
     Computes intensity overlays for specified cortical layers based on input volumes
@@ -147,10 +147,12 @@ def mris_compute_layer_intensities_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisComputeLayerIntensitiesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_COMPUTE_LAYER_INTENSITIES_METADATA)
     params = execution.params(params)
     cargs = mris_compute_layer_intensities_cargs(params, execution)
     ret = mris_compute_layer_intensities_outputs(params, execution)
@@ -182,15 +184,13 @@ def mris_compute_layer_intensities(
     Returns:
         NamedTuple of outputs (described in `MrisComputeLayerIntensitiesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_COMPUTE_LAYER_INTENSITIES_METADATA)
     params = mris_compute_layer_intensities_params(
         input_intensity_volume=input_intensity_volume,
         layer_volume_fractions_file=layer_volume_fractions_file,
         input_surface=input_surface,
         output_overlay=output_overlay,
     )
-    return mris_compute_layer_intensities_execute(params, execution)
+    return mris_compute_layer_intensities_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MrisComputeLayerIntensitiesOutputs",
     "MrisComputeLayerIntensitiesParameters",
     "mris_compute_layer_intensities",
-    "mris_compute_layer_intensities_cargs",
     "mris_compute_layer_intensities_execute",
-    "mris_compute_layer_intensities_outputs",
     "mris_compute_layer_intensities_params",
 ]

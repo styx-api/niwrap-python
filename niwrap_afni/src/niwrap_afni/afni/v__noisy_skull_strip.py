@@ -149,7 +149,7 @@ def v__noisy_skull_strip_outputs(
 
 def v__noisy_skull_strip_execute(
     params: VNoisySkullStripParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VNoisySkullStripOutputs:
     """
     Strips the skull of anatomical datasets with low SNR.
@@ -160,10 +160,12 @@ def v__noisy_skull_strip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VNoisySkullStripOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__NOISY_SKULL_STRIP_METADATA)
     params = execution.params(params)
     cargs = v__noisy_skull_strip_cargs(params, execution)
     ret = v__noisy_skull_strip_outputs(params, execution)
@@ -193,14 +195,12 @@ def v__noisy_skull_strip(
     Returns:
         NamedTuple of outputs (described in `VNoisySkullStripOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__NOISY_SKULL_STRIP_METADATA)
     params = v__noisy_skull_strip_params(
         input_file=input_file,
         keep_tmp=keep_tmp,
         v_3dskullstrip_opts=v_3dskullstrip_opts,
     )
-    return v__noisy_skull_strip_execute(params, execution)
+    return v__noisy_skull_strip_execute(params, runner)
 
 
 __all__ = [
@@ -208,8 +208,6 @@ __all__ = [
     "VNoisySkullStripParameters",
     "V__NOISY_SKULL_STRIP_METADATA",
     "v__noisy_skull_strip",
-    "v__noisy_skull_strip_cargs",
     "v__noisy_skull_strip_execute",
-    "v__noisy_skull_strip_outputs",
     "v__noisy_skull_strip_params",
 ]

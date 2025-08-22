@@ -296,7 +296,7 @@ def mrmetric_outputs(
 
 def mrmetric_execute(
     params: MrmetricParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrmetricOutputs:
     """
     Computes a dissimilarity metric between two images.
@@ -313,10 +313,12 @@ def mrmetric_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrmetricOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRMETRIC_METADATA)
     params = execution.params(params)
     cargs = mrmetric_cargs(params, execution)
     ret = mrmetric_outputs(params, execution)
@@ -390,8 +392,6 @@ def mrmetric(
     Returns:
         NamedTuple of outputs (described in `MrmetricOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRMETRIC_METADATA)
     params = mrmetric_params(
         space=space,
         interp=interp,
@@ -411,7 +411,7 @@ def mrmetric(
         image1=image1,
         image2=image2,
     )
-    return mrmetric_execute(params, execution)
+    return mrmetric_execute(params, runner)
 
 
 __all__ = [
@@ -420,10 +420,7 @@ __all__ = [
     "MrmetricOutputs",
     "MrmetricParameters",
     "mrmetric",
-    "mrmetric_cargs",
-    "mrmetric_config_cargs",
     "mrmetric_config_params",
     "mrmetric_execute",
-    "mrmetric_outputs",
     "mrmetric_params",
 ]

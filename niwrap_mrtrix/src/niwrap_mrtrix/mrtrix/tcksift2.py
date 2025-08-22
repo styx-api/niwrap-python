@@ -497,7 +497,7 @@ def tcksift2_outputs(
 
 def tcksift2_execute(
     params: Tcksift2Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tcksift2Outputs:
     """
     Optimise per-streamline cross-section multipliers to match a whole-brain
@@ -522,10 +522,12 @@ def tcksift2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tcksift2Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKSIFT2_METADATA)
     params = execution.params(params)
     cargs = tcksift2_cargs(params, execution)
     ret = tcksift2_outputs(params, execution)
@@ -678,8 +680,6 @@ def tcksift2(
     Returns:
         NamedTuple of outputs (described in `Tcksift2Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKSIFT2_METADATA)
     params = tcksift2_params(
         proc_mask=proc_mask,
         act=act,
@@ -716,7 +716,7 @@ def tcksift2(
         in_fod=in_fod,
         out_weights=out_weights,
     )
-    return tcksift2_execute(params, execution)
+    return tcksift2_execute(params, runner)
 
 
 __all__ = [
@@ -725,10 +725,7 @@ __all__ = [
     "Tcksift2Outputs",
     "Tcksift2Parameters",
     "tcksift2",
-    "tcksift2_cargs",
-    "tcksift2_config_cargs",
     "tcksift2_config_params",
     "tcksift2_execute",
-    "tcksift2_outputs",
     "tcksift2_params",
 ]

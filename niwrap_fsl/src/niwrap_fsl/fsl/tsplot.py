@@ -191,7 +191,7 @@ def tsplot_outputs(
 
 def tsplot_execute(
     params: TsplotParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TsplotOutputs:
     """
     Time series plotting tool for FSL.
@@ -202,10 +202,12 @@ def tsplot_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TsplotOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TSPLOT_METADATA)
     params = execution.params(params)
     cargs = tsplot_cargs(params, execution)
     ret = tsplot_outputs(params, execution)
@@ -249,8 +251,6 @@ def tsplot(
     Returns:
         NamedTuple of outputs (described in `TsplotOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TSPLOT_METADATA)
     params = tsplot_params(
         input_directory=input_directory,
         main_filtered_data=main_filtered_data,
@@ -262,7 +262,7 @@ def tsplot(
         prewhiten_flag=prewhiten_flag,
         no_raw_flag=no_raw_flag,
     )
-    return tsplot_execute(params, execution)
+    return tsplot_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "TsplotOutputs",
     "TsplotParameters",
     "tsplot",
-    "tsplot_cargs",
     "tsplot_execute",
-    "tsplot_outputs",
     "tsplot_params",
 ]

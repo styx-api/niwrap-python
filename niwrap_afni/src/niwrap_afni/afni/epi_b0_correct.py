@@ -346,7 +346,7 @@ def epi_b0_correct_outputs(
 
 def epi_b0_correct_execute(
     params: EpiB0CorrectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EpiB0CorrectOutputs:
     """
     B0 distortion correction tool using an acquired frequency (phase) image.
@@ -357,10 +357,12 @@ def epi_b0_correct_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EpiB0CorrectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EPI_B0_CORRECT_METADATA)
     params = execution.params(params)
     cargs = epi_b0_correct_cargs(params, execution)
     ret = epi_b0_correct_outputs(params, execution)
@@ -445,8 +447,6 @@ def epi_b0_correct(
     Returns:
         NamedTuple of outputs (described in `EpiB0CorrectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EPI_B0_CORRECT_METADATA)
     params = epi_b0_correct_params(
         prefix=prefix,
         input_freq=input_freq,
@@ -473,7 +473,7 @@ def epi_b0_correct(
         ver=ver,
         date=date,
     )
-    return epi_b0_correct_execute(params, execution)
+    return epi_b0_correct_execute(params, runner)
 
 
 __all__ = [
@@ -481,8 +481,6 @@ __all__ = [
     "EpiB0CorrectOutputs",
     "EpiB0CorrectParameters",
     "epi_b0_correct",
-    "epi_b0_correct_cargs",
     "epi_b0_correct_execute",
-    "epi_b0_correct_outputs",
     "epi_b0_correct_params",
 ]

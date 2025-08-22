@@ -139,7 +139,7 @@ def v_3dmaxdisp_outputs(
 
 def v_3dmaxdisp_execute(
     params: V3dmaxdispParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmaxdispOutputs:
     """
     Reads in a 3D dataset and a DICOM-based affine matrix to output the average and
@@ -151,10 +151,12 @@ def v_3dmaxdisp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmaxdispOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMAXDISP_METADATA)
     params = execution.params(params)
     cargs = v_3dmaxdisp_cargs(params, execution)
     ret = v_3dmaxdisp_outputs(params, execution)
@@ -186,14 +188,12 @@ def v_3dmaxdisp(
     Returns:
         NamedTuple of outputs (described in `V3dmaxdispOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMAXDISP_METADATA)
     params = v_3dmaxdisp_params(
         inset=inset,
         matrix=matrix,
         verbose=verbose,
     )
-    return v_3dmaxdisp_execute(params, execution)
+    return v_3dmaxdisp_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "V3dmaxdispParameters",
     "V_3DMAXDISP_METADATA",
     "v_3dmaxdisp",
-    "v_3dmaxdisp_cargs",
     "v_3dmaxdisp_execute",
-    "v_3dmaxdisp_outputs",
     "v_3dmaxdisp_params",
 ]

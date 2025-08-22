@@ -171,7 +171,7 @@ def stimband_outputs(
 
 def stimband_execute(
     params: StimbandParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> StimbandOutputs:
     """
     Determines frequency band covering at least 90% of the 'power' (|FFT|^2) of
@@ -183,10 +183,12 @@ def stimband_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `StimbandOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(STIMBAND_METADATA)
     params = execution.params(params)
     cargs = stimband_cargs(params, execution)
     ret = stimband_outputs(params, execution)
@@ -226,8 +228,6 @@ def stimband(
     Returns:
         NamedTuple of outputs (described in `StimbandOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(STIMBAND_METADATA)
     params = stimband_params(
         verbose_flag=verbose_flag,
         matrixfiles=matrixfiles,
@@ -236,7 +236,7 @@ def stimband(
         min_bwidth=min_bwidth,
         min_pow=min_pow,
     )
-    return stimband_execute(params, execution)
+    return stimband_execute(params, runner)
 
 
 __all__ = [
@@ -244,8 +244,6 @@ __all__ = [
     "StimbandOutputs",
     "StimbandParameters",
     "stimband",
-    "stimband_cargs",
     "stimband_execute",
-    "stimband_outputs",
     "stimband_params",
 ]

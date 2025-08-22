@@ -164,7 +164,7 @@ def fslcc_outputs(
 
 def fslcc_execute(
     params: FslccParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslccOutputs:
     """
     Cross-correlate two time-series, timepoint by timepoint.
@@ -175,10 +175,12 @@ def fslcc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslccOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLCC_METADATA)
     params = execution.params(params)
     cargs = fslcc_cargs(params, execution)
     ret = fslcc_outputs(params, execution)
@@ -216,8 +218,6 @@ def fslcc(
     Returns:
         NamedTuple of outputs (described in `FslccOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLCC_METADATA)
     params = fslcc_params(
         first_input=first_input,
         second_input=second_input,
@@ -227,7 +227,7 @@ def fslcc(
         threshold=threshold,
         decimal_places=decimal_places,
     )
-    return fslcc_execute(params, execution)
+    return fslcc_execute(params, runner)
 
 
 __all__ = [
@@ -235,8 +235,6 @@ __all__ = [
     "FslccOutputs",
     "FslccParameters",
     "fslcc",
-    "fslcc_cargs",
     "fslcc_execute",
-    "fslcc_outputs",
     "fslcc_params",
 ]

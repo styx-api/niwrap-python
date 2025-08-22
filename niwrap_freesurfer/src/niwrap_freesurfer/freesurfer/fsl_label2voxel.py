@@ -135,7 +135,7 @@ def fsl_label2voxel_outputs(
 
 def fsl_label2voxel_execute(
     params: FslLabel2voxelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslLabel2voxelOutputs:
     """
     Converts labeled volumes to voxels based on specified labels.
@@ -146,10 +146,12 @@ def fsl_label2voxel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslLabel2voxelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_LABEL2VOXEL_METADATA)
     params = execution.params(params)
     cargs = fsl_label2voxel_cargs(params, execution)
     ret = fsl_label2voxel_outputs(params, execution)
@@ -180,15 +182,13 @@ def fsl_label2voxel(
     Returns:
         NamedTuple of outputs (described in `FslLabel2voxelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_LABEL2VOXEL_METADATA)
     params = fsl_label2voxel_params(
         label_value=label_value,
         labeled_volume=labeled_volume,
         src_volume=src_volume,
         output_filename=output_filename,
     )
-    return fsl_label2voxel_execute(params, execution)
+    return fsl_label2voxel_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "FslLabel2voxelOutputs",
     "FslLabel2voxelParameters",
     "fsl_label2voxel",
-    "fsl_label2voxel_cargs",
     "fsl_label2voxel_execute",
-    "fsl_label2voxel_outputs",
     "fsl_label2voxel_params",
 ]

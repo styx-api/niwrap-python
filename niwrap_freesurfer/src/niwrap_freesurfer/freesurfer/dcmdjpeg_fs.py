@@ -375,7 +375,7 @@ def dcmdjpeg_fs_outputs(
 
 def dcmdjpeg_fs_execute(
     params: DcmdjpegFsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DcmdjpegFsOutputs:
     """
     A tool to decode JPEG-compressed DICOM files.
@@ -386,10 +386,12 @@ def dcmdjpeg_fs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DcmdjpegFsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DCMDJPEG_FS_METADATA)
     params = execution.params(params)
     cargs = dcmdjpeg_fs_cargs(params, execution)
     ret = dcmdjpeg_fs_outputs(params, execution)
@@ -498,8 +500,6 @@ def dcmdjpeg_fs(
     Returns:
         NamedTuple of outputs (described in `DcmdjpegFsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DCMDJPEG_FS_METADATA)
     params = dcmdjpeg_fs_params(
         input_file=input_file,
         output_file=output_file,
@@ -543,7 +543,7 @@ def dcmdjpeg_fs(
         padding_off=padding_off,
         padding_create=padding_create,
     )
-    return dcmdjpeg_fs_execute(params, execution)
+    return dcmdjpeg_fs_execute(params, runner)
 
 
 __all__ = [
@@ -551,8 +551,6 @@ __all__ = [
     "DcmdjpegFsOutputs",
     "DcmdjpegFsParameters",
     "dcmdjpeg_fs",
-    "dcmdjpeg_fs_cargs",
     "dcmdjpeg_fs_execute",
-    "dcmdjpeg_fs_outputs",
     "dcmdjpeg_fs_params",
 ]

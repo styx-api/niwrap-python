@@ -151,7 +151,7 @@ def v__xyz_to_ijk_outputs(
 
 def v__xyz_to_ijk_execute(
     params: VXyzToIjkParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VXyzToIjkOutputs:
     """
     Helper script to convert (x, y, z) coordinates to (i, j, k) indices for a
@@ -163,10 +163,12 @@ def v__xyz_to_ijk_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VXyzToIjkOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__XYZ_TO_IJK_METADATA)
     params = execution.params(params)
     cargs = v__xyz_to_ijk_cargs(params, execution)
     ret = v__xyz_to_ijk_outputs(params, execution)
@@ -200,8 +202,6 @@ def v__xyz_to_ijk(
     Returns:
         NamedTuple of outputs (described in `VXyzToIjkOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__XYZ_TO_IJK_METADATA)
     params = v__xyz_to_ijk_params(
         inset=inset,
         x_coord=x_coord,
@@ -209,7 +209,7 @@ def v__xyz_to_ijk(
         z_coord=z_coord,
         prefix=prefix,
     )
-    return v__xyz_to_ijk_execute(params, execution)
+    return v__xyz_to_ijk_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "VXyzToIjkParameters",
     "V__XYZ_TO_IJK_METADATA",
     "v__xyz_to_ijk",
-    "v__xyz_to_ijk_cargs",
     "v__xyz_to_ijk_execute",
-    "v__xyz_to_ijk_outputs",
     "v__xyz_to_ijk_params",
 ]

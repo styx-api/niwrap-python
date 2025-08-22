@@ -122,7 +122,7 @@ def v_1dmatcalc_outputs(
 
 def v_1dmatcalc_execute(
     params: V1dmatcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dmatcalcOutputs:
     """
     A tool to evaluate space-delimited RPN (Reverse Polish Notation) matrix-valued
@@ -134,10 +134,12 @@ def v_1dmatcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dmatcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1DMATCALC_METADATA)
     params = execution.params(params)
     cargs = v_1dmatcalc_cargs(params, execution)
     ret = v_1dmatcalc_outputs(params, execution)
@@ -163,12 +165,10 @@ def v_1dmatcalc(
     Returns:
         NamedTuple of outputs (described in `V1dmatcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1DMATCALC_METADATA)
     params = v_1dmatcalc_params(
         expression=expression,
     )
-    return v_1dmatcalc_execute(params, execution)
+    return v_1dmatcalc_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "V1dmatcalcParameters",
     "V_1DMATCALC_METADATA",
     "v_1dmatcalc",
-    "v_1dmatcalc_cargs",
     "v_1dmatcalc_execute",
-    "v_1dmatcalc_outputs",
     "v_1dmatcalc_params",
 ]

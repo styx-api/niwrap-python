@@ -275,7 +275,7 @@ def imreg_outputs(
 
 def imreg_execute(
     params: ImregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImregOutputs:
     """
     Registers each 2D image in 'image_sequence' to 'base_image'.
@@ -286,10 +286,12 @@ def imreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMREG_METADATA)
     params = execution.params(params)
     cargs = imreg_cargs(params, execution)
     ret = imreg_outputs(params, execution)
@@ -353,8 +355,6 @@ def imreg(
     Returns:
         NamedTuple of outputs (described in `ImregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMREG_METADATA)
     params = imreg_params(
         base_image=base_image,
         image_sequence=image_sequence,
@@ -377,7 +377,7 @@ def imreg(
         fine=fine,
         nofine=nofine,
     )
-    return imreg_execute(params, execution)
+    return imreg_execute(params, runner)
 
 
 __all__ = [
@@ -385,8 +385,6 @@ __all__ = [
     "ImregOutputs",
     "ImregParameters",
     "imreg",
-    "imreg_cargs",
     "imreg_execute",
-    "imreg_outputs",
     "imreg_params",
 ]

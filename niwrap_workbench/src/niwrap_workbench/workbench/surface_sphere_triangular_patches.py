@@ -128,7 +128,7 @@ def surface_sphere_triangular_patches_outputs(
 
 def surface_sphere_triangular_patches_execute(
     params: SurfaceSphereTriangularPatchesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceSphereTriangularPatchesOutputs:
     """
     Divide standard sphere into patches.
@@ -142,10 +142,12 @@ def surface_sphere_triangular_patches_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceSphereTriangularPatchesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA)
     params = execution.params(params)
     cargs = surface_sphere_triangular_patches_cargs(params, execution)
     ret = surface_sphere_triangular_patches_outputs(params, execution)
@@ -178,14 +180,12 @@ def surface_sphere_triangular_patches(
     Returns:
         NamedTuple of outputs (described in `SurfaceSphereTriangularPatchesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_SPHERE_TRIANGULAR_PATCHES_METADATA)
     params = surface_sphere_triangular_patches_params(
         sphere=sphere,
         divisions=divisions,
         text_out=text_out,
     )
-    return surface_sphere_triangular_patches_execute(params, execution)
+    return surface_sphere_triangular_patches_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "SurfaceSphereTriangularPatchesOutputs",
     "SurfaceSphereTriangularPatchesParameters",
     "surface_sphere_triangular_patches",
-    "surface_sphere_triangular_patches_cargs",
     "surface_sphere_triangular_patches_execute",
-    "surface_sphere_triangular_patches_outputs",
     "surface_sphere_triangular_patches_params",
 ]

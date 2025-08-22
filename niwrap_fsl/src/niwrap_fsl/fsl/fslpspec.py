@@ -127,7 +127,7 @@ def fslpspec_outputs(
 
 def fslpspec_execute(
     params: FslpspecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslpspecOutputs:
     """
     Estimate the power spectrum of 4D fMRI time series data.
@@ -138,10 +138,12 @@ def fslpspec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslpspecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLPSPEC_METADATA)
     params = execution.params(params)
     cargs = fslpspec_cargs(params, execution)
     ret = fslpspec_outputs(params, execution)
@@ -168,13 +170,11 @@ def fslpspec(
     Returns:
         NamedTuple of outputs (described in `FslpspecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLPSPEC_METADATA)
     params = fslpspec_params(
         infile=infile,
         outfile=outfile,
     )
-    return fslpspec_execute(params, execution)
+    return fslpspec_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "FslpspecOutputs",
     "FslpspecParameters",
     "fslpspec",
-    "fslpspec_cargs",
     "fslpspec_execute",
-    "fslpspec_outputs",
     "fslpspec_params",
 ]

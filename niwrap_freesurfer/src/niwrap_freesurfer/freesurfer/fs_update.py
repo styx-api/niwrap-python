@@ -137,7 +137,7 @@ def fs_update_outputs(
 
 def fs_update_execute(
     params: FsUpdateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsUpdateOutputs:
     """
     Utility to update the FreeSurfer installation.
@@ -148,10 +148,12 @@ def fs_update_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsUpdateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_UPDATE_METADATA)
     params = execution.params(params)
     cargs = fs_update_cargs(params, execution)
     ret = fs_update_outputs(params, execution)
@@ -183,15 +185,13 @@ def fs_update(
     Returns:
         NamedTuple of outputs (described in `FsUpdateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_UPDATE_METADATA)
     params = fs_update_params(
         update_path=update_path,
         help_short=help_short,
         help_medium=help_medium,
         help_long=help_long,
     )
-    return fs_update_execute(params, execution)
+    return fs_update_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "FsUpdateOutputs",
     "FsUpdateParameters",
     "fs_update",
-    "fs_update_cargs",
     "fs_update_execute",
-    "fs_update_outputs",
     "fs_update_params",
 ]

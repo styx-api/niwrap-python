@@ -128,7 +128,7 @@ def check_feat_outputs(
 
 def check_feat_execute(
     params: CheckFeatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CheckFeatOutputs:
     """
     Perform checks on FEAT analysis results.
@@ -139,10 +139,12 @@ def check_feat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CheckFeatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CHECK_FEAT_METADATA)
     params = execution.params(params)
     cargs = check_feat_cargs(params, execution)
     ret = check_feat_outputs(params, execution)
@@ -169,13 +171,11 @@ def check_feat(
     Returns:
         NamedTuple of outputs (described in `CheckFeatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CHECK_FEAT_METADATA)
     params = check_feat_params(
         report_file=report_file,
         report_log_file=report_log_file,
     )
-    return check_feat_execute(params, execution)
+    return check_feat_execute(params, runner)
 
 
 __all__ = [
@@ -183,8 +183,6 @@ __all__ = [
     "CheckFeatOutputs",
     "CheckFeatParameters",
     "check_feat",
-    "check_feat_cargs",
     "check_feat_execute",
-    "check_feat_outputs",
     "check_feat_params",
 ]

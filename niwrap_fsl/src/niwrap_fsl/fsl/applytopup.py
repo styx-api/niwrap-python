@@ -169,7 +169,7 @@ def applytopup_outputs(
 
 def applytopup_execute(
     params: ApplytopupParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ApplytopupOutputs:
     """
     applytopup applies corrections to images using the field estimates produced by
@@ -181,10 +181,12 @@ def applytopup_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ApplytopupOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APPLYTOPUP_METADATA)
     params = execution.params(params)
     cargs = applytopup_cargs(params, execution)
     ret = applytopup_outputs(params, execution)
@@ -228,8 +230,6 @@ def applytopup(
     Returns:
         NamedTuple of outputs (described in `ApplytopupOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APPLYTOPUP_METADATA)
     params = applytopup_params(
         imain=imain,
         datain=datain,
@@ -241,7 +241,7 @@ def applytopup(
         datatype=datatype,
         verbose=verbose,
     )
-    return applytopup_execute(params, execution)
+    return applytopup_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "ApplytopupOutputs",
     "ApplytopupParameters",
     "applytopup",
-    "applytopup_cargs",
     "applytopup_execute",
-    "applytopup_outputs",
     "applytopup_params",
 ]

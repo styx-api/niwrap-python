@@ -353,7 +353,7 @@ def asl_file_outputs(
 
 def asl_file_execute(
     params: AslFileParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AslFileOutputs:
     """
     ASL data manipulation tool for FSL.
@@ -364,10 +364,12 @@ def asl_file_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AslFileOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ASL_FILE_METADATA)
     params = execution.params(params)
     cargs = asl_file_cargs(params, execution)
     ret = asl_file_outputs(params, execution)
@@ -455,8 +457,6 @@ def asl_file(
     Returns:
         NamedTuple of outputs (described in `AslFileOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ASL_FILE_METADATA)
     params = asl_file_params(
         datafile=datafile,
         ntis=ntis,
@@ -486,7 +486,7 @@ def asl_file(
         help_=help_,
         version=version,
     )
-    return asl_file_execute(params, execution)
+    return asl_file_execute(params, runner)
 
 
 __all__ = [
@@ -494,8 +494,6 @@ __all__ = [
     "AslFileOutputs",
     "AslFileParameters",
     "asl_file",
-    "asl_file_cargs",
     "asl_file_execute",
-    "asl_file_outputs",
     "asl_file_params",
 ]

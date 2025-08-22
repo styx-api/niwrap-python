@@ -163,7 +163,7 @@ def v_3d_tcat_outputs(
 
 def v_3d_tcat_execute(
     params: V3dTcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTcatOutputs:
     """
     Concatenate sub-bricks from input datasets into one big 3D+time dataset.
@@ -176,10 +176,12 @@ def v_3d_tcat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TCAT_METADATA)
     params = execution.params(params)
     cargs = v_3d_tcat_cargs(params, execution)
     ret = v_3d_tcat_outputs(params, execution)
@@ -220,8 +222,6 @@ def v_3d_tcat(
     Returns:
         NamedTuple of outputs (described in `V3dTcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TCAT_METADATA)
     params = v_3d_tcat_params(
         rlt=rlt,
         in_files=in_files,
@@ -230,7 +230,7 @@ def v_3d_tcat(
         num_threads=num_threads,
         verbose=verbose,
     )
-    return v_3d_tcat_execute(params, execution)
+    return v_3d_tcat_execute(params, runner)
 
 
 __all__ = [
@@ -238,8 +238,6 @@ __all__ = [
     "V3dTcatParameters",
     "V_3D_TCAT_METADATA",
     "v_3d_tcat",
-    "v_3d_tcat_cargs",
     "v_3d_tcat_execute",
-    "v_3d_tcat_outputs",
     "v_3d_tcat_params",
 ]

@@ -310,7 +310,7 @@ def cifti_export_dense_mapping_outputs(
 
 def cifti_export_dense_mapping_execute(
     params: CiftiExportDenseMappingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiExportDenseMappingOutputs:
     """
     Write index to element mapping as text.
@@ -367,10 +367,12 @@ def cifti_export_dense_mapping_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiExportDenseMappingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_EXPORT_DENSE_MAPPING_METADATA)
     params = execution.params(params)
     cargs = cifti_export_dense_mapping_cargs(params, execution)
     ret = cifti_export_dense_mapping_outputs(params, execution)
@@ -449,8 +451,6 @@ def cifti_export_dense_mapping(
     Returns:
         NamedTuple of outputs (described in `CiftiExportDenseMappingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_EXPORT_DENSE_MAPPING_METADATA)
     params = cifti_export_dense_mapping_params(
         cifti=cifti,
         direction=direction,
@@ -458,7 +458,7 @@ def cifti_export_dense_mapping(
         surface=surface,
         volume=volume,
     )
-    return cifti_export_dense_mapping_execute(params, execution)
+    return cifti_export_dense_mapping_execute(params, runner)
 
 
 __all__ = [
@@ -469,14 +469,9 @@ __all__ = [
     "CiftiExportDenseMappingVolumeAllParameters",
     "CiftiExportDenseMappingVolumeParameters",
     "cifti_export_dense_mapping",
-    "cifti_export_dense_mapping_cargs",
     "cifti_export_dense_mapping_execute",
-    "cifti_export_dense_mapping_outputs",
     "cifti_export_dense_mapping_params",
-    "cifti_export_dense_mapping_surface_cargs",
     "cifti_export_dense_mapping_surface_params",
-    "cifti_export_dense_mapping_volume_all_cargs",
     "cifti_export_dense_mapping_volume_all_params",
-    "cifti_export_dense_mapping_volume_cargs",
     "cifti_export_dense_mapping_volume_params",
 ]

@@ -162,7 +162,7 @@ def systemnoise_outputs(
 
 def systemnoise_execute(
     params: SystemnoiseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SystemnoiseOutputs:
     """
     Tool for adding system noise to a given signal using FSL's utilities.
@@ -173,10 +173,12 @@ def systemnoise_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SystemnoiseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SYSTEMNOISE_METADATA)
     params = execution.params(params)
     cargs = systemnoise_cargs(params, execution)
     ret = systemnoise_outputs(params, execution)
@@ -212,8 +214,6 @@ def systemnoise(
     Returns:
         NamedTuple of outputs (described in `SystemnoiseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SYSTEMNOISE_METADATA)
     params = systemnoise_params(
         input_signal=input_signal,
         output_signal=output_signal,
@@ -222,7 +222,7 @@ def systemnoise(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return systemnoise_execute(params, execution)
+    return systemnoise_execute(params, runner)
 
 
 __all__ = [
@@ -230,8 +230,6 @@ __all__ = [
     "SystemnoiseOutputs",
     "SystemnoiseParameters",
     "systemnoise",
-    "systemnoise_cargs",
     "systemnoise_execute",
-    "systemnoise_outputs",
     "systemnoise_params",
 ]

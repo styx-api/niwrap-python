@@ -338,7 +338,7 @@ def xfibres_outputs(
 
 def xfibres_execute(
     params: XfibresParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> XfibresOutputs:
     """
     Part of FSL - estimates diffusion parameters for multiple fibres per voxel.
@@ -349,10 +349,12 @@ def xfibres_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `XfibresOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(XFIBRES_METADATA)
     params = execution.params(params)
     cargs = xfibres_cargs(params, execution)
     ret = xfibres_outputs(params, execution)
@@ -434,8 +436,6 @@ def xfibres(
     Returns:
         NamedTuple of outputs (described in `XfibresOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(XFIBRES_METADATA)
     params = xfibres_params(
         datafile=datafile,
         maskfile=maskfile,
@@ -465,7 +465,7 @@ def xfibres(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return xfibres_execute(params, execution)
+    return xfibres_execute(params, runner)
 
 
 __all__ = [
@@ -473,8 +473,6 @@ __all__ = [
     "XfibresOutputs",
     "XfibresParameters",
     "xfibres",
-    "xfibres_cargs",
     "xfibres_execute",
-    "xfibres_outputs",
     "xfibres_params",
 ]

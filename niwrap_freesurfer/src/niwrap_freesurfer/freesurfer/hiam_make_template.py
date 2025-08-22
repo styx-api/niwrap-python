@@ -131,7 +131,7 @@ def hiam_make_template_outputs(
 
 def hiam_make_template_execute(
     params: HiamMakeTemplateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> HiamMakeTemplateOutputs:
     """
     This program adds a template into an average surface using FreeSurfer.
@@ -142,10 +142,12 @@ def hiam_make_template_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `HiamMakeTemplateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HIAM_MAKE_TEMPLATE_METADATA)
     params = execution.params(params)
     cargs = hiam_make_template_cargs(params, execution)
     ret = hiam_make_template_outputs(params, execution)
@@ -176,15 +178,13 @@ def hiam_make_template(
     Returns:
         NamedTuple of outputs (described in `HiamMakeTemplateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HIAM_MAKE_TEMPLATE_METADATA)
     params = hiam_make_template_params(
         hemi=hemi,
         surface_name=surface_name,
         subjects=subjects,
         output_name=output_name,
     )
-    return hiam_make_template_execute(params, execution)
+    return hiam_make_template_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "HiamMakeTemplateOutputs",
     "HiamMakeTemplateParameters",
     "hiam_make_template",
-    "hiam_make_template_cargs",
     "hiam_make_template_execute",
-    "hiam_make_template_outputs",
     "hiam_make_template_params",
 ]

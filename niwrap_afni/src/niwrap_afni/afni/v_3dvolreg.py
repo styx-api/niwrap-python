@@ -256,7 +256,7 @@ def v_3dvolreg_outputs(
 
 def v_3dvolreg_execute(
     params: V3dvolregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dvolregOutputs:
     """
     Register input volumes to a base volume using AFNI 3dvolreg command.
@@ -267,10 +267,12 @@ def v_3dvolreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dvolregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DVOLREG_METADATA)
     params = execution.params(params)
     cargs = v_3dvolreg_cargs(params, execution)
     ret = v_3dvolreg_outputs(params, execution)
@@ -329,8 +331,6 @@ def v_3dvolreg(
     Returns:
         NamedTuple of outputs (described in `V3dvolregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DVOLREG_METADATA)
     params = v_3dvolreg_params(
         copyorigin=copyorigin,
         twopass=twopass,
@@ -348,7 +348,7 @@ def v_3dvolreg(
         maxdisp1d=maxdisp1d,
         in_file=in_file,
     )
-    return v_3dvolreg_execute(params, execution)
+    return v_3dvolreg_execute(params, runner)
 
 
 __all__ = [
@@ -356,8 +356,6 @@ __all__ = [
     "V3dvolregParameters",
     "V_3DVOLREG_METADATA",
     "v_3dvolreg",
-    "v_3dvolreg_cargs",
     "v_3dvolreg_execute",
-    "v_3dvolreg_outputs",
     "v_3dvolreg_params",
 ]

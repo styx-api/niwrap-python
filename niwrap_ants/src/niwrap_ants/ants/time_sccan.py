@@ -403,7 +403,7 @@ def time_sccan_outputs(
 
 def time_sccan_execute(
     params: TimeSccanParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TimeSccanOutputs:
     """
     A tool for sparse statistical analysis on connectivity within a subject.
@@ -414,10 +414,12 @@ def time_sccan_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TimeSccanOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TIME_SCCAN_METADATA)
     params = execution.params(params)
     cargs = time_sccan_cargs(params, execution)
     ret = time_sccan_outputs(params, execution)
@@ -477,8 +479,6 @@ def time_sccan(
     Returns:
         NamedTuple of outputs (described in `TimeSccanOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TIME_SCCAN_METADATA)
     params = time_sccan_params(
         output=output,
         number_consecutive_labels=number_consecutive_labels,
@@ -495,7 +495,7 @@ def time_sccan(
         labelsimage_to_matrix=labelsimage_to_matrix,
         network=network,
     )
-    return time_sccan_execute(params, execution)
+    return time_sccan_execute(params, runner)
 
 
 __all__ = [
@@ -506,14 +506,9 @@ __all__ = [
     "TimeSccanParameters",
     "TimeSccanTimeseriesimageToMatrixParameters",
     "time_sccan",
-    "time_sccan_cargs",
     "time_sccan_execute",
-    "time_sccan_network_region_averaging_cargs",
     "time_sccan_network_region_averaging_params",
-    "time_sccan_network_scca_cargs",
     "time_sccan_network_scca_params",
-    "time_sccan_outputs",
     "time_sccan_params",
-    "time_sccan_timeseriesimage_to_matrix_cargs",
     "time_sccan_timeseriesimage_to_matrix_params",
 ]

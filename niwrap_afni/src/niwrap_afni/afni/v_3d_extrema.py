@@ -268,7 +268,7 @@ def v_3d_extrema_outputs(
 
 def v_3d_extrema_execute(
     params: V3dExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dExtremaOutputs:
     """
     Find local extrema (minima or maxima) in 3D datasets.
@@ -279,10 +279,12 @@ def v_3d_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = v_3d_extrema_cargs(params, execution)
     ret = v_3d_extrema_outputs(params, execution)
@@ -348,8 +350,6 @@ def v_3d_extrema(
     Returns:
         NamedTuple of outputs (described in `V3dExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_EXTREMA_METADATA)
     params = v_3d_extrema_params(
         input_dataset=input_dataset,
         output_prefix=output_prefix,
@@ -372,7 +372,7 @@ def v_3d_extrema(
         average=average,
         weight=weight,
     )
-    return v_3d_extrema_execute(params, execution)
+    return v_3d_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -380,8 +380,6 @@ __all__ = [
     "V3dExtremaParameters",
     "V_3D_EXTREMA_METADATA",
     "v_3d_extrema",
-    "v_3d_extrema_cargs",
     "v_3d_extrema_execute",
-    "v_3d_extrema_outputs",
     "v_3d_extrema_params",
 ]

@@ -249,7 +249,7 @@ def voxel2mesh_outputs(
 
 def voxel2mesh_execute(
     params: Voxel2meshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Voxel2meshOutputs:
     """
     Generate a surface mesh representation from a voxel image.
@@ -275,10 +275,12 @@ def voxel2mesh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Voxel2meshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOXEL2MESH_METADATA)
     params = execution.params(params)
     cargs = voxel2mesh_cargs(params, execution)
     ret = voxel2mesh_outputs(params, execution)
@@ -346,8 +348,6 @@ def voxel2mesh(
     Returns:
         NamedTuple of outputs (described in `Voxel2meshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOXEL2MESH_METADATA)
     params = voxel2mesh_params(
         blocky=blocky,
         threshold=threshold,
@@ -362,7 +362,7 @@ def voxel2mesh(
         input_=input_,
         output=output,
     )
-    return voxel2mesh_execute(params, execution)
+    return voxel2mesh_execute(params, runner)
 
 
 __all__ = [
@@ -371,10 +371,7 @@ __all__ = [
     "Voxel2meshOutputs",
     "Voxel2meshParameters",
     "voxel2mesh",
-    "voxel2mesh_cargs",
-    "voxel2mesh_config_cargs",
     "voxel2mesh_config_params",
     "voxel2mesh_execute",
-    "voxel2mesh_outputs",
     "voxel2mesh_params",
 ]

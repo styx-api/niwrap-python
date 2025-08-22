@@ -169,7 +169,7 @@ def wm_anat_snr_outputs(
 
 def wm_anat_snr_execute(
     params: WmAnatSnrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> WmAnatSnrOutputs:
     """
     Measures the anatomical SNR in white matter (WM) for quality assurance (QA).
@@ -181,10 +181,12 @@ def wm_anat_snr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `WmAnatSnrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(WM_ANAT_SNR_METADATA)
     params = execution.params(params)
     cargs = wm_anat_snr_cargs(params, execution)
     ret = wm_anat_snr_outputs(params, execution)
@@ -222,8 +224,6 @@ def wm_anat_snr(
     Returns:
         NamedTuple of outputs (described in `WmAnatSnrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(WM_ANAT_SNR_METADATA)
     params = wm_anat_snr_params(
         subject=subject,
         output_file=output_file,
@@ -233,7 +233,7 @@ def wm_anat_snr(
         cleanup=cleanup,
         no_cleanup=no_cleanup,
     )
-    return wm_anat_snr_execute(params, execution)
+    return wm_anat_snr_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "WmAnatSnrOutputs",
     "WmAnatSnrParameters",
     "wm_anat_snr",
-    "wm_anat_snr_cargs",
     "wm_anat_snr_execute",
-    "wm_anat_snr_outputs",
     "wm_anat_snr_params",
 ]

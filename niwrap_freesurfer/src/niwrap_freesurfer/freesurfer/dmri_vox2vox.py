@@ -213,7 +213,7 @@ def dmri_vox2vox_outputs(
 
 def dmri_vox2vox_execute(
     params: DmriVox2voxParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriVox2voxOutputs:
     """
     Tool for voxel-to-voxel transformations in diffusion MRI data processing.
@@ -224,10 +224,12 @@ def dmri_vox2vox_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriVox2voxOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_VOX2VOX_METADATA)
     params = execution.params(params)
     cargs = dmri_vox2vox_cargs(params, execution)
     ret = dmri_vox2vox_outputs(params, execution)
@@ -280,8 +282,6 @@ def dmri_vox2vox(
     Returns:
         NamedTuple of outputs (described in `DmriVox2voxOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_VOX2VOX_METADATA)
     params = dmri_vox2vox_params(
         input_files=input_files,
         input_directory=input_directory,
@@ -297,7 +297,7 @@ def dmri_vox2vox(
         help_=help_,
         version=version,
     )
-    return dmri_vox2vox_execute(params, execution)
+    return dmri_vox2vox_execute(params, runner)
 
 
 __all__ = [
@@ -305,8 +305,6 @@ __all__ = [
     "DmriVox2voxOutputs",
     "DmriVox2voxParameters",
     "dmri_vox2vox",
-    "dmri_vox2vox_cargs",
     "dmri_vox2vox_execute",
-    "dmri_vox2vox_outputs",
     "dmri_vox2vox_params",
 ]

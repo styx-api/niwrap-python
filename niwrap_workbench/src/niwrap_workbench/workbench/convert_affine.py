@@ -370,7 +370,7 @@ def convert_affine_outputs(
 
 def convert_affine_execute(
     params: ConvertAffineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
     Convert an affine file between conventions.
@@ -393,10 +393,12 @@ def convert_affine_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertAffineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_AFFINE_METADATA)
     params = execution.params(params)
     cargs = convert_affine_cargs(params, execution)
     ret = convert_affine_outputs(params, execution)
@@ -444,8 +446,6 @@ def convert_affine(
     Returns:
         NamedTuple of outputs (described in `ConvertAffineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_AFFINE_METADATA)
     params = convert_affine_params(
         from_world=from_world,
         opt_from_itk_input=opt_from_itk_input,
@@ -454,7 +454,7 @@ def convert_affine(
         opt_to_itk_output=opt_to_itk_output,
         to_flirt=to_flirt,
     )
-    return convert_affine_execute(params, execution)
+    return convert_affine_execute(params, runner)
 
 
 __all__ = [
@@ -466,16 +466,10 @@ __all__ = [
     "ConvertAffineToFlirtParameters",
     "ConvertAffineToWorldParameters",
     "convert_affine",
-    "convert_affine_cargs",
     "convert_affine_execute",
-    "convert_affine_from_flirt_cargs",
     "convert_affine_from_flirt_params",
-    "convert_affine_from_world_cargs",
     "convert_affine_from_world_params",
-    "convert_affine_outputs",
     "convert_affine_params",
-    "convert_affine_to_flirt_cargs",
     "convert_affine_to_flirt_params",
-    "convert_affine_to_world_cargs",
     "convert_affine_to_world_params",
 ]

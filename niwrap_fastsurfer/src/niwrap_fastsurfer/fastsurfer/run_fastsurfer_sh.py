@@ -406,7 +406,7 @@ def run_fastsurfer_sh_outputs(
 
 def run_fastsurfer_sh_execute(
     params: RunFastsurferShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunFastsurferShOutputs:
     """
     run_fastsurfer.sh takes a T1 full head image and creates segmentation using
@@ -414,10 +414,12 @@ def run_fastsurfer_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunFastsurferShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_FASTSURFER_SH_METADATA)
     params = execution.params(params)
     cargs = run_fastsurfer_sh_cargs(params, execution)
     ret = run_fastsurfer_sh_outputs(params, execution)
@@ -510,8 +512,6 @@ def run_fastsurfer_sh(
     Returns:
         NamedTuple of outputs (described in `RunFastsurferShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_FASTSURFER_SH_METADATA)
     params = run_fastsurfer_sh_params(
         sid=sid,
         subjects_dir=subjects_dir,
@@ -549,7 +549,7 @@ def run_fastsurfer_sh(
         allow_root=allow_root,
         version=version,
     )
-    return run_fastsurfer_sh_execute(params, execution)
+    return run_fastsurfer_sh_execute(params, runner)
 
 
 __all__ = [
@@ -557,8 +557,6 @@ __all__ = [
     "RunFastsurferShOutputs",
     "RunFastsurferShParameters",
     "run_fastsurfer_sh",
-    "run_fastsurfer_sh_cargs",
     "run_fastsurfer_sh_execute",
-    "run_fastsurfer_sh_outputs",
     "run_fastsurfer_sh_params",
 ]

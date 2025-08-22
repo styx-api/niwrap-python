@@ -408,7 +408,7 @@ def mtnormalise_outputs(
 
 def mtnormalise_execute(
     params: MtnormaliseParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MtnormaliseOutputs:
     """
     Multi-tissue informed log-domain intensity normalisation.
@@ -448,10 +448,12 @@ def mtnormalise_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MtnormaliseOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MTNORMALISE_METADATA)
     params = execution.params(params)
     cargs = mtnormalise_cargs(params, execution)
     ret = mtnormalise_outputs(params, execution)
@@ -558,8 +560,6 @@ def mtnormalise(
     Returns:
         NamedTuple of outputs (described in `MtnormaliseOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MTNORMALISE_METADATA)
     params = mtnormalise_params(
         mask=mask,
         order=order,
@@ -579,7 +579,7 @@ def mtnormalise(
         version=version,
         input_output=input_output,
     )
-    return mtnormalise_execute(params, execution)
+    return mtnormalise_execute(params, runner)
 
 
 __all__ = [
@@ -590,13 +590,8 @@ __all__ = [
     "MtnormaliseOutputs",
     "MtnormaliseParameters",
     "mtnormalise",
-    "mtnormalise_cargs",
-    "mtnormalise_config_cargs",
     "mtnormalise_config_params",
     "mtnormalise_execute",
-    "mtnormalise_input_output_cargs",
-    "mtnormalise_input_output_outputs",
     "mtnormalise_input_output_params",
-    "mtnormalise_outputs",
     "mtnormalise_params",
 ]

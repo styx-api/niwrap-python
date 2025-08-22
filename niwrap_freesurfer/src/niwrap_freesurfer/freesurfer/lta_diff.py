@@ -176,7 +176,7 @@ def lta_diff_outputs(
 
 def lta_diff_execute(
     params: LtaDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LtaDiffOutputs:
     """
     A tool to compute different distance norms for a single transform or for the
@@ -188,10 +188,12 @@ def lta_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LtaDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LTA_DIFF_METADATA)
     params = execution.params(params)
     cargs = lta_diff_cargs(params, execution)
     ret = lta_diff_outputs(params, execution)
@@ -236,8 +238,6 @@ def lta_diff(
     Returns:
         NamedTuple of outputs (described in `LtaDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LTA_DIFF_METADATA)
     params = lta_diff_params(
         transform1=transform1,
         transform2=transform2,
@@ -248,7 +248,7 @@ def lta_diff(
         normdiv=normdiv,
         radius=radius,
     )
-    return lta_diff_execute(params, execution)
+    return lta_diff_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "LtaDiffOutputs",
     "LtaDiffParameters",
     "lta_diff",
-    "lta_diff_cargs",
     "lta_diff_execute",
-    "lta_diff_outputs",
     "lta_diff_params",
 ]

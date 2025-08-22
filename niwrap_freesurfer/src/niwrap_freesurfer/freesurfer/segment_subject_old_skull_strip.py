@@ -162,7 +162,7 @@ def segment_subject_old_skull_strip_outputs(
 
 def segment_subject_old_skull_strip_execute(
     params: SegmentSubjectOldSkullStripParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentSubjectOldSkullStripOutputs:
     """
     Front-end for MINCs mritotal for computing the talairach transform that maps the
@@ -174,10 +174,12 @@ def segment_subject_old_skull_strip_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectOldSkullStripOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA)
     params = execution.params(params)
     cargs = segment_subject_old_skull_strip_cargs(params, execution)
     ret = segment_subject_old_skull_strip_outputs(params, execution)
@@ -213,8 +215,6 @@ def segment_subject_old_skull_strip(
     Returns:
         NamedTuple of outputs (described in `SegmentSubjectOldSkullStripOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_SUBJECT_OLD_SKULL_STRIP_METADATA)
     params = segment_subject_old_skull_strip_params(
         input_volume=input_volume,
         output_xfm=output_xfm,
@@ -223,7 +223,7 @@ def segment_subject_old_skull_strip(
         debug_flag=debug_flag,
         version_flag=version_flag,
     )
-    return segment_subject_old_skull_strip_execute(params, execution)
+    return segment_subject_old_skull_strip_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "SegmentSubjectOldSkullStripOutputs",
     "SegmentSubjectOldSkullStripParameters",
     "segment_subject_old_skull_strip",
-    "segment_subject_old_skull_strip_cargs",
     "segment_subject_old_skull_strip_execute",
-    "segment_subject_old_skull_strip_outputs",
     "segment_subject_old_skull_strip_params",
 ]

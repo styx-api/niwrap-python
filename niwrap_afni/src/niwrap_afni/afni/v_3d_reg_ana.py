@@ -272,7 +272,7 @@ def v_3d_reg_ana_outputs(
 
 def v_3d_reg_ana_execute(
     params: V3dRegAnaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dRegAnaOutputs:
     """
     Multiple linear regression analysis for AFNI datasets.
@@ -283,10 +283,12 @@ def v_3d_reg_ana_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dRegAnaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_REG_ANA_METADATA)
     params = execution.params(params)
     cargs = v_3d_reg_ana_cargs(params, execution)
     ret = v_3d_reg_ana_outputs(params, execution)
@@ -346,8 +348,6 @@ def v_3d_reg_ana(
     Returns:
         NamedTuple of outputs (described in `V3dRegAnaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_REG_ANA_METADATA)
     params = v_3d_reg_ana_params(
         rows=rows,
         cols=cols,
@@ -365,7 +365,7 @@ def v_3d_reg_ana(
         brick=brick,
         datum=datum,
     )
-    return v_3d_reg_ana_execute(params, execution)
+    return v_3d_reg_ana_execute(params, runner)
 
 
 __all__ = [
@@ -373,8 +373,6 @@ __all__ = [
     "V3dRegAnaParameters",
     "V_3D_REG_ANA_METADATA",
     "v_3d_reg_ana",
-    "v_3d_reg_ana_cargs",
     "v_3d_reg_ana_execute",
-    "v_3d_reg_ana_outputs",
     "v_3d_reg_ana_params",
 ]

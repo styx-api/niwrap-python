@@ -530,7 +530,7 @@ def tckglobal_outputs(
 
 def tckglobal_execute(
     params: TckglobalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TckglobalOutputs:
     """
     Multi-Shell Multi-Tissue Global Tractography.
@@ -563,10 +563,12 @@ def tckglobal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TckglobalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCKGLOBAL_METADATA)
     params = execution.params(params)
     cargs = tckglobal_cargs(params, execution)
     ret = tckglobal_outputs(params, execution)
@@ -706,8 +708,6 @@ def tckglobal(
     Returns:
         NamedTuple of outputs (described in `TckglobalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCKGLOBAL_METADATA)
     params = tckglobal_params(
         grad=grad,
         mask=mask,
@@ -742,7 +742,7 @@ def tckglobal(
         response=response,
         tracks=tracks,
     )
-    return tckglobal_execute(params, execution)
+    return tckglobal_execute(params, runner)
 
 
 __all__ = [
@@ -752,12 +752,8 @@ __all__ = [
     "TckglobalParameters",
     "TckglobalRisoParameters",
     "tckglobal",
-    "tckglobal_cargs",
-    "tckglobal_config_cargs",
     "tckglobal_config_params",
     "tckglobal_execute",
-    "tckglobal_outputs",
     "tckglobal_params",
-    "tckglobal_riso_cargs",
     "tckglobal_riso_params",
 ]

@@ -121,7 +121,7 @@ def reconbatchjobs_outputs(
 
 def reconbatchjobs_execute(
     params: ReconbatchjobsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReconbatchjobsOutputs:
     """
     Batch job processor for reconstruction scripts.
@@ -132,10 +132,12 @@ def reconbatchjobs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReconbatchjobsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RECONBATCHJOBS_METADATA)
     params = execution.params(params)
     cargs = reconbatchjobs_cargs(params, execution)
     ret = reconbatchjobs_outputs(params, execution)
@@ -162,13 +164,11 @@ def reconbatchjobs(
     Returns:
         NamedTuple of outputs (described in `ReconbatchjobsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RECONBATCHJOBS_METADATA)
     params = reconbatchjobs_params(
         logfile=logfile,
         cmdfiles=cmdfiles,
     )
-    return reconbatchjobs_execute(params, execution)
+    return reconbatchjobs_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "ReconbatchjobsOutputs",
     "ReconbatchjobsParameters",
     "reconbatchjobs",
-    "reconbatchjobs_cargs",
     "reconbatchjobs_execute",
-    "reconbatchjobs_outputs",
     "reconbatchjobs_params",
 ]

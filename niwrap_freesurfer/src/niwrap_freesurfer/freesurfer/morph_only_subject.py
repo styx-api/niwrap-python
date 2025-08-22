@@ -119,7 +119,7 @@ def morph_only_subject_outputs(
 
 def morph_only_subject_execute(
     params: MorphOnlySubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphOnlySubjectOutputs:
     """
     A placeholder descriptor for morph_only_subject tool as help content is
@@ -131,10 +131,12 @@ def morph_only_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_ONLY_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = morph_only_subject_cargs(params, execution)
     ret = morph_only_subject_outputs(params, execution)
@@ -161,12 +163,10 @@ def morph_only_subject(
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_ONLY_SUBJECT_METADATA)
     params = morph_only_subject_params(
         placeholder_input=placeholder_input,
     )
-    return morph_only_subject_execute(params, execution)
+    return morph_only_subject_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "MorphOnlySubjectOutputs",
     "MorphOnlySubjectParameters",
     "morph_only_subject",
-    "morph_only_subject_cargs",
     "morph_only_subject_execute",
-    "morph_only_subject_outputs",
     "morph_only_subject_params",
 ]

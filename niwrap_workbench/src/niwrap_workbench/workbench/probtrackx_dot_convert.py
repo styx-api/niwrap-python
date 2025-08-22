@@ -388,7 +388,7 @@ def probtrackx_dot_convert_outputs(
 
 def probtrackx_dot_convert_execute(
     params: ProbtrackxDotConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ProbtrackxDotConvertOutputs:
     """
     Convert a .dot file from probtrackx to cifti.
@@ -445,10 +445,12 @@ def probtrackx_dot_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ProbtrackxDotConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PROBTRACKX_DOT_CONVERT_METADATA)
     params = execution.params(params)
     cargs = probtrackx_dot_convert_cargs(params, execution)
     ret = probtrackx_dot_convert_outputs(params, execution)
@@ -541,8 +543,6 @@ def probtrackx_dot_convert(
     Returns:
         NamedTuple of outputs (described in `ProbtrackxDotConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PROBTRACKX_DOT_CONVERT_METADATA)
     params = probtrackx_dot_convert_params(
         dot_file=dot_file,
         cifti_out=cifti_out,
@@ -555,7 +555,7 @@ def probtrackx_dot_convert(
         opt_transpose=opt_transpose,
         opt_make_symmetric=opt_make_symmetric,
     )
-    return probtrackx_dot_convert_execute(params, execution)
+    return probtrackx_dot_convert_execute(params, runner)
 
 
 __all__ = [
@@ -567,16 +567,10 @@ __all__ = [
     "ProbtrackxDotConvertRowCiftiParameters",
     "ProbtrackxDotConvertRowVoxelsParameters",
     "probtrackx_dot_convert",
-    "probtrackx_dot_convert_cargs",
-    "probtrackx_dot_convert_col_cifti_cargs",
     "probtrackx_dot_convert_col_cifti_params",
-    "probtrackx_dot_convert_col_voxels_cargs",
     "probtrackx_dot_convert_col_voxels_params",
     "probtrackx_dot_convert_execute",
-    "probtrackx_dot_convert_outputs",
     "probtrackx_dot_convert_params",
-    "probtrackx_dot_convert_row_cifti_cargs",
     "probtrackx_dot_convert_row_cifti_params",
-    "probtrackx_dot_convert_row_voxels_cargs",
     "probtrackx_dot_convert_row_voxels_params",
 ]

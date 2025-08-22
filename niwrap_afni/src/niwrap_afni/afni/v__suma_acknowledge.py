@@ -179,7 +179,7 @@ def v__suma_acknowledge_outputs(
 
 def v__suma_acknowledge_execute(
     params: VSumaAcknowledgeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VSumaAcknowledgeOutputs:
     """
     Demo script to create a graph dataset to show names of individuals and groups,
@@ -191,10 +191,12 @@ def v__suma_acknowledge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VSumaAcknowledgeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SUMA_ACKNOWLEDGE_METADATA)
     params = execution.params(params)
     cargs = v__suma_acknowledge_cargs(params, execution)
     ret = v__suma_acknowledge_outputs(params, execution)
@@ -236,8 +238,6 @@ def v__suma_acknowledge(
     Returns:
         NamedTuple of outputs (described in `VSumaAcknowledgeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SUMA_ACKNOWLEDGE_METADATA)
     params = v__suma_acknowledge_params(
         input_file=input_file,
         surface_file=surface_file,
@@ -247,7 +247,7 @@ def v__suma_acknowledge(
         scale_factor=scale_factor,
         reduce_factor=reduce_factor,
     )
-    return v__suma_acknowledge_execute(params, execution)
+    return v__suma_acknowledge_execute(params, runner)
 
 
 __all__ = [
@@ -255,8 +255,6 @@ __all__ = [
     "VSumaAcknowledgeParameters",
     "V__SUMA_ACKNOWLEDGE_METADATA",
     "v__suma_acknowledge",
-    "v__suma_acknowledge_cargs",
     "v__suma_acknowledge_execute",
-    "v__suma_acknowledge_outputs",
     "v__suma_acknowledge_params",
 ]

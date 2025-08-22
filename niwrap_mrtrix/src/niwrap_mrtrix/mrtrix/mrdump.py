@@ -244,7 +244,7 @@ def mrdump_outputs(
 
 def mrdump_execute(
     params: MrdumpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrdumpOutputs:
     """
     Print out the values within an image.
@@ -262,10 +262,12 @@ def mrdump_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrdumpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRDUMP_METADATA)
     params = execution.params(params)
     cargs = mrdump_cargs(params, execution)
     ret = mrdump_outputs(params, execution)
@@ -322,8 +324,6 @@ def mrdump(
     Returns:
         NamedTuple of outputs (described in `MrdumpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRDUMP_METADATA)
     params = mrdump_params(
         mask=mask,
         info=info,
@@ -337,7 +337,7 @@ def mrdump(
         input_=input_,
         output=output,
     )
-    return mrdump_execute(params, execution)
+    return mrdump_execute(params, runner)
 
 
 __all__ = [
@@ -346,10 +346,7 @@ __all__ = [
     "MrdumpOutputs",
     "MrdumpParameters",
     "mrdump",
-    "mrdump_cargs",
-    "mrdump_config_cargs",
     "mrdump_config_params",
     "mrdump_execute",
-    "mrdump_outputs",
     "mrdump_params",
 ]

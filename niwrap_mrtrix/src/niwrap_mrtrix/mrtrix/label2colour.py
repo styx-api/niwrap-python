@@ -242,7 +242,7 @@ def label2colour_outputs(
 
 def label2colour_execute(
     params: Label2colourParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Label2colourOutputs:
     """
     Convert a parcellated image (where values are node indices) into a colour image.
@@ -261,10 +261,12 @@ def label2colour_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Label2colourOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL2COLOUR_METADATA)
     params = execution.params(params)
     cargs = label2colour_cargs(params, execution)
     ret = label2colour_outputs(params, execution)
@@ -322,8 +324,6 @@ def label2colour(
     Returns:
         NamedTuple of outputs (described in `Label2colourOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL2COLOUR_METADATA)
     params = label2colour_params(
         lut=lut,
         info=info,
@@ -337,7 +337,7 @@ def label2colour(
         nodes_in=nodes_in,
         colour_out=colour_out,
     )
-    return label2colour_execute(params, execution)
+    return label2colour_execute(params, runner)
 
 
 __all__ = [
@@ -346,10 +346,7 @@ __all__ = [
     "Label2colourOutputs",
     "Label2colourParameters",
     "label2colour",
-    "label2colour_cargs",
-    "label2colour_config_cargs",
     "label2colour_config_params",
     "label2colour_execute",
-    "label2colour_outputs",
     "label2colour_params",
 ]

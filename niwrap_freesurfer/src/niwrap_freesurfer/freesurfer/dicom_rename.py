@@ -144,7 +144,7 @@ def dicom_rename_outputs(
 
 def dicom_rename_execute(
     params: DicomRenameParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DicomRenameOutputs:
     """
     Copies dicom file(s) to new path with more meaningful names.
@@ -155,10 +155,12 @@ def dicom_rename_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DicomRenameOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DICOM_RENAME_METADATA)
     params = execution.params(params)
     cargs = dicom_rename_cargs(params, execution)
     ret = dicom_rename_outputs(params, execution)
@@ -190,15 +192,13 @@ def dicom_rename(
     Returns:
         NamedTuple of outputs (described in `DicomRenameOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DICOM_RENAME_METADATA)
     params = dicom_rename_params(
         input_files=input_files,
         output_base=output_base,
         version=version,
         help_=help_,
     )
-    return dicom_rename_execute(params, execution)
+    return dicom_rename_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "DicomRenameOutputs",
     "DicomRenameParameters",
     "dicom_rename",
-    "dicom_rename_cargs",
     "dicom_rename_execute",
-    "dicom_rename_outputs",
     "dicom_rename_params",
 ]

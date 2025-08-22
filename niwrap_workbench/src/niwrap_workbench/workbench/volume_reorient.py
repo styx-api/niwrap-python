@@ -127,7 +127,7 @@ def volume_reorient_outputs(
 
 def volume_reorient_execute(
     params: VolumeReorientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeReorientOutputs:
     """
     Change voxel order of a volume file.
@@ -150,10 +150,12 @@ def volume_reorient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeReorientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_REORIENT_METADATA)
     params = execution.params(params)
     cargs = volume_reorient_cargs(params, execution)
     ret = volume_reorient_outputs(params, execution)
@@ -194,14 +196,12 @@ def volume_reorient(
     Returns:
         NamedTuple of outputs (described in `VolumeReorientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_REORIENT_METADATA)
     params = volume_reorient_params(
         volume=volume,
         orient_string=orient_string,
         volume_out=volume_out,
     )
-    return volume_reorient_execute(params, execution)
+    return volume_reorient_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "VolumeReorientOutputs",
     "VolumeReorientParameters",
     "volume_reorient",
-    "volume_reorient_cargs",
     "volume_reorient_execute",
-    "volume_reorient_outputs",
     "volume_reorient_params",
 ]

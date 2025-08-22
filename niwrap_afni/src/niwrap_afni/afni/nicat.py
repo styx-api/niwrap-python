@@ -140,7 +140,7 @@ def nicat_outputs(
 
 def nicat_execute(
     params: NicatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NicatOutputs:
     """
     Copies stdin to the NIML stream, which will be opened for writing.
@@ -151,10 +151,12 @@ def nicat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NicatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NICAT_METADATA)
     params = execution.params(params)
     cargs = nicat_cargs(params, execution)
     ret = nicat_outputs(params, execution)
@@ -187,15 +189,13 @@ def nicat(
     Returns:
         NamedTuple of outputs (described in `NicatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NICAT_METADATA)
     params = nicat_params(
         stream_spec=stream_spec,
         reopen=reopen,
         copy_stream=copy_stream,
         read_only=read_only,
     )
-    return nicat_execute(params, execution)
+    return nicat_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "NicatOutputs",
     "NicatParameters",
     "nicat",
-    "nicat_cargs",
     "nicat_execute",
-    "nicat_outputs",
     "nicat_params",
 ]

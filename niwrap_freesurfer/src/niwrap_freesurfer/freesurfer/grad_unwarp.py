@@ -191,7 +191,7 @@ def grad_unwarp_outputs(
 
 def grad_unwarp_execute(
     params: GradUnwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GradUnwarpOutputs:
     """
     Convert, dewarp, and resample DICOM files to MGH files.
@@ -202,10 +202,12 @@ def grad_unwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GradUnwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GRAD_UNWARP_METADATA)
     params = execution.params(params)
     cargs = grad_unwarp_cargs(params, execution)
     ret = grad_unwarp_outputs(params, execution)
@@ -248,8 +250,6 @@ def grad_unwarp(
     Returns:
         NamedTuple of outputs (described in `GradUnwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GRAD_UNWARP_METADATA)
     params = grad_unwarp_params(
         infile=infile,
         seriesno=seriesno,
@@ -261,7 +261,7 @@ def grad_unwarp(
         outfile=outfile,
         matlab_binary=matlab_binary,
     )
-    return grad_unwarp_execute(params, execution)
+    return grad_unwarp_execute(params, runner)
 
 
 __all__ = [
@@ -269,8 +269,6 @@ __all__ = [
     "GradUnwarpOutputs",
     "GradUnwarpParameters",
     "grad_unwarp",
-    "grad_unwarp_cargs",
     "grad_unwarp_execute",
-    "grad_unwarp_outputs",
     "grad_unwarp_params",
 ]

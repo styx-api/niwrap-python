@@ -168,7 +168,7 @@ def mris_compute_lgi_outputs(
 
 def mris_compute_lgi_execute(
     params: MrisComputeLgiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisComputeLgiOutputs:
     """
     Computes local measurements of gyrification at thousands of points over the
@@ -180,10 +180,12 @@ def mris_compute_lgi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisComputeLgiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_COMPUTE_LGI_METADATA)
     params = execution.params(params)
     cargs = mris_compute_lgi_cargs(params, execution)
     ret = mris_compute_lgi_outputs(params, execution)
@@ -222,8 +224,6 @@ def mris_compute_lgi(
     Returns:
         NamedTuple of outputs (described in `MrisComputeLgiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_COMPUTE_LGI_METADATA)
     params = mris_compute_lgi_params(
         input_surface=input_surface,
         close_sphere_size=close_sphere_size,
@@ -232,7 +232,7 @@ def mris_compute_lgi(
         echo=echo,
         dontrun=dontrun,
     )
-    return mris_compute_lgi_execute(params, execution)
+    return mris_compute_lgi_execute(params, runner)
 
 
 __all__ = [
@@ -240,8 +240,6 @@ __all__ = [
     "MrisComputeLgiOutputs",
     "MrisComputeLgiParameters",
     "mris_compute_lgi",
-    "mris_compute_lgi_cargs",
     "mris_compute_lgi_execute",
-    "mris_compute_lgi_outputs",
     "mris_compute_lgi_params",
 ]

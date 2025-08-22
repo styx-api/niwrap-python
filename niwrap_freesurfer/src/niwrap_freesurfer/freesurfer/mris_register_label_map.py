@@ -195,7 +195,7 @@ def mris_register_label_map_outputs(
 
 def mris_register_label_map_execute(
     params: MrisRegisterLabelMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRegisterLabelMapOutputs:
     """
     Tool for registering label maps in Freesurfer.
@@ -206,10 +206,12 @@ def mris_register_label_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRegisterLabelMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REGISTER_LABEL_MAP_METADATA)
     params = execution.params(params)
     cargs = mris_register_label_map_cargs(params, execution)
     ret = mris_register_label_map_outputs(params, execution)
@@ -254,8 +256,6 @@ def mris_register_label_map(
     Returns:
         NamedTuple of outputs (described in `MrisRegisterLabelMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REGISTER_LABEL_MAP_METADATA)
     params = mris_register_label_map_params(
         subjects_list=subjects_list,
         target_subject=target_subject,
@@ -269,7 +269,7 @@ def mris_register_label_map(
         version=version,
         vno=vno,
     )
-    return mris_register_label_map_execute(params, execution)
+    return mris_register_label_map_execute(params, runner)
 
 
 __all__ = [
@@ -277,8 +277,6 @@ __all__ = [
     "MrisRegisterLabelMapOutputs",
     "MrisRegisterLabelMapParameters",
     "mris_register_label_map",
-    "mris_register_label_map_cargs",
     "mris_register_label_map_execute",
-    "mris_register_label_map_outputs",
     "mris_register_label_map_params",
 ]

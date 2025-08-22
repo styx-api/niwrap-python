@@ -175,7 +175,7 @@ def seg2filled_outputs(
 
 def seg2filled_execute(
     params: Seg2filledParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Seg2filledOutputs:
     """
     Creates a filled.mgz from an aseg-style segmentation using SAMSEG segmentation.
@@ -186,10 +186,12 @@ def seg2filled_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Seg2filledOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEG2FILLED_METADATA)
     params = execution.params(params)
     cargs = seg2filled_cargs(params, execution)
     ret = seg2filled_outputs(params, execution)
@@ -226,8 +228,6 @@ def seg2filled(
     Returns:
         NamedTuple of outputs (described in `Seg2filledOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEG2FILLED_METADATA)
     params = seg2filled_params(
         seg_file=seg_file,
         norm_file=norm_file,
@@ -237,7 +237,7 @@ def seg2filled(
         surf_name=surf_name,
         surf_dir=surf_dir,
     )
-    return seg2filled_execute(params, execution)
+    return seg2filled_execute(params, runner)
 
 
 __all__ = [
@@ -245,8 +245,6 @@ __all__ = [
     "Seg2filledOutputs",
     "Seg2filledParameters",
     "seg2filled",
-    "seg2filled_cargs",
     "seg2filled_execute",
-    "seg2filled_outputs",
     "seg2filled_params",
 ]

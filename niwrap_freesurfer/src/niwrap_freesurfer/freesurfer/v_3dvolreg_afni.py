@@ -132,7 +132,7 @@ def v_3dvolreg_afni_outputs(
 
 def v_3dvolreg_afni_execute(
     params: V3dvolregAfniParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dvolregAfniOutputs:
     """
     AFNI program for volume registration.
@@ -143,10 +143,12 @@ def v_3dvolreg_afni_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dvolregAfniOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DVOLREG_AFNI_METADATA)
     params = execution.params(params)
     cargs = v_3dvolreg_afni_cargs(params, execution)
     ret = v_3dvolreg_afni_outputs(params, execution)
@@ -175,14 +177,12 @@ def v_3dvolreg_afni(
     Returns:
         NamedTuple of outputs (described in `V3dvolregAfniOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DVOLREG_AFNI_METADATA)
     params = v_3dvolreg_afni_params(
         input_file=input_file,
         output_file=output_file,
         options=options,
     )
-    return v_3dvolreg_afni_execute(params, execution)
+    return v_3dvolreg_afni_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "V3dvolregAfniParameters",
     "V_3DVOLREG_AFNI_METADATA",
     "v_3dvolreg_afni",
-    "v_3dvolreg_afni_cargs",
     "v_3dvolreg_afni_execute",
-    "v_3dvolreg_afni_outputs",
     "v_3dvolreg_afni_params",
 ]

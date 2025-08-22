@@ -374,7 +374,7 @@ def fslregister_outputs(
 
 def fslregister_execute(
     params: FslregisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslregisterOutputs:
     """
     Registers a volume to its FreeSurfer anatomical using FSL's FLIRT and creates a
@@ -386,10 +386,12 @@ def fslregister_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslregisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLREGISTER_METADATA)
     params = execution.params(params)
     cargs = fslregister_cargs(params, execution)
     ret = fslregister_outputs(params, execution)
@@ -474,8 +476,6 @@ def fslregister(
     Returns:
         NamedTuple of outputs (described in `FslregisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLREGISTER_METADATA)
     params = fslregister_params(
         subjid=subjid,
         mov_vol=mov_vol,
@@ -508,7 +508,7 @@ def fslregister(
         help_=help_,
         lta_format=lta_format,
     )
-    return fslregister_execute(params, execution)
+    return fslregister_execute(params, runner)
 
 
 __all__ = [
@@ -516,8 +516,6 @@ __all__ = [
     "FslregisterOutputs",
     "FslregisterParameters",
     "fslregister",
-    "fslregister_cargs",
     "fslregister_execute",
-    "fslregister_outputs",
     "fslregister_params",
 ]

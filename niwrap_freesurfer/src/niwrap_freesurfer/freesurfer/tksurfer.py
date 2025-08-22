@@ -133,7 +133,7 @@ def tksurfer_outputs(
 
 def tksurfer_execute(
     params: TksurferParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TksurferOutputs:
     """
     3D visualization tool for cortical surface models (part of FreeSurfer).
@@ -144,10 +144,12 @@ def tksurfer_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TksurferOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TKSURFER_METADATA)
     params = execution.params(params)
     cargs = tksurfer_cargs(params, execution)
     ret = tksurfer_outputs(params, execution)
@@ -178,15 +180,13 @@ def tksurfer(
     Returns:
         NamedTuple of outputs (described in `TksurferOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TKSURFER_METADATA)
     params = tksurfer_params(
         subject_id=subject_id,
         hemisphere=hemisphere,
         surface_name=surface_name,
         options=options,
     )
-    return tksurfer_execute(params, execution)
+    return tksurfer_execute(params, runner)
 
 
 __all__ = [
@@ -194,8 +194,6 @@ __all__ = [
     "TksurferOutputs",
     "TksurferParameters",
     "tksurfer",
-    "tksurfer_cargs",
     "tksurfer_execute",
-    "tksurfer_outputs",
     "tksurfer_params",
 ]

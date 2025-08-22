@@ -215,7 +215,7 @@ def pctsurfcon_outputs(
 
 def pctsurfcon_execute(
     params: PctsurfconParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PctsurfconOutputs:
     """
     Compute surface-wise gray/white matter contrast.
@@ -226,10 +226,12 @@ def pctsurfcon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PctsurfconOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PCTSURFCON_METADATA)
     params = execution.params(params)
     cargs = pctsurfcon_cargs(params, execution)
     ret = pctsurfcon_outputs(params, execution)
@@ -278,8 +280,6 @@ def pctsurfcon(
     Returns:
         NamedTuple of outputs (described in `PctsurfconOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PCTSURFCON_METADATA)
     params = pctsurfcon_params(
         subject=subject,
         fsvol=fsvol,
@@ -295,7 +295,7 @@ def pctsurfcon(
         tmp=tmp,
         nocleanup=nocleanup,
     )
-    return pctsurfcon_execute(params, execution)
+    return pctsurfcon_execute(params, runner)
 
 
 __all__ = [
@@ -303,8 +303,6 @@ __all__ = [
     "PctsurfconOutputs",
     "PctsurfconParameters",
     "pctsurfcon",
-    "pctsurfcon_cargs",
     "pctsurfcon_execute",
-    "pctsurfcon_outputs",
     "pctsurfcon_params",
 ]

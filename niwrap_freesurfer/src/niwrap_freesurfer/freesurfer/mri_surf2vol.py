@@ -383,7 +383,7 @@ def mri_surf2vol_outputs(
 
 def mri_surf2vol_execute(
     params: MriSurf2volParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSurf2volOutputs:
     """
     Resamples a surface into a volume using one of two methods.
@@ -394,10 +394,12 @@ def mri_surf2vol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSurf2volOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SURF2VOL_METADATA)
     params = execution.params(params)
     cargs = mri_surf2vol_cargs(params, execution)
     ret = mri_surf2vol_outputs(params, execution)
@@ -479,8 +481,6 @@ def mri_surf2vol(
     Returns:
         NamedTuple of outputs (described in `MriSurf2volOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SURF2VOL_METADATA)
     params = mri_surf2vol_params(
         surface_overlay=surface_overlay,
         ltafile=ltafile,
@@ -512,7 +512,7 @@ def mri_surf2vol(
         version=version,
         help_=help_,
     )
-    return mri_surf2vol_execute(params, execution)
+    return mri_surf2vol_execute(params, runner)
 
 
 __all__ = [
@@ -520,8 +520,6 @@ __all__ = [
     "MriSurf2volOutputs",
     "MriSurf2volParameters",
     "mri_surf2vol",
-    "mri_surf2vol_cargs",
     "mri_surf2vol_execute",
-    "mri_surf2vol_outputs",
     "mri_surf2vol_params",
 ]

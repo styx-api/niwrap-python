@@ -161,7 +161,7 @@ def midtrans_outputs(
 
 def midtrans_execute(
     params: MidtransParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MidtransOutputs:
     """
     Calculate the midpoint transform from a series of input transforms.
@@ -172,10 +172,12 @@ def midtrans_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MidtransOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MIDTRANS_METADATA)
     params = execution.params(params)
     cargs = midtrans_cargs(params, execution)
     ret = midtrans_outputs(params, execution)
@@ -213,8 +215,6 @@ def midtrans(
     Returns:
         NamedTuple of outputs (described in `MidtransOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MIDTRANS_METADATA)
     params = midtrans_params(
         transforms=transforms,
         output_matrix=output_matrix,
@@ -223,7 +223,7 @@ def midtrans(
         debug_flag=debug_flag,
         verbose_flag=verbose_flag,
     )
-    return midtrans_execute(params, execution)
+    return midtrans_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "MidtransOutputs",
     "MidtransParameters",
     "midtrans",
-    "midtrans_cargs",
     "midtrans_execute",
-    "midtrans_outputs",
     "midtrans_params",
 ]

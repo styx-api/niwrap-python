@@ -120,7 +120,7 @@ def fiducials_calibration_outputs(
 
 def fiducials_calibration_execute(
     params: FiducialsCalibrationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FiducialsCalibrationOutputs:
     """
     A tool used for calibrating fiducials.
@@ -131,10 +131,12 @@ def fiducials_calibration_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FiducialsCalibrationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIDUCIALS_CALIBRATION_METADATA)
     params = execution.params(params)
     cargs = fiducials_calibration_cargs(params, execution)
     ret = fiducials_calibration_outputs(params, execution)
@@ -161,12 +163,10 @@ def fiducials_calibration(
     Returns:
         NamedTuple of outputs (described in `FiducialsCalibrationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIDUCIALS_CALIBRATION_METADATA)
     params = fiducials_calibration_params(
         qt_plugin_installation=qt_plugin_installation,
     )
-    return fiducials_calibration_execute(params, execution)
+    return fiducials_calibration_execute(params, runner)
 
 
 __all__ = [
@@ -174,8 +174,6 @@ __all__ = [
     "FiducialsCalibrationOutputs",
     "FiducialsCalibrationParameters",
     "fiducials_calibration",
-    "fiducials_calibration_cargs",
     "fiducials_calibration_execute",
-    "fiducials_calibration_outputs",
     "fiducials_calibration_params",
 ]

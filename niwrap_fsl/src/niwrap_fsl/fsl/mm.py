@@ -256,7 +256,7 @@ def mm_outputs(
 
 def mm_execute(
     params: MmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MmOutputs:
     """
     FSL's MM: mixture modelling.
@@ -267,10 +267,12 @@ def mm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MM_METADATA)
     params = execution.params(params)
     cargs = mm_cargs(params, execution)
     ret = mm_outputs(params, execution)
@@ -330,8 +332,6 @@ def mm(
     Returns:
         NamedTuple of outputs (described in `MmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MM_METADATA)
     params = mm_params(
         spatial_data_file=spatial_data_file,
         mask_file=mask_file,
@@ -351,7 +351,7 @@ def mm(
         niters=niters,
         threshold=threshold,
     )
-    return mm_execute(params, execution)
+    return mm_execute(params, runner)
 
 
 __all__ = [
@@ -359,8 +359,6 @@ __all__ = [
     "MmOutputs",
     "MmParameters",
     "mm",
-    "mm_cargs",
     "mm_execute",
-    "mm_outputs",
     "mm_params",
 ]

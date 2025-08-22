@@ -116,7 +116,7 @@ def browse_minc_header_tcl_outputs(
 
 def browse_minc_header_tcl_execute(
     params: BrowseMincHeaderTclParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BrowseMincHeaderTclOutputs:
     """
     A tool for browsing MINC file headers, likely part of the FreeSurfer package.
@@ -127,10 +127,12 @@ def browse_minc_header_tcl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BrowseMincHeaderTclOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BROWSE_MINC_HEADER_TCL_METADATA)
     params = execution.params(params)
     cargs = browse_minc_header_tcl_cargs(params, execution)
     ret = browse_minc_header_tcl_outputs(params, execution)
@@ -155,12 +157,10 @@ def browse_minc_header_tcl(
     Returns:
         NamedTuple of outputs (described in `BrowseMincHeaderTclOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BROWSE_MINC_HEADER_TCL_METADATA)
     params = browse_minc_header_tcl_params(
         infile=infile,
     )
-    return browse_minc_header_tcl_execute(params, execution)
+    return browse_minc_header_tcl_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "BrowseMincHeaderTclOutputs",
     "BrowseMincHeaderTclParameters",
     "browse_minc_header_tcl",
-    "browse_minc_header_tcl_cargs",
     "browse_minc_header_tcl_execute",
-    "browse_minc_header_tcl_outputs",
     "browse_minc_header_tcl_params",
 ]

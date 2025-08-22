@@ -248,7 +248,7 @@ def cifti_rois_from_extrema_outputs(
 
 def cifti_rois_from_extrema_execute(
     params: CiftiRoisFromExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiRoisFromExtremaOutputs:
     """
     Create cifti roi maps from extrema maps.
@@ -268,10 +268,12 @@ def cifti_rois_from_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiRoisFromExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_ROIS_FROM_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = cifti_rois_from_extrema_cargs(params, execution)
     ret = cifti_rois_from_extrema_outputs(params, execution)
@@ -330,8 +332,6 @@ def cifti_rois_from_extrema(
     Returns:
         NamedTuple of outputs (described in `CiftiRoisFromExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_ROIS_FROM_EXTREMA_METADATA)
     params = cifti_rois_from_extrema_params(
         cifti=cifti,
         surf_limit=surf_limit,
@@ -345,7 +345,7 @@ def cifti_rois_from_extrema(
         opt_overlap_logic_method=opt_overlap_logic_method,
         opt_merged_volume=opt_merged_volume,
     )
-    return cifti_rois_from_extrema_execute(params, execution)
+    return cifti_rois_from_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -354,10 +354,7 @@ __all__ = [
     "CiftiRoisFromExtremaOutputs",
     "CiftiRoisFromExtremaParameters",
     "cifti_rois_from_extrema",
-    "cifti_rois_from_extrema_cargs",
     "cifti_rois_from_extrema_execute",
-    "cifti_rois_from_extrema_gaussian_cargs",
     "cifti_rois_from_extrema_gaussian_params",
-    "cifti_rois_from_extrema_outputs",
     "cifti_rois_from_extrema_params",
 ]

@@ -277,7 +277,7 @@ def mri_fill_outputs(
 
 def mri_fill_execute(
     params: MriFillParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriFillOutputs:
     """
     Tool for creating hemispheric cutting planes and filling white matter for
@@ -289,10 +289,12 @@ def mri_fill_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriFillOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_FILL_METADATA)
     params = execution.params(params)
     cargs = mri_fill_cargs(params, execution)
     ret = mri_fill_outputs(params, execution)
@@ -359,8 +361,6 @@ def mri_fill(
     Returns:
         NamedTuple of outputs (described in `MriFillOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_FILL_METADATA)
     params = mri_fill_params(
         input_mr_dir=input_mr_dir,
         output_mr_dir=output_mr_dir,
@@ -380,7 +380,7 @@ def mri_fill(
         pointset_args=pointset_args,
         ctab_file=ctab_file,
     )
-    return mri_fill_execute(params, execution)
+    return mri_fill_execute(params, runner)
 
 
 __all__ = [
@@ -388,8 +388,6 @@ __all__ = [
     "MriFillOutputs",
     "MriFillParameters",
     "mri_fill",
-    "mri_fill_cargs",
     "mri_fill_execute",
-    "mri_fill_outputs",
     "mri_fill_params",
 ]

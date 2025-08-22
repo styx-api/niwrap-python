@@ -208,7 +208,7 @@ def compute_label_volumes_csh_outputs(
 
 def compute_label_volumes_csh_execute(
     params: ComputeLabelVolumesCshParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ComputeLabelVolumesCshOutputs:
     """
     Computes the number of voxels and the volumes of either all or a particular
@@ -220,10 +220,12 @@ def compute_label_volumes_csh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ComputeLabelVolumesCshOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(COMPUTE_LABEL_VOLUMES_CSH_METADATA)
     params = execution.params(params)
     cargs = compute_label_volumes_csh_cargs(params, execution)
     ret = compute_label_volumes_csh_outputs(params, execution)
@@ -257,8 +259,6 @@ def compute_label_volumes_csh(
     Returns:
         NamedTuple of outputs (described in `ComputeLabelVolumesCshOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(COMPUTE_LABEL_VOLUMES_CSH_METADATA)
     params = compute_label_volumes_csh_params(
         label_vol=label_vol,
         output_file=output_file,
@@ -266,7 +266,7 @@ def compute_label_volumes_csh(
         version=version,
         help_=help_,
     )
-    return compute_label_volumes_csh_execute(params, execution)
+    return compute_label_volumes_csh_execute(params, runner)
 
 
 __all__ = [
@@ -275,10 +275,7 @@ __all__ = [
     "ComputeLabelVolumesCshOutputs",
     "ComputeLabelVolumesCshParameters",
     "compute_label_volumes_csh",
-    "compute_label_volumes_csh_cargs",
     "compute_label_volumes_csh_execute",
-    "compute_label_volumes_csh_label_l_cargs",
     "compute_label_volumes_csh_label_l_params",
-    "compute_label_volumes_csh_outputs",
     "compute_label_volumes_csh_params",
 ]

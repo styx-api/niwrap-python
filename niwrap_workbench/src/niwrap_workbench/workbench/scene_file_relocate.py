@@ -122,7 +122,7 @@ def scene_file_relocate_outputs(
 
 def scene_file_relocate_execute(
     params: SceneFileRelocateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SceneFileRelocateOutputs:
     """
     Recreate scene file in new location.
@@ -138,10 +138,12 @@ def scene_file_relocate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SceneFileRelocateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SCENE_FILE_RELOCATE_METADATA)
     params = execution.params(params)
     cargs = scene_file_relocate_cargs(params, execution)
     ret = scene_file_relocate_outputs(params, execution)
@@ -173,13 +175,11 @@ def scene_file_relocate(
     Returns:
         NamedTuple of outputs (described in `SceneFileRelocateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SCENE_FILE_RELOCATE_METADATA)
     params = scene_file_relocate_params(
         input_scene=input_scene,
         output_scene=output_scene,
     )
-    return scene_file_relocate_execute(params, execution)
+    return scene_file_relocate_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "SceneFileRelocateOutputs",
     "SceneFileRelocateParameters",
     "scene_file_relocate",
-    "scene_file_relocate_cargs",
     "scene_file_relocate_execute",
-    "scene_file_relocate_outputs",
     "scene_file_relocate_params",
 ]

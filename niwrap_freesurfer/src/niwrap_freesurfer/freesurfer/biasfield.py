@@ -160,7 +160,7 @@ def biasfield_outputs(
 
 def biasfield_execute(
     params: BiasfieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BiasfieldOutputs:
     """
     Computes the bias field by dividing the (unconformed) orig.mgz by the norm.mgz.
@@ -171,10 +171,12 @@ def biasfield_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BiasfieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BIASFIELD_METADATA)
     params = execution.params(params)
     cargs = biasfield_cargs(params, execution)
     ret = biasfield_outputs(params, execution)
@@ -209,8 +211,6 @@ def biasfield(
     Returns:
         NamedTuple of outputs (described in `BiasfieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BIASFIELD_METADATA)
     params = biasfield_params(
         subject=subject,
         tmpdir=tmpdir,
@@ -219,7 +219,7 @@ def biasfield(
         debug=debug,
         version=version,
     )
-    return biasfield_execute(params, execution)
+    return biasfield_execute(params, runner)
 
 
 __all__ = [
@@ -227,8 +227,6 @@ __all__ = [
     "BiasfieldOutputs",
     "BiasfieldParameters",
     "biasfield",
-    "biasfield_cargs",
     "biasfield_execute",
-    "biasfield_outputs",
     "biasfield_params",
 ]

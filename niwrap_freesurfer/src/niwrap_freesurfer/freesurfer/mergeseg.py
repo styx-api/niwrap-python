@@ -175,7 +175,7 @@ def mergeseg_outputs(
 
 def mergeseg_execute(
     params: MergesegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MergesegOutputs:
     """
     Merges one segmentation into another, replacing the source voxels with those
@@ -187,10 +187,12 @@ def mergeseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MergesegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MERGESEG_METADATA)
     params = execution.params(params)
     cargs = mergeseg_cargs(params, execution)
     ret = mergeseg_outputs(params, execution)
@@ -230,8 +232,6 @@ def mergeseg(
     Returns:
         NamedTuple of outputs (described in `MergesegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MERGESEG_METADATA)
     params = mergeseg_params(
         src_seg=src_seg,
         merge_seg=merge_seg,
@@ -241,7 +241,7 @@ def mergeseg(
         segid_erode=segid_erode,
         ctab=ctab,
     )
-    return mergeseg_execute(params, execution)
+    return mergeseg_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "MergesegOutputs",
     "MergesegParameters",
     "mergeseg",
-    "mergeseg_cargs",
     "mergeseg_execute",
-    "mergeseg_outputs",
     "mergeseg_params",
 ]

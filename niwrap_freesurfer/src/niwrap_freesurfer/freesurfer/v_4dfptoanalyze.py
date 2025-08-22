@@ -155,7 +155,7 @@ def v_4dfptoanalyze_outputs(
 
 def v_4dfptoanalyze_execute(
     params: V4dfptoanalyzeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V4dfptoanalyzeOutputs:
     """
     Converts 4dfp formatted files to Analyze format.
@@ -166,10 +166,12 @@ def v_4dfptoanalyze_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V4dfptoanalyzeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_4DFPTOANALYZE_METADATA)
     params = execution.params(params)
     cargs = v_4dfptoanalyze_cargs(params, execution)
     ret = v_4dfptoanalyze_outputs(params, execution)
@@ -202,8 +204,6 @@ def v_4dfptoanalyze(
     Returns:
         NamedTuple of outputs (described in `V4dfptoanalyzeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_4DFPTOANALYZE_METADATA)
     params = v_4dfptoanalyze_params(
         input_file=input_file,
         scale_factor=scale_factor,
@@ -211,7 +211,7 @@ def v_4dfptoanalyze(
         spm99=spm99,
         endianness=endianness,
     )
-    return v_4dfptoanalyze_execute(params, execution)
+    return v_4dfptoanalyze_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "V4dfptoanalyzeParameters",
     "V_4DFPTOANALYZE_METADATA",
     "v_4dfptoanalyze",
-    "v_4dfptoanalyze_cargs",
     "v_4dfptoanalyze_execute",
-    "v_4dfptoanalyze_outputs",
     "v_4dfptoanalyze_params",
 ]

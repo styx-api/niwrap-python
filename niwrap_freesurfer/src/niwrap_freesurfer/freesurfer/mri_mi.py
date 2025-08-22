@@ -138,7 +138,7 @@ def mri_mi_outputs(
 
 def mri_mi_execute(
     params: MriMiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMiOutputs:
     """
     Computes mutual information (mi) between two input volumes.
@@ -149,10 +149,12 @@ def mri_mi_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MI_METADATA)
     params = execution.params(params)
     cargs = mri_mi_cargs(params, execution)
     ret = mri_mi_outputs(params, execution)
@@ -184,15 +186,13 @@ def mri_mi(
     Returns:
         NamedTuple of outputs (described in `MriMiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MI_METADATA)
     params = mri_mi_params(
         input_file1=input_file1,
         input_file2=input_file2,
         bins=bins,
         silent=silent,
     )
-    return mri_mi_execute(params, execution)
+    return mri_mi_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "MriMiOutputs",
     "MriMiParameters",
     "mri_mi",
-    "mri_mi_cargs",
     "mri_mi_execute",
-    "mri_mi_outputs",
     "mri_mi_params",
 ]

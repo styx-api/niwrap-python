@@ -245,7 +245,7 @@ def mri_exvivo_norm_outputs(
 
 def mri_exvivo_norm_execute(
     params: MriExvivoNormParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriExvivoNormOutputs:
     """
     MRI Ex Vivo Normalization Tool.
@@ -256,10 +256,12 @@ def mri_exvivo_norm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriExvivoNormOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_EXVIVO_NORM_METADATA)
     params = execution.params(params)
     cargs = mri_exvivo_norm_cargs(params, execution)
     ret = mri_exvivo_norm_outputs(params, execution)
@@ -314,8 +316,6 @@ def mri_exvivo_norm(
     Returns:
         NamedTuple of outputs (described in `MriExvivoNormOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_EXVIVO_NORM_METADATA)
     params = mri_exvivo_norm_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -333,7 +333,7 @@ def mri_exvivo_norm(
         weights_file=weights_file,
         gpu_number=gpu_number,
     )
-    return mri_exvivo_norm_execute(params, execution)
+    return mri_exvivo_norm_execute(params, runner)
 
 
 __all__ = [
@@ -341,8 +341,6 @@ __all__ = [
     "MriExvivoNormOutputs",
     "MriExvivoNormParameters",
     "mri_exvivo_norm",
-    "mri_exvivo_norm_cargs",
     "mri_exvivo_norm_execute",
-    "mri_exvivo_norm_outputs",
     "mri_exvivo_norm_params",
 ]

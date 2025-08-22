@@ -141,7 +141,7 @@ def column_cat_outputs(
 
 def column_cat_execute(
     params: ColumnCatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ColumnCatOutputs:
     """
     Catenate files horizontally. Each line of output is the concatenation of each
@@ -154,10 +154,12 @@ def column_cat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ColumnCatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(COLUMN_CAT_METADATA)
     params = execution.params(params)
     cargs = column_cat_cargs(params, execution)
     ret = column_cat_outputs(params, execution)
@@ -189,14 +191,12 @@ def column_cat(
     Returns:
         NamedTuple of outputs (described in `ColumnCatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(COLUMN_CAT_METADATA)
     params = column_cat_params(
         line_number=line_number,
         separator_string=separator_string,
         input_files=input_files,
     )
-    return column_cat_execute(params, execution)
+    return column_cat_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "ColumnCatOutputs",
     "ColumnCatParameters",
     "column_cat",
-    "column_cat_cargs",
     "column_cat_execute",
-    "column_cat_outputs",
     "column_cat_params",
 ]

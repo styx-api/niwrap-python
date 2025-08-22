@@ -123,7 +123,7 @@ def tkmedit_outputs(
 
 def tkmedit_execute(
     params: TkmeditParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TkmeditOutputs:
     """
     tkmedit is a multi-functional imaging tool for viewing and editing surface
@@ -136,10 +136,12 @@ def tkmedit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TkmeditOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TKMEDIT_METADATA)
     params = execution.params(params)
     cargs = tkmedit_cargs(params, execution)
     ret = tkmedit_outputs(params, execution)
@@ -168,13 +170,11 @@ def tkmedit(
     Returns:
         NamedTuple of outputs (described in `TkmeditOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TKMEDIT_METADATA)
     params = tkmedit_params(
         input_volume=input_volume,
         options=options,
     )
-    return tkmedit_execute(params, execution)
+    return tkmedit_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "TkmeditOutputs",
     "TkmeditParameters",
     "tkmedit",
-    "tkmedit_cargs",
     "tkmedit_execute",
-    "tkmedit_outputs",
     "tkmedit_params",
 ]

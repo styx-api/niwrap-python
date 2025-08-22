@@ -138,7 +138,7 @@ def quantify_hasubregions_sh_outputs(
 
 def quantify_hasubregions_sh_execute(
     params: QuantifyHasubregionsShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QuantifyHasubregionsShOutputs:
     """
     Tool to quantify hippocampal subregions using FreeSurfer.
@@ -149,10 +149,12 @@ def quantify_hasubregions_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QuantifyHasubregionsShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QUANTIFY_HASUBREGIONS_SH_METADATA)
     params = execution.params(params)
     cargs = quantify_hasubregions_sh_cargs(params, execution)
     ret = quantify_hasubregions_sh_outputs(params, execution)
@@ -184,15 +186,13 @@ def quantify_hasubregions_sh(
     Returns:
         NamedTuple of outputs (described in `QuantifyHasubregionsShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QUANTIFY_HASUBREGIONS_SH_METADATA)
     params = quantify_hasubregions_sh_params(
         prefix=prefix,
         suffix=suffix,
         output_file=output_file,
         subjects_directory=subjects_directory,
     )
-    return quantify_hasubregions_sh_execute(params, execution)
+    return quantify_hasubregions_sh_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "QuantifyHasubregionsShOutputs",
     "QuantifyHasubregionsShParameters",
     "quantify_hasubregions_sh",
-    "quantify_hasubregions_sh_cargs",
     "quantify_hasubregions_sh_execute",
-    "quantify_hasubregions_sh_outputs",
     "quantify_hasubregions_sh_params",
 ]

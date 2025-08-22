@@ -162,7 +162,7 @@ def sfim_outputs(
 
 def sfim_execute(
     params: SfimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SfimOutputs:
     """
     Stepwise Functional IMages.
@@ -173,10 +173,12 @@ def sfim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SfimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SFIM_METADATA)
     params = execution.params(params)
     cargs = sfim_cargs(params, execution)
     ret = sfim_outputs(params, execution)
@@ -215,8 +217,6 @@ def sfim(
     Returns:
         NamedTuple of outputs (described in `SfimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SFIM_METADATA)
     params = sfim_params(
         input_images=input_images,
         sfint_file=sfint_file,
@@ -224,7 +224,7 @@ def sfim(
         local_base_option=local_base_option,
         output_prefix=output_prefix,
     )
-    return sfim_execute(params, execution)
+    return sfim_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "SfimOutputs",
     "SfimParameters",
     "sfim",
-    "sfim_cargs",
     "sfim_execute",
-    "sfim_outputs",
     "sfim_params",
 ]

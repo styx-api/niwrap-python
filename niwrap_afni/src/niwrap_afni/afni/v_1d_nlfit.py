@@ -171,7 +171,7 @@ def v_1d_nlfit_outputs(
 
 def v_1d_nlfit_execute(
     params: V1dNlfitParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dNlfitOutputs:
     """
     Program to fit a model to a vector of data. The model is given by a symbolic
@@ -183,10 +183,12 @@ def v_1d_nlfit_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dNlfitOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_NLFIT_METADATA)
     params = execution.params(params)
     cargs = v_1d_nlfit_cargs(params, execution)
     ret = v_1d_nlfit_outputs(params, execution)
@@ -233,8 +235,6 @@ def v_1d_nlfit(
     Returns:
         NamedTuple of outputs (described in `V1dNlfitOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_NLFIT_METADATA)
     params = v_1d_nlfit_params(
         expression=expression,
         independent_variable=independent_variable,
@@ -242,7 +242,7 @@ def v_1d_nlfit(
         dependent_data=dependent_data,
         method=method,
     )
-    return v_1d_nlfit_execute(params, execution)
+    return v_1d_nlfit_execute(params, runner)
 
 
 __all__ = [
@@ -250,8 +250,6 @@ __all__ = [
     "V1dNlfitParameters",
     "V_1D_NLFIT_METADATA",
     "v_1d_nlfit",
-    "v_1d_nlfit_cargs",
     "v_1d_nlfit_execute",
-    "v_1d_nlfit_outputs",
     "v_1d_nlfit_params",
 ]

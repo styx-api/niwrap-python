@@ -152,7 +152,7 @@ def mris_remove_intersection_outputs(
 
 def mris_remove_intersection_execute(
     params: MrisRemoveIntersectionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisRemoveIntersectionOutputs:
     """
     Tool to remove intersections in surface files.
@@ -163,10 +163,12 @@ def mris_remove_intersection_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisRemoveIntersectionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_REMOVE_INTERSECTION_METADATA)
     params = execution.params(params)
     cargs = mris_remove_intersection_cargs(params, execution)
     ret = mris_remove_intersection_outputs(params, execution)
@@ -200,8 +202,6 @@ def mris_remove_intersection(
     Returns:
         NamedTuple of outputs (described in `MrisRemoveIntersectionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_REMOVE_INTERSECTION_METADATA)
     params = mris_remove_intersection_params(
         surface_in_file=surface_in_file,
         corrected_surface_out_file=corrected_surface_out_file,
@@ -209,7 +209,7 @@ def mris_remove_intersection(
         map_option=map_option,
         projdistmm=projdistmm,
     )
-    return mris_remove_intersection_execute(params, execution)
+    return mris_remove_intersection_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "MrisRemoveIntersectionOutputs",
     "MrisRemoveIntersectionParameters",
     "mris_remove_intersection",
-    "mris_remove_intersection_cargs",
     "mris_remove_intersection_execute",
-    "mris_remove_intersection_outputs",
     "mris_remove_intersection_params",
 ]

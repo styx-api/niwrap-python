@@ -121,7 +121,7 @@ def spm_t_to_b_outputs(
 
 def spm_t_to_b_execute(
     params: SpmTToBParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SpmTToBOutputs:
     """
     Converts SPM format to Bshort format.
@@ -132,10 +132,12 @@ def spm_t_to_b_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SpmTToBOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SPM_T_TO_B_METADATA)
     params = execution.params(params)
     cargs = spm_t_to_b_cargs(params, execution)
     ret = spm_t_to_b_outputs(params, execution)
@@ -162,13 +164,11 @@ def spm_t_to_b(
     Returns:
         NamedTuple of outputs (described in `SpmTToBOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SPM_T_TO_B_METADATA)
     params = spm_t_to_b_params(
         spm_stem_format=spm_stem_format,
         bshort_stem=bshort_stem,
     )
-    return spm_t_to_b_execute(params, execution)
+    return spm_t_to_b_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "SpmTToBOutputs",
     "SpmTToBParameters",
     "spm_t_to_b",
-    "spm_t_to_b_cargs",
     "spm_t_to_b_execute",
-    "spm_t_to_b_outputs",
     "spm_t_to_b_params",
 ]

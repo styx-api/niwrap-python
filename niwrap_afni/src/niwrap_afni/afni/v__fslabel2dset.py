@@ -147,7 +147,7 @@ def v__fslabel2dset_outputs(
 
 def v__fslabel2dset_execute(
     params: VFslabel2dsetParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VFslabel2dsetOutputs:
     """
     A script to convert a FreeSurfer ASCII label file into a SUMA dataset and a SUMA
@@ -159,10 +159,12 @@ def v__fslabel2dset_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VFslabel2dsetOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__FSLABEL2DSET_METADATA)
     params = execution.params(params)
     cargs = v__fslabel2dset_cargs(params, execution)
     ret = v__fslabel2dset_outputs(params, execution)
@@ -196,8 +198,6 @@ def v__fslabel2dset(
     Returns:
         NamedTuple of outputs (described in `VFslabel2dsetOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__FSLABEL2DSET_METADATA)
     params = v__fslabel2dset_params(
         fs_label_file=fs_label_file,
         val=val,
@@ -205,7 +205,7 @@ def v__fslabel2dset(
         echo=echo,
         keep_tmp=keep_tmp,
     )
-    return v__fslabel2dset_execute(params, execution)
+    return v__fslabel2dset_execute(params, runner)
 
 
 __all__ = [
@@ -213,8 +213,6 @@ __all__ = [
     "VFslabel2dsetParameters",
     "V__FSLABEL2DSET_METADATA",
     "v__fslabel2dset",
-    "v__fslabel2dset_cargs",
     "v__fslabel2dset_execute",
-    "v__fslabel2dset_outputs",
     "v__fslabel2dset_params",
 ]

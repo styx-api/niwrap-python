@@ -137,7 +137,7 @@ def siena_cal_outputs(
 
 def siena_cal_execute(
     params: SienaCalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SienaCalOutputs:
     """
     SIENA is part of FSL (FMRIB Software Library), which performs a two-timepoint
@@ -149,10 +149,12 @@ def siena_cal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SienaCalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIENA_CAL_METADATA)
     params = execution.params(params)
     cargs = siena_cal_cargs(params, execution)
     ret = siena_cal_outputs(params, execution)
@@ -184,15 +186,13 @@ def siena_cal(
     Returns:
         NamedTuple of outputs (described in `SienaCalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIENA_CAL_METADATA)
     params = siena_cal_params(
         input1_file=input1_file,
         input2_file=input2_file,
         scale=scale,
         siena_diff_options=siena_diff_options,
     )
-    return siena_cal_execute(params, execution)
+    return siena_cal_execute(params, runner)
 
 
 __all__ = [
@@ -200,8 +200,6 @@ __all__ = [
     "SienaCalOutputs",
     "SienaCalParameters",
     "siena_cal",
-    "siena_cal_cargs",
     "siena_cal_execute",
-    "siena_cal_outputs",
     "siena_cal_params",
 ]

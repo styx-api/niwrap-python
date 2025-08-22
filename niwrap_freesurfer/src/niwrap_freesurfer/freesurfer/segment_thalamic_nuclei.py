@@ -125,7 +125,7 @@ def segment_thalamic_nuclei_outputs(
 
 def segment_thalamic_nuclei_execute(
     params: SegmentThalamicNucleiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SegmentThalamicNucleiOutputs:
     """
     A tool for segmenting thalamic nuclei using FreeSurfer.
@@ -136,10 +136,12 @@ def segment_thalamic_nuclei_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SegmentThalamicNucleiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SEGMENT_THALAMIC_NUCLEI_METADATA)
     params = execution.params(params)
     cargs = segment_thalamic_nuclei_cargs(params, execution)
     ret = segment_thalamic_nuclei_outputs(params, execution)
@@ -166,13 +168,11 @@ def segment_thalamic_nuclei(
     Returns:
         NamedTuple of outputs (described in `SegmentThalamicNucleiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SEGMENT_THALAMIC_NUCLEI_METADATA)
     params = segment_thalamic_nuclei_params(
         t1_image=t1_image,
         output_dir=output_dir,
     )
-    return segment_thalamic_nuclei_execute(params, execution)
+    return segment_thalamic_nuclei_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "SegmentThalamicNucleiOutputs",
     "SegmentThalamicNucleiParameters",
     "segment_thalamic_nuclei",
-    "segment_thalamic_nuclei_cargs",
     "segment_thalamic_nuclei_execute",
-    "segment_thalamic_nuclei_outputs",
     "segment_thalamic_nuclei_params",
 ]

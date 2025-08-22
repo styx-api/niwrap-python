@@ -172,7 +172,7 @@ def v_3d_synthesize_outputs(
 
 def v_3d_synthesize_execute(
     params: V3dSynthesizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dSynthesizeOutputs:
     """
     Reads a '-cbucket' dataset and a '.xmat.1D' matrix from 3dDeconvolve, and
@@ -184,10 +184,12 @@ def v_3d_synthesize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dSynthesizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_SYNTHESIZE_METADATA)
     params = execution.params(params)
     cargs = v_3d_synthesize_cargs(params, execution)
     ret = v_3d_synthesize_outputs(params, execution)
@@ -228,8 +230,6 @@ def v_3d_synthesize(
     Returns:
         NamedTuple of outputs (described in `V3dSynthesizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_SYNTHESIZE_METADATA)
     params = v_3d_synthesize_params(
         c_bucket=c_bucket,
         matrix=matrix,
@@ -239,7 +239,7 @@ def v_3d_synthesize(
         tr=tr,
         cenfill=cenfill,
     )
-    return v_3d_synthesize_execute(params, execution)
+    return v_3d_synthesize_execute(params, runner)
 
 
 __all__ = [
@@ -247,8 +247,6 @@ __all__ = [
     "V3dSynthesizeParameters",
     "V_3D_SYNTHESIZE_METADATA",
     "v_3d_synthesize",
-    "v_3d_synthesize_cargs",
     "v_3d_synthesize_execute",
-    "v_3d_synthesize_outputs",
     "v_3d_synthesize_params",
 ]

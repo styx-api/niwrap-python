@@ -141,7 +141,7 @@ def make_symmetric_outputs(
 
 def make_symmetric_execute(
     params: MakeSymmetricParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeSymmetricOutputs:
     """
     Registers an input image to its left/right reversed version using
@@ -153,10 +153,12 @@ def make_symmetric_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeSymmetricOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_SYMMETRIC_METADATA)
     params = execution.params(params)
     cargs = make_symmetric_cargs(params, execution)
     ret = make_symmetric_outputs(params, execution)
@@ -191,15 +193,13 @@ def make_symmetric(
     Returns:
         NamedTuple of outputs (described in `MakeSymmetricOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_SYMMETRIC_METADATA)
     params = make_symmetric_params(
         hemi=hemi,
         input_file=input_file,
         output_file=output_file,
         transform_map=transform_map,
     )
-    return make_symmetric_execute(params, execution)
+    return make_symmetric_execute(params, runner)
 
 
 __all__ = [
@@ -207,8 +207,6 @@ __all__ = [
     "MakeSymmetricOutputs",
     "MakeSymmetricParameters",
     "make_symmetric",
-    "make_symmetric_cargs",
     "make_symmetric_execute",
-    "make_symmetric_outputs",
     "make_symmetric_params",
 ]

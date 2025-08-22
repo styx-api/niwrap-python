@@ -243,7 +243,7 @@ def gems_compute_atlas_probs_outputs(
 
 def gems_compute_atlas_probs_execute(
     params: GemsComputeAtlasProbsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GemsComputeAtlasProbsOutputs:
     """
     Tool to compute atlas probabilities using SAMSEG results.
@@ -254,10 +254,12 @@ def gems_compute_atlas_probs_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GemsComputeAtlasProbsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GEMS_COMPUTE_ATLAS_PROBS_METADATA)
     params = execution.params(params)
     cargs = gems_compute_atlas_probs_cargs(params, execution)
     ret = gems_compute_atlas_probs_outputs(params, execution)
@@ -314,8 +316,6 @@ def gems_compute_atlas_probs(
     Returns:
         NamedTuple of outputs (described in `GemsComputeAtlasProbsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GEMS_COMPUTE_ATLAS_PROBS_METADATA)
     params = gems_compute_atlas_probs_params(
         subjects_dir=subjects_dir,
         mesh_collections=mesh_collections,
@@ -334,7 +334,7 @@ def gems_compute_atlas_probs(
         labels_file=labels_file,
         samseg_subdir=samseg_subdir,
     )
-    return gems_compute_atlas_probs_execute(params, execution)
+    return gems_compute_atlas_probs_execute(params, runner)
 
 
 __all__ = [
@@ -342,8 +342,6 @@ __all__ = [
     "GemsComputeAtlasProbsOutputs",
     "GemsComputeAtlasProbsParameters",
     "gems_compute_atlas_probs",
-    "gems_compute_atlas_probs_cargs",
     "gems_compute_atlas_probs_execute",
-    "gems_compute_atlas_probs_outputs",
     "gems_compute_atlas_probs_params",
 ]

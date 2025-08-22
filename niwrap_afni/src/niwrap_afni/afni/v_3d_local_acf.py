@@ -154,7 +154,7 @@ def v_3d_local_acf_outputs(
 
 def v_3d_local_acf_execute(
     params: V3dLocalAcfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLocalAcfOutputs:
     """
     Estimate the spatial AutoCorrelation Function (ACF) locally in a neighborhood
@@ -166,10 +166,12 @@ def v_3d_local_acf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLocalAcfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LOCAL_ACF_METADATA)
     params = execution.params(params)
     cargs = v_3d_local_acf_cargs(params, execution)
     ret = v_3d_local_acf_outputs(params, execution)
@@ -203,8 +205,6 @@ def v_3d_local_acf(
     Returns:
         NamedTuple of outputs (described in `V3dLocalAcfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LOCAL_ACF_METADATA)
     params = v_3d_local_acf_params(
         prefix=prefix,
         input_file=input_file,
@@ -212,7 +212,7 @@ def v_3d_local_acf(
         mask_file=mask_file,
         auto_mask=auto_mask,
     )
-    return v_3d_local_acf_execute(params, execution)
+    return v_3d_local_acf_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "V3dLocalAcfParameters",
     "V_3D_LOCAL_ACF_METADATA",
     "v_3d_local_acf",
-    "v_3d_local_acf_cargs",
     "v_3d_local_acf_execute",
-    "v_3d_local_acf_outputs",
     "v_3d_local_acf_params",
 ]

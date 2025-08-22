@@ -245,7 +245,7 @@ def fsl_motion_outliers_outputs(
 
 def fsl_motion_outliers_execute(
     params: FslMotionOutliersParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslMotionOutliersOutputs:
     """
     FSL tool used to calculate motion outliers in 4D image data.
@@ -256,10 +256,12 @@ def fsl_motion_outliers_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslMotionOutliersOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_MOTION_OUTLIERS_METADATA)
     params = execution.params(params)
     cargs = fsl_motion_outliers_cargs(params, execution)
     ret = fsl_motion_outliers_outputs(params, execution)
@@ -318,8 +320,6 @@ def fsl_motion_outliers(
     Returns:
         NamedTuple of outputs (described in `FslMotionOutliersOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_MOTION_OUTLIERS_METADATA)
     params = fsl_motion_outliers_params(
         input_4d_image=input_4d_image,
         output_confound_file=output_confound_file,
@@ -337,7 +337,7 @@ def fsl_motion_outliers(
         dummy_scans=dummy_scans,
         verbose_flag=verbose_flag,
     )
-    return fsl_motion_outliers_execute(params, execution)
+    return fsl_motion_outliers_execute(params, runner)
 
 
 __all__ = [
@@ -345,8 +345,6 @@ __all__ = [
     "FslMotionOutliersOutputs",
     "FslMotionOutliersParameters",
     "fsl_motion_outliers",
-    "fsl_motion_outliers_cargs",
     "fsl_motion_outliers_execute",
-    "fsl_motion_outliers_outputs",
     "fsl_motion_outliers_params",
 ]

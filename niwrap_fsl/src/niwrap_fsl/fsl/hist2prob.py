@@ -135,7 +135,7 @@ def hist2prob_outputs(
 
 def hist2prob_execute(
     params: Hist2probParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Hist2probOutputs:
     """
     Converts a histogram image to a probability map based on specified thresholds.
@@ -146,10 +146,12 @@ def hist2prob_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Hist2probOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(HIST2PROB_METADATA)
     params = execution.params(params)
     cargs = hist2prob_cargs(params, execution)
     ret = hist2prob_outputs(params, execution)
@@ -180,15 +182,13 @@ def hist2prob(
     Returns:
         NamedTuple of outputs (described in `Hist2probOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(HIST2PROB_METADATA)
     params = hist2prob_params(
         image=image,
         size=size,
         low_threshold=low_threshold,
         high_threshold=high_threshold,
     )
-    return hist2prob_execute(params, execution)
+    return hist2prob_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "Hist2probOutputs",
     "Hist2probParameters",
     "hist2prob",
-    "hist2prob_cargs",
     "hist2prob_execute",
-    "hist2prob_outputs",
     "hist2prob_params",
 ]

@@ -349,7 +349,7 @@ def imcat_outputs(
 
 def imcat_execute(
     params: ImcatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImcatOutputs:
     """
     Assembles a set of images into an image matrix (IM) montage of NX by NY images.
@@ -360,10 +360,12 @@ def imcat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImcatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMCAT_METADATA)
     params = execution.params(params)
     cargs = imcat_cargs(params, execution)
     ret = imcat_outputs(params, execution)
@@ -457,8 +459,6 @@ def imcat(
     Returns:
         NamedTuple of outputs (described in `ImcatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMCAT_METADATA)
     params = imcat_params(
         input_files=input_files,
         scale_image=scale_image,
@@ -486,7 +486,7 @@ def imcat(
         gap=gap,
         gap_col=gap_col,
     )
-    return imcat_execute(params, execution)
+    return imcat_execute(params, runner)
 
 
 __all__ = [
@@ -494,8 +494,6 @@ __all__ = [
     "ImcatOutputs",
     "ImcatParameters",
     "imcat",
-    "imcat_cargs",
     "imcat_execute",
-    "imcat_outputs",
     "imcat_params",
 ]

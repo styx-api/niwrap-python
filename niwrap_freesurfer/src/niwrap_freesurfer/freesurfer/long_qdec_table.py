@@ -160,7 +160,7 @@ def long_qdec_table_outputs(
 
 def long_qdec_table_execute(
     params: LongQdecTableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongQdecTableOutputs:
     """
     Tool to operate on longitudinal QDEC tables.
@@ -171,10 +171,12 @@ def long_qdec_table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongQdecTableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_QDEC_TABLE_METADATA)
     params = execution.params(params)
     cargs = long_qdec_table_cargs(params, execution)
     ret = long_qdec_table_outputs(params, execution)
@@ -208,8 +210,6 @@ def long_qdec_table(
     Returns:
         NamedTuple of outputs (described in `LongQdecTableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_QDEC_TABLE_METADATA)
     params = long_qdec_table_params(
         qdec_table=qdec_table,
         split=split,
@@ -217,7 +217,7 @@ def long_qdec_table(
         sort=sort,
         out=out,
     )
-    return long_qdec_table_execute(params, execution)
+    return long_qdec_table_execute(params, runner)
 
 
 __all__ = [
@@ -225,8 +225,6 @@ __all__ = [
     "LongQdecTableOutputs",
     "LongQdecTableParameters",
     "long_qdec_table",
-    "long_qdec_table_cargs",
     "long_qdec_table_execute",
-    "long_qdec_table_outputs",
     "long_qdec_table_params",
 ]

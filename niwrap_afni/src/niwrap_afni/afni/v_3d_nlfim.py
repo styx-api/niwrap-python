@@ -514,7 +514,7 @@ def v_3d_nlfim_outputs(
 
 def v_3d_nlfim_execute(
     params: V3dNlfimParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNlfimOutputs:
     """
     Nonlinear regression for each voxel of the input AFNI 3d+time data set.
@@ -525,10 +525,12 @@ def v_3d_nlfim_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNlfimOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NLFIM_METADATA)
     params = execution.params(params)
     cargs = v_3d_nlfim_cargs(params, execution)
     ret = v_3d_nlfim_outputs(params, execution)
@@ -645,8 +647,6 @@ def v_3d_nlfim(
     Returns:
         NamedTuple of outputs (described in `V3dNlfimOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NLFIM_METADATA)
     params = v_3d_nlfim_params(
         input_file=input_file,
         signal_model=signal_model,
@@ -686,7 +686,7 @@ def v_3d_nlfim(
         snfit=snfit,
         jobs=jobs,
     )
-    return v_3d_nlfim_execute(params, execution)
+    return v_3d_nlfim_execute(params, runner)
 
 
 __all__ = [
@@ -694,8 +694,6 @@ __all__ = [
     "V3dNlfimParameters",
     "V_3D_NLFIM_METADATA",
     "v_3d_nlfim",
-    "v_3d_nlfim_cargs",
     "v_3d_nlfim_execute",
-    "v_3d_nlfim_outputs",
     "v_3d_nlfim_params",
 ]

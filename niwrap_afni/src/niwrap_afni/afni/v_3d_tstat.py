@@ -528,7 +528,7 @@ def v_3d_tstat_outputs(
 
 def v_3d_tstat_execute(
     params: V3dTstatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dTstatOutputs:
     """
     Compute voxel-wise statistics using AFNI 3dTstat command.
@@ -539,10 +539,12 @@ def v_3d_tstat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dTstatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_TSTAT_METADATA)
     params = execution.params(params)
     cargs = v_3d_tstat_cargs(params, execution)
     ret = v_3d_tstat_outputs(params, execution)
@@ -704,8 +706,6 @@ def v_3d_tstat(
     Returns:
         NamedTuple of outputs (described in `V3dTstatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_TSTAT_METADATA)
     params = v_3d_tstat_params(
         in_file=in_file,
         mask=mask,
@@ -769,7 +769,7 @@ def v_3d_tstat(
         mrange=mrange,
         cmask=cmask,
     )
-    return v_3d_tstat_execute(params, execution)
+    return v_3d_tstat_execute(params, runner)
 
 
 __all__ = [
@@ -777,8 +777,6 @@ __all__ = [
     "V3dTstatParameters",
     "V_3D_TSTAT_METADATA",
     "v_3d_tstat",
-    "v_3d_tstat_cargs",
     "v_3d_tstat_execute",
-    "v_3d_tstat_outputs",
     "v_3d_tstat_params",
 ]

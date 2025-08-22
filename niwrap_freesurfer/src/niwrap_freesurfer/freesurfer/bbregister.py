@@ -251,7 +251,7 @@ def bbregister_outputs(
 
 def bbregister_execute(
     params: BbregisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BbregisterOutputs:
     """
     Performs within-subject, cross-modal registration using a boundary-based cost
@@ -263,10 +263,12 @@ def bbregister_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BbregisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BBREGISTER_METADATA)
     params = execution.params(params)
     cargs = bbregister_cargs(params, execution)
     ret = bbregister_outputs(params, execution)
@@ -329,8 +331,6 @@ def bbregister(
     Returns:
         NamedTuple of outputs (described in `BbregisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BBREGISTER_METADATA)
     params = bbregister_params(
         subject=subject,
         moveable_volume=moveable_volume,
@@ -349,7 +349,7 @@ def bbregister(
         o_outvol=o_outvol,
         s_from_reg=s_from_reg,
     )
-    return bbregister_execute(params, execution)
+    return bbregister_execute(params, runner)
 
 
 __all__ = [
@@ -357,8 +357,6 @@ __all__ = [
     "BbregisterOutputs",
     "BbregisterParameters",
     "bbregister",
-    "bbregister_cargs",
     "bbregister_execute",
-    "bbregister_outputs",
     "bbregister_params",
 ]

@@ -201,7 +201,7 @@ def v_1d_bport_outputs(
 
 def v_1d_bport_execute(
     params: V1dBportParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V1dBportOutputs:
     """
     Creates a set of columns of sines and cosines for bandpassing via regression.
@@ -212,10 +212,12 @@ def v_1d_bport_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V1dBportOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_1D_BPORT_METADATA)
     params = execution.params(params)
     cargs = v_1d_bport_cargs(params, execution)
     ret = v_1d_bport_outputs(params, execution)
@@ -262,8 +264,6 @@ def v_1d_bport(
     Returns:
         NamedTuple of outputs (described in `V1dBportOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_1D_BPORT_METADATA)
     params = v_1d_bport_params(
         band=band,
         invert=invert,
@@ -276,7 +276,7 @@ def v_1d_bport(
         tr=tr,
         concat=concat,
     )
-    return v_1d_bport_execute(params, execution)
+    return v_1d_bport_execute(params, runner)
 
 
 __all__ = [
@@ -284,8 +284,6 @@ __all__ = [
     "V1dBportParameters",
     "V_1D_BPORT_METADATA",
     "v_1d_bport",
-    "v_1d_bport_cargs",
     "v_1d_bport_execute",
-    "v_1d_bport_outputs",
     "v_1d_bport_params",
 ]

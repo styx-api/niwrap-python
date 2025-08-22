@@ -150,7 +150,7 @@ def mris_segment_vals_outputs(
 
 def mris_segment_vals_execute(
     params: MrisSegmentValsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSegmentValsOutputs:
     """
     This program segments an input val file into connected components.
@@ -161,10 +161,12 @@ def mris_segment_vals_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSegmentValsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SEGMENT_VALS_METADATA)
     params = execution.params(params)
     cargs = mris_segment_vals_cargs(params, execution)
     ret = mris_segment_vals_outputs(params, execution)
@@ -197,8 +199,6 @@ def mris_segment_vals(
     Returns:
         NamedTuple of outputs (described in `MrisSegmentValsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SEGMENT_VALS_METADATA)
     params = mris_segment_vals_params(
         input_surface=input_surface,
         input_curv_file=input_curv_file,
@@ -206,7 +206,7 @@ def mris_segment_vals(
         threshold=threshold,
         area_thresh=area_thresh,
     )
-    return mris_segment_vals_execute(params, execution)
+    return mris_segment_vals_execute(params, runner)
 
 
 __all__ = [
@@ -214,8 +214,6 @@ __all__ = [
     "MrisSegmentValsOutputs",
     "MrisSegmentValsParameters",
     "mris_segment_vals",
-    "mris_segment_vals_cargs",
     "mris_segment_vals_execute",
-    "mris_segment_vals_outputs",
     "mris_segment_vals_params",
 ]

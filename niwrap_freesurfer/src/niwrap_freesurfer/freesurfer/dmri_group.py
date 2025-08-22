@@ -165,7 +165,7 @@ def dmri_group_outputs(
 
 def dmri_group_execute(
     params: DmriGroupParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriGroupOutputs:
     """
     A tool to process and analyze diffusion MRI group data.
@@ -176,10 +176,12 @@ def dmri_group_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriGroupOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_GROUP_METADATA)
     params = execution.params(params)
     cargs = dmri_group_cargs(params, execution)
     ret = dmri_group_outputs(params, execution)
@@ -218,8 +220,6 @@ def dmri_group(
     Returns:
         NamedTuple of outputs (described in `DmriGroupOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_GROUP_METADATA)
     params = dmri_group_params(
         input_list=input_list,
         reference_volume=reference_volume,
@@ -229,7 +229,7 @@ def dmri_group(
         debug_mode=debug_mode,
         check_options=check_options,
     )
-    return dmri_group_execute(params, execution)
+    return dmri_group_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "DmriGroupOutputs",
     "DmriGroupParameters",
     "dmri_group",
-    "dmri_group_cargs",
     "dmri_group_execute",
-    "dmri_group_outputs",
     "dmri_group_params",
 ]

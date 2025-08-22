@@ -253,7 +253,7 @@ def tcalc_outputs(
 
 def tcalc_execute(
     params: TcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TcalcOutputs:
     """
     Resample a 4D phantom for theoretical calculations.
@@ -264,10 +264,12 @@ def tcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TCALC_METADATA)
     params = execution.params(params)
     cargs = tcalc_cargs(params, execution)
     ret = tcalc_outputs(params, execution)
@@ -323,8 +325,6 @@ def tcalc(
     Returns:
         NamedTuple of outputs (described in `TcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TCALC_METADATA)
     params = tcalc_params(
         input_image=input_image,
         output_image=output_image,
@@ -342,7 +342,7 @@ def tcalc(
         save_flag=save_flag,
         verbose_flag=verbose_flag,
     )
-    return tcalc_execute(params, execution)
+    return tcalc_execute(params, runner)
 
 
 __all__ = [
@@ -350,8 +350,6 @@ __all__ = [
     "TcalcOutputs",
     "TcalcParameters",
     "tcalc",
-    "tcalc_cargs",
     "tcalc_execute",
-    "tcalc_outputs",
     "tcalc_params",
 ]

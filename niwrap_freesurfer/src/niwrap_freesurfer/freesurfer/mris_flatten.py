@@ -184,7 +184,7 @@ def mris_flatten_outputs(
 
 def mris_flatten_execute(
     params: MrisFlattenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisFlattenOutputs:
     """
     This program will flatten a surface patch.
@@ -195,10 +195,12 @@ def mris_flatten_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisFlattenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_FLATTEN_METADATA)
     params = execution.params(params)
     cargs = mris_flatten_cargs(params, execution)
     ret = mris_flatten_outputs(params, execution)
@@ -240,8 +242,6 @@ def mris_flatten(
     Returns:
         NamedTuple of outputs (described in `MrisFlattenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_FLATTEN_METADATA)
     params = mris_flatten_params(
         input_patch=input_patch,
         output_patch=output_patch,
@@ -252,7 +252,7 @@ def mris_flatten(
         copy_coords=copy_coords,
         norand=norand,
     )
-    return mris_flatten_execute(params, execution)
+    return mris_flatten_execute(params, runner)
 
 
 __all__ = [
@@ -260,8 +260,6 @@ __all__ = [
     "MrisFlattenOutputs",
     "MrisFlattenParameters",
     "mris_flatten",
-    "mris_flatten_cargs",
     "mris_flatten_execute",
-    "mris_flatten_outputs",
     "mris_flatten_params",
 ]

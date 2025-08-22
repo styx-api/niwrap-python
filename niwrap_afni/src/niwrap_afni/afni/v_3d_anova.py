@@ -263,7 +263,7 @@ def v_3d_anova_outputs(
 
 def v_3d_anova_execute(
     params: V3dAnovaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dAnovaOutputs:
     """
     Performs single-factor Analysis of Variance (ANOVA) on 3D datasets.
@@ -274,10 +274,12 @@ def v_3d_anova_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dAnovaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_ANOVA_METADATA)
     params = execution.params(params)
     cargs = v_3d_anova_cargs(params, execution)
     ret = v_3d_anova_outputs(params, execution)
@@ -329,8 +331,6 @@ def v_3d_anova(
     Returns:
         NamedTuple of outputs (described in `V3dAnovaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_ANOVA_METADATA)
     params = v_3d_anova_params(
         levels=levels,
         datasets=datasets,
@@ -347,7 +347,7 @@ def v_3d_anova(
         assume_sph=assume_sph,
         bucket=bucket,
     )
-    return v_3d_anova_execute(params, execution)
+    return v_3d_anova_execute(params, runner)
 
 
 __all__ = [
@@ -355,8 +355,6 @@ __all__ = [
     "V3dAnovaParameters",
     "V_3D_ANOVA_METADATA",
     "v_3d_anova",
-    "v_3d_anova_cargs",
     "v_3d_anova_execute",
-    "v_3d_anova_outputs",
     "v_3d_anova_params",
 ]

@@ -145,7 +145,7 @@ def surface_generate_inflated_outputs(
 
 def surface_generate_inflated_execute(
     params: SurfaceGenerateInflatedParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
     """
     Surface generate inflated.
@@ -162,10 +162,12 @@ def surface_generate_inflated_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceGenerateInflatedOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_GENERATE_INFLATED_METADATA)
     params = execution.params(params)
     cargs = surface_generate_inflated_cargs(params, execution)
     ret = surface_generate_inflated_outputs(params, execution)
@@ -203,15 +205,13 @@ def surface_generate_inflated(
     Returns:
         NamedTuple of outputs (described in `SurfaceGenerateInflatedOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_GENERATE_INFLATED_METADATA)
     params = surface_generate_inflated_params(
         anatomical_surface_in=anatomical_surface_in,
         inflated_surface_out=inflated_surface_out,
         very_inflated_surface_out=very_inflated_surface_out,
         opt_iterations_scale_iterations_scale_value=opt_iterations_scale_iterations_scale_value,
     )
-    return surface_generate_inflated_execute(params, execution)
+    return surface_generate_inflated_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "SurfaceGenerateInflatedOutputs",
     "SurfaceGenerateInflatedParameters",
     "surface_generate_inflated",
-    "surface_generate_inflated_cargs",
     "surface_generate_inflated_execute",
-    "surface_generate_inflated_outputs",
     "surface_generate_inflated_params",
 ]

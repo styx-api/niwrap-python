@@ -233,7 +233,7 @@ def mris_intensity_profile_outputs(
 
 def mris_intensity_profile_execute(
     params: MrisIntensityProfileParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisIntensityProfileOutputs:
     """
     This program computes the intensity profile of the cortical ribbon and writes
@@ -245,10 +245,12 @@ def mris_intensity_profile_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisIntensityProfileOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_INTENSITY_PROFILE_METADATA)
     params = execution.params(params)
     cargs = mris_intensity_profile_cargs(params, execution)
     ret = mris_intensity_profile_outputs(params, execution)
@@ -303,8 +305,6 @@ def mris_intensity_profile(
     Returns:
         NamedTuple of outputs (described in `MrisIntensityProfileOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_INTENSITY_PROFILE_METADATA)
     params = mris_intensity_profile_params(
         subject_name=subject_name,
         hemi=hemi,
@@ -321,7 +321,7 @@ def mris_intensity_profile(
         dst=dst,
         invert_flag=invert_flag,
     )
-    return mris_intensity_profile_execute(params, execution)
+    return mris_intensity_profile_execute(params, runner)
 
 
 __all__ = [
@@ -329,8 +329,6 @@ __all__ = [
     "MrisIntensityProfileOutputs",
     "MrisIntensityProfileParameters",
     "mris_intensity_profile",
-    "mris_intensity_profile_cargs",
     "mris_intensity_profile_execute",
-    "mris_intensity_profile_outputs",
     "mris_intensity_profile_params",
 ]

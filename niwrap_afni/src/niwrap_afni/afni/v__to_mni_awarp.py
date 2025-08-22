@@ -126,7 +126,7 @@ def v__to_mni_awarp_outputs(
 
 def v__to_mni_awarp_execute(
     params: VToMniAwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VToMniAwarpOutputs:
     """
     Transforms skull-stripped datasets to 1x1x1 mm MNI space using an affine
@@ -138,10 +138,12 @@ def v__to_mni_awarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VToMniAwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__TO_MNI_AWARP_METADATA)
     params = execution.params(params)
     cargs = v__to_mni_awarp_cargs(params, execution)
     ret = v__to_mni_awarp_outputs(params, execution)
@@ -170,13 +172,11 @@ def v__to_mni_awarp(
     Returns:
         NamedTuple of outputs (described in `VToMniAwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__TO_MNI_AWARP_METADATA)
     params = v__to_mni_awarp_params(
         directory=directory,
         datasets=datasets,
     )
-    return v__to_mni_awarp_execute(params, execution)
+    return v__to_mni_awarp_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "VToMniAwarpParameters",
     "V__TO_MNI_AWARP_METADATA",
     "v__to_mni_awarp",
-    "v__to_mni_awarp_cargs",
     "v__to_mni_awarp_execute",
-    "v__to_mni_awarp_outputs",
     "v__to_mni_awarp_params",
 ]

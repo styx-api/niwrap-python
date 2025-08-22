@@ -125,7 +125,7 @@ def mri_topologycorrection_outputs(
 
 def mri_topologycorrection_execute(
     params: MriTopologycorrectionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriTopologycorrectionOutputs:
     """
     Corrects the topology of segmented MRI images.
@@ -136,10 +136,12 @@ def mri_topologycorrection_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriTopologycorrectionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_TOPOLOGYCORRECTION_METADATA)
     params = execution.params(params)
     cargs = mri_topologycorrection_cargs(params, execution)
     ret = mri_topologycorrection_outputs(params, execution)
@@ -166,13 +168,11 @@ def mri_topologycorrection(
     Returns:
         NamedTuple of outputs (described in `MriTopologycorrectionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_TOPOLOGYCORRECTION_METADATA)
     params = mri_topologycorrection_params(
         input_orig_file=input_orig_file,
         input_segmented_file=input_segmented_file,
     )
-    return mri_topologycorrection_execute(params, execution)
+    return mri_topologycorrection_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MriTopologycorrectionOutputs",
     "MriTopologycorrectionParameters",
     "mri_topologycorrection",
-    "mri_topologycorrection_cargs",
     "mri_topologycorrection_execute",
-    "mri_topologycorrection_outputs",
     "mri_topologycorrection_params",
 ]

@@ -173,7 +173,7 @@ def map_track_id_outputs(
 
 def map_track_id_execute(
     params: MapTrackIdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MapTrackIdOutputs:
     """
     Maps the track file (*.trk) output of 3dTrackID to another space using the
@@ -185,10 +185,12 @@ def map_track_id_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MapTrackIdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAP_TRACK_ID_METADATA)
     params = execution.params(params)
     cargs = map_track_id_cargs(params, execution)
     ret = map_track_id_outputs(params, execution)
@@ -230,8 +232,6 @@ def map_track_id(
     Returns:
         NamedTuple of outputs (described in `MapTrackIdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAP_TRACK_ID_METADATA)
     params = map_track_id_params(
         prefix=prefix,
         in_trk=in_trk,
@@ -242,7 +242,7 @@ def map_track_id(
         line_only_num=line_only_num,
         already_inv=already_inv,
     )
-    return map_track_id_execute(params, execution)
+    return map_track_id_execute(params, runner)
 
 
 __all__ = [
@@ -250,8 +250,6 @@ __all__ = [
     "MapTrackIdOutputs",
     "MapTrackIdParameters",
     "map_track_id",
-    "map_track_id_cargs",
     "map_track_id_execute",
-    "map_track_id_outputs",
     "map_track_id_params",
 ]

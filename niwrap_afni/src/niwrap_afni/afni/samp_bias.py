@@ -183,7 +183,7 @@ def samp_bias_outputs(
 
 def samp_bias_execute(
     params: SampBiasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SampBiasOutputs:
     """
     SampBias is a tool for sampling bias resultant segments between paired nodes on
@@ -195,10 +195,12 @@ def samp_bias_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SampBiasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SAMP_BIAS_METADATA)
     params = execution.params(params)
     cargs = samp_bias_cargs(params, execution)
     ret = samp_bias_outputs(params, execution)
@@ -237,8 +239,6 @@ def samp_bias(
     Returns:
         NamedTuple of outputs (described in `SampBiasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SAMP_BIAS_METADATA)
     params = samp_bias_params(
         specfile=specfile,
         surfname=surfname,
@@ -248,7 +248,7 @@ def samp_bias(
         prefix=prefix,
         segdo=segdo,
     )
-    return samp_bias_execute(params, execution)
+    return samp_bias_execute(params, runner)
 
 
 __all__ = [
@@ -256,8 +256,6 @@ __all__ = [
     "SampBiasOutputs",
     "SampBiasParameters",
     "samp_bias",
-    "samp_bias_cargs",
     "samp_bias_execute",
-    "samp_bias_outputs",
     "samp_bias_params",
 ]

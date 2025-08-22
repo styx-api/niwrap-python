@@ -121,7 +121,7 @@ def morph_tables_rh_outputs(
 
 def morph_tables_rh_execute(
     params: MorphTablesRhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphTablesRhOutputs:
     """
     A tool from Freesurfer associated with morphological tables for the right
@@ -133,10 +133,12 @@ def morph_tables_rh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphTablesRhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_TABLES_RH_METADATA)
     params = execution.params(params)
     cargs = morph_tables_rh_cargs(params, execution)
     ret = morph_tables_rh_outputs(params, execution)
@@ -162,12 +164,10 @@ def morph_tables_rh(
     Returns:
         NamedTuple of outputs (described in `MorphTablesRhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_TABLES_RH_METADATA)
     params = morph_tables_rh_params(
         options=options,
     )
-    return morph_tables_rh_execute(params, execution)
+    return morph_tables_rh_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "MorphTablesRhOutputs",
     "MorphTablesRhParameters",
     "morph_tables_rh",
-    "morph_tables_rh_cargs",
     "morph_tables_rh_execute",
-    "morph_tables_rh_outputs",
     "morph_tables_rh_params",
 ]

@@ -165,7 +165,7 @@ def fslascii2img_outputs(
 
 def fslascii2img_execute(
     params: Fslascii2imgParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fslascii2imgOutputs:
     """
     Convert data from ASCII format to NIfTI format.
@@ -176,10 +176,12 @@ def fslascii2img_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fslascii2imgOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLASCII2IMG_METADATA)
     params = execution.params(params)
     cargs = fslascii2img_cargs(params, execution)
     ret = fslascii2img_outputs(params, execution)
@@ -222,8 +224,6 @@ def fslascii2img(
     Returns:
         NamedTuple of outputs (described in `Fslascii2imgOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLASCII2IMG_METADATA)
     params = fslascii2img_params(
         infile=infile,
         xsize=xsize,
@@ -236,7 +236,7 @@ def fslascii2img(
         tr=tr,
         outfile=outfile,
     )
-    return fslascii2img_execute(params, execution)
+    return fslascii2img_execute(params, runner)
 
 
 __all__ = [
@@ -244,8 +244,6 @@ __all__ = [
     "Fslascii2imgOutputs",
     "Fslascii2imgParameters",
     "fslascii2img",
-    "fslascii2img_cargs",
     "fslascii2img_execute",
-    "fslascii2img_outputs",
     "fslascii2img_params",
 ]

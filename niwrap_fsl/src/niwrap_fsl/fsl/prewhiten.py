@@ -131,7 +131,7 @@ def prewhiten_outputs(
 
 def prewhiten_execute(
     params: PrewhitenParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PrewhitenOutputs:
     """
     Prewhitening tool for FEAT directories.
@@ -142,10 +142,12 @@ def prewhiten_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PrewhitenOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PREWHITEN_METADATA)
     params = execution.params(params)
     cargs = prewhiten_cargs(params, execution)
     ret = prewhiten_outputs(params, execution)
@@ -173,13 +175,11 @@ def prewhiten(
     Returns:
         NamedTuple of outputs (described in `PrewhitenOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PREWHITEN_METADATA)
     params = prewhiten_params(
         feat_directory=feat_directory,
         output_directory=output_directory,
     )
-    return prewhiten_execute(params, execution)
+    return prewhiten_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "PrewhitenOutputs",
     "PrewhitenParameters",
     "prewhiten",
-    "prewhiten_cargs",
     "prewhiten_execute",
-    "prewhiten_outputs",
     "prewhiten_params",
 ]

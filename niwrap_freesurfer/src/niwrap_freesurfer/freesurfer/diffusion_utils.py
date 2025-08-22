@@ -118,7 +118,7 @@ def diffusion_utils_outputs(
 
 def diffusion_utils_execute(
     params: DiffusionUtilsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DiffusionUtilsOutputs:
     """
     A utility related to diffusion data, potentially using the DIPY library.
@@ -129,10 +129,12 @@ def diffusion_utils_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DiffusionUtilsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DIFFUSION_UTILS_METADATA)
     params = execution.params(params)
     cargs = diffusion_utils_cargs(params, execution)
     ret = diffusion_utils_outputs(params, execution)
@@ -158,12 +160,10 @@ def diffusion_utils(
     Returns:
         NamedTuple of outputs (described in `DiffusionUtilsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DIFFUSION_UTILS_METADATA)
     params = diffusion_utils_params(
         dummy_flag=dummy_flag,
     )
-    return diffusion_utils_execute(params, execution)
+    return diffusion_utils_execute(params, runner)
 
 
 __all__ = [
@@ -171,8 +171,6 @@ __all__ = [
     "DiffusionUtilsOutputs",
     "DiffusionUtilsParameters",
     "diffusion_utils",
-    "diffusion_utils_cargs",
     "diffusion_utils_execute",
-    "diffusion_utils_outputs",
     "diffusion_utils_params",
 ]

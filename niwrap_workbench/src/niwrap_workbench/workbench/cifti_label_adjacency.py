@@ -159,7 +159,7 @@ def cifti_label_adjacency_outputs(
 
 def cifti_label_adjacency_execute(
     params: CiftiLabelAdjacencyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiLabelAdjacencyOutputs:
     """
     Make adjacency matrix of a cifti label file.
@@ -175,10 +175,12 @@ def cifti_label_adjacency_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiLabelAdjacencyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_LABEL_ADJACENCY_METADATA)
     params = execution.params(params)
     cargs = cifti_label_adjacency_cargs(params, execution)
     ret = cifti_label_adjacency_outputs(params, execution)
@@ -219,8 +221,6 @@ def cifti_label_adjacency(
     Returns:
         NamedTuple of outputs (described in `CiftiLabelAdjacencyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_LABEL_ADJACENCY_METADATA)
     params = cifti_label_adjacency_params(
         label_in=label_in,
         adjacency_out=adjacency_out,
@@ -228,7 +228,7 @@ def cifti_label_adjacency(
         opt_right_surface_surface=opt_right_surface_surface,
         opt_cerebellum_surface_surface=opt_cerebellum_surface_surface,
     )
-    return cifti_label_adjacency_execute(params, execution)
+    return cifti_label_adjacency_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "CiftiLabelAdjacencyOutputs",
     "CiftiLabelAdjacencyParameters",
     "cifti_label_adjacency",
-    "cifti_label_adjacency_cargs",
     "cifti_label_adjacency_execute",
-    "cifti_label_adjacency_outputs",
     "cifti_label_adjacency_params",
 ]

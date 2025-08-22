@@ -199,7 +199,7 @@ def surf_extrema_outputs(
 
 def surf_extrema_execute(
     params: SurfExtremaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfExtremaOutputs:
     """
     A program finding the local extrema in a dataset.
@@ -210,10 +210,12 @@ def surf_extrema_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfExtremaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_EXTREMA_METADATA)
     params = execution.params(params)
     cargs = surf_extrema_cargs(params, execution)
     ret = surf_extrema_outputs(params, execution)
@@ -255,8 +257,6 @@ def surf_extrema(
     Returns:
         NamedTuple of outputs (described in `SurfExtremaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_EXTREMA_METADATA)
     params = surf_extrema_params(
         input_=input_,
         hood=hood,
@@ -267,7 +267,7 @@ def surf_extrema(
         prefix=prefix,
         table=table,
     )
-    return surf_extrema_execute(params, execution)
+    return surf_extrema_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "SurfExtremaOutputs",
     "SurfExtremaParameters",
     "surf_extrema",
-    "surf_extrema_cargs",
     "surf_extrema_execute",
-    "surf_extrema_outputs",
     "surf_extrema_params",
 ]

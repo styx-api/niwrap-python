@@ -197,7 +197,7 @@ def volume_capture_plane_outputs(
 
 def volume_capture_plane_execute(
     params: VolumeCapturePlaneParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeCapturePlaneOutputs:
     """
     Interpolate image from plane through volume.
@@ -218,10 +218,12 @@ def volume_capture_plane_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeCapturePlaneOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_CAPTURE_PLANE_METADATA)
     params = execution.params(params)
     cargs = volume_capture_plane_cargs(params, execution)
     ret = volume_capture_plane_outputs(params, execution)
@@ -288,8 +290,6 @@ def volume_capture_plane(
     Returns:
         NamedTuple of outputs (described in `VolumeCapturePlaneOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_CAPTURE_PLANE_METADATA)
     params = volume_capture_plane_params(
         volume=volume,
         subvolume=subvolume,
@@ -309,7 +309,7 @@ def volume_capture_plane(
         top_left_z=top_left_z,
         image=image,
     )
-    return volume_capture_plane_execute(params, execution)
+    return volume_capture_plane_execute(params, runner)
 
 
 __all__ = [
@@ -317,8 +317,6 @@ __all__ = [
     "VolumeCapturePlaneOutputs",
     "VolumeCapturePlaneParameters",
     "volume_capture_plane",
-    "volume_capture_plane_cargs",
     "volume_capture_plane_execute",
-    "volume_capture_plane_outputs",
     "volume_capture_plane_params",
 ]

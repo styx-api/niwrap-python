@@ -298,7 +298,7 @@ def mri_label2vol_outputs(
 
 def mri_label2vol_execute(
     params: MriLabel2volParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriLabel2volOutputs:
     """
     Converts a label or a set of labels into a volume.
@@ -309,10 +309,12 @@ def mri_label2vol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriLabel2volOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_LABEL2VOL_METADATA)
     params = execution.params(params)
     cargs = mri_label2vol_cargs(params, execution)
     ret = mri_label2vol_outputs(params, execution)
@@ -380,8 +382,6 @@ def mri_label2vol(
     Returns:
         NamedTuple of outputs (described in `MriLabel2volOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_LABEL2VOL_METADATA)
     params = mri_label2vol_params(
         labels=labels,
         annotation=annotation,
@@ -402,7 +402,7 @@ def mri_label2vol(
         defects=defects,
         native_vox2ras_flag=native_vox2ras_flag,
     )
-    return mri_label2vol_execute(params, execution)
+    return mri_label2vol_execute(params, runner)
 
 
 __all__ = [
@@ -410,8 +410,6 @@ __all__ = [
     "MriLabel2volOutputs",
     "MriLabel2volParameters",
     "mri_label2vol",
-    "mri_label2vol_cargs",
     "mri_label2vol_execute",
-    "mri_label2vol_outputs",
     "mri_label2vol_params",
 ]

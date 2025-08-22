@@ -1115,7 +1115,7 @@ def mrconvert_outputs(
 
 def mrconvert_execute(
     params: MrconvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrconvertOutputs:
     """
     Perform conversion between different file types and optionally extract a subset
@@ -1175,10 +1175,12 @@ def mrconvert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrconvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRCONVERT_METADATA)
     params = execution.params(params)
     cargs = mrconvert_cargs(params, execution)
     ret = mrconvert_outputs(params, execution)
@@ -1348,8 +1350,6 @@ def mrconvert(
     Returns:
         NamedTuple of outputs (described in `MrconvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRCONVERT_METADATA)
     params = mrconvert_params(
         coord=coord,
         vox=vox,
@@ -1383,7 +1383,7 @@ def mrconvert(
         input_=input_,
         output=output,
     )
-    return mrconvert_execute(params, execution)
+    return mrconvert_execute(params, runner)
 
 
 __all__ = [
@@ -1406,36 +1406,19 @@ __all__ = [
     "MrconvertVariousString1Parameters",
     "MrconvertVariousStringParameters",
     "mrconvert",
-    "mrconvert_append_property_cargs",
     "mrconvert_append_property_params",
-    "mrconvert_cargs",
-    "mrconvert_clear_property_cargs",
     "mrconvert_clear_property_params",
-    "mrconvert_config_cargs",
     "mrconvert_config_params",
-    "mrconvert_coord_cargs",
     "mrconvert_coord_params",
     "mrconvert_execute",
-    "mrconvert_export_grad_fsl_cargs",
-    "mrconvert_export_grad_fsl_outputs",
     "mrconvert_export_grad_fsl_params",
-    "mrconvert_export_pe_eddy_cargs",
-    "mrconvert_export_pe_eddy_outputs",
     "mrconvert_export_pe_eddy_params",
-    "mrconvert_fslgrad_cargs",
     "mrconvert_fslgrad_params",
-    "mrconvert_import_pe_eddy_cargs",
     "mrconvert_import_pe_eddy_params",
-    "mrconvert_outputs",
     "mrconvert_params",
-    "mrconvert_set_property_cargs",
     "mrconvert_set_property_params",
-    "mrconvert_various_file_1_cargs",
     "mrconvert_various_file_1_params",
-    "mrconvert_various_file_cargs",
     "mrconvert_various_file_params",
-    "mrconvert_various_string_1_cargs",
     "mrconvert_various_string_1_params",
-    "mrconvert_various_string_cargs",
     "mrconvert_various_string_params",
 ]

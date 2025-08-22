@@ -219,7 +219,7 @@ def ants_introduction_sh_outputs(
 
 def ants_introduction_sh_execute(
     params: AntsIntroductionShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsIntroductionShOutputs:
     """
     Script for registration using ANTS with compulsory and optional arguments.
@@ -230,10 +230,12 @@ def ants_introduction_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsIntroductionShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_INTRODUCTION_SH_METADATA)
     params = execution.params(params)
     cargs = ants_introduction_sh_cargs(params, execution)
     ret = ants_introduction_sh_outputs(params, execution)
@@ -282,8 +284,6 @@ def ants_introduction_sh(
     Returns:
         NamedTuple of outputs (described in `AntsIntroductionShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_INTRODUCTION_SH_METADATA)
     params = ants_introduction_sh_params(
         image_dimension=image_dimension,
         reference_image=reference_image,
@@ -297,7 +297,7 @@ def ants_introduction_sh(
         similarity_metric=similarity_metric,
         transformation_model=transformation_model,
     )
-    return ants_introduction_sh_execute(params, execution)
+    return ants_introduction_sh_execute(params, runner)
 
 
 __all__ = [
@@ -305,8 +305,6 @@ __all__ = [
     "AntsIntroductionShOutputs",
     "AntsIntroductionShParameters",
     "ants_introduction_sh",
-    "ants_introduction_sh_cargs",
     "ants_introduction_sh_execute",
-    "ants_introduction_sh_outputs",
     "ants_introduction_sh_params",
 ]

@@ -249,7 +249,7 @@ def mri_seghead_outputs(
 
 def mri_seghead_execute(
     params: MriSegheadParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegheadOutputs:
     """
     Binarizes an input volume to identify the head's voxels.
@@ -260,10 +260,12 @@ def mri_seghead_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegheadOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEGHEAD_METADATA)
     params = execution.params(params)
     cargs = mri_seghead_cargs(params, execution)
     ret = mri_seghead_outputs(params, execution)
@@ -320,8 +322,6 @@ def mri_seghead(
     Returns:
         NamedTuple of outputs (described in `MriSegheadOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEGHEAD_METADATA)
     params = mri_seghead_params(
         input_volume=input_volume,
         output_volume=output_volume,
@@ -339,7 +339,7 @@ def mri_seghead(
         or_mask_file=or_mask_file,
         gdiag_option=gdiag_option,
     )
-    return mri_seghead_execute(params, execution)
+    return mri_seghead_execute(params, runner)
 
 
 __all__ = [
@@ -347,8 +347,6 @@ __all__ = [
     "MriSegheadOutputs",
     "MriSegheadParameters",
     "mri_seghead",
-    "mri_seghead_cargs",
     "mri_seghead_execute",
-    "mri_seghead_outputs",
     "mri_seghead_params",
 ]

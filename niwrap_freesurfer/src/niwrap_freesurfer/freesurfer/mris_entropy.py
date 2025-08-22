@@ -152,7 +152,7 @@ def mris_entropy_outputs(
 
 def mris_entropy_execute(
     params: MrisEntropyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisEntropyOutputs:
     """
     Computes the entropy of a surface activation pattern for FreeSurfer.
@@ -163,10 +163,12 @@ def mris_entropy_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisEntropyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ENTROPY_METADATA)
     params = execution.params(params)
     cargs = mris_entropy_cargs(params, execution)
     ret = mris_entropy_outputs(params, execution)
@@ -202,8 +204,6 @@ def mris_entropy(
     Returns:
         NamedTuple of outputs (described in `MrisEntropyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ENTROPY_METADATA)
     params = mris_entropy_params(
         subject=subject,
         hemi=hemi,
@@ -212,7 +212,7 @@ def mris_entropy(
         average_iterations=average_iterations,
         normalize=normalize,
     )
-    return mris_entropy_execute(params, execution)
+    return mris_entropy_execute(params, runner)
 
 
 __all__ = [
@@ -220,8 +220,6 @@ __all__ = [
     "MrisEntropyOutputs",
     "MrisEntropyParameters",
     "mris_entropy",
-    "mris_entropy_cargs",
     "mris_entropy_execute",
-    "mris_entropy_outputs",
     "mris_entropy_params",
 ]

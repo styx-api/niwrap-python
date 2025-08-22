@@ -199,7 +199,7 @@ def mri_concatenate_lta_outputs(
 
 def mri_concatenate_lta_execute(
     params: MriConcatenateLtaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriConcatenateLtaOutputs:
     """
     Concatenates two consecutive LTA transformations into one overall
@@ -211,10 +211,12 @@ def mri_concatenate_lta_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriConcatenateLtaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CONCATENATE_LTA_METADATA)
     params = execution.params(params)
     cargs = mri_concatenate_lta_cargs(params, execution)
     ret = mri_concatenate_lta_outputs(params, execution)
@@ -263,8 +265,6 @@ def mri_concatenate_lta(
     Returns:
         NamedTuple of outputs (described in `MriConcatenateLtaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CONCATENATE_LTA_METADATA)
     params = mri_concatenate_lta_params(
         lta_1=lta_1,
         lta_2=lta_2,
@@ -279,7 +279,7 @@ def mri_concatenate_lta(
         rmsdiff_radius=rmsdiff_radius,
         rmsdiff_outputfile=rmsdiff_outputfile,
     )
-    return mri_concatenate_lta_execute(params, execution)
+    return mri_concatenate_lta_execute(params, runner)
 
 
 __all__ = [
@@ -287,8 +287,6 @@ __all__ = [
     "MriConcatenateLtaOutputs",
     "MriConcatenateLtaParameters",
     "mri_concatenate_lta",
-    "mri_concatenate_lta_cargs",
     "mri_concatenate_lta_execute",
-    "mri_concatenate_lta_outputs",
     "mri_concatenate_lta_params",
 ]

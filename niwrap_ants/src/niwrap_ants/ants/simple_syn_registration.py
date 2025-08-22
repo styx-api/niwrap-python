@@ -138,7 +138,7 @@ def simple_syn_registration_outputs(
 
 def simple_syn_registration_execute(
     params: SimpleSynRegistrationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SimpleSynRegistrationOutputs:
     """
     A simple SyN registration tool.
@@ -149,10 +149,12 @@ def simple_syn_registration_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SimpleSynRegistrationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIMPLE_SYN_REGISTRATION_METADATA)
     params = execution.params(params)
     cargs = simple_syn_registration_cargs(params, execution)
     ret = simple_syn_registration_outputs(params, execution)
@@ -183,15 +185,13 @@ def simple_syn_registration(
     Returns:
         NamedTuple of outputs (described in `SimpleSynRegistrationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIMPLE_SYN_REGISTRATION_METADATA)
     params = simple_syn_registration_params(
         fixed_image=fixed_image,
         moving_image=moving_image,
         initial_transform=initial_transform,
         output_prefix=output_prefix,
     )
-    return simple_syn_registration_execute(params, execution)
+    return simple_syn_registration_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "SimpleSynRegistrationOutputs",
     "SimpleSynRegistrationParameters",
     "simple_syn_registration",
-    "simple_syn_registration_cargs",
     "simple_syn_registration_execute",
-    "simple_syn_registration_outputs",
     "simple_syn_registration_params",
 ]

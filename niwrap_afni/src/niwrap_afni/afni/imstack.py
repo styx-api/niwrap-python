@@ -145,7 +145,7 @@ def imstack_outputs(
 
 def imstack_execute(
     params: ImstackParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImstackOutputs:
     """
     Stacks up a set of 2D images into one big file (a la MGH).
@@ -156,10 +156,12 @@ def imstack_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImstackOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMSTACK_METADATA)
     params = execution.params(params)
     cargs = imstack_cargs(params, execution)
     ret = imstack_outputs(params, execution)
@@ -190,14 +192,12 @@ def imstack(
     Returns:
         NamedTuple of outputs (described in `ImstackOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMSTACK_METADATA)
     params = imstack_params(
         image_files=image_files,
         data_type=data_type,
         output_prefix=output_prefix,
     )
-    return imstack_execute(params, execution)
+    return imstack_execute(params, runner)
 
 
 __all__ = [
@@ -205,8 +205,6 @@ __all__ = [
     "ImstackOutputs",
     "ImstackParameters",
     "imstack",
-    "imstack_cargs",
     "imstack_execute",
-    "imstack_outputs",
     "imstack_params",
 ]

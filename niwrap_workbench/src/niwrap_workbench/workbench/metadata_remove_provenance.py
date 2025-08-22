@@ -122,7 +122,7 @@ def metadata_remove_provenance_outputs(
 
 def metadata_remove_provenance_execute(
     params: MetadataRemoveProvenanceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetadataRemoveProvenanceOutputs:
     """
     Remove provenance information from file metadata.
@@ -135,10 +135,12 @@ def metadata_remove_provenance_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetadataRemoveProvenanceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METADATA_REMOVE_PROVENANCE_METADATA)
     params = execution.params(params)
     cargs = metadata_remove_provenance_cargs(params, execution)
     ret = metadata_remove_provenance_outputs(params, execution)
@@ -167,13 +169,11 @@ def metadata_remove_provenance(
     Returns:
         NamedTuple of outputs (described in `MetadataRemoveProvenanceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METADATA_REMOVE_PROVENANCE_METADATA)
     params = metadata_remove_provenance_params(
         input_file=input_file,
         output_file=output_file,
     )
-    return metadata_remove_provenance_execute(params, execution)
+    return metadata_remove_provenance_execute(params, runner)
 
 
 __all__ = [
@@ -181,8 +181,6 @@ __all__ = [
     "MetadataRemoveProvenanceOutputs",
     "MetadataRemoveProvenanceParameters",
     "metadata_remove_provenance",
-    "metadata_remove_provenance_cargs",
     "metadata_remove_provenance_execute",
-    "metadata_remove_provenance_outputs",
     "metadata_remove_provenance_params",
 ]

@@ -139,7 +139,7 @@ def v_3d_overlap_outputs(
 
 def v_3d_overlap_execute(
     params: V3dOverlapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dOverlapOutputs:
     """
     Counts the number of voxels that are nonzero in all input datasets.
@@ -150,10 +150,12 @@ def v_3d_overlap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dOverlapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_OVERLAP_METADATA)
     params = execution.params(params)
     cargs = v_3d_overlap_cargs(params, execution)
     ret = v_3d_overlap_outputs(params, execution)
@@ -183,14 +185,12 @@ def v_3d_overlap(
     Returns:
         NamedTuple of outputs (described in `V3dOverlapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_OVERLAP_METADATA)
     params = v_3d_overlap_params(
         dataset1=dataset1,
         dataset2=dataset2,
         save_prefix=save_prefix,
     )
-    return v_3d_overlap_execute(params, execution)
+    return v_3d_overlap_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "V3dOverlapParameters",
     "V_3D_OVERLAP_METADATA",
     "v_3d_overlap",
-    "v_3d_overlap_cargs",
     "v_3d_overlap_execute",
-    "v_3d_overlap_outputs",
     "v_3d_overlap_params",
 ]

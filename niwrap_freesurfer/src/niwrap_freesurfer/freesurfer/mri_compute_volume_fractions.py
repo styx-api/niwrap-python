@@ -345,7 +345,7 @@ def mri_compute_volume_fractions_outputs(
 
 def mri_compute_volume_fractions_execute(
     params: MriComputeVolumeFractionsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeVolumeFractionsOutputs:
     """
     Computes partial volume fractions for cortex, subcortical GM, WM and CSF.
@@ -356,10 +356,12 @@ def mri_compute_volume_fractions_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeVolumeFractionsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_VOLUME_FRACTIONS_METADATA)
     params = execution.params(params)
     cargs = mri_compute_volume_fractions_cargs(params, execution)
     ret = mri_compute_volume_fractions_outputs(params, execution)
@@ -441,8 +443,6 @@ def mri_compute_volume_fractions(
     Returns:
         NamedTuple of outputs (described in `MriComputeVolumeFractionsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_VOLUME_FRACTIONS_METADATA)
     params = mri_compute_volume_fractions_params(
         output_stem=output_stem,
         registration_file=registration_file,
@@ -470,7 +470,7 @@ def mri_compute_volume_fractions(
         debug=debug,
         checkopts=checkopts,
     )
-    return mri_compute_volume_fractions_execute(params, execution)
+    return mri_compute_volume_fractions_execute(params, runner)
 
 
 __all__ = [
@@ -478,8 +478,6 @@ __all__ = [
     "MriComputeVolumeFractionsOutputs",
     "MriComputeVolumeFractionsParameters",
     "mri_compute_volume_fractions",
-    "mri_compute_volume_fractions_cargs",
     "mri_compute_volume_fractions_execute",
-    "mri_compute_volume_fractions_outputs",
     "mri_compute_volume_fractions_params",
 ]

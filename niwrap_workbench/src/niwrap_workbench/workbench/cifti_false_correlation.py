@@ -327,7 +327,7 @@ def cifti_false_correlation_outputs(
 
 def cifti_false_correlation_execute(
     params: CiftiFalseCorrelationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiFalseCorrelationOutputs:
     """
     Compare correlation locally and across/through sulci/gyri.
@@ -345,10 +345,12 @@ def cifti_false_correlation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiFalseCorrelationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_FALSE_CORRELATION_METADATA)
     params = execution.params(params)
     cargs = cifti_false_correlation_cargs(params, execution)
     ret = cifti_false_correlation_outputs(params, execution)
@@ -394,8 +396,6 @@ def cifti_false_correlation(
     Returns:
         NamedTuple of outputs (described in `CiftiFalseCorrelationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_FALSE_CORRELATION_METADATA)
     params = cifti_false_correlation_params(
         cifti_in=cifti_in,
         v_3d_dist=v_3d_dist,
@@ -406,7 +406,7 @@ def cifti_false_correlation(
         right_surface=right_surface,
         cerebellum_surface=cerebellum_surface,
     )
-    return cifti_false_correlation_execute(params, execution)
+    return cifti_false_correlation_execute(params, runner)
 
 
 __all__ = [
@@ -417,14 +417,9 @@ __all__ = [
     "CiftiFalseCorrelationParameters",
     "CiftiFalseCorrelationRightSurfaceParameters",
     "cifti_false_correlation",
-    "cifti_false_correlation_cargs",
-    "cifti_false_correlation_cerebellum_surface_cargs",
     "cifti_false_correlation_cerebellum_surface_params",
     "cifti_false_correlation_execute",
-    "cifti_false_correlation_left_surface_cargs",
     "cifti_false_correlation_left_surface_params",
-    "cifti_false_correlation_outputs",
     "cifti_false_correlation_params",
-    "cifti_false_correlation_right_surface_cargs",
     "cifti_false_correlation_right_surface_params",
 ]

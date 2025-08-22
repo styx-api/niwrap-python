@@ -132,7 +132,7 @@ def images_equal_outputs(
 
 def images_equal_execute(
     params: ImagesEqualParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImagesEqualOutputs:
     """
     A simple program to test if two 2D images are identical.
@@ -143,10 +143,12 @@ def images_equal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImagesEqualOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMAGES_EQUAL_METADATA)
     params = execution.params(params)
     cargs = images_equal_cargs(params, execution)
     ret = images_equal_outputs(params, execution)
@@ -176,14 +178,12 @@ def images_equal(
     Returns:
         NamedTuple of outputs (described in `ImagesEqualOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMAGES_EQUAL_METADATA)
     params = images_equal_params(
         file_a=file_a,
         file_b=file_b,
         all_flag=all_flag,
     )
-    return images_equal_execute(params, execution)
+    return images_equal_execute(params, runner)
 
 
 __all__ = [
@@ -191,8 +191,6 @@ __all__ = [
     "ImagesEqualOutputs",
     "ImagesEqualParameters",
     "images_equal",
-    "images_equal_cargs",
     "images_equal_execute",
-    "images_equal_outputs",
     "images_equal_params",
 ]

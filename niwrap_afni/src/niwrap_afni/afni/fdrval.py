@@ -162,7 +162,7 @@ def fdrval_outputs(
 
 def fdrval_execute(
     params: FdrvalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FdrvalOutputs:
     """
     Computes q-values from FDR curve data stored in dataset headers.
@@ -173,10 +173,12 @@ def fdrval_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FdrvalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FDRVAL_METADATA)
     params = execution.params(params)
     cargs = fdrval_cargs(params, execution)
     ret = fdrval_outputs(params, execution)
@@ -217,8 +219,6 @@ def fdrval(
     Returns:
         NamedTuple of outputs (described in `FdrvalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FDRVAL_METADATA)
     params = fdrval_params(
         dset=dset,
         sub=sub,
@@ -229,7 +229,7 @@ def fdrval(
         qinput=qinput,
         inverse=inverse,
     )
-    return fdrval_execute(params, execution)
+    return fdrval_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "FdrvalOutputs",
     "FdrvalParameters",
     "fdrval",
-    "fdrval_cargs",
     "fdrval_execute",
-    "fdrval_outputs",
     "fdrval_params",
 ]

@@ -213,7 +213,7 @@ def mris_spherical_average_outputs(
 
 def mris_spherical_average_execute(
     params: MrisSphericalAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSphericalAverageOutputs:
     """
     This tool adds a template into an average surface in FreeSurfer.
@@ -224,10 +224,12 @@ def mris_spherical_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSphericalAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SPHERICAL_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = mris_spherical_average_cargs(params, execution)
     ret = mris_spherical_average_outputs(params, execution)
@@ -282,8 +284,6 @@ def mris_spherical_average(
     Returns:
         NamedTuple of outputs (described in `MrisSphericalAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SPHERICAL_AVERAGE_METADATA)
     params = mris_spherical_average_params(
         which=which,
         fname=fname,
@@ -300,7 +300,7 @@ def mris_spherical_average(
         average_area=average_area,
         summary_statistics=summary_statistics,
     )
-    return mris_spherical_average_execute(params, execution)
+    return mris_spherical_average_execute(params, runner)
 
 
 __all__ = [
@@ -308,8 +308,6 @@ __all__ = [
     "MrisSphericalAverageOutputs",
     "MrisSphericalAverageParameters",
     "mris_spherical_average",
-    "mris_spherical_average_cargs",
     "mris_spherical_average_execute",
-    "mris_spherical_average_outputs",
     "mris_spherical_average_params",
 ]

@@ -339,7 +339,7 @@ def mri_entowm_seg_outputs(
 
 def mri_entowm_seg_execute(
     params: MriEntowmSegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriEntowmSegOutputs:
     """
     Segment white matter near gyrus ambiens entorhinal cortex using a deep learning
@@ -351,10 +351,12 @@ def mri_entowm_seg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriEntowmSegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_ENTOWM_SEG_METADATA)
     params = execution.params(params)
     cargs = mri_entowm_seg_cargs(params, execution)
     ret = mri_entowm_seg_outputs(params, execution)
@@ -437,8 +439,6 @@ def mri_entowm_seg(
     Returns:
         NamedTuple of outputs (described in `MriEntowmSegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_ENTOWM_SEG_METADATA)
     params = mri_entowm_seg_params(
         input_image=input_image,
         output_segmentation=output_segmentation,
@@ -466,7 +466,7 @@ def mri_entowm_seg(
         no_cite_sclimbic=no_cite_sclimbic,
         nchannels=nchannels,
     )
-    return mri_entowm_seg_execute(params, execution)
+    return mri_entowm_seg_execute(params, runner)
 
 
 __all__ = [
@@ -474,8 +474,6 @@ __all__ = [
     "MriEntowmSegOutputs",
     "MriEntowmSegParameters",
     "mri_entowm_seg",
-    "mri_entowm_seg_cargs",
     "mri_entowm_seg_execute",
-    "mri_entowm_seg_outputs",
     "mri_entowm_seg_params",
 ]

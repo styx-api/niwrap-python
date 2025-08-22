@@ -346,7 +346,7 @@ def avw2fsl_outputs(
 
 def avw2fsl_execute(
     params: Avw2fslParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Avw2fslOutputs:
     """
     Processing script to copy files and directories.
@@ -357,10 +357,12 @@ def avw2fsl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Avw2fslOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(AVW2FSL_METADATA)
     params = execution.params(params)
     cargs = avw2fsl_cargs(params, execution)
     ret = avw2fsl_outputs(params, execution)
@@ -464,8 +466,6 @@ def avw2fsl(
     Returns:
         NamedTuple of outputs (described in `Avw2fslOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(AVW2FSL_METADATA)
     params = avw2fsl_params(
         source=source,
         destination=destination,
@@ -504,7 +504,7 @@ def avw2fsl(
         help_=help_,
         version=version,
     )
-    return avw2fsl_execute(params, execution)
+    return avw2fsl_execute(params, runner)
 
 
 __all__ = [
@@ -512,8 +512,6 @@ __all__ = [
     "Avw2fslOutputs",
     "Avw2fslParameters",
     "avw2fsl",
-    "avw2fsl_cargs",
     "avw2fsl_execute",
-    "avw2fsl_outputs",
     "avw2fsl_params",
 ]

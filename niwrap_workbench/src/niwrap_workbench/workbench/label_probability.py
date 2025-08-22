@@ -135,7 +135,7 @@ def label_probability_outputs(
 
 def label_probability_execute(
     params: LabelProbabilityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelProbabilityOutputs:
     """
     Find frequency of surface labels.
@@ -150,10 +150,12 @@ def label_probability_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelProbabilityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_PROBABILITY_METADATA)
     params = execution.params(params)
     cargs = label_probability_cargs(params, execution)
     ret = label_probability_outputs(params, execution)
@@ -189,14 +191,12 @@ def label_probability(
     Returns:
         NamedTuple of outputs (described in `LabelProbabilityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_PROBABILITY_METADATA)
     params = label_probability_params(
         label_maps=label_maps,
         probability_metric_out=probability_metric_out,
         opt_exclude_unlabeled=opt_exclude_unlabeled,
     )
-    return label_probability_execute(params, execution)
+    return label_probability_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "LabelProbabilityOutputs",
     "LabelProbabilityParameters",
     "label_probability",
-    "label_probability_cargs",
     "label_probability_execute",
-    "label_probability_outputs",
     "label_probability_params",
 ]

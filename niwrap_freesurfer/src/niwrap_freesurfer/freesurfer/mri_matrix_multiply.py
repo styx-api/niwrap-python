@@ -170,7 +170,7 @@ def mri_matrix_multiply_outputs(
 
 def mri_matrix_multiply_execute(
     params: MriMatrixMultiplyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMatrixMultiplyOutputs:
     """
     Command-line tool for multiplying and manipulating MRI transformation matrices.
@@ -181,10 +181,12 @@ def mri_matrix_multiply_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMatrixMultiplyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MATRIX_MULTIPLY_METADATA)
     params = execution.params(params)
     cargs = mri_matrix_multiply_cargs(params, execution)
     ret = mri_matrix_multiply_outputs(params, execution)
@@ -222,8 +224,6 @@ def mri_matrix_multiply(
     Returns:
         NamedTuple of outputs (described in `MriMatrixMultiplyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MATRIX_MULTIPLY_METADATA)
     params = mri_matrix_multiply_params(
         input_matrices=input_matrices,
         inverted_input_matrices=inverted_input_matrices,
@@ -233,7 +233,7 @@ def mri_matrix_multiply(
         binarize=binarize,
         subject_name=subject_name,
     )
-    return mri_matrix_multiply_execute(params, execution)
+    return mri_matrix_multiply_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "MriMatrixMultiplyOutputs",
     "MriMatrixMultiplyParameters",
     "mri_matrix_multiply",
-    "mri_matrix_multiply_cargs",
     "mri_matrix_multiply_execute",
-    "mri_matrix_multiply_outputs",
     "mri_matrix_multiply_params",
 ]

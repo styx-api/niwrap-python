@@ -136,7 +136,7 @@ def mri_deface_outputs(
 
 def mri_deface_execute(
     params: MriDefaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriDefaceOutputs:
     """
     MRI Deface utility for removing facial features from MRI images.
@@ -147,10 +147,12 @@ def mri_deface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriDefaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_DEFACE_METADATA)
     params = execution.params(params)
     cargs = mri_deface_cargs(params, execution)
     ret = mri_deface_outputs(params, execution)
@@ -182,15 +184,13 @@ def mri_deface(
     Returns:
         NamedTuple of outputs (described in `MriDefaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_DEFACE_METADATA)
     params = mri_deface_params(
         input_volume=input_volume,
         brain_template=brain_template,
         face_template=face_template,
         output_volume=output_volume,
     )
-    return mri_deface_execute(params, execution)
+    return mri_deface_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "MriDefaceOutputs",
     "MriDefaceParameters",
     "mri_deface",
-    "mri_deface_cargs",
     "mri_deface_execute",
-    "mri_deface_outputs",
     "mri_deface_params",
 ]

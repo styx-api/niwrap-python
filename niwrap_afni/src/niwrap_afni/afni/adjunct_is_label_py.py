@@ -121,7 +121,7 @@ def adjunct_is_label_py_outputs(
 
 def adjunct_is_label_py_execute(
     params: AdjunctIsLabelPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctIsLabelPyOutputs:
     """
     A subsidiary script of the chauffeur_afni suite for label functionalities.
@@ -132,10 +132,12 @@ def adjunct_is_label_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctIsLabelPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_IS_LABEL_PY_METADATA)
     params = execution.params(params)
     cargs = adjunct_is_label_py_cargs(params, execution)
     ret = adjunct_is_label_py_outputs(params, execution)
@@ -162,13 +164,11 @@ def adjunct_is_label_py(
     Returns:
         NamedTuple of outputs (described in `AdjunctIsLabelPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_IS_LABEL_PY_METADATA)
     params = adjunct_is_label_py_params(
         infile=infile,
         label=label,
     )
-    return adjunct_is_label_py_execute(params, execution)
+    return adjunct_is_label_py_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "AdjunctIsLabelPyOutputs",
     "AdjunctIsLabelPyParameters",
     "adjunct_is_label_py",
-    "adjunct_is_label_py_cargs",
     "adjunct_is_label_py_execute",
-    "adjunct_is_label_py_outputs",
     "adjunct_is_label_py_params",
 ]

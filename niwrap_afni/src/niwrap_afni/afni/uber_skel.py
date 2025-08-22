@@ -189,7 +189,7 @@ def uber_skel_outputs(
 
 def uber_skel_execute(
     params: UberSkelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UberSkelOutputs:
     """
     Sample uber processing program for initializing user and control variables, with
@@ -201,10 +201,12 @@ def uber_skel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UberSkelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UBER_SKEL_METADATA)
     params = execution.params(params)
     cargs = uber_skel_cargs(params, execution)
     ret = uber_skel_outputs(params, execution)
@@ -250,8 +252,6 @@ def uber_skel(
     Returns:
         NamedTuple of outputs (described in `UberSkelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UBER_SKEL_METADATA)
     params = uber_skel_params(
         qt_options=qt_options,
         no_gui_flag=no_gui_flag,
@@ -265,7 +265,7 @@ def uber_skel(
         show_valid_opts=show_valid_opts,
         version=version,
     )
-    return uber_skel_execute(params, execution)
+    return uber_skel_execute(params, runner)
 
 
 __all__ = [
@@ -273,8 +273,6 @@ __all__ = [
     "UberSkelOutputs",
     "UberSkelParameters",
     "uber_skel",
-    "uber_skel_cargs",
     "uber_skel_execute",
-    "uber_skel_outputs",
     "uber_skel_params",
 ]

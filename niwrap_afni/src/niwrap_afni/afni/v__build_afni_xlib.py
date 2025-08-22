@@ -148,7 +148,7 @@ def v__build_afni_xlib_outputs(
 
 def v__build_afni_xlib_execute(
     params: VBuildAfniXlibParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VBuildAfniXlibOutputs:
     """
     Compile and install lesstif, openmotif, and/or libXt.
@@ -159,10 +159,12 @@ def v__build_afni_xlib_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VBuildAfniXlibOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__BUILD_AFNI_XLIB_METADATA)
     params = execution.params(params)
     cargs = v__build_afni_xlib_cargs(params, execution)
     ret = v__build_afni_xlib_outputs(params, execution)
@@ -199,8 +201,6 @@ def v__build_afni_xlib(
     Returns:
         NamedTuple of outputs (described in `VBuildAfniXlibOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__BUILD_AFNI_XLIB_METADATA)
     params = v__build_afni_xlib_params(
         afni_x=afni_x,
         localinstall=localinstall,
@@ -209,7 +209,7 @@ def v__build_afni_xlib(
         lib64=lib64,
         packages=packages,
     )
-    return v__build_afni_xlib_execute(params, execution)
+    return v__build_afni_xlib_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "VBuildAfniXlibParameters",
     "V__BUILD_AFNI_XLIB_METADATA",
     "v__build_afni_xlib",
-    "v__build_afni_xlib_cargs",
     "v__build_afni_xlib_execute",
-    "v__build_afni_xlib_outputs",
     "v__build_afni_xlib_params",
 ]

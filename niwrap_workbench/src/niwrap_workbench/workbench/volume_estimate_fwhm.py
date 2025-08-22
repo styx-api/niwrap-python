@@ -192,7 +192,7 @@ def volume_estimate_fwhm_outputs(
 
 def volume_estimate_fwhm_execute(
     params: VolumeEstimateFwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeEstimateFwhmOutputs:
     """
     Estimate fwhm smoothness of a volume.
@@ -208,10 +208,12 @@ def volume_estimate_fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeEstimateFwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_ESTIMATE_FWHM_METADATA)
     params = execution.params(params)
     cargs = volume_estimate_fwhm_cargs(params, execution)
     ret = volume_estimate_fwhm_outputs(params, execution)
@@ -250,15 +252,13 @@ def volume_estimate_fwhm(
     Returns:
         NamedTuple of outputs (described in `VolumeEstimateFwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_ESTIMATE_FWHM_METADATA)
     params = volume_estimate_fwhm_params(
         volume=volume,
         opt_roi_roivol=opt_roi_roivol,
         opt_subvolume_subvol=opt_subvolume_subvol,
         whole_file=whole_file,
     )
-    return volume_estimate_fwhm_execute(params, execution)
+    return volume_estimate_fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -267,10 +267,7 @@ __all__ = [
     "VolumeEstimateFwhmParameters",
     "VolumeEstimateFwhmWholeFileParameters",
     "volume_estimate_fwhm",
-    "volume_estimate_fwhm_cargs",
     "volume_estimate_fwhm_execute",
-    "volume_estimate_fwhm_outputs",
     "volume_estimate_fwhm_params",
-    "volume_estimate_fwhm_whole_file_cargs",
     "volume_estimate_fwhm_whole_file_params",
 ]

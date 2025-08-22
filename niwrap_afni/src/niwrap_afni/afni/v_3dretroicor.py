@@ -210,7 +210,7 @@ def v_3dretroicor_outputs(
 
 def v_3dretroicor_execute(
     params: V3dretroicorParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dretroicorOutputs:
     """
     Performs Retrospective Image Correction for physiological motion effects using a
@@ -222,10 +222,12 @@ def v_3dretroicor_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dretroicorOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DRETROICOR_METADATA)
     params = execution.params(params)
     cargs = v_3dretroicor_cargs(params, execution)
     ret = v_3dretroicor_outputs(params, execution)
@@ -271,8 +273,6 @@ def v_3dretroicor(
     Returns:
         NamedTuple of outputs (described in `V3dretroicorOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DRETROICOR_METADATA)
     params = v_3dretroicor_params(
         ignore=ignore,
         prefix=prefix,
@@ -284,7 +284,7 @@ def v_3dretroicor(
         order=order,
         dataset=dataset,
     )
-    return v_3dretroicor_execute(params, execution)
+    return v_3dretroicor_execute(params, runner)
 
 
 __all__ = [
@@ -292,8 +292,6 @@ __all__ = [
     "V3dretroicorParameters",
     "V_3DRETROICOR_METADATA",
     "v_3dretroicor",
-    "v_3dretroicor_cargs",
     "v_3dretroicor_execute",
-    "v_3dretroicor_outputs",
     "v_3dretroicor_params",
 ]

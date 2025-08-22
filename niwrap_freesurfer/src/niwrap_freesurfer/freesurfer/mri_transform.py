@@ -146,7 +146,7 @@ def mri_transform_outputs(
 
 def mri_transform_execute(
     params: MriTransformParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriTransformOutputs:
     """
     Applies a linear transform to an MRI volume and writes out the result.
@@ -157,10 +157,12 @@ def mri_transform_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriTransformOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_TRANSFORM_METADATA)
     params = execution.params(params)
     cargs = mri_transform_cargs(params, execution)
     ret = mri_transform_outputs(params, execution)
@@ -193,8 +195,6 @@ def mri_transform(
     Returns:
         NamedTuple of outputs (described in `MriTransformOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_TRANSFORM_METADATA)
     params = mri_transform_params(
         input_volume=input_volume,
         lta_file=lta_file,
@@ -202,7 +202,7 @@ def mri_transform(
         out_like=out_like,
         invert=invert,
     )
-    return mri_transform_execute(params, execution)
+    return mri_transform_execute(params, runner)
 
 
 __all__ = [
@@ -210,8 +210,6 @@ __all__ = [
     "MriTransformOutputs",
     "MriTransformParameters",
     "mri_transform",
-    "mri_transform_cargs",
     "mri_transform_execute",
-    "mri_transform_outputs",
     "mri_transform_params",
 ]

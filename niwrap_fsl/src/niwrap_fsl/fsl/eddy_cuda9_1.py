@@ -474,7 +474,7 @@ def eddy_cuda9_1_outputs(
 
 def eddy_cuda9_1_execute(
     params: EddyCuda91Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddyCuda91Outputs:
     """
     A tool for correcting eddy currents and movements in diffusion data.
@@ -485,10 +485,12 @@ def eddy_cuda9_1_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddyCuda91Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_CUDA9_1_METADATA)
     params = execution.params(params)
     cargs = eddy_cuda9_1_cargs(params, execution)
     ret = eddy_cuda9_1_outputs(params, execution)
@@ -618,8 +620,6 @@ def eddy_cuda9_1(
     Returns:
         NamedTuple of outputs (described in `EddyCuda91Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_CUDA9_1_METADATA)
     params = eddy_cuda9_1_params(
         imain=imain,
         mask=mask,
@@ -666,7 +666,7 @@ def eddy_cuda9_1(
         data_is_shelled=data_is_shelled,
         verbose=verbose,
     )
-    return eddy_cuda9_1_execute(params, execution)
+    return eddy_cuda9_1_execute(params, runner)
 
 
 __all__ = [
@@ -674,8 +674,6 @@ __all__ = [
     "EddyCuda91Outputs",
     "EddyCuda91Parameters",
     "eddy_cuda9_1",
-    "eddy_cuda9_1_cargs",
     "eddy_cuda9_1_execute",
-    "eddy_cuda9_1_outputs",
     "eddy_cuda9_1_params",
 ]

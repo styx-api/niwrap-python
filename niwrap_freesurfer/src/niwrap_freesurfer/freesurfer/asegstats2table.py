@@ -331,7 +331,7 @@ def asegstats2table_outputs(
 
 def asegstats2table_execute(
     params: Asegstats2tableParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Asegstats2tableOutputs:
     """
     Converts a subcortical stats file created by recon-all and/or mri_segstats
@@ -343,10 +343,12 @@ def asegstats2table_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Asegstats2tableOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ASEGSTATS2TABLE_METADATA)
     params = execution.params(params)
     cargs = asegstats2table_cargs(params, execution)
     ret = asegstats2table_outputs(params, execution)
@@ -428,8 +430,6 @@ def asegstats2table(
     Returns:
         NamedTuple of outputs (described in `Asegstats2tableOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ASEGSTATS2TABLE_METADATA)
     params = asegstats2table_params(
         subjects=subjects,
         inputs=inputs,
@@ -456,7 +456,7 @@ def asegstats2table(
         skip_missing_flag=skip_missing_flag,
         replace53_flag=replace53_flag,
     )
-    return asegstats2table_execute(params, execution)
+    return asegstats2table_execute(params, runner)
 
 
 __all__ = [
@@ -464,8 +464,6 @@ __all__ = [
     "Asegstats2tableOutputs",
     "Asegstats2tableParameters",
     "asegstats2table",
-    "asegstats2table_cargs",
     "asegstats2table_execute",
-    "asegstats2table_outputs",
     "asegstats2table_params",
 ]

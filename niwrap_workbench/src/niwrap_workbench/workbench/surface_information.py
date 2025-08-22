@@ -117,7 +117,7 @@ def surface_information_outputs(
 
 def surface_information_execute(
     params: SurfaceInformationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceInformationOutputs:
     """
     Display information about a surface.
@@ -131,10 +131,12 @@ def surface_information_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceInformationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_INFORMATION_METADATA)
     params = execution.params(params)
     cargs = surface_information_cargs(params, execution)
     ret = surface_information_outputs(params, execution)
@@ -162,12 +164,10 @@ def surface_information(
     Returns:
         NamedTuple of outputs (described in `SurfaceInformationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_INFORMATION_METADATA)
     params = surface_information_params(
         surface_file=surface_file,
     )
-    return surface_information_execute(params, execution)
+    return surface_information_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "SurfaceInformationOutputs",
     "SurfaceInformationParameters",
     "surface_information",
-    "surface_information_cargs",
     "surface_information_execute",
-    "surface_information_outputs",
     "surface_information_params",
 ]

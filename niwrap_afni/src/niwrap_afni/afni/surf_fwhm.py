@@ -247,7 +247,7 @@ def surf_fwhm_outputs(
 
 def surf_fwhm_execute(
     params: SurfFwhmParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfFwhmOutputs:
     """
     A program for calculating local and global FWHM.
@@ -258,10 +258,12 @@ def surf_fwhm_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfFwhmOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_FWHM_METADATA)
     params = execution.params(params)
     cargs = surf_fwhm_cargs(params, execution)
     ret = surf_fwhm_outputs(params, execution)
@@ -316,8 +318,6 @@ def surf_fwhm(
     Returns:
         NamedTuple of outputs (described in `SurfFwhmOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_FWHM_METADATA)
     params = surf_fwhm_params(
         input_file=input_file,
         mask=mask,
@@ -334,7 +334,7 @@ def surf_fwhm(
         examples=examples,
         slice_=slice_,
     )
-    return surf_fwhm_execute(params, execution)
+    return surf_fwhm_execute(params, runner)
 
 
 __all__ = [
@@ -342,8 +342,6 @@ __all__ = [
     "SurfFwhmOutputs",
     "SurfFwhmParameters",
     "surf_fwhm",
-    "surf_fwhm_cargs",
     "surf_fwhm_execute",
-    "surf_fwhm_outputs",
     "surf_fwhm_params",
 ]

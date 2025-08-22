@@ -124,7 +124,7 @@ def run_segment_subfields_t1_longitudinal_sh_outputs(
 
 def run_segment_subfields_t1_longitudinal_sh_execute(
     params: RunSegmentSubfieldsT1LongitudinalShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RunSegmentSubfieldsT1LongitudinalShOutputs:
     """
     Script for segmenting subfields from T1-weighted longitudinal data using
@@ -136,10 +136,12 @@ def run_segment_subfields_t1_longitudinal_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubfieldsT1LongitudinalShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA)
     params = execution.params(params)
     cargs = run_segment_subfields_t1_longitudinal_sh_cargs(params, execution)
     ret = run_segment_subfields_t1_longitudinal_sh_outputs(params, execution)
@@ -168,13 +170,11 @@ def run_segment_subfields_t1_longitudinal_sh(
     Returns:
         NamedTuple of outputs (described in `RunSegmentSubfieldsT1LongitudinalShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RUN_SEGMENT_SUBFIELDS_T1_LONGITUDINAL_SH_METADATA)
     params = run_segment_subfields_t1_longitudinal_sh_params(
         deployed_mcr_root=deployed_mcr_root,
         additional_args=additional_args,
     )
-    return run_segment_subfields_t1_longitudinal_sh_execute(params, execution)
+    return run_segment_subfields_t1_longitudinal_sh_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "RunSegmentSubfieldsT1LongitudinalShOutputs",
     "RunSegmentSubfieldsT1LongitudinalShParameters",
     "run_segment_subfields_t1_longitudinal_sh",
-    "run_segment_subfields_t1_longitudinal_sh_cargs",
     "run_segment_subfields_t1_longitudinal_sh_execute",
-    "run_segment_subfields_t1_longitudinal_sh_outputs",
     "run_segment_subfields_t1_longitudinal_sh_params",
 ]

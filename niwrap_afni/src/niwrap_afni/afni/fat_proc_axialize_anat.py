@@ -287,7 +287,7 @@ def fat_proc_axialize_anat_outputs(
 
 def fat_proc_axialize_anat_execute(
     params: FatProcAxializeAnatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcAxializeAnatOutputs:
     """
     Helps align the major axes of an anatomical volume to those of the volumetric
@@ -299,10 +299,12 @@ def fat_proc_axialize_anat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcAxializeAnatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_AXIALIZE_ANAT_METADATA)
     params = execution.params(params)
     cargs = fat_proc_axialize_anat_cargs(params, execution)
     ret = fat_proc_axialize_anat_outputs(params, execution)
@@ -377,8 +379,6 @@ def fat_proc_axialize_anat(
     Returns:
         NamedTuple of outputs (described in `FatProcAxializeAnatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_AXIALIZE_ANAT_METADATA)
     params = fat_proc_axialize_anat_params(
         in_file=in_file,
         ref_file=ref_file,
@@ -403,7 +403,7 @@ def fat_proc_axialize_anat(
         no_qc_view=no_qc_view,
         qc_prefix=qc_prefix,
     )
-    return fat_proc_axialize_anat_execute(params, execution)
+    return fat_proc_axialize_anat_execute(params, runner)
 
 
 __all__ = [
@@ -411,8 +411,6 @@ __all__ = [
     "FatProcAxializeAnatOutputs",
     "FatProcAxializeAnatParameters",
     "fat_proc_axialize_anat",
-    "fat_proc_axialize_anat_cargs",
     "fat_proc_axialize_anat_execute",
-    "fat_proc_axialize_anat_outputs",
     "fat_proc_axialize_anat_params",
 ]

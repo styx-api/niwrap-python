@@ -167,7 +167,7 @@ def metric_label_import_outputs(
 
 def metric_label_import_execute(
     params: MetricLabelImportParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricLabelImportOutputs:
     """
     Import a gifti label file from a metric file.
@@ -202,10 +202,12 @@ def metric_label_import_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricLabelImportOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_LABEL_IMPORT_METADATA)
     params = execution.params(params)
     cargs = metric_label_import_cargs(params, execution)
     ret = metric_label_import_outputs(params, execution)
@@ -270,8 +272,6 @@ def metric_label_import(
     Returns:
         NamedTuple of outputs (described in `MetricLabelImportOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_LABEL_IMPORT_METADATA)
     params = metric_label_import_params(
         input_=input_,
         label_list_file=label_list_file,
@@ -281,7 +281,7 @@ def metric_label_import(
         opt_column_column=opt_column_column,
         opt_drop_unused_labels=opt_drop_unused_labels,
     )
-    return metric_label_import_execute(params, execution)
+    return metric_label_import_execute(params, runner)
 
 
 __all__ = [
@@ -289,8 +289,6 @@ __all__ = [
     "MetricLabelImportOutputs",
     "MetricLabelImportParameters",
     "metric_label_import",
-    "metric_label_import_cargs",
     "metric_label_import_execute",
-    "metric_label_import_outputs",
     "metric_label_import_params",
 ]

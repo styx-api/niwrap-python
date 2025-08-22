@@ -376,7 +376,7 @@ def v_3d_lme_outputs(
 
 def v_3d_lme_execute(
     params: V3dLmeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dLmeOutputs:
     """
     AFNI Group Analysis Program with Linear Mixed-Effects Modeling Approach.
@@ -387,10 +387,12 @@ def v_3d_lme_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dLmeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_LME_METADATA)
     params = execution.params(params)
     cargs = v_3d_lme_cargs(params, execution)
     ret = v_3d_lme_outputs(params, execution)
@@ -476,8 +478,6 @@ def v_3d_lme(
     Returns:
         NamedTuple of outputs (described in `V3dLmeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_LME_METADATA)
     params = v_3d_lme_params(
         prefix=prefix,
         model=model,
@@ -510,7 +510,7 @@ def v_3d_lme(
         show_options_flag=show_options_flag,
         ss_type=ss_type,
     )
-    return v_3d_lme_execute(params, execution)
+    return v_3d_lme_execute(params, runner)
 
 
 __all__ = [
@@ -518,8 +518,6 @@ __all__ = [
     "V3dLmeParameters",
     "V_3D_LME_METADATA",
     "v_3d_lme",
-    "v_3d_lme_cargs",
     "v_3d_lme_execute",
-    "v_3d_lme_outputs",
     "v_3d_lme_params",
 ]

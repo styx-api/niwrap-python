@@ -192,7 +192,7 @@ def v_3d_intracranial_outputs(
 
 def v_3d_intracranial_execute(
     params: V3dIntracranialParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dIntracranialOutputs:
     """
     Performs automatic segmentation of intracranial region.
@@ -203,10 +203,12 @@ def v_3d_intracranial_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dIntracranialOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_INTRACRANIAL_METADATA)
     params = execution.params(params)
     cargs = v_3d_intracranial_cargs(params, execution)
     ret = v_3d_intracranial_outputs(params, execution)
@@ -250,8 +252,6 @@ def v_3d_intracranial(
     Returns:
         NamedTuple of outputs (described in `V3dIntracranialOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_INTRACRANIAL_METADATA)
     params = v_3d_intracranial_params(
         infile=infile,
         prefix=prefix,
@@ -263,7 +263,7 @@ def v_3d_intracranial(
         mask=mask,
         quiet=quiet,
     )
-    return v_3d_intracranial_execute(params, execution)
+    return v_3d_intracranial_execute(params, runner)
 
 
 __all__ = [
@@ -271,8 +271,6 @@ __all__ = [
     "V3dIntracranialParameters",
     "V_3D_INTRACRANIAL_METADATA",
     "v_3d_intracranial",
-    "v_3d_intracranial_cargs",
     "v_3d_intracranial_execute",
-    "v_3d_intracranial_outputs",
     "v_3d_intracranial_params",
 ]

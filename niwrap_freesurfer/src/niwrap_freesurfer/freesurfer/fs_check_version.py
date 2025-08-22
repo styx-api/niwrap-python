@@ -165,7 +165,7 @@ def fs_check_version_outputs(
 
 def fs_check_version_execute(
     params: FsCheckVersionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsCheckVersionOutputs:
     """
     Script to manage which version of FreeSurfer can be used to analyze data
@@ -177,10 +177,12 @@ def fs_check_version_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsCheckVersionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_CHECK_VERSION_METADATA)
     params = execution.params(params)
     cargs = fs_check_version_cargs(params, execution)
     ret = fs_check_version_outputs(params, execution)
@@ -218,8 +220,6 @@ def fs_check_version(
     Returns:
         NamedTuple of outputs (described in `FsCheckVersionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_CHECK_VERSION_METADATA)
     params = fs_check_version_params(
         subjects_dir=subjects_dir,
         outfile=outfile,
@@ -229,7 +229,7 @@ def fs_check_version(
         test=test,
         test_debug=test_debug,
     )
-    return fs_check_version_execute(params, execution)
+    return fs_check_version_execute(params, runner)
 
 
 __all__ = [
@@ -237,8 +237,6 @@ __all__ = [
     "FsCheckVersionOutputs",
     "FsCheckVersionParameters",
     "fs_check_version",
-    "fs_check_version_cargs",
     "fs_check_version_execute",
-    "fs_check_version_outputs",
     "fs_check_version_params",
 ]

@@ -131,7 +131,7 @@ def ccalc_outputs(
 
 def ccalc_execute(
     params: CcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CcalcOutputs:
     """
     Command line calculator with formatted output options.
@@ -142,10 +142,12 @@ def ccalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CCALC_METADATA)
     params = execution.params(params)
     cargs = ccalc_cargs(params, execution)
     ret = ccalc_outputs(params, execution)
@@ -174,13 +176,11 @@ def ccalc(
     Returns:
         NamedTuple of outputs (described in `CcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CCALC_METADATA)
     params = ccalc_params(
         format_=format_,
         expr=expr,
     )
-    return ccalc_execute(params, execution)
+    return ccalc_execute(params, runner)
 
 
 __all__ = [
@@ -188,8 +188,6 @@ __all__ = [
     "CcalcOutputs",
     "CcalcParameters",
     "ccalc",
-    "ccalc_cargs",
     "ccalc_execute",
-    "ccalc_outputs",
     "ccalc_params",
 ]

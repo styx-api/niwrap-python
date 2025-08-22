@@ -221,7 +221,7 @@ def v_3d_inv_fmri_outputs(
 
 def v_3d_inv_fmri_execute(
     params: V3dInvFmriParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dInvFmriOutputs:
     """
     Program to compute stimulus time series, given a 3D+time dataset and an
@@ -233,10 +233,12 @@ def v_3d_inv_fmri_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dInvFmriOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_INV_FMRI_METADATA)
     params = execution.params(params)
     cargs = v_3d_inv_fmri_cargs(params, execution)
     ret = v_3d_inv_fmri_outputs(params, execution)
@@ -290,8 +292,6 @@ def v_3d_inv_fmri(
     Returns:
         NamedTuple of outputs (described in `V3dInvFmriOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_INV_FMRI_METADATA)
     params = v_3d_inv_fmri_params(
         input_file=input_file,
         activation_map=activation_map,
@@ -305,7 +305,7 @@ def v_3d_inv_fmri(
         smooth_fir=smooth_fir,
         smooth_median=smooth_median,
     )
-    return v_3d_inv_fmri_execute(params, execution)
+    return v_3d_inv_fmri_execute(params, runner)
 
 
 __all__ = [
@@ -313,8 +313,6 @@ __all__ = [
     "V3dInvFmriParameters",
     "V_3D_INV_FMRI_METADATA",
     "v_3d_inv_fmri",
-    "v_3d_inv_fmri_cargs",
     "v_3d_inv_fmri_execute",
-    "v_3d_inv_fmri_outputs",
     "v_3d_inv_fmri_params",
 ]

@@ -218,7 +218,7 @@ def v__dice_metric_outputs(
 
 def v__dice_metric_execute(
     params: VDiceMetricParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDiceMetricOutputs:
     """
     Computes Dice Metric between BASE and each of the DSET volumes.
@@ -229,10 +229,12 @@ def v__dice_metric_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDiceMetricOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DICE_METRIC_METADATA)
     params = execution.params(params)
     cargs = v__dice_metric_cargs(params, execution)
     ret = v__dice_metric_outputs(params, execution)
@@ -290,8 +292,6 @@ def v__dice_metric(
     Returns:
         NamedTuple of outputs (described in `VDiceMetricOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DICE_METRIC_METADATA)
     params = v__dice_metric_params(
         base=base,
         dsets=dsets,
@@ -307,7 +307,7 @@ def v__dice_metric(
         ignore_bad=ignore_bad,
         keep_tmp=keep_tmp,
     )
-    return v__dice_metric_execute(params, execution)
+    return v__dice_metric_execute(params, runner)
 
 
 __all__ = [
@@ -315,8 +315,6 @@ __all__ = [
     "VDiceMetricParameters",
     "V__DICE_METRIC_METADATA",
     "v__dice_metric",
-    "v__dice_metric_cargs",
     "v__dice_metric_execute",
-    "v__dice_metric_outputs",
     "v__dice_metric_params",
 ]

@@ -199,7 +199,7 @@ def t4imgs_4dfp_outputs(
 
 def t4imgs_4dfp_execute(
     params: T4imgs4dfpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> T4imgs4dfpOutputs:
     """
     Freesurfer tool for transforming images according to a specified T4 file.
@@ -210,10 +210,12 @@ def t4imgs_4dfp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `T4imgs4dfpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(T4IMGS_4DFP_METADATA)
     params = execution.params(params)
     cargs = t4imgs_4dfp_cargs(params, execution)
     ret = t4imgs_4dfp_outputs(params, execution)
@@ -262,8 +264,6 @@ def t4imgs_4dfp(
     Returns:
         NamedTuple of outputs (described in `T4imgs4dfpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(T4IMGS_4DFP_METADATA)
     params = t4imgs_4dfp_params(
         sqrt_normalize=sqrt_normalize,
         cubic_spline=cubic_spline,
@@ -279,7 +279,7 @@ def t4imgs_4dfp(
         input_images=input_images,
         output_image=output_image,
     )
-    return t4imgs_4dfp_execute(params, execution)
+    return t4imgs_4dfp_execute(params, runner)
 
 
 __all__ = [
@@ -287,8 +287,6 @@ __all__ = [
     "T4imgs4dfpOutputs",
     "T4imgs4dfpParameters",
     "t4imgs_4dfp",
-    "t4imgs_4dfp_cargs",
     "t4imgs_4dfp_execute",
-    "t4imgs_4dfp_outputs",
     "t4imgs_4dfp_params",
 ]

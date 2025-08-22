@@ -231,7 +231,7 @@ def mris_pmake_outputs(
 
 def mris_pmake_execute(
     params: MrisPmakeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisPmakeOutputs:
     """
     Calculates paths and related costs on FreeSurfer surfaces based on an edge cost
@@ -243,10 +243,12 @@ def mris_pmake_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisPmakeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_PMAKE_METADATA)
     params = execution.params(params)
     cargs = mris_pmake_cargs(params, execution)
     ret = mris_pmake_outputs(params, execution)
@@ -298,8 +300,6 @@ def mris_pmake(
     Returns:
         NamedTuple of outputs (described in `MrisPmakeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_PMAKE_METADATA)
     params = mris_pmake_params(
         options_file=options_file,
         working_dir=working_dir,
@@ -315,7 +315,7 @@ def mris_pmake(
         mpm_prog=mpm_prog,
         mpm_args=mpm_args,
     )
-    return mris_pmake_execute(params, execution)
+    return mris_pmake_execute(params, runner)
 
 
 __all__ = [
@@ -323,8 +323,6 @@ __all__ = [
     "MrisPmakeOutputs",
     "MrisPmakeParameters",
     "mris_pmake",
-    "mris_pmake_cargs",
     "mris_pmake_execute",
-    "mris_pmake_outputs",
     "mris_pmake_params",
 ]

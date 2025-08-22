@@ -171,7 +171,7 @@ def fsr_coreg_outputs(
 
 def fsr_coreg_execute(
     params: FsrCoregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsrCoregOutputs:
     """
     Co-registers input data in preparation for FreeSurfer analysis.
@@ -182,10 +182,12 @@ def fsr_coreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsrCoregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSR_COREG_METADATA)
     params = execution.params(params)
     cargs = fsr_coreg_cargs(params, execution)
     ret = fsr_coreg_outputs(params, execution)
@@ -221,8 +223,6 @@ def fsr_coreg(
     Returns:
         NamedTuple of outputs (described in `FsrCoregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSR_COREG_METADATA)
     params = fsr_coreg_params(
         import_dir=import_dir,
         reference_mode=reference_mode,
@@ -231,7 +231,7 @@ def fsr_coreg(
         output_dir=output_dir,
         expert_options=expert_options,
     )
-    return fsr_coreg_execute(params, execution)
+    return fsr_coreg_execute(params, runner)
 
 
 __all__ = [
@@ -239,8 +239,6 @@ __all__ = [
     "FsrCoregOutputs",
     "FsrCoregParameters",
     "fsr_coreg",
-    "fsr_coreg_cargs",
     "fsr_coreg_execute",
-    "fsr_coreg_outputs",
     "fsr_coreg_params",
 ]

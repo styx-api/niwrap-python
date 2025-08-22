@@ -136,7 +136,7 @@ def tbss_deproject_outputs(
 
 def tbss_deproject_execute(
     params: TbssDeprojectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TbssDeprojectOutputs:
     """
     Tool to deproject images from skeleton space to final space.
@@ -147,10 +147,12 @@ def tbss_deproject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TbssDeprojectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_DEPROJECT_METADATA)
     params = execution.params(params)
     cargs = tbss_deproject_cargs(params, execution)
     ret = tbss_deproject_outputs(params, execution)
@@ -181,14 +183,12 @@ def tbss_deproject(
     Returns:
         NamedTuple of outputs (described in `TbssDeprojectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_DEPROJECT_METADATA)
     params = tbss_deproject_params(
         skeleton_space_input_image=skeleton_space_input_image,
         final_space_option=final_space_option,
         index_image_flag=index_image_flag,
     )
-    return tbss_deproject_execute(params, execution)
+    return tbss_deproject_execute(params, runner)
 
 
 __all__ = [
@@ -196,8 +196,6 @@ __all__ = [
     "TbssDeprojectOutputs",
     "TbssDeprojectParameters",
     "tbss_deproject",
-    "tbss_deproject_cargs",
     "tbss_deproject_execute",
-    "tbss_deproject_outputs",
     "tbss_deproject_params",
 ]

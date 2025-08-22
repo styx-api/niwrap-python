@@ -380,7 +380,7 @@ def oxford_asl_outputs(
 
 def oxford_asl_execute(
     params: OxfordAslParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> OxfordAslOutputs:
     """
     Calculate perfusion maps from ASL data.
@@ -391,10 +391,12 @@ def oxford_asl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `OxfordAslOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(OXFORD_ASL_METADATA)
     params = execution.params(params)
     cargs = oxford_asl_cargs(params, execution)
     ret = oxford_asl_outputs(params, execution)
@@ -478,8 +480,6 @@ def oxford_asl(
     Returns:
         NamedTuple of outputs (described in `OxfordAslOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(OXFORD_ASL_METADATA)
     params = oxford_asl_params(
         asl_data=asl_data,
         output_dir_name=output_dir_name,
@@ -511,7 +511,7 @@ def oxford_asl(
         calibration_image=calibration_image,
         calibration_method=calibration_method,
     )
-    return oxford_asl_execute(params, execution)
+    return oxford_asl_execute(params, runner)
 
 
 __all__ = [
@@ -519,8 +519,6 @@ __all__ = [
     "OxfordAslOutputs",
     "OxfordAslParameters",
     "oxford_asl",
-    "oxford_asl_cargs",
     "oxford_asl_execute",
-    "oxford_asl_outputs",
     "oxford_asl_params",
 ]

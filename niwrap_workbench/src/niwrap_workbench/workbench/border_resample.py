@@ -138,7 +138,7 @@ def border_resample_outputs(
 
 def border_resample_execute(
     params: BorderResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BorderResampleOutputs:
     """
     Resample a border file to a different mesh.
@@ -153,10 +153,12 @@ def border_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BorderResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BORDER_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = border_resample_cargs(params, execution)
     ret = border_resample_outputs(params, execution)
@@ -193,15 +195,13 @@ def border_resample(
     Returns:
         NamedTuple of outputs (described in `BorderResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BORDER_RESAMPLE_METADATA)
     params = border_resample_params(
         border_in=border_in,
         current_sphere=current_sphere,
         new_sphere=new_sphere,
         border_out=border_out,
     )
-    return border_resample_execute(params, execution)
+    return border_resample_execute(params, runner)
 
 
 __all__ = [
@@ -209,8 +209,6 @@ __all__ = [
     "BorderResampleOutputs",
     "BorderResampleParameters",
     "border_resample",
-    "border_resample_cargs",
     "border_resample_execute",
-    "border_resample_outputs",
     "border_resample_params",
 ]

@@ -121,7 +121,7 @@ def imdump_outputs(
 
 def imdump_execute(
     params: ImdumpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImdumpOutputs:
     """
     Prints out nonzero pixels in an image.
@@ -132,10 +132,12 @@ def imdump_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImdumpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMDUMP_METADATA)
     params = execution.params(params)
     cargs = imdump_cargs(params, execution)
     ret = imdump_outputs(params, execution)
@@ -160,12 +162,10 @@ def imdump(
     Returns:
         NamedTuple of outputs (described in `ImdumpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMDUMP_METADATA)
     params = imdump_params(
         input_image=input_image,
     )
-    return imdump_execute(params, execution)
+    return imdump_execute(params, runner)
 
 
 __all__ = [
@@ -173,8 +173,6 @@ __all__ = [
     "ImdumpOutputs",
     "ImdumpParameters",
     "imdump",
-    "imdump_cargs",
     "imdump_execute",
-    "imdump_outputs",
     "imdump_params",
 ]

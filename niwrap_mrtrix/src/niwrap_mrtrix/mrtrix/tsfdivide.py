@@ -236,7 +236,7 @@ def tsfdivide_outputs(
 
 def tsfdivide_execute(
     params: TsfdivideParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TsfdivideOutputs:
     """
     Divide corresponding values in track scalar files.
@@ -253,10 +253,12 @@ def tsfdivide_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TsfdivideOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TSFDIVIDE_METADATA)
     params = execution.params(params)
     cargs = tsfdivide_cargs(params, execution)
     ret = tsfdivide_outputs(params, execution)
@@ -311,8 +313,6 @@ def tsfdivide(
     Returns:
         NamedTuple of outputs (described in `TsfdivideOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TSFDIVIDE_METADATA)
     params = tsfdivide_params(
         info=info,
         quiet=quiet,
@@ -326,7 +326,7 @@ def tsfdivide(
         input2=input2,
         output=output,
     )
-    return tsfdivide_execute(params, execution)
+    return tsfdivide_execute(params, runner)
 
 
 __all__ = [
@@ -335,10 +335,7 @@ __all__ = [
     "TsfdivideOutputs",
     "TsfdivideParameters",
     "tsfdivide",
-    "tsfdivide_cargs",
-    "tsfdivide_config_cargs",
     "tsfdivide_config_params",
     "tsfdivide_execute",
-    "tsfdivide_outputs",
     "tsfdivide_params",
 ]

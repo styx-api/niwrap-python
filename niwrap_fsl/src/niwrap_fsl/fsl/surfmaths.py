@@ -132,7 +132,7 @@ def surfmaths_outputs(
 
 def surfmaths_execute(
     params: SurfmathsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfmathsOutputs:
     """
     A command-line tool for performing various mathematical operations on surface
@@ -144,10 +144,12 @@ def surfmaths_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfmathsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFMATHS_METADATA)
     params = execution.params(params)
     cargs = surfmaths_cargs(params, execution)
     ret = surfmaths_outputs(params, execution)
@@ -177,14 +179,12 @@ def surfmaths(
     Returns:
         NamedTuple of outputs (described in `SurfmathsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFMATHS_METADATA)
     params = surfmaths_params(
         first_input=first_input,
         operations_inputs=operations_inputs,
         output=output,
     )
-    return surfmaths_execute(params, execution)
+    return surfmaths_execute(params, runner)
 
 
 __all__ = [
@@ -192,8 +192,6 @@ __all__ = [
     "SurfmathsOutputs",
     "SurfmathsParameters",
     "surfmaths",
-    "surfmaths_cargs",
     "surfmaths_execute",
-    "surfmaths_outputs",
     "surfmaths_params",
 ]

@@ -185,7 +185,7 @@ def img2imgcoord_outputs(
 
 def img2imgcoord_execute(
     params: Img2imgcoordParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Img2imgcoordOutputs:
     """
     Tool for transforming coordinates between images.
@@ -196,10 +196,12 @@ def img2imgcoord_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Img2imgcoordOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMG2IMGCOORD_METADATA)
     params = execution.params(params)
     cargs = img2imgcoord_cargs(params, execution)
     ret = img2imgcoord_outputs(params, execution)
@@ -243,8 +245,6 @@ def img2imgcoord(
     Returns:
         NamedTuple of outputs (described in `Img2imgcoordOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMG2IMGCOORD_METADATA)
     params = img2imgcoord_params(
         coordinates_file=coordinates_file,
         source_image=source_image,
@@ -257,7 +257,7 @@ def img2imgcoord(
         verbose=verbose,
         help_=help_,
     )
-    return img2imgcoord_execute(params, execution)
+    return img2imgcoord_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "Img2imgcoordOutputs",
     "Img2imgcoordParameters",
     "img2imgcoord",
-    "img2imgcoord_cargs",
     "img2imgcoord_execute",
-    "img2imgcoord_outputs",
     "img2imgcoord_params",
 ]

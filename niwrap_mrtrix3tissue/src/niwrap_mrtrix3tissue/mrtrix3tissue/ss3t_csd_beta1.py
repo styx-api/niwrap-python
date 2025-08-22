@@ -345,7 +345,7 @@ def ss3t_csd_beta1_outputs(
 
 def ss3t_csd_beta1_execute(
     params: Ss3tCsdBeta1Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Ss3tCsdBeta1Outputs:
     """
     SS3T-CSD: beta 1 implementation
@@ -360,10 +360,12 @@ def ss3t_csd_beta1_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Ss3tCsdBeta1Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SS3T_CSD_BETA1_METADATA)
     params = execution.params(params)
     cargs = ss3t_csd_beta1_cargs(params, execution)
     ret = ss3t_csd_beta1_outputs(params, execution)
@@ -424,8 +426,6 @@ def ss3t_csd_beta1(
     Returns:
         NamedTuple of outputs (described in `Ss3tCsdBeta1Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SS3T_CSD_BETA1_METADATA)
     params = ss3t_csd_beta1_params(
         mask=mask,
         bzero_pct=bzero_pct,
@@ -441,7 +441,7 @@ def ss3t_csd_beta1(
         dwi=dwi,
         response_odf=response_odf,
     )
-    return ss3t_csd_beta1_execute(params, execution)
+    return ss3t_csd_beta1_execute(params, runner)
 
 
 __all__ = [
@@ -452,13 +452,8 @@ __all__ = [
     "Ss3tCsdBeta1ResponseOdfOutputs",
     "Ss3tCsdBeta1ResponseOdfParameters",
     "ss3t_csd_beta1",
-    "ss3t_csd_beta1_cargs",
-    "ss3t_csd_beta1_config_cargs",
     "ss3t_csd_beta1_config_params",
     "ss3t_csd_beta1_execute",
-    "ss3t_csd_beta1_outputs",
     "ss3t_csd_beta1_params",
-    "ss3t_csd_beta1_response_odf_cargs",
-    "ss3t_csd_beta1_response_odf_outputs",
     "ss3t_csd_beta1_response_odf_params",
 ]

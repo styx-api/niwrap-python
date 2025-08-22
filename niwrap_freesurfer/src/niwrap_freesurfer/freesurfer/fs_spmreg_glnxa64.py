@@ -125,7 +125,7 @@ def fs_spmreg_glnxa64_outputs(
 
 def fs_spmreg_glnxa64_execute(
     params: FsSpmregGlnxa64Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsSpmregGlnxa64Outputs:
     """
     fs_spmreg is a tool for registration using SPM within FreeSurfer.
@@ -136,10 +136,12 @@ def fs_spmreg_glnxa64_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsSpmregGlnxa64Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_SPMREG_GLNXA64_METADATA)
     params = execution.params(params)
     cargs = fs_spmreg_glnxa64_cargs(params, execution)
     ret = fs_spmreg_glnxa64_outputs(params, execution)
@@ -166,13 +168,11 @@ def fs_spmreg_glnxa64(
     Returns:
         NamedTuple of outputs (described in `FsSpmregGlnxa64Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_SPMREG_GLNXA64_METADATA)
     params = fs_spmreg_glnxa64_params(
         input_volume=input_volume,
         output_matrix=output_matrix,
     )
-    return fs_spmreg_glnxa64_execute(params, execution)
+    return fs_spmreg_glnxa64_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "FsSpmregGlnxa64Outputs",
     "FsSpmregGlnxa64Parameters",
     "fs_spmreg_glnxa64",
-    "fs_spmreg_glnxa64_cargs",
     "fs_spmreg_glnxa64_execute",
-    "fs_spmreg_glnxa64_outputs",
     "fs_spmreg_glnxa64_params",
 ]

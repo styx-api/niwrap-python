@@ -117,7 +117,7 @@ def tbss_4_prestats_outputs(
 
 def tbss_4_prestats_execute(
     params: Tbss4PrestatsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Tbss4PrestatsOutputs:
     """
     A tool for thresholding the Mean FA Skeleton in TBSS analysis.
@@ -128,10 +128,12 @@ def tbss_4_prestats_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Tbss4PrestatsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TBSS_4_PRESTATS_METADATA)
     params = execution.params(params)
     cargs = tbss_4_prestats_cargs(params, execution)
     ret = tbss_4_prestats_outputs(params, execution)
@@ -157,12 +159,10 @@ def tbss_4_prestats(
     Returns:
         NamedTuple of outputs (described in `Tbss4PrestatsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TBSS_4_PRESTATS_METADATA)
     params = tbss_4_prestats_params(
         threshold=threshold,
     )
-    return tbss_4_prestats_execute(params, execution)
+    return tbss_4_prestats_execute(params, runner)
 
 
 __all__ = [
@@ -170,8 +170,6 @@ __all__ = [
     "Tbss4PrestatsOutputs",
     "Tbss4PrestatsParameters",
     "tbss_4_prestats",
-    "tbss_4_prestats_cargs",
     "tbss_4_prestats_execute",
-    "tbss_4_prestats_outputs",
     "tbss_4_prestats_params",
 ]

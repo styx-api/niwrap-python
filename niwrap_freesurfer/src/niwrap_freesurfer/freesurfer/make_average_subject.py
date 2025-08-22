@@ -280,7 +280,7 @@ def make_average_subject_outputs(
 
 def make_average_subject_execute(
     params: MakeAverageSubjectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeAverageSubjectOutputs:
     """
     Creates an average subject by averaging surfaces, curvatures, and volumes from a
@@ -292,10 +292,12 @@ def make_average_subject_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeAverageSubjectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_AVERAGE_SUBJECT_METADATA)
     params = execution.params(params)
     cargs = make_average_subject_cargs(params, execution)
     ret = make_average_subject_outputs(params, execution)
@@ -364,8 +366,6 @@ def make_average_subject(
     Returns:
         NamedTuple of outputs (described in `MakeAverageSubjectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_AVERAGE_SUBJECT_METADATA)
     params = make_average_subject_params(
         subjects=subjects,
         fsgd_file=fsgd_file,
@@ -390,7 +390,7 @@ def make_average_subject(
         echo=echo,
         debug=debug,
     )
-    return make_average_subject_execute(params, execution)
+    return make_average_subject_execute(params, runner)
 
 
 __all__ = [
@@ -398,8 +398,6 @@ __all__ = [
     "MakeAverageSubjectOutputs",
     "MakeAverageSubjectParameters",
     "make_average_subject",
-    "make_average_subject_cargs",
     "make_average_subject_execute",
-    "make_average_subject_outputs",
     "make_average_subject_params",
 ]

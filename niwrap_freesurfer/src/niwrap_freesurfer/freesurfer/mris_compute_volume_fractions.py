@@ -159,7 +159,7 @@ def mris_compute_volume_fractions_outputs(
 
 def mris_compute_volume_fractions_execute(
     params: MrisComputeVolumeFractionsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisComputeVolumeFractionsOutputs:
     """
     Computes volume fractions based on a given surface and volume.
@@ -170,10 +170,12 @@ def mris_compute_volume_fractions_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisComputeVolumeFractionsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA)
     params = execution.params(params)
     cargs = mris_compute_volume_fractions_cargs(params, execution)
     ret = mris_compute_volume_fractions_outputs(params, execution)
@@ -208,8 +210,6 @@ def mris_compute_volume_fractions(
     Returns:
         NamedTuple of outputs (described in `MrisComputeVolumeFractionsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_COMPUTE_VOLUME_FRACTIONS_METADATA)
     params = mris_compute_volume_fractions_params(
         volume_file=volume_file,
         surface_file=surface_file,
@@ -218,7 +218,7 @@ def mris_compute_volume_fractions(
         debug=debug,
         checkopts=checkopts,
     )
-    return mris_compute_volume_fractions_execute(params, execution)
+    return mris_compute_volume_fractions_execute(params, runner)
 
 
 __all__ = [
@@ -226,8 +226,6 @@ __all__ = [
     "MrisComputeVolumeFractionsOutputs",
     "MrisComputeVolumeFractionsParameters",
     "mris_compute_volume_fractions",
-    "mris_compute_volume_fractions_cargs",
     "mris_compute_volume_fractions_execute",
-    "mris_compute_volume_fractions_outputs",
     "mris_compute_volume_fractions_params",
 ]

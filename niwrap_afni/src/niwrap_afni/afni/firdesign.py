@@ -158,7 +158,7 @@ def firdesign_outputs(
 
 def firdesign_execute(
     params: FirdesignParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FirdesignOutputs:
     """
     Uses the Remez algorithm to calculate the FIR filter weights for a bandpass
@@ -171,10 +171,12 @@ def firdesign_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FirdesignOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIRDESIGN_METADATA)
     params = execution.params(params)
     cargs = firdesign_cargs(params, execution)
     ret = firdesign_outputs(params, execution)
@@ -213,8 +215,6 @@ def firdesign(
     Returns:
         NamedTuple of outputs (described in `FirdesignOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIRDESIGN_METADATA)
     params = firdesign_params(
         fbot=fbot,
         ftop=ftop,
@@ -223,7 +223,7 @@ def firdesign(
         alternative_band=alternative_band,
         alternative_ntap=alternative_ntap,
     )
-    return firdesign_execute(params, execution)
+    return firdesign_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "FirdesignOutputs",
     "FirdesignParameters",
     "firdesign",
-    "firdesign_cargs",
     "firdesign_execute",
-    "firdesign_outputs",
     "firdesign_params",
 ]

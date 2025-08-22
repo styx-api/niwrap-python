@@ -133,7 +133,7 @@ def foci_list_coords_outputs(
 
 def foci_list_coords_execute(
     params: FociListCoordsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FociListCoordsOutputs:
     """
     Output foci coordinates in a text file.
@@ -147,10 +147,12 @@ def foci_list_coords_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FociListCoordsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FOCI_LIST_COORDS_METADATA)
     params = execution.params(params)
     cargs = foci_list_coords_cargs(params, execution)
     ret = foci_list_coords_outputs(params, execution)
@@ -183,14 +185,12 @@ def foci_list_coords(
     Returns:
         NamedTuple of outputs (described in `FociListCoordsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FOCI_LIST_COORDS_METADATA)
     params = foci_list_coords_params(
         foci_file=foci_file,
         coord_file_out=coord_file_out,
         opt_names_out_names_file_out=opt_names_out_names_file_out,
     )
-    return foci_list_coords_execute(params, execution)
+    return foci_list_coords_execute(params, runner)
 
 
 __all__ = [
@@ -198,8 +198,6 @@ __all__ = [
     "FociListCoordsOutputs",
     "FociListCoordsParameters",
     "foci_list_coords",
-    "foci_list_coords_cargs",
     "foci_list_coords_execute",
-    "foci_list_coords_outputs",
     "foci_list_coords_params",
 ]

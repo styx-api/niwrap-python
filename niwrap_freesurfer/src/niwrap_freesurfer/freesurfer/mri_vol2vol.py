@@ -492,7 +492,7 @@ def mri_vol2vol_outputs(
 
 def mri_vol2vol_execute(
     params: MriVol2volParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriVol2volOutputs:
     """
     Resamples a volume into another field-of-view using various types of matrices
@@ -504,10 +504,12 @@ def mri_vol2vol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriVol2volOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_VOL2VOL_METADATA)
     params = execution.params(params)
     cargs = mri_vol2vol_cargs(params, execution)
     ret = mri_vol2vol_outputs(params, execution)
@@ -627,8 +629,6 @@ def mri_vol2vol(
     Returns:
         NamedTuple of outputs (described in `MriVol2volOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_VOL2VOL_METADATA)
     params = mri_vol2vol_params(
         movvol=movvol,
         targvol=targvol,
@@ -675,7 +675,7 @@ def mri_vol2vol(
         debug=debug,
         version=version,
     )
-    return mri_vol2vol_execute(params, execution)
+    return mri_vol2vol_execute(params, runner)
 
 
 __all__ = [
@@ -683,8 +683,6 @@ __all__ = [
     "MriVol2volOutputs",
     "MriVol2volParameters",
     "mri_vol2vol",
-    "mri_vol2vol_cargs",
     "mri_vol2vol_execute",
-    "mri_vol2vol_outputs",
     "mri_vol2vol_params",
 ]

@@ -140,7 +140,7 @@ def fs_run_from_mcr_outputs(
 
 def fs_run_from_mcr_execute(
     params: FsRunFromMcrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FsRunFromMcrOutputs:
     """
     Replace the shell with the given command.
@@ -151,10 +151,12 @@ def fs_run_from_mcr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FsRunFromMcrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FS_RUN_FROM_MCR_METADATA)
     params = execution.params(params)
     cargs = fs_run_from_mcr_cargs(params, execution)
     ret = fs_run_from_mcr_outputs(params, execution)
@@ -185,15 +187,13 @@ def fs_run_from_mcr(
     Returns:
         NamedTuple of outputs (described in `FsRunFromMcrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FS_RUN_FROM_MCR_METADATA)
     params = fs_run_from_mcr_params(
         name=name,
         command=command,
         zeroth_flag=zeroth_flag,
         empty_env_flag=empty_env_flag,
     )
-    return fs_run_from_mcr_execute(params, execution)
+    return fs_run_from_mcr_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "FsRunFromMcrOutputs",
     "FsRunFromMcrParameters",
     "fs_run_from_mcr",
-    "fs_run_from_mcr_cargs",
     "fs_run_from_mcr_execute",
-    "fs_run_from_mcr_outputs",
     "fs_run_from_mcr_params",
 ]

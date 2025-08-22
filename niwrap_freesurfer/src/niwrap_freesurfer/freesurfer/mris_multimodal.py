@@ -196,7 +196,7 @@ def mris_multimodal_outputs(
 
 def mris_multimodal_execute(
     params: MrisMultimodalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisMultimodalOutputs:
     """
     A FreeSurfer tool for processing multimodal surface data.
@@ -207,10 +207,12 @@ def mris_multimodal_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisMultimodalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_MULTIMODAL_METADATA)
     params = execution.params(params)
     cargs = mris_multimodal_cargs(params, execution)
     ret = mris_multimodal_outputs(params, execution)
@@ -253,8 +255,6 @@ def mris_multimodal(
     Returns:
         NamedTuple of outputs (described in `MrisMultimodalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_MULTIMODAL_METADATA)
     params = mris_multimodal_params(
         input_surface=input_surface,
         target_surface=target_surface,
@@ -267,7 +267,7 @@ def mris_multimodal(
         csv_output=csv_output,
         vtk_output=vtk_output,
     )
-    return mris_multimodal_execute(params, execution)
+    return mris_multimodal_execute(params, runner)
 
 
 __all__ = [
@@ -275,8 +275,6 @@ __all__ = [
     "MrisMultimodalOutputs",
     "MrisMultimodalParameters",
     "mris_multimodal",
-    "mris_multimodal_cargs",
     "mris_multimodal_execute",
-    "mris_multimodal_outputs",
     "mris_multimodal_params",
 ]

@@ -148,7 +148,7 @@ def mri_parse_sdcmdir_outputs(
 
 def mri_parse_sdcmdir_execute(
     params: MriParseSdcmdirParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriParseSdcmdirOutputs:
     """
     This program parses the Siemens DICOM files in a given directory and prints out
@@ -160,10 +160,12 @@ def mri_parse_sdcmdir_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriParseSdcmdirOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_PARSE_SDCMDIR_METADATA)
     params = execution.params(params)
     cargs = mri_parse_sdcmdir_cargs(params, execution)
     ret = mri_parse_sdcmdir_outputs(params, execution)
@@ -198,8 +200,6 @@ def mri_parse_sdcmdir(
     Returns:
         NamedTuple of outputs (described in `MriParseSdcmdirOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_PARSE_SDCMDIR_METADATA)
     params = mri_parse_sdcmdir_params(
         sdicomdir=sdicomdir,
         outfile=outfile,
@@ -207,7 +207,7 @@ def mri_parse_sdcmdir(
         summarize=summarize,
         dwi=dwi,
     )
-    return mri_parse_sdcmdir_execute(params, execution)
+    return mri_parse_sdcmdir_execute(params, runner)
 
 
 __all__ = [
@@ -215,8 +215,6 @@ __all__ = [
     "MriParseSdcmdirOutputs",
     "MriParseSdcmdirParameters",
     "mri_parse_sdcmdir",
-    "mri_parse_sdcmdir_cargs",
     "mri_parse_sdcmdir_execute",
-    "mri_parse_sdcmdir_outputs",
     "mri_parse_sdcmdir_params",
 ]

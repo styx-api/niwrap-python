@@ -204,7 +204,7 @@ def mri_jacobian_outputs(
 
 def mri_jacobian_execute(
     params: MriJacobianParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriJacobianOutputs:
     """
     Compute the Jacobian of a morph with FreeSurfer.
@@ -215,10 +215,12 @@ def mri_jacobian_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriJacobianOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_JACOBIAN_METADATA)
     params = execution.params(params)
     cargs = mri_jacobian_cargs(params, execution)
     ret = mri_jacobian_outputs(params, execution)
@@ -269,8 +271,6 @@ def mri_jacobian(
     Returns:
         NamedTuple of outputs (described in `MriJacobianOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_JACOBIAN_METADATA)
     params = mri_jacobian_params(
         morph_file=morph_file,
         template_vol=template_vol,
@@ -287,7 +287,7 @@ def mri_jacobian(
         debug_voxel=debug_voxel,
         remove=remove,
     )
-    return mri_jacobian_execute(params, execution)
+    return mri_jacobian_execute(params, runner)
 
 
 __all__ = [
@@ -295,8 +295,6 @@ __all__ = [
     "MriJacobianOutputs",
     "MriJacobianParameters",
     "mri_jacobian",
-    "mri_jacobian_cargs",
     "mri_jacobian_execute",
-    "mri_jacobian_outputs",
     "mri_jacobian_params",
 ]

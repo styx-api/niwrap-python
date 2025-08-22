@@ -566,7 +566,7 @@ def cifti_separate_outputs(
 
 def cifti_separate_execute(
     params: CiftiSeparateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiSeparateOutputs:
     """
     Write a cifti structure as metric, label or volume.
@@ -622,10 +622,12 @@ def cifti_separate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiSeparateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_SEPARATE_METADATA)
     params = execution.params(params)
     cargs = cifti_separate_cargs(params, execution)
     ret = cifti_separate_outputs(params, execution)
@@ -705,8 +707,6 @@ def cifti_separate(
     Returns:
         NamedTuple of outputs (described in `CiftiSeparateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_SEPARATE_METADATA)
     params = cifti_separate_params(
         cifti_in=cifti_in,
         direction=direction,
@@ -715,7 +715,7 @@ def cifti_separate(
         metric=metric,
         volume=volume,
     )
-    return cifti_separate_execute(params, execution)
+    return cifti_separate_execute(params, runner)
 
 
 __all__ = [
@@ -731,20 +731,10 @@ __all__ = [
     "CiftiSeparateVolumeOutputs",
     "CiftiSeparateVolumeParameters",
     "cifti_separate",
-    "cifti_separate_cargs",
     "cifti_separate_execute",
-    "cifti_separate_label_cargs",
-    "cifti_separate_label_outputs",
     "cifti_separate_label_params",
-    "cifti_separate_metric_cargs",
-    "cifti_separate_metric_outputs",
     "cifti_separate_metric_params",
-    "cifti_separate_outputs",
     "cifti_separate_params",
-    "cifti_separate_volume_all_cargs",
-    "cifti_separate_volume_all_outputs",
     "cifti_separate_volume_all_params",
-    "cifti_separate_volume_cargs",
-    "cifti_separate_volume_outputs",
     "cifti_separate_volume_params",
 ]

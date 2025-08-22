@@ -125,7 +125,7 @@ def dmri_colored_fa_outputs(
 
 def dmri_colored_fa_execute(
     params: DmriColoredFaParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriColoredFaOutputs:
     """
     Tool for generating colored FA maps from diffusion MRI data.
@@ -136,10 +136,12 @@ def dmri_colored_fa_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriColoredFaOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_COLORED_FA_METADATA)
     params = execution.params(params)
     cargs = dmri_colored_fa_cargs(params, execution)
     ret = dmri_colored_fa_outputs(params, execution)
@@ -166,13 +168,11 @@ def dmri_colored_fa(
     Returns:
         NamedTuple of outputs (described in `DmriColoredFaOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_COLORED_FA_METADATA)
     params = dmri_colored_fa_params(
         input_volume=input_volume,
         output_volume=output_volume,
     )
-    return dmri_colored_fa_execute(params, execution)
+    return dmri_colored_fa_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "DmriColoredFaOutputs",
     "DmriColoredFaParameters",
     "dmri_colored_fa",
-    "dmri_colored_fa_cargs",
     "dmri_colored_fa_execute",
-    "dmri_colored_fa_outputs",
     "dmri_colored_fa_params",
 ]

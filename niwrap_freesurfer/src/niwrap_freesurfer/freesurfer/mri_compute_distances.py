@@ -131,7 +131,7 @@ def mri_compute_distances_outputs(
 
 def mri_compute_distances_execute(
     params: MriComputeDistancesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeDistancesOutputs:
     """
     A tool to compute distances between source and target images.
@@ -142,10 +142,12 @@ def mri_compute_distances_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeDistancesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_DISTANCES_METADATA)
     params = execution.params(params)
     cargs = mri_compute_distances_cargs(params, execution)
     ret = mri_compute_distances_outputs(params, execution)
@@ -175,14 +177,12 @@ def mri_compute_distances(
     Returns:
         NamedTuple of outputs (described in `MriComputeDistancesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_DISTANCES_METADATA)
     params = mri_compute_distances_params(
         source=source,
         target=target,
         output_xform=output_xform,
     )
-    return mri_compute_distances_execute(params, execution)
+    return mri_compute_distances_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "MriComputeDistancesOutputs",
     "MriComputeDistancesParameters",
     "mri_compute_distances",
-    "mri_compute_distances_cargs",
     "mri_compute_distances_execute",
-    "mri_compute_distances_outputs",
     "mri_compute_distances_params",
 ]

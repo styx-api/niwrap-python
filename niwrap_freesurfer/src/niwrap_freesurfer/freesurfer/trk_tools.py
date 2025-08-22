@@ -173,7 +173,7 @@ def trk_tools_outputs(
 
 def trk_tools_execute(
     params: TrkToolsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TrkToolsOutputs:
     """
     Tool for processing TRK files.
@@ -184,10 +184,12 @@ def trk_tools_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TrkToolsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TRK_TOOLS_METADATA)
     params = execution.params(params)
     cargs = trk_tools_cargs(params, execution)
     ret = trk_tools_outputs(params, execution)
@@ -222,8 +224,6 @@ def trk_tools(
     Returns:
         NamedTuple of outputs (described in `TrkToolsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TRK_TOOLS_METADATA)
     params = trk_tools_params(
         reference_image=reference_image,
         input_trk=input_trk,
@@ -232,7 +232,7 @@ def trk_tools(
         update_header=update_header,
         output_vtk=output_vtk,
     )
-    return trk_tools_execute(params, execution)
+    return trk_tools_execute(params, runner)
 
 
 __all__ = [
@@ -240,8 +240,6 @@ __all__ = [
     "TrkToolsOutputs",
     "TrkToolsParameters",
     "trk_tools",
-    "trk_tools_cargs",
     "trk_tools_execute",
-    "trk_tools_outputs",
     "trk_tools_params",
 ]

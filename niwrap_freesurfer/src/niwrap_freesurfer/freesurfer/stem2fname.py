@@ -121,7 +121,7 @@ def stem2fname_outputs(
 
 def stem2fname_execute(
     params: Stem2fnameParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Stem2fnameOutputs:
     """
     Determines the full filename with extension for a given file stem by checking
@@ -133,10 +133,12 @@ def stem2fname_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Stem2fnameOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(STEM2FNAME_METADATA)
     params = execution.params(params)
     cargs = stem2fname_cargs(params, execution)
     ret = stem2fname_outputs(params, execution)
@@ -162,12 +164,10 @@ def stem2fname(
     Returns:
         NamedTuple of outputs (described in `Stem2fnameOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(STEM2FNAME_METADATA)
     params = stem2fname_params(
         stem=stem,
     )
-    return stem2fname_execute(params, execution)
+    return stem2fname_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "Stem2fnameOutputs",
     "Stem2fnameParameters",
     "stem2fname",
-    "stem2fname_cargs",
     "stem2fname_execute",
-    "stem2fname_outputs",
     "stem2fname_params",
 ]

@@ -117,7 +117,7 @@ def adjunct_calc_mont_dims_py_outputs(
 
 def adjunct_calc_mont_dims_py_execute(
     params: AdjunctCalcMontDimsPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctCalcMontDimsPyOutputs:
     """
     A helper function for the fat_proc* scripts.
@@ -128,10 +128,12 @@ def adjunct_calc_mont_dims_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctCalcMontDimsPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_CALC_MONT_DIMS_PY_METADATA)
     params = execution.params(params)
     cargs = adjunct_calc_mont_dims_py_cargs(params, execution)
     ret = adjunct_calc_mont_dims_py_outputs(params, execution)
@@ -156,12 +158,10 @@ def adjunct_calc_mont_dims_py(
     Returns:
         NamedTuple of outputs (described in `AdjunctCalcMontDimsPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_CALC_MONT_DIMS_PY_METADATA)
     params = adjunct_calc_mont_dims_py_params(
         help_=help_,
     )
-    return adjunct_calc_mont_dims_py_execute(params, execution)
+    return adjunct_calc_mont_dims_py_execute(params, runner)
 
 
 __all__ = [
@@ -169,8 +169,6 @@ __all__ = [
     "AdjunctCalcMontDimsPyOutputs",
     "AdjunctCalcMontDimsPyParameters",
     "adjunct_calc_mont_dims_py",
-    "adjunct_calc_mont_dims_py_cargs",
     "adjunct_calc_mont_dims_py_execute",
-    "adjunct_calc_mont_dims_py_outputs",
     "adjunct_calc_mont_dims_py_params",
 ]

@@ -138,7 +138,7 @@ def imupsam_outputs(
 
 def imupsam_execute(
     params: ImupsamParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ImupsamOutputs:
     """
     Upsamples a 2D image by a specified factor.
@@ -149,10 +149,12 @@ def imupsam_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ImupsamOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(IMUPSAM_METADATA)
     params = execution.params(params)
     cargs = imupsam_cargs(params, execution)
     ret = imupsam_outputs(params, execution)
@@ -185,15 +187,13 @@ def imupsam(
     Returns:
         NamedTuple of outputs (described in `ImupsamOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(IMUPSAM_METADATA)
     params = imupsam_params(
         ascii_flag=ascii_flag,
         factor=factor,
         input_image=input_image,
         output_image=output_image,
     )
-    return imupsam_execute(params, execution)
+    return imupsam_execute(params, runner)
 
 
 __all__ = [
@@ -201,8 +201,6 @@ __all__ = [
     "ImupsamOutputs",
     "ImupsamParameters",
     "imupsam",
-    "imupsam_cargs",
     "imupsam_execute",
-    "imupsam_outputs",
     "imupsam_params",
 ]

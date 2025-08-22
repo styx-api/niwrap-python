@@ -125,7 +125,7 @@ def fsl_fix_text_outputs(
 
 def fsl_fix_text_execute(
     params: FslFixTextParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslFixTextOutputs:
     """
     Ensures standard UNIX line endings in the output text file.
@@ -136,10 +136,12 @@ def fsl_fix_text_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslFixTextOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_FIX_TEXT_METADATA)
     params = execution.params(params)
     cargs = fsl_fix_text_cargs(params, execution)
     ret = fsl_fix_text_outputs(params, execution)
@@ -166,13 +168,11 @@ def fsl_fix_text(
     Returns:
         NamedTuple of outputs (described in `FslFixTextOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_FIX_TEXT_METADATA)
     params = fsl_fix_text_params(
         input_text_file=input_text_file,
         output_text_file=output_text_file,
     )
-    return fsl_fix_text_execute(params, execution)
+    return fsl_fix_text_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "FslFixTextOutputs",
     "FslFixTextParameters",
     "fsl_fix_text",
-    "fsl_fix_text_cargs",
     "fsl_fix_text_execute",
-    "fsl_fix_text_outputs",
     "fsl_fix_text_params",
 ]

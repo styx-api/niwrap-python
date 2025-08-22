@@ -127,7 +127,7 @@ def v__to_rai_outputs(
 
 def v__to_rai_execute(
     params: VToRaiParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VToRaiOutputs:
     """
     Tool to change the ORIENT coordinates to RAI.
@@ -138,10 +138,12 @@ def v__to_rai_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VToRaiOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__TO_RAI_METADATA)
     params = execution.params(params)
     cargs = v__to_rai_cargs(params, execution)
     ret = v__to_rai_outputs(params, execution)
@@ -168,13 +170,11 @@ def v__to_rai(
     Returns:
         NamedTuple of outputs (described in `VToRaiOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__TO_RAI_METADATA)
     params = v__to_rai_params(
         coordinates=coordinates,
         orientation=orientation,
     )
-    return v__to_rai_execute(params, execution)
+    return v__to_rai_execute(params, runner)
 
 
 __all__ = [
@@ -182,8 +182,6 @@ __all__ = [
     "VToRaiParameters",
     "V__TO_RAI_METADATA",
     "v__to_rai",
-    "v__to_rai_cargs",
     "v__to_rai_execute",
-    "v__to_rai_outputs",
     "v__to_rai_params",
 ]

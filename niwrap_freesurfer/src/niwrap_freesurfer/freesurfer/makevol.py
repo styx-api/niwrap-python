@@ -196,7 +196,7 @@ def makevol_outputs(
 
 def makevol_execute(
     params: MakevolParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakevolOutputs:
     """
     A tool to create a volume with given parameters.
@@ -207,10 +207,12 @@ def makevol_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakevolOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKEVOL_METADATA)
     params = execution.params(params)
     cargs = makevol_cargs(params, execution)
     ret = makevol_outputs(params, execution)
@@ -250,8 +252,6 @@ def makevol(
     Returns:
         NamedTuple of outputs (described in `MakevolOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKEVOL_METADATA)
     params = makevol_params(
         filename=filename,
         width=width,
@@ -262,7 +262,7 @@ def makevol(
         sizez=sizez,
         set_method=set_method,
     )
-    return makevol_execute(params, execution)
+    return makevol_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "MakevolOutputs",
     "MakevolParameters",
     "makevol",
-    "makevol_cargs",
     "makevol_execute",
-    "makevol_outputs",
     "makevol_params",
 ]

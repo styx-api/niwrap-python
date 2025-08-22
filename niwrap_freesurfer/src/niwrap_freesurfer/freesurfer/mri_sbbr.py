@@ -326,7 +326,7 @@ def mri_sbbr_outputs(
 
 def mri_sbbr_execute(
     params: MriSbbrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSbbrOutputs:
     """
     Special implementation of boundary-based registration for a single slice.
@@ -337,10 +337,12 @@ def mri_sbbr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSbbrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SBBR_METADATA)
     params = execution.params(params)
     cargs = mri_sbbr_cargs(params, execution)
     ret = mri_sbbr_outputs(params, execution)
@@ -412,8 +414,6 @@ def mri_sbbr(
     Returns:
         NamedTuple of outputs (described in `MriSbbrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SBBR_METADATA)
     params = mri_sbbr_params(
         template_volume=template_volume,
         surface_file=surface_file,
@@ -440,7 +440,7 @@ def mri_sbbr(
         diagnostic=diagnostic,
         check_options=check_options,
     )
-    return mri_sbbr_execute(params, execution)
+    return mri_sbbr_execute(params, runner)
 
 
 __all__ = [
@@ -448,8 +448,6 @@ __all__ = [
     "MriSbbrOutputs",
     "MriSbbrParameters",
     "mri_sbbr",
-    "mri_sbbr_cargs",
     "mri_sbbr_execute",
-    "mri_sbbr_outputs",
     "mri_sbbr_params",
 ]

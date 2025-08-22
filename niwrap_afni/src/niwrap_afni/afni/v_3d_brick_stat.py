@@ -317,7 +317,7 @@ def v_3d_brick_stat_outputs(
 
 def v_3d_brick_stat_execute(
     params: V3dBrickStatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dBrickStatOutputs:
     """
     Compute voxel statistics of an input dataset.
@@ -328,10 +328,12 @@ def v_3d_brick_stat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dBrickStatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_BRICK_STAT_METADATA)
     params = execution.params(params)
     cargs = v_3d_brick_stat_cargs(params, execution)
     ret = v_3d_brick_stat_outputs(params, execution)
@@ -417,8 +419,6 @@ def v_3d_brick_stat(
     Returns:
         NamedTuple of outputs (described in `V3dBrickStatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_BRICK_STAT_METADATA)
     params = v_3d_brick_stat_params(
         dataset=dataset,
         quick=quick,
@@ -451,7 +451,7 @@ def v_3d_brick_stat(
         ver=ver,
         help_=help_,
     )
-    return v_3d_brick_stat_execute(params, execution)
+    return v_3d_brick_stat_execute(params, runner)
 
 
 __all__ = [
@@ -459,8 +459,6 @@ __all__ = [
     "V3dBrickStatParameters",
     "V_3D_BRICK_STAT_METADATA",
     "v_3d_brick_stat",
-    "v_3d_brick_stat_cargs",
     "v_3d_brick_stat_execute",
-    "v_3d_brick_stat_outputs",
     "v_3d_brick_stat_params",
 ]

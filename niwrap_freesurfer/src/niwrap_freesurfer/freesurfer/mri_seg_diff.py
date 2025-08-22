@@ -200,7 +200,7 @@ def mri_seg_diff_outputs(
 
 def mri_seg_diff_execute(
     params: MriSegDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSegDiffOutputs:
     """
     This program computes and merges differences in segmentation volumes, primarily
@@ -212,10 +212,12 @@ def mri_seg_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSegDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SEG_DIFF_METADATA)
     params = execution.params(params)
     cargs = mri_seg_diff_cargs(params, execution)
     ret = mri_seg_diff_outputs(params, execution)
@@ -259,8 +261,6 @@ def mri_seg_diff(
     Returns:
         NamedTuple of outputs (described in `MriSegDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SEG_DIFF_METADATA)
     params = mri_seg_diff_params(
         seg1=seg1,
         seg2=seg2,
@@ -273,7 +273,7 @@ def mri_seg_diff(
         checkopts=checkopts,
         version=version,
     )
-    return mri_seg_diff_execute(params, execution)
+    return mri_seg_diff_execute(params, runner)
 
 
 __all__ = [
@@ -281,8 +281,6 @@ __all__ = [
     "MriSegDiffOutputs",
     "MriSegDiffParameters",
     "mri_seg_diff",
-    "mri_seg_diff_cargs",
     "mri_seg_diff_execute",
-    "mri_seg_diff_outputs",
     "mri_seg_diff_params",
 ]

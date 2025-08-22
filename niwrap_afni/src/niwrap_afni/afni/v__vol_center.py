@@ -129,7 +129,7 @@ def v__vol_center_outputs(
 
 def v__vol_center_execute(
     params: VVolCenterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VVolCenterOutputs:
     """
     Tool to return the center of volume for a given dataset.
@@ -140,10 +140,12 @@ def v__vol_center_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VVolCenterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__VOL_CENTER_METADATA)
     params = execution.params(params)
     cargs = v__vol_center_cargs(params, execution)
     ret = v__vol_center_outputs(params, execution)
@@ -170,13 +172,11 @@ def v__vol_center(
     Returns:
         NamedTuple of outputs (described in `VVolCenterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__VOL_CENTER_METADATA)
     params = v__vol_center_params(
         dset=dset,
         orient=orient,
     )
-    return v__vol_center_execute(params, execution)
+    return v__vol_center_execute(params, runner)
 
 
 __all__ = [
@@ -184,8 +184,6 @@ __all__ = [
     "VVolCenterParameters",
     "V__VOL_CENTER_METADATA",
     "v__vol_center",
-    "v__vol_center_cargs",
     "v__vol_center_execute",
-    "v__vol_center_outputs",
     "v__vol_center_params",
 ]

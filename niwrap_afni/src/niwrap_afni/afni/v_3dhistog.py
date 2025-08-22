@@ -258,7 +258,7 @@ def v_3dhistog_outputs(
 
 def v_3dhistog_execute(
     params: V3dhistogParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dhistogOutputs:
     """
     Compute histogram of a 3D dataset.
@@ -269,10 +269,12 @@ def v_3dhistog_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dhistogOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DHISTOG_METADATA)
     params = execution.params(params)
     cargs = v_3dhistog_cargs(params, execution)
     ret = v_3dhistog_outputs(params, execution)
@@ -331,8 +333,6 @@ def v_3dhistog(
     Returns:
         NamedTuple of outputs (described in `V3dhistogOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DHISTOG_METADATA)
     params = v_3dhistog_params(
         dataset=dataset,
         nbin=nbin,
@@ -353,7 +353,7 @@ def v_3dhistog(
         unq=unq,
         prefix=prefix,
     )
-    return v_3dhistog_execute(params, execution)
+    return v_3dhistog_execute(params, runner)
 
 
 __all__ = [
@@ -361,8 +361,6 @@ __all__ = [
     "V3dhistogParameters",
     "V_3DHISTOG_METADATA",
     "v_3dhistog",
-    "v_3dhistog_cargs",
     "v_3dhistog_execute",
-    "v_3dhistog_outputs",
     "v_3dhistog_params",
 ]

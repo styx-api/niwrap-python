@@ -145,7 +145,7 @@ def cifti_pairwise_correlation_outputs(
 
 def cifti_pairwise_correlation_execute(
     params: CiftiPairwiseCorrelationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiPairwiseCorrelationOutputs:
     """
     Correlate paired rows between two cifti files.
@@ -159,10 +159,12 @@ def cifti_pairwise_correlation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiPairwiseCorrelationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_PAIRWISE_CORRELATION_METADATA)
     params = execution.params(params)
     cargs = cifti_pairwise_correlation_cargs(params, execution)
     ret = cifti_pairwise_correlation_outputs(params, execution)
@@ -200,8 +202,6 @@ def cifti_pairwise_correlation(
     Returns:
         NamedTuple of outputs (described in `CiftiPairwiseCorrelationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_PAIRWISE_CORRELATION_METADATA)
     params = cifti_pairwise_correlation_params(
         cifti_a=cifti_a,
         cifti_b=cifti_b,
@@ -209,7 +209,7 @@ def cifti_pairwise_correlation(
         opt_fisher_z=opt_fisher_z,
         opt_override_mapping_check=opt_override_mapping_check,
     )
-    return cifti_pairwise_correlation_execute(params, execution)
+    return cifti_pairwise_correlation_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "CiftiPairwiseCorrelationOutputs",
     "CiftiPairwiseCorrelationParameters",
     "cifti_pairwise_correlation",
-    "cifti_pairwise_correlation_cargs",
     "cifti_pairwise_correlation_execute",
-    "cifti_pairwise_correlation_outputs",
     "cifti_pairwise_correlation_params",
 ]

@@ -140,7 +140,7 @@ def mris_translate_annotation_outputs(
 
 def mris_translate_annotation_execute(
     params: MrisTranslateAnnotationParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisTranslateAnnotationOutputs:
     """
     This program applies a translation table to an annotation file.
@@ -151,10 +151,12 @@ def mris_translate_annotation_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisTranslateAnnotationOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_TRANSLATE_ANNOTATION_METADATA)
     params = execution.params(params)
     cargs = mris_translate_annotation_cargs(params, execution)
     ret = mris_translate_annotation_outputs(params, execution)
@@ -187,8 +189,6 @@ def mris_translate_annotation(
     Returns:
         NamedTuple of outputs (described in `MrisTranslateAnnotationOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_TRANSLATE_ANNOTATION_METADATA)
     params = mris_translate_annotation_params(
         subject=subject,
         hemi=hemi,
@@ -196,7 +196,7 @@ def mris_translate_annotation(
         translation_file=translation_file,
         out_annot=out_annot,
     )
-    return mris_translate_annotation_execute(params, execution)
+    return mris_translate_annotation_execute(params, runner)
 
 
 __all__ = [
@@ -204,8 +204,6 @@ __all__ = [
     "MrisTranslateAnnotationOutputs",
     "MrisTranslateAnnotationParameters",
     "mris_translate_annotation",
-    "mris_translate_annotation_cargs",
     "mris_translate_annotation_execute",
-    "mris_translate_annotation_outputs",
     "mris_translate_annotation_params",
 ]

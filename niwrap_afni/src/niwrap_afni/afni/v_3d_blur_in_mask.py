@@ -201,7 +201,7 @@ def v_3d_blur_in_mask_outputs(
 
 def v_3d_blur_in_mask_execute(
     params: V3dBlurInMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dBlurInMaskOutputs:
     """
     Blurs a dataset spatially inside a mask.
@@ -212,10 +212,12 @@ def v_3d_blur_in_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dBlurInMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_BLUR_IN_MASK_METADATA)
     params = execution.params(params)
     cargs = v_3d_blur_in_mask_cargs(params, execution)
     ret = v_3d_blur_in_mask_outputs(params, execution)
@@ -264,8 +266,6 @@ def v_3d_blur_in_mask(
     Returns:
         NamedTuple of outputs (described in `V3dBlurInMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_BLUR_IN_MASK_METADATA)
     params = v_3d_blur_in_mask_params(
         input_file=input_file,
         output_prefix=output_prefix,
@@ -279,7 +279,7 @@ def v_3d_blur_in_mask(
         float_=float_,
         fwhm_xyz=fwhm_xyz,
     )
-    return v_3d_blur_in_mask_execute(params, execution)
+    return v_3d_blur_in_mask_execute(params, runner)
 
 
 __all__ = [
@@ -287,8 +287,6 @@ __all__ = [
     "V3dBlurInMaskParameters",
     "V_3D_BLUR_IN_MASK_METADATA",
     "v_3d_blur_in_mask",
-    "v_3d_blur_in_mask_cargs",
     "v_3d_blur_in_mask_execute",
-    "v_3d_blur_in_mask_outputs",
     "v_3d_blur_in_mask_params",
 ]

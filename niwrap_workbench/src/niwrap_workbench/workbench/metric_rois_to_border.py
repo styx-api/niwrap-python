@@ -157,7 +157,7 @@ def metric_rois_to_border_outputs(
 
 def metric_rois_to_border_execute(
     params: MetricRoisToBorderParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
     Draw borders around metric rois.
@@ -172,10 +172,12 @@ def metric_rois_to_border_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MetricRoisToBorderOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(METRIC_ROIS_TO_BORDER_METADATA)
     params = execution.params(params)
     cargs = metric_rois_to_border_cargs(params, execution)
     ret = metric_rois_to_border_outputs(params, execution)
@@ -215,8 +217,6 @@ def metric_rois_to_border(
     Returns:
         NamedTuple of outputs (described in `MetricRoisToBorderOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(METRIC_ROIS_TO_BORDER_METADATA)
     params = metric_rois_to_border_params(
         surface=surface,
         metric=metric,
@@ -225,7 +225,7 @@ def metric_rois_to_border(
         opt_placement_fraction=opt_placement_fraction,
         opt_column_column=opt_column_column,
     )
-    return metric_rois_to_border_execute(params, execution)
+    return metric_rois_to_border_execute(params, runner)
 
 
 __all__ = [
@@ -233,8 +233,6 @@ __all__ = [
     "MetricRoisToBorderOutputs",
     "MetricRoisToBorderParameters",
     "metric_rois_to_border",
-    "metric_rois_to_border_cargs",
     "metric_rois_to_border_execute",
-    "metric_rois_to_border_outputs",
     "metric_rois_to_border_params",
 ]

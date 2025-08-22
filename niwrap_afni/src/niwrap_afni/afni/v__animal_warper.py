@@ -435,7 +435,7 @@ def v__animal_warper_outputs(
 
 def v__animal_warper_execute(
     params: VAnimalWarperParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAnimalWarperOutputs:
     """
     Align a subject structural dataset to a template and perform several
@@ -447,10 +447,12 @@ def v__animal_warper_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAnimalWarperOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ANIMAL_WARPER_METADATA)
     params = execution.params(params)
     cargs = v__animal_warper_cargs(params, execution)
     ret = v__animal_warper_outputs(params, execution)
@@ -552,8 +554,6 @@ def v__animal_warper(
     Returns:
         NamedTuple of outputs (described in `VAnimalWarperOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ANIMAL_WARPER_METADATA)
     params = v__animal_warper_params(
         input_file=input_file,
         base_template=base_template,
@@ -590,7 +590,7 @@ def v__animal_warper(
         ok_to_exist=ok_to_exist,
         echo=echo,
     )
-    return v__animal_warper_execute(params, execution)
+    return v__animal_warper_execute(params, runner)
 
 
 __all__ = [
@@ -598,8 +598,6 @@ __all__ = [
     "VAnimalWarperParameters",
     "V__ANIMAL_WARPER_METADATA",
     "v__animal_warper",
-    "v__animal_warper_cargs",
     "v__animal_warper_execute",
-    "v__animal_warper_outputs",
     "v__animal_warper_params",
 ]

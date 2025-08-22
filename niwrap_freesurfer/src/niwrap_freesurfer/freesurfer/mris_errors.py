@@ -116,7 +116,7 @@ def mris_errors_outputs(
 
 def mris_errors_execute(
     params: MrisErrorsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisErrorsOutputs:
     """
     This program will unfold an MRI on the surface of an ellipsoid.
@@ -127,10 +127,12 @@ def mris_errors_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisErrorsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_ERRORS_METADATA)
     params = execution.params(params)
     cargs = mris_errors_cargs(params, execution)
     ret = mris_errors_outputs(params, execution)
@@ -155,12 +157,10 @@ def mris_errors(
     Returns:
         NamedTuple of outputs (described in `MrisErrorsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_ERRORS_METADATA)
     params = mris_errors_params(
         input_image_file=input_image_file,
     )
-    return mris_errors_execute(params, execution)
+    return mris_errors_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "MrisErrorsOutputs",
     "MrisErrorsParameters",
     "mris_errors",
-    "mris_errors_cargs",
     "mris_errors_execute",
-    "mris_errors_outputs",
     "mris_errors_params",
 ]

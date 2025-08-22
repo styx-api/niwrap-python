@@ -231,7 +231,7 @@ def tsfmult_outputs(
 
 def tsfmult_execute(
     params: TsfmultParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TsfmultOutputs:
     """
     Multiply corresponding values in track scalar files.
@@ -248,10 +248,12 @@ def tsfmult_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TsfmultOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TSFMULT_METADATA)
     params = execution.params(params)
     cargs = tsfmult_cargs(params, execution)
     ret = tsfmult_outputs(params, execution)
@@ -304,8 +306,6 @@ def tsfmult(
     Returns:
         NamedTuple of outputs (described in `TsfmultOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TSFMULT_METADATA)
     params = tsfmult_params(
         info=info,
         quiet=quiet,
@@ -318,7 +318,7 @@ def tsfmult(
         input1=input1,
         output=output,
     )
-    return tsfmult_execute(params, execution)
+    return tsfmult_execute(params, runner)
 
 
 __all__ = [
@@ -327,10 +327,7 @@ __all__ = [
     "TsfmultOutputs",
     "TsfmultParameters",
     "tsfmult",
-    "tsfmult_cargs",
-    "tsfmult_config_cargs",
     "tsfmult_config_params",
     "tsfmult_execute",
-    "tsfmult_outputs",
     "tsfmult_params",
 ]

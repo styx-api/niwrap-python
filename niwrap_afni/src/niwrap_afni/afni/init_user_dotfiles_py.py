@@ -244,7 +244,7 @@ def init_user_dotfiles_py_outputs(
 
 def init_user_dotfiles_py_execute(
     params: InitUserDotfilesPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InitUserDotfilesPyOutputs:
     """
     Initialize or evaluate user dot files (.cshrc, .bashrc, ...) for system
@@ -256,10 +256,12 @@ def init_user_dotfiles_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InitUserDotfilesPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INIT_USER_DOTFILES_PY_METADATA)
     params = execution.params(params)
     cargs = init_user_dotfiles_py_cargs(params, execution)
     ret = init_user_dotfiles_py_outputs(params, execution)
@@ -320,8 +322,6 @@ def init_user_dotfiles_py(
     Returns:
         NamedTuple of outputs (described in `InitUserDotfilesPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INIT_USER_DOTFILES_PY_METADATA)
     params = init_user_dotfiles_py_params(
         help_=help_,
         help_dotfiles_all=help_dotfiles_all,
@@ -341,7 +341,7 @@ def init_user_dotfiles_py(
         test=test,
         verbosity_level=verbosity_level,
     )
-    return init_user_dotfiles_py_execute(params, execution)
+    return init_user_dotfiles_py_execute(params, runner)
 
 
 __all__ = [
@@ -349,8 +349,6 @@ __all__ = [
     "InitUserDotfilesPyOutputs",
     "InitUserDotfilesPyParameters",
     "init_user_dotfiles_py",
-    "init_user_dotfiles_py_cargs",
     "init_user_dotfiles_py_execute",
-    "init_user_dotfiles_py_outputs",
     "init_user_dotfiles_py_params",
 ]

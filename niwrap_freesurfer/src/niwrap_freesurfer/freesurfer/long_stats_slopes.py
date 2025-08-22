@@ -352,7 +352,7 @@ def long_stats_slopes_outputs(
 
 def long_stats_slopes_execute(
     params: LongStatsSlopesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LongStatsSlopesOutputs:
     """
     Computes slopes of statistics in a longitudinal study for each subject from
@@ -364,10 +364,12 @@ def long_stats_slopes_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LongStatsSlopesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LONG_STATS_SLOPES_METADATA)
     params = execution.params(params)
     cargs = long_stats_slopes_cargs(params, execution)
     ret = long_stats_slopes_outputs(params, execution)
@@ -456,8 +458,6 @@ def long_stats_slopes(
     Returns:
         NamedTuple of outputs (described in `LongStatsSlopesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LONG_STATS_SLOPES_METADATA)
     params = long_stats_slopes_params(
         qdec_table=qdec_table,
         stats_file=stats_file,
@@ -487,7 +487,7 @@ def long_stats_slopes(
         stack_spc=stack_spc,
         stack_resid=stack_resid,
     )
-    return long_stats_slopes_execute(params, execution)
+    return long_stats_slopes_execute(params, runner)
 
 
 __all__ = [
@@ -495,8 +495,6 @@ __all__ = [
     "LongStatsSlopesOutputs",
     "LongStatsSlopesParameters",
     "long_stats_slopes",
-    "long_stats_slopes_cargs",
     "long_stats_slopes_execute",
-    "long_stats_slopes_outputs",
     "long_stats_slopes_params",
 ]

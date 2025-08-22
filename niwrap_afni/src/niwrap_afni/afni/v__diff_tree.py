@@ -248,7 +248,7 @@ def v__diff_tree_outputs(
 
 def v__diff_tree_execute(
     params: VDiffTreeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDiffTreeOutputs:
     """
     Show file differences between 2 directories.
@@ -259,10 +259,12 @@ def v__diff_tree_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDiffTreeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DIFF_TREE_METADATA)
     params = execution.params(params)
     cargs = v__diff_tree_cargs(params, execution)
     ret = v__diff_tree_outputs(params, execution)
@@ -324,8 +326,6 @@ def v__diff_tree(
     Returns:
         NamedTuple of outputs (described in `VDiffTreeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DIFF_TREE_METADATA)
     params = v__diff_tree_params(
         new_dir=new_dir,
         old_dir=old_dir,
@@ -346,7 +346,7 @@ def v__diff_tree(
         xxdiff=xxdiff,
         x_option=x_option,
     )
-    return v__diff_tree_execute(params, execution)
+    return v__diff_tree_execute(params, runner)
 
 
 __all__ = [
@@ -354,8 +354,6 @@ __all__ = [
     "VDiffTreeParameters",
     "V__DIFF_TREE_METADATA",
     "v__diff_tree",
-    "v__diff_tree_cargs",
     "v__diff_tree_execute",
-    "v__diff_tree_outputs",
     "v__diff_tree_params",
 ]

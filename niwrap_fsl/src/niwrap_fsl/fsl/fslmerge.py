@@ -181,7 +181,7 @@ def fslmerge_outputs(
 
 def fslmerge_execute(
     params: FslmergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslmergeOutputs:
     """
     FSL tool to concatenate images in various dimensions.
@@ -192,10 +192,12 @@ def fslmerge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslmergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLMERGE_METADATA)
     params = execution.params(params)
     cargs = fslmerge_cargs(params, execution)
     ret = fslmerge_outputs(params, execution)
@@ -241,8 +243,6 @@ def fslmerge(
     Returns:
         NamedTuple of outputs (described in `FslmergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLMERGE_METADATA)
     params = fslmerge_params(
         merge_time=merge_time,
         merge_x=merge_x,
@@ -255,7 +255,7 @@ def fslmerge(
         volume_number=volume_number,
         tr_value=tr_value,
     )
-    return fslmerge_execute(params, execution)
+    return fslmerge_execute(params, runner)
 
 
 __all__ = [
@@ -263,8 +263,6 @@ __all__ = [
     "FslmergeOutputs",
     "FslmergeParameters",
     "fslmerge",
-    "fslmerge_cargs",
     "fslmerge_execute",
-    "fslmerge_outputs",
     "fslmerge_params",
 ]

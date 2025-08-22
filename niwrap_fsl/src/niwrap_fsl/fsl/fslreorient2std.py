@@ -143,7 +143,7 @@ def fslreorient2std_outputs(
 
 def fslreorient2std_execute(
     params: Fslreorient2stdParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fslreorient2stdOutputs:
     """
     A tool for reorienting an image to match the approximate orientation of standard
@@ -155,10 +155,12 @@ def fslreorient2std_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fslreorient2stdOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLREORIENT2STD_METADATA)
     params = execution.params(params)
     cargs = fslreorient2std_cargs(params, execution)
     ret = fslreorient2std_outputs(params, execution)
@@ -191,14 +193,12 @@ def fslreorient2std(
     Returns:
         NamedTuple of outputs (described in `Fslreorient2stdOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLREORIENT2STD_METADATA)
     params = fslreorient2std_params(
         input_image=input_image,
         output_image=output_image,
         matrix_file=matrix_file,
     )
-    return fslreorient2std_execute(params, execution)
+    return fslreorient2std_execute(params, runner)
 
 
 __all__ = [
@@ -206,8 +206,6 @@ __all__ = [
     "Fslreorient2stdOutputs",
     "Fslreorient2stdParameters",
     "fslreorient2std",
-    "fslreorient2std_cargs",
     "fslreorient2std_execute",
-    "fslreorient2std_outputs",
     "fslreorient2std_params",
 ]

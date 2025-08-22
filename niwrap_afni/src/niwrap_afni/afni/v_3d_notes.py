@@ -170,7 +170,7 @@ def v_3d_notes_outputs(
 
 def v_3d_notes_execute(
     params: V3dNotesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dNotesOutputs:
     """
     A program to add, delete and show notes for AFNI datasets.
@@ -181,10 +181,12 @@ def v_3d_notes_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dNotesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3D_NOTES_METADATA)
     params = execution.params(params)
     cargs = v_3d_notes_cargs(params, execution)
     ret = v_3d_notes_outputs(params, execution)
@@ -223,8 +225,6 @@ def v_3d_notes(
     Returns:
         NamedTuple of outputs (described in `V3dNotesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3D_NOTES_METADATA)
     params = v_3d_notes_params(
         add_note=add_note,
         append_history=append_history,
@@ -234,7 +234,7 @@ def v_3d_notes(
         help_=help_,
         dataset=dataset,
     )
-    return v_3d_notes_execute(params, execution)
+    return v_3d_notes_execute(params, runner)
 
 
 __all__ = [
@@ -242,8 +242,6 @@ __all__ = [
     "V3dNotesParameters",
     "V_3D_NOTES_METADATA",
     "v_3d_notes",
-    "v_3d_notes_cargs",
     "v_3d_notes_execute",
-    "v_3d_notes_outputs",
     "v_3d_notes_params",
 ]

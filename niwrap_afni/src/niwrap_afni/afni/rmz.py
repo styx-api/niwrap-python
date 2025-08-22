@@ -138,7 +138,7 @@ def rmz_outputs(
 
 def rmz_execute(
     params: RmzParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> RmzOutputs:
     """
     Zeros out files before removing them.
@@ -149,10 +149,12 @@ def rmz_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `RmzOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RMZ_METADATA)
     params = execution.params(params)
     cargs = rmz_cargs(params, execution)
     ret = rmz_outputs(params, execution)
@@ -183,15 +185,13 @@ def rmz(
     Returns:
         NamedTuple of outputs (described in `RmzOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RMZ_METADATA)
     params = rmz_params(
         quiet=quiet,
         hash_flag=hash_flag,
         keep_flag=keep_flag,
         filenames=filenames,
     )
-    return rmz_execute(params, execution)
+    return rmz_execute(params, runner)
 
 
 __all__ = [
@@ -199,8 +199,6 @@ __all__ = [
     "RmzOutputs",
     "RmzParameters",
     "rmz",
-    "rmz_cargs",
     "rmz_execute",
-    "rmz_outputs",
     "rmz_params",
 ]

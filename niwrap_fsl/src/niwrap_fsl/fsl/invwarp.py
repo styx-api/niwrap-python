@@ -173,7 +173,7 @@ def invwarp_outputs(
 
 def invwarp_execute(
     params: InvwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> InvwarpOutputs:
     """
     
@@ -185,10 +185,12 @@ def invwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `InvwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(INVWARP_METADATA)
     params = execution.params(params)
     cargs = invwarp_cargs(params, execution)
     ret = invwarp_outputs(params, execution)
@@ -232,8 +234,6 @@ def invwarp(
     Returns:
         NamedTuple of outputs (described in `InvwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(INVWARP_METADATA)
     params = invwarp_params(
         warp=warp,
         out_img=out_img,
@@ -245,7 +245,7 @@ def invwarp(
         jacobian_max=jacobian_max,
         debug=debug,
     )
-    return invwarp_execute(params, execution)
+    return invwarp_execute(params, runner)
 
 
 __all__ = [
@@ -253,8 +253,6 @@ __all__ = [
     "InvwarpOutputs",
     "InvwarpParameters",
     "invwarp",
-    "invwarp_cargs",
     "invwarp_execute",
-    "invwarp_outputs",
     "invwarp_params",
 ]

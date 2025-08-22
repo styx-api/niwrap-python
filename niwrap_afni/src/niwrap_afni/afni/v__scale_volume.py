@@ -174,7 +174,7 @@ def v__scale_volume_outputs(
 
 def v__scale_volume_execute(
     params: VScaleVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VScaleVolumeOutputs:
     """
     A tool to scale the volume of datasets.
@@ -185,10 +185,12 @@ def v__scale_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VScaleVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__SCALE_VOLUME_METADATA)
     params = execution.params(params)
     cargs = v__scale_volume_cargs(params, execution)
     ret = v__scale_volume_outputs(params, execution)
@@ -228,8 +230,6 @@ def v__scale_volume(
     Returns:
         NamedTuple of outputs (described in `VScaleVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__SCALE_VOLUME_METADATA)
     params = v__scale_volume_params(
         input_dset=input_dset,
         prefix=prefix,
@@ -240,7 +240,7 @@ def v__scale_volume(
         norm=norm,
         mask=mask,
     )
-    return v__scale_volume_execute(params, execution)
+    return v__scale_volume_execute(params, runner)
 
 
 __all__ = [
@@ -248,8 +248,6 @@ __all__ = [
     "VScaleVolumeParameters",
     "V__SCALE_VOLUME_METADATA",
     "v__scale_volume",
-    "v__scale_volume_cargs",
     "v__scale_volume_execute",
-    "v__scale_volume_outputs",
     "v__scale_volume_params",
 ]

@@ -270,7 +270,7 @@ def fixelconnectivity_outputs(
 
 def fixelconnectivity_execute(
     params: FixelconnectivityParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixelconnectivityOutputs:
     """
     Generate a fixel-fixel connectivity matrix.
@@ -289,10 +289,12 @@ def fixelconnectivity_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixelconnectivityOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXELCONNECTIVITY_METADATA)
     params = execution.params(params)
     cargs = fixelconnectivity_cargs(params, execution)
     ret = fixelconnectivity_outputs(params, execution)
@@ -359,8 +361,6 @@ def fixelconnectivity(
     Returns:
         NamedTuple of outputs (described in `FixelconnectivityOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXELCONNECTIVITY_METADATA)
     params = fixelconnectivity_params(
         threshold=threshold,
         angle=angle,
@@ -377,7 +377,7 @@ def fixelconnectivity(
         tracks=tracks,
         matrix=matrix,
     )
-    return fixelconnectivity_execute(params, execution)
+    return fixelconnectivity_execute(params, runner)
 
 
 __all__ = [
@@ -386,10 +386,7 @@ __all__ = [
     "FixelconnectivityOutputs",
     "FixelconnectivityParameters",
     "fixelconnectivity",
-    "fixelconnectivity_cargs",
-    "fixelconnectivity_config_cargs",
     "fixelconnectivity_config_params",
     "fixelconnectivity_execute",
-    "fixelconnectivity_outputs",
     "fixelconnectivity_params",
 ]

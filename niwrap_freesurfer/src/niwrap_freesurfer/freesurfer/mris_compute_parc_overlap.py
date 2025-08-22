@@ -241,7 +241,7 @@ def mris_compute_parc_overlap_outputs(
 
 def mris_compute_parc_overlap_execute(
     params: MrisComputeParcOverlapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisComputeParcOverlapOutputs:
     """
     Compares two parcellated (annotated or labeled) surfaces and computes an overall
@@ -253,10 +253,12 @@ def mris_compute_parc_overlap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisComputeParcOverlapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_COMPUTE_PARC_OVERLAP_METADATA)
     params = execution.params(params)
     cargs = mris_compute_parc_overlap_cargs(params, execution)
     ret = mris_compute_parc_overlap_outputs(params, execution)
@@ -314,8 +316,6 @@ def mris_compute_parc_overlap(
     Returns:
         NamedTuple of outputs (described in `MrisComputeParcOverlapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_COMPUTE_PARC_OVERLAP_METADATA)
     params = mris_compute_parc_overlap_params(
         subject=subject,
         hemi=hemi,
@@ -334,7 +334,7 @@ def mris_compute_parc_overlap(
         use_label_xyz=use_label_xyz,
         debug_overlap=debug_overlap,
     )
-    return mris_compute_parc_overlap_execute(params, execution)
+    return mris_compute_parc_overlap_execute(params, runner)
 
 
 __all__ = [
@@ -342,8 +342,6 @@ __all__ = [
     "MrisComputeParcOverlapOutputs",
     "MrisComputeParcOverlapParameters",
     "mris_compute_parc_overlap",
-    "mris_compute_parc_overlap_cargs",
     "mris_compute_parc_overlap_execute",
-    "mris_compute_parc_overlap_outputs",
     "mris_compute_parc_overlap_params",
 ]

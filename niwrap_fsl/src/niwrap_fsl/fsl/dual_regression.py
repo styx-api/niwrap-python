@@ -173,7 +173,7 @@ def dual_regression_outputs(
 
 def dual_regression_execute(
     params: DualRegressionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DualRegressionOutputs:
     """
     Dual regression algorithm to investigate group-ICA results.
@@ -184,10 +184,12 @@ def dual_regression_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DualRegressionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DUAL_REGRESSION_METADATA)
     params = execution.params(params)
     cargs = dual_regression_cargs(params, execution)
     ret = dual_regression_outputs(params, execution)
@@ -234,8 +236,6 @@ def dual_regression(
     Returns:
         NamedTuple of outputs (described in `DualRegressionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DUAL_REGRESSION_METADATA)
     params = dual_regression_params(
         group_ic_maps=group_ic_maps,
         des_norm=des_norm,
@@ -246,7 +246,7 @@ def dual_regression(
         output_directory=output_directory,
         input_files=input_files,
     )
-    return dual_regression_execute(params, execution)
+    return dual_regression_execute(params, runner)
 
 
 __all__ = [
@@ -254,8 +254,6 @@ __all__ = [
     "DualRegressionOutputs",
     "DualRegressionParameters",
     "dual_regression",
-    "dual_regression_cargs",
     "dual_regression_execute",
-    "dual_regression_outputs",
     "dual_regression_params",
 ]

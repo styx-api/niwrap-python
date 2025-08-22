@@ -399,7 +399,7 @@ def fabber_dce_outputs(
 
 def fabber_dce_execute(
     params: FabberDceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FabberDceOutputs:
     """
     Fabber DCE analysis tool for model-based analysis of dynamic contrast-enhanced
@@ -411,10 +411,12 @@ def fabber_dce_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FabberDceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FABBER_DCE_METADATA)
     params = execution.params(params)
     cargs = fabber_dce_cargs(params, execution)
     ret = fabber_dce_outputs(params, execution)
@@ -530,8 +532,6 @@ def fabber_dce(
     Returns:
         NamedTuple of outputs (described in `FabberDceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FABBER_DCE_METADATA)
     params = fabber_dce_params(
         output_directory=output_directory,
         inference_method=inference_method,
@@ -570,7 +570,7 @@ def fabber_dce(
         option_file=option_file,
         debug=debug,
     )
-    return fabber_dce_execute(params, execution)
+    return fabber_dce_execute(params, runner)
 
 
 __all__ = [
@@ -578,8 +578,6 @@ __all__ = [
     "FabberDceOutputs",
     "FabberDceParameters",
     "fabber_dce",
-    "fabber_dce_cargs",
     "fabber_dce_execute",
-    "fabber_dce_outputs",
     "fabber_dce_params",
 ]

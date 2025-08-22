@@ -163,7 +163,7 @@ def add_noise_to_image_outputs(
 
 def add_noise_to_image_execute(
     params: AddNoiseToImageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AddNoiseToImageOutputs:
     """
     Add various types of noise to an image.
@@ -174,10 +174,12 @@ def add_noise_to_image_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AddNoiseToImageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADD_NOISE_TO_IMAGE_METADATA)
     params = execution.params(params)
     cargs = add_noise_to_image_cargs(params, execution)
     ret = add_noise_to_image_outputs(params, execution)
@@ -214,8 +216,6 @@ def add_noise_to_image(
     Returns:
         NamedTuple of outputs (described in `AddNoiseToImageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADD_NOISE_TO_IMAGE_METADATA)
     params = add_noise_to_image_params(
         image_dimensionality=image_dimensionality,
         input_image=input_image,
@@ -223,7 +223,7 @@ def add_noise_to_image(
         output=output,
         verbose=verbose,
     )
-    return add_noise_to_image_execute(params, execution)
+    return add_noise_to_image_execute(params, runner)
 
 
 __all__ = [
@@ -231,8 +231,6 @@ __all__ = [
     "AddNoiseToImageOutputs",
     "AddNoiseToImageParameters",
     "add_noise_to_image",
-    "add_noise_to_image_cargs",
     "add_noise_to_image_execute",
-    "add_noise_to_image_outputs",
     "add_noise_to_image_params",
 ]

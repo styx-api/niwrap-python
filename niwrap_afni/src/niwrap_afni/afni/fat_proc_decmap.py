@@ -230,7 +230,7 @@ def fat_proc_decmap_outputs(
 
 def fat_proc_decmap_execute(
     params: FatProcDecmapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FatProcDecmapOutputs:
     """
     This program makes a directionally encoded color (DEC) map for DTI results.
@@ -241,10 +241,12 @@ def fat_proc_decmap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FatProcDecmapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FAT_PROC_DECMAP_METADATA)
     params = execution.params(params)
     cargs = fat_proc_decmap_cargs(params, execution)
     ret = fat_proc_decmap_outputs(params, execution)
@@ -294,8 +296,6 @@ def fat_proc_decmap(
     Returns:
         NamedTuple of outputs (described in `FatProcDecmapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FAT_PROC_DECMAP_METADATA)
     params = fat_proc_decmap_params(
         in_fa=in_fa,
         in_v1=in_v1,
@@ -309,7 +309,7 @@ def fat_proc_decmap(
         no_cmd_out=no_cmd_out,
         no_qc_view=no_qc_view,
     )
-    return fat_proc_decmap_execute(params, execution)
+    return fat_proc_decmap_execute(params, runner)
 
 
 __all__ = [
@@ -317,8 +317,6 @@ __all__ = [
     "FatProcDecmapOutputs",
     "FatProcDecmapParameters",
     "fat_proc_decmap",
-    "fat_proc_decmap_cargs",
     "fat_proc_decmap_execute",
-    "fat_proc_decmap_outputs",
     "fat_proc_decmap_params",
 ]

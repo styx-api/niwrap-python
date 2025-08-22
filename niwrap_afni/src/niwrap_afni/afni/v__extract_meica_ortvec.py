@@ -175,7 +175,7 @@ def v__extract_meica_ortvec_outputs(
 
 def v__extract_meica_ortvec_execute(
     params: VExtractMeicaOrtvecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VExtractMeicaOrtvecOutputs:
     """
     Project good MEICA components out of bad ones.
@@ -186,10 +186,12 @@ def v__extract_meica_ortvec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VExtractMeicaOrtvecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__EXTRACT_MEICA_ORTVEC_METADATA)
     params = execution.params(params)
     cargs = v__extract_meica_ortvec_cargs(params, execution)
     ret = v__extract_meica_ortvec_outputs(params, execution)
@@ -226,8 +228,6 @@ def v__extract_meica_ortvec(
     Returns:
         NamedTuple of outputs (described in `VExtractMeicaOrtvecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__EXTRACT_MEICA_ORTVEC_METADATA)
     params = v__extract_meica_ortvec_params(
         prefix=prefix,
         meica_dir=meica_dir,
@@ -236,7 +236,7 @@ def v__extract_meica_ortvec(
         work_dir=work_dir,
         verbosity=verbosity,
     )
-    return v__extract_meica_ortvec_execute(params, execution)
+    return v__extract_meica_ortvec_execute(params, runner)
 
 
 __all__ = [
@@ -244,8 +244,6 @@ __all__ = [
     "VExtractMeicaOrtvecParameters",
     "V__EXTRACT_MEICA_ORTVEC_METADATA",
     "v__extract_meica_ortvec",
-    "v__extract_meica_ortvec_cargs",
     "v__extract_meica_ortvec_execute",
-    "v__extract_meica_ortvec_outputs",
     "v__extract_meica_ortvec_params",
 ]

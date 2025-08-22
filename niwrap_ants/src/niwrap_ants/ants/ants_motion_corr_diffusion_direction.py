@@ -155,7 +155,7 @@ def ants_motion_corr_diffusion_direction_outputs(
 
 def ants_motion_corr_diffusion_direction_execute(
     params: AntsMotionCorrDiffusionDirectionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsMotionCorrDiffusionDirectionOutputs:
     """
     This tool adjusts the diffusion scheme for motion correction.
@@ -166,10 +166,12 @@ def ants_motion_corr_diffusion_direction_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrDiffusionDirectionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA)
     params = execution.params(params)
     cargs = ants_motion_corr_diffusion_direction_cargs(params, execution)
     ret = ants_motion_corr_diffusion_direction_outputs(params, execution)
@@ -202,8 +204,6 @@ def ants_motion_corr_diffusion_direction(
     Returns:
         NamedTuple of outputs (described in `AntsMotionCorrDiffusionDirectionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_MOTION_CORR_DIFFUSION_DIRECTION_METADATA)
     params = ants_motion_corr_diffusion_direction_params(
         scheme=scheme,
         bvec=bvec,
@@ -211,7 +211,7 @@ def ants_motion_corr_diffusion_direction(
         moco=moco,
         output=output,
     )
-    return ants_motion_corr_diffusion_direction_execute(params, execution)
+    return ants_motion_corr_diffusion_direction_execute(params, runner)
 
 
 __all__ = [
@@ -219,8 +219,6 @@ __all__ = [
     "AntsMotionCorrDiffusionDirectionOutputs",
     "AntsMotionCorrDiffusionDirectionParameters",
     "ants_motion_corr_diffusion_direction",
-    "ants_motion_corr_diffusion_direction_cargs",
     "ants_motion_corr_diffusion_direction_execute",
-    "ants_motion_corr_diffusion_direction_outputs",
     "ants_motion_corr_diffusion_direction_params",
 ]

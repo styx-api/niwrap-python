@@ -131,7 +131,7 @@ def surface_wedge_volume_outputs(
 
 def surface_wedge_volume_execute(
     params: SurfaceWedgeVolumeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceWedgeVolumeOutputs:
     """
     Measure per-vertex volume between surfaces.
@@ -146,10 +146,12 @@ def surface_wedge_volume_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceWedgeVolumeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_WEDGE_VOLUME_METADATA)
     params = execution.params(params)
     cargs = surface_wedge_volume_cargs(params, execution)
     ret = surface_wedge_volume_outputs(params, execution)
@@ -182,14 +184,12 @@ def surface_wedge_volume(
     Returns:
         NamedTuple of outputs (described in `SurfaceWedgeVolumeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_WEDGE_VOLUME_METADATA)
     params = surface_wedge_volume_params(
         inner_surface=inner_surface,
         outer_surface=outer_surface,
         metric=metric,
     )
-    return surface_wedge_volume_execute(params, execution)
+    return surface_wedge_volume_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "SurfaceWedgeVolumeOutputs",
     "SurfaceWedgeVolumeParameters",
     "surface_wedge_volume",
-    "surface_wedge_volume_cargs",
     "surface_wedge_volume_execute",
-    "surface_wedge_volume_outputs",
     "surface_wedge_volume_params",
 ]

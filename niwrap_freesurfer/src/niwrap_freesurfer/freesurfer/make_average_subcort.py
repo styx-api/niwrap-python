@@ -128,7 +128,7 @@ def make_average_subcort_outputs(
 
 def make_average_subcort_execute(
     params: MakeAverageSubcortParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MakeAverageSubcortOutputs:
     """
     This creates an average subcortical mask for the given input subjects, intended
@@ -140,10 +140,12 @@ def make_average_subcort_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MakeAverageSubcortOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MAKE_AVERAGE_SUBCORT_METADATA)
     params = execution.params(params)
     cargs = make_average_subcort_cargs(params, execution)
     ret = make_average_subcort_outputs(params, execution)
@@ -171,13 +173,11 @@ def make_average_subcort(
     Returns:
         NamedTuple of outputs (described in `MakeAverageSubcortOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MAKE_AVERAGE_SUBCORT_METADATA)
     params = make_average_subcort_params(
         subjects=subjects,
         output_volume=output_volume,
     )
-    return make_average_subcort_execute(params, execution)
+    return make_average_subcort_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "MakeAverageSubcortOutputs",
     "MakeAverageSubcortParameters",
     "make_average_subcort",
-    "make_average_subcort_cargs",
     "make_average_subcort_execute",
-    "make_average_subcort_outputs",
     "make_average_subcort_params",
 ]

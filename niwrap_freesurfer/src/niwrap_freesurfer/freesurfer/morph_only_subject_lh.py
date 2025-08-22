@@ -123,7 +123,7 @@ def morph_only_subject_lh_outputs(
 
 def morph_only_subject_lh_execute(
     params: MorphOnlySubjectLhParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MorphOnlySubjectLhOutputs:
     """
     A tool for morphological processing for the left hemisphere.
@@ -134,10 +134,12 @@ def morph_only_subject_lh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectLhOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MORPH_ONLY_SUBJECT_LH_METADATA)
     params = execution.params(params)
     cargs = morph_only_subject_lh_cargs(params, execution)
     ret = morph_only_subject_lh_outputs(params, execution)
@@ -162,12 +164,10 @@ def morph_only_subject_lh(
     Returns:
         NamedTuple of outputs (described in `MorphOnlySubjectLhOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MORPH_ONLY_SUBJECT_LH_METADATA)
     params = morph_only_subject_lh_params(
         subject_dir=subject_dir,
     )
-    return morph_only_subject_lh_execute(params, execution)
+    return morph_only_subject_lh_execute(params, runner)
 
 
 __all__ = [
@@ -175,8 +175,6 @@ __all__ = [
     "MorphOnlySubjectLhOutputs",
     "MorphOnlySubjectLhParameters",
     "morph_only_subject_lh",
-    "morph_only_subject_lh_cargs",
     "morph_only_subject_lh_execute",
-    "morph_only_subject_lh_outputs",
     "morph_only_subject_lh_params",
 ]

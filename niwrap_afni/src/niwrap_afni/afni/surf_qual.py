@@ -179,7 +179,7 @@ def surf_qual_outputs(
 
 def surf_qual_execute(
     params: SurfQualParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfQualOutputs:
     """
     A program to check the quality of surfaces.
@@ -190,10 +190,12 @@ def surf_qual_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfQualOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_QUAL_METADATA)
     params = execution.params(params)
     cargs = surf_qual_cargs(params, execution)
     ret = surf_qual_outputs(params, execution)
@@ -228,8 +230,6 @@ def surf_qual(
     Returns:
         NamedTuple of outputs (described in `SurfQualOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_QUAL_METADATA)
     params = surf_qual_params(
         spec_file=spec_file,
         surface_a=surface_a,
@@ -238,7 +238,7 @@ def surf_qual(
         self_intersect_flag=self_intersect_flag,
         output_prefix=output_prefix,
     )
-    return surf_qual_execute(params, execution)
+    return surf_qual_execute(params, runner)
 
 
 __all__ = [
@@ -246,8 +246,6 @@ __all__ = [
     "SurfQualOutputs",
     "SurfQualParameters",
     "surf_qual",
-    "surf_qual_cargs",
     "surf_qual_execute",
-    "surf_qual_outputs",
     "surf_qual_params",
 ]

@@ -125,7 +125,7 @@ def sliceanimate_outputs(
 
 def sliceanimate_execute(
     params: SliceanimateParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SliceanimateOutputs:
     """
     A tool for animating slices of an image using whirlgif.
@@ -136,10 +136,12 @@ def sliceanimate_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SliceanimateOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SLICEANIMATE_METADATA)
     params = execution.params(params)
     cargs = sliceanimate_cargs(params, execution)
     ret = sliceanimate_outputs(params, execution)
@@ -166,13 +168,11 @@ def sliceanimate(
     Returns:
         NamedTuple of outputs (described in `SliceanimateOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SLICEANIMATE_METADATA)
     params = sliceanimate_params(
         output_file=output_file,
         input_files=input_files,
     )
-    return sliceanimate_execute(params, execution)
+    return sliceanimate_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "SliceanimateOutputs",
     "SliceanimateParameters",
     "sliceanimate",
-    "sliceanimate_cargs",
     "sliceanimate_execute",
-    "sliceanimate_outputs",
     "sliceanimate_params",
 ]

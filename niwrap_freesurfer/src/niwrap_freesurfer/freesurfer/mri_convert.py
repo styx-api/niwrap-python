@@ -260,7 +260,7 @@ def mri_convert_outputs(
 
 def mri_convert_execute(
     params: MriConvertParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriConvertOutputs:
     """
     A general purpose utility for converting between different file formats
@@ -272,10 +272,12 @@ def mri_convert_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriConvertOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CONVERT_METADATA)
     params = execution.params(params)
     cargs = mri_convert_cargs(params, execution)
     ret = mri_convert_outputs(params, execution)
@@ -338,8 +340,6 @@ def mri_convert(
     Returns:
         NamedTuple of outputs (described in `MriConvertOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CONVERT_METADATA)
     params = mri_convert_params(
         inp_volume=inp_volume,
         out_volume=out_volume,
@@ -361,7 +361,7 @@ def mri_convert(
         bfile_little_endian=bfile_little_endian,
         sphinx=sphinx,
     )
-    return mri_convert_execute(params, execution)
+    return mri_convert_execute(params, runner)
 
 
 __all__ = [
@@ -369,8 +369,6 @@ __all__ = [
     "MriConvertOutputs",
     "MriConvertParameters",
     "mri_convert",
-    "mri_convert_cargs",
     "mri_convert_execute",
-    "mri_convert_outputs",
     "mri_convert_params",
 ]

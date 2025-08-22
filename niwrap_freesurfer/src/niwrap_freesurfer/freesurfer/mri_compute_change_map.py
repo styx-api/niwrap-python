@@ -154,7 +154,7 @@ def mri_compute_change_map_outputs(
 
 def mri_compute_change_map_execute(
     params: MriComputeChangeMapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriComputeChangeMapOutputs:
     """
     Compute the change map between two MRI volumes.
@@ -165,10 +165,12 @@ def mri_compute_change_map_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriComputeChangeMapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_COMPUTE_CHANGE_MAP_METADATA)
     params = execution.params(params)
     cargs = mri_compute_change_map_cargs(params, execution)
     ret = mri_compute_change_map_outputs(params, execution)
@@ -206,8 +208,6 @@ def mri_compute_change_map(
     Returns:
         NamedTuple of outputs (described in `MriComputeChangeMapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_COMPUTE_CHANGE_MAP_METADATA)
     params = mri_compute_change_map_params(
         mean_filter=mean_filter,
         gaussian_sigma=gaussian_sigma,
@@ -216,7 +216,7 @@ def mri_compute_change_map(
         transform=transform,
         outvolume=outvolume,
     )
-    return mri_compute_change_map_execute(params, execution)
+    return mri_compute_change_map_execute(params, runner)
 
 
 __all__ = [
@@ -224,8 +224,6 @@ __all__ = [
     "MriComputeChangeMapOutputs",
     "MriComputeChangeMapParameters",
     "mri_compute_change_map",
-    "mri_compute_change_map_cargs",
     "mri_compute_change_map_execute",
-    "mri_compute_change_map_outputs",
     "mri_compute_change_map_params",
 ]

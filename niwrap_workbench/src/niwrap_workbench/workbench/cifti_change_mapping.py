@@ -310,7 +310,7 @@ def cifti_change_mapping_outputs(
 
 def cifti_change_mapping_execute(
     params: CiftiChangeMappingParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiChangeMappingOutputs:
     """
     Convert to scalar, copy mapping, etc.
@@ -332,10 +332,12 @@ def cifti_change_mapping_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiChangeMappingOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_CHANGE_MAPPING_METADATA)
     params = execution.params(params)
     cargs = cifti_change_mapping_cargs(params, execution)
     ret = cifti_change_mapping_outputs(params, execution)
@@ -381,8 +383,6 @@ def cifti_change_mapping(
     Returns:
         NamedTuple of outputs (described in `CiftiChangeMappingOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_CHANGE_MAPPING_METADATA)
     params = cifti_change_mapping_params(
         data_cifti=data_cifti,
         direction=direction,
@@ -391,7 +391,7 @@ def cifti_change_mapping(
         scalar=scalar,
         from_cifti=from_cifti,
     )
-    return cifti_change_mapping_execute(params, execution)
+    return cifti_change_mapping_execute(params, runner)
 
 
 __all__ = [
@@ -402,14 +402,9 @@ __all__ = [
     "CiftiChangeMappingScalarParameters",
     "CiftiChangeMappingSeriesParameters",
     "cifti_change_mapping",
-    "cifti_change_mapping_cargs",
     "cifti_change_mapping_execute",
-    "cifti_change_mapping_from_cifti_cargs",
     "cifti_change_mapping_from_cifti_params",
-    "cifti_change_mapping_outputs",
     "cifti_change_mapping_params",
-    "cifti_change_mapping_scalar_cargs",
     "cifti_change_mapping_scalar_params",
-    "cifti_change_mapping_series_cargs",
     "cifti_change_mapping_series_params",
 ]

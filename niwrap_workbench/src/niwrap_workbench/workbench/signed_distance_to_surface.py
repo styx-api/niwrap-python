@@ -143,7 +143,7 @@ def signed_distance_to_surface_outputs(
 
 def signed_distance_to_surface_execute(
     params: SignedDistanceToSurfaceParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
     """
     Compute signed distance from one surface to another.
@@ -172,10 +172,12 @@ def signed_distance_to_surface_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SignedDistanceToSurfaceOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIGNED_DISTANCE_TO_SURFACE_METADATA)
     params = execution.params(params)
     cargs = signed_distance_to_surface_cargs(params, execution)
     ret = signed_distance_to_surface_outputs(params, execution)
@@ -226,15 +228,13 @@ def signed_distance_to_surface(
     Returns:
         NamedTuple of outputs (described in `SignedDistanceToSurfaceOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIGNED_DISTANCE_TO_SURFACE_METADATA)
     params = signed_distance_to_surface_params(
         surface_comp=surface_comp,
         surface_ref=surface_ref,
         metric=metric,
         opt_winding_method=opt_winding_method,
     )
-    return signed_distance_to_surface_execute(params, execution)
+    return signed_distance_to_surface_execute(params, runner)
 
 
 __all__ = [
@@ -242,8 +242,6 @@ __all__ = [
     "SignedDistanceToSurfaceOutputs",
     "SignedDistanceToSurfaceParameters",
     "signed_distance_to_surface",
-    "signed_distance_to_surface_cargs",
     "signed_distance_to_surface_execute",
-    "signed_distance_to_surface_outputs",
     "signed_distance_to_surface_params",
 ]

@@ -187,7 +187,7 @@ def defect2seg_outputs(
 
 def defect2seg_execute(
     params: Defect2segParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Defect2segOutputs:
     """
     Converts surface defect labels into a segmentation volume and pointsets.
@@ -198,10 +198,12 @@ def defect2seg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Defect2segOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DEFECT2SEG_METADATA)
     params = execution.params(params)
     cargs = defect2seg_cargs(params, execution)
     ret = defect2seg_outputs(params, execution)
@@ -244,8 +246,6 @@ def defect2seg(
     Returns:
         NamedTuple of outputs (described in `Defect2segOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DEFECT2SEG_METADATA)
     params = defect2seg_params(
         output_seg=output_seg,
         template=template,
@@ -257,7 +257,7 @@ def defect2seg(
         cortex=cortex,
         no_cortex=no_cortex,
     )
-    return defect2seg_execute(params, execution)
+    return defect2seg_execute(params, runner)
 
 
 __all__ = [
@@ -265,8 +265,6 @@ __all__ = [
     "Defect2segOutputs",
     "Defect2segParameters",
     "defect2seg",
-    "defect2seg_cargs",
     "defect2seg_execute",
-    "defect2seg_outputs",
     "defect2seg_params",
 ]

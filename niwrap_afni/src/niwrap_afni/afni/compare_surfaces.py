@@ -238,7 +238,7 @@ def compare_surfaces_outputs(
 
 def compare_surfaces_execute(
     params: CompareSurfacesParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CompareSurfacesOutputs:
     """
     Calculates distance at each node in Surface 1 (S1) to Surface 2 (S2) along the
@@ -250,10 +250,12 @@ def compare_surfaces_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CompareSurfacesOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(COMPARE_SURFACES_METADATA)
     params = execution.params(params)
     cargs = compare_surfaces_cargs(params, execution)
     ret = compare_surfaces_outputs(params, execution)
@@ -313,8 +315,6 @@ def compare_surfaces(
     Returns:
         NamedTuple of outputs (described in `CompareSurfacesOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(COMPARE_SURFACES_METADATA)
     params = compare_surfaces_params(
         spec_file=spec_file,
         hemisphere=hemisphere,
@@ -332,7 +332,7 @@ def compare_surfaces(
         no_memory_trace=no_memory_trace,
         yes_memory_trace=yes_memory_trace,
     )
-    return compare_surfaces_execute(params, execution)
+    return compare_surfaces_execute(params, runner)
 
 
 __all__ = [
@@ -340,8 +340,6 @@ __all__ = [
     "CompareSurfacesOutputs",
     "CompareSurfacesParameters",
     "compare_surfaces",
-    "compare_surfaces_cargs",
     "compare_surfaces_execute",
-    "compare_surfaces_outputs",
     "compare_surfaces_params",
 ]

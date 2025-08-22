@@ -130,7 +130,7 @@ def mri_apply_bias_outputs(
 
 def mri_apply_bias_execute(
     params: MriApplyBiasParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriApplyBiasOutputs:
     """
     A tool for applying a bias volume to an input volume to produce an output
@@ -142,10 +142,12 @@ def mri_apply_bias_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriApplyBiasOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_APPLY_BIAS_METADATA)
     params = execution.params(params)
     cargs = mri_apply_bias_cargs(params, execution)
     ret = mri_apply_bias_outputs(params, execution)
@@ -175,14 +177,12 @@ def mri_apply_bias(
     Returns:
         NamedTuple of outputs (described in `MriApplyBiasOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_APPLY_BIAS_METADATA)
     params = mri_apply_bias_params(
         input_volume=input_volume,
         bias_volume=bias_volume,
         output_volume=output_volume,
     )
-    return mri_apply_bias_execute(params, execution)
+    return mri_apply_bias_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "MriApplyBiasOutputs",
     "MriApplyBiasParameters",
     "mri_apply_bias",
-    "mri_apply_bias_cargs",
     "mri_apply_bias_execute",
-    "mri_apply_bias_outputs",
     "mri_apply_bias_params",
 ]

@@ -170,7 +170,7 @@ def siena_diff_outputs(
 
 def siena_diff_execute(
     params: SienaDiffParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SienaDiffOutputs:
     """
     SIENA_diff: Analysis of longitudinal brain image differences.
@@ -181,10 +181,12 @@ def siena_diff_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SienaDiffOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SIENA_DIFF_METADATA)
     params = execution.params(params)
     cargs = siena_diff_cargs(params, execution)
     ret = siena_diff_outputs(params, execution)
@@ -228,8 +230,6 @@ def siena_diff(
     Returns:
         NamedTuple of outputs (described in `SienaDiffOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SIENA_DIFF_METADATA)
     params = siena_diff_params(
         input1_basename=input1_basename,
         input2_basename=input2_basename,
@@ -240,7 +240,7 @@ def siena_diff(
         apply_std_mask_flag=apply_std_mask_flag,
         segment_options=segment_options,
     )
-    return siena_diff_execute(params, execution)
+    return siena_diff_execute(params, runner)
 
 
 __all__ = [
@@ -248,8 +248,6 @@ __all__ = [
     "SienaDiffOutputs",
     "SienaDiffParameters",
     "siena_diff",
-    "siena_diff_cargs",
     "siena_diff_execute",
-    "siena_diff_outputs",
     "siena_diff_params",
 ]

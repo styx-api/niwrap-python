@@ -175,7 +175,7 @@ def qatools_py_outputs(
 
 def qatools_py_execute(
     params: QatoolsPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QatoolsPyOutputs:
     """
     A tool to compute quality metrics from Freesurfer 6.0 analysis results.
@@ -186,10 +186,12 @@ def qatools_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QatoolsPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QATOOLS_PY_METADATA)
     params = execution.params(params)
     cargs = qatools_py_cargs(params, execution)
     ret = qatools_py_outputs(params, execution)
@@ -228,8 +230,6 @@ def qatools_py(
     Returns:
         NamedTuple of outputs (described in `QatoolsPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QATOOLS_PY_METADATA)
     params = qatools_py_params(
         subjects_dir=subjects_dir,
         output_dir=output_dir,
@@ -239,7 +239,7 @@ def qatools_py(
         outlier=outlier,
         outlier_table=outlier_table,
     )
-    return qatools_py_execute(params, execution)
+    return qatools_py_execute(params, runner)
 
 
 __all__ = [
@@ -247,8 +247,6 @@ __all__ = [
     "QatoolsPyOutputs",
     "QatoolsPyParameters",
     "qatools_py",
-    "qatools_py_cargs",
     "qatools_py_execute",
-    "qatools_py_outputs",
     "qatools_py_params",
 ]

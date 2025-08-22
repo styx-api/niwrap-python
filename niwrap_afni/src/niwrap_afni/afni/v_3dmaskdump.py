@@ -300,7 +300,7 @@ def v_3dmaskdump_outputs(
 
 def v_3dmaskdump_execute(
     params: V3dmaskdumpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> V3dmaskdumpOutputs:
     """
     Outputs voxel values from AFNI datasets satisfying mask criteria to an ASCII
@@ -312,10 +312,12 @@ def v_3dmaskdump_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `V3dmaskdumpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V_3DMASKDUMP_METADATA)
     params = execution.params(params)
     cargs = v_3dmaskdump_cargs(params, execution)
     ret = v_3dmaskdump_outputs(params, execution)
@@ -389,8 +391,6 @@ def v_3dmaskdump(
     Returns:
         NamedTuple of outputs (described in `V3dmaskdumpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V_3DMASKDUMP_METADATA)
     params = v_3dmaskdump_params(
         input_files=input_files,
         mask_dataset=mask_dataset,
@@ -413,7 +413,7 @@ def v_3dmaskdump(
         output_niml=output_niml,
         quiet_mode=quiet_mode,
     )
-    return v_3dmaskdump_execute(params, execution)
+    return v_3dmaskdump_execute(params, runner)
 
 
 __all__ = [
@@ -421,8 +421,6 @@ __all__ = [
     "V3dmaskdumpParameters",
     "V_3DMASKDUMP_METADATA",
     "v_3dmaskdump",
-    "v_3dmaskdump_cargs",
     "v_3dmaskdump_execute",
-    "v_3dmaskdump_outputs",
     "v_3dmaskdump_params",
 ]

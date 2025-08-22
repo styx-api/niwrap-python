@@ -126,7 +126,7 @@ def surface_normals_outputs(
 
 def surface_normals_execute(
     params: SurfaceNormalsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfaceNormalsOutputs:
     """
     Output vertex normals as metric file.
@@ -140,10 +140,12 @@ def surface_normals_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfaceNormalsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFACE_NORMALS_METADATA)
     params = execution.params(params)
     cargs = surface_normals_cargs(params, execution)
     ret = surface_normals_outputs(params, execution)
@@ -173,13 +175,11 @@ def surface_normals(
     Returns:
         NamedTuple of outputs (described in `SurfaceNormalsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFACE_NORMALS_METADATA)
     params = surface_normals_params(
         surface=surface,
         metric_out=metric_out,
     )
-    return surface_normals_execute(params, execution)
+    return surface_normals_execute(params, runner)
 
 
 __all__ = [
@@ -187,8 +187,6 @@ __all__ = [
     "SurfaceNormalsOutputs",
     "SurfaceNormalsParameters",
     "surface_normals",
-    "surface_normals_cargs",
     "surface_normals_execute",
-    "surface_normals_outputs",
     "surface_normals_params",
 ]

@@ -531,7 +531,7 @@ def flirt_outputs(
 
 def flirt_execute(
     params: FlirtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FlirtOutputs:
     """
     FLIRT (FMRIB's Linear Image Registration Tool) is a fully automated robust and
@@ -544,10 +544,12 @@ def flirt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FlirtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FLIRT_METADATA)
     params = execution.params(params)
     cargs = flirt_cargs(params, execution)
     ret = flirt_outputs(params, execution)
@@ -669,8 +671,6 @@ def flirt(
     Returns:
         NamedTuple of outputs (described in `FlirtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FLIRT_METADATA)
     params = flirt_params(
         in_file=in_file,
         reference=reference,
@@ -718,7 +718,7 @@ def flirt(
         wmcoords=wmcoords,
         wmnorms=wmnorms,
     )
-    return flirt_execute(params, execution)
+    return flirt_execute(params, runner)
 
 
 __all__ = [
@@ -726,8 +726,6 @@ __all__ = [
     "FlirtOutputs",
     "FlirtParameters",
     "flirt",
-    "flirt_cargs",
     "flirt_execute",
-    "flirt_outputs",
     "flirt_params",
 ]

@@ -235,7 +235,7 @@ def surfreg_outputs(
 
 def surfreg_execute(
     params: SurfregParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfregOutputs:
     """
     Performs surface registration (mris_register) between a subject and a target
@@ -247,10 +247,12 @@ def surfreg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfregOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURFREG_METADATA)
     params = execution.params(params)
     cargs = surfreg_cargs(params, execution)
     ret = surfreg_outputs(params, execution)
@@ -306,8 +308,6 @@ def surfreg(
     Returns:
         NamedTuple of outputs (described in `SurfregOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURFREG_METADATA)
     params = surfreg_params(
         subject=subject,
         target=target,
@@ -326,7 +326,7 @@ def surfreg(
         no_set_vol_geom=no_set_vol_geom,
         threads=threads,
     )
-    return surfreg_execute(params, execution)
+    return surfreg_execute(params, runner)
 
 
 __all__ = [
@@ -334,8 +334,6 @@ __all__ = [
     "SurfregOutputs",
     "SurfregParameters",
     "surfreg",
-    "surfreg_cargs",
     "surfreg_execute",
-    "surfreg_outputs",
     "surfreg_params",
 ]

@@ -565,7 +565,7 @@ def mri_robust_register_outputs(
 
 def mri_robust_register_execute(
     params: MriRobustRegisterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRobustRegisterOutputs:
     """
     Inverse consistent registration of two volumes using robust and standard cost
@@ -577,10 +577,12 @@ def mri_robust_register_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRobustRegisterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_ROBUST_REGISTER_METADATA)
     params = execution.params(params)
     cargs = mri_robust_register_cargs(params, execution)
     ret = mri_robust_register_outputs(params, execution)
@@ -710,8 +712,6 @@ def mri_robust_register(
     Returns:
         NamedTuple of outputs (described in `MriRobustRegisterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_ROBUST_REGISTER_METADATA)
     params = mri_robust_register_params(
         movable_volume=movable_volume,
         target_volume=target_volume,
@@ -763,7 +763,7 @@ def mri_robust_register(
         debug=debug,
         verbose=verbose,
     )
-    return mri_robust_register_execute(params, execution)
+    return mri_robust_register_execute(params, runner)
 
 
 __all__ = [
@@ -771,8 +771,6 @@ __all__ = [
     "MriRobustRegisterOutputs",
     "MriRobustRegisterParameters",
     "mri_robust_register",
-    "mri_robust_register_cargs",
     "mri_robust_register_execute",
-    "mri_robust_register_outputs",
     "mri_robust_register_params",
 ]

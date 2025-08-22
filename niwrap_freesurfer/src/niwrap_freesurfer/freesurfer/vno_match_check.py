@@ -134,7 +134,7 @@ def vno_match_check_outputs(
 
 def vno_match_check_execute(
     params: VnoMatchCheckParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VnoMatchCheckOutputs:
     """
     Checks that all surfaces and surface data files for a subject have the same
@@ -146,10 +146,12 @@ def vno_match_check_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VnoMatchCheckOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VNO_MATCH_CHECK_METADATA)
     params = execution.params(params)
     cargs = vno_match_check_cargs(params, execution)
     ret = vno_match_check_outputs(params, execution)
@@ -181,15 +183,13 @@ def vno_match_check(
     Returns:
         NamedTuple of outputs (described in `VnoMatchCheckOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VNO_MATCH_CHECK_METADATA)
     params = vno_match_check_params(
         subjid=subjid,
         debug=debug,
         right_hemi=right_hemi,
         left_hemi=left_hemi,
     )
-    return vno_match_check_execute(params, execution)
+    return vno_match_check_execute(params, runner)
 
 
 __all__ = [
@@ -197,8 +197,6 @@ __all__ = [
     "VnoMatchCheckOutputs",
     "VnoMatchCheckParameters",
     "vno_match_check",
-    "vno_match_check_cargs",
     "vno_match_check_execute",
-    "vno_match_check_outputs",
     "vno_match_check_params",
 ]

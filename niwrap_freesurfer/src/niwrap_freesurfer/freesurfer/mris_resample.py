@@ -172,7 +172,7 @@ def mris_resample_outputs(
 
 def mris_resample_execute(
     params: MrisResampleParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisResampleOutputs:
     """
     Resample cortical surfaces in FreeSurfer.
@@ -183,10 +183,12 @@ def mris_resample_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisResampleOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_RESAMPLE_METADATA)
     params = execution.params(params)
     cargs = mris_resample_cargs(params, execution)
     ret = mris_resample_outputs(params, execution)
@@ -223,8 +225,6 @@ def mris_resample(
     Returns:
         NamedTuple of outputs (described in `MrisResampleOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_RESAMPLE_METADATA)
     params = mris_resample_params(
         atlas_reg=atlas_reg,
         subject_reg=subject_reg,
@@ -233,7 +233,7 @@ def mris_resample(
         annot_in=annot_in,
         annot_out=annot_out,
     )
-    return mris_resample_execute(params, execution)
+    return mris_resample_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "MrisResampleOutputs",
     "MrisResampleParameters",
     "mris_resample",
-    "mris_resample_cargs",
     "mris_resample_execute",
-    "mris_resample_outputs",
     "mris_resample_params",
 ]

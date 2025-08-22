@@ -250,7 +250,7 @@ def cifti_average_outputs(
 
 def cifti_average_execute(
     params: CiftiAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiAverageOutputs:
     """
     Average cifti files.
@@ -268,10 +268,12 @@ def cifti_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = cifti_average_cargs(params, execution)
     ret = cifti_average_outputs(params, execution)
@@ -311,15 +313,13 @@ def cifti_average(
     Returns:
         NamedTuple of outputs (described in `CiftiAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_AVERAGE_METADATA)
     params = cifti_average_params(
         cifti_out=cifti_out,
         exclude_outliers=exclude_outliers,
         opt_mem_limit_limit_gb=opt_mem_limit_limit_gb,
         cifti=cifti,
     )
-    return cifti_average_execute(params, execution)
+    return cifti_average_execute(params, runner)
 
 
 __all__ = [
@@ -329,12 +329,8 @@ __all__ = [
     "CiftiAverageOutputs",
     "CiftiAverageParameters",
     "cifti_average",
-    "cifti_average_cargs",
-    "cifti_average_cifti_cargs",
     "cifti_average_cifti_params",
-    "cifti_average_exclude_outliers_cargs",
     "cifti_average_exclude_outliers_params",
     "cifti_average_execute",
-    "cifti_average_outputs",
     "cifti_average_params",
 ]

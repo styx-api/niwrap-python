@@ -189,7 +189,7 @@ def label2patch_outputs(
 
 def label2patch_execute(
     params: Label2patchParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Label2patchOutputs:
     """
     Utility to create patches from label files in Freesurfer.
@@ -200,10 +200,12 @@ def label2patch_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Label2patchOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL2PATCH_METADATA)
     params = execution.params(params)
     cargs = label2patch_cargs(params, execution)
     ret = label2patch_outputs(params, execution)
@@ -248,8 +250,6 @@ def label2patch(
     Returns:
         NamedTuple of outputs (described in `Label2patchOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL2PATCH_METADATA)
     params = label2patch_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -262,7 +262,7 @@ def label2patch(
         surface_name=surface_name,
         write_surface=write_surface,
     )
-    return label2patch_execute(params, execution)
+    return label2patch_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "Label2patchOutputs",
     "Label2patchParameters",
     "label2patch",
-    "label2patch_cargs",
     "label2patch_execute",
-    "label2patch_outputs",
     "label2patch_params",
 ]

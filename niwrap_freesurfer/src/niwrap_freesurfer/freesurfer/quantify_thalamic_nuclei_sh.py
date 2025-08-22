@@ -132,7 +132,7 @@ def quantify_thalamic_nuclei_sh_outputs(
 
 def quantify_thalamic_nuclei_sh_execute(
     params: QuantifyThalamicNucleiShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> QuantifyThalamicNucleiShOutputs:
     """
     Command-line tool to quantify thalamic nuclei using FreeSurfer.
@@ -143,10 +143,12 @@ def quantify_thalamic_nuclei_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `QuantifyThalamicNucleiShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(QUANTIFY_THALAMIC_NUCLEI_SH_METADATA)
     params = execution.params(params)
     cargs = quantify_thalamic_nuclei_sh_cargs(params, execution)
     ret = quantify_thalamic_nuclei_sh_outputs(params, execution)
@@ -175,14 +177,12 @@ def quantify_thalamic_nuclei_sh(
     Returns:
         NamedTuple of outputs (described in `QuantifyThalamicNucleiShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(QUANTIFY_THALAMIC_NUCLEI_SH_METADATA)
     params = quantify_thalamic_nuclei_sh_params(
         output_file=output_file,
         analysis_id=analysis_id,
         subjects_directory=subjects_directory,
     )
-    return quantify_thalamic_nuclei_sh_execute(params, execution)
+    return quantify_thalamic_nuclei_sh_execute(params, runner)
 
 
 __all__ = [
@@ -190,8 +190,6 @@ __all__ = [
     "QuantifyThalamicNucleiShOutputs",
     "QuantifyThalamicNucleiShParameters",
     "quantify_thalamic_nuclei_sh",
-    "quantify_thalamic_nuclei_sh_cargs",
     "quantify_thalamic_nuclei_sh_execute",
-    "quantify_thalamic_nuclei_sh_outputs",
     "quantify_thalamic_nuclei_sh_params",
 ]

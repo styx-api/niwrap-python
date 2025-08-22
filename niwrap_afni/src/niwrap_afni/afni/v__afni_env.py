@@ -188,7 +188,7 @@ def v__afni_env_outputs(
 
 def v__afni_env_execute(
     params: VAfniEnvParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAfniEnvOutputs:
     """
     Script to set or unset an AFNI environment variable in your .afnirc file.
@@ -199,10 +199,12 @@ def v__afni_env_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAfniEnvOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__AFNI_ENV_METADATA)
     params = execution.params(params)
     cargs = v__afni_env_cargs(params, execution)
     ret = v__afni_env_outputs(params, execution)
@@ -246,8 +248,6 @@ def v__afni_env(
     Returns:
         NamedTuple of outputs (described in `VAfniEnvOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__AFNI_ENV_METADATA)
     params = v__afni_env_params(
         set_flag=set_flag,
         unset_flag=unset_flag,
@@ -260,7 +260,7 @@ def v__afni_env(
         all_opts_flag=all_opts_flag,
         help_find_flag=help_find_flag,
     )
-    return v__afni_env_execute(params, execution)
+    return v__afni_env_execute(params, runner)
 
 
 __all__ = [
@@ -268,8 +268,6 @@ __all__ = [
     "VAfniEnvParameters",
     "V__AFNI_ENV_METADATA",
     "v__afni_env",
-    "v__afni_env_cargs",
     "v__afni_env_execute",
-    "v__afni_env_outputs",
     "v__afni_env_params",
 ]

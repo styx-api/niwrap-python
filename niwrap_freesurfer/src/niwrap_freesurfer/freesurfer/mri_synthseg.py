@@ -229,7 +229,7 @@ def mri_synthseg_outputs(
 
 def mri_synthseg_execute(
     params: MriSynthsegParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriSynthsegOutputs:
     """
     SynthSeg is a tool for brain image segmentation.
@@ -240,10 +240,12 @@ def mri_synthseg_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriSynthsegOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_SYNTHSEG_METADATA)
     params = execution.params(params)
     cargs = mri_synthseg_cargs(params, execution)
     ret = mri_synthseg_outputs(params, execution)
@@ -303,8 +305,6 @@ def mri_synthseg(
     Returns:
         NamedTuple of outputs (described in `MriSynthsegOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_SYNTHSEG_METADATA)
     params = mri_synthseg_params(
         input_image=input_image,
         output_segmentation=output_segmentation,
@@ -322,7 +322,7 @@ def mri_synthseg(
         version_1=version_1,
         photo_synthseg=photo_synthseg,
     )
-    return mri_synthseg_execute(params, execution)
+    return mri_synthseg_execute(params, runner)
 
 
 __all__ = [
@@ -330,8 +330,6 @@ __all__ = [
     "MriSynthsegOutputs",
     "MriSynthsegParameters",
     "mri_synthseg",
-    "mri_synthseg_cargs",
     "mri_synthseg_execute",
-    "mri_synthseg_outputs",
     "mri_synthseg_params",
 ]

@@ -283,7 +283,7 @@ def v__atlasize_outputs(
 
 def v__atlasize_execute(
     params: VAtlasizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VAtlasizeOutputs:
     """
     Script to turn a volumetric dataset into an AFNI atlas.
@@ -294,10 +294,12 @@ def v__atlasize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VAtlasizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__ATLASIZE_METADATA)
     params = execution.params(params)
     cargs = v__atlasize_cargs(params, execution)
     ret = v__atlasize_outputs(params, execution)
@@ -368,8 +370,6 @@ def v__atlasize(
     Returns:
         NamedTuple of outputs (described in `VAtlasizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__ATLASIZE_METADATA)
     params = v__atlasize_params(
         dset=dset,
         space=space,
@@ -390,7 +390,7 @@ def v__atlasize(
         all_opts=all_opts,
         h_find=h_find,
     )
-    return v__atlasize_execute(params, execution)
+    return v__atlasize_execute(params, runner)
 
 
 __all__ = [
@@ -398,8 +398,6 @@ __all__ = [
     "VAtlasizeParameters",
     "V__ATLASIZE_METADATA",
     "v__atlasize",
-    "v__atlasize_cargs",
     "v__atlasize_execute",
-    "v__atlasize_outputs",
     "v__atlasize_params",
 ]

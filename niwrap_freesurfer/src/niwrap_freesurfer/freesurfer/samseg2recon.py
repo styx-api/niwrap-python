@@ -210,7 +210,7 @@ def samseg2recon_outputs(
 
 def samseg2recon_execute(
     params: Samseg2reconParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Samseg2reconOutputs:
     """
     Creates and populates a subjects directory for use with recon-all from SAMSEG
@@ -222,10 +222,12 @@ def samseg2recon_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Samseg2reconOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SAMSEG2RECON_METADATA)
     params = execution.params(params)
     cargs = samseg2recon_cargs(params, execution)
     ret = samseg2recon_outputs(params, execution)
@@ -275,8 +277,6 @@ def samseg2recon(
     Returns:
         NamedTuple of outputs (described in `Samseg2reconOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SAMSEG2RECON_METADATA)
     params = samseg2recon_params(
         subject=subject,
         samseg_dir=samseg_dir,
@@ -291,7 +291,7 @@ def samseg2recon(
         from_recon_all=from_recon_all,
         force_update=force_update,
     )
-    return samseg2recon_execute(params, execution)
+    return samseg2recon_execute(params, runner)
 
 
 __all__ = [
@@ -299,8 +299,6 @@ __all__ = [
     "Samseg2reconOutputs",
     "Samseg2reconParameters",
     "samseg2recon",
-    "samseg2recon_cargs",
     "samseg2recon_execute",
-    "samseg2recon_outputs",
     "samseg2recon_params",
 ]

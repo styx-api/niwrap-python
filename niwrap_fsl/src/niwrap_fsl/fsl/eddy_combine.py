@@ -178,7 +178,7 @@ def eddy_combine_outputs(
 
 def eddy_combine_execute(
     params: EddyCombineParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddyCombineOutputs:
     """
     Combines diffusion data sets with opposite phase encoding directions for use
@@ -190,10 +190,12 @@ def eddy_combine_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddyCombineOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_COMBINE_METADATA)
     params = execution.params(params)
     cargs = eddy_combine_cargs(params, execution)
     ret = eddy_combine_outputs(params, execution)
@@ -244,8 +246,6 @@ def eddy_combine(
     Returns:
         NamedTuple of outputs (described in `EddyCombineOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_COMBINE_METADATA)
     params = eddy_combine_params(
         pos_data=pos_data,
         pos_bvals=pos_bvals,
@@ -258,7 +258,7 @@ def eddy_combine(
         output_path=output_path,
         only_matched_flag=only_matched_flag,
     )
-    return eddy_combine_execute(params, execution)
+    return eddy_combine_execute(params, runner)
 
 
 __all__ = [
@@ -266,8 +266,6 @@ __all__ = [
     "EddyCombineOutputs",
     "EddyCombineParameters",
     "eddy_combine",
-    "eddy_combine_cargs",
     "eddy_combine_execute",
-    "eddy_combine_outputs",
     "eddy_combine_params",
 ]

@@ -221,7 +221,7 @@ def plugout_tt_outputs(
 
 def plugout_tt_execute(
     params: PlugoutTtParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> PlugoutTtOutputs:
     """
     This program connects to AFNI and receives notification whenever the user
@@ -233,10 +233,12 @@ def plugout_tt_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `PlugoutTtOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(PLUGOUT_TT_METADATA)
     params = execution.params(params)
     cargs = plugout_tt_cargs(params, execution)
     ret = plugout_tt_outputs(params, execution)
@@ -298,8 +300,6 @@ def plugout_tt(
     Returns:
         NamedTuple of outputs (described in `PlugoutTtOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(PLUGOUT_TT_METADATA)
     params = plugout_tt_params(
         host=host,
         ijk_option=ijk_option,
@@ -314,7 +314,7 @@ def plugout_tt(
         num_assigned_ports=num_assigned_ports,
         num_assigned_ports_quiet=num_assigned_ports_quiet,
     )
-    return plugout_tt_execute(params, execution)
+    return plugout_tt_execute(params, runner)
 
 
 __all__ = [
@@ -322,8 +322,6 @@ __all__ = [
     "PlugoutTtOutputs",
     "PlugoutTtParameters",
     "plugout_tt",
-    "plugout_tt_cargs",
     "plugout_tt_execute",
-    "plugout_tt_outputs",
     "plugout_tt_params",
 ]

@@ -233,7 +233,7 @@ def surf_to_surf_outputs(
 
 def surf_to_surf_execute(
     params: SurfToSurfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfToSurfOutputs:
     """
     Interpolate data from one surface to another.
@@ -244,10 +244,12 @@ def surf_to_surf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfToSurfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_TO_SURF_METADATA)
     params = execution.params(params)
     cargs = surf_to_surf_cargs(params, execution)
     ret = surf_to_surf_outputs(params, execution)
@@ -298,8 +300,6 @@ def surf_to_surf(
     Returns:
         NamedTuple of outputs (described in `SurfToSurfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_TO_SURF_METADATA)
     params = surf_to_surf_params(
         input_surface_1=input_surface_1,
         input_surface_2=input_surface_2,
@@ -315,7 +315,7 @@ def surf_to_surf(
         dset=dset,
         mapfile=mapfile,
     )
-    return surf_to_surf_execute(params, execution)
+    return surf_to_surf_execute(params, runner)
 
 
 __all__ = [
@@ -323,8 +323,6 @@ __all__ = [
     "SurfToSurfOutputs",
     "SurfToSurfParameters",
     "surf_to_surf",
-    "surf_to_surf_cargs",
     "surf_to_surf_execute",
-    "surf_to_surf_outputs",
     "surf_to_surf_params",
 ]

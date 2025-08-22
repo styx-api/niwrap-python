@@ -162,7 +162,7 @@ def cutoffcalc_outputs(
 
 def cutoffcalc_execute(
     params: CutoffcalcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CutoffcalcOutputs:
     """
     Calculates the minimal period for the highpass filter that still preserves a
@@ -174,10 +174,12 @@ def cutoffcalc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CutoffcalcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CUTOFFCALC_METADATA)
     params = execution.params(params)
     cargs = cutoffcalc_cargs(params, execution)
     ret = cutoffcalc_outputs(params, execution)
@@ -217,8 +219,6 @@ def cutoffcalc(
     Returns:
         NamedTuple of outputs (described in `CutoffcalcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CUTOFFCALC_METADATA)
     params = cutoffcalc_params(
         input_design=input_design,
         threshold=threshold,
@@ -228,7 +228,7 @@ def cutoffcalc(
         verbose_flag=verbose_flag,
         debug_flag=debug_flag,
     )
-    return cutoffcalc_execute(params, execution)
+    return cutoffcalc_execute(params, runner)
 
 
 __all__ = [
@@ -236,8 +236,6 @@ __all__ = [
     "CutoffcalcOutputs",
     "CutoffcalcParameters",
     "cutoffcalc",
-    "cutoffcalc_cargs",
     "cutoffcalc_execute",
-    "cutoffcalc_outputs",
     "cutoffcalc_params",
 ]

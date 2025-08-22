@@ -474,7 +474,7 @@ def eddy_outputs(
 
 def eddy_execute(
     params: EddyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddyOutputs:
     """
     A tool for correcting eddy currents and movements in diffusion data.
@@ -485,10 +485,12 @@ def eddy_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_METADATA)
     params = execution.params(params)
     cargs = eddy_cargs(params, execution)
     ret = eddy_outputs(params, execution)
@@ -618,8 +620,6 @@ def eddy(
     Returns:
         NamedTuple of outputs (described in `EddyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_METADATA)
     params = eddy_params(
         imain=imain,
         mask=mask,
@@ -666,7 +666,7 @@ def eddy(
         data_is_shelled=data_is_shelled,
         verbose=verbose,
     )
-    return eddy_execute(params, execution)
+    return eddy_execute(params, runner)
 
 
 __all__ = [
@@ -674,8 +674,6 @@ __all__ = [
     "EddyOutputs",
     "EddyParameters",
     "eddy",
-    "eddy_cargs",
     "eddy_execute",
-    "eddy_outputs",
     "eddy_params",
 ]

@@ -292,7 +292,7 @@ def timing_tool_py_outputs(
 
 def timing_tool_py_execute(
     params: TimingToolPyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> TimingToolPyOutputs:
     """
     Tool for manipulating and evaluating stimulus timing files.
@@ -303,10 +303,12 @@ def timing_tool_py_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `TimingToolPyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(TIMING_TOOL_PY_METADATA)
     params = execution.params(params)
     cargs = timing_tool_py_cargs(params, execution)
     ret = timing_tool_py_outputs(params, execution)
@@ -371,8 +373,6 @@ def timing_tool_py(
     Returns:
         NamedTuple of outputs (described in `TimingToolPyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(TIMING_TOOL_PY_METADATA)
     params = timing_tool_py_params(
         timing_file=timing_file,
         output_file=output_file,
@@ -394,7 +394,7 @@ def timing_tool_py(
         truncate_times=truncate_times,
         multi_timing_event_list=multi_timing_event_list,
     )
-    return timing_tool_py_execute(params, execution)
+    return timing_tool_py_execute(params, runner)
 
 
 __all__ = [
@@ -402,8 +402,6 @@ __all__ = [
     "TimingToolPyOutputs",
     "TimingToolPyParameters",
     "timing_tool_py",
-    "timing_tool_py_cargs",
     "timing_tool_py_execute",
-    "timing_tool_py_outputs",
     "timing_tool_py_params",
 ]

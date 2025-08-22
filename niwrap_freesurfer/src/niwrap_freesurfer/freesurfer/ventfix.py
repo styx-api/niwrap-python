@@ -130,7 +130,7 @@ def ventfix_outputs(
 
 def ventfix_execute(
     params: VentfixParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VentfixOutputs:
     """
     Tool for fixing ventricles in MRI scans.
@@ -141,10 +141,12 @@ def ventfix_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VentfixOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VENTFIX_METADATA)
     params = execution.params(params)
     cargs = ventfix_cargs(params, execution)
     ret = ventfix_outputs(params, execution)
@@ -171,13 +173,11 @@ def ventfix(
     Returns:
         NamedTuple of outputs (described in `VentfixOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VENTFIX_METADATA)
     params = ventfix_params(
         subject_dir=subject_dir,
         option1=option1,
     )
-    return ventfix_execute(params, execution)
+    return ventfix_execute(params, runner)
 
 
 __all__ = [
@@ -185,8 +185,6 @@ __all__ = [
     "VentfixOutputs",
     "VentfixParameters",
     "ventfix",
-    "ventfix_cargs",
     "ventfix_execute",
-    "ventfix_outputs",
     "ventfix_params",
 ]

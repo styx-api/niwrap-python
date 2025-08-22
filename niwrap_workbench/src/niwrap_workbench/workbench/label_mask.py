@@ -141,7 +141,7 @@ def label_mask_outputs(
 
 def label_mask_execute(
     params: LabelMaskParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> LabelMaskOutputs:
     """
     Mask a label file.
@@ -157,10 +157,12 @@ def label_mask_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `LabelMaskOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(LABEL_MASK_METADATA)
     params = execution.params(params)
     cargs = label_mask_cargs(params, execution)
     ret = label_mask_outputs(params, execution)
@@ -196,15 +198,13 @@ def label_mask(
     Returns:
         NamedTuple of outputs (described in `LabelMaskOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(LABEL_MASK_METADATA)
     params = label_mask_params(
         label=label,
         mask=mask,
         label_out=label_out,
         opt_column_column=opt_column_column,
     )
-    return label_mask_execute(params, execution)
+    return label_mask_execute(params, runner)
 
 
 __all__ = [
@@ -212,8 +212,6 @@ __all__ = [
     "LabelMaskOutputs",
     "LabelMaskParameters",
     "label_mask",
-    "label_mask_cargs",
     "label_mask_execute",
-    "label_mask_outputs",
     "label_mask_params",
 ]

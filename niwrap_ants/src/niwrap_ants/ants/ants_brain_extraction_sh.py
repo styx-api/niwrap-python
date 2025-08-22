@@ -247,7 +247,7 @@ def ants_brain_extraction_sh_outputs(
 
 def ants_brain_extraction_sh_execute(
     params: AntsBrainExtractionShParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AntsBrainExtractionShOutputs:
     """
     antsBrainExtraction.sh performs template-based brain extraction.
@@ -258,10 +258,12 @@ def ants_brain_extraction_sh_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AntsBrainExtractionShOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ANTS_BRAIN_EXTRACTION_SH_METADATA)
     params = execution.params(params)
     cargs = ants_brain_extraction_sh_cargs(params, execution)
     ret = ants_brain_extraction_sh_outputs(params, execution)
@@ -314,8 +316,6 @@ def ants_brain_extraction_sh(
     Returns:
         NamedTuple of outputs (described in `AntsBrainExtractionShOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ANTS_BRAIN_EXTRACTION_SH_METADATA)
     params = ants_brain_extraction_sh_params(
         image_dimension=image_dimension,
         anatomical_image=anatomical_image,
@@ -333,7 +333,7 @@ def ants_brain_extraction_sh(
         debug_mode=debug_mode,
         output_prefix=output_prefix,
     )
-    return ants_brain_extraction_sh_execute(params, execution)
+    return ants_brain_extraction_sh_execute(params, runner)
 
 
 __all__ = [
@@ -341,8 +341,6 @@ __all__ = [
     "AntsBrainExtractionShOutputs",
     "AntsBrainExtractionShParameters",
     "ants_brain_extraction_sh",
-    "ants_brain_extraction_sh_cargs",
     "ants_brain_extraction_sh_execute",
-    "ants_brain_extraction_sh_outputs",
     "ants_brain_extraction_sh_params",
 ]

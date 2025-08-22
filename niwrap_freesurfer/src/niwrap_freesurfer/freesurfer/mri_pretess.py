@@ -170,7 +170,7 @@ def mri_pretess_outputs(
 
 def mri_pretess_execute(
     params: MriPretessParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriPretessOutputs:
     """
     Tool to modify WM segmentation so that all neighbors of WM voxels have a common
@@ -182,10 +182,12 @@ def mri_pretess_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriPretessOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_PRETESS_METADATA)
     params = execution.params(params)
     cargs = mri_pretess_cargs(params, execution)
     ret = mri_pretess_outputs(params, execution)
@@ -228,8 +230,6 @@ def mri_pretess(
     Returns:
         NamedTuple of outputs (described in `MriPretessOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_PRETESS_METADATA)
     params = mri_pretess_params(
         filledvol=filledvol,
         labelstring=labelstring,
@@ -241,7 +241,7 @@ def mri_pretess(
         keep=keep,
         test=test,
     )
-    return mri_pretess_execute(params, execution)
+    return mri_pretess_execute(params, runner)
 
 
 __all__ = [
@@ -249,8 +249,6 @@ __all__ = [
     "MriPretessOutputs",
     "MriPretessParameters",
     "mri_pretess",
-    "mri_pretess_cargs",
     "mri_pretess_execute",
-    "mri_pretess_outputs",
     "mri_pretess_params",
 ]

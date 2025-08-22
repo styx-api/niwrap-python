@@ -152,7 +152,7 @@ def apply_morph_outputs(
 
 def apply_morph_execute(
     params: ApplyMorphParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ApplyMorphOutputs:
     """
     A tool for applying a morph to a volume using a template and a transform.
@@ -163,10 +163,12 @@ def apply_morph_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ApplyMorphOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(APPLY_MORPH_METADATA)
     params = execution.params(params)
     cargs = apply_morph_cargs(params, execution)
     ret = apply_morph_outputs(params, execution)
@@ -199,8 +201,6 @@ def apply_morph(
     Returns:
         NamedTuple of outputs (described in `ApplyMorphOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(APPLY_MORPH_METADATA)
     params = apply_morph_params(
         inputs=inputs,
         template=template,
@@ -208,7 +208,7 @@ def apply_morph(
         zlib_buffer=zlib_buffer,
         dbg_coords=dbg_coords,
     )
-    return apply_morph_execute(params, execution)
+    return apply_morph_execute(params, runner)
 
 
 __all__ = [
@@ -216,8 +216,6 @@ __all__ = [
     "ApplyMorphOutputs",
     "ApplyMorphParameters",
     "apply_morph",
-    "apply_morph_cargs",
     "apply_morph_execute",
-    "apply_morph_outputs",
     "apply_morph_params",
 ]

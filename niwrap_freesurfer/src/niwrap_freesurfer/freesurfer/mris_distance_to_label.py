@@ -122,7 +122,7 @@ def mris_distance_to_label_outputs(
 
 def mris_distance_to_label_execute(
     params: MrisDistanceToLabelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisDistanceToLabelOutputs:
     """
     A tool for measuring the distance between vertices on a surface and a labeled
@@ -134,10 +134,12 @@ def mris_distance_to_label_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisDistanceToLabelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_DISTANCE_TO_LABEL_METADATA)
     params = execution.params(params)
     cargs = mris_distance_to_label_cargs(params, execution)
     ret = mris_distance_to_label_outputs(params, execution)
@@ -166,13 +168,11 @@ def mris_distance_to_label(
     Returns:
         NamedTuple of outputs (described in `MrisDistanceToLabelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_DISTANCE_TO_LABEL_METADATA)
     params = mris_distance_to_label_params(
         hemisphere=hemisphere,
         subject_1=subject_1,
     )
-    return mris_distance_to_label_execute(params, execution)
+    return mris_distance_to_label_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MrisDistanceToLabelOutputs",
     "MrisDistanceToLabelParameters",
     "mris_distance_to_label",
-    "mris_distance_to_label_cargs",
     "mris_distance_to_label_execute",
-    "mris_distance_to_label_outputs",
     "mris_distance_to_label_params",
 ]

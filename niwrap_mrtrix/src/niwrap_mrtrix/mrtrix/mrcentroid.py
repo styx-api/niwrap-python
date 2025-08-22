@@ -239,7 +239,7 @@ def mrcentroid_outputs(
 
 def mrcentroid_execute(
     params: MrcentroidParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrcentroidOutputs:
     """
     Determine the centre of mass / centre of gravity of an image.
@@ -256,10 +256,12 @@ def mrcentroid_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrcentroidOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRCENTROID_METADATA)
     params = execution.params(params)
     cargs = mrcentroid_cargs(params, execution)
     ret = mrcentroid_outputs(params, execution)
@@ -315,8 +317,6 @@ def mrcentroid(
     Returns:
         NamedTuple of outputs (described in `MrcentroidOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRCENTROID_METADATA)
     params = mrcentroid_params(
         mask=mask,
         voxelspace=voxelspace,
@@ -330,7 +330,7 @@ def mrcentroid(
         version=version,
         input_=input_,
     )
-    return mrcentroid_execute(params, execution)
+    return mrcentroid_execute(params, runner)
 
 
 __all__ = [
@@ -339,10 +339,7 @@ __all__ = [
     "MrcentroidOutputs",
     "MrcentroidParameters",
     "mrcentroid",
-    "mrcentroid_cargs",
-    "mrcentroid_config_cargs",
     "mrcentroid_config_params",
     "mrcentroid_execute",
-    "mrcentroid_outputs",
     "mrcentroid_params",
 ]

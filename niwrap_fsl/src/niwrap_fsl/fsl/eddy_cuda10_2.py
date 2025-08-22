@@ -474,7 +474,7 @@ def eddy_cuda10_2_outputs(
 
 def eddy_cuda10_2_execute(
     params: EddyCuda102Parameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> EddyCuda102Outputs:
     """
     A tool for correcting eddy currents and movements in diffusion data.
@@ -485,10 +485,12 @@ def eddy_cuda10_2_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `EddyCuda102Outputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(EDDY_CUDA10_2_METADATA)
     params = execution.params(params)
     cargs = eddy_cuda10_2_cargs(params, execution)
     ret = eddy_cuda10_2_outputs(params, execution)
@@ -618,8 +620,6 @@ def eddy_cuda10_2(
     Returns:
         NamedTuple of outputs (described in `EddyCuda102Outputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(EDDY_CUDA10_2_METADATA)
     params = eddy_cuda10_2_params(
         imain=imain,
         mask=mask,
@@ -666,7 +666,7 @@ def eddy_cuda10_2(
         data_is_shelled=data_is_shelled,
         verbose=verbose,
     )
-    return eddy_cuda10_2_execute(params, execution)
+    return eddy_cuda10_2_execute(params, runner)
 
 
 __all__ = [
@@ -674,8 +674,6 @@ __all__ = [
     "EddyCuda102Outputs",
     "EddyCuda102Parameters",
     "eddy_cuda10_2",
-    "eddy_cuda10_2_cargs",
     "eddy_cuda10_2_execute",
-    "eddy_cuda10_2_outputs",
     "eddy_cuda10_2_params",
 ]

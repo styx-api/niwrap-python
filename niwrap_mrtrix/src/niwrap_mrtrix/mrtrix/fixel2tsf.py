@@ -247,7 +247,7 @@ def fixel2tsf_outputs(
 
 def fixel2tsf_execute(
     params: Fixel2tsfParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Fixel2tsfOutputs:
     """
     Map fixel values to a track scalar file based on an input tractogram.
@@ -265,10 +265,12 @@ def fixel2tsf_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Fixel2tsfOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXEL2TSF_METADATA)
     params = execution.params(params)
     cargs = fixel2tsf_cargs(params, execution)
     ret = fixel2tsf_outputs(params, execution)
@@ -327,8 +329,6 @@ def fixel2tsf(
     Returns:
         NamedTuple of outputs (described in `Fixel2tsfOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXEL2TSF_METADATA)
     params = fixel2tsf_params(
         angle=angle,
         info=info,
@@ -343,7 +343,7 @@ def fixel2tsf(
         tracks=tracks,
         tsf=tsf,
     )
-    return fixel2tsf_execute(params, execution)
+    return fixel2tsf_execute(params, runner)
 
 
 __all__ = [
@@ -352,10 +352,7 @@ __all__ = [
     "Fixel2tsfOutputs",
     "Fixel2tsfParameters",
     "fixel2tsf",
-    "fixel2tsf_cargs",
-    "fixel2tsf_config_cargs",
     "fixel2tsf_config_params",
     "fixel2tsf_execute",
-    "fixel2tsf_outputs",
     "fixel2tsf_params",
 ]

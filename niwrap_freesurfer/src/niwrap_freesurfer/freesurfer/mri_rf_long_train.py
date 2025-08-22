@@ -189,7 +189,7 @@ def mri_rf_long_train_outputs(
 
 def mri_rf_long_train_execute(
     params: MriRfLongTrainParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriRfLongTrainOutputs:
     """
     Trains GCA data with multiple subjects for FreeSurfer.
@@ -200,10 +200,12 @@ def mri_rf_long_train_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriRfLongTrainOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_RF_LONG_TRAIN_METADATA)
     params = execution.params(params)
     cargs = mri_rf_long_train_cargs(params, execution)
     ret = mri_rf_long_train_outputs(params, execution)
@@ -246,8 +248,6 @@ def mri_rf_long_train(
     Returns:
         NamedTuple of outputs (described in `MriRfLongTrainOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_RF_LONG_TRAIN_METADATA)
     params = mri_rf_long_train_params(
         seg_dir=seg_dir,
         xform=xform,
@@ -259,7 +259,7 @@ def mri_rf_long_train(
         subjects=subjects,
         output_rfa=output_rfa,
     )
-    return mri_rf_long_train_execute(params, execution)
+    return mri_rf_long_train_execute(params, runner)
 
 
 __all__ = [
@@ -267,8 +267,6 @@ __all__ = [
     "MriRfLongTrainOutputs",
     "MriRfLongTrainParameters",
     "mri_rf_long_train",
-    "mri_rf_long_train_cargs",
     "mri_rf_long_train_execute",
-    "mri_rf_long_train_outputs",
     "mri_rf_long_train_params",
 ]

@@ -147,7 +147,7 @@ def fsl_prepare_fieldmap_outputs(
 
 def fsl_prepare_fieldmap_execute(
     params: FslPrepareFieldmapParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslPrepareFieldmapOutputs:
     """
     Prepares a fieldmap suitable for FEAT from SIEMENS data and saves output in
@@ -159,10 +159,12 @@ def fsl_prepare_fieldmap_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslPrepareFieldmapOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSL_PREPARE_FIELDMAP_METADATA)
     params = execution.params(params)
     cargs = fsl_prepare_fieldmap_cargs(params, execution)
     ret = fsl_prepare_fieldmap_outputs(params, execution)
@@ -199,8 +201,6 @@ def fsl_prepare_fieldmap(
     Returns:
         NamedTuple of outputs (described in `FslPrepareFieldmapOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSL_PREPARE_FIELDMAP_METADATA)
     params = fsl_prepare_fieldmap_params(
         scanner=scanner,
         phase_image=phase_image,
@@ -209,7 +209,7 @@ def fsl_prepare_fieldmap(
         delta_te=delta_te,
         nocheck_flag=nocheck_flag,
     )
-    return fsl_prepare_fieldmap_execute(params, execution)
+    return fsl_prepare_fieldmap_execute(params, runner)
 
 
 __all__ = [
@@ -217,8 +217,6 @@ __all__ = [
     "FslPrepareFieldmapOutputs",
     "FslPrepareFieldmapParameters",
     "fsl_prepare_fieldmap",
-    "fsl_prepare_fieldmap_cargs",
     "fsl_prepare_fieldmap_execute",
-    "fsl_prepare_fieldmap_outputs",
     "fsl_prepare_fieldmap_params",
 ]

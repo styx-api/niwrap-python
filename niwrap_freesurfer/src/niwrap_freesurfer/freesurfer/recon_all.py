@@ -662,7 +662,7 @@ def recon_all_outputs(
 
 def recon_all_execute(
     params: ReconAllParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ReconAllOutputs:
     """
     Performs all, or any part of, the FreeSurfer cortical reconstruction process.
@@ -673,10 +673,12 @@ def recon_all_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ReconAllOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(RECON_ALL_METADATA)
     params = execution.params(params)
     cargs = recon_all_cargs(params, execution)
     ret = recon_all_outputs(params, execution)
@@ -845,8 +847,6 @@ def recon_all(
     Returns:
         NamedTuple of outputs (described in `ReconAllOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(RECON_ALL_METADATA)
     params = recon_all_params(
         subjid=subjid,
         all_flag=all_flag,
@@ -918,7 +918,7 @@ def recon_all(
         version=version,
         help_=help_,
     )
-    return recon_all_execute(params, execution)
+    return recon_all_execute(params, runner)
 
 
 __all__ = [
@@ -926,8 +926,6 @@ __all__ = [
     "ReconAllOutputs",
     "ReconAllParameters",
     "recon_all",
-    "recon_all_cargs",
     "recon_all_execute",
-    "recon_all_outputs",
     "recon_all_params",
 ]

@@ -322,7 +322,7 @@ def convert_warpfield_outputs(
 
 def convert_warpfield_execute(
     params: ConvertWarpfieldParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> ConvertWarpfieldOutputs:
     """
     Convert a warpfield between conventions.
@@ -346,10 +346,12 @@ def convert_warpfield_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `ConvertWarpfieldOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CONVERT_WARPFIELD_METADATA)
     params = execution.params(params)
     cargs = convert_warpfield_cargs(params, execution)
     ret = convert_warpfield_outputs(params, execution)
@@ -399,8 +401,6 @@ def convert_warpfield(
     Returns:
         NamedTuple of outputs (described in `ConvertWarpfieldOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CONVERT_WARPFIELD_METADATA)
     params = convert_warpfield_params(
         from_world=from_world,
         opt_from_itk_input=opt_from_itk_input,
@@ -409,7 +409,7 @@ def convert_warpfield(
         opt_to_itk_output=opt_to_itk_output,
         to_fnirt=to_fnirt,
     )
-    return convert_warpfield_execute(params, execution)
+    return convert_warpfield_execute(params, runner)
 
 
 __all__ = [
@@ -420,14 +420,9 @@ __all__ = [
     "ConvertWarpfieldParameters",
     "ConvertWarpfieldToFnirtParameters",
     "convert_warpfield",
-    "convert_warpfield_cargs",
     "convert_warpfield_execute",
-    "convert_warpfield_from_fnirt_cargs",
     "convert_warpfield_from_fnirt_params",
-    "convert_warpfield_from_world_cargs",
     "convert_warpfield_from_world_params",
-    "convert_warpfield_outputs",
     "convert_warpfield_params",
-    "convert_warpfield_to_fnirt_cargs",
     "convert_warpfield_to_fnirt_params",
 ]

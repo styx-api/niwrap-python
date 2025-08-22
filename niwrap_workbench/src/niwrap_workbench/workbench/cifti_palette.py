@@ -496,7 +496,7 @@ def cifti_palette_outputs(
 
 def cifti_palette_execute(
     params: CiftiPaletteParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiPaletteOutputs:
     """
     Set palette on a cifti file.
@@ -584,10 +584,12 @@ def cifti_palette_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiPaletteOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_PALETTE_METADATA)
     params = execution.params(params)
     cargs = cifti_palette_cargs(params, execution)
     ret = cifti_palette_outputs(params, execution)
@@ -722,8 +724,6 @@ def cifti_palette(
     Returns:
         NamedTuple of outputs (described in `CiftiPaletteOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_PALETTE_METADATA)
     params = cifti_palette_params(
         cifti_in=cifti_in,
         mode=mode,
@@ -741,7 +741,7 @@ def cifti_palette(
         thresholding=thresholding,
         opt_inversion_type=opt_inversion_type,
     )
-    return cifti_palette_execute(params, execution)
+    return cifti_palette_execute(params, runner)
 
 
 __all__ = [
@@ -754,18 +754,11 @@ __all__ = [
     "CiftiPalettePosUserParameters",
     "CiftiPaletteThresholdingParameters",
     "cifti_palette",
-    "cifti_palette_cargs",
     "cifti_palette_execute",
-    "cifti_palette_neg_percent_cargs",
     "cifti_palette_neg_percent_params",
-    "cifti_palette_neg_user_cargs",
     "cifti_palette_neg_user_params",
-    "cifti_palette_outputs",
     "cifti_palette_params",
-    "cifti_palette_pos_percent_cargs",
     "cifti_palette_pos_percent_params",
-    "cifti_palette_pos_user_cargs",
     "cifti_palette_pos_user_params",
-    "cifti_palette_thresholding_cargs",
     "cifti_palette_thresholding_params",
 ]

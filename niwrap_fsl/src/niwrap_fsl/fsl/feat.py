@@ -120,7 +120,7 @@ def feat_outputs(
 
 def feat_execute(
     params: FeatParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FeatOutputs:
     """
     fMRI Expert Analysis Tool.
@@ -131,10 +131,12 @@ def feat_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FeatOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FEAT_METADATA)
     params = execution.params(params)
     cargs = feat_cargs(params, execution)
     ret = feat_outputs(params, execution)
@@ -159,12 +161,10 @@ def feat(
     Returns:
         NamedTuple of outputs (described in `FeatOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FEAT_METADATA)
     params = feat_params(
         design_file=design_file,
     )
-    return feat_execute(params, execution)
+    return feat_execute(params, runner)
 
 
 __all__ = [
@@ -172,8 +172,6 @@ __all__ = [
     "FeatOutputs",
     "FeatParameters",
     "feat",
-    "feat_cargs",
     "feat_execute",
-    "feat_outputs",
     "feat_params",
 ]

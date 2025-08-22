@@ -233,7 +233,7 @@ def mri_z2p_outputs(
 
 def mri_z2p_execute(
     params: MriZ2pParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriZ2pOutputs:
     """
     Converts Z-statistic volumes to P-value volumes.
@@ -244,10 +244,12 @@ def mri_z2p_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriZ2pOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_Z2P_METADATA)
     params = execution.params(params)
     cargs = mri_z2p_cargs(params, execution)
     ret = mri_z2p_outputs(params, execution)
@@ -303,8 +305,6 @@ def mri_z2p(
     Returns:
         NamedTuple of outputs (described in `MriZ2pOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_Z2P_METADATA)
     params = mri_z2p_params(
         z_volume=z_volume,
         p_volume=p_volume,
@@ -323,7 +323,7 @@ def mri_z2p(
         debug=debug,
         check_opts=check_opts,
     )
-    return mri_z2p_execute(params, execution)
+    return mri_z2p_execute(params, runner)
 
 
 __all__ = [
@@ -331,8 +331,6 @@ __all__ = [
     "MriZ2pOutputs",
     "MriZ2pParameters",
     "mri_z2p",
-    "mri_z2p_cargs",
     "mri_z2p_execute",
-    "mri_z2p_outputs",
     "mri_z2p_params",
 ]

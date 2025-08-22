@@ -214,7 +214,7 @@ def surf_proj_outputs(
 
 def surf_proj_execute(
     params: SurfProjParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> SurfProjOutputs:
     """
     Projects data onto a surface mesh using specified parameters.
@@ -225,10 +225,12 @@ def surf_proj_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `SurfProjOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(SURF_PROJ_METADATA)
     params = execution.params(params)
     cargs = surf_proj_cargs(params, execution)
     ret = surf_proj_outputs(params, execution)
@@ -273,8 +275,6 @@ def surf_proj(
     Returns:
         NamedTuple of outputs (described in `SurfProjOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(SURF_PROJ_METADATA)
     params = surf_proj_params(
         data=data,
         surface=surface,
@@ -287,7 +287,7 @@ def surf_proj(
         operation=operation,
         surface_output=surface_output,
     )
-    return surf_proj_execute(params, execution)
+    return surf_proj_execute(params, runner)
 
 
 __all__ = [
@@ -295,8 +295,6 @@ __all__ = [
     "SurfProjOutputs",
     "SurfProjParameters",
     "surf_proj",
-    "surf_proj_cargs",
     "surf_proj_execute",
-    "surf_proj_outputs",
     "surf_proj_params",
 ]

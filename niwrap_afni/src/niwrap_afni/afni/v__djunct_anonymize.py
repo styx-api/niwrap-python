@@ -142,7 +142,7 @@ def v__djunct_anonymize_outputs(
 
 def v__djunct_anonymize_execute(
     params: VDjunctAnonymizeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VDjunctAnonymizeOutputs:
     """
     Helper program to anonymize files.
@@ -153,10 +153,12 @@ def v__djunct_anonymize_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VDjunctAnonymizeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__DJUNCT_ANONYMIZE_METADATA)
     params = execution.params(params)
     cargs = v__djunct_anonymize_cargs(params, execution)
     ret = v__djunct_anonymize_outputs(params, execution)
@@ -187,15 +189,13 @@ def v__djunct_anonymize(
     Returns:
         NamedTuple of outputs (described in `VDjunctAnonymizeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__DJUNCT_ANONYMIZE_METADATA)
     params = v__djunct_anonymize_params(
         input_=input_,
         add_note=add_note,
         copy_to=copy_to,
         overwrite=overwrite,
     )
-    return v__djunct_anonymize_execute(params, execution)
+    return v__djunct_anonymize_execute(params, runner)
 
 
 __all__ = [
@@ -203,8 +203,6 @@ __all__ = [
     "VDjunctAnonymizeParameters",
     "V__DJUNCT_ANONYMIZE_METADATA",
     "v__djunct_anonymize",
-    "v__djunct_anonymize_cargs",
     "v__djunct_anonymize_execute",
-    "v__djunct_anonymize_outputs",
     "v__djunct_anonymize_params",
 ]

@@ -246,7 +246,7 @@ def fixelreorient_outputs(
 
 def fixelreorient_execute(
     params: FixelreorientParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FixelreorientOutputs:
     """
     Reorient fixel directions.
@@ -265,10 +265,12 @@ def fixelreorient_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FixelreorientOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIXELREORIENT_METADATA)
     params = execution.params(params)
     cargs = fixelreorient_cargs(params, execution)
     ret = fixelreorient_outputs(params, execution)
@@ -332,8 +334,6 @@ def fixelreorient(
     Returns:
         NamedTuple of outputs (described in `FixelreorientOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIXELREORIENT_METADATA)
     params = fixelreorient_params(
         info=info,
         quiet=quiet,
@@ -347,7 +347,7 @@ def fixelreorient(
         warp=warp,
         fixel_out=fixel_out,
     )
-    return fixelreorient_execute(params, execution)
+    return fixelreorient_execute(params, runner)
 
 
 __all__ = [
@@ -356,10 +356,7 @@ __all__ = [
     "FixelreorientOutputs",
     "FixelreorientParameters",
     "fixelreorient",
-    "fixelreorient_cargs",
-    "fixelreorient_config_cargs",
     "fixelreorient_config_params",
     "fixelreorient_execute",
-    "fixelreorient_outputs",
     "fixelreorient_params",
 ]

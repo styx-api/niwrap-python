@@ -125,7 +125,7 @@ def mri_motion_correct_outputs(
 
 def mri_motion_correct_execute(
     params: MriMotionCorrectParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriMotionCorrectOutputs:
     """
     Tool for correcting motion in MRI scans.
@@ -136,10 +136,12 @@ def mri_motion_correct_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriMotionCorrectOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_MOTION_CORRECT_METADATA)
     params = execution.params(params)
     cargs = mri_motion_correct_cargs(params, execution)
     ret = mri_motion_correct_outputs(params, execution)
@@ -166,13 +168,11 @@ def mri_motion_correct(
     Returns:
         NamedTuple of outputs (described in `MriMotionCorrectOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_MOTION_CORRECT_METADATA)
     params = mri_motion_correct_params(
         outfile=outfile,
         infiles=infiles,
     )
-    return mri_motion_correct_execute(params, execution)
+    return mri_motion_correct_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "MriMotionCorrectOutputs",
     "MriMotionCorrectParameters",
     "mri_motion_correct",
-    "mri_motion_correct_cargs",
     "mri_motion_correct_execute",
-    "mri_motion_correct_outputs",
     "mri_motion_correct_params",
 ]

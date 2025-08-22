@@ -116,7 +116,7 @@ def unpack_ima_tcl_outputs(
 
 def unpack_ima_tcl_execute(
     params: UnpackImaTclParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> UnpackImaTclOutputs:
     """
     A tool to unpack MRI DICOM .ima files.
@@ -127,10 +127,12 @@ def unpack_ima_tcl_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `UnpackImaTclOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(UNPACK_IMA_TCL_METADATA)
     params = execution.params(params)
     cargs = unpack_ima_tcl_cargs(params, execution)
     ret = unpack_ima_tcl_outputs(params, execution)
@@ -155,12 +157,10 @@ def unpack_ima_tcl(
     Returns:
         NamedTuple of outputs (described in `UnpackImaTclOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(UNPACK_IMA_TCL_METADATA)
     params = unpack_ima_tcl_params(
         target_dir=target_dir,
     )
-    return unpack_ima_tcl_execute(params, execution)
+    return unpack_ima_tcl_execute(params, runner)
 
 
 __all__ = [
@@ -168,8 +168,6 @@ __all__ = [
     "UnpackImaTclOutputs",
     "UnpackImaTclParameters",
     "unpack_ima_tcl",
-    "unpack_ima_tcl_cargs",
     "unpack_ima_tcl_execute",
-    "unpack_ima_tcl_outputs",
     "unpack_ima_tcl_params",
 ]

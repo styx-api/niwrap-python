@@ -161,7 +161,7 @@ def first_mult_bcorr_outputs(
 
 def first_mult_bcorr_execute(
     params: FirstMultBcorrParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FirstMultBcorrOutputs:
     """
     Part of FSL (ID: 6.0.5:9e026117), first_mult_bcorr converts label images to an
@@ -173,10 +173,12 @@ def first_mult_bcorr_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FirstMultBcorrOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FIRST_MULT_BCORR_METADATA)
     params = execution.params(params)
     cargs = first_mult_bcorr_cargs(params, execution)
     ret = first_mult_bcorr_outputs(params, execution)
@@ -214,8 +216,6 @@ def first_mult_bcorr(
     Returns:
         NamedTuple of outputs (described in `FirstMultBcorrOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FIRST_MULT_BCORR_METADATA)
     params = first_mult_bcorr_params(
         input_image=input_image,
         corrected_4d_labels=corrected_4d_labels,
@@ -224,7 +224,7 @@ def first_mult_bcorr(
         verbose_flag=verbose_flag,
         help_flag=help_flag,
     )
-    return first_mult_bcorr_execute(params, execution)
+    return first_mult_bcorr_execute(params, runner)
 
 
 __all__ = [
@@ -232,8 +232,6 @@ __all__ = [
     "FirstMultBcorrOutputs",
     "FirstMultBcorrParameters",
     "first_mult_bcorr",
-    "first_mult_bcorr_cargs",
     "first_mult_bcorr_execute",
-    "first_mult_bcorr_outputs",
     "first_mult_bcorr_params",
 ]

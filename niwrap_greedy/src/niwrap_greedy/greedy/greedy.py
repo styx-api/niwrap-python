@@ -1486,7 +1486,7 @@ def greedy_outputs(
 
 def greedy_execute(
     params: GreedyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> GreedyOutputs:
     """
     Paul's greedy diffeomorphic registration implementation.
@@ -1497,10 +1497,12 @@ def greedy_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `GreedyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(GREEDY_METADATA)
     params = execution.params(params)
     cargs = greedy_cargs(params, execution)
     ret = greedy_outputs(params, execution)
@@ -1699,8 +1701,6 @@ def greedy_(
     Returns:
         NamedTuple of outputs (described in `GreedyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(GREEDY_METADATA)
     params = greedy_params(
         dimensions=dimensions,
         input_images=input_images,
@@ -1775,7 +1775,7 @@ def greedy_(
         version=version,
         verbosity=verbosity,
     )
-    return greedy_execute(params, execution)
+    return greedy_execute(params, runner)
 
 
 __all__ = [
@@ -1799,34 +1799,16 @@ __all__ = [
     "GreedySearchParameters",
     "GreedyTjrParameters",
     "greedy_",
-    "greedy_cargs",
     "greedy_execute",
-    "greedy_input_images_cargs",
     "greedy_input_images_params",
-    "greedy_invert_cargs",
-    "greedy_invert_outputs",
     "greedy_invert_params",
-    "greedy_jacobian_cargs",
-    "greedy_jacobian_outputs",
     "greedy_jacobian_params",
-    "greedy_metric_cargs",
     "greedy_metric_params",
-    "greedy_outputs",
     "greedy_params",
-    "greedy_reslice_moving_image_cargs",
-    "greedy_reslice_moving_image_outputs",
     "greedy_reslice_moving_image_params",
-    "greedy_reslice_simplex_jacobian_cargs",
-    "greedy_reslice_simplex_jacobian_outputs",
     "greedy_reslice_simplex_jacobian_params",
-    "greedy_reslice_surface_cargs",
-    "greedy_reslice_surface_outputs",
     "greedy_reslice_surface_params",
-    "greedy_root_cargs",
-    "greedy_root_outputs",
     "greedy_root_params",
-    "greedy_search_cargs",
     "greedy_search_params",
-    "greedy_tjr_cargs",
     "greedy_tjr_params",
 ]

@@ -252,7 +252,7 @@ def dirmerge_outputs(
 
 def dirmerge_execute(
     params: DirmergeParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DirmergeOutputs:
     """
     Splice / merge multiple sets of directions in such a way as to maintain
@@ -270,10 +270,12 @@ def dirmerge_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DirmergeOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DIRMERGE_METADATA)
     params = execution.params(params)
     cargs = dirmerge_cargs(params, execution)
     ret = dirmerge_outputs(params, execution)
@@ -335,8 +337,6 @@ def dirmerge(
     Returns:
         NamedTuple of outputs (described in `DirmergeOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DIRMERGE_METADATA)
     params = dirmerge_params(
         unipolar_weight=unipolar_weight,
         info=info,
@@ -351,7 +351,7 @@ def dirmerge(
         bvalue_files=bvalue_files,
         out=out,
     )
-    return dirmerge_execute(params, execution)
+    return dirmerge_execute(params, runner)
 
 
 __all__ = [
@@ -360,10 +360,7 @@ __all__ = [
     "DirmergeOutputs",
     "DirmergeParameters",
     "dirmerge",
-    "dirmerge_cargs",
-    "dirmerge_config_cargs",
     "dirmerge_config_params",
     "dirmerge_execute",
-    "dirmerge_outputs",
     "dirmerge_params",
 ]

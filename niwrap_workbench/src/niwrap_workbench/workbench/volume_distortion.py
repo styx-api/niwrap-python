@@ -149,7 +149,7 @@ def volume_distortion_outputs(
 
 def volume_distortion_execute(
     params: VolumeDistortionParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VolumeDistortionOutputs:
     """
     Calculate volume warpfield distortion.
@@ -173,10 +173,12 @@ def volume_distortion_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VolumeDistortionOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOLUME_DISTORTION_METADATA)
     params = execution.params(params)
     cargs = volume_distortion_cargs(params, execution)
     ret = volume_distortion_outputs(params, execution)
@@ -223,8 +225,6 @@ def volume_distortion(
     Returns:
         NamedTuple of outputs (described in `VolumeDistortionOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOLUME_DISTORTION_METADATA)
     params = volume_distortion_params(
         warpfield=warpfield,
         volume_out=volume_out,
@@ -232,7 +232,7 @@ def volume_distortion(
         opt_circular=opt_circular,
         opt_log2=opt_log2,
     )
-    return volume_distortion_execute(params, execution)
+    return volume_distortion_execute(params, runner)
 
 
 __all__ = [
@@ -240,8 +240,6 @@ __all__ = [
     "VolumeDistortionOutputs",
     "VolumeDistortionParameters",
     "volume_distortion",
-    "volume_distortion_cargs",
     "volume_distortion_execute",
-    "volume_distortion_outputs",
     "volume_distortion_params",
 ]

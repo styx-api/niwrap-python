@@ -322,7 +322,7 @@ def mris_sample_parc_outputs(
 
 def mris_sample_parc_execute(
     params: MrisSampleParcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MrisSampleParcOutputs:
     """
     This program samples a volumetric parcellation onto a surface.
@@ -333,10 +333,12 @@ def mris_sample_parc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MrisSampleParcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRIS_SAMPLE_PARC_METADATA)
     params = execution.params(params)
     cargs = mris_sample_parc_cargs(params, execution)
     ret = mris_sample_parc_outputs(params, execution)
@@ -410,8 +412,6 @@ def mris_sample_parc(
     Returns:
         NamedTuple of outputs (described in `MrisSampleParcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRIS_SAMPLE_PARC_METADATA)
     params = mris_sample_parc_params(
         subject_name=subject_name,
         hemisphere=hemisphere,
@@ -437,7 +437,7 @@ def mris_sample_parc(
         help_=help_,
         version=version,
     )
-    return mris_sample_parc_execute(params, execution)
+    return mris_sample_parc_execute(params, runner)
 
 
 __all__ = [
@@ -445,8 +445,6 @@ __all__ = [
     "MrisSampleParcOutputs",
     "MrisSampleParcParameters",
     "mris_sample_parc",
-    "mris_sample_parc_cargs",
     "mris_sample_parc_execute",
-    "mris_sample_parc_outputs",
     "mris_sample_parc_params",
 ]

@@ -125,7 +125,7 @@ def fslval_outputs(
 
 def fslval_execute(
     params: FslvalParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FslvalOutputs:
     """
     Tool for printing out header information from NIfTI image files.
@@ -136,10 +136,12 @@ def fslval_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FslvalOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FSLVAL_METADATA)
     params = execution.params(params)
     cargs = fslval_cargs(params, execution)
     ret = fslval_outputs(params, execution)
@@ -166,13 +168,11 @@ def fslval(
     Returns:
         NamedTuple of outputs (described in `FslvalOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FSLVAL_METADATA)
     params = fslval_params(
         input_file=input_file,
         keyword_=keyword_,
     )
-    return fslval_execute(params, execution)
+    return fslval_execute(params, runner)
 
 
 __all__ = [
@@ -180,8 +180,6 @@ __all__ = [
     "FslvalOutputs",
     "FslvalParameters",
     "fslval",
-    "fslval_cargs",
     "fslval_execute",
-    "fslval_outputs",
     "fslval_params",
 ]

@@ -254,7 +254,7 @@ def v__grad_flip_test_outputs(
 
 def v__grad_flip_test_execute(
     params: VGradFlipTestParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VGradFlipTestOutputs:
     """
     Script to test the correct flip for a data set when using 1dDW_Grad_o_Mat++.
@@ -265,10 +265,12 @@ def v__grad_flip_test_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VGradFlipTestOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__GRAD_FLIP_TEST_METADATA)
     params = execution.params(params)
     cargs = v__grad_flip_test_cargs(params, execution)
     ret = v__grad_flip_test_outputs(params, execution)
@@ -325,8 +327,6 @@ def v__grad_flip_test(
     Returns:
         NamedTuple of outputs (described in `VGradFlipTestOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__GRAD_FLIP_TEST_METADATA)
     params = v__grad_flip_test_params(
         dwi=dwi,
         grad_row_vec=grad_row_vec,
@@ -343,7 +343,7 @@ def v__grad_flip_test(
         wdir=wdir,
         do_clean=do_clean,
     )
-    return v__grad_flip_test_execute(params, execution)
+    return v__grad_flip_test_execute(params, runner)
 
 
 __all__ = [
@@ -351,8 +351,6 @@ __all__ = [
     "VGradFlipTestParameters",
     "V__GRAD_FLIP_TEST_METADATA",
     "v__grad_flip_test",
-    "v__grad_flip_test_cargs",
     "v__grad_flip_test_execute",
-    "v__grad_flip_test_outputs",
     "v__grad_flip_test_params",
 ]

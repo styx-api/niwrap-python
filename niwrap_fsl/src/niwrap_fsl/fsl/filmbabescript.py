@@ -121,7 +121,7 @@ def filmbabescript_outputs(
 
 def filmbabescript_execute(
     params: FilmbabescriptParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> FilmbabescriptOutputs:
     """
     A tool/script for processing FEAT directories and FLOBs directories.
@@ -132,10 +132,12 @@ def filmbabescript_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `FilmbabescriptOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(FILMBABESCRIPT_METADATA)
     params = execution.params(params)
     cargs = filmbabescript_cargs(params, execution)
     ret = filmbabescript_outputs(params, execution)
@@ -162,13 +164,11 @@ def filmbabescript(
     Returns:
         NamedTuple of outputs (described in `FilmbabescriptOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(FILMBABESCRIPT_METADATA)
     params = filmbabescript_params(
         feat_dir=feat_dir,
         flobs_dir=flobs_dir,
     )
-    return filmbabescript_execute(params, execution)
+    return filmbabescript_execute(params, runner)
 
 
 __all__ = [
@@ -176,8 +176,6 @@ __all__ = [
     "FilmbabescriptOutputs",
     "FilmbabescriptParameters",
     "filmbabescript",
-    "filmbabescript_cargs",
     "filmbabescript_execute",
-    "filmbabescript_outputs",
     "filmbabescript_params",
 ]

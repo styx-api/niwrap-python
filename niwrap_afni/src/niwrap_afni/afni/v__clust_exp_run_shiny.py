@@ -122,7 +122,7 @@ def v__clust_exp_run_shiny_outputs(
 
 def v__clust_exp_run_shiny_execute(
     params: VClustExpRunShinyParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> VClustExpRunShinyOutputs:
     """
     Launch a shiny app that was created by ClustExp_StatParse.py.
@@ -133,10 +133,12 @@ def v__clust_exp_run_shiny_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `VClustExpRunShinyOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(V__CLUST_EXP_RUN_SHINY_METADATA)
     params = execution.params(params)
     cargs = v__clust_exp_run_shiny_cargs(params, execution)
     ret = v__clust_exp_run_shiny_outputs(params, execution)
@@ -163,13 +165,11 @@ def v__clust_exp_run_shiny(
     Returns:
         NamedTuple of outputs (described in `VClustExpRunShinyOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(V__CLUST_EXP_RUN_SHINY_METADATA)
     params = v__clust_exp_run_shiny_params(
         directory=directory,
         help_=help_,
     )
-    return v__clust_exp_run_shiny_execute(params, execution)
+    return v__clust_exp_run_shiny_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "VClustExpRunShinyParameters",
     "V__CLUST_EXP_RUN_SHINY_METADATA",
     "v__clust_exp_run_shiny",
-    "v__clust_exp_run_shiny_cargs",
     "v__clust_exp_run_shiny_execute",
-    "v__clust_exp_run_shiny_outputs",
     "v__clust_exp_run_shiny_params",
 ]

@@ -256,7 +256,7 @@ def meshfilter_outputs(
 
 def meshfilter_execute(
     params: MeshfilterParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MeshfilterOutputs:
     """
     Apply filter operations to meshes.
@@ -275,10 +275,12 @@ def meshfilter_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MeshfilterOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MESHFILTER_METADATA)
     params = execution.params(params)
     cargs = meshfilter_cargs(params, execution)
     ret = meshfilter_outputs(params, execution)
@@ -339,8 +341,6 @@ def meshfilter(
     Returns:
         NamedTuple of outputs (described in `MeshfilterOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MESHFILTER_METADATA)
     params = meshfilter_params(
         smooth_spatial=smooth_spatial,
         smooth_influence=smooth_influence,
@@ -356,7 +356,7 @@ def meshfilter(
         filter_=filter_,
         output=output,
     )
-    return meshfilter_execute(params, execution)
+    return meshfilter_execute(params, runner)
 
 
 __all__ = [
@@ -365,10 +365,7 @@ __all__ = [
     "MeshfilterOutputs",
     "MeshfilterParameters",
     "meshfilter",
-    "meshfilter_cargs",
-    "meshfilter_config_cargs",
     "meshfilter_config_params",
     "meshfilter_execute",
-    "meshfilter_outputs",
     "meshfilter_params",
 ]

@@ -122,7 +122,7 @@ def brec_outputs(
 
 def brec_execute(
     params: BrecParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> BrecOutputs:
     """
     A description for brec tool could not be retrieved.
@@ -133,10 +133,12 @@ def brec_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `BrecOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(BREC_METADATA)
     params = execution.params(params)
     cargs = brec_cargs(params, execution)
     ret = brec_outputs(params, execution)
@@ -163,13 +165,11 @@ def brec(
     Returns:
         NamedTuple of outputs (described in `BrecOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(BREC_METADATA)
     params = brec_params(
         my_file=my_file,
         depth_limit=depth_limit,
     )
-    return brec_execute(params, execution)
+    return brec_execute(params, runner)
 
 
 __all__ = [
@@ -177,8 +177,6 @@ __all__ = [
     "BrecOutputs",
     "BrecParameters",
     "brec",
-    "brec_cargs",
     "brec_execute",
-    "brec_outputs",
     "brec_params",
 ]

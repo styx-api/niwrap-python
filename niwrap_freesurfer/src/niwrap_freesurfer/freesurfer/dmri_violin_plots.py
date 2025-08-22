@@ -135,7 +135,7 @@ def dmri_violin_plots_outputs(
 
 def dmri_violin_plots_execute(
     params: DmriViolinPlotsParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> DmriViolinPlotsOutputs:
     """
     Generate violin plots for dMRI data.
@@ -146,10 +146,12 @@ def dmri_violin_plots_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `DmriViolinPlotsOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(DMRI_VIOLIN_PLOTS_METADATA)
     params = execution.params(params)
     cargs = dmri_violin_plots_cargs(params, execution)
     ret = dmri_violin_plots_outputs(params, execution)
@@ -178,14 +180,12 @@ def dmri_violin_plots(
     Returns:
         NamedTuple of outputs (described in `DmriViolinPlotsOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(DMRI_VIOLIN_PLOTS_METADATA)
     params = dmri_violin_plots_params(
         input_directory=input_directory,
         labels=labels,
         structure=structure,
     )
-    return dmri_violin_plots_execute(params, execution)
+    return dmri_violin_plots_execute(params, runner)
 
 
 __all__ = [
@@ -193,8 +193,6 @@ __all__ = [
     "DmriViolinPlotsOutputs",
     "DmriViolinPlotsParameters",
     "dmri_violin_plots",
-    "dmri_violin_plots_cargs",
     "dmri_violin_plots_execute",
-    "dmri_violin_plots_outputs",
     "dmri_violin_plots_params",
 ]

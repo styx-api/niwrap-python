@@ -166,7 +166,7 @@ def mri_concatenate_gcam_outputs(
 
 def mri_concatenate_gcam_execute(
     params: MriConcatenateGcamParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> MriConcatenateGcamOutputs:
     """
     Concatenate a combination of input LTAs (linear transform array) and GCAMs
@@ -178,10 +178,12 @@ def mri_concatenate_gcam_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `MriConcatenateGcamOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(MRI_CONCATENATE_GCAM_METADATA)
     params = execution.params(params)
     cargs = mri_concatenate_gcam_cargs(params, execution)
     ret = mri_concatenate_gcam_outputs(params, execution)
@@ -222,8 +224,6 @@ def mri_concatenate_gcam(
     Returns:
         NamedTuple of outputs (described in `MriConcatenateGcamOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(MRI_CONCATENATE_GCAM_METADATA)
     params = mri_concatenate_gcam_params(
         inputs=inputs,
         output=output,
@@ -233,7 +233,7 @@ def mri_concatenate_gcam(
         invert=invert,
         downsample=downsample,
     )
-    return mri_concatenate_gcam_execute(params, execution)
+    return mri_concatenate_gcam_execute(params, runner)
 
 
 __all__ = [
@@ -241,8 +241,6 @@ __all__ = [
     "MriConcatenateGcamOutputs",
     "MriConcatenateGcamParameters",
     "mri_concatenate_gcam",
-    "mri_concatenate_gcam_cargs",
     "mri_concatenate_gcam_execute",
-    "mri_concatenate_gcam_outputs",
     "mri_concatenate_gcam_params",
 ]

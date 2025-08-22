@@ -493,7 +493,7 @@ def cifti_find_clusters_outputs(
 
 def cifti_find_clusters_execute(
     params: CiftiFindClustersParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiFindClustersOutputs:
     """
     Filter clusters by area/volume.
@@ -514,10 +514,12 @@ def cifti_find_clusters_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiFindClustersOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_FIND_CLUSTERS_METADATA)
     params = execution.params(params)
     cargs = cifti_find_clusters_cargs(params, execution)
     ret = cifti_find_clusters_outputs(params, execution)
@@ -589,8 +591,6 @@ def cifti_find_clusters(
     Returns:
         NamedTuple of outputs (described in `CiftiFindClustersOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_FIND_CLUSTERS_METADATA)
     params = cifti_find_clusters_params(
         cifti=cifti,
         surface_value_threshold=surface_value_threshold,
@@ -609,7 +609,7 @@ def cifti_find_clusters(
         distance=distance,
         opt_start_startval=opt_start_startval,
     )
-    return cifti_find_clusters_execute(params, execution)
+    return cifti_find_clusters_execute(params, runner)
 
 
 __all__ = [
@@ -622,18 +622,11 @@ __all__ = [
     "CiftiFindClustersRightSurfaceParameters",
     "CiftiFindClustersSizeRatioParameters",
     "cifti_find_clusters",
-    "cifti_find_clusters_cargs",
-    "cifti_find_clusters_cerebellum_surface_cargs",
     "cifti_find_clusters_cerebellum_surface_params",
-    "cifti_find_clusters_distance_cargs",
     "cifti_find_clusters_distance_params",
     "cifti_find_clusters_execute",
-    "cifti_find_clusters_left_surface_cargs",
     "cifti_find_clusters_left_surface_params",
-    "cifti_find_clusters_outputs",
     "cifti_find_clusters_params",
-    "cifti_find_clusters_right_surface_cargs",
     "cifti_find_clusters_right_surface_params",
-    "cifti_find_clusters_size_ratio_cargs",
     "cifti_find_clusters_size_ratio_params",
 ]

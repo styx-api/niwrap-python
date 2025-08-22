@@ -190,7 +190,7 @@ def new_invwarp_outputs(
 
 def new_invwarp_execute(
     params: NewInvwarpParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> NewInvwarpOutputs:
     """
     Inverse warp tool from FSL suite.
@@ -201,10 +201,12 @@ def new_invwarp_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `NewInvwarpOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(NEW_INVWARP_METADATA)
     params = execution.params(params)
     cargs = new_invwarp_cargs(params, execution)
     ret = new_invwarp_outputs(params, execution)
@@ -248,8 +250,6 @@ def new_invwarp(
     Returns:
         NamedTuple of outputs (described in `NewInvwarpOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(NEW_INVWARP_METADATA)
     params = new_invwarp_params(
         warpvol=warpvol,
         outvol=outvol,
@@ -262,7 +262,7 @@ def new_invwarp(
         debugflag=debugflag,
         verboseflag=verboseflag,
     )
-    return new_invwarp_execute(params, execution)
+    return new_invwarp_execute(params, runner)
 
 
 __all__ = [
@@ -270,8 +270,6 @@ __all__ = [
     "NewInvwarpOutputs",
     "NewInvwarpParameters",
     "new_invwarp",
-    "new_invwarp_cargs",
     "new_invwarp_execute",
-    "new_invwarp_outputs",
     "new_invwarp_params",
 ]

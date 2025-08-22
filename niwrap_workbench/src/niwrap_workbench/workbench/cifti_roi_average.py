@@ -176,7 +176,7 @@ def cifti_roi_average_outputs(
 
 def cifti_roi_average_execute(
     params: CiftiRoiAverageParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> CiftiRoiAverageOutputs:
     """
     Average rows in a single cifti file.
@@ -192,10 +192,12 @@ def cifti_roi_average_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `CiftiRoiAverageOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(CIFTI_ROI_AVERAGE_METADATA)
     params = execution.params(params)
     cargs = cifti_roi_average_cargs(params, execution)
     ret = cifti_roi_average_outputs(params, execution)
@@ -241,8 +243,6 @@ def cifti_roi_average(
     Returns:
         NamedTuple of outputs (described in `CiftiRoiAverageOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(CIFTI_ROI_AVERAGE_METADATA)
     params = cifti_roi_average_params(
         cifti_in=cifti_in,
         text_out=text_out,
@@ -252,7 +252,7 @@ def cifti_roi_average(
         opt_cerebellum_roi_roi_metric=opt_cerebellum_roi_roi_metric,
         opt_vol_roi_roi_vol=opt_vol_roi_roi_vol,
     )
-    return cifti_roi_average_execute(params, execution)
+    return cifti_roi_average_execute(params, runner)
 
 
 __all__ = [
@@ -260,8 +260,6 @@ __all__ = [
     "CiftiRoiAverageOutputs",
     "CiftiRoiAverageParameters",
     "cifti_roi_average",
-    "cifti_roi_average_cargs",
     "cifti_roi_average_execute",
-    "cifti_roi_average_outputs",
     "cifti_roi_average_params",
 ]

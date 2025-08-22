@@ -239,7 +239,7 @@ def voxel2fixel_outputs(
 
 def voxel2fixel_execute(
     params: Voxel2fixelParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> Voxel2fixelOutputs:
     """
     Map the scalar value in each voxel to all fixels within that voxel.
@@ -257,10 +257,12 @@ def voxel2fixel_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `Voxel2fixelOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(VOXEL2FIXEL_METADATA)
     params = execution.params(params)
     cargs = voxel2fixel_cargs(params, execution)
     ret = voxel2fixel_outputs(params, execution)
@@ -320,8 +322,6 @@ def voxel2fixel(
     Returns:
         NamedTuple of outputs (described in `Voxel2fixelOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(VOXEL2FIXEL_METADATA)
     params = voxel2fixel_params(
         info=info,
         quiet=quiet,
@@ -336,7 +336,7 @@ def voxel2fixel(
         fixel_directory_out=fixel_directory_out,
         fixel_data_out=fixel_data_out,
     )
-    return voxel2fixel_execute(params, execution)
+    return voxel2fixel_execute(params, runner)
 
 
 __all__ = [
@@ -345,10 +345,7 @@ __all__ = [
     "Voxel2fixelOutputs",
     "Voxel2fixelParameters",
     "voxel2fixel",
-    "voxel2fixel_cargs",
-    "voxel2fixel_config_cargs",
     "voxel2fixel_config_params",
     "voxel2fixel_execute",
-    "voxel2fixel_outputs",
     "voxel2fixel_params",
 ]

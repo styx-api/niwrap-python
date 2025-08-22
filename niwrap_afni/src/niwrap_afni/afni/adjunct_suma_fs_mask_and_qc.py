@@ -175,7 +175,7 @@ def adjunct_suma_fs_mask_and_qc_outputs(
 
 def adjunct_suma_fs_mask_and_qc_execute(
     params: AdjunctSumaFsMaskAndQcParameters,
-    execution: Execution,
+    runner: Runner | None = None,
 ) -> AdjunctSumaFsMaskAndQcOutputs:
     """
     Script for quickly making some QC images for the SUMA/ directory created by
@@ -187,10 +187,12 @@ def adjunct_suma_fs_mask_and_qc_execute(
     
     Args:
         params: The parameters.
-        execution: The execution object.
+        runner: Command runner.
     Returns:
         NamedTuple of outputs (described in `AdjunctSumaFsMaskAndQcOutputs`).
     """
+    runner = runner or get_global_runner()
+    execution = runner.start_execution(ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA)
     params = execution.params(params)
     cargs = adjunct_suma_fs_mask_and_qc_cargs(params, execution)
     ret = adjunct_suma_fs_mask_and_qc_outputs(params, execution)
@@ -227,8 +229,6 @@ def adjunct_suma_fs_mask_and_qc(
     Returns:
         NamedTuple of outputs (described in `AdjunctSumaFsMaskAndQcOutputs`).
     """
-    runner = runner or get_global_runner()
-    execution = runner.start_execution(ADJUNCT_SUMA_FS_MASK_AND_QC_METADATA)
     params = adjunct_suma_fs_mask_and_qc_params(
         subj_id=subj_id,
         suma_dir=suma_dir,
@@ -237,7 +237,7 @@ def adjunct_suma_fs_mask_and_qc(
         hview=hview,
         version=version,
     )
-    return adjunct_suma_fs_mask_and_qc_execute(params, execution)
+    return adjunct_suma_fs_mask_and_qc_execute(params, runner)
 
 
 __all__ = [
@@ -245,8 +245,6 @@ __all__ = [
     "AdjunctSumaFsMaskAndQcOutputs",
     "AdjunctSumaFsMaskAndQcParameters",
     "adjunct_suma_fs_mask_and_qc",
-    "adjunct_suma_fs_mask_and_qc_cargs",
     "adjunct_suma_fs_mask_and_qc_execute",
-    "adjunct_suma_fs_mask_and_qc_outputs",
     "adjunct_suma_fs_mask_and_qc_params",
 ]
