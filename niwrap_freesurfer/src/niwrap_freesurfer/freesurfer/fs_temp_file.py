@@ -173,8 +173,10 @@ def fs_temp_file_execute(
     runner: Runner | None = None,
 ) -> FsTempFileOutputs:
     """
-    Generates and creates an empty temporary file, printing the resulting path to
-    stdout.
+    fs_temp_file
+    
+    Generates and creates an empty temporary file, printing the resulting path
+    to stdout.
     
     Author: FreeSurfer Developers
     
@@ -206,8 +208,10 @@ def fs_temp_file(
     runner: Runner | None = None,
 ) -> FsTempFileOutputs:
     """
-    Generates and creates an empty temporary file, printing the resulting path to
-    stdout.
+    fs_temp_file
+    
+    Generates and creates an empty temporary file, printing the resulting path
+    to stdout.
     
     Author: FreeSurfer Developers
     

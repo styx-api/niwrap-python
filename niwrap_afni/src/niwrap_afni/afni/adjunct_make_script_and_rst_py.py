@@ -166,8 +166,10 @@ def adjunct_make_script_and_rst_py_execute(
     runner: Runner | None = None,
 ) -> AdjunctMakeScriptAndRstPyOutputs:
     """
-    Program to take a script with some special markup and turn it into both an RST
-    page and a script for the online Sphinx documentation.
+    adjunct_make_script_and_rst.py
+    
+    Program to take a script with some special markup and turn it into both an
+    RST page and a script for the online Sphinx documentation.
     
     Author: AFNI Developers
     
@@ -197,8 +199,10 @@ def adjunct_make_script_and_rst_py(
     runner: Runner | None = None,
 ) -> AdjunctMakeScriptAndRstPyOutputs:
     """
-    Program to take a script with some special markup and turn it into both an RST
-    page and a script for the online Sphinx documentation.
+    adjunct_make_script_and_rst.py
+    
+    Program to take a script with some special markup and turn it into both an
+    RST page and a script for the online Sphinx documentation.
     
     Author: AFNI Developers
     

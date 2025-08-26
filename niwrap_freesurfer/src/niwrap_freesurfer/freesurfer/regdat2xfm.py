@@ -124,6 +124,8 @@ def regdat2xfm_execute(
     runner: Runner | None = None,
 ) -> Regdat2xfmOutputs:
     """
+    regdat2xfm
+    
     This tool has been removed from the current version of FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def regdat2xfm(
     runner: Runner | None = None,
 ) -> Regdat2xfmOutputs:
     """
+    regdat2xfm
+    
     This tool has been removed from the current version of FreeSurfer.
     
     Author: FreeSurfer Developers

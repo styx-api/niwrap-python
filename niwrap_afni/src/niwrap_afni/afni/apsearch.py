@@ -136,6 +136,8 @@ def apsearch_execute(
     runner: Runner | None = None,
 ) -> ApsearchOutputs:
     """
+    apsearch
+    
     A tool for searching applications.
     
     Author: AFNI Developers
@@ -164,6 +166,8 @@ def apsearch(
     runner: Runner | None = None,
 ) -> ApsearchOutputs:
     """
+    apsearch
+    
     A tool for searching applications.
     
     Author: AFNI Developers

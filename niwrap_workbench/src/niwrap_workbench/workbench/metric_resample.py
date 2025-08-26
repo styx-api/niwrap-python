@@ -298,6 +298,8 @@ def metric_resample_execute(
     runner: Runner | None = None,
 ) -> MetricResampleOutputs:
     """
+    metric-resample
+    
     Resample a metric file to a different mesh.
     
     Resamples a metric file, given two spherical surfaces that are in register.
@@ -358,6 +360,8 @@ def metric_resample(
     runner: Runner | None = None,
 ) -> MetricResampleOutputs:
     """
+    metric-resample
+    
     Resample a metric file to a different mesh.
     
     Resamples a metric file, given two spherical surfaces that are in register.

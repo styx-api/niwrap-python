@@ -156,8 +156,10 @@ def v_3dmaskave_execute(
     runner: Runner | None = None,
 ) -> V3dmaskaveOutputs:
     """
-    Computes average of all voxels in the input dataset which satisfy the criterion
-    in the options list.
+    3dmaskave
+    
+    Computes average of all voxels in the input dataset which satisfy the
+    criterion in the options list.
     
     Author: AFNI Developers
     
@@ -187,8 +189,10 @@ def v_3dmaskave(
     runner: Runner | None = None,
 ) -> V3dmaskaveOutputs:
     """
-    Computes average of all voxels in the input dataset which satisfy the criterion
-    in the options list.
+    3dmaskave
+    
+    Computes average of all voxels in the input dataset which satisfy the
+    criterion in the options list.
     
     Author: AFNI Developers
     

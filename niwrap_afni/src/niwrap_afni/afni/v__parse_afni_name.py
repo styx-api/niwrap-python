@@ -132,8 +132,10 @@ def v__parse_afni_name_execute(
     runner: Runner | None = None,
 ) -> VParseAfniNameOutputs:
     """
-    A script to parse an AFNI name, outputting the path, prefix, view, and sub-brick
-    selection string.
+    @parse_afni_name
+    
+    A script to parse an AFNI name, outputting the path, prefix, view, and
+    sub-brick selection string.
     
     Author: AFNI Developers
     
@@ -159,8 +161,10 @@ def v__parse_afni_name(
     runner: Runner | None = None,
 ) -> VParseAfniNameOutputs:
     """
-    A script to parse an AFNI name, outputting the path, prefix, view, and sub-brick
-    selection string.
+    @parse_afni_name
+    
+    A script to parse an AFNI name, outputting the path, prefix, view, and
+    sub-brick selection string.
     
     Author: AFNI Developers
     

@@ -150,8 +150,10 @@ def slicedelay_execute(
     runner: Runner | None = None,
 ) -> SlicedelayOutputs:
     """
-    Creates an FSL custom slice delay file for use with slicetimer for slice-time
-    correction of fMRI.
+    slicedelay
+    
+    Creates an FSL custom slice delay file for use with slicetimer for
+    slice-time correction of fMRI.
     
     Author: FreeSurfer Developers
     
@@ -180,8 +182,10 @@ def slicedelay(
     runner: Runner | None = None,
 ) -> SlicedelayOutputs:
     """
-    Creates an FSL custom slice delay file for use with slicetimer for slice-time
-    correction of fMRI.
+    slicedelay
+    
+    Creates an FSL custom slice delay file for use with slicetimer for
+    slice-time correction of fMRI.
     
     Author: FreeSurfer Developers
     

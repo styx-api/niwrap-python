@@ -138,6 +138,8 @@ def mri_label_histo_execute(
     runner: Runner | None = None,
 ) -> MriLabelHistoOutputs:
     """
+    mri_label_histo
+    
     Tool for creating a histogram of voxel values within a specified label.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def mri_label_histo(
     runner: Runner | None = None,
 ) -> MriLabelHistoOutputs:
     """
+    mri_label_histo
+    
     Tool for creating a histogram of voxel values within a specified label.
     
     Author: FreeSurfer Developers

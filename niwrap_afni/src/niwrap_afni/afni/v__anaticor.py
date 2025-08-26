@@ -226,6 +226,8 @@ def v__anaticor_execute(
     runner: Runner | None = None,
 ) -> VAnaticorOutputs:
     """
+    @ANATICOR
+    
     Script to produce a residual time series cleaned by ANATICOR model.
     
     Author: AFNI Developers
@@ -265,6 +267,8 @@ def v__anaticor(
     runner: Runner | None = None,
 ) -> VAnaticorOutputs:
     """
+    @ANATICOR
+    
     Script to produce a residual time series cleaned by ANATICOR model.
     
     Author: AFNI Developers

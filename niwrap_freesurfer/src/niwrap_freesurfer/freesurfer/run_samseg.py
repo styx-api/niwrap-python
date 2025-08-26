@@ -393,6 +393,8 @@ def run_samseg_execute(
     runner: Runner | None = None,
 ) -> RunSamsegOutputs:
     """
+    run_samseg
+    
     SAMSEG (Sequence Adaptive Multimodal SEGmentation) is a tool for automated
     segmentation of brain MRI data.
     
@@ -451,6 +453,8 @@ def run_samseg(
     runner: Runner | None = None,
 ) -> RunSamsegOutputs:
     """
+    run_samseg
+    
     SAMSEG (Sequence Adaptive Multimodal SEGmentation) is a tool for automated
     segmentation of brain MRI data.
     

@@ -350,8 +350,11 @@ def mri_surf2volseg_execute(
     runner: Runner | None = None,
 ) -> MriSurf2volsegOutputs:
     """
+    mri_surf2volseg
+    
     Tool that cleans up presurf aseg cortex and WM, maps cortical labels from an
-    annotation into a volume, and labels cerebral WM with closest cortical label.
+    annotation into a volume, and labels cerebral WM with closest cortical
+    label.
     
     Author: FreeSurfer Developers
     
@@ -401,8 +404,11 @@ def mri_surf2volseg(
     runner: Runner | None = None,
 ) -> MriSurf2volsegOutputs:
     """
+    mri_surf2volseg
+    
     Tool that cleans up presurf aseg cortex and WM, maps cortical labels from an
-    annotation into a volume, and labels cerebral WM with closest cortical label.
+    annotation into a volume, and labels cerebral WM with closest cortical
+    label.
     
     Author: FreeSurfer Developers
     

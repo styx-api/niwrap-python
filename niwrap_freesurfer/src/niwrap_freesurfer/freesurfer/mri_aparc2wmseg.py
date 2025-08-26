@@ -142,8 +142,10 @@ def mri_aparc2wmseg_execute(
     runner: Runner | None = None,
 ) -> MriAparc2wmsegOutputs:
     """
-    A tool to convert aparc+aseg.mgz annotations into a white matter segmentation
-    file.
+    mri_aparc2wmseg
+    
+    A tool to convert aparc+aseg.mgz annotations into a white matter
+    segmentation file.
     
     Author: FreeSurfer Developers
     
@@ -172,8 +174,10 @@ def mri_aparc2wmseg(
     runner: Runner | None = None,
 ) -> MriAparc2wmsegOutputs:
     """
-    A tool to convert aparc+aseg.mgz annotations into a white matter segmentation
-    file.
+    mri_aparc2wmseg
+    
+    A tool to convert aparc+aseg.mgz annotations into a white matter
+    segmentation file.
     
     Author: FreeSurfer Developers
     

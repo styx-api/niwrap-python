@@ -237,8 +237,10 @@ def mris_make_average_surface_execute(
     runner: Runner | None = None,
 ) -> MrisMakeAverageSurfaceOutputs:
     """
-    A program to average the orig surfaces from the given subject list into a single
-    surface using Talairach coords and the spherical transform.
+    mris_make_average_surface
+    
+    A program to average the orig surfaces from the given subject list into a
+    single surface using Talairach coords and the spherical transform.
     
     Author: FreeSurfer Developers
     
@@ -278,8 +280,10 @@ def mris_make_average_surface(
     runner: Runner | None = None,
 ) -> MrisMakeAverageSurfaceOutputs:
     """
-    A program to average the orig surfaces from the given subject list into a single
-    surface using Talairach coords and the spherical transform.
+    mris_make_average_surface
+    
+    A program to average the orig surfaces from the given subject list into a
+    single surface using Talairach coords and the spherical transform.
     
     Author: FreeSurfer Developers
     

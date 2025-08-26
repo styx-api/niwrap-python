@@ -128,8 +128,10 @@ def v__show_dynamic_range_execute(
     runner: Runner | None = None,
 ) -> VShowDynamicRangeOutputs:
     """
-    The script checks the dynamic range of the time series data at locations inside
-    the brain.
+    @ShowDynamicRange
+    
+    The script checks the dynamic range of the time series data at locations
+    inside the brain.
     
     Author: AFNI Developers
     
@@ -155,8 +157,10 @@ def v__show_dynamic_range(
     runner: Runner | None = None,
 ) -> VShowDynamicRangeOutputs:
     """
-    The script checks the dynamic range of the time series data at locations inside
-    the brain.
+    @ShowDynamicRange
+    
+    The script checks the dynamic range of the time series data at locations
+    inside the brain.
     
     Author: AFNI Developers
     

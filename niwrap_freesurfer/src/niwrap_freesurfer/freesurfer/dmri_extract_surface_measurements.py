@@ -230,6 +230,8 @@ def dmri_extract_surface_measurements_execute(
     runner: Runner | None = None,
 ) -> DmriExtractSurfaceMeasurementsOutputs:
     """
+    dmri_extractSurfaceMeasurements
+    
     A tool for extracting surface measurements from diffusion MRI data.
     
     Author: FreeSurfer Developers
@@ -268,6 +270,8 @@ def dmri_extract_surface_measurements(
     runner: Runner | None = None,
 ) -> DmriExtractSurfaceMeasurementsOutputs:
     """
+    dmri_extractSurfaceMeasurements
+    
     A tool for extracting surface measurements from diffusion MRI data.
     
     Author: FreeSurfer Developers

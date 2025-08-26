@@ -210,6 +210,8 @@ def bedpostx_gpu_execute(
     runner: Runner | None = None,
 ) -> BedpostxGpuOutputs:
     """
+    bedpostx_gpu
+    
     Probabilistic tractography and diffusion MRI fitting tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -245,6 +247,8 @@ def bedpostx_gpu(
     runner: Runner | None = None,
 ) -> BedpostxGpuOutputs:
     """
+    bedpostx_gpu
+    
     Probabilistic tractography and diffusion MRI fitting tool.
     
     Author: FMRIB Analysis Group, University of Oxford

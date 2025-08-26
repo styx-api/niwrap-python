@@ -158,9 +158,11 @@ def warp_time_series_image_multi_transform_execute(
     runner: Runner | None = None,
 ) -> WarpTimeSeriesImageMultiTransformOutputs:
     """
+    WarpTimeSeriesImageMultiTransform
+    
     WarpTimeSeriesImageMultiTransform is a tool used to apply a series of
-    transformations to a time series image, either forward or reverse, using affine
-    transforms and warps.
+    transformations to a time series image, either forward or reverse, using
+    affine transforms and warps.
     
     Author: ANTs Developers
     
@@ -191,9 +193,11 @@ def warp_time_series_image_multi_transform(
     runner: Runner | None = None,
 ) -> WarpTimeSeriesImageMultiTransformOutputs:
     """
+    WarpTimeSeriesImageMultiTransform
+    
     WarpTimeSeriesImageMultiTransform is a tool used to apply a series of
-    transformations to a time series image, either forward or reverse, using affine
-    transforms and warps.
+    transformations to a time series image, either forward or reverse, using
+    affine transforms and warps.
     
     Author: ANTs Developers
     

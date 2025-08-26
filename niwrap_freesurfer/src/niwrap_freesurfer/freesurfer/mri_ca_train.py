@@ -241,8 +241,10 @@ def mri_ca_train_execute(
     runner: Runner | None = None,
 ) -> MriCaTrainOutputs:
     """
-    Trains GCA data with multiple subjects using provided segmentation volumes and
-    other configuration.
+    mri_ca_train
+    
+    Trains GCA data with multiple subjects using provided segmentation volumes
+    and other configuration.
     
     Author: FreeSurfer Developers
     
@@ -281,8 +283,10 @@ def mri_ca_train(
     runner: Runner | None = None,
 ) -> MriCaTrainOutputs:
     """
-    Trains GCA data with multiple subjects using provided segmentation volumes and
-    other configuration.
+    mri_ca_train
+    
+    Trains GCA data with multiple subjects using provided segmentation volumes
+    and other configuration.
     
     Author: FreeSurfer Developers
     

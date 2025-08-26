@@ -124,6 +124,8 @@ def imdump_execute(
     runner: Runner | None = None,
 ) -> ImdumpOutputs:
     """
+    imdump
+    
     Prints out nonzero pixels in an image.
     
     Author: AFNI Developers
@@ -150,6 +152,8 @@ def imdump(
     runner: Runner | None = None,
 ) -> ImdumpOutputs:
     """
+    imdump
+    
     Prints out nonzero pixels in an image.
     
     Author: AFNI Developers

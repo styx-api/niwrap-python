@@ -367,8 +367,10 @@ def fat_proc_dwi_to_dt_execute(
     runner: Runner | None = None,
 ) -> FatProcDwiToDtOutputs:
     """
-    This program fits tensors and DT parameters, as well as the uncertainty of DT
-    parameters needed for tractography.
+    fat_proc_dwi_to_dt
+    
+    This program fits tensors and DT parameters, as well as the uncertainty of
+    DT parameters needed for tractography.
     
     Author: AFNI Developers
     
@@ -422,8 +424,10 @@ def fat_proc_dwi_to_dt(
     runner: Runner | None = None,
 ) -> FatProcDwiToDtOutputs:
     """
-    This program fits tensors and DT parameters, as well as the uncertainty of DT
-    parameters needed for tractography.
+    fat_proc_dwi_to_dt
+    
+    This program fits tensors and DT parameters, as well as the uncertainty of
+    DT parameters needed for tractography.
     
     Author: AFNI Developers
     

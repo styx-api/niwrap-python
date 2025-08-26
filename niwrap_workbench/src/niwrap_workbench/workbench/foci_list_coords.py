@@ -136,6 +136,8 @@ def foci_list_coords_execute(
     runner: Runner | None = None,
 ) -> FociListCoordsOutputs:
     """
+    foci-list-coords
+    
     Output foci coordinates in a text file.
     
     Output the coordinates for every focus in the foci file, and optionally the
@@ -167,6 +169,8 @@ def foci_list_coords(
     runner: Runner | None = None,
 ) -> FociListCoordsOutputs:
     """
+    foci-list-coords
+    
     Output foci coordinates in a text file.
     
     Output the coordinates for every focus in the foci file, and optionally the

@@ -133,6 +133,8 @@ def mris_segment_execute(
     runner: Runner | None = None,
 ) -> MrisSegmentOutputs:
     """
+    mris_segment
+    
     A command-line tool for segmenting surfaces in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mris_segment(
     runner: Runner | None = None,
 ) -> MrisSegmentOutputs:
     """
+    mris_segment
+    
     A command-line tool for segmenting surfaces in FreeSurfer.
     
     Author: FreeSurfer Developers

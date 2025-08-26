@@ -128,6 +128,8 @@ def run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh_execute(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectT1T2AutoEstimateAlveusMlShOutputs:
     """
+    run_segmentSubjectT1T2_autoEstimateAlveusML.sh
+    
     Automated segmentation tool for T1 and T2 weighted images to estimate the
     Alveus.
     
@@ -156,6 +158,8 @@ def run_segment_subject_t1_t2_auto_estimate_alveus_ml_sh(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectT1T2AutoEstimateAlveusMlShOutputs:
     """
+    run_segmentSubjectT1T2_autoEstimateAlveusML.sh
+    
     Automated segmentation tool for T1 and T2 weighted images to estimate the
     Alveus.
     

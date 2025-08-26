@@ -148,6 +148,8 @@ def imstack_execute(
     runner: Runner | None = None,
 ) -> ImstackOutputs:
     """
+    imstack
+    
     Stacks up a set of 2D images into one big file (a la MGH).
     
     Author: AFNI Developers
@@ -176,6 +178,8 @@ def imstack(
     runner: Runner | None = None,
 ) -> ImstackOutputs:
     """
+    imstack
+    
     Stacks up a set of 2D images into one big file (a la MGH).
     
     Author: AFNI Developers

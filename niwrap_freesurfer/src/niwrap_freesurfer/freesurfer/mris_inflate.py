@@ -193,6 +193,8 @@ def mris_inflate_execute(
     runner: Runner | None = None,
 ) -> MrisInflateOutputs:
     """
+    mris_inflate
+    
     Cortical surface inflation tool.
     
     Author: FreeSurfer Developers
@@ -227,6 +229,8 @@ def mris_inflate(
     runner: Runner | None = None,
 ) -> MrisInflateOutputs:
     """
+    mris_inflate
+    
     Cortical surface inflation tool.
     
     Author: FreeSurfer Developers

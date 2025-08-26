@@ -275,6 +275,8 @@ def v_3d_zipper_zapper_execute(
     runner: Runner | None = None,
 ) -> V3dZipperZapperOutputs:
     """
+    3dZipperZapper
+    
     A basic program to highlight problematic volumes in data sets, especially
     EPI/DWI data sets with interleaved acquisition.
     
@@ -317,6 +319,8 @@ def v_3d_zipper_zapper(
     runner: Runner | None = None,
 ) -> V3dZipperZapperOutputs:
     """
+    3dZipperZapper
+    
     A basic program to highlight problematic volumes in data sets, especially
     EPI/DWI data sets with interleaved acquisition.
     

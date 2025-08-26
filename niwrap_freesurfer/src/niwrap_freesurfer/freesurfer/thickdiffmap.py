@@ -141,6 +141,8 @@ def thickdiffmap_execute(
     runner: Runner | None = None,
 ) -> ThickdiffmapOutputs:
     """
+    thickdiffmap
+    
     Compute and analyze cortical thickness difference maps.
     
     Author: FreeSurfer Developers
@@ -171,6 +173,8 @@ def thickdiffmap(
     runner: Runner | None = None,
 ) -> ThickdiffmapOutputs:
     """
+    thickdiffmap
+    
     Compute and analyze cortical thickness difference maps.
     
     Author: FreeSurfer Developers

@@ -375,6 +375,8 @@ def auto_warp_py_execute(
     runner: Runner | None = None,
 ) -> AutoWarpPyOutputs:
     """
+    auto_warp.py
+    
     Nonlinear registration tool.
     
     Author: AFNI Developers
@@ -433,6 +435,8 @@ def auto_warp_py(
     runner: Runner | None = None,
 ) -> AutoWarpPyOutputs:
     """
+    auto_warp.py
+    
     Nonlinear registration tool.
     
     Author: AFNI Developers

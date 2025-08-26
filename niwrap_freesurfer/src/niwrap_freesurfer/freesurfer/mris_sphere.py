@@ -133,6 +133,8 @@ def mris_sphere_execute(
     runner: Runner | None = None,
 ) -> MrisSphereOutputs:
     """
+    mris_sphere
+    
     This program will add a template into an average surface.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mris_sphere(
     runner: Runner | None = None,
 ) -> MrisSphereOutputs:
     """
+    mris_sphere
+    
     This program will add a template into an average surface.
     
     Author: FreeSurfer Developers

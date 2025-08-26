@@ -181,6 +181,8 @@ def mri_extract_label_execute(
     runner: Runner | None = None,
 ) -> MriExtractLabelOutputs:
     """
+    mri_extract_label
+    
     Extracts a set of labeled voxels from an image.
     
     Author: FreeSurfer Developers
@@ -214,6 +216,8 @@ def mri_extract_label(
     runner: Runner | None = None,
 ) -> MriExtractLabelOutputs:
     """
+    mri_extract_label
+    
     Extracts a set of labeled voxels from an image.
     
     Author: FreeSurfer Developers

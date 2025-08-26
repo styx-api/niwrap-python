@@ -189,9 +189,11 @@ def ants_n4_bias_field_correction_fs_execute(
     runner: Runner | None = None,
 ) -> AntsN4BiasFieldCorrectionFsOutputs:
     """
-    Runs N4 (nonparameteric, nonuniform normalization) retrospective bias correction
-    on an image. This program wraps the AntsN4BiasFieldCorrection utility available
-    in the ANTs package.
+    AntsN4BiasFieldCorrectionFs
+    
+    Runs N4 (nonparameteric, nonuniform normalization) retrospective bias
+    correction on an image. This program wraps the AntsN4BiasFieldCorrection
+    utility available in the ANTs package.
     
     Author: FreeSurfer Developers
     
@@ -223,9 +225,11 @@ def ants_n4_bias_field_correction_fs(
     runner: Runner | None = None,
 ) -> AntsN4BiasFieldCorrectionFsOutputs:
     """
-    Runs N4 (nonparameteric, nonuniform normalization) retrospective bias correction
-    on an image. This program wraps the AntsN4BiasFieldCorrection utility available
-    in the ANTs package.
+    AntsN4BiasFieldCorrectionFs
+    
+    Runs N4 (nonparameteric, nonuniform normalization) retrospective bias
+    correction on an image. This program wraps the AntsN4BiasFieldCorrection
+    utility available in the ANTs package.
     
     Author: FreeSurfer Developers
     

@@ -519,6 +519,8 @@ def mrfilter_execute(
     runner: Runner | None = None,
 ) -> MrfilterOutputs:
     """
+    mrfilter
+    
     Perform filtering operations on 3D / 4D MR images.
     
     The available filters are: fft, gradient, median, smooth, normalise, zclean.
@@ -583,6 +585,8 @@ def mrfilter(
     runner: Runner | None = None,
 ) -> MrfilterOutputs:
     """
+    mrfilter
+    
     Perform filtering operations on 3D / 4D MR images.
     
     The available filters are: fft, gradient, median, smooth, normalise, zclean.

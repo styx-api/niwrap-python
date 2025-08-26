@@ -209,6 +209,8 @@ def plugout_ijk_execute(
     runner: Runner | None = None,
 ) -> PlugoutIjkOutputs:
     """
+    plugout_ijk
+    
     Connects to AFNI and sends (i,j,k) dataset indices to control the viewpoint.
     
     Author: AFNI Developers
@@ -245,6 +247,8 @@ def plugout_ijk(
     runner: Runner | None = None,
 ) -> PlugoutIjkOutputs:
     """
+    plugout_ijk
+    
     Connects to AFNI and sends (i,j,k) dataset indices to control the viewpoint.
     
     Author: AFNI Developers

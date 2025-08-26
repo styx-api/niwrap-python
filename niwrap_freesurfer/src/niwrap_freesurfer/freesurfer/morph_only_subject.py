@@ -122,6 +122,8 @@ def morph_only_subject_execute(
     runner: Runner | None = None,
 ) -> MorphOnlySubjectOutputs:
     """
+    morph_only_subject
+    
     A placeholder descriptor for morph_only_subject tool as help content is
     unavailable.
     
@@ -149,6 +151,8 @@ def morph_only_subject(
     runner: Runner | None = None,
 ) -> MorphOnlySubjectOutputs:
     """
+    morph_only_subject
+    
     A placeholder descriptor for morph_only_subject tool as help content is
     unavailable.
     

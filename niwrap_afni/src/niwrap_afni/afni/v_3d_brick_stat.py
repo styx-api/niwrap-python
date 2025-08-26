@@ -320,6 +320,8 @@ def v_3d_brick_stat_execute(
     runner: Runner | None = None,
 ) -> V3dBrickStatOutputs:
     """
+    3dBrickStat
+    
     Compute voxel statistics of an input dataset.
     
     Author: AFNI Developers
@@ -375,6 +377,8 @@ def v_3d_brick_stat(
     runner: Runner | None = None,
 ) -> V3dBrickStatOutputs:
     """
+    3dBrickStat
+    
     Compute voxel statistics of an input dataset.
     
     Author: AFNI Developers

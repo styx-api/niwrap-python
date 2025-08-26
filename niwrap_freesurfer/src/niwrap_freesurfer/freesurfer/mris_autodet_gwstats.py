@@ -257,8 +257,10 @@ def mris_autodet_gwstats_execute(
     runner: Runner | None = None,
 ) -> MrisAutodetGwstatsOutputs:
     """
-    Manages the computation of the gray/white statistics used to place the white and
-    pial surfaces.
+    mris_autodet_gwstats
+    
+    Manages the computation of the gray/white statistics used to place the white
+    and pial surfaces.
     
     Author: FreeSurfer Developers
     
@@ -298,8 +300,10 @@ def mris_autodet_gwstats(
     runner: Runner | None = None,
 ) -> MrisAutodetGwstatsOutputs:
     """
-    Manages the computation of the gray/white statistics used to place the white and
-    pial surfaces.
+    mris_autodet_gwstats
+    
+    Manages the computation of the gray/white statistics used to place the white
+    and pial surfaces.
     
     Author: FreeSurfer Developers
     

@@ -129,6 +129,8 @@ def surface_normals_execute(
     runner: Runner | None = None,
 ) -> SurfaceNormalsOutputs:
     """
+    surface-normals
+    
     Output vertex normals as metric file.
     
     Computes the normal vectors of the surface file, and outputs them as a 3
@@ -159,6 +161,8 @@ def surface_normals(
     runner: Runner | None = None,
 ) -> SurfaceNormalsOutputs:
     """
+    surface-normals
+    
     Output vertex normals as metric file.
     
     Computes the normal vectors of the surface file, and outputs them as a 3

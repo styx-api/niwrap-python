@@ -124,6 +124,8 @@ def v__1d_diff_mag_execute(
     runner: Runner | None = None,
 ) -> V1dDiffMagOutputs:
     """
+    @1dDiffMag
+    
     Computes a magnitude estimate of the first differences of a 1D file.
     
     Author: AFNI Developers
@@ -150,6 +152,8 @@ def v__1d_diff_mag(
     runner: Runner | None = None,
 ) -> V1dDiffMagOutputs:
     """
+    @1dDiffMag
+    
     Computes a magnitude estimate of the first differences of a 1D file.
     
     Author: AFNI Developers

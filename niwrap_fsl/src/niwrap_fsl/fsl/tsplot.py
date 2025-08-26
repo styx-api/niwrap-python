@@ -194,6 +194,8 @@ def tsplot_execute(
     runner: Runner | None = None,
 ) -> TsplotOutputs:
     """
+    tsplot
+    
     Time series plotting tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -228,6 +230,8 @@ def tsplot(
     runner: Runner | None = None,
 ) -> TsplotOutputs:
     """
+    tsplot
+    
     Time series plotting tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

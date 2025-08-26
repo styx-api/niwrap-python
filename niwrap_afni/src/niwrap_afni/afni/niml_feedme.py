@@ -180,6 +180,8 @@ def niml_feedme_execute(
     runner: Runner | None = None,
 ) -> NimlFeedmeOutputs:
     """
+    niml_feedme
+    
     Sends volumes from the dataset to AFNI via the NIML socket interface.
     
     Author: AFNI Developers
@@ -212,6 +214,8 @@ def niml_feedme(
     runner: Runner | None = None,
 ) -> NimlFeedmeOutputs:
     """
+    niml_feedme
+    
     Sends volumes from the dataset to AFNI via the NIML socket interface.
     
     Author: AFNI Developers

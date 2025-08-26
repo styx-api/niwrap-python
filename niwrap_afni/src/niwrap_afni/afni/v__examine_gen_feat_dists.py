@@ -197,6 +197,8 @@ def v__examine_gen_feat_dists_execute(
     runner: Runner | None = None,
 ) -> VExamineGenFeatDistsOutputs:
     """
+    @ExamineGenFeatDists
+    
     Examine histograms produced by 3dGenFeatDists.
     
     Author: AFNI Developers
@@ -231,6 +233,8 @@ def v__examine_gen_feat_dists(
     runner: Runner | None = None,
 ) -> VExamineGenFeatDistsOutputs:
     """
+    @ExamineGenFeatDists
+    
     Examine histograms produced by 3dGenFeatDists.
     
     Author: AFNI Developers

@@ -133,6 +133,8 @@ def mris_sample_label_execute(
     runner: Runner | None = None,
 ) -> MrisSampleLabelOutputs:
     """
+    mris_sample_label
+    
     This tool samples a label onto a surface model.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mris_sample_label(
     runner: Runner | None = None,
 ) -> MrisSampleLabelOutputs:
     """
+    mris_sample_label
+    
     This tool samples a label onto a surface model.
     
     Author: FreeSurfer Developers

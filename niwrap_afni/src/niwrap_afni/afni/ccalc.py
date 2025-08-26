@@ -134,6 +134,8 @@ def ccalc_execute(
     runner: Runner | None = None,
 ) -> CcalcOutputs:
     """
+    ccalc
+    
     Command line calculator with formatted output options.
     
     Author: AFNI Developers
@@ -161,6 +163,8 @@ def ccalc(
     runner: Runner | None = None,
 ) -> CcalcOutputs:
     """
+    ccalc
+    
     Command line calculator with formatted output options.
     
     Author: AFNI Developers

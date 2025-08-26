@@ -133,6 +133,8 @@ def viena_quant_execute(
     runner: Runner | None = None,
 ) -> VienaQuantOutputs:
     """
+    viena_quant
+    
     Automated brain ventricle quantification tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -161,6 +163,8 @@ def viena_quant(
     runner: Runner | None = None,
 ) -> VienaQuantOutputs:
     """
+    viena_quant
+    
     Automated brain ventricle quantification tool.
     
     Author: FMRIB Analysis Group, University of Oxford

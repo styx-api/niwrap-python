@@ -136,7 +136,10 @@ def flirt_newdefault_20080811_sch_execute(
     runner: Runner | None = None,
 ) -> FlirtNewdefault20080811SchOutputs:
     """
-    FLIRT (FMRIB's Linear Image Registration Tool) new default configuration script.
+    flirt.newdefault.20080811.sch
+    
+    FLIRT (FMRIB's Linear Image Registration Tool) new default configuration
+    script.
     
     Author: FreeSurfer Developers
     
@@ -164,7 +167,10 @@ def flirt_newdefault_20080811_sch(
     runner: Runner | None = None,
 ) -> FlirtNewdefault20080811SchOutputs:
     """
-    FLIRT (FMRIB's Linear Image Registration Tool) new default configuration script.
+    flirt.newdefault.20080811.sch
+    
+    FLIRT (FMRIB's Linear Image Registration Tool) new default configuration
+    script.
     
     Author: FreeSurfer Developers
     

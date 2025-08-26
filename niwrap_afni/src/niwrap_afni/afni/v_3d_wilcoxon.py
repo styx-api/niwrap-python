@@ -165,7 +165,10 @@ def v_3d_wilcoxon_execute(
     runner: Runner | None = None,
 ) -> V3dWilcoxonOutputs:
     """
-    Nonparametric Wilcoxon signed-rank test for paired comparisons of two samples.
+    3dWilcoxon
+    
+    Nonparametric Wilcoxon signed-rank test for paired comparisons of two
+    samples.
     
     Author: AFNI Developers
     
@@ -195,7 +198,10 @@ def v_3d_wilcoxon(
     runner: Runner | None = None,
 ) -> V3dWilcoxonOutputs:
     """
-    Nonparametric Wilcoxon signed-rank test for paired comparisons of two samples.
+    3dWilcoxon
+    
+    Nonparametric Wilcoxon signed-rank test for paired comparisons of two
+    samples.
     
     Author: AFNI Developers
     

@@ -163,6 +163,8 @@ def v_3d_kruskal_wallis_execute(
     runner: Runner | None = None,
 ) -> V3dKruskalWallisOutputs:
     """
+    3dKruskalWallis
+    
     This program performs nonparametric Kruskal-Wallis test for comparison of
     multiple treatments.
     
@@ -194,6 +196,8 @@ def v_3d_kruskal_wallis(
     runner: Runner | None = None,
 ) -> V3dKruskalWallisOutputs:
     """
+    3dKruskalWallis
+    
     This program performs nonparametric Kruskal-Wallis test for comparison of
     multiple treatments.
     

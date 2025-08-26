@@ -416,6 +416,8 @@ def dwigradcheck_execute(
     runner: Runner | None = None,
 ) -> DwigradcheckOutputs:
     """
+    dwigradcheck
+    
     Check the orientation of the diffusion gradient table.
     
     Author: MRTrix3 Developers
@@ -459,6 +461,8 @@ def dwigradcheck(
     runner: Runner | None = None,
 ) -> DwigradcheckOutputs:
     """
+    dwigradcheck
+    
     Check the orientation of the diffusion gradient table.
     
     Author: MRTrix3 Developers

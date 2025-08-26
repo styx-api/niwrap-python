@@ -206,6 +206,8 @@ def xcerebralseg_execute(
     runner: Runner | None = None,
 ) -> XcerebralsegOutputs:
     """
+    xcerebralseg
+    
     Tool for labeling extracerebral structures including sulcal CSF, skull/bone,
     head soft tissue, and air inside the head, merged with aparc+aseg.mgz
     segmentation for a whole head segmentation.
@@ -243,6 +245,8 @@ def xcerebralseg(
     runner: Runner | None = None,
 ) -> XcerebralsegOutputs:
     """
+    xcerebralseg
+    
     Tool for labeling extracerebral structures including sulcal CSF, skull/bone,
     head soft tissue, and air inside the head, merged with aparc+aseg.mgz
     segmentation for a whole head segmentation.

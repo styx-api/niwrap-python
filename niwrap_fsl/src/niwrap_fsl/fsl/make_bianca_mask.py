@@ -274,6 +274,8 @@ def make_bianca_mask_execute(
     runner: Runner | None = None,
 ) -> MakeBiancaMaskOutputs:
     """
+    make_bianca_mask
+    
     A script for generating BIANCA masks.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -320,6 +322,8 @@ def make_bianca_mask(
     runner: Runner | None = None,
 ) -> MakeBiancaMaskOutputs:
     """
+    make_bianca_mask
+    
     A script for generating BIANCA masks.
     
     Author: FMRIB Analysis Group, University of Oxford

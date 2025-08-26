@@ -409,6 +409,8 @@ def run_fastsurfer_sh_execute(
     runner: Runner | None = None,
 ) -> RunFastsurferShOutputs:
     """
+    run_fastsurfer.sh
+    
     run_fastsurfer.sh takes a T1 full head image and creates segmentation using
     FastSurferVINN and surfaces using recon-surf.
     
@@ -466,6 +468,8 @@ def run_fastsurfer_sh(
     runner: Runner | None = None,
 ) -> RunFastsurferShOutputs:
     """
+    run_fastsurfer.sh
+    
     run_fastsurfer.sh takes a T1 full head image and creates segmentation using
     FastSurferVINN and surfaces using recon-surf.
     

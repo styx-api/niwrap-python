@@ -439,6 +439,8 @@ def mri_info_execute(
     runner: Runner | None = None,
 ) -> MriInfoOutputs:
     """
+    mri_info
+    
     Tool to extract metadata from MRI volumes.
     
     Author: FreeSurfer Developers
@@ -516,6 +518,8 @@ def mri_info(
     runner: Runner | None = None,
 ) -> MriInfoOutputs:
     """
+    mri_info
+    
     Tool to extract metadata from MRI volumes.
     
     Author: FreeSurfer Developers

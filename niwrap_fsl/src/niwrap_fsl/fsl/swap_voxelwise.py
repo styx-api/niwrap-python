@@ -192,6 +192,8 @@ def swap_voxelwise_execute(
     runner: Runner | None = None,
 ) -> SwapVoxelwiseOutputs:
     """
+    swap_voxelwise
+    
     Reordering of vectors with direction preservation.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -225,6 +227,8 @@ def swap_voxelwise(
     runner: Runner | None = None,
 ) -> SwapVoxelwiseOutputs:
     """
+    swap_voxelwise
+    
     Reordering of vectors with direction preservation.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -305,6 +305,8 @@ def qboot_execute(
     runner: Runner | None = None,
 ) -> QbootOutputs:
     """
+    qboot
+    
     Tool for computing q-ball ODFs using bootstrap samples.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -351,6 +353,8 @@ def qboot(
     runner: Runner | None = None,
 ) -> QbootOutputs:
     """
+    qboot
+    
     Tool for computing q-ball ODFs using bootstrap samples.
     
     Author: FMRIB Analysis Group, University of Oxford

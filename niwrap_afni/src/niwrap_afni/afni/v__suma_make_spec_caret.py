@@ -173,6 +173,8 @@ def v__suma_make_spec_caret_execute(
     runner: Runner | None = None,
 ) -> VSumaMakeSpecCaretOutputs:
     """
+    @SUMA_Make_Spec_Caret
+    
     Prepare surfaces for viewing in SUMA, tested with Caret-5.2 surfaces.
     
     Author: AFNI Developers
@@ -204,6 +206,8 @@ def v__suma_make_spec_caret(
     runner: Runner | None = None,
 ) -> VSumaMakeSpecCaretOutputs:
     """
+    @SUMA_Make_Spec_Caret
+    
     Prepare surfaces for viewing in SUMA, tested with Caret-5.2 surfaces.
     
     Author: AFNI Developers

@@ -342,8 +342,10 @@ def mri_entowm_seg_execute(
     runner: Runner | None = None,
 ) -> MriEntowmSegOutputs:
     """
-    Segment white matter near gyrus ambiens entorhinal cortex using a deep learning
-    model.
+    mri_entowm_seg
+    
+    Segment white matter near gyrus ambiens entorhinal cortex using a deep
+    learning model.
     
     Author: FreeSurfer Developers
     
@@ -393,8 +395,10 @@ def mri_entowm_seg(
     runner: Runner | None = None,
 ) -> MriEntowmSegOutputs:
     """
-    Segment white matter near gyrus ambiens entorhinal cortex using a deep learning
-    model.
+    mri_entowm_seg
+    
+    Segment white matter near gyrus ambiens entorhinal cortex using a deep
+    learning model.
     
     Author: FreeSurfer Developers
     

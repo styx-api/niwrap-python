@@ -382,6 +382,8 @@ def dwi2tensor_execute(
     runner: Runner | None = None,
 ) -> Dwi2tensorOutputs:
     """
+    dwi2tensor
+    
     Diffusion (kurtosis) tensor estimation.
     
     By default, the diffusion tensor (and optionally its kurtosis) is fitted to
@@ -466,6 +468,8 @@ def dwi2tensor(
     runner: Runner | None = None,
 ) -> Dwi2tensorOutputs:
     """
+    dwi2tensor
+    
     Diffusion (kurtosis) tensor estimation.
     
     By default, the diffusion tensor (and optionally its kurtosis) is fitted to

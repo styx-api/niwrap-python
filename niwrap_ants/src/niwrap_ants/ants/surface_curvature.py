@@ -139,8 +139,10 @@ def surface_curvature_execute(
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
-    The Shape Operator for Differential Analysis of Images. It can operate on binary
-    or gray scale images with various modes to see different effects.
+    SurfaceCurvature
+    
+    The Shape Operator for Differential Analysis of Images. It can operate on
+    binary or gray scale images with various modes to see different effects.
     
     Author: ANTs Developers
     
@@ -169,8 +171,10 @@ def surface_curvature(
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
-    The Shape Operator for Differential Analysis of Images. It can operate on binary
-    or gray scale images with various modes to see different effects.
+    SurfaceCurvature
+    
+    The Shape Operator for Differential Analysis of Images. It can operate on
+    binary or gray scale images with various modes to see different effects.
     
     Author: ANTs Developers
     

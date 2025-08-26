@@ -125,6 +125,8 @@ def backend_average_dense_roi_execute(
     runner: Runner | None = None,
 ) -> BackendAverageDenseRoiOutputs:
     """
+    backend-average-dense-roi
+    
     Connectome db backend command for cifti average dense roi.
     
     This command is probably not the one you are looking for, try
@@ -157,6 +159,8 @@ def backend_average_dense_roi(
     runner: Runner | None = None,
 ) -> BackendAverageDenseRoiOutputs:
     """
+    backend-average-dense-roi
+    
     Connectome db backend command for cifti average dense roi.
     
     This command is probably not the one you are looking for, try

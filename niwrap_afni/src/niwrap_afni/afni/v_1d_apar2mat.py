@@ -174,6 +174,8 @@ def v_1d_apar2mat_execute(
     runner: Runner | None = None,
 ) -> V1dApar2matOutputs:
     """
+    1dApar2mat
+    
     Computes the affine transformation matrix from the set of 3dAllineate
     parameters.
     
@@ -212,6 +214,8 @@ def v_1d_apar2mat(
     runner: Runner | None = None,
 ) -> V1dApar2matOutputs:
     """
+    1dApar2mat
+    
     Computes the affine transformation matrix from the set of 3dAllineate
     parameters.
     

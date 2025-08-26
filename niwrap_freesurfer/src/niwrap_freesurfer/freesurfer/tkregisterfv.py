@@ -374,6 +374,8 @@ def tkregisterfv_execute(
     runner: Runner | None = None,
 ) -> TkregisterfvOutputs:
     """
+    tkregisterfv
+    
     A script that runs freeview with arguments like tkregister, focusing on LTA
     files.
     
@@ -432,6 +434,8 @@ def tkregisterfv(
     runner: Runner | None = None,
 ) -> TkregisterfvOutputs:
     """
+    tkregisterfv
+    
     A script that runs freeview with arguments like tkregister, focusing on LTA
     files.
     

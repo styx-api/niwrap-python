@@ -233,7 +233,10 @@ def mris_congeal_execute(
     runner: Runner | None = None,
 ) -> MrisCongealOutputs:
     """
-    Program that registers a set of input surfaces together and generates an atlas.
+    mris_congeal
+    
+    Program that registers a set of input surfaces together and generates an
+    atlas.
     
     Author: FreeSurfer Developers
     
@@ -273,7 +276,10 @@ def mris_congeal(
     runner: Runner | None = None,
 ) -> MrisCongealOutputs:
     """
-    Program that registers a set of input surfaces together and generates an atlas.
+    mris_congeal
+    
+    Program that registers a set of input surfaces together and generates an
+    atlas.
     
     Author: FreeSurfer Developers
     

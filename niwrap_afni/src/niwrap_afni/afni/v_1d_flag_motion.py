@@ -147,8 +147,10 @@ def v_1d_flag_motion_execute(
     runner: Runner | None = None,
 ) -> V1dFlagMotionOutputs:
     """
-    Produces a list of time points with excessive motion relative to the previous
-    time point.
+    1dFlagMotion
+    
+    Produces a list of time points with excessive motion relative to the
+    previous time point.
     
     Author: AFNI Developers
     
@@ -176,8 +178,10 @@ def v_1d_flag_motion(
     runner: Runner | None = None,
 ) -> V1dFlagMotionOutputs:
     """
-    Produces a list of time points with excessive motion relative to the previous
-    time point.
+    1dFlagMotion
+    
+    Produces a list of time points with excessive motion relative to the
+    previous time point.
     
     Author: AFNI Developers
     

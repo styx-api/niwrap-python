@@ -136,6 +136,8 @@ def v_3d_mask_to_ascii_execute(
     runner: Runner | None = None,
 ) -> V3dMaskToAsciiOutputs:
     """
+    3dMaskToASCII
+    
     Converts a byte-valued 0/1 dataset into an ASCII string, or vice versa.
     
     Author: AFNI Developers
@@ -164,6 +166,8 @@ def v_3d_mask_to_ascii(
     runner: Runner | None = None,
 ) -> V3dMaskToAsciiOutputs:
     """
+    3dMaskToASCII
+    
     Converts a byte-valued 0/1 dataset into an ASCII string, or vice versa.
     
     Author: AFNI Developers

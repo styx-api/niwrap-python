@@ -180,8 +180,10 @@ def mri_voldiff_execute(
     runner: Runner | None = None,
 ) -> MriVoldiffOutputs:
     """
-    Determines whether two volumes are different in terms of pixel data, dimension,
-    precision, resolution, or geometry.
+    mri_voldiff
+    
+    Determines whether two volumes are different in terms of pixel data,
+    dimension, precision, resolution, or geometry.
     
     Author: FreeSurfer Developers
     
@@ -215,8 +217,10 @@ def mri_voldiff(
     runner: Runner | None = None,
 ) -> MriVoldiffOutputs:
     """
-    Determines whether two volumes are different in terms of pixel data, dimension,
-    precision, resolution, or geometry.
+    mri_voldiff
+    
+    Determines whether two volumes are different in terms of pixel data,
+    dimension, precision, resolution, or geometry.
     
     Author: FreeSurfer Developers
     

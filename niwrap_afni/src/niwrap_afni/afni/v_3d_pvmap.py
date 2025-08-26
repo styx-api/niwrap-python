@@ -155,6 +155,8 @@ def v_3d_pvmap_execute(
     runner: Runner | None = None,
 ) -> V3dPvmapOutputs:
     """
+    3dPVmap
+    
     Computes the first two principal component vectors of a time series dataset,
     then outputs the R-squared coefficient of each voxel time series with these
     first two components.
@@ -186,6 +188,8 @@ def v_3d_pvmap(
     runner: Runner | None = None,
 ) -> V3dPvmapOutputs:
     """
+    3dPVmap
+    
     Computes the first two principal component vectors of a time series dataset,
     then outputs the R-squared coefficient of each voxel time series with these
     first two components.

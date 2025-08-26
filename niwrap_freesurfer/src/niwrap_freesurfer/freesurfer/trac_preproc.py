@@ -205,6 +205,8 @@ def trac_preproc_execute(
     runner: Runner | None = None,
 ) -> TracPreprocOutputs:
     """
+    trac-preproc
+    
     Tractography pre-processing for a single subject.
     
     Author: FreeSurfer Developers
@@ -242,6 +244,8 @@ def trac_preproc(
     runner: Runner | None = None,
 ) -> TracPreprocOutputs:
     """
+    trac-preproc
+    
     Tractography pre-processing for a single subject.
     
     Author: FreeSurfer Developers

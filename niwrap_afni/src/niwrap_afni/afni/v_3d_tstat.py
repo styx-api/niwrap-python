@@ -531,6 +531,8 @@ def v_3d_tstat_execute(
     runner: Runner | None = None,
 ) -> V3dTstatOutputs:
     """
+    3dTstat
+    
     Compute voxel-wise statistics using AFNI 3dTstat command.
     
     Author: AFNI Developers
@@ -617,6 +619,8 @@ def v_3d_tstat(
     runner: Runner | None = None,
 ) -> V3dTstatOutputs:
     """
+    3dTstat
+    
     Compute voxel-wise statistics using AFNI 3dTstat command.
     
     Author: AFNI Developers

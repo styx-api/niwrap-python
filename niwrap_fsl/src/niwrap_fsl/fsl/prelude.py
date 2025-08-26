@@ -383,6 +383,8 @@ def prelude_execute(
     runner: Runner | None = None,
 ) -> PreludeOutputs:
     """
+    prelude
+    
     Phase Region Expanding Labeller for Unwrapping Discrete Estimates.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -438,6 +440,8 @@ def prelude(
     runner: Runner | None = None,
 ) -> PreludeOutputs:
     """
+    prelude
+    
     Phase Region Expanding Labeller for Unwrapping Discrete Estimates.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -200,6 +200,8 @@ def metric_estimate_fwhm_execute(
     runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
+    metric-estimate-fwhm
+    
     Estimate fwhm smoothness of a metric file.
     
     Estimates the smoothness of the metric columns, printing the estimates to
@@ -233,6 +235,8 @@ def metric_estimate_fwhm(
     runner: Runner | None = None,
 ) -> MetricEstimateFwhmOutputs:
     """
+    metric-estimate-fwhm
+    
     Estimate fwhm smoothness of a metric file.
     
     Estimates the smoothness of the metric columns, printing the estimates to

@@ -151,6 +151,8 @@ def possum_sum_execute(
     runner: Runner | None = None,
 ) -> PossumSumOutputs:
     """
+    possum_sum
+    
     Sum of output signals from multiple possum processors.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -180,6 +182,8 @@ def possum_sum(
     runner: Runner | None = None,
 ) -> PossumSumOutputs:
     """
+    possum_sum
+    
     Sum of output signals from multiple possum processors.
     
     Author: FMRIB Analysis Group, University of Oxford

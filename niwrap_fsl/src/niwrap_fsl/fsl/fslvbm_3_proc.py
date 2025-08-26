@@ -406,6 +406,8 @@ def fslvbm_3_proc_execute(
     runner: Runner | None = None,
 ) -> Fslvbm3ProcOutputs:
     """
+    fslvbm_3_proc
+    
     Pipeline for voxel-based morphometry analysis using FSL tools.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -463,6 +465,8 @@ def fslvbm_3_proc(
     runner: Runner | None = None,
 ) -> Fslvbm3ProcOutputs:
     """
+    fslvbm_3_proc
+    
     Pipeline for voxel-based morphometry analysis using FSL tools.
     
     Author: FMRIB Analysis Group, University of Oxford

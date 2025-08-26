@@ -203,9 +203,11 @@ def mri_nlfilter_execute(
     runner: Runner | None = None,
 ) -> MriNlfilterOutputs:
     """
-    This program processes an image using a nonlocal filter and writes the results
-    to an output file. It supports different filtering methods such as median,
-    Gaussian, and mean.
+    mri_nlfilter
+    
+    This program processes an image using a nonlocal filter and writes the
+    results to an output file. It supports different filtering methods such as
+    median, Gaussian, and mean.
     
     Author: FreeSurfer Developers
     
@@ -242,9 +244,11 @@ def mri_nlfilter(
     runner: Runner | None = None,
 ) -> MriNlfilterOutputs:
     """
-    This program processes an image using a nonlocal filter and writes the results
-    to an output file. It supports different filtering methods such as median,
-    Gaussian, and mean.
+    mri_nlfilter
+    
+    This program processes an image using a nonlocal filter and writes the
+    results to an output file. It supports different filtering methods such as
+    median, Gaussian, and mean.
     
     Author: FreeSurfer Developers
     

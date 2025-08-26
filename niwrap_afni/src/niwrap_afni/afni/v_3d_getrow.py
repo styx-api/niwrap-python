@@ -173,6 +173,8 @@ def v_3d_getrow_execute(
     runner: Runner | None = None,
 ) -> V3dGetrowOutputs:
     """
+    3dGetrow
+    
     Program to extract 1 row from a dataset and write it as a .1D file.
     
     Author: AFNI Developers
@@ -203,6 +205,8 @@ def v_3d_getrow(
     runner: Runner | None = None,
 ) -> V3dGetrowOutputs:
     """
+    3dGetrow
+    
     Program to extract 1 row from a dataset and write it as a .1D file.
     
     Author: AFNI Developers

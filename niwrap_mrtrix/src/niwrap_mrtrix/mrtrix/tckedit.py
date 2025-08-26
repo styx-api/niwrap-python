@@ -820,6 +820,8 @@ def tckedit_execute(
     runner: Runner | None = None,
 ) -> TckeditOutputs:
     """
+    tckedit
+    
     Perform various editing operations on track files.
     
     This command can be used to perform various types of manipulations on track
@@ -877,6 +879,8 @@ def tckedit(
     runner: Runner | None = None,
 ) -> TckeditOutputs:
     """
+    tckedit
+    
     Perform various editing operations on track files.
     
     This command can be used to perform various types of manipulations on track

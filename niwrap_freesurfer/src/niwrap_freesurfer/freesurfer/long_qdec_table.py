@@ -163,6 +163,8 @@ def long_qdec_table_execute(
     runner: Runner | None = None,
 ) -> LongQdecTableOutputs:
     """
+    long_qdec_table
+    
     Tool to operate on longitudinal QDEC tables.
     
     Author: FreeSurfer Developers
@@ -193,6 +195,8 @@ def long_qdec_table(
     runner: Runner | None = None,
 ) -> LongQdecTableOutputs:
     """
+    long_qdec_table
+    
     Tool to operate on longitudinal QDEC tables.
     
     Author: FreeSurfer Developers

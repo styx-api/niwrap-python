@@ -297,6 +297,8 @@ def trr_execute(
     runner: Runner | None = None,
 ) -> TrrOutputs:
     """
+    TRR
+    
     Test-Retest Reliability Program through Bayesian Multilevel Modeling.
     
     Author: AFNI Developers
@@ -340,6 +342,8 @@ def trr(
     runner: Runner | None = None,
 ) -> TrrOutputs:
     """
+    TRR
+    
     Test-Retest Reliability Program through Bayesian Multilevel Modeling.
     
     Author: AFNI Developers

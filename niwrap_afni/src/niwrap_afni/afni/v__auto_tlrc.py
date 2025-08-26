@@ -447,9 +447,11 @@ def v__auto_tlrc_execute(
     runner: Runner | None = None,
 ) -> VAutoTlrcOutputs:
     """
-    A script to transform an anatomical dataset to align with some standard space
-    template and to apply the same TLRC transform obtained with @auto_tlrc in Usage
-    1 mode to other datasets.
+    @auto_tlrc
+    
+    A script to transform an anatomical dataset to align with some standard
+    space template and to apply the same TLRC transform obtained with @auto_tlrc
+    in Usage 1 mode to other datasets.
     
     Author: AFNI Developers
     
@@ -513,9 +515,11 @@ def v__auto_tlrc(
     runner: Runner | None = None,
 ) -> VAutoTlrcOutputs:
     """
-    A script to transform an anatomical dataset to align with some standard space
-    template and to apply the same TLRC transform obtained with @auto_tlrc in Usage
-    1 mode to other datasets.
+    @auto_tlrc
+    
+    A script to transform an anatomical dataset to align with some standard
+    space template and to apply the same TLRC transform obtained with @auto_tlrc
+    in Usage 1 mode to other datasets.
     
     Author: AFNI Developers
     

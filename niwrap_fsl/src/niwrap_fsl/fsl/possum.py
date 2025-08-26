@@ -330,6 +330,8 @@ def possum_execute(
     runner: Runner | None = None,
 ) -> PossumOutputs:
     """
+    possum
+    
     Positron emission tomography (PET) simulation tool as part of FSL suite.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -379,6 +381,8 @@ def possum(
     runner: Runner | None = None,
 ) -> PossumOutputs:
     """
+    possum
+    
     Positron emission tomography (PET) simulation tool as part of FSL suite.
     
     Author: FMRIB Analysis Group, University of Oxford

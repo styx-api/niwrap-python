@@ -141,6 +141,8 @@ def simple_syn_registration_execute(
     runner: Runner | None = None,
 ) -> SimpleSynRegistrationOutputs:
     """
+    simpleSynRegistration
+    
     A simple SyN registration tool.
     
     Author: ANTs Developers
@@ -170,6 +172,8 @@ def simple_syn_registration(
     runner: Runner | None = None,
 ) -> SimpleSynRegistrationOutputs:
     """
+    simpleSynRegistration
+    
     A simple SyN registration tool.
     
     Author: ANTs Developers

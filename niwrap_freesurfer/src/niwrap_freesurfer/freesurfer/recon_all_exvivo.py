@@ -138,6 +138,8 @@ def recon_all_exvivo_execute(
     runner: Runner | None = None,
 ) -> ReconAllExvivoOutputs:
     """
+    recon-all-exvivo
+    
     A script to perform an ex vivo reconstruction with FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -166,6 +168,8 @@ def recon_all_exvivo(
     runner: Runner | None = None,
 ) -> ReconAllExvivoOutputs:
     """
+    recon-all-exvivo
+    
     A script to perform an ex vivo reconstruction with FreeSurfer.
     
     Author: FreeSurfer Developers

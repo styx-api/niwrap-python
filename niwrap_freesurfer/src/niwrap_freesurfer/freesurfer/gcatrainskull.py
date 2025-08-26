@@ -122,6 +122,8 @@ def gcatrainskull_execute(
     runner: Runner | None = None,
 ) -> GcatrainskullOutputs:
     """
+    gcatrainskull
+    
     GCA train skull stripping tool.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def gcatrainskull(
     runner: Runner | None = None,
 ) -> GcatrainskullOutputs:
     """
+    gcatrainskull
+    
     GCA train skull stripping tool.
     
     Author: FreeSurfer Developers

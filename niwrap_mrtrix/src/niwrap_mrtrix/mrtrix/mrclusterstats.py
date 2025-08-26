@@ -501,6 +501,8 @@ def mrclusterstats_execute(
     runner: Runner | None = None,
 ) -> MrclusterstatsOutputs:
     """
+    mrclusterstats
+    
     Voxel-based analysis using permutation testing and threshold-free cluster
     enhancement.
     
@@ -582,6 +584,8 @@ def mrclusterstats(
     runner: Runner | None = None,
 ) -> MrclusterstatsOutputs:
     """
+    mrclusterstats
+    
     Voxel-based analysis using permutation testing and threshold-free cluster
     enhancement.
     

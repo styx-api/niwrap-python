@@ -628,9 +628,11 @@ def tkregister2_cmdl_execute(
     runner: Runner | None = None,
 ) -> Tkregister2CmdlOutputs:
     """
-    tkregister2 is a tool to assist in the manual tuning of the linear registration
-    between two volumes, mainly for the purpose of interacting with the FreeSurfer
-    anatomical stream.
+    tkregister2_cmdl
+    
+    tkregister2 is a tool to assist in the manual tuning of the linear
+    registration between two volumes, mainly for the purpose of interacting with
+    the FreeSurfer anatomical stream.
     
     Author: FreeSurfer Developers
     
@@ -715,9 +717,11 @@ def tkregister2_cmdl(
     runner: Runner | None = None,
 ) -> Tkregister2CmdlOutputs:
     """
-    tkregister2 is a tool to assist in the manual tuning of the linear registration
-    between two volumes, mainly for the purpose of interacting with the FreeSurfer
-    anatomical stream.
+    tkregister2_cmdl
+    
+    tkregister2 is a tool to assist in the manual tuning of the linear
+    registration between two volumes, mainly for the purpose of interacting with
+    the FreeSurfer anatomical stream.
     
     Author: FreeSurfer Developers
     

@@ -260,6 +260,8 @@ def mri_label_volume_execute(
     runner: Runner | None = None,
 ) -> MriLabelVolumeOutputs:
     """
+    mri_label_volume
+    
     A tool to compute volumes of labeled voxels within MRI images, often used in
     conjunction with FreeSurfer processed data.
     
@@ -302,6 +304,8 @@ def mri_label_volume(
     runner: Runner | None = None,
 ) -> MriLabelVolumeOutputs:
     """
+    mri_label_volume
+    
     A tool to compute volumes of labeled voxels within MRI images, often used in
     conjunction with FreeSurfer processed data.
     

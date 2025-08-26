@@ -148,6 +148,8 @@ def meanval_execute(
     runner: Runner | None = None,
 ) -> MeanvalOutputs:
     """
+    meanval
+    
     Tool to calculate the mean value of an image within a mask.
     
     Author: FreeSurfer Developers
@@ -177,6 +179,8 @@ def meanval(
     runner: Runner | None = None,
 ) -> MeanvalOutputs:
     """
+    meanval
+    
     Tool to calculate the mean value of an image within a mask.
     
     Author: FreeSurfer Developers

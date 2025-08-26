@@ -306,6 +306,8 @@ def run_samseg_long_execute(
     runner: Runner | None = None,
 ) -> RunSamsegLongOutputs:
     """
+    run_samseg_long
+    
     Longitudinal image segmentation using SAMSEG.
     
     Author: FreeSurfer Developers
@@ -353,6 +355,8 @@ def run_samseg_long(
     runner: Runner | None = None,
 ) -> RunSamsegLongOutputs:
     """
+    run_samseg_long
+    
     Longitudinal image segmentation using SAMSEG.
     
     Author: FreeSurfer Developers

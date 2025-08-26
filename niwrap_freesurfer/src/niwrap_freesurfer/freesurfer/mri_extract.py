@@ -147,6 +147,8 @@ def mri_extract_execute(
     runner: Runner | None = None,
 ) -> MriExtractOutputs:
     """
+    mri_extract
+    
     MRI data extraction tool for FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -176,6 +178,8 @@ def mri_extract(
     runner: Runner | None = None,
 ) -> MriExtractOutputs:
     """
+    mri_extract
+    
     MRI data extraction tool for FreeSurfer.
     
     Author: FreeSurfer Developers

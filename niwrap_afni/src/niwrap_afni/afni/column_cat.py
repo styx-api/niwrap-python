@@ -144,9 +144,11 @@ def column_cat_execute(
     runner: Runner | None = None,
 ) -> ColumnCatOutputs:
     """
-    Catenate files horizontally. Each line of output is the concatenation of each
-    current line from the input files, all on the same line, separated by a space or
-    a user-defined separator.
+    column_cat
+    
+    Catenate files horizontally. Each line of output is the concatenation of
+    each current line from the input files, all on the same line, separated by a
+    space or a user-defined separator.
     
     Author: AFNI Developers
     
@@ -174,9 +176,11 @@ def column_cat(
     runner: Runner | None = None,
 ) -> ColumnCatOutputs:
     """
-    Catenate files horizontally. Each line of output is the concatenation of each
-    current line from the input files, all on the same line, separated by a space or
-    a user-defined separator.
+    column_cat
+    
+    Catenate files horizontally. Each line of output is the concatenation of
+    each current line from the input files, all on the same line, separated by a
+    space or a user-defined separator.
     
     Author: AFNI Developers
     

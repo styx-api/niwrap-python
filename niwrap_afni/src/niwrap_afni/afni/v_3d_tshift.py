@@ -240,8 +240,10 @@ def v_3d_tshift_execute(
     runner: Runner | None = None,
 ) -> V3dTshiftOutputs:
     """
-    Shifts voxel time series from input so that separate slices are aligned to the
-    same temporal origin.
+    3dTshift
+    
+    Shifts voxel time series from input so that separate slices are aligned to
+    the same temporal origin.
     
     Author: AFNI Developers
     
@@ -279,8 +281,10 @@ def v_3d_tshift(
     runner: Runner | None = None,
 ) -> V3dTshiftOutputs:
     """
-    Shifts voxel time series from input so that separate slices are aligned to the
-    same temporal origin.
+    3dTshift
+    
+    Shifts voxel time series from input so that separate slices are aligned to
+    the same temporal origin.
     
     Author: AFNI Developers
     

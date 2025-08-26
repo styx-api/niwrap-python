@@ -164,7 +164,10 @@ def v_1dsum_execute(
     runner: Runner | None = None,
 ) -> V1dsumOutputs:
     """
-    Sum or average columns of ASCII files with numbers arranged in rows and columns.
+    1dsum
+    
+    Sum or average columns of ASCII files with numbers arranged in rows and
+    columns.
     
     Author: AFNI Developers
     
@@ -195,7 +198,10 @@ def v_1dsum(
     runner: Runner | None = None,
 ) -> V1dsumOutputs:
     """
-    Sum or average columns of ASCII files with numbers arranged in rows and columns.
+    1dsum
+    
+    Sum or average columns of ASCII files with numbers arranged in rows and
+    columns.
     
     Author: AFNI Developers
     

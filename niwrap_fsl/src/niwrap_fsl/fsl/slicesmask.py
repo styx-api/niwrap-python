@@ -133,6 +133,8 @@ def slicesmask_execute(
     runner: Runner | None = None,
 ) -> SlicesmaskOutputs:
     """
+    slicesmask
+    
     Tool for masking slices from an image using a mask.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -161,6 +163,8 @@ def slicesmask(
     runner: Runner | None = None,
 ) -> SlicesmaskOutputs:
     """
+    slicesmask
+    
     Tool for masking slices from an image using a mask.
     
     Author: FMRIB Analysis Group, University of Oxford

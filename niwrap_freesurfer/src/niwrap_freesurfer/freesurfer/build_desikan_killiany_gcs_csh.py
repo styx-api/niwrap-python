@@ -120,6 +120,8 @@ def build_desikan_killiany_gcs_csh_execute(
     runner: Runner | None = None,
 ) -> BuildDesikanKillianyGcsCshOutputs:
     """
+    build_desikan_killiany_gcs.csh
+    
     Tool to build Desikan-Killiany cortical parcellation in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -146,6 +148,8 @@ def build_desikan_killiany_gcs_csh(
     runner: Runner | None = None,
 ) -> BuildDesikanKillianyGcsCshOutputs:
     """
+    build_desikan_killiany_gcs.csh
+    
     Tool to build Desikan-Killiany cortical parcellation in FreeSurfer.
     
     Author: FreeSurfer Developers

@@ -128,6 +128,8 @@ def segment_ha_t1_long_sh_execute(
     runner: Runner | None = None,
 ) -> SegmentHaT1LongShOutputs:
     """
+    segmentHA_T1_long.sh
+    
     A script for longitudinal segmentation of the hippocampal/amygdala regions.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def segment_ha_t1_long_sh(
     runner: Runner | None = None,
 ) -> SegmentHaT1LongShOutputs:
     """
+    segmentHA_T1_long.sh
+    
     A script for longitudinal segmentation of the hippocampal/amygdala regions.
     
     Author: FreeSurfer Developers

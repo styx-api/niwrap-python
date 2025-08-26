@@ -174,6 +174,8 @@ def image_set_statistics_execute(
     runner: Runner | None = None,
 ) -> ImageSetStatisticsOutputs:
     """
+    ImageSetStatistics
+    
     ImageSetStatistics computes statistics from a set of images. The whichstat
     option defines the type of statistic to compute, ranging from median to
     similarity-weighted metrics.
@@ -207,6 +209,8 @@ def image_set_statistics(
     runner: Runner | None = None,
 ) -> ImageSetStatisticsOutputs:
     """
+    ImageSetStatistics
+    
     ImageSetStatistics computes statistics from a set of images. The whichstat
     option defines the type of statistic to compute, ranging from median to
     similarity-weighted metrics.

@@ -302,6 +302,8 @@ def metric_extrema_execute(
     runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
+    metric-extrema
+    
     Find extrema in a metric file.
     
     Finds extrema in a metric file, such that no two extrema of the same type
@@ -365,6 +367,8 @@ def metric_extrema(
     runner: Runner | None = None,
 ) -> MetricExtremaOutputs:
     """
+    metric-extrema
+    
     Find extrema in a metric file.
     
     Finds extrema in a metric file, such that no two extrema of the same type

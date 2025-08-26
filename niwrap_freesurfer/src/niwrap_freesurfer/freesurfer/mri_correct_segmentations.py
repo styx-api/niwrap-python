@@ -124,6 +124,8 @@ def mri_correct_segmentations_execute(
     runner: Runner | None = None,
 ) -> MriCorrectSegmentationsOutputs:
     """
+    mri_correct_segmentations
+    
     Tool for correcting automated infant segmentations.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def mri_correct_segmentations(
     runner: Runner | None = None,
 ) -> MriCorrectSegmentationsOutputs:
     """
+    mri_correct_segmentations
+    
     Tool for correcting automated infant segmentations.
     
     Author: FreeSurfer Developers

@@ -159,8 +159,10 @@ def fat_roi_row_execute(
     runner: Runner | None = None,
 ) -> FatRoiRowOutputs:
     """
-    Select a single ROI's row out of a connectivity matrix file (*.grid or *.netcc)
-    for viewing and/or further analysis.
+    fat_roi_row
+    
+    Select a single ROI's row out of a connectivity matrix file (*.grid or
+    *.netcc) for viewing and/or further analysis.
     
     Author: AFNI Developers
     
@@ -189,8 +191,10 @@ def fat_roi_row(
     runner: Runner | None = None,
 ) -> FatRoiRowOutputs:
     """
-    Select a single ROI's row out of a connectivity matrix file (*.grid or *.netcc)
-    for viewing and/or further analysis.
+    fat_roi_row
+    
+    Select a single ROI's row out of a connectivity matrix file (*.grid or
+    *.netcc) for viewing and/or further analysis.
     
     Author: AFNI Developers
     

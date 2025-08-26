@@ -173,7 +173,10 @@ def v_3d_attribute_execute(
     runner: Runner | None = None,
 ) -> V3dAttributeOutputs:
     """
-    Prints the value of the attribute 'aname' from the header of the dataset 'dset'.
+    3dAttribute
+    
+    Prints the value of the attribute 'aname' from the header of the dataset
+    'dset'.
     
     Author: AFNI Developers
     
@@ -206,7 +209,10 @@ def v_3d_attribute(
     runner: Runner | None = None,
 ) -> V3dAttributeOutputs:
     """
-    Prints the value of the attribute 'aname' from the header of the dataset 'dset'.
+    3dAttribute
+    
+    Prints the value of the attribute 'aname' from the header of the dataset
+    'dset'.
     
     Author: AFNI Developers
     

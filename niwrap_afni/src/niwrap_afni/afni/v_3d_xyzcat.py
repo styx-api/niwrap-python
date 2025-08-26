@@ -153,6 +153,8 @@ def v_3d_xyzcat_execute(
     runner: Runner | None = None,
 ) -> V3dXyzcatOutputs:
     """
+    3dXYZcat
+    
     Catenates datasets spatially.
     
     Author: AFNI Developers
@@ -182,6 +184,8 @@ def v_3d_xyzcat(
     runner: Runner | None = None,
 ) -> V3dXyzcatOutputs:
     """
+    3dXYZcat
+    
     Catenates datasets spatially.
     
     Author: AFNI Developers

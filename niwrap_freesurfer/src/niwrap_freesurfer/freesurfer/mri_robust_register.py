@@ -568,8 +568,10 @@ def mri_robust_register_execute(
     runner: Runner | None = None,
 ) -> MriRobustRegisterOutputs:
     """
-    Inverse consistent registration of two volumes using robust and standard cost
-    functions.
+    mri_robust_register
+    
+    Inverse consistent registration of two volumes using robust and standard
+    cost functions.
     
     Author: FreeSurfer Developers
     
@@ -643,8 +645,10 @@ def mri_robust_register(
     runner: Runner | None = None,
 ) -> MriRobustRegisterOutputs:
     """
-    Inverse consistent registration of two volumes using robust and standard cost
-    functions.
+    mri_robust_register
+    
+    Inverse consistent registration of two volumes using robust and standard
+    cost functions.
     
     Author: FreeSurfer Developers
     

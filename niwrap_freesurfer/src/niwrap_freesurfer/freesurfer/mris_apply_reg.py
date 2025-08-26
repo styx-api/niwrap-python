@@ -310,6 +310,8 @@ def mris_apply_reg_execute(
     runner: Runner | None = None,
 ) -> MrisApplyRegOutputs:
     """
+    mris_apply_reg
+    
     Apply surface registration in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -358,6 +360,8 @@ def mris_apply_reg(
     runner: Runner | None = None,
 ) -> MrisApplyRegOutputs:
     """
+    mris_apply_reg
+    
     Apply surface registration in FreeSurfer.
     
     Author: FreeSurfer Developers

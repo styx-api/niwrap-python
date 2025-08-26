@@ -302,6 +302,8 @@ def afni_execute(
     runner: Runner | None = None,
 ) -> AfniOutputs:
     """
+    afni
+    
     Tool for reading in sessions of 3D datasets and visualizing them.
     
     Author: AFNI Developers
@@ -352,6 +354,8 @@ def afni_(
     runner: Runner | None = None,
 ) -> AfniOutputs:
     """
+    afni
+    
     Tool for reading in sessions of 3D datasets and visualizing them.
     
     Author: AFNI Developers

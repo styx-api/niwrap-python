@@ -196,6 +196,8 @@ def v__roi_corr_mat_execute(
     runner: Runner | None = None,
 ) -> VRoiCorrMatOutputs:
     """
+    @ROI_Corr_Mat
+    
     Script to produce an NxN ROI correlation matrix of N ROIs.
     
     Author: AFNI Developers
@@ -231,6 +233,8 @@ def v__roi_corr_mat(
     runner: Runner | None = None,
 ) -> VRoiCorrMatOutputs:
     """
+    @ROI_Corr_Mat
+    
     Script to produce an NxN ROI correlation matrix of N ROIs.
     
     Author: AFNI Developers

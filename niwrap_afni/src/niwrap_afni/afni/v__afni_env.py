@@ -191,6 +191,8 @@ def v__afni_env_execute(
     runner: Runner | None = None,
 ) -> VAfniEnvOutputs:
     """
+    @AfniEnv
+    
     Script to set or unset an AFNI environment variable in your .afnirc file.
     
     Author: AFNI Developers
@@ -226,6 +228,8 @@ def v__afni_env(
     runner: Runner | None = None,
 ) -> VAfniEnvOutputs:
     """
+    @AfniEnv
+    
     Script to set or unset an AFNI environment variable in your .afnirc file.
     
     Author: AFNI Developers

@@ -250,8 +250,10 @@ def merge_stats_tables_execute(
     runner: Runner | None = None,
 ) -> MergeStatsTablesOutputs:
     """
-    Merges a set of stats table files into a single stats table where each line is a
-    subject and each column is a segmentation or parcellation.
+    merge_stats_tables
+    
+    Merges a set of stats table files into a single stats table where each line
+    is a subject and each column is a segmentation or parcellation.
     
     Author: FreeSurfer Developers
     
@@ -291,8 +293,10 @@ def merge_stats_tables(
     runner: Runner | None = None,
 ) -> MergeStatsTablesOutputs:
     """
-    Merges a set of stats table files into a single stats table where each line is a
-    subject and each column is a segmentation or parcellation.
+    merge_stats_tables
+    
+    Merges a set of stats table files into a single stats table where each line
+    is a subject and each column is a segmentation or parcellation.
     
     Author: FreeSurfer Developers
     

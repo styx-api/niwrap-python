@@ -134,6 +134,8 @@ def mris_gradient_execute(
     runner: Runner | None = None,
 ) -> MrisGradientOutputs:
     """
+    mris_gradient
+    
     This program computes the gradient of an intensity profile of the cortical
     ribbon and writes the resulting measurement into a .mgz file.
     
@@ -163,6 +165,8 @@ def mris_gradient(
     runner: Runner | None = None,
 ) -> MrisGradientOutputs:
     """
+    mris_gradient
+    
     This program computes the gradient of an intensity profile of the cortical
     ribbon and writes the resulting measurement into a .mgz file.
     

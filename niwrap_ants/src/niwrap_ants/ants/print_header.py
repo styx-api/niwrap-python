@@ -132,6 +132,8 @@ def print_header_execute(
     runner: Runner | None = None,
 ) -> PrintHeaderOutputs:
     """
+    PrintHeader
+    
     A utility to print header information from an image file.
     
     Author: ANTs Developers
@@ -159,6 +161,8 @@ def print_header(
     runner: Runner | None = None,
 ) -> PrintHeaderOutputs:
     """
+    PrintHeader
+    
     A utility to print header information from an image file.
     
     Author: ANTs Developers

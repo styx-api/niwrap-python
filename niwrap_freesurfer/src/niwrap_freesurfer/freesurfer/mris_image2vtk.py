@@ -153,7 +153,10 @@ def mris_image2vtk_execute(
     runner: Runner | None = None,
 ) -> MrisImage2vtkOutputs:
     """
-    Convert image to VTK format with specified thresholds and smoothing parameters.
+    mris_image2vtk
+    
+    Convert image to VTK format with specified thresholds and smoothing
+    parameters.
     
     Author: FreeSurfer Developers
     
@@ -185,7 +188,10 @@ def mris_image2vtk(
     runner: Runner | None = None,
 ) -> MrisImage2vtkOutputs:
     """
-    Convert image to VTK format with specified thresholds and smoothing parameters.
+    mris_image2vtk
+    
+    Convert image to VTK format with specified thresholds and smoothing
+    parameters.
     
     Author: FreeSurfer Developers
     

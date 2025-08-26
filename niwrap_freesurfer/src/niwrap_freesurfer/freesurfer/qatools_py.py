@@ -178,6 +178,8 @@ def qatools_py_execute(
     runner: Runner | None = None,
 ) -> QatoolsPyOutputs:
     """
+    qatools.py
+    
     A tool to compute quality metrics from Freesurfer 6.0 analysis results.
     
     Author: FreeSurfer Developers
@@ -210,6 +212,8 @@ def qatools_py(
     runner: Runner | None = None,
 ) -> QatoolsPyOutputs:
     """
+    qatools.py
+    
     A tool to compute quality metrics from Freesurfer 6.0 analysis results.
     
     Author: FreeSurfer Developers

@@ -217,6 +217,8 @@ def metric_dilate_execute(
     runner: Runner | None = None,
 ) -> MetricDilateOutputs:
     """
+    metric-dilate
+    
     Dilate a metric file.
     
     For all metric vertices that are designated as bad, if they neighbor a
@@ -273,6 +275,8 @@ def metric_dilate(
     runner: Runner | None = None,
 ) -> MetricDilateOutputs:
     """
+    metric-dilate
+    
     Dilate a metric file.
     
     For all metric vertices that are designated as bad, if they neighbor a

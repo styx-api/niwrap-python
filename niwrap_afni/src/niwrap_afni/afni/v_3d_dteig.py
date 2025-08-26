@@ -169,6 +169,8 @@ def v_3d_dteig_execute(
     runner: Runner | None = None,
 ) -> V3dDteigOutputs:
     """
+    3dDTeig
+    
     Computes eigenvalues and eigenvectors for an input dataset of tensors.
     
     Author: AFNI Developers
@@ -199,6 +201,8 @@ def v_3d_dteig(
     runner: Runner | None = None,
 ) -> V3dDteigOutputs:
     """
+    3dDTeig
+    
     Computes eigenvalues and eigenvectors for an input dataset of tensors.
     
     Author: AFNI Developers

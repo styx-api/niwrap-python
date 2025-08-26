@@ -217,6 +217,8 @@ def mris_target_pos_execute(
     runner: Runner | None = None,
 ) -> MrisTargetPosOutputs:
     """
+    mris_target_pos
+    
     Tool for setting target positions of a surface using input imaging data and
     other parameters.
     
@@ -256,6 +258,8 @@ def mris_target_pos(
     runner: Runner | None = None,
 ) -> MrisTargetPosOutputs:
     """
+    mris_target_pos
+    
     Tool for setting target positions of a surface using input imaging data and
     other parameters.
     

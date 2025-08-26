@@ -166,6 +166,8 @@ def v__make_plug_diff_execute(
     runner: Runner | None = None,
 ) -> VMakePlugDiffOutputs:
     """
+    @make_plug_diff
+    
     Compiles AFNI's diffusion plugin.
     
     Author: AFNI Developers
@@ -198,6 +200,8 @@ def v__make_plug_diff(
     runner: Runner | None = None,
 ) -> VMakePlugDiffOutputs:
     """
+    @make_plug_diff
+    
     Compiles AFNI's diffusion plugin.
     
     Author: AFNI Developers

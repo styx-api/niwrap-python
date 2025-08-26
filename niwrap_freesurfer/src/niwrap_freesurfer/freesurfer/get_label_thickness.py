@@ -119,6 +119,8 @@ def get_label_thickness_execute(
     runner: Runner | None = None,
 ) -> GetLabelThicknessOutputs:
     """
+    get_label_thickness
+    
     Tool to calculate label thickness.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def get_label_thickness(
     runner: Runner | None = None,
 ) -> GetLabelThicknessOutputs:
     """
+    get_label_thickness
+    
     Tool to calculate label thickness.
     
     Author: FreeSurfer Developers

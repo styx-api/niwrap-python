@@ -123,6 +123,8 @@ def create_lut_execute(
     runner: Runner | None = None,
 ) -> CreateLutOutputs:
     """
+    create_lut
+    
     A tool to create lookup tables.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -149,6 +151,8 @@ def create_lut(
     runner: Runner | None = None,
 ) -> CreateLutOutputs:
     """
+    create_lut
+    
     A tool to create lookup tables.
     
     Author: FMRIB Analysis Group, University of Oxford

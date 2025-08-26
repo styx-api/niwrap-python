@@ -138,6 +138,8 @@ def mist_fa_reg_execute(
     runner: Runner | None = None,
 ) -> MistFaRegOutputs:
     """
+    mist_FA_reg
+    
     Tool for registering FA volumes to a reference T1 volume.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -167,6 +169,8 @@ def mist_fa_reg(
     runner: Runner | None = None,
 ) -> MistFaRegOutputs:
     """
+    mist_FA_reg
+    
     Tool for registering FA volumes to a reference T1 volume.
     
     Author: FMRIB Analysis Group, University of Oxford

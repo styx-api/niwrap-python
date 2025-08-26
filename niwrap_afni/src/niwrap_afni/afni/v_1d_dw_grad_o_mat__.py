@@ -300,8 +300,10 @@ def v_1d_dw_grad_o_mat___execute(
     runner: Runner | None = None,
 ) -> V1dDwGradOMatOutputs:
     """
-    Manipulation of diffusion-weighted (DW) gradient vector files, b-value files,
-    and b- or g-matrices with various input and output configurations.
+    1dDW_Grad_o_Mat++
+    
+    Manipulation of diffusion-weighted (DW) gradient vector files, b-value
+    files, and b- or g-matrices with various input and output configurations.
     
     Author: AFNI Developers
     
@@ -347,8 +349,10 @@ def v_1d_dw_grad_o_mat__(
     runner: Runner | None = None,
 ) -> V1dDwGradOMatOutputs:
     """
-    Manipulation of diffusion-weighted (DW) gradient vector files, b-value files,
-    and b- or g-matrices with various input and output configurations.
+    1dDW_Grad_o_Mat++
+    
+    Manipulation of diffusion-weighted (DW) gradient vector files, b-value
+    files, and b- or g-matrices with various input and output configurations.
     
     Author: AFNI Developers
     

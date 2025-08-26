@@ -157,6 +157,8 @@ def v_3dmatcalc_execute(
     runner: Runner | None = None,
 ) -> V3dmatcalcOutputs:
     """
+    3dmatcalc
+    
     Apply a matrix to a dataset, voxel-by-voxel, to produce a new dataset.
     
     Author: AFNI Developers
@@ -186,6 +188,8 @@ def v_3dmatcalc(
     runner: Runner | None = None,
 ) -> V3dmatcalcOutputs:
     """
+    3dmatcalc
+    
     Apply a matrix to a dataset, voxel-by-voxel, to produce a new dataset.
     
     Author: AFNI Developers

@@ -140,8 +140,10 @@ def siena_cal_execute(
     runner: Runner | None = None,
 ) -> SienaCalOutputs:
     """
-    SIENA is part of FSL (FMRIB Software Library), which performs a two-timepoint
-    brain volume change analysis.
+    siena_cal
+    
+    SIENA is part of FSL (FMRIB Software Library), which performs a
+    two-timepoint brain volume change analysis.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -170,8 +172,10 @@ def siena_cal(
     runner: Runner | None = None,
 ) -> SienaCalOutputs:
     """
-    SIENA is part of FSL (FMRIB Software Library), which performs a two-timepoint
-    brain volume change analysis.
+    siena_cal
+    
+    SIENA is part of FSL (FMRIB Software Library), which performs a
+    two-timepoint brain volume change analysis.
     
     Author: FMRIB Analysis Group, University of Oxford
     

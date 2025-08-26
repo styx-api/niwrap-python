@@ -129,6 +129,8 @@ def mkima_index_tcl_execute(
     runner: Runner | None = None,
 ) -> MkimaIndexTclOutputs:
     """
+    mkima_index.tcl
+    
     A command-line tool for handling mkima index operations.
     
     Author: FreeSurfer Developers
@@ -156,6 +158,8 @@ def mkima_index_tcl(
     runner: Runner | None = None,
 ) -> MkimaIndexTclOutputs:
     """
+    mkima_index.tcl
+    
     A command-line tool for handling mkima index operations.
     
     Author: FreeSurfer Developers

@@ -239,8 +239,10 @@ def v_3d_grayplot_execute(
     runner: Runner | None = None,
 ) -> V3dGrayplotOutputs:
     """
-    Make a grayplot from a 3D+time dataset, like a carpet plot. Result is saved to a
-    PNG image.
+    3dGrayplot
+    
+    Make a grayplot from a 3D+time dataset, like a carpet plot. Result is saved
+    to a PNG image.
     
     Author: AFNI Developers
     
@@ -279,8 +281,10 @@ def v_3d_grayplot(
     runner: Runner | None = None,
 ) -> V3dGrayplotOutputs:
     """
-    Make a grayplot from a 3D+time dataset, like a carpet plot. Result is saved to a
-    PNG image.
+    3dGrayplot
+    
+    Make a grayplot from a 3D+time dataset, like a carpet plot. Result is saved
+    to a PNG image.
     
     Author: AFNI Developers
     

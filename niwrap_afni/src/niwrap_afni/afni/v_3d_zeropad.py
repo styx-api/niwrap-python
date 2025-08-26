@@ -266,6 +266,8 @@ def v_3d_zeropad_execute(
     runner: Runner | None = None,
 ) -> V3dZeropadOutputs:
     """
+    3dZeropad
+    
     Adds planes of zeros to a dataset (i.e., pads it out). Negative 'add' count
     means to cut a dataset down in size.
     
@@ -307,6 +309,8 @@ def v_3d_zeropad(
     runner: Runner | None = None,
 ) -> V3dZeropadOutputs:
     """
+    3dZeropad
+    
     Adds planes of zeros to a dataset (i.e., pads it out). Negative 'add' count
     means to cut a dataset down in size.
     

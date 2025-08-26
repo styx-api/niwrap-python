@@ -256,6 +256,8 @@ def mrcheckerboardmask_execute(
     runner: Runner | None = None,
 ) -> MrcheckerboardmaskOutputs:
     """
+    mrcheckerboardmask
+    
     Create bitwise checkerboard image.
     
     
@@ -300,6 +302,8 @@ def mrcheckerboardmask(
     runner: Runner | None = None,
 ) -> MrcheckerboardmaskOutputs:
     """
+    mrcheckerboardmask
+    
     Create bitwise checkerboard image.
     
     

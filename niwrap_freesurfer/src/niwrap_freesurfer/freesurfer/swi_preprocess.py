@@ -191,6 +191,8 @@ def swi_preprocess_execute(
     runner: Runner | None = None,
 ) -> SwiPreprocessOutputs:
     """
+    swi_preprocess
+    
     Pre-process the Susceptibility-weighted images and write out nifti files for
     feeding into PRELUDE (Phase Unwrapping Library of FSL).
     
@@ -224,6 +226,8 @@ def swi_preprocess(
     runner: Runner | None = None,
 ) -> SwiPreprocessOutputs:
     """
+    swi_preprocess
+    
     Pre-process the Susceptibility-weighted images and write out nifti files for
     feeding into PRELUDE (Phase Unwrapping Library of FSL).
     

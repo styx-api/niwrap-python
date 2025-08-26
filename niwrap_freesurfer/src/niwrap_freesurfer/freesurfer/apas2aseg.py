@@ -149,8 +149,10 @@ def apas2aseg_execute(
     runner: Runner | None = None,
 ) -> Apas2asegOutputs:
     """
-    Converts aparc+aseg.mgz into aseg.mgz-like format by replacing specific cortical
-    segmentations.
+    apas2aseg
+    
+    Converts aparc+aseg.mgz into aseg.mgz-like format by replacing specific
+    cortical segmentations.
     
     Author: FreeSurfer Developers
     
@@ -178,8 +180,10 @@ def apas2aseg(
     runner: Runner | None = None,
 ) -> Apas2asegOutputs:
     """
-    Converts aparc+aseg.mgz into aseg.mgz-like format by replacing specific cortical
-    segmentations.
+    apas2aseg
+    
+    Converts aparc+aseg.mgz into aseg.mgz-like format by replacing specific
+    cortical segmentations.
     
     Author: FreeSurfer Developers
     

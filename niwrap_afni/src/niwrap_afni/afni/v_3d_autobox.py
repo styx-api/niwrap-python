@@ -231,8 +231,10 @@ def v_3d_autobox_execute(
     runner: Runner | None = None,
 ) -> V3dAutoboxOutputs:
     """
-    Computes size of a box that fits around the volume. Can also be used to crop the
-    volume to that box.
+    3dAutobox
+    
+    Computes size of a box that fits around the volume. Can also be used to crop
+    the volume to that box.
     
     Author: AFNI Developers
     
@@ -271,8 +273,10 @@ def v_3d_autobox(
     runner: Runner | None = None,
 ) -> V3dAutoboxOutputs:
     """
-    Computes size of a box that fits around the volume. Can also be used to crop the
-    volume to that box.
+    3dAutobox
+    
+    Computes size of a box that fits around the volume. Can also be used to crop
+    the volume to that box.
     
     Author: AFNI Developers
     

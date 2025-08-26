@@ -148,6 +148,8 @@ def zero_lt_4dfp_execute(
     runner: Runner | None = None,
 ) -> ZeroLt4dfpOutputs:
     """
+    zero_lt_4dfp
+    
     A tool to process 4dfp image files by zeroing values less than a given float
     threshold.
     
@@ -178,6 +180,8 @@ def zero_lt_4dfp(
     runner: Runner | None = None,
 ) -> ZeroLt4dfpOutputs:
     """
+    zero_lt_4dfp
+    
     A tool to process 4dfp image files by zeroing values less than a given float
     threshold.
     

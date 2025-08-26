@@ -259,6 +259,8 @@ def mm_execute(
     runner: Runner | None = None,
 ) -> MmOutputs:
     """
+    mm
+    
     FSL's MM: mixture modelling.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -301,6 +303,8 @@ def mm(
     runner: Runner | None = None,
 ) -> MmOutputs:
     """
+    mm
+    
     FSL's MM: mixture modelling.
     
     Author: FMRIB Analysis Group, University of Oxford

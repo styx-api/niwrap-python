@@ -164,6 +164,8 @@ def wfilemask_execute(
     runner: Runner | None = None,
 ) -> WfilemaskOutputs:
     """
+    wfilemask
+    
     Zero-out regions of a surface value file (.w file) using a label.
     
     Author: FreeSurfer Developers
@@ -195,6 +197,8 @@ def wfilemask(
     runner: Runner | None = None,
 ) -> WfilemaskOutputs:
     """
+    wfilemask
+    
     Zero-out regions of a surface value file (.w file) using a label.
     
     Author: FreeSurfer Developers

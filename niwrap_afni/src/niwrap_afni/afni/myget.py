@@ -139,6 +139,8 @@ def myget_execute(
     runner: Runner | None = None,
 ) -> MygetOutputs:
     """
+    myget
+    
     A simple file downloader from a URL.
     
     Author: AFNI Developers
@@ -167,6 +169,8 @@ def myget(
     runner: Runner | None = None,
 ) -> MygetOutputs:
     """
+    myget
+    
     A simple file downloader from a URL.
     
     Author: AFNI Developers

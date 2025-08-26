@@ -177,6 +177,8 @@ def slices_summary_execute(
     runner: Runner | None = None,
 ) -> SlicesSummaryOutputs:
     """
+    slices_summary
+    
     Generate summary PNG images for 4D neuroimaging data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -212,6 +214,8 @@ def slices_summary(
     runner: Runner | None = None,
 ) -> SlicesSummaryOutputs:
     """
+    slices_summary
+    
     Generate summary PNG images for 4D neuroimaging data.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -194,6 +194,8 @@ def fsr_import_execute(
     runner: Runner | None = None,
 ) -> FsrImportOutputs:
     """
+    fsr-import
+    
     Copies/converts data into a directory structure for samseg-expected format.
     
     Author: FreeSurfer Developers
@@ -227,6 +229,8 @@ def fsr_import(
     runner: Runner | None = None,
 ) -> FsrImportOutputs:
     """
+    fsr-import
+    
     Copies/converts data into a directory structure for samseg-expected format.
     
     Author: FreeSurfer Developers

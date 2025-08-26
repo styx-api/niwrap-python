@@ -258,6 +258,8 @@ def v__measure_bb_thick_execute(
     runner: Runner | None = None,
 ) -> VMeasureBbThickOutputs:
     """
+    @measure_bb_thick
+    
     Compute thickness of mask using ball and box method.
     
     Author: AFNI Developers
@@ -295,6 +297,8 @@ def v__measure_bb_thick(
     runner: Runner | None = None,
 ) -> VMeasureBbThickOutputs:
     """
+    @measure_bb_thick
+    
     Compute thickness of mask using ball and box method.
     
     Author: AFNI Developers

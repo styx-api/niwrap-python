@@ -418,8 +418,10 @@ def v_1dplot_py_execute(
     runner: Runner | None = None,
 ) -> V1dplotPyOutputs:
     """
-    This program is for making images to visualize columns of numbers from 1D text
-    files. It uses Python, particularly matplotlib, to create plots.
+    1dplot.py
+    
+    This program is for making images to visualize columns of numbers from 1D
+    text files. It uses Python, particularly matplotlib, to create plots.
     
     Author: AFNI Developers
     
@@ -476,8 +478,10 @@ def v_1dplot_py(
     runner: Runner | None = None,
 ) -> V1dplotPyOutputs:
     """
-    This program is for making images to visualize columns of numbers from 1D text
-    files. It uses Python, particularly matplotlib, to create plots.
+    1dplot.py
+    
+    This program is for making images to visualize columns of numbers from 1D
+    text files. It uses Python, particularly matplotlib, to create plots.
     
     Author: AFNI Developers
     

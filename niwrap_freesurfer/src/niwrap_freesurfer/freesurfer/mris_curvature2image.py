@@ -183,6 +183,8 @@ def mris_curvature2image_execute(
     runner: Runner | None = None,
 ) -> MrisCurvature2imageOutputs:
     """
+    mris_curvature2image
+    
     Tool to convert surface curvature data to an image using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -216,6 +218,8 @@ def mris_curvature2image(
     runner: Runner | None = None,
 ) -> MrisCurvature2imageOutputs:
     """
+    mris_curvature2image
+    
     Tool to convert surface curvature data to an image using FreeSurfer.
     
     Author: FreeSurfer Developers

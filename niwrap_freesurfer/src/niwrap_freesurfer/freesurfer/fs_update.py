@@ -140,6 +140,8 @@ def fs_update_execute(
     runner: Runner | None = None,
 ) -> FsUpdateOutputs:
     """
+    fs_update
+    
     Utility to update the FreeSurfer installation.
     
     Author: FreeSurfer Developers
@@ -169,6 +171,8 @@ def fs_update(
     runner: Runner | None = None,
 ) -> FsUpdateOutputs:
     """
+    fs_update
+    
     Utility to update the FreeSurfer installation.
     
     Author: FreeSurfer Developers

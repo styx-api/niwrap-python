@@ -184,6 +184,8 @@ def v_1dcat_execute(
     runner: Runner | None = None,
 ) -> V1dcatOutputs:
     """
+    1dcat
+    
     Concatenates columns of multiple 1D or TSV/CSV files.
     
     Author: AFNI Developers
@@ -218,6 +220,8 @@ def v_1dcat(
     runner: Runner | None = None,
 ) -> V1dcatOutputs:
     """
+    1dcat
+    
     Concatenates columns of multiple 1D or TSV/CSV files.
     
     Author: AFNI Developers

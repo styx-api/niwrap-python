@@ -294,6 +294,8 @@ def metric_gradient_execute(
     runner: Runner | None = None,
 ) -> MetricGradientOutputs:
     """
+    metric-gradient
+    
     Surface gradient of a metric file.
     
     At each vertex, the immediate neighbors are unfolded onto a plane tangent to
@@ -356,6 +358,8 @@ def metric_gradient(
     runner: Runner | None = None,
 ) -> MetricGradientOutputs:
     """
+    metric-gradient
+    
     Surface gradient of a metric file.
     
     At each vertex, the immediate neighbors are unfolded onto a plane tangent to

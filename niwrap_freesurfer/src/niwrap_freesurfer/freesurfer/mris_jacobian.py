@@ -151,6 +151,8 @@ def mris_jacobian_execute(
     runner: Runner | None = None,
 ) -> MrisJacobianOutputs:
     """
+    mris_jacobian
+    
     This program computes the Jacobian of a surface mapping.
     
     Author: FreeSurfer Developers
@@ -182,6 +184,8 @@ def mris_jacobian(
     runner: Runner | None = None,
 ) -> MrisJacobianOutputs:
     """
+    mris_jacobian
+    
     This program computes the Jacobian of a surface mapping.
     
     Author: FreeSurfer Developers

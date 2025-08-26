@@ -138,8 +138,10 @@ def xfmrot_execute(
     runner: Runner | None = None,
 ) -> XfmrotOutputs:
     """
-    Tool to apply a transformation defined in a transform file to an input vector
-    file.
+    xfmrot
+    
+    Tool to apply a transformation defined in a transform file to an input
+    vector file.
     
     Author: FreeSurfer Developers
     
@@ -167,8 +169,10 @@ def xfmrot(
     runner: Runner | None = None,
 ) -> XfmrotOutputs:
     """
-    Tool to apply a transformation defined in a transform file to an input vector
-    file.
+    xfmrot
+    
+    Tool to apply a transformation defined in a transform file to an input
+    vector file.
     
     Author: FreeSurfer Developers
     

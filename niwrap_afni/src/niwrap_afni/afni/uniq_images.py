@@ -123,9 +123,11 @@ def uniq_images_execute(
     runner: Runner | None = None,
 ) -> UniqImagesOutputs:
     """
-    Simple program to read in a list of image filenames, determine which files have
-    unique images inside, and echo out only a list of the filenames with unique
-    images.
+    uniq_images
+    
+    Simple program to read in a list of image filenames, determine which files
+    have unique images inside, and echo out only a list of the filenames with
+    unique images.
     
     Author: AFNI Developers
     
@@ -151,9 +153,11 @@ def uniq_images(
     runner: Runner | None = None,
 ) -> UniqImagesOutputs:
     """
-    Simple program to read in a list of image filenames, determine which files have
-    unique images inside, and echo out only a list of the filenames with unique
-    images.
+    uniq_images
+    
+    Simple program to read in a list of image filenames, determine which files
+    have unique images inside, and echo out only a list of the filenames with
+    unique images.
     
     Author: AFNI Developers
     

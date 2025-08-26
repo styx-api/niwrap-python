@@ -241,6 +241,8 @@ def label2mesh_execute(
     runner: Runner | None = None,
 ) -> Label2meshOutputs:
     """
+    label2mesh
+    
     Generate meshes from a label image.
     
     
@@ -283,6 +285,8 @@ def label2mesh(
     runner: Runner | None = None,
 ) -> Label2meshOutputs:
     """
+    label2mesh
+    
     Generate meshes from a label image.
     
     

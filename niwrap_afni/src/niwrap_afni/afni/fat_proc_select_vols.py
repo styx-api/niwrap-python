@@ -188,6 +188,8 @@ def fat_proc_select_vols_execute(
     runner: Runner | None = None,
 ) -> FatProcSelectVolsOutputs:
     """
+    fat_proc_select_vols
+    
     Tool for building a selector string for AFNI subbricks and/or 1D text files.
     
     Author: AFNI Developers
@@ -221,6 +223,8 @@ def fat_proc_select_vols(
     runner: Runner | None = None,
 ) -> FatProcSelectVolsOutputs:
     """
+    fat_proc_select_vols
+    
     Tool for building a selector string for AFNI subbricks and/or 1D text files.
     
     Author: AFNI Developers

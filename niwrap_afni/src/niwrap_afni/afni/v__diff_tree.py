@@ -251,6 +251,8 @@ def v__diff_tree_execute(
     runner: Runner | None = None,
 ) -> VDiffTreeOutputs:
     """
+    @diff.tree
+    
     Show file differences between 2 directories.
     
     Author: AFNI Developers
@@ -294,6 +296,8 @@ def v__diff_tree(
     runner: Runner | None = None,
 ) -> VDiffTreeOutputs:
     """
+    @diff.tree
+    
     Show file differences between 2 directories.
     
     Author: AFNI Developers

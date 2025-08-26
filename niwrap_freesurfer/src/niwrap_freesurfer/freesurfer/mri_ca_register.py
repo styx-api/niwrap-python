@@ -446,6 +446,8 @@ def mri_ca_register_execute(
     runner: Runner | None = None,
 ) -> MriCaRegisterOutputs:
     """
+    mri_ca_register
+    
     Generates a multi-dimensional talairach transform from a gca file and
     talairach.lta file.
     
@@ -511,6 +513,8 @@ def mri_ca_register(
     runner: Runner | None = None,
 ) -> MriCaRegisterOutputs:
     """
+    mri_ca_register
+    
     Generates a multi-dimensional talairach transform from a gca file and
     talairach.lta file.
     

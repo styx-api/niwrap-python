@@ -148,7 +148,10 @@ def mris_compute_acorr_execute(
     runner: Runner | None = None,
 ) -> MrisComputeAcorrOutputs:
     """
-    Compute the autocorrelation function of a curvature file on a spherical surface.
+    mris_compute_acorr
+    
+    Compute the autocorrelation function of a curvature file on a spherical
+    surface.
     
     Author: FreeSurfer Developers
     
@@ -179,7 +182,10 @@ def mris_compute_acorr(
     runner: Runner | None = None,
 ) -> MrisComputeAcorrOutputs:
     """
-    Compute the autocorrelation function of a curvature file on a spherical surface.
+    mris_compute_acorr
+    
+    Compute the autocorrelation function of a curvature file on a spherical
+    surface.
     
     Author: FreeSurfer Developers
     

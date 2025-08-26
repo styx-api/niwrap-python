@@ -219,6 +219,8 @@ def v_3dinfill_execute(
     runner: Runner | None = None,
 ) -> V3dinfillOutputs:
     """
+    3dinfill
+    
     A program to fill holes in volumes.
     
     Author: AFNI Developers
@@ -254,6 +256,8 @@ def v_3dinfill(
     runner: Runner | None = None,
 ) -> V3dinfillOutputs:
     """
+    3dinfill
+    
     A program to fill holes in volumes.
     
     Author: AFNI Developers

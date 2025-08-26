@@ -237,6 +237,8 @@ def rsfgen_execute(
     runner: Runner | None = None,
 ) -> RsfgenOutputs:
     """
+    RSFgen
+    
     Program to generate random stimulus functions.
     
     Author: AFNI Developers
@@ -275,6 +277,8 @@ def rsfgen(
     runner: Runner | None = None,
 ) -> RsfgenOutputs:
     """
+    RSFgen
+    
     Program to generate random stimulus functions.
     
     Author: AFNI Developers

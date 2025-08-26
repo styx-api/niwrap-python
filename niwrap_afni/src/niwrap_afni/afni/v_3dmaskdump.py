@@ -303,6 +303,8 @@ def v_3dmaskdump_execute(
     runner: Runner | None = None,
 ) -> V3dmaskdumpOutputs:
     """
+    3dmaskdump
+    
     Outputs voxel values from AFNI datasets satisfying mask criteria to an ASCII
     file.
     
@@ -349,6 +351,8 @@ def v_3dmaskdump(
     runner: Runner | None = None,
 ) -> V3dmaskdumpOutputs:
     """
+    3dmaskdump
+    
     Outputs voxel values from AFNI datasets satisfying mask criteria to an ASCII
     file.
     

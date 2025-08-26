@@ -160,6 +160,8 @@ def split_parts_gpu_execute(
     runner: Runner | None = None,
 ) -> SplitPartsGpuOutputs:
     """
+    split_parts_gpu
+    
     Splits parts of data for GPU processing.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -193,6 +195,8 @@ def split_parts_gpu(
     runner: Runner | None = None,
 ) -> SplitPartsGpuOutputs:
     """
+    split_parts_gpu
+    
     Splits parts of data for GPU processing.
     
     Author: FMRIB Analysis Group, University of Oxford

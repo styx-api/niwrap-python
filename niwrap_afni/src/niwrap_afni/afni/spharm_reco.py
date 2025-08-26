@@ -192,6 +192,8 @@ def spharm_reco_execute(
     runner: Runner | None = None,
 ) -> SpharmRecoOutputs:
     """
+    SpharmReco
+    
     Spherical Harmonics Reconstruction from a set of harmonics and their
     corresponding coefficients.
     
@@ -226,6 +228,8 @@ def spharm_reco(
     runner: Runner | None = None,
 ) -> SpharmRecoOutputs:
     """
+    SpharmReco
+    
     Spherical Harmonics Reconstruction from a set of harmonics and their
     corresponding coefficients.
     

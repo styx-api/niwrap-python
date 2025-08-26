@@ -125,6 +125,8 @@ def fatcat_matplot_execute(
     runner: Runner | None = None,
 ) -> FatcatMatplotOutputs:
     """
+    FATCAT_matplot
+    
     Launch a shiny app to visualize .netcc and/or .grid files.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def fatcat_matplot(
     runner: Runner | None = None,
 ) -> FatcatMatplotOutputs:
     """
+    FATCAT_matplot
+    
     Launch a shiny app to visualize .netcc and/or .grid files.
     
     Author: AFNI Developers

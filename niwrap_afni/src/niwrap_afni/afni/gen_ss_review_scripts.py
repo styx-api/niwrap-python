@@ -314,6 +314,8 @@ def gen_ss_review_scripts_execute(
     runner: Runner | None = None,
 ) -> GenSsReviewScriptsOutputs:
     """
+    gen_ss_review_scripts
+    
     Generate single subject analysis review scripts.
     
     Author: AFNI Developers
@@ -358,6 +360,8 @@ def gen_ss_review_scripts(
     runner: Runner | None = None,
 ) -> GenSsReviewScriptsOutputs:
     """
+    gen_ss_review_scripts
+    
     Generate single subject analysis review scripts.
     
     Author: AFNI Developers

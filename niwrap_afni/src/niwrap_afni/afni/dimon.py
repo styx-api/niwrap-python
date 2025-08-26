@@ -209,6 +209,8 @@ def dimon_execute(
     runner: Runner | None = None,
 ) -> DimonOutputs:
     """
+    Dimon
+    
     Monitor real-time acquisition of DICOM image files.
     
     Author: AFNI Developers
@@ -243,6 +245,8 @@ def dimon(
     runner: Runner | None = None,
 ) -> DimonOutputs:
     """
+    Dimon
+    
     Monitor real-time acquisition of DICOM image files.
     
     Author: AFNI Developers

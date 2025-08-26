@@ -191,6 +191,8 @@ def v_3d_amp_to_rsfc_execute(
     runner: Runner | None = None,
 ) -> V3dAmpToRsfcOutputs:
     """
+    3dAmpToRSFC
+    
     Convert spectral amplitudes into standard RSFC parameters.
     
     Author: AFNI Developers
@@ -222,6 +224,8 @@ def v_3d_amp_to_rsfc(
     runner: Runner | None = None,
 ) -> V3dAmpToRsfcOutputs:
     """
+    3dAmpToRSFC
+    
     Convert spectral amplitudes into standard RSFC parameters.
     
     Author: AFNI Developers

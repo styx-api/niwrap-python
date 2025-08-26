@@ -139,6 +139,8 @@ def mris_find_flat_regions_execute(
     runner: Runner | None = None,
 ) -> MrisFindFlatRegionsOutputs:
     """
+    mris_find_flat_regions
+    
     Compute regions in which the surface is almost perpendicular to one of the
     cardinal axes and write the results to a label file.
     
@@ -168,6 +170,8 @@ def mris_find_flat_regions(
     runner: Runner | None = None,
 ) -> MrisFindFlatRegionsOutputs:
     """
+    mris_find_flat_regions
+    
     Compute regions in which the surface is almost perpendicular to one of the
     cardinal axes and write the results to a label file.
     

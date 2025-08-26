@@ -140,6 +140,8 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectT1T2AutoEstimateAlveusMlOutputs:
     """
+    segmentSubjectT1T2_autoEstimateAlveusML
+    
     Tool for automatic estimation of the alveus in MR images using T1 and T2
     contrast.
     
@@ -170,6 +172,8 @@ def segment_subject_t1_t2_auto_estimate_alveus_ml(
     runner: Runner | None = None,
 ) -> SegmentSubjectT1T2AutoEstimateAlveusMlOutputs:
     """
+    segmentSubjectT1T2_autoEstimateAlveusML
+    
     Tool for automatic estimation of the alveus in MR images using T1 and T2
     contrast.
     

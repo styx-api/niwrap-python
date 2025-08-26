@@ -139,6 +139,8 @@ def fslinterleave_execute(
     runner: Runner | None = None,
 ) -> FslinterleaveOutputs:
     """
+    fslinterleave
+    
     Interleaves two input images slice-by-slice to produce an output image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -168,6 +170,8 @@ def fslinterleave(
     runner: Runner | None = None,
 ) -> FslinterleaveOutputs:
     """
+    fslinterleave
+    
     Interleaves two input images slice-by-slice to produce an output image.
     
     Author: FMRIB Analysis Group, University of Oxford

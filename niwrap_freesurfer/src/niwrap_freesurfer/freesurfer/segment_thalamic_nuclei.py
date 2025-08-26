@@ -128,6 +128,8 @@ def segment_thalamic_nuclei_execute(
     runner: Runner | None = None,
 ) -> SegmentThalamicNucleiOutputs:
     """
+    SegmentThalamicNuclei
+    
     A tool for segmenting thalamic nuclei using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def segment_thalamic_nuclei(
     runner: Runner | None = None,
 ) -> SegmentThalamicNucleiOutputs:
     """
+    SegmentThalamicNuclei
+    
     A tool for segmenting thalamic nuclei using FreeSurfer.
     
     Author: FreeSurfer Developers

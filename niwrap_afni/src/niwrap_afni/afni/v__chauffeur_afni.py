@@ -278,6 +278,8 @@ def v__chauffeur_afni_execute(
     runner: Runner | None = None,
 ) -> VChauffeurAfniOutputs:
     """
+    @chauffeur_afni
+    
     Automated QC snapshots generator in AFNI.
     
     Author: AFNI Developers
@@ -321,6 +323,8 @@ def v__chauffeur_afni(
     runner: Runner | None = None,
 ) -> VChauffeurAfniOutputs:
     """
+    @chauffeur_afni
+    
     Automated QC snapshots generator in AFNI.
     
     Author: AFNI Developers

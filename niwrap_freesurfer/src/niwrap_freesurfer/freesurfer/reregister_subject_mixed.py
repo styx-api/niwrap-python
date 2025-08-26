@@ -142,6 +142,8 @@ def reregister_subject_mixed_execute(
     runner: Runner | None = None,
 ) -> ReregisterSubjectMixedOutputs:
     """
+    reregister_subject_mixed
+    
     Tool for re-registering a subject's MRI volumes using Freesurfer.
     
     Author: FreeSurfer Developers
@@ -170,6 +172,8 @@ def reregister_subject_mixed(
     runner: Runner | None = None,
 ) -> ReregisterSubjectMixedOutputs:
     """
+    reregister_subject_mixed
+    
     Tool for re-registering a subject's MRI volumes using Freesurfer.
     
     Author: FreeSurfer Developers

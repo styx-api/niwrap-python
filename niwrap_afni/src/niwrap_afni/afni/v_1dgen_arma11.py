@@ -240,8 +240,10 @@ def v_1dgen_arma11_execute(
     runner: Runner | None = None,
 ) -> V1dgenArma11Outputs:
     """
-    Program to generate an ARMA(1,1) time series, for simulation studies. Results
-    are written to stdout.
+    1dgenARMA11
+    
+    Program to generate an ARMA(1,1) time series, for simulation studies.
+    Results are written to stdout.
     
     Author: AFNI Developers
     
@@ -278,8 +280,10 @@ def v_1dgen_arma11(
     runner: Runner | None = None,
 ) -> V1dgenArma11Outputs:
     """
-    Program to generate an ARMA(1,1) time series, for simulation studies. Results
-    are written to stdout.
+    1dgenARMA11
+    
+    Program to generate an ARMA(1,1) time series, for simulation studies.
+    Results are written to stdout.
     
     Author: AFNI Developers
     

@@ -378,6 +378,8 @@ def dcmdjpeg_fs_execute(
     runner: Runner | None = None,
 ) -> DcmdjpegFsOutputs:
     """
+    dcmdjpeg.fs
+    
     A tool to decode JPEG-compressed DICOM files.
     
     Author: FreeSurfer Developers
@@ -444,6 +446,8 @@ def dcmdjpeg_fs(
     runner: Runner | None = None,
 ) -> DcmdjpegFsOutputs:
     """
+    dcmdjpeg.fs
+    
     A tool to decode JPEG-compressed DICOM files.
     
     Author: FreeSurfer Developers

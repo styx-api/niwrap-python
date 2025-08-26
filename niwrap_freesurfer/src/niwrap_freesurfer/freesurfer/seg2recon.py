@@ -246,8 +246,10 @@ def seg2recon_execute(
     runner: Runner | None = None,
 ) -> Seg2reconOutputs:
     """
-    Creates and populates a subjects directory from an input image and segmentation
-    suitable for running recon-all.
+    seg2recon
+    
+    Creates and populates a subjects directory from an input image and
+    segmentation suitable for running recon-all.
     
     Author: FreeSurfer Developers
     
@@ -286,8 +288,10 @@ def seg2recon(
     runner: Runner | None = None,
 ) -> Seg2reconOutputs:
     """
-    Creates and populates a subjects directory from an input image and segmentation
-    suitable for running recon-all.
+    seg2recon
+    
+    Creates and populates a subjects directory from an input image and
+    segmentation suitable for running recon-all.
     
     Author: FreeSurfer Developers
     

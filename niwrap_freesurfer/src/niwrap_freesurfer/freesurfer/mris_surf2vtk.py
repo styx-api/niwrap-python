@@ -134,6 +134,8 @@ def mris_surf2vtk_execute(
     runner: Runner | None = None,
 ) -> MrisSurf2vtkOutputs:
     """
+    mris_surf2vtk
+    
     Conversion tool to convert surface files to VTK format.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mris_surf2vtk(
     runner: Runner | None = None,
 ) -> MrisSurf2vtkOutputs:
     """
+    mris_surf2vtk
+    
     Conversion tool to convert surface files to VTK format.
     
     Author: FreeSurfer Developers

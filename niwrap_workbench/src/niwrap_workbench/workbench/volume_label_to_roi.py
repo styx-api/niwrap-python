@@ -161,6 +161,8 @@ def volume_label_to_roi_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelToRoiOutputs:
     """
+    volume-label-to-roi
+    
     Make a volume label into an roi volume.
     
     For each map in <label-in>, a map is created in <volume-out> where all
@@ -196,6 +198,8 @@ def volume_label_to_roi(
     runner: Runner | None = None,
 ) -> VolumeLabelToRoiOutputs:
     """
+    volume-label-to-roi
+    
     Make a volume label into an roi volume.
     
     For each map in <label-in>, a map is created in <volume-out> where all

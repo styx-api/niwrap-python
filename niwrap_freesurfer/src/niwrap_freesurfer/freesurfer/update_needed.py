@@ -132,7 +132,10 @@ def update_needed_execute(
     runner: Runner | None = None,
 ) -> UpdateNeededOutputs:
     """
-    A command-line tool to update a target file based on one or more source files.
+    UpdateNeeded
+    
+    A command-line tool to update a target file based on one or more source
+    files.
     
     Author: FreeSurfer Developers
     
@@ -160,7 +163,10 @@ def update_needed(
     runner: Runner | None = None,
 ) -> UpdateNeededOutputs:
     """
-    A command-line tool to update a target file based on one or more source files.
+    UpdateNeeded
+    
+    A command-line tool to update a target file based on one or more source
+    files.
     
     Author: FreeSurfer Developers
     

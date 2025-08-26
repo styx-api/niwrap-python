@@ -156,9 +156,11 @@ def defect_seg_execute(
     runner: Runner | None = None,
 ) -> DefectSegOutputs:
     """
-    This program creates some files that allows the user to visualize and evaluate
-    the surface defects that were automatically detected and fixed by the topology
-    correction program.
+    defect-seg
+    
+    This program creates some files that allows the user to visualize and
+    evaluate the surface defects that were automatically detected and fixed by
+    the topology correction program.
     
     Author: FreeSurfer Developers
     
@@ -186,9 +188,11 @@ def defect_seg(
     runner: Runner | None = None,
 ) -> DefectSegOutputs:
     """
-    This program creates some files that allows the user to visualize and evaluate
-    the surface defects that were automatically detected and fixed by the topology
-    correction program.
+    defect-seg
+    
+    This program creates some files that allows the user to visualize and
+    evaluate the surface defects that were automatically detected and fixed by
+    the topology correction program.
     
     Author: FreeSurfer Developers
     

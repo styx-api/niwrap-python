@@ -219,6 +219,8 @@ def abids_json_tool_py_execute(
     runner: Runner | None = None,
 ) -> AbidsJsonToolPyOutputs:
     """
+    abids_json_tool.py
+    
     This script helps to manipulate json files in various ways.
     
     Author: AFNI Developers
@@ -257,6 +259,8 @@ def abids_json_tool_py(
     runner: Runner | None = None,
 ) -> AbidsJsonToolPyOutputs:
     """
+    abids_json_tool.py
+    
     This script helps to manipulate json files in various ways.
     
     Author: AFNI Developers

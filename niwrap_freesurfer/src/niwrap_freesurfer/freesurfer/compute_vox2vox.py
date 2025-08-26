@@ -133,6 +133,8 @@ def compute_vox2vox_execute(
     runner: Runner | None = None,
 ) -> ComputeVox2voxOutputs:
     """
+    compute_vox2vox
+    
     Tool for computing voxel-to-voxel transformations.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def compute_vox2vox(
     runner: Runner | None = None,
 ) -> ComputeVox2voxOutputs:
     """
+    compute_vox2vox
+    
     Tool for computing voxel-to-voxel transformations.
     
     Author: FreeSurfer Developers

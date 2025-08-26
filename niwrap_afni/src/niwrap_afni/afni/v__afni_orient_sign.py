@@ -126,6 +126,8 @@ def v__afni_orient_sign_execute(
     runner: Runner | None = None,
 ) -> VAfniOrientSignOutputs:
     """
+    @AfniOrientSign
+    
     A tool within the AFNI suite to determine the orientation signs of datasets.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def v__afni_orient_sign(
     runner: Runner | None = None,
 ) -> VAfniOrientSignOutputs:
     """
+    @AfniOrientSign
+    
     A tool within the AFNI suite to determine the orientation signs of datasets.
     
     Author: AFNI Developers

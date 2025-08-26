@@ -416,6 +416,8 @@ def tckconvert_execute(
     runner: Runner | None = None,
 ) -> TckconvertOutputs:
     """
+    tckconvert
+    
     Convert between different track file formats.
     
     The program currently supports MRtrix .tck files (input/output), ascii text
@@ -479,6 +481,8 @@ def tckconvert(
     runner: Runner | None = None,
 ) -> TckconvertOutputs:
     """
+    tckconvert
+    
     Convert between different track file formats.
     
     The program currently supports MRtrix .tck files (input/output), ascii text

@@ -301,8 +301,10 @@ def make_color_map_execute(
     runner: Runner | None = None,
 ) -> MakeColorMapOutputs:
     """
-    Utility for creating and modifying colormaps with various formats and fiducial
-    points.
+    MakeColorMap
+    
+    Utility for creating and modifying colormaps with various formats and
+    fiducial points.
     
     Author: AFNI Developers
     
@@ -347,8 +349,10 @@ def make_color_map(
     runner: Runner | None = None,
 ) -> MakeColorMapOutputs:
     """
-    Utility for creating and modifying colormaps with various formats and fiducial
-    points.
+    MakeColorMap
+    
+    Utility for creating and modifying colormaps with various formats and
+    fiducial points.
     
     Author: AFNI Developers
     

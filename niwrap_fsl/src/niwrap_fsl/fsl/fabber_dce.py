@@ -402,8 +402,10 @@ def fabber_dce_execute(
     runner: Runner | None = None,
 ) -> FabberDceOutputs:
     """
-    Fabber DCE analysis tool for model-based analysis of dynamic contrast-enhanced
-    imaging data.
+    fabber_dce
+    
+    Fabber DCE analysis tool for model-based analysis of dynamic
+    contrast-enhanced imaging data.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -464,8 +466,10 @@ def fabber_dce(
     runner: Runner | None = None,
 ) -> FabberDceOutputs:
     """
-    Fabber DCE analysis tool for model-based analysis of dynamic contrast-enhanced
-    imaging data.
+    fabber_dce
+    
+    Fabber DCE analysis tool for model-based analysis of dynamic
+    contrast-enhanced imaging data.
     
     Author: FMRIB Analysis Group, University of Oxford
     

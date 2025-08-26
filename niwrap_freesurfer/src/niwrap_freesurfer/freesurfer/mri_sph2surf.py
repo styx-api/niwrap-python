@@ -197,8 +197,10 @@ def mri_sph2surf_execute(
     runner: Runner | None = None,
 ) -> MriSph2surfOutputs:
     """
-    Converts spherical functional data to surface data in the FreeSurfer processing
-    pipeline.
+    mri-sph2surf
+    
+    Converts spherical functional data to surface data in the FreeSurfer
+    processing pipeline.
     
     Author: FreeSurfer Developers
     
@@ -232,8 +234,10 @@ def mri_sph2surf(
     runner: Runner | None = None,
 ) -> MriSph2surfOutputs:
     """
-    Converts spherical functional data to surface data in the FreeSurfer processing
-    pipeline.
+    mri-sph2surf
+    
+    Converts spherical functional data to surface data in the FreeSurfer
+    processing pipeline.
     
     Author: FreeSurfer Developers
     

@@ -119,6 +119,8 @@ def bedpostx_datacheck_execute(
     runner: Runner | None = None,
 ) -> BedpostxDatacheckOutputs:
     """
+    bedpostx_datacheck
+    
     Check the data directory for BEDPOSTX compatibility.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -145,6 +147,8 @@ def bedpostx_datacheck(
     runner: Runner | None = None,
 ) -> BedpostxDatacheckOutputs:
     """
+    bedpostx_datacheck
+    
     Check the data directory for BEDPOSTX compatibility.
     
     Author: FMRIB Analysis Group, University of Oxford

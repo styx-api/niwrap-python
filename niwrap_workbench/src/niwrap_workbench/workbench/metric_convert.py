@@ -301,6 +301,8 @@ def metric_convert_execute(
     runner: Runner | None = None,
 ) -> MetricConvertOutputs:
     """
+    metric-convert
+    
     Convert metric file to fake nifti.
     
     The purpose of this command is to convert between metric files and nifti1 so
@@ -332,6 +334,8 @@ def metric_convert(
     runner: Runner | None = None,
 ) -> MetricConvertOutputs:
     """
+    metric-convert
+    
     Convert metric file to fake nifti.
     
     The purpose of this command is to convert between metric files and nifti1 so

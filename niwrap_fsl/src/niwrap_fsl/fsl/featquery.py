@@ -210,6 +210,8 @@ def featquery_execute(
     runner: Runner | None = None,
 ) -> FeatqueryOutputs:
     """
+    featquery
+    
     Tool to extract statistics and/or time series from FEAT directories.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -249,6 +251,8 @@ def featquery(
     runner: Runner | None = None,
 ) -> FeatqueryOutputs:
     """
+    featquery
+    
     Tool to extract statistics and/or time series from FEAT directories.
     
     Author: FMRIB Analysis Group, University of Oxford

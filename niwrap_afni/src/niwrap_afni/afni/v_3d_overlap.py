@@ -142,6 +142,8 @@ def v_3d_overlap_execute(
     runner: Runner | None = None,
 ) -> V3dOverlapOutputs:
     """
+    3dOverlap
+    
     Counts the number of voxels that are nonzero in all input datasets.
     
     Author: AFNI Developers
@@ -170,6 +172,8 @@ def v_3d_overlap(
     runner: Runner | None = None,
 ) -> V3dOverlapOutputs:
     """
+    3dOverlap
+    
     Counts the number of voxels that are nonzero in all input datasets.
     
     Author: AFNI Developers

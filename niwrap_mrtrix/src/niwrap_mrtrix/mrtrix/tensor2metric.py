@@ -391,6 +391,8 @@ def tensor2metric_execute(
     runner: Runner | None = None,
 ) -> Tensor2metricOutputs:
     """
+    tensor2metric
+    
     Generate maps of tensor-derived parameters.
     
     
@@ -448,6 +450,8 @@ def tensor2metric(
     runner: Runner | None = None,
 ) -> Tensor2metricOutputs:
     """
+    tensor2metric
+    
     Generate maps of tensor-derived parameters.
     
     

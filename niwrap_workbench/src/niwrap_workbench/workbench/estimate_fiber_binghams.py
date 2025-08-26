@@ -174,6 +174,8 @@ def estimate_fiber_binghams_execute(
     runner: Runner | None = None,
 ) -> EstimateFiberBinghamsOutputs:
     """
+    estimate-fiber-binghams
+    
     Estimate fiber orientation distributions from bedpostx samples.
     
     This command does an estimation of a bingham distribution for each fiber
@@ -249,6 +251,8 @@ def estimate_fiber_binghams(
     runner: Runner | None = None,
 ) -> EstimateFiberBinghamsOutputs:
     """
+    estimate-fiber-binghams
+    
     Estimate fiber orientation distributions from bedpostx samples.
     
     This command does an estimation of a bingham distribution for each fiber

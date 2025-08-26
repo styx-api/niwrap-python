@@ -239,6 +239,8 @@ def mri_segment_hypothalamic_subunits_execute(
     runner: Runner | None = None,
 ) -> MriSegmentHypothalamicSubunitsOutputs:
     """
+    mri_segment_hypothalamic_subunits
+    
     This module segments hypothalamic subunits and can be run in two modes: on
     FreeSurfer subjects or on any T1-weighted scan(s) of approximately 1mm
     resolution.
@@ -277,6 +279,8 @@ def mri_segment_hypothalamic_subunits(
     runner: Runner | None = None,
 ) -> MriSegmentHypothalamicSubunitsOutputs:
     """
+    mri_segment_hypothalamic_subunits
+    
     This module segments hypothalamic subunits and can be run in two modes: on
     FreeSurfer subjects or on any T1-weighted scan(s) of approximately 1mm
     resolution.

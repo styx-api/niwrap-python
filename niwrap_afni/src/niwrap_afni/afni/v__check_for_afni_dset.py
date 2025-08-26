@@ -124,6 +124,8 @@ def v__check_for_afni_dset_execute(
     runner: Runner | None = None,
 ) -> VCheckForAfniDsetOutputs:
     """
+    @CheckForAfniDset
+    
     Check for the existence of AFNI datasets.
     
     Author: AFNI Developers
@@ -150,6 +152,8 @@ def v__check_for_afni_dset(
     runner: Runner | None = None,
 ) -> VCheckForAfniDsetOutputs:
     """
+    @CheckForAfniDset
+    
     Check for the existence of AFNI datasets.
     
     Author: AFNI Developers

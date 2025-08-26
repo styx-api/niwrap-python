@@ -283,6 +283,8 @@ def border_merge_execute(
     runner: Runner | None = None,
 ) -> BorderMergeOutputs:
     """
+    border-merge
+    
     Merge border files into a new file.
     
     Takes one or more border files and makes a new border file from the borders
@@ -319,6 +321,8 @@ def border_merge(
     runner: Runner | None = None,
 ) -> BorderMergeOutputs:
     """
+    border-merge
+    
     Merge border files into a new file.
     
     Takes one or more border files and makes a new border file from the borders

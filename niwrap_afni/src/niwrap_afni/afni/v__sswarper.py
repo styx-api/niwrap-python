@@ -336,8 +336,11 @@ def v__sswarper_execute(
     runner: Runner | None = None,
 ) -> VSswarperOutputs:
     """
-    Dual purposes for processing a given subject's anatomical volume: skull-strip
-    the brain and calculate the warp to a reference template/standard space.
+    @SSwarper
+    
+    Dual purposes for processing a given subject's anatomical volume:
+    skull-strip the brain and calculate the warp to a reference
+    template/standard space.
     
     Author: AFNI Developers
     
@@ -385,8 +388,11 @@ def v__sswarper(
     runner: Runner | None = None,
 ) -> VSswarperOutputs:
     """
-    Dual purposes for processing a given subject's anatomical volume: skull-strip
-    the brain and calculate the warp to a reference template/standard space.
+    @SSwarper
+    
+    Dual purposes for processing a given subject's anatomical volume:
+    skull-strip the brain and calculate the warp to a reference
+    template/standard space.
     
     Author: AFNI Developers
     

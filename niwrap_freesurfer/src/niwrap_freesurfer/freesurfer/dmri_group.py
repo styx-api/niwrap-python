@@ -168,6 +168,8 @@ def dmri_group_execute(
     runner: Runner | None = None,
 ) -> DmriGroupOutputs:
     """
+    dmri_group
+    
     A tool to process and analyze diffusion MRI group data.
     
     Author: FreeSurfer Developers
@@ -200,6 +202,8 @@ def dmri_group(
     runner: Runner | None = None,
 ) -> DmriGroupOutputs:
     """
+    dmri_group
+    
     A tool to process and analyze diffusion MRI group data.
     
     Author: FreeSurfer Developers

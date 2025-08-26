@@ -174,8 +174,10 @@ def mri_fuse_segmentations_execute(
     runner: Runner | None = None,
 ) -> MriFuseSegmentationsOutputs:
     """
-    Fuse a set of segmentations (asegs) into an initial estimate of a longitudinal
-    one.
+    mri_fuse_segmentations
+    
+    Fuse a set of segmentations (asegs) into an initial estimate of a
+    longitudinal one.
     
     Author: FreeSurfer Developers
     
@@ -207,8 +209,10 @@ def mri_fuse_segmentations(
     runner: Runner | None = None,
 ) -> MriFuseSegmentationsOutputs:
     """
-    Fuse a set of segmentations (asegs) into an initial estimate of a longitudinal
-    one.
+    mri_fuse_segmentations
+    
+    Fuse a set of segmentations (asegs) into an initial estimate of a
+    longitudinal one.
     
     Author: FreeSurfer Developers
     

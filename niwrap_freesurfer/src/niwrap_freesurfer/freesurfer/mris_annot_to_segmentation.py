@@ -148,6 +148,8 @@ def mris_annot_to_segmentation_execute(
     runner: Runner | None = None,
 ) -> MrisAnnotToSegmentationOutputs:
     """
+    mris_annot_to_segmentation
+    
     Converts annotation files to segmentation volumes in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -179,6 +181,8 @@ def mris_annot_to_segmentation(
     runner: Runner | None = None,
 ) -> MrisAnnotToSegmentationOutputs:
     """
+    mris_annot_to_segmentation
+    
     Converts annotation files to segmentation volumes in FreeSurfer.
     
     Author: FreeSurfer Developers

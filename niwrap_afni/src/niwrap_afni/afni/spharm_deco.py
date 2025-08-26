@@ -199,6 +199,8 @@ def spharm_deco_execute(
     runner: Runner | None = None,
 ) -> SpharmDecoOutputs:
     """
+    SpharmDeco
+    
     Spherical Harmonics Decomposition of a surface's coordinates or data.
     
     Author: AFNI Developers
@@ -234,6 +236,8 @@ def spharm_deco(
     runner: Runner | None = None,
 ) -> SpharmDecoOutputs:
     """
+    SpharmDeco
+    
     Spherical Harmonics Decomposition of a surface's coordinates or data.
     
     Author: AFNI Developers

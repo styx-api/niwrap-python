@@ -144,6 +144,8 @@ def imgreg_4dfp_execute(
     runner: Runner | None = None,
 ) -> Imgreg4dfpOutputs:
     """
+    imgreg_4dfp
+    
     Image registration utility using 4dfp.
     
     Author: FreeSurfer Developers
@@ -175,6 +177,8 @@ def imgreg_4dfp(
     runner: Runner | None = None,
 ) -> Imgreg4dfpOutputs:
     """
+    imgreg_4dfp
+    
     Image registration utility using 4dfp.
     
     Author: FreeSurfer Developers

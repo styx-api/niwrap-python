@@ -155,6 +155,8 @@ def apply_morph_execute(
     runner: Runner | None = None,
 ) -> ApplyMorphOutputs:
     """
+    applyMorph
+    
     A tool for applying a morph to a volume using a template and a transform.
     
     Author: FreeSurfer Developers
@@ -185,6 +187,8 @@ def apply_morph(
     runner: Runner | None = None,
 ) -> ApplyMorphOutputs:
     """
+    applyMorph
+    
     A tool for applying a morph to a volume using a template and a transform.
     
     Author: FreeSurfer Developers

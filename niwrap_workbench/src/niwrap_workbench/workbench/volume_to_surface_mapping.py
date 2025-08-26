@@ -528,6 +528,8 @@ def volume_to_surface_mapping_execute(
     runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
+    volume-to-surface-mapping
+    
     Map volume to surface.
     
     You must specify exactly one mapping method. Enclosing voxel uses the value
@@ -600,6 +602,8 @@ def volume_to_surface_mapping(
     runner: Runner | None = None,
 ) -> VolumeToSurfaceMappingOutputs:
     """
+    volume-to-surface-mapping
+    
     Map volume to surface.
     
     You must specify exactly one mapping method. Enclosing voxel uses the value

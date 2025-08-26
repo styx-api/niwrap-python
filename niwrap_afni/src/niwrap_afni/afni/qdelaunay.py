@@ -380,6 +380,8 @@ def qdelaunay_execute(
     runner: Runner | None = None,
 ) -> QdelaunayOutputs:
     """
+    qdelaunay
+    
     Compute the Delaunay triangulation using Qhull.
     
     Author: AFNI Developers
@@ -438,6 +440,8 @@ def qdelaunay(
     runner: Runner | None = None,
 ) -> QdelaunayOutputs:
     """
+    qdelaunay
+    
     Compute the Delaunay triangulation using Qhull.
     
     Author: AFNI Developers

@@ -133,6 +133,8 @@ def segment_subfields_t1_longitudinal_execute(
     runner: Runner | None = None,
 ) -> SegmentSubfieldsT1LongitudinalOutputs:
     """
+    SegmentSubfieldsT1Longitudinal
+    
     FreeSurfer tool for segmenting subfields in longitudinal T1-weighted images.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def segment_subfields_t1_longitudinal(
     runner: Runner | None = None,
 ) -> SegmentSubfieldsT1LongitudinalOutputs:
     """
+    SegmentSubfieldsT1Longitudinal
+    
     FreeSurfer tool for segmenting subfields in longitudinal T1-weighted images.
     
     Author: FreeSurfer Developers

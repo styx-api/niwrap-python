@@ -126,8 +126,10 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh_execute(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs:
     """
-    A script to automatically estimate Alveus using machine learning with the given
-    subject T1 image.
+    run_segmentSubjectT1_autoEstimateAlveusML.sh
+    
+    A script to automatically estimate Alveus using machine learning with the
+    given subject T1 image.
     
     Author: FreeSurfer Developers
     
@@ -154,8 +156,10 @@ def run_segment_subject_t1_auto_estimate_alveus_ml_sh(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectT1AutoEstimateAlveusMlShOutputs:
     """
-    A script to automatically estimate Alveus using machine learning with the given
-    subject T1 image.
+    run_segmentSubjectT1_autoEstimateAlveusML.sh
+    
+    A script to automatically estimate Alveus using machine learning with the
+    given subject T1 image.
     
     Author: FreeSurfer Developers
     

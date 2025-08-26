@@ -121,6 +121,8 @@ def mri_rf_long_label_execute(
     runner: Runner | None = None,
 ) -> MriRfLongLabelOutputs:
     """
+    mri_rf_long_label
+    
     The mri_rf_long_label tool has been removed from this version of FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -147,6 +149,8 @@ def mri_rf_long_label(
     runner: Runner | None = None,
 ) -> MriRfLongLabelOutputs:
     """
+    mri_rf_long_label
+    
     The mri_rf_long_label tool has been removed from this version of FreeSurfer.
     
     Author: FreeSurfer Developers

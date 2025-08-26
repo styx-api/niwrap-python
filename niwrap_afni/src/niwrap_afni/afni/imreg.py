@@ -278,6 +278,8 @@ def imreg_execute(
     runner: Runner | None = None,
 ) -> ImregOutputs:
     """
+    imreg
+    
     Registers each 2D image in 'image_sequence' to 'base_image'.
     
     Author: AFNI Developers
@@ -323,6 +325,8 @@ def imreg(
     runner: Runner | None = None,
 ) -> ImregOutputs:
     """
+    imreg
+    
     Registers each 2D image in 'image_sequence' to 'base_image'.
     
     Author: AFNI Developers

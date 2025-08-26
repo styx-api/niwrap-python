@@ -142,6 +142,8 @@ def v_3d_afnito_niml_execute(
     runner: Runner | None = None,
 ) -> V3dAfnitoNimlOutputs:
     """
+    3dAFNItoNIML
+    
     Dumps AFNI dataset header information to stdout in NIML format. Mostly for
     debugging and testing purposes!.
     
@@ -172,6 +174,8 @@ def v_3d_afnito_niml(
     runner: Runner | None = None,
 ) -> V3dAfnitoNimlOutputs:
     """
+    3dAFNItoNIML
+    
     Dumps AFNI dataset header information to stdout in NIML format. Mostly for
     debugging and testing purposes!.
     

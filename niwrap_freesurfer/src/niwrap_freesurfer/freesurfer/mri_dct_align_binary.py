@@ -133,6 +133,8 @@ def mri_dct_align_binary_execute(
     runner: Runner | None = None,
 ) -> MriDctAlignBinaryOutputs:
     """
+    mri_dct_align_binary
+    
     A binary tool for aligning MRI images using DCT.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_dct_align_binary(
     runner: Runner | None = None,
 ) -> MriDctAlignBinaryOutputs:
     """
+    mri_dct_align_binary
+    
     A binary tool for aligning MRI images using DCT.
     
     Author: FreeSurfer Developers

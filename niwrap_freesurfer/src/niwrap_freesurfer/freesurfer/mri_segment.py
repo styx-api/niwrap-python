@@ -411,6 +411,8 @@ def mri_segment_execute(
     runner: Runner | None = None,
 ) -> MriSegmentOutputs:
     """
+    mri_segment
+    
     Segments white matter from the input volume.
     
     Author: FreeSurfer Developers
@@ -470,6 +472,8 @@ def mri_segment(
     runner: Runner | None = None,
 ) -> MriSegmentOutputs:
     """
+    mri_segment
+    
     Segments white matter from the input volume.
     
     Author: FreeSurfer Developers

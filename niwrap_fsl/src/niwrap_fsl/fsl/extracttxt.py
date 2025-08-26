@@ -143,6 +143,8 @@ def extracttxt_execute(
     runner: Runner | None = None,
 ) -> ExtracttxtOutputs:
     """
+    extracttxt
+    
     Extracts text from a file based on a search word.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -172,6 +174,8 @@ def extracttxt(
     runner: Runner | None = None,
 ) -> ExtracttxtOutputs:
     """
+    extracttxt
+    
     Extracts text from a file based on a search word.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -273,8 +273,10 @@ def mris_ca_label_execute(
     runner: Runner | None = None,
 ) -> MrisCaLabelOutputs:
     """
-    Produces an annotation file in which each cortical surface vertex is assigned a
-    neuroanatomical label using a previously-prepared atlas file.
+    mris_ca_label
+    
+    Produces an annotation file in which each cortical surface vertex is
+    assigned a neuroanatomical label using a previously-prepared atlas file.
     
     Author: FreeSurfer Developers
     
@@ -318,8 +320,10 @@ def mris_ca_label(
     runner: Runner | None = None,
 ) -> MrisCaLabelOutputs:
     """
-    Produces an annotation file in which each cortical surface vertex is assigned a
-    neuroanatomical label using a previously-prepared atlas file.
+    mris_ca_label
+    
+    Produces an annotation file in which each cortical surface vertex is
+    assigned a neuroanatomical label using a previously-prepared atlas file.
     
     Author: FreeSurfer Developers
     

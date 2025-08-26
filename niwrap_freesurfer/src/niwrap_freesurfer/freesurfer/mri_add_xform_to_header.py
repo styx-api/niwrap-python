@@ -145,6 +145,8 @@ def mri_add_xform_to_header_execute(
     runner: Runner | None = None,
 ) -> MriAddXformToHeaderOutputs:
     """
+    mri_add_xform_to_header
+    
     Program to add specified transformation to the volume header.
     
     Author: FreeSurfer Developers
@@ -175,6 +177,8 @@ def mri_add_xform_to_header(
     runner: Runner | None = None,
 ) -> MriAddXformToHeaderOutputs:
     """
+    mri_add_xform_to_header
+    
     Program to add specified transformation to the volume header.
     
     Author: FreeSurfer Developers

@@ -150,9 +150,11 @@ def v__grayplot_execute(
     runner: Runner | None = None,
 ) -> VGrayplotOutputs:
     """
+    @grayplot
+    
     Script to read files from an afni_proc.py results directory and produce a
-    grayplot from the errts dataset(s), combined with a motion magnitude indicator
-    graph.
+    grayplot from the errts dataset(s), combined with a motion magnitude
+    indicator graph.
     
     Author: AFNI Developers
     
@@ -182,9 +184,11 @@ def v__grayplot(
     runner: Runner | None = None,
 ) -> VGrayplotOutputs:
     """
+    @grayplot
+    
     Script to read files from an afni_proc.py results directory and produce a
-    grayplot from the errts dataset(s), combined with a motion magnitude indicator
-    graph.
+    grayplot from the errts dataset(s), combined with a motion magnitude
+    indicator graph.
     
     Author: AFNI Developers
     

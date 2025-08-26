@@ -191,8 +191,10 @@ def run_first_all_execute(
     runner: Runner | None = None,
 ) -> RunFirstAllOutputs:
     """
-    FIRST - FMRIB's Integrated Registration and Segmentation Tool for subcortical
-    brain structures.
+    run_first_all
+    
+    FIRST - FMRIB's Integrated Registration and Segmentation Tool for
+    subcortical brain structures.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -226,8 +228,10 @@ def run_first_all(
     runner: Runner | None = None,
 ) -> RunFirstAllOutputs:
     """
-    FIRST - FMRIB's Integrated Registration and Segmentation Tool for subcortical
-    brain structures.
+    run_first_all
+    
+    FIRST - FMRIB's Integrated Registration and Segmentation Tool for
+    subcortical brain structures.
     
     Author: FMRIB Analysis Group, University of Oxford
     

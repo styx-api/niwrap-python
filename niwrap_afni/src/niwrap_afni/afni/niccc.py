@@ -212,8 +212,10 @@ def niccc_execute(
     runner: Runner | None = None,
 ) -> NicccOutputs:
     """
-    A program for conducting certain NIML tests on input from streamspec and write
-    the results to stderr.
+    niccc
+    
+    A program for conducting certain NIML tests on input from streamspec and
+    write the results to stderr.
     
     Author: AFNI Developers
     
@@ -250,8 +252,10 @@ def niccc(
     runner: Runner | None = None,
 ) -> NicccOutputs:
     """
-    A program for conducting certain NIML tests on input from streamspec and write
-    the results to stderr.
+    niccc
+    
+    A program for conducting certain NIML tests on input from streamspec and
+    write the results to stderr.
     
     Author: AFNI Developers
     

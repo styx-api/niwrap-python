@@ -146,6 +146,8 @@ def signed_distance_to_surface_execute(
     runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
     """
+    signed-distance-to-surface
+    
     Compute signed distance from one surface to another.
     
     Compute the signed distance function of the reference surface at every
@@ -193,6 +195,8 @@ def signed_distance_to_surface(
     runner: Runner | None = None,
 ) -> SignedDistanceToSurfaceOutputs:
     """
+    signed-distance-to-surface
+    
     Compute signed distance from one surface to another.
     
     Compute the signed distance function of the reference surface at every

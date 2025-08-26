@@ -124,6 +124,8 @@ def mri_strip_subject_info_execute(
     runner: Runner | None = None,
 ) -> MriStripSubjectInfoOutputs:
     """
+    mri_strip_subject_info
+    
     A tool to strip subject information from MRI data files.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def mri_strip_subject_info(
     runner: Runner | None = None,
 ) -> MriStripSubjectInfoOutputs:
     """
+    mri_strip_subject_info
+    
     A tool to strip subject information from MRI data files.
     
     Author: FreeSurfer Developers

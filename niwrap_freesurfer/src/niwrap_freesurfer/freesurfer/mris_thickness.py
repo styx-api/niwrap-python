@@ -173,6 +173,8 @@ def mris_thickness_execute(
     runner: Runner | None = None,
 ) -> MrisThicknessOutputs:
     """
+    mris_thickness
+    
     Measures the thickness of the cortical surface.
     
     Author: FreeSurfer Developers
@@ -205,6 +207,8 @@ def mris_thickness(
     runner: Runner | None = None,
 ) -> MrisThicknessOutputs:
     """
+    mris_thickness
+    
     Measures the thickness of the cortical surface.
     
     Author: FreeSurfer Developers

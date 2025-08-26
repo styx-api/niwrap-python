@@ -124,6 +124,8 @@ def fname2ext_execute(
     runner: Runner | None = None,
 ) -> Fname2extOutputs:
     """
+    fname2ext
+    
     Converts the name of a file to its extension.
     
     Author: FreeSurfer Developers
@@ -150,6 +152,8 @@ def fname2ext(
     runner: Runner | None = None,
 ) -> Fname2extOutputs:
     """
+    fname2ext
+    
     Converts the name of a file to its extension.
     
     Author: FreeSurfer Developers

@@ -175,6 +175,8 @@ def mris_resample_execute(
     runner: Runner | None = None,
 ) -> MrisResampleOutputs:
     """
+    mris_resample
+    
     Resample cortical surfaces in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -206,6 +208,8 @@ def mris_resample(
     runner: Runner | None = None,
 ) -> MrisResampleOutputs:
     """
+    mris_resample
+    
     Resample cortical surfaces in FreeSurfer.
     
     Author: FreeSurfer Developers

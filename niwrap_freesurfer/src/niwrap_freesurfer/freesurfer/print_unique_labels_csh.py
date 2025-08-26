@@ -154,6 +154,8 @@ def print_unique_labels_csh_execute(
     runner: Runner | None = None,
 ) -> PrintUniqueLabelsCshOutputs:
     """
+    print_unique_labels.csh
+    
     Prints the list of unique labels (with structure name) in the input volume.
     
     Author: FreeSurfer Developers
@@ -184,6 +186,8 @@ def print_unique_labels_csh(
     runner: Runner | None = None,
 ) -> PrintUniqueLabelsCshOutputs:
     """
+    print_unique_labels.csh
+    
     Prints the list of unique labels (with structure name) in the input volume.
     
     Author: FreeSurfer Developers

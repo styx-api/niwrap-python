@@ -10415,6 +10415,8 @@ def c3d_execute(
     runner: Runner | None = None,
 ) -> C3dOutputs:
     """
+    c3d
+    
     C3D is a command-line tool for medical image processing.
     
     Author: Convert3D Developers
@@ -10443,6 +10445,8 @@ def c3d_(
     runner: Runner | None = None,
 ) -> C3dOutputs:
     """
+    c3d
+    
     C3D is a command-line tool for medical image processing.
     
     Author: Convert3D Developers

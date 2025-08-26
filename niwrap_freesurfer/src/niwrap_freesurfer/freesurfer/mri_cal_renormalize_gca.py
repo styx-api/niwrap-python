@@ -143,6 +143,8 @@ def mri_cal_renormalize_gca_execute(
     runner: Runner | None = None,
 ) -> MriCalRenormalizeGcaOutputs:
     """
+    mri_cal_renormalize_gca
+    
     Tool for atlas renormalization in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -173,6 +175,8 @@ def mri_cal_renormalize_gca(
     runner: Runner | None = None,
 ) -> MriCalRenormalizeGcaOutputs:
     """
+    mri_cal_renormalize_gca
+    
     Tool for atlas renormalization in FreeSurfer.
     
     Author: FreeSurfer Developers

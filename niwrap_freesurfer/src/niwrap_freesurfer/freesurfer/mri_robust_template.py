@@ -444,6 +444,8 @@ def mri_robust_template_execute(
     runner: Runner | None = None,
 ) -> MriRobustTemplateOutputs:
     """
+    mri_robust_template
+    
     Constructs an unbiased robust template for longitudinal volumes using an
     iterative method.
     
@@ -507,6 +509,8 @@ def mri_robust_template(
     runner: Runner | None = None,
 ) -> MriRobustTemplateOutputs:
     """
+    mri_robust_template
+    
     Constructs an unbiased robust template for longitudinal volumes using an
     iterative method.
     

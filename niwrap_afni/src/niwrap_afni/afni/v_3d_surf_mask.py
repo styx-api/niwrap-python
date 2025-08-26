@@ -181,8 +181,10 @@ def v_3d_surf_mask_execute(
     runner: Runner | None = None,
 ) -> V3dSurfMaskOutputs:
     """
-    Creates volumetric datasets marking voxels based on their location relative to a
-    surface.
+    3dSurfMask
+    
+    Creates volumetric datasets marking voxels based on their location relative
+    to a surface.
     
     Author: AFNI Developers
     
@@ -216,8 +218,10 @@ def v_3d_surf_mask(
     runner: Runner | None = None,
 ) -> V3dSurfMaskOutputs:
     """
-    Creates volumetric datasets marking voxels based on their location relative to a
-    surface.
+    3dSurfMask
+    
+    Creates volumetric datasets marking voxels based on their location relative
+    to a surface.
     
     Author: AFNI Developers
     

@@ -138,6 +138,8 @@ def label2flat_execute(
     runner: Runner | None = None,
 ) -> Label2flatOutputs:
     """
+    label2flat
+    
     A tool used in FreeSurfer to process labeling and patch files.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def label2flat(
     runner: Runner | None = None,
 ) -> Label2flatOutputs:
     """
+    label2flat
+    
     A tool used in FreeSurfer to process labeling and patch files.
     
     Author: FreeSurfer Developers

@@ -159,6 +159,8 @@ def ants_align_origin_execute(
     runner: Runner | None = None,
 ) -> AntsAlignOriginOutputs:
     """
+    antsAlignOrigin
+    
     antsAlignOrigin, applied to an input image, transforms it according to a
     reference image and a transform (or a set of transforms).
     
@@ -189,6 +191,8 @@ def ants_align_origin(
     runner: Runner | None = None,
 ) -> AntsAlignOriginOutputs:
     """
+    antsAlignOrigin
+    
     antsAlignOrigin, applied to an input image, transforms it according to a
     reference image and a transform (or a set of transforms).
     

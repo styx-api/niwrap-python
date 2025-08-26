@@ -136,6 +136,8 @@ def rmsdiff_execute(
     runner: Runner | None = None,
 ) -> RmsdiffOutputs:
     """
+    rmsdiff
+    
     Outputs RMS deviation between matrices (in mm).
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -165,6 +167,8 @@ def rmsdiff(
     runner: Runner | None = None,
 ) -> RmsdiffOutputs:
     """
+    rmsdiff
+    
     Outputs RMS deviation between matrices (in mm).
     
     Author: FMRIB Analysis Group, University of Oxford

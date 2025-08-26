@@ -336,6 +336,8 @@ def mri_cvs_register_execute(
     runner: Runner | None = None,
 ) -> MriCvsRegisterOutputs:
     """
+    mri_cvs_register
+    
     Combined Volume and Surface Registration.
     
     Author: FreeSurfer Developers
@@ -388,6 +390,8 @@ def mri_cvs_register(
     runner: Runner | None = None,
 ) -> MriCvsRegisterOutputs:
     """
+    mri_cvs_register
+    
     Combined Volume and Surface Registration.
     
     Author: FreeSurfer Developers

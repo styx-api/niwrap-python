@@ -125,6 +125,8 @@ def fslsize_execute(
     runner: Runner | None = None,
 ) -> FslsizeOutputs:
     """
+    fslsize
+    
     Tool to output the size of an image file in FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -152,6 +154,8 @@ def fslsize(
     runner: Runner | None = None,
 ) -> FslsizeOutputs:
     """
+    fslsize
+    
     Tool to output the size of an image file in FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

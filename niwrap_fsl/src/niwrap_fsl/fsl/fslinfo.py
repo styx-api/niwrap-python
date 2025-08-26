@@ -119,6 +119,8 @@ def fslinfo_execute(
     runner: Runner | None = None,
 ) -> FslinfoOutputs:
     """
+    fslinfo
+    
     Display information about NIFTI-1 image file.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -145,6 +147,8 @@ def fslinfo(
     runner: Runner | None = None,
 ) -> FslinfoOutputs:
     """
+    fslinfo
+    
     Display information about NIFTI-1 image file.
     
     Author: FMRIB Analysis Group, University of Oxford

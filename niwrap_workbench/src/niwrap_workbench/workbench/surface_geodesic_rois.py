@@ -185,6 +185,8 @@ def surface_geodesic_rois_execute(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicRoisOutputs:
     """
+    surface-geodesic-rois
+    
     Draw geodesic limited rois at vertices.
     
     For each vertex in the list file, a column in the output metric is created,
@@ -231,6 +233,8 @@ def surface_geodesic_rois(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicRoisOutputs:
     """
+    surface-geodesic-rois
+    
     Draw geodesic limited rois at vertices.
     
     For each vertex in the list file, a column in the output metric is created,

@@ -174,6 +174,8 @@ def stimband_execute(
     runner: Runner | None = None,
 ) -> StimbandOutputs:
     """
+    stimband
+    
     Determines frequency band covering at least 90% of the 'power' (|FFT|^2) of
     stimulus columns from X.nocensor.xmat.1D files.
     
@@ -206,6 +208,8 @@ def stimband(
     runner: Runner | None = None,
 ) -> StimbandOutputs:
     """
+    stimband
+    
     Determines frequency band covering at least 90% of the 'power' (|FFT|^2) of
     stimulus columns from X.nocensor.xmat.1D files.
     

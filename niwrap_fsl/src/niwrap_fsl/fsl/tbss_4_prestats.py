@@ -120,6 +120,8 @@ def tbss_4_prestats_execute(
     runner: Runner | None = None,
 ) -> Tbss4PrestatsOutputs:
     """
+    tbss_4_prestats
+    
     A tool for thresholding the Mean FA Skeleton in TBSS analysis.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -146,6 +148,8 @@ def tbss_4_prestats(
     runner: Runner | None = None,
 ) -> Tbss4PrestatsOutputs:
     """
+    tbss_4_prestats
+    
     A tool for thresholding the Mean FA Skeleton in TBSS analysis.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -128,6 +128,8 @@ def mri_compile_edits_execute(
     runner: Runner | None = None,
 ) -> MriCompileEditsOutputs:
     """
+    mri_compile_edits
+    
     Program to create a single volume showing all the volumetric edits made to a
     subject.
     
@@ -156,6 +158,8 @@ def mri_compile_edits(
     runner: Runner | None = None,
 ) -> MriCompileEditsOutputs:
     """
+    mri_compile_edits
+    
     Program to create a single volume showing all the volumetric edits made to a
     subject.
     

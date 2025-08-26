@@ -156,6 +156,8 @@ def mri_vessel_segment_execute(
     runner: Runner | None = None,
 ) -> MriVesselSegmentOutputs:
     """
+    mri_vessel_segment
+    
     MRI vessel segmentation tool.
     
     Author: FreeSurfer Developers
@@ -186,6 +188,8 @@ def mri_vessel_segment(
     runner: Runner | None = None,
 ) -> MriVesselSegmentOutputs:
     """
+    mri_vessel_segment
+    
     MRI vessel segmentation tool.
     
     Author: FreeSurfer Developers

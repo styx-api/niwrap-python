@@ -242,6 +242,8 @@ def mris_multimodal_surface_placement_execute(
     runner: Runner | None = None,
 ) -> MrisMultimodalSurfacePlacementOutputs:
     """
+    mris_multimodal_surface_placement
+    
     FreeSurfer command for multimodal surface placement.
     
     Author: FreeSurfer Developers
@@ -283,6 +285,8 @@ def mris_multimodal_surface_placement(
     runner: Runner | None = None,
 ) -> MrisMultimodalSurfacePlacementOutputs:
     """
+    mris_multimodal_surface_placement
+    
     FreeSurfer command for multimodal surface placement.
     
     Author: FreeSurfer Developers

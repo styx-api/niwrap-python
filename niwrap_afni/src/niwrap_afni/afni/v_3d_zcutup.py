@@ -147,6 +147,8 @@ def v_3d_zcutup_execute(
     runner: Runner | None = None,
 ) -> V3dZcutupOutputs:
     """
+    3dZcutup
+    
     Cut slices off a dataset in its z-direction and write a new dataset.
     
     Author: AFNI Developers
@@ -175,6 +177,8 @@ def v_3d_zcutup(
     runner: Runner | None = None,
 ) -> V3dZcutupOutputs:
     """
+    3dZcutup
+    
     Cut slices off a dataset in its z-direction and write a new dataset.
     
     Author: AFNI Developers

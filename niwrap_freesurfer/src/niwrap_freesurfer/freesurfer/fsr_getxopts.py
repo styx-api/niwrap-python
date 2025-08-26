@@ -120,6 +120,8 @@ def fsr_getxopts_execute(
     runner: Runner | None = None,
 ) -> FsrGetxoptsOutputs:
     """
+    fsr-getxopts
+    
     Tool to retrieve extended options for a specific context or configuration.
     
     Author: FreeSurfer Developers
@@ -146,6 +148,8 @@ def fsr_getxopts(
     runner: Runner | None = None,
 ) -> FsrGetxoptsOutputs:
     """
+    fsr-getxopts
+    
     Tool to retrieve extended options for a specific context or configuration.
     
     Author: FreeSurfer Developers

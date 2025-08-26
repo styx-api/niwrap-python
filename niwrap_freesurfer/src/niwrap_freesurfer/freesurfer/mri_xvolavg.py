@@ -154,6 +154,8 @@ def mri_xvolavg_execute(
     runner: Runner | None = None,
 ) -> MriXvolavgOutputs:
     """
+    mri_xvolavg
+    
     Tool to average multiple volumes together (including 4D volumes).
     
     Author: FreeSurfer Developers
@@ -183,6 +185,8 @@ def mri_xvolavg(
     runner: Runner | None = None,
 ) -> MriXvolavgOutputs:
     """
+    mri_xvolavg
+    
     Tool to average multiple volumes together (including 4D volumes).
     
     Author: FreeSurfer Developers

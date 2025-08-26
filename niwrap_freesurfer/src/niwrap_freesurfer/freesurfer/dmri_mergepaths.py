@@ -166,6 +166,8 @@ def dmri_mergepaths_execute(
     runner: Runner | None = None,
 ) -> DmriMergepathsOutputs:
     """
+    dmri_mergepaths
+    
     A tool for merging diffusion MRI path data.
     
     Author: FreeSurfer Developers
@@ -198,6 +200,8 @@ def dmri_mergepaths(
     runner: Runner | None = None,
 ) -> DmriMergepathsOutputs:
     """
+    dmri_mergepaths
+    
     A tool for merging diffusion MRI path data.
     
     Author: FreeSurfer Developers

@@ -128,6 +128,8 @@ def segment_subject_notal2_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectNotal2Outputs:
     """
+    segment_subject_notal2
+    
     FreeSurfer tool for segmenting subject data using notal2 algorithm.
     
     Author: FreeSurfer Developers
@@ -154,6 +156,8 @@ def segment_subject_notal2(
     runner: Runner | None = None,
 ) -> SegmentSubjectNotal2Outputs:
     """
+    segment_subject_notal2
+    
     FreeSurfer tool for segmenting subject data using notal2 algorithm.
     
     Author: FreeSurfer Developers

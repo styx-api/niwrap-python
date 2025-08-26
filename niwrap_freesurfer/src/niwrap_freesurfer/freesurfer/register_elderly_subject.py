@@ -163,6 +163,8 @@ def register_elderly_subject_execute(
     runner: Runner | None = None,
 ) -> RegisterElderlySubjectOutputs:
     """
+    register_elderly_subject
+    
     Tool for registering MRI images of elderly subjects using Freesurfer's
     mri_em_register.
     
@@ -195,6 +197,8 @@ def register_elderly_subject(
     runner: Runner | None = None,
 ) -> RegisterElderlySubjectOutputs:
     """
+    register_elderly_subject
+    
     Tool for registering MRI images of elderly subjects using Freesurfer's
     mri_em_register.
     

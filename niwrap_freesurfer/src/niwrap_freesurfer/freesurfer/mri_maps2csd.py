@@ -212,6 +212,8 @@ def mri_maps2csd_execute(
     runner: Runner | None = None,
 ) -> MriMaps2csdOutputs:
     """
+    mri_maps2csd
+    
     Tool to create CSD files and PDFs from input maps and apply them.
     
     Author: FreeSurfer Developers
@@ -248,6 +250,8 @@ def mri_maps2csd(
     runner: Runner | None = None,
 ) -> MriMaps2csdOutputs:
     """
+    mri_maps2csd
+    
     Tool to create CSD files and PDFs from input maps and apply them.
     
     Author: FreeSurfer Developers

@@ -725,6 +725,8 @@ def mrinfo_execute(
     runner: Runner | None = None,
 ) -> MrinfoOutputs:
     """
+    mrinfo
+    
     Display image header information, or extract specific information from the
     header.
     
@@ -823,6 +825,8 @@ def mrinfo(
     runner: Runner | None = None,
 ) -> MrinfoOutputs:
     """
+    mrinfo
+    
     Display image header information, or extract specific information from the
     header.
     

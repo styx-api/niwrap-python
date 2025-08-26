@@ -234,6 +234,8 @@ def warpinit_execute(
     runner: Runner | None = None,
 ) -> WarpinitOutputs:
     """
+    warpinit
+    
     Create an initial warp image, representing an identity transformation.
     
     This is useful to obtain the warp fields from other normalisation
@@ -287,6 +289,8 @@ def warpinit(
     runner: Runner | None = None,
 ) -> WarpinitOutputs:
     """
+    warpinit
+    
     Create an initial warp image, representing an identity transformation.
     
     This is useful to obtain the warp fields from other normalisation

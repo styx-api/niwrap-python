@@ -134,6 +134,8 @@ def volume_all_labels_to_rois_execute(
     runner: Runner | None = None,
 ) -> VolumeAllLabelsToRoisOutputs:
     """
+    volume-all-labels-to-rois
+    
     Make rois from all labels in a volume frame.
     
     The output volume has a frame for each label in the specified input frame,
@@ -166,6 +168,8 @@ def volume_all_labels_to_rois(
     runner: Runner | None = None,
 ) -> VolumeAllLabelsToRoisOutputs:
     """
+    volume-all-labels-to-rois
+    
     Make rois from all labels in a volume frame.
     
     The output volume has a frame for each label in the specified input frame,

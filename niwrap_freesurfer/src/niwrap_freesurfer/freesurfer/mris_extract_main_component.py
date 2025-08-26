@@ -128,6 +128,8 @@ def mris_extract_main_component_execute(
     runner: Runner | None = None,
 ) -> MrisExtractMainComponentOutputs:
     """
+    mris_extract_main_component
+    
     Tool for extracting the main component from a surface input.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mris_extract_main_component(
     runner: Runner | None = None,
 ) -> MrisExtractMainComponentOutputs:
     """
+    mris_extract_main_component
+    
     Tool for extracting the main component from a surface input.
     
     Author: FreeSurfer Developers

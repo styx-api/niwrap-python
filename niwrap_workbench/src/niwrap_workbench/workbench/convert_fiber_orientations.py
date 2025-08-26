@@ -210,6 +210,8 @@ def convert_fiber_orientations_execute(
     runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
     """
+    convert-fiber-orientations
+    
     Convert bingham parameter volumes to fiber orientation file.
     
     Takes precomputed bingham parameters from volume files and converts them to
@@ -277,6 +279,8 @@ def convert_fiber_orientations(
     runner: Runner | None = None,
 ) -> ConvertFiberOrientationsOutputs:
     """
+    convert-fiber-orientations
+    
     Convert bingham parameter volumes to fiber orientation file.
     
     Takes precomputed bingham parameters from volume files and converts them to

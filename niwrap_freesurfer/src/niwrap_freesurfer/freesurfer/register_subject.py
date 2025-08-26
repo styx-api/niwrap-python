@@ -164,6 +164,8 @@ def register_subject_execute(
     runner: Runner | None = None,
 ) -> RegisterSubjectOutputs:
     """
+    register_subject
+    
     Tool for registering brain MR volumes.
     
     Author: FreeSurfer Developers
@@ -195,6 +197,8 @@ def register_subject(
     runner: Runner | None = None,
 ) -> RegisterSubjectOutputs:
     """
+    register_subject
+    
     Tool for registering brain MR volumes.
     
     Author: FreeSurfer Developers

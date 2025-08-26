@@ -269,6 +269,8 @@ def mris_volmask_novtk_execute(
     runner: Runner | None = None,
 ) -> MrisVolmaskNovtkOutputs:
     """
+    mris_volmask_novtk
+    
     Computes a volume mask at the same resolution as <subject>/mri/brain.mgz and
     labels voxels based on the signed-distance function from the surface.
     
@@ -313,6 +315,8 @@ def mris_volmask_novtk(
     runner: Runner | None = None,
 ) -> MrisVolmaskNovtkOutputs:
     """
+    mris_volmask_novtk
+    
     Computes a volume mask at the same resolution as <subject>/mri/brain.mgz and
     labels voxels based on the signed-distance function from the surface.
     

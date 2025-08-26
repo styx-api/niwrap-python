@@ -144,6 +144,8 @@ def foci_get_projection_vertex_execute(
     runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
     """
+    foci-get-projection-vertex
+    
     Get projection vertex for foci.
     
     For each focus, a column is created in <metric-out>, and the vertex with the
@@ -177,6 +179,8 @@ def foci_get_projection_vertex(
     runner: Runner | None = None,
 ) -> FociGetProjectionVertexOutputs:
     """
+    foci-get-projection-vertex
+    
     Get projection vertex for foci.
     
     For each focus, a column is created in <metric-out>, and the vertex with the

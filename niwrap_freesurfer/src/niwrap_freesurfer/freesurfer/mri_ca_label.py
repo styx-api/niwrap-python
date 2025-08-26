@@ -589,6 +589,8 @@ def mri_ca_label_execute(
     runner: Runner | None = None,
 ) -> MriCaLabelOutputs:
     """
+    mri_ca_label
+    
     MRI cortical annotation labeler using atlas prior (GCA).
     
     Author: FreeSurfer Developers
@@ -666,6 +668,8 @@ def mri_ca_label(
     runner: Runner | None = None,
 ) -> MriCaLabelOutputs:
     """
+    mri_ca_label
+    
     MRI cortical annotation labeler using atlas prior (GCA).
     
     Author: FreeSurfer Developers

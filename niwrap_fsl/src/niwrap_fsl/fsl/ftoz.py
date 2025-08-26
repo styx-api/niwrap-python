@@ -149,6 +149,8 @@ def ftoz_execute(
     runner: Runner | None = None,
 ) -> FtozOutputs:
     """
+    ftoz
+    
     Convert F-statistics to Z-scores.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -179,6 +181,8 @@ def ftoz(
     runner: Runner | None = None,
 ) -> FtozOutputs:
     """
+    ftoz
+    
     Convert F-statistics to Z-scores.
     
     Author: FMRIB Analysis Group, University of Oxford

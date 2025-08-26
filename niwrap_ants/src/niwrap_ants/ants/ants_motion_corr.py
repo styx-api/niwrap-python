@@ -288,6 +288,8 @@ def ants_motion_corr_execute(
     runner: Runner | None = None,
 ) -> AntsMotionCorrOutputs:
     """
+    antsMotionCorr
+    
     ANTS Motion Correction application to perform motion correction on 4D time
     series data.
     
@@ -330,6 +332,8 @@ def ants_motion_corr(
     runner: Runner | None = None,
 ) -> AntsMotionCorrOutputs:
     """
+    antsMotionCorr
+    
     ANTS Motion Correction application to perform motion correction on 4D time
     series data.
     

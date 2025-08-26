@@ -216,6 +216,8 @@ def rtfeedme_execute(
     runner: Runner | None = None,
 ) -> RtfeedmeOutputs:
     """
+    rtfeedme
+    
     Test the real-time plugin by sending all the bricks in 'dataset' to AFNI.
     
     Author: AFNI Developers
@@ -252,6 +254,8 @@ def rtfeedme(
     runner: Runner | None = None,
 ) -> RtfeedmeOutputs:
     """
+    rtfeedme
+    
     Test the real-time plugin by sending all the bricks in 'dataset' to AFNI.
     
     Author: AFNI Developers

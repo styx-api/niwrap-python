@@ -138,6 +138,8 @@ def make_pq_script_py_execute(
     runner: Runner | None = None,
 ) -> MakePqScriptPyOutputs:
     """
+    make_pq_script.py
+    
     Creates a script to compute p-value and q-value curves.
     
     Author: AFNI Developers
@@ -167,6 +169,8 @@ def make_pq_script_py(
     runner: Runner | None = None,
 ) -> MakePqScriptPyOutputs:
     """
+    make_pq_script.py
+    
     Creates a script to compute p-value and q-value curves.
     
     Author: AFNI Developers

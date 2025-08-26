@@ -262,6 +262,8 @@ def mba_execute(
     runner: Runner | None = None,
 ) -> MbaOutputs:
     """
+    MBA
+    
     Matrix-Based Analysis Program through Bayesian Multilevel Modeling.
     
     Author: AFNI Developers
@@ -302,6 +304,8 @@ def mba(
     runner: Runner | None = None,
 ) -> MbaOutputs:
     """
+    MBA
+    
     Matrix-Based Analysis Program through Bayesian Multilevel Modeling.
     
     Author: AFNI Developers

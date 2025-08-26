@@ -652,6 +652,8 @@ def dwi2fod_execute(
     runner: Runner | None = None,
 ) -> Dwi2fodOutputs:
     """
+    dwi2fod
+    
     Estimate fibre orientation distributions from diffusion data using spherical
     deconvolution.
     
@@ -724,6 +726,8 @@ def dwi2fod(
     runner: Runner | None = None,
 ) -> Dwi2fodOutputs:
     """
+    dwi2fod
+    
     Estimate fibre orientation distributions from diffusion data using spherical
     deconvolution.
     

@@ -180,6 +180,8 @@ def cifti_merge_parcels_execute(
     runner: Runner | None = None,
 ) -> CiftiMergeParcelsOutputs:
     """
+    cifti-merge-parcels
+    
     Merge cifti files along parcels dimension.
     
     The input cifti files must have matching mappings along the direction not
@@ -213,6 +215,8 @@ def cifti_merge_parcels(
     runner: Runner | None = None,
 ) -> CiftiMergeParcelsOutputs:
     """
+    cifti-merge-parcels
+    
     Merge cifti files along parcels dimension.
     
     The input cifti files must have matching mappings along the direction not

@@ -157,8 +157,10 @@ def isolate_labels_keeporigval_csh_execute(
     runner: Runner | None = None,
 ) -> IsolateLabelsKeeporigvalCshOutputs:
     """
-    Separates out a particular or all labels into individual binary files keeping
-    the original label values for subsequent shape analysis.
+    isolate_labels_keeporigval.csh
+    
+    Separates out a particular or all labels into individual binary files
+    keeping the original label values for subsequent shape analysis.
     
     Author: FreeSurfer Developers
     
@@ -188,8 +190,10 @@ def isolate_labels_keeporigval_csh(
     runner: Runner | None = None,
 ) -> IsolateLabelsKeeporigvalCshOutputs:
     """
-    Separates out a particular or all labels into individual binary files keeping
-    the original label values for subsequent shape analysis.
+    isolate_labels_keeporigval.csh
+    
+    Separates out a particular or all labels into individual binary files
+    keeping the original label values for subsequent shape analysis.
     
     Author: FreeSurfer Developers
     

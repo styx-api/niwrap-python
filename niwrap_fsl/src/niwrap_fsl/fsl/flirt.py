@@ -534,8 +534,10 @@ def flirt_execute(
     runner: Runner | None = None,
 ) -> FlirtOutputs:
     """
-    FLIRT (FMRIB's Linear Image Registration Tool) is a fully automated robust and
-    accurate tool for linear (affine) intra- and inter-modal brain image
+    flirt
+    
+    FLIRT (FMRIB's Linear Image Registration Tool) is a fully automated robust
+    and accurate tool for linear (affine) intra- and inter-modal brain image
     registration.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -606,8 +608,10 @@ def flirt(
     runner: Runner | None = None,
 ) -> FlirtOutputs:
     """
-    FLIRT (FMRIB's Linear Image Registration Tool) is a fully automated robust and
-    accurate tool for linear (affine) intra- and inter-modal brain image
+    flirt
+    
+    FLIRT (FMRIB's Linear Image Registration Tool) is a fully automated robust
+    and accurate tool for linear (affine) intra- and inter-modal brain image
     registration.
     
     Author: FMRIB Analysis Group, University of Oxford

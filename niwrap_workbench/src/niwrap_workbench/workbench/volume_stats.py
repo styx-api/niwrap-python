@@ -217,6 +217,8 @@ def volume_stats_execute(
     runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
     """
+    volume-stats
+    
     Spatial statistics on a volume file.
     
     For each subvolume of the input, a line of text is printed, resulting from
@@ -275,6 +277,8 @@ def volume_stats(
     runner: Runner | None = None,
 ) -> VolumeStatsOutputs:
     """
+    volume-stats
+    
     Spatial statistics on a volume file.
     
     For each subvolume of the input, a line of text is printed, resulting from

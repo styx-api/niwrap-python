@@ -128,6 +128,8 @@ def minc2seqinfo_execute(
     runner: Runner | None = None,
 ) -> Minc2seqinfoOutputs:
     """
+    minc2seqinfo
+    
     Tool for extracting sequence information from MINC files.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def minc2seqinfo(
     runner: Runner | None = None,
 ) -> Minc2seqinfoOutputs:
     """
+    minc2seqinfo
+    
     Tool for extracting sequence information from MINC files.
     
     Author: FreeSurfer Developers

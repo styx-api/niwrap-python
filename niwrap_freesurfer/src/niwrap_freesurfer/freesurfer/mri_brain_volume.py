@@ -146,6 +146,8 @@ def mri_brain_volume_execute(
     runner: Runner | None = None,
 ) -> MriBrainVolumeOutputs:
     """
+    mri_brain_volume
+    
     Tool to calculate brain volume from MRI scans.
     
     Author: FreeSurfer Developers
@@ -175,6 +177,8 @@ def mri_brain_volume(
     runner: Runner | None = None,
 ) -> MriBrainVolumeOutputs:
     """
+    mri_brain_volume
+    
     Tool to calculate brain volume from MRI scans.
     
     Author: FreeSurfer Developers

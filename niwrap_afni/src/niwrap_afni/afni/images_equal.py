@@ -135,6 +135,8 @@ def images_equal_execute(
     runner: Runner | None = None,
 ) -> ImagesEqualOutputs:
     """
+    images_equal
+    
     A simple program to test if two 2D images are identical.
     
     Author: AFNI Developers
@@ -163,6 +165,8 @@ def images_equal(
     runner: Runner | None = None,
 ) -> ImagesEqualOutputs:
     """
+    images_equal
+    
     A simple program to test if two 2D images are identical.
     
     Author: AFNI Developers

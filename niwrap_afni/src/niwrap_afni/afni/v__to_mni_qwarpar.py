@@ -130,6 +130,8 @@ def v__to_mni_qwarpar_execute(
     runner: Runner | None = None,
 ) -> VToMniQwarparOutputs:
     """
+    @toMNI_Qwarpar
+    
     Transforms datasets to MNI space, then collectively re-transforms them to
     produce a refined average.
     
@@ -158,6 +160,8 @@ def v__to_mni_qwarpar(
     runner: Runner | None = None,
 ) -> VToMniQwarparOutputs:
     """
+    @toMNI_Qwarpar
+    
     Transforms datasets to MNI space, then collectively re-transforms them to
     produce a refined average.
     

@@ -162,8 +162,10 @@ def segment_subject_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectOutputs:
     """
-    Front-end for MINCs mritotal to compute the Talairach transform that maps the
-    input volume to the MNI305 space.
+    segment_subject
+    
+    Front-end for MINCs mritotal to compute the Talairach transform that maps
+    the input volume to the MNI305 space.
     
     Author: FreeSurfer Developers
     
@@ -194,8 +196,10 @@ def segment_subject(
     runner: Runner | None = None,
 ) -> SegmentSubjectOutputs:
     """
-    Front-end for MINCs mritotal to compute the Talairach transform that maps the
-    input volume to the MNI305 space.
+    segment_subject
+    
+    Front-end for MINCs mritotal to compute the Talairach transform that maps
+    the input volume to the MNI305 space.
     
     Author: FreeSurfer Developers
     

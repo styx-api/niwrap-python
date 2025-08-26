@@ -213,6 +213,8 @@ def dmri_motion_execute(
     runner: Runner | None = None,
 ) -> DmriMotionOutputs:
     """
+    dmri_motion
+    
     A tool for calculating motion measures from DWI scans.
     
     Author: FreeSurfer Developers
@@ -249,6 +251,8 @@ def dmri_motion(
     runner: Runner | None = None,
 ) -> DmriMotionOutputs:
     """
+    dmri_motion
+    
     A tool for calculating motion measures from DWI scans.
     
     Author: FreeSurfer Developers

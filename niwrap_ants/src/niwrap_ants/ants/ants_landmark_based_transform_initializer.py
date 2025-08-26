@@ -184,6 +184,8 @@ def ants_landmark_based_transform_initializer_execute(
     runner: Runner | None = None,
 ) -> AntsLandmarkBasedTransformInitializerOutputs:
     """
+    antsLandmarkBasedTransformInitializer
+    
     This tool initializes a transform between two images based on corresponding
     landmarks.
     
@@ -220,6 +222,8 @@ def ants_landmark_based_transform_initializer(
     runner: Runner | None = None,
 ) -> AntsLandmarkBasedTransformInitializerOutputs:
     """
+    antsLandmarkBasedTransformInitializer
+    
     This tool initializes a transform between two images based on corresponding
     landmarks.
     

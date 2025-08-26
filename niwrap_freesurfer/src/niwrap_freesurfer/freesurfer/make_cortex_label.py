@@ -154,6 +154,8 @@ def make_cortex_label_execute(
     runner: Runner | None = None,
 ) -> MakeCortexLabelOutputs:
     """
+    make_cortex_label
+    
     A tool to create cortical labels.
     
     Author: FreeSurfer Developers
@@ -183,6 +185,8 @@ def make_cortex_label(
     runner: Runner | None = None,
 ) -> MakeCortexLabelOutputs:
     """
+    make_cortex_label
+    
     A tool to create cortical labels.
     
     Author: FreeSurfer Developers

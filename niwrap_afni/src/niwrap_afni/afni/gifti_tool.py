@@ -310,6 +310,8 @@ def gifti_tool_execute(
     runner: Runner | None = None,
 ) -> GiftiToolOutputs:
     """
+    gifti_tool
+    
     Tool for creating, displaying, modifying, or comparing GIFTI datasets.
     
     Author: AFNI Developers
@@ -357,6 +359,8 @@ def gifti_tool(
     runner: Runner | None = None,
 ) -> GiftiToolOutputs:
     """
+    gifti_tool
+    
     Tool for creating, displaying, modifying, or comparing GIFTI datasets.
     
     Author: AFNI Developers

@@ -229,6 +229,8 @@ def v_3d_cruiseto_afni_execute(
     runner: Runner | None = None,
 ) -> V3dCruisetoAfniOutputs:
     """
+    3dCRUISEtoAFNI
+    
     Converts a CRUISE dataset defined by a header in OpenDX format.
     
     Author: AFNI Developers
@@ -263,6 +265,8 @@ def v_3d_cruiseto_afni(
     runner: Runner | None = None,
 ) -> V3dCruisetoAfniOutputs:
     """
+    3dCRUISEtoAFNI
+    
     Converts a CRUISE dataset defined by a header in OpenDX format.
     
     Author: AFNI Developers

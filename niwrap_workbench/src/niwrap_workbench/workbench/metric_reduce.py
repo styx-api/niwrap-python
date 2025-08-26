@@ -197,6 +197,8 @@ def metric_reduce_execute(
     runner: Runner | None = None,
 ) -> MetricReduceOutputs:
     """
+    metric-reduce
+    
     Perform reduction operation across metric columns.
     
     For each surface vertex, takes the data across columns as a vector, and
@@ -249,6 +251,8 @@ def metric_reduce(
     runner: Runner | None = None,
 ) -> MetricReduceOutputs:
     """
+    metric-reduce
+    
     Perform reduction operation across metric columns.
     
     For each surface vertex, takes the data across columns as a vector, and

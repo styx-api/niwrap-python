@@ -286,6 +286,8 @@ def v_3d_warp_execute(
     runner: Runner | None = None,
 ) -> V3dWarpOutputs:
     """
+    3dWarp
+    
     Warp (spatially transform) one 3D dataset.
     
     Author: AFNI Developers
@@ -333,6 +335,8 @@ def v_3d_warp(
     runner: Runner | None = None,
 ) -> V3dWarpOutputs:
     """
+    3dWarp
+    
     Warp (spatially transform) one 3D dataset.
     
     Author: AFNI Developers

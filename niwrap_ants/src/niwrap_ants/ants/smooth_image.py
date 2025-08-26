@@ -155,8 +155,10 @@ def smooth_image_execute(
     runner: Runner | None = None,
 ) -> SmoothImageOutputs:
     """
-    SmoothImage allows smoothing of images with adjustable sigma values, offering
-    optional median filtering functionality.
+    SmoothImage
+    
+    SmoothImage allows smoothing of images with adjustable sigma values,
+    offering optional median filtering functionality.
     
     Author: ANTs Developers
     
@@ -187,8 +189,10 @@ def smooth_image(
     runner: Runner | None = None,
 ) -> SmoothImageOutputs:
     """
-    SmoothImage allows smoothing of images with adjustable sigma values, offering
-    optional median filtering functionality.
+    SmoothImage
+    
+    SmoothImage allows smoothing of images with adjustable sigma values,
+    offering optional median filtering functionality.
     
     Author: ANTs Developers
     

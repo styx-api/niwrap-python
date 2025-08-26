@@ -167,8 +167,10 @@ def v_3d_tcorr1_d_execute(
     runner: Runner | None = None,
 ) -> V3dTcorr1DOutputs:
     """
-    Computes the correlation coefficient between each voxel time series in the input
-    3D+time dataset.
+    3dTcorr1D
+    
+    Computes the correlation coefficient between each voxel time series in the
+    input 3D+time dataset.
     
     Author: AFNI Developers
     
@@ -201,8 +203,10 @@ def v_3d_tcorr1_d(
     runner: Runner | None = None,
 ) -> V3dTcorr1DOutputs:
     """
-    Computes the correlation coefficient between each voxel time series in the input
-    3D+time dataset.
+    3dTcorr1D
+    
+    Computes the correlation coefficient between each voxel time series in the
+    input 3D+time dataset.
     
     Author: AFNI Developers
     

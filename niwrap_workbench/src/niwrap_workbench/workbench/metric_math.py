@@ -212,6 +212,8 @@ def metric_math_execute(
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
+    metric-math
+    
     Evaluate expression on metric files.
     
     This command evaluates <expression> at each surface vertex independently.
@@ -311,6 +313,8 @@ def metric_math(
     runner: Runner | None = None,
 ) -> MetricMathOutputs:
     """
+    metric-math
+    
     Evaluate expression on metric files.
     
     This command evaluates <expression> at each surface vertex independently.

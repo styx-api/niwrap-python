@@ -123,6 +123,8 @@ def mris2rgb_execute(
     runner: Runner | None = None,
 ) -> Mris2rgbOutputs:
     """
+    mris2rgb
+    
     A tool from FreeSurfer for converting MRI surface files to RGB images.
     
     Author: FreeSurfer Developers
@@ -149,6 +151,8 @@ def mris2rgb(
     runner: Runner | None = None,
 ) -> Mris2rgbOutputs:
     """
+    mris2rgb
+    
     A tool from FreeSurfer for converting MRI surface files to RGB images.
     
     Author: FreeSurfer Developers

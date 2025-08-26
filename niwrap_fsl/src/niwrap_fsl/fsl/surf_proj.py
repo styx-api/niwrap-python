@@ -217,6 +217,8 @@ def surf_proj_execute(
     runner: Runner | None = None,
 ) -> SurfProjOutputs:
     """
+    surf_proj
+    
     Projects data onto a surface mesh using specified parameters.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -252,6 +254,8 @@ def surf_proj(
     runner: Runner | None = None,
 ) -> SurfProjOutputs:
     """
+    surf_proj
+    
     Projects data onto a surface mesh using specified parameters.
     
     Author: FMRIB Analysis Group, University of Oxford

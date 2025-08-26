@@ -190,8 +190,10 @@ def mksurfatlas_execute(
     runner: Runner | None = None,
 ) -> MksurfatlasOutputs:
     """
-    Creates an atlas using mris_make_template. The atlas can then be used to create
-    the surface registration for each subject based on this atlas.
+    mksurfatlas
+    
+    Creates an atlas using mris_make_template. The atlas can then be used to
+    create the surface registration for each subject based on this atlas.
     
     Author: FreeSurfer Developers
     
@@ -225,8 +227,10 @@ def mksurfatlas(
     runner: Runner | None = None,
 ) -> MksurfatlasOutputs:
     """
-    Creates an atlas using mris_make_template. The atlas can then be used to create
-    the surface registration for each subject based on this atlas.
+    mksurfatlas
+    
+    Creates an atlas using mris_make_template. The atlas can then be used to
+    create the surface registration for each subject based on this atlas.
     
     Author: FreeSurfer Developers
     

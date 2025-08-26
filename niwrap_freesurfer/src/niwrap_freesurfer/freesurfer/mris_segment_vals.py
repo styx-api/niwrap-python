@@ -153,6 +153,8 @@ def mris_segment_vals_execute(
     runner: Runner | None = None,
 ) -> MrisSegmentValsOutputs:
     """
+    mris_segment_vals
+    
     This program segments an input val file into connected components.
     
     Author: FreeSurfer Developers
@@ -183,6 +185,8 @@ def mris_segment_vals(
     runner: Runner | None = None,
 ) -> MrisSegmentValsOutputs:
     """
+    mris_segment_vals
+    
     This program segments an input val file into connected components.
     
     Author: FreeSurfer Developers

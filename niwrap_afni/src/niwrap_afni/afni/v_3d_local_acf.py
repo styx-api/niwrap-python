@@ -157,8 +157,10 @@ def v_3d_local_acf_execute(
     runner: Runner | None = None,
 ) -> V3dLocalAcfOutputs:
     """
-    Estimate the spatial AutoCorrelation Function (ACF) locally in a neighborhood
-    around each voxel.
+    3dLocalACF
+    
+    Estimate the spatial AutoCorrelation Function (ACF) locally in a
+    neighborhood around each voxel.
     
     Author: AFNI Developers
     
@@ -188,8 +190,10 @@ def v_3d_local_acf(
     runner: Runner | None = None,
 ) -> V3dLocalAcfOutputs:
     """
-    Estimate the spatial AutoCorrelation Function (ACF) locally in a neighborhood
-    around each voxel.
+    3dLocalACF
+    
+    Estimate the spatial AutoCorrelation Function (ACF) locally in a
+    neighborhood around each voxel.
     
     Author: AFNI Developers
     

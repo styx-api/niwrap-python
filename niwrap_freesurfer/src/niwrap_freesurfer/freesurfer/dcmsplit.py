@@ -182,6 +182,8 @@ def dcmsplit_execute(
     runner: Runner | None = None,
 ) -> DcmsplitOutputs:
     """
+    dcmsplit
+    
     Splits DICOM files into separate folders based on a unique identifier (UID).
     
     Author: FreeSurfer Developers
@@ -217,6 +219,8 @@ def dcmsplit(
     runner: Runner | None = None,
 ) -> DcmsplitOutputs:
     """
+    dcmsplit
+    
     Splits DICOM files into separate folders based on a unique identifier (UID).
     
     Author: FreeSurfer Developers

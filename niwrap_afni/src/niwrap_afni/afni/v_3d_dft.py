@@ -172,8 +172,10 @@ def v_3d_dft_execute(
     runner: Runner | None = None,
 ) -> V3dDftOutputs:
     """
-    Performs Discrete Fourier Transform (DFT) along the time axis of a complex- or
-    float-valued dataset.
+    3dDFT
+    
+    Performs Discrete Fourier Transform (DFT) along the time axis of a complex-
+    or float-valued dataset.
     
     Author: AFNI Developers
     
@@ -205,8 +207,10 @@ def v_3d_dft(
     runner: Runner | None = None,
 ) -> V3dDftOutputs:
     """
-    Performs Discrete Fourier Transform (DFT) along the time axis of a complex- or
-    float-valued dataset.
+    3dDFT
+    
+    Performs Discrete Fourier Transform (DFT) along the time axis of a complex-
+    or float-valued dataset.
     
     Author: AFNI Developers
     

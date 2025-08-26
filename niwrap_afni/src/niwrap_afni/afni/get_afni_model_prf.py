@@ -134,6 +134,8 @@ def get_afni_model_prf_execute(
     runner: Runner | None = None,
 ) -> GetAfniModelPrfOutputs:
     """
+    get_afni_model_PRF
+    
     A tool to get AFNI model parameters assuming a PRF framework.
     
     Author: AFNI Developers
@@ -163,6 +165,8 @@ def get_afni_model_prf(
     runner: Runner | None = None,
 ) -> GetAfniModelPrfOutputs:
     """
+    get_afni_model_PRF
+    
     A tool to get AFNI model parameters assuming a PRF framework.
     
     Author: AFNI Developers

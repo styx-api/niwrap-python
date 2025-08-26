@@ -416,6 +416,8 @@ def volume_resample_execute(
     runner: Runner | None = None,
 ) -> VolumeResampleOutputs:
     """
+    volume-resample
+    
     Transform and resample a volume file.
     
     Resample a volume file with an arbitrary list of transformations. You may
@@ -460,6 +462,8 @@ def volume_resample(
     runner: Runner | None = None,
 ) -> VolumeResampleOutputs:
     """
+    volume-resample
+    
     Transform and resample a volume file.
     
     Resample a volume file with an arbitrary list of transformations. You may

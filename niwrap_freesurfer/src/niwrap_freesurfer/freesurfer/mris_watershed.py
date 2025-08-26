@@ -154,6 +154,8 @@ def mris_watershed_execute(
     runner: Runner | None = None,
 ) -> MrisWatershedOutputs:
     """
+    mris_watershed
+    
     This program computes the watershed transform on the surface of an intensity
     gradient and writes the resulting measurement into a .annot file.
     
@@ -185,6 +187,8 @@ def mris_watershed(
     runner: Runner | None = None,
 ) -> MrisWatershedOutputs:
     """
+    mris_watershed
+    
     This program computes the watershed transform on the surface of an intensity
     gradient and writes the resulting measurement into a .annot file.
     

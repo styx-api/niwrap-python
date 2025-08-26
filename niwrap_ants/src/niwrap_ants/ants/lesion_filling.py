@@ -138,6 +138,8 @@ def lesion_filling_execute(
     runner: Runner | None = None,
 ) -> LesionFillingOutputs:
     """
+    LesionFilling
+    
     A tool for filling lesions in T1 images using a mask.
     
     Author: ANTs Developers
@@ -167,6 +169,8 @@ def lesion_filling(
     runner: Runner | None = None,
 ) -> LesionFillingOutputs:
     """
+    LesionFilling
+    
     A tool for filling lesions in T1 images using a mask.
     
     Author: ANTs Developers

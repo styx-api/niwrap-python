@@ -195,6 +195,8 @@ def mri_compute_seg_overlap_execute(
     runner: Runner | None = None,
 ) -> MriComputeSegOverlapOutputs:
     """
+    mri_compute_seg_overlap
+    
     Compute coefficients of overlap between segmentation volumes.
     
     Author: FreeSurfer Developers
@@ -230,6 +232,8 @@ def mri_compute_seg_overlap(
     runner: Runner | None = None,
 ) -> MriComputeSegOverlapOutputs:
     """
+    mri_compute_seg_overlap
+    
     Compute coefficients of overlap between segmentation volumes.
     
     Author: FreeSurfer Developers

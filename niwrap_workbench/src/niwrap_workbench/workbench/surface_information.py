@@ -120,6 +120,8 @@ def surface_information_execute(
     runner: Runner | None = None,
 ) -> SurfaceInformationOutputs:
     """
+    surface-information
+    
     Display information about a surface.
     
     Information about surface is displayed including vertices,
@@ -149,6 +151,8 @@ def surface_information(
     runner: Runner | None = None,
 ) -> SurfaceInformationOutputs:
     """
+    surface-information
+    
     Display information about a surface.
     
     Information about surface is displayed including vertices,

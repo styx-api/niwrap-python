@@ -149,6 +149,8 @@ def mris_rf_label_execute(
     runner: Runner | None = None,
 ) -> MrisRfLabelOutputs:
     """
+    mris_rf_label
+    
     A tool for labeling regions of a surface using random forest classification.
     
     Author: FreeSurfer Developers
@@ -179,6 +181,8 @@ def mris_rf_label(
     runner: Runner | None = None,
 ) -> MrisRfLabelOutputs:
     """
+    mris_rf_label
+    
     A tool for labeling regions of a surface using random forest classification.
     
     Author: FreeSurfer Developers

@@ -123,6 +123,8 @@ def v__demo_prompt_execute(
     runner: Runner | None = None,
 ) -> VDemoPromptOutputs:
     """
+    @demo_prompt
+    
     Prompts user with a message and waits for acknowledgment.
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def v__demo_prompt(
     runner: Runner | None = None,
 ) -> VDemoPromptOutputs:
     """
+    @demo_prompt
+    
     Prompts user with a message and waits for acknowledgment.
     
     Author: AFNI Developers

@@ -234,8 +234,10 @@ def v__afni_refacer_run_execute(
     runner: Runner | None = None,
 ) -> VAfniRefacerRunOutputs:
     """
-    This script re-faces one input dataset, using a master shell dataset to write
-    over the subject's 'face' region.
+    @afni_refacer_run
+    
+    This script re-faces one input dataset, using a master shell dataset to
+    write over the subject's 'face' region.
     
     Author: AFNI Developers
     
@@ -273,8 +275,10 @@ def v__afni_refacer_run(
     runner: Runner | None = None,
 ) -> VAfniRefacerRunOutputs:
     """
-    This script re-faces one input dataset, using a master shell dataset to write
-    over the subject's 'face' region.
+    @afni_refacer_run
+    
+    This script re-faces one input dataset, using a master shell dataset to
+    write over the subject's 'face' region.
     
     Author: AFNI Developers
     

@@ -634,6 +634,8 @@ def mri_surf2surf_execute(
     runner: Runner | None = None,
 ) -> MriSurf2surfOutputs:
     """
+    mri_surf2surf
+    
     Resample one surface onto another using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -715,6 +717,8 @@ def mri_surf2surf(
     runner: Runner | None = None,
 ) -> MriSurf2surfOutputs:
     """
+    mri_surf2surf
+    
     Resample one surface onto another using FreeSurfer.
     
     Author: FreeSurfer Developers

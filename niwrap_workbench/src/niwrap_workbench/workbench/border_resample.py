@@ -141,6 +141,8 @@ def border_resample_execute(
     runner: Runner | None = None,
 ) -> BorderResampleOutputs:
     """
+    border-resample
+    
     Resample a border file to a different mesh.
     
     Resamples a border file, given two spherical surfaces that are in register.
@@ -174,6 +176,8 @@ def border_resample(
     runner: Runner | None = None,
 ) -> BorderResampleOutputs:
     """
+    border-resample
+    
     Resample a border file to a different mesh.
     
     Resamples a border file, given two spherical surfaces that are in register.

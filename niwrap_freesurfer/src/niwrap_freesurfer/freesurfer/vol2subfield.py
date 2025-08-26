@@ -283,6 +283,8 @@ def vol2subfield_execute(
     runner: Runner | None = None,
 ) -> Vol2subfieldOutputs:
     """
+    vol2subfield
+    
     A tool for integrating arbitrary volumes with volumes that share a RAS space
     with the orig volume in the FreeSurfer mri folder.
     
@@ -328,6 +330,8 @@ def vol2subfield(
     runner: Runner | None = None,
 ) -> Vol2subfieldOutputs:
     """
+    vol2subfield
+    
     A tool for integrating arbitrary volumes with volumes that share a RAS space
     with the orig volume in the FreeSurfer mri folder.
     

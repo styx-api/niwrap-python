@@ -137,7 +137,10 @@ def v__find_afni_dset_path_execute(
     runner: Runner | None = None,
 ) -> VFindAfniDsetPathOutputs:
     """
-    Searches various AFNI directories for a specified dataset and returns its path.
+    @FindAfniDsetPath
+    
+    Searches various AFNI directories for a specified dataset and returns its
+    path.
     
     Author: AFNI Developers
     
@@ -166,7 +169,10 @@ def v__find_afni_dset_path(
     runner: Runner | None = None,
 ) -> VFindAfniDsetPathOutputs:
     """
-    Searches various AFNI directories for a specified dataset and returns its path.
+    @FindAfniDsetPath
+    
+    Searches various AFNI directories for a specified dataset and returns its
+    path.
     
     Author: AFNI Developers
     

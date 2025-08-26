@@ -129,6 +129,8 @@ def medianfilter_execute(
     runner: Runner | None = None,
 ) -> MedianfilterOutputs:
     """
+    medianfilter
+    
     A tool to perform 26 neighbourhood median filtering on an input image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -156,6 +158,8 @@ def medianfilter(
     runner: Runner | None = None,
 ) -> MedianfilterOutputs:
     """
+    medianfilter
+    
     A tool to perform 26 neighbourhood median filtering on an input image.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -123,6 +123,8 @@ def sphere_subject_rh_execute(
     runner: Runner | None = None,
 ) -> SphereSubjectRhOutputs:
     """
+    sphere_subject-rh
+    
     Sphere Subject RH tool for FreeSurfer, requires valid license.
     
     Author: FreeSurfer Developers
@@ -149,6 +151,8 @@ def sphere_subject_rh(
     runner: Runner | None = None,
 ) -> SphereSubjectRhOutputs:
     """
+    sphere_subject-rh
+    
     Sphere Subject RH tool for FreeSurfer, requires valid license.
     
     Author: FreeSurfer Developers

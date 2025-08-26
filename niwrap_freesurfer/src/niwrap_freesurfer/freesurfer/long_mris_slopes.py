@@ -413,6 +413,8 @@ def long_mris_slopes_execute(
     runner: Runner | None = None,
 ) -> LongMrisSlopesOutputs:
     """
+    long_mris_slopes
+    
     Computes slope maps (e.g., of thickness) in a longitudinal study using
     FreeSurfer.
     
@@ -473,6 +475,8 @@ def long_mris_slopes(
     runner: Runner | None = None,
 ) -> LongMrisSlopesOutputs:
     """
+    long_mris_slopes
+    
     Computes slope maps (e.g., of thickness) in a longitudinal study using
     FreeSurfer.
     

@@ -398,6 +398,8 @@ def dcm2niix_afni_execute(
     runner: Runner | None = None,
 ) -> Dcm2niixAfniOutputs:
     """
+    dcm2niix_afni
+    
     DICOM to NIfTI converter optimized for AFNI.
     
     Author: AFNI Developers
@@ -452,6 +454,8 @@ def dcm2niix_afni(
     runner: Runner | None = None,
 ) -> Dcm2niixAfniOutputs:
     """
+    dcm2niix_afni
+    
     DICOM to NIfTI converter optimized for AFNI.
     
     Author: AFNI Developers

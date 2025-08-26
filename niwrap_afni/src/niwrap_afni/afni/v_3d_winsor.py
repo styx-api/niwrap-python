@@ -206,6 +206,8 @@ def v_3d_winsor_execute(
     runner: Runner | None = None,
 ) -> V3dWinsorOutputs:
     """
+    3dWinsor
+    
     Apply a 3D 'Winsorizing' filter to a short-valued dataset.
     
     Author: AFNI Developers
@@ -240,6 +242,8 @@ def v_3d_winsor(
     runner: Runner | None = None,
 ) -> V3dWinsorOutputs:
     """
+    3dWinsor
+    
     Apply a 3D 'Winsorizing' filter to a short-valued dataset.
     
     Author: AFNI Developers

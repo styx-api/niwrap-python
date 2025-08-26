@@ -273,6 +273,8 @@ def fixelconnectivity_execute(
     runner: Runner | None = None,
 ) -> FixelconnectivityOutputs:
     """
+    fixelconnectivity
+    
     Generate a fixel-fixel connectivity matrix.
     
     This command will generate a directory containing three images, which
@@ -320,6 +322,8 @@ def fixelconnectivity(
     runner: Runner | None = None,
 ) -> FixelconnectivityOutputs:
     """
+    fixelconnectivity
+    
     Generate a fixel-fixel connectivity matrix.
     
     This command will generate a directory containing three images, which

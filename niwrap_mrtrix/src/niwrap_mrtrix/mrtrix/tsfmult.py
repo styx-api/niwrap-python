@@ -234,6 +234,8 @@ def tsfmult_execute(
     runner: Runner | None = None,
 ) -> TsfmultOutputs:
     """
+    tsfmult
+    
     Multiply corresponding values in track scalar files.
     
     
@@ -275,6 +277,8 @@ def tsfmult(
     runner: Runner | None = None,
 ) -> TsfmultOutputs:
     """
+    tsfmult
+    
     Multiply corresponding values in track scalar files.
     
     

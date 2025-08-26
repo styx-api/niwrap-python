@@ -134,6 +134,8 @@ def make_exvivo_filled_execute(
     runner: Runner | None = None,
 ) -> MakeExvivoFilledOutputs:
     """
+    make_exvivo_filled
+    
     A command-line tool for generating filled ex vivo brain images.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def make_exvivo_filled(
     runner: Runner | None = None,
 ) -> MakeExvivoFilledOutputs:
     """
+    make_exvivo_filled
+    
     A command-line tool for generating filled ex vivo brain images.
     
     Author: FreeSurfer Developers

@@ -135,8 +135,10 @@ def adjunct_combine_str_py_execute(
     runner: Runner | None = None,
 ) -> AdjunctCombineStrPyOutputs:
     """
-    A simple helper function for fat_proc* scripts that processes string selectors
-    and outputs a new string selector.
+    adjunct_combine_str.py
+    
+    A simple helper function for fat_proc* scripts that processes string
+    selectors and outputs a new string selector.
     
     Author: AFNI Developers
     
@@ -164,8 +166,10 @@ def adjunct_combine_str_py(
     runner: Runner | None = None,
 ) -> AdjunctCombineStrPyOutputs:
     """
-    A simple helper function for fat_proc* scripts that processes string selectors
-    and outputs a new string selector.
+    adjunct_combine_str.py
+    
+    A simple helper function for fat_proc* scripts that processes string
+    selectors and outputs a new string selector.
     
     Author: AFNI Developers
     

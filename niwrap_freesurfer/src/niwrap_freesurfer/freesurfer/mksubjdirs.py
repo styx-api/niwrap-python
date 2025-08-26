@@ -160,6 +160,8 @@ def mksubjdirs_execute(
     runner: Runner | None = None,
 ) -> MksubjdirsOutputs:
     """
+    mksubjdirs
+    
     A command-line tool to create subject directories.
     
     Author: FreeSurfer Developers
@@ -192,6 +194,8 @@ def mksubjdirs(
     runner: Runner | None = None,
 ) -> MksubjdirsOutputs:
     """
+    mksubjdirs
+    
     A command-line tool to create subject directories.
     
     Author: FreeSurfer Developers

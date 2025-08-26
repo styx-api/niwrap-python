@@ -365,8 +365,10 @@ def mri_ca_normalize_execute(
     runner: Runner | None = None,
 ) -> MriCaNormalizeOutputs:
     """
-    This program creates a normalized volume using the brain volume and an input gca
-    file.
+    mri_ca_normalize
+    
+    This program creates a normalized volume using the brain volume and an input
+    gca file.
     
     Author: FreeSurfer Developers
     
@@ -418,8 +420,10 @@ def mri_ca_normalize(
     runner: Runner | None = None,
 ) -> MriCaNormalizeOutputs:
     """
-    This program creates a normalized volume using the brain volume and an input gca
-    file.
+    mri_ca_normalize
+    
+    This program creates a normalized volume using the brain volume and an input
+    gca file.
     
     Author: FreeSurfer Developers
     

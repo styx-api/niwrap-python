@@ -257,6 +257,8 @@ def qhull_execute(
     runner: Runner | None = None,
 ) -> QhullOutputs:
     """
+    qhull
+    
     Tool to compute convex hulls and related structures.
     
     Author: AFNI Developers
@@ -303,6 +305,8 @@ def qhull(
     runner: Runner | None = None,
 ) -> QhullOutputs:
     """
+    qhull
+    
     Tool to compute convex hulls and related structures.
     
     Author: AFNI Developers

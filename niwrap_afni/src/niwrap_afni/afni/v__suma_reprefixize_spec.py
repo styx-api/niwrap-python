@@ -156,6 +156,8 @@ def v__suma_reprefixize_spec_execute(
     runner: Runner | None = None,
 ) -> VSumaReprefixizeSpecOutputs:
     """
+    @suma_reprefixize_spec
+    
     A tool for prefixing and working with SUMA specification files.
     
     Author: AFNI Developers
@@ -186,6 +188,8 @@ def v__suma_reprefixize_spec(
     runner: Runner | None = None,
 ) -> VSumaReprefixizeSpecOutputs:
     """
+    @suma_reprefixize_spec
+    
     A tool for prefixing and working with SUMA specification files.
     
     Author: AFNI Developers

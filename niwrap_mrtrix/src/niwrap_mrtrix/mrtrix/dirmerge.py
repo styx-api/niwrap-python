@@ -255,6 +255,8 @@ def dirmerge_execute(
     runner: Runner | None = None,
 ) -> DirmergeOutputs:
     """
+    dirmerge
+    
     Splice / merge multiple sets of directions in such a way as to maintain
     near-optimality upon truncation.
     
@@ -299,6 +301,8 @@ def dirmerge(
     runner: Runner | None = None,
 ) -> DirmergeOutputs:
     """
+    dirmerge
+    
     Splice / merge multiple sets of directions in such a way as to maintain
     near-optimality upon truncation.
     

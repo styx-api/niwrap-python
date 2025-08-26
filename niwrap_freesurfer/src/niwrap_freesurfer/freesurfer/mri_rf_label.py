@@ -467,6 +467,8 @@ def mri_rf_label_execute(
     runner: Runner | None = None,
 ) -> MriRfLabelOutputs:
     """
+    mri_rf_label
+    
     MRI automatic tissue labeling using a Gaussian Classifier Atlas (GCA).
     
     Author: FreeSurfer Developers
@@ -532,6 +534,8 @@ def mri_rf_label(
     runner: Runner | None = None,
 ) -> MriRfLabelOutputs:
     """
+    mri_rf_label
+    
     MRI automatic tissue labeling using a Gaussian Classifier Atlas (GCA).
     
     Author: FreeSurfer Developers

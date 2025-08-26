@@ -128,6 +128,8 @@ def convert_to_jpg_execute(
     runner: Runner | None = None,
 ) -> ConvertToJpgOutputs:
     """
+    ConvertToJpg
+    
     A tool to convert NIfTI images to JPG format.
     
     Author: ANTs Developers
@@ -155,6 +157,8 @@ def convert_to_jpg(
     runner: Runner | None = None,
 ) -> ConvertToJpgOutputs:
     """
+    ConvertToJpg
+    
     A tool to convert NIfTI images to JPG format.
     
     Author: ANTs Developers

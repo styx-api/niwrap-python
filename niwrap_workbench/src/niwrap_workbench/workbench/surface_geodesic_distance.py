@@ -163,6 +163,8 @@ def surface_geodesic_distance_execute(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
+    surface-geodesic-distance
+    
     Compute geodesic distance from one vertex to the entire surface.
     
     Unless -limit is specified, computes the geodesic distance from the
@@ -210,6 +212,8 @@ def surface_geodesic_distance(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceOutputs:
     """
+    surface-geodesic-distance
+    
     Compute geodesic distance from one vertex to the entire surface.
     
     Unless -limit is specified, computes the geodesic distance from the

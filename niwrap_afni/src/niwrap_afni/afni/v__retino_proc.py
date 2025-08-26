@@ -493,6 +493,8 @@ def v__retino_proc_execute(
     runner: Runner | None = None,
 ) -> VRetinoProcOutputs:
     """
+    @RetinoProc
+    
     A script to process retinotopic FMRI data, using AFNI's 3dRetinoPhase and
     SurfRetinMap.
     
@@ -559,6 +561,8 @@ def v__retino_proc(
     runner: Runner | None = None,
 ) -> VRetinoProcOutputs:
     """
+    @RetinoProc
+    
     A script to process retinotopic FMRI data, using AFNI's 3dRetinoPhase and
     SurfRetinMap.
     

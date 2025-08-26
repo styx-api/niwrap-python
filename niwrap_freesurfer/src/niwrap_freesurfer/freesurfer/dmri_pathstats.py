@@ -296,6 +296,8 @@ def dmri_pathstats_execute(
     runner: Runner | None = None,
 ) -> DmriPathstatsOutputs:
     """
+    dmri_pathstats
+    
     Compute path statistics for diffusion MRI data based on input .trk file and
     optional various measures.
     
@@ -341,6 +343,8 @@ def dmri_pathstats(
     runner: Runner | None = None,
 ) -> DmriPathstatsOutputs:
     """
+    dmri_pathstats
+    
     Compute path statistics for diffusion MRI data based on input .trk file and
     optional various measures.
     

@@ -225,7 +225,10 @@ def v_3d_toy_prog_execute(
     runner: Runner | None = None,
 ) -> V3dToyProgOutputs:
     """
-    A program to illustrate dataset creation and manipulation in C using AFNI's API.
+    3dToyProg
+    
+    A program to illustrate dataset creation and manipulation in C using AFNI's
+    API.
     
     Author: AFNI Developers
     
@@ -264,7 +267,10 @@ def v_3d_toy_prog(
     runner: Runner | None = None,
 ) -> V3dToyProgOutputs:
     """
-    A program to illustrate dataset creation and manipulation in C using AFNI's API.
+    3dToyProg
+    
+    A program to illustrate dataset creation and manipulation in C using AFNI's
+    API.
     
     Author: AFNI Developers
     

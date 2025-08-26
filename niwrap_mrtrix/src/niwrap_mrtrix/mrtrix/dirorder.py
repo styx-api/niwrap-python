@@ -241,6 +241,8 @@ def dirorder_execute(
     runner: Runner | None = None,
 ) -> DirorderOutputs:
     """
+    dirorder
+    
     Reorder a set of directions to ensure near-uniformity upon truncation.
     
     The intent of this command is to reorder a set of gradient directions such
@@ -285,6 +287,8 @@ def dirorder(
     runner: Runner | None = None,
 ) -> DirorderOutputs:
     """
+    dirorder
+    
     Reorder a set of directions to ensure near-uniformity upon truncation.
     
     The intent of this command is to reorder a set of gradient directions such

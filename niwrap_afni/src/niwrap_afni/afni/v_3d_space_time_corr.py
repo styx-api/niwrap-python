@@ -185,6 +185,8 @@ def v_3d_space_time_corr_execute(
     runner: Runner | None = None,
 ) -> V3dSpaceTimeCorrOutputs:
     """
+    3dSpaceTimeCorr
+    
     Calculates correlation coefficients between two 4D datasets using space+time
     patterns.
     
@@ -218,6 +220,8 @@ def v_3d_space_time_corr(
     runner: Runner | None = None,
 ) -> V3dSpaceTimeCorrOutputs:
     """
+    3dSpaceTimeCorr
+    
     Calculates correlation coefficients between two 4D datasets using space+time
     patterns.
     

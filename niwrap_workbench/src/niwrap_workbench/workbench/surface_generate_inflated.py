@@ -148,6 +148,8 @@ def surface_generate_inflated_execute(
     runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
     """
+    surface-generate-inflated
+    
     Surface generate inflated.
     
     Generate inflated and very inflated surfaces. The output surfaces are
@@ -183,6 +185,8 @@ def surface_generate_inflated(
     runner: Runner | None = None,
 ) -> SurfaceGenerateInflatedOutputs:
     """
+    surface-generate-inflated
+    
     Surface generate inflated.
     
     Generate inflated and very inflated surfaces. The output surfaces are

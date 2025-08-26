@@ -225,6 +225,8 @@ def fat_proc_align_anat_pair_execute(
     runner: Runner | None = None,
 ) -> FatProcAlignAnatPairOutputs:
     """
+    fat_proc_align_anat_pair
+    
     A tool for aligning a T1w anatomical image to a T2w anatomical image using
     solid-body parameters (translation and rotation).
     
@@ -263,6 +265,8 @@ def fat_proc_align_anat_pair(
     runner: Runner | None = None,
 ) -> FatProcAlignAnatPairOutputs:
     """
+    fat_proc_align_anat_pair
+    
     A tool for aligning a T1w anatomical image to a T2w anatomical image using
     solid-body parameters (translation and rotation).
     

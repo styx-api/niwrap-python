@@ -170,6 +170,8 @@ def wpng_execute(
     runner: Runner | None = None,
 ) -> WpngOutputs:
     """
+    wpng
+    
     Simple PGM/PPM/PAM to PNG Converter.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -201,6 +203,8 @@ def wpng(
     runner: Runner | None = None,
 ) -> WpngOutputs:
     """
+    wpng
+    
     Simple PGM/PPM/PAM to PNG Converter.
     
     Author: FMRIB Analysis Group, University of Oxford

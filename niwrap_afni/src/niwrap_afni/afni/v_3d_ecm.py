@@ -273,6 +273,8 @@ def v_3d_ecm_execute(
     runner: Runner | None = None,
 ) -> V3dEcmOutputs:
     """
+    3dECM
+    
     Performs degree centrality on a dataset using a given maskfile via the 3dECM
     command.
     
@@ -316,6 +318,8 @@ def v_3d_ecm(
     runner: Runner | None = None,
 ) -> V3dEcmOutputs:
     """
+    3dECM
+    
     Performs degree centrality on a dataset using a given maskfile via the 3dECM
     command.
     

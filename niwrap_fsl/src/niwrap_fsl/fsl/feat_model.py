@@ -126,6 +126,8 @@ def feat_model_execute(
     runner: Runner | None = None,
 ) -> FeatModelOutputs:
     """
+    feat_model
+    
     Generate design matrices for use by FEAT.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -153,6 +155,8 @@ def feat_model(
     runner: Runner | None = None,
 ) -> FeatModelOutputs:
     """
+    feat_model
+    
     Generate design matrices for use by FEAT.
     
     Author: FMRIB Analysis Group, University of Oxford

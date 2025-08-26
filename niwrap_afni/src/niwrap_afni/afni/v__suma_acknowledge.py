@@ -182,8 +182,10 @@ def v__suma_acknowledge_execute(
     runner: Runner | None = None,
 ) -> VSumaAcknowledgeOutputs:
     """
-    Demo script to create a graph dataset to show names of individuals and groups,
-    potentially useful for acknowledgements in a talk.
+    @suma_acknowledge
+    
+    Demo script to create a graph dataset to show names of individuals and
+    groups, potentially useful for acknowledgements in a talk.
     
     Author: AFNI Developers
     
@@ -215,8 +217,10 @@ def v__suma_acknowledge(
     runner: Runner | None = None,
 ) -> VSumaAcknowledgeOutputs:
     """
-    Demo script to create a graph dataset to show names of individuals and groups,
-    potentially useful for acknowledgements in a talk.
+    @suma_acknowledge
+    
+    Demo script to create a graph dataset to show names of individuals and
+    groups, potentially useful for acknowledgements in a talk.
     
     Author: AFNI Developers
     

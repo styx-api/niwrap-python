@@ -223,8 +223,10 @@ def v__surf_to_vol_spackle_execute(
     runner: Runner | None = None,
 ) -> VSurfToVolSpackleOutputs:
     """
-    Project data from a surface dataset into a volume primarily using 3dSurf2Vol but
-    then filling any holes with an iterative smoothing procedure.
+    @surf_to_vol_spackle
+    
+    Project data from a surface dataset into a volume primarily using 3dSurf2Vol
+    but then filling any holes with an iterative smoothing procedure.
     
     Author: AFNI Developers
     
@@ -263,8 +265,10 @@ def v__surf_to_vol_spackle(
     runner: Runner | None = None,
 ) -> VSurfToVolSpackleOutputs:
     """
-    Project data from a surface dataset into a volume primarily using 3dSurf2Vol but
-    then filling any holes with an iterative smoothing procedure.
+    @surf_to_vol_spackle
+    
+    Project data from a surface dataset into a volume primarily using 3dSurf2Vol
+    but then filling any holes with an iterative smoothing procedure.
     
     Author: AFNI Developers
     

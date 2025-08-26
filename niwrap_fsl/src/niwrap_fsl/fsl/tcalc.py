@@ -256,6 +256,8 @@ def tcalc_execute(
     runner: Runner | None = None,
 ) -> TcalcOutputs:
     """
+    tcalc
+    
     Resample a 4D phantom for theoretical calculations.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -296,6 +298,8 @@ def tcalc(
     runner: Runner | None = None,
 ) -> TcalcOutputs:
     """
+    tcalc
+    
     Resample a 4D phantom for theoretical calculations.
     
     Author: FMRIB Analysis Group, University of Oxford

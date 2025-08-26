@@ -120,6 +120,8 @@ def fname2stem_execute(
     runner: Runner | None = None,
 ) -> Fname2stemOutputs:
     """
+    fname2stem
+    
     Converts the name of a file to a stem. Example: f.mgh, f.nii, f.nii.gz would
     return f.
     
@@ -147,6 +149,8 @@ def fname2stem(
     runner: Runner | None = None,
 ) -> Fname2stemOutputs:
     """
+    fname2stem
+    
     Converts the name of a file to a stem. Example: f.mgh, f.nii, f.nii.gz would
     return f.
     

@@ -122,6 +122,8 @@ def is_surface_execute(
     runner: Runner | None = None,
 ) -> IsSurfaceOutputs:
     """
+    is-surface
+    
     Determines whether a file is a volume-encoded surface file by examining its
     dimensions.
     
@@ -149,6 +151,8 @@ def is_surface(
     runner: Runner | None = None,
 ) -> IsSurfaceOutputs:
     """
+    is-surface
+    
     Determines whether a file is a volume-encoded surface file by examining its
     dimensions.
     

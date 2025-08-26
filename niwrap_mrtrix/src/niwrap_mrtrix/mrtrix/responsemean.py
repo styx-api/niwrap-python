@@ -220,6 +220,8 @@ def responsemean_execute(
     runner: Runner | None = None,
 ) -> ResponsemeanOutputs:
     """
+    responsemean
+    
     Calculate the mean response function from a set of text files.
     
     Author: MRTrix3 Developers
@@ -259,6 +261,8 @@ def responsemean(
     runner: Runner | None = None,
 ) -> ResponsemeanOutputs:
     """
+    responsemean
+    
     Calculate the mean response function from a set of text files.
     
     Author: MRTrix3 Developers

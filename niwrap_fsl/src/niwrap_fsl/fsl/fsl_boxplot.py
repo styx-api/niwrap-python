@@ -201,6 +201,8 @@ def fsl_boxplot_execute(
     runner: Runner | None = None,
 ) -> FslBoxplotOutputs:
     """
+    fsl_boxplot
+    
     Tool for creating boxplot images from ASCII text matrices.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -235,6 +237,8 @@ def fsl_boxplot(
     runner: Runner | None = None,
 ) -> FslBoxplotOutputs:
     """
+    fsl_boxplot
+    
     Tool for creating boxplot images from ASCII text matrices.
     
     Author: FMRIB Analysis Group, University of Oxford

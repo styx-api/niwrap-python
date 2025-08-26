@@ -139,6 +139,8 @@ def surface_smoothing_execute(
     runner: Runner | None = None,
 ) -> SurfaceSmoothingOutputs:
     """
+    surface-smoothing
+    
     Surface smoothing.
     
     Smooths a surface by averaging vertex coordinates with those of the
@@ -171,6 +173,8 @@ def surface_smoothing(
     runner: Runner | None = None,
 ) -> SurfaceSmoothingOutputs:
     """
+    surface-smoothing
+    
     Surface smoothing.
     
     Smooths a surface by averaging vertex coordinates with those of the

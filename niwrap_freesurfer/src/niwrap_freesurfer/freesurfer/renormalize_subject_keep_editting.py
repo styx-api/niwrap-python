@@ -126,6 +126,8 @@ def renormalize_subject_keep_editting_execute(
     runner: Runner | None = None,
 ) -> RenormalizeSubjectKeepEdittingOutputs:
     """
+    renormalize_subject_keep_editting
+    
     A placeholder for the renormalize_subject_keep_editting tool, details not
     available.
     
@@ -153,6 +155,8 @@ def renormalize_subject_keep_editting(
     runner: Runner | None = None,
 ) -> RenormalizeSubjectKeepEdittingOutputs:
     """
+    renormalize_subject_keep_editting
+    
     A placeholder for the renormalize_subject_keep_editting tool, details not
     available.
     

@@ -166,8 +166,10 @@ def v_3d_tortoiseto_here_execute(
     runner: Runner | None = None,
 ) -> V3dTortoisetoHereOutputs:
     """
-    Convert standard TORTOISE DTs (diagonal-first format) to standard AFNI (lower
-    triangular, row-wise) format.
+    3dTORTOISEtoHere
+    
+    Convert standard TORTOISE DTs (diagonal-first format) to standard AFNI
+    (lower triangular, row-wise) format.
     
     Author: AFNI Developers
     
@@ -198,8 +200,10 @@ def v_3d_tortoiseto_here(
     runner: Runner | None = None,
 ) -> V3dTortoisetoHereOutputs:
     """
-    Convert standard TORTOISE DTs (diagonal-first format) to standard AFNI (lower
-    triangular, row-wise) format.
+    3dTORTOISEtoHere
+    
+    Convert standard TORTOISE DTs (diagonal-first format) to standard AFNI
+    (lower triangular, row-wise) format.
     
     Author: AFNI Developers
     

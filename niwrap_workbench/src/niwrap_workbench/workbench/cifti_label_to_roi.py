@@ -161,6 +161,8 @@ def cifti_label_to_roi_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelToRoiOutputs:
     """
+    cifti-label-to-roi
+    
     Make a cifti label into an roi.
     
     For each map in <label-in>, a map is created in <scalar-out> where all
@@ -196,6 +198,8 @@ def cifti_label_to_roi(
     runner: Runner | None = None,
 ) -> CiftiLabelToRoiOutputs:
     """
+    cifti-label-to-roi
+    
     Make a cifti label into an roi.
     
     For each map in <label-in>, a map is created in <scalar-out> where all

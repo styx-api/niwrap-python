@@ -258,8 +258,10 @@ def v_3d_remlfit_execute(
     runner: Runner | None = None,
 ) -> V3dRemlfitOutputs:
     """
-    Generalized least squares time series fit, with REML estimation of the temporal
-    auto-correlation structure.
+    3dREMLfit
+    
+    Generalized least squares time series fit, with REML estimation of the
+    temporal auto-correlation structure.
     
     Author: AFNI Developers
     
@@ -299,8 +301,10 @@ def v_3d_remlfit(
     runner: Runner | None = None,
 ) -> V3dRemlfitOutputs:
     """
-    Generalized least squares time series fit, with REML estimation of the temporal
-    auto-correlation structure.
+    3dREMLfit
+    
+    Generalized least squares time series fit, with REML estimation of the
+    temporal auto-correlation structure.
     
     Author: AFNI Developers
     

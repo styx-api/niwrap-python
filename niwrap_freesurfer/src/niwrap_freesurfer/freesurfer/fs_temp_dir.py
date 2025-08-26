@@ -135,6 +135,8 @@ def fs_temp_dir_execute(
     runner: Runner | None = None,
 ) -> FsTempDirOutputs:
     """
+    fs_temp_dir
+    
     Generates and creates an empty temporary directory.
     
     Author: FreeSurfer Developers
@@ -162,6 +164,8 @@ def fs_temp_dir(
     runner: Runner | None = None,
 ) -> FsTempDirOutputs:
     """
+    fs_temp_dir
+    
     Generates and creates an empty temporary directory.
     
     Author: FreeSurfer Developers

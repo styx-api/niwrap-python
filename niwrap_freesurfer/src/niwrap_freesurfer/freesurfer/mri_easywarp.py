@@ -162,6 +162,8 @@ def mri_easywarp_execute(
     runner: Runner | None = None,
 ) -> MriEasywarpOutputs:
     """
+    mri_easywarp
+    
     EasyReg: deep learning registration simple and easy.
     
     Author: FreeSurfer Developers
@@ -192,6 +194,8 @@ def mri_easywarp(
     runner: Runner | None = None,
 ) -> MriEasywarpOutputs:
     """
+    mri_easywarp
+    
     EasyReg: deep learning registration simple and easy.
     
     Author: FreeSurfer Developers

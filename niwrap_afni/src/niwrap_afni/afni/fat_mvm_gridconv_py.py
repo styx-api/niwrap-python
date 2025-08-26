@@ -145,6 +145,8 @@ def fat_mvm_gridconv_py_execute(
     runner: Runner | None = None,
 ) -> FatMvmGridconvPyOutputs:
     """
+    fat_mvm_gridconv.py
+    
     Preprocess 'old school' *.grid files for statistical modeling using 3dMVM.
     
     Author: AFNI Developers
@@ -172,6 +174,8 @@ def fat_mvm_gridconv_py(
     runner: Runner | None = None,
 ) -> FatMvmGridconvPyOutputs:
     """
+    fat_mvm_gridconv.py
+    
     Preprocess 'old school' *.grid files for statistical modeling using 3dMVM.
     
     Author: AFNI Developers

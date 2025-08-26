@@ -128,8 +128,10 @@ def mri_gca_ambiguous_execute(
     runner: Runner | None = None,
 ) -> MriGcaAmbiguousOutputs:
     """
-    This program computes an ambiguity measure across a GCA and outputs an MR image
-    of it.
+    mri_gca_ambiguous
+    
+    This program computes an ambiguity measure across a GCA and outputs an MR
+    image of it.
     
     Author: FreeSurfer Developers
     
@@ -156,8 +158,10 @@ def mri_gca_ambiguous(
     runner: Runner | None = None,
 ) -> MriGcaAmbiguousOutputs:
     """
-    This program computes an ambiguity measure across a GCA and outputs an MR image
-    of it.
+    mri_gca_ambiguous
+    
+    This program computes an ambiguity measure across a GCA and outputs an MR
+    image of it.
     
     Author: FreeSurfer Developers
     

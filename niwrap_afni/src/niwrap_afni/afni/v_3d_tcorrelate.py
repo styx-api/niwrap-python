@@ -248,8 +248,10 @@ def v_3d_tcorrelate_execute(
     runner: Runner | None = None,
 ) -> V3dTcorrelateOutputs:
     """
-    3dTcorrelate. Computes the correlation coefficient between corresponding voxel
-    time series in two input 3D+time datasets 'xset' and 'yset'.
+    3dTcorrelate
+    
+    3dTcorrelate. Computes the correlation coefficient between corresponding
+    voxel time series in two input 3D+time datasets 'xset' and 'yset'.
     
     Author: AFNI Developers
     
@@ -290,8 +292,10 @@ def v_3d_tcorrelate(
     runner: Runner | None = None,
 ) -> V3dTcorrelateOutputs:
     """
-    3dTcorrelate. Computes the correlation coefficient between corresponding voxel
-    time series in two input 3D+time datasets 'xset' and 'yset'.
+    3dTcorrelate
+    
+    3dTcorrelate. Computes the correlation coefficient between corresponding
+    voxel time series in two input 3D+time datasets 'xset' and 'yset'.
     
     Author: AFNI Developers
     

@@ -170,8 +170,10 @@ def paste_image_into_image_execute(
     runner: Runner | None = None,
 ) -> PasteImageIntoImageOutputs:
     """
-    Paste the input image into the input canvas image. Depending on parameters, it
-    can replace or merge existing voxel values.
+    PasteImageIntoImage
+    
+    Paste the input image into the input canvas image. Depending on parameters,
+    it can replace or merge existing voxel values.
     
     Author: ANTs Developers
     
@@ -204,8 +206,10 @@ def paste_image_into_image(
     runner: Runner | None = None,
 ) -> PasteImageIntoImageOutputs:
     """
-    Paste the input image into the input canvas image. Depending on parameters, it
-    can replace or merge existing voxel values.
+    PasteImageIntoImage
+    
+    Paste the input image into the input canvas image. Depending on parameters,
+    it can replace or merge existing voxel values.
     
     Author: ANTs Developers
     

@@ -216,8 +216,10 @@ def mris_smooth_intracortical_execute(
     runner: Runner | None = None,
 ) -> MrisSmoothIntracorticalOutputs:
     """
-    Smooths data overlaid onto cortical surface meshes using specified tangential
-    and radial extents.
+    mris_smooth_intracortical
+    
+    Smooths data overlaid onto cortical surface meshes using specified
+    tangential and radial extents.
     
     Author: FreeSurfer Developers
     
@@ -252,8 +254,10 @@ def mris_smooth_intracortical(
     runner: Runner | None = None,
 ) -> MrisSmoothIntracorticalOutputs:
     """
-    Smooths data overlaid onto cortical surface meshes using specified tangential
-    and radial extents.
+    mris_smooth_intracortical
+    
+    Smooths data overlaid onto cortical surface meshes using specified
+    tangential and radial extents.
     
     Author: FreeSurfer Developers
     

@@ -165,7 +165,10 @@ def v_1dgrayplot_execute(
     runner: Runner | None = None,
 ) -> V1dgrayplotOutputs:
     """
-    Graphs the columns of a *.1D type time series file to the screen in grayscale.
+    1dgrayplot
+    
+    Graphs the columns of a *.1D type time series file to the screen in
+    grayscale.
     
     Author: AFNI Developers
     
@@ -197,7 +200,10 @@ def v_1dgrayplot(
     runner: Runner | None = None,
 ) -> V1dgrayplotOutputs:
     """
-    Graphs the columns of a *.1D type time series file to the screen in grayscale.
+    1dgrayplot
+    
+    Graphs the columns of a *.1D type time series file to the screen in
+    grayscale.
     
     Author: AFNI Developers
     

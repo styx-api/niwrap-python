@@ -193,6 +193,8 @@ def roigrow_execute(
     runner: Runner | None = None,
 ) -> RoigrowOutputs:
     """
+    ROIgrow
+    
     A program to expand an ROI on the surface.
     
     Author: AFNI Developers
@@ -226,6 +228,8 @@ def roigrow(
     runner: Runner | None = None,
 ) -> RoigrowOutputs:
     """
+    ROIgrow
+    
     A program to expand an ROI on the surface.
     
     Author: AFNI Developers

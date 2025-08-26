@@ -309,6 +309,8 @@ def cifti_average_roi_correlation_execute(
     runner: Runner | None = None,
 ) -> CiftiAverageRoiCorrelationOutputs:
     """
+    cifti-average-roi-correlation
+    
     Correlate roi average with all rows then average across subjects.
     
     Averages rows for each map of the ROI(s), takes the correlation of each ROI
@@ -353,6 +355,8 @@ def cifti_average_roi_correlation(
     runner: Runner | None = None,
 ) -> CiftiAverageRoiCorrelationOutputs:
     """
+    cifti-average-roi-correlation
+    
     Correlate roi average with all rows then average across subjects.
     
     Averages rows for each map of the ROI(s), takes the correlation of each ROI

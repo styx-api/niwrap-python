@@ -128,6 +128,8 @@ def inflate_subject_lh_execute(
     runner: Runner | None = None,
 ) -> InflateSubjectLhOutputs:
     """
+    inflate_subject-lh
+    
     A tool to process and inflate left hemisphere subject data in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def inflate_subject_lh(
     runner: Runner | None = None,
 ) -> InflateSubjectLhOutputs:
     """
+    inflate_subject-lh
+    
     A tool to process and inflate left hemisphere subject data in FreeSurfer.
     
     Author: FreeSurfer Developers

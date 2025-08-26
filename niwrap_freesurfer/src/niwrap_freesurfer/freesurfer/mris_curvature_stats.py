@@ -426,6 +426,8 @@ def mris_curvature_stats_execute(
     runner: Runner | None = None,
 ) -> MrisCurvatureStatsOutputs:
     """
+    mris_curvature_stats
+    
     Tool for calculating statistics on surface curvature values.
     
     Author: FreeSurfer Developers
@@ -488,6 +490,8 @@ def mris_curvature_stats(
     runner: Runner | None = None,
 ) -> MrisCurvatureStatsOutputs:
     """
+    mris_curvature_stats
+    
     Tool for calculating statistics on surface curvature values.
     
     Author: FreeSurfer Developers

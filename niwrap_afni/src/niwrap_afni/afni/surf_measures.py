@@ -268,6 +268,8 @@ def surf_measures_execute(
     runner: Runner | None = None,
 ) -> SurfMeasuresOutputs:
     """
+    SurfMeasures
+    
     Compute measures from surface dataset(s).
     
     Author: AFNI Developers
@@ -311,6 +313,8 @@ def surf_measures(
     runner: Runner | None = None,
 ) -> SurfMeasuresOutputs:
     """
+    SurfMeasures
+    
     Compute measures from surface dataset(s).
     
     Author: AFNI Developers

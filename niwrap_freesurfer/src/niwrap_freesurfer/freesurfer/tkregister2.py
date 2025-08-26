@@ -163,6 +163,8 @@ def tkregister2_execute(
     runner: Runner | None = None,
 ) -> Tkregister2Outputs:
     """
+    tkregister2
+    
     tkregister2 is a tool from FreeSurfer used for registration of MRI images.
     
     Author: FreeSurfer Developers
@@ -196,6 +198,8 @@ def tkregister2(
     runner: Runner | None = None,
 ) -> Tkregister2Outputs:
     """
+    tkregister2
+    
     tkregister2 is a tool from FreeSurfer used for registration of MRI images.
     
     Author: FreeSurfer Developers

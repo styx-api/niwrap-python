@@ -232,8 +232,10 @@ def mri_cor2label_execute(
     runner: Runner | None = None,
 ) -> MriCor2labelOutputs:
     """
-    Converts values in a volume or surface overlay to a label. Designed to convert
-    parcellation volumes stored in mri format.
+    mri_cor2label
+    
+    Converts values in a volume or surface overlay to a label. Designed to
+    convert parcellation volumes stored in mri format.
     
     Author: FreeSurfer Developers
     
@@ -270,8 +272,10 @@ def mri_cor2label(
     runner: Runner | None = None,
 ) -> MriCor2labelOutputs:
     """
-    Converts values in a volume or surface overlay to a label. Designed to convert
-    parcellation volumes stored in mri format.
+    mri_cor2label
+    
+    Converts values in a volume or surface overlay to a label. Designed to
+    convert parcellation volumes stored in mri format.
     
     Author: FreeSurfer Developers
     

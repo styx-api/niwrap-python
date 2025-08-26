@@ -233,6 +233,8 @@ def reg_tools_execute(
     runner: Runner | None = None,
 ) -> RegToolsOutputs:
     """
+    reg_tools
+    
     A versatile tool for manipulating and processing medical images.
     
     Author: NiftyReg Developers
@@ -270,6 +272,8 @@ def reg_tools(
     runner: Runner | None = None,
 ) -> RegToolsOutputs:
     """
+    reg_tools
+    
     A versatile tool for manipulating and processing medical images.
     
     Author: NiftyReg Developers

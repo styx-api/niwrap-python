@@ -146,7 +146,10 @@ def v_3dcopy_execute(
     runner: Runner | None = None,
 ) -> V3dcopyOutputs:
     """
-    3dcopy copies datasets with or without altering prefixes and converting formats.
+    3dcopy
+    
+    3dcopy copies datasets with or without altering prefixes and converting
+    formats.
     
     Author: AFNI Developers
     
@@ -176,7 +179,10 @@ def v_3dcopy(
     runner: Runner | None = None,
 ) -> V3dcopyOutputs:
     """
-    3dcopy copies datasets with or without altering prefixes and converting formats.
+    3dcopy
+    
+    3dcopy copies datasets with or without altering prefixes and converting
+    formats.
     
     Author: AFNI Developers
     

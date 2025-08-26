@@ -230,6 +230,8 @@ def mri_exvivo_strip_execute(
     runner: Runner | None = None,
 ) -> MriExvivoStripOutputs:
     """
+    mri_exvivo_strip
+    
     Tool for processing MRI volumes for ex vivo data.
     
     Author: FreeSurfer Developers
@@ -267,6 +269,8 @@ def mri_exvivo_strip(
     runner: Runner | None = None,
 ) -> MriExvivoStripOutputs:
     """
+    mri_exvivo_strip
+    
     Tool for processing MRI volumes for ex vivo data.
     
     Author: FreeSurfer Developers

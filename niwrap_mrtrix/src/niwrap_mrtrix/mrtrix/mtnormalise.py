@@ -411,6 +411,8 @@ def mtnormalise_execute(
     runner: Runner | None = None,
 ) -> MtnormaliseOutputs:
     """
+    mtnormalise
+    
     Multi-tissue informed log-domain intensity normalisation.
     
     This command takes as input any number of tissue components (e.g. from
@@ -482,6 +484,8 @@ def mtnormalise(
     runner: Runner | None = None,
 ) -> MtnormaliseOutputs:
     """
+    mtnormalise
+    
     Multi-tissue informed log-domain intensity normalisation.
     
     This command takes as input any number of tissue components (e.g. from

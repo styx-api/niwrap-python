@@ -152,6 +152,8 @@ def v__thickness_master_execute(
     runner: Runner | None = None,
 ) -> VThicknessMasterOutputs:
     """
+    @thickness_master
+    
     Compute cortical thickness using mask and surface datasets.
     
     Author: AFNI Developers
@@ -180,6 +182,8 @@ def v__thickness_master(
     runner: Runner | None = None,
 ) -> VThicknessMasterOutputs:
     """
+    @thickness_master
+    
     Compute cortical thickness using mask and surface datasets.
     
     Author: AFNI Developers

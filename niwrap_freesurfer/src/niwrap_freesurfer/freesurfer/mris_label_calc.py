@@ -149,6 +149,8 @@ def mris_label_calc_execute(
     runner: Runner | None = None,
 ) -> MrisLabelCalcOutputs:
     """
+    mris_label_calc
+    
     Tool for surface label calculations.
     
     Author: FreeSurfer Developers
@@ -179,6 +181,8 @@ def mris_label_calc(
     runner: Runner | None = None,
 ) -> MrisLabelCalcOutputs:
     """
+    mris_label_calc
+    
     Tool for surface label calculations.
     
     Author: FreeSurfer Developers

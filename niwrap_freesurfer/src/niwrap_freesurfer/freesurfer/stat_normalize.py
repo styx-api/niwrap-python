@@ -182,8 +182,10 @@ def stat_normalize_execute(
     runner: Runner | None = None,
 ) -> StatNormalizeOutputs:
     """
-    This program will convert and average a sequence of volume-based statistics in
-    Talairach space.
+    stat_normalize
+    
+    This program will convert and average a sequence of volume-based statistics
+    in Talairach space.
     
     Author: FreeSurfer Developers
     
@@ -216,8 +218,10 @@ def stat_normalize(
     runner: Runner | None = None,
 ) -> StatNormalizeOutputs:
     """
-    This program will convert and average a sequence of volume-based statistics in
-    Talairach space.
+    stat_normalize
+    
+    This program will convert and average a sequence of volume-based statistics
+    in Talairach space.
     
     Author: FreeSurfer Developers
     

@@ -131,6 +131,8 @@ def border_export_color_table_execute(
     runner: Runner | None = None,
 ) -> BorderExportColorTableOutputs:
     """
+    border-export-color-table
+    
     Write border names and colors as text.
     
     Takes the names and colors of each border, and writes it to the same format
@@ -164,6 +166,8 @@ def border_export_color_table(
     runner: Runner | None = None,
 ) -> BorderExportColorTableOutputs:
     """
+    border-export-color-table
+    
     Write border names and colors as text.
     
     Takes the names and colors of each border, and writes it to the same format

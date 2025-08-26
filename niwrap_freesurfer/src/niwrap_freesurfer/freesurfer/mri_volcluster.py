@@ -570,6 +570,8 @@ def mri_volcluster_execute(
     runner: Runner | None = None,
 ) -> MriVolclusterOutputs:
     """
+    mri_volcluster
+    
     A tool for finding clusters in a volume, useful for analyzing MRI data.
     
     Author: FreeSurfer Developers
@@ -643,6 +645,8 @@ def mri_volcluster(
     runner: Runner | None = None,
 ) -> MriVolclusterOutputs:
     """
+    mri_volcluster
+    
     A tool for finding clusters in a volume, useful for analyzing MRI data.
     
     Author: FreeSurfer Developers

@@ -265,6 +265,8 @@ def volume_tfce_execute(
     runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
+    volume-tfce
+    
     Do tfce on a volume file.
     
     This command does not do any statistical analysis. Please use something like
@@ -315,6 +317,8 @@ def volume_tfce(
     runner: Runner | None = None,
 ) -> VolumeTfceOutputs:
     """
+    volume-tfce
+    
     Do tfce on a volume file.
     
     This command does not do any statistical analysis. Please use something like

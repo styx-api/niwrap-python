@@ -205,6 +205,8 @@ def volume_warpfield_affine_regression_execute(
     runner: Runner | None = None,
 ) -> VolumeWarpfieldAffineRegressionOutputs:
     """
+    volume-warpfield-affine-regression
+    
     Regress affine from warpfield.
     
     For all voxels in the warpfield, do a regression that predicts the post-warp
@@ -244,6 +246,8 @@ def volume_warpfield_affine_regression(
     runner: Runner | None = None,
 ) -> VolumeWarpfieldAffineRegressionOutputs:
     """
+    volume-warpfield-affine-regression
+    
     Regress affine from warpfield.
     
     For all voxels in the warpfield, do a regression that predicts the post-warp

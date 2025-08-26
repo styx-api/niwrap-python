@@ -169,6 +169,8 @@ def v_3d_twoto_complex_execute(
     runner: Runner | None = None,
 ) -> V3dTwotoComplexOutputs:
     """
+    3dTwotoComplex
+    
     Converts 2 sub-bricks of input to a complex-valued dataset.
     
     Author: AFNI Developers
@@ -200,6 +202,8 @@ def v_3d_twoto_complex(
     runner: Runner | None = None,
 ) -> V3dTwotoComplexOutputs:
     """
+    3dTwotoComplex
+    
     Converts 2 sub-bricks of input to a complex-valued dataset.
     
     Author: AFNI Developers

@@ -201,8 +201,10 @@ def analyze_trace_execute(
     runner: Runner | None = None,
 ) -> AnalyzeTraceOutputs:
     """
-    A program to analyze SUMA (and AFNI's perhaps) stack output for functions that
-    return with RETURN without bothering to go on the stack.
+    AnalyzeTrace
+    
+    A program to analyze SUMA (and AFNI's perhaps) stack output for functions
+    that return with RETURN without bothering to go on the stack.
     
     Author: AFNI Developers
     
@@ -238,8 +240,10 @@ def analyze_trace(
     runner: Runner | None = None,
 ) -> AnalyzeTraceOutputs:
     """
-    A program to analyze SUMA (and AFNI's perhaps) stack output for functions that
-    return with RETURN without bothering to go on the stack.
+    AnalyzeTrace
+    
+    A program to analyze SUMA (and AFNI's perhaps) stack output for functions
+    that return with RETURN without bothering to go on the stack.
     
     Author: AFNI Developers
     

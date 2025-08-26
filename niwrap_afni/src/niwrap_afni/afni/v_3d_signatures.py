@@ -161,6 +161,8 @@ def v_3d_signatures_execute(
     runner: Runner | None = None,
 ) -> V3dSignaturesOutputs:
     """
+    3dSignatures
+    
     3dSignatures analysis tool for 3D genome organization.
     
     Author: AFNI Developers
@@ -192,6 +194,8 @@ def v_3d_signatures(
     runner: Runner | None = None,
 ) -> V3dSignaturesOutputs:
     """
+    3dSignatures
+    
     3dSignatures analysis tool for 3D genome organization.
     
     Author: AFNI Developers

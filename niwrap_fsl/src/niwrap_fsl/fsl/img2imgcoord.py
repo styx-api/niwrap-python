@@ -188,6 +188,8 @@ def img2imgcoord_execute(
     runner: Runner | None = None,
 ) -> Img2imgcoordOutputs:
     """
+    img2imgcoord
+    
     Tool for transforming coordinates between images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -223,6 +225,8 @@ def img2imgcoord(
     runner: Runner | None = None,
 ) -> Img2imgcoordOutputs:
     """
+    img2imgcoord
+    
     Tool for transforming coordinates between images.
     
     Author: FMRIB Analysis Group, University of Oxford

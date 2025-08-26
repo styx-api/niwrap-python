@@ -189,8 +189,10 @@ def bbmask_execute(
     runner: Runner | None = None,
 ) -> BbmaskOutputs:
     """
-    Tool to create a volume with a smaller field of view by creating a bounding box
-    that encompasses a mask.
+    bbmask
+    
+    Tool to create a volume with a smaller field of view by creating a bounding
+    box that encompasses a mask.
     
     Author: FreeSurfer Developers
     
@@ -221,8 +223,10 @@ def bbmask(
     runner: Runner | None = None,
 ) -> BbmaskOutputs:
     """
-    Tool to create a volume with a smaller field of view by creating a bounding box
-    that encompasses a mask.
+    bbmask
+    
+    Tool to create a volume with a smaller field of view by creating a bounding
+    box that encompasses a mask.
     
     Author: FreeSurfer Developers
     

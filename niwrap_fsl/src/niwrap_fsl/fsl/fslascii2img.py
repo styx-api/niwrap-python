@@ -168,6 +168,8 @@ def fslascii2img_execute(
     runner: Runner | None = None,
 ) -> Fslascii2imgOutputs:
     """
+    fslascii2img
+    
     Convert data from ASCII format to NIfTI format.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -203,6 +205,8 @@ def fslascii2img(
     runner: Runner | None = None,
 ) -> Fslascii2imgOutputs:
     """
+    fslascii2img
+    
     Convert data from ASCII format to NIfTI format.
     
     Author: FMRIB Analysis Group, University of Oxford

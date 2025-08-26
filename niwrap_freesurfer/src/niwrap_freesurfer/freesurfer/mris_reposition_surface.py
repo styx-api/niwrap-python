@@ -180,6 +180,8 @@ def mris_reposition_surface_execute(
     runner: Runner | None = None,
 ) -> MrisRepositionSurfaceOutputs:
     """
+    mris_reposition_surface
+    
     Reposition a surface based on the given control points (in JSON format).
     
     Author: FreeSurfer Developers
@@ -212,6 +214,8 @@ def mris_reposition_surface(
     runner: Runner | None = None,
 ) -> MrisRepositionSurfaceOutputs:
     """
+    mris_reposition_surface
+    
     Reposition a surface based on the given control points (in JSON format).
     
     Author: FreeSurfer Developers

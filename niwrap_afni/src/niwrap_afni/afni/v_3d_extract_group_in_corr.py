@@ -135,8 +135,10 @@ def v_3d_extract_group_in_corr_execute(
     runner: Runner | None = None,
 ) -> V3dExtractGroupInCorrOutputs:
     """
-    This program breaks the collection of images from a GroupInCorr file back into
-    individual AFNI 3D+time datasets.
+    3dExtractGroupInCorr
+    
+    This program breaks the collection of images from a GroupInCorr file back
+    into individual AFNI 3D+time datasets.
     
     Author: AFNI Developers
     
@@ -163,8 +165,10 @@ def v_3d_extract_group_in_corr(
     runner: Runner | None = None,
 ) -> V3dExtractGroupInCorrOutputs:
     """
-    This program breaks the collection of images from a GroupInCorr file back into
-    individual AFNI 3D+time datasets.
+    3dExtractGroupInCorr
+    
+    This program breaks the collection of images from a GroupInCorr file back
+    into individual AFNI 3D+time datasets.
     
     Author: AFNI Developers
     

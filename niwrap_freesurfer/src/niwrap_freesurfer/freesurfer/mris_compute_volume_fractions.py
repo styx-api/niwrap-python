@@ -162,6 +162,8 @@ def mris_compute_volume_fractions_execute(
     runner: Runner | None = None,
 ) -> MrisComputeVolumeFractionsOutputs:
     """
+    mris_compute_volume_fractions
+    
     Computes volume fractions based on a given surface and volume.
     
     Author: FreeSurfer Developers
@@ -193,6 +195,8 @@ def mris_compute_volume_fractions(
     runner: Runner | None = None,
 ) -> MrisComputeVolumeFractionsOutputs:
     """
+    mris_compute_volume_fractions
+    
     Computes volume fractions based on a given surface and volume.
     
     Author: FreeSurfer Developers

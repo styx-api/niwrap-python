@@ -278,6 +278,8 @@ def surf_smooth_execute(
     runner: Runner | None = None,
 ) -> SurfSmoothOutputs:
     """
+    SurfSmooth
+    
     Tool for smoothing data on surfaces using various methods.
     
     Author: AFNI Developers
@@ -319,6 +321,8 @@ def surf_smooth(
     runner: Runner | None = None,
 ) -> SurfSmoothOutputs:
     """
+    SurfSmooth
+    
     Tool for smoothing data on surfaces using various methods.
     
     Author: AFNI Developers

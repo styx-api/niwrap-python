@@ -172,6 +172,8 @@ def cblumwmgyri_execute(
     runner: Runner | None = None,
 ) -> CblumwmgyriOutputs:
     """
+    cblumwmgyri
+    
     Segments cerebellar white matter into gyral and core components using
     geometrical constraints.
     
@@ -204,6 +206,8 @@ def cblumwmgyri(
     runner: Runner | None = None,
 ) -> CblumwmgyriOutputs:
     """
+    cblumwmgyri
+    
     Segments cerebellar white matter into gyral and core components using
     geometrical constraints.
     

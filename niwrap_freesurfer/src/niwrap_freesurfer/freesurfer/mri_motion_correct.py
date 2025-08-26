@@ -128,6 +128,8 @@ def mri_motion_correct_execute(
     runner: Runner | None = None,
 ) -> MriMotionCorrectOutputs:
     """
+    mri_motion_correct
+    
     Tool for correcting motion in MRI scans.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mri_motion_correct(
     runner: Runner | None = None,
 ) -> MriMotionCorrectOutputs:
     """
+    mri_motion_correct
+    
     Tool for correcting motion in MRI scans.
     
     Author: FreeSurfer Developers

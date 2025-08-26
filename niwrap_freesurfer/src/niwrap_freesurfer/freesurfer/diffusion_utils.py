@@ -121,6 +121,8 @@ def diffusion_utils_execute(
     runner: Runner | None = None,
 ) -> DiffusionUtilsOutputs:
     """
+    diffusionUtils
+    
     A utility related to diffusion data, potentially using the DIPY library.
     
     Author: FreeSurfer Developers
@@ -147,6 +149,8 @@ def diffusion_utils(
     runner: Runner | None = None,
 ) -> DiffusionUtilsOutputs:
     """
+    diffusionUtils
+    
     A utility related to diffusion data, potentially using the DIPY library.
     
     Author: FreeSurfer Developers

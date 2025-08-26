@@ -186,6 +186,8 @@ def uber_align_test_py_execute(
     runner: Runner | None = None,
 ) -> UberAlignTestPyOutputs:
     """
+    uber_align_test.py
+    
     Generate script to test anatomical/EPI alignment.
     
     Author: AFNI Developers
@@ -221,6 +223,8 @@ def uber_align_test_py(
     runner: Runner | None = None,
 ) -> UberAlignTestPyOutputs:
     """
+    uber_align_test.py
+    
     Generate script to test anatomical/EPI alignment.
     
     Author: AFNI Developers

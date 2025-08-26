@@ -128,6 +128,8 @@ def fsl_gen_3_d_execute(
     runner: Runner | None = None,
 ) -> FslGen3DOutputs:
     """
+    fsl_gen_3D
+    
     Tool to generate a 3D snapshot of a structural image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def fsl_gen_3_d(
     runner: Runner | None = None,
 ) -> FslGen3DOutputs:
     """
+    fsl_gen_3D
+    
     Tool to generate a 3D snapshot of a structural image.
     
     Author: FMRIB Analysis Group, University of Oxford

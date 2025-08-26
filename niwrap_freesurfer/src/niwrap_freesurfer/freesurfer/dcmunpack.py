@@ -420,6 +420,8 @@ def dcmunpack_execute(
     runner: Runner | None = None,
 ) -> DcmunpackOutputs:
     """
+    dcmunpack
+    
     Sorts and converts a directory of DICOM files (Siemens, GE, Philips) into an
     output hierarchy with nifti (nii), mgh, mgz, or analyze output formats.
     
@@ -484,6 +486,8 @@ def dcmunpack(
     runner: Runner | None = None,
 ) -> DcmunpackOutputs:
     """
+    dcmunpack
+    
     Sorts and converts a directory of DICOM files (Siemens, GE, Philips) into an
     output hierarchy with nifti (nii), mgh, mgz, or analyze output formats.
     

@@ -250,6 +250,8 @@ def create_tiled_mosaic_execute(
     runner: Runner | None = None,
 ) -> CreateTiledMosaicOutputs:
     """
+    CreateTiledMosaic
+    
     Render a 3-D image volume with optional Rgb overlay.
     
     Author: ANTs Developers
@@ -287,6 +289,8 @@ def create_tiled_mosaic(
     runner: Runner | None = None,
 ) -> CreateTiledMosaicOutputs:
     """
+    CreateTiledMosaic
+    
     Render a 3-D image volume with optional Rgb overlay.
     
     Author: ANTs Developers

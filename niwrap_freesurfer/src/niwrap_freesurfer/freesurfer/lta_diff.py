@@ -179,6 +179,8 @@ def lta_diff_execute(
     runner: Runner | None = None,
 ) -> LtaDiffOutputs:
     """
+    lta_diff
+    
     A tool to compute different distance norms for a single transform or for the
     difference between two transforms.
     
@@ -213,6 +215,8 @@ def lta_diff(
     runner: Runner | None = None,
 ) -> LtaDiffOutputs:
     """
+    lta_diff
+    
     A tool to compute different distance norms for a single transform or for the
     difference between two transforms.
     

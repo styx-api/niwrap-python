@@ -161,6 +161,8 @@ def firdesign_execute(
     runner: Runner | None = None,
 ) -> FirdesignOutputs:
     """
+    FIRdesign
+    
     Uses the Remez algorithm to calculate the FIR filter weights for a bandpass
     filter; results are written to stdout in an unadorned (no header) column of
     numbers.
@@ -194,6 +196,8 @@ def firdesign(
     runner: Runner | None = None,
 ) -> FirdesignOutputs:
     """
+    FIRdesign
+    
     Uses the Remez algorithm to calculate the FIR filter weights for a bandpass
     filter; results are written to stdout in an unadorned (no header) column of
     numbers.

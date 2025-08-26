@@ -197,8 +197,10 @@ def pta_execute(
     runner: Runner | None = None,
 ) -> PtaOutputs:
     """
-    Program for Profile Tracking Analysis - estimates nonlinear trajectories through
-    smoothing splines.
+    PTA
+    
+    Program for Profile Tracking Analysis - estimates nonlinear trajectories
+    through smoothing splines.
     
     Author: AFNI Developers
     
@@ -231,8 +233,10 @@ def pta(
     runner: Runner | None = None,
 ) -> PtaOutputs:
     """
-    Program for Profile Tracking Analysis - estimates nonlinear trajectories through
-    smoothing splines.
+    PTA
+    
+    Program for Profile Tracking Analysis - estimates nonlinear trajectories
+    through smoothing splines.
     
     Author: AFNI Developers
     

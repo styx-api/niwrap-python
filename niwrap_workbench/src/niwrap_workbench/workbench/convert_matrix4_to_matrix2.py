@@ -244,6 +244,8 @@ def convert_matrix4_to_matrix2_execute(
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
+    convert-matrix4-to-matrix2
+    
     Generates a matrix2 cifti from matrix4 wbsparse.
     
     This command makes a cifti file from the fiber counts in a matrix4 wbsparse
@@ -279,6 +281,8 @@ def convert_matrix4_to_matrix2(
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToMatrix2Outputs:
     """
+    convert-matrix4-to-matrix2
+    
     Generates a matrix2 cifti from matrix4 wbsparse.
     
     This command makes a cifti file from the fiber counts in a matrix4 wbsparse

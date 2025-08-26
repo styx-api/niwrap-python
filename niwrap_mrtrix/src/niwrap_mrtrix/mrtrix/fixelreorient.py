@@ -249,6 +249,8 @@ def fixelreorient_execute(
     runner: Runner | None = None,
 ) -> FixelreorientOutputs:
     """
+    fixelreorient
+    
     Reorient fixel directions.
     
     Reorientation is performed by transforming the vector representing the fixel
@@ -293,6 +295,8 @@ def fixelreorient(
     runner: Runner | None = None,
 ) -> FixelreorientOutputs:
     """
+    fixelreorient
+    
     Reorient fixel directions.
     
     Reorientation is performed by transforming the vector representing the fixel

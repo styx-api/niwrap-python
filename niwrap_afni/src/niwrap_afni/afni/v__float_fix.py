@@ -120,8 +120,10 @@ def v__float_fix_execute(
     runner: Runner | None = None,
 ) -> VFloatFixOutputs:
     """
-    Check whether the input files have any IEEE floating point numbers for illegal
-    values: infinities and not-a-number (NaN) values.
+    @float_fix
+    
+    Check whether the input files have any IEEE floating point numbers for
+    illegal values: infinities and not-a-number (NaN) values.
     
     Author: AFNI Developers
     
@@ -147,8 +149,10 @@ def v__float_fix(
     runner: Runner | None = None,
 ) -> VFloatFixOutputs:
     """
-    Check whether the input files have any IEEE floating point numbers for illegal
-    values: infinities and not-a-number (NaN) values.
+    @float_fix
+    
+    Check whether the input files have any IEEE floating point numbers for
+    illegal values: infinities and not-a-number (NaN) values.
     
     Author: AFNI Developers
     

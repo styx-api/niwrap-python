@@ -124,6 +124,8 @@ def ants_multivariate_template_construction2_sh_execute(
     runner: Runner | None = None,
 ) -> AntsMultivariateTemplateConstruction2ShOutputs:
     """
+    antsMultivariateTemplateConstruction2.sh
+    
     The antsMultivariateTemplateConstruction2.sh script is part of the Advanced
     Normalization Tools (ANTs) suite. It is used for constructing multivariate
     templates.
@@ -152,6 +154,8 @@ def ants_multivariate_template_construction2_sh(
     runner: Runner | None = None,
 ) -> AntsMultivariateTemplateConstruction2ShOutputs:
     """
+    antsMultivariateTemplateConstruction2.sh
+    
     The antsMultivariateTemplateConstruction2.sh script is part of the Advanced
     Normalization Tools (ANTs) suite. It is used for constructing multivariate
     templates.

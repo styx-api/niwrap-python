@@ -128,6 +128,8 @@ def zeropad_execute(
     runner: Runner | None = None,
 ) -> ZeropadOutputs:
     """
+    zeropad
+    
     Tool for zero-padding numbers to a specified length.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def zeropad(
     runner: Runner | None = None,
 ) -> ZeropadOutputs:
     """
+    zeropad
+    
     Tool for zero-padding numbers to a specified length.
     
     Author: FMRIB Analysis Group, University of Oxford

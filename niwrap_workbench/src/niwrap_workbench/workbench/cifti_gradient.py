@@ -374,6 +374,8 @@ def cifti_gradient_execute(
     runner: Runner | None = None,
 ) -> CiftiGradientOutputs:
     """
+    cifti-gradient
+    
     Take gradient of a cifti file.
     
     Performs gradient calculation on each component of the cifti file, and
@@ -417,6 +419,8 @@ def cifti_gradient(
     runner: Runner | None = None,
 ) -> CiftiGradientOutputs:
     """
+    cifti-gradient
+    
     Take gradient of a cifti file.
     
     Performs gradient calculation on each component of the cifti file, and

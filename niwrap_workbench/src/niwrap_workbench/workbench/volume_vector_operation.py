@@ -165,6 +165,8 @@ def volume_vector_operation_execute(
     runner: Runner | None = None,
 ) -> VolumeVectorOperationOutputs:
     """
+    volume-vector-operation
+    
     Do a vector operation on volume files.
     
     Does a vector operation on two volume files (that must have a multiple of 3
@@ -210,6 +212,8 @@ def volume_vector_operation(
     runner: Runner | None = None,
 ) -> VolumeVectorOperationOutputs:
     """
+    volume-vector-operation
+    
     Do a vector operation on volume files.
     
     Does a vector operation on two volume files (that must have a multiple of 3

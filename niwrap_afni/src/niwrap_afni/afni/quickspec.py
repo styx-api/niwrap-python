@@ -183,8 +183,10 @@ def quickspec_execute(
     runner: Runner | None = None,
 ) -> QuickspecOutputs:
     """
-    A quick and dirty way of loading a surface into SUMA or command line programs
-    using a spec file.
+    quickspec
+    
+    A quick and dirty way of loading a surface into SUMA or command line
+    programs using a spec file.
     
     Author: AFNI Developers
     
@@ -216,8 +218,10 @@ def quickspec(
     runner: Runner | None = None,
 ) -> QuickspecOutputs:
     """
-    A quick and dirty way of loading a surface into SUMA or command line programs
-    using a spec file.
+    quickspec
+    
+    A quick and dirty way of loading a surface into SUMA or command line
+    programs using a spec file.
     
     Author: AFNI Developers
     

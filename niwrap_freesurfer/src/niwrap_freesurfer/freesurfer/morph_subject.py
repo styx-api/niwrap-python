@@ -119,8 +119,10 @@ def morph_subject_execute(
     runner: Runner | None = None,
 ) -> MorphSubjectOutputs:
     """
-    A morphological processing tool for Freesurfer subjects. The specific operations
-    and options are not documented in the available help text.
+    morph_subject
+    
+    A morphological processing tool for Freesurfer subjects. The specific
+    operations and options are not documented in the available help text.
     
     Author: FreeSurfer Developers
     
@@ -146,8 +148,10 @@ def morph_subject(
     runner: Runner | None = None,
 ) -> MorphSubjectOutputs:
     """
-    A morphological processing tool for Freesurfer subjects. The specific operations
-    and options are not documented in the available help text.
+    morph_subject
+    
+    A morphological processing tool for Freesurfer subjects. The specific
+    operations and options are not documented in the available help text.
     
     Author: FreeSurfer Developers
     

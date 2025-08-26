@@ -182,6 +182,8 @@ def v_3dfractionize_execute(
     runner: Runner | None = None,
 ) -> V3dfractionizeOutputs:
     """
+    3dfractionize
+    
     For each voxel in the output dataset, computes the fraction of it that is
     occupied by nonzero voxels from the input.
     
@@ -215,6 +217,8 @@ def v_3dfractionize(
     runner: Runner | None = None,
 ) -> V3dfractionizeOutputs:
     """
+    3dfractionize
+    
     For each voxel in the output dataset, computes the fraction of it that is
     occupied by nonzero voxels from the input.
     

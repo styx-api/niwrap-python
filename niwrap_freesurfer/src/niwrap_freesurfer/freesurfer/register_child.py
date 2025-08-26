@@ -131,6 +131,8 @@ def register_child_execute(
     runner: Runner | None = None,
 ) -> RegisterChildOutputs:
     """
+    register_child
+    
     A tool used for registering MR volumes with a child's atlas in Freesurfer.
     
     Author: FreeSurfer Developers
@@ -158,6 +160,8 @@ def register_child(
     runner: Runner | None = None,
 ) -> RegisterChildOutputs:
     """
+    register_child
+    
     A tool used for registering MR volumes with a child's atlas in Freesurfer.
     
     Author: FreeSurfer Developers

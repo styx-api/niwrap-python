@@ -146,8 +146,10 @@ def i_math_execute(
     runner: Runner | None = None,
 ) -> IMathOutputs:
     """
-    iMath is a tool for performing various image mathematical operations on medical
-    images, specifically supporting operations on 2D, 3D, and 4D data.
+    iMath
+    
+    iMath is a tool for performing various image mathematical operations on
+    medical images, specifically supporting operations on 2D, 3D, and 4D data.
     
     Author: ANTs Developers
     
@@ -177,8 +179,10 @@ def i_math(
     runner: Runner | None = None,
 ) -> IMathOutputs:
     """
-    iMath is a tool for performing various image mathematical operations on medical
-    images, specifically supporting operations on 2D, 3D, and 4D data.
+    iMath
+    
+    iMath is a tool for performing various image mathematical operations on
+    medical images, specifically supporting operations on 2D, 3D, and 4D data.
     
     Author: ANTs Developers
     

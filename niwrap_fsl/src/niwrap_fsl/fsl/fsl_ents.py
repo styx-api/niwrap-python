@@ -155,6 +155,8 @@ def fsl_ents_execute(
     runner: Runner | None = None,
 ) -> FslEntsOutputs:
     """
+    fsl_ents
+    
     Extract component time series from a MELODIC .ica directory.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -185,6 +187,8 @@ def fsl_ents(
     runner: Runner | None = None,
 ) -> FslEntsOutputs:
     """
+    fsl_ents
+    
     Extract component time series from a MELODIC .ica directory.
     
     Author: FMRIB Analysis Group, University of Oxford

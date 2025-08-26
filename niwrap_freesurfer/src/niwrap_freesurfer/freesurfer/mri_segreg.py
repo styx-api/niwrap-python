@@ -129,6 +129,8 @@ def mri_segreg_execute(
     runner: Runner | None = None,
 ) -> MriSegregOutputs:
     """
+    mri_segreg
+    
     MRI Segregation tool.
     
     Author: FreeSurfer Developers
@@ -156,6 +158,8 @@ def mri_segreg(
     runner: Runner | None = None,
 ) -> MriSegregOutputs:
     """
+    mri_segreg
+    
     MRI Segregation tool.
     
     Author: FreeSurfer Developers

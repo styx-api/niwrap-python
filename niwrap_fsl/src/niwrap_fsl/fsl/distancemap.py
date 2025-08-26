@@ -212,6 +212,8 @@ def distancemap_execute(
     runner: Runner | None = None,
 ) -> DistancemapOutputs:
     """
+    distancemap
+    
     A tool to calculate distance maps using FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -247,6 +249,8 @@ def distancemap(
     runner: Runner | None = None,
 ) -> DistancemapOutputs:
     """
+    distancemap
+    
     A tool to calculate distance maps using FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

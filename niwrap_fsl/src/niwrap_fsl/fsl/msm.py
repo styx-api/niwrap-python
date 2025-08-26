@@ -271,6 +271,8 @@ def msm_execute(
     runner: Runner | None = None,
 ) -> MsmOutputs:
     """
+    msm
+    
     MSM (Multimodal Surface Matching) is a tool for aligning brain surface scans
     based on their cortical folding patterns or functional/structural data.
     
@@ -313,6 +315,8 @@ def msm(
     runner: Runner | None = None,
 ) -> MsmOutputs:
     """
+    msm
+    
     MSM (Multimodal Surface Matching) is a tool for aligning brain surface scans
     based on their cortical folding patterns or functional/structural data.
     

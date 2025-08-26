@@ -253,6 +253,8 @@ def cifti_average_execute(
     runner: Runner | None = None,
 ) -> CiftiAverageOutputs:
     """
+    cifti-average
+    
     Average cifti files.
     
     Averages cifti files together. Files without -weight specified are given a
@@ -289,6 +291,8 @@ def cifti_average(
     runner: Runner | None = None,
 ) -> CiftiAverageOutputs:
     """
+    cifti-average
+    
     Average cifti files.
     
     Averages cifti files together. Files without -weight specified are given a

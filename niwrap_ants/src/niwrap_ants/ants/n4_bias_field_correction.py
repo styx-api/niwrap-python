@@ -593,13 +593,15 @@ def n4_bias_field_correction_execute(
     runner: Runner | None = None,
 ) -> N4BiasFieldCorrectionOutputs:
     """
+    N4BiasFieldCorrection
+    
     N4 is a variant of the popular N3 (nonparameteric nonuniform normalization)
     retrospective bias correction algorithm. Based on the assumption that the
-    corruption of the low frequency bias field can be modeled as a convolution of
-    the intensity histogram by a Gaussian, the basic algorithmic protocol is to
-    iterate between deconvolving the intensity histogram by a Gaussian, remapping
-    the intensities, and then spatially smoothing this result by a B-spline modeling
-    of the bias field itself.
+    corruption of the low frequency bias field can be modeled as a convolution
+    of the intensity histogram by a Gaussian, the basic algorithmic protocol is
+    to iterate between deconvolving the intensity histogram by a Gaussian,
+    remapping the intensities, and then spatially smoothing this result by a
+    B-spline modeling of the bias field itself.
     
     Author: ANTs Developers
     
@@ -635,13 +637,15 @@ def n4_bias_field_correction(
     runner: Runner | None = None,
 ) -> N4BiasFieldCorrectionOutputs:
     """
+    N4BiasFieldCorrection
+    
     N4 is a variant of the popular N3 (nonparameteric nonuniform normalization)
     retrospective bias correction algorithm. Based on the assumption that the
-    corruption of the low frequency bias field can be modeled as a convolution of
-    the intensity histogram by a Gaussian, the basic algorithmic protocol is to
-    iterate between deconvolving the intensity histogram by a Gaussian, remapping
-    the intensities, and then spatially smoothing this result by a B-spline modeling
-    of the bias field itself.
+    corruption of the low frequency bias field can be modeled as a convolution
+    of the intensity histogram by a Gaussian, the basic algorithmic protocol is
+    to iterate between deconvolving the intensity histogram by a Gaussian,
+    remapping the intensities, and then spatially smoothing this result by a
+    B-spline modeling of the bias field itself.
     
     Author: ANTs Developers
     

@@ -261,6 +261,8 @@ def v_3dhistog_execute(
     runner: Runner | None = None,
 ) -> V3dhistogOutputs:
     """
+    3dhistog
+    
     Compute histogram of a 3D dataset.
     
     Author: AFNI Developers
@@ -304,6 +306,8 @@ def v_3dhistog(
     runner: Runner | None = None,
 ) -> V3dhistogOutputs:
     """
+    3dhistog
+    
     Compute histogram of a 3D dataset.
     
     Author: AFNI Developers

@@ -157,6 +157,8 @@ def v__command_globb_execute(
     runner: Runner | None = None,
 ) -> VCommandGlobbOutputs:
     """
+    @CommandGlobb
+    
     A command-line tool to execute a specified program command line on a list of
     input bricks.
     
@@ -187,6 +189,8 @@ def v__command_globb(
     runner: Runner | None = None,
 ) -> VCommandGlobbOutputs:
     """
+    @CommandGlobb
+    
     A command-line tool to execute a specified program command line on a list of
     input bricks.
     

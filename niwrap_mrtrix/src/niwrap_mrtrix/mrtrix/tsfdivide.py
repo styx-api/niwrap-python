@@ -239,6 +239,8 @@ def tsfdivide_execute(
     runner: Runner | None = None,
 ) -> TsfdivideOutputs:
     """
+    tsfdivide
+    
     Divide corresponding values in track scalar files.
     
     
@@ -281,6 +283,8 @@ def tsfdivide(
     runner: Runner | None = None,
 ) -> TsfdivideOutputs:
     """
+    tsfdivide
+    
     Divide corresponding values in track scalar files.
     
     

@@ -132,8 +132,10 @@ def quantify_brainstem_structures_sh_execute(
     runner: Runner | None = None,
 ) -> QuantifyBrainstemStructuresShOutputs:
     """
-    A script to gather results from FreeSurfer brainstem processing and write them
-    to an output file.
+    quantifyBrainstemStructures.sh
+    
+    A script to gather results from FreeSurfer brainstem processing and write
+    them to an output file.
     
     Author: FreeSurfer Developers
     
@@ -160,8 +162,10 @@ def quantify_brainstem_structures_sh(
     runner: Runner | None = None,
 ) -> QuantifyBrainstemStructuresShOutputs:
     """
-    A script to gather results from FreeSurfer brainstem processing and write them
-    to an output file.
+    quantifyBrainstemStructures.sh
+    
+    A script to gather results from FreeSurfer brainstem processing and write
+    them to an output file.
     
     Author: FreeSurfer Developers
     

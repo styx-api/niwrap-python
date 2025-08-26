@@ -120,6 +120,8 @@ def fs_install_mcr_execute(
     runner: Runner | None = None,
 ) -> FsInstallMcrOutputs:
     """
+    fs_install_mcr
+    
     MCR installation tool for FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -146,6 +148,8 @@ def fs_install_mcr(
     runner: Runner | None = None,
 ) -> FsInstallMcrOutputs:
     """
+    fs_install_mcr
+    
     MCR installation tool for FreeSurfer.
     
     Author: FreeSurfer Developers

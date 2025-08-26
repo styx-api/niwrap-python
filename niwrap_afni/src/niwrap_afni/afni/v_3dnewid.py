@@ -166,7 +166,10 @@ def v_3dnewid_execute(
     runner: Runner | None = None,
 ) -> V3dnewidOutputs:
     """
-    Assigns a new ID code to a dataset, ensuring internal ID codes remain unique.
+    3dnewid
+    
+    Assigns a new ID code to a dataset, ensuring internal ID codes remain
+    unique.
     
     Author: AFNI Developers
     
@@ -197,7 +200,10 @@ def v_3dnewid(
     runner: Runner | None = None,
 ) -> V3dnewidOutputs:
     """
-    Assigns a new ID code to a dataset, ensuring internal ID codes remain unique.
+    3dnewid
+    
+    Assigns a new ID code to a dataset, ensuring internal ID codes remain
+    unique.
     
     Author: AFNI Developers
     

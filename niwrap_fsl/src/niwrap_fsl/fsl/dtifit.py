@@ -296,6 +296,8 @@ def dtifit_execute(
     runner: Runner | None = None,
 ) -> DtifitOutputs:
     """
+    dtifit
+    
     DTIFIT - Fit a diffusion tensor model at each voxel.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -341,6 +343,8 @@ def dtifit(
     runner: Runner | None = None,
 ) -> DtifitOutputs:
     """
+    dtifit
+    
     DTIFIT - Fit a diffusion tensor model at each voxel.
     
     Author: FMRIB Analysis Group, University of Oxford

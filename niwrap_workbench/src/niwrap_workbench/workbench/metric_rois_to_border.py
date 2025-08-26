@@ -160,6 +160,8 @@ def metric_rois_to_border_execute(
     runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
+    metric-rois-to-border
+    
     Draw borders around metric rois.
     
     For each ROI column, finds all edges on the mesh that cross the boundary of
@@ -195,6 +197,8 @@ def metric_rois_to_border(
     runner: Runner | None = None,
 ) -> MetricRoisToBorderOutputs:
     """
+    metric-rois-to-border
+    
     Draw borders around metric rois.
     
     For each ROI column, finds all edges on the mesh that cross the boundary of

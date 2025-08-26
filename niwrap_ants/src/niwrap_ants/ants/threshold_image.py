@@ -184,8 +184,10 @@ def threshold_image_execute(
     runner: Runner | None = None,
 ) -> ThresholdImageOutputs:
     """
-    Image thresholding utility that applies different thresholding techniques to an
-    input image. It can use fixed thresholds, Otsu method, or K-means for
+    ThresholdImage
+    
+    Image thresholding utility that applies different thresholding techniques to
+    an input image. It can use fixed thresholds, Otsu method, or K-means for
     thresholding.
     
     Author: ANTs Developers
@@ -221,8 +223,10 @@ def threshold_image(
     runner: Runner | None = None,
 ) -> ThresholdImageOutputs:
     """
-    Image thresholding utility that applies different thresholding techniques to an
-    input image. It can use fixed thresholds, Otsu method, or K-means for
+    ThresholdImage
+    
+    Image thresholding utility that applies different thresholding techniques to
+    an input image. It can use fixed thresholds, Otsu method, or K-means for
     thresholding.
     
     Author: ANTs Developers

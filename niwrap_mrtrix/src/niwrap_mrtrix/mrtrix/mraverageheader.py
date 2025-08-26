@@ -278,6 +278,8 @@ def mraverageheader_execute(
     runner: Runner | None = None,
 ) -> MraverageheaderOutputs:
     """
+    mraverageheader
+    
     Calculate the average (unbiased) coordinate space of all input images.
     
     
@@ -323,6 +325,8 @@ def mraverageheader(
     runner: Runner | None = None,
 ) -> MraverageheaderOutputs:
     """
+    mraverageheader
+    
     Calculate the average (unbiased) coordinate space of all input images.
     
     

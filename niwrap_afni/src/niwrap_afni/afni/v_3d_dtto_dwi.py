@@ -174,6 +174,8 @@ def v_3d_dtto_dwi_execute(
     runner: Runner | None = None,
 ) -> V3dDttoDwiOutputs:
     """
+    3dDTtoDWI
+    
     Tool to compute multiple gradient images from tensors and gradient vector
     coordinates applied to the I0-dataset.
     
@@ -208,6 +210,8 @@ def v_3d_dtto_dwi(
     runner: Runner | None = None,
 ) -> V3dDttoDwiOutputs:
     """
+    3dDTtoDWI
+    
     Tool to compute multiple gradient images from tensors and gradient vector
     coordinates applied to the I0-dataset.
     

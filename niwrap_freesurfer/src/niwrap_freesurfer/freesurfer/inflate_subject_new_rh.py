@@ -124,9 +124,11 @@ def inflate_subject_new_rh_execute(
     runner: Runner | None = None,
 ) -> InflateSubjectNewRhOutputs:
     """
-    This is a placeholder descriptor for the 'inflate_subject_new-rh' command. The
-    tool appears to be part of FreeSurfer but the specific inputs, outputs or
-    options couldn't be extracted from the help text.
+    inflate_subject_new-rh
+    
+    This is a placeholder descriptor for the 'inflate_subject_new-rh' command.
+    The tool appears to be part of FreeSurfer but the specific inputs, outputs
+    or options couldn't be extracted from the help text.
     
     Author: FreeSurfer Developers
     
@@ -152,9 +154,11 @@ def inflate_subject_new_rh(
     runner: Runner | None = None,
 ) -> InflateSubjectNewRhOutputs:
     """
-    This is a placeholder descriptor for the 'inflate_subject_new-rh' command. The
-    tool appears to be part of FreeSurfer but the specific inputs, outputs or
-    options couldn't be extracted from the help text.
+    inflate_subject_new-rh
+    
+    This is a placeholder descriptor for the 'inflate_subject_new-rh' command.
+    The tool appears to be part of FreeSurfer but the specific inputs, outputs
+    or options couldn't be extracted from the help text.
     
     Author: FreeSurfer Developers
     

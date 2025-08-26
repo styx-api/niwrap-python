@@ -10415,6 +10415,8 @@ def c2d_execute(
     runner: Runner | None = None,
 ) -> C2dOutputs:
     """
+    c2d
+    
     c2d is a command-line tool for medical image processing.
     
     Author: Convert3D Developers
@@ -10443,6 +10445,8 @@ def c2d(
     runner: Runner | None = None,
 ) -> C2dOutputs:
     """
+    c2d
+    
     c2d is a command-line tool for medical image processing.
     
     Author: Convert3D Developers

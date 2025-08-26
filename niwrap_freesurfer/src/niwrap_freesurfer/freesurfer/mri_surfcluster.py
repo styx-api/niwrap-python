@@ -513,7 +513,10 @@ def mri_surfcluster_execute(
     runner: Runner | None = None,
 ) -> MriSurfclusterOutputs:
     """
-    A tool for clustering vertices on a cortical surface based on intensity values.
+    mri_surfcluster
+    
+    A tool for clustering vertices on a cortical surface based on intensity
+    values.
     
     Author: FreeSurfer Developers
     
@@ -579,7 +582,10 @@ def mri_surfcluster(
     runner: Runner | None = None,
 ) -> MriSurfclusterOutputs:
     """
-    A tool for clustering vertices on a cortical surface based on intensity values.
+    mri_surfcluster
+    
+    A tool for clustering vertices on a cortical surface based on intensity
+    values.
     
     Author: FreeSurfer Developers
     

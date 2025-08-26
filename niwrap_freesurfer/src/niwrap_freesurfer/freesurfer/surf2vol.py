@@ -283,6 +283,8 @@ def surf2vol_execute(
     runner: Runner | None = None,
 ) -> Surf2volOutputs:
     """
+    surf2vol
+    
     Diffuse surface deformation to volumes using surface and MRI data.
     
     Author: FreeSurfer Developers
@@ -325,6 +327,8 @@ def surf2vol(
     runner: Runner | None = None,
 ) -> Surf2volOutputs:
     """
+    surf2vol
+    
     Diffuse surface deformation to volumes using surface and MRI data.
     
     Author: FreeSurfer Developers

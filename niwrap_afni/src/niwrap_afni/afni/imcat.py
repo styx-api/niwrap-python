@@ -352,7 +352,10 @@ def imcat_execute(
     runner: Runner | None = None,
 ) -> ImcatOutputs:
     """
-    Assembles a set of images into an image matrix (IM) montage of NX by NY images.
+    imcat
+    
+    Assembles a set of images into an image matrix (IM) montage of NX by NY
+    images.
     
     Author: AFNI Developers
     
@@ -402,7 +405,10 @@ def imcat(
     runner: Runner | None = None,
 ) -> ImcatOutputs:
     """
-    Assembles a set of images into an image matrix (IM) montage of NX by NY images.
+    imcat
+    
+    Assembles a set of images into an image matrix (IM) montage of NX by NY
+    images.
     
     Author: AFNI Developers
     

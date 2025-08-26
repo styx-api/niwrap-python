@@ -144,6 +144,8 @@ def estnoise_execute(
     runner: Runner | None = None,
 ) -> EstnoiseOutputs:
     """
+    estnoise
+    
     Estimate noise in 4D fMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -173,6 +175,8 @@ def estnoise(
     runner: Runner | None = None,
 ) -> EstnoiseOutputs:
     """
+    estnoise
+    
     Estimate noise in 4D fMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford

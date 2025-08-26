@@ -171,6 +171,8 @@ def dmri_project_end_points_execute(
     runner: Runner | None = None,
 ) -> DmriProjectEndPointsOutputs:
     """
+    dmri_projectEndPoints
+    
     A tool for projecting the endpoints of streamlines onto cortical surfaces,
     producing overlay files for visualization.
     
@@ -203,6 +205,8 @@ def dmri_project_end_points(
     runner: Runner | None = None,
 ) -> DmriProjectEndPointsOutputs:
     """
+    dmri_projectEndPoints
+    
     A tool for projecting the endpoints of streamlines onto cortical surfaces,
     producing overlay files for visualization.
     

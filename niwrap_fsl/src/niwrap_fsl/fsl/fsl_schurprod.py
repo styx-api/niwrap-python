@@ -181,8 +181,10 @@ def fsl_schurprod_execute(
     runner: Runner | None = None,
 ) -> FslSchurprodOutputs:
     """
-    Generates element-wise matrix products or product of matrices against vectors
-    from 4D data.
+    fsl_schurprod
+    
+    Generates element-wise matrix products or product of matrices against
+    vectors from 4D data.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -215,8 +217,10 @@ def fsl_schurprod(
     runner: Runner | None = None,
 ) -> FslSchurprodOutputs:
     """
-    Generates element-wise matrix products or product of matrices against vectors
-    from 4D data.
+    fsl_schurprod
+    
+    Generates element-wise matrix products or product of matrices against
+    vectors from 4D data.
     
     Author: FMRIB Analysis Group, University of Oxford
     

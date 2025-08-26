@@ -159,6 +159,8 @@ def eddy_squad_execute(
     runner: Runner | None = None,
 ) -> EddySquadOutputs:
     """
+    eddy_squad
+    
     Study-wise QC for dMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -189,6 +191,8 @@ def eddy_squad(
     runner: Runner | None = None,
 ) -> EddySquadOutputs:
     """
+    eddy_squad
+    
     Study-wise QC for dMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford

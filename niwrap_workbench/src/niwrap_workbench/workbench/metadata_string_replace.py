@@ -141,6 +141,8 @@ def metadata_string_replace_execute(
     runner: Runner | None = None,
 ) -> MetadataStringReplaceOutputs:
     """
+    metadata-string-replace
+    
     Replace a string in all metadata of a file.
     
     Replaces all occurrences of <find-string> in the metadata and map names of
@@ -174,6 +176,8 @@ def metadata_string_replace(
     runner: Runner | None = None,
 ) -> MetadataStringReplaceOutputs:
     """
+    metadata-string-replace
+    
     Replace a string in all metadata of a file.
     
     Replaces all occurrences of <find-string> in the metadata and map names of

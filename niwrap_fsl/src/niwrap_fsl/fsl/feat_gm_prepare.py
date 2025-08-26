@@ -124,6 +124,8 @@ def feat_gm_prepare_execute(
     runner: Runner | None = None,
 ) -> FeatGmPrepareOutputs:
     """
+    feat_gm_prepare
+    
     Prepare 4D grey matter files for higher-level analysis in FEAT.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -151,6 +153,8 @@ def feat_gm_prepare(
     runner: Runner | None = None,
 ) -> FeatGmPrepareOutputs:
     """
+    feat_gm_prepare
+    
     Prepare 4D grey matter files for higher-level analysis in FEAT.
     
     Author: FMRIB Analysis Group, University of Oxford

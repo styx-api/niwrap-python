@@ -160,8 +160,10 @@ def mris_wm_volume_execute(
     runner: Runner | None = None,
 ) -> MrisWmVolumeOutputs:
     """
-    Computes the volume of the enclosed hemisphere white matter surface, ignoring
-    non-white matter voxels in the aseg.
+    mris_wm_volume
+    
+    Computes the volume of the enclosed hemisphere white matter surface,
+    ignoring non-white matter voxels in the aseg.
     
     Author: FreeSurfer Developers
     
@@ -192,8 +194,10 @@ def mris_wm_volume(
     runner: Runner | None = None,
 ) -> MrisWmVolumeOutputs:
     """
-    Computes the volume of the enclosed hemisphere white matter surface, ignoring
-    non-white matter voxels in the aseg.
+    mris_wm_volume
+    
+    Computes the volume of the enclosed hemisphere white matter surface,
+    ignoring non-white matter voxels in the aseg.
     
     Author: FreeSurfer Developers
     

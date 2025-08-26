@@ -334,6 +334,8 @@ def film_gls_execute(
     runner: Runner | None = None,
 ) -> FilmGlsOutputs:
     """
+    film_gls
+    
     General Linear Model fitting with autocorrelation in FMRI.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -382,6 +384,8 @@ def film_gls(
     runner: Runner | None = None,
 ) -> FilmGlsOutputs:
     """
+    film_gls
+    
     General Linear Model fitting with autocorrelation in FMRI.
     
     Author: FMRIB Analysis Group, University of Oxford

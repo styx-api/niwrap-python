@@ -131,6 +131,8 @@ def v_3dnvals_execute(
     runner: Runner | None = None,
 ) -> V3dnvalsOutputs:
     """
+    3dnvals
+    
     Tool to print the number of sub-bricks in a 3D dataset.
     
     Author: AFNI Developers
@@ -159,6 +161,8 @@ def v_3dnvals(
     runner: Runner | None = None,
 ) -> V3dnvalsOutputs:
     """
+    3dnvals
+    
     Tool to print the number of sub-bricks in a 3D dataset.
     
     Author: AFNI Developers

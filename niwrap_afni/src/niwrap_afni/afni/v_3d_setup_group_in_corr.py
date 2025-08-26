@@ -194,7 +194,10 @@ def v_3d_setup_group_in_corr_execute(
     runner: Runner | None = None,
 ) -> V3dSetupGroupInCorrOutputs:
     """
-    Pre-process a collection of AFNI 3D+time datasets for use with Group InstaCorr.
+    3dSetupGroupInCorr
+    
+    Pre-process a collection of AFNI 3D+time datasets for use with Group
+    InstaCorr.
     
     Author: AFNI Developers
     
@@ -228,7 +231,10 @@ def v_3d_setup_group_in_corr(
     runner: Runner | None = None,
 ) -> V3dSetupGroupInCorrOutputs:
     """
-    Pre-process a collection of AFNI 3D+time datasets for use with Group InstaCorr.
+    3dSetupGroupInCorr
+    
+    Pre-process a collection of AFNI 3D+time datasets for use with Group
+    InstaCorr.
     
     Author: AFNI Developers
     

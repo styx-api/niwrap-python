@@ -154,6 +154,8 @@ def bianca_overlap_measures_execute(
     runner: Runner | None = None,
 ) -> BiancaOverlapMeasuresOutputs:
     """
+    bianca_overlap_measures
+    
     BIANCA overlap measures script for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -182,6 +184,8 @@ def bianca_overlap_measures(
     runner: Runner | None = None,
 ) -> BiancaOverlapMeasuresOutputs:
     """
+    bianca_overlap_measures
+    
     BIANCA overlap measures script for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

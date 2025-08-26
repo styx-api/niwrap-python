@@ -273,6 +273,8 @@ def sh2response_execute(
     runner: Runner | None = None,
 ) -> Sh2responseOutputs:
     """
+    sh2response
+    
     Generate an appropriate response function from the image data for spherical
     deconvolution.
     
@@ -321,6 +323,8 @@ def sh2response(
     runner: Runner | None = None,
 ) -> Sh2responseOutputs:
     """
+    sh2response
+    
     Generate an appropriate response function from the image data for spherical
     deconvolution.
     

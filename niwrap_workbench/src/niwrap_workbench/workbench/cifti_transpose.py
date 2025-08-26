@@ -140,6 +140,8 @@ def cifti_transpose_execute(
     runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
     """
+    cifti-transpose
+    
     Transpose a cifti file.
     
     The input must be a 2-dimensional cifti file. The output is a cifti file
@@ -171,6 +173,8 @@ def cifti_transpose(
     runner: Runner | None = None,
 ) -> CiftiTransposeOutputs:
     """
+    cifti-transpose
+    
     Transpose a cifti file.
     
     The input must be a 2-dimensional cifti file. The output is a cifti file

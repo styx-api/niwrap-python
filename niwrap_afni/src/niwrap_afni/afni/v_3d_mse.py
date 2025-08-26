@@ -202,6 +202,8 @@ def v_3d_mse_execute(
     runner: Runner | None = None,
 ) -> V3dMseOutputs:
     """
+    3dMSE
+    
     Computes voxelwise multi-scale entropy.
     
     Author: AFNI Developers
@@ -236,6 +238,8 @@ def v_3d_mse(
     runner: Runner | None = None,
 ) -> V3dMseOutputs:
     """
+    3dMSE
+    
     Computes voxelwise multi-scale entropy.
     
     Author: AFNI Developers

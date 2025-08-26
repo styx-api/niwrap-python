@@ -125,6 +125,8 @@ def inflate_subject_execute(
     runner: Runner | None = None,
 ) -> InflateSubjectOutputs:
     """
+    inflate_subject
+    
     Inflate subject script for FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def inflate_subject(
     runner: Runner | None = None,
 ) -> InflateSubjectOutputs:
     """
+    inflate_subject
+    
     Inflate subject script for FreeSurfer.
     
     Author: FreeSurfer Developers

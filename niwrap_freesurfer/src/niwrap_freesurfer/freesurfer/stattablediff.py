@@ -195,6 +195,8 @@ def stattablediff_execute(
     runner: Runner | None = None,
 ) -> StattablediffOutputs:
     """
+    stattablediff
+    
     Creates a table of the differences between two stats tables.
     
     Author: FreeSurfer Developers
@@ -232,6 +234,8 @@ def stattablediff(
     runner: Runner | None = None,
 ) -> StattablediffOutputs:
     """
+    stattablediff
+    
     Creates a table of the differences between two stats tables.
     
     Author: FreeSurfer Developers

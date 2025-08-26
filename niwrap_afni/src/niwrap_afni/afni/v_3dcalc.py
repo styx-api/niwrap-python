@@ -198,6 +198,8 @@ def v_3dcalc_execute(
     runner: Runner | None = None,
 ) -> V3dcalcOutputs:
     """
+    3dcalc
+    
     AFNI's calculator program.
     
     Author: AFNI Developers
@@ -233,6 +235,8 @@ def v_3dcalc(
     runner: Runner | None = None,
 ) -> V3dcalcOutputs:
     """
+    3dcalc
+    
     AFNI's calculator program.
     
     Author: AFNI Developers

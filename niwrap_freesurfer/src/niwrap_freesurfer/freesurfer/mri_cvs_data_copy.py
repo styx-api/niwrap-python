@@ -152,6 +152,8 @@ def mri_cvs_data_copy_execute(
     runner: Runner | None = None,
 ) -> MriCvsDataCopyOutputs:
     """
+    mri_cvs_data_copy
+    
     Packs and copies files that are required for mri_cvs_register.
     
     Author: FreeSurfer Developers
@@ -182,6 +184,8 @@ def mri_cvs_data_copy(
     runner: Runner | None = None,
 ) -> MriCvsDataCopyOutputs:
     """
+    mri_cvs_data_copy
+    
     Packs and copies files that are required for mri_cvs_register.
     
     Author: FreeSurfer Developers

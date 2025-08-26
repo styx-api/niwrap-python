@@ -128,6 +128,8 @@ def fs_spmreg_glnxa64_execute(
     runner: Runner | None = None,
 ) -> FsSpmregGlnxa64Outputs:
     """
+    fs_spmreg.glnxa64
+    
     fs_spmreg is a tool for registration using SPM within FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def fs_spmreg_glnxa64(
     runner: Runner | None = None,
 ) -> FsSpmregGlnxa64Outputs:
     """
+    fs_spmreg.glnxa64
+    
     fs_spmreg is a tool for registration using SPM within FreeSurfer.
     
     Author: FreeSurfer Developers

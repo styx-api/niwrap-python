@@ -123,6 +123,8 @@ def v__get_afni_id_execute(
     runner: Runner | None = None,
 ) -> VGetAfniIdOutputs:
     """
+    @GetAfniID
+    
     Returns the unique identifier of a dataset.
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def v__get_afni_id(
     runner: Runner | None = None,
 ) -> VGetAfniIdOutputs:
     """
+    @GetAfniID
+    
     Returns the unique identifier of a dataset.
     
     Author: AFNI Developers

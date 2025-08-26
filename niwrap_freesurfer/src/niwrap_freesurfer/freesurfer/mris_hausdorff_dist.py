@@ -144,7 +144,10 @@ def mris_hausdorff_dist_execute(
     runner: Runner | None = None,
 ) -> MrisHausdorffDistOutputs:
     """
-    This program computes the Hausdorff distance between two labels on a surface.
+    mris_hausdorff_dist
+    
+    This program computes the Hausdorff distance between two labels on a
+    surface.
     
     Author: FreeSurfer Developers
     
@@ -173,7 +176,10 @@ def mris_hausdorff_dist(
     runner: Runner | None = None,
 ) -> MrisHausdorffDistOutputs:
     """
-    This program computes the Hausdorff distance between two labels on a surface.
+    mris_hausdorff_dist
+    
+    This program computes the Hausdorff distance between two labels on a
+    surface.
     
     Author: FreeSurfer Developers
     

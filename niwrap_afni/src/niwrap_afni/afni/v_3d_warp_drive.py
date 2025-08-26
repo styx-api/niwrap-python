@@ -412,7 +412,10 @@ def v_3d_warp_drive_execute(
     runner: Runner | None = None,
 ) -> V3dWarpDriveOutputs:
     """
-    Warp a dataset to match another one (the base) using an affine transformation.
+    3dWarpDrive
+    
+    Warp a dataset to match another one (the base) using an affine
+    transformation.
     
     Author: AFNI Developers
     
@@ -473,7 +476,10 @@ def v_3d_warp_drive(
     runner: Runner | None = None,
 ) -> V3dWarpDriveOutputs:
     """
-    Warp a dataset to match another one (the base) using an affine transformation.
+    3dWarpDrive
+    
+    Warp a dataset to match another one (the base) using an affine
+    transformation.
     
     Author: AFNI Developers
     

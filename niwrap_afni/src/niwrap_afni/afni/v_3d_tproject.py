@@ -319,11 +319,14 @@ def v_3d_tproject_execute(
     runner: Runner | None = None,
 ) -> V3dTprojectOutputs:
     """
-    This program projects (detrends) out various 'nuisance' time series from each
-    voxel in the input dataset. Note that all the projections are done via linear
-    regression, including the frequency-based options such as '-passband'. In this
-    way, you can bandpass time-censored data, and at the same time, remove other
-    time series of no interest (e.g., physiological estimates, motion parameters).
+    3dTproject
+    
+    This program projects (detrends) out various 'nuisance' time series from
+    each voxel in the input dataset. Note that all the projections are done via
+    linear regression, including the frequency-based options such as
+    '-passband'. In this way, you can bandpass time-censored data, and at the
+    same time, remove other time series of no interest (e.g., physiological
+    estimates, motion parameters).
     
     Author: AFNI Developers
     
@@ -365,11 +368,14 @@ def v_3d_tproject(
     runner: Runner | None = None,
 ) -> V3dTprojectOutputs:
     """
-    This program projects (detrends) out various 'nuisance' time series from each
-    voxel in the input dataset. Note that all the projections are done via linear
-    regression, including the frequency-based options such as '-passband'. In this
-    way, you can bandpass time-censored data, and at the same time, remove other
-    time series of no interest (e.g., physiological estimates, motion parameters).
+    3dTproject
+    
+    This program projects (detrends) out various 'nuisance' time series from
+    each voxel in the input dataset. Note that all the projections are done via
+    linear regression, including the frequency-based options such as
+    '-passband'. In this way, you can bandpass time-censored data, and at the
+    same time, remove other time series of no interest (e.g., physiological
+    estimates, motion parameters).
     
     Author: AFNI Developers
     

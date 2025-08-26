@@ -173,6 +173,8 @@ def v_3d_upsample_execute(
     runner: Runner | None = None,
 ) -> V3dUpsampleOutputs:
     """
+    3dUpsample
+    
     Upsamples a 3D+time dataset in the time direction by a specified factor.
     
     Author: AFNI Developers
@@ -204,6 +206,8 @@ def v_3d_upsample(
     runner: Runner | None = None,
 ) -> V3dUpsampleOutputs:
     """
+    3dUpsample
+    
     Upsamples a 3D+time dataset in the time direction by a specified factor.
     
     Author: AFNI Developers

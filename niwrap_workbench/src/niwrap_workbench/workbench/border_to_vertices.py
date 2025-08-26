@@ -144,6 +144,8 @@ def border_to_vertices_execute(
     runner: Runner | None = None,
 ) -> BorderToVerticesOutputs:
     """
+    border-to-vertices
+    
     Draw borders as vertices in a metric file.
     
     Outputs a metric with 1s on vertices that follow a border, and 0s elsewhere.
@@ -176,6 +178,8 @@ def border_to_vertices(
     runner: Runner | None = None,
 ) -> BorderToVerticesOutputs:
     """
+    border-to-vertices
+    
     Draw borders as vertices in a metric file.
     
     Outputs a metric with 1s on vertices that follow a border, and 0s elsewhere.

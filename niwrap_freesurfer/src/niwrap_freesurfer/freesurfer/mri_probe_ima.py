@@ -187,6 +187,8 @@ def mri_probe_ima_execute(
     runner: Runner | None = None,
 ) -> MriProbeImaOutputs:
     """
+    mri_probe_ima
+    
     Query Siemens IMA files to extract header information.
     
     Author: FreeSurfer Developers
@@ -221,6 +223,8 @@ def mri_probe_ima(
     runner: Runner | None = None,
 ) -> MriProbeImaOutputs:
     """
+    mri_probe_ima
+    
     Query Siemens IMA files to extract header information.
     
     Author: FreeSurfer Developers

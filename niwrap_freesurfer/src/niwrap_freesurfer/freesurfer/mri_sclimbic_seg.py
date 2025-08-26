@@ -329,6 +329,8 @@ def mri_sclimbic_seg_execute(
     runner: Runner | None = None,
 ) -> MriSclimbicSegOutputs:
     """
+    mri_sclimbic_seg
+    
     Segment subcortical limbic structures using Freesurfer.
     
     Author: FreeSurfer Developers
@@ -379,6 +381,8 @@ def mri_sclimbic_seg(
     runner: Runner | None = None,
 ) -> MriSclimbicSegOutputs:
     """
+    mri_sclimbic_seg
+    
     Segment subcortical limbic structures using Freesurfer.
     
     Author: FreeSurfer Developers

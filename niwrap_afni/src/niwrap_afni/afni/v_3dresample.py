@@ -183,6 +183,8 @@ def v_3dresample_execute(
     runner: Runner | None = None,
 ) -> V3dresampleOutputs:
     """
+    3dresample
+    
     Resample or reorient an image using AFNI 3dresample command.
     
     Author: AFNI Developers
@@ -215,6 +217,8 @@ def v_3dresample(
     runner: Runner | None = None,
 ) -> V3dresampleOutputs:
     """
+    3dresample
+    
     Resample or reorient an image using AFNI 3dresample command.
     
     Author: AFNI Developers

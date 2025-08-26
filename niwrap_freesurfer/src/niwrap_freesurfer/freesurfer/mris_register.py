@@ -678,6 +678,8 @@ def mris_register_execute(
     runner: Runner | None = None,
 ) -> MrisRegisterOutputs:
     """
+    mris_register
+    
     This program registers a surface to an average surface template.
     
     Author: FreeSurfer Developers
@@ -766,6 +768,8 @@ def mris_register(
     runner: Runner | None = None,
 ) -> MrisRegisterOutputs:
     """
+    mris_register
+    
     This program registers a surface to an average surface template.
     
     Author: FreeSurfer Developers

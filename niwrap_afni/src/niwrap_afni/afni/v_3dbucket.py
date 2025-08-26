@@ -196,6 +196,8 @@ def v_3dbucket_execute(
     runner: Runner | None = None,
 ) -> V3dbucketOutputs:
     """
+    3dbucket
+    
     Concatenate sub-bricks from input datasets into one big bucket dataset.
     
     Author: AFNI Developers
@@ -231,6 +233,8 @@ def v_3dbucket(
     runner: Runner | None = None,
 ) -> V3dbucketOutputs:
     """
+    3dbucket
+    
     Concatenate sub-bricks from input datasets into one big bucket dataset.
     
     Author: AFNI Developers

@@ -246,8 +246,10 @@ def v__add_edge_execute(
     runner: Runner | None = None,
 ) -> VAddEdgeOutputs:
     """
-    A script to create composite edge-enhanced datasets and drive the AFNI interface
-    to display the results.
+    @AddEdge
+    
+    A script to create composite edge-enhanced datasets and drive the AFNI
+    interface to display the results.
     
     Author: AFNI Developers
     
@@ -287,8 +289,10 @@ def v__add_edge(
     runner: Runner | None = None,
 ) -> VAddEdgeOutputs:
     """
-    A script to create composite edge-enhanced datasets and drive the AFNI interface
-    to display the results.
+    @AddEdge
+    
+    A script to create composite edge-enhanced datasets and drive the AFNI
+    interface to display the results.
     
     Author: AFNI Developers
     

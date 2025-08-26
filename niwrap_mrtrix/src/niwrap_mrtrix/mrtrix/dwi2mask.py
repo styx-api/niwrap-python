@@ -327,6 +327,8 @@ def dwi2mask_execute(
     runner: Runner | None = None,
 ) -> Dwi2maskOutputs:
     """
+    dwi2mask
+    
     Generates a whole brain mask from a DWI image.
     
     All diffusion weighted and b=0 volumes are used to obtain a mask that
@@ -379,6 +381,8 @@ def dwi2mask(
     runner: Runner | None = None,
 ) -> Dwi2maskOutputs:
     """
+    dwi2mask
+    
     Generates a whole brain mask from a DWI image.
     
     All diffusion weighted and b=0 volumes are used to obtain a mask that

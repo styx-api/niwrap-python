@@ -164,6 +164,8 @@ def v_1d_bandpass_execute(
     runner: Runner | None = None,
 ) -> V1dBandpassOutputs:
     """
+    1dBandpass
+    
     Bandpass filtering of time series data in AFNI *.1D files.
     
     Author: AFNI Developers
@@ -196,6 +198,8 @@ def v_1d_bandpass(
     runner: Runner | None = None,
 ) -> V1dBandpassOutputs:
     """
+    1dBandpass
+    
     Bandpass filtering of time series data in AFNI *.1D files.
     
     Author: AFNI Developers

@@ -129,6 +129,8 @@ def v__get_afni_orient_execute(
     runner: Runner | None = None,
 ) -> VGetAfniOrientOutputs:
     """
+    @GetAfniOrient
+    
     Returns the orient code of AFNI datasets.
     
     Author: AFNI Developers
@@ -156,6 +158,8 @@ def v__get_afni_orient(
     runner: Runner | None = None,
 ) -> VGetAfniOrientOutputs:
     """
+    @GetAfniOrient
+    
     Returns the orient code of AFNI datasets.
     
     Author: AFNI Developers

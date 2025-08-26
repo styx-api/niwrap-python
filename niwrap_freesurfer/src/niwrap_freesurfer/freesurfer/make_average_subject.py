@@ -283,8 +283,10 @@ def make_average_subject_execute(
     runner: Runner | None = None,
 ) -> MakeAverageSubjectOutputs:
     """
-    Creates an average subject by averaging surfaces, curvatures, and volumes from a
-    set of subjects.
+    make_average_subject
+    
+    Creates an average subject by averaging surfaces, curvatures, and volumes
+    from a set of subjects.
     
     Author: FreeSurfer Developers
     
@@ -331,8 +333,10 @@ def make_average_subject(
     runner: Runner | None = None,
 ) -> MakeAverageSubjectOutputs:
     """
-    Creates an average subject by averaging surfaces, curvatures, and volumes from a
-    set of subjects.
+    make_average_subject
+    
+    Creates an average subject by averaging surfaces, curvatures, and volumes
+    from a set of subjects.
     
     Author: FreeSurfer Developers
     

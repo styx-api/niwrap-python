@@ -256,8 +256,10 @@ def warpcorrect_execute(
     runner: Runner | None = None,
 ) -> WarpcorrectOutputs:
     """
-    Replaces voxels in a deformation field that point to a specific out of bounds
-    location with nan,nan,nan.
+    warpcorrect
+    
+    Replaces voxels in a deformation field that point to a specific out of
+    bounds location with nan,nan,nan.
     
     This can be used in conjunction with the warpinit command to compute a
     MRtrix compatible deformation field from non-linear transformations
@@ -302,8 +304,10 @@ def warpcorrect(
     runner: Runner | None = None,
 ) -> WarpcorrectOutputs:
     """
-    Replaces voxels in a deformation field that point to a specific out of bounds
-    location with nan,nan,nan.
+    warpcorrect
+    
+    Replaces voxels in a deformation field that point to a specific out of
+    bounds location with nan,nan,nan.
     
     This can be used in conjunction with the warpinit command to compute a
     MRtrix compatible deformation field from non-linear transformations

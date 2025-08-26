@@ -147,6 +147,8 @@ def float_scan_execute(
     runner: Runner | None = None,
 ) -> FloatScanOutputs:
     """
+    float_scan
+    
     Scans the input file of IEEE floating point numbers for illegal values:
     infinities and not-a-number (NaN) values.
     
@@ -177,6 +179,8 @@ def float_scan(
     runner: Runner | None = None,
 ) -> FloatScanOutputs:
     """
+    float_scan
+    
     Scans the input file of IEEE floating point numbers for illegal values:
     infinities and not-a-number (NaN) values.
     

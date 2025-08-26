@@ -119,6 +119,8 @@ def check_subject_execute(
     runner: Runner | None = None,
 ) -> CheckSubjectOutputs:
     """
+    check_subject
+    
     Checks a subject directory for the existence of a surf directory.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def check_subject(
     runner: Runner | None = None,
 ) -> CheckSubjectOutputs:
     """
+    check_subject
+    
     Checks a subject directory for the existence of a surf directory.
     
     Author: FreeSurfer Developers

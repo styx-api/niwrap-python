@@ -151,6 +151,8 @@ def v__build_afni_xlib_execute(
     runner: Runner | None = None,
 ) -> VBuildAfniXlibOutputs:
     """
+    @build_afni_Xlib
+    
     Compile and install lesstif, openmotif, and/or libXt.
     
     Author: AFNI Developers
@@ -182,6 +184,8 @@ def v__build_afni_xlib(
     runner: Runner | None = None,
 ) -> VBuildAfniXlibOutputs:
     """
+    @build_afni_Xlib
+    
     Compile and install lesstif, openmotif, and/or libXt.
     
     Author: AFNI Developers

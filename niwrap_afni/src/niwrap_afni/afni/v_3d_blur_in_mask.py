@@ -204,6 +204,8 @@ def v_3d_blur_in_mask_execute(
     runner: Runner | None = None,
 ) -> V3dBlurInMaskOutputs:
     """
+    3dBlurInMask
+    
     Blurs a dataset spatially inside a mask.
     
     Author: AFNI Developers
@@ -240,6 +242,8 @@ def v_3d_blur_in_mask(
     runner: Runner | None = None,
 ) -> V3dBlurInMaskOutputs:
     """
+    3dBlurInMask
+    
     Blurs a dataset spatially inside a mask.
     
     Author: AFNI Developers

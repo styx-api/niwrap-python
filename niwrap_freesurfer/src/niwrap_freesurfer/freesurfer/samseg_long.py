@@ -174,6 +174,8 @@ def samseg_long_execute(
     runner: Runner | None = None,
 ) -> SamsegLongOutputs:
     """
+    samseg-long
+    
     Longitudinal analysis tool using SAMSEG in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -206,6 +208,8 @@ def samseg_long(
     runner: Runner | None = None,
 ) -> SamsegLongOutputs:
     """
+    samseg-long
+    
     Longitudinal analysis tool using SAMSEG in FreeSurfer.
     
     Author: FreeSurfer Developers

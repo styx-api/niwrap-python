@@ -160,6 +160,8 @@ def mris_rotate_execute(
     runner: Runner | None = None,
 ) -> MrisRotateOutputs:
     """
+    mris_rotate
+    
     Rotate a surface given three angles.
     
     Author: FreeSurfer Developers
@@ -192,6 +194,8 @@ def mris_rotate(
     runner: Runner | None = None,
 ) -> MrisRotateOutputs:
     """
+    mris_rotate
+    
     Rotate a surface given three angles.
     
     Author: FreeSurfer Developers

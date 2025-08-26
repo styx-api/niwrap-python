@@ -286,6 +286,8 @@ def v__atlasize_execute(
     runner: Runner | None = None,
 ) -> VAtlasizeOutputs:
     """
+    @Atlasize
+    
     Script to turn a volumetric dataset into an AFNI atlas.
     
     Author: AFNI Developers
@@ -329,6 +331,8 @@ def v__atlasize(
     runner: Runner | None = None,
 ) -> VAtlasizeOutputs:
     """
+    @Atlasize
+    
     Script to turn a volumetric dataset into an AFNI atlas.
     
     Author: AFNI Developers

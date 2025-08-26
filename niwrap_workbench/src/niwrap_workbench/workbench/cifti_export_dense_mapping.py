@@ -313,6 +313,8 @@ def cifti_export_dense_mapping_execute(
     runner: Runner | None = None,
 ) -> CiftiExportDenseMappingOutputs:
     """
+    cifti-export-dense-mapping
+    
     Write index to element mapping as text.
     
     This command produces text files that describe the mapping from cifti
@@ -389,6 +391,8 @@ def cifti_export_dense_mapping(
     runner: Runner | None = None,
 ) -> CiftiExportDenseMappingOutputs:
     """
+    cifti-export-dense-mapping
+    
     Write index to element mapping as text.
     
     This command produces text files that describe the mapping from cifti

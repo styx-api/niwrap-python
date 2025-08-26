@@ -306,6 +306,8 @@ def ants_registration_sy_n_sh_execute(
     runner: Runner | None = None,
 ) -> AntsRegistrationSyNShOutputs:
     """
+    antsRegistrationSyN.sh
+    
     Script for simplified symmetric image registration using ANTs.
     
     Author: ANTs Developers
@@ -347,6 +349,8 @@ def ants_registration_sy_n_sh(
     runner: Runner | None = None,
 ) -> AntsRegistrationSyNShOutputs:
     """
+    antsRegistrationSyN.sh
+    
     Script for simplified symmetric image registration using ANTs.
     
     Author: ANTs Developers

@@ -156,8 +156,10 @@ def resample_image_execute(
     runner: Runner | None = None,
 ) -> ResampleImageOutputs:
     """
-    ResampleImage is a tool used to resample images to specified sizes and spacings,
-    using various interpolation methods and pixel types.
+    ResampleImage
+    
+    ResampleImage is a tool used to resample images to specified sizes and
+    spacings, using various interpolation methods and pixel types.
     
     Author: ANTs Developers
     
@@ -188,8 +190,10 @@ def resample_image(
     runner: Runner | None = None,
 ) -> ResampleImageOutputs:
     """
-    ResampleImage is a tool used to resample images to specified sizes and spacings,
-    using various interpolation methods and pixel types.
+    ResampleImage
+    
+    ResampleImage is a tool used to resample images to specified sizes and
+    spacings, using various interpolation methods and pixel types.
     
     Author: ANTs Developers
     

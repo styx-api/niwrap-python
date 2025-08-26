@@ -155,6 +155,8 @@ def v__spharm_examples_execute(
     runner: Runner | None = None,
 ) -> VSpharmExamplesOutputs:
     """
+    @Spharm.examples
+    
     A script to demonstrate the usage of spherical harmonics decomposition with
     SUMA.
     
@@ -187,6 +189,8 @@ def v__spharm_examples(
     runner: Runner | None = None,
 ) -> VSpharmExamplesOutputs:
     """
+    @Spharm.examples
+    
     A script to demonstrate the usage of spherical harmonics decomposition with
     SUMA.
     

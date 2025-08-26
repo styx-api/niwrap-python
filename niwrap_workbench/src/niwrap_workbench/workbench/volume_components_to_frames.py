@@ -129,6 +129,8 @@ def volume_components_to_frames_execute(
     runner: Runner | None = None,
 ) -> VolumeComponentsToFramesOutputs:
     """
+    volume-components-to-frames
+    
     Convert rgb/complex volume to frames.
     
     RGB and complex datatypes are not always well supported, this command allows
@@ -159,6 +161,8 @@ def volume_components_to_frames(
     runner: Runner | None = None,
 ) -> VolumeComponentsToFramesOutputs:
     """
+    volume-components-to-frames
+    
     Convert rgb/complex volume to frames.
     
     RGB and complex datatypes are not always well supported, this command allows

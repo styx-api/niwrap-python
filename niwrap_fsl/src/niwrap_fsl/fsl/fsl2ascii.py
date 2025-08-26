@@ -128,6 +128,8 @@ def fsl2ascii_execute(
     runner: Runner | None = None,
 ) -> Fsl2asciiOutputs:
     """
+    fsl2ascii
+    
     Convert NIfTI image or analyze 7.5 format file to ASCII text file.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def fsl2ascii(
     runner: Runner | None = None,
 ) -> Fsl2asciiOutputs:
     """
+    fsl2ascii
+    
     Convert NIfTI image or analyze 7.5 format file to ASCII text file.
     
     Author: FMRIB Analysis Group, University of Oxford

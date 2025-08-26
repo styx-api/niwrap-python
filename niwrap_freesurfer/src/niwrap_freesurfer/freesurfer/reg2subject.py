@@ -122,8 +122,10 @@ def reg2subject_execute(
     runner: Runner | None = None,
 ) -> Reg2subjectOutputs:
     """
-    Returns the name of the subject in the registration file, whether it is an LTA
-    or register.dat file.
+    reg2subject
+    
+    Returns the name of the subject in the registration file, whether it is an
+    LTA or register.dat file.
     
     Author: FreeSurfer Developers
     
@@ -149,8 +151,10 @@ def reg2subject(
     runner: Runner | None = None,
 ) -> Reg2subjectOutputs:
     """
-    Returns the name of the subject in the registration file, whether it is an LTA
-    or register.dat file.
+    reg2subject
+    
+    Returns the name of the subject in the registration file, whether it is an
+    LTA or register.dat file.
     
     Author: FreeSurfer Developers
     

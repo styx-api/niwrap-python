@@ -202,6 +202,8 @@ def v__fast_roi_execute(
     runner: Runner | None = None,
 ) -> VFastRoiOutputs:
     """
+    @fast_roi
+    
     Creates Atlas-based ROI masked in ANAT's original space. The script executes
     rapidly for realtime fMRI applications.
     
@@ -238,6 +240,8 @@ def v__fast_roi(
     runner: Runner | None = None,
 ) -> VFastRoiOutputs:
     """
+    @fast_roi
+    
     Creates Atlas-based ROI masked in ANAT's original space. The script executes
     rapidly for realtime fMRI applications.
     

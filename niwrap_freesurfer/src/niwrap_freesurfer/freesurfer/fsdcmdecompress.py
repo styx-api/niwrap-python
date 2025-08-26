@@ -158,6 +158,8 @@ def fsdcmdecompress_execute(
     runner: Runner | None = None,
 ) -> FsdcmdecompressOutputs:
     """
+    fsdcmdecompress
+    
     A tool for decompressing DICOM files using GDCM or DCMTK.
     
     Author: FreeSurfer Developers
@@ -189,6 +191,8 @@ def fsdcmdecompress(
     runner: Runner | None = None,
 ) -> FsdcmdecompressOutputs:
     """
+    fsdcmdecompress
+    
     A tool for decompressing DICOM files using GDCM or DCMTK.
     
     Author: FreeSurfer Developers

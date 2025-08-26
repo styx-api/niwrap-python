@@ -169,6 +169,8 @@ def abids_json_info_py_execute(
     runner: Runner | None = None,
 ) -> AbidsJsonInfoPyOutputs:
     """
+    abids_json_info.py
+    
     A tool to extract information from BIDS formatted json files.
     
     Author: AFNI Developers
@@ -202,6 +204,8 @@ def abids_json_info_py(
     runner: Runner | None = None,
 ) -> AbidsJsonInfoPyOutputs:
     """
+    abids_json_info.py
+    
     A tool to extract information from BIDS formatted json files.
     
     Author: AFNI Developers

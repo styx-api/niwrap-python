@@ -126,6 +126,8 @@ def aff2rigid_execute(
     runner: Runner | None = None,
 ) -> Aff2rigidOutputs:
     """
+    aff2rigid
+    
     Tool for converting affine transformations to rigid transformations.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -153,6 +155,8 @@ def aff2rigid(
     runner: Runner | None = None,
 ) -> Aff2rigidOutputs:
     """
+    aff2rigid
+    
     Tool for converting affine transformations to rigid transformations.
     
     Author: FMRIB Analysis Group, University of Oxford

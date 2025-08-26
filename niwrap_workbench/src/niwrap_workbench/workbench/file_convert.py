@@ -310,6 +310,8 @@ def file_convert_execute(
     runner: Runner | None = None,
 ) -> FileConvertOutputs:
     """
+    file-convert
+    
     Change version of file format.
     
     You may only specify one top-level option.
@@ -340,6 +342,8 @@ def file_convert(
     runner: Runner | None = None,
 ) -> FileConvertOutputs:
     """
+    file-convert
+    
     Change version of file format.
     
     You may only specify one top-level option.

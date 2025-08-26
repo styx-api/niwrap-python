@@ -334,6 +334,8 @@ def asegstats2table_execute(
     runner: Runner | None = None,
 ) -> Asegstats2tableOutputs:
     """
+    asegstats2table
+    
     Converts a subcortical stats file created by recon-all and/or mri_segstats
     (e.g., aseg.stats) into a table.
     
@@ -384,6 +386,8 @@ def asegstats2table(
     runner: Runner | None = None,
 ) -> Asegstats2tableOutputs:
     """
+    asegstats2table
+    
     Converts a subcortical stats file created by recon-all and/or mri_segstats
     (e.g., aseg.stats) into a table.
     

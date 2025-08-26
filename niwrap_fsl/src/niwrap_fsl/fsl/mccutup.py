@@ -153,6 +153,8 @@ def mccutup_execute(
     runner: Runner | None = None,
 ) -> MccutupOutputs:
     """
+    mccutup
+    
     FSL mccutup tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -182,6 +184,8 @@ def mccutup(
     runner: Runner | None = None,
 ) -> MccutupOutputs:
     """
+    mccutup
+    
     FSL mccutup tool.
     
     Author: FMRIB Analysis Group, University of Oxford

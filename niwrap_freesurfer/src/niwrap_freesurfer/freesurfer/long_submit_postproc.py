@@ -186,6 +186,8 @@ def long_submit_postproc_execute(
     runner: Runner | None = None,
 ) -> LongSubmitPostprocOutputs:
     """
+    long_submit_postproc
+    
     Submits jobs to the cluster (either seychelles or launchpad at NMR) for
     longitudinal post-processing.
     
@@ -220,6 +222,8 @@ def long_submit_postproc(
     runner: Runner | None = None,
 ) -> LongSubmitPostprocOutputs:
     """
+    long_submit_postproc
+    
     Submits jobs to the cluster (either seychelles or launchpad at NMR) for
     longitudinal post-processing.
     

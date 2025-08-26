@@ -182,6 +182,8 @@ def surf_qual_execute(
     runner: Runner | None = None,
 ) -> SurfQualOutputs:
     """
+    SurfQual
+    
     A program to check the quality of surfaces.
     
     Author: AFNI Developers
@@ -213,6 +215,8 @@ def surf_qual(
     runner: Runner | None = None,
 ) -> SurfQualOutputs:
     """
+    SurfQual
+    
     A program to check the quality of surfaces.
     
     Author: AFNI Developers

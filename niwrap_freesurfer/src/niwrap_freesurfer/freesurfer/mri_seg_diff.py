@@ -203,8 +203,10 @@ def mri_seg_diff_execute(
     runner: Runner | None = None,
 ) -> MriSegDiffOutputs:
     """
-    This program computes and merges differences in segmentation volumes, primarily
-    for managing manual edits in FreeSurfer's aseg.mgz.
+    mri_seg_diff
+    
+    This program computes and merges differences in segmentation volumes,
+    primarily for managing manual edits in FreeSurfer's aseg.mgz.
     
     Author: FreeSurfer Developers
     
@@ -239,8 +241,10 @@ def mri_seg_diff(
     runner: Runner | None = None,
 ) -> MriSegDiffOutputs:
     """
-    This program computes and merges differences in segmentation volumes, primarily
-    for managing manual edits in FreeSurfer's aseg.mgz.
+    mri_seg_diff
+    
+    This program computes and merges differences in segmentation volumes,
+    primarily for managing manual edits in FreeSurfer's aseg.mgz.
     
     Author: FreeSurfer Developers
     

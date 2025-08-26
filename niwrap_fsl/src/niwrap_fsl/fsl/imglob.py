@@ -131,6 +131,8 @@ def imglob_execute(
     runner: Runner | None = None,
 ) -> ImglobOutputs:
     """
+    imglob
+    
     Tool for generating image lists with specific extensions.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -159,6 +161,8 @@ def imglob(
     runner: Runner | None = None,
 ) -> ImglobOutputs:
     """
+    imglob
+    
     Tool for generating image lists with specific extensions.
     
     Author: FMRIB Analysis Group, University of Oxford

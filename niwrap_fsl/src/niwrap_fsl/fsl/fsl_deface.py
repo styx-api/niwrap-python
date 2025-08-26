@@ -258,6 +258,8 @@ def fsl_deface_execute(
     runner: Runner | None = None,
 ) -> FslDefaceOutputs:
     """
+    fsl_deface
+    
     Tool to deface a structural T1w image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -296,6 +298,8 @@ def fsl_deface(
     runner: Runner | None = None,
 ) -> FslDefaceOutputs:
     """
+    fsl_deface
+    
     Tool to deface a structural T1w image.
     
     Author: FMRIB Analysis Group, University of Oxford

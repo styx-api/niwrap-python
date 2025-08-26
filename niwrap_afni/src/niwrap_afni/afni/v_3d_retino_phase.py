@@ -276,8 +276,10 @@ def v_3d_retino_phase_execute(
     runner: Runner | None = None,
 ) -> V3dRetinoPhaseOutputs:
     """
-    Process time series from retinotopy stimuli to create phase datasets and visual
-    field angle datasets.
+    3dRetinoPhase
+    
+    Process time series from retinotopy stimuli to create phase datasets and
+    visual field angle datasets.
     
     Author: AFNI Developers
     
@@ -318,8 +320,10 @@ def v_3d_retino_phase(
     runner: Runner | None = None,
 ) -> V3dRetinoPhaseOutputs:
     """
-    Process time series from retinotopy stimuli to create phase datasets and visual
-    field angle datasets.
+    3dRetinoPhase
+    
+    Process time series from retinotopy stimuli to create phase datasets and
+    visual field angle datasets.
     
     Author: AFNI Developers
     

@@ -161,6 +161,8 @@ def aiv_execute(
     runner: Runner | None = None,
 ) -> AivOutputs:
     """
+    aiv
+    
     AFNI Image Viewer program. Shows the 2D images on the command line in an
     AFNI-like image viewer.
     
@@ -193,6 +195,8 @@ def aiv(
     runner: Runner | None = None,
 ) -> AivOutputs:
     """
+    aiv
+    
     AFNI Image Viewer program. Shows the 2D images on the command line in an
     AFNI-like image viewer.
     

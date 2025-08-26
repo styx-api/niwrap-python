@@ -133,8 +133,10 @@ def mri_evaluate_morph_execute(
     runner: Runner | None = None,
 ) -> MriEvaluateMorphOutputs:
     """
-    This program computes the overlap of a set of segmentations for a given morph
-    using an xform file.
+    mri_evaluate_morph
+    
+    This program computes the overlap of a set of segmentations for a given
+    morph using an xform file.
     
     Author: FreeSurfer Developers
     
@@ -162,8 +164,10 @@ def mri_evaluate_morph(
     runner: Runner | None = None,
 ) -> MriEvaluateMorphOutputs:
     """
-    This program computes the overlap of a set of segmentations for a given morph
-    using an xform file.
+    mri_evaluate_morph
+    
+    This program computes the overlap of a set of segmentations for a given
+    morph using an xform file.
     
     Author: FreeSurfer Developers
     

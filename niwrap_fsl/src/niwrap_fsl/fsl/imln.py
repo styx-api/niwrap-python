@@ -128,6 +128,8 @@ def imln_execute(
     runner: Runner | None = None,
 ) -> ImlnOutputs:
     """
+    imln
+    
     Creates a link (called file2) to file1.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def imln(
     runner: Runner | None = None,
 ) -> ImlnOutputs:
     """
+    imln
+    
     Creates a link (called file2) to file1.
     
     Author: FMRIB Analysis Group, University of Oxford

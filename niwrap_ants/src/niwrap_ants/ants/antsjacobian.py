@@ -157,9 +157,11 @@ def antsjacobian_execute(
     runner: Runner | None = None,
 ) -> AntsjacobianOutputs:
     """
+    ANTSJacobian
+    
     Calculate the Jacobian determinant of a transformation using ANTs. WARNING:
-    ANTSJacobian may not be working correctly; see CreateJacobianDeterminantImage
-    for an alternative method.
+    ANTSJacobian may not be working correctly; see
+    CreateJacobianDeterminantImage for an alternative method.
     
     Author: ANTs Developers
     
@@ -191,9 +193,11 @@ def antsjacobian(
     runner: Runner | None = None,
 ) -> AntsjacobianOutputs:
     """
+    ANTSJacobian
+    
     Calculate the Jacobian determinant of a transformation using ANTs. WARNING:
-    ANTSJacobian may not be working correctly; see CreateJacobianDeterminantImage
-    for an alternative method.
+    ANTSJacobian may not be working correctly; see
+    CreateJacobianDeterminantImage for an alternative method.
     
     Author: ANTs Developers
     

@@ -200,6 +200,8 @@ def volume_capture_plane_execute(
     runner: Runner | None = None,
 ) -> VolumeCapturePlaneOutputs:
     """
+    volume-capture-plane
+    
     Interpolate image from plane through volume.
     
     NOTE: If you want to generate an image with all of the capabilities of the
@@ -252,6 +254,8 @@ def volume_capture_plane(
     runner: Runner | None = None,
 ) -> VolumeCapturePlaneOutputs:
     """
+    volume-capture-plane
+    
     Interpolate image from plane through volume.
     
     NOTE: If you want to generate an image with all of the capabilities of the

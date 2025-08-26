@@ -195,8 +195,10 @@ def overlay_execute(
     runner: Runner | None = None,
 ) -> OverlayOutputs:
     """
-    Use FSL's overlay command to combine background and statistical images into one
-    volume.
+    overlay
+    
+    Use FSL's overlay command to combine background and statistical images into
+    one volume.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -233,8 +235,10 @@ def overlay(
     runner: Runner | None = None,
 ) -> OverlayOutputs:
     """
-    Use FSL's overlay command to combine background and statistical images into one
-    volume.
+    overlay
+    
+    Use FSL's overlay command to combine background and statistical images into
+    one volume.
     
     Author: FMRIB Analysis Group, University of Oxford
     

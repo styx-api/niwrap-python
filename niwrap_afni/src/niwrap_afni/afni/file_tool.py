@@ -404,6 +404,8 @@ def file_tool_execute(
     runner: Runner | None = None,
 ) -> FileToolOutputs:
     """
+    file_tool
+    
     Program to display or modify sections of a file.
     
     Author: AFNI Developers
@@ -471,6 +473,8 @@ def file_tool(
     runner: Runner | None = None,
 ) -> FileToolOutputs:
     """
+    file_tool
+    
     Program to display or modify sections of a file.
     
     Author: AFNI Developers

@@ -139,6 +139,8 @@ def eddy_correct_execute(
     runner: Runner | None = None,
 ) -> EddyCorrectOutputs:
     """
+    eddy_correct
+    
     Eddy current correction tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -168,6 +170,8 @@ def eddy_correct(
     runner: Runner | None = None,
 ) -> EddyCorrectOutputs:
     """
+    eddy_correct
+    
     Eddy current correction tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

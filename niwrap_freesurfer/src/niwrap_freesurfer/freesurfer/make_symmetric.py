@@ -144,6 +144,8 @@ def make_symmetric_execute(
     runner: Runner | None = None,
 ) -> MakeSymmetricOutputs:
     """
+    make_symmetric
+    
     Registers an input image to its left/right reversed version using
     mri_robust_register in a half-way space and mirrors the selected hemisphere.
     
@@ -174,6 +176,8 @@ def make_symmetric(
     runner: Runner | None = None,
 ) -> MakeSymmetricOutputs:
     """
+    make_symmetric
+    
     Registers an input image to its left/right reversed version using
     mri_robust_register in a half-way space and mirrors the selected hemisphere.
     

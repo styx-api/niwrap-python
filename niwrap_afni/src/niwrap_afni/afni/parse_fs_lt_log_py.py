@@ -152,6 +152,8 @@ def parse_fs_lt_log_py_execute(
     runner: Runner | None = None,
 ) -> ParseFsLtLogPyOutputs:
     """
+    parse_fs_lt_log.py
+    
     Parses FreeSurfer labeltable log file and retrieves labeltable indices.
     
     Author: AFNI Developers
@@ -182,6 +184,8 @@ def parse_fs_lt_log_py(
     runner: Runner | None = None,
 ) -> ParseFsLtLogPyOutputs:
     """
+    parse_fs_lt_log.py
+    
     Parses FreeSurfer labeltable log file and retrieves labeltable indices.
     
     Author: AFNI Developers

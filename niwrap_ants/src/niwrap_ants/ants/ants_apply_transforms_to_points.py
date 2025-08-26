@@ -259,11 +259,13 @@ def ants_apply_transforms_to_points_execute(
     runner: Runner | None = None,
 ) -> AntsApplyTransformsToPointsOutputs:
     """
-    antsApplyTransformsToPoints, applied to an input image, transforms it according
-    to a reference image and a transform (or a set of transforms). It reads in a CSV
-    file with the first D columns defining the spatial location where the spatial
-    location is defined in physical coordinates. The CSV file should have a header
-    row.
+    antsApplyTransformsToPoints
+    
+    antsApplyTransformsToPoints, applied to an input image, transforms it
+    according to a reference image and a transform (or a set of transforms). It
+    reads in a CSV file with the first D columns defining the spatial location
+    where the spatial location is defined in physical coordinates. The CSV file
+    should have a header row.
     
     Author: ANTs Developers
     
@@ -294,11 +296,13 @@ def ants_apply_transforms_to_points(
     runner: Runner | None = None,
 ) -> AntsApplyTransformsToPointsOutputs:
     """
-    antsApplyTransformsToPoints, applied to an input image, transforms it according
-    to a reference image and a transform (or a set of transforms). It reads in a CSV
-    file with the first D columns defining the spatial location where the spatial
-    location is defined in physical coordinates. The CSV file should have a header
-    row.
+    antsApplyTransformsToPoints
+    
+    antsApplyTransformsToPoints, applied to an input image, transforms it
+    according to a reference image and a transform (or a set of transforms). It
+    reads in a CSV file with the first D columns defining the spatial location
+    where the spatial location is defined in physical coordinates. The CSV file
+    should have a header row.
     
     Author: ANTs Developers
     

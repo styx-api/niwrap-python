@@ -121,6 +121,8 @@ def freeview_execute(
     runner: Runner | None = None,
 ) -> FreeviewOutputs:
     """
+    freeview
+    
     Freeview is a 3D/2D brain visualization tool.
     
     Author: FreeSurfer Developers
@@ -147,6 +149,8 @@ def freeview(
     runner: Runner | None = None,
 ) -> FreeviewOutputs:
     """
+    freeview
+    
     Freeview is a 3D/2D brain visualization tool.
     
     Author: FreeSurfer Developers

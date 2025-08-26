@@ -200,6 +200,8 @@ def segment_subregions_execute(
     runner: Runner | None = None,
 ) -> SegmentSubregionsOutputs:
     """
+    segment_subregions
+    
     Cross-sectional and longitudinal segmentation for brain structures like
     thalamus, brainstem, and hippo-amygdala.
     
@@ -235,6 +237,8 @@ def segment_subregions(
     runner: Runner | None = None,
 ) -> SegmentSubregionsOutputs:
     """
+    segment_subregions
+    
     Cross-sectional and longitudinal segmentation for brain structures like
     thalamus, brainstem, and hippo-amygdala.
     

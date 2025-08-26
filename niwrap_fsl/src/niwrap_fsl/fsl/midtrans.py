@@ -164,6 +164,8 @@ def midtrans_execute(
     runner: Runner | None = None,
 ) -> MidtransOutputs:
     """
+    midtrans
+    
     Calculate the midpoint transform from a series of input transforms.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -195,6 +197,8 @@ def midtrans(
     runner: Runner | None = None,
 ) -> MidtransOutputs:
     """
+    midtrans
+    
     Calculate the midpoint transform from a series of input transforms.
     
     Author: FMRIB Analysis Group, University of Oxford

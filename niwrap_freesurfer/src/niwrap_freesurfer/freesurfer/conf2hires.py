@@ -267,6 +267,8 @@ def conf2hires_execute(
     runner: Runner | None = None,
 ) -> Conf2hiresOutputs:
     """
+    conf2hires
+    
     Places the surfaces on high resolution T1 (and maybe T2) volumes based on an
     initial placement on a conformed volume.
     
@@ -314,6 +316,8 @@ def conf2hires(
     runner: Runner | None = None,
 ) -> Conf2hiresOutputs:
     """
+    conf2hires
+    
     Places the surfaces on high resolution T1 (and maybe T2) volumes based on an
     initial placement on a conformed volume.
     

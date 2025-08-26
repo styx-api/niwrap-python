@@ -141,6 +141,8 @@ def siena_flow2std_execute(
     runner: Runner | None = None,
 ) -> SienaFlow2stdOutputs:
     """
+    siena_flow2std
+    
     Convert edge flow to standard space.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -170,6 +172,8 @@ def siena_flow2std(
     runner: Runner | None = None,
 ) -> SienaFlow2stdOutputs:
     """
+    siena_flow2std
+    
     Convert edge flow to standard space.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -133,6 +133,8 @@ def siena_flirt_execute(
     runner: Runner | None = None,
 ) -> SienaFlirtOutputs:
     """
+    siena_flirt
+    
     Wrapper for FLIRT image registration within the SIENA framework.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -160,6 +162,8 @@ def siena_flirt(
     runner: Runner | None = None,
 ) -> SienaFlirtOutputs:
     """
+    siena_flirt
+    
     Wrapper for FLIRT image registration within the SIENA framework.
     
     Author: FMRIB Analysis Group, University of Oxford

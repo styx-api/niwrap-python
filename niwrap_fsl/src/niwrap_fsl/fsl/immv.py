@@ -125,6 +125,8 @@ def immv_execute(
     runner: Runner | None = None,
 ) -> ImmvOutputs:
     """
+    immv
+    
     Moves images from one file or directory to another.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -152,6 +154,8 @@ def immv(
     runner: Runner | None = None,
 ) -> ImmvOutputs:
     """
+    immv
+    
     Moves images from one file or directory to another.
     
     Author: FMRIB Analysis Group, University of Oxford

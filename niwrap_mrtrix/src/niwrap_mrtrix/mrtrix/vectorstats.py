@@ -400,6 +400,8 @@ def vectorstats_execute(
     runner: Runner | None = None,
 ) -> VectorstatsOutputs:
     """
+    vectorstats
+    
     Statistical testing of vector data using non-parametric permutation testing.
     
     This command can be used to perform permutation testing of any form of data.
@@ -468,6 +470,8 @@ def vectorstats(
     runner: Runner | None = None,
 ) -> VectorstatsOutputs:
     """
+    vectorstats
+    
     Statistical testing of vector data using non-parametric permutation testing.
     
     This command can be used to perform permutation testing of any form of data.

@@ -473,6 +473,8 @@ def fixelfilter_execute(
     runner: Runner | None = None,
 ) -> FixelfilterOutputs:
     """
+    fixelfilter
+    
     Perform filtering operations on fixel-based data.
     
     If the first input to the command is a specific fixel data file, then a
@@ -525,6 +527,8 @@ def fixelfilter(
     runner: Runner | None = None,
 ) -> FixelfilterOutputs:
     """
+    fixelfilter
+    
     Perform filtering operations on fixel-based data.
     
     If the first input to the command is a specific fixel data file, then a

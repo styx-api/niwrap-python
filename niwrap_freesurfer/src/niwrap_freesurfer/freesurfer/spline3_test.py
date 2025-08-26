@@ -136,6 +136,8 @@ def spline3_test_execute(
     runner: Runner | None = None,
 ) -> Spline3TestOutputs:
     """
+    Spline3_test
+    
     A tool for cubic spline interpolation.
     
     Author: FreeSurfer Developers
@@ -164,6 +166,8 @@ def spline3_test(
     runner: Runner | None = None,
 ) -> Spline3TestOutputs:
     """
+    Spline3_test
+    
     A tool for cubic spline interpolation.
     
     Author: FreeSurfer Developers

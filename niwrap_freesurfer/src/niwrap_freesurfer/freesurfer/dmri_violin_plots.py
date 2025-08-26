@@ -138,6 +138,8 @@ def dmri_violin_plots_execute(
     runner: Runner | None = None,
 ) -> DmriViolinPlotsOutputs:
     """
+    dmri_violinPlots
+    
     Generate violin plots for dMRI data.
     
     Author: FreeSurfer Developers
@@ -166,6 +168,8 @@ def dmri_violin_plots(
     runner: Runner | None = None,
 ) -> DmriViolinPlotsOutputs:
     """
+    dmri_violinPlots
+    
     Generate violin plots for dMRI data.
     
     Author: FreeSurfer Developers

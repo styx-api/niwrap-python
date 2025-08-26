@@ -233,10 +233,12 @@ def fat_proc_connec_vis_execute(
     runner: Runner | None = None,
 ) -> FatProcConnecVisOutputs:
     """
-    This program is for visualizing the volumetric output of tracking, mainly for
-    the '-dump_rois ...' from 3dTrackID. It creates surface-ized views of the
-    separate white matter connection maps (WMCs) which can be viewed simultaneously
-    in 3D with SUMA.
+    fat_proc_connec_vis
+    
+    This program is for visualizing the volumetric output of tracking, mainly
+    for the '-dump_rois ...' from 3dTrackID. It creates surface-ized views of
+    the separate white matter connection maps (WMCs) which can be viewed
+    simultaneously in 3D with SUMA.
     
     Author: AFNI Developers
     
@@ -272,10 +274,12 @@ def fat_proc_connec_vis(
     runner: Runner | None = None,
 ) -> FatProcConnecVisOutputs:
     """
-    This program is for visualizing the volumetric output of tracking, mainly for
-    the '-dump_rois ...' from 3dTrackID. It creates surface-ized views of the
-    separate white matter connection maps (WMCs) which can be viewed simultaneously
-    in 3D with SUMA.
+    fat_proc_connec_vis
+    
+    This program is for visualizing the volumetric output of tracking, mainly
+    for the '-dump_rois ...' from 3dTrackID. It creates surface-ized views of
+    the separate white matter connection maps (WMCs) which can be viewed
+    simultaneously in 3D with SUMA.
     
     Author: AFNI Developers
     

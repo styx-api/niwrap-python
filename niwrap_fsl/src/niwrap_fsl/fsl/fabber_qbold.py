@@ -432,6 +432,8 @@ def fabber_qbold_execute(
     runner: Runner | None = None,
 ) -> FabberQboldOutputs:
     """
+    fabber_qbold
+    
     Fabber - a flexible BaYesian modeling framework for FMRI and MRI analysis.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -492,6 +494,8 @@ def fabber_qbold(
     runner: Runner | None = None,
 ) -> FabberQboldOutputs:
     """
+    fabber_qbold
+    
     Fabber - a flexible BaYesian modeling framework for FMRI and MRI analysis.
     
     Author: FMRIB Analysis Group, University of Oxford

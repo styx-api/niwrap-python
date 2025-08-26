@@ -186,6 +186,8 @@ def susan_execute(
     runner: Runner | None = None,
 ) -> SusanOutputs:
     """
+    susan
+    
     Non-linear noise reduction filtering tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -222,6 +224,8 @@ def susan(
     runner: Runner | None = None,
 ) -> SusanOutputs:
     """
+    susan
+    
     Non-linear noise reduction filtering tool.
     
     Author: FMRIB Analysis Group, University of Oxford

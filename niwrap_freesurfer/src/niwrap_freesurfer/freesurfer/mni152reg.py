@@ -157,6 +157,8 @@ def mni152reg_execute(
     runner: Runner | None = None,
 ) -> Mni152regOutputs:
     """
+    mni152reg
+    
     Registers the FreeSurfer subject to the FSL MNI 152 brain to create a
     tkregister-style registration matrix.
     
@@ -188,6 +190,8 @@ def mni152reg(
     runner: Runner | None = None,
 ) -> Mni152regOutputs:
     """
+    mni152reg
+    
     Registers the FreeSurfer subject to the FSL MNI 152 brain to create a
     tkregister-style registration matrix.
     

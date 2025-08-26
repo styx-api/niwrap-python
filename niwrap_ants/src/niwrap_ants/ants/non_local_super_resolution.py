@@ -241,8 +241,10 @@ def non_local_super_resolution_execute(
     runner: Runner | None = None,
 ) -> NonLocalSuperResolutionOutputs:
     """
-    Non-local super resolution described in the papers by JV Manjon et al., focusing
-    on MRI superresolution using self-similarity and image priors.
+    NonLocalSuperResolution
+    
+    Non-local super resolution described in the papers by JV Manjon et al.,
+    focusing on MRI superresolution using self-similarity and image priors.
     
     Author: ANTs Developers
     
@@ -279,8 +281,10 @@ def non_local_super_resolution(
     runner: Runner | None = None,
 ) -> NonLocalSuperResolutionOutputs:
     """
-    Non-local super resolution described in the papers by JV Manjon et al., focusing
-    on MRI superresolution using self-similarity and image priors.
+    NonLocalSuperResolution
+    
+    Non-local super resolution described in the papers by JV Manjon et al.,
+    focusing on MRI superresolution using self-similarity and image priors.
     
     Author: ANTs Developers
     

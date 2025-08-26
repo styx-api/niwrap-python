@@ -217,6 +217,8 @@ def v_3d_multi_thresh_execute(
     runner: Runner | None = None,
 ) -> V3dMultiThreshOutputs:
     """
+    3dMultiThresh
+    
     Program to apply a multi-threshold (mthresh) dataset to an input dataset.
     
     Author: AFNI Developers
@@ -253,6 +255,8 @@ def v_3d_multi_thresh(
     runner: Runner | None = None,
 ) -> V3dMultiThreshOutputs:
     """
+    3dMultiThresh
+    
     Program to apply a multi-threshold (mthresh) dataset to an input dataset.
     
     Author: AFNI Developers

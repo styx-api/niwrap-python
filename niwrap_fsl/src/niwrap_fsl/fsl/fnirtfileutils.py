@@ -224,8 +224,10 @@ def fnirtfileutils_execute(
     runner: Runner | None = None,
 ) -> FnirtfileutilsOutputs:
     """
-    FNIRT file utilities for FSL - Converts FNIRT warp field coefficients to other
-    formats.
+    fnirtfileutils
+    
+    FNIRT file utilities for FSL - Converts FNIRT warp field coefficients to
+    other formats.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -261,8 +263,10 @@ def fnirtfileutils(
     runner: Runner | None = None,
 ) -> FnirtfileutilsOutputs:
     """
-    FNIRT file utilities for FSL - Converts FNIRT warp field coefficients to other
-    formats.
+    fnirtfileutils
+    
+    FNIRT file utilities for FSL - Converts FNIRT warp field coefficients to
+    other formats.
     
     Author: FMRIB Analysis Group, University of Oxford
     

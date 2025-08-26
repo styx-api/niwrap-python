@@ -128,6 +128,8 @@ def irepifitvol_glnx64_execute(
     runner: Runner | None = None,
 ) -> IrepifitvolGlnx64Outputs:
     """
+    irepifitvol.glnx64
+    
     This tool is a part of the FreeSurfer toolkit, designed for certain volume
     fitting tasks.
     
@@ -156,6 +158,8 @@ def irepifitvol_glnx64(
     runner: Runner | None = None,
 ) -> IrepifitvolGlnx64Outputs:
     """
+    irepifitvol.glnx64
+    
     This tool is a part of the FreeSurfer toolkit, designed for certain volume
     fitting tasks.
     

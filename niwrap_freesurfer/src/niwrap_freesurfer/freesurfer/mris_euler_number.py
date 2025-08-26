@@ -133,6 +133,8 @@ def mris_euler_number_execute(
     runner: Runner | None = None,
 ) -> MrisEulerNumberOutputs:
     """
+    mris_euler_number
+    
     This program computes EulerNumber for a cortical surface.
     
     Author: FreeSurfer Developers
@@ -160,6 +162,8 @@ def mris_euler_number(
     runner: Runner | None = None,
 ) -> MrisEulerNumberOutputs:
     """
+    mris_euler_number
+    
     This program computes EulerNumber for a cortical surface.
     
     Author: FreeSurfer Developers

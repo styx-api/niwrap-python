@@ -224,6 +224,8 @@ def mris_register_to_label_execute(
     runner: Runner | None = None,
 ) -> MrisRegisterToLabelOutputs:
     """
+    mris_register_to_label
+    
     Register a surface to a volume using a label.
     
     Author: FreeSurfer Developers
@@ -261,6 +263,8 @@ def mris_register_to_label(
     runner: Runner | None = None,
 ) -> MrisRegisterToLabelOutputs:
     """
+    mris_register_to_label
+    
     Register a surface to a volume using a label.
     
     Author: FreeSurfer Developers

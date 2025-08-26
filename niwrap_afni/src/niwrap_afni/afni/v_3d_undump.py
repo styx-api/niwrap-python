@@ -265,7 +265,10 @@ def v_3d_undump_execute(
     runner: Runner | None = None,
 ) -> V3dUndumpOutputs:
     """
-    Assembles a 3D dataset from an ASCII list of coordinates and optionally values.
+    3dUndump
+    
+    Assembles a 3D dataset from an ASCII list of coordinates and optionally
+    values.
     
     Author: AFNI Developers
     
@@ -306,7 +309,10 @@ def v_3d_undump(
     runner: Runner | None = None,
 ) -> V3dUndumpOutputs:
     """
-    Assembles a 3D dataset from an ASCII list of coordinates and optionally values.
+    3dUndump
+    
+    Assembles a 3D dataset from an ASCII list of coordinates and optionally
+    values.
     
     Author: AFNI Developers
     

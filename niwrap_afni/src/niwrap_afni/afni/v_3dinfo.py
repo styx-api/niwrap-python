@@ -850,6 +850,8 @@ def v_3dinfo_execute(
     runner: Runner | None = None,
 ) -> V3dinfoOutputs:
     """
+    3dinfo
+    
     Prints out sort-of-useful information from a 3D dataset's header.
     
     Author: AFNI Developers
@@ -988,6 +990,8 @@ def v_3dinfo(
     runner: Runner | None = None,
 ) -> V3dinfoOutputs:
     """
+    3dinfo
+    
     Prints out sort-of-useful information from a 3D dataset's header.
     
     Author: AFNI Developers

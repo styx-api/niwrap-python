@@ -157,6 +157,8 @@ def mri_cvs_check_execute(
     runner: Runner | None = None,
 ) -> MriCvsCheckOutputs:
     """
+    mri_cvs_check
+    
     Checks whether the files required for mri_cvs_register all exist.
     
     Author: FreeSurfer Developers
@@ -187,6 +189,8 @@ def mri_cvs_check(
     runner: Runner | None = None,
 ) -> MriCvsCheckOutputs:
     """
+    mri_cvs_check
+    
     Checks whether the files required for mri_cvs_register all exist.
     
     Author: FreeSurfer Developers

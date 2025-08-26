@@ -220,6 +220,8 @@ def mri_modify_execute(
     runner: Runner | None = None,
 ) -> MriModifyOutputs:
     """
+    mri_modify
+    
     Tool for modifying MRI image headers.
     
     Author: FreeSurfer Developers
@@ -259,6 +261,8 @@ def mri_modify(
     runner: Runner | None = None,
 ) -> MriModifyOutputs:
     """
+    mri_modify
+    
     Tool for modifying MRI image headers.
     
     Author: FreeSurfer Developers

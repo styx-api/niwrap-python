@@ -245,6 +245,8 @@ def tsfsmooth_execute(
     runner: Runner | None = None,
 ) -> TsfsmoothOutputs:
     """
+    tsfsmooth
+    
     Gaussian filter a track scalar file.
     
     
@@ -287,6 +289,8 @@ def tsfsmooth(
     runner: Runner | None = None,
 ) -> TsfsmoothOutputs:
     """
+    tsfsmooth
+    
     Gaussian filter a track scalar file.
     
     

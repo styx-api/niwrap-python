@@ -162,6 +162,8 @@ def mri_brainvol_stats_execute(
     runner: Runner | None = None,
 ) -> MriBrainvolStatsOutputs:
     """
+    mri_brainvol_stats
+    
     Tool for computing brain volume statistics with FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -192,6 +194,8 @@ def mri_brainvol_stats(
     runner: Runner | None = None,
 ) -> MriBrainvolStatsOutputs:
     """
+    mri_brainvol_stats
+    
     Tool for computing brain volume statistics with FreeSurfer.
     
     Author: FreeSurfer Developers

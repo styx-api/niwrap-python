@@ -163,8 +163,10 @@ def mri_synthsr_hyperfine_execute(
     runner: Runner | None = None,
 ) -> MriSynthsrHyperfineOutputs:
     """
-    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a pair of
-    T1-T2 standard Hyperfine scans (1.5x1.5x5mm axial).
+    mri_synthsr_hyperfine
+    
+    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a pair
+    of T1-T2 standard Hyperfine scans (1.5x1.5x5mm axial).
     
     Author: FreeSurfer Developers
     
@@ -194,8 +196,10 @@ def mri_synthsr_hyperfine(
     runner: Runner | None = None,
 ) -> MriSynthsrHyperfineOutputs:
     """
-    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a pair of
-    T1-T2 standard Hyperfine scans (1.5x1.5x5mm axial).
+    mri_synthsr_hyperfine
+    
+    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a pair
+    of T1-T2 standard Hyperfine scans (1.5x1.5x5mm axial).
     
     Author: FreeSurfer Developers
     

@@ -133,6 +133,8 @@ def mri_apply_bias_execute(
     runner: Runner | None = None,
 ) -> MriApplyBiasOutputs:
     """
+    mri_apply_bias
+    
     A tool for applying a bias volume to an input volume to produce an output
     volume.
     
@@ -162,6 +164,8 @@ def mri_apply_bias(
     runner: Runner | None = None,
 ) -> MriApplyBiasOutputs:
     """
+    mri_apply_bias
+    
     A tool for applying a bias volume to an input volume to produce an output
     volume.
     

@@ -157,6 +157,8 @@ def balloon_execute(
     runner: Runner | None = None,
 ) -> BalloonOutputs:
     """
+    balloon
+    
     Simulation of haemodynamic response using the balloon model. Based on the
     theoretical model proposed by Buxton et al. (1998).
     
@@ -189,6 +191,8 @@ def balloon(
     runner: Runner | None = None,
 ) -> BalloonOutputs:
     """
+    balloon
+    
     Simulation of haemodynamic response using the balloon model. Based on the
     theoretical model proposed by Buxton et al. (1998).
     

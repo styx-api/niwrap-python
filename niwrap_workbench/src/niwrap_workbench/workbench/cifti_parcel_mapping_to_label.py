@@ -140,6 +140,8 @@ def cifti_parcel_mapping_to_label_execute(
     runner: Runner | None = None,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
+    cifti-parcel-mapping-to-label
+    
     Create dlabel from parcellated file.
     
     This command will output a dlabel file, useful for doing the same
@@ -175,6 +177,8 @@ def cifti_parcel_mapping_to_label(
     runner: Runner | None = None,
 ) -> CiftiParcelMappingToLabelOutputs:
     """
+    cifti-parcel-mapping-to-label
+    
     Create dlabel from parcellated file.
     
     This command will output a dlabel file, useful for doing the same

@@ -167,8 +167,10 @@ def ants_registration_sy_nquick_sh_execute(
     runner: Runner | None = None,
 ) -> AntsRegistrationSyNquickShOutputs:
     """
-    A script to quickly compute a SyN-based registration between two images using
-    ANTS.
+    antsRegistrationSyNQuick.sh
+    
+    A script to quickly compute a SyN-based registration between two images
+    using ANTS.
     
     Author: ANTs Developers
     
@@ -198,8 +200,10 @@ def ants_registration_sy_nquick_sh(
     runner: Runner | None = None,
 ) -> AntsRegistrationSyNquickShOutputs:
     """
-    A script to quickly compute a SyN-based registration between two images using
-    ANTS.
+    antsRegistrationSyNQuick.sh
+    
+    A script to quickly compute a SyN-based registration between two images
+    using ANTS.
     
     Author: ANTs Developers
     

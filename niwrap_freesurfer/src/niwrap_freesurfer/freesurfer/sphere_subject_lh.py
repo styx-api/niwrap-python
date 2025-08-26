@@ -122,6 +122,8 @@ def sphere_subject_lh_execute(
     runner: Runner | None = None,
 ) -> SphereSubjectLhOutputs:
     """
+    sphere_subject-lh
+    
     Tool for processing spherical representations in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def sphere_subject_lh(
     runner: Runner | None = None,
 ) -> SphereSubjectLhOutputs:
     """
+    sphere_subject-lh
+    
     Tool for processing spherical representations in FreeSurfer.
     
     Author: FreeSurfer Developers

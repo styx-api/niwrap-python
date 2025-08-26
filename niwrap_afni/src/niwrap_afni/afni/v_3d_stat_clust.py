@@ -190,9 +190,11 @@ def v_3d_stat_clust_execute(
     runner: Runner | None = None,
 ) -> V3dStatClustOutputs:
     """
+    3dStatClust
+    
     Perform agglomerative hierarchical clustering for user specified parameter
-    sub-bricks, for all voxels whose threshold statistic is above a user specified
-    value.
+    sub-bricks, for all voxels whose threshold statistic is above a user
+    specified value.
     
     Author: AFNI Developers
     
@@ -226,9 +228,11 @@ def v_3d_stat_clust(
     runner: Runner | None = None,
 ) -> V3dStatClustOutputs:
     """
+    3dStatClust
+    
     Perform agglomerative hierarchical clustering for user specified parameter
-    sub-bricks, for all voxels whose threshold statistic is above a user specified
-    value.
+    sub-bricks, for all voxels whose threshold statistic is above a user
+    specified value.
     
     Author: AFNI Developers
     

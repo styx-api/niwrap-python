@@ -224,6 +224,8 @@ def train_gcs_atlas_execute(
     runner: Runner | None = None,
 ) -> TrainGcsAtlasOutputs:
     """
+    train-gcs-atlas
+    
     Script to train a surface-based gaussian classifier for cortical surface
     parcellation.
     
@@ -262,6 +264,8 @@ def train_gcs_atlas(
     runner: Runner | None = None,
 ) -> TrainGcsAtlasOutputs:
     """
+    train-gcs-atlas
+    
     Script to train a surface-based gaussian classifier for cortical surface
     parcellation.
     

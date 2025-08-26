@@ -247,6 +247,8 @@ def mrdump_execute(
     runner: Runner | None = None,
 ) -> MrdumpOutputs:
     """
+    mrdump
+    
     Print out the values within an image.
     
     If no destination file is specified, the voxel locations will be printed to
@@ -290,6 +292,8 @@ def mrdump(
     runner: Runner | None = None,
 ) -> MrdumpOutputs:
     """
+    mrdump
+    
     Print out the values within an image.
     
     If no destination file is specified, the voxel locations will be printed to

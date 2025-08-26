@@ -189,6 +189,8 @@ def mri_edit_segmentation_with_surfaces_execute(
     runner: Runner | None = None,
 ) -> MriEditSegmentationWithSurfacesOutputs:
     """
+    mri_edit_segmentation_with_surfaces
+    
     This program edits an aseg with the surface.
     
     Author: FreeSurfer Developers
@@ -223,6 +225,8 @@ def mri_edit_segmentation_with_surfaces(
     runner: Runner | None = None,
 ) -> MriEditSegmentationWithSurfacesOutputs:
     """
+    mri_edit_segmentation_with_surfaces
+    
     This program edits an aseg with the surface.
     
     Author: FreeSurfer Developers

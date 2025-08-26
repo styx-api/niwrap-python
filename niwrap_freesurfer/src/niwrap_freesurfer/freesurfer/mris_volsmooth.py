@@ -241,6 +241,8 @@ def mris_volsmooth_execute(
     runner: Runner | None = None,
 ) -> MrisVolsmoothOutputs:
     """
+    mris_volsmooth
+    
     Performs surface-based smoothing inside a volume by sampling a volume to a
     surface, smoothing on the surface, then replacing the surface voxels in the
     volume with values that were smoothed.
@@ -281,6 +283,8 @@ def mris_volsmooth(
     runner: Runner | None = None,
 ) -> MrisVolsmoothOutputs:
     """
+    mris_volsmooth
+    
     Performs surface-based smoothing inside a volume by sampling a volume to a
     surface, smoothing on the surface, then replacing the surface voxels in the
     volume with values that were smoothed.

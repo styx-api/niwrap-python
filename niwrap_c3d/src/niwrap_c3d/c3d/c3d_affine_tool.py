@@ -261,6 +261,8 @@ def c3d_affine_tool_execute(
     runner: Runner | None = None,
 ) -> C3dAffineToolOutputs:
     """
+    c3d_affine_tool
+    
     RAS affine transform tool.
     
     Author: Convert3D Developers
@@ -303,6 +305,8 @@ def c3d_affine_tool(
     runner: Runner | None = None,
 ) -> C3dAffineToolOutputs:
     """
+    c3d_affine_tool
+    
     RAS affine transform tool.
     
     Author: Convert3D Developers

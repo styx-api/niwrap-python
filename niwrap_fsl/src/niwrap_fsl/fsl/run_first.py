@@ -193,6 +193,8 @@ def run_first_execute(
     runner: Runner | None = None,
 ) -> RunFirstOutputs:
     """
+    run_first
+    
     A tool to run FSL's FIRST for subcortical segmentation.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -227,6 +229,8 @@ def run_first(
     runner: Runner | None = None,
 ) -> RunFirstOutputs:
     """
+    run_first
+    
     A tool to run FSL's FIRST for subcortical segmentation.
     
     Author: FMRIB Analysis Group, University of Oxford

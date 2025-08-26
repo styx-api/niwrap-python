@@ -221,6 +221,8 @@ def v__dice_metric_execute(
     runner: Runner | None = None,
 ) -> VDiceMetricOutputs:
     """
+    @DiceMetric
+    
     Computes Dice Metric between BASE and each of the DSET volumes.
     
     Author: AFNI Developers
@@ -259,6 +261,8 @@ def v__dice_metric(
     runner: Runner | None = None,
 ) -> VDiceMetricOutputs:
     """
+    @DiceMetric
+    
     Computes Dice Metric between BASE and each of the DSET volumes.
     
     Author: AFNI Developers

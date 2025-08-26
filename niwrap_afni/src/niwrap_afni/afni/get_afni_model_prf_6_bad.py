@@ -144,6 +144,8 @@ def get_afni_model_prf_6_bad_execute(
     runner: Runner | None = None,
 ) -> GetAfniModelPrf6BadOutputs:
     """
+    get_afni_model_PRF_6_BAD
+    
     Command line tool for obtaining AFNI pRF model.
     
     Author: AFNI Developers
@@ -175,6 +177,8 @@ def get_afni_model_prf_6_bad(
     runner: Runner | None = None,
 ) -> GetAfniModelPrf6BadOutputs:
     """
+    get_afni_model_PRF_6_BAD
+    
     Command line tool for obtaining AFNI pRF model.
     
     Author: AFNI Developers

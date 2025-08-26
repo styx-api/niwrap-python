@@ -216,6 +216,8 @@ def fspalm_execute(
     runner: Runner | None = None,
 ) -> FspalmOutputs:
     """
+    fspalm
+    
     Prepares and analyzes the output of mri_glmfit for Permutation Analysis of
     Linear Models (PALM) to correct for multiple comparisons.
     
@@ -256,6 +258,8 @@ def fspalm(
     runner: Runner | None = None,
 ) -> FspalmOutputs:
     """
+    fspalm
+    
     Prepares and analyzes the output of mri_glmfit for Permutation Analysis of
     Linear Models (PALM) to correct for multiple comparisons.
     

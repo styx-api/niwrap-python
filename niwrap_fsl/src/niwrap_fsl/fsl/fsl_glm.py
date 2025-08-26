@@ -377,6 +377,8 @@ def fsl_glm_execute(
     runner: Runner | None = None,
 ) -> FslGlmOutputs:
     """
+    fsl_glm
+    
     Simple GLM allowing temporal or spatial regression on either text data or
     images.
     
@@ -427,6 +429,8 @@ def fsl_glm(
     runner: Runner | None = None,
 ) -> FslGlmOutputs:
     """
+    fsl_glm
+    
     Simple GLM allowing temporal or spatial regression on either text data or
     images.
     

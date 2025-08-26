@@ -124,6 +124,8 @@ def v__get_afni_view_execute(
     runner: Runner | None = None,
 ) -> VGetAfniViewOutputs:
     """
+    @GetAfniView
+    
     A tool to retrieve the AFNI view of a given dataset name.
     
     Author: AFNI Developers
@@ -150,6 +152,8 @@ def v__get_afni_view(
     runner: Runner | None = None,
 ) -> VGetAfniViewOutputs:
     """
+    @GetAfniView
+    
     A tool to retrieve the AFNI view of a given dataset name.
     
     Author: AFNI Developers

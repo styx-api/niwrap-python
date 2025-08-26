@@ -239,6 +239,8 @@ def tcktransform_execute(
     runner: Runner | None = None,
 ) -> TcktransformOutputs:
     """
+    tcktransform
+    
     Apply a spatial transformation to a tracks file.
     
     
@@ -281,6 +283,8 @@ def tcktransform(
     runner: Runner | None = None,
 ) -> TcktransformOutputs:
     """
+    tcktransform
+    
     Apply a spatial transformation to a tracks file.
     
     

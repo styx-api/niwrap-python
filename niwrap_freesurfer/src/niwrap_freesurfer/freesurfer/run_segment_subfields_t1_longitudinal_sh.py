@@ -127,6 +127,8 @@ def run_segment_subfields_t1_longitudinal_sh_execute(
     runner: Runner | None = None,
 ) -> RunSegmentSubfieldsT1LongitudinalShOutputs:
     """
+    run_SegmentSubfieldsT1Longitudinal.sh
+    
     Script for segmenting subfields from T1-weighted longitudinal data using
     FreeSurfer.
     
@@ -155,6 +157,8 @@ def run_segment_subfields_t1_longitudinal_sh(
     runner: Runner | None = None,
 ) -> RunSegmentSubfieldsT1LongitudinalShOutputs:
     """
+    run_SegmentSubfieldsT1Longitudinal.sh
+    
     Script for segmenting subfields from T1-weighted longitudinal data using
     FreeSurfer.
     

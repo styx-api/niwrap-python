@@ -202,6 +202,8 @@ def t4imgs_4dfp_execute(
     runner: Runner | None = None,
 ) -> T4imgs4dfpOutputs:
     """
+    t4imgs_4dfp
+    
     Freesurfer tool for transforming images according to a specified T4 file.
     
     Author: FreeSurfer Developers
@@ -240,6 +242,8 @@ def t4imgs_4dfp(
     runner: Runner | None = None,
 ) -> T4imgs4dfpOutputs:
     """
+    t4imgs_4dfp
+    
     Freesurfer tool for transforming images according to a specified T4 file.
     
     Author: FreeSurfer Developers

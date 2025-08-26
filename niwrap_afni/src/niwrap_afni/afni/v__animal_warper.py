@@ -438,6 +438,8 @@ def v__animal_warper_execute(
     runner: Runner | None = None,
 ) -> VAnimalWarperOutputs:
     """
+    @animal_warper
+    
     Align a subject structural dataset to a template and perform several
     post-alignment operations.
     
@@ -498,6 +500,8 @@ def v__animal_warper(
     runner: Runner | None = None,
 ) -> VAnimalWarperOutputs:
     """
+    @animal_warper
+    
     Align a subject structural dataset to a template and perform several
     post-alignment operations.
     

@@ -186,8 +186,10 @@ def samp_bias_execute(
     runner: Runner | None = None,
 ) -> SampBiasOutputs:
     """
-    SampBias is a tool for sampling bias resultant segments between paired nodes on
-    anatomical surfaces.
+    SampBias
+    
+    SampBias is a tool for sampling bias resultant segments between paired nodes
+    on anatomical surfaces.
     
     Author: AFNI Developers
     
@@ -219,8 +221,10 @@ def samp_bias(
     runner: Runner | None = None,
 ) -> SampBiasOutputs:
     """
-    SampBias is a tool for sampling bias resultant segments between paired nodes on
-    anatomical surfaces.
+    SampBias
+    
+    SampBias is a tool for sampling bias resultant segments between paired nodes
+    on anatomical surfaces.
     
     Author: AFNI Developers
     

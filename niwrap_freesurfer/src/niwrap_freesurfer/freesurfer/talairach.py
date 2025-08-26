@@ -146,6 +146,8 @@ def talairach_execute(
     runner: Runner | None = None,
 ) -> TalairachOutputs:
     """
+    talairach
+    
     Front-end for MINC's mritotal to compute the Talairach transform mapping the
     input volume to the MNI305.
     
@@ -176,6 +178,8 @@ def talairach(
     runner: Runner | None = None,
 ) -> TalairachOutputs:
     """
+    talairach
+    
     Front-end for MINC's mritotal to compute the Talairach transform mapping the
     input volume to the MNI305.
     

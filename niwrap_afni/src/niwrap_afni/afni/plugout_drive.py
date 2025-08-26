@@ -245,6 +245,8 @@ def plugout_drive_execute(
     runner: Runner | None = None,
 ) -> PlugoutDriveOutputs:
     """
+    plugout_drive
+    
     This program connects to AFNI and sends commands that the user specifies
     interactively or on command line over to AFNI to be executed.
     
@@ -286,6 +288,8 @@ def plugout_drive(
     runner: Runner | None = None,
 ) -> PlugoutDriveOutputs:
     """
+    plugout_drive
+    
     This program connects to AFNI and sends commands that the user specifies
     interactively or on command line over to AFNI to be executed.
     

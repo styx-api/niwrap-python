@@ -153,8 +153,10 @@ def clust_exp_hist_table_py_execute(
     runner: Runner | None = None,
 ) -> ClustExpHistTablePyOutputs:
     """
-    Script to extract the data table from history of datasets from 3dttest++, 3dMVM,
-    or 3dLME.
+    ClustExp_HistTable.py
+    
+    Script to extract the data table from history of datasets from 3dttest++,
+    3dMVM, or 3dLME.
     
     Author: AFNI Developers
     
@@ -183,8 +185,10 @@ def clust_exp_hist_table_py(
     runner: Runner | None = None,
 ) -> ClustExpHistTablePyOutputs:
     """
-    Script to extract the data table from history of datasets from 3dttest++, 3dMVM,
-    or 3dLME.
+    ClustExp_HistTable.py
+    
+    Script to extract the data table from history of datasets from 3dttest++,
+    3dMVM, or 3dLME.
     
     Author: AFNI Developers
     

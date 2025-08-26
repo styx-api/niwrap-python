@@ -226,6 +226,8 @@ def mri_funcvits_execute(
     runner: Runner | None = None,
 ) -> MriFuncvitsOutputs:
     """
+    mri-funcvits
+    
     Tool for functional volume to surface conversion in neuroimaging analysis.
     
     Author: FreeSurfer Developers
@@ -263,6 +265,8 @@ def mri_funcvits(
     runner: Runner | None = None,
 ) -> MriFuncvitsOutputs:
     """
+    mri-funcvits
+    
     Tool for functional volume to surface conversion in neuroimaging analysis.
     
     Author: FreeSurfer Developers

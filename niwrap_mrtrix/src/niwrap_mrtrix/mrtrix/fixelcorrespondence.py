@@ -254,8 +254,10 @@ def fixelcorrespondence_execute(
     runner: Runner | None = None,
 ) -> FixelcorrespondenceOutputs:
     """
-    Obtain fixel-fixel correpondence between a subject fixel image and a template
-    fixel mask.
+    fixelcorrespondence
+    
+    Obtain fixel-fixel correpondence between a subject fixel image and a
+    template fixel mask.
     
     It is assumed that the subject image has already been spatially normalised
     and is aligned with the template. The output fixel image will have the same
@@ -301,8 +303,10 @@ def fixelcorrespondence(
     runner: Runner | None = None,
 ) -> FixelcorrespondenceOutputs:
     """
-    Obtain fixel-fixel correpondence between a subject fixel image and a template
-    fixel mask.
+    fixelcorrespondence
+    
+    Obtain fixel-fixel correpondence between a subject fixel image and a
+    template fixel mask.
     
     It is assumed that the subject image has already been spatially normalised
     and is aligned with the template. The output fixel image will have the same

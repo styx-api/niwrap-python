@@ -141,6 +141,8 @@ def rmz_execute(
     runner: Runner | None = None,
 ) -> RmzOutputs:
     """
+    rmz
+    
     Zeros out files before removing them.
     
     Author: AFNI Developers
@@ -170,6 +172,8 @@ def rmz(
     runner: Runner | None = None,
 ) -> RmzOutputs:
     """
+    rmz
+    
     Zeros out files before removing them.
     
     Author: AFNI Developers

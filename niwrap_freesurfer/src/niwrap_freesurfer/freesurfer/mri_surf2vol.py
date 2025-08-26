@@ -386,6 +386,8 @@ def mri_surf2vol_execute(
     runner: Runner | None = None,
 ) -> MriSurf2volOutputs:
     """
+    mri_surf2vol
+    
     Resamples a surface into a volume using one of two methods.
     
     Author: FreeSurfer Developers
@@ -440,6 +442,8 @@ def mri_surf2vol(
     runner: Runner | None = None,
 ) -> MriSurf2volOutputs:
     """
+    mri_surf2vol
+    
     Resamples a surface into a volume using one of two methods.
     
     Author: FreeSurfer Developers

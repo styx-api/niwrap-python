@@ -236,6 +236,8 @@ def ants_intermodality_intrasubject_sh_execute(
     runner: Runner | None = None,
 ) -> AntsIntermodalityIntrasubjectShOutputs:
     """
+    antsIntermodalityIntrasubject.sh
+    
     Performs registration between a scalar image and a T1 image.
     
     Author: ANTs Developers
@@ -273,6 +275,8 @@ def ants_intermodality_intrasubject_sh(
     runner: Runner | None = None,
 ) -> AntsIntermodalityIntrasubjectShOutputs:
     """
+    antsIntermodalityIntrasubject.sh
+    
     Performs registration between a scalar image and a T1 image.
     
     Author: ANTs Developers

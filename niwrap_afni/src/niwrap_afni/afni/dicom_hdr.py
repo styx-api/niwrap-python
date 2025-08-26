@@ -180,6 +180,8 @@ def dicom_hdr_execute(
     runner: Runner | None = None,
 ) -> DicomHdrOutputs:
     """
+    dicom_hdr
+    
     A tool to print DICOM file information to stdout.
     
     Author: AFNI Developers
@@ -215,6 +217,8 @@ def dicom_hdr(
     runner: Runner | None = None,
 ) -> DicomHdrOutputs:
     """
+    dicom_hdr
+    
     A tool to print DICOM file information to stdout.
     
     Author: AFNI Developers

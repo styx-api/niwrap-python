@@ -136,6 +136,8 @@ def test_orientation_planes_from_parcellation_execute(
     runner: Runner | None = None,
 ) -> TestOrientationPlanesFromParcellationOutputs:
     """
+    testOrientationPlanesFromParcellation
+    
     Tests orientation planes from a given parcellation using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -164,6 +166,8 @@ def test_orientation_planes_from_parcellation(
     runner: Runner | None = None,
 ) -> TestOrientationPlanesFromParcellationOutputs:
     """
+    testOrientationPlanesFromParcellation
+    
     Tests orientation planes from a given parcellation using FreeSurfer.
     
     Author: FreeSurfer Developers

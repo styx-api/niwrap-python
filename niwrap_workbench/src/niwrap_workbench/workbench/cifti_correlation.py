@@ -271,6 +271,8 @@ def cifti_correlation_execute(
     runner: Runner | None = None,
 ) -> CiftiCorrelationOutputs:
     """
+    cifti-correlation
+    
     Generate correlation of rows in a cifti file.
     
     For each row (or each row inside an roi if -roi-override is specified),
@@ -319,6 +321,8 @@ def cifti_correlation(
     runner: Runner | None = None,
 ) -> CiftiCorrelationOutputs:
     """
+    cifti-correlation
+    
     Generate correlation of rows in a cifti file.
     
     For each row (or each row inside an roi if -roi-override is specified),

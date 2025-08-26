@@ -128,6 +128,8 @@ def mris_topo_fixer_execute(
     runner: Runner | None = None,
 ) -> MrisTopoFixerOutputs:
     """
+    mris_topo_fixer
+    
     FreeSurfer tool for fixing topological defects in cortical surface meshes.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mris_topo_fixer(
     runner: Runner | None = None,
 ) -> MrisTopoFixerOutputs:
     """
+    mris_topo_fixer
+    
     FreeSurfer tool for fixing topological defects in cortical surface meshes.
     
     Author: FreeSurfer Developers

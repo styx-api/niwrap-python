@@ -162,6 +162,8 @@ def djpeg_execute(
     runner: Runner | None = None,
 ) -> DjpegOutputs:
     """
+    djpeg
+    
     Decompress a JPEG file to an image file.
     
     Author: AFNI Developers
@@ -194,6 +196,8 @@ def djpeg(
     runner: Runner | None = None,
 ) -> DjpegOutputs:
     """
+    djpeg
+    
     Decompress a JPEG file to an image file.
     
     Author: AFNI Developers

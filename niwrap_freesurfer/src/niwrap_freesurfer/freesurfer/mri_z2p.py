@@ -236,6 +236,8 @@ def mri_z2p_execute(
     runner: Runner | None = None,
 ) -> MriZ2pOutputs:
     """
+    mri_z2p
+    
     Converts Z-statistic volumes to P-value volumes.
     
     Author: FreeSurfer Developers
@@ -277,6 +279,8 @@ def mri_z2p(
     runner: Runner | None = None,
 ) -> MriZ2pOutputs:
     """
+    mri_z2p
+    
     Converts Z-statistic volumes to P-value volumes.
     
     Author: FreeSurfer Developers

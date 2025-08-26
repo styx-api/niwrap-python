@@ -242,6 +242,8 @@ def voxel2fixel_execute(
     runner: Runner | None = None,
 ) -> Voxel2fixelOutputs:
     """
+    voxel2fixel
+    
     Map the scalar value in each voxel to all fixels within that voxel.
     
     This command is designed to enable CFE-based statistical analysis to be
@@ -286,6 +288,8 @@ def voxel2fixel(
     runner: Runner | None = None,
 ) -> Voxel2fixelOutputs:
     """
+    voxel2fixel
+    
     Map the scalar value in each voxel to all fixels within that voxel.
     
     This command is designed to enable CFE-based statistical analysis to be

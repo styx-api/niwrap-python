@@ -327,6 +327,8 @@ def v_3dkmeans_execute(
     runner: Runner | None = None,
 ) -> V3dkmeansOutputs:
     """
+    3dkmeans
+    
     3d+t Clustering segmentation based on The C clustering library.
     
     Author: AFNI Developers
@@ -371,6 +373,8 @@ def v_3dkmeans(
     runner: Runner | None = None,
 ) -> V3dkmeansOutputs:
     """
+    3dkmeans
+    
     3d+t Clustering segmentation based on The C clustering library.
     
     Author: AFNI Developers

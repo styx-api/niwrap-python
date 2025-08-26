@@ -128,6 +128,8 @@ def mri_reduce_execute(
     runner: Runner | None = None,
 ) -> MriReduceOutputs:
     """
+    mri_reduce
+    
     A tool to reduce MRI file dimensions.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mri_reduce(
     runner: Runner | None = None,
 ) -> MriReduceOutputs:
     """
+    mri_reduce
+    
     A tool to reduce MRI file dimensions.
     
     Author: FreeSurfer Developers

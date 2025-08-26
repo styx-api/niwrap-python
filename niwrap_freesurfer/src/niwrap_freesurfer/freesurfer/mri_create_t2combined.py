@@ -160,8 +160,10 @@ def mri_create_t2combined_execute(
     runner: Runner | None = None,
 ) -> MriCreateT2combinedOutputs:
     """
-    Utility to combine two or three T2* 7T partial-brain volumes into one volume,
-    retaining resolution and registered to the MPRAGE anatomical.
+    mri_create_t2combined
+    
+    Utility to combine two or three T2* 7T partial-brain volumes into one
+    volume, retaining resolution and registered to the MPRAGE anatomical.
     
     Author: FreeSurfer Developers
     
@@ -193,8 +195,10 @@ def mri_create_t2combined(
     runner: Runner | None = None,
 ) -> MriCreateT2combinedOutputs:
     """
-    Utility to combine two or three T2* 7T partial-brain volumes into one volume,
-    retaining resolution and registered to the MPRAGE anatomical.
+    mri_create_t2combined
+    
+    Utility to combine two or three T2* 7T partial-brain volumes into one
+    volume, retaining resolution and registered to the MPRAGE anatomical.
     
     Author: FreeSurfer Developers
     

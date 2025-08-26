@@ -173,6 +173,8 @@ def v_3d_tnorm_execute(
     runner: Runner | None = None,
 ) -> V3dTnormOutputs:
     """
+    3dTnorm
+    
     Normalizes each voxel time series by multiplicative scaling.
     
     Author: AFNI Developers
@@ -206,6 +208,8 @@ def v_3d_tnorm(
     runner: Runner | None = None,
 ) -> V3dTnormOutputs:
     """
+    3dTnorm
+    
     Normalizes each voxel time series by multiplicative scaling.
     
     Author: AFNI Developers

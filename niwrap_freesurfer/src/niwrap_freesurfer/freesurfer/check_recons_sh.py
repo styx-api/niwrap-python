@@ -122,8 +122,10 @@ def check_recons_sh_execute(
     runner: Runner | None = None,
 ) -> CheckReconsShOutputs:
     """
-    Checks the status of subjects being processed by recon-all in the SUBJECTS_DIR
-    or a specified directory.
+    check_recons.sh
+    
+    Checks the status of subjects being processed by recon-all in the
+    SUBJECTS_DIR or a specified directory.
     
     Author: FreeSurfer Developers
     
@@ -149,8 +151,10 @@ def check_recons_sh(
     runner: Runner | None = None,
 ) -> CheckReconsShOutputs:
     """
-    Checks the status of subjects being processed by recon-all in the SUBJECTS_DIR
-    or a specified directory.
+    check_recons.sh
+    
+    Checks the status of subjects being processed by recon-all in the
+    SUBJECTS_DIR or a specified directory.
     
     Author: FreeSurfer Developers
     

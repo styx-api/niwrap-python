@@ -138,6 +138,8 @@ def v_3d_convolve_execute(
     runner: Runner | None = None,
 ) -> V3dConvolveOutputs:
     """
+    3dConvolve
+    
     3dConvolve is no longer supported in AFNI.
     
     Author: AFNI Developers
@@ -166,6 +168,8 @@ def v_3d_convolve(
     runner: Runner | None = None,
 ) -> V3dConvolveOutputs:
     """
+    3dConvolve
+    
     3dConvolve is no longer supported in AFNI.
     
     Author: AFNI Developers

@@ -274,9 +274,11 @@ def annot2std_execute(
     runner: Runner | None = None,
 ) -> Annot2stdOutputs:
     """
+    annot2std
+    
     Creates an average annotation in a standard space based on transforming the
-    annotations of the individual subjects to the standard space through the surface
-    registration.
+    annotations of the individual subjects to the standard space through the
+    surface registration.
     
     Author: FreeSurfer Developers
     
@@ -319,9 +321,11 @@ def annot2std(
     runner: Runner | None = None,
 ) -> Annot2stdOutputs:
     """
+    annot2std
+    
     Creates an average annotation in a standard space based on transforming the
-    annotations of the individual subjects to the standard space through the surface
-    registration.
+    annotations of the individual subjects to the standard space through the
+    surface registration.
     
     Author: FreeSurfer Developers
     

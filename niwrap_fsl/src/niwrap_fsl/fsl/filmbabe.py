@@ -403,6 +403,8 @@ def filmbabe_execute(
     runner: Runner | None = None,
 ) -> FilmbabeOutputs:
     """
+    filmbabe
+    
     FILM with MCMC-based Bayesian Analysis for fMRI.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -461,6 +463,8 @@ def filmbabe(
     runner: Runner | None = None,
 ) -> FilmbabeOutputs:
     """
+    filmbabe
+    
     FILM with MCMC-based Bayesian Analysis for fMRI.
     
     Author: FMRIB Analysis Group, University of Oxford

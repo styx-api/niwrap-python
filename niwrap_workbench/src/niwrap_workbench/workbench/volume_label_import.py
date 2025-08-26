@@ -170,6 +170,8 @@ def volume_label_import_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
+    volume-label-import
+    
     Import a label volume to workbench format.
     
     Creates a label volume from an integer-valued volume file. The label name
@@ -228,6 +230,8 @@ def volume_label_import(
     runner: Runner | None = None,
 ) -> VolumeLabelImportOutputs:
     """
+    volume-label-import
+    
     Import a label volume to workbench format.
     
     Creates a label volume from an integer-valued volume file. The label name

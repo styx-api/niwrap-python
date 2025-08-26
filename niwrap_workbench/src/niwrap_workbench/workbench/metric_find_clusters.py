@@ -217,6 +217,8 @@ def metric_find_clusters_execute(
     runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
+    metric-find-clusters
+    
     Filter clusters by surface area.
     
     Outputs a metric with nonzero integers for all vertices within a large
@@ -263,6 +265,8 @@ def metric_find_clusters(
     runner: Runner | None = None,
 ) -> MetricFindClustersOutputs:
     """
+    metric-find-clusters
+    
     Filter clusters by surface area.
     
     Outputs a metric with nonzero integers for all vertices within a large

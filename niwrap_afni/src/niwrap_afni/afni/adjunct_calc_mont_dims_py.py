@@ -120,6 +120,8 @@ def adjunct_calc_mont_dims_py_execute(
     runner: Runner | None = None,
 ) -> AdjunctCalcMontDimsPyOutputs:
     """
+    adjunct_calc_mont_dims.py
+    
     A helper function for the fat_proc* scripts.
     
     Author: AFNI Developers
@@ -146,6 +148,8 @@ def adjunct_calc_mont_dims_py(
     runner: Runner | None = None,
 ) -> AdjunctCalcMontDimsPyOutputs:
     """
+    adjunct_calc_mont_dims.py
+    
     A helper function for the fat_proc* scripts.
     
     Author: AFNI Developers

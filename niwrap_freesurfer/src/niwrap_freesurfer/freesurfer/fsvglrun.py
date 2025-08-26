@@ -149,6 +149,8 @@ def fsvglrun_execute(
     runner: Runner | None = None,
 ) -> FsvglrunOutputs:
     """
+    fsvglrun
+    
     A tool to execute a command, replacing the shell with the specified program,
     typically used within FreeSurfer environment.
     
@@ -180,6 +182,8 @@ def fsvglrun(
     runner: Runner | None = None,
 ) -> FsvglrunOutputs:
     """
+    fsvglrun
+    
     A tool to execute a command, replacing the shell with the specified program,
     typically used within FreeSurfer environment.
     

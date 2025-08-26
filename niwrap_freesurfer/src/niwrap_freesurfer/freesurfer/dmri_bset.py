@@ -215,8 +215,10 @@ def dmri_bset_execute(
     runner: Runner | None = None,
 ) -> DmriBsetOutputs:
     """
-    This tool extracts a subset of volumes, b-values, and gradient directions from a
-    diffusion MRI data set.
+    dmri_bset
+    
+    This tool extracts a subset of volumes, b-values, and gradient directions
+    from a diffusion MRI data set.
     
     Author: FreeSurfer Developers
     
@@ -251,8 +253,10 @@ def dmri_bset(
     runner: Runner | None = None,
 ) -> DmriBsetOutputs:
     """
-    This tool extracts a subset of volumes, b-values, and gradient directions from a
-    diffusion MRI data set.
+    dmri_bset
+    
+    This tool extracts a subset of volumes, b-values, and gradient directions
+    from a diffusion MRI data set.
     
     Author: FreeSurfer Developers
     

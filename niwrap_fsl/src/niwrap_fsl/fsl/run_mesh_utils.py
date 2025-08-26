@@ -249,6 +249,8 @@ def run_mesh_utils_execute(
     runner: Runner | None = None,
 ) -> RunMeshUtilsOutputs:
     """
+    run_mesh_utils
+    
     A tool for various mesh operations as part of FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -291,6 +293,8 @@ def run_mesh_utils(
     runner: Runner | None = None,
 ) -> RunMeshUtilsOutputs:
     """
+    run_mesh_utils
+    
     A tool for various mesh operations as part of FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -136,6 +136,8 @@ def v_3dto_xdataset_execute(
     runner: Runner | None = None,
 ) -> V3dtoXdatasetOutputs:
     """
+    3dtoXdataset
+    
     Convert input datasets to the format needed for 3dClustSimX.
     
     Author: AFNI Developers
@@ -164,6 +166,8 @@ def v_3dto_xdataset(
     runner: Runner | None = None,
 ) -> V3dtoXdatasetOutputs:
     """
+    3dtoXdataset
+    
     Convert input datasets to the format needed for 3dClustSimX.
     
     Author: AFNI Developers

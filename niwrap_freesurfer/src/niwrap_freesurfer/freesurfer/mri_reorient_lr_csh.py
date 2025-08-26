@@ -165,6 +165,8 @@ def mri_reorient_lr_csh_execute(
     runner: Runner | None = None,
 ) -> MriReorientLrCshOutputs:
     """
+    mri_reorient_LR.csh
+    
     A script to reorient MRI volumes from left-right orientation.
     
     Author: FreeSurfer Developers
@@ -197,6 +199,8 @@ def mri_reorient_lr_csh(
     runner: Runner | None = None,
 ) -> MriReorientLrCshOutputs:
     """
+    mri_reorient_LR.csh
+    
     A script to reorient MRI volumes from left-right orientation.
     
     Author: FreeSurfer Developers

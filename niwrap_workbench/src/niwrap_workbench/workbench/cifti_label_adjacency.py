@@ -162,6 +162,8 @@ def cifti_label_adjacency_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelAdjacencyOutputs:
     """
+    cifti-label-adjacency
+    
     Make adjacency matrix of a cifti label file.
     
     Find face-adjacent voxels and connected vertices that have different label
@@ -197,6 +199,8 @@ def cifti_label_adjacency(
     runner: Runner | None = None,
 ) -> CiftiLabelAdjacencyOutputs:
     """
+    cifti-label-adjacency
+    
     Make adjacency matrix of a cifti label file.
     
     Find face-adjacent voxels and connected vertices that have different label

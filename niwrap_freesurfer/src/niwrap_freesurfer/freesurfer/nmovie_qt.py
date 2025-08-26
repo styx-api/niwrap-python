@@ -120,6 +120,8 @@ def nmovie_qt_execute(
     runner: Runner | None = None,
 ) -> NmovieQtOutputs:
     """
+    nmovie_qt
+    
     An image viewer using Qt for displaying images in sequence.
     
     Author: FreeSurfer Developers
@@ -146,6 +148,8 @@ def nmovie_qt(
     runner: Runner | None = None,
 ) -> NmovieQtOutputs:
     """
+    nmovie_qt
+    
     An image viewer using Qt for displaying images in sequence.
     
     Author: FreeSurfer Developers

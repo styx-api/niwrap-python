@@ -208,6 +208,8 @@ def adwarp_execute(
     runner: Runner | None = None,
 ) -> AdwarpOutputs:
     """
+    adwarp
+    
     Resamples a 'data parent' dataset to the grid defined by an 'anat parent'
     dataset.
     
@@ -243,6 +245,8 @@ def adwarp(
     runner: Runner | None = None,
 ) -> AdwarpOutputs:
     """
+    adwarp
+    
     Resamples a 'data parent' dataset to the grid defined by an 'anat parent'
     dataset.
     

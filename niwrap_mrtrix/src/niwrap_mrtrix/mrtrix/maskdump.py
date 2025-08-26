@@ -236,6 +236,8 @@ def maskdump_execute(
     runner: Runner | None = None,
 ) -> MaskdumpOutputs:
     """
+    maskdump
+    
     Print out the locations of all non-zero voxels in a mask image.
     
     If no destination file is specified, the voxel locations will be printed to
@@ -278,6 +280,8 @@ def maskdump(
     runner: Runner | None = None,
 ) -> MaskdumpOutputs:
     """
+    maskdump
+    
     Print out the locations of all non-zero voxels in a mask image.
     
     If no destination file is specified, the voxel locations will be printed to

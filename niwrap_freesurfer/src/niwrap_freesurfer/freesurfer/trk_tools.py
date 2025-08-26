@@ -176,6 +176,8 @@ def trk_tools_execute(
     runner: Runner | None = None,
 ) -> TrkToolsOutputs:
     """
+    trk_tools
+    
     Tool for processing TRK files.
     
     Author: FreeSurfer Developers
@@ -207,6 +209,8 @@ def trk_tools(
     runner: Runner | None = None,
 ) -> TrkToolsOutputs:
     """
+    trk_tools
+    
     Tool for processing TRK files.
     
     Author: FreeSurfer Developers

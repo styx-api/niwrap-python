@@ -193,6 +193,8 @@ def new_invwarp_execute(
     runner: Runner | None = None,
 ) -> NewInvwarpOutputs:
     """
+    new_invwarp
+    
     Inverse warp tool from FSL suite.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -228,6 +230,8 @@ def new_invwarp(
     runner: Runner | None = None,
 ) -> NewInvwarpOutputs:
     """
+    new_invwarp
+    
     Inverse warp tool from FSL suite.
     
     Author: FMRIB Analysis Group, University of Oxford

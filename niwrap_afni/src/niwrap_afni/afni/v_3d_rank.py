@@ -155,6 +155,8 @@ def v_3d_rank_execute(
     runner: Runner | None = None,
 ) -> V3dRankOutputs:
     """
+    3dRank
+    
     Replaces voxel values by their rank in the set of values collected over all
     voxels in all input datasets.
     
@@ -185,6 +187,8 @@ def v_3d_rank(
     runner: Runner | None = None,
 ) -> V3dRankOutputs:
     """
+    3dRank
+    
     Replaces voxel values by their rank in the set of values collected over all
     voxels in all input datasets.
     

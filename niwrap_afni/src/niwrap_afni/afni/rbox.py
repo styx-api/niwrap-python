@@ -274,6 +274,8 @@ def rbox_execute(
     runner: Runner | None = None,
 ) -> RboxOutputs:
     """
+    rbox
+    
     Generate various point distributions. Default is random in cube.
     
     Author: AFNI Developers
@@ -320,6 +322,8 @@ def rbox(
     runner: Runner | None = None,
 ) -> RboxOutputs:
     """
+    rbox
+    
     Generate various point distributions. Default is random in cube.
     
     Author: AFNI Developers

@@ -359,6 +359,8 @@ def tckdfc_execute(
     runner: Runner | None = None,
 ) -> TckdfcOutputs:
     """
+    tckdfc
+    
     Perform the Track-Weighted Dynamic Functional Connectivity (TW-dFC) method.
     
     This command generates a Track-Weighted Image (TWI), where the contribution
@@ -437,6 +439,8 @@ def tckdfc(
     runner: Runner | None = None,
 ) -> TckdfcOutputs:
     """
+    tckdfc
+    
     Perform the Track-Weighted Dynamic Functional Connectivity (TW-dFC) method.
     
     This command generates a Track-Weighted Image (TWI), where the contribution

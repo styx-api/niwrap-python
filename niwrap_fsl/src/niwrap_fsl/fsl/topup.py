@@ -292,6 +292,8 @@ def topup_execute(
     runner: Runner | None = None,
 ) -> TopupOutputs:
     """
+    topup
+    
     topup is part of FSL and is used to estimate and correct for
     susceptibility-induced distortions in echo planar imaging (EPI) data.
     
@@ -341,6 +343,8 @@ def topup(
     runner: Runner | None = None,
 ) -> TopupOutputs:
     """
+    topup
+    
     topup is part of FSL and is used to estimate and correct for
     susceptibility-induced distortions in echo planar imaging (EPI) data.
     

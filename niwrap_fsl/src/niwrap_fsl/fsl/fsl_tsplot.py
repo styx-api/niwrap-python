@@ -271,6 +271,8 @@ def fsl_tsplot_execute(
     runner: Runner | None = None,
 ) -> FslTsplotOutputs:
     """
+    fsl_tsplot
+    
     Timeseries plotting tool from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -312,6 +314,8 @@ def fsl_tsplot(
     runner: Runner | None = None,
 ) -> FslTsplotOutputs:
     """
+    fsl_tsplot
+    
     Timeseries plotting tool from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

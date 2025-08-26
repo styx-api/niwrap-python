@@ -289,6 +289,8 @@ def mris_volmask_vtk_execute(
     runner: Runner | None = None,
 ) -> MrisVolmaskVtkOutputs:
     """
+    mris_volmask_vtk
+    
     Computes a volume mask at the resolution of the brain.mgz file, containing
     labels for various brain structures using surface files.
     
@@ -333,6 +335,8 @@ def mris_volmask_vtk(
     runner: Runner | None = None,
 ) -> MrisVolmaskVtkOutputs:
     """
+    mris_volmask_vtk
+    
     Computes a volume mask at the resolution of the brain.mgz file, containing
     labels for various brain structures using surface files.
     

@@ -224,6 +224,8 @@ def v_3d_fwhmx_execute(
     runner: Runner | None = None,
 ) -> V3dFwhmxOutputs:
     """
+    3dFWHMx
+    
     Compute Full Width at Half Maximum (FWHM) for FMRI datasets using
     AutoCorrelation Function (ACF).
     
@@ -263,6 +265,8 @@ def v_3d_fwhmx(
     runner: Runner | None = None,
 ) -> V3dFwhmxOutputs:
     """
+    3dFWHMx
+    
     Compute Full Width at Half Maximum (FWHM) for FMRI datasets using
     AutoCorrelation Function (ACF).
     

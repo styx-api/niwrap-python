@@ -181,6 +181,8 @@ def gps_execute(
     runner: Runner | None = None,
 ) -> GpsOutputs:
     """
+    gps
+    
     Generate set of diffusion gradient directions.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -214,6 +216,8 @@ def gps(
     runner: Runner | None = None,
 ) -> GpsOutputs:
     """
+    gps
+    
     Generate set of diffusion gradient directions.
     
     Author: FMRIB Analysis Group, University of Oxford

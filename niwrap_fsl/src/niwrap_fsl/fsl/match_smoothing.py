@@ -136,8 +136,10 @@ def match_smoothing_execute(
     runner: Runner | None = None,
 ) -> MatchSmoothingOutputs:
     """
-    Computes the smoothing sigma needed to be applied to structural data to match a
-    given functional data smoothing level.
+    match_smoothing
+    
+    Computes the smoothing sigma needed to be applied to structural data to
+    match a given functional data smoothing level.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -166,8 +168,10 @@ def match_smoothing(
     runner: Runner | None = None,
 ) -> MatchSmoothingOutputs:
     """
-    Computes the smoothing sigma needed to be applied to structural data to match a
-    given functional data smoothing level.
+    match_smoothing
+    
+    Computes the smoothing sigma needed to be applied to structural data to
+    match a given functional data smoothing level.
     
     Author: FMRIB Analysis Group, University of Oxford
     

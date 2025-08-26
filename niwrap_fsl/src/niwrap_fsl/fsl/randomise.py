@@ -364,6 +364,8 @@ def randomise_execute(
     runner: Runner | None = None,
 ) -> RandomiseOutputs:
     """
+    randomise
+    
     FSL Randomise: feeds the 4D projected FA data into GLM modelling and
     thresholding in order to find voxels which correlate with your model.
     
@@ -418,6 +420,8 @@ def randomise(
     runner: Runner | None = None,
 ) -> RandomiseOutputs:
     """
+    randomise
+    
     FSL Randomise: feeds the 4D projected FA data into GLM modelling and
     thresholding in order to find voxels which correlate with your model.
     

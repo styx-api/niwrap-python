@@ -125,6 +125,8 @@ def scene_file_relocate_execute(
     runner: Runner | None = None,
 ) -> SceneFileRelocateOutputs:
     """
+    scene-file-relocate
+    
     Recreate scene file in new location.
     
     Scene files contain internal relative paths, such that moving or copying a
@@ -157,6 +159,8 @@ def scene_file_relocate(
     runner: Runner | None = None,
 ) -> SceneFileRelocateOutputs:
     """
+    scene-file-relocate
+    
     Recreate scene file in new location.
     
     Scene files contain internal relative paths, such that moving or copying a

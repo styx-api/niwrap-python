@@ -181,6 +181,8 @@ def tbss_non_fa_execute(
     runner: Runner | None = None,
 ) -> TbssNonFaOutputs:
     """
+    tbss_non_FA
+    
     TBSS processing for non-FA images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -215,6 +217,8 @@ def tbss_non_fa(
     runner: Runner | None = None,
 ) -> TbssNonFaOutputs:
     """
+    tbss_non_FA
+    
     TBSS processing for non-FA images.
     
     Author: FMRIB Analysis Group, University of Oxford

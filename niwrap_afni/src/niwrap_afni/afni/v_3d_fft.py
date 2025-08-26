@@ -214,8 +214,10 @@ def v_3d_fft_execute(
     runner: Runner | None = None,
 ) -> V3dFftOutputs:
     """
-    Performs the FFT of the input dataset in 3 directions (x, y, z) and produces the
-    output dataset.
+    3dFFT
+    
+    Performs the FFT of the input dataset in 3 directions (x, y, z) and produces
+    the output dataset.
     
     Author: AFNI Developers
     
@@ -252,8 +254,10 @@ def v_3d_fft(
     runner: Runner | None = None,
 ) -> V3dFftOutputs:
     """
-    Performs the FFT of the input dataset in 3 directions (x, y, z) and produces the
-    output dataset.
+    3dFFT
+    
+    Performs the FFT of the input dataset in 3 directions (x, y, z) and produces
+    the output dataset.
     
     Author: AFNI Developers
     

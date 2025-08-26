@@ -397,6 +397,8 @@ def maskfilter_execute(
     runner: Runner | None = None,
 ) -> MaskfilterOutputs:
     """
+    maskfilter
+    
     Perform filtering operations on 3D / 4D mask images.
     
     The available filters are: clean, connect, dilate, erode, median.
@@ -448,6 +450,8 @@ def maskfilter(
     runner: Runner | None = None,
 ) -> MaskfilterOutputs:
     """
+    maskfilter
+    
     Perform filtering operations on 3D / 4D mask images.
     
     The available filters are: clean, connect, dilate, erode, median.

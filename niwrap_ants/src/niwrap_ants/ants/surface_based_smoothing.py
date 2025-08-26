@@ -146,8 +146,10 @@ def surface_based_smoothing_execute(
     runner: Runner | None = None,
 ) -> SurfaceBasedSmoothingOutputs:
     """
-    Surface-based smoothing applied to ImageToSmooth using a geodesic neighbourhood
-    defined by sigma and the surface image.
+    SurfaceBasedSmoothing
+    
+    Surface-based smoothing applied to ImageToSmooth using a geodesic
+    neighbourhood defined by sigma and the surface image.
     
     Author: ANTs Developers
     
@@ -177,8 +179,10 @@ def surface_based_smoothing(
     runner: Runner | None = None,
 ) -> SurfaceBasedSmoothingOutputs:
     """
-    Surface-based smoothing applied to ImageToSmooth using a geodesic neighbourhood
-    defined by sigma and the surface image.
+    SurfaceBasedSmoothing
+    
+    Surface-based smoothing applied to ImageToSmooth using a geodesic
+    neighbourhood defined by sigma and the surface image.
     
     Author: ANTs Developers
     

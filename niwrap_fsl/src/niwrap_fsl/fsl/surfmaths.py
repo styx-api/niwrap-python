@@ -135,8 +135,10 @@ def surfmaths_execute(
     runner: Runner | None = None,
 ) -> SurfmathsOutputs:
     """
-    A command-line tool for performing various mathematical operations on surface
-    files.
+    surfmaths
+    
+    A command-line tool for performing various mathematical operations on
+    surface files.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -164,8 +166,10 @@ def surfmaths(
     runner: Runner | None = None,
 ) -> SurfmathsOutputs:
     """
-    A command-line tool for performing various mathematical operations on surface
-    files.
+    surfmaths
+    
+    A command-line tool for performing various mathematical operations on
+    surface files.
     
     Author: FMRIB Analysis Group, University of Oxford
     

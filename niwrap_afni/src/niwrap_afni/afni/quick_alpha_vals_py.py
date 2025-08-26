@@ -133,6 +133,8 @@ def quick_alpha_vals_py_execute(
     runner: Runner | None = None,
 ) -> QuickAlphaValsPyOutputs:
     """
+    quick.alpha.vals.py
+    
     Generate an alpha table from slow_surf_clustsim.py results.
     
     Author: AFNI Developers
@@ -160,6 +162,8 @@ def quick_alpha_vals_py(
     runner: Runner | None = None,
 ) -> QuickAlphaValsPyOutputs:
     """
+    quick.alpha.vals.py
+    
     Generate an alpha table from slow_surf_clustsim.py results.
     
     Author: AFNI Developers

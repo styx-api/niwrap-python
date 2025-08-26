@@ -242,6 +242,8 @@ def mri_synthmorph_execute(
     runner: Runner | None = None,
 ) -> MriSynthmorphOutputs:
     """
+    mri_synthmorph
+    
     SynthMorph is a deep-learning tool for brain-specific MRI image registration
     without preprocessing.
     
@@ -281,6 +283,8 @@ def mri_synthmorph(
     runner: Runner | None = None,
 ) -> MriSynthmorphOutputs:
     """
+    mri_synthmorph
+    
     SynthMorph is a deep-learning tool for brain-specific MRI image registration
     without preprocessing.
     

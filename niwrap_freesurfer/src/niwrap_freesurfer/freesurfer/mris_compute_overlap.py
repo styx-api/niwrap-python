@@ -165,7 +165,10 @@ def mris_compute_overlap_execute(
     runner: Runner | None = None,
 ) -> MrisComputeOverlapOutputs:
     """
-    Tool to compute the overlap between two or more labels on a cortical surface.
+    mris_compute_overlap
+    
+    Tool to compute the overlap between two or more labels on a cortical
+    surface.
     
     Author: FreeSurfer Developers
     
@@ -198,7 +201,10 @@ def mris_compute_overlap(
     runner: Runner | None = None,
 ) -> MrisComputeOverlapOutputs:
     """
-    Tool to compute the overlap between two or more labels on a cortical surface.
+    mris_compute_overlap
+    
+    Tool to compute the overlap between two or more labels on a cortical
+    surface.
     
     Author: FreeSurfer Developers
     

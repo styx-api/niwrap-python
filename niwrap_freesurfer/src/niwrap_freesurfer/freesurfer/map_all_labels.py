@@ -148,6 +148,8 @@ def map_all_labels_execute(
     runner: Runner | None = None,
 ) -> MapAllLabelsOutputs:
     """
+    map_all_labels
+    
     Tool for mapping labels onto subject surfaces.
     
     Author: FreeSurfer Developers
@@ -179,6 +181,8 @@ def map_all_labels(
     runner: Runner | None = None,
 ) -> MapAllLabelsOutputs:
     """
+    map_all_labels
+    
     Tool for mapping labels onto subject surfaces.
     
     Author: FreeSurfer Developers

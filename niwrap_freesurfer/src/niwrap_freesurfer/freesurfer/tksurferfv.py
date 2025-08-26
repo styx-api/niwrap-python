@@ -180,6 +180,8 @@ def tksurferfv_execute(
     runner: Runner | None = None,
 ) -> TksurferfvOutputs:
     """
+    tksurferfv
+    
     A script that runs freeview with arguments similar to tksurfer.
     
     Author: FreeSurfer Developers
@@ -216,6 +218,8 @@ def tksurferfv(
     runner: Runner | None = None,
 ) -> TksurferfvOutputs:
     """
+    tksurferfv
+    
     A script that runs freeview with arguments similar to tksurfer.
     
     Author: FreeSurfer Developers

@@ -294,7 +294,10 @@ def ants_neuroimaging_battery_execute(
     runner: Runner | None = None,
 ) -> AntsNeuroimagingBatteryOutputs:
     """
-    Align MR modalities to a common within-subject (and optional template) space.
+    antsNeuroimagingBattery
+    
+    Align MR modalities to a common within-subject (and optional template)
+    space.
     
     Author: ANTs Developers
     
@@ -338,7 +341,10 @@ def ants_neuroimaging_battery(
     runner: Runner | None = None,
 ) -> AntsNeuroimagingBatteryOutputs:
     """
-    Align MR modalities to a common within-subject (and optional template) space.
+    antsNeuroimagingBattery
+    
+    Align MR modalities to a common within-subject (and optional template)
+    space.
     
     Author: ANTs Developers
     

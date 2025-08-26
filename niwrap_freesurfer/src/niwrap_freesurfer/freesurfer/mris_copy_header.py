@@ -134,8 +134,10 @@ def mris_copy_header_execute(
     runner: Runner | None = None,
 ) -> MrisCopyHeaderOutputs:
     """
-    Tool to copy the header from a template surface to an input surface and save as
-    the output surface.
+    mris_copy_header
+    
+    Tool to copy the header from a template surface to an input surface and save
+    as the output surface.
     
     Author: FreeSurfer Developers
     
@@ -163,8 +165,10 @@ def mris_copy_header(
     runner: Runner | None = None,
 ) -> MrisCopyHeaderOutputs:
     """
-    Tool to copy the header from a template surface to an input surface and save as
-    the output surface.
+    mris_copy_header
+    
+    Tool to copy the header from a template surface to an input surface and save
+    as the output surface.
     
     Author: FreeSurfer Developers
     

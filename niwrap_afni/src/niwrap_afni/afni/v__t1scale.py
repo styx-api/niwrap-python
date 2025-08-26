@@ -230,6 +230,8 @@ def v__t1scale_execute(
     runner: Runner | None = None,
 ) -> VT1scaleOutputs:
     """
+    @T1scale
+    
     Fix bias field shading in T1 by scaling it with PD image. You can also get a
     decent result even without the PD volume.
     
@@ -270,6 +272,8 @@ def v__t1scale(
     runner: Runner | None = None,
 ) -> VT1scaleOutputs:
     """
+    @T1scale
+    
     Fix bias field shading in T1 by scaling it with PD image. You can also get a
     decent result even without the PD volume.
     

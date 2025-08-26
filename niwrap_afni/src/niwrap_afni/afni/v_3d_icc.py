@@ -254,6 +254,8 @@ def v_3d_icc_execute(
     runner: Runner | None = None,
 ) -> V3dIccOutputs:
     """
+    3dICC
+    
     AFNI Program for IntraClass Correlatin (ICC) Analysis.
     
     Author: AFNI Developers
@@ -293,6 +295,8 @@ def v_3d_icc(
     runner: Runner | None = None,
 ) -> V3dIccOutputs:
     """
+    3dICC
+    
     AFNI Program for IntraClass Correlatin (ICC) Analysis.
     
     Author: AFNI Developers

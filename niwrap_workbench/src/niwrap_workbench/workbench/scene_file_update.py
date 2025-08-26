@@ -326,6 +326,8 @@ def scene_file_update_execute(
     runner: Runner | None = None,
 ) -> SceneFileUpdateOutputs:
     """
+    scene-file-update
+    
     Update scene file.
     
     This command will update a scene for specific changes in data files.
@@ -389,6 +391,8 @@ def scene_file_update(
     runner: Runner | None = None,
 ) -> SceneFileUpdateOutputs:
     """
+    scene-file-update
+    
     Update scene file.
     
     This command will update a scene for specific changes in data files.

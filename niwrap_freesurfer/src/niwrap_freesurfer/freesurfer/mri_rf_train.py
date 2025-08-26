@@ -189,6 +189,8 @@ def mri_rf_train_execute(
     runner: Runner | None = None,
 ) -> MriRfTrainOutputs:
     """
+    mri_rf_train
+    
     Trains GCA data with multiple subjects using MRI data.
     
     Author: FreeSurfer Developers
@@ -223,6 +225,8 @@ def mri_rf_train(
     runner: Runner | None = None,
 ) -> MriRfTrainOutputs:
     """
+    mri_rf_train
+    
     Trains GCA data with multiple subjects using MRI data.
     
     Author: FreeSurfer Developers

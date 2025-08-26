@@ -129,6 +129,8 @@ def ifh2hdr_execute(
     runner: Runner | None = None,
 ) -> Ifh2hdrOutputs:
     """
+    ifh2hdr
+    
     Tool for converting IFH (Interfile Header) to HDR (Header) format in 4dfp
     (Four-Dimensional Functional Image) file format.
     
@@ -157,6 +159,8 @@ def ifh2hdr(
     runner: Runner | None = None,
 ) -> Ifh2hdrOutputs:
     """
+    ifh2hdr
+    
     Tool for converting IFH (Interfile Header) to HDR (Header) format in 4dfp
     (Four-Dimensional Functional Image) file format.
     

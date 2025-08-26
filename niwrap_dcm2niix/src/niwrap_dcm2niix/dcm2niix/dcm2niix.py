@@ -396,6 +396,8 @@ def dcm2niix_execute(
     runner: Runner | None = None,
 ) -> Dcm2niixOutputs:
     """
+    dcm2niix
+    
     Chris Rorden's dcm2niiX - DICOM to NIfTI converter. Converts DICOM files to
     NIfTI format with optional BIDS sidecar generation.
     
@@ -449,6 +451,8 @@ def dcm2niix_(
     runner: Runner | None = None,
 ) -> Dcm2niixOutputs:
     """
+    dcm2niix
+    
     Chris Rorden's dcm2niiX - DICOM to NIfTI converter. Converts DICOM files to
     NIfTI format with optional BIDS sidecar generation.
     

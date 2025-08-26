@@ -141,6 +141,8 @@ def v__purify_1_d_execute(
     runner: Runner | None = None,
 ) -> VPurify1DOutputs:
     """
+    @Purify_1D
+    
     Purifies a series of 1D files for faster I/O into matlab.
     
     Author: AFNI Developers
@@ -169,6 +171,8 @@ def v__purify_1_d(
     runner: Runner | None = None,
 ) -> VPurify1DOutputs:
     """
+    @Purify_1D
+    
     Purifies a series of 1D files for faster I/O into matlab.
     
     Author: AFNI Developers

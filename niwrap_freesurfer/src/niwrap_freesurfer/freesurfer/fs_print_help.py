@@ -121,8 +121,10 @@ def fs_print_help_execute(
     runner: Runner | None = None,
 ) -> FsPrintHelpOutputs:
     """
-    fsPrintHelp - A tool that attempts to provide help documentation for FreeSurfer
-    commands.
+    fsPrintHelp
+    
+    fsPrintHelp - A tool that attempts to provide help documentation for
+    FreeSurfer commands.
     
     Author: FreeSurfer Developers
     
@@ -148,8 +150,10 @@ def fs_print_help(
     runner: Runner | None = None,
 ) -> FsPrintHelpOutputs:
     """
-    fsPrintHelp - A tool that attempts to provide help documentation for FreeSurfer
-    commands.
+    fsPrintHelp
+    
+    fsPrintHelp - A tool that attempts to provide help documentation for
+    FreeSurfer commands.
     
     Author: FreeSurfer Developers
     

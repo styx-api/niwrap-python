@@ -224,6 +224,8 @@ def plugout_tt_execute(
     runner: Runner | None = None,
 ) -> PlugoutTtOutputs:
     """
+    plugout_tt
+    
     This program connects to AFNI and receives notification whenever the user
     changes Talairach coordinates.
     
@@ -262,6 +264,8 @@ def plugout_tt(
     runner: Runner | None = None,
 ) -> PlugoutTtOutputs:
     """
+    plugout_tt
+    
     This program connects to AFNI and receives notification whenever the user
     changes Talairach coordinates.
     

@@ -245,6 +245,8 @@ def surf_dset_info_execute(
     runner: Runner | None = None,
 ) -> SurfDsetInfoOutputs:
     """
+    SurfDsetInfo
+    
     Provides information about surface datasets (DSET).
     
     Author: AFNI Developers
@@ -289,6 +291,8 @@ def surf_dset_info(
     runner: Runner | None = None,
 ) -> SurfDsetInfoOutputs:
     """
+    SurfDsetInfo
+    
     Provides information about surface datasets (DSET).
     
     Author: AFNI Developers

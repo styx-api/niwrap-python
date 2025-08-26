@@ -477,6 +477,8 @@ def eddy_execute(
     runner: Runner | None = None,
 ) -> EddyOutputs:
     """
+    eddy
+    
     A tool for correcting eddy currents and movements in diffusion data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -546,6 +548,8 @@ def eddy(
     runner: Runner | None = None,
 ) -> EddyOutputs:
     """
+    eddy
+    
     A tool for correcting eddy currents and movements in diffusion data.
     
     Author: FMRIB Analysis Group, University of Oxford

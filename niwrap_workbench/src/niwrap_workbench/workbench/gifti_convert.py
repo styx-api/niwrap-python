@@ -130,6 +130,8 @@ def gifti_convert_execute(
     runner: Runner | None = None,
 ) -> GiftiConvertOutputs:
     """
+    gifti-convert
+    
     Convert a gifti file to a different encoding.
     
     The value of <gifti-encoding> must be one of the following:
@@ -165,6 +167,8 @@ def gifti_convert(
     runner: Runner | None = None,
 ) -> GiftiConvertOutputs:
     """
+    gifti-convert
+    
     Convert a gifti file to a different encoding.
     
     The value of <gifti-encoding> must be one of the following:

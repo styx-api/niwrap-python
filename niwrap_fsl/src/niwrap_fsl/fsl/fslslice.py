@@ -130,6 +130,8 @@ def fslslice_execute(
     runner: Runner | None = None,
 ) -> FslsliceOutputs:
     """
+    fslslice
+    
     Tool to extract all slices from a 3D volume and store as 2D images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -157,6 +159,8 @@ def fslslice(
     runner: Runner | None = None,
 ) -> FslsliceOutputs:
     """
+    fslslice
+    
     Tool to extract all slices from a 3D volume and store as 2D images.
     
     Author: FMRIB Analysis Group, University of Oxford

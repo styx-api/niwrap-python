@@ -294,6 +294,8 @@ def mri_mask_execute(
     runner: Runner | None = None,
 ) -> MriMaskOutputs:
     """
+    mri_mask
+    
     Applies a mask volume (typically skull stripped).
     
     Author: FreeSurfer Developers
@@ -340,6 +342,8 @@ def mri_mask(
     runner: Runner | None = None,
 ) -> MriMaskOutputs:
     """
+    mri_mask
+    
     Applies a mask volume (typically skull stripped).
     
     Author: FreeSurfer Developers

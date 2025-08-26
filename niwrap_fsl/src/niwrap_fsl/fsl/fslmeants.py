@@ -230,6 +230,8 @@ def fslmeants_execute(
     runner: Runner | None = None,
 ) -> FslmeantsOutputs:
     """
+    fslmeants
+    
     Prints average timeseries (intensities) to the screen (or saves to a file).
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -269,6 +271,8 @@ def fslmeants(
     runner: Runner | None = None,
 ) -> FslmeantsOutputs:
     """
+    fslmeants
+    
     Prints average timeseries (intensities) to the screen (or saves to a file).
     
     Author: FMRIB Analysis Group, University of Oxford

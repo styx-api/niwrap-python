@@ -255,6 +255,8 @@ def mris_skeletonize_execute(
     runner: Runner | None = None,
 ) -> MrisSkeletonizeOutputs:
     """
+    mris_skeletonize
+    
     Computes the skeleton of gyri (ie, the crowns) or sulci (ie, the fundi).
     
     Author: FreeSurfer Developers
@@ -295,6 +297,8 @@ def mris_skeletonize(
     runner: Runner | None = None,
 ) -> MrisSkeletonizeOutputs:
     """
+    mris_skeletonize
+    
     Computes the skeleton of gyri (ie, the crowns) or sulci (ie, the fundi).
     
     Author: FreeSurfer Developers

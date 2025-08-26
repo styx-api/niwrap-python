@@ -129,6 +129,8 @@ def surface_flip_lr_execute(
     runner: Runner | None = None,
 ) -> SurfaceFlipLrOutputs:
     """
+    surface-flip-lr
+    
     Mirror a surface through the yz plane.
     
     This command negates the x coordinate of each vertex, and flips the surface
@@ -162,6 +164,8 @@ def surface_flip_lr(
     runner: Runner | None = None,
 ) -> SurfaceFlipLrOutputs:
     """
+    surface-flip-lr
+    
     Mirror a surface through the yz plane.
     
     This command negates the x coordinate of each vertex, and flips the surface

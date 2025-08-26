@@ -341,6 +341,8 @@ def xfibres_execute(
     runner: Runner | None = None,
 ) -> XfibresOutputs:
     """
+    xfibres
+    
     Part of FSL - estimates diffusion parameters for multiple fibres per voxel.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -393,6 +395,8 @@ def xfibres(
     runner: Runner | None = None,
 ) -> XfibresOutputs:
     """
+    xfibres
+    
     Part of FSL - estimates diffusion parameters for multiple fibres per voxel.
     
     Author: FMRIB Analysis Group, University of Oxford

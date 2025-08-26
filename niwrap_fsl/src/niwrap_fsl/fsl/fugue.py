@@ -349,6 +349,8 @@ def fugue_execute(
     runner: Runner | None = None,
 ) -> FugueOutputs:
     """
+    fugue
+    
     FMRIB's Utility for Geometric Unwarping of EPIs.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -407,6 +409,8 @@ def fugue(
     runner: Runner | None = None,
 ) -> FugueOutputs:
     """
+    fugue
+    
     FMRIB's Utility for Geometric Unwarping of EPIs.
     
     Author: FMRIB Analysis Group, University of Oxford

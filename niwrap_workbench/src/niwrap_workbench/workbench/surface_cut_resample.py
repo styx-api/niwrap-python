@@ -141,6 +141,8 @@ def surface_cut_resample_execute(
     runner: Runner | None = None,
 ) -> SurfaceCutResampleOutputs:
     """
+    surface-cut-resample
+    
     Resample a cut surface.
     
     Resamples a surface file, given two spherical surfaces that are in register.
@@ -174,6 +176,8 @@ def surface_cut_resample(
     runner: Runner | None = None,
 ) -> SurfaceCutResampleOutputs:
     """
+    surface-cut-resample
+    
     Resample a cut surface.
     
     Resamples a surface file, given two spherical surfaces that are in register.

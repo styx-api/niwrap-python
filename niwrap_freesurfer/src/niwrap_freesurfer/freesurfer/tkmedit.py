@@ -126,9 +126,11 @@ def tkmedit_execute(
     runner: Runner | None = None,
 ) -> TkmeditOutputs:
     """
+    tkmedit
+    
     tkmedit is a multi-functional imaging tool for viewing and editing surface
-    models and volumes in FreeSurfer. It provides a GUI representation of volumetric
-    data and facilitates modifications in the data.
+    models and volumes in FreeSurfer. It provides a GUI representation of
+    volumetric data and facilitates modifications in the data.
     
     Author: FreeSurfer Developers
     
@@ -155,9 +157,11 @@ def tkmedit(
     runner: Runner | None = None,
 ) -> TkmeditOutputs:
     """
+    tkmedit
+    
     tkmedit is a multi-functional imaging tool for viewing and editing surface
-    models and volumes in FreeSurfer. It provides a GUI representation of volumetric
-    data and facilitates modifications in the data.
+    models and volumes in FreeSurfer. It provides a GUI representation of
+    volumetric data and facilitates modifications in the data.
     
     Author: FreeSurfer Developers
     

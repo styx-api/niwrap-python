@@ -199,6 +199,8 @@ def slow_surf_clustsim_py_execute(
     runner: Runner | None = None,
 ) -> SlowSurfClustsimPyOutputs:
     """
+    slow_surf_clustsim.py
+    
     Generate a tcsh script to run clustsim on surface.
     
     Author: AFNI Developers
@@ -235,6 +237,8 @@ def slow_surf_clustsim_py(
     runner: Runner | None = None,
 ) -> SlowSurfClustsimPyOutputs:
     """
+    slow_surf_clustsim.py
+    
     Generate a tcsh script to run clustsim on surface.
     
     Author: AFNI Developers

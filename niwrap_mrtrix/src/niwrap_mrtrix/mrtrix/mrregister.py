@@ -1217,6 +1217,8 @@ def mrregister_execute(
     runner: Runner | None = None,
 ) -> MrregisterOutputs:
     """
+    mrregister
+    
     Register two images together using a symmetric rigid, affine or non-linear
     transformation model.
     
@@ -1345,6 +1347,8 @@ def mrregister(
     runner: Runner | None = None,
 ) -> MrregisterOutputs:
     """
+    mrregister
+    
     Register two images together using a symmetric rigid, affine or non-linear
     transformation model.
     

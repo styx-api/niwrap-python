@@ -135,6 +135,8 @@ def v_1d_upsample_execute(
     runner: Runner | None = None,
 ) -> V1dUpsampleOutputs:
     """
+    1dUpsample
+    
     Upsamples a 1D time series to a finer time grid.
     
     Author: AFNI Developers
@@ -163,6 +165,8 @@ def v_1d_upsample(
     runner: Runner | None = None,
 ) -> V1dUpsampleOutputs:
     """
+    1dUpsample
+    
     Upsamples a 1D time series to a finer time grid.
     
     Author: AFNI Developers

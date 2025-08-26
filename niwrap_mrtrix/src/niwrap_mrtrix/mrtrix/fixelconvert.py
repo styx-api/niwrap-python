@@ -458,6 +458,8 @@ def fixelconvert_execute(
     runner: Runner | None = None,
 ) -> FixelconvertOutputs:
     """
+    fixelconvert
+    
     Convert between the old format fixel image (.msf / .msh) and the new fixel
     directory format.
     
@@ -506,6 +508,8 @@ def fixelconvert(
     runner: Runner | None = None,
 ) -> FixelconvertOutputs:
     """
+    fixelconvert
+    
     Convert between the old format fixel image (.msf / .msh) and the new fixel
     directory format.
     

@@ -139,6 +139,8 @@ def mri_strip_nonwhite_execute(
     runner: Runner | None = None,
 ) -> MriStripNonwhiteOutputs:
     """
+    mri_strip_nonwhite
+    
     Tool for processing MRI images, transforming volumetric data using provided
     transformation and template files.
     
@@ -169,6 +171,8 @@ def mri_strip_nonwhite(
     runner: Runner | None = None,
 ) -> MriStripNonwhiteOutputs:
     """
+    mri_strip_nonwhite
+    
     Tool for processing MRI images, transforming volumetric data using provided
     transformation and template files.
     

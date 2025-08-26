@@ -215,6 +215,8 @@ def convert_matrix4_to_workbench_sparse_execute(
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
     """
+    convert-matrix4-to-workbench-sparse
+    
     Convert a 3-file matrix4 to a workbench sparse file.
     
     Converts the matrix 4 output of probtrackx to workbench sparse file format.
@@ -251,6 +253,8 @@ def convert_matrix4_to_workbench_sparse(
     runner: Runner | None = None,
 ) -> ConvertMatrix4ToWorkbenchSparseOutputs:
     """
+    convert-matrix4-to-workbench-sparse
+    
     Convert a 3-file matrix4 to a workbench sparse file.
     
     Converts the matrix 4 output of probtrackx to workbench sparse file format.

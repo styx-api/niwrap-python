@@ -157,6 +157,8 @@ def read_matlab_files_py_execute(
     runner: Runner | None = None,
 ) -> ReadMatlabFilesPyOutputs:
     """
+    read_matlab_files.py
+    
     Describe or convert MATLAB files (.mat) to 1D format.
     
     Author: AFNI Developers
@@ -188,6 +190,8 @@ def read_matlab_files_py(
     runner: Runner | None = None,
 ) -> ReadMatlabFilesPyOutputs:
     """
+    read_matlab_files.py
+    
     Describe or convert MATLAB files (.mat) to 1D format.
     
     Author: AFNI Developers

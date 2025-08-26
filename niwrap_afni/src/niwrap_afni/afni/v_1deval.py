@@ -198,8 +198,10 @@ def v_1deval_execute(
     runner: Runner | None = None,
 ) -> V1devalOutputs:
     """
-    Evaluates an expression that may include columns of data from one or more text
-    files and writes the result to stdout.
+    1deval
+    
+    Evaluates an expression that may include columns of data from one or more
+    text files and writes the result to stdout.
     
     Author: AFNI Developers
     
@@ -232,8 +234,10 @@ def v_1deval(
     runner: Runner | None = None,
 ) -> V1devalOutputs:
     """
-    Evaluates an expression that may include columns of data from one or more text
-    files and writes the result to stdout.
+    1deval
+    
+    Evaluates an expression that may include columns of data from one or more
+    text files and writes the result to stdout.
     
     Author: AFNI Developers
     

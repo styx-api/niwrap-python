@@ -124,6 +124,8 @@ def v_3drename_execute(
     runner: Runner | None = None,
 ) -> V3drenameOutputs:
     """
+    3drename
+    
     Tool to rename AFNI datasets by changing the dataset prefix.
     
     Author: AFNI Developers
@@ -151,6 +153,8 @@ def v_3drename(
     runner: Runner | None = None,
 ) -> V3drenameOutputs:
     """
+    3drename
+    
     Tool to rename AFNI datasets by changing the dataset prefix.
     
     Author: AFNI Developers

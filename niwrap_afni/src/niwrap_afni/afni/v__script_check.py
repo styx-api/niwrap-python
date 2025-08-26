@@ -142,6 +142,8 @@ def v__script_check_execute(
     runner: Runner | None = None,
 ) -> VScriptCheckOutputs:
     """
+    @ScriptCheck
+    
     Checks scripts for improperly terminated lines and optionally cleans them.
     
     Author: AFNI Developers
@@ -170,6 +172,8 @@ def v__script_check(
     runner: Runner | None = None,
 ) -> VScriptCheckOutputs:
     """
+    @ScriptCheck
+    
     Checks scripts for improperly terminated lines and optionally cleans them.
     
     Author: AFNI Developers

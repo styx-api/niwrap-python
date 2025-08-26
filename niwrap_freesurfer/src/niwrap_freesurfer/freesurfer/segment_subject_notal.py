@@ -119,6 +119,8 @@ def segment_subject_notal_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectNotalOutputs:
     """
+    segment_subject_notal
+    
     A script to segment subjects (notal).
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def segment_subject_notal(
     runner: Runner | None = None,
 ) -> SegmentSubjectNotalOutputs:
     """
+    segment_subject_notal
+    
     A script to segment subjects (notal).
     
     Author: FreeSurfer Developers

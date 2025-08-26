@@ -183,6 +183,8 @@ def long_stats_tps_execute(
     runner: Runner | None = None,
 ) -> LongStatsTpsOutputs:
     """
+    long_stats_tps
+    
     Stack results for individual time points based on longitudinal qdec table.
     
     Author: FreeSurfer Developers
@@ -216,6 +218,8 @@ def long_stats_tps(
     runner: Runner | None = None,
 ) -> LongStatsTpsOutputs:
     """
+    long_stats_tps
+    
     Stack results for individual time points based on longitudinal qdec table.
     
     Author: FreeSurfer Developers

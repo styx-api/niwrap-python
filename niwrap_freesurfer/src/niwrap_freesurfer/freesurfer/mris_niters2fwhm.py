@@ -178,7 +178,10 @@ def mris_niters2fwhm_execute(
     runner: Runner | None = None,
 ) -> MrisNiters2fwhmOutputs:
     """
-    Convert number of iterations to full width at half maximum (FWHM) for surface.
+    mris_niters2fwhm
+    
+    Convert number of iterations to full width at half maximum (FWHM) for
+    surface.
     
     Author: FreeSurfer Developers
     
@@ -212,7 +215,10 @@ def mris_niters2fwhm(
     runner: Runner | None = None,
 ) -> MrisNiters2fwhmOutputs:
     """
-    Convert number of iterations to full width at half maximum (FWHM) for surface.
+    mris_niters2fwhm
+    
+    Convert number of iterations to full width at half maximum (FWHM) for
+    surface.
     
     Author: FreeSurfer Developers
     

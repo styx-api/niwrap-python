@@ -129,6 +129,8 @@ def v__iso_masks_execute(
     runner: Runner | None = None,
 ) -> VIsoMasksOutputs:
     """
+    @IsoMasks
+    
     Creates isosurfaces from isovolume envelopes.
     
     Author: AFNI Developers
@@ -156,6 +158,8 @@ def v__iso_masks(
     runner: Runner | None = None,
 ) -> VIsoMasksOutputs:
     """
+    @IsoMasks
+    
     Creates isosurfaces from isovolume envelopes.
     
     Author: AFNI Developers

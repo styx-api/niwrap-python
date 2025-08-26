@@ -155,9 +155,11 @@ def texture_cooccurrence_features_execute(
     runner: Runner | None = None,
 ) -> TextureCooccurrenceFeaturesOutputs:
     """
+    TextureCooccurrenceFeatures
+    
     Calculates texture co-occurrence features such as Energy, Entropy, Inverse
-    Difference Moment, Inertia, Cluster Shade, and Cluster Prominence from an input
-    image.
+    Difference Moment, Inertia, Cluster Shade, and Cluster Prominence from an
+    input image.
     
     Author: ANTs Developers
     
@@ -187,9 +189,11 @@ def texture_cooccurrence_features(
     runner: Runner | None = None,
 ) -> TextureCooccurrenceFeaturesOutputs:
     """
+    TextureCooccurrenceFeatures
+    
     Calculates texture co-occurrence features such as Energy, Entropy, Inverse
-    Difference Moment, Inertia, Cluster Shade, and Cluster Prominence from an input
-    image.
+    Difference Moment, Inertia, Cluster Shade, and Cluster Prominence from an
+    input image.
     
     Author: ANTs Developers
     

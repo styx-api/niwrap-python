@@ -125,6 +125,8 @@ def v__clust_exp_run_shiny_execute(
     runner: Runner | None = None,
 ) -> VClustExpRunShinyOutputs:
     """
+    @ClustExp_run_shiny
+    
     Launch a shiny app that was created by ClustExp_StatParse.py.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def v__clust_exp_run_shiny(
     runner: Runner | None = None,
 ) -> VClustExpRunShinyOutputs:
     """
+    @ClustExp_run_shiny
+    
     Launch a shiny app that was created by ClustExp_StatParse.py.
     
     Author: AFNI Developers

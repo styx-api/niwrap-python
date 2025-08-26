@@ -177,7 +177,10 @@ def mri_cnr_execute(
     runner: Runner | None = None,
 ) -> MriCnrOutputs:
     """
-    Compute the gray/white/csf contrast-to-noise ratio for volumes using FreeSurfer.
+    mri_cnr
+    
+    Compute the gray/white/csf contrast-to-noise ratio for volumes using
+    FreeSurfer.
     
     Author: FreeSurfer Developers
     
@@ -210,7 +213,10 @@ def mri_cnr(
     runner: Runner | None = None,
 ) -> MriCnrOutputs:
     """
-    Compute the gray/white/csf contrast-to-noise ratio for volumes using FreeSurfer.
+    mri_cnr
+    
+    Compute the gray/white/csf contrast-to-noise ratio for volumes using
+    FreeSurfer.
     
     Author: FreeSurfer Developers
     

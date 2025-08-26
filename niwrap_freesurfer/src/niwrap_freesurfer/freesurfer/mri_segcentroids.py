@@ -176,6 +176,8 @@ def mri_segcentroids_execute(
     runner: Runner | None = None,
 ) -> MriSegcentroidsOutputs:
     """
+    mri_segcentroids
+    
     Computes the center of mass for individual structures in a segmentation.
     
     Author: FreeSurfer Developers
@@ -208,6 +210,8 @@ def mri_segcentroids(
     runner: Runner | None = None,
 ) -> MriSegcentroidsOutputs:
     """
+    mri_segcentroids
+    
     Computes the center of mass for individual structures in a segmentation.
     
     Author: FreeSurfer Developers

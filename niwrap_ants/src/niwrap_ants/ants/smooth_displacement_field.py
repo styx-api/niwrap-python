@@ -173,9 +173,11 @@ def smooth_displacement_field_execute(
     runner: Runner | None = None,
 ) -> SmoothDisplacementFieldOutputs:
     """
+    SmoothDisplacementField
+    
     SmoothDisplacementField applies smoothing to a displacement field over a
-    specified number of levels with optional parameters for spline order, inverse
-    estimation, and confidence image output.
+    specified number of levels with optional parameters for spline order,
+    inverse estimation, and confidence image output.
     
     Author: ANTs Developers
     
@@ -208,9 +210,11 @@ def smooth_displacement_field(
     runner: Runner | None = None,
 ) -> SmoothDisplacementFieldOutputs:
     """
+    SmoothDisplacementField
+    
     SmoothDisplacementField applies smoothing to a displacement field over a
-    specified number of levels with optional parameters for spline order, inverse
-    estimation, and confidence image output.
+    specified number of levels with optional parameters for spline order,
+    inverse estimation, and confidence image output.
     
     Author: ANTs Developers
     

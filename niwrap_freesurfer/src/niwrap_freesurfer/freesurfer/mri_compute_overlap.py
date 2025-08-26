@@ -197,7 +197,10 @@ def mri_compute_overlap_execute(
     runner: Runner | None = None,
 ) -> MriComputeOverlapOutputs:
     """
-    Computes three different types of overlap measures for labels in input volumes.
+    mri_compute_overlap
+    
+    Computes three different types of overlap measures for labels in input
+    volumes.
     
     Author: FreeSurfer Developers
     
@@ -233,7 +236,10 @@ def mri_compute_overlap(
     runner: Runner | None = None,
 ) -> MriComputeOverlapOutputs:
     """
-    Computes three different types of overlap measures for labels in input volumes.
+    mri_compute_overlap
+    
+    Computes three different types of overlap measures for labels in input
+    volumes.
     
     Author: FreeSurfer Developers
     

@@ -139,6 +139,8 @@ def mri_fuse_intensity_images_execute(
     runner: Runner | None = None,
 ) -> MriFuseIntensityImagesOutputs:
     """
+    mri_fuse_intensity_images
+    
     Fuses intensity images based on given transforms.
     
     Author: FreeSurfer Developers
@@ -168,6 +170,8 @@ def mri_fuse_intensity_images(
     runner: Runner | None = None,
 ) -> MriFuseIntensityImagesOutputs:
     """
+    mri_fuse_intensity_images
+    
     Fuses intensity images based on given transforms.
     
     Author: FreeSurfer Developers

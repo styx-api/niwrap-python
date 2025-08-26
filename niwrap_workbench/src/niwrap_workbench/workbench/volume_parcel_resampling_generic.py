@@ -168,6 +168,8 @@ def volume_parcel_resampling_generic_execute(
     runner: Runner | None = None,
 ) -> VolumeParcelResamplingGenericOutputs:
     """
+    volume-parcel-resampling-generic
+    
     Smooth and resample volume parcels from different volume space.
     
     Smooths and resamples the region inside each label in cur-parcels to the
@@ -211,6 +213,8 @@ def volume_parcel_resampling_generic(
     runner: Runner | None = None,
 ) -> VolumeParcelResamplingGenericOutputs:
     """
+    volume-parcel-resampling-generic
+    
     Smooth and resample volume parcels from different volume space.
     
     Smooths and resamples the region inside each label in cur-parcels to the

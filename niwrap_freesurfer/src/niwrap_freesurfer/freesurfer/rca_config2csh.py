@@ -122,7 +122,10 @@ def rca_config2csh_execute(
     runner: Runner | None = None,
 ) -> RcaConfig2cshOutputs:
     """
-    rca-config2csh is a utility to convert configuration files into C-shell syntax.
+    rca-config2csh
+    
+    rca-config2csh is a utility to convert configuration files into C-shell
+    syntax.
     
     Author: FreeSurfer Developers
     
@@ -148,7 +151,10 @@ def rca_config2csh(
     runner: Runner | None = None,
 ) -> RcaConfig2cshOutputs:
     """
-    rca-config2csh is a utility to convert configuration files into C-shell syntax.
+    rca-config2csh
+    
+    rca-config2csh is a utility to convert configuration files into C-shell
+    syntax.
     
     Author: FreeSurfer Developers
     

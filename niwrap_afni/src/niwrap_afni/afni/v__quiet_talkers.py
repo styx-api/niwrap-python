@@ -180,6 +180,8 @@ def v__quiet_talkers_execute(
     runner: Runner | None = None,
 ) -> VQuietTalkersOutputs:
     """
+    @Quiet_Talkers
+    
     A script to find and kill AFNI processes.
     
     Author: AFNI Developers
@@ -213,6 +215,8 @@ def v__quiet_talkers(
     runner: Runner | None = None,
 ) -> VQuietTalkersOutputs:
     """
+    @Quiet_Talkers
+    
     A script to find and kill AFNI processes.
     
     Author: AFNI Developers

@@ -162,7 +162,10 @@ def un_warp_epi_py_execute(
     runner: Runner | None = None,
 ) -> UnWarpEpiPyOutputs:
     """
-    Routine to unwarp EPI data set using another data set with opposite polarity.
+    unWarpEPI.py
+    
+    Routine to unwarp EPI data set using another data set with opposite
+    polarity.
     
     Author: AFNI Developers
     
@@ -193,7 +196,10 @@ def un_warp_epi_py(
     runner: Runner | None = None,
 ) -> UnWarpEpiPyOutputs:
     """
-    Routine to unwarp EPI data set using another data set with opposite polarity.
+    unWarpEPI.py
+    
+    Routine to unwarp EPI data set using another data set with opposite
+    polarity.
     
     Author: AFNI Developers
     

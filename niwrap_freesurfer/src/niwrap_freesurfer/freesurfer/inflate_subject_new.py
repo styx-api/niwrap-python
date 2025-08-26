@@ -119,6 +119,8 @@ def inflate_subject_new_execute(
     runner: Runner | None = None,
 ) -> InflateSubjectNewOutputs:
     """
+    inflate_subject_new
+    
     Tool to inflate subject surfaces.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def inflate_subject_new(
     runner: Runner | None = None,
 ) -> InflateSubjectNewOutputs:
     """
+    inflate_subject_new
+    
     Tool to inflate subject surfaces.
     
     Author: FreeSurfer Developers

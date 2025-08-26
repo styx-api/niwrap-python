@@ -196,6 +196,8 @@ def tbss_skeleton_execute(
     runner: Runner | None = None,
 ) -> TbssSkeletonOutputs:
     """
+    tbss_skeleton
+    
     A tool for defining a 'skeleton' of white matter tracts in the brain to help
     compare them across subjects.
     
@@ -229,6 +231,8 @@ def tbss_skeleton(
     runner: Runner | None = None,
 ) -> TbssSkeletonOutputs:
     """
+    tbss_skeleton
+    
     A tool for defining a 'skeleton' of white matter tracts in the brain to help
     compare them across subjects.
     

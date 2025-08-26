@@ -272,8 +272,10 @@ def mrmath_execute(
     runner: Runner | None = None,
 ) -> MrmathOutputs:
     """
-    Compute summary statistic on image intensities either across images, or along a
-    specified axis of a single image.
+    mrmath
+    
+    Compute summary statistic on image intensities either across images, or
+    along a specified axis of a single image.
     
     Supported operations are:
     
@@ -329,8 +331,10 @@ def mrmath(
     runner: Runner | None = None,
 ) -> MrmathOutputs:
     """
-    Compute summary statistic on image intensities either across images, or along a
-    specified axis of a single image.
+    mrmath
+    
+    Compute summary statistic on image intensities either across images, or
+    along a specified axis of a single image.
     
     Supported operations are:
     

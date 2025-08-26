@@ -220,8 +220,10 @@ def fat_proc_map_to_dti_execute(
     runner: Runner | None = None,
 ) -> FatProcMapToDtiOutputs:
     """
-    A program for mapping data sets into DWI space, suitable for aligning anatomical
-    ROI maps or EPI data to a DWI reference volume.
+    fat_proc_map_to_dti
+    
+    A program for mapping data sets into DWI space, suitable for aligning
+    anatomical ROI maps or EPI data to a DWI reference volume.
     
     Author: AFNI Developers
     
@@ -258,8 +260,10 @@ def fat_proc_map_to_dti(
     runner: Runner | None = None,
 ) -> FatProcMapToDtiOutputs:
     """
-    A program for mapping data sets into DWI space, suitable for aligning anatomical
-    ROI maps or EPI data to a DWI reference volume.
+    fat_proc_map_to_dti
+    
+    A program for mapping data sets into DWI space, suitable for aligning
+    anatomical ROI maps or EPI data to a DWI reference volume.
     
     Author: AFNI Developers
     

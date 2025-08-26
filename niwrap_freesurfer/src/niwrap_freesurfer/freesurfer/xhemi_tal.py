@@ -122,6 +122,8 @@ def xhemi_tal_execute(
     runner: Runner | None = None,
 ) -> XhemiTalOutputs:
     """
+    xhemi-tal
+    
     Computes the talairach.xfm for xhemi based on the original (unflipped)
     talairach.xfm.
     
@@ -149,6 +151,8 @@ def xhemi_tal(
     runner: Runner | None = None,
 ) -> XhemiTalOutputs:
     """
+    xhemi-tal
+    
     Computes the talairach.xfm for xhemi based on the original (unflipped)
     talairach.xfm.
     

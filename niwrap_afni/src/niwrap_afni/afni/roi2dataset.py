@@ -218,6 +218,8 @@ def roi2dataset_execute(
     runner: Runner | None = None,
 ) -> Roi2datasetOutputs:
     """
+    ROI2dataset
+    
     Transforms a series of ROI files to a node dataset.
     
     Author: AFNI Developers
@@ -254,6 +256,8 @@ def roi2dataset(
     runner: Runner | None = None,
 ) -> Roi2datasetOutputs:
     """
+    ROI2dataset
+    
     Transforms a series of ROI files to a node dataset.
     
     Author: AFNI Developers

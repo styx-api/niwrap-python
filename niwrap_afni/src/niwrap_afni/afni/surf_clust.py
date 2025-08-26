@@ -431,6 +431,8 @@ def surf_clust_execute(
     runner: Runner | None = None,
 ) -> SurfClustOutputs:
     """
+    SurfClust
+    
     A program to perform clustering analysis surfaces.
     
     Author: AFNI Developers
@@ -495,6 +497,8 @@ def surf_clust(
     runner: Runner | None = None,
 ) -> SurfClustOutputs:
     """
+    SurfClust
+    
     A program to perform clustering analysis surfaces.
     
     Author: AFNI Developers

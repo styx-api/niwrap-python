@@ -171,6 +171,8 @@ def mris_expand_execute(
     runner: Runner | None = None,
 ) -> MrisExpandOutputs:
     """
+    mris_expand
+    
     Expand a given surface by a specified distance.
     
     Author: FreeSurfer Developers
@@ -203,6 +205,8 @@ def mris_expand(
     runner: Runner | None = None,
 ) -> MrisExpandOutputs:
     """
+    mris_expand
+    
     Expand a given surface by a specified distance.
     
     Author: FreeSurfer Developers

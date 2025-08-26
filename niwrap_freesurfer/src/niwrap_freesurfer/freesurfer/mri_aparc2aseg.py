@@ -288,6 +288,8 @@ def mri_aparc2aseg_execute(
     runner: Runner | None = None,
 ) -> MriAparc2asegOutputs:
     """
+    mri_aparc2aseg
+    
     Maps the cortical labels from the automatic cortical parcellation to the
     automatic segmentation volume.
     
@@ -335,6 +337,8 @@ def mri_aparc2aseg(
     runner: Runner | None = None,
 ) -> MriAparc2asegOutputs:
     """
+    mri_aparc2aseg
+    
     Maps the cortical labels from the automatic cortical parcellation to the
     automatic segmentation volume.
     

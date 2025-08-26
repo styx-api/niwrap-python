@@ -212,9 +212,11 @@ def mri_stopmask_execute(
     runner: Runner | None = None,
 ) -> MriStopmaskOutputs:
     """
-    This program creates a mask used to stop the search for the maximum gradient in
-    mris_place_surface, preventing the surface from wandering into areas it should
-    not.
+    mri_stopmask
+    
+    This program creates a mask used to stop the search for the maximum gradient
+    in mris_place_surface, preventing the surface from wandering into areas it
+    should not.
     
     Author: FreeSurfer Developers
     
@@ -251,9 +253,11 @@ def mri_stopmask(
     runner: Runner | None = None,
 ) -> MriStopmaskOutputs:
     """
-    This program creates a mask used to stop the search for the maximum gradient in
-    mris_place_surface, preventing the surface from wandering into areas it should
-    not.
+    mri_stopmask
+    
+    This program creates a mask used to stop the search for the maximum gradient
+    in mris_place_surface, preventing the surface from wandering into areas it
+    should not.
     
     Author: FreeSurfer Developers
     

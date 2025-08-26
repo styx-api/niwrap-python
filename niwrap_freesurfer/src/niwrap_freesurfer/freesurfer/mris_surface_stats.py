@@ -253,8 +253,10 @@ def mris_surface_stats_execute(
     runner: Runner | None = None,
 ) -> MrisSurfaceStatsOutputs:
     """
-    Computes the group-wise mean and standard deviation of thickness differences at
-    every vertex of the template surface.
+    mris_surface_stats
+    
+    Computes the group-wise mean and standard deviation of thickness differences
+    at every vertex of the template surface.
     
     Author: FreeSurfer Developers
     
@@ -292,8 +294,10 @@ def mris_surface_stats(
     runner: Runner | None = None,
 ) -> MrisSurfaceStatsOutputs:
     """
-    Computes the group-wise mean and standard deviation of thickness differences at
-    every vertex of the template surface.
+    mris_surface_stats
+    
+    Computes the group-wise mean and standard deviation of thickness differences
+    at every vertex of the template surface.
     
     Author: FreeSurfer Developers
     

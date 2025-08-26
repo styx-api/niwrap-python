@@ -238,8 +238,10 @@ def fsl_mvlm_execute(
     runner: Runner | None = None,
 ) -> FslMvlmOutputs:
     """
-    Multivariate Linear Model regression on time courses and/or 3D/4D images using
-    SVD (PCA), PLS, normalised PLS, CVA, SVD-CVA or MLM.
+    fsl_mvlm
+    
+    Multivariate Linear Model regression on time courses and/or 3D/4D images
+    using SVD (PCA), PLS, normalised PLS, CVA, SVD-CVA or MLM.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -277,8 +279,10 @@ def fsl_mvlm(
     runner: Runner | None = None,
 ) -> FslMvlmOutputs:
     """
-    Multivariate Linear Model regression on time courses and/or 3D/4D images using
-    SVD (PCA), PLS, normalised PLS, CVA, SVD-CVA or MLM.
+    fsl_mvlm
+    
+    Multivariate Linear Model regression on time courses and/or 3D/4D images
+    using SVD (PCA), PLS, normalised PLS, CVA, SVD-CVA or MLM.
     
     Author: FMRIB Analysis Group, University of Oxford
     

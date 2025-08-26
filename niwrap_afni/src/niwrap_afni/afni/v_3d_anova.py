@@ -266,6 +266,8 @@ def v_3d_anova_execute(
     runner: Runner | None = None,
 ) -> V3dAnovaOutputs:
     """
+    3dANOVA
+    
     Performs single-factor Analysis of Variance (ANOVA) on 3D datasets.
     
     Author: AFNI Developers
@@ -305,6 +307,8 @@ def v_3d_anova(
     runner: Runner | None = None,
 ) -> V3dAnovaOutputs:
     """
+    3dANOVA
+    
     Performs single-factor Analysis of Variance (ANOVA) on 3D datasets.
     
     Author: AFNI Developers

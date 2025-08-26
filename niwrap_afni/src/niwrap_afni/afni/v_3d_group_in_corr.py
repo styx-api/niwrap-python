@@ -343,6 +343,8 @@ def v_3d_group_in_corr_execute(
     runner: Runner | None = None,
 ) -> V3dGroupInCorrOutputs:
     """
+    3dGroupInCorr
+    
     Functional connectivity analysis in group of subjects.
     
     Author: AFNI Developers
@@ -396,6 +398,8 @@ def v_3d_group_in_corr(
     runner: Runner | None = None,
 ) -> V3dGroupInCorrOutputs:
     """
+    3dGroupInCorr
+    
     Functional connectivity analysis in group of subjects.
     
     Author: AFNI Developers

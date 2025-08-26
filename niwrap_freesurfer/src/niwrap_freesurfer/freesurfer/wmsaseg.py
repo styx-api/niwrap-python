@@ -201,6 +201,8 @@ def wmsaseg_execute(
     runner: Runner | None = None,
 ) -> WmsasegOutputs:
     """
+    wmsaseg
+    
     White Matter Hyperintensity Segmentation Tool.
     
     Author: FreeSurfer Developers
@@ -237,6 +239,8 @@ def wmsaseg(
     runner: Runner | None = None,
 ) -> WmsasegOutputs:
     """
+    wmsaseg
+    
     White Matter Hyperintensity Segmentation Tool.
     
     Author: FreeSurfer Developers

@@ -176,8 +176,10 @@ def v_1d_correlate_execute(
     runner: Runner | None = None,
 ) -> V1dCorrelateOutputs:
     """
-    1dCorrelate calculates the correlation coefficients between columns of input 1D
-    files along with confidence intervals via a bootstrap procedure.
+    1dCorrelate
+    
+    1dCorrelate calculates the correlation coefficients between columns of input
+    1D files along with confidence intervals via a bootstrap procedure.
     
     Author: AFNI Developers
     
@@ -211,8 +213,10 @@ def v_1d_correlate(
     runner: Runner | None = None,
 ) -> V1dCorrelateOutputs:
     """
-    1dCorrelate calculates the correlation coefficients between columns of input 1D
-    files along with confidence intervals via a bootstrap procedure.
+    1dCorrelate
+    
+    1dCorrelate calculates the correlation coefficients between columns of input
+    1D files along with confidence intervals via a bootstrap procedure.
     
     Author: AFNI Developers
     

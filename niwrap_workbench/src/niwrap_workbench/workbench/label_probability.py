@@ -138,6 +138,8 @@ def label_probability_execute(
     runner: Runner | None = None,
 ) -> LabelProbabilityOutputs:
     """
+    label-probability
+    
     Find frequency of surface labels.
     
     This command outputs a set of soft ROIs, one for each label in the input,
@@ -170,6 +172,8 @@ def label_probability(
     runner: Runner | None = None,
 ) -> LabelProbabilityOutputs:
     """
+    label-probability
+    
     Find frequency of surface labels.
     
     This command outputs a set of soft ROIs, one for each label in the input,

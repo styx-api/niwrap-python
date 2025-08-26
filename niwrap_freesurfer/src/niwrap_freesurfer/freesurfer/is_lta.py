@@ -134,8 +134,10 @@ def is_lta_execute(
     runner: Runner | None = None,
 ) -> IsLtaOutputs:
     """
-    Determines if a given file is an LTA (Linear Transform Array) file. Outputs 1 if
-    true, otherwise outputs 0.
+    IsLTA
+    
+    Determines if a given file is an LTA (Linear Transform Array) file. Outputs
+    1 if true, otherwise outputs 0.
     
     Author: FreeSurfer Developers
     
@@ -162,8 +164,10 @@ def is_lta(
     runner: Runner | None = None,
 ) -> IsLtaOutputs:
     """
-    Determines if a given file is an LTA (Linear Transform Array) file. Outputs 1 if
-    true, otherwise outputs 0.
+    IsLTA
+    
+    Determines if a given file is an LTA (Linear Transform Array) file. Outputs
+    1 if true, otherwise outputs 0.
     
     Author: FreeSurfer Developers
     

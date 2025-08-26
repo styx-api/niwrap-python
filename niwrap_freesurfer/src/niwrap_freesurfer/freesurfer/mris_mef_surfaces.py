@@ -155,10 +155,12 @@ def mris_mef_surfaces_execute(
     runner: Runner | None = None,
 ) -> MrisMefSurfacesOutputs:
     """
-    Positions the tessellation of the cortical surface at the white matter surface,
-    then the gray matter surface and generates surface files for these surfaces.
-    Also generates 'curvature' file for cortical thickness and a surface file
-    approximating layer IV of the cortical sheet.
+    mris_mef_surfaces
+    
+    Positions the tessellation of the cortical surface at the white matter
+    surface, then the gray matter surface and generates surface files for these
+    surfaces. Also generates 'curvature' file for cortical thickness and a
+    surface file approximating layer IV of the cortical sheet.
     
     Author: FreeSurfer Developers
     
@@ -189,10 +191,12 @@ def mris_mef_surfaces(
     runner: Runner | None = None,
 ) -> MrisMefSurfacesOutputs:
     """
-    Positions the tessellation of the cortical surface at the white matter surface,
-    then the gray matter surface and generates surface files for these surfaces.
-    Also generates 'curvature' file for cortical thickness and a surface file
-    approximating layer IV of the cortical sheet.
+    mris_mef_surfaces
+    
+    Positions the tessellation of the cortical surface at the white matter
+    surface, then the gray matter surface and generates surface files for these
+    surfaces. Also generates 'curvature' file for cortical thickness and a
+    surface file approximating layer IV of the cortical sheet.
     
     Author: FreeSurfer Developers
     

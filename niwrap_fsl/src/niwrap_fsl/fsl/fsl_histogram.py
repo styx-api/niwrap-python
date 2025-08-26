@@ -360,6 +360,8 @@ def fsl_histogram_execute(
     runner: Runner | None = None,
 ) -> FslHistogramOutputs:
     """
+    fsl_histogram
+    
     Histogram plotting tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -410,6 +412,8 @@ def fsl_histogram(
     runner: Runner | None = None,
 ) -> FslHistogramOutputs:
     """
+    fsl_histogram
+    
     Histogram plotting tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

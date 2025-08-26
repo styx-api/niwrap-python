@@ -289,6 +289,8 @@ def mrdegibbs_execute(
     runner: Runner | None = None,
 ) -> MrdegibbsOutputs:
     """
+    mrdegibbs
+    
     Remove Gibbs Ringing Artifacts.
     
     This application attempts to remove Gibbs ringing artefacts from MRI images
@@ -353,6 +355,8 @@ def mrdegibbs(
     runner: Runner | None = None,
 ) -> MrdegibbsOutputs:
     """
+    mrdegibbs
+    
     Remove Gibbs Ringing Artifacts.
     
     This application attempts to remove Gibbs ringing artefacts from MRI images

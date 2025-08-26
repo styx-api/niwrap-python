@@ -477,6 +477,8 @@ def eddy_cuda10_2_execute(
     runner: Runner | None = None,
 ) -> EddyCuda102Outputs:
     """
+    eddy_cuda10.2
+    
     A tool for correcting eddy currents and movements in diffusion data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -546,6 +548,8 @@ def eddy_cuda10_2(
     runner: Runner | None = None,
 ) -> EddyCuda102Outputs:
     """
+    eddy_cuda10.2
+    
     A tool for correcting eddy currents and movements in diffusion data.
     
     Author: FMRIB Analysis Group, University of Oxford

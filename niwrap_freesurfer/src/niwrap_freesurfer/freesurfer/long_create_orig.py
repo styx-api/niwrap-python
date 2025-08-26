@@ -131,6 +131,8 @@ def long_create_orig_execute(
     runner: Runner | None = None,
 ) -> LongCreateOrigOutputs:
     """
+    long_create_orig
+    
     Maps, conforms and averages (motioncorrect) raw inputs from cross-sectional
     directory to base space in Freesurfer.
     
@@ -159,6 +161,8 @@ def long_create_orig(
     runner: Runner | None = None,
 ) -> LongCreateOrigOutputs:
     """
+    long_create_orig
+    
     Maps, conforms and averages (motioncorrect) raw inputs from cross-sectional
     directory to base space in Freesurfer.
     

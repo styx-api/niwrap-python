@@ -125,6 +125,8 @@ def v_2swap_execute(
     runner: Runner | None = None,
 ) -> V2swapOutputs:
     """
+    2swap
+    
     Swaps byte pairs on the files listed.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def v_2swap(
     runner: Runner | None = None,
 ) -> V2swapOutputs:
     """
+    2swap
+    
     Swaps byte pairs on the files listed.
     
     Author: AFNI Developers

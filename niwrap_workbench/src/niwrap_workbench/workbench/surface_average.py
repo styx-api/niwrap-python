@@ -215,6 +215,8 @@ def surface_average_execute(
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
     """
+    surface-average
+    
     Average surface files together.
     
     The 3D sample standard deviation is computed as 'sqrt(sum(squaredlength(xyz
@@ -253,6 +255,8 @@ def surface_average(
     runner: Runner | None = None,
 ) -> SurfaceAverageOutputs:
     """
+    surface-average
+    
     Average surface files together.
     
     The 3D sample standard deviation is computed as 'sqrt(sum(squaredlength(xyz

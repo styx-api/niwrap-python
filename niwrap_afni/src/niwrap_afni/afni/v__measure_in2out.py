@@ -259,6 +259,8 @@ def v__measure_in2out_execute(
     runner: Runner | None = None,
 ) -> VMeasureIn2outOutputs:
     """
+    @measure_in2out
+    
     Compute thickness of mask using in2out method.
     
     Author: AFNI Developers
@@ -296,6 +298,8 @@ def v__measure_in2out(
     runner: Runner | None = None,
 ) -> VMeasureIn2outOutputs:
     """
+    @measure_in2out
+    
     Compute thickness of mask using in2out method.
     
     Author: AFNI Developers

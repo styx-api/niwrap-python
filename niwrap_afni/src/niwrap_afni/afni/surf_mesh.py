@@ -181,6 +181,8 @@ def surf_mesh_execute(
     runner: Runner | None = None,
 ) -> SurfMeshOutputs:
     """
+    SurfMesh
+    
     Surface mesh manipulation tool.
     
     Author: AFNI Developers
@@ -214,6 +216,8 @@ def surf_mesh(
     runner: Runner | None = None,
 ) -> SurfMeshOutputs:
     """
+    SurfMesh
+    
     Surface mesh manipulation tool.
     
     Author: AFNI Developers

@@ -255,6 +255,8 @@ def v_3d_unifize_execute(
     runner: Runner | None = None,
 ) -> V3dUnifizeOutputs:
     """
+    3dUnifize
+    
     3dUnifize - for uniformizing image intensity
     * The input dataset is supposed to be a T1-weighted volume, possibly already
     skull-stripped (e.g., via 3dSkullStrip). However, this program can be a
@@ -311,6 +313,8 @@ def v_3d_unifize(
     runner: Runner | None = None,
 ) -> V3dUnifizeOutputs:
     """
+    3dUnifize
+    
     3dUnifize - for uniformizing image intensity
     * The input dataset is supposed to be a T1-weighted volume, possibly already
     skull-stripped (e.g., via 3dSkullStrip). However, this program can be a

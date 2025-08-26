@@ -187,8 +187,10 @@ def aseg2feat_execute(
     runner: Runner | None = None,
 ) -> Aseg2featOutputs:
     """
-    Resamples the FreeSurfer automatic subcortical segmentation (aseg) to the FEAT
-    functional space.
+    aseg2feat
+    
+    Resamples the FreeSurfer automatic subcortical segmentation (aseg) to the
+    FEAT functional space.
     
     Author: FreeSurfer Developers
     
@@ -222,8 +224,10 @@ def aseg2feat(
     runner: Runner | None = None,
 ) -> Aseg2featOutputs:
     """
-    Resamples the FreeSurfer automatic subcortical segmentation (aseg) to the FEAT
-    functional space.
+    aseg2feat
+    
+    Resamples the FreeSurfer automatic subcortical segmentation (aseg) to the
+    FEAT functional space.
     
     Author: FreeSurfer Developers
     

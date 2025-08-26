@@ -192,6 +192,8 @@ def fslcreatehd_execute(
     runner: Runner | None = None,
 ) -> FslcreatehdOutputs:
     """
+    fslcreatehd
+    
     Tool to create a new NIfTI header.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -231,6 +233,8 @@ def fslcreatehd(
     runner: Runner | None = None,
 ) -> FslcreatehdOutputs:
     """
+    fslcreatehd
+    
     Tool to create a new NIfTI header.
     
     Author: FMRIB Analysis Group, University of Oxford

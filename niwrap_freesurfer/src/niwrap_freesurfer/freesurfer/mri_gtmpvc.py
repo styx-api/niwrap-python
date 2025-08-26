@@ -632,6 +632,8 @@ def mri_gtmpvc_execute(
     runner: Runner | None = None,
 ) -> MriGtmpvcOutputs:
     """
+    mri_gtmpvc
+    
     mri_gtmpvc performs partial volume correction on PET data using anatomical
     segmentation.
     
@@ -720,6 +722,8 @@ def mri_gtmpvc(
     runner: Runner | None = None,
 ) -> MriGtmpvcOutputs:
     """
+    mri_gtmpvc
+    
     mri_gtmpvc performs partial volume correction on PET data using anatomical
     segmentation.
     

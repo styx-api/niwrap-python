@@ -132,6 +132,8 @@ def v__vol_center_execute(
     runner: Runner | None = None,
 ) -> VVolCenterOutputs:
     """
+    @VolCenter
+    
     Tool to return the center of volume for a given dataset.
     
     Author: AFNI Developers
@@ -159,6 +161,8 @@ def v__vol_center(
     runner: Runner | None = None,
 ) -> VVolCenterOutputs:
     """
+    @VolCenter
+    
     Tool to return the center of volume for a given dataset.
     
     Author: AFNI Developers

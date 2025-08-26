@@ -129,6 +129,8 @@ def surface_coordinates_to_metric_execute(
     runner: Runner | None = None,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
+    surface-coordinates-to-metric
+    
     Make metric file of surface coordinates.
     
     Puts the coordinates of the surface into a 3-map metric file, as x, y, z.
@@ -158,6 +160,8 @@ def surface_coordinates_to_metric(
     runner: Runner | None = None,
 ) -> SurfaceCoordinatesToMetricOutputs:
     """
+    surface-coordinates-to-metric
+    
     Make metric file of surface coordinates.
     
     Puts the coordinates of the surface into a 3-map metric file, as x, y, z.

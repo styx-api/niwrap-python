@@ -375,6 +375,8 @@ def mris_fwhm_execute(
     runner: Runner | None = None,
 ) -> MrisFwhmOutputs:
     """
+    mris_fwhm
+    
     Smooths surface data and/or estimates FWHM.
     
     Author: FreeSurfer Developers
@@ -431,6 +433,8 @@ def mris_fwhm(
     runner: Runner | None = None,
 ) -> MrisFwhmOutputs:
     """
+    mris_fwhm
+    
     Smooths surface data and/or estimates FWHM.
     
     Author: FreeSurfer Developers

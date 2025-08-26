@@ -325,6 +325,8 @@ def mris_sample_parc_execute(
     runner: Runner | None = None,
 ) -> MrisSampleParcOutputs:
     """
+    mris_sample_parc
+    
     This program samples a volumetric parcellation onto a surface.
     
     Author: FreeSurfer Developers
@@ -373,6 +375,8 @@ def mris_sample_parc(
     runner: Runner | None = None,
 ) -> MrisSampleParcOutputs:
     """
+    mris_sample_parc
+    
     This program samples a volumetric parcellation onto a surface.
     
     Author: FreeSurfer Developers

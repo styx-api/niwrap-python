@@ -242,6 +242,8 @@ def labelstats_execute(
     runner: Runner | None = None,
 ) -> LabelstatsOutputs:
     """
+    labelstats
+    
     Compute statistics of parcels within a label image.
     
     
@@ -284,6 +286,8 @@ def labelstats(
     runner: Runner | None = None,
 ) -> LabelstatsOutputs:
     """
+    labelstats
+    
     Compute statistics of parcels within a label image.
     
     

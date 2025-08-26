@@ -119,6 +119,8 @@ def getfullpath_execute(
     runner: Runner | None = None,
 ) -> GetfullpathOutputs:
     """
+    getfullpath
+    
     A utility to retrieve the full path of a specified file or directory.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def getfullpath(
     runner: Runner | None = None,
 ) -> GetfullpathOutputs:
     """
+    getfullpath
+    
     A utility to retrieve the full path of a specified file or directory.
     
     Author: FreeSurfer Developers

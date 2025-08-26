@@ -364,6 +364,8 @@ def pulse_execute(
     runner: Runner | None = None,
 ) -> PulseOutputs:
     """
+    pulse
+    
     Generates a pulse sequence matrix for a given digital brain image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -414,6 +416,8 @@ def pulse(
     runner: Runner | None = None,
 ) -> PulseOutputs:
     """
+    pulse
+    
     Generates a pulse sequence matrix for a given digital brain image.
     
     Author: FMRIB Analysis Group, University of Oxford

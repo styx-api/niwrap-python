@@ -194,6 +194,8 @@ def afni_system_check_py_execute(
     runner: Runner | None = None,
 ) -> AfniSystemCheckPyOutputs:
     """
+    afni_system_check.py
+    
     Perform various system checks for figuring out AFNI installation issues.
     
     Author: AFNI Developers
@@ -229,6 +231,8 @@ def afni_system_check_py(
     runner: Runner | None = None,
 ) -> AfniSystemCheckPyOutputs:
     """
+    afni_system_check.py
+    
     Perform various system checks for figuring out AFNI installation issues.
     
     Author: AFNI Developers

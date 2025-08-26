@@ -127,6 +127,8 @@ def ants_transform_info_execute(
     runner: Runner | None = None,
 ) -> AntsTransformInfoOutputs:
     """
+    antsTransformInfo
+    
     Provide information about an ITK transform file.
     
     Author: ANTs Developers
@@ -153,6 +155,8 @@ def ants_transform_info(
     runner: Runner | None = None,
 ) -> AntsTransformInfoOutputs:
     """
+    antsTransformInfo
+    
     Provide information about an ITK transform file.
     
     Author: ANTs Developers

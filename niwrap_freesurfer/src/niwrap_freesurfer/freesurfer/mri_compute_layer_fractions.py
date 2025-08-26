@@ -229,8 +229,10 @@ def mri_compute_layer_fractions_execute(
     runner: Runner | None = None,
 ) -> MriComputeLayerFractionsOutputs:
     """
-    This program computes volumetric partial volume fractions from laminar surfaces
-    using FreeSurfer.
+    mri_compute_layer_fractions
+    
+    This program computes volumetric partial volume fractions from laminar
+    surfaces using FreeSurfer.
     
     Author: FreeSurfer Developers
     
@@ -269,8 +271,10 @@ def mri_compute_layer_fractions(
     runner: Runner | None = None,
 ) -> MriComputeLayerFractionsOutputs:
     """
-    This program computes volumetric partial volume fractions from laminar surfaces
-    using FreeSurfer.
+    mri_compute_layer_fractions
+    
+    This program computes volumetric partial volume fractions from laminar
+    surfaces using FreeSurfer.
     
     Author: FreeSurfer Developers
     

@@ -142,8 +142,10 @@ def v_3d_tfilter_execute(
     runner: Runner | None = None,
 ) -> V3dTfilterOutputs:
     """
-    3dTfilter filters the time series in each voxel according to the user-specified
-    filter functions.
+    3dTfilter
+    
+    3dTfilter filters the time series in each voxel according to the
+    user-specified filter functions.
     
     Author: AFNI Developers
     
@@ -171,8 +173,10 @@ def v_3d_tfilter(
     runner: Runner | None = None,
 ) -> V3dTfilterOutputs:
     """
-    3dTfilter filters the time series in each voxel according to the user-specified
-    filter functions.
+    3dTfilter
+    
+    3dTfilter filters the time series in each voxel according to the
+    user-specified filter functions.
     
     Author: AFNI Developers
     

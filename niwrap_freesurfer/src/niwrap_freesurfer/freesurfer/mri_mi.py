@@ -141,6 +141,8 @@ def mri_mi_execute(
     runner: Runner | None = None,
 ) -> MriMiOutputs:
     """
+    mri_mi
+    
     Computes mutual information (mi) between two input volumes.
     
     Author: FreeSurfer Developers
@@ -170,6 +172,8 @@ def mri_mi(
     runner: Runner | None = None,
 ) -> MriMiOutputs:
     """
+    mri_mi
+    
     Computes mutual information (mi) between two input volumes.
     
     Author: FreeSurfer Developers

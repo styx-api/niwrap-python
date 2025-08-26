@@ -236,8 +236,10 @@ def mris_intensity_profile_execute(
     runner: Runner | None = None,
 ) -> MrisIntensityProfileOutputs:
     """
-    This program computes the intensity profile of the cortical ribbon and writes
-    the resulting measurement into a 'curvature' file.
+    mris_intensity_profile
+    
+    This program computes the intensity profile of the cortical ribbon and
+    writes the resulting measurement into a 'curvature' file.
     
     Author: FreeSurfer Developers
     
@@ -276,8 +278,10 @@ def mris_intensity_profile(
     runner: Runner | None = None,
 ) -> MrisIntensityProfileOutputs:
     """
-    This program computes the intensity profile of the cortical ribbon and writes
-    the resulting measurement into a 'curvature' file.
+    mris_intensity_profile
+    
+    This program computes the intensity profile of the cortical ribbon and
+    writes the resulting measurement into a 'curvature' file.
     
     Author: FreeSurfer Developers
     

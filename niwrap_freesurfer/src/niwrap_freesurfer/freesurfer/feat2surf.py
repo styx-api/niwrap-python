@@ -218,6 +218,8 @@ def feat2surf_execute(
     runner: Runner | None = None,
 ) -> Feat2surfOutputs:
     """
+    feat2surf
+    
     Resamples Feat statistics onto the surface of the subject and onto a
     stereo-taxic surface atlas.
     
@@ -254,6 +256,8 @@ def feat2surf(
     runner: Runner | None = None,
 ) -> Feat2surfOutputs:
     """
+    feat2surf
+    
     Resamples Feat statistics onto the surface of the subject and onto a
     stereo-taxic surface atlas.
     

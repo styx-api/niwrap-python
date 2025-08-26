@@ -124,6 +124,8 @@ def mri_histo_eq_execute(
     runner: Runner | None = None,
 ) -> MriHistoEqOutputs:
     """
+    mri_histo_eq
+    
     MRI histogram equalization tool from Freesurfer.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def mri_histo_eq(
     runner: Runner | None = None,
 ) -> MriHistoEqOutputs:
     """
+    mri_histo_eq
+    
     MRI histogram equalization tool from Freesurfer.
     
     Author: FreeSurfer Developers

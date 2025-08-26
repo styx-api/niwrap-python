@@ -131,6 +131,8 @@ def surface_sphere_triangular_patches_execute(
     runner: Runner | None = None,
 ) -> SurfaceSphereTriangularPatchesOutputs:
     """
+    surface-sphere-triangular-patches
+    
     Divide standard sphere into patches.
     
     Divide the given undistorted sphere into equally-sized triangular patches.
@@ -162,6 +164,8 @@ def surface_sphere_triangular_patches(
     runner: Runner | None = None,
 ) -> SurfaceSphereTriangularPatchesOutputs:
     """
+    surface-sphere-triangular-patches
+    
     Divide standard sphere into patches.
     
     Divide the given undistorted sphere into equally-sized triangular patches.

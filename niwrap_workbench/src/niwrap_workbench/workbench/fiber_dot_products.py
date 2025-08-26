@@ -154,6 +154,8 @@ def fiber_dot_products_execute(
     runner: Runner | None = None,
 ) -> FiberDotProductsOutputs:
     """
+    fiber-dot-products
+    
     Compute dot products of fiber orientations with surface normals.
     
     For each vertex, this command finds the closest fiber population that
@@ -193,6 +195,8 @@ def fiber_dot_products(
     runner: Runner | None = None,
 ) -> FiberDotProductsOutputs:
     """
+    fiber-dot-products
+    
     Compute dot products of fiber orientations with surface normals.
     
     For each vertex, this command finds the closest fiber population that

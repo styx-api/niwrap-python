@@ -187,6 +187,8 @@ def v_1dfft_execute(
     runner: Runner | None = None,
 ) -> V1dfftOutputs:
     """
+    1dfft
+    
     Compute the absolute value of the FFT of input columns from an AFNI 1D file.
     
     Author: AFNI Developers
@@ -221,6 +223,8 @@ def v_1dfft(
     runner: Runner | None = None,
 ) -> V1dfftOutputs:
     """
+    1dfft
+    
     Compute the absolute value of the FFT of input columns from an AFNI 1D file.
     
     Author: AFNI Developers

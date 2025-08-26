@@ -242,7 +242,10 @@ def epi_reg_execute(
     runner: Runner | None = None,
 ) -> EpiRegOutputs:
     """
-    Runs FSL epi_reg script for simultaneous coregistration and fieldmap unwarping.
+    epi_reg
+    
+    Runs FSL epi_reg script for simultaneous coregistration and fieldmap
+    unwarping.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -280,7 +283,10 @@ def epi_reg(
     runner: Runner | None = None,
 ) -> EpiRegOutputs:
     """
-    Runs FSL epi_reg script for simultaneous coregistration and fieldmap unwarping.
+    epi_reg
+    
+    Runs FSL epi_reg script for simultaneous coregistration and fieldmap
+    unwarping.
     
     Author: FMRIB Analysis Group, University of Oxford
     

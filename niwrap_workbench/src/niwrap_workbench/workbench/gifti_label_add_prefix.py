@@ -134,6 +134,8 @@ def gifti_label_add_prefix_execute(
     runner: Runner | None = None,
 ) -> GiftiLabelAddPrefixOutputs:
     """
+    gifti-label-add-prefix
+    
     Add prefix to all label names in a gifti label file.
     
     For each label other than '???', prepend <prefix> to the label name.
@@ -164,6 +166,8 @@ def gifti_label_add_prefix(
     runner: Runner | None = None,
 ) -> GiftiLabelAddPrefixOutputs:
     """
+    gifti-label-add-prefix
+    
     Add prefix to all label names in a gifti label file.
     
     For each label other than '???', prepend <prefix> to the label name.

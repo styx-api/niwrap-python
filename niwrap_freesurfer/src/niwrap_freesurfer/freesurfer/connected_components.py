@@ -141,6 +141,8 @@ def connected_components_execute(
     runner: Runner | None = None,
 ) -> ConnectedComponentsOutputs:
     """
+    connected_components
+    
     A tool for identifying connected components in an image.
     
     Author: FreeSurfer Developers
@@ -169,6 +171,8 @@ def connected_components(
     runner: Runner | None = None,
 ) -> ConnectedComponentsOutputs:
     """
+    connected_components
+    
     A tool for identifying connected components in an image.
     
     Author: FreeSurfer Developers

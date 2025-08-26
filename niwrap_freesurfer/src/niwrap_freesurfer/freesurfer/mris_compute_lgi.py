@@ -171,6 +171,8 @@ def mris_compute_lgi_execute(
     runner: Runner | None = None,
 ) -> MrisComputeLgiOutputs:
     """
+    mris_compute_lgi
+    
     Computes local measurements of gyrification at thousands of points over the
     entire cortical surface.
     
@@ -203,6 +205,8 @@ def mris_compute_lgi(
     runner: Runner | None = None,
 ) -> MrisComputeLgiOutputs:
     """
+    mris_compute_lgi
+    
     Computes local measurements of gyrification at thousands of points over the
     entire cortical surface.
     

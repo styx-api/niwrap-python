@@ -282,6 +282,8 @@ def mri_gtmseg_execute(
     runner: Runner | None = None,
 ) -> MriGtmsegOutputs:
     """
+    mri_gtmseg
+    
     Creates a segmentation that can be used with the geometric transfer matrix
     (GTM).
     
@@ -327,6 +329,8 @@ def mri_gtmseg(
     runner: Runner | None = None,
 ) -> MriGtmsegOutputs:
     """
+    mri_gtmseg
+    
     Creates a segmentation that can be used with the geometric transfer matrix
     (GTM).
     

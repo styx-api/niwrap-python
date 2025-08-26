@@ -173,8 +173,10 @@ def mri_pretess_execute(
     runner: Runner | None = None,
 ) -> MriPretessOutputs:
     """
-    Tool to modify WM segmentation so that all neighbors of WM voxels have a common
-    face.
+    mri_pretess
+    
+    Tool to modify WM segmentation so that all neighbors of WM voxels have a
+    common face.
     
     Author: FreeSurfer Developers
     
@@ -208,8 +210,10 @@ def mri_pretess(
     runner: Runner | None = None,
 ) -> MriPretessOutputs:
     """
-    Tool to modify WM segmentation so that all neighbors of WM voxels have a common
-    face.
+    mri_pretess
+    
+    Tool to modify WM segmentation so that all neighbors of WM voxels have a
+    common face.
     
     Author: FreeSurfer Developers
     

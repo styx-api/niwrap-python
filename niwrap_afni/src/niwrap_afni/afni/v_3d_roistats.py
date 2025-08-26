@@ -256,6 +256,8 @@ def v_3d_roistats_execute(
     runner: Runner | None = None,
 ) -> V3dRoistatsOutputs:
     """
+    3dROIstats
+    
     Display statistics over masked regions.
     
     Author: AFNI Developers
@@ -295,6 +297,8 @@ def v_3d_roistats(
     runner: Runner | None = None,
 ) -> V3dRoistatsOutputs:
     """
+    3dROIstats
+    
     Display statistics over masked regions.
     
     Author: AFNI Developers

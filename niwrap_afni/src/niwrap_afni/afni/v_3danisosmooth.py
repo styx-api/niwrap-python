@@ -315,6 +315,8 @@ def v_3danisosmooth_execute(
     runner: Runner | None = None,
 ) -> V3danisosmoothOutputs:
     """
+    3danisosmooth
+    
     Smooths a dataset using an anisotropic smoothing technique.
     
     Author: AFNI Developers
@@ -362,6 +364,8 @@ def v_3danisosmooth(
     runner: Runner | None = None,
 ) -> V3danisosmoothOutputs:
     """
+    3danisosmooth
+    
     Smooths a dataset using an anisotropic smoothing technique.
     
     Author: AFNI Developers

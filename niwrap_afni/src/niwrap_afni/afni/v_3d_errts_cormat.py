@@ -173,8 +173,10 @@ def v_3d_errts_cormat_execute(
     runner: Runner | None = None,
 ) -> V3dErrtsCormatOutputs:
     """
-    Computes the correlation matrix corresponding to the residual (or error) time
-    series in 'dset'.
+    3dErrtsCormat
+    
+    Computes the correlation matrix corresponding to the residual (or error)
+    time series in 'dset'.
     
     Author: AFNI Developers
     
@@ -205,8 +207,10 @@ def v_3d_errts_cormat(
     runner: Runner | None = None,
 ) -> V3dErrtsCormatOutputs:
     """
-    Computes the correlation matrix corresponding to the residual (or error) time
-    series in 'dset'.
+    3dErrtsCormat
+    
+    Computes the correlation matrix corresponding to the residual (or error)
+    time series in 'dset'.
     
     Author: AFNI Developers
     

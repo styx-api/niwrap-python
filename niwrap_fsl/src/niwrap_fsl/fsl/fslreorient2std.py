@@ -146,8 +146,10 @@ def fslreorient2std_execute(
     runner: Runner | None = None,
 ) -> Fslreorient2stdOutputs:
     """
-    A tool for reorienting an image to match the approximate orientation of standard
-    template images (MNI152).
+    fslreorient2std
+    
+    A tool for reorienting an image to match the approximate orientation of
+    standard template images (MNI152).
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -175,8 +177,10 @@ def fslreorient2std(
     runner: Runner | None = None,
 ) -> Fslreorient2stdOutputs:
     """
-    A tool for reorienting an image to match the approximate orientation of standard
-    template images (MNI152).
+    fslreorient2std
+    
+    A tool for reorienting an image to match the approximate orientation of
+    standard template images (MNI152).
     
     Author: FMRIB Analysis Group, University of Oxford
     

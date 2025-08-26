@@ -167,6 +167,8 @@ def v__fix_fssphere_execute(
     runner: Runner | None = None,
 ) -> VFixFssphereOutputs:
     """
+    @fix_FSsphere
+    
     Tool for fixing errors in FreeSurfer spherical surfaces.
     
     Author: AFNI Developers
@@ -198,6 +200,8 @@ def v__fix_fssphere(
     runner: Runner | None = None,
 ) -> VFixFssphereOutputs:
     """
+    @fix_FSsphere
+    
     Tool for fixing errors in FreeSurfer spherical surfaces.
     
     Author: AFNI Developers

@@ -169,6 +169,8 @@ def surface_geodesic_distance_all_to_all_execute(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
     """
+    surface-geodesic-distance-all-to-all
+    
     Compute geodesic distances from all vertices.
     
     Computes geodesic distance from every vertex to every vertex, outputting a
@@ -220,6 +222,8 @@ def surface_geodesic_distance_all_to_all(
     runner: Runner | None = None,
 ) -> SurfaceGeodesicDistanceAllToAllOutputs:
     """
+    surface-geodesic-distance-all-to-all
+    
     Compute geodesic distances from all vertices.
     
     Computes geodesic distance from every vertex to every vertex, outputting a

@@ -125,6 +125,8 @@ def v_4swap_execute(
     runner: Runner | None = None,
 ) -> V4swapOutputs:
     """
+    4swap
+    
     Swaps byte quadruples on the listed files.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def v_4swap(
     runner: Runner | None = None,
 ) -> V4swapOutputs:
     """
+    4swap
+    
     Swaps byte quadruples on the listed files.
     
     Author: AFNI Developers

@@ -128,6 +128,8 @@ def mris_reverse_execute(
     runner: Runner | None = None,
 ) -> MrisReverseOutputs:
     """
+    mris_reverse
+    
     This tool reverses a cortical surface.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mris_reverse(
     runner: Runner | None = None,
 ) -> MrisReverseOutputs:
     """
+    mris_reverse
+    
     This tool reverses a cortical surface.
     
     Author: FreeSurfer Developers

@@ -282,6 +282,8 @@ def make_average_surface_execute(
     runner: Runner | None = None,
 ) -> MakeAverageSurfaceOutputs:
     """
+    make_average_surface
+    
     Creates average surfaces and curvatures from a set of subjects.
     
     Author: FreeSurfer Developers
@@ -329,6 +331,8 @@ def make_average_surface(
     runner: Runner | None = None,
 ) -> MakeAverageSurfaceOutputs:
     """
+    make_average_surface
+    
     Creates average surfaces and curvatures from a set of subjects.
     
     Author: FreeSurfer Developers

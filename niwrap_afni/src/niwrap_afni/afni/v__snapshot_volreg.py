@@ -143,6 +143,8 @@ def v__snapshot_volreg_execute(
     runner: Runner | None = None,
 ) -> VSnapshotVolregOutputs:
     """
+    @snapshot_volreg
+    
     Create a JPEG image showing the edges of an EPI dataset overlayed on an
     anatomical dataset to judge 3D registration quality.
     
@@ -173,6 +175,8 @@ def v__snapshot_volreg(
     runner: Runner | None = None,
 ) -> VSnapshotVolregOutputs:
     """
+    @snapshot_volreg
+    
     Create a JPEG image showing the edges of an EPI dataset overlayed on an
     anatomical dataset to judge 3D registration quality.
     

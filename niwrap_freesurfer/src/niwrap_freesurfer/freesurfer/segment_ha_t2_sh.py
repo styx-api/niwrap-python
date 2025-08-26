@@ -131,8 +131,10 @@ def segment_ha_t2_sh_execute(
     runner: Runner | None = None,
 ) -> SegmentHaT2ShOutputs:
     """
-    Segments hippocampal and amygdala structures from T2-weighted MRI images using
-    the FreeSurfer suite.
+    segmentHA_T2.sh
+    
+    Segments hippocampal and amygdala structures from T2-weighted MRI images
+    using the FreeSurfer suite.
     
     Author: FreeSurfer Developers
     
@@ -159,8 +161,10 @@ def segment_ha_t2_sh(
     runner: Runner | None = None,
 ) -> SegmentHaT2ShOutputs:
     """
-    Segments hippocampal and amygdala structures from T2-weighted MRI images using
-    the FreeSurfer suite.
+    segmentHA_T2.sh
+    
+    Segments hippocampal and amygdala structures from T2-weighted MRI images
+    using the FreeSurfer suite.
     
     Author: FreeSurfer Developers
     

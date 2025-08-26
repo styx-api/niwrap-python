@@ -233,8 +233,10 @@ def v_3d_tsmooth_execute(
     runner: Runner | None = None,
 ) -> V3dTsmoothOutputs:
     """
-    Smooths each voxel time series in a 3D+time dataset and produces as output a new
-    3D+time dataset (e.g., lowpass filter in time).
+    3dTsmooth
+    
+    Smooths each voxel time series in a 3D+time dataset and produces as output a
+    new 3D+time dataset (e.g., lowpass filter in time).
     
     Author: AFNI Developers
     
@@ -273,8 +275,10 @@ def v_3d_tsmooth(
     runner: Runner | None = None,
 ) -> V3dTsmoothOutputs:
     """
-    Smooths each voxel time series in a 3D+time dataset and produces as output a new
-    3D+time dataset (e.g., lowpass filter in time).
+    3dTsmooth
+    
+    Smooths each voxel time series in a 3D+time dataset and produces as output a
+    new 3D+time dataset (e.g., lowpass filter in time).
     
     Author: AFNI Developers
     

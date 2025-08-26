@@ -170,6 +170,8 @@ def table2map_execute(
     runner: Runner | None = None,
 ) -> Table2mapOutputs:
     """
+    table2map
+    
     A tool to map data from a table onto an output map, optionally using
     segmentation or parcellation files.
     
@@ -202,6 +204,8 @@ def table2map(
     runner: Runner | None = None,
 ) -> Table2mapOutputs:
     """
+    table2map
+    
     A tool to map data from a table onto an output map, optionally using
     segmentation or parcellation files.
     

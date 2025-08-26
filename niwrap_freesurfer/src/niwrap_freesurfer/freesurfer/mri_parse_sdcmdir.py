@@ -151,8 +151,10 @@ def mri_parse_sdcmdir_execute(
     runner: Runner | None = None,
 ) -> MriParseSdcmdirOutputs:
     """
-    This program parses the Siemens DICOM files in a given directory and prints out
-    information about each file.
+    mri_parse_sdcmdir
+    
+    This program parses the Siemens DICOM files in a given directory and prints
+    out information about each file.
     
     Author: FreeSurfer Developers
     
@@ -182,8 +184,10 @@ def mri_parse_sdcmdir(
     runner: Runner | None = None,
 ) -> MriParseSdcmdirOutputs:
     """
-    This program parses the Siemens DICOM files in a given directory and prints out
-    information about each file.
+    mri_parse_sdcmdir
+    
+    This program parses the Siemens DICOM files in a given directory and prints
+    out information about each file.
     
     Author: FreeSurfer Developers
     

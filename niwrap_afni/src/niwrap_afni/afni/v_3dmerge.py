@@ -214,6 +214,8 @@ def v_3dmerge_execute(
     runner: Runner | None = None,
 ) -> V3dmergeOutputs:
     """
+    3dmerge
+    
     3dmerge edits and merges 3D datasets by applying various operations like
     thresholding, blurring, clustering, and more.
     
@@ -252,6 +254,8 @@ def v_3dmerge(
     runner: Runner | None = None,
 ) -> V3dmergeOutputs:
     """
+    3dmerge
+    
     3dmerge edits and merges 3D datasets by applying various operations like
     thresholding, blurring, clustering, and more.
     

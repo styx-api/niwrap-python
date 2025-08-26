@@ -119,6 +119,8 @@ def unpackimadir2_execute(
     runner: Runner | None = None,
 ) -> Unpackimadir2Outputs:
     """
+    unpackimadir2
+    
     Tool to unpack image directories, from FreeSurfer suite.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def unpackimadir2(
     runner: Runner | None = None,
 ) -> Unpackimadir2Outputs:
     """
+    unpackimadir2
+    
     Tool to unpack image directories, from FreeSurfer suite.
     
     Author: FreeSurfer Developers

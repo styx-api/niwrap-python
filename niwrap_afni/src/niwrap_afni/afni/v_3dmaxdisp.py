@@ -142,8 +142,11 @@ def v_3dmaxdisp_execute(
     runner: Runner | None = None,
 ) -> V3dmaxdispOutputs:
     """
-    Reads in a 3D dataset and a DICOM-based affine matrix to output the average and
-    maximum displacement applied to the edge voxels of the 3D dataset's automask.
+    3dmaxdisp
+    
+    Reads in a 3D dataset and a DICOM-based affine matrix to output the average
+    and maximum displacement applied to the edge voxels of the 3D dataset's
+    automask.
     
     Author: AFNI Developers
     
@@ -171,8 +174,11 @@ def v_3dmaxdisp(
     runner: Runner | None = None,
 ) -> V3dmaxdispOutputs:
     """
-    Reads in a 3D dataset and a DICOM-based affine matrix to output the average and
-    maximum displacement applied to the edge voxels of the 3D dataset's automask.
+    3dmaxdisp
+    
+    Reads in a 3D dataset and a DICOM-based affine matrix to output the average
+    and maximum displacement applied to the edge voxels of the 3D dataset's
+    automask.
     
     Author: AFNI Developers
     

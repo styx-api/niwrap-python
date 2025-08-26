@@ -247,8 +247,10 @@ def groupstats_execute(
     runner: Runner | None = None,
 ) -> GroupstatsOutputs:
     """
-    A script for comprehensive group analysis on both maps and ROI results within
-    FreeSurfer.
+    groupstats
+    
+    A script for comprehensive group analysis on both maps and ROI results
+    within FreeSurfer.
     
     Author: FreeSurfer Developers
     
@@ -290,8 +292,10 @@ def groupstats(
     runner: Runner | None = None,
 ) -> GroupstatsOutputs:
     """
-    A script for comprehensive group analysis on both maps and ROI results within
-    FreeSurfer.
+    groupstats
+    
+    A script for comprehensive group analysis on both maps and ROI results
+    within FreeSurfer.
     
     Author: FreeSurfer Developers
     

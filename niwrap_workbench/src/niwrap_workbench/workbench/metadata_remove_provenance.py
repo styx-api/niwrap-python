@@ -125,6 +125,8 @@ def metadata_remove_provenance_execute(
     runner: Runner | None = None,
 ) -> MetadataRemoveProvenanceOutputs:
     """
+    metadata-remove-provenance
+    
     Remove provenance information from file metadata.
     
     Removes the provenance metadata fields added by workbench during processing.
@@ -154,6 +156,8 @@ def metadata_remove_provenance(
     runner: Runner | None = None,
 ) -> MetadataRemoveProvenanceOutputs:
     """
+    metadata-remove-provenance
+    
     Remove provenance information from file metadata.
     
     Removes the provenance metadata fields added by workbench during processing.

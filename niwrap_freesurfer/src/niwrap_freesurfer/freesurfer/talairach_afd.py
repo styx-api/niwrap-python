@@ -161,6 +161,8 @@ def talairach_afd_execute(
     runner: Runner | None = None,
 ) -> TalairachAfdOutputs:
     """
+    talairach_afd
+    
     Detects Talairach alignment failures.
     
     Author: FreeSurfer Developers
@@ -191,6 +193,8 @@ def talairach_afd(
     runner: Runner | None = None,
 ) -> TalairachAfdOutputs:
     """
+    talairach_afd
+    
     Detects Talairach alignment failures.
     
     Author: FreeSurfer Developers

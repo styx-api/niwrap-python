@@ -119,6 +119,8 @@ def csvprint_execute(
     runner: Runner | None = None,
 ) -> CsvprintOutputs:
     """
+    csvprint
+    
     Command-line tool for printing CSV files.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def csvprint(
     runner: Runner | None = None,
 ) -> CsvprintOutputs:
     """
+    csvprint
+    
     Command-line tool for printing CSV files.
     
     Author: FreeSurfer Developers

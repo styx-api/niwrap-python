@@ -199,6 +199,8 @@ def makevol_execute(
     runner: Runner | None = None,
 ) -> MakevolOutputs:
     """
+    makevol
+    
     A tool to create a volume with given parameters.
     
     Author: FreeSurfer Developers
@@ -232,6 +234,8 @@ def makevol(
     runner: Runner | None = None,
 ) -> MakevolOutputs:
     """
+    makevol
+    
     A tool to create a volume with given parameters.
     
     Author: FreeSurfer Developers

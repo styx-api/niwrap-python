@@ -125,7 +125,10 @@ def pngappend_execute(
     runner: Runner | None = None,
 ) -> PngappendOutputs:
     """
-    Append PNG files horizontally and/or vertically into a new PNG (or GIF) file.
+    pngappend
+    
+    Append PNG files horizontally and/or vertically into a new PNG (or GIF)
+    file.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -152,7 +155,10 @@ def pngappend(
     runner: Runner | None = None,
 ) -> PngappendOutputs:
     """
-    Append PNG files horizontally and/or vertically into a new PNG (or GIF) file.
+    pngappend
+    
+    Append PNG files horizontally and/or vertically into a new PNG (or GIF)
+    file.
     
     Author: FMRIB Analysis Group, University of Oxford
     

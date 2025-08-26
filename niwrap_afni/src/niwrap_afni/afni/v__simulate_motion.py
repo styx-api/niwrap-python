@@ -248,6 +248,8 @@ def v__simulate_motion_execute(
     runner: Runner | None = None,
 ) -> VSimulateMotionOutputs:
     """
+    @simulate_motion
+    
     Create simulated motion time series in an EPI dataset based on the provided
     motion parameters and an input volume.
     
@@ -290,6 +292,8 @@ def v__simulate_motion(
     runner: Runner | None = None,
 ) -> VSimulateMotionOutputs:
     """
+    @simulate_motion
+    
     Create simulated motion time series in an EPI dataset based on the provided
     motion parameters and an input volume.
     

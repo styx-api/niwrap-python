@@ -172,8 +172,10 @@ def applytopup_execute(
     runner: Runner | None = None,
 ) -> ApplytopupOutputs:
     """
-    applytopup applies corrections to images using the field estimates produced by
-    topup.
+    applytopup
+    
+    applytopup applies corrections to images using the field estimates produced
+    by topup.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -207,8 +209,10 @@ def applytopup(
     runner: Runner | None = None,
 ) -> ApplytopupOutputs:
     """
-    applytopup applies corrections to images using the field estimates produced by
-    topup.
+    applytopup
+    
+    applytopup applies corrections to images using the field estimates produced
+    by topup.
     
     Author: FMRIB Analysis Group, University of Oxford
     

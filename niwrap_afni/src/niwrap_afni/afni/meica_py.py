@@ -185,6 +185,8 @@ def meica_py_execute(
     runner: Runner | None = None,
 ) -> MeicaPyOutputs:
     """
+    meica.py
+    
     Multi-Echo Independent Component Analysis for fMRI denoising.
     
     Author: AFNI Developers
@@ -218,6 +220,8 @@ def meica_py(
     runner: Runner | None = None,
 ) -> MeicaPyOutputs:
     """
+    meica.py
+    
     Multi-Echo Independent Component Analysis for fMRI denoising.
     
     Author: AFNI Developers

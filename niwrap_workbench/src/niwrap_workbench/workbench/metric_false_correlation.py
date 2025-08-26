@@ -171,6 +171,8 @@ def metric_false_correlation_execute(
     runner: Runner | None = None,
 ) -> MetricFalseCorrelationOutputs:
     """
+    metric-false-correlation
+    
     Compare correlation locally and across/through sulci/gyri.
     
     For each vertex, compute the average correlation within a range of geodesic
@@ -211,6 +213,8 @@ def metric_false_correlation(
     runner: Runner | None = None,
 ) -> MetricFalseCorrelationOutputs:
     """
+    metric-false-correlation
+    
     Compare correlation locally and across/through sulci/gyri.
     
     For each vertex, compute the average correlation within a range of geodesic

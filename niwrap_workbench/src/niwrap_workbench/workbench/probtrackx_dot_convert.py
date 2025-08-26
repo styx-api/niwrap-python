@@ -391,6 +391,8 @@ def probtrackx_dot_convert_execute(
     runner: Runner | None = None,
 ) -> ProbtrackxDotConvertOutputs:
     """
+    probtrackx-dot-convert
+    
     Convert a .dot file from probtrackx to cifti.
     
     NOTE: exactly one -row option and one -col option must be used.
@@ -472,6 +474,8 @@ def probtrackx_dot_convert(
     runner: Runner | None = None,
 ) -> ProbtrackxDotConvertOutputs:
     """
+    probtrackx-dot-convert
+    
     Convert a .dot file from probtrackx to cifti.
     
     NOTE: exactly one -row option and one -col option must be used.

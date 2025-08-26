@@ -423,6 +423,8 @@ def probtrackx_execute(
     runner: Runner | None = None,
 ) -> ProbtrackxOutputs:
     """
+    probtrackx
+    
     Streamlines tracking algorithm for probabilistic tractography.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -482,6 +484,8 @@ def probtrackx(
     runner: Runner | None = None,
 ) -> ProbtrackxOutputs:
     """
+    probtrackx
+    
     Streamlines tracking algorithm for probabilistic tractography.
     
     Author: FMRIB Analysis Group, University of Oxford

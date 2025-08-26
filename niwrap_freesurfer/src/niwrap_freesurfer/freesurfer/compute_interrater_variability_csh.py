@@ -162,8 +162,10 @@ def compute_interrater_variability_csh_execute(
     runner: Runner | None = None,
 ) -> ComputeInterraterVariabilityCshOutputs:
     """
-    Computes the interrater variability between label volumes from different raters
-    or time points using several metrics.
+    compute_interrater_variability.csh
+    
+    Computes the interrater variability between label volumes from different
+    raters or time points using several metrics.
     
     Author: FreeSurfer Developers
     
@@ -193,8 +195,10 @@ def compute_interrater_variability_csh(
     runner: Runner | None = None,
 ) -> ComputeInterraterVariabilityCshOutputs:
     """
-    Computes the interrater variability between label volumes from different raters
-    or time points using several metrics.
+    compute_interrater_variability.csh
+    
+    Computes the interrater variability between label volumes from different
+    raters or time points using several metrics.
     
     Author: FreeSurfer Developers
     

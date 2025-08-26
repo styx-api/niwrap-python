@@ -129,9 +129,11 @@ def fiducials_correction_execute(
     runner: Runner | None = None,
 ) -> FiducialsCorrectionOutputs:
     """
-    A tool for correcting fiducial markers in imaging data. Note: This command has
-    dependency issues with the Qt platform plugin 'xcb'. Ensure dependencies are
-    properly configured.
+    fiducials_correction
+    
+    A tool for correcting fiducial markers in imaging data. Note: This command
+    has dependency issues with the Qt platform plugin 'xcb'. Ensure dependencies
+    are properly configured.
     
     Author: FreeSurfer Developers
     
@@ -158,9 +160,11 @@ def fiducials_correction(
     runner: Runner | None = None,
 ) -> FiducialsCorrectionOutputs:
     """
-    A tool for correcting fiducial markers in imaging data. Note: This command has
-    dependency issues with the Qt platform plugin 'xcb'. Ensure dependencies are
-    properly configured.
+    fiducials_correction
+    
+    A tool for correcting fiducial markers in imaging data. Note: This command
+    has dependency issues with the Qt platform plugin 'xcb'. Ensure dependencies
+    are properly configured.
     
     Author: FreeSurfer Developers
     

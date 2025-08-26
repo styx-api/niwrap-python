@@ -124,6 +124,8 @@ def v__time_diff_execute(
     runner: Runner | None = None,
 ) -> VTimeDiffOutputs:
     """
+    @TimeDiff
+    
     A tool to compare the modification times of two files.
     
     Author: AFNI Developers
@@ -151,6 +153,8 @@ def v__time_diff(
     runner: Runner | None = None,
 ) -> VTimeDiffOutputs:
     """
+    @TimeDiff
+    
     A tool to compare the modification times of two files.
     
     Author: AFNI Developers

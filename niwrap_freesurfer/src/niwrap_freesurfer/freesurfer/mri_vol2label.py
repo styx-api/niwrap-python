@@ -232,6 +232,8 @@ def mri_vol2label_execute(
     runner: Runner | None = None,
 ) -> MriVol2labelOutputs:
     """
+    mri_vol2label
+    
     Converts values in a volume or surface overlay to a label using specified
     parameters.
     
@@ -270,6 +272,8 @@ def mri_vol2label(
     runner: Runner | None = None,
 ) -> MriVol2labelOutputs:
     """
+    mri_vol2label
+    
     Converts values in a volume or surface overlay to a label using specified
     parameters.
     

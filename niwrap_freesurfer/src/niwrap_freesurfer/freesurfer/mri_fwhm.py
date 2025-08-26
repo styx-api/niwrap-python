@@ -444,8 +444,10 @@ def mri_fwhm_execute(
     runner: Runner | None = None,
 ) -> MriFwhmOutputs:
     """
-    FreeSurfer program to estimate the global Gaussian smoothness of a multi-frame,
-    volume-based data set.
+    mri_fwhm
+    
+    FreeSurfer program to estimate the global Gaussian smoothness of a
+    multi-frame, volume-based data set.
     
     Author: FreeSurfer Developers
     
@@ -505,8 +507,10 @@ def mri_fwhm(
     runner: Runner | None = None,
 ) -> MriFwhmOutputs:
     """
-    FreeSurfer program to estimate the global Gaussian smoothness of a multi-frame,
-    volume-based data set.
+    mri_fwhm
+    
+    FreeSurfer program to estimate the global Gaussian smoothness of a
+    multi-frame, volume-based data set.
     
     Author: FreeSurfer Developers
     

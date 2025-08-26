@@ -134,6 +134,8 @@ def surface_wedge_volume_execute(
     runner: Runner | None = None,
 ) -> SurfaceWedgeVolumeOutputs:
     """
+    surface-wedge-volume
+    
     Measure per-vertex volume between surfaces.
     
     Compute the volume of each vertex's area from one surface to another. The
@@ -166,6 +168,8 @@ def surface_wedge_volume(
     runner: Runner | None = None,
 ) -> SurfaceWedgeVolumeOutputs:
     """
+    surface-wedge-volume
+    
     Measure per-vertex volume between surfaces.
     
     Compute the volume of each vertex's area from one surface to another. The

@@ -277,8 +277,10 @@ def v__clip_volume_execute(
     runner: Runner | None = None,
 ) -> VClipVolumeOutputs:
     """
-    A tool to clip regions of a volume in various ways, such as above/below certain
-    coordinates or within a specified box.
+    @clip_volume
+    
+    A tool to clip regions of a volume in various ways, such as above/below
+    certain coordinates or within a specified box.
     
     Author: AFNI Developers
     
@@ -321,8 +323,10 @@ def v__clip_volume(
     runner: Runner | None = None,
 ) -> VClipVolumeOutputs:
     """
-    A tool to clip regions of a volume in various ways, such as above/below certain
-    coordinates or within a specified box.
+    @clip_volume
+    
+    A tool to clip regions of a volume in various ways, such as above/below
+    certain coordinates or within a specified box.
     
     Author: AFNI Developers
     

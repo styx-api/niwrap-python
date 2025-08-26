@@ -170,6 +170,8 @@ def mris_calc_execute(
     runner: Runner | None = None,
 ) -> MrisCalcOutputs:
     """
+    mris_calc
+    
     Simple calculator that operates on FreeSurfer curvatures and volumes.
     
     Author: FreeSurfer Developers
@@ -201,6 +203,8 @@ def mris_calc(
     runner: Runner | None = None,
 ) -> MrisCalcOutputs:
     """
+    mris_calc
+    
     Simple calculator that operates on FreeSurfer curvatures and volumes.
     
     Author: FreeSurfer Developers

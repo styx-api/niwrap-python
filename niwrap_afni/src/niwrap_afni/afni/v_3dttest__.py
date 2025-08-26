@@ -320,6 +320,8 @@ def v_3dttest___execute(
     runner: Runner | None = None,
 ) -> V3dttestOutputs:
     """
+    3dttest++
+    
     Gosset (Student) t-test of sets of 3D datasets in AFNI.
     
     Author: AFNI Developers
@@ -366,6 +368,8 @@ def v_3dttest__(
     runner: Runner | None = None,
 ) -> V3dttestOutputs:
     """
+    3dttest++
+    
     Gosset (Student) t-test of sets of 3D datasets in AFNI.
     
     Author: AFNI Developers

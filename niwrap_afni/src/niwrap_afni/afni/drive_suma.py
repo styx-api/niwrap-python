@@ -376,6 +376,8 @@ def drive_suma_execute(
     runner: Runner | None = None,
 ) -> DriveSumaOutputs:
     """
+    DriveSuma
+    
     A program to drive suma from the command line.
     
     Author: AFNI Developers
@@ -432,6 +434,8 @@ def drive_suma(
     runner: Runner | None = None,
 ) -> DriveSumaOutputs:
     """
+    DriveSuma
+    
     A program to drive suma from the command line.
     
     Author: AFNI Developers

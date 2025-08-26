@@ -120,6 +120,8 @@ def v__no_pound_execute(
     runner: Runner | None = None,
 ) -> VNoPoundOutputs:
     """
+    @NoPound
+    
     Replaces all # characters in AFNI filenames with a -.
     
     Author: AFNI Developers
@@ -146,6 +148,8 @@ def v__no_pound(
     runner: Runner | None = None,
 ) -> VNoPoundOutputs:
     """
+    @NoPound
+    
     Replaces all # characters in AFNI filenames with a -.
     
     Author: AFNI Developers

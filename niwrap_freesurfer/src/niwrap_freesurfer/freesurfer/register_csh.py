@@ -135,6 +135,8 @@ def register_csh_execute(
     runner: Runner | None = None,
 ) -> RegisterCshOutputs:
     """
+    register.csh
+    
     A script for registering MRI images.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def register_csh(
     runner: Runner | None = None,
 ) -> RegisterCshOutputs:
     """
+    register.csh
+    
     A script for registering MRI images.
     
     Author: FreeSurfer Developers

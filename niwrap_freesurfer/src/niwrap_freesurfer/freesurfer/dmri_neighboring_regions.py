@@ -128,6 +128,8 @@ def dmri_neighboring_regions_execute(
     runner: Runner | None = None,
 ) -> DmriNeighboringRegionsOutputs:
     """
+    dmri_neighboringRegions
+    
     A tool for diffusion MRI analysis involving neighboring regions.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def dmri_neighboring_regions(
     runner: Runner | None = None,
 ) -> DmriNeighboringRegionsOutputs:
     """
+    dmri_neighboringRegions
+    
     A tool for diffusion MRI analysis involving neighboring regions.
     
     Author: FreeSurfer Developers

@@ -192,6 +192,8 @@ def v_3d_cm_execute(
     runner: Runner | None = None,
 ) -> V3dCmOutputs:
     """
+    3dCM
+    
     Tool for computing the center of mass of a dataset.
     
     Author: AFNI Developers
@@ -226,6 +228,8 @@ def v_3d_cm(
     runner: Runner | None = None,
 ) -> V3dCmOutputs:
     """
+    3dCM
+    
     Tool for computing the center of mass of a dataset.
     
     Author: AFNI Developers

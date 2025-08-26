@@ -121,6 +121,8 @@ def afni_check_omp_execute(
     runner: Runner | None = None,
 ) -> AfniCheckOmpOutputs:
     """
+    afni_check_omp
+    
     Tool to check the OpenMP multi-threading environment for AFNI.
     
     Author: AFNI Developers
@@ -147,6 +149,8 @@ def afni_check_omp(
     runner: Runner | None = None,
 ) -> AfniCheckOmpOutputs:
     """
+    afni_check_omp
+    
     Tool to check the OpenMP multi-threading environment for AFNI.
     
     Author: AFNI Developers

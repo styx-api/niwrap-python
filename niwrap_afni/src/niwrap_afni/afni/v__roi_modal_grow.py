@@ -181,7 +181,10 @@ def v__roi_modal_grow_execute(
     runner: Runner | None = None,
 ) -> VRoiModalGrowOutputs:
     """
-    Script to grow a set of regions in a volumetric dataset using modal smoothing.
+    @ROI_modal_grow
+    
+    Script to grow a set of regions in a volumetric dataset using modal
+    smoothing.
     
     Author: AFNI Developers
     
@@ -212,7 +215,10 @@ def v__roi_modal_grow(
     runner: Runner | None = None,
 ) -> VRoiModalGrowOutputs:
     """
-    Script to grow a set of regions in a volumetric dataset using modal smoothing.
+    @ROI_modal_grow
+    
+    Script to grow a set of regions in a volumetric dataset using modal
+    smoothing.
     
     Author: AFNI Developers
     

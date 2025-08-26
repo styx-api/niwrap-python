@@ -175,6 +175,8 @@ def convert_cdiflist_to_grads_execute(
     runner: Runner | None = None,
 ) -> ConvertCdiflistToGradsOutputs:
     """
+    convert_cdiflist_to_grads
+    
     This program reads in a GE cdiflist and outputs gradient file and file of
     bvalues for subsequent processing.
     
@@ -208,6 +210,8 @@ def convert_cdiflist_to_grads(
     runner: Runner | None = None,
 ) -> ConvertCdiflistToGradsOutputs:
     """
+    convert_cdiflist_to_grads
+    
     This program reads in a GE cdiflist and outputs gradient file and file of
     bvalues for subsequent processing.
     

@@ -523,6 +523,8 @@ def mri_volsynth_execute(
     runner: Runner | None = None,
 ) -> MriVolsynthOutputs:
     """
+    mri_volsynth
+    
     Synthesizes a volume with specified geometry and probability distribution
     function.
     
@@ -592,6 +594,8 @@ def mri_volsynth(
     runner: Runner | None = None,
 ) -> MriVolsynthOutputs:
     """
+    mri_volsynth
+    
     Synthesizes a volume with specified geometry and probability distribution
     function.
     

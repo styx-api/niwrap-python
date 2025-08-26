@@ -359,6 +359,8 @@ def sh2peaks_execute(
     runner: Runner | None = None,
 ) -> Sh2peaksOutputs:
     """
+    sh2peaks
+    
     Extract the peaks of a spherical harmonic function in each voxel.
     
     Peaks of the spherical harmonic function in each voxel are located by
@@ -415,6 +417,8 @@ def sh2peaks(
     runner: Runner | None = None,
 ) -> Sh2peaksOutputs:
     """
+    sh2peaks
+    
     Extract the peaks of a spherical harmonic function in each voxel.
     
     Peaks of the spherical harmonic function in each voxel are located by

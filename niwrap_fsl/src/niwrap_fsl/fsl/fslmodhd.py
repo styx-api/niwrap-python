@@ -129,6 +129,8 @@ def fslmodhd_execute(
     runner: Runner | None = None,
 ) -> FslmodhdOutputs:
     """
+    fslmodhd
+    
     A tool for modifying header information of NIfTI images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -157,6 +159,8 @@ def fslmodhd(
     runner: Runner | None = None,
 ) -> FslmodhdOutputs:
     """
+    fslmodhd
+    
     A tool for modifying header information of NIfTI images.
     
     Author: FMRIB Analysis Group, University of Oxford

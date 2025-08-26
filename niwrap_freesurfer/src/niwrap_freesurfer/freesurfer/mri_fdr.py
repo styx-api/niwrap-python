@@ -194,6 +194,8 @@ def mri_fdr_execute(
     runner: Runner | None = None,
 ) -> MriFdrOutputs:
     """
+    mri_fdr
+    
     A program that performs False Discovery Rate correction.
     
     Author: FreeSurfer Developers
@@ -229,6 +231,8 @@ def mri_fdr(
     runner: Runner | None = None,
 ) -> MriFdrOutputs:
     """
+    mri_fdr
+    
     A program that performs False Discovery Rate correction.
     
     Author: FreeSurfer Developers

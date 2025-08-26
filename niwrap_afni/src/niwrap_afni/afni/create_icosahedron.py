@@ -200,6 +200,8 @@ def create_icosahedron_execute(
     runner: Runner | None = None,
 ) -> CreateIcosahedronOutputs:
     """
+    CreateIcosahedron
+    
     Tool to create an icosahedron with optional tessellation.
     
     Author: AFNI Developers
@@ -235,6 +237,8 @@ def create_icosahedron(
     runner: Runner | None = None,
 ) -> CreateIcosahedronOutputs:
     """
+    CreateIcosahedron
+    
     Tool to create an icosahedron with optional tessellation.
     
     Author: AFNI Developers

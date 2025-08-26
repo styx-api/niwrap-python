@@ -256,6 +256,8 @@ def surface_distortion_execute(
     runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """
+    surface-distortion
+    
     Measure distortion between surfaces.
     
     This command, when not using -caret5-method, -edge-method, or
@@ -308,6 +310,8 @@ def surface_distortion(
     runner: Runner | None = None,
 ) -> SurfaceDistortionOutputs:
     """
+    surface-distortion
+    
     Measure distortion between surfaces.
     
     This command, when not using -caret5-method, -edge-method, or

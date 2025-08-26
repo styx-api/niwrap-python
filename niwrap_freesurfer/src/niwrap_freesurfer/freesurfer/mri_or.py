@@ -127,6 +127,8 @@ def mri_or_execute(
     runner: Runner | None = None,
 ) -> MriOrOutputs:
     """
+    mri_or
+    
     Performs a logical voxel-wise OR on a series of volumes.
     
     Author: FreeSurfer Developers
@@ -154,6 +156,8 @@ def mri_or(
     runner: Runner | None = None,
 ) -> MriOrOutputs:
     """
+    mri_or
+    
     Performs a logical voxel-wise OR on a series of volumes.
     
     Author: FreeSurfer Developers

@@ -134,6 +134,8 @@ def surface_set_coordinates_execute(
     runner: Runner | None = None,
 ) -> SurfaceSetCoordinatesOutputs:
     """
+    surface-set-coordinates
+    
     Modify coordinates of a surface.
     
     Takes the topology from an existing surface file, and uses values from a
@@ -168,6 +170,8 @@ def surface_set_coordinates(
     runner: Runner | None = None,
 ) -> SurfaceSetCoordinatesOutputs:
     """
+    surface-set-coordinates
+    
     Modify coordinates of a surface.
     
     Takes the topology from an existing surface file, and uses values from a

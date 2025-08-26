@@ -131,6 +131,8 @@ def old_betall_execute(
     runner: Runner | None = None,
 ) -> OldBetallOutputs:
     """
+    old_betall
+    
     Automated brain extraction tool for FSL involving both T1 and T2 images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -158,6 +160,8 @@ def old_betall(
     runner: Runner | None = None,
 ) -> OldBetallOutputs:
     """
+    old_betall
+    
     Automated brain extraction tool for FSL involving both T1 and T2 images.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -303,9 +303,11 @@ def ants_joint_tensor_fusion_execute(
     runner: Runner | None = None,
 ) -> AntsJointTensorFusionOutputs:
     """
-    antsJointTensorFusion is an image fusion algorithm developed by Hongzhi Wang and
-    Paul Yushkevich which won segmentation challenges at MICCAI 2012 and MICCAI
-    2013. The original label fusion framework was extended to accommodate
+    antsJointTensorFusion
+    
+    antsJointTensorFusion is an image fusion algorithm developed by Hongzhi Wang
+    and Paul Yushkevich which won segmentation challenges at MICCAI 2012 and
+    MICCAI 2013. The original label fusion framework was extended to accommodate
     intensities by Brian Avants. This implementation is based on the original
     ITK-style implementation and ANTsR implementation.
     
@@ -349,9 +351,11 @@ def ants_joint_tensor_fusion(
     runner: Runner | None = None,
 ) -> AntsJointTensorFusionOutputs:
     """
-    antsJointTensorFusion is an image fusion algorithm developed by Hongzhi Wang and
-    Paul Yushkevich which won segmentation challenges at MICCAI 2012 and MICCAI
-    2013. The original label fusion framework was extended to accommodate
+    antsJointTensorFusion
+    
+    antsJointTensorFusion is an image fusion algorithm developed by Hongzhi Wang
+    and Paul Yushkevich which won segmentation challenges at MICCAI 2012 and
+    MICCAI 2013. The original label fusion framework was extended to accommodate
     intensities by Brian Avants. This implementation is based on the original
     ITK-style implementation and ANTsR implementation.
     

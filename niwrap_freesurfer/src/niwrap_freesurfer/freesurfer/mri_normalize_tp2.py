@@ -214,7 +214,10 @@ def mri_normalize_tp2_execute(
     runner: Runner | None = None,
 ) -> MriNormalizeTp2Outputs:
     """
-    Normalize the input volume using control points of tp1 to help normalize tp2.
+    mri_normalize_tp2
+    
+    Normalize the input volume using control points of tp1 to help normalize
+    tp2.
     
     Author: FreeSurfer Developers
     
@@ -250,7 +253,10 @@ def mri_normalize_tp2(
     runner: Runner | None = None,
 ) -> MriNormalizeTp2Outputs:
     """
-    Normalize the input volume using control points of tp1 to help normalize tp2.
+    mri_normalize_tp2
+    
+    Normalize the input volume using control points of tp1 to help normalize
+    tp2.
     
     Author: FreeSurfer Developers
     

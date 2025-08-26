@@ -153,6 +153,8 @@ def fslswapdim_exe_execute(
     runner: Runner | None = None,
 ) -> FslswapdimExeOutputs:
     """
+    fslswapdim_exe
+    
     Tool to swap the x, y, z axes dimensions of an image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -184,6 +186,8 @@ def fslswapdim_exe(
     runner: Runner | None = None,
 ) -> FslswapdimExeOutputs:
     """
+    fslswapdim_exe
+    
     Tool to swap the x, y, z axes dimensions of an image.
     
     Author: FMRIB Analysis Group, University of Oxford

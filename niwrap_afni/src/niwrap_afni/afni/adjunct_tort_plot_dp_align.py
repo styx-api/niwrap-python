@@ -176,8 +176,10 @@ def adjunct_tort_plot_dp_align_execute(
     runner: Runner | None = None,
 ) -> AdjunctTortPlotDpAlignOutputs:
     """
-    Tool to display the rigid-body alignment parameters from TORTOISE's DIFFPREP,
-    useful for analyzing subject motion in DWI data.
+    adjunct_tort_plot_dp_align
+    
+    Tool to display the rigid-body alignment parameters from TORTOISE's
+    DIFFPREP, useful for analyzing subject motion in DWI data.
     
     Author: AFNI Developers
     
@@ -207,8 +209,10 @@ def adjunct_tort_plot_dp_align(
     runner: Runner | None = None,
 ) -> AdjunctTortPlotDpAlignOutputs:
     """
-    Tool to display the rigid-body alignment parameters from TORTOISE's DIFFPREP,
-    useful for analyzing subject motion in DWI data.
+    adjunct_tort_plot_dp_align
+    
+    Tool to display the rigid-body alignment parameters from TORTOISE's
+    DIFFPREP, useful for analyzing subject motion in DWI data.
     
     Author: AFNI Developers
     

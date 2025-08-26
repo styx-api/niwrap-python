@@ -247,6 +247,8 @@ def cifti_estimate_fwhm_execute(
     runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
     """
+    cifti-estimate-fwhm
+    
     Estimate fwhm smoothness of a cifti file.
     
     Estimate the smoothness of the components of the cifti file, printing the
@@ -317,6 +319,8 @@ def cifti_estimate_fwhm(
     runner: Runner | None = None,
 ) -> CiftiEstimateFwhmOutputs:
     """
+    cifti-estimate-fwhm
+    
     Estimate fwhm smoothness of a cifti file.
     
     Estimate the smoothness of the components of the cifti file, printing the

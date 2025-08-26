@@ -201,6 +201,8 @@ def img2stdcoord_execute(
     runner: Runner | None = None,
 ) -> Img2stdcoordOutputs:
     """
+    img2stdcoord
+    
     Transforms image coordinates using standard space transformations.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -237,6 +239,8 @@ def img2stdcoord(
     runner: Runner | None = None,
 ) -> Img2stdcoordOutputs:
     """
+    img2stdcoord
+    
     Transforms image coordinates using standard space transformations.
     
     Author: FMRIB Analysis Group, University of Oxford

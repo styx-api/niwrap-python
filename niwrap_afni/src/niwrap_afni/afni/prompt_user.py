@@ -144,6 +144,8 @@ def prompt_user_execute(
     runner: Runner | None = None,
 ) -> PromptUserOutputs:
     """
+    prompt_user
+    
     Tool that prompts a window requesting user input with a custom message.
     
     Author: AFNI Developers
@@ -172,6 +174,8 @@ def prompt_user(
     runner: Runner | None = None,
 ) -> PromptUserOutputs:
     """
+    prompt_user
+    
     Tool that prompts a window requesting user input with a custom message.
     
     Author: AFNI Developers

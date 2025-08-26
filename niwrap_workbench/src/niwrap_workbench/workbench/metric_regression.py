@@ -275,6 +275,8 @@ def metric_regression_execute(
     runner: Runner | None = None,
 ) -> MetricRegressionOutputs:
     """
+    metric-regression
+    
     Regress spatial map out of a metric file.
     
     For each regressor, its mean across the surface is subtracted from its data.
@@ -312,6 +314,8 @@ def metric_regression(
     runner: Runner | None = None,
 ) -> MetricRegressionOutputs:
     """
+    metric-regression
+    
     Regress spatial map out of a metric file.
     
     For each regressor, its mean across the surface is subtracted from its data.

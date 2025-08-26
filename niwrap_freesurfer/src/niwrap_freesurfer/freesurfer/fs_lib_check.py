@@ -143,8 +143,10 @@ def fs_lib_check_execute(
     runner: Runner | None = None,
 ) -> FsLibCheckOutputs:
     """
-    Checks if the operating system has the necessary system libraries required to
-    run FreeSurfer.
+    fs_lib_check
+    
+    Checks if the operating system has the necessary system libraries required
+    to run FreeSurfer.
     
     Author: FreeSurfer Developers
     
@@ -173,8 +175,10 @@ def fs_lib_check(
     runner: Runner | None = None,
 ) -> FsLibCheckOutputs:
     """
-    Checks if the operating system has the necessary system libraries required to
-    run FreeSurfer.
+    fs_lib_check
+    
+    Checks if the operating system has the necessary system libraries required
+    to run FreeSurfer.
     
     Author: FreeSurfer Developers
     

@@ -146,6 +146,8 @@ def mri_distance_transform_execute(
     runner: Runner | None = None,
 ) -> MriDistanceTransformOutputs:
     """
+    mri_distance_transform
+    
     Tool to compute distance transforms on MRI volumes.
     
     Author: FreeSurfer Developers
@@ -176,6 +178,8 @@ def mri_distance_transform(
     runner: Runner | None = None,
 ) -> MriDistanceTransformOutputs:
     """
+    mri_distance_transform
+    
     Tool to compute distance transforms on MRI volumes.
     
     Author: FreeSurfer Developers

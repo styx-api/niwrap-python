@@ -222,6 +222,8 @@ def ants_introduction_sh_execute(
     runner: Runner | None = None,
 ) -> AntsIntroductionShOutputs:
     """
+    antsIntroduction.sh
+    
     Script for registration using ANTS with compulsory and optional arguments.
     
     Author: ANTs Developers
@@ -258,6 +260,8 @@ def ants_introduction_sh(
     runner: Runner | None = None,
 ) -> AntsIntroductionShOutputs:
     """
+    antsIntroduction.sh
+    
     Script for registration using ANTS with compulsory and optional arguments.
     
     Author: ANTs Developers

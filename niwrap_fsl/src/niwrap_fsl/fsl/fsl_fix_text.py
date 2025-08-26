@@ -128,6 +128,8 @@ def fsl_fix_text_execute(
     runner: Runner | None = None,
 ) -> FslFixTextOutputs:
     """
+    fslFixText
+    
     Ensures standard UNIX line endings in the output text file.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def fsl_fix_text(
     runner: Runner | None = None,
 ) -> FslFixTextOutputs:
     """
+    fslFixText
+    
     Ensures standard UNIX line endings in the output text file.
     
     Author: FMRIB Analysis Group, University of Oxford

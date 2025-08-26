@@ -231,6 +231,8 @@ def metric_to_volume_mapping_execute(
     runner: Runner | None = None,
 ) -> MetricToVolumeMappingOutputs:
     """
+    metric-to-volume-mapping
+    
     Map metric file to volume.
     
     Maps values from a metric file into a volume file. You must specify exactly
@@ -270,6 +272,8 @@ def metric_to_volume_mapping(
     runner: Runner | None = None,
 ) -> MetricToVolumeMappingOutputs:
     """
+    metric-to-volume-mapping
+    
     Map metric file to volume.
     
     Maps values from a metric file into a volume file. You must specify exactly

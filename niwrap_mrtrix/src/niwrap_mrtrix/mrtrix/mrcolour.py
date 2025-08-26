@@ -271,6 +271,8 @@ def mrcolour_execute(
     runner: Runner | None = None,
 ) -> MrcolourOutputs:
     """
+    mrcolour
+    
     Apply a colour map to an image.
     
     Under typical usage, this command will receive as input ad 3D greyscale
@@ -325,6 +327,8 @@ def mrcolour(
     runner: Runner | None = None,
 ) -> MrcolourOutputs:
     """
+    mrcolour
+    
     Apply a colour map to an image.
     
     Under typical usage, this command will receive as input ad 3D greyscale

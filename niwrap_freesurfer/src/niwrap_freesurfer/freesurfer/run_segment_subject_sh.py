@@ -132,6 +132,8 @@ def run_segment_subject_sh_execute(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectShOutputs:
     """
+    run_SegmentSubject.sh
+    
     A command-line tool for subject segmentation in Freesurfer.
     
     Author: FreeSurfer Developers
@@ -159,6 +161,8 @@ def run_segment_subject_sh(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectShOutputs:
     """
+    run_SegmentSubject.sh
+    
     A command-line tool for subject segmentation in Freesurfer.
     
     Author: FreeSurfer Developers

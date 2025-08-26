@@ -281,8 +281,10 @@ def v__djunct_edgy_align_check_execute(
     runner: Runner | None = None,
 ) -> VDjunctEdgyAlignCheckOutputs:
     """
-    Helper script for various tasks, heavily modeled on RW Cox's '@snapshot_volreg'
-    script.
+    @djunct_edgy_align_check
+    
+    Helper script for various tasks, heavily modeled on RW Cox's
+    '@snapshot_volreg' script.
     
     Author: AFNI Developers
     
@@ -333,8 +335,10 @@ def v__djunct_edgy_align_check(
     runner: Runner | None = None,
 ) -> VDjunctEdgyAlignCheckOutputs:
     """
-    Helper script for various tasks, heavily modeled on RW Cox's '@snapshot_volreg'
-    script.
+    @djunct_edgy_align_check
+    
+    Helper script for various tasks, heavily modeled on RW Cox's
+    '@snapshot_volreg' script.
     
     Author: AFNI Developers
     

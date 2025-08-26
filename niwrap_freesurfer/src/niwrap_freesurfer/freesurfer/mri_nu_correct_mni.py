@@ -223,6 +223,8 @@ def mri_nu_correct_mni_execute(
     runner: Runner | None = None,
 ) -> MriNuCorrectMniOutputs:
     """
+    mri_nu_correct.mni
+    
     Wrapper for nu_correct, used for correcting intensity non-uniformity (bias
     fields).
     
@@ -262,6 +264,8 @@ def mri_nu_correct_mni(
     runner: Runner | None = None,
 ) -> MriNuCorrectMniOutputs:
     """
+    mri_nu_correct.mni
+    
     Wrapper for nu_correct, used for correcting intensity non-uniformity (bias
     fields).
     

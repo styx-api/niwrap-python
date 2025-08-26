@@ -150,6 +150,8 @@ def fsl_prepare_fieldmap_execute(
     runner: Runner | None = None,
 ) -> FslPrepareFieldmapOutputs:
     """
+    fsl_prepare_fieldmap
+    
     Prepares a fieldmap suitable for FEAT from SIEMENS data and saves output in
     rad/s format.
     
@@ -182,6 +184,8 @@ def fsl_prepare_fieldmap(
     runner: Runner | None = None,
 ) -> FslPrepareFieldmapOutputs:
     """
+    fsl_prepare_fieldmap
+    
     Prepares a fieldmap suitable for FEAT from SIEMENS data and saves output in
     rad/s format.
     

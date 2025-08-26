@@ -135,8 +135,10 @@ def bayes_view_execute(
     runner: Runner | None = None,
 ) -> BayesViewOutputs:
     """
-    Launch a shiny app to visualize RBA output files. The files must have the .RData
-    extension.
+    bayes_view
+    
+    Launch a shiny app to visualize RBA output files. The files must have the
+    .RData extension.
     
     Author: AFNI Developers
     
@@ -164,8 +166,10 @@ def bayes_view(
     runner: Runner | None = None,
 ) -> BayesViewOutputs:
     """
-    Launch a shiny app to visualize RBA output files. The files must have the .RData
-    extension.
+    bayes_view
+    
+    Launch a shiny app to visualize RBA output files. The files must have the
+    .RData extension.
     
     Author: AFNI Developers
     

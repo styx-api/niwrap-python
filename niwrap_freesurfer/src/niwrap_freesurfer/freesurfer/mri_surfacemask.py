@@ -134,6 +134,8 @@ def mri_surfacemask_execute(
     runner: Runner | None = None,
 ) -> MriSurfacemaskOutputs:
     """
+    mri_surfacemask
+    
     Tool to produce a new volume where all pixels outside the surface are set to
     zero.
     
@@ -163,6 +165,8 @@ def mri_surfacemask(
     runner: Runner | None = None,
 ) -> MriSurfacemaskOutputs:
     """
+    mri_surfacemask
+    
     Tool to produce a new volume where all pixels outside the surface are set to
     zero.
     

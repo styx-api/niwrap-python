@@ -247,6 +247,8 @@ def v_5tt2gmwmi_execute(
     runner: Runner | None = None,
 ) -> V5tt2gmwmiOutputs:
     """
+    5tt2gmwmi
+    
     Generate a mask image appropriate for seeding streamlines on the grey
     matter-white matter interface.
     
@@ -293,6 +295,8 @@ def v_5tt2gmwmi(
     runner: Runner | None = None,
 ) -> V5tt2gmwmiOutputs:
     """
+    5tt2gmwmi
+    
     Generate a mask image appropriate for seeding streamlines on the grey
     matter-white matter interface.
     

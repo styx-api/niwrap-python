@@ -194,6 +194,8 @@ def tractstats2table_execute(
     runner: Runner | None = None,
 ) -> Tractstats2tableOutputs:
     """
+    tractstats2table
+    
     Converts a track overall stats file created by tracula into a table used for
     group statistics.
     
@@ -229,6 +231,8 @@ def tractstats2table(
     runner: Runner | None = None,
 ) -> Tractstats2tableOutputs:
     """
+    tractstats2table
+    
     Converts a track overall stats file created by tracula into a table used for
     group statistics.
     

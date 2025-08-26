@@ -130,6 +130,8 @@ def spec_file_merge_execute(
     runner: Runner | None = None,
 ) -> SpecFileMergeOutputs:
     """
+    spec-file-merge
+    
     Merge two spec files into one.
     
     The output spec file contains every file that is in either of the input spec
@@ -161,6 +163,8 @@ def spec_file_merge(
     runner: Runner | None = None,
 ) -> SpecFileMergeOutputs:
     """
+    spec-file-merge
+    
     Merge two spec files into one.
     
     The output spec file contains every file that is in either of the input spec

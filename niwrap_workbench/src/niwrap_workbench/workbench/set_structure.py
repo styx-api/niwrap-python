@@ -148,6 +148,8 @@ def set_structure_execute(
     runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
+    set-structure
+    
     Set structure of a data file.
     
     The existing file is modified and rewritten to the same filename. Valid
@@ -235,6 +237,8 @@ def set_structure(
     runner: Runner | None = None,
 ) -> SetStructureOutputs:
     """
+    set-structure
+    
     Set structure of a data file.
     
     The existing file is modified and rewritten to the same filename. Valid

@@ -162,6 +162,8 @@ def flirt_average_execute(
     runner: Runner | None = None,
 ) -> FlirtAverageOutputs:
     """
+    flirt_average
+    
     Averages multiple input images after linear registration (FLIRT).
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -194,6 +196,8 @@ def flirt_average(
     runner: Runner | None = None,
 ) -> FlirtAverageOutputs:
     """
+    flirt_average
+    
     Averages multiple input images after linear registration (FLIRT).
     
     Author: FMRIB Analysis Group, University of Oxford

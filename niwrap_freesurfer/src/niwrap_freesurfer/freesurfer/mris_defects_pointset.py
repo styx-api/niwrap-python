@@ -158,8 +158,10 @@ def mris_defects_pointset_execute(
     runner: Runner | None = None,
 ) -> MrisDefectsPointsetOutputs:
     """
-    Produces a pointset file containing the locations of each topological defect in
-    a surface.
+    mris_defects_pointset
+    
+    Produces a pointset file containing the locations of each topological defect
+    in a surface.
     
     Author: FreeSurfer Developers
     
@@ -189,8 +191,10 @@ def mris_defects_pointset(
     runner: Runner | None = None,
 ) -> MrisDefectsPointsetOutputs:
     """
-    Produces a pointset file containing the locations of each topological defect in
-    a surface.
+    mris_defects_pointset
+    
+    Produces a pointset file containing the locations of each topological defect
+    in a surface.
     
     Author: FreeSurfer Developers
     

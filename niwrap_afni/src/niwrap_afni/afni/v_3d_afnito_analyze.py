@@ -155,6 +155,8 @@ def v_3d_afnito_analyze_execute(
     runner: Runner | None = None,
 ) -> V3dAfnitoAnalyzeOutputs:
     """
+    3dAFNItoANALYZE
+    
     Writes AFNI dataset to ANALYZE 7.5 format .hdr/.img file pairs.
     
     Author: AFNI Developers
@@ -184,6 +186,8 @@ def v_3d_afnito_analyze(
     runner: Runner | None = None,
 ) -> V3dAfnitoAnalyzeOutputs:
     """
+    3dAFNItoANALYZE
+    
     Writes AFNI dataset to ANALYZE 7.5 format .hdr/.img file pairs.
     
     Author: AFNI Developers

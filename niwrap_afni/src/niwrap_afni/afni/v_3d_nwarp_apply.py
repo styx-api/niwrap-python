@@ -248,8 +248,10 @@ def v_3d_nwarp_apply_execute(
     runner: Runner | None = None,
 ) -> V3dNwarpApplyOutputs:
     """
-    Program to apply a nonlinear 3D warp saved from 3dQwarp (or 3dNwarpCat, etc.) to
-    a 3D dataset, to produce a warped version of the source dataset.
+    3dNwarpApply
+    
+    Program to apply a nonlinear 3D warp saved from 3dQwarp (or 3dNwarpCat,
+    etc.) to a 3D dataset, to produce a warped version of the source dataset.
     
     Author: AFNI Developers
     
@@ -288,8 +290,10 @@ def v_3d_nwarp_apply(
     runner: Runner | None = None,
 ) -> V3dNwarpApplyOutputs:
     """
-    Program to apply a nonlinear 3D warp saved from 3dQwarp (or 3dNwarpCat, etc.) to
-    a 3D dataset, to produce a warped version of the source dataset.
+    3dNwarpApply
+    
+    Program to apply a nonlinear 3D warp saved from 3dQwarp (or 3dNwarpCat,
+    etc.) to a 3D dataset, to produce a warped version of the source dataset.
     
     Author: AFNI Developers
     

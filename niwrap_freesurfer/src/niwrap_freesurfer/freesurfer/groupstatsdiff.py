@@ -260,8 +260,10 @@ def groupstatsdiff_execute(
     runner: Runner | None = None,
 ) -> GroupstatsdiffOutputs:
     """
-    Evaluate the differences between two groupstats outputs from recon-all analyses
-    in Freesurfer.
+    groupstatsdiff
+    
+    Evaluate the differences between two groupstats outputs from recon-all
+    analyses in Freesurfer.
     
     Author: FreeSurfer Developers
     
@@ -306,8 +308,10 @@ def groupstatsdiff(
     runner: Runner | None = None,
 ) -> GroupstatsdiffOutputs:
     """
-    Evaluate the differences between two groupstats outputs from recon-all analyses
-    in Freesurfer.
+    groupstatsdiff
+    
+    Evaluate the differences between two groupstats outputs from recon-all
+    analyses in Freesurfer.
     
     Author: FreeSurfer Developers
     

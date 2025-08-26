@@ -134,8 +134,10 @@ def fslfft_execute(
     runner: Runner | None = None,
 ) -> FslfftOutputs:
     """
-    A tool to compute the Fourier transform of an input volume and save the result
-    in an output volume.
+    fslfft
+    
+    A tool to compute the Fourier transform of an input volume and save the
+    result in an output volume.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -163,8 +165,10 @@ def fslfft(
     runner: Runner | None = None,
 ) -> FslfftOutputs:
     """
-    A tool to compute the Fourier transform of an input volume and save the result
-    in an output volume.
+    fslfft
+    
+    A tool to compute the Fourier transform of an input volume and save the
+    result in an output volume.
     
     Author: FMRIB Analysis Group, University of Oxford
     

@@ -270,8 +270,10 @@ def v_3d_deconvolve_execute(
     runner: Runner | None = None,
 ) -> V3dDeconvolveOutputs:
     """
-    Program to calculate the deconvolution of a measurement 3D+time dataset with a
-    specified input stimulus time series.
+    3dDeconvolve
+    
+    Program to calculate the deconvolution of a measurement 3D+time dataset with
+    a specified input stimulus time series.
     
     Author: AFNI Developers
     
@@ -311,8 +313,10 @@ def v_3d_deconvolve(
     runner: Runner | None = None,
 ) -> V3dDeconvolveOutputs:
     """
-    Program to calculate the deconvolution of a measurement 3D+time dataset with a
-    specified input stimulus time series.
+    3dDeconvolve
+    
+    Program to calculate the deconvolution of a measurement 3D+time dataset with
+    a specified input stimulus time series.
     
     Author: AFNI Developers
     

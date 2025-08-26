@@ -569,6 +569,8 @@ def cifti_separate_execute(
     runner: Runner | None = None,
 ) -> CiftiSeparateOutputs:
     """
+    cifti-separate
+    
     Write a cifti structure as metric, label or volume.
     
     For dtseries, dscalar, and dlabel, use COLUMN for <direction>, and if you
@@ -645,6 +647,8 @@ def cifti_separate(
     runner: Runner | None = None,
 ) -> CiftiSeparateOutputs:
     """
+    cifti-separate
+    
     Write a cifti structure as metric, label or volume.
     
     For dtseries, dscalar, and dlabel, use COLUMN for <direction>, and if you

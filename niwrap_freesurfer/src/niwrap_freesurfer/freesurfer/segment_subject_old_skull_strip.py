@@ -165,8 +165,10 @@ def segment_subject_old_skull_strip_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectOldSkullStripOutputs:
     """
-    Front-end for MINCs mritotal for computing the talairach transform that maps the
-    input volume to the MNI305.
+    segment_subject_old_skull_strip
+    
+    Front-end for MINCs mritotal for computing the talairach transform that maps
+    the input volume to the MNI305.
     
     Author: FreeSurfer Developers
     
@@ -197,8 +199,10 @@ def segment_subject_old_skull_strip(
     runner: Runner | None = None,
 ) -> SegmentSubjectOldSkullStripOutputs:
     """
-    Front-end for MINCs mritotal for computing the talairach transform that maps the
-    input volume to the MNI305.
+    segment_subject_old_skull_strip
+    
+    Front-end for MINCs mritotal for computing the talairach transform that maps
+    the input volume to the MNI305.
     
     Author: FreeSurfer Developers
     

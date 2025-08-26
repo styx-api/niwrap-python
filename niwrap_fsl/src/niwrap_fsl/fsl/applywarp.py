@@ -221,6 +221,8 @@ def applywarp_execute(
     runner: Runner | None = None,
 ) -> ApplywarpOutputs:
     """
+    applywarp
+    
     Apply warps estimated by FNIRT (or some other software) to some image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -261,6 +263,8 @@ def applywarp(
     runner: Runner | None = None,
 ) -> ApplywarpOutputs:
     """
+    applywarp
+    
     Apply warps estimated by FNIRT (or some other software) to some image.
     
     Author: FMRIB Analysis Group, University of Oxford

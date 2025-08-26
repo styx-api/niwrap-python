@@ -166,7 +166,10 @@ def create_morph_execute(
     runner: Runner | None = None,
 ) -> CreateMorphOutputs:
     """
-    Tool to create morphological transformations using specified input transforms.
+    createMorph
+    
+    Tool to create morphological transformations using specified input
+    transforms.
     
     Author: FreeSurfer Developers
     
@@ -196,7 +199,10 @@ def create_morph(
     runner: Runner | None = None,
 ) -> CreateMorphOutputs:
     """
-    Tool to create morphological transformations using specified input transforms.
+    createMorph
+    
+    Tool to create morphological transformations using specified input
+    transforms.
     
     Author: FreeSurfer Developers
     

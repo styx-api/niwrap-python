@@ -119,7 +119,10 @@ def adjunct_simplify_cost_execute(
     runner: Runner | None = None,
 ) -> AdjunctSimplifyCostOutputs:
     """
-    Simplifies a cost function name by removing the '+' and anything following it.
+    adjunct_simplify_cost
+    
+    Simplifies a cost function name by removing the '+' and anything following
+    it.
     
     Author: AFNI Developers
     
@@ -145,7 +148,10 @@ def adjunct_simplify_cost(
     runner: Runner | None = None,
 ) -> AdjunctSimplifyCostOutputs:
     """
-    Simplifies a cost function name by removing the '+' and anything following it.
+    adjunct_simplify_cost
+    
+    Simplifies a cost function name by removing the '+' and anything following
+    it.
     
     Author: AFNI Developers
     

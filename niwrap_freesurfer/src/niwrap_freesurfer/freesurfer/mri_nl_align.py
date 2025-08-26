@@ -555,6 +555,8 @@ def mri_nl_align_execute(
     runner: Runner | None = None,
 ) -> MriNlAlignOutputs:
     """
+    mri_nl_align
+    
     mri_nl_align aligns two images using nonlinear registration.
     
     Author: FreeSurfer Developers
@@ -628,6 +630,8 @@ def mri_nl_align(
     runner: Runner | None = None,
 ) -> MriNlAlignOutputs:
     """
+    mri_nl_align
+    
     mri_nl_align aligns two images using nonlinear registration.
     
     Author: FreeSurfer Developers

@@ -175,6 +175,8 @@ def dmri_anatomi_cuts_execute(
     runner: Runner | None = None,
 ) -> DmriAnatomiCutsOutputs:
     """
+    dmri_AnatomiCuts
+    
     AnatomiCuts tool for DTI fibers segmentation.
     
     Author: FreeSurfer Developers
@@ -207,6 +209,8 @@ def dmri_anatomi_cuts(
     runner: Runner | None = None,
 ) -> DmriAnatomiCutsOutputs:
     """
+    dmri_AnatomiCuts
+    
     AnatomiCuts tool for DTI fibers segmentation.
     
     Author: FreeSurfer Developers

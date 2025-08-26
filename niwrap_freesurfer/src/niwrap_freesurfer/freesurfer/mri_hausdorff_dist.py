@@ -178,8 +178,10 @@ def mri_hausdorff_dist_execute(
     runner: Runner | None = None,
 ) -> MriHausdorffDistOutputs:
     """
-    Tool for computing the mean or max of the minimum distances between point sets
-    in 3D volumes.
+    mri_hausdorff_dist
+    
+    Tool for computing the mean or max of the minimum distances between point
+    sets in 3D volumes.
     
     Author: FreeSurfer Developers
     
@@ -212,8 +214,10 @@ def mri_hausdorff_dist(
     runner: Runner | None = None,
 ) -> MriHausdorffDistOutputs:
     """
-    Tool for computing the mean or max of the minimum distances between point sets
-    in 3D volumes.
+    mri_hausdorff_dist
+    
+    Tool for computing the mean or max of the minimum distances between point
+    sets in 3D volumes.
     
     Author: FreeSurfer Developers
     

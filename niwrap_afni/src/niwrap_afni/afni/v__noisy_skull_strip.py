@@ -152,6 +152,8 @@ def v__noisy_skull_strip_execute(
     runner: Runner | None = None,
 ) -> VNoisySkullStripOutputs:
     """
+    @NoisySkullStrip
+    
     Strips the skull of anatomical datasets with low SNR.
     
     Author: AFNI Developers
@@ -180,6 +182,8 @@ def v__noisy_skull_strip(
     runner: Runner | None = None,
 ) -> VNoisySkullStripOutputs:
     """
+    @NoisySkullStrip
+    
     Strips the skull of anatomical datasets with low SNR.
     
     Author: AFNI Developers

@@ -160,8 +160,10 @@ def v_3d_nwarp_funcs_execute(
     runner: Runner | None = None,
 ) -> V3dNwarpFuncsOutputs:
     """
-    Compute functions of 3D warp displacements, such as bulk volume change, shear
-    energy, and vorticity energy.
+    3dNwarpFuncs
+    
+    Compute functions of 3D warp displacements, such as bulk volume change,
+    shear energy, and vorticity energy.
     
     Author: AFNI Developers
     
@@ -192,8 +194,10 @@ def v_3d_nwarp_funcs(
     runner: Runner | None = None,
 ) -> V3dNwarpFuncsOutputs:
     """
-    Compute functions of 3D warp displacements, such as bulk volume change, shear
-    energy, and vorticity energy.
+    3dNwarpFuncs
+    
+    Compute functions of 3D warp displacements, such as bulk volume change,
+    shear energy, and vorticity energy.
     
     Author: AFNI Developers
     

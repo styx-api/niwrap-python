@@ -298,6 +298,8 @@ def volume_dilate_execute(
     runner: Runner | None = None,
 ) -> VolumeDilateOutputs:
     """
+    volume-dilate
+    
     Dilate a volume file.
     
     For all voxels that are designated as bad, if they neighbor a non-bad voxel
@@ -351,6 +353,8 @@ def volume_dilate(
     runner: Runner | None = None,
 ) -> VolumeDilateOutputs:
     """
+    volume-dilate
+    
     Dilate a volume file.
     
     For all voxels that are designated as bad, if they neighbor a non-bad voxel

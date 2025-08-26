@@ -226,6 +226,8 @@ def fat_proc_filter_dwis_execute(
     runner: Runner | None = None,
 ) -> FatProcFilterDwisOutputs:
     """
+    fat_proc_filter_dwis
+    
     Filter out user-found and user-defined bad volumes from DWI data sets.
     
     Author: AFNI Developers
@@ -262,6 +264,8 @@ def fat_proc_filter_dwis(
     runner: Runner | None = None,
 ) -> FatProcFilterDwisOutputs:
     """
+    fat_proc_filter_dwis
+    
     Filter out user-found and user-defined bad volumes from DWI data sets.
     
     Author: AFNI Developers

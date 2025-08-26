@@ -2638,6 +2638,8 @@ def mrcalc_execute(
     runner: Runner | None = None,
 ) -> MrcalcOutputs:
     """
+    mrcalc
+    
     Apply generic voxel-wise mathematical operations to images.
     
     This command will only compute per-voxel operations. Use 'mrmath' to compute
@@ -2749,6 +2751,8 @@ def mrcalc(
     runner: Runner | None = None,
 ) -> MrcalcOutputs:
     """
+    mrcalc
+    
     Apply generic voxel-wise mathematical operations to images.
     
     This command will only compute per-voxel operations. Use 'mrmath' to compute

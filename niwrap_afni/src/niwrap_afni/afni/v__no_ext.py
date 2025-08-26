@@ -130,6 +130,8 @@ def v__no_ext_execute(
     runner: Runner | None = None,
 ) -> VNoExtOutputs:
     """
+    @NoExt
+    
     Tool for removing specified extensions from filenames.
     
     Author: AFNI Developers
@@ -157,6 +159,8 @@ def v__no_ext(
     runner: Runner | None = None,
 ) -> VNoExtOutputs:
     """
+    @NoExt
+    
     Tool for removing specified extensions from filenames.
     
     Author: AFNI Developers

@@ -129,6 +129,8 @@ def volume_remove_islands_execute(
     runner: Runner | None = None,
 ) -> VolumeRemoveIslandsOutputs:
     """
+    volume-remove-islands
+    
     Remove islands from an roi volume.
     
     Finds all face-connected parts of the ROI, and zeros out all but the largest
@@ -159,6 +161,8 @@ def volume_remove_islands(
     runner: Runner | None = None,
 ) -> VolumeRemoveIslandsOutputs:
     """
+    volume-remove-islands
+    
     Remove islands from an roi volume.
     
     Finds all face-connected parts of the ROI, and zeros out all but the largest

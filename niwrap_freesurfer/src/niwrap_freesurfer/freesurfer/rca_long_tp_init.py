@@ -163,6 +163,8 @@ def rca_long_tp_init_execute(
     runner: Runner | None = None,
 ) -> RcaLongTpInitOutputs:
     """
+    rca-long-tp-init
+    
     Initialize long timepoint subject for recon-all processing.
     
     Author: FreeSurfer Developers
@@ -194,6 +196,8 @@ def rca_long_tp_init(
     runner: Runner | None = None,
 ) -> RcaLongTpInitOutputs:
     """
+    rca-long-tp-init
+    
     Initialize long timepoint subject for recon-all processing.
     
     Author: FreeSurfer Developers

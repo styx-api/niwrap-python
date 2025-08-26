@@ -142,6 +142,8 @@ def calc_grad_perc_dev_execute(
     runner: Runner | None = None,
 ) -> CalcGradPercDevOutputs:
     """
+    calc_grad_perc_dev
+    
     Compute the gradient percent deviation based on a full warp image from
     gradient_unwarp.py.
     
@@ -172,6 +174,8 @@ def calc_grad_perc_dev(
     runner: Runner | None = None,
 ) -> CalcGradPercDevOutputs:
     """
+    calc_grad_perc_dev
+    
     Compute the gradient percent deviation based on a full warp image from
     gradient_unwarp.py.
     

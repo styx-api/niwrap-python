@@ -277,6 +277,8 @@ def mrhistmatch_execute(
     runner: Runner | None = None,
 ) -> MrhistmatchOutputs:
     """
+    mrhistmatch
+    
     Modify the intensities of one image to match the histogram of another.
     
     
@@ -328,6 +330,8 @@ def mrhistmatch(
     runner: Runner | None = None,
 ) -> MrhistmatchOutputs:
     """
+    mrhistmatch
+    
     Modify the intensities of one image to match the histogram of another.
     
     

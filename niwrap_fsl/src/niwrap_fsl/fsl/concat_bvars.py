@@ -128,6 +128,8 @@ def concat_bvars_execute(
     runner: Runner | None = None,
 ) -> ConcatBvarsOutputs:
     """
+    concat_bvars
+    
     Concatenate multiple .bvars files into a single .bvars file.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def concat_bvars(
     runner: Runner | None = None,
 ) -> ConcatBvarsOutputs:
     """
+    concat_bvars
+    
     Concatenate multiple .bvars files into a single .bvars file.
     
     Author: FMRIB Analysis Group, University of Oxford

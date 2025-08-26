@@ -394,8 +394,11 @@ def sccan_execute(
     runner: Runner | None = None,
 ) -> SccanOutputs:
     """
-    A tool for sparse statistical analysis on images : scca, pscca (with options),
-    mscca. Can also convert an imagelist/mask pair to a binary matrix image.
+    sccan
+    
+    A tool for sparse statistical analysis on images : scca, pscca (with
+    options), mscca. Can also convert an imagelist/mask pair to a binary matrix
+    image.
     
     Author: ANTs Developers
     
@@ -447,8 +450,11 @@ def sccan(
     runner: Runner | None = None,
 ) -> SccanOutputs:
     """
-    A tool for sparse statistical analysis on images : scca, pscca (with options),
-    mscca. Can also convert an imagelist/mask pair to a binary matrix image.
+    sccan
+    
+    A tool for sparse statistical analysis on images : scca, pscca (with
+    options), mscca. Can also convert an imagelist/mask pair to a binary matrix
+    image.
     
     Author: ANTs Developers
     

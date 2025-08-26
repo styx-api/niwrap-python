@@ -147,6 +147,8 @@ def v__suma_make_spec_sf_execute(
     runner: Runner | None = None,
 ) -> VSumaMakeSpecSfOutputs:
     """
+    @SUMA_Make_Spec_SF
+    
     Prepare for surface viewing in SUMA.
     
     Author: AFNI Developers
@@ -175,6 +177,8 @@ def v__suma_make_spec_sf(
     runner: Runner | None = None,
 ) -> VSumaMakeSpecSfOutputs:
     """
+    @SUMA_Make_Spec_SF
+    
     Prepare for surface viewing in SUMA.
     
     Author: AFNI Developers

@@ -275,6 +275,8 @@ def v_3d_reg_ana_execute(
     runner: Runner | None = None,
 ) -> V3dRegAnaOutputs:
     """
+    3dRegAna
+    
     Multiple linear regression analysis for AFNI datasets.
     
     Author: AFNI Developers
@@ -315,6 +317,8 @@ def v_3d_reg_ana(
     runner: Runner | None = None,
 ) -> V3dRegAnaOutputs:
     """
+    3dRegAna
+    
     Multiple linear regression analysis for AFNI datasets.
     
     Author: AFNI Developers

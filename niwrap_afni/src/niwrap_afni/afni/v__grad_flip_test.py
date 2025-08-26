@@ -257,6 +257,8 @@ def v__grad_flip_test_execute(
     runner: Runner | None = None,
 ) -> VGradFlipTestOutputs:
     """
+    @GradFlipTest
+    
     Script to test the correct flip for a data set when using 1dDW_Grad_o_Mat++.
     
     Author: AFNI Developers
@@ -296,6 +298,8 @@ def v__grad_flip_test(
     runner: Runner | None = None,
 ) -> VGradFlipTestOutputs:
     """
+    @GradFlipTest
+    
     Script to test the correct flip for a data set when using 1dDW_Grad_o_Mat++.
     
     Author: AFNI Developers

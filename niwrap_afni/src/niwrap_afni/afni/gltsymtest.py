@@ -131,8 +131,10 @@ def gltsymtest_execute(
     runner: Runner | None = None,
 ) -> GltsymtestOutputs:
     """
-    A tool to test the validity of '-gltsym' strings for use with 3dDeconvolve or
-    3dREMLfit.
+    GLTsymtest
+    
+    A tool to test the validity of '-gltsym' strings for use with 3dDeconvolve
+    or 3dREMLfit.
     
     Author: AFNI Developers
     
@@ -160,8 +162,10 @@ def gltsymtest(
     runner: Runner | None = None,
 ) -> GltsymtestOutputs:
     """
-    A tool to test the validity of '-gltsym' strings for use with 3dDeconvolve or
-    3dREMLfit.
+    GLTsymtest
+    
+    A tool to test the validity of '-gltsym' strings for use with 3dDeconvolve
+    or 3dREMLfit.
     
     Author: AFNI Developers
     

@@ -143,8 +143,10 @@ def v_3d_sharpen_execute(
     runner: Runner | None = None,
 ) -> V3dSharpenOutputs:
     """
-    Applies a simple 3D sharpening filter to the positive values in the #0 volume of
-    the input dataset, and writes out a new dataset.
+    3dSharpen
+    
+    Applies a simple 3D sharpening filter to the positive values in the #0
+    volume of the input dataset, and writes out a new dataset.
     
     Author: AFNI Developers
     
@@ -172,8 +174,10 @@ def v_3d_sharpen(
     runner: Runner | None = None,
 ) -> V3dSharpenOutputs:
     """
-    Applies a simple 3D sharpening filter to the positive values in the #0 volume of
-    the input dataset, and writes out a new dataset.
+    3dSharpen
+    
+    Applies a simple 3D sharpening filter to the positive values in the #0
+    volume of the input dataset, and writes out a new dataset.
     
     Author: AFNI Developers
     

@@ -176,6 +176,8 @@ def mri_extract_largest_cc_execute(
     runner: Runner | None = None,
 ) -> MriExtractLargestCcOutputs:
     """
+    mri_extract_largest_CC
+    
     This program extracts the largest connected component of the input volume.
     
     Author: FreeSurfer Developers
@@ -208,6 +210,8 @@ def mri_extract_largest_cc(
     runner: Runner | None = None,
 ) -> MriExtractLargestCcOutputs:
     """
+    mri_extract_largest_CC
+    
     This program extracts the largest connected component of the input volume.
     
     Author: FreeSurfer Developers

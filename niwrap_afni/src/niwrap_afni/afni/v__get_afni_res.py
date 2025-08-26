@@ -127,6 +127,8 @@ def v__get_afni_res_execute(
     runner: Runner | None = None,
 ) -> VGetAfniResOutputs:
     """
+    @GetAfniRes
+    
     Tool to return the voxel resolution of a dataset.
     
     Author: AFNI Developers
@@ -154,6 +156,8 @@ def v__get_afni_res(
     runner: Runner | None = None,
 ) -> VGetAfniResOutputs:
     """
+    @GetAfniRes
+    
     Tool to return the voxel resolution of a dataset.
     
     Author: AFNI Developers

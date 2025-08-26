@@ -145,6 +145,8 @@ def mris_rf_train_execute(
     runner: Runner | None = None,
 ) -> MrisRfTrainOutputs:
     """
+    mris_rf_train
+    
     Tool for training a random forest classifier using MRIS surface data.
     
     Author: FreeSurfer Developers
@@ -174,6 +176,8 @@ def mris_rf_train(
     runner: Runner | None = None,
 ) -> MrisRfTrainOutputs:
     """
+    mris_rf_train
+    
     Tool for training a random forest classifier using MRIS surface data.
     
     Author: FreeSurfer Developers

@@ -125,6 +125,8 @@ def hiam_make_surfaces_execute(
     runner: Runner | None = None,
 ) -> HiamMakeSurfacesOutputs:
     """
+    hiam_make_surfaces
+    
     Surface creation tool for specified brain structures.
     
     Author: FreeSurfer Developers
@@ -152,6 +154,8 @@ def hiam_make_surfaces(
     runner: Runner | None = None,
 ) -> HiamMakeSurfacesOutputs:
     """
+    hiam_make_surfaces
+    
     Surface creation tool for specified brain structures.
     
     Author: FreeSurfer Developers

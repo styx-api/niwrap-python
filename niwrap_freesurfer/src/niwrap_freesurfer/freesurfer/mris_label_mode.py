@@ -162,6 +162,8 @@ def mris_label_mode_execute(
     runner: Runner | None = None,
 ) -> MrisLabelModeOutputs:
     """
+    mris_label_mode
+    
     This program will add a template into an average surface.
     
     Author: FreeSurfer Developers
@@ -195,6 +197,8 @@ def mris_label_mode(
     runner: Runner | None = None,
 ) -> MrisLabelModeOutputs:
     """
+    mris_label_mode
+    
     This program will add a template into an average surface.
     
     Author: FreeSurfer Developers

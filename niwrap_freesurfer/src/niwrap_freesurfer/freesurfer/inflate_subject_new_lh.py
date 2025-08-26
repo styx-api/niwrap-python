@@ -126,6 +126,8 @@ def inflate_subject_new_lh_execute(
     runner: Runner | None = None,
 ) -> InflateSubjectNewLhOutputs:
     """
+    inflate_subject_new-lh
+    
     Tool for inflating the left hemisphere of a subject in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -152,6 +154,8 @@ def inflate_subject_new_lh(
     runner: Runner | None = None,
 ) -> InflateSubjectNewLhOutputs:
     """
+    inflate_subject_new-lh
+    
     Tool for inflating the left hemisphere of a subject in FreeSurfer.
     
     Author: FreeSurfer Developers

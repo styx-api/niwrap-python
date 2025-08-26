@@ -192,6 +192,8 @@ def v_3d_tsort_execute(
     runner: Runner | None = None,
 ) -> V3dTsortOutputs:
     """
+    3dTsort
+    
     Sorts each voxel in a dataset and produces a new dataset.
     
     Author: AFNI Developers
@@ -228,6 +230,8 @@ def v_3d_tsort(
     runner: Runner | None = None,
 ) -> V3dTsortOutputs:
     """
+    3dTsort
+    
     Sorts each voxel in a dataset and produces a new dataset.
     
     Author: AFNI Developers

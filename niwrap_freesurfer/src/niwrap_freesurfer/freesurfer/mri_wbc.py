@@ -266,7 +266,10 @@ def mri_wbc_execute(
     runner: Runner | None = None,
 ) -> MriWbcOutputs:
     """
-    A tool for working with functional brain imaging data on surfaces and volumes.
+    mri_wbc
+    
+    A tool for working with functional brain imaging data on surfaces and
+    volumes.
     
     Author: FreeSurfer Developers
     
@@ -308,7 +311,10 @@ def mri_wbc(
     runner: Runner | None = None,
 ) -> MriWbcOutputs:
     """
-    A tool for working with functional brain imaging data on surfaces and volumes.
+    mri_wbc
+    
+    A tool for working with functional brain imaging data on surfaces and
+    volumes.
     
     Author: FreeSurfer Developers
     

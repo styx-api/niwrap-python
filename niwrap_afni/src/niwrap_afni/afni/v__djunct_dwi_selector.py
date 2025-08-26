@@ -133,6 +133,8 @@ def v__djunct_dwi_selector_execute(
     runner: Runner | None = None,
 ) -> VDjunctDwiSelectorOutputs:
     """
+    @djunct_dwi_selector
+    
     Selects DWI data and creates a representative image.
     
     Author: AFNI Developers
@@ -161,6 +163,8 @@ def v__djunct_dwi_selector(
     runner: Runner | None = None,
 ) -> VDjunctDwiSelectorOutputs:
     """
+    @djunct_dwi_selector
+    
     Selects DWI data and creates a representative image.
     
     Author: AFNI Developers

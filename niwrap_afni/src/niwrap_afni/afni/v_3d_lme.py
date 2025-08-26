@@ -379,6 +379,8 @@ def v_3d_lme_execute(
     runner: Runner | None = None,
 ) -> V3dLmeOutputs:
     """
+    3dLME
+    
     AFNI Group Analysis Program with Linear Mixed-Effects Modeling Approach.
     
     Author: AFNI Developers
@@ -434,6 +436,8 @@ def v_3d_lme(
     runner: Runner | None = None,
 ) -> V3dLmeOutputs:
     """
+    3dLME
+    
     AFNI Group Analysis Program with Linear Mixed-Effects Modeling Approach.
     
     Author: AFNI Developers

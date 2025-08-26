@@ -265,8 +265,10 @@ def gtmseg_execute(
     runner: Runner | None = None,
 ) -> GtmsegOutputs:
     """
-    Creates an anatomical segmentation for the geometric transfer matrix (GTM) used
-    in PET partial volume correction.
+    gtmseg
+    
+    Creates an anatomical segmentation for the geometric transfer matrix (GTM)
+    used in PET partial volume correction.
     
     Author: FreeSurfer Developers
     
@@ -309,8 +311,10 @@ def gtmseg(
     runner: Runner | None = None,
 ) -> GtmsegOutputs:
     """
-    Creates an anatomical segmentation for the geometric transfer matrix (GTM) used
-    in PET partial volume correction.
+    gtmseg
+    
+    Creates an anatomical segmentation for the geometric transfer matrix (GTM)
+    used in PET partial volume correction.
     
     Author: FreeSurfer Developers
     

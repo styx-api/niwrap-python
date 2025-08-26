@@ -265,6 +265,8 @@ def halfcosbasis_execute(
     runner: Runner | None = None,
 ) -> HalfcosbasisOutputs:
     """
+    halfcosbasis
+    
     Tool for handling half-cosine basis functions in FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -307,6 +309,8 @@ def halfcosbasis(
     runner: Runner | None = None,
 ) -> HalfcosbasisOutputs:
     """
+    halfcosbasis
+    
     Tool for handling half-cosine basis functions in FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -251,6 +251,8 @@ def cifti_rois_from_extrema_execute(
     runner: Runner | None = None,
 ) -> CiftiRoisFromExtremaOutputs:
     """
+    cifti-rois-from-extrema
+    
     Create cifti roi maps from extrema maps.
     
     For each nonzero value in each map, make a map with an ROI around that
@@ -296,6 +298,8 @@ def cifti_rois_from_extrema(
     runner: Runner | None = None,
 ) -> CiftiRoisFromExtremaOutputs:
     """
+    cifti-rois-from-extrema
+    
     Create cifti roi maps from extrema maps.
     
     For each nonzero value in each map, make a map with an ROI around that

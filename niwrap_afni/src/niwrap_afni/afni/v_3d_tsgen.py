@@ -236,8 +236,10 @@ def v_3d_tsgen_execute(
     runner: Runner | None = None,
 ) -> V3dTsgenOutputs:
     """
-    This program generates an AFNI 3d+time data set based on user-specified signal
-    and noise models for each voxel.
+    3dTSgen
+    
+    This program generates an AFNI 3d+time data set based on user-specified
+    signal and noise models for each voxel.
     
     Author: AFNI Developers
     
@@ -275,8 +277,10 @@ def v_3d_tsgen(
     runner: Runner | None = None,
 ) -> V3dTsgenOutputs:
     """
-    This program generates an AFNI 3d+time data set based on user-specified signal
-    and noise models for each voxel.
+    3dTSgen
+    
+    This program generates an AFNI 3d+time data set based on user-specified
+    signal and noise models for each voxel.
     
     Author: AFNI Developers
     

@@ -489,6 +489,8 @@ def metric_palette_execute(
     runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
+    metric-palette
+    
     Set the palette of a metric file.
     
     The original metric file is overwritten with the modified version. By
@@ -604,6 +606,8 @@ def metric_palette(
     runner: Runner | None = None,
 ) -> MetricPaletteOutputs:
     """
+    metric-palette
+    
     Set the palette of a metric file.
     
     The original metric file is overwritten with the modified version. By

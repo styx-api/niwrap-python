@@ -133,6 +133,8 @@ def mris_remove_negative_vertices_execute(
     runner: Runner | None = None,
 ) -> MrisRemoveNegativeVerticesOutputs:
     """
+    mris_remove_negative_vertices
+    
     This program adds a template into an average surface.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mris_remove_negative_vertices(
     runner: Runner | None = None,
 ) -> MrisRemoveNegativeVerticesOutputs:
     """
+    mris_remove_negative_vertices
+    
     This program adds a template into an average surface.
     
     Author: FreeSurfer Developers

@@ -230,6 +230,8 @@ def tsfvalidate_execute(
     runner: Runner | None = None,
 ) -> TsfvalidateOutputs:
     """
+    tsfvalidate
+    
     Validate a track scalar file against the corresponding track data.
     
     
@@ -271,6 +273,8 @@ def tsfvalidate(
     runner: Runner | None = None,
 ) -> TsfvalidateOutputs:
     """
+    tsfvalidate
+    
     Validate a track scalar file against the corresponding track data.
     
     

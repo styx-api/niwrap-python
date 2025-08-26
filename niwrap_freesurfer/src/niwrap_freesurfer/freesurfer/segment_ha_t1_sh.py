@@ -154,6 +154,8 @@ def segment_ha_t1_sh_execute(
     runner: Runner | None = None,
 ) -> SegmentHaT1ShOutputs:
     """
+    segmentHA_T1.sh
+    
     Tool for hippocampal/amygdalar subfield segmentation.
     
     Author: FreeSurfer Developers
@@ -184,6 +186,8 @@ def segment_ha_t1_sh(
     runner: Runner | None = None,
 ) -> SegmentHaT1ShOutputs:
     """
+    segmentHA_T1.sh
+    
     Tool for hippocampal/amygdalar subfield segmentation.
     
     Author: FreeSurfer Developers

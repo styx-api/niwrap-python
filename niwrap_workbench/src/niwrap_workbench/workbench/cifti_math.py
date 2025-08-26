@@ -266,6 +266,8 @@ def cifti_math_execute(
     runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
+    cifti-math
+    
     Evaluate expression on cifti files.
     
     This command evaluates <expression> at each matrix element independently.
@@ -369,6 +371,8 @@ def cifti_math(
     runner: Runner | None = None,
 ) -> CiftiMathOutputs:
     """
+    cifti-math
+    
     Evaluate expression on cifti files.
     
     This command evaluates <expression> at each matrix element independently.

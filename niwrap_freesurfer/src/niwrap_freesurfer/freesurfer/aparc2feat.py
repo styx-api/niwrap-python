@@ -191,8 +191,10 @@ def aparc2feat_execute(
     runner: Runner | None = None,
 ) -> Aparc2featOutputs:
     """
-    Resamples the FreeSurfer automatic cortical segmentation to the FEAT functional
-    space.
+    aparc2feat
+    
+    Resamples the FreeSurfer automatic cortical segmentation to the FEAT
+    functional space.
     
     Author: FreeSurfer Developers
     
@@ -226,8 +228,10 @@ def aparc2feat(
     runner: Runner | None = None,
 ) -> Aparc2featOutputs:
     """
-    Resamples the FreeSurfer automatic cortical segmentation to the FEAT functional
-    space.
+    aparc2feat
+    
+    Resamples the FreeSurfer automatic cortical segmentation to the FEAT
+    functional space.
     
     Author: FreeSurfer Developers
     

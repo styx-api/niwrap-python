@@ -128,6 +128,8 @@ def mkmnc_index_tcl_execute(
     runner: Runner | None = None,
 ) -> MkmncIndexTclOutputs:
     """
+    mkmnc_index.tcl
+    
     A tool for creating MINC indices.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mkmnc_index_tcl(
     runner: Runner | None = None,
 ) -> MkmncIndexTclOutputs:
     """
+    mkmnc_index.tcl
+    
     A tool for creating MINC indices.
     
     Author: FreeSurfer Developers

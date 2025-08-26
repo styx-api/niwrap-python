@@ -128,6 +128,8 @@ def run_segment_subject_t2_auto_estimate_alveus_ml_sh_execute(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectT2AutoEstimateAlveusMlShOutputs:
     """
+    run_segmentSubjectT2_autoEstimateAlveusML.sh
+    
     Script to run segmentSubjectT2_autoEstimateAlveusML operation. This script
     requires a MATLAB Compiler Runtime (MCR) root directory as input, but help
     output indicates missing library reference for operation.
@@ -157,6 +159,8 @@ def run_segment_subject_t2_auto_estimate_alveus_ml_sh(
     runner: Runner | None = None,
 ) -> RunSegmentSubjectT2AutoEstimateAlveusMlShOutputs:
     """
+    run_segmentSubjectT2_autoEstimateAlveusML.sh
+    
     Script to run segmentSubjectT2_autoEstimateAlveusML operation. This script
     requires a MATLAB Compiler Runtime (MCR) root directory as input, but help
     output indicates missing library reference for operation.

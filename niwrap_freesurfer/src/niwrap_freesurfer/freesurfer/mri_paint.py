@@ -154,6 +154,8 @@ def mri_paint_execute(
     runner: Runner | None = None,
 ) -> MriPaintOutputs:
     """
+    mri_paint
+    
     This program will paint average Talairach stats onto a surface.
     
     Author: FreeSurfer Developers
@@ -185,6 +187,8 @@ def mri_paint(
     runner: Runner | None = None,
 ) -> MriPaintOutputs:
     """
+    mri_paint
+    
     This program will paint average Talairach stats onto a surface.
     
     Author: FreeSurfer Developers

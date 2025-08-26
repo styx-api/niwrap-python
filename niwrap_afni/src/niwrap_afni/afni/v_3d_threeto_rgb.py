@@ -186,6 +186,8 @@ def v_3d_threeto_rgb_execute(
     runner: Runner | None = None,
 ) -> V3dThreetoRgbOutputs:
     """
+    3dThreetoRGB
+    
     Converts 3 sub-bricks of input to an RGB-valued dataset.
     
     Author: AFNI Developers
@@ -219,6 +221,8 @@ def v_3d_threeto_rgb(
     runner: Runner | None = None,
 ) -> V3dThreetoRgbOutputs:
     """
+    3dThreetoRGB
+    
     Converts 3 sub-bricks of input to an RGB-valued dataset.
     
     Author: AFNI Developers

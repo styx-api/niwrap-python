@@ -124,6 +124,8 @@ def morph_rgb_lh_execute(
     runner: Runner | None = None,
 ) -> MorphRgbLhOutputs:
     """
+    morph_rgb-lh
+    
     Tool for working with and generating RGB images of morphometric data for the
     left hemisphere in FreeSurfer.
     
@@ -151,6 +153,8 @@ def morph_rgb_lh(
     runner: Runner | None = None,
 ) -> MorphRgbLhOutputs:
     """
+    morph_rgb-lh
+    
     Tool for working with and generating RGB images of morphometric data for the
     left hemisphere in FreeSurfer.
     

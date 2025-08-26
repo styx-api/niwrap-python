@@ -243,8 +243,10 @@ def ants_ai_execute(
     runner: Runner | None = None,
 ) -> AntsAiOutputs:
     """
-    Program to calculate the optimal linear transform parameters for aligning two
-    images.
+    antsAI
+    
+    Program to calculate the optimal linear transform parameters for aligning
+    two images.
     
     Author: ANTs Developers
     
@@ -281,8 +283,10 @@ def ants_ai(
     runner: Runner | None = None,
 ) -> AntsAiOutputs:
     """
-    Program to calculate the optimal linear transform parameters for aligning two
-    images.
+    antsAI
+    
+    Program to calculate the optimal linear transform parameters for aligning
+    two images.
     
     Author: ANTs Developers
     

@@ -124,6 +124,8 @@ def afni_run_r_execute(
     runner: Runner | None = None,
 ) -> AfniRunROutputs:
     """
+    afni_run_R
+    
     Run an R script with the specified arguments.
     
     Author: AFNI Developers
@@ -151,6 +153,8 @@ def afni_run_r(
     runner: Runner | None = None,
 ) -> AfniRunROutputs:
     """
+    afni_run_R
+    
     Run an R script with the specified arguments.
     
     Author: AFNI Developers

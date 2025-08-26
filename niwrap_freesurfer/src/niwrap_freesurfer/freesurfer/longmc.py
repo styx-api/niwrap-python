@@ -163,8 +163,10 @@ def longmc_execute(
     runner: Runner | None = None,
 ) -> LongmcOutputs:
     """
-    Perform motion correction for the longitudinal recon-all stream when creating
-    the longitudinal timepoint of a subject.
+    longmc
+    
+    Perform motion correction for the longitudinal recon-all stream when
+    creating the longitudinal timepoint of a subject.
     
     Author: FreeSurfer Developers
     
@@ -196,8 +198,10 @@ def longmc(
     runner: Runner | None = None,
 ) -> LongmcOutputs:
     """
-    Perform motion correction for the longitudinal recon-all stream when creating
-    the longitudinal timepoint of a subject.
+    longmc
+    
+    Perform motion correction for the longitudinal recon-all stream when
+    creating the longitudinal timepoint of a subject.
     
     Author: FreeSurfer Developers
     

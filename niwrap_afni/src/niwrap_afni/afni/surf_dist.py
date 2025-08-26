@@ -178,6 +178,8 @@ def surf_dist_execute(
     runner: Runner | None = None,
 ) -> SurfDistOutputs:
     """
+    SurfDist
+    
     Calculate shortest distance between node pairs on a surface mesh.
     
     Author: AFNI Developers
@@ -211,6 +213,8 @@ def surf_dist(
     runner: Runner | None = None,
 ) -> SurfDistOutputs:
     """
+    SurfDist
+    
     Calculate shortest distance between node pairs on a surface mesh.
     
     Author: AFNI Developers

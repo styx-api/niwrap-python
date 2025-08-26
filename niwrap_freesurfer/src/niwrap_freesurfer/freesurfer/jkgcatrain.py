@@ -154,6 +154,8 @@ def jkgcatrain_execute(
     runner: Runner | None = None,
 ) -> JkgcatrainOutputs:
     """
+    jkgcatrain
+    
     Jackknife training of GCA using existing output from gcatrain.
     
     Author: FreeSurfer Developers
@@ -184,6 +186,8 @@ def jkgcatrain(
     runner: Runner | None = None,
 ) -> JkgcatrainOutputs:
     """
+    jkgcatrain
+    
     Jackknife training of GCA using existing output from gcatrain.
     
     Author: FreeSurfer Developers

@@ -238,6 +238,8 @@ def v_3d_fdr_execute(
     runner: Runner | None = None,
 ) -> V3dFdrOutputs:
     """
+    3dFDR
+    
     A tool for applying False Discovery Rate (FDR) thresholding to voxelwise
     statistics in 3D functional datasets.
     
@@ -278,6 +280,8 @@ def v_3d_fdr(
     runner: Runner | None = None,
 ) -> V3dFdrOutputs:
     """
+    3dFDR
+    
     A tool for applying False Discovery Rate (FDR) thresholding to voxelwise
     statistics in 3D functional datasets.
     

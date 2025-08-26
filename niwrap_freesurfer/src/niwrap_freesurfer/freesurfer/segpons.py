@@ -164,6 +164,8 @@ def segpons_execute(
     runner: Runner | None = None,
 ) -> SegponsOutputs:
     """
+    segpons
+    
     Approximate segmentation of pons using MNI152 space registration.
     
     Author: FreeSurfer Developers
@@ -195,6 +197,8 @@ def segpons(
     runner: Runner | None = None,
 ) -> SegponsOutputs:
     """
+    segpons
+    
     Approximate segmentation of pons using MNI152 space registration.
     
     Author: FreeSurfer Developers

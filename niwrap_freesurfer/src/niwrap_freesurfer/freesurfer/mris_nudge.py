@@ -143,6 +143,8 @@ def mris_nudge_execute(
     runner: Runner | None = None,
 ) -> MrisNudgeOutputs:
     """
+    mris_nudge
+    
     A tool to nudge vertex positions on a surface using a volume.
     
     Author: FreeSurfer Developers
@@ -173,6 +175,8 @@ def mris_nudge(
     runner: Runner | None = None,
 ) -> MrisNudgeOutputs:
     """
+    mris_nudge
+    
     A tool to nudge vertex positions on a surface using a volume.
     
     Author: FreeSurfer Developers

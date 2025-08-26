@@ -139,6 +139,8 @@ def mri_copy_params_execute(
     runner: Runner | None = None,
 ) -> MriCopyParamsOutputs:
     """
+    mri_copy_params
+    
     A tool to replace the volume parameters of an input volume with those of a
     template volume.
     
@@ -169,6 +171,8 @@ def mri_copy_params(
     runner: Runner | None = None,
 ) -> MriCopyParamsOutputs:
     """
+    mri_copy_params
+    
     A tool to replace the volume parameters of an input volume with those of a
     template volume.
     

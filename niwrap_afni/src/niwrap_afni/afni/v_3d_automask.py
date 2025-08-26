@@ -185,6 +185,8 @@ def v_3d_automask_execute(
     runner: Runner | None = None,
 ) -> V3dAutomaskOutputs:
     """
+    3dAutomask
+    
     Create a brain-only mask of the image using AFNI 3dAutomask command.
     
     Author: AFNI Developers
@@ -217,6 +219,8 @@ def v_3d_automask(
     runner: Runner | None = None,
 ) -> V3dAutomaskOutputs:
     """
+    3dAutomask
+    
     Create a brain-only mask of the image using AFNI 3dAutomask command.
     
     Author: AFNI Developers

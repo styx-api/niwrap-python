@@ -314,6 +314,8 @@ def dwi2adc_execute(
     runner: Runner | None = None,
 ) -> Dwi2adcOutputs:
     """
+    dwi2adc
+    
     Convert mean dwi (trace-weighted) images to mean ADC maps.
     
     
@@ -357,6 +359,8 @@ def dwi2adc(
     runner: Runner | None = None,
 ) -> Dwi2adcOutputs:
     """
+    dwi2adc
+    
     Convert mean dwi (trace-weighted) images to mean ADC maps.
     
     

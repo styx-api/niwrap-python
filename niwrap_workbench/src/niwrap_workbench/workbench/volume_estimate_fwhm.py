@@ -195,6 +195,8 @@ def volume_estimate_fwhm_execute(
     runner: Runner | None = None,
 ) -> VolumeEstimateFwhmOutputs:
     """
+    volume-estimate-fwhm
+    
     Estimate fwhm smoothness of a volume.
     
     Estimates the smoothness of the input volume in X, Y, and Z directions
@@ -229,6 +231,8 @@ def volume_estimate_fwhm(
     runner: Runner | None = None,
 ) -> VolumeEstimateFwhmOutputs:
     """
+    volume-estimate-fwhm
+    
     Estimate fwhm smoothness of a volume.
     
     Estimates the smoothness of the input volume in X, Y, and Z directions

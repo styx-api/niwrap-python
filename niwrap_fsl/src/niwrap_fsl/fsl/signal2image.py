@@ -226,6 +226,8 @@ def signal2image_execute(
     runner: Runner | None = None,
 ) -> Signal2imageOutputs:
     """
+    signal2image
+    
     A tool for converting MR signal data to images using specified k-space
     coordinates and pulse sequences.
     
@@ -265,6 +267,8 @@ def signal2image(
     runner: Runner | None = None,
 ) -> Signal2imageOutputs:
     """
+    signal2image
+    
     A tool for converting MR signal data to images using specified k-space
     coordinates and pulse sequences.
     

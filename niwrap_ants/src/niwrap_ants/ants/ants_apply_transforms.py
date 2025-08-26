@@ -1175,6 +1175,8 @@ def ants_apply_transforms_execute(
     runner: Runner | None = None,
 ) -> AntsApplyTransformsOutputs:
     """
+    antsApplyTransforms
+    
     antsApplyTransforms, applied to an input image, transforms it according to a
     reference image and a transform (or a set of transforms).
     
@@ -1213,6 +1215,8 @@ def ants_apply_transforms(
     runner: Runner | None = None,
 ) -> AntsApplyTransformsOutputs:
     """
+    antsApplyTransforms
+    
     antsApplyTransforms, applied to an input image, transforms it according to a
     reference image and a transform (or a set of transforms).
     

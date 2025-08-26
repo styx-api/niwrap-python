@@ -372,6 +372,8 @@ def cifti_smoothing_execute(
     runner: Runner | None = None,
 ) -> CiftiSmoothingOutputs:
     """
+    cifti-smoothing
+    
     Smooth a cifti file.
     
     The input cifti file must have a brain models mapping on the chosen
@@ -428,6 +430,8 @@ def cifti_smoothing(
     runner: Runner | None = None,
 ) -> CiftiSmoothingOutputs:
     """
+    cifti-smoothing
+    
     Smooth a cifti file.
     
     The input cifti file must have a brain models mapping on the chosen

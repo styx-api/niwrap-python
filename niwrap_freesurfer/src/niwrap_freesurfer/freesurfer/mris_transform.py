@@ -162,7 +162,10 @@ def mris_transform_execute(
     runner: Runner | None = None,
 ) -> MrisTransformOutputs:
     """
-    A tool to transform surfaces from one space to another using image transforms.
+    mris_transform
+    
+    A tool to transform surfaces from one space to another using image
+    transforms.
     
     Author: FreeSurfer Developers
     
@@ -193,7 +196,10 @@ def mris_transform(
     runner: Runner | None = None,
 ) -> MrisTransformOutputs:
     """
-    A tool to transform surfaces from one space to another using image transforms.
+    mris_transform
+    
+    A tool to transform surfaces from one space to another using image
+    transforms.
     
     Author: FreeSurfer Developers
     

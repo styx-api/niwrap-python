@@ -197,6 +197,8 @@ def volume_reduce_execute(
     runner: Runner | None = None,
 ) -> VolumeReduceOutputs:
     """
+    volume-reduce
+    
     Perform reduction operation across subvolumes.
     
     For each voxel, takes the data across subvolumes as a vector, and performs
@@ -249,6 +251,8 @@ def volume_reduce(
     runner: Runner | None = None,
 ) -> VolumeReduceOutputs:
     """
+    volume-reduce
+    
     Perform reduction operation across subvolumes.
     
     For each voxel, takes the data across subvolumes as a vector, and performs

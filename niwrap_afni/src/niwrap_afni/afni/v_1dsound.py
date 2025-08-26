@@ -202,6 +202,8 @@ def v_1dsound_execute(
     runner: Runner | None = None,
 ) -> V1dsoundOutputs:
     """
+    1dsound
+    
     Program to create a sound file from a 1D file (column of numbers).
     
     Author: AFNI Developers
@@ -238,6 +240,8 @@ def v_1dsound(
     runner: Runner | None = None,
 ) -> V1dsoundOutputs:
     """
+    1dsound
+    
     Program to create a sound file from a 1D file (column of numbers).
     
     Author: AFNI Developers

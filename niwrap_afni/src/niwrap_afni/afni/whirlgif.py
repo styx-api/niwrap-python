@@ -180,8 +180,10 @@ def whirlgif_execute(
     runner: Runner | None = None,
 ) -> WhirlgifOutputs:
     """
-    A quick program that reads a series of GIF files and produces a single GIF file
-    composed of those images.
+    whirlgif
+    
+    A quick program that reads a series of GIF files and produces a single GIF
+    file composed of those images.
     
     Author: AFNI Developers
     
@@ -213,8 +215,10 @@ def whirlgif(
     runner: Runner | None = None,
 ) -> WhirlgifOutputs:
     """
-    A quick program that reads a series of GIF files and produces a single GIF file
-    composed of those images.
+    whirlgif
+    
+    A quick program that reads a series of GIF files and produces a single GIF
+    file composed of those images.
     
     Author: AFNI Developers
     

@@ -322,6 +322,8 @@ def mris_ca_train_execute(
     runner: Runner | None = None,
 ) -> MrisCaTrainOutputs:
     """
+    mris_ca_train
+    
     Creates a cortical parcellation atlas file based on one or more annotated
     subjects using probabilistic information.
     
@@ -374,6 +376,8 @@ def mris_ca_train(
     runner: Runner | None = None,
 ) -> MrisCaTrainOutputs:
     """
+    mris_ca_train
+    
     Creates a cortical parcellation atlas file based on one or more annotated
     subjects using probabilistic information.
     

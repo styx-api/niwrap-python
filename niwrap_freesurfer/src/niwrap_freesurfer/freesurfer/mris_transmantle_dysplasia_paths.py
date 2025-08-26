@@ -160,6 +160,8 @@ def mris_transmantle_dysplasia_paths_execute(
     runner: Runner | None = None,
 ) -> MrisTransmantleDysplasiaPathsOutputs:
     """
+    mris_transmantle_dysplasia_paths
+    
     Tool for transmantle dysplasia path computation.
     
     Author: FreeSurfer Developers
@@ -192,6 +194,8 @@ def mris_transmantle_dysplasia_paths(
     runner: Runner | None = None,
 ) -> MrisTransmantleDysplasiaPathsOutputs:
     """
+    mris_transmantle_dysplasia_paths
+    
     Tool for transmantle dysplasia path computation.
     
     Author: FreeSurfer Developers

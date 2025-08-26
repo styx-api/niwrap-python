@@ -154,6 +154,8 @@ def v_1dnorm_execute(
     runner: Runner | None = None,
 ) -> V1dnormOutputs:
     """
+    1dnorm
+    
     Normalize columns of a 1D file (AFNI ASCII list of numbers).
     
     Author: AFNI Developers
@@ -185,6 +187,8 @@ def v_1dnorm(
     runner: Runner | None = None,
 ) -> V1dnormOutputs:
     """
+    1dnorm
+    
     Normalize columns of a 1D file (AFNI ASCII list of numbers).
     
     Author: AFNI Developers

@@ -150,6 +150,8 @@ def deface_subject_execute(
     runner: Runner | None = None,
 ) -> DefaceSubjectOutputs:
     """
+    deface_subject
+    
     Tool for defacing MRI images to anonymize patient data.
     
     Author: FreeSurfer Developers
@@ -179,6 +181,8 @@ def deface_subject(
     runner: Runner | None = None,
 ) -> DefaceSubjectOutputs:
     """
+    deface_subject
+    
     Tool for defacing MRI images to anonymize patient data.
     
     Author: FreeSurfer Developers

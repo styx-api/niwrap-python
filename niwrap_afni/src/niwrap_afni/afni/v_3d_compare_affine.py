@@ -151,8 +151,10 @@ def v_3d_compare_affine_execute(
     runner: Runner | None = None,
 ) -> V3dCompareAffineOutputs:
     """
-    Compares two (or more) affine spatial transformations on a dataset and outputs
-    measurements of their differences in spatial displacements.
+    3dCompareAffine
+    
+    Compares two (or more) affine spatial transformations on a dataset and
+    outputs measurements of their differences in spatial displacements.
     
     Author: AFNI Developers
     
@@ -180,8 +182,10 @@ def v_3d_compare_affine(
     runner: Runner | None = None,
 ) -> V3dCompareAffineOutputs:
     """
-    Compares two (or more) affine spatial transformations on a dataset and outputs
-    measurements of their differences in spatial displacements.
+    3dCompareAffine
+    
+    Compares two (or more) affine spatial transformations on a dataset and
+    outputs measurements of their differences in spatial displacements.
     
     Author: AFNI Developers
     

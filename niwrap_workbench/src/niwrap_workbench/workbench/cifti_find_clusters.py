@@ -496,6 +496,8 @@ def cifti_find_clusters_execute(
     runner: Runner | None = None,
 ) -> CiftiFindClustersOutputs:
     """
+    cifti-find-clusters
+    
     Filter clusters by area/volume.
     
     Outputs a cifti file with nonzero integers for all brainordinates within a
@@ -547,6 +549,8 @@ def cifti_find_clusters(
     runner: Runner | None = None,
 ) -> CiftiFindClustersOutputs:
     """
+    cifti-find-clusters
+    
     Filter clusters by area/volume.
     
     Outputs a cifti file with nonzero integers for all brainordinates within a

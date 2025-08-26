@@ -185,11 +185,14 @@ def ants_motion_corr_stats_execute(
     runner: Runner | None = None,
 ) -> AntsMotionCorrStatsOutputs:
     """
+    antsMotionCorrStats
+    
     Create summary measures of the parameters that are output by antsMotionCorr.
     Currently only works for linear transforms. Outputs the mean and max
     displacements for the voxels within a provided mask, at each time point. By
-    default the displacements are relative to the reference space, but the framewise
-    option may be used to provide displacements between consecutive time points.
+    default the displacements are relative to the reference space, but the
+    framewise option may be used to provide displacements between consecutive
+    time points.
     
     Author: ANTs Developers
     
@@ -222,11 +225,14 @@ def ants_motion_corr_stats(
     runner: Runner | None = None,
 ) -> AntsMotionCorrStatsOutputs:
     """
+    antsMotionCorrStats
+    
     Create summary measures of the parameters that are output by antsMotionCorr.
     Currently only works for linear transforms. Outputs the mean and max
     displacements for the voxels within a provided mask, at each time point. By
-    default the displacements are relative to the reference space, but the framewise
-    option may be used to provide displacements between consecutive time points.
+    default the displacements are relative to the reference space, but the
+    framewise option may be used to provide displacements between consecutive
+    time points.
     
     Author: ANTs Developers
     

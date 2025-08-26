@@ -119,6 +119,8 @@ def tbss_1_preproc_execute(
     runner: Runner | None = None,
 ) -> Tbss1PreprocOutputs:
     """
+    tbss_1_preproc
+    
     TBSS (Tract-Based Spatial Statistics) - Step 1: Preprocessing.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -145,6 +147,8 @@ def tbss_1_preproc(
     runner: Runner | None = None,
 ) -> Tbss1PreprocOutputs:
     """
+    tbss_1_preproc
+    
     TBSS (Tract-Based Spatial Statistics) - Step 1: Preprocessing.
     
     Author: FMRIB Analysis Group, University of Oxford

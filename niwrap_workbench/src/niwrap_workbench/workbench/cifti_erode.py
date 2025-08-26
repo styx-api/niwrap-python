@@ -340,6 +340,8 @@ def cifti_erode_execute(
     runner: Runner | None = None,
 ) -> CiftiErodeOutputs:
     """
+    cifti-erode
+    
     Erode a cifti file.
     
     For all data values that are empty (for label data, unlabeled, for other
@@ -383,6 +385,8 @@ def cifti_erode(
     runner: Runner | None = None,
 ) -> CiftiErodeOutputs:
     """
+    cifti-erode
+    
     Erode a cifti file.
     
     For all data values that are empty (for label data, unlabeled, for other

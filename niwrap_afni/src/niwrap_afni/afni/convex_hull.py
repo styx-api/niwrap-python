@@ -276,8 +276,10 @@ def convex_hull_execute(
     runner: Runner | None = None,
 ) -> ConvexHullOutputs:
     """
-    A program to find the convex hull, or perform a Delaunay triangulation of a set
-    of points.
+    ConvexHull
+    
+    A program to find the convex hull, or perform a Delaunay triangulation of a
+    set of points.
     
     Author: AFNI Developers
     
@@ -318,8 +320,10 @@ def convex_hull(
     runner: Runner | None = None,
 ) -> ConvexHullOutputs:
     """
-    A program to find the convex hull, or perform a Delaunay triangulation of a set
-    of points.
+    ConvexHull
+    
+    A program to find the convex hull, or perform a Delaunay triangulation of a
+    set of points.
     
     Author: AFNI Developers
     

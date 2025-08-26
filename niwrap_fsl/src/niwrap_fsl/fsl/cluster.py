@@ -361,6 +361,8 @@ def cluster_execute(
     runner: Runner | None = None,
 ) -> ClusterOutputs:
     """
+    cluster
+    
     Uses FSL cluster to perform clustering on statistical output.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -420,6 +422,8 @@ def cluster(
     runner: Runner | None = None,
 ) -> ClusterOutputs:
     """
+    cluster
+    
     Uses FSL cluster to perform clustering on statistical output.
     
     Author: FMRIB Analysis Group, University of Oxford

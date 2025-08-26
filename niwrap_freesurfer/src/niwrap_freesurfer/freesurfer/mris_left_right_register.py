@@ -143,6 +143,8 @@ def mris_left_right_register_execute(
     runner: Runner | None = None,
 ) -> MrisLeftRightRegisterOutputs:
     """
+    mris_left_right_register
+    
     Register left and right hemisphere spherical surfaces.
     
     Author: FreeSurfer Developers
@@ -172,6 +174,8 @@ def mris_left_right_register(
     runner: Runner | None = None,
 ) -> MrisLeftRightRegisterOutputs:
     """
+    mris_left_right_register
+    
     Register left and right hemisphere spherical surfaces.
     
     Author: FreeSurfer Developers

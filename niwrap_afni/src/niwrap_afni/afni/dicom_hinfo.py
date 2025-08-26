@@ -157,6 +157,8 @@ def dicom_hinfo_execute(
     runner: Runner | None = None,
 ) -> DicomHinfoOutputs:
     """
+    dicom_hinfo
+    
     Prints selected information from one or more DICOM files to stdout.
     
     Author: AFNI Developers
@@ -188,6 +190,8 @@ def dicom_hinfo(
     runner: Runner | None = None,
 ) -> DicomHinfoOutputs:
     """
+    dicom_hinfo
+    
     Prints selected information from one or more DICOM files to stdout.
     
     Author: AFNI Developers

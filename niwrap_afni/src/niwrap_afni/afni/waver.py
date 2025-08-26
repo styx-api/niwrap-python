@@ -332,6 +332,8 @@ def waver_execute(
     runner: Runner | None = None,
 ) -> WaverOutputs:
     """
+    waver
+    
     Creates an ideal waveform timeseries file.
     
     Author: AFNI Developers
@@ -379,6 +381,8 @@ def waver(
     runner: Runner | None = None,
 ) -> WaverOutputs:
     """
+    waver
+    
     Creates an ideal waveform timeseries file.
     
     Author: AFNI Developers

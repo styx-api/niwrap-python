@@ -150,6 +150,8 @@ def get_afni_model_prf_6_execute(
     runner: Runner | None = None,
 ) -> GetAfniModelPrf6Outputs:
     """
+    get_afni_model_PRF_6
+    
     A command to invoke AFNI's population receptive field (pRF) model.
     
     Author: AFNI Developers
@@ -182,6 +184,8 @@ def get_afni_model_prf_6(
     runner: Runner | None = None,
 ) -> GetAfniModelPrf6Outputs:
     """
+    get_afni_model_PRF_6
+    
     A command to invoke AFNI's population receptive field (pRF) model.
     
     Author: AFNI Developers

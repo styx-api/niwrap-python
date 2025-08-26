@@ -216,8 +216,10 @@ def sienax_execute(
     runner: Runner | None = None,
 ) -> SienaxOutputs:
     """
-    A tool to estimate brain tissue volume from a single MR image and to compare it
-    to an external standard.
+    sienax
+    
+    A tool to estimate brain tissue volume from a single MR image and to compare
+    it to an external standard.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -253,8 +255,10 @@ def sienax(
     runner: Runner | None = None,
 ) -> SienaxOutputs:
     """
-    A tool to estimate brain tissue volume from a single MR image and to compare it
-    to an external standard.
+    sienax
+    
+    A tool to estimate brain tissue volume from a single MR image and to compare
+    it to an external standard.
     
     Author: FMRIB Analysis Group, University of Oxford
     

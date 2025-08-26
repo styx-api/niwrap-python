@@ -155,6 +155,8 @@ def v_1d_tsort_execute(
     runner: Runner | None = None,
 ) -> V1dTsortOutputs:
     """
+    1dTsort
+    
     Sorts each column of the input 1D file and writes result to stdout.
     
     Author: AFNI Developers
@@ -186,6 +188,8 @@ def v_1d_tsort(
     runner: Runner | None = None,
 ) -> V1dTsortOutputs:
     """
+    1dTsort
+    
     Sorts each column of the input 1D file and writes result to stdout.
     
     Author: AFNI Developers

@@ -298,6 +298,8 @@ def cifti_extrema_execute(
     runner: Runner | None = None,
 ) -> CiftiExtremaOutputs:
     """
+    cifti-extrema
+    
     Find extrema in a cifti file.
     
     Finds spatial locations in a cifti file that have more extreme values than
@@ -346,6 +348,8 @@ def cifti_extrema(
     runner: Runner | None = None,
 ) -> CiftiExtremaOutputs:
     """
+    cifti-extrema
+    
     Find extrema in a cifti file.
     
     Finds spatial locations in a cifti file that have more extreme values than

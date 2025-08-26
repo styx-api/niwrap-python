@@ -294,6 +294,8 @@ def afni_history_execute(
     runner: Runner | None = None,
 ) -> AfniHistoryOutputs:
     """
+    afni_history
+    
     Show AFNI updates per user, dates, or levels.
     
     Author: AFNI Developers
@@ -340,6 +342,8 @@ def afni_history(
     runner: Runner | None = None,
 ) -> AfniHistoryOutputs:
     """
+    afni_history
+    
     Show AFNI updates per user, dates, or levels.
     
     Author: AFNI Developers

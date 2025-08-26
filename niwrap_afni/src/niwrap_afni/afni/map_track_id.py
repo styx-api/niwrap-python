@@ -176,6 +176,8 @@ def map_track_id_execute(
     runner: Runner | None = None,
 ) -> MapTrackIdOutputs:
     """
+    map_TrackID
+    
     Maps the track file (*.trk) output of 3dTrackID to another space using the
     1Dmatrix_save info of 3dAllineate.
     
@@ -210,6 +212,8 @@ def map_track_id(
     runner: Runner | None = None,
 ) -> MapTrackIdOutputs:
     """
+    map_TrackID
+    
     Maps the track file (*.trk) output of 3dTrackID to another space using the
     1Dmatrix_save info of 3dAllineate.
     

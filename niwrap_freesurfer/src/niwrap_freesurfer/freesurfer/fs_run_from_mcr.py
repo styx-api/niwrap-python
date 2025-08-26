@@ -143,6 +143,8 @@ def fs_run_from_mcr_execute(
     runner: Runner | None = None,
 ) -> FsRunFromMcrOutputs:
     """
+    fs_run_from_mcr
+    
     Replace the shell with the given command.
     
     Author: FreeSurfer Developers
@@ -172,6 +174,8 @@ def fs_run_from_mcr(
     runner: Runner | None = None,
 ) -> FsRunFromMcrOutputs:
     """
+    fs_run_from_mcr
+    
     Replace the shell with the given command.
     
     Author: FreeSurfer Developers

@@ -122,6 +122,8 @@ def apqc_make_html_execute(
     runner: Runner | None = None,
 ) -> ApqcMakeHtmlOutputs:
     """
+    apqc_make_html
+    
     Tool to generate HTML reports.
     
     Author: AFNI Developers
@@ -148,6 +150,8 @@ def apqc_make_html(
     runner: Runner | None = None,
 ) -> ApqcMakeHtmlOutputs:
     """
+    apqc_make_html
+    
     Tool to generate HTML reports.
     
     Author: AFNI Developers

@@ -170,6 +170,8 @@ def v_3d_afnito_nifti_execute(
     runner: Runner | None = None,
 ) -> V3dAfnitoNiftiOutputs:
     """
+    3dAFNItoNIFTI
+    
     Converts an AFNI dataset to a NIfTI-1.1 file.
     
     Author: AFNI Developers
@@ -203,6 +205,8 @@ def v_3d_afnito_nifti(
     runner: Runner | None = None,
 ) -> V3dAfnitoNiftiOutputs:
     """
+    3dAFNItoNIFTI
+    
     Converts an AFNI dataset to a NIfTI-1.1 file.
     
     Author: AFNI Developers

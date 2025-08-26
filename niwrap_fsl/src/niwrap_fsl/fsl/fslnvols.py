@@ -119,6 +119,8 @@ def fslnvols_execute(
     runner: Runner | None = None,
 ) -> FslnvolsOutputs:
     """
+    fslnvols
+    
     Retrieve the number of volumes in a 4D NIfTI file.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -145,6 +147,8 @@ def fslnvols(
     runner: Runner | None = None,
 ) -> FslnvolsOutputs:
     """
+    fslnvols
+    
     Retrieve the number of volumes in a 4D NIfTI file.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -151,6 +151,8 @@ def mri_head_execute(
     runner: Runner | None = None,
 ) -> MriHeadOutputs:
     """
+    mri_head
+    
     No description.
     
     Author: FreeSurfer Developers
@@ -182,6 +184,8 @@ def mri_head(
     runner: Runner | None = None,
 ) -> MriHeadOutputs:
     """
+    mri_head
+    
     No description.
     
     Author: FreeSurfer Developers

@@ -168,8 +168,10 @@ def v__djunct_montage_coordinator_execute(
     runner: Runner | None = None,
 ) -> VDjunctMontageCoordinatorOutputs:
     """
-    Small program to calculate how to evenly space a certain number of slices within
-    each view plane of a dataset.
+    @djunct_montage_coordinator
+    
+    Small program to calculate how to evenly space a certain number of slices
+    within each view plane of a dataset.
     
     Author: AFNI Developers
     
@@ -201,8 +203,10 @@ def v__djunct_montage_coordinator(
     runner: Runner | None = None,
 ) -> VDjunctMontageCoordinatorOutputs:
     """
-    Small program to calculate how to evenly space a certain number of slices within
-    each view plane of a dataset.
+    @djunct_montage_coordinator
+    
+    Small program to calculate how to evenly space a certain number of slices
+    within each view plane of a dataset.
     
     Author: AFNI Developers
     

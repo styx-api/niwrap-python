@@ -145,6 +145,8 @@ def mris_shrinkwrap_execute(
     runner: Runner | None = None,
 ) -> MrisShrinkwrapOutputs:
     """
+    mris_shrinkwrap
+    
     Generate shrink-wrapped tessellations of the input volume.
     
     Author: FreeSurfer Developers
@@ -173,6 +175,8 @@ def mris_shrinkwrap(
     runner: Runner | None = None,
 ) -> MrisShrinkwrapOutputs:
     """
+    mris_shrinkwrap
+    
     Generate shrink-wrapped tessellations of the input volume.
     
     Author: FreeSurfer Developers

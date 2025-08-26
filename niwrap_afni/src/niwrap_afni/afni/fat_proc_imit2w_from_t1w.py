@@ -203,6 +203,8 @@ def fat_proc_imit2w_from_t1w_execute(
     runner: Runner | None = None,
 ) -> FatProcImit2wFromT1wOutputs:
     """
+    fat_proc_imit2w_from_t1w
+    
     Process T1w anatomical images to generate an imitation T2w-contrast image.
     
     Author: AFNI Developers
@@ -236,6 +238,8 @@ def fat_proc_imit2w_from_t1w(
     runner: Runner | None = None,
 ) -> FatProcImit2wFromT1wOutputs:
     """
+    fat_proc_imit2w_from_t1w
+    
     Process T1w anatomical images to generate an imitation T2w-contrast image.
     
     Author: AFNI Developers

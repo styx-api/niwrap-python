@@ -124,6 +124,8 @@ def morph_tables_rh_execute(
     runner: Runner | None = None,
 ) -> MorphTablesRhOutputs:
     """
+    morph_tables-rh
+    
     A tool from Freesurfer associated with morphological tables for the right
     hemisphere.
     
@@ -151,6 +153,8 @@ def morph_tables_rh(
     runner: Runner | None = None,
 ) -> MorphTablesRhOutputs:
     """
+    morph_tables-rh
+    
     A tool from Freesurfer associated with morphological tables for the right
     hemisphere.
     

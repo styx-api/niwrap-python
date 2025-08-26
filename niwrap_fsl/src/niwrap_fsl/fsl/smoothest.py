@@ -158,6 +158,8 @@ def smoothest_execute(
     runner: Runner | None = None,
 ) -> SmoothestOutputs:
     """
+    smoothest
+    
     Tool to estimate smoothness of data from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -188,6 +190,8 @@ def smoothest(
     runner: Runner | None = None,
 ) -> SmoothestOutputs:
     """
+    smoothest
+    
     Tool to estimate smoothness of data from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

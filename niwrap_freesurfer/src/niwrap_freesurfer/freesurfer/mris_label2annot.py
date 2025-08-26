@@ -238,6 +238,8 @@ def mris_label2annot_execute(
     runner: Runner | None = None,
 ) -> MrisLabel2annotOutputs:
     """
+    mris_label2annot
+    
     Converts a set of surface labels to an annotation file.
     
     Author: FreeSurfer Developers
@@ -277,6 +279,8 @@ def mris_label2annot(
     runner: Runner | None = None,
 ) -> MrisLabel2annotOutputs:
     """
+    mris_label2annot
+    
     Converts a set of surface labels to an annotation file.
     
     Author: FreeSurfer Developers

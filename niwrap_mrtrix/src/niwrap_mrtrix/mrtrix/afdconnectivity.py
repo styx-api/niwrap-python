@@ -268,6 +268,8 @@ def afdconnectivity_execute(
     runner: Runner | None = None,
 ) -> AfdconnectivityOutputs:
     """
+    afdconnectivity
+    
     Obtain an estimate of fibre connectivity between two regions using AFD and
     streamlines tractography.
     
@@ -343,6 +345,8 @@ def afdconnectivity(
     runner: Runner | None = None,
 ) -> AfdconnectivityOutputs:
     """
+    afdconnectivity
+    
     Obtain an estimate of fibre connectivity between two regions using AFD and
     streamlines tractography.
     

@@ -164,6 +164,8 @@ def mri_relabel_nonwm_hypos_execute(
     runner: Runner | None = None,
 ) -> MriRelabelNonwmHyposOutputs:
     """
+    mri_relabel_nonwm_hypos
+    
     Relabels non-WM hypointensities based on proximity to a nearby label.
     
     Author: FreeSurfer Developers
@@ -195,6 +197,8 @@ def mri_relabel_nonwm_hypos(
     runner: Runner | None = None,
 ) -> MriRelabelNonwmHyposOutputs:
     """
+    mri_relabel_nonwm_hypos
+    
     Relabels non-WM hypointensities based on proximity to a nearby label.
     
     Author: FreeSurfer Developers

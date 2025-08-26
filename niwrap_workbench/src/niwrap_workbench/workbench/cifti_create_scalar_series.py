@@ -208,6 +208,8 @@ def cifti_create_scalar_series_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
+    cifti-create-scalar-series
+    
     Import series data into cifti.
     
     Convert a text file containing series of equal length into a cifti file. The
@@ -249,6 +251,8 @@ def cifti_create_scalar_series(
     runner: Runner | None = None,
 ) -> CiftiCreateScalarSeriesOutputs:
     """
+    cifti-create-scalar-series
+    
     Import series data into cifti.
     
     Convert a text file containing series of equal length into a cifti file. The

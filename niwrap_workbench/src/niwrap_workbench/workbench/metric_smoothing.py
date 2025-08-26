@@ -244,6 +244,8 @@ def metric_smoothing_execute(
     runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
     """
+    metric-smoothing
+    
     Smooth a metric file.
     
     Smooth a metric file on a surface. By default, smooths all input columns on
@@ -323,6 +325,8 @@ def metric_smoothing(
     runner: Runner | None = None,
 ) -> MetricSmoothingOutputs:
     """
+    metric-smoothing
+    
     Smooth a metric file.
     
     Smooth a metric file on a surface. By default, smooths all input columns on

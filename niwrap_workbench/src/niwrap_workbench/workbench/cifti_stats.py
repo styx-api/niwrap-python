@@ -217,6 +217,8 @@ def cifti_stats_execute(
     runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
     """
+    cifti-stats
+    
     Statistics along cifti columns.
     
     For each column of the input, a line of text is printed, resulting from the
@@ -275,6 +277,8 @@ def cifti_stats(
     runner: Runner | None = None,
 ) -> CiftiStatsOutputs:
     """
+    cifti-stats
+    
     Statistics along cifti columns.
     
     For each column of the input, a line of text is printed, resulting from the

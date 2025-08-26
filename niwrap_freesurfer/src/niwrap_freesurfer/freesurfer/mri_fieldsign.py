@@ -308,6 +308,8 @@ def mri_fieldsign_execute(
     runner: Runner | None = None,
 ) -> MriFieldsignOutputs:
     """
+    mri_fieldsign
+    
     Field Sign Mapping Tool from FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -357,6 +359,8 @@ def mri_fieldsign(
     runner: Runner | None = None,
 ) -> MriFieldsignOutputs:
     """
+    mri_fieldsign
+    
     Field Sign Mapping Tool from FreeSurfer.
     
     Author: FreeSurfer Developers

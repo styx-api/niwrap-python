@@ -192,8 +192,10 @@ def uber_skel_execute(
     runner: Runner | None = None,
 ) -> UberSkelOutputs:
     """
-    Sample uber processing program for initializing user and control variables, with
-    options for both GUI and non-GUI modes.
+    uber_skel
+    
+    Sample uber processing program for initializing user and control variables,
+    with options for both GUI and non-GUI modes.
     
     Author: AFNI Developers
     
@@ -229,8 +231,10 @@ def uber_skel(
     runner: Runner | None = None,
 ) -> UberSkelOutputs:
     """
-    Sample uber processing program for initializing user and control variables, with
-    options for both GUI and non-GUI modes.
+    uber_skel
+    
+    Sample uber processing program for initializing user and control variables,
+    with options for both GUI and non-GUI modes.
     
     Author: AFNI Developers
     

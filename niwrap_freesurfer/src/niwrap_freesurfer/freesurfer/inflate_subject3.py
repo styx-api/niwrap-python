@@ -124,6 +124,8 @@ def inflate_subject3_execute(
     runner: Runner | None = None,
 ) -> InflateSubject3Outputs:
     """
+    inflate_subject3
+    
     A tool related to subject inflation in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def inflate_subject3(
     runner: Runner | None = None,
 ) -> InflateSubject3Outputs:
     """
+    inflate_subject3
+    
     A tool related to subject inflation in FreeSurfer.
     
     Author: FreeSurfer Developers

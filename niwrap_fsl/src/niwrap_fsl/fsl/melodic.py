@@ -543,6 +543,8 @@ def melodic_execute(
     runner: Runner | None = None,
 ) -> MelodicOutputs:
     """
+    melodic
+    
     Multivariate Exploratory Linear Optimised Decomposition into Independent
     Components.
     
@@ -618,6 +620,8 @@ def melodic(
     runner: Runner | None = None,
 ) -> MelodicOutputs:
     """
+    melodic
+    
     Multivariate Exploratory Linear Optimised Decomposition into Independent
     Components.
     

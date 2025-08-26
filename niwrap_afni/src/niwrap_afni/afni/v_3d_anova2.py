@@ -385,7 +385,10 @@ def v_3d_anova2_execute(
     runner: Runner | None = None,
 ) -> V3dAnova2Outputs:
     """
-    This program performs a two-factor Analysis of Variance (ANOVA) on 3D datasets.
+    3dANOVA2
+    
+    This program performs a two-factor Analysis of Variance (ANOVA) on 3D
+    datasets.
     
     Author: AFNI Developers
     
@@ -434,7 +437,10 @@ def v_3d_anova2(
     runner: Runner | None = None,
 ) -> V3dAnova2Outputs:
     """
-    This program performs a two-factor Analysis of Variance (ANOVA) on 3D datasets.
+    3dANOVA2
+    
+    This program performs a two-factor Analysis of Variance (ANOVA) on 3D
+    datasets.
     
     Author: AFNI Developers
     

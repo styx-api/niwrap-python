@@ -133,6 +133,8 @@ def mri_dct_align_execute(
     runner: Runner | None = None,
 ) -> MriDctAlignOutputs:
     """
+    mri_dct_align
+    
     MRI DCT alignment tool from FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_dct_align(
     runner: Runner | None = None,
 ) -> MriDctAlignOutputs:
     """
+    mri_dct_align
+    
     MRI DCT alignment tool from FreeSurfer.
     
     Author: FreeSurfer Developers

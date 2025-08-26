@@ -228,8 +228,11 @@ def lpcregister_execute(
     runner: Runner | None = None,
 ) -> LpcregisterOutputs:
     """
-    Registers a volume to its FreeSurfer anatomical using Local Pearson Correlation
-    (LPC) (the AFNI lpc_align.py program). Creates a FreeSurfer register.dat file.
+    lpcregister
+    
+    Registers a volume to its FreeSurfer anatomical using Local Pearson
+    Correlation (LPC) (the AFNI lpc_align.py program). Creates a FreeSurfer
+    register.dat file.
     
     Author: FreeSurfer Developers
     
@@ -267,8 +270,11 @@ def lpcregister(
     runner: Runner | None = None,
 ) -> LpcregisterOutputs:
     """
-    Registers a volume to its FreeSurfer anatomical using Local Pearson Correlation
-    (LPC) (the AFNI lpc_align.py program). Creates a FreeSurfer register.dat file.
+    lpcregister
+    
+    Registers a volume to its FreeSurfer anatomical using Local Pearson
+    Correlation (LPC) (the AFNI lpc_align.py program). Creates a FreeSurfer
+    register.dat file.
     
     Author: FreeSurfer Developers
     

@@ -250,6 +250,8 @@ def surf_fwhm_execute(
     runner: Runner | None = None,
 ) -> SurfFwhmOutputs:
     """
+    SurfFWHM
+    
     A program for calculating local and global FWHM.
     
     Author: AFNI Developers
@@ -289,6 +291,8 @@ def surf_fwhm(
     runner: Runner | None = None,
 ) -> SurfFwhmOutputs:
     """
+    SurfFWHM
+    
     A program for calculating local and global FWHM.
     
     Author: AFNI Developers

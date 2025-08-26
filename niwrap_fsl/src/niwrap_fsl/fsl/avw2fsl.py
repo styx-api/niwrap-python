@@ -349,6 +349,8 @@ def avw2fsl_execute(
     runner: Runner | None = None,
 ) -> Avw2fslOutputs:
     """
+    avw2fsl
+    
     Processing script to copy files and directories.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -410,6 +412,8 @@ def avw2fsl(
     runner: Runner | None = None,
 ) -> Avw2fslOutputs:
     """
+    avw2fsl
+    
     Processing script to copy files and directories.
     
     Author: FMRIB Analysis Group, University of Oxford

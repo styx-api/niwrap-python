@@ -133,9 +133,11 @@ def make_upright_execute(
     runner: Runner | None = None,
 ) -> MakeUprightOutputs:
     """
-    Registers MRI input to the left/right reversed version using mri_robust_register
-    and making use of the half-way space, resulting in an upright, forward facing
-    head position.
+    make_upright
+    
+    Registers MRI input to the left/right reversed version using
+    mri_robust_register and making use of the half-way space, resulting in an
+    upright, forward facing head position.
     
     Author: FreeSurfer Developers
     
@@ -163,9 +165,11 @@ def make_upright(
     runner: Runner | None = None,
 ) -> MakeUprightOutputs:
     """
-    Registers MRI input to the left/right reversed version using mri_robust_register
-    and making use of the half-way space, resulting in an upright, forward facing
-    head position.
+    make_upright
+    
+    Registers MRI input to the left/right reversed version using
+    mri_robust_register and making use of the half-way space, resulting in an
+    upright, forward facing head position.
     
     Author: FreeSurfer Developers
     

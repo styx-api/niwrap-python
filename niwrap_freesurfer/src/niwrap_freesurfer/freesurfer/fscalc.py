@@ -186,8 +186,10 @@ def fscalc_execute(
     runner: Runner | None = None,
 ) -> FscalcOutputs:
     """
-    A frontend tool to perform mathematical operations on volumes/surfaces of data
-    using mris_calc.
+    fscalc
+    
+    A frontend tool to perform mathematical operations on volumes/surfaces of
+    data using mris_calc.
     
     Author: FreeSurfer Developers
     
@@ -221,8 +223,10 @@ def fscalc(
     runner: Runner | None = None,
 ) -> FscalcOutputs:
     """
-    A frontend tool to perform mathematical operations on volumes/surfaces of data
-    using mris_calc.
+    fscalc
+    
+    A frontend tool to perform mathematical operations on volumes/surfaces of
+    data using mris_calc.
     
     Author: FreeSurfer Developers
     

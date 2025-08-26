@@ -123,6 +123,8 @@ def help_format_execute(
     runner: Runner | None = None,
 ) -> HelpFormatOutputs:
     """
+    help_format
+    
     Formats text by converting URLs into HTML hyperlinks.
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def help_format(
     runner: Runner | None = None,
 ) -> HelpFormatOutputs:
     """
+    help_format
+    
     Formats text by converting URLs into HTML hyperlinks.
     
     Author: AFNI Developers

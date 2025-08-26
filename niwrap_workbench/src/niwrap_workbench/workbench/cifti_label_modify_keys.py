@@ -145,6 +145,8 @@ def cifti_label_modify_keys_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
     """
+    cifti-label-modify-keys
+    
     Change key values in a dlabel file.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
@@ -188,6 +190,8 @@ def cifti_label_modify_keys(
     runner: Runner | None = None,
 ) -> CiftiLabelModifyKeysOutputs:
     """
+    cifti-label-modify-keys
+    
     Change key values in a dlabel file.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:

@@ -152,6 +152,8 @@ def mri_morphology_execute(
     runner: Runner | None = None,
 ) -> MriMorphologyOutputs:
     """
+    mri_morphology
+    
     MRI Morphology Tool - performs various morphological operations on a volume.
     
     Author: FreeSurfer Developers
@@ -182,6 +184,8 @@ def mri_morphology(
     runner: Runner | None = None,
 ) -> MriMorphologyOutputs:
     """
+    mri_morphology
+    
     MRI Morphology Tool - performs various morphological operations on a volume.
     
     Author: FreeSurfer Developers

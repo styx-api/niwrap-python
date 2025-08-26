@@ -139,6 +139,8 @@ def cifti_reorder_execute(
     runner: Runner | None = None,
 ) -> CiftiReorderOutputs:
     """
+    cifti-reorder
+    
     Reorder the parcels or scalar/label maps in a cifti file.
     
     The mapping along the specified direction must be parcels, scalars, or
@@ -177,6 +179,8 @@ def cifti_reorder(
     runner: Runner | None = None,
 ) -> CiftiReorderOutputs:
     """
+    cifti-reorder
+    
     Reorder the parcels or scalar/label maps in a cifti file.
     
     The mapping along the specified direction must be parcels, scalars, or

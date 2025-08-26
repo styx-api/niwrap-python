@@ -242,6 +242,8 @@ def mris_anatomical_stats_execute(
     runner: Runner | None = None,
 ) -> MrisAnatomicalStatsOutputs:
     """
+    mris_anatomical_stats
+    
     This program computes a number of anatomical properties.
     
     Author: FreeSurfer Developers
@@ -281,6 +283,8 @@ def mris_anatomical_stats(
     runner: Runner | None = None,
 ) -> MrisAnatomicalStatsOutputs:
     """
+    mris_anatomical_stats
+    
     This program computes a number of anatomical properties.
     
     Author: FreeSurfer Developers

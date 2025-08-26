@@ -139,6 +139,8 @@ def tal_compare_execute(
     runner: Runner | None = None,
 ) -> TalCompareOutputs:
     """
+    tal_compare
+    
     Tool for comparing TAL databases.
     
     Author: FreeSurfer Developers
@@ -168,6 +170,8 @@ def tal_compare(
     runner: Runner | None = None,
 ) -> TalCompareOutputs:
     """
+    tal_compare
+    
     Tool for comparing TAL databases.
     
     Author: FreeSurfer Developers

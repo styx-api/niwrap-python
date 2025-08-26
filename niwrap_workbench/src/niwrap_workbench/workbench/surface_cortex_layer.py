@@ -154,6 +154,8 @@ def surface_cortex_layer_execute(
     runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
+    surface-cortex-layer
+    
     Create surface approximating a cortical layer.
     
     The input surfaces must have vertex correspondence. The output surface is
@@ -191,6 +193,8 @@ def surface_cortex_layer(
     runner: Runner | None = None,
 ) -> SurfaceCortexLayerOutputs:
     """
+    surface-cortex-layer
+    
     Create surface approximating a cortical layer.
     
     The input surfaces must have vertex correspondence. The output surface is

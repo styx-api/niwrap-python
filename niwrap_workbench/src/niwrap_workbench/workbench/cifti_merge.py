@@ -305,6 +305,8 @@ def cifti_merge_execute(
     runner: Runner | None = None,
 ) -> CiftiMergeOutputs:
     """
+    cifti-merge
+    
     Merge or split on series, scalar, or label dimensions.
     
     Given input CIFTI files for which mappings along the selected direction are
@@ -349,6 +351,8 @@ def cifti_merge(
     runner: Runner | None = None,
 ) -> CiftiMergeOutputs:
     """
+    cifti-merge
+    
     Merge or split on series, scalar, or label dimensions.
     
     Given input CIFTI files for which mappings along the selected direction are

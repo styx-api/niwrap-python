@@ -141,6 +141,8 @@ def v_3dsvm_linpredict_execute(
     runner: Runner | None = None,
 ) -> V3dsvmLinpredictOutputs:
     """
+    3dsvm_linpredict
+    
     Linear prediction for weights from 3dsvm.
     
     Author: AFNI Developers
@@ -169,6 +171,8 @@ def v_3dsvm_linpredict(
     runner: Runner | None = None,
 ) -> V3dsvmLinpredictOutputs:
     """
+    3dsvm_linpredict
+    
     Linear prediction for weights from 3dsvm.
     
     Author: AFNI Developers

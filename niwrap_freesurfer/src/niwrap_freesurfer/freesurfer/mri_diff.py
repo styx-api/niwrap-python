@@ -347,6 +347,8 @@ def mri_diff_execute(
     runner: Runner | None = None,
 ) -> MriDiffOutputs:
     """
+    mri_diff
+    
     Determines whether two volumes differ based on dimensions, resolutions,
     acquisition parameters, geometry, precision, and pixel data.
     
@@ -404,6 +406,8 @@ def mri_diff(
     runner: Runner | None = None,
 ) -> MriDiffOutputs:
     """
+    mri_diff
+    
     Determines whether two volumes differ based on dimensions, resolutions,
     acquisition parameters, geometry, precision, and pixel data.
     

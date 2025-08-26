@@ -241,8 +241,10 @@ def compare_surfaces_execute(
     runner: Runner | None = None,
 ) -> CompareSurfacesOutputs:
     """
-    Calculates distance at each node in Surface 1 (S1) to Surface 2 (S2) along the
-    local surface normal at each node in S1. Superseded by SurfToSurf.
+    CompareSurfaces
+    
+    Calculates distance at each node in Surface 1 (S1) to Surface 2 (S2) along
+    the local surface normal at each node in S1. Superseded by SurfToSurf.
     
     Author: AFNI Developers
     
@@ -282,8 +284,10 @@ def compare_surfaces(
     runner: Runner | None = None,
 ) -> CompareSurfacesOutputs:
     """
-    Calculates distance at each node in Surface 1 (S1) to Surface 2 (S2) along the
-    local surface normal at each node in S1. Superseded by SurfToSurf.
+    CompareSurfaces
+    
+    Calculates distance at each node in Surface 1 (S1) to Surface 2 (S2) along
+    the local surface normal at each node in S1. Superseded by SurfToSurf.
     
     Author: AFNI Developers
     

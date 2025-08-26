@@ -139,8 +139,10 @@ def mris_thickness_comparison_execute(
     runner: Runner | None = None,
 ) -> MrisThicknessComparisonOutputs:
     """
-    Tool to compare cortical thickness measurements between two or more specified
-    labels.
+    mris_thickness_comparison
+    
+    Tool to compare cortical thickness measurements between two or more
+    specified labels.
     
     Author: FreeSurfer Developers
     
@@ -170,8 +172,10 @@ def mris_thickness_comparison(
     runner: Runner | None = None,
 ) -> MrisThicknessComparisonOutputs:
     """
-    Tool to compare cortical thickness measurements between two or more specified
-    labels.
+    mris_thickness_comparison
+    
+    Tool to compare cortical thickness measurements between two or more
+    specified labels.
     
     Author: FreeSurfer Developers
     

@@ -157,6 +157,8 @@ def mri_compute_change_map_execute(
     runner: Runner | None = None,
 ) -> MriComputeChangeMapOutputs:
     """
+    mri_compute_change_map
+    
     Compute the change map between two MRI volumes.
     
     Author: FreeSurfer Developers
@@ -188,6 +190,8 @@ def mri_compute_change_map(
     runner: Runner | None = None,
 ) -> MriComputeChangeMapOutputs:
     """
+    mri_compute_change_map
+    
     Compute the change map between two MRI volumes.
     
     Author: FreeSurfer Developers

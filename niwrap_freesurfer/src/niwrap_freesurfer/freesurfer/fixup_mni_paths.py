@@ -160,6 +160,8 @@ def fixup_mni_paths_execute(
     runner: Runner | None = None,
 ) -> FixupMniPathsOutputs:
     """
+    fixup_mni_paths
+    
     A utility for patching MNI tools to ensure correct paths are used.
     
     Author: FreeSurfer Developers
@@ -186,6 +188,8 @@ def fixup_mni_paths(
     runner: Runner | None = None,
 ) -> FixupMniPathsOutputs:
     """
+    fixup_mni_paths
+    
     A utility for patching MNI tools to ensure correct paths are used.
     
     Author: FreeSurfer Developers

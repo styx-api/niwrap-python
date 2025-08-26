@@ -286,6 +286,8 @@ def surf_patch_execute(
     runner: Runner | None = None,
 ) -> SurfPatchOutputs:
     """
+    SurfPatch
+    
     Creates a patch of surface formed by nodes in a nodefile and optionally
     calculates the volume between the same patch on two isotopic surfaces.
     
@@ -333,6 +335,8 @@ def surf_patch(
     runner: Runner | None = None,
 ) -> SurfPatchOutputs:
     """
+    SurfPatch
+    
     Creates a patch of surface formed by nodes in a nodefile and optionally
     calculates the volume between the same patch on two isotopic surfaces.
     

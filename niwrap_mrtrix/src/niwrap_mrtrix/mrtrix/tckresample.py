@@ -428,6 +428,8 @@ def tckresample_execute(
     runner: Runner | None = None,
 ) -> TckresampleOutputs:
     """
+    tckresample
+    
     Resample each streamline in a track file to a new set of vertices.
     
     It is necessary to specify precisely ONE of the command-line options for
@@ -487,6 +489,8 @@ def tckresample(
     runner: Runner | None = None,
 ) -> TckresampleOutputs:
     """
+    tckresample
+    
     Resample each streamline in a track file to a new set of vertices.
     
     It is necessary to specify precisely ONE of the command-line options for

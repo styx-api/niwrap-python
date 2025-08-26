@@ -134,6 +134,8 @@ def prewhiten_execute(
     runner: Runner | None = None,
 ) -> PrewhitenOutputs:
     """
+    prewhiten
+    
     Prewhitening tool for FEAT directories.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -161,6 +163,8 @@ def prewhiten(
     runner: Runner | None = None,
 ) -> PrewhitenOutputs:
     """
+    prewhiten
+    
     Prewhitening tool for FEAT directories.
     
     Author: FMRIB Analysis Group, University of Oxford

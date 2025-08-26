@@ -146,6 +146,8 @@ def metric_fill_holes_execute(
     runner: Runner | None = None,
 ) -> MetricFillHolesOutputs:
     """
+    metric-fill-holes
+    
     Fill holes in an roi metric.
     
     Finds all connected areas that are not included in the ROI, and writes ones
@@ -178,6 +180,8 @@ def metric_fill_holes(
     runner: Runner | None = None,
 ) -> MetricFillHolesOutputs:
     """
+    metric-fill-holes
+    
     Fill holes in an roi metric.
     
     Finds all connected areas that are not included in the ROI, and writes ones

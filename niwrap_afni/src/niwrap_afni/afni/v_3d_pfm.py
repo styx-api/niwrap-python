@@ -346,6 +346,8 @@ def v_3d_pfm_execute(
     runner: Runner | None = None,
 ) -> V3dPfmOutputs:
     """
+    3dPFM
+    
     Program for identifying brief BOLD events in fMRI time series using Paradigm
     Free Mapping.
     
@@ -387,6 +389,8 @@ def v_3d_pfm(
     runner: Runner | None = None,
 ) -> V3dPfmOutputs:
     """
+    3dPFM
+    
     Program for identifying brief BOLD events in fMRI time series using Paradigm
     Free Mapping.
     

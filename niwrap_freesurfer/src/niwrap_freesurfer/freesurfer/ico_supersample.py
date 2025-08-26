@@ -139,6 +139,8 @@ def ico_supersample_execute(
     runner: Runner | None = None,
 ) -> IcoSupersampleOutputs:
     """
+    ico_supersample
+    
     A tool for refining icosahedron meshes with user-specified parameters.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def ico_supersample(
     runner: Runner | None = None,
 ) -> IcoSupersampleOutputs:
     """
+    ico_supersample
+    
     A tool for refining icosahedron meshes with user-specified parameters.
     
     Author: FreeSurfer Developers

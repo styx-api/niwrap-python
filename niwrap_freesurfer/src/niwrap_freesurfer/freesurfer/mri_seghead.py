@@ -252,6 +252,8 @@ def mri_seghead_execute(
     runner: Runner | None = None,
 ) -> MriSegheadOutputs:
     """
+    mri_seghead
+    
     Binarizes an input volume to identify the head's voxels.
     
     Author: FreeSurfer Developers
@@ -292,6 +294,8 @@ def mri_seghead(
     runner: Runner | None = None,
 ) -> MriSegheadOutputs:
     """
+    mri_seghead
+    
     Binarizes an input volume to identify the head's voxels.
     
     Author: FreeSurfer Developers

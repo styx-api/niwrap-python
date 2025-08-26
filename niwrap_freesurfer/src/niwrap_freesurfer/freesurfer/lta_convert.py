@@ -314,6 +314,8 @@ def lta_convert_execute(
     runner: Runner | None = None,
 ) -> LtaConvertOutputs:
     """
+    lta_convert
+    
     This program converts between different linear transform formats.
     
     Author: FreeSurfer Developers
@@ -360,6 +362,8 @@ def lta_convert(
     runner: Runner | None = None,
 ) -> LtaConvertOutputs:
     """
+    lta_convert
+    
     This program converts between different linear transform formats.
     
     Author: FreeSurfer Developers

@@ -178,6 +178,8 @@ def makerot_execute(
     runner: Runner | None = None,
 ) -> MakerotOutputs:
     """
+    makerot
+    
     Tool to create a rotation matrix for a given angle and axis of rotation.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -210,6 +212,8 @@ def makerot(
     runner: Runner | None = None,
 ) -> MakerotOutputs:
     """
+    makerot
+    
     Tool to create a rotation matrix for a given angle and axis of rotation.
     
     Author: FMRIB Analysis Group, University of Oxford

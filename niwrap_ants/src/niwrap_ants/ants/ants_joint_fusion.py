@@ -274,8 +274,10 @@ def ants_joint_fusion_execute(
     runner: Runner | None = None,
 ) -> AntsJointFusionOutputs:
     """
-    antsJointFusion is an image fusion algorithm developed by Hongzhi Wang and Paul
-    Yushkevich. This implementation is based on Paul's original ITK-style
+    antsJointFusion
+    
+    antsJointFusion is an image fusion algorithm developed by Hongzhi Wang and
+    Paul Yushkevich. This implementation is based on Paul's original ITK-style
     implementation and Brian's ANTsR implementation. The original label fusion
     framework was extended to accommodate intensities.
     
@@ -316,8 +318,10 @@ def ants_joint_fusion(
     runner: Runner | None = None,
 ) -> AntsJointFusionOutputs:
     """
-    antsJointFusion is an image fusion algorithm developed by Hongzhi Wang and Paul
-    Yushkevich. This implementation is based on Paul's original ITK-style
+    antsJointFusion
+    
+    antsJointFusion is an image fusion algorithm developed by Hongzhi Wang and
+    Paul Yushkevich. This implementation is based on Paul's original ITK-style
     implementation and Brian's ANTsR implementation. The original label fusion
     framework was extended to accommodate intensities.
     

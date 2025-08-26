@@ -125,6 +125,8 @@ def fsrealpath_execute(
     runner: Runner | None = None,
 ) -> FsrealpathOutputs:
     """
+    fsrealpath
+    
     Resolve symbolic links in a path.
     
     Author: FreeSurfer Developers
@@ -152,6 +154,8 @@ def fsrealpath(
     runner: Runner | None = None,
 ) -> FsrealpathOutputs:
     """
+    fsrealpath
+    
     Resolve symbolic links in a path.
     
     Author: FreeSurfer Developers

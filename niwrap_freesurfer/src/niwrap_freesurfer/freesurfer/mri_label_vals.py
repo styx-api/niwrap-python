@@ -137,6 +137,8 @@ def mri_label_vals_execute(
     runner: Runner | None = None,
 ) -> MriLabelValsOutputs:
     """
+    mri_label_vals
+    
     Extract values at label coordinates from a volume.
     
     Author: FreeSurfer Developers
@@ -166,6 +168,8 @@ def mri_label_vals(
     runner: Runner | None = None,
 ) -> MriLabelValsOutputs:
     """
+    mri_label_vals
+    
     Extract values at label coordinates from a volume.
     
     Author: FreeSurfer Developers

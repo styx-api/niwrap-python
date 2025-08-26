@@ -200,9 +200,11 @@ def plugout_tta_execute(
     runner: Runner | None = None,
 ) -> PlugoutTtaOutputs:
     """
-    Connects to AFNI and receives notification whenever the user changes Talairach
-    coordinates, then drives Netscape to display the closest figures from the
-    Talairach-Tournoux atlas.
+    plugout_tta
+    
+    Connects to AFNI and receives notification whenever the user changes
+    Talairach coordinates, then drives Netscape to display the closest figures
+    from the Talairach-Tournoux atlas.
     
     Author: AFNI Developers
     
@@ -237,9 +239,11 @@ def plugout_tta(
     runner: Runner | None = None,
 ) -> PlugoutTtaOutputs:
     """
-    Connects to AFNI and receives notification whenever the user changes Talairach
-    coordinates, then drives Netscape to display the closest figures from the
-    Talairach-Tournoux atlas.
+    plugout_tta
+    
+    Connects to AFNI and receives notification whenever the user changes
+    Talairach coordinates, then drives Netscape to display the closest figures
+    from the Talairach-Tournoux atlas.
     
     Author: AFNI Developers
     

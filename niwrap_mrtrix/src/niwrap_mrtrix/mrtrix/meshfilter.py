@@ -259,6 +259,8 @@ def meshfilter_execute(
     runner: Runner | None = None,
 ) -> MeshfilterOutputs:
     """
+    meshfilter
+    
     Apply filter operations to meshes.
     
     While this command has only one filter operation currently available, it
@@ -305,6 +307,8 @@ def meshfilter(
     runner: Runner | None = None,
 ) -> MeshfilterOutputs:
     """
+    meshfilter
+    
     Apply filter operations to meshes.
     
     While this command has only one filter operation currently available, it

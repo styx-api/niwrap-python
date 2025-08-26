@@ -141,6 +141,8 @@ def cat_matvec_execute(
     runner: Runner | None = None,
 ) -> CatMatvecOutputs:
     """
+    cat_matvec
+    
     Catenates 3D rotation+shift matrix+vector transformations.
     
     Author: AFNI Developers
@@ -170,6 +172,8 @@ def cat_matvec(
     runner: Runner | None = None,
 ) -> CatMatvecOutputs:
     """
+    cat_matvec
+    
     Catenates 3D rotation+shift matrix+vector transformations.
     
     Author: AFNI Developers

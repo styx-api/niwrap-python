@@ -402,8 +402,10 @@ def mri_binarize_execute(
     runner: Runner | None = None,
 ) -> MriBinarizeOutputs:
     """
-    A program to binarize a volume or volume-encoded surface file, with options to
-    merge and manipulate binarized output.
+    mri_binarize
+    
+    A program to binarize a volume or volume-encoded surface file, with options
+    to merge and manipulate binarized output.
     
     Author: FreeSurfer Developers
     
@@ -462,8 +464,10 @@ def mri_binarize(
     runner: Runner | None = None,
 ) -> MriBinarizeOutputs:
     """
-    A program to binarize a volume or volume-encoded surface file, with options to
-    merge and manipulate binarized output.
+    mri_binarize
+    
+    A program to binarize a volume or volume-encoded surface file, with options
+    to merge and manipulate binarized output.
     
     Author: FreeSurfer Developers
     

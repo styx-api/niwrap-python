@@ -363,6 +363,8 @@ def fabber_asl_execute(
     runner: Runner | None = None,
 ) -> FabberAslOutputs:
     """
+    fabber_asl
+    
     Fabber is a tool for automated model fitting of time series data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -420,6 +422,8 @@ def fabber_asl(
     runner: Runner | None = None,
 ) -> FabberAslOutputs:
     """
+    fabber_asl
+    
     Fabber is a tool for automated model fitting of time series data.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -497,6 +497,8 @@ def reg_f3d_execute(
     runner: Runner | None = None,
 ) -> RegF3dOutputs:
     """
+    reg_f3d
+    
     Fast Free-Form Deformation algorithm for non-rigid registration based on
     Rueckert's 99 TMI work.
     
@@ -563,6 +565,8 @@ def reg_f3d(
     runner: Runner | None = None,
 ) -> RegF3dOutputs:
     """
+    reg_f3d
+    
     Fast Free-Form Deformation algorithm for non-rigid registration based on
     Rueckert's 99 TMI work.
     

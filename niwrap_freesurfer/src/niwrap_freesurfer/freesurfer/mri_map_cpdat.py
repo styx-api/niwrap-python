@@ -175,6 +175,8 @@ def mri_map_cpdat_execute(
     runner: Runner | None = None,
 ) -> MriMapCpdatOutputs:
     """
+    mri_map_cpdat
+    
     Maps a control.dat file to a different space using an LTA.
     
     Author: FreeSurfer Developers
@@ -206,6 +208,8 @@ def mri_map_cpdat(
     runner: Runner | None = None,
 ) -> MriMapCpdatOutputs:
     """
+    mri_map_cpdat
+    
     Maps a control.dat file to a different space using an LTA.
     
     Author: FreeSurfer Developers

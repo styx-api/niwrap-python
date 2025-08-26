@@ -154,8 +154,10 @@ def slicesdir_execute(
     runner: Runner | None = None,
 ) -> SlicesdirOutputs:
     """
-    slicesdir generates a directory containing orthogonal slices through a set of
-    images.
+    slicesdir
+    
+    slicesdir generates a directory containing orthogonal slices through a set
+    of images.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -185,8 +187,10 @@ def slicesdir(
     runner: Runner | None = None,
 ) -> SlicesdirOutputs:
     """
-    slicesdir generates a directory containing orthogonal slices through a set of
-    images.
+    slicesdir
+    
+    slicesdir generates a directory containing orthogonal slices through a set
+    of images.
     
     Author: FMRIB Analysis Group, University of Oxford
     

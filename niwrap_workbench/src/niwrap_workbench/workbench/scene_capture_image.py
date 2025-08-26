@@ -469,6 +469,8 @@ def scene_capture_image_execute(
     runner: Runner | None = None,
 ) -> SceneCaptureImageOutputs:
     """
+    scene-capture-image
+    
     Offscreen rendering of scene to an image file.
     
     ----------------------------------------------------------------------
@@ -564,6 +566,8 @@ def scene_capture_image(
     runner: Runner | None = None,
 ) -> SceneCaptureImageOutputs:
     """
+    scene-capture-image
+    
     Offscreen rendering of scene to an image file.
     
     ----------------------------------------------------------------------

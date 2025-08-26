@@ -1118,8 +1118,10 @@ def mrconvert_execute(
     runner: Runner | None = None,
 ) -> MrconvertOutputs:
     """
-    Perform conversion between different file types and optionally extract a subset
-    of the input image.
+    mrconvert
+    
+    Perform conversion between different file types and optionally extract a
+    subset of the input image.
     
     If used correctly, this program can be a very useful workhorse. In addition
     to converting images between different formats, it can be used to extract
@@ -1223,8 +1225,10 @@ def mrconvert(
     runner: Runner | None = None,
 ) -> MrconvertOutputs:
     """
-    Perform conversion between different file types and optionally extract a subset
-    of the input image.
+    mrconvert
+    
+    Perform conversion between different file types and optionally extract a
+    subset of the input image.
     
     If used correctly, this program can be a very useful workhorse. In addition
     to converting images between different formats, it can be used to extract

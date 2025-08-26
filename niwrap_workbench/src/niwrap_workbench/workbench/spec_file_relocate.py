@@ -125,6 +125,8 @@ def spec_file_relocate_execute(
     runner: Runner | None = None,
 ) -> SpecFileRelocateOutputs:
     """
+    spec-file-relocate
+    
     Recreate spec file in new location.
     
     Spec files contain internal relative paths, such that moving or copying a
@@ -157,6 +159,8 @@ def spec_file_relocate(
     runner: Runner | None = None,
 ) -> SpecFileRelocateOutputs:
     """
+    spec-file-relocate
+    
     Recreate spec file in new location.
     
     Spec files contain internal relative paths, such that moving or copying a

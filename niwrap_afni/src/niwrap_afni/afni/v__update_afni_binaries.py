@@ -287,6 +287,8 @@ def v__update_afni_binaries_execute(
     runner: Runner | None = None,
 ) -> VUpdateAfniBinariesOutputs:
     """
+    @update.afni.binaries
+    
     Install or update AFNI binaries.
     
     Author: AFNI Developers
@@ -336,6 +338,8 @@ def v__update_afni_binaries(
     runner: Runner | None = None,
 ) -> VUpdateAfniBinariesOutputs:
     """
+    @update.afni.binaries
+    
     Install or update AFNI binaries.
     
     Author: AFNI Developers

@@ -173,6 +173,8 @@ def label_erode_execute(
     runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
+    label-erode
+    
     Erode a label file.
     
     Around each vertex that is unlabeled, set surrounding vertices to unlabeled.
@@ -212,6 +214,8 @@ def label_erode(
     runner: Runner | None = None,
 ) -> LabelErodeOutputs:
     """
+    label-erode
+    
     Erode a label file.
     
     Around each vertex that is unlabeled, set surrounding vertices to unlabeled.

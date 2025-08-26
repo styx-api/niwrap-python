@@ -144,6 +144,8 @@ def mri_mergelabels_execute(
     runner: Runner | None = None,
 ) -> MriMergelabelsOutputs:
     """
+    mri_mergelabels
+    
     A tool to merge two or more label files by concatenating them together.
     
     Author: FreeSurfer Developers
@@ -172,6 +174,8 @@ def mri_mergelabels(
     runner: Runner | None = None,
 ) -> MriMergelabelsOutputs:
     """
+    mri_mergelabels
+    
     A tool to merge two or more label files by concatenating them together.
     
     Author: FreeSurfer Developers

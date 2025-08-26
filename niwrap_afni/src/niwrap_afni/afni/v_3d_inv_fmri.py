@@ -224,6 +224,8 @@ def v_3d_inv_fmri_execute(
     runner: Runner | None = None,
 ) -> V3dInvFmriOutputs:
     """
+    3dInvFMRI
+    
     Program to compute stimulus time series, given a 3D+time dataset and an
     activation map (the inverse of the usual FMRI analysis problem).
     
@@ -261,6 +263,8 @@ def v_3d_inv_fmri(
     runner: Runner | None = None,
 ) -> V3dInvFmriOutputs:
     """
+    3dInvFMRI
+    
     Program to compute stimulus time series, given a 3D+time dataset and an
     activation map (the inverse of the usual FMRI analysis problem).
     

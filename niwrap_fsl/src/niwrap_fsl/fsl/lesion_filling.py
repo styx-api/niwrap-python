@@ -170,6 +170,8 @@ def lesion_filling_execute(
     runner: Runner | None = None,
 ) -> LesionFillingOutputs:
     """
+    lesion_filling
+    
     Lesion filling tool as part of FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -202,6 +204,8 @@ def lesion_filling(
     runner: Runner | None = None,
 ) -> LesionFillingOutputs:
     """
+    lesion_filling
+    
     Lesion filling tool as part of FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

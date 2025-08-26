@@ -133,8 +133,10 @@ def v_3d_despike_execute(
     runner: Runner | None = None,
 ) -> V3dDespikeOutputs:
     """
-    Removes 'spikes' from the 3D+time input dataset and writes a new dataset with
-    the spike values replaced by something more pleasing to the eye.
+    3dDespike
+    
+    Removes 'spikes' from the 3D+time input dataset and writes a new dataset
+    with the spike values replaced by something more pleasing to the eye.
     
     Author: AFNI Developers
     
@@ -161,8 +163,10 @@ def v_3d_despike(
     runner: Runner | None = None,
 ) -> V3dDespikeOutputs:
     """
-    Removes 'spikes' from the 3D+time input dataset and writes a new dataset with
-    the spike values replaced by something more pleasing to the eye.
+    3dDespike
+    
+    Removes 'spikes' from the 3D+time input dataset and writes a new dataset
+    with the spike values replaced by something more pleasing to the eye.
     
     Author: AFNI Developers
     

@@ -174,6 +174,8 @@ def whirlgif_execute(
     runner: Runner | None = None,
 ) -> WhirlgifOutputs:
     """
+    whirlgif
+    
     GIF animation tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -205,6 +207,8 @@ def whirlgif(
     runner: Runner | None = None,
 ) -> WhirlgifOutputs:
     """
+    whirlgif
+    
     GIF animation tool.
     
     Author: FMRIB Analysis Group, University of Oxford

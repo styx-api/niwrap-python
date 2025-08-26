@@ -271,6 +271,8 @@ def feat2segstats_execute(
     runner: Runner | None = None,
 ) -> Feat2segstatsOutputs:
     """
+    feat2segstats
+    
     Computes segmentation summaries and stores output in
     featdir/freesurfer/segstats/segvol/statname.dat.
     
@@ -317,6 +319,8 @@ def feat2segstats(
     runner: Runner | None = None,
 ) -> Feat2segstatsOutputs:
     """
+    feat2segstats
+    
     Computes segmentation summaries and stores output in
     featdir/freesurfer/segstats/segvol/statname.dat.
     

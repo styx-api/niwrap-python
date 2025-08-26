@@ -160,8 +160,10 @@ def map_to_base_execute(
     runner: Runner | None = None,
 ) -> MapToBaseOutputs:
     """
-    Maps an image or surface from a time point directory (either cross-sectional or
-    longitudinal) to the base space and outputs it in the appropriate base
+    map_to_base
+    
+    Maps an image or surface from a time point directory (either cross-sectional
+    or longitudinal) to the base space and outputs it in the appropriate base
     directory.
     
     Author: FreeSurfer Developers
@@ -192,8 +194,10 @@ def map_to_base(
     runner: Runner | None = None,
 ) -> MapToBaseOutputs:
     """
-    Maps an image or surface from a time point directory (either cross-sectional or
-    longitudinal) to the base space and outputs it in the appropriate base
+    map_to_base
+    
+    Maps an image or surface from a time point directory (either cross-sectional
+    or longitudinal) to the base space and outputs it in the appropriate base
     directory.
     
     Author: FreeSurfer Developers

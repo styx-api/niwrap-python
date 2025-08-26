@@ -215,14 +215,16 @@ def ants_slice_regularized_registration_execute(
     runner: Runner | None = None,
 ) -> AntsSliceRegularizedRegistrationOutputs:
     """
+    antsSliceRegularizedRegistration
+    
     This program is a user-level application for slice-by-slice translation
     registration. Results are regularized in z using polynomial regression. The
     program is targeted at spinal cord MRI. Only one stage is supported where a
-    stage consists of a transform; an image metric; and iterations, shrink factors,
-    and smoothing sigmas for each level. Specialized for 3D data: fixed image is 3D,
-    moving image is 3D. Registration is performed slice-by-slice then regularized in
-    z. The parameter -p controls the polynomial degree. -p 0 means no
-    regularization.
+    stage consists of a transform; an image metric; and iterations, shrink
+    factors, and smoothing sigmas for each level. Specialized for 3D data: fixed
+    image is 3D, moving image is 3D. Registration is performed slice-by-slice
+    then regularized in z. The parameter -p controls the polynomial degree. -p 0
+    means no regularization.
     
     Author: ANTs Developers
     
@@ -257,14 +259,16 @@ def ants_slice_regularized_registration(
     runner: Runner | None = None,
 ) -> AntsSliceRegularizedRegistrationOutputs:
     """
+    antsSliceRegularizedRegistration
+    
     This program is a user-level application for slice-by-slice translation
     registration. Results are regularized in z using polynomial regression. The
     program is targeted at spinal cord MRI. Only one stage is supported where a
-    stage consists of a transform; an image metric; and iterations, shrink factors,
-    and smoothing sigmas for each level. Specialized for 3D data: fixed image is 3D,
-    moving image is 3D. Registration is performed slice-by-slice then regularized in
-    z. The parameter -p controls the polynomial degree. -p 0 means no
-    regularization.
+    stage consists of a transform; an image metric; and iterations, shrink
+    factors, and smoothing sigmas for each level. Specialized for 3D data: fixed
+    image is 3D, moving image is 3D. Registration is performed slice-by-slice
+    then regularized in z. The parameter -p controls the polynomial degree. -p 0
+    means no regularization.
     
     Author: ANTs Developers
     

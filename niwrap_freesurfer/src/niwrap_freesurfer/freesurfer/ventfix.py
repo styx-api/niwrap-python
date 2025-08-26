@@ -133,6 +133,8 @@ def ventfix_execute(
     runner: Runner | None = None,
 ) -> VentfixOutputs:
     """
+    ventfix
+    
     Tool for fixing ventricles in MRI scans.
     
     Author: FreeSurfer Developers
@@ -160,6 +162,8 @@ def ventfix(
     runner: Runner | None = None,
 ) -> VentfixOutputs:
     """
+    ventfix
+    
     Tool for fixing ventricles in MRI scans.
     
     Author: FreeSurfer Developers

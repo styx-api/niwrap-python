@@ -159,6 +159,8 @@ def v_3d_exchange_execute(
     runner: Runner | None = None,
 ) -> V3dExchangeOutputs:
     """
+    3dExchange
+    
     Replaces voxel values using a mapping file with specified columns.
     
     Author: AFNI Developers
@@ -189,6 +191,8 @@ def v_3d_exchange(
     runner: Runner | None = None,
 ) -> V3dExchangeOutputs:
     """
+    3dExchange
+    
     Replaces voxel values using a mapping file with specified columns.
     
     Author: AFNI Developers

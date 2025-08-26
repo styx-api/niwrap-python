@@ -199,6 +199,8 @@ def v_3d_toutcount_execute(
     runner: Runner | None = None,
 ) -> V3dToutcountOutputs:
     """
+    3dToutcount
+    
     Calculates the number of 'outliers' in a 3D+time dataset at each time point.
     
     Author: AFNI Developers
@@ -234,6 +236,8 @@ def v_3d_toutcount(
     runner: Runner | None = None,
 ) -> V3dToutcountOutputs:
     """
+    3dToutcount
+    
     Calculates the number of 'outliers' in a 3D+time dataset at each time point.
     
     Author: AFNI Developers

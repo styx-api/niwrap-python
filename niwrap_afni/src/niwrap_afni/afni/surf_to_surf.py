@@ -236,6 +236,8 @@ def surf_to_surf_execute(
     runner: Runner | None = None,
 ) -> SurfToSurfOutputs:
     """
+    SurfToSurf
+    
     Interpolate data from one surface to another.
     
     Author: AFNI Developers
@@ -274,6 +276,8 @@ def surf_to_surf(
     runner: Runner | None = None,
 ) -> SurfToSurfOutputs:
     """
+    SurfToSurf
+    
     Interpolate data from one surface to another.
     
     Author: AFNI Developers

@@ -131,6 +131,8 @@ def cluster2html_execute(
     runner: Runner | None = None,
 ) -> Cluster2htmlOutputs:
     """
+    cluster2html
+    
     Generates an HTML report from cluster-based FEAT analysis.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -159,6 +161,8 @@ def cluster2html(
     runner: Runner | None = None,
 ) -> Cluster2htmlOutputs:
     """
+    cluster2html
+    
     Generates an HTML report from cluster-based FEAT analysis.
     
     Author: FMRIB Analysis Group, University of Oxford

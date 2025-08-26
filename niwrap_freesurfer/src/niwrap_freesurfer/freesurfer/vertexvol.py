@@ -160,6 +160,8 @@ def vertexvol_execute(
     runner: Runner | None = None,
 ) -> VertexvolOutputs:
     """
+    vertexvol
+    
     Computes vertex-wise volume (and mid.area).
     
     Author: FreeSurfer Developers
@@ -191,6 +193,8 @@ def vertexvol(
     runner: Runner | None = None,
 ) -> VertexvolOutputs:
     """
+    vertexvol
+    
     Computes vertex-wise volume (and mid.area).
     
     Author: FreeSurfer Developers

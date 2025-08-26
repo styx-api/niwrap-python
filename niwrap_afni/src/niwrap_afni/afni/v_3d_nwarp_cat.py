@@ -197,6 +197,8 @@ def v_3d_nwarp_cat_execute(
     runner: Runner | None = None,
 ) -> V3dNwarpCatOutputs:
     """
+    3dNwarpCat
+    
     Catenates (composes) 3D warps defined on a grid or via a matrix.
     
     Author: AFNI Developers
@@ -231,6 +233,8 @@ def v_3d_nwarp_cat(
     runner: Runner | None = None,
 ) -> V3dNwarpCatOutputs:
     """
+    3dNwarpCat
+    
     Catenates (composes) 3D warps defined on a grid or via a matrix.
     
     Author: AFNI Developers

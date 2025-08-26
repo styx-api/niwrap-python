@@ -182,8 +182,10 @@ def first_flirt_execute(
     runner: Runner | None = None,
 ) -> FirstFlirtOutputs:
     """
-    FLIRT-based image registration tool with additional options for brain extraction
-    and weighting masks.
+    first_flirt
+    
+    FLIRT-based image registration tool with additional options for brain
+    extraction and weighting masks.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -216,8 +218,10 @@ def first_flirt(
     runner: Runner | None = None,
 ) -> FirstFlirtOutputs:
     """
-    FLIRT-based image registration tool with additional options for brain extraction
-    and weighting masks.
+    first_flirt
+    
+    FLIRT-based image registration tool with additional options for brain
+    extraction and weighting masks.
     
     Author: FMRIB Analysis Group, University of Oxford
     

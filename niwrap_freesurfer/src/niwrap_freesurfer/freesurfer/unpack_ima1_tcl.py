@@ -130,6 +130,8 @@ def unpack_ima1_tcl_execute(
     runner: Runner | None = None,
 ) -> UnpackIma1TclOutputs:
     """
+    unpack_ima1.tcl
+    
     A tool for unpacking images using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -157,6 +159,8 @@ def unpack_ima1_tcl(
     runner: Runner | None = None,
 ) -> UnpackIma1TclOutputs:
     """
+    unpack_ima1.tcl
+    
     A tool for unpacking images using FreeSurfer.
     
     Author: FreeSurfer Developers

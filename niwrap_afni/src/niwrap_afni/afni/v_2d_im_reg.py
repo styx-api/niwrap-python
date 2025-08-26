@@ -217,6 +217,8 @@ def v_2d_im_reg_execute(
     runner: Runner | None = None,
 ) -> V2dImRegOutputs:
     """
+    2dImReg
+    
     2D image registration tool for 3D+time datasets, aligning images on a
     slice-by-slice basis to a specified base image.
     
@@ -255,6 +257,8 @@ def v_2d_im_reg(
     runner: Runner | None = None,
 ) -> V2dImRegOutputs:
     """
+    2dImReg
+    
     2D image registration tool for 3D+time datasets, aligning images on a
     slice-by-slice basis to a specified base image.
     

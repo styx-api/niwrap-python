@@ -128,6 +128,8 @@ def segment_subject_t1_auto_estimate_alveus_ml_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectT1AutoEstimateAlveusMlOutputs:
     """
+    segmentSubjectT1_autoEstimateAlveusML
+    
     A tool that segments T1-weighted MRI data and automatically estimates the
     Alveus.
     
@@ -156,6 +158,8 @@ def segment_subject_t1_auto_estimate_alveus_ml(
     runner: Runner | None = None,
 ) -> SegmentSubjectT1AutoEstimateAlveusMlOutputs:
     """
+    segmentSubjectT1_autoEstimateAlveusML
+    
     A tool that segments T1-weighted MRI data and automatically estimates the
     Alveus.
     

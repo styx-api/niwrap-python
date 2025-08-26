@@ -128,6 +128,8 @@ def mri_train_execute(
     runner: Runner | None = None,
 ) -> MriTrainOutputs:
     """
+    mri_train
+    
     Tool for training with MRI data in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mri_train(
     runner: Runner | None = None,
 ) -> MriTrainOutputs:
     """
+    mri_train
+    
     Tool for training with MRI data in FreeSurfer.
     
     Author: FreeSurfer Developers

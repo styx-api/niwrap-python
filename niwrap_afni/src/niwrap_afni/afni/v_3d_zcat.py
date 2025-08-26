@@ -179,6 +179,8 @@ def v_3d_zcat_execute(
     runner: Runner | None = None,
 ) -> V3dZcatOutputs:
     """
+    3dZcat
+    
     Concatenates datasets in the slice (z) direction.
     
     Author: AFNI Developers
@@ -211,6 +213,8 @@ def v_3d_zcat(
     runner: Runner | None = None,
 ) -> V3dZcatOutputs:
     """
+    3dZcat
+    
     Concatenates datasets in the slice (z) direction.
     
     Author: AFNI Developers

@@ -353,6 +353,8 @@ def v_2dcat_execute(
     runner: Runner | None = None,
 ) -> V2dcatOutputs:
     """
+    2dcat
+    
     Puts a set of images into an image matrix montage of NX by NY images.
     
     Author: AFNI Developers
@@ -403,6 +405,8 @@ def v_2dcat(
     runner: Runner | None = None,
 ) -> V2dcatOutputs:
     """
+    2dcat
+    
     Puts a set of images into an image matrix montage of NX by NY images.
     
     Author: AFNI Developers

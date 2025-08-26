@@ -308,6 +308,8 @@ def v__djunct_overlap_check_execute(
     runner: Runner | None = None,
 ) -> VDjunctOverlapCheckOutputs:
     """
+    @djunct_overlap_check
+    
     A helper script for visualizing overlap between datasets in AFNI.
     
     Author: AFNI Developers
@@ -357,6 +359,8 @@ def v__djunct_overlap_check(
     runner: Runner | None = None,
 ) -> VDjunctOverlapCheckOutputs:
     """
+    @djunct_overlap_check
+    
     A helper script for visualizing overlap between datasets in AFNI.
     
     Author: AFNI Developers

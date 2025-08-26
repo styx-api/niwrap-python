@@ -244,6 +244,8 @@ def mri_3d_photo_recon_execute(
     runner: Runner | None = None,
 ) -> Mri3dPhotoReconOutputs:
     """
+    mri_3d_photo_recon
+    
     Code for 3D photo reconstruction (Tregidgo, et al., MICCAI 2020).
     
     Author: FreeSurfer Developers
@@ -283,6 +285,8 @@ def mri_3d_photo_recon(
     runner: Runner | None = None,
 ) -> Mri3dPhotoReconOutputs:
     """
+    mri_3d_photo_recon
+    
     Code for 3D photo reconstruction (Tregidgo, et al., MICCAI 2020).
     
     Author: FreeSurfer Developers

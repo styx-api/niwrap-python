@@ -237,6 +237,8 @@ def vol2segavg_execute(
     runner: Runner | None = None,
 ) -> Vol2segavgOutputs:
     """
+    vol2segavg
+    
     Computes the average of a volume inside a given segment of a segmentation
     resampling the input volume to the segmentation space.
     
@@ -278,6 +280,8 @@ def vol2segavg(
     runner: Runner | None = None,
 ) -> Vol2segavgOutputs:
     """
+    vol2segavg
+    
     Computes the average of a volume inside a given segment of a segmentation
     resampling the input volume to the segmentation space.
     

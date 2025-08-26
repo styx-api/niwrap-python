@@ -165,6 +165,8 @@ def metric_vector_operation_execute(
     runner: Runner | None = None,
 ) -> MetricVectorOperationOutputs:
     """
+    metric-vector-operation
+    
     Do a vector operation on metric files.
     
     Does a vector operation on two metric files (that must have a multiple of 3
@@ -210,6 +212,8 @@ def metric_vector_operation(
     runner: Runner | None = None,
 ) -> MetricVectorOperationOutputs:
     """
+    metric-vector-operation
+    
     Do a vector operation on metric files.
     
     Does a vector operation on two metric files (that must have a multiple of 3

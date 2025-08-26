@@ -626,6 +626,8 @@ def mri_em_register_execute(
     runner: Runner | None = None,
 ) -> MriEmRegisterOutputs:
     """
+    mri_em_register
+    
     This program creates a transform in lta format.
     
     Author: FreeSurfer Developers
@@ -707,6 +709,8 @@ def mri_em_register(
     runner: Runner | None = None,
 ) -> MriEmRegisterOutputs:
     """
+    mri_em_register
+    
     This program creates a transform in lta format.
     
     Author: FreeSurfer Developers

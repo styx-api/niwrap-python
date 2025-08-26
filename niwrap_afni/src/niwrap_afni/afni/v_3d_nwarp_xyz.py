@@ -142,8 +142,10 @@ def v_3d_nwarp_xyz_execute(
     runner: Runner | None = None,
 ) -> V3dNwarpXyzOutputs:
     """
-    Transforms the DICOM xyz coordinates in the input XYZfile.1D based on specified
-    warp.
+    3dNwarpXYZ
+    
+    Transforms the DICOM xyz coordinates in the input XYZfile.1D based on
+    specified warp.
     
     Author: AFNI Developers
     
@@ -172,8 +174,10 @@ def v_3d_nwarp_xyz(
     runner: Runner | None = None,
 ) -> V3dNwarpXyzOutputs:
     """
-    Transforms the DICOM xyz coordinates in the input XYZfile.1D based on specified
-    warp.
+    3dNwarpXYZ
+    
+    Transforms the DICOM xyz coordinates in the input XYZfile.1D based on
+    specified warp.
     
     Author: AFNI Developers
     

@@ -236,6 +236,8 @@ def v_3dmask_tool_execute(
     runner: Runner | None = None,
 ) -> V3dmaskToolOutputs:
     """
+    3dmask_tool
+    
     3dmask_tool - for combining/dilating/eroding/filling masks.
     
     Author: AFNI Developers
@@ -274,6 +276,8 @@ def v_3dmask_tool(
     runner: Runner | None = None,
 ) -> V3dmaskToolOutputs:
     """
+    3dmask_tool
+    
     3dmask_tool - for combining/dilating/eroding/filling masks.
     
     Author: AFNI Developers

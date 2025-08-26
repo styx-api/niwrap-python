@@ -145,8 +145,10 @@ def mris_fill_execute(
     runner: Runner | None = None,
 ) -> MrisFillOutputs:
     """
-    A tool that floodfills the interior of a surface and writes the results into a
-    volume of specified resolution.
+    mris_fill
+    
+    A tool that floodfills the interior of a surface and writes the results into
+    a volume of specified resolution.
     
     Author: FreeSurfer Developers
     
@@ -175,8 +177,10 @@ def mris_fill(
     runner: Runner | None = None,
 ) -> MrisFillOutputs:
     """
-    A tool that floodfills the interior of a surface and writes the results into a
-    volume of specified resolution.
+    mris_fill
+    
+    A tool that floodfills the interior of a surface and writes the results into
+    a volume of specified resolution.
     
     Author: FreeSurfer Developers
     

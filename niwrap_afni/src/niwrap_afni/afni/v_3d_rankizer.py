@@ -167,8 +167,10 @@ def v_3d_rankizer_execute(
     runner: Runner | None = None,
 ) -> V3dRankizerOutputs:
     """
-    Tool to rank each voxel as sorted into increasing value. Ties get the average
-    rank.
+    3dRankizer
+    
+    Tool to rank each voxel as sorted into increasing value. Ties get the
+    average rank.
     
     Author: AFNI Developers
     
@@ -199,8 +201,10 @@ def v_3d_rankizer(
     runner: Runner | None = None,
 ) -> V3dRankizerOutputs:
     """
-    Tool to rank each voxel as sorted into increasing value. Ties get the average
-    rank.
+    3dRankizer
+    
+    Tool to rank each voxel as sorted into increasing value. Ties get the
+    average rank.
     
     Author: AFNI Developers
     

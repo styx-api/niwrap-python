@@ -150,6 +150,8 @@ def pairreg_execute(
     runner: Runner | None = None,
 ) -> PairregOutputs:
     """
+    pairreg
+    
     Pairwise registration tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -181,6 +183,8 @@ def pairreg(
     runner: Runner | None = None,
 ) -> PairregOutputs:
     """
+    pairreg
+    
     Pairwise registration tool.
     
     Author: FMRIB Analysis Group, University of Oxford

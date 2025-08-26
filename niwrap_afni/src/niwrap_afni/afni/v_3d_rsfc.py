@@ -305,6 +305,8 @@ def v_3d_rsfc_execute(
     runner: Runner | None = None,
 ) -> V3dRsfcOutputs:
     """
+    3dRSFC
+    
     Program to calculate common resting state functional connectivity (RSFC)
     parameters.
     
@@ -355,6 +357,8 @@ def v_3d_rsfc(
     runner: Runner | None = None,
 ) -> V3dRsfcOutputs:
     """
+    3dRSFC
+    
     Program to calculate common resting state functional connectivity (RSFC)
     parameters.
     

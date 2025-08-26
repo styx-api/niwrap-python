@@ -300,6 +300,8 @@ def dwidenoise_execute(
     runner: Runner | None = None,
 ) -> DwidenoiseOutputs:
     """
+    dwidenoise
+    
     dMRI noise level estimation and denoising using Marchenko-Pastur PCA.
     
     DWI data denoising and noise map estimation by exploiting data redundancy in
@@ -373,6 +375,8 @@ def dwidenoise(
     runner: Runner | None = None,
 ) -> DwidenoiseOutputs:
     """
+    dwidenoise
+    
     dMRI noise level estimation and denoising using Marchenko-Pastur PCA.
     
     DWI data denoising and noise map estimation by exploiting data redundancy in

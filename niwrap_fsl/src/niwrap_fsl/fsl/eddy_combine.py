@@ -181,6 +181,8 @@ def eddy_combine_execute(
     runner: Runner | None = None,
 ) -> EddyCombineOutputs:
     """
+    eddy_combine
+    
     Combines diffusion data sets with opposite phase encoding directions for use
     with FSL's EDDY.
     
@@ -217,6 +219,8 @@ def eddy_combine(
     runner: Runner | None = None,
 ) -> EddyCombineOutputs:
     """
+    eddy_combine
+    
     Combines diffusion data sets with opposite phase encoding directions for use
     with FSL's EDDY.
     

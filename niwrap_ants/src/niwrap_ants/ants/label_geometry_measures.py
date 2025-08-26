@@ -145,8 +145,10 @@ def label_geometry_measures_execute(
     runner: Runner | None = None,
 ) -> LabelGeometryMeasuresOutputs:
     """
-    This tool computes various geometry measures on a label image, optionally using
-    an intensity image, and outputs the results to a CSV file.
+    LabelGeometryMeasures
+    
+    This tool computes various geometry measures on a label image, optionally
+    using an intensity image, and outputs the results to a CSV file.
     
     Author: ANTs Developers
     
@@ -175,8 +177,10 @@ def label_geometry_measures(
     runner: Runner | None = None,
 ) -> LabelGeometryMeasuresOutputs:
     """
-    This tool computes various geometry measures on a label image, optionally using
-    an intensity image, and outputs the results to a CSV file.
+    LabelGeometryMeasures
+    
+    This tool computes various geometry measures on a label image, optionally
+    using an intensity image, and outputs the results to a CSV file.
     
     Author: ANTs Developers
     

@@ -131,6 +131,8 @@ def v__center_distance_execute(
     runner: Runner | None = None,
 ) -> VCenterDistanceOutputs:
     """
+    @Center_Distance
+    
     Tool to calculate the distance between the centers of two datasets.
     
     Author: AFNI Developers
@@ -158,6 +160,8 @@ def v__center_distance(
     runner: Runner | None = None,
 ) -> VCenterDistanceOutputs:
     """
+    @Center_Distance
+    
     Tool to calculate the distance between the centers of two datasets.
     
     Author: AFNI Developers

@@ -341,6 +341,8 @@ def dmri_train_execute(
     runner: Runner | None = None,
 ) -> DmriTrainOutputs:
     """
+    dmri_train
+    
     DMRI training tool for processing diffusion MRI data in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -394,6 +396,8 @@ def dmri_train(
     runner: Runner | None = None,
 ) -> DmriTrainOutputs:
     """
+    dmri_train
+    
     DMRI training tool for processing diffusion MRI data in FreeSurfer.
     
     Author: FreeSurfer Developers

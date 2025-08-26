@@ -131,6 +131,8 @@ def check_feat_execute(
     runner: Runner | None = None,
 ) -> CheckFeatOutputs:
     """
+    checkFEAT
+    
     Perform checks on FEAT analysis results.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -158,6 +160,8 @@ def check_feat(
     runner: Runner | None = None,
 ) -> CheckFeatOutputs:
     """
+    checkFEAT
+    
     Perform checks on FEAT analysis results.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -147,6 +147,8 @@ def v_3d_tsplit4_d_execute(
     runner: Runner | None = None,
 ) -> V3dTsplit4DOutputs:
     """
+    3dTsplit4D
+    
     Convert a 3D+time dataset into multiple 3D single-brick files.
     
     Author: AFNI Developers
@@ -176,6 +178,8 @@ def v_3d_tsplit4_d(
     runner: Runner | None = None,
 ) -> V3dTsplit4DOutputs:
     """
+    3dTsplit4D
+    
     Convert a 3D+time dataset into multiple 3D single-brick files.
     
     Author: AFNI Developers

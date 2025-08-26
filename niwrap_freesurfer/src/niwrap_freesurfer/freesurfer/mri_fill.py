@@ -280,6 +280,8 @@ def mri_fill_execute(
     runner: Runner | None = None,
 ) -> MriFillOutputs:
     """
+    mri_fill
+    
     Tool for creating hemispheric cutting planes and filling white matter for
     surface tessellation.
     
@@ -323,6 +325,8 @@ def mri_fill(
     runner: Runner | None = None,
 ) -> MriFillOutputs:
     """
+    mri_fill
+    
     Tool for creating hemispheric cutting planes and filling white matter for
     surface tessellation.
     

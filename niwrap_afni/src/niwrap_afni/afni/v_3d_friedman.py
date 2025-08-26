@@ -159,6 +159,8 @@ def v_3d_friedman_execute(
     runner: Runner | None = None,
 ) -> V3dFriedmanOutputs:
     """
+    3dFriedman
+    
     Performs nonparametric Friedman test for randomized complete block design
     experiments.
     
@@ -190,6 +192,8 @@ def v_3d_friedman(
     runner: Runner | None = None,
 ) -> V3dFriedmanOutputs:
     """
+    3dFriedman
+    
     Performs nonparametric Friedman test for randomized complete block design
     experiments.
     

@@ -576,8 +576,10 @@ def mrgrid_execute(
     runner: Runner | None = None,
 ) -> MrgridOutputs:
     """
-    Modify the grid of an image without interpolation (cropping or padding) or by
-    regridding to an image grid with modified orientation, location and or
+    mrgrid
+    
+    Modify the grid of an image without interpolation (cropping or padding) or
+    by regridding to an image grid with modified orientation, location and or
     resolution. The image content remains in place in real world coordinates..
     
     - regrid: This operation performs changes of the voxel grid that require
@@ -656,8 +658,10 @@ def mrgrid(
     runner: Runner | None = None,
 ) -> MrgridOutputs:
     """
-    Modify the grid of an image without interpolation (cropping or padding) or by
-    regridding to an image grid with modified orientation, location and or
+    mrgrid
+    
+    Modify the grid of an image without interpolation (cropping or padding) or
+    by regridding to an image grid with modified orientation, location and or
     resolution. The image content remains in place in real world coordinates..
     
     - regrid: This operation performs changes of the voxel grid that require

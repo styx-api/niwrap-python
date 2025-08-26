@@ -302,6 +302,8 @@ def convert_dset_execute(
     runner: Runner | None = None,
 ) -> ConvertDsetOutputs:
     """
+    ConvertDset
+    
     Converts a surface dataset from one format to another.
     
     Author: AFNI Developers
@@ -348,6 +350,8 @@ def convert_dset(
     runner: Runner | None = None,
 ) -> ConvertDsetOutputs:
     """
+    ConvertDset
+    
     Converts a surface dataset from one format to another.
     
     Author: AFNI Developers

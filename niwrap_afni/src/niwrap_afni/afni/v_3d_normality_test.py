@@ -144,6 +144,8 @@ def v_3d_normality_test_execute(
     runner: Runner | None = None,
 ) -> V3dNormalityTestOutputs:
     """
+    3dNormalityTest
+    
     This program tests the input values at each voxel for normality using the
     Anderson-Darling method.
     
@@ -174,6 +176,8 @@ def v_3d_normality_test(
     runner: Runner | None = None,
 ) -> V3dNormalityTestOutputs:
     """
+    3dNormalityTest
+    
     This program tests the input values at each voxel for normality using the
     Anderson-Darling method.
     

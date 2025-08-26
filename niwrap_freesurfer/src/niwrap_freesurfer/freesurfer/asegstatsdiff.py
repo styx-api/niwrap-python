@@ -135,8 +135,10 @@ def asegstatsdiff_execute(
     runner: Runner | None = None,
 ) -> AsegstatsdiffOutputs:
     """
-    Compute and report percentage differences in aseg morphometry data between two
-    subjects.
+    asegstatsdiff
+    
+    Compute and report percentage differences in aseg morphometry data between
+    two subjects.
     
     Author: FreeSurfer Developers
     
@@ -164,8 +166,10 @@ def asegstatsdiff(
     runner: Runner | None = None,
 ) -> AsegstatsdiffOutputs:
     """
-    Compute and report percentage differences in aseg morphometry data between two
-    subjects.
+    asegstatsdiff
+    
+    Compute and report percentage differences in aseg morphometry data between
+    two subjects.
     
     Author: FreeSurfer Developers
     

@@ -226,8 +226,10 @@ def v__align_centers_execute(
     runner: Runner | None = None,
 ) -> VAlignCentersOutputs:
     """
-    Moves the center of a dataset (DSET) to the center of a base volume (BASE) and
-    optionally creates a transform matrix.
+    @Align_Centers
+    
+    Moves the center of a dataset (DSET) to the center of a base volume (BASE)
+    and optionally creates a transform matrix.
     
     Author: AFNI Developers
     
@@ -266,8 +268,10 @@ def v__align_centers(
     runner: Runner | None = None,
 ) -> VAlignCentersOutputs:
     """
-    Moves the center of a dataset (DSET) to the center of a base volume (BASE) and
-    optionally creates a transform matrix.
+    @Align_Centers
+    
+    Moves the center of a dataset (DSET) to the center of a base volume (BASE)
+    and optionally creates a transform matrix.
     
     Author: AFNI Developers
     

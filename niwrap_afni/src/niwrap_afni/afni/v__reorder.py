@@ -161,8 +161,10 @@ def v__reorder_execute(
     runner: Runner | None = None,
 ) -> VReorderOutputs:
     """
-    Reorder sub-bricks of a dataset based on event mapping. Works similarly to the
-    Reorder plugin.
+    @Reorder
+    
+    Reorder sub-bricks of a dataset based on event mapping. Works similarly to
+    the Reorder plugin.
     
     Author: AFNI Developers
     
@@ -194,8 +196,10 @@ def v__reorder(
     runner: Runner | None = None,
 ) -> VReorderOutputs:
     """
-    Reorder sub-bricks of a dataset based on event mapping. Works similarly to the
-    Reorder plugin.
+    @Reorder
+    
+    Reorder sub-bricks of a dataset based on event mapping. Works similarly to
+    the Reorder plugin.
     
     Author: AFNI Developers
     

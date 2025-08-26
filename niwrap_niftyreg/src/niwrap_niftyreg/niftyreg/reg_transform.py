@@ -394,6 +394,8 @@ def reg_transform_execute(
     runner: Runner | None = None,
 ) -> RegTransformOutputs:
     """
+    reg_transform
+    
     Tool for performing various transformation operations on medical images
     including control point to deformation conversion, composition of
     transformations, and converting between deformation and displacement fields.
@@ -449,6 +451,8 @@ def reg_transform(
     runner: Runner | None = None,
 ) -> RegTransformOutputs:
     """
+    reg_transform
+    
     Tool for performing various transformation operations on medical images
     including control point to deformation conversion, composition of
     transformations, and converting between deformation and displacement fields.

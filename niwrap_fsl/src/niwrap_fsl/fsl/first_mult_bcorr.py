@@ -164,8 +164,10 @@ def first_mult_bcorr_execute(
     runner: Runner | None = None,
 ) -> FirstMultBcorrOutputs:
     """
-    Part of FSL (ID: 6.0.5:9e026117), first_mult_bcorr converts label images to an
-    output image.
+    first_mult_bcorr
+    
+    Part of FSL (ID: 6.0.5:9e026117), first_mult_bcorr converts label images to
+    an output image.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -196,8 +198,10 @@ def first_mult_bcorr(
     runner: Runner | None = None,
 ) -> FirstMultBcorrOutputs:
     """
-    Part of FSL (ID: 6.0.5:9e026117), first_mult_bcorr converts label images to an
-    output image.
+    first_mult_bcorr
+    
+    Part of FSL (ID: 6.0.5:9e026117), first_mult_bcorr converts label images to
+    an output image.
     
     Author: FMRIB Analysis Group, University of Oxford
     

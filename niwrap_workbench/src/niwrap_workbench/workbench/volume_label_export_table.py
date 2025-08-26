@@ -130,6 +130,8 @@ def volume_label_export_table_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelExportTableOutputs:
     """
+    volume-label-export-table
+    
     Export label table from volume as text.
     
     Takes the label table from the volume label map, and writes it to a text
@@ -161,6 +163,8 @@ def volume_label_export_table(
     runner: Runner | None = None,
 ) -> VolumeLabelExportTableOutputs:
     """
+    volume-label-export-table
+    
     Export label table from volume as text.
     
     Takes the label table from the volume label map, and writes it to a text

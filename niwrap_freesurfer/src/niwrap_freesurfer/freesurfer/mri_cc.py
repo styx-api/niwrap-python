@@ -225,6 +225,8 @@ def mri_cc_execute(
     runner: Runner | None = None,
 ) -> MriCcOutputs:
     """
+    mri_cc
+    
     Segments the corpus callosum into five separate labels in the subcortical
     segmentation volume.
     
@@ -263,6 +265,8 @@ def mri_cc(
     runner: Runner | None = None,
 ) -> MriCcOutputs:
     """
+    mri_cc
+    
     Segments the corpus callosum into five separate labels in the subcortical
     segmentation volume.
     

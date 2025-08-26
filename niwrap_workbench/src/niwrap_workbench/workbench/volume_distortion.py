@@ -152,6 +152,8 @@ def volume_distortion_execute(
     runner: Runner | None = None,
 ) -> VolumeDistortionOutputs:
     """
+    volume-distortion
+    
     Calculate volume warpfield distortion.
     
     Calculates isotropic and anisotropic distortions in the volume warpfield. At
@@ -195,6 +197,8 @@ def volume_distortion(
     runner: Runner | None = None,
 ) -> VolumeDistortionOutputs:
     """
+    volume-distortion
+    
     Calculate volume warpfield distortion.
     
     Calculates isotropic and anisotropic distortions in the volume warpfield. At

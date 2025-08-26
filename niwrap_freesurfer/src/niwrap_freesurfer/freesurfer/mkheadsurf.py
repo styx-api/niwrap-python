@@ -357,8 +357,10 @@ def mkheadsurf_execute(
     runner: Runner | None = None,
 ) -> MkheadsurfOutputs:
     """
-    Segment and create a surface representation of the head for visualization and
-    further processing.
+    mkheadsurf
+    
+    Segment and create a surface representation of the head for visualization
+    and further processing.
     
     Author: FreeSurfer Developers
     
@@ -410,8 +412,10 @@ def mkheadsurf(
     runner: Runner | None = None,
 ) -> MkheadsurfOutputs:
     """
-    Segment and create a surface representation of the head for visualization and
-    further processing.
+    mkheadsurf
+    
+    Segment and create a surface representation of the head for visualization
+    and further processing.
     
     Author: FreeSurfer Developers
     

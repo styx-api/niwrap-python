@@ -131,9 +131,11 @@ def mp_diffpow_execute(
     runner: Runner | None = None,
 ) -> MpDiffpowOutputs:
     """
+    mp_diffpow
+    
     Generates a file with specific motion parameter calculations useful for
-    accounting for 'spin history' effects and other variations not accounted for by
-    motion correction.
+    accounting for 'spin history' effects and other variations not accounted for
+    by motion correction.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -160,9 +162,11 @@ def mp_diffpow(
     runner: Runner | None = None,
 ) -> MpDiffpowOutputs:
     """
+    mp_diffpow
+    
     Generates a file with specific motion parameter calculations useful for
-    accounting for 'spin history' effects and other variations not accounted for by
-    motion correction.
+    accounting for 'spin history' effects and other variations not accounted for
+    by motion correction.
     
     Author: FMRIB Analysis Group, University of Oxford
     

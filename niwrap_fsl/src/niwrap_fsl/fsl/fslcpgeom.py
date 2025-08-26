@@ -130,6 +130,8 @@ def fslcpgeom_execute(
     runner: Runner | None = None,
 ) -> FslcpgeomOutputs:
     """
+    fslcpgeom
+    
     FSL tool to copy image geometry from one file to another.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -158,6 +160,8 @@ def fslcpgeom(
     runner: Runner | None = None,
 ) -> FslcpgeomOutputs:
     """
+    fslcpgeom
+    
     FSL tool to copy image geometry from one file to another.
     
     Author: FMRIB Analysis Group, University of Oxford

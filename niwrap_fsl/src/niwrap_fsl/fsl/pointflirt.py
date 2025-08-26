@@ -176,6 +176,8 @@ def pointflirt_execute(
     runner: Runner | None = None,
 ) -> PointflirtOutputs:
     """
+    pointflirt
+    
     A tool to align point coordinates between volumes and compute affine
     transformation matrices.
     
@@ -209,6 +211,8 @@ def pointflirt(
     runner: Runner | None = None,
 ) -> PointflirtOutputs:
     """
+    pointflirt
+    
     A tool to align point coordinates between volumes and compute affine
     transformation matrices.
     

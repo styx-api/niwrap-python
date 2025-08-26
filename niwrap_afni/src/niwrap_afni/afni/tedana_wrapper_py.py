@@ -230,6 +230,8 @@ def tedana_wrapper_py_execute(
     runner: Runner | None = None,
 ) -> TedanaWrapperPyOutputs:
     """
+    tedana_wrapper.py
+    
     Internal wrapper to run tedana.py, typically used within afni_proc.py.
     
     Author: AFNI Developers
@@ -268,6 +270,8 @@ def tedana_wrapper_py(
     runner: Runner | None = None,
 ) -> TedanaWrapperPyOutputs:
     """
+    tedana_wrapper.py
+    
     Internal wrapper to run tedana.py, typically used within afni_proc.py.
     
     Author: AFNI Developers

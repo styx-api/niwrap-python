@@ -233,6 +233,8 @@ def fat_proc_decmap_execute(
     runner: Runner | None = None,
 ) -> FatProcDecmapOutputs:
     """
+    fat_proc_decmap
+    
     This program makes a directionally encoded color (DEC) map for DTI results.
     
     Author: AFNI Developers
@@ -269,6 +271,8 @@ def fat_proc_decmap(
     runner: Runner | None = None,
 ) -> FatProcDecmapOutputs:
     """
+    fat_proc_decmap
+    
     This program makes a directionally encoded color (DEC) map for DTI results.
     
     Author: AFNI Developers

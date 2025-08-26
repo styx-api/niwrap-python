@@ -123,6 +123,8 @@ def v__afni_refacer_make_onebig_a12_execute(
     runner: Runner | None = None,
 ) -> VAfniRefacerMakeOnebigA12Outputs:
     """
+    @afni_refacer_make_onebigA12
+    
     Script to align a single T1w dataset to the MNI template and expand it to a
     'big' grid.
     
@@ -150,6 +152,8 @@ def v__afni_refacer_make_onebig_a12(
     runner: Runner | None = None,
 ) -> VAfniRefacerMakeOnebigA12Outputs:
     """
+    @afni_refacer_make_onebigA12
+    
     Script to align a single T1w dataset to the MNI template and expand it to a
     'big' grid.
     

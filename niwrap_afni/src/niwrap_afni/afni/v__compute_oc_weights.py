@@ -217,6 +217,8 @@ def v__compute_oc_weights_execute(
     runner: Runner | None = None,
 ) -> VComputeOcWeightsOutputs:
     """
+    @compute_OC_weights
+    
     Compute optimal combined weights dataset for multi-echo EPI data.
     
     Author: AFNI Developers
@@ -252,6 +254,8 @@ def v__compute_oc_weights(
     runner: Runner | None = None,
 ) -> VComputeOcWeightsOutputs:
     """
+    @compute_OC_weights
+    
     Compute optimal combined weights dataset for multi-echo EPI data.
     
     Author: AFNI Developers

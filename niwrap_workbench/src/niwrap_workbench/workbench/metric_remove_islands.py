@@ -146,6 +146,8 @@ def metric_remove_islands_execute(
     runner: Runner | None = None,
 ) -> MetricRemoveIslandsOutputs:
     """
+    metric-remove-islands
+    
     Remove islands from an roi metric.
     
     Finds all connected areas in the ROI, and zeros out all but the largest one,
@@ -178,6 +180,8 @@ def metric_remove_islands(
     runner: Runner | None = None,
 ) -> MetricRemoveIslandsOutputs:
     """
+    metric-remove-islands
+    
     Remove islands from an roi metric.
     
     Finds all connected areas in the ROI, and zeros out all but the largest one,

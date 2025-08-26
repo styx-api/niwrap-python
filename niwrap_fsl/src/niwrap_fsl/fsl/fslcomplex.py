@@ -147,6 +147,8 @@ def fslcomplex_execute(
     runner: Runner | None = None,
 ) -> FslcomplexOutputs:
     """
+    fslcomplex
+    
     Tool for manipulating complex-valued MR data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -177,6 +179,8 @@ def fslcomplex(
     runner: Runner | None = None,
 ) -> FslcomplexOutputs:
     """
+    fslcomplex
+    
     Tool for manipulating complex-valued MR data.
     
     Author: FMRIB Analysis Group, University of Oxford

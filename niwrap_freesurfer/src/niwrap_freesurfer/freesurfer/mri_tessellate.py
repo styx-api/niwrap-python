@@ -158,6 +158,8 @@ def mri_tessellate_execute(
     runner: Runner | None = None,
 ) -> MriTessellateOutputs:
     """
+    mri_tessellate
+    
     This program creates a surface by tessellating a given input volume.
     
     Author: FreeSurfer Developers
@@ -189,6 +191,8 @@ def mri_tessellate(
     runner: Runner | None = None,
 ) -> MriTessellateOutputs:
     """
+    mri_tessellate
+    
     This program creates a surface by tessellating a given input volume.
     
     Author: FreeSurfer Developers

@@ -235,6 +235,8 @@ def nifti_information_execute(
     runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
+    nifti-information
+    
     Display information about a nifti/cifti file.
     
     You must specify at least one -print-* option.
@@ -266,6 +268,8 @@ def nifti_information(
     runner: Runner | None = None,
 ) -> NiftiInformationOutputs:
     """
+    nifti-information
+    
     Display information about a nifti/cifti file.
     
     You must specify at least one -print-* option.

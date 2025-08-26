@@ -176,6 +176,8 @@ def wbsparse_merge_dense_execute(
     runner: Runner | None = None,
 ) -> WbsparseMergeDenseOutputs:
     """
+    wbsparse-merge-dense
+    
     Merge wbsparse files along dense dimension.
     
     The input wbsparse files must have matching mappings along the direction not
@@ -208,6 +210,8 @@ def wbsparse_merge_dense(
     runner: Runner | None = None,
 ) -> WbsparseMergeDenseOutputs:
     """
+    wbsparse-merge-dense
+    
     Merge wbsparse files along dense dimension.
     
     The input wbsparse files must have matching mappings along the direction not

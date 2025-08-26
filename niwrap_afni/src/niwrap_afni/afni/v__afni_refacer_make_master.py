@@ -124,6 +124,8 @@ def v__afni_refacer_make_master_execute(
     runner: Runner | None = None,
 ) -> VAfniRefacerMakeMasterOutputs:
     """
+    @afni_refacer_make_master
+    
     This script makes a new mask/shell dataset for use with @afni_refacer_run by
     averaging 'faces' (non-brain tissue) from input datasets.
     
@@ -151,6 +153,8 @@ def v__afni_refacer_make_master(
     runner: Runner | None = None,
 ) -> VAfniRefacerMakeMasterOutputs:
     """
+    @afni_refacer_make_master
+    
     This script makes a new mask/shell dataset for use with @afni_refacer_run by
     averaging 'faces' (non-brain tissue) from input datasets.
     

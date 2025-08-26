@@ -202,6 +202,8 @@ def surf_extrema_execute(
     runner: Runner | None = None,
 ) -> SurfExtremaOutputs:
     """
+    SurfExtrema
+    
     A program finding the local extrema in a dataset.
     
     Author: AFNI Developers
@@ -235,6 +237,8 @@ def surf_extrema(
     runner: Runner | None = None,
 ) -> SurfExtremaOutputs:
     """
+    SurfExtrema
+    
     A program finding the local extrema in a dataset.
     
     Author: AFNI Developers

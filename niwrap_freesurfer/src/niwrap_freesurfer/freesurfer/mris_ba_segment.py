@@ -138,6 +138,8 @@ def mris_ba_segment_execute(
     runner: Runner | None = None,
 ) -> MrisBaSegmentOutputs:
     """
+    mris_BA_segment
+    
     Segments a Brodmann area (MT currently) from a laminar intensity profile
     overlay.
     
@@ -168,6 +170,8 @@ def mris_ba_segment(
     runner: Runner | None = None,
 ) -> MrisBaSegmentOutputs:
     """
+    mris_BA_segment
+    
     Segments a Brodmann area (MT currently) from a laminar intensity profile
     overlay.
     

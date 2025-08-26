@@ -176,7 +176,10 @@ def v_3daxialize_execute(
     runner: Runner | None = None,
 ) -> V3daxializeOutputs:
     """
-    Read and write dataset as new dataset with data brick oriented as axial slices.
+    3daxialize
+    
+    Read and write dataset as new dataset with data brick oriented as axial
+    slices.
     
     Author: AFNI Developers
     
@@ -209,7 +212,10 @@ def v_3daxialize(
     runner: Runner | None = None,
 ) -> V3daxializeOutputs:
     """
-    Read and write dataset as new dataset with data brick oriented as axial slices.
+    3daxialize
+    
+    Read and write dataset as new dataset with data brick oriented as axial
+    slices.
     
     Author: AFNI Developers
     

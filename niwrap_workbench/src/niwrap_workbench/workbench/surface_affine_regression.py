@@ -130,6 +130,8 @@ def surface_affine_regression_execute(
     runner: Runner | None = None,
 ) -> SurfaceAffineRegressionOutputs:
     """
+    surface-affine-regression
+    
     Regress the affine transform between surfaces on the same mesh.
     
     Use linear regression to compute an affine that minimizes the sum of squares
@@ -164,6 +166,8 @@ def surface_affine_regression(
     runner: Runner | None = None,
 ) -> SurfaceAffineRegressionOutputs:
     """
+    surface-affine-regression
+    
     Regress the affine transform between surfaces on the same mesh.
     
     Use linear regression to compute an affine that minimizes the sum of squares

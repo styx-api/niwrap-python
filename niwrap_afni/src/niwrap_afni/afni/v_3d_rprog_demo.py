@@ -196,6 +196,8 @@ def v_3d_rprog_demo_execute(
     runner: Runner | None = None,
 ) -> V3dRprogDemoOutputs:
     """
+    3dRprogDemo
+    
     Template program to help users write their own R processing routines on MRI
     volumes.
     
@@ -233,6 +235,8 @@ def v_3d_rprog_demo(
     runner: Runner | None = None,
 ) -> V3dRprogDemoOutputs:
     """
+    3dRprogDemo
+    
     Template program to help users write their own R processing routines on MRI
     volumes.
     

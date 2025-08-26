@@ -393,6 +393,8 @@ def fabber_dualecho_execute(
     runner: Runner | None = None,
 ) -> FabberDualechoOutputs:
     """
+    fabber_dualecho
+    
     FMRIB's Advanced Bayesian Estimation and Inference tool for FMRI analysis.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -453,6 +455,8 @@ def fabber_dualecho(
     runner: Runner | None = None,
 ) -> FabberDualechoOutputs:
     """
+    fabber_dualecho
+    
     FMRIB's Advanced Bayesian Estimation and Inference tool for FMRI analysis.
     
     Author: FMRIB Analysis Group, University of Oxford

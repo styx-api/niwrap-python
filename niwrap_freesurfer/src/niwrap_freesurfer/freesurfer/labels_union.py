@@ -134,6 +134,8 @@ def labels_union_execute(
     runner: Runner | None = None,
 ) -> LabelsUnionOutputs:
     """
+    labels_union
+    
     Utility to create the union of two label files.
     
     Author: FreeSurfer Developers
@@ -162,6 +164,8 @@ def labels_union(
     runner: Runner | None = None,
 ) -> LabelsUnionOutputs:
     """
+    labels_union
+    
     Utility to create the union of two label files.
     
     Author: FreeSurfer Developers

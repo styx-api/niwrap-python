@@ -241,6 +241,8 @@ def sh2power_execute(
     runner: Runner | None = None,
 ) -> Sh2powerOutputs:
     """
+    sh2power
+    
     Compute the total power of a spherical harmonics image.
     
     This command computes the sum of squared SH coefficients, which equals the
@@ -288,6 +290,8 @@ def sh2power(
     runner: Runner | None = None,
 ) -> Sh2powerOutputs:
     """
+    sh2power
+    
     Compute the total power of a spherical harmonics image.
     
     This command computes the sum of squared SH coefficients, which equals the

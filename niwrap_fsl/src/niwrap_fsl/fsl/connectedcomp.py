@@ -137,6 +137,8 @@ def connectedcomp_execute(
     runner: Runner | None = None,
 ) -> ConnectedcompOutputs:
     """
+    connectedcomp
+    
     Connected component analysis tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -165,6 +167,8 @@ def connectedcomp(
     runner: Runner | None = None,
 ) -> ConnectedcompOutputs:
     """
+    connectedcomp
+    
     Connected component analysis tool.
     
     Author: FMRIB Analysis Group, University of Oxford

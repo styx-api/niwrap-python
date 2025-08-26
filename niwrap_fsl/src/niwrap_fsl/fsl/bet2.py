@@ -245,6 +245,8 @@ def bet2_execute(
     runner: Runner | None = None,
 ) -> Bet2Outputs:
     """
+    bet2
+    
     Automated brain extraction tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -285,6 +287,8 @@ def bet2(
     runner: Runner | None = None,
 ) -> Bet2Outputs:
     """
+    bet2
+    
     Automated brain extraction tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

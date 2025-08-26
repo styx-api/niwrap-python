@@ -129,6 +129,8 @@ def unpacksdcmdir_execute(
     runner: Runner | None = None,
 ) -> UnpacksdcmdirOutputs:
     """
+    unpacksdcmdir
+    
     A tool for unpacking SD card directories, typically used in neuroimaging
     workflows. It seems to have a dependency on Tcl, as indicated by the error
     messages.
@@ -158,6 +160,8 @@ def unpacksdcmdir(
     runner: Runner | None = None,
 ) -> UnpacksdcmdirOutputs:
     """
+    unpacksdcmdir
+    
     A tool for unpacking SD card directories, typically used in neuroimaging
     workflows. It seems to have a dependency on Tcl, as indicated by the error
     messages.

@@ -220,9 +220,11 @@ def v_3d_depth_map_execute(
     runner: Runner | None = None,
 ) -> V3dDepthMapOutputs:
     """
+    3dDepthMap
+    
     Calculates the Euclidean Distance Transform (EDT) for 3D volumes, allowing
-    computation of ROI depth maps and applying various adjustments like masking and
-    rimification.
+    computation of ROI depth maps and applying various adjustments like masking
+    and rimification.
     
     Author: AFNI Developers
     
@@ -260,9 +262,11 @@ def v_3d_depth_map(
     runner: Runner | None = None,
 ) -> V3dDepthMapOutputs:
     """
+    3dDepthMap
+    
     Calculates the Euclidean Distance Transform (EDT) for 3D volumes, allowing
-    computation of ROI depth maps and applying various adjustments like masking and
-    rimification.
+    computation of ROI depth maps and applying various adjustments like masking
+    and rimification.
     
     Author: AFNI Developers
     

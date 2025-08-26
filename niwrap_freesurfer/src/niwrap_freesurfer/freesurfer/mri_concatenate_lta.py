@@ -202,6 +202,8 @@ def mri_concatenate_lta_execute(
     runner: Runner | None = None,
 ) -> MriConcatenateLtaOutputs:
     """
+    mri_concatenate_lta
+    
     Concatenates two consecutive LTA transformations into one overall
     transformation, Out = LTA2*LTA1.
     
@@ -240,6 +242,8 @@ def mri_concatenate_lta(
     runner: Runner | None = None,
 ) -> MriConcatenateLtaOutputs:
     """
+    mri_concatenate_lta
+    
     Concatenates two consecutive LTA transformations into one overall
     transformation, Out = LTA2*LTA1.
     

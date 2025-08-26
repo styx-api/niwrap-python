@@ -250,6 +250,8 @@ def iso_surface_execute(
     runner: Runner | None = None,
 ) -> IsoSurfaceOutputs:
     """
+    IsoSurface
+    
     A program to perform isosurface extraction from a volume.
     
     Author: AFNI Developers
@@ -289,6 +291,8 @@ def iso_surface(
     runner: Runner | None = None,
 ) -> IsoSurfaceOutputs:
     """
+    IsoSurface
+    
     A program to perform isosurface extraction from a volume.
     
     Author: AFNI Developers

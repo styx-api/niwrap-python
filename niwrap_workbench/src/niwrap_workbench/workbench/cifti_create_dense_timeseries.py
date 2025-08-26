@@ -401,6 +401,8 @@ def cifti_create_dense_timeseries_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
+    cifti-create-dense-timeseries
+    
     Create a cifti dense timeseries.
     
     All input files must have the same number of columns/subvolumes. Only the
@@ -483,6 +485,8 @@ def cifti_create_dense_timeseries(
     runner: Runner | None = None,
 ) -> CiftiCreateDenseTimeseriesOutputs:
     """
+    cifti-create-dense-timeseries
+    
     Create a cifti dense timeseries.
     
     All input files must have the same number of columns/subvolumes. Only the

@@ -162,7 +162,10 @@ def p2dsetstat_execute(
     runner: Runner | None = None,
 ) -> P2dsetstatOutputs:
     """
-    Convert a p-value to a statistic of choice with reference to a specific dataset.
+    p2dsetstat
+    
+    Convert a p-value to a statistic of choice with reference to a specific
+    dataset.
     
     Author: AFNI Developers
     
@@ -193,7 +196,10 @@ def p2dsetstat(
     runner: Runner | None = None,
 ) -> P2dsetstatOutputs:
     """
-    Convert a p-value to a statistic of choice with reference to a specific dataset.
+    p2dsetstat
+    
+    Convert a p-value to a statistic of choice with reference to a specific
+    dataset.
     
     Author: AFNI Developers
     

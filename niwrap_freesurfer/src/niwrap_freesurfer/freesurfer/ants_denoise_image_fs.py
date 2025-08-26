@@ -140,6 +140,8 @@ def ants_denoise_image_fs_execute(
     runner: Runner | None = None,
 ) -> AntsDenoiseImageFsOutputs:
     """
+    AntsDenoiseImageFs
+    
     Denoises an image with a spatially adaptive filter. This program wraps the
     AntsDenoiseImage utility available in the ANTs package.
     
@@ -169,6 +171,8 @@ def ants_denoise_image_fs(
     runner: Runner | None = None,
 ) -> AntsDenoiseImageFsOutputs:
     """
+    AntsDenoiseImageFs
+    
     Denoises an image with a spatially adaptive filter. This program wraps the
     AntsDenoiseImage utility available in the ANTs package.
     

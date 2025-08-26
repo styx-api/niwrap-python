@@ -128,6 +128,8 @@ def dmri_colored_fa_execute(
     runner: Runner | None = None,
 ) -> DmriColoredFaOutputs:
     """
+    dmri_coloredFA
+    
     Tool for generating colored FA maps from diffusion MRI data.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def dmri_colored_fa(
     runner: Runner | None = None,
 ) -> DmriColoredFaOutputs:
     """
+    dmri_coloredFA
+    
     Tool for generating colored FA maps from diffusion MRI data.
     
     Author: FreeSurfer Developers

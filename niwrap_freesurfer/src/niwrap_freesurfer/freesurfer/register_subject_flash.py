@@ -123,6 +123,8 @@ def register_subject_flash_execute(
     runner: Runner | None = None,
 ) -> RegisterSubjectFlashOutputs:
     """
+    register_subject_flash
+    
     Register subject using the FLASH forward model to predict intensity values.
     
     Author: FreeSurfer Developers
@@ -149,6 +151,8 @@ def register_subject_flash(
     runner: Runner | None = None,
 ) -> RegisterSubjectFlashOutputs:
     """
+    register_subject_flash
+    
     Register subject using the FLASH forward model to predict intensity values.
     
     Author: FreeSurfer Developers

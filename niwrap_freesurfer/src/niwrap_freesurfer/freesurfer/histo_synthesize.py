@@ -133,6 +133,8 @@ def histo_synthesize_execute(
     runner: Runner | None = None,
 ) -> HistoSynthesizeOutputs:
     """
+    histo_synthesize
+    
     Tool for synthesizing histology-like volumes from MRI data.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def histo_synthesize(
     runner: Runner | None = None,
 ) -> HistoSynthesizeOutputs:
     """
+    histo_synthesize
+    
     Tool for synthesizing histology-like volumes from MRI data.
     
     Author: FreeSurfer Developers

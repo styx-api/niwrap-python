@@ -125,8 +125,10 @@ def mris_distance_to_label_execute(
     runner: Runner | None = None,
 ) -> MrisDistanceToLabelOutputs:
     """
-    A tool for measuring the distance between vertices on a surface and a labeled
-    region.
+    mris_distance_to_label
+    
+    A tool for measuring the distance between vertices on a surface and a
+    labeled region.
     
     Author: FreeSurfer Developers
     
@@ -153,8 +155,10 @@ def mris_distance_to_label(
     runner: Runner | None = None,
 ) -> MrisDistanceToLabelOutputs:
     """
-    A tool for measuring the distance between vertices on a surface and a labeled
-    region.
+    mris_distance_to_label
+    
+    A tool for measuring the distance between vertices on a surface and a
+    labeled region.
     
     Author: FreeSurfer Developers
     

@@ -443,6 +443,8 @@ def sh2amp_execute(
     runner: Runner | None = None,
 ) -> Sh2ampOutputs:
     """
+    sh2amp
+    
     Evaluate the amplitude of an image of spherical harmonic functions along
     specified directions.
     
@@ -518,6 +520,8 @@ def sh2amp(
     runner: Runner | None = None,
 ) -> Sh2ampOutputs:
     """
+    sh2amp
+    
     Evaluate the amplitude of an image of spherical harmonic functions along
     specified directions.
     

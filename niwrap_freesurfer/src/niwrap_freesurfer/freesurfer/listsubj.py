@@ -173,6 +173,8 @@ def listsubj_execute(
     runner: Runner | None = None,
 ) -> ListsubjOutputs:
     """
+    listsubj
+    
     List subject IDs in SUBJECT_DIR.
     
     Author: FreeSurfer Developers
@@ -208,6 +210,8 @@ def listsubj(
     runner: Runner | None = None,
 ) -> ListsubjOutputs:
     """
+    listsubj
+    
     List subject IDs in SUBJECT_DIR.
     
     Author: FreeSurfer Developers

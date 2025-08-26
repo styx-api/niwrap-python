@@ -551,6 +551,8 @@ def mri_label2label_execute(
     runner: Runner | None = None,
 ) -> MriLabel2labelOutputs:
     """
+    mri_label2label
+    
     No description.
     
     Author: FreeSurfer Developers
@@ -622,6 +624,8 @@ def mri_label2label(
     runner: Runner | None = None,
 ) -> MriLabel2labelOutputs:
     """
+    mri_label2label
+    
     No description.
     
     Author: FreeSurfer Developers

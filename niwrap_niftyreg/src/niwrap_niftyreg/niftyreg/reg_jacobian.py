@@ -197,8 +197,10 @@ def reg_jacobian_execute(
     runner: Runner | None = None,
 ) -> RegJacobianOutputs:
     """
-    Tool to compute the Jacobian determinant map from a deformation field or control
-    point lattice.
+    reg_jacobian
+    
+    Tool to compute the Jacobian determinant map from a deformation field or
+    control point lattice.
     
     Author: NiftyReg Developers
     
@@ -230,8 +232,10 @@ def reg_jacobian(
     runner: Runner | None = None,
 ) -> RegJacobianOutputs:
     """
-    Tool to compute the Jacobian determinant map from a deformation field or control
-    point lattice.
+    reg_jacobian
+    
+    Tool to compute the Jacobian determinant map from a deformation field or
+    control point lattice.
     
     Author: NiftyReg Developers
     

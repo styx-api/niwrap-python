@@ -193,9 +193,12 @@ def warp_tensor_image_multi_transform_execute(
     runner: Runner | None = None,
 ) -> WarpTensorImageMultiTransformOutputs:
     """
-    WarpTensorImageMultiTransform is used to apply transformations including affine
-    and deformation fields to an image, supporting various interpolation techniques,
-    image header reslicing, and compatibility with ANTS-generated transformations.
+    WarpTensorImageMultiTransform
+    
+    WarpTensorImageMultiTransform is used to apply transformations including
+    affine and deformation fields to an image, supporting various interpolation
+    techniques, image header reslicing, and compatibility with ANTS-generated
+    transformations.
     
     Author: ANTs Developers
     
@@ -230,9 +233,12 @@ def warp_tensor_image_multi_transform(
     runner: Runner | None = None,
 ) -> WarpTensorImageMultiTransformOutputs:
     """
-    WarpTensorImageMultiTransform is used to apply transformations including affine
-    and deformation fields to an image, supporting various interpolation techniques,
-    image header reslicing, and compatibility with ANTS-generated transformations.
+    WarpTensorImageMultiTransform
+    
+    WarpTensorImageMultiTransform is used to apply transformations including
+    affine and deformation fields to an image, supporting various interpolation
+    techniques, image header reslicing, and compatibility with ANTS-generated
+    transformations.
     
     Author: ANTs Developers
     

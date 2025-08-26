@@ -173,7 +173,10 @@ def mri_matrix_multiply_execute(
     runner: Runner | None = None,
 ) -> MriMatrixMultiplyOutputs:
     """
-    Command-line tool for multiplying and manipulating MRI transformation matrices.
+    mri_matrix_multiply
+    
+    Command-line tool for multiplying and manipulating MRI transformation
+    matrices.
     
     Author: FreeSurfer Developers
     
@@ -205,7 +208,10 @@ def mri_matrix_multiply(
     runner: Runner | None = None,
 ) -> MriMatrixMultiplyOutputs:
     """
-    Command-line tool for multiplying and manipulating MRI transformation matrices.
+    mri_matrix_multiply
+    
+    Command-line tool for multiplying and manipulating MRI transformation
+    matrices.
     
     Author: FreeSurfer Developers
     

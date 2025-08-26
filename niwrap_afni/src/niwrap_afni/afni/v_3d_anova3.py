@@ -564,6 +564,8 @@ def v_3d_anova3_execute(
     runner: Runner | None = None,
 ) -> V3dAnova3Outputs:
     """
+    3dANOVA3
+    
     Performs three-factor ANOVA on 3D data sets.
     
     Author: AFNI Developers
@@ -620,6 +622,8 @@ def v_3d_anova3(
     runner: Runner | None = None,
 ) -> V3dAnova3Outputs:
     """
+    3dANOVA3
+    
     Performs three-factor ANOVA on 3D data sets.
     
     Author: AFNI Developers

@@ -126,6 +126,8 @@ def mri_align_long_csh_execute(
     runner: Runner | None = None,
 ) -> MriAlignLongCshOutputs:
     """
+    mri_align_long.csh
+    
     Aligns all longitudinal norm and aseg files to the base space in FreeSurfer
     processing.
     
@@ -153,6 +155,8 @@ def mri_align_long_csh(
     runner: Runner | None = None,
 ) -> MriAlignLongCshOutputs:
     """
+    mri_align_long.csh
+    
     Aligns all longitudinal norm and aseg files to the base space in FreeSurfer
     processing.
     

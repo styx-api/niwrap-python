@@ -123,6 +123,8 @@ def feat_execute(
     runner: Runner | None = None,
 ) -> FeatOutputs:
     """
+    feat
+    
     fMRI Expert Analysis Tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -149,6 +151,8 @@ def feat(
     runner: Runner | None = None,
 ) -> FeatOutputs:
     """
+    feat
+    
     fMRI Expert Analysis Tool.
     
     Author: FMRIB Analysis Group, University of Oxford

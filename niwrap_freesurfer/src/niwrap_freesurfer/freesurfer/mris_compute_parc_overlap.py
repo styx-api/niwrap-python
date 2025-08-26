@@ -244,8 +244,10 @@ def mris_compute_parc_overlap_execute(
     runner: Runner | None = None,
 ) -> MrisComputeParcOverlapOutputs:
     """
-    Compares two parcellated (annotated or labeled) surfaces and computes an overall
-    Dice coefficient and mean minimum distances (mm).
+    mris_compute_parc_overlap
+    
+    Compares two parcellated (annotated or labeled) surfaces and computes an
+    overall Dice coefficient and mean minimum distances (mm).
     
     Author: FreeSurfer Developers
     
@@ -286,8 +288,10 @@ def mris_compute_parc_overlap(
     runner: Runner | None = None,
 ) -> MrisComputeParcOverlapOutputs:
     """
-    Compares two parcellated (annotated or labeled) surfaces and computes an overall
-    Dice coefficient and mean minimum distances (mm).
+    mris_compute_parc_overlap
+    
+    Compares two parcellated (annotated or labeled) surfaces and computes an
+    overall Dice coefficient and mean minimum distances (mm).
     
     Author: FreeSurfer Developers
     

@@ -129,6 +129,8 @@ def volume_fill_holes_execute(
     runner: Runner | None = None,
 ) -> VolumeFillHolesOutputs:
     """
+    volume-fill-holes
+    
     Fill holes in an roi volume.
     
     Finds all face-connected parts that are not included in the ROI, and fills
@@ -159,6 +161,8 @@ def volume_fill_holes(
     runner: Runner | None = None,
 ) -> VolumeFillHolesOutputs:
     """
+    volume-fill-holes
+    
     Fill holes in an roi volume.
     
     Finds all face-connected parts that are not included in the ROI, and fills

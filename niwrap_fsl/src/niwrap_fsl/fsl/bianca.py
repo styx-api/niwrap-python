@@ -243,6 +243,8 @@ def bianca_execute(
     runner: Runner | None = None,
 ) -> BiancaOutputs:
     """
+    bianca
+    
     BIANCA: Brain Intensity AbNormality Classification Algorithm.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -285,6 +287,8 @@ def bianca(
     runner: Runner | None = None,
 ) -> BiancaOutputs:
     """
+    bianca
+    
     BIANCA: Brain Intensity AbNormality Classification Algorithm.
     
     Author: FMRIB Analysis Group, University of Oxford

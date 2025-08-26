@@ -154,6 +154,8 @@ def possum_interpmot_execute(
     runner: Runner | None = None,
 ) -> PossumInterpmotOutputs:
     """
+    possum_interpmot
+    
     Position Interpolation for Movers and Shakers.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -186,6 +188,8 @@ def possum_interpmot(
     runner: Runner | None = None,
 ) -> PossumInterpmotOutputs:
     """
+    possum_interpmot
+    
     Position Interpolation for Movers and Shakers.
     
     Author: FMRIB Analysis Group, University of Oxford

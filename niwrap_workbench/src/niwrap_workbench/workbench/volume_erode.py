@@ -156,6 +156,8 @@ def volume_erode_execute(
     runner: Runner | None = None,
 ) -> VolumeErodeOutputs:
     """
+    volume-erode
+    
     Erode a volume file.
     
     Around each voxel with a value of zero, set surrounding voxels to zero. The
@@ -190,6 +192,8 @@ def volume_erode(
     runner: Runner | None = None,
 ) -> VolumeErodeOutputs:
     """
+    volume-erode
+    
     Erode a volume file.
     
     Around each voxel with a value of zero, set surrounding voxels to zero. The

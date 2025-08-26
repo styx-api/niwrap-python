@@ -128,6 +128,8 @@ def irepifitvol_execute(
     runner: Runner | None = None,
 ) -> IrepifitvolOutputs:
     """
+    irepifitvol
+    
     A tool for 3D volume fitting.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def irepifitvol(
     runner: Runner | None = None,
 ) -> IrepifitvolOutputs:
     """
+    irepifitvol
+    
     A tool for 3D volume fitting.
     
     Author: FreeSurfer Developers

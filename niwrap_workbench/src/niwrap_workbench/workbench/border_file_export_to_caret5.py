@@ -177,6 +177,8 @@ def border_file_export_to_caret5_execute(
     runner: Runner | None = None,
 ) -> BorderFileExportToCaret5Outputs:
     """
+    border-file-export-to-caret5
+    
     Export border file to caret5 file format.
     
     A Workbench border file may contain borders for multiple structures and
@@ -230,6 +232,8 @@ def border_file_export_to_caret5(
     runner: Runner | None = None,
 ) -> BorderFileExportToCaret5Outputs:
     """
+    border-file-export-to-caret5
+    
     Export border file to caret5 file format.
     
     A Workbench border file may contain borders for multiple structures and

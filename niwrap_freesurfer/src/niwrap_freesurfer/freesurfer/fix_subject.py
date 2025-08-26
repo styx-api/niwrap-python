@@ -122,6 +122,8 @@ def fix_subject_execute(
     runner: Runner | None = None,
 ) -> FixSubjectOutputs:
     """
+    fix_subject
+    
     Tool to fix subjects in FreeSurfer, encountered errors due to incorrect path
     handling.
     
@@ -149,6 +151,8 @@ def fix_subject(
     runner: Runner | None = None,
 ) -> FixSubjectOutputs:
     """
+    fix_subject
+    
     Tool to fix subjects in FreeSurfer, encountered errors due to incorrect path
     handling.
     

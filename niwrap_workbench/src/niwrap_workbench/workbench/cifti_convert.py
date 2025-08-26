@@ -932,6 +932,8 @@ def cifti_convert_execute(
     runner: Runner | None = None,
 ) -> CiftiConvertOutputs:
     """
+    cifti-convert
+    
     Dump cifti matrix into other formats.
     
     This command is used to convert a full CIFTI matrix to/from formats that can
@@ -992,6 +994,8 @@ def cifti_convert(
     runner: Runner | None = None,
 ) -> CiftiConvertOutputs:
     """
+    cifti-convert
+    
     Dump cifti matrix into other formats.
     
     This command is used to convert a full CIFTI matrix to/from formats that can

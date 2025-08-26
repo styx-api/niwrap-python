@@ -124,6 +124,8 @@ def spm_t_to_b_execute(
     runner: Runner | None = None,
 ) -> SpmTToBOutputs:
     """
+    spm_t_to_b
+    
     Converts SPM format to Bshort format.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def spm_t_to_b(
     runner: Runner | None = None,
 ) -> SpmTToBOutputs:
     """
+    spm_t_to_b
+    
     Converts SPM format to Bshort format.
     
     Author: FreeSurfer Developers

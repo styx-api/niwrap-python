@@ -141,6 +141,8 @@ def mri_refine_seg_execute(
     runner: Runner | None = None,
 ) -> MriRefineSegOutputs:
     """
+    mri_refine_seg
+    
     Refines a messy segmentation by recoding stray voxels.
     
     Author: FreeSurfer Developers
@@ -169,6 +171,8 @@ def mri_refine_seg(
     runner: Runner | None = None,
 ) -> MriRefineSegOutputs:
     """
+    mri_refine_seg
+    
     Refines a messy segmentation by recoding stray voxels.
     
     Author: FreeSurfer Developers

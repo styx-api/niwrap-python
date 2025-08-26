@@ -288,6 +288,8 @@ def v_3drefit_execute(
     runner: Runner | None = None,
 ) -> V3drefitOutputs:
     """
+    3drefit
+    
     Changes some of the information inside a 3D dataset's header.
     
     Author: AFNI Developers
@@ -330,6 +332,8 @@ def v_3drefit(
     runner: Runner | None = None,
 ) -> V3drefitOutputs:
     """
+    3drefit
+    
     Changes some of the information inside a 3D dataset's header.
     
     Author: AFNI Developers

@@ -155,8 +155,10 @@ def mri_synthesize_execute(
     runner: Runner | None = None,
 ) -> MriSynthesizeOutputs:
     """
-    This program synthesizes a FLASH acquisition based on previously computed T1/PD
-    maps.
+    mri_synthesize
+    
+    This program synthesizes a FLASH acquisition based on previously computed
+    T1/PD maps.
     
     Author: FreeSurfer Developers
     
@@ -188,8 +190,10 @@ def mri_synthesize(
     runner: Runner | None = None,
 ) -> MriSynthesizeOutputs:
     """
-    This program synthesizes a FLASH acquisition based on previously computed T1/PD
-    maps.
+    mri_synthesize
+    
+    This program synthesizes a FLASH acquisition based on previously computed
+    T1/PD maps.
     
     Author: FreeSurfer Developers
     

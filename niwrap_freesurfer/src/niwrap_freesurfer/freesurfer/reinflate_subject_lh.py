@@ -126,6 +126,8 @@ def reinflate_subject_lh_execute(
     runner: Runner | None = None,
 ) -> ReinflateSubjectLhOutputs:
     """
+    reinflate_subject-lh
+    
     Utility to reinflate cortical surfaces for left hemisphere in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -152,6 +154,8 @@ def reinflate_subject_lh(
     runner: Runner | None = None,
 ) -> ReinflateSubjectLhOutputs:
     """
+    reinflate_subject-lh
+    
     Utility to reinflate cortical surfaces for left hemisphere in FreeSurfer.
     
     Author: FreeSurfer Developers

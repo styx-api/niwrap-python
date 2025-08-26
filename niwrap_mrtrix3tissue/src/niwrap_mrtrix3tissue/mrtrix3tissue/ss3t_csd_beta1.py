@@ -348,6 +348,8 @@ def ss3t_csd_beta1_execute(
     runner: Runner | None = None,
 ) -> Ss3tCsdBeta1Outputs:
     """
+    ss3t_csd_beta1
+    
     SS3T-CSD: beta 1 implementation
     
     * Dhollander, T. & Connelly, A. A novel iterative approach to reap the
@@ -390,6 +392,8 @@ def ss3t_csd_beta1(
     runner: Runner | None = None,
 ) -> Ss3tCsdBeta1Outputs:
     """
+    ss3t_csd_beta1
+    
     SS3T-CSD: beta 1 implementation
     
     * Dhollander, T. & Connelly, A. A novel iterative approach to reap the

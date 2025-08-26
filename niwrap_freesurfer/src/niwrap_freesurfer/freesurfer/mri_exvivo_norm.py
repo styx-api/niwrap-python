@@ -248,6 +248,8 @@ def mri_exvivo_norm_execute(
     runner: Runner | None = None,
 ) -> MriExvivoNormOutputs:
     """
+    mri_exvivo_norm
+    
     MRI Ex Vivo Normalization Tool.
     
     Author: FreeSurfer Developers
@@ -288,6 +290,8 @@ def mri_exvivo_norm(
     runner: Runner | None = None,
 ) -> MriExvivoNormOutputs:
     """
+    mri_exvivo_norm
+    
     MRI Ex Vivo Normalization Tool.
     
     Author: FreeSurfer Developers

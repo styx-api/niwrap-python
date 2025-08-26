@@ -747,6 +747,8 @@ def mrtransform_execute(
     runner: Runner | None = None,
 ) -> MrtransformOutputs:
     """
+    mrtransform
+    
     Apply spatial transformations to an image.
     
     If a linear transform is applied without a template image the command will
@@ -845,6 +847,8 @@ def mrtransform(
     runner: Runner | None = None,
 ) -> MrtransformOutputs:
     """
+    mrtransform
+    
     Apply spatial transformations to an image.
     
     If a linear transform is applied without a template image the command will

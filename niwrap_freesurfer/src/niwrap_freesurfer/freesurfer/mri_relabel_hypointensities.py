@@ -133,6 +133,8 @@ def mri_relabel_hypointensities_execute(
     runner: Runner | None = None,
 ) -> MriRelabelHypointensitiesOutputs:
     """
+    mri_relabel_hypointensities
+    
     Tool for relabeling hypointensities in FreeSurfer's aseg files.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_relabel_hypointensities(
     runner: Runner | None = None,
 ) -> MriRelabelHypointensitiesOutputs:
     """
+    mri_relabel_hypointensities
+    
     Tool for relabeling hypointensities in FreeSurfer's aseg files.
     
     Author: FreeSurfer Developers

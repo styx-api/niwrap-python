@@ -130,6 +130,8 @@ def add_to_spec_file_execute(
     runner: Runner | None = None,
 ) -> AddToSpecFileOutputs:
     """
+    add-to-spec-file
+    
     Add a file to a specification file.
     
     The resulting spec file overwrites the existing spec file. If the spec file
@@ -197,6 +199,8 @@ def add_to_spec_file(
     runner: Runner | None = None,
 ) -> AddToSpecFileOutputs:
     """
+    add-to-spec-file
+    
     Add a file to a specification file.
     
     The resulting spec file overwrites the existing spec file. If the spec file

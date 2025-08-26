@@ -125,6 +125,8 @@ def fs_tutorial_data_execute(
     runner: Runner | None = None,
 ) -> FsTutorialDataOutputs:
     """
+    fs_tutorial_data
+    
     Tool to download and install FreeSurfer tutorial data.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def fs_tutorial_data(
     runner: Runner | None = None,
 ) -> FsTutorialDataOutputs:
     """
+    fs_tutorial_data
+    
     Tool to download and install FreeSurfer tutorial data.
     
     Author: FreeSurfer Developers

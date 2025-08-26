@@ -168,8 +168,10 @@ def v_3d_median_filter_execute(
     runner: Runner | None = None,
 ) -> V3dMedianFilterOutputs:
     """
-    Computes the median in a spherical neighborhood around each point in the input
-    to produce the output.
+    3dMedianFilter
+    
+    Computes the median in a spherical neighborhood around each point in the
+    input to produce the output.
     
     Author: AFNI Developers
     
@@ -200,8 +202,10 @@ def v_3d_median_filter(
     runner: Runner | None = None,
 ) -> V3dMedianFilterOutputs:
     """
-    Computes the median in a spherical neighborhood around each point in the input
-    to produce the output.
+    3dMedianFilter
+    
+    Computes the median in a spherical neighborhood around each point in the
+    input to produce the output.
     
     Author: AFNI Developers
     

@@ -210,6 +210,8 @@ def bblabel_execute(
     runner: Runner | None = None,
 ) -> BblabelOutputs:
     """
+    bblabel
+    
     Applies a bounding box to a label, copying only the label points within the
     specified box to the output.
     
@@ -246,6 +248,8 @@ def bblabel(
     runner: Runner | None = None,
 ) -> BblabelOutputs:
     """
+    bblabel
+    
     Applies a bounding box to a label, copying only the label points within the
     specified box to the output.
     

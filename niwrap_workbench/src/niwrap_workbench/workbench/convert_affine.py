@@ -373,6 +373,8 @@ def convert_affine_execute(
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
+    convert-affine
+    
     Convert an affine file between conventions.
     
     NIFTI world matrices can be used directly on mm coordinates via matrix
@@ -416,6 +418,8 @@ def convert_affine(
     runner: Runner | None = None,
 ) -> ConvertAffineOutputs:
     """
+    convert-affine
+    
     Convert an affine file between conventions.
     
     NIFTI world matrices can be used directly on mm coordinates via matrix

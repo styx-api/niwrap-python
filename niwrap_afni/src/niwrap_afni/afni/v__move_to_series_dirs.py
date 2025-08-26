@@ -176,8 +176,10 @@ def v__move_to_series_dirs_execute(
     runner: Runner | None = None,
 ) -> VMoveToSeriesDirsOutputs:
     """
-    Partition DICOM files into series directories by copying or moving them to new
-    series directories.
+    @move.to.series.dirs
+    
+    Partition DICOM files into series directories by copying or moving them to
+    new series directories.
     
     Author: AFNI Developers
     
@@ -210,8 +212,10 @@ def v__move_to_series_dirs(
     runner: Runner | None = None,
 ) -> VMoveToSeriesDirsOutputs:
     """
-    Partition DICOM files into series directories by copying or moving them to new
-    series directories.
+    @move.to.series.dirs
+    
+    Partition DICOM files into series directories by copying or moving them to
+    new series directories.
     
     Author: AFNI Developers
     

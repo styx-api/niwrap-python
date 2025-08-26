@@ -166,6 +166,8 @@ def add_noise_to_image_execute(
     runner: Runner | None = None,
 ) -> AddNoiseToImageOutputs:
     """
+    AddNoiseToImage
+    
     Add various types of noise to an image.
     
     Author: ANTs Developers
@@ -196,6 +198,8 @@ def add_noise_to_image(
     runner: Runner | None = None,
 ) -> AddNoiseToImageOutputs:
     """
+    AddNoiseToImage
+    
     Add various types of noise to an image.
     
     Author: ANTs Developers

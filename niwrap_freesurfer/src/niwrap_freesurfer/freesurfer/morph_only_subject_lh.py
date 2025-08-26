@@ -126,6 +126,8 @@ def morph_only_subject_lh_execute(
     runner: Runner | None = None,
 ) -> MorphOnlySubjectLhOutputs:
     """
+    morph_only_subject-lh
+    
     A tool for morphological processing for the left hemisphere.
     
     Author: FreeSurfer Developers
@@ -152,6 +154,8 @@ def morph_only_subject_lh(
     runner: Runner | None = None,
 ) -> MorphOnlySubjectLhOutputs:
     """
+    morph_only_subject-lh
+    
     A tool for morphological processing for the left hemisphere.
     
     Author: FreeSurfer Developers

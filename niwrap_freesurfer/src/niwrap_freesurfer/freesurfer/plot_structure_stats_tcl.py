@@ -128,6 +128,8 @@ def plot_structure_stats_tcl_execute(
     runner: Runner | None = None,
 ) -> PlotStructureStatsTclOutputs:
     """
+    plot_structure_stats.tcl
+    
     Script to plot structural statistics.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def plot_structure_stats_tcl(
     runner: Runner | None = None,
 ) -> PlotStructureStatsTclOutputs:
     """
+    plot_structure_stats.tcl
+    
     Script to plot structural statistics.
     
     Author: FreeSurfer Developers

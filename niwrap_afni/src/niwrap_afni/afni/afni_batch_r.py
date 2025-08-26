@@ -148,6 +148,8 @@ def afni_batch_r_execute(
     runner: Runner | None = None,
 ) -> AfniBatchROutputs:
     """
+    AFNI_Batch_R
+    
     Batch mode for executing R scripts in the AFNI environment.
     
     Author: AFNI Developers
@@ -178,6 +180,8 @@ def afni_batch_r(
     runner: Runner | None = None,
 ) -> AfniBatchROutputs:
     """
+    AFNI_Batch_R
+    
     Batch mode for executing R scripts in the AFNI environment.
     
     Author: AFNI Developers

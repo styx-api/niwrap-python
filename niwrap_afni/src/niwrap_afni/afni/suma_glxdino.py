@@ -120,8 +120,10 @@ def suma_glxdino_execute(
     runner: Runner | None = None,
 ) -> SumaGlxdinoOutputs:
     """
-    A simple openGL test program using GLX. If it does not run, then SUMA certainly
-    won't.
+    SUMA_glxdino
+    
+    A simple openGL test program using GLX. If it does not run, then SUMA
+    certainly won't.
     
     Author: AFNI Developers
     
@@ -147,8 +149,10 @@ def suma_glxdino(
     runner: Runner | None = None,
 ) -> SumaGlxdinoOutputs:
     """
-    A simple openGL test program using GLX. If it does not run, then SUMA certainly
-    won't.
+    SUMA_glxdino
+    
+    A simple openGL test program using GLX. If it does not run, then SUMA
+    certainly won't.
     
     Author: AFNI Developers
     

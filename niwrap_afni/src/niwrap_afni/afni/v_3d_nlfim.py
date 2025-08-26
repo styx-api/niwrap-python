@@ -517,6 +517,8 @@ def v_3d_nlfim_execute(
     runner: Runner | None = None,
 ) -> V3dNlfimOutputs:
     """
+    3dNLfim
+    
     Nonlinear regression for each voxel of the input AFNI 3d+time data set.
     
     Author: AFNI Developers
@@ -579,6 +581,8 @@ def v_3d_nlfim(
     runner: Runner | None = None,
 ) -> V3dNlfimOutputs:
     """
+    3dNLfim
+    
     Nonlinear regression for each voxel of the input AFNI 3d+time data set.
     
     Author: AFNI Developers

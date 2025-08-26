@@ -148,6 +148,8 @@ def surface_curvature_execute(
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
+    surface-curvature
+    
     Calculate curvature of surface.
     
     Compute the curvature of the surface, using the method from:
@@ -180,6 +182,8 @@ def surface_curvature(
     runner: Runner | None = None,
 ) -> SurfaceCurvatureOutputs:
     """
+    surface-curvature
+    
     Calculate curvature of surface.
     
     Compute the curvature of the surface, using the method from:

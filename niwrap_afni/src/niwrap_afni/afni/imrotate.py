@@ -155,6 +155,8 @@ def imrotate_execute(
     runner: Runner | None = None,
 ) -> ImrotateOutputs:
     """
+    imrotate
+    
     Shifts and rotates an image.
     
     Author: AFNI Developers
@@ -187,6 +189,8 @@ def imrotate(
     runner: Runner | None = None,
 ) -> ImrotateOutputs:
     """
+    imrotate
+    
     Shifts and rotates an image.
     
     Author: AFNI Developers

@@ -132,6 +132,8 @@ def v__suma_fsvol_to_brik_execute(
     runner: Runner | None = None,
 ) -> VSumaFsvolToBrikOutputs:
     """
+    @SUMA_FSvolToBRIK
+    
     A script to convert COR- or .mgz files from FreeSurfer to BRIK format.
     
     Author: AFNI Developers
@@ -159,6 +161,8 @@ def v__suma_fsvol_to_brik(
     runner: Runner | None = None,
 ) -> VSumaFsvolToBrikOutputs:
     """
+    @SUMA_FSvolToBRIK
+    
     A script to convert COR- or .mgz files from FreeSurfer to BRIK format.
     
     Author: AFNI Developers

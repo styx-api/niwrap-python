@@ -144,6 +144,8 @@ def unpack_mnc_tcl_execute(
     runner: Runner | None = None,
 ) -> UnpackMncTclOutputs:
     """
+    unpack_mnc.tcl
+    
     A tool for unpacking MINC format images.
     
     Author: FreeSurfer Developers
@@ -172,6 +174,8 @@ def unpack_mnc_tcl(
     runner: Runner | None = None,
 ) -> UnpackMncTclOutputs:
     """
+    unpack_mnc.tcl
+    
     A tool for unpacking MINC format images.
     
     Author: FreeSurfer Developers

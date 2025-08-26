@@ -290,8 +290,10 @@ def fat_proc_axialize_anat_execute(
     runner: Runner | None = None,
 ) -> FatProcAxializeAnatOutputs:
     """
-    Helps align the major axes of an anatomical volume to those of the volumetric
-    field of view.
+    fat_proc_axialize_anat
+    
+    Helps align the major axes of an anatomical volume to those of the
+    volumetric field of view.
     
     Author: AFNI Developers
     
@@ -338,8 +340,10 @@ def fat_proc_axialize_anat(
     runner: Runner | None = None,
 ) -> FatProcAxializeAnatOutputs:
     """
-    Helps align the major axes of an anatomical volume to those of the volumetric
-    field of view.
+    fat_proc_axialize_anat
+    
+    Helps align the major axes of an anatomical volume to those of the
+    volumetric field of view.
     
     Author: AFNI Developers
     

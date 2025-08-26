@@ -295,6 +295,8 @@ def timing_tool_py_execute(
     runner: Runner | None = None,
 ) -> TimingToolPyOutputs:
     """
+    timing_tool.py
+    
     Tool for manipulating and evaluating stimulus timing files.
     
     Author: AFNI Developers
@@ -339,6 +341,8 @@ def timing_tool_py(
     runner: Runner | None = None,
 ) -> TimingToolPyOutputs:
     """
+    timing_tool.py
+    
     Tool for manipulating and evaluating stimulus timing files.
     
     Author: AFNI Developers

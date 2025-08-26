@@ -124,8 +124,10 @@ def mri_add_new_tp_execute(
     runner: Runner | None = None,
 ) -> MriAddNewTpOutputs:
     """
-    Adds a new time point to the base/template without re-creating the base. Only
-    the new time point needs to be run longitudinally.
+    mri_add_new_tp
+    
+    Adds a new time point to the base/template without re-creating the base.
+    Only the new time point needs to be run longitudinally.
     
     Author: FreeSurfer Developers
     
@@ -152,8 +154,10 @@ def mri_add_new_tp(
     runner: Runner | None = None,
 ) -> MriAddNewTpOutputs:
     """
-    Adds a new time point to the base/template without re-creating the base. Only
-    the new time point needs to be run longitudinally.
+    mri_add_new_tp
+    
+    Adds a new time point to the base/template without re-creating the base.
+    Only the new time point needs to be run longitudinally.
     
     Author: FreeSurfer Developers
     

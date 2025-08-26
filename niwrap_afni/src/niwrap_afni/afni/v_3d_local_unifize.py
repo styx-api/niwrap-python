@@ -199,8 +199,10 @@ def v_3d_local_unifize_execute(
     runner: Runner | None = None,
 ) -> V3dLocalUnifizeOutputs:
     """
-    This program generates a 'unifized' output volume by estimating the median in
-    the local neighborhood of each voxel and using that to scale each voxel's
+    3dLocalUnifize
+    
+    This program generates a 'unifized' output volume by estimating the median
+    in the local neighborhood of each voxel and using that to scale each voxel's
     brightness.
     
     Author: AFNI Developers
@@ -235,8 +237,10 @@ def v_3d_local_unifize(
     runner: Runner | None = None,
 ) -> V3dLocalUnifizeOutputs:
     """
-    This program generates a 'unifized' output volume by estimating the median in
-    the local neighborhood of each voxel and using that to scale each voxel's
+    3dLocalUnifize
+    
+    This program generates a 'unifized' output volume by estimating the median
+    in the local neighborhood of each voxel and using that to scale each voxel's
     brightness.
     
     Author: AFNI Developers

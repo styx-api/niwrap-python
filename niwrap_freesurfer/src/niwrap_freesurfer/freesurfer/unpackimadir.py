@@ -131,6 +131,8 @@ def unpackimadir_execute(
     runner: Runner | None = None,
 ) -> UnpackimadirOutputs:
     """
+    unpackimadir
+    
     Unpack image directories.
     
     Author: FreeSurfer Developers
@@ -158,6 +160,8 @@ def unpackimadir(
     runner: Runner | None = None,
 ) -> UnpackimadirOutputs:
     """
+    unpackimadir
+    
     Unpack image directories.
     
     Author: FreeSurfer Developers

@@ -215,8 +215,10 @@ def reg_resample_execute(
     runner: Runner | None = None,
 ) -> RegResampleOutputs:
     """
-    Tool for resampling floating images to the reference image space using different
-    transformations.
+    reg_resample
+    
+    Tool for resampling floating images to the reference image space using
+    different transformations.
     
     Author: NiftyReg Developers
     
@@ -251,8 +253,10 @@ def reg_resample(
     runner: Runner | None = None,
 ) -> RegResampleOutputs:
     """
-    Tool for resampling floating images to the reference image space using different
-    transformations.
+    reg_resample
+    
+    Tool for resampling floating images to the reference image space using
+    different transformations.
     
     Author: NiftyReg Developers
     

@@ -217,8 +217,10 @@ def sfa2fieldsign_execute(
     runner: Runner | None = None,
 ) -> Sfa2fieldsignOutputs:
     """
-    Computes fieldsign map from sfa-sess output. Masks the angle volumes and samples
-    them to the surface.
+    sfa2fieldsign
+    
+    Computes fieldsign map from sfa-sess output. Masks the angle volumes and
+    samples them to the surface.
     
     Author: FreeSurfer Developers
     
@@ -253,8 +255,10 @@ def sfa2fieldsign(
     runner: Runner | None = None,
 ) -> Sfa2fieldsignOutputs:
     """
-    Computes fieldsign map from sfa-sess output. Masks the angle volumes and samples
-    them to the surface.
+    sfa2fieldsign
+    
+    Computes fieldsign map from sfa-sess output. Masks the angle volumes and
+    samples them to the surface.
     
     Author: FreeSurfer Developers
     

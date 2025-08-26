@@ -240,8 +240,10 @@ def fsl_sub_mgh_execute(
     runner: Runner | None = None,
 ) -> FslSubMghOutputs:
     """
-    Wrapper for job control system such as SGE, modified for compatibility with the
-    PBS queueing system.
+    fsl_sub_mgh
+    
+    Wrapper for job control system such as SGE, modified for compatibility with
+    the PBS queueing system.
     
     Author: FreeSurfer Developers
     
@@ -279,8 +281,10 @@ def fsl_sub_mgh(
     runner: Runner | None = None,
 ) -> FslSubMghOutputs:
     """
-    Wrapper for job control system such as SGE, modified for compatibility with the
-    PBS queueing system.
+    fsl_sub_mgh
+    
+    Wrapper for job control system such as SGE, modified for compatibility with
+    the PBS queueing system.
     
     Author: FreeSurfer Developers
     

@@ -434,6 +434,8 @@ def optseq2_execute(
     runner: Runner | None = None,
 ) -> Optseq2Outputs:
     """
+    optseq2
+    
     Optseq2 is a tool for automatically scheduling events for rapid-presentation
     event-related (RPER) fMRI experiments.
     
@@ -492,6 +494,8 @@ def optseq2(
     runner: Runner | None = None,
 ) -> Optseq2Outputs:
     """
+    optseq2
+    
     Optseq2 is a tool for automatically scheduling events for rapid-presentation
     event-related (RPER) fMRI experiments.
     

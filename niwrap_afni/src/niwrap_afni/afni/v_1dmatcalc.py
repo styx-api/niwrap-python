@@ -125,8 +125,10 @@ def v_1dmatcalc_execute(
     runner: Runner | None = None,
 ) -> V1dmatcalcOutputs:
     """
-    A tool to evaluate space-delimited RPN (Reverse Polish Notation) matrix-valued
-    expressions.
+    1dmatcalc
+    
+    A tool to evaluate space-delimited RPN (Reverse Polish Notation)
+    matrix-valued expressions.
     
     Author: AFNI Developers
     
@@ -152,8 +154,10 @@ def v_1dmatcalc(
     runner: Runner | None = None,
 ) -> V1dmatcalcOutputs:
     """
-    A tool to evaluate space-delimited RPN (Reverse Polish Notation) matrix-valued
-    expressions.
+    1dmatcalc
+    
+    A tool to evaluate space-delimited RPN (Reverse Polish Notation)
+    matrix-valued expressions.
     
     Author: AFNI Developers
     

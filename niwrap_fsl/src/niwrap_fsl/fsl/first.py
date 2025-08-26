@@ -239,8 +239,10 @@ def first_execute(
     runner: Runner | None = None,
 ) -> FirstOutputs:
     """
-    A command-line tool for segmenting subcortical structures in MRI images using
-    models and transformations.
+    first
+    
+    A command-line tool for segmenting subcortical structures in MRI images
+    using models and transformations.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -280,8 +282,10 @@ def first(
     runner: Runner | None = None,
 ) -> FirstOutputs:
     """
-    A command-line tool for segmenting subcortical structures in MRI images using
-    models and transformations.
+    first
+    
+    A command-line tool for segmenting subcortical structures in MRI images
+    using models and transformations.
     
     Author: FMRIB Analysis Group, University of Oxford
     

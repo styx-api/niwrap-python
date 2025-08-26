@@ -119,6 +119,8 @@ def mri_and_execute(
     runner: Runner | None = None,
 ) -> MriAndOutputs:
     """
+    mri_and
+    
     Performs a logical voxel-wise AND on a series of volumes.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def mri_and(
     runner: Runner | None = None,
 ) -> MriAndOutputs:
     """
+    mri_and
+    
     Performs a logical voxel-wise AND on a series of volumes.
     
     Author: FreeSurfer Developers

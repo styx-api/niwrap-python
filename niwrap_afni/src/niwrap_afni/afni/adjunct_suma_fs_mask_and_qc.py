@@ -178,6 +178,8 @@ def adjunct_suma_fs_mask_and_qc_execute(
     runner: Runner | None = None,
 ) -> AdjunctSumaFsMaskAndQcOutputs:
     """
+    adjunct_suma_fs_mask_and_qc
+    
     Script for quickly making some QC images for the SUMA/ directory created by
     @SUMA_Make_Spec_FS after running FreeSurfer's recon-all.
     
@@ -210,6 +212,8 @@ def adjunct_suma_fs_mask_and_qc(
     runner: Runner | None = None,
 ) -> AdjunctSumaFsMaskAndQcOutputs:
     """
+    adjunct_suma_fs_mask_and_qc
+    
     Script for quickly making some QC images for the SUMA/ directory created by
     @SUMA_Make_Spec_FS after running FreeSurfer's recon-all.
     

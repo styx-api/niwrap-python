@@ -541,9 +541,11 @@ def mris_preproc_execute(
     runner: Runner | None = None,
 ) -> MrisPreprocOutputs:
     """
+    mris_preproc
+    
     Script to prepare surface-based data for high-level analysis by resampling
-    surface or volume source data to a common subject and concatenating them into
-    one file.
+    surface or volume source data to a common subject and concatenating them
+    into one file.
     
     Author: FreeSurfer Developers
     
@@ -617,9 +619,11 @@ def mris_preproc(
     runner: Runner | None = None,
 ) -> MrisPreprocOutputs:
     """
+    mris_preproc
+    
     Script to prepare surface-based data for high-level analysis by resampling
-    surface or volume source data to a common subject and concatenating them into
-    one file.
+    surface or volume source data to a common subject and concatenating them
+    into one file.
     
     Author: FreeSurfer Developers
     

@@ -124,6 +124,8 @@ def mris_map_cuts_execute(
     runner: Runner | None = None,
 ) -> MrisMapCutsOutputs:
     """
+    mris_map_cuts
+    
     Tool for mapping cortical surface data onto cuts.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def mris_map_cuts(
     runner: Runner | None = None,
 ) -> MrisMapCutsOutputs:
     """
+    mris_map_cuts
+    
     Tool for mapping cortical surface data onto cuts.
     
     Author: FreeSurfer Developers

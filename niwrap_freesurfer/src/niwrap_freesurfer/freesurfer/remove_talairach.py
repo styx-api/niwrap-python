@@ -130,6 +130,8 @@ def remove_talairach_execute(
     runner: Runner | None = None,
 ) -> RemoveTalairachOutputs:
     """
+    remove_talairach
+    
     A tool for removing the Talairach transformation from a volume.
     
     Author: FreeSurfer Developers
@@ -157,6 +159,8 @@ def remove_talairach(
     runner: Runner | None = None,
 ) -> RemoveTalairachOutputs:
     """
+    remove_talairach
+    
     A tool for removing the Talairach transformation from a volume.
     
     Author: FreeSurfer Developers

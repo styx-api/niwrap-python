@@ -139,8 +139,10 @@ def mri_fslmat_to_lta_execute(
     runner: Runner | None = None,
 ) -> MriFslmatToLtaOutputs:
     """
-    This program creates the LTA transformation file using information from the src
-    and target volumes and an FSL matrix file.
+    mri_fslmat_to_lta
+    
+    This program creates the LTA transformation file using information from the
+    src and target volumes and an FSL matrix file.
     
     Author: FreeSurfer Developers
     
@@ -169,8 +171,10 @@ def mri_fslmat_to_lta(
     runner: Runner | None = None,
 ) -> MriFslmatToLtaOutputs:
     """
-    This program creates the LTA transformation file using information from the src
-    and target volumes and an FSL matrix file.
+    mri_fslmat_to_lta
+    
+    This program creates the LTA transformation file using information from the
+    src and target volumes and an FSL matrix file.
     
     Author: FreeSurfer Developers
     

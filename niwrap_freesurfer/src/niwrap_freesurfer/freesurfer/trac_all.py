@@ -365,6 +365,8 @@ def trac_all_execute(
     runner: Runner | None = None,
 ) -> TracAllOutputs:
     """
+    trac-all
+    
     Reconstruct white-matter pathways using an atlas of the underlying anatomy.
     
     Author: FreeSurfer Developers
@@ -424,6 +426,8 @@ def trac_all(
     runner: Runner | None = None,
 ) -> TracAllOutputs:
     """
+    trac-all
+    
     Reconstruct white-matter pathways using an atlas of the underlying anatomy.
     
     Author: FreeSurfer Developers

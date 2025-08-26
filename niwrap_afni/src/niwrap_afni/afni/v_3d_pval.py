@@ -160,6 +160,8 @@ def v_3d_pval_execute(
     runner: Runner | None = None,
 ) -> V3dPvalOutputs:
     """
+    3dPval
+    
     Convert a dataset's statistical sub-bricks to p-values or other statistical
     representations.
     
@@ -192,6 +194,8 @@ def v_3d_pval(
     runner: Runner | None = None,
 ) -> V3dPvalOutputs:
     """
+    3dPval
+    
     Convert a dataset's statistical sub-bricks to p-values or other statistical
     representations.
     

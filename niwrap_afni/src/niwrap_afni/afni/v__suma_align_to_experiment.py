@@ -300,7 +300,10 @@ def v__suma_align_to_experiment_execute(
     runner: Runner | None = None,
 ) -> VSumaAlignToExperimentOutputs:
     """
-    Creates a version of Surface Anatomy that is registered to Experiment Anatomy.
+    @SUMA_AlignToExperiment
+    
+    Creates a version of Surface Anatomy that is registered to Experiment
+    Anatomy.
     
     Author: AFNI Developers
     
@@ -345,7 +348,10 @@ def v__suma_align_to_experiment(
     runner: Runner | None = None,
 ) -> VSumaAlignToExperimentOutputs:
     """
-    Creates a version of Surface Anatomy that is registered to Experiment Anatomy.
+    @SUMA_AlignToExperiment
+    
+    Creates a version of Surface Anatomy that is registered to Experiment
+    Anatomy.
     
     Author: AFNI Developers
     

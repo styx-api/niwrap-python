@@ -123,6 +123,8 @@ def v__2dwarper_execute(
     runner: Runner | None = None,
 ) -> V2dwarperOutputs:
     """
+    @2dwarper
+    
     2D image warping tool.
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def v__2dwarper(
     runner: Runner | None = None,
 ) -> V2dwarperOutputs:
     """
+    @2dwarper
+    
     2D image warping tool.
     
     Author: AFNI Developers

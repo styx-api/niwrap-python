@@ -327,6 +327,8 @@ def volume_create_execute(
     runner: Runner | None = None,
 ) -> VolumeCreateOutputs:
     """
+    volume-create
+    
     Create a blank volume file.
     
     Creates a volume file full of zeros. Exactly one of -plumb or -sform must be
@@ -361,6 +363,8 @@ def volume_create(
     runner: Runner | None = None,
 ) -> VolumeCreateOutputs:
     """
+    volume-create
+    
     Create a blank volume file.
     
     Creates a volume file full of zeros. Exactly one of -plumb or -sform must be

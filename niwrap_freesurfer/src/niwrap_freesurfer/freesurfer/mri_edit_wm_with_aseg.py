@@ -219,6 +219,8 @@ def mri_edit_wm_with_aseg_execute(
     runner: Runner | None = None,
 ) -> MriEditWmWithAsegOutputs:
     """
+    mri_edit_wm_with_aseg
+    
     A tool for editing white matter with anatomical segmentation.
     
     Author: FreeSurfer Developers
@@ -258,6 +260,8 @@ def mri_edit_wm_with_aseg(
     runner: Runner | None = None,
 ) -> MriEditWmWithAsegOutputs:
     """
+    mri_edit_wm_with_aseg
+    
     A tool for editing white matter with anatomical segmentation.
     
     Author: FreeSurfer Developers

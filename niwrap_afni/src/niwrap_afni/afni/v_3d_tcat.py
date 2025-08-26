@@ -166,6 +166,8 @@ def v_3d_tcat_execute(
     runner: Runner | None = None,
 ) -> V3dTcatOutputs:
     """
+    3dTcat
+    
     Concatenate sub-bricks from input datasets into one big 3D+time dataset.
     TODO Replace InputMultiPath in_files with Traits.List, if possible. Current
     version adds extra whitespace.
@@ -199,6 +201,8 @@ def v_3d_tcat(
     runner: Runner | None = None,
 ) -> V3dTcatOutputs:
     """
+    3dTcat
+    
     Concatenate sub-bricks from input datasets into one big 3D+time dataset.
     TODO Replace InputMultiPath in_files with Traits.List, if possible. Current
     version adds extra whitespace.

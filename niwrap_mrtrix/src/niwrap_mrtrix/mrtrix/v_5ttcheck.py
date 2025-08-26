@@ -236,6 +236,8 @@ def v_5ttcheck_execute(
     runner: Runner | None = None,
 ) -> V5ttcheckOutputs:
     """
+    5ttcheck
+    
     Thoroughly check that one or more images conform to the expected ACT
     five-tissue-type (5TT) format.
     
@@ -278,6 +280,8 @@ def v_5ttcheck(
     runner: Runner | None = None,
 ) -> V5ttcheckOutputs:
     """
+    5ttcheck
+    
     Thoroughly check that one or more images conform to the expected ACT
     five-tissue-type (5TT) format.
     

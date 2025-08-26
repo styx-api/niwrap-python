@@ -302,6 +302,8 @@ def v_3d_tfitter_execute(
     runner: Runner | None = None,
 ) -> V3dTfitterOutputs:
     """
+    3dTfitter
+    
     * At each voxel, assembles and solves a set of linear equations.
     ++ The matrix at each voxel may be the same or may be different.
     ++ This flexibility (for voxel-wise regressors) is one feature
@@ -351,6 +353,8 @@ def v_3d_tfitter(
     runner: Runner | None = None,
 ) -> V3dTfitterOutputs:
     """
+    3dTfitter
+    
     * At each voxel, assembles and solves a set of linear equations.
     ++ The matrix at each voxel may be the same or may be different.
     ++ This flexibility (for voxel-wise regressors) is one feature

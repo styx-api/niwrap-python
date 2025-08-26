@@ -141,6 +141,8 @@ def v__clust_exp_cat_lab_execute(
     runner: Runner | None = None,
 ) -> VClustExpCatLabOutputs:
     """
+    @ClustExp_CatLab
+    
     Helper script to concatenate and label a group of data sets.
     
     Author: AFNI Developers
@@ -169,6 +171,8 @@ def v__clust_exp_cat_lab(
     runner: Runner | None = None,
 ) -> VClustExpCatLabOutputs:
     """
+    @ClustExp_CatLab
+    
     Helper script to concatenate and label a group of data sets.
     
     Author: AFNI Developers

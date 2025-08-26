@@ -371,6 +371,8 @@ def volume_set_space_execute(
     runner: Runner | None = None,
 ) -> VolumeSetSpaceOutputs:
     """
+    volume-set-space
+    
     Change volume space information.
     
     Writes a copy of the volume file, with the spacing information changed as
@@ -406,6 +408,8 @@ def volume_set_space(
     runner: Runner | None = None,
 ) -> VolumeSetSpaceOutputs:
     """
+    volume-set-space
+    
     Change volume space information.
     
     Writes a copy of the volume file, with the spacing information changed as

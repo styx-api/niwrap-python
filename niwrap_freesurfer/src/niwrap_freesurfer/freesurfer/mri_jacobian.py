@@ -207,6 +207,8 @@ def mri_jacobian_execute(
     runner: Runner | None = None,
 ) -> MriJacobianOutputs:
     """
+    mri_jacobian
+    
     Compute the Jacobian of a morph with FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -246,6 +248,8 @@ def mri_jacobian(
     runner: Runner | None = None,
 ) -> MriJacobianOutputs:
     """
+    mri_jacobian
+    
     Compute the Jacobian of a morph with FreeSurfer.
     
     Author: FreeSurfer Developers

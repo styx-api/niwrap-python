@@ -158,6 +158,8 @@ def ants_motion_corr_diffusion_direction_execute(
     runner: Runner | None = None,
 ) -> AntsMotionCorrDiffusionDirectionOutputs:
     """
+    antsMotionCorrDiffusionDirection
+    
     This tool adjusts the diffusion scheme for motion correction.
     
     Author: ANTs Developers
@@ -188,6 +190,8 @@ def ants_motion_corr_diffusion_direction(
     runner: Runner | None = None,
 ) -> AntsMotionCorrDiffusionDirectionOutputs:
     """
+    antsMotionCorrDiffusionDirection
+    
     This tool adjusts the diffusion scheme for motion correction.
     
     Author: ANTs Developers

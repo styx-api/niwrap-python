@@ -263,6 +263,8 @@ def v_3d_mvm_execute(
     runner: Runner | None = None,
 ) -> V3dMvmOutputs:
     """
+    3dMVM
+    
     AFNI Group Analysis Program with Multi-Variate Modeling Approach.
     
     Author: AFNI Developers
@@ -303,6 +305,8 @@ def v_3d_mvm(
     runner: Runner | None = None,
 ) -> V3dMvmOutputs:
     """
+    3dMVM
+    
     AFNI Group Analysis Program with Multi-Variate Modeling Approach.
     
     Author: AFNI Developers

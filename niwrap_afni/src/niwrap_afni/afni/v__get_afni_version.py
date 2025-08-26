@@ -124,6 +124,8 @@ def v__get_afni_version_execute(
     runner: Runner | None = None,
 ) -> VGetAfniVersionOutputs:
     """
+    @get.afni.version
+    
     Downloads the source code for a specified AFNI version.
     
     Author: AFNI Developers
@@ -150,6 +152,8 @@ def v__get_afni_version(
     runner: Runner | None = None,
 ) -> VGetAfniVersionOutputs:
     """
+    @get.afni.version
+    
     Downloads the source code for a specified AFNI version.
     
     Author: AFNI Developers

@@ -302,6 +302,8 @@ def rbbr_execute(
     runner: Runner | None = None,
 ) -> RbbrOutputs:
     """
+    rbbr
+    
     Robust version of bbregister.
     
     Author: FreeSurfer Developers
@@ -349,6 +351,8 @@ def rbbr(
     runner: Runner | None = None,
 ) -> RbbrOutputs:
     """
+    rbbr
+    
     Robust version of bbregister.
     
     Author: FreeSurfer Developers

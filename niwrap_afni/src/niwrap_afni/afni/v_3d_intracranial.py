@@ -195,6 +195,8 @@ def v_3d_intracranial_execute(
     runner: Runner | None = None,
 ) -> V3dIntracranialOutputs:
     """
+    3dIntracranial
+    
     Performs automatic segmentation of intracranial region.
     
     Author: AFNI Developers
@@ -229,6 +231,8 @@ def v_3d_intracranial(
     runner: Runner | None = None,
 ) -> V3dIntracranialOutputs:
     """
+    3dIntracranial
+    
     Performs automatic segmentation of intracranial region.
     
     Author: AFNI Developers

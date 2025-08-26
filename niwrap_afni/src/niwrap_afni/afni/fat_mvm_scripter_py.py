@@ -249,6 +249,8 @@ def fat_mvm_scripter_py_execute(
     runner: Runner | None = None,
 ) -> FatMvmScripterPyOutputs:
     """
+    fat_mvm_scripter.py
+    
     Automated tool to create command scripts for 3dMVM statistical modeling.
     
     Author: AFNI Developers
@@ -287,6 +289,8 @@ def fat_mvm_scripter_py(
     runner: Runner | None = None,
 ) -> FatMvmScripterPyOutputs:
     """
+    fat_mvm_scripter.py
+    
     Automated tool to create command scripts for 3dMVM statistical modeling.
     
     Author: AFNI Developers

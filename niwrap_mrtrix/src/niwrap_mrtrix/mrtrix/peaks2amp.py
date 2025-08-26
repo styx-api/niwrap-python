@@ -235,6 +235,8 @@ def peaks2amp_execute(
     runner: Runner | None = None,
 ) -> Peaks2ampOutputs:
     """
+    peaks2amp
+    
     Extract amplitudes from a peak directions image.
     
     
@@ -276,6 +278,8 @@ def peaks2amp(
     runner: Runner | None = None,
 ) -> Peaks2ampOutputs:
     """
+    peaks2amp
+    
     Extract amplitudes from a peak directions image.
     
     

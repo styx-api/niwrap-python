@@ -126,6 +126,8 @@ def v__get_afni_prefix_execute(
     runner: Runner | None = None,
 ) -> VGetAfniPrefixOutputs:
     """
+    @GetAfniPrefix
+    
     A tool to extract AFNI prefix from a given file path.
     
     Author: AFNI Developers
@@ -153,6 +155,8 @@ def v__get_afni_prefix(
     runner: Runner | None = None,
 ) -> VGetAfniPrefixOutputs:
     """
+    @GetAfniPrefix
+    
     A tool to extract AFNI prefix from a given file path.
     
     Author: AFNI Developers

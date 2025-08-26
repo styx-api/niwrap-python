@@ -166,8 +166,10 @@ def rca_fix_ento_execute(
     runner: Runner | None = None,
 ) -> RcaFixEntoOutputs:
     """
-    A tool to fix the entorhinal white matter in FreeSurfer using a deep learning
-    network.
+    rca-fix-ento
+    
+    A tool to fix the entorhinal white matter in FreeSurfer using a deep
+    learning network.
     
     Author: FreeSurfer Developers
     
@@ -197,8 +199,10 @@ def rca_fix_ento(
     runner: Runner | None = None,
 ) -> RcaFixEntoOutputs:
     """
-    A tool to fix the entorhinal white matter in FreeSurfer using a deep learning
-    network.
+    rca-fix-ento
+    
+    A tool to fix the entorhinal white matter in FreeSurfer using a deep
+    learning network.
     
     Author: FreeSurfer Developers
     

@@ -120,6 +120,8 @@ def renormalize_t1_subject_execute(
     runner: Runner | None = None,
 ) -> RenormalizeT1SubjectOutputs:
     """
+    renormalize_T1_subject
+    
     Renormalize T1 subject images using FreeSurfer scripts.
     
     Author: FreeSurfer Developers
@@ -146,6 +148,8 @@ def renormalize_t1_subject(
     runner: Runner | None = None,
 ) -> RenormalizeT1SubjectOutputs:
     """
+    renormalize_T1_subject
+    
     Renormalize T1 subject images using FreeSurfer scripts.
     
     Author: FreeSurfer Developers

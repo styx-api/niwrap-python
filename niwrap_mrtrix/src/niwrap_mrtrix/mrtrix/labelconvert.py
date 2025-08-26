@@ -256,6 +256,8 @@ def labelconvert_execute(
     runner: Runner | None = None,
 ) -> LabelconvertOutputs:
     """
+    labelconvert
+    
     Convert a connectome node image from one lookup table to another.
     
     Typical usage is to convert a parcellation image provided by some other
@@ -306,6 +308,8 @@ def labelconvert(
     runner: Runner | None = None,
 ) -> LabelconvertOutputs:
     """
+    labelconvert
+    
     Convert a connectome node image from one lookup table to another.
     
     Typical usage is to convert a parcellation image provided by some other

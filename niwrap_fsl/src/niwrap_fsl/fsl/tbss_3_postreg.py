@@ -128,6 +128,8 @@ def tbss_3_postreg_execute(
     runner: Runner | None = None,
 ) -> Tbss3PostregOutputs:
     """
+    tbss_3_postreg
+    
     TBSS post-registration processing.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def tbss_3_postreg(
     runner: Runner | None = None,
 ) -> Tbss3PostregOutputs:
     """
+    tbss_3_postreg
+    
     TBSS post-registration processing.
     
     Author: FMRIB Analysis Group, University of Oxford

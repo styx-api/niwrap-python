@@ -354,6 +354,8 @@ def v_3d_gen_priors_execute(
     runner: Runner | None = None,
 ) -> V3dGenPriorsOutputs:
     """
+    3dGenPriors
+    
     Produces classification priors based on voxel signatures.
     
     Author: AFNI Developers
@@ -405,6 +407,8 @@ def v_3d_gen_priors(
     runner: Runner | None = None,
 ) -> V3dGenPriorsOutputs:
     """
+    3dGenPriors
+    
     Produces classification priors based on voxel signatures.
     
     Author: AFNI Developers

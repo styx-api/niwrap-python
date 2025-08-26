@@ -217,6 +217,8 @@ def mri_gradunwarp_execute(
     runner: Runner | None = None,
 ) -> MriGradunwarpOutputs:
     """
+    mri_gradunwarp
+    
     Tool to correct gradient non-linearity distortions in MRI images.
     
     Author: FreeSurfer Developers
@@ -253,6 +255,8 @@ def mri_gradunwarp(
     runner: Runner | None = None,
 ) -> MriGradunwarpOutputs:
     """
+    mri_gradunwarp
+    
     Tool to correct gradient non-linearity distortions in MRI images.
     
     Author: FreeSurfer Developers

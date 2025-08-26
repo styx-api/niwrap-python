@@ -246,6 +246,8 @@ def peaks2fixel_execute(
     runner: Runner | None = None,
 ) -> Peaks2fixelOutputs:
     """
+    peaks2fixel
+    
     Convert peak directions image to a fixel directory.
     
     
@@ -288,6 +290,8 @@ def peaks2fixel(
     runner: Runner | None = None,
 ) -> Peaks2fixelOutputs:
     """
+    peaks2fixel
+    
     Convert peak directions image to a fixel directory.
     
     

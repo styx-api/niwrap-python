@@ -337,6 +337,8 @@ def v_3drotate_execute(
     runner: Runner | None = None,
 ) -> V3drotateOutputs:
     """
+    3drotate
+    
     Rotates and/or translates all bricks from an AFNI dataset.
     
     Author: AFNI Developers
@@ -387,6 +389,8 @@ def v_3drotate(
     runner: Runner | None = None,
 ) -> V3drotateOutputs:
     """
+    3drotate
+    
     Rotates and/or translates all bricks from an AFNI dataset.
     
     Author: AFNI Developers

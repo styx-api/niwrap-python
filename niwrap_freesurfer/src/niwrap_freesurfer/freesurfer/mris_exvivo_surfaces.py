@@ -179,8 +179,10 @@ def mris_exvivo_surfaces_execute(
     runner: Runner | None = None,
 ) -> MrisExvivoSurfacesOutputs:
     """
-    FreeSurfer tool to position tessellation of the cortical surface at the white
-    and gray matter surfaces, and generate relevant surface files.
+    mris_exvivo_surfaces
+    
+    FreeSurfer tool to position tessellation of the cortical surface at the
+    white and gray matter surfaces, and generate relevant surface files.
     
     Author: FreeSurfer Developers
     
@@ -212,8 +214,10 @@ def mris_exvivo_surfaces(
     runner: Runner | None = None,
 ) -> MrisExvivoSurfacesOutputs:
     """
-    FreeSurfer tool to position tessellation of the cortical surface at the white
-    and gray matter surfaces, and generate relevant surface files.
+    mris_exvivo_surfaces
+    
+    FreeSurfer tool to position tessellation of the cortical surface at the
+    white and gray matter surfaces, and generate relevant surface files.
     
     Author: FreeSurfer Developers
     

@@ -367,6 +367,8 @@ def cifti_create_label_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateLabelOutputs:
     """
+    cifti-create-label
+    
     Create a cifti label file.
     
     All input files must have the same number of columns/subvolumes. Only the
@@ -445,6 +447,8 @@ def cifti_create_label(
     runner: Runner | None = None,
 ) -> CiftiCreateLabelOutputs:
     """
+    cifti-create-label
+    
     Create a cifti label file.
     
     All input files must have the same number of columns/subvolumes. Only the

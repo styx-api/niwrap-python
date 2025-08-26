@@ -242,6 +242,8 @@ def mrisp_paint_execute(
     runner: Runner | None = None,
 ) -> MrispPaintOutputs:
     """
+    mrisp_paint
+    
     A tool for extracting arrays from a surface-registration template file and
     sampling them onto a surface mesh.
     
@@ -284,6 +286,8 @@ def mrisp_paint(
     runner: Runner | None = None,
 ) -> MrispPaintOutputs:
     """
+    mrisp_paint
+    
     A tool for extracting arrays from a surface-registration template file and
     sampling them onto a surface mesh.
     

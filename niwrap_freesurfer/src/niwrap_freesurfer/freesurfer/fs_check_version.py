@@ -168,6 +168,8 @@ def fs_check_version_execute(
     runner: Runner | None = None,
 ) -> FsCheckVersionOutputs:
     """
+    fs-check-version
+    
     Script to manage which version of FreeSurfer can be used to analyze data
     ensuring consistency with the desired version.
     
@@ -201,6 +203,8 @@ def fs_check_version(
     runner: Runner | None = None,
 ) -> FsCheckVersionOutputs:
     """
+    fs-check-version
+    
     Script to manage which version of FreeSurfer can be used to analyze data
     ensuring consistency with the desired version.
     

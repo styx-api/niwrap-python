@@ -133,6 +133,8 @@ def quotize_execute(
     runner: Runner | None = None,
 ) -> QuotizeOutputs:
     """
+    quotize
+    
     Turns a text file into a C array of strings initialized into an array 'char
     *name[]'.
     
@@ -162,6 +164,8 @@ def quotize(
     runner: Runner | None = None,
 ) -> QuotizeOutputs:
     """
+    quotize
+    
     Turns a text file into a C array of strings initialized into an array 'char
     *name[]'.
     

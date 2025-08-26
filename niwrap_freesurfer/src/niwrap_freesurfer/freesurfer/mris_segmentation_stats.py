@@ -138,6 +138,8 @@ def mris_segmentation_stats_execute(
     runner: Runner | None = None,
 ) -> MrisSegmentationStatsOutputs:
     """
+    mris_segmentation_stats
+    
     Tool for calculating segmentation statistics.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def mris_segmentation_stats(
     runner: Runner | None = None,
 ) -> MrisSegmentationStatsOutputs:
     """
+    mris_segmentation_stats
+    
     Tool for calculating segmentation statistics.
     
     Author: FreeSurfer Developers

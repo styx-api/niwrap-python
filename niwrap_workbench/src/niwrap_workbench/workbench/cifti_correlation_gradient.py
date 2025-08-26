@@ -469,6 +469,8 @@ def cifti_correlation_gradient_execute(
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
+    cifti-correlation-gradient
+    
     Correlate cifti rows and take gradient.
     
     For each structure, compute the correlation of the rows in the structure,
@@ -514,6 +516,8 @@ def cifti_correlation_gradient(
     runner: Runner | None = None,
 ) -> CiftiCorrelationGradientOutputs:
     """
+    cifti-correlation-gradient
+    
     Correlate cifti rows and take gradient.
     
     For each structure, compute the correlation of the rows in the structure,

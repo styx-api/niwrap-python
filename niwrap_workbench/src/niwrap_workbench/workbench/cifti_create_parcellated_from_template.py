@@ -198,6 +198,8 @@ def cifti_create_parcellated_from_template_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
+    cifti-create-parcellated-from-template
+    
     Match parcels to template by name.
     
     For each parcel name in the template mapping, find that name in an input
@@ -234,6 +236,8 @@ def cifti_create_parcellated_from_template(
     runner: Runner | None = None,
 ) -> CiftiCreateParcellatedFromTemplateOutputs:
     """
+    cifti-create-parcellated-from-template
+    
     Match parcels to template by name.
     
     For each parcel name in the template mapping, find that name in an input

@@ -163,6 +163,8 @@ def v_2perm_execute(
     runner: Runner | None = None,
 ) -> V2permOutputs:
     """
+    2perm
+    
     Generates two random non-overlapping subsets of a given set of integers.
     
     Author: AFNI Developers
@@ -194,6 +196,8 @@ def v_2perm(
     runner: Runner | None = None,
 ) -> V2permOutputs:
     """
+    2perm
+    
     Generates two random non-overlapping subsets of a given set of integers.
     
     Author: AFNI Developers

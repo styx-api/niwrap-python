@@ -126,6 +126,8 @@ def talairach2_execute(
     runner: Runner | None = None,
 ) -> Talairach2Outputs:
     """
+    talairach2
+    
     Tool for processing and converting talairach transformation files.
     
     Author: FreeSurfer Developers
@@ -153,6 +155,8 @@ def talairach2(
     runner: Runner | None = None,
 ) -> Talairach2Outputs:
     """
+    talairach2
+    
     Tool for processing and converting talairach transformation files.
     
     Author: FreeSurfer Developers

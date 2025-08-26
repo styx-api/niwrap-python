@@ -228,6 +228,8 @@ def volume_label_to_surface_mapping_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
+    volume-label-to-surface-mapping
+    
     Map a label volume to a surface label file.
     
     Map label volume data to a surface. If -ribbon-constrained is not specified,
@@ -275,6 +277,8 @@ def volume_label_to_surface_mapping(
     runner: Runner | None = None,
 ) -> VolumeLabelToSurfaceMappingOutputs:
     """
+    volume-label-to-surface-mapping
+    
     Map a label volume to a surface label file.
     
     Map label volume data to a surface. If -ribbon-constrained is not specified,

@@ -189,6 +189,8 @@ def convert_scalar_image_to_rgb_execute(
     runner: Runner | None = None,
 ) -> ConvertScalarImageToRgbOutputs:
     """
+    ConvertScalarImageToRGB
+    
     Converts a scalar image to an RGB image using specified parameters. Supports
     multiple colormap options and customization.
     
@@ -226,6 +228,8 @@ def convert_scalar_image_to_rgb(
     runner: Runner | None = None,
 ) -> ConvertScalarImageToRgbOutputs:
     """
+    ConvertScalarImageToRGB
+    
     Converts a scalar image to an RGB image using specified parameters. Supports
     multiple colormap options and customization.
     

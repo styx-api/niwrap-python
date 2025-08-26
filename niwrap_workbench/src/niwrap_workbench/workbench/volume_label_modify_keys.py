@@ -145,6 +145,8 @@ def volume_label_modify_keys_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
     """
+    volume-label-modify-keys
+    
     Change key values in a volume label file.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:
@@ -188,6 +190,8 @@ def volume_label_modify_keys(
     runner: Runner | None = None,
 ) -> VolumeLabelModifyKeysOutputs:
     """
+    volume-label-modify-keys
+    
     Change key values in a volume label file.
     
     <remap-file> should have lines of the form 'oldkey newkey', like so:

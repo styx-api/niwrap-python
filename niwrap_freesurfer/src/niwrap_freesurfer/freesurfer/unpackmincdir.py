@@ -184,6 +184,8 @@ def unpackmincdir_execute(
     runner: Runner | None = None,
 ) -> UnpackmincdirOutputs:
     """
+    unpackmincdir
+    
     Tool for unpacking directories with MINC files.
     
     Author: FreeSurfer Developers
@@ -217,6 +219,8 @@ def unpackmincdir(
     runner: Runner | None = None,
 ) -> UnpackmincdirOutputs:
     """
+    unpackmincdir
+    
     Tool for unpacking directories with MINC files.
     
     Author: FreeSurfer Developers

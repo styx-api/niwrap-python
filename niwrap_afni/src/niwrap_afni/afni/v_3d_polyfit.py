@@ -253,8 +253,10 @@ def v_3d_polyfit_execute(
     runner: Runner | None = None,
 ) -> V3dPolyfitOutputs:
     """
-    Fits a polynomial in space to the input dataset and outputs that fitted dataset.
-    You can also add your own basis datasets to the fitting mix.
+    3dPolyfit
+    
+    Fits a polynomial in space to the input dataset and outputs that fitted
+    dataset. You can also add your own basis datasets to the fitting mix.
     
     Author: AFNI Developers
     
@@ -293,8 +295,10 @@ def v_3d_polyfit(
     runner: Runner | None = None,
 ) -> V3dPolyfitOutputs:
     """
-    Fits a polynomial in space to the input dataset and outputs that fitted dataset.
-    You can also add your own basis datasets to the fitting mix.
+    3dPolyfit
+    
+    Fits a polynomial in space to the input dataset and outputs that fitted
+    dataset. You can also add your own basis datasets to the fitting mix.
     
     Author: AFNI Developers
     

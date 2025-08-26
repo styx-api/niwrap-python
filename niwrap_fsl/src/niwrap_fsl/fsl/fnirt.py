@@ -211,6 +211,8 @@ def fnirt_execute(
     runner: Runner | None = None,
 ) -> FnirtOutputs:
     """
+    fnirt
+    
     FSL non-linear registration.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -247,6 +249,8 @@ def fnirt(
     runner: Runner | None = None,
 ) -> FnirtOutputs:
     """
+    fnirt
+    
     FSL non-linear registration.
     
     Author: FMRIB Analysis Group, University of Oxford

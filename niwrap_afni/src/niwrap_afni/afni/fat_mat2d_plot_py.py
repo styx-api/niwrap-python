@@ -293,7 +293,10 @@ def fat_mat2d_plot_py_execute(
     runner: Runner | None = None,
 ) -> FatMat2dPlotPyOutputs:
     """
-    Plots simple matrices output from 3dNetCorr (*.netcc) and 3dTrackID (*.grid).
+    fat_mat2d_plot.py
+    
+    Plots simple matrices output from 3dNetCorr (*.netcc) and 3dTrackID
+    (*.grid).
     
     Author: AFNI Developers
     
@@ -343,7 +346,10 @@ def fat_mat2d_plot_py(
     runner: Runner | None = None,
 ) -> FatMat2dPlotPyOutputs:
     """
-    Plots simple matrices output from 3dNetCorr (*.netcc) and 3dTrackID (*.grid).
+    fat_mat2d_plot.py
+    
+    Plots simple matrices output from 3dNetCorr (*.netcc) and 3dTrackID
+    (*.grid).
     
     Author: AFNI Developers
     

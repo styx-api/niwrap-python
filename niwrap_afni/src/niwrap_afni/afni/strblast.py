@@ -164,8 +164,10 @@ def strblast_execute(
     runner: Runner | None = None,
 ) -> StrblastOutputs:
     """
-    Finds exact copies of the target string in each of the input files, and replaces
-    all characters with some junk string.
+    strblast
+    
+    Finds exact copies of the target string in each of the input files, and
+    replaces all characters with some junk string.
     
     Author: AFNI Developers
     
@@ -197,8 +199,10 @@ def strblast(
     runner: Runner | None = None,
 ) -> StrblastOutputs:
     """
-    Finds exact copies of the target string in each of the input files, and replaces
-    all characters with some junk string.
+    strblast
+    
+    Finds exact copies of the target string in each of the input files, and
+    replaces all characters with some junk string.
     
     Author: AFNI Developers
     

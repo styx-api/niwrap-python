@@ -177,6 +177,8 @@ def featregapply_execute(
     runner: Runner | None = None,
 ) -> FeatregapplyOutputs:
     """
+    featregapply
+    
     Apply registration from FEAT analysis to other images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -209,6 +211,8 @@ def featregapply(
     runner: Runner | None = None,
 ) -> FeatregapplyOutputs:
     """
+    featregapply
+    
     Apply registration from FEAT analysis to other images.
     
     Author: FMRIB Analysis Group, University of Oxford

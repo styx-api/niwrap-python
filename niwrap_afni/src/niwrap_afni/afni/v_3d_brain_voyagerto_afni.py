@@ -217,8 +217,10 @@ def v_3d_brain_voyagerto_afni_execute(
     runner: Runner | None = None,
 ) -> V3dBrainVoyagertoAfniOutputs:
     """
-    Converts a BrainVoyager vmr dataset to AFNI's BRIK format based on information
-    from BrainVoyager's website.
+    3dBRAIN_VOYAGERtoAFNI
+    
+    Converts a BrainVoyager vmr dataset to AFNI's BRIK format based on
+    information from BrainVoyager's website.
     
     Author: AFNI Developers
     
@@ -257,8 +259,10 @@ def v_3d_brain_voyagerto_afni(
     runner: Runner | None = None,
 ) -> V3dBrainVoyagertoAfniOutputs:
     """
-    Converts a BrainVoyager vmr dataset to AFNI's BRIK format based on information
-    from BrainVoyager's website.
+    3dBRAIN_VOYAGERtoAFNI
+    
+    Converts a BrainVoyager vmr dataset to AFNI's BRIK format based on
+    information from BrainVoyager's website.
     
     Author: AFNI Developers
     

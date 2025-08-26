@@ -340,6 +340,8 @@ def retro_ts_py_execute(
     runner: Runner | None = None,
 ) -> RetroTsPyOutputs:
     """
+    RetroTS.py
+    
     Creates slice-based regressors for regressing out components of heart rate,
     respiration, and respiration volume per time using independent data files or
     BIDS formatted files.
@@ -392,6 +394,8 @@ def retro_ts_py(
     runner: Runner | None = None,
 ) -> RetroTsPyOutputs:
     """
+    RetroTS.py
+    
     Creates slice-based regressors for regressing out components of heart rate,
     respiration, and respiration volume per time using independent data files or
     BIDS formatted files.

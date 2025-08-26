@@ -337,6 +337,8 @@ def fixel2peaks_execute(
     runner: Runner | None = None,
 ) -> Fixel2peaksOutputs:
     """
+    fixel2peaks
+    
     Convert data in the fixel directory format into a 4D image of 3-vectors.
     
     If a fixel data file is provided as input, then the 3-vectors in the output
@@ -383,6 +385,8 @@ def fixel2peaks(
     runner: Runner | None = None,
 ) -> Fixel2peaksOutputs:
     """
+    fixel2peaks
+    
     Convert data in the fixel directory format into a 4D image of 3-vectors.
     
     If a fixel data file is provided as input, then the 3-vectors in the output

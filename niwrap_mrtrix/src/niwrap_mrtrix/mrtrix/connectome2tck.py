@@ -317,8 +317,10 @@ def connectome2tck_execute(
     runner: Runner | None = None,
 ) -> Connectome2tckOutputs:
     """
-    Extract streamlines from a tractogram based on their assignment to parcellated
-    nodes.
+    connectome2tck
+    
+    Extract streamlines from a tractogram based on their assignment to
+    parcellated nodes.
     
     The compulsory input file "assignments_in" should contain a text file where
     there is one row for each streamline, and each row contains a list of
@@ -374,8 +376,10 @@ def connectome2tck(
     runner: Runner | None = None,
 ) -> Connectome2tckOutputs:
     """
-    Extract streamlines from a tractogram based on their assignment to parcellated
-    nodes.
+    connectome2tck
+    
+    Extract streamlines from a tractogram based on their assignment to
+    parcellated nodes.
     
     The compulsory input file "assignments_in" should contain a text file where
     there is one row for each streamline, and each row contains a list of

@@ -154,6 +154,8 @@ def easythresh_execute(
     runner: Runner | None = None,
 ) -> EasythreshOutputs:
     """
+    easythresh
+    
     Cluster-based statistical thresholding tool from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -186,6 +188,8 @@ def easythresh(
     runner: Runner | None = None,
 ) -> EasythreshOutputs:
     """
+    easythresh
+    
     Cluster-based statistical thresholding tool from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

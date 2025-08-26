@@ -202,6 +202,8 @@ def volume_find_clusters_execute(
     runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
+    volume-find-clusters
+    
     Filter clusters by volume.
     
     Outputs a volume with nonzero integers for all voxels within a large enough
@@ -246,6 +248,8 @@ def volume_find_clusters(
     runner: Runner | None = None,
 ) -> VolumeFindClustersOutputs:
     """
+    volume-find-clusters
+    
     Filter clusters by volume.
     
     Outputs a volume with nonzero integers for all voxels within a large enough

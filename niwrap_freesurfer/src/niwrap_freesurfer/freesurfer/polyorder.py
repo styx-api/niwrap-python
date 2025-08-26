@@ -138,8 +138,10 @@ def polyorder_execute(
     runner: Runner | None = None,
 ) -> PolyorderOutputs:
     """
-    Computes the order of polynomial regressors needed to achieve a highpass filter
-    with the given cutoff frequency.
+    polyorder
+    
+    Computes the order of polynomial regressors needed to achieve a highpass
+    filter with the given cutoff frequency.
     
     Author: FreeSurfer Developers
     
@@ -167,8 +169,10 @@ def polyorder(
     runner: Runner | None = None,
 ) -> PolyorderOutputs:
     """
-    Computes the order of polynomial regressors needed to achieve a highpass filter
-    with the given cutoff frequency.
+    polyorder
+    
+    Computes the order of polynomial regressors needed to achieve a highpass
+    filter with the given cutoff frequency.
     
     Author: FreeSurfer Developers
     

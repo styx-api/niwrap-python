@@ -129,6 +129,8 @@ def adjunct_select_str_py_execute(
     runner: Runner | None = None,
 ) -> AdjunctSelectStrPyOutputs:
     """
+    adjunct_select_str.py
+    
     A simple helper function for the fat_proc* scripts.
     
     Author: AFNI Developers
@@ -157,6 +159,8 @@ def adjunct_select_str_py(
     runner: Runner | None = None,
 ) -> AdjunctSelectStrPyOutputs:
     """
+    adjunct_select_str.py
+    
     A simple helper function for the fat_proc* scripts.
     
     Author: AFNI Developers

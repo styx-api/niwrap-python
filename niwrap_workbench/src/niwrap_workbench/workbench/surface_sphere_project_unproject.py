@@ -140,6 +140,8 @@ def surface_sphere_project_unproject_execute(
     runner: Runner | None = None,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
+    surface-sphere-project-unproject
+    
     Copy registration deformations to different sphere.
     
     Background: A surface registration starts with an input sphere, and moves
@@ -224,6 +226,8 @@ def surface_sphere_project_unproject(
     runner: Runner | None = None,
 ) -> SurfaceSphereProjectUnprojectOutputs:
     """
+    surface-sphere-project-unproject
+    
     Copy registration deformations to different sphere.
     
     Background: A surface registration starts with an input sphere, and moves

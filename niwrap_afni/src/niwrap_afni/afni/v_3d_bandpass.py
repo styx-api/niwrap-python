@@ -264,8 +264,10 @@ def v_3d_bandpass_execute(
     runner: Runner | None = None,
 ) -> V3dBandpassOutputs:
     """
-    Program to lowpass and/or highpass each voxel time series in a dataset, offering
-    more/different options than Fourier.
+    3dBandpass
+    
+    Program to lowpass and/or highpass each voxel time series in a dataset,
+    offering more/different options than Fourier.
     
     Author: AFNI Developers
     
@@ -307,8 +309,10 @@ def v_3d_bandpass(
     runner: Runner | None = None,
 ) -> V3dBandpassOutputs:
     """
-    Program to lowpass and/or highpass each voxel time series in a dataset, offering
-    more/different options than Fourier.
+    3dBandpass
+    
+    Program to lowpass and/or highpass each voxel time series in a dataset,
+    offering more/different options than Fourier.
     
     Author: AFNI Developers
     

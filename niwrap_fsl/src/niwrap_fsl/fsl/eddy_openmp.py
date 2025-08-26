@@ -477,6 +477,8 @@ def eddy_openmp_execute(
     runner: Runner | None = None,
 ) -> EddyOpenmpOutputs:
     """
+    eddy_openmp
+    
     A tool for correcting eddy currents and movements in diffusion data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -546,6 +548,8 @@ def eddy_openmp(
     runner: Runner | None = None,
 ) -> EddyOpenmpOutputs:
     """
+    eddy_openmp
+    
     A tool for correcting eddy currents and movements in diffusion data.
     
     Author: FMRIB Analysis Group, University of Oxford

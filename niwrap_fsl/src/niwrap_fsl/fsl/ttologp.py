@@ -149,6 +149,8 @@ def ttologp_execute(
     runner: Runner | None = None,
 ) -> TtologpOutputs:
     """
+    ttologp
+    
     Tool for computing logp.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -179,6 +181,8 @@ def ttologp(
     runner: Runner | None = None,
 ) -> TtologpOutputs:
     """
+    ttologp
+    
     Tool for computing logp.
     
     Author: FMRIB Analysis Group, University of Oxford

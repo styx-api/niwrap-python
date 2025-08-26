@@ -158,6 +158,8 @@ def r_pkgs_install_execute(
     runner: Runner | None = None,
 ) -> RPkgsInstallOutputs:
     """
+    rPkgsInstall
+    
     A tool for installing, checking, updating, or removing R packages for AFNI.
     
     Author: AFNI Developers
@@ -188,6 +190,8 @@ def r_pkgs_install(
     runner: Runner | None = None,
 ) -> RPkgsInstallOutputs:
     """
+    rPkgsInstall
+    
     A tool for installing, checking, updating, or removing R packages for AFNI.
     
     Author: AFNI Developers

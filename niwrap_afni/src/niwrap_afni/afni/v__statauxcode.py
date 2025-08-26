@@ -124,6 +124,8 @@ def v__statauxcode_execute(
     runner: Runner | None = None,
 ) -> VStatauxcodeOutputs:
     """
+    @statauxcode
+    
     Returns the name or number of a statistics code based on specified mappings.
     
     Author: AFNI Developers
@@ -150,6 +152,8 @@ def v__statauxcode(
     runner: Runner | None = None,
 ) -> VStatauxcodeOutputs:
     """
+    @statauxcode
+    
     Returns the name or number of a statistics code based on specified mappings.
     
     Author: AFNI Developers

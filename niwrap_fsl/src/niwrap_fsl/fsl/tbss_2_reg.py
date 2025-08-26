@@ -138,6 +138,8 @@ def tbss_2_reg_execute(
     runner: Runner | None = None,
 ) -> Tbss2RegOutputs:
     """
+    tbss_2_reg
+    
     TBSS utility for target selection and registration for Tract-Based Spatial
     Statistics (TBSS) analysis.
     
@@ -167,6 +169,8 @@ def tbss_2_reg(
     runner: Runner | None = None,
 ) -> Tbss2RegOutputs:
     """
+    tbss_2_reg
+    
     TBSS utility for target selection and registration for Tract-Based Spatial
     Statistics (TBSS) analysis.
     

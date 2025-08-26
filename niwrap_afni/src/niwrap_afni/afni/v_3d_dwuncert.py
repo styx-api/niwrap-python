@@ -203,6 +203,8 @@ def v_3d_dwuncert_execute(
     runner: Runner | None = None,
 ) -> V3dDwuncertOutputs:
     """
+    3dDWUncert
+    
     Use jackknifing to estimate uncertainty of DTI parameters, important for
     probabilistic tractography.
     
@@ -238,6 +240,8 @@ def v_3d_dwuncert(
     runner: Runner | None = None,
 ) -> V3dDwuncertOutputs:
     """
+    3dDWUncert
+    
     Use jackknifing to estimate uncertainty of DTI parameters, important for
     probabilistic tractography.
     

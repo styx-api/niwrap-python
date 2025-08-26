@@ -427,6 +427,8 @@ def fsl_sub_execute(
     runner: Runner | None = None,
 ) -> FslSubOutputs:
     """
+    fsl_sub
+    
     FSL cluster submission tool.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -486,6 +488,8 @@ def fsl_sub(
     runner: Runner | None = None,
 ) -> FslSubOutputs:
     """
+    fsl_sub
+    
     FSL cluster submission tool.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -150,8 +150,10 @@ def extract_region_from_image_by_mask_execute(
     runner: Runner | None = None,
 ) -> ExtractRegionFromImageByMaskOutputs:
     """
-    Extract a sub-region from an image using the bounding box from a label image,
-    with an optional padding radius.
+    ExtractRegionFromImageByMask
+    
+    Extract a sub-region from an image using the bounding box from a label
+    image, with an optional padding radius.
     
     Author: ANTs Developers
     
@@ -182,8 +184,10 @@ def extract_region_from_image_by_mask(
     runner: Runner | None = None,
 ) -> ExtractRegionFromImageByMaskOutputs:
     """
-    Extract a sub-region from an image using the bounding box from a label image,
-    with an optional padding radius.
+    ExtractRegionFromImageByMask
+    
+    Extract a sub-region from an image using the bounding box from a label
+    image, with an optional padding radius.
     
     Author: ANTs Developers
     

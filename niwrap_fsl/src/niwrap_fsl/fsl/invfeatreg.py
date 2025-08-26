@@ -119,6 +119,8 @@ def invfeatreg_execute(
     runner: Runner | None = None,
 ) -> InvfeatregOutputs:
     """
+    invfeatreg
+    
     Inverse warp image using FNIRT.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -145,6 +147,8 @@ def invfeatreg(
     runner: Runner | None = None,
 ) -> InvfeatregOutputs:
     """
+    invfeatreg
+    
     Inverse warp image using FNIRT.
     
     Author: FMRIB Analysis Group, University of Oxford

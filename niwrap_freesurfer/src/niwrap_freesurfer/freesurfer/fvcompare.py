@@ -323,8 +323,11 @@ def fvcompare_execute(
     runner: Runner | None = None,
 ) -> FvcompareOutputs:
     """
-    Simultaneously loads volume, segmentation, and surface data from two subjects in
-    freeview, for comparing across time or different analysis methods.
+    fvcompare
+    
+    Simultaneously loads volume, segmentation, and surface data from two
+    subjects in freeview, for comparing across time or different analysis
+    methods.
     
     Author: FreeSurfer Developers
     
@@ -374,8 +377,11 @@ def fvcompare(
     runner: Runner | None = None,
 ) -> FvcompareOutputs:
     """
-    Simultaneously loads volume, segmentation, and surface data from two subjects in
-    freeview, for comparing across time or different analysis methods.
+    fvcompare
+    
+    Simultaneously loads volume, segmentation, and surface data from two
+    subjects in freeview, for comparing across time or different analysis
+    methods.
     
     Author: FreeSurfer Developers
     

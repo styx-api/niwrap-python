@@ -178,7 +178,10 @@ def seg2filled_execute(
     runner: Runner | None = None,
 ) -> Seg2filledOutputs:
     """
-    Creates a filled.mgz from an aseg-style segmentation using SAMSEG segmentation.
+    seg2filled
+    
+    Creates a filled.mgz from an aseg-style segmentation using SAMSEG
+    segmentation.
     
     Author: FreeSurfer Developers
     
@@ -210,7 +213,10 @@ def seg2filled(
     runner: Runner | None = None,
 ) -> Seg2filledOutputs:
     """
-    Creates a filled.mgz from an aseg-style segmentation using SAMSEG segmentation.
+    seg2filled
+    
+    Creates a filled.mgz from an aseg-style segmentation using SAMSEG
+    segmentation.
     
     Author: FreeSurfer Developers
     

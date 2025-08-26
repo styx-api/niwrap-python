@@ -648,8 +648,10 @@ def dwiextract_execute(
     runner: Runner | None = None,
 ) -> DwiextractOutputs:
     """
-    Extract diffusion-weighted volumes, b=0 volumes, or certain shells from a DWI
-    dataset.
+    dwiextract
+    
+    Extract diffusion-weighted volumes, b=0 volumes, or certain shells from a
+    DWI dataset.
     
     
     
@@ -702,8 +704,10 @@ def dwiextract(
     runner: Runner | None = None,
 ) -> DwiextractOutputs:
     """
-    Extract diffusion-weighted volumes, b=0 volumes, or certain shells from a DWI
-    dataset.
+    dwiextract
+    
+    Extract diffusion-weighted volumes, b=0 volumes, or certain shells from a
+    DWI dataset.
     
     
     

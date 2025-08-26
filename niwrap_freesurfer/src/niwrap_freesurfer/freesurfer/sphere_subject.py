@@ -135,6 +135,8 @@ def sphere_subject_execute(
     runner: Runner | None = None,
 ) -> SphereSubjectOutputs:
     """
+    sphere_subject
+    
     A FreeSurfer tool for processing subject data.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def sphere_subject(
     runner: Runner | None = None,
 ) -> SphereSubjectOutputs:
     """
+    sphere_subject
+    
     A FreeSurfer tool for processing subject data.
     
     Author: FreeSurfer Developers

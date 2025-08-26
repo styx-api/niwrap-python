@@ -236,6 +236,8 @@ def shbasis_execute(
     runner: Runner | None = None,
 ) -> ShbasisOutputs:
     """
+    shbasis
+    
     Examine the values in spherical harmonic images to estimate (and optionally
     change) the SH basis used.
     
@@ -296,6 +298,8 @@ def shbasis(
     runner: Runner | None = None,
 ) -> ShbasisOutputs:
     """
+    shbasis
+    
     Examine the values in spherical harmonic images to estimate (and optionally
     change) the SH basis used.
     

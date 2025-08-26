@@ -125,6 +125,8 @@ def brec_execute(
     runner: Runner | None = None,
 ) -> BrecOutputs:
     """
+    brec
+    
     A description for brec tool could not be retrieved.
     
     Author: FreeSurfer Developers
@@ -152,6 +154,8 @@ def brec(
     runner: Runner | None = None,
 ) -> BrecOutputs:
     """
+    brec
+    
     A description for brec tool could not be retrieved.
     
     Author: FreeSurfer Developers

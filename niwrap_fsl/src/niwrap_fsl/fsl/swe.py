@@ -421,6 +421,8 @@ def swe_execute(
     runner: Runner | None = None,
 ) -> SweOutputs:
     """
+    swe
+    
     SwE (summary statistics and voxelwise statistical analyses tool for FSL).
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -480,6 +482,8 @@ def swe(
     runner: Runner | None = None,
 ) -> SweOutputs:
     """
+    swe
+    
     SwE (summary statistics and voxelwise statistical analyses tool for FSL).
     
     Author: FMRIB Analysis Group, University of Oxford

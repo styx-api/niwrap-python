@@ -125,6 +125,8 @@ def v_3d_entropy_execute(
     runner: Runner | None = None,
 ) -> V3dEntropyOutputs:
     """
+    3dEntropy
+    
     Computes entropy for a 3D dataset.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def v_3d_entropy(
     runner: Runner | None = None,
 ) -> V3dEntropyOutputs:
     """
+    3dEntropy
+    
     Computes entropy for a 3D dataset.
     
     Author: AFNI Developers

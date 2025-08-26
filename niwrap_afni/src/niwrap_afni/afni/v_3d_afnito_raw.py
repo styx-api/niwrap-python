@@ -138,6 +138,8 @@ def v_3d_afnito_raw_execute(
     runner: Runner | None = None,
 ) -> V3dAfnitoRawOutputs:
     """
+    3dAFNItoRaw
+    
     Convert an AFNI brik file with multiple sub-briks to a raw file with each
     sub-brik voxel concatenated voxel-wise.
     
@@ -167,6 +169,8 @@ def v_3d_afnito_raw(
     runner: Runner | None = None,
 ) -> V3dAfnitoRawOutputs:
     """
+    3dAFNItoRaw
+    
     Convert an AFNI brik file with multiple sub-briks to a raw file with each
     sub-brik voxel concatenated voxel-wise.
     

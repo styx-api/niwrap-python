@@ -1489,6 +1489,8 @@ def greedy_execute(
     runner: Runner | None = None,
 ) -> GreedyOutputs:
     """
+    greedy
+    
     Paul's greedy diffeomorphic registration implementation.
     
     Author: Greedy Developers
@@ -1586,6 +1588,8 @@ def greedy_(
     runner: Runner | None = None,
 ) -> GreedyOutputs:
     """
+    greedy
+    
     Paul's greedy diffeomorphic registration implementation.
     
     Author: Greedy Developers

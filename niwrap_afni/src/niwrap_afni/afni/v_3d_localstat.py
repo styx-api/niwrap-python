@@ -303,8 +303,10 @@ def v_3d_localstat_execute(
     runner: Runner | None = None,
 ) -> V3dLocalstatOutputs:
     """
-    This program computes statistics at each voxel, based on a local neighborhood of
-    that voxel.
+    3dLocalstat
+    
+    This program computes statistics at each voxel, based on a local
+    neighborhood of that voxel.
     
     Author: AFNI Developers
     
@@ -349,8 +351,10 @@ def v_3d_localstat(
     runner: Runner | None = None,
 ) -> V3dLocalstatOutputs:
     """
-    This program computes statistics at each voxel, based on a local neighborhood of
-    that voxel.
+    3dLocalstat
+    
+    This program computes statistics at each voxel, based on a local
+    neighborhood of that voxel.
     
     Author: AFNI Developers
     

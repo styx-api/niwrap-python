@@ -133,6 +133,8 @@ def mri_make_bem_surfaces_execute(
     runner: Runner | None = None,
 ) -> MriMakeBemSurfacesOutputs:
     """
+    mri_make_bem_surfaces
+    
     Tool to create Boundary Element Method (BEM) surfaces.
     
     Author: FreeSurfer Developers
@@ -160,6 +162,8 @@ def mri_make_bem_surfaces(
     runner: Runner | None = None,
 ) -> MriMakeBemSurfacesOutputs:
     """
+    mri_make_bem_surfaces
+    
     Tool to create Boundary Element Method (BEM) surfaces.
     
     Author: FreeSurfer Developers

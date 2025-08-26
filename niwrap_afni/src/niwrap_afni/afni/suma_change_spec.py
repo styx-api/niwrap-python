@@ -157,6 +157,8 @@ def suma_change_spec_execute(
     runner: Runner | None = None,
 ) -> SumaChangeSpecOutputs:
     """
+    suma_change_spec
+    
     This program changes SUMA's surface specification (Spec) files.
     
     Author: AFNI Developers
@@ -188,6 +190,8 @@ def suma_change_spec(
     runner: Runner | None = None,
 ) -> SumaChangeSpecOutputs:
     """
+    suma_change_spec
+    
     This program changes SUMA's surface specification (Spec) files.
     
     Author: AFNI Developers

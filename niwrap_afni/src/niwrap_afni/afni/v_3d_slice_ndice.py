@@ -168,7 +168,10 @@ def v_3d_slice_ndice_execute(
     runner: Runner | None = None,
 ) -> V3dSliceNdiceOutputs:
     """
-    Calculates the Dice coefficient between two volumes on a slice-by-slice basis.
+    3dSliceNDice
+    
+    Calculates the Dice coefficient between two volumes on a slice-by-slice
+    basis.
     
     Author: AFNI Developers
     
@@ -198,7 +201,10 @@ def v_3d_slice_ndice(
     runner: Runner | None = None,
 ) -> V3dSliceNdiceOutputs:
     """
-    Calculates the Dice coefficient between two volumes on a slice-by-slice basis.
+    3dSliceNDice
+    
+    Calculates the Dice coefficient between two volumes on a slice-by-slice
+    basis.
     
     Author: AFNI Developers
     

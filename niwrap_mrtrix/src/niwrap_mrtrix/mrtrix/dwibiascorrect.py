@@ -397,8 +397,10 @@ def dwibiascorrect_execute(
     runner: Runner | None = None,
 ) -> DwibiascorrectOutputs:
     """
-    Perform B1 field inhomogeneity correction for a DWI volume series using either
-    ANTs or FSL.
+    dwibiascorrect
+    
+    Perform B1 field inhomogeneity correction for a DWI volume series using
+    either ANTs or FSL.
     
     Author: MRTrix3 Developers
     
@@ -444,8 +446,10 @@ def dwibiascorrect(
     runner: Runner | None = None,
 ) -> DwibiascorrectOutputs:
     """
-    Perform B1 field inhomogeneity correction for a DWI volume series using either
-    ANTs or FSL.
+    dwibiascorrect
+    
+    Perform B1 field inhomogeneity correction for a DWI volume series using
+    either ANTs or FSL.
     
     Author: MRTrix3 Developers
     

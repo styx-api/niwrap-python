@@ -316,8 +316,10 @@ def mris_fix_topology_execute(
     runner: Runner | None = None,
 ) -> MrisFixTopologyOutputs:
     """
-    Computes a mapping from the unit sphere onto the cortical surface, ensuring a
-    topologically correct surface.
+    mris_fix_topology
+    
+    Computes a mapping from the unit sphere onto the cortical surface, ensuring
+    a topologically correct surface.
     
     Author: FreeSurfer Developers
     
@@ -368,8 +370,10 @@ def mris_fix_topology(
     runner: Runner | None = None,
 ) -> MrisFixTopologyOutputs:
     """
-    Computes a mapping from the unit sphere onto the cortical surface, ensuring a
-    topologically correct surface.
+    mris_fix_topology
+    
+    Computes a mapping from the unit sphere onto the cortical surface, ensuring
+    a topologically correct surface.
     
     Author: FreeSurfer Developers
     

@@ -232,6 +232,8 @@ def mri_synthseg_execute(
     runner: Runner | None = None,
 ) -> MriSynthsegOutputs:
     """
+    mri_synthseg
+    
     SynthSeg is a tool for brain image segmentation.
     
     Author: FreeSurfer Developers
@@ -272,6 +274,8 @@ def mri_synthseg(
     runner: Runner | None = None,
 ) -> MriSynthsegOutputs:
     """
+    mri_synthseg
+    
     SynthSeg is a tool for brain image segmentation.
     
     Author: FreeSurfer Developers

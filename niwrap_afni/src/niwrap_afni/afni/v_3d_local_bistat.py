@@ -229,6 +229,8 @@ def v_3d_local_bistat_execute(
     runner: Runner | None = None,
 ) -> V3dLocalBistatOutputs:
     """
+    3dLocalBistat
+    
     Compute statistics between 2 datasets at each voxel based on a local
     neighborhood.
     
@@ -267,6 +269,8 @@ def v_3d_local_bistat(
     runner: Runner | None = None,
 ) -> V3dLocalBistatOutputs:
     """
+    3dLocalBistat
+    
     Compute statistics between 2 datasets at each voxel based on a local
     neighborhood.
     

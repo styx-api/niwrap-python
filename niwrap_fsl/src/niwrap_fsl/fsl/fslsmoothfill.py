@@ -151,6 +151,8 @@ def fslsmoothfill_execute(
     runner: Runner | None = None,
 ) -> FslsmoothfillOutputs:
     """
+    fslsmoothfill
+    
     Smoothfill is a tool designed to fill in holes in images by smoothly
     interpolating the pixel values.
     
@@ -183,6 +185,8 @@ def fslsmoothfill(
     runner: Runner | None = None,
 ) -> FslsmoothfillOutputs:
     """
+    fslsmoothfill
+    
     Smoothfill is a tool designed to fill in holes in images by smoothly
     interpolating the pixel values.
     

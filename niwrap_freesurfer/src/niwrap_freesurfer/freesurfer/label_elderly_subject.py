@@ -140,6 +140,8 @@ def label_elderly_subject_execute(
     runner: Runner | None = None,
 ) -> LabelElderlySubjectOutputs:
     """
+    label_elderly_subject
+    
     Tool for labeling brain structures in MRI images of elderly subjects using
     Freesurfer.
     
@@ -170,6 +172,8 @@ def label_elderly_subject(
     runner: Runner | None = None,
 ) -> LabelElderlySubjectOutputs:
     """
+    label_elderly_subject
+    
     Tool for labeling brain structures in MRI images of elderly subjects using
     Freesurfer.
     

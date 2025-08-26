@@ -176,11 +176,13 @@ def extract_seg_waveform_execute(
     runner: Runner | None = None,
 ) -> ExtractSegWaveformOutputs:
     """
-    This program extracts an average waveform from an input volume where the average
-    is computed over the voxels in the given segmentation indices. The input volume
-    is mapped to the space of the segmentation given the registration, and if a
-    voxel shift map (VSM) is supplied, it is applied simultaneously as part of the
-    transform.
+    extract_seg_waveform
+    
+    This program extracts an average waveform from an input volume where the
+    average is computed over the voxels in the given segmentation indices. The
+    input volume is mapped to the space of the segmentation given the
+    registration, and if a voxel shift map (VSM) is supplied, it is applied
+    simultaneously as part of the transform.
     
     Author: FreeSurfer Developers
     
@@ -213,11 +215,13 @@ def extract_seg_waveform(
     runner: Runner | None = None,
 ) -> ExtractSegWaveformOutputs:
     """
-    This program extracts an average waveform from an input volume where the average
-    is computed over the voxels in the given segmentation indices. The input volume
-    is mapped to the space of the segmentation given the registration, and if a
-    voxel shift map (VSM) is supplied, it is applied simultaneously as part of the
-    transform.
+    extract_seg_waveform
+    
+    This program extracts an average waveform from an input volume where the
+    average is computed over the voxels in the given segmentation indices. The
+    input volume is mapped to the space of the segmentation given the
+    registration, and if a voxel shift map (VSM) is supplied, it is applied
+    simultaneously as part of the transform.
     
     Author: FreeSurfer Developers
     

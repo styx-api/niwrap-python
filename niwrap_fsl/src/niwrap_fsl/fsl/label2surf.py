@@ -154,6 +154,8 @@ def label2surf_execute(
     runner: Runner | None = None,
 ) -> Label2surfOutputs:
     """
+    label2surf
+    
     Transform a group of labels into a surface.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -184,6 +186,8 @@ def label2surf(
     runner: Runner | None = None,
 ) -> Label2surfOutputs:
     """
+    label2surf
+    
     Transform a group of labels into a surface.
     
     Author: FMRIB Analysis Group, University of Oxford

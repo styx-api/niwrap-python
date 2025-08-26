@@ -264,6 +264,8 @@ def v_3d_xclust_sim_execute(
     runner: Runner | None = None,
 ) -> V3dXclustSimOutputs:
     """
+    3dXClustSim
+    
     ETAC processing tool to find cluster figure of merit (FOM) thresholds.
     
     Author: AFNI Developers
@@ -307,6 +309,8 @@ def v_3d_xclust_sim(
     runner: Runner | None = None,
 ) -> V3dXclustSimOutputs:
     """
+    3dXClustSim
+    
     ETAC processing tool to find cluster figure of merit (FOM) thresholds.
     
     Author: AFNI Developers

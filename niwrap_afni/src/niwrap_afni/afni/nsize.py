@@ -128,6 +128,8 @@ def nsize_execute(
     runner: Runner | None = None,
 ) -> NsizeOutputs:
     """
+    nsize
+    
     Zero pads an input image to the nearest larger NxN dimensions.
     
     Author: AFNI Developers
@@ -155,6 +157,8 @@ def nsize(
     runner: Runner | None = None,
 ) -> NsizeOutputs:
     """
+    nsize
+    
     Zero pads an input image to the nearest larger NxN dimensions.
     
     Author: AFNI Developers

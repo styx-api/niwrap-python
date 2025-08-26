@@ -362,8 +362,10 @@ def mri_watershed_execute(
     runner: Runner | None = None,
 ) -> MriWatershedOutputs:
     """
-    A tool for stripping skull and other non-brain tissues to produce brain volume
-    from T1 volume.
+    mri_watershed
+    
+    A tool for stripping skull and other non-brain tissues to produce brain
+    volume from T1 volume.
     
     Author: FreeSurfer Developers
     
@@ -419,8 +421,10 @@ def mri_watershed(
     runner: Runner | None = None,
 ) -> MriWatershedOutputs:
     """
-    A tool for stripping skull and other non-brain tissues to produce brain volume
-    from T1 volume.
+    mri_watershed
+    
+    A tool for stripping skull and other non-brain tissues to produce brain
+    volume from T1 volume.
     
     Author: FreeSurfer Developers
     

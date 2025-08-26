@@ -249,7 +249,10 @@ def v_3d_qwarp_execute(
     runner: Runner | None = None,
 ) -> V3dQwarpOutputs:
     """
-    Computes a nonlinearly warped version of source_dataset to match base_dataset.
+    3dQwarp
+    
+    Computes a nonlinearly warped version of source_dataset to match
+    base_dataset.
     
     Author: AFNI Developers
     
@@ -294,7 +297,10 @@ def v_3d_qwarp(
     runner: Runner | None = None,
 ) -> V3dQwarpOutputs:
     """
-    Computes a nonlinearly warped version of source_dataset to match base_dataset.
+    3dQwarp
+    
+    Computes a nonlinearly warped version of source_dataset to match
+    base_dataset.
     
     Author: AFNI Developers
     

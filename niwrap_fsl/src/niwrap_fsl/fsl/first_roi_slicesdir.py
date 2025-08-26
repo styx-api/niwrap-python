@@ -133,6 +133,8 @@ def first_roi_slicesdir_execute(
     runner: Runner | None = None,
 ) -> FirstRoiSlicesdirOutputs:
     """
+    first_roi_slicesdir
+    
     A utility for generating slice directories for FIRST-ROI.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -160,6 +162,8 @@ def first_roi_slicesdir(
     runner: Runner | None = None,
 ) -> FirstRoiSlicesdirOutputs:
     """
+    first_roi_slicesdir
+    
     A utility for generating slice directories for FIRST-ROI.
     
     Author: FMRIB Analysis Group, University of Oxford

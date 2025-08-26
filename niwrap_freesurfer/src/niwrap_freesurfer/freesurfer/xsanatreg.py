@@ -192,6 +192,8 @@ def xsanatreg_execute(
     runner: Runner | None = None,
 ) -> XsanatregOutputs:
     """
+    xsanatreg
+    
     A tool for registering source and target COR volumes.
     
     Author: FreeSurfer Developers
@@ -226,6 +228,8 @@ def xsanatreg(
     runner: Runner | None = None,
 ) -> XsanatregOutputs:
     """
+    xsanatreg
+    
     A tool for registering source and target COR volumes.
     
     Author: FreeSurfer Developers

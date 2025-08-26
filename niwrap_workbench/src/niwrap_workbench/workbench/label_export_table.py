@@ -125,6 +125,8 @@ def label_export_table_execute(
     runner: Runner | None = None,
 ) -> LabelExportTableOutputs:
     """
+    label-export-table
+    
     Export label table from gifti as text.
     
     Takes the label table from the gifti label file, and writes it to a text
@@ -155,6 +157,8 @@ def label_export_table(
     runner: Runner | None = None,
 ) -> LabelExportTableOutputs:
     """
+    label-export-table
+    
     Export label table from gifti as text.
     
     Takes the label table from the gifti label file, and writes it to a text

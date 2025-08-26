@@ -155,6 +155,8 @@ def label_to_border_execute(
     runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
+    label-to-border
+    
     Draw borders around labels.
     
     For each label, finds all edges on the mesh that cross the boundary of the
@@ -190,6 +192,8 @@ def label_to_border(
     runner: Runner | None = None,
 ) -> LabelToBorderOutputs:
     """
+    label-to-border
+    
     Draw borders around labels.
     
     For each label, finds all edges on the mesh that cross the boundary of the

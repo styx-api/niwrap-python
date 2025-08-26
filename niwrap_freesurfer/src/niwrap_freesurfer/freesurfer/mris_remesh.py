@@ -181,8 +181,10 @@ def mris_remesh_execute(
     runner: Runner | None = None,
 ) -> MrisRemeshOutputs:
     """
-    Remeshes a surface to a desired edge length, number of vertices, or average face
-    area.
+    mris_remesh
+    
+    Remeshes a surface to a desired edge length, number of vertices, or average
+    face area.
     
     Author: FreeSurfer Developers
     
@@ -214,8 +216,10 @@ def mris_remesh(
     runner: Runner | None = None,
 ) -> MrisRemeshOutputs:
     """
-    Remeshes a surface to a desired edge length, number of vertices, or average face
-    area.
+    mris_remesh
+    
+    Remeshes a surface to a desired edge length, number of vertices, or average
+    face area.
     
     Author: FreeSurfer Developers
     

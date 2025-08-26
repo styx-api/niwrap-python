@@ -189,8 +189,10 @@ def v_3d_lfcd_execute(
     runner: Runner | None = None,
 ) -> V3dLfcdOutputs:
     """
-    Performs degree centrality on a dataset using a given maskfile via the 3dLFCD
-    command.
+    3dLFCD
+    
+    Performs degree centrality on a dataset using a given maskfile via the
+    3dLFCD command.
     
     Author: AFNI Developers
     
@@ -224,8 +226,10 @@ def v_3d_lfcd(
     runner: Runner | None = None,
 ) -> V3dLfcdOutputs:
     """
-    Performs degree centrality on a dataset using a given maskfile via the 3dLFCD
-    command.
+    3dLFCD
+    
+    Performs degree centrality on a dataset using a given maskfile via the
+    3dLFCD command.
     
     Author: AFNI Developers
     

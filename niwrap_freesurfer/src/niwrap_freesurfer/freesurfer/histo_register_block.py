@@ -159,6 +159,8 @@ def histo_register_block_execute(
     runner: Runner | None = None,
 ) -> HistoRegisterBlockOutputs:
     """
+    histo_register_block
+    
     A tool to align a histological slice with a block face image.
     
     Author: FreeSurfer Developers
@@ -191,6 +193,8 @@ def histo_register_block(
     runner: Runner | None = None,
 ) -> HistoRegisterBlockOutputs:
     """
+    histo_register_block
+    
     A tool to align a histological slice with a block face image.
     
     Author: FreeSurfer Developers

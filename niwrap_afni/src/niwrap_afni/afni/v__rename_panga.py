@@ -193,6 +193,8 @@ def v__rename_panga_execute(
     runner: Runner | None = None,
 ) -> VRenamePangaOutputs:
     """
+    @RenamePanga
+    
     Creates AFNI bricks from RealTime GE EPI series.
     
     Author: AFNI Developers
@@ -228,6 +230,8 @@ def v__rename_panga(
     runner: Runner | None = None,
 ) -> VRenamePangaOutputs:
     """
+    @RenamePanga
+    
     Creates AFNI bricks from RealTime GE EPI series.
     
     Author: AFNI Developers

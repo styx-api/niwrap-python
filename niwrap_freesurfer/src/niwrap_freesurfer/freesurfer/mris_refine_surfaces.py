@@ -175,6 +175,8 @@ def mris_refine_surfaces_execute(
     runner: Runner | None = None,
 ) -> MrisRefineSurfacesOutputs:
     """
+    mris_refine_surfaces
+    
     Refines cortical surfaces around the region specified by the label file.
     
     Author: FreeSurfer Developers
@@ -208,6 +210,8 @@ def mris_refine_surfaces(
     runner: Runner | None = None,
 ) -> MrisRefineSurfacesOutputs:
     """
+    mris_refine_surfaces
+    
     Refines cortical surfaces around the region specified by the label file.
     
     Author: FreeSurfer Developers

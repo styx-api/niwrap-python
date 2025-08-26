@@ -135,6 +135,8 @@ def orient_las_execute(
     runner: Runner | None = None,
 ) -> OrientLasOutputs:
     """
+    orientLAS
+    
     Convert image to LAS orientation.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def orient_las(
     runner: Runner | None = None,
 ) -> OrientLasOutputs:
     """
+    orientLAS
+    
     Convert image to LAS orientation.
     
     Author: FreeSurfer Developers

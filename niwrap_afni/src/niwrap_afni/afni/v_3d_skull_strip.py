@@ -143,6 +143,8 @@ def v_3d_skull_strip_execute(
     runner: Runner | None = None,
 ) -> V3dSkullStripOutputs:
     """
+    3dSkullStrip
+    
     A program to extract the brain from surrounding tissue from MRI T1-weighted
     images.
     
@@ -172,6 +174,8 @@ def v_3d_skull_strip(
     runner: Runner | None = None,
 ) -> V3dSkullStripOutputs:
     """
+    3dSkullStrip
+    
     A program to extract the brain from surrounding tissue from MRI T1-weighted
     images.
     

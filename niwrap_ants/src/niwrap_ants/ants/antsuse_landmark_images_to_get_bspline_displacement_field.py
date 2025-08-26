@@ -170,13 +170,16 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_execute(
     runner: Runner | None = None,
 ) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs:
     """
-    We expect the input images to be (1) N-ary (2) in the same physical space as the
-    images you want to register and (3) to have the same landmark points defined
-    within them. Landmarks will be defined from the center of mass of the labels in
-    the input images. You can use ITK-snap to generate the label images. The
-    optional landmarks weights are read from a text file where each row is either:
-    "label,labelWeight" or "labelWeight". If the latter format is used, the label
-    weights are assumed to be arranged in ascending order by label.
+    ANTSUseLandmarkImagesToGetBSplineDisplacementField
+    
+    We expect the input images to be (1) N-ary (2) in the same physical space as
+    the images you want to register and (3) to have the same landmark points
+    defined within them. Landmarks will be defined from the center of mass of
+    the labels in the input images. You can use ITK-snap to generate the label
+    images. The optional landmarks weights are read from a text file where each
+    row is either: "label,labelWeight" or "labelWeight". If the latter format is
+    used, the label weights are assumed to be arranged in ascending order by
+    label.
     
     Author: ANTs Developers
     
@@ -209,13 +212,16 @@ def antsuse_landmark_images_to_get_bspline_displacement_field(
     runner: Runner | None = None,
 ) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs:
     """
-    We expect the input images to be (1) N-ary (2) in the same physical space as the
-    images you want to register and (3) to have the same landmark points defined
-    within them. Landmarks will be defined from the center of mass of the labels in
-    the input images. You can use ITK-snap to generate the label images. The
-    optional landmarks weights are read from a text file where each row is either:
-    "label,labelWeight" or "labelWeight". If the latter format is used, the label
-    weights are assumed to be arranged in ascending order by label.
+    ANTSUseLandmarkImagesToGetBSplineDisplacementField
+    
+    We expect the input images to be (1) N-ary (2) in the same physical space as
+    the images you want to register and (3) to have the same landmark points
+    defined within them. Landmarks will be defined from the center of mass of
+    the labels in the input images. You can use ITK-snap to generate the label
+    images. The optional landmarks weights are read from a text file where each
+    row is either: "label,labelWeight" or "labelWeight". If the latter format is
+    used, the label weights are assumed to be arranged in ascending order by
+    label.
     
     Author: ANTs Developers
     

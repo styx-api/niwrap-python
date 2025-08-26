@@ -260,6 +260,8 @@ def v_3dmaxima_execute(
     runner: Runner | None = None,
 ) -> V3dmaximaOutputs:
     """
+    3dmaxima
+    
     Locate extrema in a functional dataset.
     
     Author: AFNI Developers
@@ -305,6 +307,8 @@ def v_3dmaxima(
     runner: Runner | None = None,
 ) -> V3dmaximaOutputs:
     """
+    3dmaxima
+    
     Locate extrema in a functional dataset.
     
     Author: AFNI Developers

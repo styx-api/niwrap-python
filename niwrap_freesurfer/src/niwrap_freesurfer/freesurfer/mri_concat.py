@@ -455,6 +455,8 @@ def mri_concat_execute(
     runner: Runner | None = None,
 ) -> MriConcatOutputs:
     """
+    mri_concat
+    
     Concatenates input data sets.
     
     Author: FreeSurfer Developers
@@ -528,6 +530,8 @@ def mri_concat(
     runner: Runner | None = None,
 ) -> MriConcatOutputs:
     """
+    mri_concat
+    
     Concatenates input data sets.
     
     Author: FreeSurfer Developers

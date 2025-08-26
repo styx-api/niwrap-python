@@ -343,6 +343,8 @@ def v_3d_dwito_dt_execute(
     runner: Runner | None = None,
 ) -> V3dDwitoDtOutputs:
     """
+    3dDWItoDT
+    
     Computes 6 principal direction tensors from multiple gradient vectors and
     corresponding DTI image volumes.
     
@@ -395,6 +397,8 @@ def v_3d_dwito_dt(
     runner: Runner | None = None,
 ) -> V3dDwitoDtOutputs:
     """
+    3dDWItoDT
+    
     Computes 6 principal direction tensors from multiple gradient vectors and
     corresponding DTI image volumes.
     

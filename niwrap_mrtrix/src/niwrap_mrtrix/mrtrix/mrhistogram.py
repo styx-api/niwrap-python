@@ -278,6 +278,8 @@ def mrhistogram_execute(
     runner: Runner | None = None,
 ) -> MrhistogramOutputs:
     """
+    mrhistogram
+    
     Generate a histogram of image intensities.
     
     
@@ -324,6 +326,8 @@ def mrhistogram(
     runner: Runner | None = None,
 ) -> MrhistogramOutputs:
     """
+    mrhistogram
+    
     Generate a histogram of image intensities.
     
     

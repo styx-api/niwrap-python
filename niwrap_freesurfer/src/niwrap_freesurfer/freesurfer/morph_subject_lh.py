@@ -122,6 +122,8 @@ def morph_subject_lh_execute(
     runner: Runner | None = None,
 ) -> MorphSubjectLhOutputs:
     """
+    morph_subject-lh
+    
     A tool for morphing subject's left hemisphere.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def morph_subject_lh(
     runner: Runner | None = None,
 ) -> MorphSubjectLhOutputs:
     """
+    morph_subject-lh
+    
     A tool for morphing subject's left hemisphere.
     
     Author: FreeSurfer Developers

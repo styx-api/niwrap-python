@@ -129,6 +129,8 @@ def mri_validate_skull_stripped_execute(
     runner: Runner | None = None,
 ) -> MriValidateSkullStrippedOutputs:
     """
+    mri_validate_skull_stripped
+    
     Tool to validate skull stripped MRI images.
     
     Author: FreeSurfer Developers
@@ -157,6 +159,8 @@ def mri_validate_skull_stripped(
     runner: Runner | None = None,
 ) -> MriValidateSkullStrippedOutputs:
     """
+    mri_validate_skull_stripped
+    
     Tool to validate skull stripped MRI images.
     
     Author: FreeSurfer Developers

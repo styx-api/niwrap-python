@@ -332,6 +332,8 @@ def warp2metric_execute(
     runner: Runner | None = None,
 ) -> Warp2metricOutputs:
     """
+    warp2metric
+    
     Compute fixel-wise or voxel-wise metrics from a 4D deformation field.
     
     
@@ -378,6 +380,8 @@ def warp2metric(
     runner: Runner | None = None,
 ) -> Warp2metricOutputs:
     """
+    warp2metric
+    
     Compute fixel-wise or voxel-wise metrics from a 4D deformation field.
     
     

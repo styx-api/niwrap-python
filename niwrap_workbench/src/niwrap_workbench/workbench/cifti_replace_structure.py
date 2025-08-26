@@ -375,6 +375,8 @@ def cifti_replace_structure_execute(
     runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
+    cifti-replace-structure
+    
     Replace data in a structure in a cifti file.
     
     This is a fairly low-level command, you probably want to use
@@ -454,6 +456,8 @@ def cifti_replace_structure(
     runner: Runner | None = None,
 ) -> CiftiReplaceStructureOutputs:
     """
+    cifti-replace-structure
+    
     Replace data in a structure in a cifti file.
     
     This is a fairly low-level command, you probably want to use

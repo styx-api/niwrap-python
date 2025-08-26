@@ -207,6 +207,8 @@ def slicetimer_execute(
     runner: Runner | None = None,
 ) -> SlicetimerOutputs:
     """
+    slicetimer
+    
     FMRIB's Interpolation for Slice Timing.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -242,6 +244,8 @@ def slicetimer(
     runner: Runner | None = None,
 ) -> SlicetimerOutputs:
     """
+    slicetimer
+    
     FMRIB's Interpolation for Slice Timing.
     
     Author: FMRIB Analysis Group, University of Oxford

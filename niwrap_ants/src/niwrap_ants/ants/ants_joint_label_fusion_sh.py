@@ -237,6 +237,8 @@ def ants_joint_label_fusion_sh_execute(
     runner: Runner | None = None,
 ) -> AntsJointLabelFusionShOutputs:
     """
+    antsJointLabelFusion.sh
+    
     The antsJointLabelFusion script is used for performing label fusion using
     multiple atlases to improve segmentation accuracy.
     
@@ -275,6 +277,8 @@ def ants_joint_label_fusion_sh(
     runner: Runner | None = None,
 ) -> AntsJointLabelFusionShOutputs:
     """
+    antsJointLabelFusion.sh
+    
     The antsJointLabelFusion script is used for performing label fusion using
     multiple atlases to improve segmentation accuracy.
     

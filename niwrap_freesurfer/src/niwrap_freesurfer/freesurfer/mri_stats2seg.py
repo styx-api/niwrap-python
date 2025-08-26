@@ -154,6 +154,8 @@ def mri_stats2seg_execute(
     runner: Runner | None = None,
 ) -> MriStats2segOutputs:
     """
+    mri_stats2seg
+    
     A command-line tool for converting MRI statistical maps to segmented volume.
     
     Author: FreeSurfer Developers
@@ -184,6 +186,8 @@ def mri_stats2seg(
     runner: Runner | None = None,
 ) -> MriStats2segOutputs:
     """
+    mri_stats2seg
+    
     A command-line tool for converting MRI statistical maps to segmented volume.
     
     Author: FreeSurfer Developers

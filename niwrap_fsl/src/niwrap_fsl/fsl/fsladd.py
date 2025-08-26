@@ -140,6 +140,8 @@ def fsladd_execute(
     runner: Runner | None = None,
 ) -> FsladdOutputs:
     """
+    fsladd
+    
     Tool for adding or averaging multiple input volumes.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -169,6 +171,8 @@ def fsladd(
     runner: Runner | None = None,
 ) -> FsladdOutputs:
     """
+    fsladd
+    
     Tool for adding or averaging multiple input volumes.
     
     Author: FMRIB Analysis Group, University of Oxford

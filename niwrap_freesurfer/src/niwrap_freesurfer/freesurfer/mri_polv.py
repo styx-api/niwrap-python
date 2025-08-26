@@ -136,8 +136,10 @@ def mri_polv_execute(
     runner: Runner | None = None,
 ) -> MriPolvOutputs:
     """
-    Calculate an image specifying the plane of least variance at each point in the
-    input image.
+    mri_polv
+    
+    Calculate an image specifying the plane of least variance at each point in
+    the input image.
     
     Author: FreeSurfer Developers
     
@@ -165,8 +167,10 @@ def mri_polv(
     runner: Runner | None = None,
 ) -> MriPolvOutputs:
     """
-    Calculate an image specifying the plane of least variance at each point in the
-    input image.
+    mri_polv
+    
+    Calculate an image specifying the plane of least variance at each point in
+    the input image.
     
     Author: FreeSurfer Developers
     

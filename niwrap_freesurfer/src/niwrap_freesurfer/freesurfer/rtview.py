@@ -231,8 +231,11 @@ def rtview_execute(
     runner: Runner | None = None,
 ) -> RtviewOutputs:
     """
-    View FSFAST version 5 retinotopy data using the color wheel. This is a front-end
-    for tksurfer, setting up the environment for using the color wheel.
+    rtview
+    
+    View FSFAST version 5 retinotopy data using the color wheel. This is a
+    front-end for tksurfer, setting up the environment for using the color
+    wheel.
     
     Author: FreeSurfer Developers
     
@@ -271,8 +274,11 @@ def rtview(
     runner: Runner | None = None,
 ) -> RtviewOutputs:
     """
-    View FSFAST version 5 retinotopy data using the color wheel. This is a front-end
-    for tksurfer, setting up the environment for using the color wheel.
+    rtview
+    
+    View FSFAST version 5 retinotopy data using the color wheel. This is a
+    front-end for tksurfer, setting up the environment for using the color
+    wheel.
     
     Author: FreeSurfer Developers
     

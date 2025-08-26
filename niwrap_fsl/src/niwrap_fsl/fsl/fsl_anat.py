@@ -262,6 +262,8 @@ def fsl_anat_execute(
     runner: Runner | None = None,
 ) -> FslAnatOutputs:
     """
+    fsl_anat
+    
     A wrapper for FSL tools to process anatomical scans.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -305,6 +307,8 @@ def fsl_anat(
     runner: Runner | None = None,
 ) -> FslAnatOutputs:
     """
+    fsl_anat
+    
     A wrapper for FSL tools to process anatomical scans.
     
     Author: FMRIB Analysis Group, University of Oxford

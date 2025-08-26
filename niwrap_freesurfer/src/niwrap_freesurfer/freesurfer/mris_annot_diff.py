@@ -136,6 +136,8 @@ def mris_annot_diff_execute(
     runner: Runner | None = None,
 ) -> MrisAnnotDiffOutputs:
     """
+    mris_annot_diff
+    
     Compare two surface annotation files. The program works with .annot only.
     
     Author: FreeSurfer Developers
@@ -165,6 +167,8 @@ def mris_annot_diff(
     runner: Runner | None = None,
 ) -> MrisAnnotDiffOutputs:
     """
+    mris_annot_diff
+    
     Compare two surface annotation files. The program works with .annot only.
     
     Author: FreeSurfer Developers

@@ -491,6 +491,8 @@ def cifti_create_dense_from_template_execute(
     runner: Runner | None = None,
 ) -> CiftiCreateDenseFromTemplateOutputs:
     """
+    cifti-create-dense-from-template
+    
     Create cifti with matching dense map.
     
     This command helps you make a new dscalar, dtseries, or dlabel cifti file
@@ -582,6 +584,8 @@ def cifti_create_dense_from_template(
     runner: Runner | None = None,
 ) -> CiftiCreateDenseFromTemplateOutputs:
     """
+    cifti-create-dense-from-template
+    
     Create cifti with matching dense map.
     
     This command helps you make a new dscalar, dtseries, or dlabel cifti file

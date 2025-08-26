@@ -184,6 +184,8 @@ def fslroi_execute(
     runner: Runner | None = None,
 ) -> FslroiOutputs:
     """
+    fslroi
+    
     Extracts a region of interest (ROI) from an image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -219,6 +221,8 @@ def fslroi(
     runner: Runner | None = None,
 ) -> FslroiOutputs:
     """
+    fslroi
+    
     Extracts a region of interest (ROI) from an image.
     
     Author: FMRIB Analysis Group, University of Oxford

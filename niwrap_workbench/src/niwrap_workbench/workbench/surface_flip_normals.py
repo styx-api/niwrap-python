@@ -129,6 +129,8 @@ def surface_flip_normals_execute(
     runner: Runner | None = None,
 ) -> SurfaceFlipNormalsOutputs:
     """
+    surface-flip-normals
+    
     Flip all tiles on a surface.
     
     Flips all triangles on a surface, resulting in surface normals being flipped
@@ -163,6 +165,8 @@ def surface_flip_normals(
     runner: Runner | None = None,
 ) -> SurfaceFlipNormalsOutputs:
     """
+    surface-flip-normals
+    
     Flip all tiles on a surface.
     
     Flips all triangles on a surface, resulting in surface normals being flipped

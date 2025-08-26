@@ -149,6 +149,8 @@ def oct_register_mosaic_execute(
     runner: Runner | None = None,
 ) -> OctRegisterMosaicOutputs:
     """
+    oct_register_mosaic
+    
     Tool for registering multiple OCT (Optical Coherence Tomography) tiles or a
     mosaic list into a single output volume.
     
@@ -179,6 +181,8 @@ def oct_register_mosaic(
     runner: Runner | None = None,
 ) -> OctRegisterMosaicOutputs:
     """
+    oct_register_mosaic
+    
     Tool for registering multiple OCT (Optical Coherence Tomography) tiles or a
     mosaic list into a single output volume.
     

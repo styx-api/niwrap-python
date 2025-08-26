@@ -207,8 +207,10 @@ def neuro_deconvolve_py_execute(
     runner: Runner | None = None,
 ) -> NeuroDeconvolvePyOutputs:
     """
-    Generate a script to apply 3dTfitter to deconvolve an MRI signal (BOLD response
-    curve) into a neuro response curve.
+    neuro_deconvolve.py
+    
+    Generate a script to apply 3dTfitter to deconvolve an MRI signal (BOLD
+    response curve) into a neuro response curve.
     
     Author: AFNI Developers
     
@@ -243,8 +245,10 @@ def neuro_deconvolve_py(
     runner: Runner | None = None,
 ) -> NeuroDeconvolvePyOutputs:
     """
-    Generate a script to apply 3dTfitter to deconvolve an MRI signal (BOLD response
-    curve) into a neuro response curve.
+    neuro_deconvolve.py
+    
+    Generate a script to apply 3dTfitter to deconvolve an MRI signal (BOLD
+    response curve) into a neuro response curve.
     
     Author: AFNI Developers
     

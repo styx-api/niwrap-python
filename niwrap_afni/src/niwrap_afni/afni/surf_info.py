@@ -272,6 +272,8 @@ def surf_info_execute(
     runner: Runner | None = None,
 ) -> SurfInfoOutputs:
     """
+    SurfInfo
+    
     Tool to gather information about surface files.
     
     Author: AFNI Developers
@@ -317,6 +319,8 @@ def surf_info(
     runner: Runner | None = None,
 ) -> SurfInfoOutputs:
     """
+    SurfInfo
+    
     Tool to gather information about surface files.
     
     Author: AFNI Developers

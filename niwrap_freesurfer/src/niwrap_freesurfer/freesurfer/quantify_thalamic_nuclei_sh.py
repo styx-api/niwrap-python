@@ -135,6 +135,8 @@ def quantify_thalamic_nuclei_sh_execute(
     runner: Runner | None = None,
 ) -> QuantifyThalamicNucleiShOutputs:
     """
+    quantifyThalamicNuclei.sh
+    
     Command-line tool to quantify thalamic nuclei using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def quantify_thalamic_nuclei_sh(
     runner: Runner | None = None,
 ) -> QuantifyThalamicNucleiShOutputs:
     """
+    quantifyThalamicNuclei.sh
+    
     Command-line tool to quantify thalamic nuclei using FreeSurfer.
     
     Author: FreeSurfer Developers

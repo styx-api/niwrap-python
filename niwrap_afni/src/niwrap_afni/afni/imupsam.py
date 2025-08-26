@@ -141,6 +141,8 @@ def imupsam_execute(
     runner: Runner | None = None,
 ) -> ImupsamOutputs:
     """
+    imupsam
+    
     Upsamples a 2D image by a specified factor.
     
     Author: AFNI Developers
@@ -170,6 +172,8 @@ def imupsam(
     runner: Runner | None = None,
 ) -> ImupsamOutputs:
     """
+    imupsam
+    
     Upsamples a 2D image by a specified factor.
     
     Author: AFNI Developers

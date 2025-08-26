@@ -242,6 +242,8 @@ def v_3dpc_execute(
     runner: Runner | None = None,
 ) -> V3dpcOutputs:
     """
+    3dpc
+    
     Principal Component Analysis of 3D Datasets.
     
     Author: AFNI Developers
@@ -282,6 +284,8 @@ def v_3dpc(
     runner: Runner | None = None,
 ) -> V3dpcOutputs:
     """
+    3dpc
+    
     Principal Component Analysis of 3D Datasets.
     
     Author: AFNI Developers

@@ -190,6 +190,8 @@ def long_stats_combine_execute(
     runner: Runner | None = None,
 ) -> LongStatsCombineOutputs:
     """
+    long_stats_combine
+    
     Adds columns from stats into longitudinal qdec table, using longitudinally
     processed results.
     
@@ -224,6 +226,8 @@ def long_stats_combine(
     runner: Runner | None = None,
 ) -> LongStatsCombineOutputs:
     """
+    long_stats_combine
+    
     Adds columns from stats into longitudinal qdec table, using longitudinally
     processed results.
     

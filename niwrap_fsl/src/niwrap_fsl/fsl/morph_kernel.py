@@ -128,6 +128,8 @@ def morph_kernel_execute(
     runner: Runner | None = None,
 ) -> MorphKernelOutputs:
     """
+    morph_kernel
+    
     Tool to generate morphological kernels.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def morph_kernel(
     runner: Runner | None = None,
 ) -> MorphKernelOutputs:
     """
+    morph_kernel
+    
     Tool to generate morphological kernels.
     
     Author: FMRIB Analysis Group, University of Oxford

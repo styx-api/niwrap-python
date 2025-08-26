@@ -414,7 +414,10 @@ def map_central_sulcus_execute(
     runner: Runner | None = None,
 ) -> MapCentralSulcusOutputs:
     """
-    Performs all, or any part of, the FreeSurfer cortical reconstruction process.
+    map_central_sulcus
+    
+    Performs all, or any part of, the FreeSurfer cortical reconstruction
+    process.
     
     Author: FreeSurfer Developers
     
@@ -475,7 +478,10 @@ def map_central_sulcus(
     runner: Runner | None = None,
 ) -> MapCentralSulcusOutputs:
     """
-    Performs all, or any part of, the FreeSurfer cortical reconstruction process.
+    map_central_sulcus
+    
+    Performs all, or any part of, the FreeSurfer cortical reconstruction
+    process.
     
     Author: FreeSurfer Developers
     

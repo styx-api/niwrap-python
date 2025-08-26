@@ -406,6 +406,8 @@ def time_sccan_execute(
     runner: Runner | None = None,
 ) -> TimeSccanOutputs:
     """
+    TimeSCCAN
+    
     A tool for sparse statistical analysis on connectivity within a subject.
     
     Author: ANTs Developers
@@ -445,6 +447,8 @@ def time_sccan(
     runner: Runner | None = None,
 ) -> TimeSccanOutputs:
     """
+    TimeSCCAN
+    
     A tool for sparse statistical analysis on connectivity within a subject.
     
     Author: ANTs Developers

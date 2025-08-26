@@ -156,6 +156,8 @@ def fs_time_execute(
     runner: Runner | None = None,
 ) -> FsTimeOutputs:
     """
+    fs_time
+    
     A frontend for the unix /usr/bin/time program to track resource usage by a
     process.
     
@@ -187,6 +189,8 @@ def fs_time(
     runner: Runner | None = None,
 ) -> FsTimeOutputs:
     """
+    fs_time
+    
     A frontend for the unix /usr/bin/time program to track resource usage by a
     process.
     

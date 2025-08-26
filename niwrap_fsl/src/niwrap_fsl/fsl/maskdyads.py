@@ -134,6 +134,8 @@ def maskdyads_execute(
     runner: Runner | None = None,
 ) -> MaskdyadsOutputs:
     """
+    maskdyads
+    
     Tool to mask dyads with threshold.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -162,6 +164,8 @@ def maskdyads(
     runner: Runner | None = None,
 ) -> MaskdyadsOutputs:
     """
+    maskdyads
+    
     Tool to mask dyads with threshold.
     
     Author: FMRIB Analysis Group, University of Oxford

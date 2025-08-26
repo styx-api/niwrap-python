@@ -325,6 +325,8 @@ def convert_warpfield_execute(
     runner: Runner | None = None,
 ) -> ConvertWarpfieldOutputs:
     """
+    convert-warpfield
+    
     Convert a warpfield between conventions.
     
     NIFTI world warpfields can be used directly on mm coordinates via sampling
@@ -369,6 +371,8 @@ def convert_warpfield(
     runner: Runner | None = None,
 ) -> ConvertWarpfieldOutputs:
     """
+    convert-warpfield
+    
     Convert a warpfield between conventions.
     
     NIFTI world warpfields can be used directly on mm coordinates via sampling

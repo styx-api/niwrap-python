@@ -132,6 +132,8 @@ def v__afni_run_me_execute(
     runner: Runner | None = None,
 ) -> VAfniRunMeOutputs:
     """
+    @afni.run.me
+    
     A tool to execute a specific command.
     
     Author: AFNI Developers
@@ -160,6 +162,8 @@ def v__afni_run_me(
     runner: Runner | None = None,
 ) -> VAfniRunMeOutputs:
     """
+    @afni.run.me
+    
     A tool to execute a specific command.
     
     Author: AFNI Developers

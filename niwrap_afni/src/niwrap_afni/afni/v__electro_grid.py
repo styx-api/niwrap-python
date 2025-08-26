@@ -173,6 +173,8 @@ def v__electro_grid_execute(
     runner: Runner | None = None,
 ) -> VElectroGridOutputs:
     """
+    @ElectroGrid
+    
     Creates a mesh representation of an electrode grid for use with SUMA.
     
     Author: AFNI Developers
@@ -204,6 +206,8 @@ def v__electro_grid(
     runner: Runner | None = None,
 ) -> VElectroGridOutputs:
     """
+    @ElectroGrid
+    
     Creates a mesh representation of an electrode grid for use with SUMA.
     
     Author: AFNI Developers

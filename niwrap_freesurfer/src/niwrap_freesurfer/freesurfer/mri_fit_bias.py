@@ -225,6 +225,8 @@ def mri_fit_bias_execute(
     runner: Runner | None = None,
 ) -> MriFitBiasOutputs:
     """
+    mri_fit_bias
+    
     A tool for intensity normalization and bias correction in MRI images.
     
     Author: FreeSurfer Developers
@@ -262,6 +264,8 @@ def mri_fit_bias(
     runner: Runner | None = None,
 ) -> MriFitBiasOutputs:
     """
+    mri_fit_bias
+    
     A tool for intensity normalization and bias correction in MRI images.
     
     Author: FreeSurfer Developers

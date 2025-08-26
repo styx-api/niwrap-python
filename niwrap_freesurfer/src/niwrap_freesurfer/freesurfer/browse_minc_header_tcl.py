@@ -119,7 +119,10 @@ def browse_minc_header_tcl_execute(
     runner: Runner | None = None,
 ) -> BrowseMincHeaderTclOutputs:
     """
-    A tool for browsing MINC file headers, likely part of the FreeSurfer package.
+    browse-minc-header.tcl
+    
+    A tool for browsing MINC file headers, likely part of the FreeSurfer
+    package.
     
     Author: FreeSurfer Developers
     
@@ -145,7 +148,10 @@ def browse_minc_header_tcl(
     runner: Runner | None = None,
 ) -> BrowseMincHeaderTclOutputs:
     """
-    A tool for browsing MINC file headers, likely part of the FreeSurfer package.
+    browse-minc-header.tcl
+    
+    A tool for browsing MINC file headers, likely part of the FreeSurfer
+    package.
     
     Author: FreeSurfer Developers
     

@@ -233,6 +233,8 @@ def cifti_label_to_border_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelToBorderOutputs:
     """
+    cifti-label-to-border
+    
     Draw borders around cifti labels.
     
     For each surface, takes the labels on the matching structure and draws
@@ -266,6 +268,8 @@ def cifti_label_to_border(
     runner: Runner | None = None,
 ) -> CiftiLabelToBorderOutputs:
     """
+    cifti-label-to-border
+    
     Draw borders around cifti labels.
     
     For each surface, takes the labels on the matching structure and draws

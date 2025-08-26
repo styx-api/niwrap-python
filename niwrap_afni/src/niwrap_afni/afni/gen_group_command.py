@@ -235,8 +235,10 @@ def gen_group_command_execute(
     runner: Runner | None = None,
 ) -> GenGroupCommandOutputs:
     """
-    Generate group analysis command scripts by parsing wildcard-based lists of input
-    datasets.
+    gen_group_command
+    
+    Generate group analysis command scripts by parsing wildcard-based lists of
+    input datasets.
     
     Author: AFNI Developers
     
@@ -273,8 +275,10 @@ def gen_group_command(
     runner: Runner | None = None,
 ) -> GenGroupCommandOutputs:
     """
-    Generate group analysis command scripts by parsing wildcard-based lists of input
-    datasets.
+    gen_group_command
+    
+    Generate group analysis command scripts by parsing wildcard-based lists of
+    input datasets.
     
     Author: AFNI Developers
     

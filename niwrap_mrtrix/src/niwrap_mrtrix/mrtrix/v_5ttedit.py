@@ -298,8 +298,10 @@ def v_5ttedit_execute(
     runner: Runner | None = None,
 ) -> V5tteditOutputs:
     """
-    Manually set the partial volume fractions in an ACT five-tissue-type (5TT) image
-    using mask images.
+    5ttedit
+    
+    Manually set the partial volume fractions in an ACT five-tissue-type (5TT)
+    image using mask images.
     
     
     
@@ -346,8 +348,10 @@ def v_5ttedit(
     runner: Runner | None = None,
 ) -> V5tteditOutputs:
     """
-    Manually set the partial volume fractions in an ACT five-tissue-type (5TT) image
-    using mask images.
+    5ttedit
+    
+    Manually set the partial volume fractions in an ACT five-tissue-type (5TT)
+    image using mask images.
     
     
     

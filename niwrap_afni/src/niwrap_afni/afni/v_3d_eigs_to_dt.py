@@ -189,6 +189,8 @@ def v_3d_eigs_to_dt_execute(
     runner: Runner | None = None,
 ) -> V3dEigsToDtOutputs:
     """
+    3dEigsToDT
+    
     Convert set of DTI eigenvectors and eigenvalues to a diffusion tensor, with
     optional value-scaling and vector-flipping.
     
@@ -223,6 +225,8 @@ def v_3d_eigs_to_dt(
     runner: Runner | None = None,
 ) -> V3dEigsToDtOutputs:
     """
+    3dEigsToDT
+    
     Convert set of DTI eigenvectors and eigenvalues to a diffusion tensor, with
     optional value-scaling and vector-flipping.
     

@@ -161,8 +161,10 @@ def v__djunct_4d_imager_execute(
     runner: Runner | None = None,
 ) -> VDjunct4dImagerOutputs:
     """
-    The program is useful for viewing the same slice across the 'time' dimension of
-    a 4D data set.
+    @djunct_4d_imager
+    
+    The program is useful for viewing the same slice across the 'time' dimension
+    of a 4D data set.
     
     Author: AFNI Developers
     
@@ -191,8 +193,10 @@ def v__djunct_4d_imager(
     runner: Runner | None = None,
 ) -> VDjunct4dImagerOutputs:
     """
-    The program is useful for viewing the same slice across the 'time' dimension of
-    a 4D data set.
+    @djunct_4d_imager
+    
+    The program is useful for viewing the same slice across the 'time' dimension
+    of a 4D data set.
     
     Author: AFNI Developers
     

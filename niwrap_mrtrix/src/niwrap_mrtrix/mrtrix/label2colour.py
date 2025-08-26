@@ -245,7 +245,10 @@ def label2colour_execute(
     runner: Runner | None = None,
 ) -> Label2colourOutputs:
     """
-    Convert a parcellated image (where values are node indices) into a colour image.
+    label2colour
+    
+    Convert a parcellated image (where values are node indices) into a colour
+    image.
     
     Many software packages handle this colouring internally within their viewer
     program; this binary explicitly converts a parcellation image into a colour
@@ -289,7 +292,10 @@ def label2colour(
     runner: Runner | None = None,
 ) -> Label2colourOutputs:
     """
-    Convert a parcellated image (where values are node indices) into a colour image.
+    label2colour
+    
+    Convert a parcellated image (where values are node indices) into a colour
+    image.
     
     Many software packages handle this colouring internally within their viewer
     program; this binary explicitly converts a parcellation image into a colour

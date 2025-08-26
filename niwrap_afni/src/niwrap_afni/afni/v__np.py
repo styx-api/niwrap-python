@@ -123,9 +123,12 @@ def v__np_execute(
     runner: Runner | None = None,
 ) -> VNpOutputs:
     """
-    Finds an appropriate new prefix to use, given the files you already have in your
-    directory. It automatically creates a valid prefix when you are repeatedly
-    running similar commands but do not want to delete previous output.
+    @np
+    
+    Finds an appropriate new prefix to use, given the files you already have in
+    your directory. It automatically creates a valid prefix when you are
+    repeatedly running similar commands but do not want to delete previous
+    output.
     
     Author: AFNI Developers
     
@@ -151,9 +154,12 @@ def v__np(
     runner: Runner | None = None,
 ) -> VNpOutputs:
     """
-    Finds an appropriate new prefix to use, given the files you already have in your
-    directory. It automatically creates a valid prefix when you are repeatedly
-    running similar commands but do not want to delete previous output.
+    @np
+    
+    Finds an appropriate new prefix to use, given the files you already have in
+    your directory. It automatically creates a valid prefix when you are
+    repeatedly running similar commands but do not want to delete previous
+    output.
     
     Author: AFNI Developers
     

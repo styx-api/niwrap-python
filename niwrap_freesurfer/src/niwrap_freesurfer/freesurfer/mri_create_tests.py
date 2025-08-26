@@ -289,8 +289,10 @@ def mri_create_tests_execute(
     runner: Runner | None = None,
 ) -> MriCreateTestsOutputs:
     """
-    Creates test cases for the registration by mapping the input to a source (half
-    way backward) and to a target (half way forward).
+    mri_create_tests
+    
+    Creates test cases for the registration by mapping the input to a source
+    (half way backward) and to a target (half way forward).
     
     Author: FreeSurfer Developers
     
@@ -334,8 +336,10 @@ def mri_create_tests(
     runner: Runner | None = None,
 ) -> MriCreateTestsOutputs:
     """
-    Creates test cases for the registration by mapping the input to a source (half
-    way backward) and to a target (half way forward).
+    mri_create_tests
+    
+    Creates test cases for the registration by mapping the input to a source
+    (half way backward) and to a target (half way forward).
     
     Author: FreeSurfer Developers
     

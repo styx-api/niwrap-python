@@ -499,6 +499,8 @@ def cifti_palette_execute(
     runner: Runner | None = None,
 ) -> CiftiPaletteOutputs:
     """
+    cifti-palette
+    
     Set palette on a cifti file.
     
     NOTE: The output file must be a different file than the input file.
@@ -616,6 +618,8 @@ def cifti_palette(
     runner: Runner | None = None,
 ) -> CiftiPaletteOutputs:
     """
+    cifti-palette
+    
     Set palette on a cifti file.
     
     NOTE: The output file must be a different file than the input file.

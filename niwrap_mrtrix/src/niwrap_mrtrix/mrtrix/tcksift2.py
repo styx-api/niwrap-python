@@ -500,6 +500,8 @@ def tcksift2_execute(
     runner: Runner | None = None,
 ) -> Tcksift2Outputs:
     """
+    tcksift2
+    
     Optimise per-streamline cross-section multipliers to match a whole-brain
     tractogram to fixel-wise fibre densities.
     
@@ -573,6 +575,8 @@ def tcksift2(
     runner: Runner | None = None,
 ) -> Tcksift2Outputs:
     """
+    tcksift2
+    
     Optimise per-streamline cross-section multipliers to match a whole-brain
     tractogram to fixel-wise fibre densities.
     

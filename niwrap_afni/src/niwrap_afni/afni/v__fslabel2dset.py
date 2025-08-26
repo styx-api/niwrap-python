@@ -150,8 +150,10 @@ def v__fslabel2dset_execute(
     runner: Runner | None = None,
 ) -> VFslabel2dsetOutputs:
     """
-    A script to convert a FreeSurfer ASCII label file into a SUMA dataset and a SUMA
-    ROI.
+    @FSlabel2dset
+    
+    A script to convert a FreeSurfer ASCII label file into a SUMA dataset and a
+    SUMA ROI.
     
     Author: AFNI Developers
     
@@ -181,8 +183,10 @@ def v__fslabel2dset(
     runner: Runner | None = None,
 ) -> VFslabel2dsetOutputs:
     """
-    A script to convert a FreeSurfer ASCII label file into a SUMA dataset and a SUMA
-    ROI.
+    @FSlabel2dset
+    
+    A script to convert a FreeSurfer ASCII label file into a SUMA dataset and a
+    SUMA ROI.
     
     Author: AFNI Developers
     

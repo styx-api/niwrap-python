@@ -137,6 +137,8 @@ def volume_label_probability_execute(
     runner: Runner | None = None,
 ) -> VolumeLabelProbabilityOutputs:
     """
+    volume-label-probability
+    
     Find frequency of volume labels.
     
     This command outputs a set of soft ROIs, one for each label in the input,
@@ -169,6 +171,8 @@ def volume_label_probability(
     runner: Runner | None = None,
 ) -> VolumeLabelProbabilityOutputs:
     """
+    volume-label-probability
+    
     Find frequency of volume labels.
     
     This command outputs a set of soft ROIs, one for each label in the input,

@@ -513,6 +513,8 @@ def tckmap_execute(
     runner: Runner | None = None,
 ) -> TckmapOutputs:
     """
+    tckmap
+    
     Use track data as a form of contrast for producing a high-resolution image.
     
     Note: if you run into limitations with RAM usage, make sure you output the
@@ -607,6 +609,8 @@ def tckmap(
     runner: Runner | None = None,
 ) -> TckmapOutputs:
     """
+    tckmap
+    
     Use track data as a form of contrast for producing a high-resolution image.
     
     Note: if you run into limitations with RAM usage, make sure you output the

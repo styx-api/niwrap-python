@@ -130,6 +130,8 @@ def v__to_rai_execute(
     runner: Runner | None = None,
 ) -> VToRaiOutputs:
     """
+    @ToRAI
+    
     Tool to change the ORIENT coordinates to RAI.
     
     Author: AFNI Developers
@@ -157,6 +159,8 @@ def v__to_rai(
     runner: Runner | None = None,
 ) -> VToRaiOutputs:
     """
+    @ToRAI
+    
     Tool to change the ORIENT coordinates to RAI.
     
     Author: AFNI Developers

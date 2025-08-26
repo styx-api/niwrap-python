@@ -216,6 +216,8 @@ def mris_spherical_average_execute(
     runner: Runner | None = None,
 ) -> MrisSphericalAverageOutputs:
     """
+    mris_spherical_average
+    
     This tool adds a template into an average surface in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -255,6 +257,8 @@ def mris_spherical_average(
     runner: Runner | None = None,
 ) -> MrisSphericalAverageOutputs:
     """
+    mris_spherical_average
+    
     This tool adds a template into an average surface in FreeSurfer.
     
     Author: FreeSurfer Developers

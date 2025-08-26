@@ -158,6 +158,8 @@ def gcaprepone_execute(
     runner: Runner | None = None,
 ) -> GcapreponeOutputs:
     """
+    gcaprepone
+    
     Tool for preparing FreeSurfer subjects for use with group-wise template
     generation.
     
@@ -190,6 +192,8 @@ def gcaprepone(
     runner: Runner | None = None,
 ) -> GcapreponeOutputs:
     """
+    gcaprepone
+    
     Tool for preparing FreeSurfer subjects for use with group-wise template
     generation.
     

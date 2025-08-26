@@ -130,6 +130,8 @@ def v__from_rai_execute(
     runner: Runner | None = None,
 ) -> VFromRaiOutputs:
     """
+    @FromRAI
+    
     Changes the RAI coordinates to the specified orientation.
     
     Author: AFNI Developers
@@ -157,6 +159,8 @@ def v__from_rai(
     runner: Runner | None = None,
 ) -> VFromRaiOutputs:
     """
+    @FromRAI
+    
     Changes the RAI coordinates to the specified orientation.
     
     Author: AFNI Developers

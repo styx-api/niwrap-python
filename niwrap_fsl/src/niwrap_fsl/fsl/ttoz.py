@@ -149,6 +149,8 @@ def ttoz_execute(
     runner: Runner | None = None,
 ) -> TtozOutputs:
     """
+    ttoz
+    
     Tool to convert a T-statistic image to a Z-statistic image.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -179,6 +181,8 @@ def ttoz(
     runner: Runner | None = None,
 ) -> TtozOutputs:
     """
+    ttoz
+    
     Tool to convert a T-statistic image to a Z-statistic image.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -242,6 +242,8 @@ def mrcentroid_execute(
     runner: Runner | None = None,
 ) -> MrcentroidOutputs:
     """
+    mrcentroid
+    
     Determine the centre of mass / centre of gravity of an image.
     
     
@@ -284,6 +286,8 @@ def mrcentroid(
     runner: Runner | None = None,
 ) -> MrcentroidOutputs:
     """
+    mrcentroid
+    
     Determine the centre of mass / centre of gravity of an image.
     
     

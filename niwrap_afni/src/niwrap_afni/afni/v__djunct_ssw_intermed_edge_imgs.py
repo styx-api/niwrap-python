@@ -222,7 +222,10 @@ def v__djunct_ssw_intermed_edge_imgs_execute(
     runner: Runner | None = None,
 ) -> VDjunctSswIntermedEdgeImgsOutputs:
     """
-    Helper script to generate intermediate edge images for SSW-related processing.
+    @djunct_ssw_intermed_edge_imgs
+    
+    Helper script to generate intermediate edge images for SSW-related
+    processing.
     
     Author: AFNI Developers
     
@@ -260,7 +263,10 @@ def v__djunct_ssw_intermed_edge_imgs(
     runner: Runner | None = None,
 ) -> VDjunctSswIntermedEdgeImgsOutputs:
     """
-    Helper script to generate intermediate edge images for SSW-related processing.
+    @djunct_ssw_intermed_edge_imgs
+    
+    Helper script to generate intermediate edge images for SSW-related
+    processing.
     
     Author: AFNI Developers
     

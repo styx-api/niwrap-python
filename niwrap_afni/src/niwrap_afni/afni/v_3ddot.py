@@ -221,6 +221,8 @@ def v_3ddot_execute(
     runner: Runner | None = None,
 ) -> V3ddotOutputs:
     """
+    3ddot
+    
     Computes correlation coefficients between sub-brick pairs.
     
     Author: AFNI Developers
@@ -261,6 +263,8 @@ def v_3ddot(
     runner: Runner | None = None,
 ) -> V3ddotOutputs:
     """
+    3ddot
+    
     Computes correlation coefficients between sub-brick pairs.
     
     Author: AFNI Developers

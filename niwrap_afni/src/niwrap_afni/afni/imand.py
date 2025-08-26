@@ -140,8 +140,10 @@ def imand_execute(
     runner: Runner | None = None,
 ) -> ImandOutputs:
     """
-    Image AND operation tool. Only pixels nonzero in all input images (and above the
-    threshold, if given) will be output.
+    imand
+    
+    Image AND operation tool. Only pixels nonzero in all input images (and above
+    the threshold, if given) will be output.
     
     Author: AFNI Developers
     
@@ -169,8 +171,10 @@ def imand(
     runner: Runner | None = None,
 ) -> ImandOutputs:
     """
-    Image AND operation tool. Only pixels nonzero in all input images (and above the
-    threshold, if given) will be output.
+    imand
+    
+    Image AND operation tool. Only pixels nonzero in all input images (and above
+    the threshold, if given) will be output.
     
     Author: AFNI Developers
     

@@ -183,6 +183,8 @@ def metric_rois_from_extrema_execute(
     runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
+    metric-rois-from-extrema
+    
     Create metric roi maps from extrema maps.
     
     For each nonzero value in each map, make a map with an ROI around that
@@ -225,6 +227,8 @@ def metric_rois_from_extrema(
     runner: Runner | None = None,
 ) -> MetricRoisFromExtremaOutputs:
     """
+    metric-rois-from-extrema
+    
     Create metric roi maps from extrema maps.
     
     For each nonzero value in each map, make a map with an ROI around that

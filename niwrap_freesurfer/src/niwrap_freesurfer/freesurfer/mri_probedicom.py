@@ -143,6 +143,8 @@ def mri_probedicom_execute(
     runner: Runner | None = None,
 ) -> MriProbedicomOutputs:
     """
+    mri_probedicom
+    
     Utility to probe DICOM files for information.
     
     Author: FreeSurfer Developers
@@ -171,6 +173,8 @@ def mri_probedicom(
     runner: Runner | None = None,
 ) -> MriProbedicomOutputs:
     """
+    mri_probedicom
+    
     Utility to probe DICOM files for information.
     
     Author: FreeSurfer Developers

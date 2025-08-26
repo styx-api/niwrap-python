@@ -123,6 +123,8 @@ def v__is_oblique_execute(
     runner: Runner | None = None,
 ) -> VIsObliqueOutputs:
     """
+    @isOblique
+    
     Determine if a file is oblique or plumb.
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def v__is_oblique(
     runner: Runner | None = None,
 ) -> VIsObliqueOutputs:
     """
+    @isOblique
+    
     Determine if a file is oblique or plumb.
     
     Author: AFNI Developers

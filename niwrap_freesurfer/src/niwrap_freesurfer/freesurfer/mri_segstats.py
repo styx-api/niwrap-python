@@ -651,6 +651,8 @@ def mri_segstats_execute(
     runner: Runner | None = None,
 ) -> MriSegstatsOutputs:
     """
+    mri_segstats
+    
     Calculates measures and stats derived from brain segmentation data.
     
     Author: FreeSurfer Developers
@@ -736,6 +738,8 @@ def mri_segstats(
     runner: Runner | None = None,
 ) -> MriSegstatsOutputs:
     """
+    mri_segstats
+    
     Calculates measures and stats derived from brain segmentation data.
     
     Author: FreeSurfer Developers

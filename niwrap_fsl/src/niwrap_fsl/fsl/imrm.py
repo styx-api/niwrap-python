@@ -120,6 +120,8 @@ def imrm_execute(
     runner: Runner | None = None,
 ) -> ImrmOutputs:
     """
+    imrm
+    
     Remove specified image files.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -146,6 +148,8 @@ def imrm(
     runner: Runner | None = None,
 ) -> ImrmOutputs:
     """
+    imrm
+    
     Remove specified image files.
     
     Author: FMRIB Analysis Group, University of Oxford

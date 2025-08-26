@@ -128,6 +128,8 @@ def fslval_execute(
     runner: Runner | None = None,
 ) -> FslvalOutputs:
     """
+    fslval
+    
     Tool for printing out header information from NIfTI image files.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def fslval(
     runner: Runner | None = None,
 ) -> FslvalOutputs:
     """
+    fslval
+    
     Tool for printing out header information from NIfTI image files.
     
     Author: FMRIB Analysis Group, University of Oxford

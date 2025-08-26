@@ -185,7 +185,10 @@ def mri_make_uchar_execute(
     runner: Runner | None = None,
 ) -> MriMakeUcharOutputs:
     """
-    Tool to adjust intensity of brain MRI images using a Talairach transformation.
+    mri_make_uchar
+    
+    Tool to adjust intensity of brain MRI images using a Talairach
+    transformation.
     
     Author: FreeSurfer Developers
     
@@ -218,7 +221,10 @@ def mri_make_uchar(
     runner: Runner | None = None,
 ) -> MriMakeUcharOutputs:
     """
-    Tool to adjust intensity of brain MRI images using a Talairach transformation.
+    mri_make_uchar
+    
+    Tool to adjust intensity of brain MRI images using a Talairach
+    transformation.
     
     Author: FreeSurfer Developers
     

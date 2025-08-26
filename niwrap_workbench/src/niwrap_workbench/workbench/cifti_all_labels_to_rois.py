@@ -134,6 +134,8 @@ def cifti_all_labels_to_rois_execute(
     runner: Runner | None = None,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
+    cifti-all-labels-to-rois
+    
     Make rois from all labels in a cifti label map.
     
     The output cifti file is a dscalar file with a column (map) for each label
@@ -169,6 +171,8 @@ def cifti_all_labels_to_rois(
     runner: Runner | None = None,
 ) -> CiftiAllLabelsToRoisOutputs:
     """
+    cifti-all-labels-to-rois
+    
     Make rois from all labels in a cifti label map.
     
     The output cifti file is a dscalar file with a column (map) for each label

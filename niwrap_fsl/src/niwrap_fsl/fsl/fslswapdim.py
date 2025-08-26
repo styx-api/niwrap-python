@@ -146,6 +146,8 @@ def fslswapdim_execute(
     runner: Runner | None = None,
 ) -> FslswapdimOutputs:
     """
+    fslswapdim
+    
     Swap dimensions of an image volume.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -176,6 +178,8 @@ def fslswapdim(
     runner: Runner | None = None,
 ) -> FslswapdimOutputs:
     """
+    fslswapdim
+    
     Swap dimensions of an image volume.
     
     Author: FMRIB Analysis Group, University of Oxford

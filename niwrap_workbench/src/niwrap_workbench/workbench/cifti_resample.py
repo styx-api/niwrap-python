@@ -1096,6 +1096,8 @@ def cifti_resample_execute(
     runner: Runner | None = None,
 ) -> CiftiResampleOutputs:
     """
+    cifti-resample
+    
     Resample a cifti file to a new cifti space.
     
     Resample cifti data to a different brainordinate space. Use COLUMN for the
@@ -1169,6 +1171,8 @@ def cifti_resample(
     runner: Runner | None = None,
 ) -> CiftiResampleOutputs:
     """
+    cifti-resample
+    
     Resample a cifti file to a new cifti space.
     
     Resample cifti data to a different brainordinate space. Use COLUMN for the

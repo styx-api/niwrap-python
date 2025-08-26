@@ -144,6 +144,8 @@ def sratio_execute(
     runner: Runner | None = None,
 ) -> SratioOutputs:
     """
+    sratio
+    
     Tool to compute ratio A/B if A>B, -B/A if B>A, with options for absolute
     computation and threshold masking.
     
@@ -174,6 +176,8 @@ def sratio(
     runner: Runner | None = None,
 ) -> SratioOutputs:
     """
+    sratio
+    
     Tool to compute ratio A/B if A>B, -B/A if B>A, with options for absolute
     computation and threshold masking.
     

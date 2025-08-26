@@ -243,6 +243,8 @@ def ccops_execute(
     runner: Runner | None = None,
 ) -> CcopsOutputs:
     """
+    ccops
+    
     ccops - Clustering of Connectomes Using Probabilistic Tractography.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -282,6 +284,8 @@ def ccops(
     runner: Runner | None = None,
 ) -> CcopsOutputs:
     """
+    ccops
+    
     ccops - Clustering of Connectomes Using Probabilistic Tractography.
     
     Author: FMRIB Analysis Group, University of Oxford

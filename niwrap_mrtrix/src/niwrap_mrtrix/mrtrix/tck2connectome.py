@@ -390,6 +390,8 @@ def tck2connectome_execute(
     runner: Runner | None = None,
 ) -> Tck2connectomeOutputs:
     """
+    tck2connectome
+    
     Generate a connectome matrix from a streamlines file and a node parcellation
     image.
     
@@ -457,6 +459,8 @@ def tck2connectome(
     runner: Runner | None = None,
 ) -> Tck2connectomeOutputs:
     """
+    tck2connectome
+    
     Generate a connectome matrix from a streamlines file and a node parcellation
     image.
     

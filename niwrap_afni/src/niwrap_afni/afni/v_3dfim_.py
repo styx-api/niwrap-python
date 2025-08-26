@@ -251,8 +251,10 @@ def v_3dfim__execute(
     runner: Runner | None = None,
 ) -> V3dfimOutputs:
     """
-    Program to calculate the cross-correlation of an ideal reference waveform with
-    the measured FMRI time series for each voxel.
+    3dfim+
+    
+    Program to calculate the cross-correlation of an ideal reference waveform
+    with the measured FMRI time series for each voxel.
     
     Author: AFNI Developers
     
@@ -289,8 +291,10 @@ def v_3dfim_(
     runner: Runner | None = None,
 ) -> V3dfimOutputs:
     """
-    Program to calculate the cross-correlation of an ideal reference waveform with
-    the measured FMRI time series for each voxel.
+    3dfim+
+    
+    Program to calculate the cross-correlation of an ideal reference waveform
+    with the measured FMRI time series for each voxel.
     
     Author: AFNI Developers
     

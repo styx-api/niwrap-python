@@ -157,10 +157,12 @@ def super_resolution_execute(
     runner: Runner | None = None,
 ) -> SuperResolutionOutputs:
     """
-    The SuperResolution tool enhances the spatial resolution of input images. The
-    'gradientSigma' parameter is used in calculating the gradient magnitude of the
-    input images for weighting the voxel points during fitting. If a negative
-    'gradient' sigma is specified then no weighting is used.
+    SuperResolution
+    
+    The SuperResolution tool enhances the spatial resolution of input images.
+    The 'gradientSigma' parameter is used in calculating the gradient magnitude
+    of the input images for weighting the voxel points during fitting. If a
+    negative 'gradient' sigma is specified then no weighting is used.
     
     Author: ANTs Developers
     
@@ -192,10 +194,12 @@ def super_resolution(
     runner: Runner | None = None,
 ) -> SuperResolutionOutputs:
     """
-    The SuperResolution tool enhances the spatial resolution of input images. The
-    'gradientSigma' parameter is used in calculating the gradient magnitude of the
-    input images for weighting the voxel points during fitting. If a negative
-    'gradient' sigma is specified then no weighting is used.
+    SuperResolution
+    
+    The SuperResolution tool enhances the spatial resolution of input images.
+    The 'gradientSigma' parameter is used in calculating the gradient magnitude
+    of the input images for weighting the voxel points during fitting. If a
+    negative 'gradient' sigma is specified then no weighting is used.
     
     Author: ANTs Developers
     

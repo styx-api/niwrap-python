@@ -251,6 +251,8 @@ def dirflip_execute(
     runner: Runner | None = None,
 ) -> DirflipOutputs:
     """
+    dirflip
+    
     Invert the polarity of individual directions so as to optimise a unipolar
     electrostatic repulsion model.
     
@@ -297,6 +299,8 @@ def dirflip(
     runner: Runner | None = None,
 ) -> DirflipOutputs:
     """
+    dirflip
+    
     Invert the polarity of individual directions so as to optimise a unipolar
     electrostatic repulsion model.
     

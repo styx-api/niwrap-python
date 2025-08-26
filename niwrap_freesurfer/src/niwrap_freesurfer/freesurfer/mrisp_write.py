@@ -208,6 +208,8 @@ def mrisp_write_execute(
     runner: Runner | None = None,
 ) -> MrispWriteOutputs:
     """
+    mrisp_write
+    
     This tool converts a surface overlay on a sphere into spherical coordinates.
     
     Author: FreeSurfer Developers
@@ -244,6 +246,8 @@ def mrisp_write(
     runner: Runner | None = None,
 ) -> MrispWriteOutputs:
     """
+    mrisp_write
+    
     This tool converts a surface overlay on a sphere into spherical coordinates.
     
     Author: FreeSurfer Developers

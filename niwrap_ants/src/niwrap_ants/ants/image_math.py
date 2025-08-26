@@ -147,8 +147,10 @@ def image_math_execute(
     runner: Runner | None = None,
 ) -> ImageMathOutputs:
     """
-    A versatile tool for performing various mathematical and manipulation operations
-    on images.
+    ImageMath
+    
+    A versatile tool for performing various mathematical and manipulation
+    operations on images.
     
     Author: ANTs Developers
     
@@ -178,8 +180,10 @@ def image_math(
     runner: Runner | None = None,
 ) -> ImageMathOutputs:
     """
-    A versatile tool for performing various mathematical and manipulation operations
-    on images.
+    ImageMath
+    
+    A versatile tool for performing various mathematical and manipulation
+    operations on images.
     
     Author: ANTs Developers
     

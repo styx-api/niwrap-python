@@ -279,6 +279,8 @@ def scene_file_merge_execute(
     runner: Runner | None = None,
 ) -> SceneFileMergeOutputs:
     """
+    scene-file-merge
+    
     Rearrange scenes into a new file.
     
     Takes one or more scene files and constructs a new scene file by
@@ -315,6 +317,8 @@ def scene_file_merge(
     runner: Runner | None = None,
 ) -> SceneFileMergeOutputs:
     """
+    scene-file-merge
+    
     Rearrange scenes into a new file.
     
     Takes one or more scene files and constructs a new scene file by

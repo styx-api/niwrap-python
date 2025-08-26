@@ -381,6 +381,8 @@ def mideface_execute(
     runner: Runner | None = None,
 ) -> MidefaceOutputs:
     """
+    mideface
+    
     Minimally invasive defacing tool.
     
     Author: FreeSurfer Developers
@@ -436,6 +438,8 @@ def mideface(
     runner: Runner | None = None,
 ) -> MidefaceOutputs:
     """
+    mideface
+    
     Minimally invasive defacing tool.
     
     Author: FreeSurfer Developers

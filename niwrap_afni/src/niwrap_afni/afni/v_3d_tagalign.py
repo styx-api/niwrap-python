@@ -236,6 +236,8 @@ def v_3d_tagalign_execute(
     runner: Runner | None = None,
 ) -> V3dTagalignOutputs:
     """
+    3dTagalign
+    
     Rotates/translates dataset 'dset' to be aligned with the master using the
     tagsets embedded in their .HEAD files.
     
@@ -277,6 +279,8 @@ def v_3d_tagalign(
     runner: Runner | None = None,
 ) -> V3dTagalignOutputs:
     """
+    3dTagalign
+    
     Rotates/translates dataset 'dset' to be aligned with the master using the
     tagsets embedded in their .HEAD files.
     

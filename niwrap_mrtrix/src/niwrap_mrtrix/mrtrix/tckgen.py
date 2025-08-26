@@ -1405,6 +1405,8 @@ def tckgen_execute(
     runner: Runner | None = None,
 ) -> TckgenOutputs:
     """
+    tckgen
+    
     Perform streamlines tractography.
     
     By default, tckgen produces a fixed number of streamlines, by attempting to
@@ -1610,6 +1612,8 @@ def tckgen(
     runner: Runner | None = None,
 ) -> TckgenOutputs:
     """
+    tckgen
+    
     Perform streamlines tractography.
     
     By default, tckgen produces a fixed number of streamlines, by attempting to

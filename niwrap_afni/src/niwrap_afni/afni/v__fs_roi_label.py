@@ -206,6 +206,8 @@ def v__fs_roi_label_execute(
     runner: Runner | None = None,
 ) -> VFsRoiLabelOutputs:
     """
+    @FS_roi_label
+    
     Tool to get labels associated with FreeSurfer's parcellation and annotation
     files.
     
@@ -241,6 +243,8 @@ def v__fs_roi_label(
     runner: Runner | None = None,
 ) -> VFsRoiLabelOutputs:
     """
+    @FS_roi_label
+    
     Tool to get labels associated with FreeSurfer's parcellation and annotation
     files.
     

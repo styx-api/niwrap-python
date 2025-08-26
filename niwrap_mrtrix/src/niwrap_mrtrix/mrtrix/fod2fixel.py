@@ -361,6 +361,8 @@ def fod2fixel_execute(
     runner: Runner | None = None,
 ) -> Fod2fixelOutputs:
     """
+    fod2fixel
+    
     Perform segmentation of continuous Fibre Orientation Distributions (FODs) to
     produce discrete fixels.
     
@@ -423,6 +425,8 @@ def fod2fixel(
     runner: Runner | None = None,
 ) -> Fod2fixelOutputs:
     """
+    fod2fixel
+    
     Perform segmentation of continuous Fibre Orientation Distributions (FODs) to
     produce discrete fixels.
     

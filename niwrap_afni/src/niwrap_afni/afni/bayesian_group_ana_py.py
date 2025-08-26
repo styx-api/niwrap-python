@@ -242,6 +242,8 @@ def bayesian_group_ana_py_execute(
     runner: Runner | None = None,
 ) -> BayesianGroupAnaPyOutputs:
     """
+    BayesianGroupAna.py
+    
     This program conducts Bayesian Group Analysis (BGA) on a list of regions of
     interest (ROIs). Compared to the conventional univariate GLM, BGA pools and
     shares the information across the ROIs in a multilevel system.
@@ -283,6 +285,8 @@ def bayesian_group_ana_py(
     runner: Runner | None = None,
 ) -> BayesianGroupAnaPyOutputs:
     """
+    BayesianGroupAna.py
+    
     This program conducts Bayesian Group Analysis (BGA) on a list of regions of
     interest (ROIs). Compared to the conventional univariate GLM, BGA pools and
     shares the information across the ROIs in a multilevel system.

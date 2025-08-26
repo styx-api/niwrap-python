@@ -134,6 +134,8 @@ def hiam_register_execute(
     runner: Runner | None = None,
 ) -> HiamRegisterOutputs:
     """
+    hiam_register
+    
     This program registers a surface with an average surface.
     
     Author: FreeSurfer Developers
@@ -162,6 +164,8 @@ def hiam_register(
     runner: Runner | None = None,
 ) -> HiamRegisterOutputs:
     """
+    hiam_register
+    
     This program registers a surface with an average surface.
     
     Author: FreeSurfer Developers

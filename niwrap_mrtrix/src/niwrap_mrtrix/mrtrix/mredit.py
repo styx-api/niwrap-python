@@ -421,6 +421,8 @@ def mredit_execute(
     runner: Runner | None = None,
 ) -> MreditOutputs:
     """
+    mredit
+    
     Directly edit the intensities within an image from the command-line.
     
     A range of options are provided to enable direct editing of voxel
@@ -470,6 +472,8 @@ def mredit(
     runner: Runner | None = None,
 ) -> MreditOutputs:
     """
+    mredit
+    
     Directly edit the intensities within an image from the command-line.
     
     A range of options are provided to enable direct editing of voxel

@@ -246,6 +246,8 @@ def gems_compute_atlas_probs_execute(
     runner: Runner | None = None,
 ) -> GemsComputeAtlasProbsOutputs:
     """
+    gems_compute_atlas_probs
+    
     Tool to compute atlas probabilities using SAMSEG results.
     
     Author: FreeSurfer Developers
@@ -287,6 +289,8 @@ def gems_compute_atlas_probs(
     runner: Runner | None = None,
 ) -> GemsComputeAtlasProbsOutputs:
     """
+    gems_compute_atlas_probs
+    
     Tool to compute atlas probabilities using SAMSEG results.
     
     Author: FreeSurfer Developers

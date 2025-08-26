@@ -1141,6 +1141,8 @@ def dwi2response_execute(
     runner: Runner | None = None,
 ) -> Dwi2responseOutputs:
     """
+    dwi2response
+    
     Estimate response function(s) for spherical deconvolution.
     dwi2response offers different algorithms for performing various types of
     response function estimation. The name of the algorithm must appear as the
@@ -1191,6 +1193,8 @@ def dwi2response(
     runner: Runner | None = None,
 ) -> Dwi2responseOutputs:
     """
+    dwi2response
+    
     Estimate response function(s) for spherical deconvolution.
     dwi2response offers different algorithms for performing various types of
     response function estimation. The name of the algorithm must appear as the

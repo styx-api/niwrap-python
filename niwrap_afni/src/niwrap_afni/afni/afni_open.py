@@ -208,6 +208,8 @@ def afni_open_execute(
     runner: Runner | None = None,
 ) -> AfniOpenOutputs:
     """
+    afni_open
+    
     A program to open various AFNI/SUMA files.
     
     Author: AFNI Developers
@@ -248,6 +250,8 @@ def afni_open(
     runner: Runner | None = None,
 ) -> AfniOpenOutputs:
     """
+    afni_open
+    
     A program to open various AFNI/SUMA files.
     
     Author: AFNI Developers

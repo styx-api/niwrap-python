@@ -158,6 +158,8 @@ def v_4dfptoanalyze_execute(
     runner: Runner | None = None,
 ) -> V4dfptoanalyzeOutputs:
     """
+    4dfptoanalyze
+    
     Converts 4dfp formatted files to Analyze format.
     
     Author: FreeSurfer Developers
@@ -188,6 +190,8 @@ def v_4dfptoanalyze(
     runner: Runner | None = None,
 ) -> V4dfptoanalyzeOutputs:
     """
+    4dfptoanalyze
+    
     Converts 4dfp formatted files to Analyze format.
     
     Author: FreeSurfer Developers

@@ -123,6 +123,8 @@ def v__get_afni_dims_execute(
     runner: Runner | None = None,
 ) -> VGetAfniDimsOutputs:
     """
+    @GetAfniDims
+    
     A utility tool to return dimensions of AFNI dataset.
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def v__get_afni_dims(
     runner: Runner | None = None,
 ) -> VGetAfniDimsOutputs:
     """
+    @GetAfniDims
+    
     A utility tool to return dimensions of AFNI dataset.
     
     Author: AFNI Developers

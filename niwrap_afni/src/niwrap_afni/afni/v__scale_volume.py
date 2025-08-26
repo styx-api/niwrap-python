@@ -177,6 +177,8 @@ def v__scale_volume_execute(
     runner: Runner | None = None,
 ) -> VScaleVolumeOutputs:
     """
+    @ScaleVolume
+    
     A tool to scale the volume of datasets.
     
     Author: AFNI Developers
@@ -210,6 +212,8 @@ def v__scale_volume(
     runner: Runner | None = None,
 ) -> VScaleVolumeOutputs:
     """
+    @ScaleVolume
+    
     A tool to scale the volume of datasets.
     
     Author: AFNI Developers

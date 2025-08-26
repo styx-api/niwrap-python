@@ -299,6 +299,8 @@ def mrmetric_execute(
     runner: Runner | None = None,
 ) -> MrmetricOutputs:
     """
+    mrmetric
+    
     Computes a dissimilarity metric between two images.
     
     Currently only the mean squared difference is fully implemented.
@@ -347,6 +349,8 @@ def mrmetric(
     runner: Runner | None = None,
 ) -> MrmetricOutputs:
     """
+    mrmetric
+    
     Computes a dissimilarity metric between two images.
     
     Currently only the mean squared difference is fully implemented.

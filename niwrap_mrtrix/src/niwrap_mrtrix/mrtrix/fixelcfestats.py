@@ -604,6 +604,8 @@ def fixelcfestats_execute(
     runner: Runner | None = None,
 ) -> FixelcfestatsOutputs:
     """
+    fixelcfestats
+    
     Fixel-based analysis using connectivity-based fixel enhancement and
     non-parametric permutation testing.
     
@@ -708,6 +710,8 @@ def fixelcfestats(
     runner: Runner | None = None,
 ) -> FixelcfestatsOutputs:
     """
+    fixelcfestats
+    
     Fixel-based analysis using connectivity-based fixel enhancement and
     non-parametric permutation testing.
     

@@ -133,6 +133,8 @@ def mri_rigid_register_execute(
     runner: Runner | None = None,
 ) -> MriRigidRegisterOutputs:
     """
+    mri_rigid_register
+    
     Rigid registration tool for MRI volumes.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_rigid_register(
     runner: Runner | None = None,
 ) -> MriRigidRegisterOutputs:
     """
+    mri_rigid_register
+    
     Rigid registration tool for MRI volumes.
     
     Author: FreeSurfer Developers

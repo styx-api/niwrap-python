@@ -184,6 +184,8 @@ def annotation_resample_execute(
     runner: Runner | None = None,
 ) -> AnnotationResampleOutputs:
     """
+    annotation-resample
+    
     Resample an annotation file to different meshes.
     
     Resample an annotation file from the source mesh to the target mesh.
@@ -218,6 +220,8 @@ def annotation_resample(
     runner: Runner | None = None,
 ) -> AnnotationResampleOutputs:
     """
+    annotation-resample
+    
     Resample an annotation file to different meshes.
     
     Resample an annotation file from the source mesh to the target mesh.

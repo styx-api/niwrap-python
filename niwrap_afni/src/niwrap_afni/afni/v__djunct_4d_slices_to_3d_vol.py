@@ -124,6 +124,8 @@ def v__djunct_4d_slices_to_3d_vol_execute(
     runner: Runner | None = None,
 ) -> VDjunct4dSlicesTo3dVolOutputs:
     """
+    @djunct_4d_slices_to_3d_vol
+    
     Tool description goes here.
     
     Author: AFNI Developers
@@ -150,6 +152,8 @@ def v__djunct_4d_slices_to_3d_vol(
     runner: Runner | None = None,
 ) -> VDjunct4dSlicesTo3dVolOutputs:
     """
+    @djunct_4d_slices_to_3d_vol
+    
     Tool description goes here.
     
     Author: AFNI Developers

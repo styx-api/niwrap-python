@@ -400,6 +400,8 @@ def gdcmconv_fs_execute(
     runner: Runner | None = None,
 ) -> GdcmconvFsOutputs:
     """
+    gdcmconv.fs
+    
     Convert a DICOM file into another DICOM file.
     
     Author: FreeSurfer Developers
@@ -465,6 +467,8 @@ def gdcmconv_fs(
     runner: Runner | None = None,
 ) -> GdcmconvFsOutputs:
     """
+    gdcmconv.fs
+    
     Convert a DICOM file into another DICOM file.
     
     Author: FreeSurfer Developers

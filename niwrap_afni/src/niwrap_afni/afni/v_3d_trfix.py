@@ -167,6 +167,8 @@ def v_3d_trfix_execute(
     runner: Runner | None = None,
 ) -> V3dTrfixOutputs:
     """
+    3dTRfix
+    
     Re-sample dataset with irregular time grid to regular time grid via linear
     interpolation.
     
@@ -198,6 +200,8 @@ def v_3d_trfix(
     runner: Runner | None = None,
 ) -> V3dTrfixOutputs:
     """
+    3dTRfix
+    
     Re-sample dataset with irregular time grid to regular time grid via linear
     interpolation.
     

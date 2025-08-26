@@ -160,6 +160,8 @@ def flip_4dfp_execute(
     runner: Runner | None = None,
 ) -> Flip4dfpOutputs:
     """
+    flip_4dfp
+    
     A tool to flip 4dfp images along specified axes.
     
     Author: FreeSurfer Developers
@@ -191,6 +193,8 @@ def flip_4dfp(
     runner: Runner | None = None,
 ) -> Flip4dfpOutputs:
     """
+    flip_4dfp
+    
     A tool to flip 4dfp images along specified axes.
     
     Author: FreeSurfer Developers

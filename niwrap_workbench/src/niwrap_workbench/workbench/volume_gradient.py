@@ -223,6 +223,8 @@ def volume_gradient_execute(
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
+    volume-gradient
+    
     Gradient of a volume file.
     
     Computes the gradient of the volume by doing linear regressions for each
@@ -261,6 +263,8 @@ def volume_gradient(
     runner: Runner | None = None,
 ) -> VolumeGradientOutputs:
     """
+    volume-gradient
+    
     Gradient of a volume file.
     
     Computes the gradient of the volume by doing linear regressions for each

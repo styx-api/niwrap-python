@@ -135,6 +135,8 @@ def mris_profile_clustering_execute(
     runner: Runner | None = None,
 ) -> MrisProfileClusteringOutputs:
     """
+    mris_profileClustering
+    
     A tool from Freesurfer for clustering based on profile data.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def mris_profile_clustering(
     runner: Runner | None = None,
 ) -> MrisProfileClusteringOutputs:
     """
+    mris_profileClustering
+    
     A tool from Freesurfer for clustering based on profile data.
     
     Author: FreeSurfer Developers

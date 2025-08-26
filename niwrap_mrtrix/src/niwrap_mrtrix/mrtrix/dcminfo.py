@@ -305,6 +305,8 @@ def dcminfo_execute(
     runner: Runner | None = None,
 ) -> DcminfoOutputs:
     """
+    dcminfo
+    
     Output DICOM fields in human-readable format.
     
     
@@ -349,6 +351,8 @@ def dcminfo(
     runner: Runner | None = None,
 ) -> DcminfoOutputs:
     """
+    dcminfo
+    
     Output DICOM fields in human-readable format.
     
     

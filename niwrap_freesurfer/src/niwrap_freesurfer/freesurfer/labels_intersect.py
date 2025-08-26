@@ -133,6 +133,8 @@ def labels_intersect_execute(
     runner: Runner | None = None,
 ) -> LabelsIntersectOutputs:
     """
+    labels_intersect
+    
     Tool to find the intersection of two label files.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def labels_intersect(
     runner: Runner | None = None,
 ) -> LabelsIntersectOutputs:
     """
+    labels_intersect
+    
     Tool to find the intersection of two label files.
     
     Author: FreeSurfer Developers

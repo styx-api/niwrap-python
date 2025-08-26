@@ -131,8 +131,11 @@ def make_average_subcort_execute(
     runner: Runner | None = None,
 ) -> MakeAverageSubcortOutputs:
     """
-    This creates an average subcortical mask for the given input subjects, intended
-    for use in subcortical analysis in FSFAST to exclude cortical voxels.
+    make_average_subcort
+    
+    This creates an average subcortical mask for the given input subjects,
+    intended for use in subcortical analysis in FSFAST to exclude cortical
+    voxels.
     
     Author: FreeSurfer Developers
     
@@ -159,8 +162,11 @@ def make_average_subcort(
     runner: Runner | None = None,
 ) -> MakeAverageSubcortOutputs:
     """
-    This creates an average subcortical mask for the given input subjects, intended
-    for use in subcortical analysis in FSFAST to exclude cortical voxels.
+    make_average_subcort
+    
+    This creates an average subcortical mask for the given input subjects,
+    intended for use in subcortical analysis in FSFAST to exclude cortical
+    voxels.
     
     Author: FreeSurfer Developers
     

@@ -171,6 +171,8 @@ def xcorr_execute(
     runner: Runner | None = None,
 ) -> XcorrOutputs:
     """
+    xcorr
+    
     Computes the voxel-for-voxel correlation coefficient between two volumes.
     
     Author: FreeSurfer Developers
@@ -202,6 +204,8 @@ def xcorr(
     runner: Runner | None = None,
 ) -> XcorrOutputs:
     """
+    xcorr
+    
     Computes the voxel-for-voxel correlation coefficient between two volumes.
     
     Author: FreeSurfer Developers

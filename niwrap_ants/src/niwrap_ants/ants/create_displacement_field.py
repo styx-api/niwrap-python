@@ -144,13 +144,15 @@ def create_displacement_field_execute(
     runner: Runner | None = None,
 ) -> CreateDisplacementFieldOutputs:
     """
+    CreateDisplacementField
+    
     Create an itkImage of itkVector pixels (NOT an itkVectorImage), using each
     scalar input component image for each vector component. An itkImage of
-    itkVectors is the standard type for displacement fields in ITK. All component
-    images (up to 8) are assumed to have the same size, offset, origin, and spacing.
-    The 'EnforceZeroBoundaryFlag' option will create zero-valued vectors along the
-    borders when enabled (pass 1), and is recommended for better displacement field
-    behavior.
+    itkVectors is the standard type for displacement fields in ITK. All
+    component images (up to 8) are assumed to have the same size, offset,
+    origin, and spacing. The 'EnforceZeroBoundaryFlag' option will create
+    zero-valued vectors along the borders when enabled (pass 1), and is
+    recommended for better displacement field behavior.
     
     Author: ANTs Developers
     
@@ -179,13 +181,15 @@ def create_displacement_field(
     runner: Runner | None = None,
 ) -> CreateDisplacementFieldOutputs:
     """
+    CreateDisplacementField
+    
     Create an itkImage of itkVector pixels (NOT an itkVectorImage), using each
     scalar input component image for each vector component. An itkImage of
-    itkVectors is the standard type for displacement fields in ITK. All component
-    images (up to 8) are assumed to have the same size, offset, origin, and spacing.
-    The 'EnforceZeroBoundaryFlag' option will create zero-valued vectors along the
-    borders when enabled (pass 1), and is recommended for better displacement field
-    behavior.
+    itkVectors is the standard type for displacement fields in ITK. All
+    component images (up to 8) are assumed to have the same size, offset,
+    origin, and spacing. The 'EnforceZeroBoundaryFlag' option will create
+    zero-valued vectors along the borders when enabled (pass 1), and is
+    recommended for better displacement field behavior.
     
     Author: ANTs Developers
     

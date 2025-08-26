@@ -138,6 +138,8 @@ def dmri_group_by_endpoints_execute(
     runner: Runner | None = None,
 ) -> DmriGroupByEndpointsOutputs:
     """
+    dmri_groupByEndpoints
+    
     A tool to group streamlines by their endpoints using diffusion MRI data.
     
     Author: FreeSurfer Developers
@@ -166,6 +168,8 @@ def dmri_group_by_endpoints(
     runner: Runner | None = None,
 ) -> DmriGroupByEndpointsOutputs:
     """
+    dmri_groupByEndpoints
+    
     A tool to group streamlines by their endpoints using diffusion MRI data.
     
     Author: FreeSurfer Developers

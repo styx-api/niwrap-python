@@ -212,6 +212,8 @@ def gen_epi_review_py_execute(
     runner: Runner | None = None,
 ) -> GenEpiReviewPyOutputs:
     """
+    gen_epi_review.py
+    
     Generate an AFNI processing script to review EPI data.
     
     Author: AFNI Developers
@@ -247,6 +249,8 @@ def gen_epi_review_py(
     runner: Runner | None = None,
 ) -> GenEpiReviewPyOutputs:
     """
+    gen_epi_review.py
+    
     Generate an AFNI processing script to review EPI data.
     
     Author: AFNI Developers

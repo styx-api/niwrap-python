@@ -136,6 +136,8 @@ def bianca_cluster_stats_execute(
     runner: Runner | None = None,
 ) -> BiancaClusterStatsOutputs:
     """
+    bianca_cluster_stats
+    
     Calculate number of clusters and WMH volume in a BIANCA output map.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -165,6 +167,8 @@ def bianca_cluster_stats(
     runner: Runner | None = None,
 ) -> BiancaClusterStatsOutputs:
     """
+    bianca_cluster_stats
+    
     Calculate number of clusters and WMH volume in a BIANCA output map.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -199,6 +199,8 @@ def betsurf_execute(
     runner: Runner | None = None,
 ) -> BetsurfOutputs:
     """
+    betsurf
+    
     BET Surface Finder to extract brain surfaces using T1 and T2 images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -236,6 +238,8 @@ def betsurf(
     runner: Runner | None = None,
 ) -> BetsurfOutputs:
     """
+    betsurf
+    
     BET Surface Finder to extract brain surfaces using T1 and T2 images.
     
     Author: FMRIB Analysis Group, University of Oxford

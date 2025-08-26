@@ -183,6 +183,8 @@ def v_3d_local_svd_execute(
     runner: Runner | None = None,
 ) -> V3dLocalSvdOutputs:
     """
+    3dLocalSVD
+    
     Computes the SVD of time series from a neighborhood of each voxel.
     
     Author: AFNI Developers
@@ -216,6 +218,8 @@ def v_3d_local_svd(
     runner: Runner | None = None,
 ) -> V3dLocalSvdOutputs:
     """
+    3dLocalSVD
+    
     Computes the SVD of time series from a neighborhood of each voxel.
     
     Author: AFNI Developers

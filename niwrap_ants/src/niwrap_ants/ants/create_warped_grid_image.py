@@ -154,6 +154,8 @@ def create_warped_grid_image_execute(
     runner: Runner | None = None,
 ) -> CreateWarpedGridImageOutputs:
     """
+    CreateWarpedGridImage
+    
     Create a warped grid image based on the specified deformation field.
     
     Author: ANTs Developers
@@ -185,6 +187,8 @@ def create_warped_grid_image(
     runner: Runner | None = None,
 ) -> CreateWarpedGridImageOutputs:
     """
+    CreateWarpedGridImage
+    
     Create a warped grid image based on the specified deformation field.
     
     Author: ANTs Developers

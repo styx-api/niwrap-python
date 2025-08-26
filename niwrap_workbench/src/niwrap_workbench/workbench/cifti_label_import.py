@@ -159,6 +159,8 @@ def cifti_label_import_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelImportOutputs:
     """
+    cifti-label-import
+    
     Make a cifti label file from a cifti file.
     
     Creates a cifti label file from a cifti file with label-like values. You may
@@ -214,6 +216,8 @@ def cifti_label_import(
     runner: Runner | None = None,
 ) -> CiftiLabelImportOutputs:
     """
+    cifti-label-import
+    
     Make a cifti label file from a cifti file.
     
     Creates a cifti label file from a cifti file with label-like values. You may

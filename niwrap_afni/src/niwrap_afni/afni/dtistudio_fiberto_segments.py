@@ -139,6 +139,8 @@ def dtistudio_fiberto_segments_execute(
     runner: Runner | None = None,
 ) -> DtistudioFibertoSegmentsOutputs:
     """
+    DTIStudioFibertoSegments
+    
     Convert a DTIStudio Fiber file to a SUMA segment file.
     
     Author: AFNI Developers
@@ -167,6 +169,8 @@ def dtistudio_fiberto_segments(
     runner: Runner | None = None,
 ) -> DtistudioFibertoSegmentsOutputs:
     """
+    DTIStudioFibertoSegments
+    
     Convert a DTIStudio Fiber file to a SUMA segment file.
     
     Author: AFNI Developers

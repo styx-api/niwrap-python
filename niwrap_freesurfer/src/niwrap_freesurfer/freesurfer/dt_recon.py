@@ -277,6 +277,8 @@ def dt_recon_execute(
     runner: Runner | None = None,
 ) -> DtReconOutputs:
     """
+    dt_recon
+    
     Performs DTI reconstruction from the raw DWI input files.
     
     Author: FreeSurfer Developers
@@ -320,6 +322,8 @@ def dt_recon(
     runner: Runner | None = None,
 ) -> DtReconOutputs:
     """
+    dt_recon
+    
     Performs DTI reconstruction from the raw DWI input files.
     
     Author: FreeSurfer Developers

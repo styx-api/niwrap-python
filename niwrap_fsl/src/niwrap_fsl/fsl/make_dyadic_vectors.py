@@ -148,6 +148,8 @@ def make_dyadic_vectors_execute(
     runner: Runner | None = None,
 ) -> MakeDyadicVectorsOutputs:
     """
+    make_dyadic_vectors
+    
     Generate dyadic vectors from theta and phi volumes.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -178,6 +180,8 @@ def make_dyadic_vectors(
     runner: Runner | None = None,
 ) -> MakeDyadicVectorsOutputs:
     """
+    make_dyadic_vectors
+    
     Generate dyadic vectors from theta and phi volumes.
     
     Author: FMRIB Analysis Group, University of Oxford

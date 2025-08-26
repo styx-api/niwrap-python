@@ -144,6 +144,8 @@ def label_mask_execute(
     runner: Runner | None = None,
 ) -> LabelMaskOutputs:
     """
+    label-mask
+    
     Mask a label file.
     
     By default, the output label is a copy of the input label, but with the
@@ -178,6 +180,8 @@ def label_mask(
     runner: Runner | None = None,
 ) -> LabelMaskOutputs:
     """
+    label-mask
+    
     Mask a label file.
     
     By default, the output label is a copy of the input label, but with the

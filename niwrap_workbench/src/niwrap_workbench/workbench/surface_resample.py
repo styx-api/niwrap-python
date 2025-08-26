@@ -266,6 +266,8 @@ def surface_resample_execute(
     runner: Runner | None = None,
 ) -> SurfaceResampleOutputs:
     """
+    surface-resample
+    
     Resample a surface to a different mesh.
     
     Resamples a surface file, given two spherical surfaces that are in register.
@@ -318,6 +320,8 @@ def surface_resample(
     runner: Runner | None = None,
 ) -> SurfaceResampleOutputs:
     """
+    surface-resample
+    
     Resample a surface to a different mesh.
     
     Resamples a surface file, given two spherical surfaces that are in register.

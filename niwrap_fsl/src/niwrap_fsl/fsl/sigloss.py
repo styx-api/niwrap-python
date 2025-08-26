@@ -172,6 +172,8 @@ def sigloss_execute(
     runner: Runner | None = None,
 ) -> SiglossOutputs:
     """
+    sigloss
+    
     Estimates signal loss from a field map (in rad/s).
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -204,6 +206,8 @@ def sigloss(
     runner: Runner | None = None,
 ) -> SiglossOutputs:
     """
+    sigloss
+    
     Estimates signal loss from a field map (in rad/s).
     
     Author: FMRIB Analysis Group, University of Oxford

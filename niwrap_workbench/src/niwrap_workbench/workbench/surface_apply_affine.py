@@ -190,6 +190,8 @@ def surface_apply_affine_execute(
     runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
     """
+    surface-apply-affine
+    
     Apply affine transform to surface file.
     
     For flirt matrices, you must use the -flirt option, because flirt matrices
@@ -225,6 +227,8 @@ def surface_apply_affine(
     runner: Runner | None = None,
 ) -> SurfaceApplyAffineOutputs:
     """
+    surface-apply-affine
+    
     Apply affine transform to surface file.
     
     For flirt matrices, you must use the -flirt option, because flirt matrices

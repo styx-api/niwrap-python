@@ -324,6 +324,8 @@ def v_3d_clusterize_execute(
     runner: Runner | None = None,
 ) -> V3dClusterizeOutputs:
     """
+    3dClusterize
+    
     A tool for voxelwise thresholding and clusterizing of datasets.
     
     Author: AFNI Developers
@@ -373,6 +375,8 @@ def v_3d_clusterize(
     runner: Runner | None = None,
 ) -> V3dClusterizeOutputs:
     """
+    3dClusterize
+    
     A tool for voxelwise thresholding and clusterizing of datasets.
     
     Author: AFNI Developers

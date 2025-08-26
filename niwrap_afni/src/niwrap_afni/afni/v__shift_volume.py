@@ -166,8 +166,10 @@ def v__shift_volume_execute(
     runner: Runner | None = None,
 ) -> VShiftVolumeOutputs:
     """
-    Tool to shift a dataset in the RAI coordinate system or between MNI anatomical
-    space and MNI space.
+    @Shift_Volume
+    
+    Tool to shift a dataset in the RAI coordinate system or between MNI
+    anatomical space and MNI space.
     
     Author: AFNI Developers
     
@@ -198,8 +200,10 @@ def v__shift_volume(
     runner: Runner | None = None,
 ) -> VShiftVolumeOutputs:
     """
-    Tool to shift a dataset in the RAI coordinate system or between MNI anatomical
-    space and MNI space.
+    @Shift_Volume
+    
+    Tool to shift a dataset in the RAI coordinate system or between MNI
+    anatomical space and MNI space.
     
     Author: AFNI Developers
     

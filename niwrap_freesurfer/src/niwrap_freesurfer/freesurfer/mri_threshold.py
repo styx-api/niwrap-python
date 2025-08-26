@@ -160,6 +160,8 @@ def mri_threshold_execute(
     runner: Runner | None = None,
 ) -> MriThresholdOutputs:
     """
+    mri_threshold
+    
     This program will lower threshold an input volume.
     
     Author: FreeSurfer Developers
@@ -191,6 +193,8 @@ def mri_threshold(
     runner: Runner | None = None,
 ) -> MriThresholdOutputs:
     """
+    mri_threshold
+    
     This program will lower threshold an input volume.
     
     Author: FreeSurfer Developers

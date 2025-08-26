@@ -125,7 +125,10 @@ def mris_volume_execute(
     runner: Runner | None = None,
 ) -> MrisVolumeOutputs:
     """
-    A tool for computing the volume of a closed surface using a divergence formula.
+    mris_volume
+    
+    A tool for computing the volume of a closed surface using a divergence
+    formula.
     
     Author: FreeSurfer Developers
     
@@ -152,7 +155,10 @@ def mris_volume(
     runner: Runner | None = None,
 ) -> MrisVolumeOutputs:
     """
-    A tool for computing the volume of a closed surface using a divergence formula.
+    mris_volume
+    
+    A tool for computing the volume of a closed surface using a divergence
+    formula.
     
     Author: FreeSurfer Developers
     

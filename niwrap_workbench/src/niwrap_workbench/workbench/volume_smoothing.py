@@ -169,6 +169,8 @@ def volume_smoothing_execute(
     runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
+    volume-smoothing
+    
     Smooth a volume file.
     
     Gaussian smoothing for volumes. By default, smooths all subvolumes with no
@@ -213,6 +215,8 @@ def volume_smoothing(
     runner: Runner | None = None,
 ) -> VolumeSmoothingOutputs:
     """
+    volume-smoothing
+    
     Smooth a volume file.
     
     Gaussian smoothing for volumes. By default, smooths all subvolumes with no

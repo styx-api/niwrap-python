@@ -338,6 +338,8 @@ def fim2_execute(
     runner: Runner | None = None,
 ) -> Fim2Outputs:
     """
+    fim2
+    
     Functional Imaging Mapping Tool.
     
     Author: AFNI Developers
@@ -386,6 +388,8 @@ def fim2(
     runner: Runner | None = None,
 ) -> Fim2Outputs:
     """
+    fim2
+    
     Functional Imaging Mapping Tool.
     
     Author: AFNI Developers

@@ -164,6 +164,8 @@ def v_3d_row_fillin_execute(
     runner: Runner | None = None,
 ) -> V3dRowFillinOutputs:
     """
+    3dRowFillin
+    
     Fills in blank regions in 1D rows extracted from a 3D dataset.
     
     Author: AFNI Developers
@@ -194,6 +196,8 @@ def v_3d_row_fillin(
     runner: Runner | None = None,
 ) -> V3dRowFillinOutputs:
     """
+    3dRowFillin
+    
     Fills in blank regions in 1D rows extracted from a 3D dataset.
     
     Author: AFNI Developers

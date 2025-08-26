@@ -199,6 +199,8 @@ def mris_multimodal_execute(
     runner: Runner | None = None,
 ) -> MrisMultimodalOutputs:
     """
+    mris_multimodal
+    
     A FreeSurfer tool for processing multimodal surface data.
     
     Author: FreeSurfer Developers
@@ -234,6 +236,8 @@ def mris_multimodal(
     runner: Runner | None = None,
 ) -> MrisMultimodalOutputs:
     """
+    mris_multimodal
+    
     A FreeSurfer tool for processing multimodal surface data.
     
     Author: FreeSurfer Developers

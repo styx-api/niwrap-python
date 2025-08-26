@@ -162,6 +162,8 @@ def v_3dmatmult_execute(
     runner: Runner | None = None,
 ) -> V3dmatmultOutputs:
     """
+    3dmatmult
+    
     Multiply AFNI datasets slice-by-slice as matrices.
     
     Author: AFNI Developers
@@ -192,6 +194,8 @@ def v_3dmatmult(
     runner: Runner | None = None,
 ) -> V3dmatmultOutputs:
     """
+    3dmatmult
+    
     Multiply AFNI datasets slice-by-slice as matrices.
     
     Author: AFNI Developers

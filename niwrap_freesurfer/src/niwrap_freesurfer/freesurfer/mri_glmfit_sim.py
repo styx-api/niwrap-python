@@ -388,9 +388,11 @@ def mri_glmfit_sim_execute(
     runner: Runner | None = None,
 ) -> MriGlmfitSimOutputs:
     """
-    A tool to run corrections for multiple comparisons on volumes or surfaces, using
-    various methods including Monte Carlo simulation, permutation, and Gaussian
-    Random Fields.
+    mri_glmfit-sim
+    
+    A tool to run corrections for multiple comparisons on volumes or surfaces,
+    using various methods including Monte Carlo simulation, permutation, and
+    Gaussian Random Fields.
     
     Author: FreeSurfer Developers
     
@@ -444,9 +446,11 @@ def mri_glmfit_sim(
     runner: Runner | None = None,
 ) -> MriGlmfitSimOutputs:
     """
-    A tool to run corrections for multiple comparisons on volumes or surfaces, using
-    various methods including Monte Carlo simulation, permutation, and Gaussian
-    Random Fields.
+    mri_glmfit-sim
+    
+    A tool to run corrections for multiple comparisons on volumes or surfaces,
+    using various methods including Monte Carlo simulation, permutation, and
+    Gaussian Random Fields.
     
     Author: FreeSurfer Developers
     

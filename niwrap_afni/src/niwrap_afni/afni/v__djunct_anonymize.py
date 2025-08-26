@@ -145,6 +145,8 @@ def v__djunct_anonymize_execute(
     runner: Runner | None = None,
 ) -> VDjunctAnonymizeOutputs:
     """
+    @djunct_anonymize
+    
     Helper program to anonymize files.
     
     Author: AFNI Developers
@@ -174,6 +176,8 @@ def v__djunct_anonymize(
     runner: Runner | None = None,
 ) -> VDjunctAnonymizeOutputs:
     """
+    @djunct_anonymize
+    
     Helper program to anonymize files.
     
     Author: AFNI Developers

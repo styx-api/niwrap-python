@@ -247,6 +247,8 @@ def init_user_dotfiles_py_execute(
     runner: Runner | None = None,
 ) -> InitUserDotfilesPyOutputs:
     """
+    init_user_dotfiles.py
+    
     Initialize or evaluate user dot files (.cshrc, .bashrc, ...) for system
     settings.
     
@@ -290,6 +292,8 @@ def init_user_dotfiles_py(
     runner: Runner | None = None,
 ) -> InitUserDotfilesPyOutputs:
     """
+    init_user_dotfiles.py
+    
     Initialize or evaluate user dot files (.cshrc, .bashrc, ...) for system
     settings.
     

@@ -128,6 +128,8 @@ def find_the_biggest_execute(
     runner: Runner | None = None,
 ) -> FindTheBiggestOutputs:
     """
+    find_the_biggest
+    
     Tool to find the largest volume or surface from a set of inputs.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def find_the_biggest(
     runner: Runner | None = None,
 ) -> FindTheBiggestOutputs:
     """
+    find_the_biggest
+    
     Tool to find the largest volume or surface from a set of inputs.
     
     Author: FMRIB Analysis Group, University of Oxford

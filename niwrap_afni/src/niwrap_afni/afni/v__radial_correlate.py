@@ -297,6 +297,8 @@ def v__radial_correlate_execute(
     runner: Runner | None = None,
 ) -> VRadialCorrelateOutputs:
     """
+    @radial_correlate
+    
     Check datasets for correlation artifacts.
     
     Author: AFNI Developers
@@ -342,6 +344,8 @@ def v__radial_correlate(
     runner: Runner | None = None,
 ) -> VRadialCorrelateOutputs:
     """
+    @radial_correlate
+    
     Check datasets for correlation artifacts.
     
     Author: AFNI Developers

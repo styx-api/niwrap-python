@@ -128,6 +128,8 @@ def talairach_mgh_execute(
     runner: Runner | None = None,
 ) -> TalairachMghOutputs:
     """
+    talairach_mgh
+    
     A tool for aligning brain volume with Talairach reference brain.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def talairach_mgh(
     runner: Runner | None = None,
 ) -> TalairachMghOutputs:
     """
+    talairach_mgh
+    
     A tool for aligning brain volume with Talairach reference brain.
     
     Author: FreeSurfer Developers

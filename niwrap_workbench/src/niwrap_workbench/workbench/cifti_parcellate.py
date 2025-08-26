@@ -379,6 +379,8 @@ def cifti_parcellate_execute(
     runner: Runner | None = None,
 ) -> CiftiParcellateOutputs:
     """
+    cifti-parcellate
+    
     Parcellate a cifti file.
     
     Each label (other than the unlabeled key) in the cifti label file will be
@@ -453,6 +455,8 @@ def cifti_parcellate(
     runner: Runner | None = None,
 ) -> CiftiParcellateOutputs:
     """
+    cifti-parcellate
+    
     Parcellate a cifti file.
     
     Each label (other than the unlabeled key) in the cifti label file will be

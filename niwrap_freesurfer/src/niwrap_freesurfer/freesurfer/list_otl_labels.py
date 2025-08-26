@@ -122,6 +122,8 @@ def list_otl_labels_execute(
     runner: Runner | None = None,
 ) -> ListOtlLabelsOutputs:
     """
+    list_otl_labels
+    
     Tool for listing labels in an imaging file.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def list_otl_labels(
     runner: Runner | None = None,
 ) -> ListOtlLabelsOutputs:
     """
+    list_otl_labels
+    
     Tool for listing labels in an imaging file.
     
     Author: FreeSurfer Developers

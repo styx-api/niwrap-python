@@ -136,6 +136,8 @@ def cp_dicom_execute(
     runner: Runner | None = None,
 ) -> CpDicomOutputs:
     """
+    cp-dicom
+    
     Copies DICOM files into separate directories for each series based on DICOM
     headers.
     
@@ -165,6 +167,8 @@ def cp_dicom(
     runner: Runner | None = None,
 ) -> CpDicomOutputs:
     """
+    cp-dicom
+    
     Copies DICOM files into separate directories for each series based on DICOM
     headers.
     

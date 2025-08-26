@@ -148,6 +148,8 @@ def cifti_pairwise_correlation_execute(
     runner: Runner | None = None,
 ) -> CiftiPairwiseCorrelationOutputs:
     """
+    cifti-pairwise-correlation
+    
     Correlate paired rows between two cifti files.
     
     For each row in <cifti-a>, correlate it with the same row in <cifti-b>, and
@@ -181,6 +183,8 @@ def cifti_pairwise_correlation(
     runner: Runner | None = None,
 ) -> CiftiPairwiseCorrelationOutputs:
     """
+    cifti-pairwise-correlation
+    
     Correlate paired rows between two cifti files.
     
     For each row in <cifti-a>, correlate it with the same row in <cifti-b>, and

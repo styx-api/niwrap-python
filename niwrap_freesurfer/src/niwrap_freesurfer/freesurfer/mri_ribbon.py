@@ -148,6 +148,8 @@ def mri_ribbon_execute(
     runner: Runner | None = None,
 ) -> MriRibbonOutputs:
     """
+    mri_ribbon
+    
     MRI Ribbon tool to create ribbon volumes from surface files.
     
     Author: FreeSurfer Developers
@@ -178,6 +180,8 @@ def mri_ribbon(
     runner: Runner | None = None,
 ) -> MriRibbonOutputs:
     """
+    mri_ribbon
+    
     MRI Ribbon tool to create ribbon volumes from surface files.
     
     Author: FreeSurfer Developers

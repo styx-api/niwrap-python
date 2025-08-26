@@ -354,6 +354,8 @@ def mris_diff_execute(
     runner: Runner | None = None,
 ) -> MrisDiffOutputs:
     """
+    mris_diff
+    
     A tool for comparing differences between surface files in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -408,6 +410,8 @@ def mris_diff(
     runner: Runner | None = None,
 ) -> MrisDiffOutputs:
     """
+    mris_diff
+    
     A tool for comparing differences between surface files in FreeSurfer.
     
     Author: FreeSurfer Developers

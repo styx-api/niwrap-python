@@ -150,8 +150,10 @@ def segment_subject_sc_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectScOutputs:
     """
-    Front-end for MINC's mritotal. Computes the Talairach transform for mapping the
-    input volume to the MNI305 space.
+    segment_subject_sc
+    
+    Front-end for MINC's mritotal. Computes the Talairach transform for mapping
+    the input volume to the MNI305 space.
     
     Author: FreeSurfer Developers
     
@@ -180,8 +182,10 @@ def segment_subject_sc(
     runner: Runner | None = None,
 ) -> SegmentSubjectScOutputs:
     """
-    Front-end for MINC's mritotal. Computes the Talairach transform for mapping the
-    input volume to the MNI305 space.
+    segment_subject_sc
+    
+    Front-end for MINC's mritotal. Computes the Talairach transform for mapping
+    the input volume to the MNI305 space.
     
     Author: FreeSurfer Developers
     

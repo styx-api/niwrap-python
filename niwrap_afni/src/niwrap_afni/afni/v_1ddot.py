@@ -171,6 +171,8 @@ def v_1ddot_execute(
     runner: Runner | None = None,
 ) -> V1ddotOutputs:
     """
+    1ddot
+    
     Computes the correlation matrix of the input 1D files and their inverse
     correlation matrix.
     
@@ -205,6 +207,8 @@ def v_1ddot(
     runner: Runner | None = None,
 ) -> V1ddotOutputs:
     """
+    1ddot
+    
     Computes the correlation matrix of the input 1D files and their inverse
     correlation matrix.
     

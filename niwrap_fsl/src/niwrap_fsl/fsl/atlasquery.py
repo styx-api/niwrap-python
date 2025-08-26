@@ -162,6 +162,8 @@ def atlasquery_execute(
     runner: Runner | None = None,
 ) -> AtlasqueryOutputs:
     """
+    atlasquery
+    
     Structural lookup tool for FSL atlases.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -193,6 +195,8 @@ def atlasquery(
     runner: Runner | None = None,
 ) -> AtlasqueryOutputs:
     """
+    atlasquery
+    
     Structural lookup tool for FSL atlases.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -352,6 +352,8 @@ def first_utils_execute(
     runner: Runner | None = None,
 ) -> FirstUtilsOutputs:
     """
+    first_utils
+    
     Utilities for handling FIRST's input and output files.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -409,6 +411,8 @@ def first_utils(
     runner: Runner | None = None,
 ) -> FirstUtilsOutputs:
     """
+    first_utils
+    
     Utilities for handling FIRST's input and output files.
     
     Author: FMRIB Analysis Group, University of Oxford

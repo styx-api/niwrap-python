@@ -139,6 +139,8 @@ def mri_deface_execute(
     runner: Runner | None = None,
 ) -> MriDefaceOutputs:
     """
+    mri_deface
+    
     MRI Deface utility for removing facial features from MRI images.
     
     Author: FreeSurfer Developers
@@ -168,6 +170,8 @@ def mri_deface(
     runner: Runner | None = None,
 ) -> MriDefaceOutputs:
     """
+    mri_deface
+    
     MRI Deface utility for removing facial features from MRI images.
     
     Author: FreeSurfer Developers

@@ -282,6 +282,8 @@ def v_3d_mss_execute(
     runner: Runner | None = None,
 ) -> V3dMssOutputs:
     """
+    3dMSS
+    
     Voxelwise Multilevel Smoothing Spline (MSS) Analysis.
     
     Author: AFNI Developers
@@ -325,6 +327,8 @@ def v_3d_mss(
     runner: Runner | None = None,
 ) -> V3dMssOutputs:
     """
+    3dMSS
+    
     Voxelwise Multilevel Smoothing Spline (MSS) Analysis.
     
     Author: AFNI Developers

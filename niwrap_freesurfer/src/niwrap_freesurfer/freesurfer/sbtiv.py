@@ -144,6 +144,8 @@ def sbtiv_execute(
     runner: Runner | None = None,
 ) -> SbtivOutputs:
     """
+    sbtiv
+    
     Tool to calculate the total intracranial volume of a subject by summing
     individual volumes computed by samseg.
     
@@ -173,6 +175,8 @@ def sbtiv(
     runner: Runner | None = None,
 ) -> SbtivOutputs:
     """
+    sbtiv
+    
     Tool to calculate the total intracranial volume of a subject by summing
     individual volumes computed by samseg.
     

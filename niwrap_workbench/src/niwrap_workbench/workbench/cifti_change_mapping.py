@@ -313,6 +313,8 @@ def cifti_change_mapping_execute(
     runner: Runner | None = None,
 ) -> CiftiChangeMappingOutputs:
     """
+    cifti-change-mapping
+    
     Convert to scalar, copy mapping, etc.
     
     Take an existing cifti file and change one of the mappings. Exactly one of
@@ -355,6 +357,8 @@ def cifti_change_mapping(
     runner: Runner | None = None,
 ) -> CiftiChangeMappingOutputs:
     """
+    cifti-change-mapping
+    
     Convert to scalar, copy mapping, etc.
     
     Take an existing cifti file and change one of the mappings. Exactly one of

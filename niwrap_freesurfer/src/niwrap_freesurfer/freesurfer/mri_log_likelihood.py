@@ -129,6 +129,8 @@ def mri_log_likelihood_execute(
     runner: Runner | None = None,
 ) -> MriLogLikelihoodOutputs:
     """
+    mri_log_likelihood
+    
     MRI log likelihood calculation tool for brain images.
     
     Author: FreeSurfer Developers
@@ -157,6 +159,8 @@ def mri_log_likelihood(
     runner: Runner | None = None,
 ) -> MriLogLikelihoodOutputs:
     """
+    mri_log_likelihood
+    
     MRI log likelihood calculation tool for brain images.
     
     Author: FreeSurfer Developers

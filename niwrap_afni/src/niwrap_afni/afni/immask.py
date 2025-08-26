@@ -156,7 +156,10 @@ def immask_execute(
     runner: Runner | None = None,
 ) -> ImmaskOutputs:
     """
-    Masks the input image based on specified criteria and produces the output image.
+    immask
+    
+    Masks the input image based on specified criteria and produces the output
+    image.
     
     Author: AFNI Developers
     
@@ -186,7 +189,10 @@ def immask(
     runner: Runner | None = None,
 ) -> ImmaskOutputs:
     """
-    Masks the input image based on specified criteria and produces the output image.
+    immask
+    
+    Masks the input image based on specified criteria and produces the output
+    image.
     
     Author: AFNI Developers
     

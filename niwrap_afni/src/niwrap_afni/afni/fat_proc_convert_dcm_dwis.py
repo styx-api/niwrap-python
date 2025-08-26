@@ -261,8 +261,11 @@ def fat_proc_convert_dcm_dwis_execute(
     runner: Runner | None = None,
 ) -> FatProcConvertDcmDwisOutputs:
     """
-    Convert sets of DWIs in DICOM format into 'nicer' volume+grad format, reorient
-    volumetric data, and glue together multiple sessions/directories of data.
+    fat_proc_convert_dcm_dwis
+    
+    Convert sets of DWIs in DICOM format into 'nicer' volume+grad format,
+    reorient volumetric data, and glue together multiple sessions/directories of
+    data.
     
     Author: AFNI Developers
     
@@ -305,8 +308,11 @@ def fat_proc_convert_dcm_dwis(
     runner: Runner | None = None,
 ) -> FatProcConvertDcmDwisOutputs:
     """
-    Convert sets of DWIs in DICOM format into 'nicer' volume+grad format, reorient
-    volumetric data, and glue together multiple sessions/directories of data.
+    fat_proc_convert_dcm_dwis
+    
+    Convert sets of DWIs in DICOM format into 'nicer' volume+grad format,
+    reorient volumetric data, and glue together multiple sessions/directories of
+    data.
     
     Author: AFNI Developers
     

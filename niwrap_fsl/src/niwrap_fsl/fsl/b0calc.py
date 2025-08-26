@@ -261,6 +261,8 @@ def b0calc_execute(
     runner: Runner | None = None,
 ) -> B0calcOutputs:
     """
+    b0calc
+    
     B0 field calculation program.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -301,6 +303,8 @@ def b0calc(
     runner: Runner | None = None,
 ) -> B0calcOutputs:
     """
+    b0calc
+    
     B0 field calculation program.
     
     Author: FMRIB Analysis Group, University of Oxford

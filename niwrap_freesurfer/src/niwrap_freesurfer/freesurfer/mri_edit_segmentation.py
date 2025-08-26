@@ -133,6 +133,8 @@ def mri_edit_segmentation_execute(
     runner: Runner | None = None,
 ) -> MriEditSegmentationOutputs:
     """
+    mri_edit_segmentation
+    
     A tool used for editing segmentations.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_edit_segmentation(
     runner: Runner | None = None,
 ) -> MriEditSegmentationOutputs:
     """
+    mri_edit_segmentation
+    
     A tool used for editing segmentations.
     
     Author: FreeSurfer Developers

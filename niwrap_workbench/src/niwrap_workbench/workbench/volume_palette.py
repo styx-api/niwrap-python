@@ -490,6 +490,8 @@ def volume_palette_execute(
     runner: Runner | None = None,
 ) -> VolumePaletteOutputs:
     """
+    volume-palette
+    
     Set the palette of a volume file.
     
     The original volume file is overwritten with the modified version. By
@@ -605,6 +607,8 @@ def volume_palette(
     runner: Runner | None = None,
 ) -> VolumePaletteOutputs:
     """
+    volume-palette
+    
     Set the palette of a volume file.
     
     The original volume file is overwritten with the modified version. By

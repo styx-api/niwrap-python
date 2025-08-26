@@ -137,6 +137,8 @@ def vno_match_check_execute(
     runner: Runner | None = None,
 ) -> VnoMatchCheckOutputs:
     """
+    vno_match_check
+    
     Checks that all surfaces and surface data files for a subject have the same
     number of vertices.
     
@@ -167,6 +169,8 @@ def vno_match_check(
     runner: Runner | None = None,
 ) -> VnoMatchCheckOutputs:
     """
+    vno_match_check
+    
     Checks that all surfaces and surface data files for a subject have the same
     number of vertices.
     

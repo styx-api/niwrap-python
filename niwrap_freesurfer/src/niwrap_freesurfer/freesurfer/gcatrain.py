@@ -259,7 +259,10 @@ def gcatrain_execute(
     runner: Runner | None = None,
 ) -> GcatrainOutputs:
     """
-    GCA training tool for building a GCA from a group of manually labeled subjects.
+    gcatrain
+    
+    GCA training tool for building a GCA from a group of manually labeled
+    subjects.
     
     Author: FreeSurfer Developers
     
@@ -303,7 +306,10 @@ def gcatrain(
     runner: Runner | None = None,
 ) -> GcatrainOutputs:
     """
-    GCA training tool for building a GCA from a group of manually labeled subjects.
+    gcatrain
+    
+    GCA training tool for building a GCA from a group of manually labeled
+    subjects.
     
     Author: FreeSurfer Developers
     

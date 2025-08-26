@@ -144,6 +144,8 @@ def mri_linear_align_binary_execute(
     runner: Runner | None = None,
 ) -> MriLinearAlignBinaryOutputs:
     """
+    mri_linear_align_binary
+    
     A tool for linear alignment of MRI images.
     
     Author: FreeSurfer Developers
@@ -173,6 +175,8 @@ def mri_linear_align_binary(
     runner: Runner | None = None,
 ) -> MriLinearAlignBinaryOutputs:
     """
+    mri_linear_align_binary
+    
     A tool for linear alignment of MRI images.
     
     Author: FreeSurfer Developers

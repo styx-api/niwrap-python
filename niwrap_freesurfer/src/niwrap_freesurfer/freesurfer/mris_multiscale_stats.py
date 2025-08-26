@@ -147,6 +147,8 @@ def mris_multiscale_stats_execute(
     runner: Runner | None = None,
 ) -> MrisMultiscaleStatsOutputs:
     """
+    mris_multiscale_stats
+    
     Compute the autocorrelation function of a curvature file using multiscale
     statistical techniques.
     
@@ -179,6 +181,8 @@ def mris_multiscale_stats(
     runner: Runner | None = None,
 ) -> MrisMultiscaleStatsOutputs:
     """
+    mris_multiscale_stats
+    
     Compute the autocorrelation function of a curvature file using multiscale
     statistical techniques.
     

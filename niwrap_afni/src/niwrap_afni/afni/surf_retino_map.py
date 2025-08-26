@@ -158,6 +158,8 @@ def surf_retino_map_execute(
     runner: Runner | None = None,
 ) -> SurfRetinoMapOutputs:
     """
+    SurfRetinoMap
+    
     Tool for retinotopic mapping on cortical surfaces.
     
     Author: AFNI Developers
@@ -188,6 +190,8 @@ def surf_retino_map(
     runner: Runner | None = None,
 ) -> SurfRetinoMapOutputs:
     """
+    SurfRetinoMap
+    
     Tool for retinotopic mapping on cortical surfaces.
     
     Author: AFNI Developers

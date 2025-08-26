@@ -165,6 +165,8 @@ def cutoffcalc_execute(
     runner: Runner | None = None,
 ) -> CutoffcalcOutputs:
     """
+    cutoffcalc
+    
     Calculates the minimal period for the highpass filter that still preserves a
     specified amount of variance in all the design matrix regressors.
     
@@ -198,6 +200,8 @@ def cutoffcalc(
     runner: Runner | None = None,
 ) -> CutoffcalcOutputs:
     """
+    cutoffcalc
+    
     Calculates the minimal period for the highpass filter that still preserves a
     specified amount of variance in all the design matrix regressors.
     

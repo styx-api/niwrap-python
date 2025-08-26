@@ -222,6 +222,8 @@ def v_3d_auto_tcorrelate_execute(
     runner: Runner | None = None,
 ) -> V3dAutoTcorrelateOutputs:
     """
+    3dAutoTcorrelate
+    
     Computes the correlation coefficient between the time series of each pair of
     voxels in the input dataset.
     
@@ -261,6 +263,8 @@ def v_3d_auto_tcorrelate(
     runner: Runner | None = None,
 ) -> V3dAutoTcorrelateOutputs:
     """
+    3dAutoTcorrelate
+    
     Computes the correlation coefficient between the time series of each pair of
     voxels in the input dataset.
     

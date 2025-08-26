@@ -119,6 +119,8 @@ def unpack_ima_tcl_execute(
     runner: Runner | None = None,
 ) -> UnpackImaTclOutputs:
     """
+    unpack_ima.tcl
+    
     A tool to unpack MRI DICOM .ima files.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def unpack_ima_tcl(
     runner: Runner | None = None,
 ) -> UnpackImaTclOutputs:
     """
+    unpack_ima.tcl
+    
     A tool to unpack MRI DICOM .ima files.
     
     Author: FreeSurfer Developers

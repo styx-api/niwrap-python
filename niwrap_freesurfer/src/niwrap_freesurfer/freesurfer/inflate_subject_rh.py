@@ -125,6 +125,8 @@ def inflate_subject_rh_execute(
     runner: Runner | None = None,
 ) -> InflateSubjectRhOutputs:
     """
+    inflate_subject-rh
+    
     Freesurfer command to perform an operation on the right hemisphere of a
     subject's brain image data.
     
@@ -152,6 +154,8 @@ def inflate_subject_rh(
     runner: Runner | None = None,
 ) -> InflateSubjectRhOutputs:
     """
+    inflate_subject-rh
+    
     Freesurfer command to perform an operation on the right hemisphere of a
     subject's brain image data.
     

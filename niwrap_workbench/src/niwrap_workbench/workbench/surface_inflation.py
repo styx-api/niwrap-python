@@ -154,6 +154,8 @@ def surface_inflation_execute(
     runner: Runner | None = None,
 ) -> SurfaceInflationOutputs:
     """
+    surface-inflation
+    
     Surface inflation.
     
     Inflate a surface by performing cycles that consist of smoothing followed by
@@ -189,6 +191,8 @@ def surface_inflation(
     runner: Runner | None = None,
 ) -> SurfaceInflationOutputs:
     """
+    surface-inflation
+    
     Surface inflation.
     
     Inflate a surface by performing cycles that consist of smoothing followed by

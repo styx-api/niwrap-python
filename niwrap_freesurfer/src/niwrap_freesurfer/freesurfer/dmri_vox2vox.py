@@ -216,6 +216,8 @@ def dmri_vox2vox_execute(
     runner: Runner | None = None,
 ) -> DmriVox2voxOutputs:
     """
+    dmri_vox2vox
+    
     Tool for voxel-to-voxel transformations in diffusion MRI data processing.
     
     Author: FreeSurfer Developers
@@ -254,6 +256,8 @@ def dmri_vox2vox(
     runner: Runner | None = None,
 ) -> DmriVox2voxOutputs:
     """
+    dmri_vox2vox
+    
     Tool for voxel-to-voxel transformations in diffusion MRI data processing.
     
     Author: FreeSurfer Developers

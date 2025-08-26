@@ -139,6 +139,8 @@ def set_spacing_execute(
     runner: Runner | None = None,
 ) -> SetSpacingOutputs:
     """
+    SetSpacing
+    
     A tool to set the spacing of an image in each dimension.
     
     Author: ANTs Developers
@@ -168,6 +170,8 @@ def set_spacing(
     runner: Runner | None = None,
 ) -> SetSpacingOutputs:
     """
+    SetSpacing
+    
     A tool to set the spacing of an image in each dimension.
     
     Author: ANTs Developers

@@ -470,6 +470,8 @@ def dmri_paths_execute(
     runner: Runner | None = None,
 ) -> DmriPathsOutputs:
     """
+    dmri_paths
+    
     Tool for diffusion MRI path analysis.
     
     Author: FreeSurfer Developers
@@ -531,6 +533,8 @@ def dmri_paths(
     runner: Runner | None = None,
 ) -> DmriPathsOutputs:
     """
+    dmri_paths
+    
     Tool for diffusion MRI path analysis.
     
     Author: FreeSurfer Developers

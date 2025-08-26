@@ -185,6 +185,8 @@ def dmri_forrest_execute(
     runner: Runner | None = None,
 ) -> DmriForrestOutputs:
     """
+    dmri_forrest
+    
     dmri_forrest is a tool for processing diffusion MRI data using a random
     forest-based method.
     
@@ -220,6 +222,8 @@ def dmri_forrest(
     runner: Runner | None = None,
 ) -> DmriForrestOutputs:
     """
+    dmri_forrest
+    
     dmri_forrest is a tool for processing diffusion MRI data using a random
     forest-based method.
     

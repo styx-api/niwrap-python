@@ -348,6 +348,8 @@ def shconv_execute(
     runner: Runner | None = None,
 ) -> ShconvOutputs:
     """
+    shconv
+    
     Perform spherical convolution.
     
     Provided with matching pairs of response function and ODF images (containing
@@ -408,6 +410,8 @@ def shconv(
     runner: Runner | None = None,
 ) -> ShconvOutputs:
     """
+    shconv
+    
     Perform spherical convolution.
     
     Provided with matching pairs of response function and ODF images (containing

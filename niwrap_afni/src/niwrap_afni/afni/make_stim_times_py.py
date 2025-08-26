@@ -216,6 +216,8 @@ def make_stim_times_py_execute(
     runner: Runner | None = None,
 ) -> MakeStimTimesPyOutputs:
     """
+    make_stim_times.py
+    
     Convert a set of 0/1 stim files into a set of stim_times files, or convert
     real-valued files into those for use with -stim_times_AM2.
     
@@ -254,6 +256,8 @@ def make_stim_times_py(
     runner: Runner | None = None,
 ) -> MakeStimTimesPyOutputs:
     """
+    make_stim_times.py
+    
     Convert a set of 0/1 stim files into a set of stim_times files, or convert
     real-valued files into those for use with -stim_times_AM2.
     

@@ -231,6 +231,8 @@ def tckinfo_execute(
     runner: Runner | None = None,
 ) -> TckinfoOutputs:
     """
+    tckinfo
+    
     Print out information about a track file.
     
     
@@ -272,6 +274,8 @@ def tckinfo(
     runner: Runner | None = None,
 ) -> TckinfoOutputs:
     """
+    tckinfo
+    
     Print out information about a track file.
     
     

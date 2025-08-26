@@ -183,7 +183,10 @@ def v_3d_anhist_execute(
     runner: Runner | None = None,
 ) -> V3dAnhistOutputs:
     """
-    Tool to analyze histogram peaks in a T1-weighted high-res brain image dataset.
+    3dAnhist
+    
+    Tool to analyze histogram peaks in a T1-weighted high-res brain image
+    dataset.
     
     Author: AFNI Developers
     
@@ -216,7 +219,10 @@ def v_3d_anhist(
     runner: Runner | None = None,
 ) -> V3dAnhistOutputs:
     """
-    Tool to analyze histogram peaks in a T1-weighted high-res brain image dataset.
+    3dAnhist
+    
+    Tool to analyze histogram peaks in a T1-weighted high-res brain image
+    dataset.
     
     Author: AFNI Developers
     

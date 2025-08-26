@@ -143,6 +143,8 @@ def mris_translate_annotation_execute(
     runner: Runner | None = None,
 ) -> MrisTranslateAnnotationOutputs:
     """
+    mris_translate_annotation
+    
     This program applies a translation table to an annotation file.
     
     Author: FreeSurfer Developers
@@ -173,6 +175,8 @@ def mris_translate_annotation(
     runner: Runner | None = None,
 ) -> MrisTranslateAnnotationOutputs:
     """
+    mris_translate_annotation
+    
     This program applies a translation table to an annotation file.
     
     Author: FreeSurfer Developers

@@ -267,6 +267,8 @@ def mrcat_execute(
     runner: Runner | None = None,
 ) -> MrcatOutputs:
     """
+    mrcat
+    
     Concatenate several images into one.
     
     
@@ -311,6 +313,8 @@ def mrcat(
     runner: Runner | None = None,
 ) -> MrcatOutputs:
     """
+    mrcat
+    
     Concatenate several images into one.
     
     

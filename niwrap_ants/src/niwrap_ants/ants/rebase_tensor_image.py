@@ -146,6 +146,8 @@ def rebase_tensor_image_execute(
     runner: Runner | None = None,
 ) -> RebaseTensorImageOutputs:
     """
+    RebaseTensorImage
+    
     Rebase Tensor Image using specified dimensionality and method.
     
     Author: ANTs Developers
@@ -176,6 +178,8 @@ def rebase_tensor_image(
     runner: Runner | None = None,
 ) -> RebaseTensorImageOutputs:
     """
+    RebaseTensorImage
+    
     Rebase Tensor Image using specified dimensionality and method.
     
     Author: ANTs Developers

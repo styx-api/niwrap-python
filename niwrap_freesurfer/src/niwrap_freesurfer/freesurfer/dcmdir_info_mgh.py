@@ -153,6 +153,8 @@ def dcmdir_info_mgh_execute(
     runner: Runner | None = None,
 ) -> DcmdirInfoMghOutputs:
     """
+    dcmdir-info-mgh
+    
     Scans a DICOM directory and extracts information about each series.
     
     Author: FreeSurfer Developers
@@ -183,6 +185,8 @@ def dcmdir_info_mgh(
     runner: Runner | None = None,
 ) -> DcmdirInfoMghOutputs:
     """
+    dcmdir-info-mgh
+    
     Scans a DICOM directory and extracts information about each series.
     
     Author: FreeSurfer Developers

@@ -129,6 +129,8 @@ def surface_create_sphere_execute(
     runner: Runner | None = None,
 ) -> SurfaceCreateSphereOutputs:
     """
+    surface-create-sphere
+    
     Generate a sphere with consistent vertex areas.
     
     Generates a sphere by regularly dividing the triangles of an icosahedron, to
@@ -168,6 +170,8 @@ def surface_create_sphere(
     runner: Runner | None = None,
 ) -> SurfaceCreateSphereOutputs:
     """
+    surface-create-sphere
+    
     Generate a sphere with consistent vertex areas.
     
     Generates a sphere by regularly dividing the triangles of an icosahedron, to

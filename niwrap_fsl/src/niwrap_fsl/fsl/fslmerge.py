@@ -184,6 +184,8 @@ def fslmerge_execute(
     runner: Runner | None = None,
 ) -> FslmergeOutputs:
     """
+    fslmerge
+    
     FSL tool to concatenate images in various dimensions.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -219,6 +221,8 @@ def fslmerge(
     runner: Runner | None = None,
 ) -> FslmergeOutputs:
     """
+    fslmerge
+    
     FSL tool to concatenate images in various dimensions.
     
     Author: FMRIB Analysis Group, University of Oxford

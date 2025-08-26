@@ -327,6 +327,8 @@ def transformcompose_execute(
     runner: Runner | None = None,
 ) -> TransformcomposeOutputs:
     """
+    transformcompose
+    
     Compose any number of linear transformations and/or warps into a single
     transformation.
     
@@ -385,6 +387,8 @@ def transformcompose(
     runner: Runner | None = None,
 ) -> TransformcomposeOutputs:
     """
+    transformcompose
+    
     Compose any number of linear transformations and/or warps into a single
     transformation.
     

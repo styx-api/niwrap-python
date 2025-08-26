@@ -180,6 +180,8 @@ def fat_mvm_prep_execute(
     runner: Runner | None = None,
 ) -> FatMvmPrepOutputs:
     """
+    fat_mvm_prep
+    
     Combine FATCAT output with CSV data for statistical modeling.
     
     Author: AFNI Developers
@@ -212,6 +214,8 @@ def fat_mvm_prep(
     runner: Runner | None = None,
 ) -> FatMvmPrepOutputs:
     """
+    fat_mvm_prep
+    
     Combine FATCAT output with CSV data for statistical modeling.
     
     Author: AFNI Developers

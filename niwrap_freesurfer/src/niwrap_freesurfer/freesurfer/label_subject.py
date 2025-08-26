@@ -133,6 +133,8 @@ def label_subject_execute(
     runner: Runner | None = None,
 ) -> LabelSubjectOutputs:
     """
+    label_subject
+    
     A tool for labeling subject MRI data in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -160,6 +162,8 @@ def label_subject(
     runner: Runner | None = None,
 ) -> LabelSubjectOutputs:
     """
+    label_subject
+    
     A tool for labeling subject MRI data in FreeSurfer.
     
     Author: FreeSurfer Developers

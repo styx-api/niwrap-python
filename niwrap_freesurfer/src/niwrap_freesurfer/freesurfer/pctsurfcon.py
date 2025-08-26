@@ -218,6 +218,8 @@ def pctsurfcon_execute(
     runner: Runner | None = None,
 ) -> PctsurfconOutputs:
     """
+    pctsurfcon
+    
     Compute surface-wise gray/white matter contrast.
     
     Author: FreeSurfer Developers
@@ -256,6 +258,8 @@ def pctsurfcon(
     runner: Runner | None = None,
 ) -> PctsurfconOutputs:
     """
+    pctsurfcon
+    
     Compute surface-wise gray/white matter contrast.
     
     Author: FreeSurfer Developers

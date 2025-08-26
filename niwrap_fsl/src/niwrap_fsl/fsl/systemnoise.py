@@ -165,6 +165,8 @@ def systemnoise_execute(
     runner: Runner | None = None,
 ) -> SystemnoiseOutputs:
     """
+    systemnoise
+    
     Tool for adding system noise to a given signal using FSL's utilities.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -196,6 +198,8 @@ def systemnoise(
     runner: Runner | None = None,
 ) -> SystemnoiseOutputs:
     """
+    systemnoise
+    
     Tool for adding system noise to a given signal using FSL's utilities.
     
     Author: FMRIB Analysis Group, University of Oxford

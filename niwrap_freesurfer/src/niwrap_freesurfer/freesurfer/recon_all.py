@@ -665,7 +665,10 @@ def recon_all_execute(
     runner: Runner | None = None,
 ) -> ReconAllOutputs:
     """
-    Performs all, or any part of, the FreeSurfer cortical reconstruction process.
+    recon-all
+    
+    Performs all, or any part of, the FreeSurfer cortical reconstruction
+    process.
     
     Author: FreeSurfer Developers
     
@@ -759,7 +762,10 @@ def recon_all(
     runner: Runner | None = None,
 ) -> ReconAllOutputs:
     """
-    Performs all, or any part of, the FreeSurfer cortical reconstruction process.
+    recon-all
+    
+    Performs all, or any part of, the FreeSurfer cortical reconstruction
+    process.
     
     Author: FreeSurfer Developers
     

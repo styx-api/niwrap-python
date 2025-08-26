@@ -385,6 +385,8 @@ def scale_to_map_execute(
     runner: Runner | None = None,
 ) -> ScaleToMapOutputs:
     """
+    ScaleToMap
+    
     Tool to scale values to a color map.
     
     Author: AFNI Developers
@@ -439,6 +441,8 @@ def scale_to_map(
     runner: Runner | None = None,
 ) -> ScaleToMapOutputs:
     """
+    ScaleToMap
+    
     Tool to scale values to a color map.
     
     Author: AFNI Developers

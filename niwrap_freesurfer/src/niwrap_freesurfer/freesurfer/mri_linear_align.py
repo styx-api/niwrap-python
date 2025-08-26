@@ -129,6 +129,8 @@ def mri_linear_align_execute(
     runner: Runner | None = None,
 ) -> MriLinearAlignOutputs:
     """
+    mri_linear_align
+    
     MRI Linear Alignment Tool for Freesurfer.
     
     Author: FreeSurfer Developers
@@ -157,6 +159,8 @@ def mri_linear_align(
     runner: Runner | None = None,
 ) -> MriLinearAlignOutputs:
     """
+    mri_linear_align
+    
     MRI Linear Alignment Tool for Freesurfer.
     
     Author: FreeSurfer Developers

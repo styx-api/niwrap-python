@@ -124,6 +124,8 @@ def tbss_x_execute(
     runner: Runner | None = None,
 ) -> TbssXOutputs:
     """
+    tbss_x
+    
     TBSS cross-subject script for processing scalar and vector directories.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -151,6 +153,8 @@ def tbss_x(
     runner: Runner | None = None,
 ) -> TbssXOutputs:
     """
+    tbss_x
+    
     TBSS cross-subject script for processing scalar and vector directories.
     
     Author: FMRIB Analysis Group, University of Oxford

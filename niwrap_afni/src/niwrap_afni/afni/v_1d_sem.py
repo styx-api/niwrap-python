@@ -258,8 +258,10 @@ def v_1d_sem_execute(
     runner: Runner | None = None,
 ) -> V1dSemOutputs:
     """
-    Computes path coefficients for connection matrix in Structural Equation Modeling
-    (SEM).
+    1dSEM
+    
+    Computes path coefficients for connection matrix in Structural Equation
+    Modeling (SEM).
     
     Author: AFNI Developers
     
@@ -300,8 +302,10 @@ def v_1d_sem(
     runner: Runner | None = None,
 ) -> V1dSemOutputs:
     """
-    Computes path coefficients for connection matrix in Structural Equation Modeling
-    (SEM).
+    1dSEM
+    
+    Computes path coefficients for connection matrix in Structural Equation
+    Modeling (SEM).
     
     Author: AFNI Developers
     

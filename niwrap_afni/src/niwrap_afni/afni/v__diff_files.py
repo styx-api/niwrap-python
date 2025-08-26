@@ -190,7 +190,10 @@ def v__diff_files_execute(
     runner: Runner | None = None,
 ) -> VDiffFilesOutputs:
     """
-    Show file differences (between specified files and those in another directory).
+    @diff.files
+    
+    Show file differences (between specified files and those in another
+    directory).
     
     Author: AFNI Developers
     
@@ -226,7 +229,10 @@ def v__diff_files(
     runner: Runner | None = None,
 ) -> VDiffFilesOutputs:
     """
-    Show file differences (between specified files and those in another directory).
+    @diff.files
+    
+    Show file differences (between specified files and those in another
+    directory).
     
     Author: AFNI Developers
     

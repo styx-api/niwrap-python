@@ -176,6 +176,8 @@ def prompt_popup_execute(
     runner: Runner | None = None,
 ) -> PromptPopupOutputs:
     """
+    prompt_popup
+    
     A command-line tool that pops up a window prompting user interaction with a
     message and buttons.
     
@@ -208,6 +210,8 @@ def prompt_popup(
     runner: Runner | None = None,
 ) -> PromptPopupOutputs:
     """
+    prompt_popup
+    
     A command-line tool that pops up a window prompting user interaction with a
     message and buttons.
     

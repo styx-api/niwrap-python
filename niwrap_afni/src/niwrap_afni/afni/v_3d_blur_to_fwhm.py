@@ -190,6 +190,8 @@ def v_3d_blur_to_fwhm_execute(
     runner: Runner | None = None,
 ) -> V3dBlurToFwhmOutputs:
     """
+    3dBlurToFWHM
+    
     Blurs a 'master' dataset until it reaches a specified FWHM smoothness
     (approximately).
     
@@ -224,6 +226,8 @@ def v_3d_blur_to_fwhm(
     runner: Runner | None = None,
 ) -> V3dBlurToFwhmOutputs:
     """
+    3dBlurToFWHM
+    
     Blurs a 'master' dataset until it reaches a specified FWHM smoothness
     (approximately).
     

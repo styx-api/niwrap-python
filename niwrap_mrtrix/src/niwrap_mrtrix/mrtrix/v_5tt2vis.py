@@ -294,6 +294,8 @@ def v_5tt2vis_execute(
     runner: Runner | None = None,
 ) -> V5tt2visOutputs:
     """
+    5tt2vis
+    
     Generate an image for visualisation purposes from an ACT 5TT segmented
     anatomical image.
     
@@ -342,6 +344,8 @@ def v_5tt2vis(
     runner: Runner | None = None,
 ) -> V5tt2visOutputs:
     """
+    5tt2vis
+    
     Generate an image for visualisation purposes from an ACT 5TT segmented
     anatomical image.
     

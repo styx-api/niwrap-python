@@ -154,6 +154,8 @@ def v__suma_renumber_fs_execute(
     runner: Runner | None = None,
 ) -> VSumaRenumberFsOutputs:
     """
+    @SUMA_renumber_FS
+    
     This script processes FreeSurfer-generated parcellation files and produces
     various derived datasets and segmentation maps.
     
@@ -181,6 +183,8 @@ def v__suma_renumber_fs(
     runner: Runner | None = None,
 ) -> VSumaRenumberFsOutputs:
     """
+    @SUMA_renumber_FS
+    
     This script processes FreeSurfer-generated parcellation files and produces
     various derived datasets and segmentation maps.
     

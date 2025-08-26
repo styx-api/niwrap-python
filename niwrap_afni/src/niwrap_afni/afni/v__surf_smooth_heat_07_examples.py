@@ -119,6 +119,8 @@ def v__surf_smooth_heat_07_examples_execute(
     runner: Runner | None = None,
 ) -> VSurfSmoothHeat07ExamplesOutputs:
     """
+    @SurfSmooth.HEAT_07.examples
+    
     A script to illustrate controlled blurring of data on the surface.
     
     Author: AFNI Developers
@@ -145,6 +147,8 @@ def v__surf_smooth_heat_07_examples(
     runner: Runner | None = None,
 ) -> VSurfSmoothHeat07ExamplesOutputs:
     """
+    @SurfSmooth.HEAT_07.examples
+    
     A script to illustrate controlled blurring of data on the surface.
     
     Author: AFNI Developers

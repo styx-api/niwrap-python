@@ -119,6 +119,8 @@ def mris_talairach_execute(
     runner: Runner | None = None,
 ) -> MrisTalairachOutputs:
     """
+    mris_talairach
+    
     Transforms an MRI surface into Talairach space.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def mris_talairach(
     runner: Runner | None = None,
 ) -> MrisTalairachOutputs:
     """
+    mris_talairach
+    
     Transforms an MRI surface into Talairach space.
     
     Author: FreeSurfer Developers

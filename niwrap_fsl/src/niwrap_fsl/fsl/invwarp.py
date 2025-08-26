@@ -176,6 +176,8 @@ def invwarp_execute(
     runner: Runner | None = None,
 ) -> InvwarpOutputs:
     """
+    invwarp
+    
     
     Use FSL Invwarp to invert a FNIRT warp.
     
@@ -211,6 +213,8 @@ def invwarp(
     runner: Runner | None = None,
 ) -> InvwarpOutputs:
     """
+    invwarp
+    
     
     Use FSL Invwarp to invert a FNIRT warp.
     

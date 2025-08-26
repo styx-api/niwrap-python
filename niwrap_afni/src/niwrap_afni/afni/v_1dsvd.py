@@ -187,8 +187,10 @@ def v_1dsvd_execute(
     runner: Runner | None = None,
 ) -> V1dsvdOutputs:
     """
-    Computes SVD of the matrix formed by the 1D file(s) and outputs the result on
-    stdout.
+    1dsvd
+    
+    Computes SVD of the matrix formed by the 1D file(s) and outputs the result
+    on stdout.
     
     Author: AFNI Developers
     
@@ -224,8 +226,10 @@ def v_1dsvd(
     runner: Runner | None = None,
 ) -> V1dsvdOutputs:
     """
-    Computes SVD of the matrix formed by the 1D file(s) and outputs the result on
-    stdout.
+    1dsvd
+    
+    Computes SVD of the matrix formed by the 1D file(s) and outputs the result
+    on stdout.
     
     Author: AFNI Developers
     

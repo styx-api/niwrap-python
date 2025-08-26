@@ -146,8 +146,10 @@ def label_subject_flash_execute(
     runner: Runner | None = None,
 ) -> LabelSubjectFlashOutputs:
     """
-    A tool for labeling brain structures in an MRI dataset using FLASH sequences and
-    the FreeSurfer software.
+    label_subject_flash
+    
+    A tool for labeling brain structures in an MRI dataset using FLASH sequences
+    and the FreeSurfer software.
     
     Author: FreeSurfer Developers
     
@@ -177,8 +179,10 @@ def label_subject_flash(
     runner: Runner | None = None,
 ) -> LabelSubjectFlashOutputs:
     """
-    A tool for labeling brain structures in an MRI dataset using FLASH sequences and
-    the FreeSurfer software.
+    label_subject_flash
+    
+    A tool for labeling brain structures in an MRI dataset using FLASH sequences
+    and the FreeSurfer software.
     
     Author: FreeSurfer Developers
     

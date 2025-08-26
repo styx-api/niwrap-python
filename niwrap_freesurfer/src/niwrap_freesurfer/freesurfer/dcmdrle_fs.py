@@ -321,6 +321,8 @@ def dcmdrle_fs_execute(
     runner: Runner | None = None,
 ) -> DcmdrleFsOutputs:
     """
+    dcmdrle.fs
+    
     Decodes RLE-compressed DICOM files.
     
     Author: FreeSurfer Developers
@@ -378,6 +380,8 @@ def dcmdrle_fs(
     runner: Runner | None = None,
 ) -> DcmdrleFsOutputs:
     """
+    dcmdrle.fs
+    
     Decodes RLE-compressed DICOM files.
     
     Author: FreeSurfer Developers

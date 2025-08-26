@@ -314,8 +314,10 @@ def v_3ddelay_execute(
     runner: Runner | None = None,
 ) -> V3ddelayOutputs:
     """
-    Estimates the time delay between each voxel time series in a 3D+time dataset and
-    a reference time series.
+    3ddelay
+    
+    Estimates the time delay between each voxel time series in a 3D+time dataset
+    and a reference time series.
     
     Author: AFNI Developers
     
@@ -364,8 +366,10 @@ def v_3ddelay(
     runner: Runner | None = None,
 ) -> V3ddelayOutputs:
     """
-    Estimates the time delay between each voxel time series in a 3D+time dataset and
-    a reference time series.
+    3ddelay
+    
+    Estimates the time delay between each voxel time series in a 3D+time dataset
+    and a reference time series.
     
     Author: AFNI Developers
     

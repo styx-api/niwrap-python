@@ -122,6 +122,8 @@ def morph_rgb_rh_execute(
     runner: Runner | None = None,
 ) -> MorphRgbRhOutputs:
     """
+    morph_rgb-rh
+    
     Morphs RGB values onto a FreeSurfer right hemisphere surface.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def morph_rgb_rh(
     runner: Runner | None = None,
 ) -> MorphRgbRhOutputs:
     """
+    morph_rgb-rh
+    
     Morphs RGB values onto a FreeSurfer right hemisphere surface.
     
     Author: FreeSurfer Developers

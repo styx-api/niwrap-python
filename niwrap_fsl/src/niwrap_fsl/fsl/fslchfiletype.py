@@ -137,6 +137,8 @@ def fslchfiletype_execute(
     runner: Runner | None = None,
 ) -> FslchfiletypeOutputs:
     """
+    fslchfiletype
+    
     Tool to change the file type of an image file or copy it to a new file.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -165,6 +167,8 @@ def fslchfiletype(
     runner: Runner | None = None,
 ) -> FslchfiletypeOutputs:
     """
+    fslchfiletype
+    
     Tool to change the file type of an image file or copy it to a new file.
     
     Author: FMRIB Analysis Group, University of Oxford

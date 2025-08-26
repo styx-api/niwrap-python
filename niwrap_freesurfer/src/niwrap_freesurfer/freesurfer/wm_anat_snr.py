@@ -172,6 +172,8 @@ def wm_anat_snr_execute(
     runner: Runner | None = None,
 ) -> WmAnatSnrOutputs:
     """
+    wm-anat-snr
+    
     Measures the anatomical SNR in white matter (WM) for quality assurance (QA).
     This is an experimental metric.
     
@@ -205,6 +207,8 @@ def wm_anat_snr(
     runner: Runner | None = None,
 ) -> WmAnatSnrOutputs:
     """
+    wm-anat-snr
+    
     Measures the anatomical SNR in white matter (WM) for quality assurance (QA).
     This is an experimental metric.
     

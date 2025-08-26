@@ -129,6 +129,8 @@ def v__to_mni_awarp_execute(
     runner: Runner | None = None,
 ) -> VToMniAwarpOutputs:
     """
+    @toMNI_Awarp
+    
     Transforms skull-stripped datasets to 1x1x1 mm MNI space using an affine
     transformation.
     
@@ -157,6 +159,8 @@ def v__to_mni_awarp(
     runner: Runner | None = None,
 ) -> VToMniAwarpOutputs:
     """
+    @toMNI_Awarp
+    
     Transforms skull-stripped datasets to 1x1x1 mm MNI space using an affine
     transformation.
     

@@ -188,6 +188,8 @@ def v__fat_tract_colorize_execute(
     runner: Runner | None = None,
 ) -> VFatTractColorizeOutputs:
     """
+    @fat_tract_colorize
+    
     Visualize tractographic output from 3dTrackID, particularly in probabilistic
     mode.
     
@@ -221,6 +223,8 @@ def v__fat_tract_colorize(
     runner: Runner | None = None,
 ) -> VFatTractColorizeOutputs:
     """
+    @fat_tract_colorize
+    
     Visualize tractographic output from 3dTrackID, particularly in probabilistic
     mode.
     

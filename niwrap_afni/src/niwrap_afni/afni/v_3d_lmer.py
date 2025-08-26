@@ -307,6 +307,8 @@ def v_3d_lmer_execute(
     runner: Runner | None = None,
 ) -> V3dLmerOutputs:
     """
+    3dLMEr
+    
     Program for Voxelwise Linear Mixed-Effects (LME) Analysis.
     
     Author: AFNI Developers
@@ -354,6 +356,8 @@ def v_3d_lmer(
     runner: Runner | None = None,
 ) -> V3dLmerOutputs:
     """
+    3dLMEr
+    
     Program for Voxelwise Linear Mixed-Effects (LME) Analysis.
     
     Author: AFNI Developers

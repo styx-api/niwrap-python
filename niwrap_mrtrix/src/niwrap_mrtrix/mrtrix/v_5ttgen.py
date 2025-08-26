@@ -676,6 +676,8 @@ def v_5ttgen_execute(
     runner: Runner | None = None,
 ) -> V5ttgenOutputs:
     """
+    5ttgen
+    
     Generate a 5TT image suitable for ACT.
     
     5ttgen acts as a 'master' script for generating a five-tissue-type (5TT)
@@ -726,6 +728,8 @@ def v_5ttgen(
     runner: Runner | None = None,
 ) -> V5ttgenOutputs:
     """
+    5ttgen
+    
     Generate a 5TT image suitable for ACT.
     
     5ttgen acts as a 'master' script for generating a five-tissue-type (5TT)

@@ -210,7 +210,10 @@ def map_icosahedron_execute(
     runner: Runner | None = None,
 ) -> MapIcosahedronOutputs:
     """
-    Creates new versions of original-mesh surfaces using the mesh of an icosahedron.
+    MapIcosahedron
+    
+    Creates new versions of original-mesh surfaces using the mesh of an
+    icosahedron.
     
     Author: AFNI Developers
     
@@ -246,7 +249,10 @@ def map_icosahedron(
     runner: Runner | None = None,
 ) -> MapIcosahedronOutputs:
     """
-    Creates new versions of original-mesh surfaces using the mesh of an icosahedron.
+    MapIcosahedron
+    
+    Creates new versions of original-mesh surfaces using the mesh of an
+    icosahedron.
     
     Author: AFNI Developers
     

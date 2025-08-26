@@ -309,6 +309,8 @@ def pnm_evs_execute(
     runner: Runner | None = None,
 ) -> PnmEvsOutputs:
     """
+    pnm_evs
+    
     PNM EVs: Generates physiological noise regressors for fMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -354,6 +356,8 @@ def pnm_evs(
     runner: Runner | None = None,
 ) -> PnmEvsOutputs:
     """
+    pnm_evs
+    
     PNM EVs: Generates physiological noise regressors for fMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford

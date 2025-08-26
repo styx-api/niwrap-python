@@ -138,6 +138,8 @@ def tridec_execute(
     runner: Runner | None = None,
 ) -> TridecOutputs:
     """
+    tridec
+    
     Tridec tool for processing brain images.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def tridec(
     runner: Runner | None = None,
 ) -> TridecOutputs:
     """
+    tridec
+    
     Tridec tool for processing brain images.
     
     Author: FreeSurfer Developers

@@ -170,8 +170,10 @@ def isolate_labels_csh_execute(
     runner: Runner | None = None,
 ) -> IsolateLabelsCshOutputs:
     """
-    Tool to separate out a particular or all labels into individual binary files for
-    subsequent shape analysis.
+    isolate_labels.csh
+    
+    Tool to separate out a particular or all labels into individual binary files
+    for subsequent shape analysis.
     
     Author: FreeSurfer Developers
     
@@ -203,8 +205,10 @@ def isolate_labels_csh(
     runner: Runner | None = None,
 ) -> IsolateLabelsCshOutputs:
     """
-    Tool to separate out a particular or all labels into individual binary files for
-    subsequent shape analysis.
+    isolate_labels.csh
+    
+    Tool to separate out a particular or all labels into individual binary files
+    for subsequent shape analysis.
     
     Author: FreeSurfer Developers
     

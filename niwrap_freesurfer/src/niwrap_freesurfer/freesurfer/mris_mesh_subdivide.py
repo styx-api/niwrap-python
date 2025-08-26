@@ -156,6 +156,8 @@ def mris_mesh_subdivide_execute(
     runner: Runner | None = None,
 ) -> MrisMeshSubdivideOutputs:
     """
+    mris_mesh_subdivide
+    
     This program will subdivide a triangular mesh surface.
     
     Author: FreeSurfer Developers
@@ -185,6 +187,8 @@ def mris_mesh_subdivide(
     runner: Runner | None = None,
 ) -> MrisMeshSubdivideOutputs:
     """
+    mris_mesh_subdivide
+    
     This program will subdivide a triangular mesh surface.
     
     Author: FreeSurfer Developers

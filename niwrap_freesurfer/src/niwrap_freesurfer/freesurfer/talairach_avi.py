@@ -160,6 +160,8 @@ def talairach_avi_execute(
     runner: Runner | None = None,
 ) -> TalairachAviOutputs:
     """
+    talairach_avi
+    
     Front-end for Avi Snyder's image registration tool. Computes the Talairach
     transform that maps the input volume to the MNI average_305.
     
@@ -191,6 +193,8 @@ def talairach_avi(
     runner: Runner | None = None,
 ) -> TalairachAviOutputs:
     """
+    talairach_avi
+    
     Front-end for Avi Snyder's image registration tool. Computes the Talairach
     transform that maps the input volume to the MNI average_305.
     

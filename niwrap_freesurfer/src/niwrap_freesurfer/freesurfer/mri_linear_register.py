@@ -133,6 +133,8 @@ def mri_linear_register_execute(
     runner: Runner | None = None,
 ) -> MriLinearRegisterOutputs:
     """
+    mri_linear_register
+    
     A tool for linear registration of MRI brain images to a template.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_linear_register(
     runner: Runner | None = None,
 ) -> MriLinearRegisterOutputs:
     """
+    mri_linear_register
+    
     A tool for linear registration of MRI brain images to a template.
     
     Author: FreeSurfer Developers

@@ -209,6 +209,8 @@ def make_segvol_table_execute(
     runner: Runner | None = None,
 ) -> MakeSegvolTableOutputs:
     """
+    make-segvol-table
+    
     Creates a table of volumes of subcortical structures for a given list of
     subjects using FreeSurfer.
     
@@ -245,6 +247,8 @@ def make_segvol_table(
     runner: Runner | None = None,
 ) -> MakeSegvolTableOutputs:
     """
+    make-segvol-table
+    
     Creates a table of volumes of subcortical structures for a given list of
     subjects using FreeSurfer.
     

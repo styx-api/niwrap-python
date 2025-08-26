@@ -161,6 +161,8 @@ def spharm_rm_execute(
     runner: Runner | None = None,
 ) -> SpharmRmOutputs:
     """
+    spharm_rm
+    
     Part of FSL - Spherical harmonics removal tool to process neuroimaging data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -191,6 +193,8 @@ def spharm_rm(
     runner: Runner | None = None,
 ) -> SpharmRmOutputs:
     """
+    spharm_rm
+    
     Part of FSL - Spherical harmonics removal tool to process neuroimaging data.
     
     Author: FMRIB Analysis Group, University of Oxford

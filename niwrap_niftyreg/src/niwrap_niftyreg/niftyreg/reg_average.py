@@ -129,6 +129,8 @@ def reg_average_execute(
     runner: Runner | None = None,
 ) -> RegAverageOutputs:
     """
+    reg_average
+    
     Command line program to average either images or affine transformations.
     
     Author: NiftyReg Developers
@@ -156,6 +158,8 @@ def reg_average(
     runner: Runner | None = None,
 ) -> RegAverageOutputs:
     """
+    reg_average
+    
     Command line program to average either images or affine transformations.
     
     Author: NiftyReg Developers

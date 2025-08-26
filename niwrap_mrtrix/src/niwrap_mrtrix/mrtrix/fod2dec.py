@@ -313,6 +313,8 @@ def fod2dec_execute(
     runner: Runner | None = None,
 ) -> Fod2decOutputs:
     """
+    fod2dec
+    
     Generate FOD-based DEC maps, with optional panchromatic sharpening and/or
     luminance/perception correction.
     
@@ -371,6 +373,8 @@ def fod2dec(
     runner: Runner | None = None,
 ) -> Fod2decOutputs:
     """
+    fod2dec
+    
     Generate FOD-based DEC maps, with optional panchromatic sharpening and/or
     luminance/perception correction.
     

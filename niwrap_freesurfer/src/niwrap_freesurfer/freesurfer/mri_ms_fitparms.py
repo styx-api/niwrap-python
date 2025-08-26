@@ -414,6 +414,8 @@ def mri_ms_fitparms_execute(
     runner: Runner | None = None,
 ) -> MriMsFitparmsOutputs:
     """
+    mri_ms_fitparms
+    
     Tool for estimating T1 and PD values from FLASH images and applying
     transformations.
     
@@ -476,6 +478,8 @@ def mri_ms_fitparms(
     runner: Runner | None = None,
 ) -> MriMsFitparmsOutputs:
     """
+    mri_ms_fitparms
+    
     Tool for estimating T1 and PD values from FLASH images and applying
     transformations.
     

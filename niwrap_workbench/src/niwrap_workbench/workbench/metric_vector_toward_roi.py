@@ -145,6 +145,8 @@ def metric_vector_toward_roi_execute(
     runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
     """
+    metric-vector-toward-roi
+    
     Find if vectors point toward an roi.
     
     At each vertex, compute the vector along the start of the shortest path to
@@ -177,6 +179,8 @@ def metric_vector_toward_roi(
     runner: Runner | None = None,
 ) -> MetricVectorTowardRoiOutputs:
     """
+    metric-vector-toward-roi
+    
     Find if vectors point toward an roi.
     
     At each vertex, compute the vector along the start of the shortest path to

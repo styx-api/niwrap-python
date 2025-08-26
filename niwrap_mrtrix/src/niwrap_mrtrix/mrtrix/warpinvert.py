@@ -251,6 +251,8 @@ def warpinvert_execute(
     runner: Runner | None = None,
 ) -> WarpinvertOutputs:
     """
+    warpinvert
+    
     Invert a non-linear warp field.
     
     By default, this command assumes that the input warp field is a deformation
@@ -301,6 +303,8 @@ def warpinvert(
     runner: Runner | None = None,
 ) -> WarpinvertOutputs:
     """
+    warpinvert
+    
     Invert a non-linear warp field.
     
     By default, this command assumes that the input warp field is a deformation

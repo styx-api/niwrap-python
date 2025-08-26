@@ -140,8 +140,10 @@ def imaver_execute(
     runner: Runner | None = None,
 ) -> ImaverOutputs:
     """
-    Computes the mean and standard deviation, pixel-by-pixel, of a whole bunch of
-    images.
+    imaver
+    
+    Computes the mean and standard deviation, pixel-by-pixel, of a whole bunch
+    of images.
     
     Author: AFNI Developers
     
@@ -169,8 +171,10 @@ def imaver(
     runner: Runner | None = None,
 ) -> ImaverOutputs:
     """
-    Computes the mean and standard deviation, pixel-by-pixel, of a whole bunch of
-    images.
+    imaver
+    
+    Computes the mean and standard deviation, pixel-by-pixel, of a whole bunch
+    of images.
     
     Author: AFNI Developers
     

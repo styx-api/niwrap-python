@@ -158,6 +158,8 @@ def dmri_stats_ac_execute(
     runner: Runner | None = None,
 ) -> DmriStatsAcOutputs:
     """
+    dmri_stats_ac
+    
     The tool 'dmri_stats_ac' performs statistical analysis on dMRI data.
     
     Author: FreeSurfer Developers
@@ -188,6 +190,8 @@ def dmri_stats_ac(
     runner: Runner | None = None,
 ) -> DmriStatsAcOutputs:
     """
+    dmri_stats_ac
+    
     The tool 'dmri_stats_ac' performs statistical analysis on dMRI data.
     
     Author: FreeSurfer Developers

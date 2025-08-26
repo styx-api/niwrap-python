@@ -164,8 +164,10 @@ def mris_divide_parcellation_execute(
     runner: Runner | None = None,
 ) -> MrisDivideParcellationOutputs:
     """
-    Divides one or more parcellations into divisions perpendicular to the long axis
-    of the label.
+    mris_divide_parcellation
+    
+    Divides one or more parcellations into divisions perpendicular to the long
+    axis of the label.
     
     Author: FreeSurfer Developers
     
@@ -197,8 +199,10 @@ def mris_divide_parcellation(
     runner: Runner | None = None,
 ) -> MrisDivideParcellationOutputs:
     """
-    Divides one or more parcellations into divisions perpendicular to the long axis
-    of the label.
+    mris_divide_parcellation
+    
+    Divides one or more parcellations into divisions perpendicular to the long
+    axis of the label.
     
     Author: FreeSurfer Developers
     

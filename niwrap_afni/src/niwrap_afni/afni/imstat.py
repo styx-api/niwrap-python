@@ -152,6 +152,8 @@ def imstat_execute(
     runner: Runner | None = None,
 ) -> ImstatOutputs:
     """
+    imstat
+    
     Calculation of statistics of one or more images.
     
     Author: AFNI Developers
@@ -181,6 +183,8 @@ def imstat(
     runner: Runner | None = None,
 ) -> ImstatOutputs:
     """
+    imstat
+    
     Calculation of statistics of one or more images.
     
     Author: AFNI Developers

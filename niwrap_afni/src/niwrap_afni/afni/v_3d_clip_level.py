@@ -146,8 +146,10 @@ def v_3d_clip_level_execute(
     runner: Runner | None = None,
 ) -> V3dClipLevelOutputs:
     """
-    Estimates the value at which to clip the anatomical dataset so that background
-    regions are set to zero.
+    3dClipLevel
+    
+    Estimates the value at which to clip the anatomical dataset so that
+    background regions are set to zero.
     
     Author: AFNI Developers
     
@@ -176,8 +178,10 @@ def v_3d_clip_level(
     runner: Runner | None = None,
 ) -> V3dClipLevelOutputs:
     """
-    Estimates the value at which to clip the anatomical dataset so that background
-    regions are set to zero.
+    3dClipLevel
+    
+    Estimates the value at which to clip the anatomical dataset so that
+    background regions are set to zero.
     
     Author: AFNI Developers
     

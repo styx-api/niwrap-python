@@ -298,6 +298,8 @@ def v_1d_rplot_execute(
     runner: Runner | None = None,
 ) -> V1dRplotOutputs:
     """
+    1dRplot
+    
     Program for plotting a 1D file.
     
     Author: AFNI Developers
@@ -342,6 +344,8 @@ def v_1d_rplot(
     runner: Runner | None = None,
 ) -> V1dRplotOutputs:
     """
+    1dRplot
+    
     Program for plotting a 1D file.
     
     Author: AFNI Developers

@@ -136,6 +136,8 @@ def perfusion_subtract_execute(
     runner: Runner | None = None,
 ) -> PerfusionSubtractOutputs:
     """
+    perfusion_subtract
+    
     Subtract control images from tag images in 4D perfusion data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -164,6 +166,8 @@ def perfusion_subtract(
     runner: Runner | None = None,
 ) -> PerfusionSubtractOutputs:
     """
+    perfusion_subtract
+    
     Subtract control images from tag images in 4D perfusion data.
     
     Author: FMRIB Analysis Group, University of Oxford

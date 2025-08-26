@@ -244,6 +244,8 @@ def fixel2sh_execute(
     runner: Runner | None = None,
 ) -> Fixel2shOutputs:
     """
+    fixel2sh
+    
     Convert a fixel-based sparse-data image into an spherical harmonic image.
     
     This command generates spherical harmonic data from fixels that can be
@@ -292,6 +294,8 @@ def fixel2sh(
     runner: Runner | None = None,
 ) -> Fixel2shOutputs:
     """
+    fixel2sh
+    
     Convert a fixel-based sparse-data image into an spherical harmonic image.
     
     This command generates spherical harmonic data from fixels that can be

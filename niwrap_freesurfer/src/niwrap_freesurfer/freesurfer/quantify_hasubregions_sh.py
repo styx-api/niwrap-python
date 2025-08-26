@@ -141,6 +141,8 @@ def quantify_hasubregions_sh_execute(
     runner: Runner | None = None,
 ) -> QuantifyHasubregionsShOutputs:
     """
+    quantifyHAsubregions.sh
+    
     Tool to quantify hippocampal subregions using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -170,6 +172,8 @@ def quantify_hasubregions_sh(
     runner: Runner | None = None,
 ) -> QuantifyHasubregionsShOutputs:
     """
+    quantifyHAsubregions.sh
+    
     Tool to quantify hippocampal subregions using FreeSurfer.
     
     Author: FreeSurfer Developers

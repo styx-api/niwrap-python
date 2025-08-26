@@ -274,6 +274,8 @@ def brain_skin_execute(
     runner: Runner | None = None,
 ) -> BrainSkinOutputs:
     """
+    BrainSkin
+    
     A program to create an unfolded surface that wraps the brain (skin) and
     Gyrification Indices.
     
@@ -313,6 +315,8 @@ def brain_skin(
     runner: Runner | None = None,
 ) -> BrainSkinOutputs:
     """
+    BrainSkin
+    
     A program to create an unfolded surface that wraps the brain (skin) and
     Gyrification Indices.
     

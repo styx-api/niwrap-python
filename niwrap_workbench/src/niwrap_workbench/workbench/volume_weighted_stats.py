@@ -328,6 +328,8 @@ def volume_weighted_stats_execute(
     runner: Runner | None = None,
 ) -> VolumeWeightedStatsOutputs:
     """
+    volume-weighted-stats
+    
     Weighted spatial statistics on a volume file.
     
     For each subvolume of the input, a line of text is printed, resulting from
@@ -373,6 +375,8 @@ def volume_weighted_stats(
     runner: Runner | None = None,
 ) -> VolumeWeightedStatsOutputs:
     """
+    volume-weighted-stats
+    
     Weighted spatial statistics on a volume file.
     
     For each subvolume of the input, a line of text is printed, resulting from

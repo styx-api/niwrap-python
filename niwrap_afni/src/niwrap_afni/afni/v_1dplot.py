@@ -729,8 +729,10 @@ def v_1dplot_execute(
     runner: Runner | None = None,
 ) -> V1dplotOutputs:
     """
-    Graphs the columns of a *.1D time series file to the X11 screen, or to an image
-    file (.jpg or .png).
+    1dplot
+    
+    Graphs the columns of a *.1D time series file to the X11 screen, or to an
+    image file (.jpg or .png).
     
     Author: AFNI Developers
     
@@ -806,8 +808,10 @@ def v_1dplot(
     runner: Runner | None = None,
 ) -> V1dplotOutputs:
     """
-    Graphs the columns of a *.1D time series file to the X11 screen, or to an image
-    file (.jpg or .png).
+    1dplot
+    
+    Graphs the columns of a *.1D time series file to the X11 screen, or to an
+    image file (.jpg or .png).
     
     Author: AFNI Developers
     

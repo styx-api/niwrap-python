@@ -272,6 +272,8 @@ def surface_metrics_execute(
     runner: Runner | None = None,
 ) -> SurfaceMetricsOutputs:
     """
+    SurfaceMetrics
+    
     Outputs information about a surface's mesh.
     
     Author: AFNI Developers
@@ -320,6 +322,8 @@ def surface_metrics(
     runner: Runner | None = None,
 ) -> SurfaceMetricsOutputs:
     """
+    SurfaceMetrics
+    
     Outputs information about a surface's mesh.
     
     Author: AFNI Developers

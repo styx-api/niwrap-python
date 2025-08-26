@@ -284,6 +284,8 @@ def aparc_stats_aseg_execute(
     runner: Runner | None = None,
 ) -> AparcStatsAsegOutputs:
     """
+    aparc_stats_aseg
+    
     This program runs mris_ca_label, mris_anatomical_stats and mri_aparc2aseg.
     
     Author: FreeSurfer Developers
@@ -331,6 +333,8 @@ def aparc_stats_aseg(
     runner: Runner | None = None,
 ) -> AparcStatsAsegOutputs:
     """
+    aparc_stats_aseg
+    
     This program runs mris_ca_label, mris_anatomical_stats and mri_aparc2aseg.
     
     Author: FreeSurfer Developers

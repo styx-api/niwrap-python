@@ -160,6 +160,8 @@ def gauss_4dfp_execute(
     runner: Runner | None = None,
 ) -> Gauss4dfpOutputs:
     """
+    gauss_4dfp
+    
     Applies a Gaussian filter to 4dfp or conc input files.
     
     Author: FreeSurfer Developers
@@ -191,6 +193,8 @@ def gauss_4dfp(
     runner: Runner | None = None,
 ) -> Gauss4dfpOutputs:
     """
+    gauss_4dfp
+    
     Applies a Gaussian filter to 4dfp or conc input files.
     
     Author: FreeSurfer Developers

@@ -271,6 +271,8 @@ def v_3d_extrema_execute(
     runner: Runner | None = None,
 ) -> V3dExtremaOutputs:
     """
+    3dExtrema
+    
     Find local extrema (minima or maxima) in 3D datasets.
     
     Author: AFNI Developers
@@ -316,6 +318,8 @@ def v_3d_extrema(
     runner: Runner | None = None,
 ) -> V3dExtremaOutputs:
     """
+    3dExtrema
+    
     Find local extrema (minima or maxima) in 3D datasets.
     
     Author: AFNI Developers

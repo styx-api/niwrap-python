@@ -186,6 +186,8 @@ def mri_func2sph_execute(
     runner: Runner | None = None,
 ) -> MriFunc2sphOutputs:
     """
+    mri-func2sph
+    
     Maps functional data from volume space to spherical surface space.
     
     Author: FreeSurfer Developers
@@ -219,6 +221,8 @@ def mri_func2sph(
     runner: Runner | None = None,
 ) -> MriFunc2sphOutputs:
     """
+    mri-func2sph
+    
     Maps functional data from volume space to spherical surface space.
     
     Author: FreeSurfer Developers

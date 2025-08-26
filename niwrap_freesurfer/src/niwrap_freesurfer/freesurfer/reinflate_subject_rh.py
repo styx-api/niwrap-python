@@ -130,8 +130,10 @@ def reinflate_subject_rh_execute(
     runner: Runner | None = None,
 ) -> ReinflateSubjectRhOutputs:
     """
-    A tool for reinflating the cortical surfaces for a given subject in FreeSurfer,
-    specifically for the right hemisphere.
+    reinflate_subject-rh
+    
+    A tool for reinflating the cortical surfaces for a given subject in
+    FreeSurfer, specifically for the right hemisphere.
     
     Author: FreeSurfer Developers
     
@@ -158,8 +160,10 @@ def reinflate_subject_rh(
     runner: Runner | None = None,
 ) -> ReinflateSubjectRhOutputs:
     """
-    A tool for reinflating the cortical surfaces for a given subject in FreeSurfer,
-    specifically for the right hemisphere.
+    reinflate_subject-rh
+    
+    A tool for reinflating the cortical surfaces for a given subject in
+    FreeSurfer, specifically for the right hemisphere.
     
     Author: FreeSurfer Developers
     

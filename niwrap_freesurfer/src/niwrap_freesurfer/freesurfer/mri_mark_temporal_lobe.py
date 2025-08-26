@@ -142,6 +142,8 @@ def mri_mark_temporal_lobe_execute(
     runner: Runner | None = None,
 ) -> MriMarkTemporalLobeOutputs:
     """
+    mri_mark_temporal_lobe
+    
     A tool for marking the temporal lobe in MRI images.
     
     Author: FreeSurfer Developers
@@ -171,6 +173,8 @@ def mri_mark_temporal_lobe(
     runner: Runner | None = None,
 ) -> MriMarkTemporalLobeOutputs:
     """
+    mri_mark_temporal_lobe
+    
     A tool for marking the temporal lobe in MRI images.
     
     Author: FreeSurfer Developers

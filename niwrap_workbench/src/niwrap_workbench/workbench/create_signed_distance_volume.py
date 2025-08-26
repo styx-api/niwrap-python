@@ -205,6 +205,8 @@ def create_signed_distance_volume_execute(
     runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
+    create-signed-distance-volume
+    
     Create signed distance volume from surface.
     
     Computes the signed distance function of the surface. Exact distance is
@@ -258,6 +260,8 @@ def create_signed_distance_volume(
     runner: Runner | None = None,
 ) -> CreateSignedDistanceVolumeOutputs:
     """
+    create-signed-distance-volume
+    
     Create signed distance volume from surface.
     
     Computes the signed distance function of the surface. Exact distance is

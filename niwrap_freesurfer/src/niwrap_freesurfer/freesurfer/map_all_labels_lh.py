@@ -152,6 +152,8 @@ def map_all_labels_lh_execute(
     runner: Runner | None = None,
 ) -> MapAllLabelsLhOutputs:
     """
+    map_all_labels-lh
+    
     Paints output onto a subject's left hemisphere using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -183,6 +185,8 @@ def map_all_labels_lh(
     runner: Runner | None = None,
 ) -> MapAllLabelsLhOutputs:
     """
+    map_all_labels-lh
+    
     Paints output onto a subject's left hemisphere using FreeSurfer.
     
     Author: FreeSurfer Developers

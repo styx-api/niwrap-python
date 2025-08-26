@@ -128,6 +128,8 @@ def cor_to_minc_execute(
     runner: Runner | None = None,
 ) -> CorToMincOutputs:
     """
+    cor_to_minc
+    
     Converts a directory of COR files to a MINC file.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def cor_to_minc(
     runner: Runner | None = None,
 ) -> CorToMincOutputs:
     """
+    cor_to_minc
+    
     Converts a directory of COR files to a MINC file.
     
     Author: FreeSurfer Developers

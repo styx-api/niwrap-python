@@ -126,8 +126,10 @@ def run_mris_preproc_execute(
     runner: Runner | None = None,
 ) -> RunMrisPreprocOutputs:
     """
-    Utility to create pre-smoothed surface data on a target average subject for Qdec
-    application.
+    run_mris_preproc
+    
+    Utility to create pre-smoothed surface data on a target average subject for
+    Qdec application.
     
     Author: FreeSurfer Developers
     
@@ -154,8 +156,10 @@ def run_mris_preproc(
     runner: Runner | None = None,
 ) -> RunMrisPreprocOutputs:
     """
-    Utility to create pre-smoothed surface data on a target average subject for Qdec
-    application.
+    run_mris_preproc
+    
+    Utility to create pre-smoothed surface data on a target average subject for
+    Qdec application.
     
     Author: FreeSurfer Developers
     

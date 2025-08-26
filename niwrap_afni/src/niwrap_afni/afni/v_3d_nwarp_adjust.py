@@ -152,9 +152,11 @@ def v_3d_nwarp_adjust_execute(
     runner: Runner | None = None,
 ) -> V3dNwarpAdjustOutputs:
     """
-    Program to adjust 3D warp datasets by composing them with the inverse of their
-    average, optionally warping input datasets and generating an output mean
-    dataset.
+    3dNwarpAdjust
+    
+    Program to adjust 3D warp datasets by composing them with the inverse of
+    their average, optionally warping input datasets and generating an output
+    mean dataset.
     
     Author: AFNI Developers
     
@@ -182,9 +184,11 @@ def v_3d_nwarp_adjust(
     runner: Runner | None = None,
 ) -> V3dNwarpAdjustOutputs:
     """
-    Program to adjust 3D warp datasets by composing them with the inverse of their
-    average, optionally warping input datasets and generating an output mean
-    dataset.
+    3dNwarpAdjust
+    
+    Program to adjust 3D warp datasets by composing them with the inverse of
+    their average, optionally warping input datasets and generating an output
+    mean dataset.
     
     Author: AFNI Developers
     

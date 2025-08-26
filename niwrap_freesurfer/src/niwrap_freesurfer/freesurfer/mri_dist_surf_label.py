@@ -133,6 +133,8 @@ def mri_dist_surf_label_execute(
     runner: Runner | None = None,
 ) -> MriDistSurfLabelOutputs:
     """
+    mri_dist_surf_label
+    
     Computes distances from input surface to label points or waypoints.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_dist_surf_label(
     runner: Runner | None = None,
 ) -> MriDistSurfLabelOutputs:
     """
+    mri_dist_surf_label
+    
     Computes distances from input surface to label points or waypoints.
     
     Author: FreeSurfer Developers

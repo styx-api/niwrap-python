@@ -280,8 +280,10 @@ def mri_average_execute(
     runner: Runner | None = None,
 ) -> MriAverageOutputs:
     """
-    Averages multiple volumes with various options for alignment, interpolation, and
-    transformations.
+    mri_average
+    
+    Averages multiple volumes with various options for alignment, interpolation,
+    and transformations.
     
     Author: FreeSurfer Developers
     
@@ -327,8 +329,10 @@ def mri_average(
     runner: Runner | None = None,
 ) -> MriAverageOutputs:
     """
-    Averages multiple volumes with various options for alignment, interpolation, and
-    transformations.
+    mri_average
+    
+    Averages multiple volumes with various options for alignment, interpolation,
+    and transformations.
     
     Author: FreeSurfer Developers
     

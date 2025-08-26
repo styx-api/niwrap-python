@@ -212,6 +212,8 @@ def test_tutorials_sh_execute(
     runner: Runner | None = None,
 ) -> TestTutorialsShOutputs:
     """
+    test_tutorials.sh
+    
     A script to run various tutorial commands, with options for skipping GUI
     components and focusing on specific tutorials.
     
@@ -254,6 +256,8 @@ def test_tutorials_sh(
     runner: Runner | None = None,
 ) -> TestTutorialsShOutputs:
     """
+    test_tutorials.sh
+    
     A script to run various tutorial commands, with options for skipping GUI
     components and focusing on specific tutorials.
     

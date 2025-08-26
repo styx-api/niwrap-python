@@ -196,8 +196,10 @@ def v_3dmask_svd_execute(
     runner: Runner | None = None,
 ) -> V3dmaskSvdOutputs:
     """
-    Computes the principal singular vector of the time series vectors extracted from
-    the input dataset over the input mask.
+    3dmaskSVD
+    
+    Computes the principal singular vector of the time series vectors extracted
+    from the input dataset over the input mask.
     
     Author: AFNI Developers
     
@@ -231,8 +233,10 @@ def v_3dmask_svd(
     runner: Runner | None = None,
 ) -> V3dmaskSvdOutputs:
     """
-    Computes the principal singular vector of the time series vectors extracted from
-    the input dataset over the input mask.
+    3dmaskSVD
+    
+    Computes the principal singular vector of the time series vectors extracted
+    from the input dataset over the input mask.
     
     Author: AFNI Developers
     

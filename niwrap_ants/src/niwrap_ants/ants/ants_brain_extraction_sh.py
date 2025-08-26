@@ -250,6 +250,8 @@ def ants_brain_extraction_sh_execute(
     runner: Runner | None = None,
 ) -> AntsBrainExtractionShOutputs:
     """
+    antsBrainExtraction.sh
+    
     antsBrainExtraction.sh performs template-based brain extraction.
     
     Author: ANTs Developers
@@ -290,6 +292,8 @@ def ants_brain_extraction_sh(
     runner: Runner | None = None,
 ) -> AntsBrainExtractionShOutputs:
     """
+    antsBrainExtraction.sh
+    
     antsBrainExtraction.sh performs template-based brain extraction.
     
     Author: ANTs Developers

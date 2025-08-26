@@ -188,6 +188,8 @@ def bedpostx_mgh_execute(
     runner: Runner | None = None,
 ) -> BedpostxMghOutputs:
     """
+    bedpostx_mgh
+    
     A modified version of FSL's bedpostx compatible with PBS queueing system for
     parallel computation.
     
@@ -222,6 +224,8 @@ def bedpostx_mgh(
     runner: Runner | None = None,
 ) -> BedpostxMghOutputs:
     """
+    bedpostx_mgh
+    
     A modified version of FSL's bedpostx compatible with PBS queueing system for
     parallel computation.
     

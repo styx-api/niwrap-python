@@ -120,7 +120,10 @@ def segment_subject_t2_auto_estimate_alveus_ml_execute(
     runner: Runner | None = None,
 ) -> SegmentSubjectT2AutoEstimateAlveusMlOutputs:
     """
-    A Freesurfer tool to segment T2 subjects with automatic alveus ML estimation.
+    segmentSubjectT2_autoEstimateAlveusML
+    
+    A Freesurfer tool to segment T2 subjects with automatic alveus ML
+    estimation.
     
     Author: FreeSurfer Developers
     
@@ -146,7 +149,10 @@ def segment_subject_t2_auto_estimate_alveus_ml(
     runner: Runner | None = None,
 ) -> SegmentSubjectT2AutoEstimateAlveusMlOutputs:
     """
-    A Freesurfer tool to segment T2 subjects with automatic alveus ML estimation.
+    segmentSubjectT2_autoEstimateAlveusML
+    
+    A Freesurfer tool to segment T2 subjects with automatic alveus ML
+    estimation.
     
     Author: FreeSurfer Developers
     

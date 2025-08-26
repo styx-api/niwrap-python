@@ -154,6 +154,8 @@ def fslsplit_execute(
     runner: Runner | None = None,
 ) -> FslsplitOutputs:
     """
+    fslsplit
+    
     Split a 4D image into separate volumes or a 3D image into separate slices.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -185,6 +187,8 @@ def fslsplit(
     runner: Runner | None = None,
 ) -> FslsplitOutputs:
     """
+    fslsplit
+    
     Split a 4D image into separate volumes or a 3D image into separate slices.
     
     Author: FMRIB Analysis Group, University of Oxford

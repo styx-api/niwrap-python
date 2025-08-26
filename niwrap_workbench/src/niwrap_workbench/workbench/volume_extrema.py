@@ -297,6 +297,8 @@ def volume_extrema_execute(
     runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
+    volume-extrema
+    
     Find extrema in a volume file.
     
     Finds extrema in a volume file, such that no two extrema of the same type
@@ -354,6 +356,8 @@ def volume_extrema(
     runner: Runner | None = None,
 ) -> VolumeExtremaOutputs:
     """
+    volume-extrema
+    
     Find extrema in a volume file.
     
     Finds extrema in a volume file, such that no two extrema of the same type

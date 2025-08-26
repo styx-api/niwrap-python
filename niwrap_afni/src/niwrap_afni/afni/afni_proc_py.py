@@ -196,6 +196,8 @@ def afni_proc_py_execute(
     runner: Runner | None = None,
 ) -> AfniProcPyOutputs:
     """
+    afni_proc.py
+    
     Generate a tcsh script for an AFNI single subject processing stream.
     
     Author: AFNI Developers
@@ -232,6 +234,8 @@ def afni_proc_py(
     runner: Runner | None = None,
 ) -> AfniProcPyOutputs:
     """
+    afni_proc.py
+    
     Generate a tcsh script for an AFNI single subject processing stream.
     
     Author: AFNI Developers

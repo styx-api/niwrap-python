@@ -174,6 +174,8 @@ def label_dilate_execute(
     runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
+    label-dilate
+    
     Dilate a label file.
     
     Fills in label information for all vertices designated as bad, up to the
@@ -212,6 +214,8 @@ def label_dilate(
     runner: Runner | None = None,
 ) -> LabelDilateOutputs:
     """
+    label-dilate
+    
     Dilate a label file.
     
     Fills in label information for all vertices designated as bad, up to the

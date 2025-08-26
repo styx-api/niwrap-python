@@ -135,6 +135,8 @@ def inflate_subject_sc_execute(
     runner: Runner | None = None,
 ) -> InflateSubjectScOutputs:
     """
+    inflate_subject_sc
+    
     Inferred description: Tool for inflating subject surfaces, specific details
     unavailable.
     
@@ -164,6 +166,8 @@ def inflate_subject_sc(
     runner: Runner | None = None,
 ) -> InflateSubjectScOutputs:
     """
+    inflate_subject_sc
+    
     Inferred description: Tool for inflating subject surfaces, specific details
     unavailable.
     

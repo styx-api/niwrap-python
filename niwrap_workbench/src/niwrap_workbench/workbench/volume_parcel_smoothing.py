@@ -163,6 +163,8 @@ def volume_parcel_smoothing_execute(
     runner: Runner | None = None,
 ) -> VolumeParcelSmoothingOutputs:
     """
+    volume-parcel-smoothing
+    
     Smooth parcels in a volume separately.
     
     The volume is smoothed within each label in the label volume using data only
@@ -200,6 +202,8 @@ def volume_parcel_smoothing(
     runner: Runner | None = None,
 ) -> VolumeParcelSmoothingOutputs:
     """
+    volume-parcel-smoothing
+    
     Smooth parcels in a volume separately.
     
     The volume is smoothed within each label in the label volume using data only

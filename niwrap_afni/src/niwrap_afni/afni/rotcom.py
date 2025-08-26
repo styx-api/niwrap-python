@@ -131,8 +131,10 @@ def rotcom_execute(
     runner: Runner | None = None,
 ) -> RotcomOutputs:
     """
-    Prints to stdout the 4x3 transformation matrix+vector that would be applied by
-    3drotate to the given dataset.
+    rotcom
+    
+    Prints to stdout the 4x3 transformation matrix+vector that would be applied
+    by 3drotate to the given dataset.
     
     Author: AFNI Developers
     
@@ -159,8 +161,10 @@ def rotcom(
     runner: Runner | None = None,
 ) -> RotcomOutputs:
     """
-    Prints to stdout the 4x3 transformation matrix+vector that would be applied by
-    3drotate to the given dataset.
+    rotcom
+    
+    Prints to stdout the 4x3 transformation matrix+vector that would be applied
+    by 3drotate to the given dataset.
     
     Author: AFNI Developers
     

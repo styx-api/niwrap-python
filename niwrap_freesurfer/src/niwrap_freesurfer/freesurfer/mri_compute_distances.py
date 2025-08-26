@@ -134,6 +134,8 @@ def mri_compute_distances_execute(
     runner: Runner | None = None,
 ) -> MriComputeDistancesOutputs:
     """
+    mri_compute_distances
+    
     A tool to compute distances between source and target images.
     
     Author: FreeSurfer Developers
@@ -162,6 +164,8 @@ def mri_compute_distances(
     runner: Runner | None = None,
 ) -> MriComputeDistancesOutputs:
     """
+    mri_compute_distances
+    
     A tool to compute distances between source and target images.
     
     Author: FreeSurfer Developers

@@ -198,6 +198,8 @@ def set_map_names_execute(
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
+    set-map-names
+    
     Set the name of one or more maps in a file.
     
     Sets the name of one or more maps for metric, shape, label, volume, cifti
@@ -232,6 +234,8 @@ def set_map_names(
     runner: Runner | None = None,
 ) -> SetMapNamesOutputs:
     """
+    set-map-names
+    
     Set the name of one or more maps in a file.
     
     Sets the name of one or more maps for metric, shape, label, volume, cifti

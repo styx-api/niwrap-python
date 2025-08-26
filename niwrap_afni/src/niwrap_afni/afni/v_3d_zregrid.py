@@ -173,6 +173,8 @@ def v_3d_zregrid_execute(
     runner: Runner | None = None,
 ) -> V3dZregridOutputs:
     """
+    3dZregrid
+    
     Alters the input dataset's slice thickness and/or number.
     
     Author: AFNI Developers
@@ -204,6 +206,8 @@ def v_3d_zregrid(
     runner: Runner | None = None,
 ) -> V3dZregridOutputs:
     """
+    3dZregrid
+    
     Alters the input dataset's slice thickness and/or number.
     
     Author: AFNI Developers

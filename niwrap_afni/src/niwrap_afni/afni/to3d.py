@@ -466,6 +466,8 @@ def to3d_execute(
     runner: Runner | None = None,
 ) -> To3dOutputs:
     """
+    to3d
+    
     Creates 3D datasets for use with AFNI from 2D image files.
     
     Author: AFNI Developers
@@ -531,6 +533,8 @@ def to3d(
     runner: Runner | None = None,
 ) -> To3dOutputs:
     """
+    to3d
+    
     Creates 3D datasets for use with AFNI from 2D image files.
     
     Author: AFNI Developers

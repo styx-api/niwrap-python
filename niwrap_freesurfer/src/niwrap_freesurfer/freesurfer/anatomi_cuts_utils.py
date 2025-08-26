@@ -122,6 +122,8 @@ def anatomi_cuts_utils_execute(
     runner: Runner | None = None,
 ) -> AnatomiCutsUtilsOutputs:
     """
+    anatomiCutsUtils
+    
     A tool for anatomical segmentation using graph-based methods.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def anatomi_cuts_utils(
     runner: Runner | None = None,
 ) -> AnatomiCutsUtilsOutputs:
     """
+    anatomiCutsUtils
+    
     A tool for anatomical segmentation using graph-based methods.
     
     Author: FreeSurfer Developers

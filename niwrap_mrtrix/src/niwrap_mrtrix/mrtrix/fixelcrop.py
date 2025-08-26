@@ -242,6 +242,8 @@ def fixelcrop_execute(
     runner: Runner | None = None,
 ) -> FixelcropOutputs:
     """
+    fixelcrop
+    
     Crop/remove fixels from sparse fixel image using a binary fixel mask.
     
     The mask must be input as a fixel data file the same dimensions as the fixel
@@ -285,6 +287,8 @@ def fixelcrop(
     runner: Runner | None = None,
 ) -> FixelcropOutputs:
     """
+    fixelcrop
+    
     Crop/remove fixels from sparse fixel image using a binary fixel mask.
     
     The mask must be input as a fixel data file the same dimensions as the fixel

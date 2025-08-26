@@ -145,6 +145,8 @@ def v_3d_afnito3_d_execute(
     runner: Runner | None = None,
 ) -> V3dAfnito3DOutputs:
     """
+    3dAFNIto3D
+    
     Reads in an AFNI dataset, and writes it out as a 3D file.
     
     Author: AFNI Developers
@@ -174,6 +176,8 @@ def v_3d_afnito3_d(
     runner: Runner | None = None,
 ) -> V3dAfnito3DOutputs:
     """
+    3dAFNIto3D
+    
     Reads in an AFNI dataset, and writes it out as a 3D file.
     
     Author: AFNI Developers

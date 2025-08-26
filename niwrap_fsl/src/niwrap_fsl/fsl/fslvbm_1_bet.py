@@ -134,6 +134,8 @@ def fslvbm_1_bet_execute(
     runner: Runner | None = None,
 ) -> Fslvbm1BetOutputs:
     """
+    fslvbm_1_bet
+    
     Brain extraction for VBM using FSL BET.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -162,6 +164,8 @@ def fslvbm_1_bet(
     runner: Runner | None = None,
 ) -> Fslvbm1BetOutputs:
     """
+    fslvbm_1_bet
+    
     Brain extraction for VBM using FSL BET.
     
     Author: FMRIB Analysis Group, University of Oxford

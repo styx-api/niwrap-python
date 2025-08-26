@@ -173,6 +173,8 @@ def v_3d_notes_execute(
     runner: Runner | None = None,
 ) -> V3dNotesOutputs:
     """
+    3dNotes
+    
     A program to add, delete and show notes for AFNI datasets.
     
     Author: AFNI Developers
@@ -205,6 +207,8 @@ def v_3d_notes(
     runner: Runner | None = None,
 ) -> V3dNotesOutputs:
     """
+    3dNotes
+    
     A program to add, delete and show notes for AFNI datasets.
     
     Author: AFNI Developers

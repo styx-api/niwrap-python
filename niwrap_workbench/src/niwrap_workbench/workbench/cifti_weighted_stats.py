@@ -393,6 +393,8 @@ def cifti_weighted_stats_execute(
     runner: Runner | None = None,
 ) -> CiftiWeightedStatsOutputs:
     """
+    cifti-weighted-stats
+    
     Weighted statistics along cifti columns.
     
     If the mapping along column is brain models, for each column of the input,
@@ -443,6 +445,8 @@ def cifti_weighted_stats(
     runner: Runner | None = None,
 ) -> CiftiWeightedStatsOutputs:
     """
+    cifti-weighted-stats
+    
     Weighted statistics along cifti columns.
     
     If the mapping along column is brain models, for each column of the input,

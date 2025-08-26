@@ -171,6 +171,8 @@ def fsl_reg_execute(
     runner: Runner | None = None,
 ) -> FslRegOutputs:
     """
+    fsl_reg
+    
     Image registration using FSL tools.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -204,6 +206,8 @@ def fsl_reg(
     runner: Runner | None = None,
 ) -> FslRegOutputs:
     """
+    fsl_reg
+    
     Image registration using FSL tools.
     
     Author: FMRIB Analysis Group, University of Oxford

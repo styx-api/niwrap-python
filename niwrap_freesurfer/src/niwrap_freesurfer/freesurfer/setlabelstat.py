@@ -148,8 +148,10 @@ def setlabelstat_execute(
     runner: Runner | None = None,
 ) -> SetlabelstatOutputs:
     """
-    Replaces the stat values in a label file with the single stat value supplied on
-    the command-line.
+    setlabelstat
+    
+    Replaces the stat values in a label file with the single stat value supplied
+    on the command-line.
     
     Author: FreeSurfer Developers
     
@@ -178,8 +180,10 @@ def setlabelstat(
     runner: Runner | None = None,
 ) -> SetlabelstatOutputs:
     """
-    Replaces the stat values in a label file with the single stat value supplied on
-    the command-line.
+    setlabelstat
+    
+    Replaces the stat values in a label file with the single stat value supplied
+    on the command-line.
     
     Author: FreeSurfer Developers
     

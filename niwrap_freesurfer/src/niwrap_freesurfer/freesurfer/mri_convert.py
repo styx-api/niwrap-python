@@ -263,6 +263,8 @@ def mri_convert_execute(
     runner: Runner | None = None,
 ) -> MriConvertOutputs:
     """
+    mri_convert
+    
     A general purpose utility for converting between different file formats
     supported by FreeSurfer.
     
@@ -308,6 +310,8 @@ def mri_convert(
     runner: Runner | None = None,
 ) -> MriConvertOutputs:
     """
+    mri_convert
+    
     A general purpose utility for converting between different file formats
     supported by FreeSurfer.
     

@@ -125,6 +125,8 @@ def fslhd_execute(
     runner: Runner | None = None,
 ) -> FslhdOutputs:
     """
+    fslhd
+    
     Display header information from a NIFTI file.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -152,6 +154,8 @@ def fslhd(
     runner: Runner | None = None,
 ) -> FslhdOutputs:
     """
+    fslhd
+    
     Display header information from a NIFTI file.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -212,10 +212,12 @@ def create_dticohort_execute(
     runner: Runner | None = None,
 ) -> CreateDticohortOutputs:
     """
-    CreateDTICohort implements the work of Van Hecke et al. to create simulated DTI
-    data sets. The only difference is that all registrations (both for the input
-    population and for the output population) are assumed to take place outside of
-    this program.
+    CreateDTICohort
+    
+    CreateDTICohort implements the work of Van Hecke et al. to create simulated
+    DTI data sets. The only difference is that all registrations (both for the
+    input population and for the output population) are assumed to take place
+    outside of this program.
     
     Author: ANTs Developers
     
@@ -248,10 +250,12 @@ def create_dticohort(
     runner: Runner | None = None,
 ) -> CreateDticohortOutputs:
     """
-    CreateDTICohort implements the work of Van Hecke et al. to create simulated DTI
-    data sets. The only difference is that all registrations (both for the input
-    population and for the output population) are assumed to take place outside of
-    this program.
+    CreateDTICohort
+    
+    CreateDTICohort implements the work of Van Hecke et al. to create simulated
+    DTI data sets. The only difference is that all registrations (both for the
+    input population and for the output population) are assumed to take place
+    outside of this program.
     
     Author: ANTs Developers
     

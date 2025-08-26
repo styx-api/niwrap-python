@@ -122,6 +122,8 @@ def run_qdec_glm_execute(
     runner: Runner | None = None,
 ) -> RunQdecGlmOutputs:
     """
+    run-qdec-glm
+    
     QDEC GLM (General Linear Model) execution tool for statistical analysis.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def run_qdec_glm(
     runner: Runner | None = None,
 ) -> RunQdecGlmOutputs:
     """
+    run-qdec-glm
+    
     QDEC GLM (General Linear Model) execution tool for statistical analysis.
     
     Author: FreeSurfer Developers

@@ -170,6 +170,8 @@ def v_3d_lrflip_execute(
     runner: Runner | None = None,
 ) -> V3dLrflipOutputs:
     """
+    3dLRflip
+    
     Flips the rows of a dataset along one of the three axes to correct dataset
     direction labeling errors.
     
@@ -204,6 +206,8 @@ def v_3d_lrflip(
     runner: Runner | None = None,
 ) -> V3dLrflipOutputs:
     """
+    3dLRflip
+    
     Flips the rows of a dataset along one of the three axes to correct dataset
     direction labeling errors.
     

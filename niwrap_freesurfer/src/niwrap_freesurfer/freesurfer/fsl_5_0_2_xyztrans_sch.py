@@ -136,7 +136,10 @@ def fsl_5_0_2_xyztrans_sch_execute(
     runner: Runner | None = None,
 ) -> Fsl502XyztransSchOutputs:
     """
-    A script with unclear functionality, potentially related to terminal operations.
+    fsl.5.0.2.xyztrans.sch
+    
+    A script with unclear functionality, potentially related to terminal
+    operations.
     
     Author: FreeSurfer Developers
     
@@ -164,7 +167,10 @@ def fsl_5_0_2_xyztrans_sch(
     runner: Runner | None = None,
 ) -> Fsl502XyztransSchOutputs:
     """
-    A script with unclear functionality, potentially related to terminal operations.
+    fsl.5.0.2.xyztrans.sch
+    
+    A script with unclear functionality, potentially related to terminal
+    operations.
     
     Author: FreeSurfer Developers
     

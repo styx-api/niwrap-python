@@ -125,6 +125,8 @@ def proj_thresh_execute(
     runner: Runner | None = None,
 ) -> ProjThreshOutputs:
     """
+    proj_thresh
+    
     A tool to apply a threshold to either volumes or surfaces.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -152,6 +154,8 @@ def proj_thresh(
     runner: Runner | None = None,
 ) -> ProjThreshOutputs:
     """
+    proj_thresh
+    
     A tool to apply a threshold to either volumes or surfaces.
     
     Author: FMRIB Analysis Group, University of Oxford

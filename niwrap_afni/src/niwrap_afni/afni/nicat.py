@@ -143,6 +143,8 @@ def nicat_execute(
     runner: Runner | None = None,
 ) -> NicatOutputs:
     """
+    nicat
+    
     Copies stdin to the NIML stream, which will be opened for writing.
     
     Author: AFNI Developers
@@ -172,6 +174,8 @@ def nicat(
     runner: Runner | None = None,
 ) -> NicatOutputs:
     """
+    nicat
+    
     Copies stdin to the NIML stream, which will be opened for writing.
     
     Author: AFNI Developers

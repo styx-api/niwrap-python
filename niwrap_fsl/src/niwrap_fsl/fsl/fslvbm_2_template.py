@@ -354,6 +354,8 @@ def fslvbm_2_template_execute(
     runner: Runner | None = None,
 ) -> Fslvbm2TemplateOutputs:
     """
+    fslvbm_2_template
+    
     FSL-VBM is a Voxel-Based Morphometry style analysis tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -403,6 +405,8 @@ def fslvbm_2_template(
     runner: Runner | None = None,
 ) -> Fslvbm2TemplateOutputs:
     """
+    fslvbm_2_template
+    
     FSL-VBM is a Voxel-Based Morphometry style analysis tool for FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

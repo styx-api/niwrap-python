@@ -146,6 +146,8 @@ def v__2dwarper_allin_execute(
     runner: Runner | None = None,
 ) -> V2dwarperAllinOutputs:
     """
+    @2dwarper.Allin
+    
     Perform 2D registration on each slice of a 3D+time dataset, and combine the
     results.
     
@@ -175,6 +177,8 @@ def v__2dwarper_allin(
     runner: Runner | None = None,
 ) -> V2dwarperAllinOutputs:
     """
+    @2dwarper.Allin
+    
     Perform 2D registration on each slice of a 3D+time dataset, and combine the
     results.
     

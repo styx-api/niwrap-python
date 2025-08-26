@@ -209,6 +209,8 @@ def standard_space_roi_execute(
     runner: Runner | None = None,
 ) -> StandardSpaceRoiOutputs:
     """
+    standard_space_roi
+    
     Masks input and/or reduces its FOV based on a standard space image or mask,
     transformed into the space of the input image.
     
@@ -247,6 +249,8 @@ def standard_space_roi(
     runner: Runner | None = None,
 ) -> StandardSpaceRoiOutputs:
     """
+    standard_space_roi
+    
     Masks input and/or reduces its FOV based on a standard space image or mask,
     transformed into the space of the input image.
     

@@ -175,8 +175,10 @@ def samsegmesh2surf_execute(
     runner: Runner | None = None,
 ) -> Samsegmesh2surfOutputs:
     """
-    Generate Freesurfer surface from a SAMSEG atlas mesh file and generate priors at
-    each vertex as overlay MRI volume.
+    samsegmesh2surf
+    
+    Generate Freesurfer surface from a SAMSEG atlas mesh file and generate
+    priors at each vertex as overlay MRI volume.
     
     Author: FreeSurfer Developers
     
@@ -207,8 +209,10 @@ def samsegmesh2surf(
     runner: Runner | None = None,
 ) -> Samsegmesh2surfOutputs:
     """
-    Generate Freesurfer surface from a SAMSEG atlas mesh file and generate priors at
-    each vertex as overlay MRI volume.
+    samsegmesh2surf
+    
+    Generate Freesurfer surface from a SAMSEG atlas mesh file and generate
+    priors at each vertex as overlay MRI volume.
     
     Author: FreeSurfer Developers
     

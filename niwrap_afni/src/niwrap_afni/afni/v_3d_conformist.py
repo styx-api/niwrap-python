@@ -123,7 +123,10 @@ def v_3d_conformist_execute(
     runner: Runner | None = None,
 ) -> V3dConformistOutputs:
     """
-    Program to conform a collection of datasets to the same size by zero padding.
+    3dConformist
+    
+    Program to conform a collection of datasets to the same size by zero
+    padding.
     
     Author: AFNI Developers
     
@@ -149,7 +152,10 @@ def v_3d_conformist(
     runner: Runner | None = None,
 ) -> V3dConformistOutputs:
     """
-    Program to conform a collection of datasets to the same size by zero padding.
+    3dConformist
+    
+    Program to conform a collection of datasets to the same size by zero
+    padding.
     
     Author: AFNI Developers
     

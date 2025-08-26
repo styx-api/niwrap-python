@@ -135,6 +135,8 @@ def ptoz_execute(
     runner: Runner | None = None,
 ) -> PtozOutputs:
     """
+    ptoz
+    
     Convert p-values to z-values.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -163,6 +165,8 @@ def ptoz(
     runner: Runner | None = None,
 ) -> PtozOutputs:
     """
+    ptoz
+    
     Convert p-values to z-values.
     
     Author: FMRIB Analysis Group, University of Oxford

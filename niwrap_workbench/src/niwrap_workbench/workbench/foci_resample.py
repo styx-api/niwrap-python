@@ -311,6 +311,8 @@ def foci_resample_execute(
     runner: Runner | None = None,
 ) -> FociResampleOutputs:
     """
+    foci-resample
+    
     Project foci to a different surface.
     
     Unprojects foci from the <current-surf> for the structure, then projects
@@ -349,6 +351,8 @@ def foci_resample(
     runner: Runner | None = None,
 ) -> FociResampleOutputs:
     """
+    foci-resample
+    
     Project foci to a different surface.
     
     Unprojects foci from the <current-surf> for the structure, then projects

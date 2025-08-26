@@ -375,6 +375,8 @@ def v_3dsvm_execute(
     runner: Runner | None = None,
 ) -> V3dsvmOutputs:
     """
+    3dsvm
+    
     Support vector machine analysis of brain data using the SVM-light package.
     
     Author: AFNI Developers
@@ -427,6 +429,8 @@ def v_3dsvm(
     runner: Runner | None = None,
 ) -> V3dsvmOutputs:
     """
+    3dsvm
+    
     Support vector machine analysis of brain data using the SVM-light package.
     
     Author: AFNI Developers

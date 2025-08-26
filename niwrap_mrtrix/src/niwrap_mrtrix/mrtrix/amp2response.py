@@ -299,8 +299,10 @@ def amp2response_execute(
     runner: Runner | None = None,
 ) -> Amp2responseOutputs:
     """
-    Estimate response function coefficients based on the DWI signal in single-fibre
-    voxels.
+    amp2response
+    
+    Estimate response function coefficients based on the DWI signal in
+    single-fibre voxels.
     
     This command uses the image data from all selected single-fibre voxels
     concurrently, rather than simply averaging their individual spherical
@@ -358,8 +360,10 @@ def amp2response(
     runner: Runner | None = None,
 ) -> Amp2responseOutputs:
     """
-    Estimate response function coefficients based on the DWI signal in single-fibre
-    voxels.
+    amp2response
+    
+    Estimate response function coefficients based on the DWI signal in
+    single-fibre voxels.
     
     This command uses the image data from all selected single-fibre voxels
     concurrently, rather than simply averaging their individual spherical

@@ -252,8 +252,10 @@ def v_3d_allineate_execute(
     runner: Runner | None = None,
 ) -> V3dAllineateOutputs:
     """
-    Program to align one dataset (the 'source') to a 'base' dataset using an affine
-    (matrix) transformation of space.
+    3dAllineate
+    
+    Program to align one dataset (the 'source') to a 'base' dataset using an
+    affine (matrix) transformation of space.
     
     Author: AFNI Developers
     
@@ -292,8 +294,10 @@ def v_3d_allineate(
     runner: Runner | None = None,
 ) -> V3dAllineateOutputs:
     """
-    Program to align one dataset (the 'source') to a 'base' dataset using an affine
-    (matrix) transformation of space.
+    3dAllineate
+    
+    Program to align one dataset (the 'source') to a 'base' dataset using an
+    affine (matrix) transformation of space.
     
     Author: AFNI Developers
     

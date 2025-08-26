@@ -138,6 +138,8 @@ def cifti_label_probability_execute(
     runner: Runner | None = None,
 ) -> CiftiLabelProbabilityOutputs:
     """
+    cifti-label-probability
+    
     Find frequency of cifti labels.
     
     This command outputs a set of soft ROIs, one for each label in the input,
@@ -170,6 +172,8 @@ def cifti_label_probability(
     runner: Runner | None = None,
 ) -> CiftiLabelProbabilityOutputs:
     """
+    cifti-label-probability
+    
     Find frequency of cifti labels.
     
     This command outputs a set of soft ROIs, one for each label in the input,

@@ -133,6 +133,8 @@ def mri_compute_volume_intensities_execute(
     runner: Runner | None = None,
 ) -> MriComputeVolumeIntensitiesOutputs:
     """
+    mri_compute_volume_intensities
+    
     A tool to compute volume intensities for a given input intensity volume and
     volume fraction stem.
     
@@ -162,6 +164,8 @@ def mri_compute_volume_intensities(
     runner: Runner | None = None,
 ) -> MriComputeVolumeIntensitiesOutputs:
     """
+    mri_compute_volume_intensities
+    
     A tool to compute volume intensities for a given input intensity volume and
     volume fraction stem.
     

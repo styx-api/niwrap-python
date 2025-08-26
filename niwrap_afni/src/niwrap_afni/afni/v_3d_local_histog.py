@@ -212,6 +212,8 @@ def v_3d_local_histog_execute(
     runner: Runner | None = None,
 ) -> V3dLocalHistogOutputs:
     """
+    3dLocalHistog
+    
     This program computes a local histogram at each voxel in the input datasets.
     
     Author: AFNI Developers
@@ -247,6 +249,8 @@ def v_3d_local_histog(
     runner: Runner | None = None,
 ) -> V3dLocalHistogOutputs:
     """
+    3dLocalHistog
+    
     This program computes a local histogram at each voxel in the input datasets.
     
     Author: AFNI Developers

@@ -165,6 +165,8 @@ def sfim_execute(
     runner: Runner | None = None,
 ) -> SfimOutputs:
     """
+    sfim
+    
     Stepwise Functional IMages.
     
     Author: AFNI Developers
@@ -195,6 +197,8 @@ def sfim(
     runner: Runner | None = None,
 ) -> SfimOutputs:
     """
+    sfim
+    
     Stepwise Functional IMages.
     
     Author: AFNI Developers

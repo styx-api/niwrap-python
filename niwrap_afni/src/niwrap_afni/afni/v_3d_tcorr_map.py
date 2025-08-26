@@ -283,6 +283,8 @@ def v_3d_tcorr_map_execute(
     runner: Runner | None = None,
 ) -> V3dTcorrMapOutputs:
     """
+    3dTcorrMap
+    
     AFNI program to compute correlation maps of input time series data.
     
     Author: AFNI Developers
@@ -325,6 +327,8 @@ def v_3d_tcorr_map(
     runner: Runner | None = None,
 ) -> V3dTcorrMapOutputs:
     """
+    3dTcorrMap
+    
     AFNI program to compute correlation maps of input time series data.
     
     Author: AFNI Developers

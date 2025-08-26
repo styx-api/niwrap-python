@@ -129,6 +129,8 @@ def mris_interpolate_warp_execute(
     runner: Runner | None = None,
 ) -> MrisInterpolateWarpOutputs:
     """
+    mris_interpolate_warp
+    
     Interpolate warp on cortical surfaces.
     
     Author: FreeSurfer Developers
@@ -157,6 +159,8 @@ def mris_interpolate_warp(
     runner: Runner | None = None,
 ) -> MrisInterpolateWarpOutputs:
     """
+    mris_interpolate_warp
+    
     Interpolate warp on cortical surfaces.
     
     Author: FreeSurfer Developers

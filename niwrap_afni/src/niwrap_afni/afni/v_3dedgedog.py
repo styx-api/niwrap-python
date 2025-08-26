@@ -244,8 +244,10 @@ def v_3dedgedog_execute(
     runner: Runner | None = None,
 ) -> V3dedgedogOutputs:
     """
-    Calculate edges in an image using the Difference of Gaussians (DOG) method with
-    extensions/tweaks of the Marr-Hildreth algorithm.
+    3dedgedog
+    
+    Calculate edges in an image using the Difference of Gaussians (DOG) method
+    with extensions/tweaks of the Marr-Hildreth algorithm.
     
     Author: AFNI Developers
     
@@ -282,8 +284,10 @@ def v_3dedgedog(
     runner: Runner | None = None,
 ) -> V3dedgedogOutputs:
     """
-    Calculate edges in an image using the Difference of Gaussians (DOG) method with
-    extensions/tweaks of the Marr-Hildreth algorithm.
+    3dedgedog
+    
+    Calculate edges in an image using the Difference of Gaussians (DOG) method
+    with extensions/tweaks of the Marr-Hildreth algorithm.
     
     Author: AFNI Developers
     

@@ -174,6 +174,8 @@ def v_1d_nlfit_execute(
     runner: Runner | None = None,
 ) -> V1dNlfitOutputs:
     """
+    1dNLfit
+    
     Program to fit a model to a vector of data. The model is given by a symbolic
     expression, with parameters to be estimated.
     
@@ -205,6 +207,8 @@ def v_1d_nlfit(
     runner: Runner | None = None,
 ) -> V1dNlfitOutputs:
     """
+    1dNLfit
+    
     Program to fit a model to a vector of data. The model is given by a symbolic
     expression, with parameters to be estimated.
     

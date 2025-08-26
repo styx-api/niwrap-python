@@ -337,6 +337,8 @@ def mrthreshold_execute(
     runner: Runner | None = None,
 ) -> MrthresholdOutputs:
     """
+    mrthreshold
+    
     Create bitwise image by thresholding image intensity.
     
     The threshold value to be applied can be determined in one of a number of
@@ -424,6 +426,8 @@ def mrthreshold(
     runner: Runner | None = None,
 ) -> MrthresholdOutputs:
     """
+    mrthreshold
+    
     Create bitwise image by thresholding image intensity.
     
     The threshold value to be applied can be determined in one of a number of

@@ -151,6 +151,8 @@ def adjunct_aw_tableize_roi_info_py_execute(
     runner: Runner | None = None,
 ) -> AdjunctAwTableizeRoiInfoPyOutputs:
     """
+    adjunct_aw_tableize_roi_info.py
+    
     A simple helper function for the fat_proc scripts that generates a text file
     containing ROI count/size information based on provided atlases and masks.
     
@@ -183,6 +185,8 @@ def adjunct_aw_tableize_roi_info_py(
     runner: Runner | None = None,
 ) -> AdjunctAwTableizeRoiInfoPyOutputs:
     """
+    adjunct_aw_tableize_roi_info.py
+    
     A simple helper function for the fat_proc scripts that generates a text file
     containing ROI count/size information based on provided atlases and masks.
     

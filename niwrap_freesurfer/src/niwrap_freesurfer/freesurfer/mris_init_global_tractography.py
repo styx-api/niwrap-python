@@ -129,6 +129,8 @@ def mris_init_global_tractography_execute(
     runner: Runner | None = None,
 ) -> MrisInitGlobalTractographyOutputs:
     """
+    mris_init_global_tractography
+    
     Initializes global tractography for a given subject and parcellation.
     
     Author: FreeSurfer Developers
@@ -157,6 +159,8 @@ def mris_init_global_tractography(
     runner: Runner | None = None,
 ) -> MrisInitGlobalTractographyOutputs:
     """
+    mris_init_global_tractography
+    
     Initializes global tractography for a given subject and parcellation.
     
     Author: FreeSurfer Developers

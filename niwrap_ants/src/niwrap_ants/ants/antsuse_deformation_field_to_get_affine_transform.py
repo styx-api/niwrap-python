@@ -150,6 +150,8 @@ def antsuse_deformation_field_to_get_affine_transform_execute(
     runner: Runner | None = None,
 ) -> AntsuseDeformationFieldToGetAffineTransformOutputs:
     """
+    ANTSUseDeformationFieldToGetAffineTransform
+    
     Extracts an affine transform from a deformation field. The input deformation
     field is expected to be in the same physical space as the images you want to
     transform.
@@ -182,6 +184,8 @@ def antsuse_deformation_field_to_get_affine_transform(
     runner: Runner | None = None,
 ) -> AntsuseDeformationFieldToGetAffineTransformOutputs:
     """
+    ANTSUseDeformationFieldToGetAffineTransform
+    
     Extracts an affine transform from a deformation field. The input deformation
     field is expected to be in the same physical space as the images you want to
     transform.

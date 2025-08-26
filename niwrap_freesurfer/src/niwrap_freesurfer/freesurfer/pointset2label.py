@@ -144,6 +144,8 @@ def pointset2label_execute(
     runner: Runner | None = None,
 ) -> Pointset2labelOutputs:
     """
+    pointset2label
+    
     Tool for applying waypoint labels to a volume.
     
     Author: FreeSurfer Developers
@@ -174,6 +176,8 @@ def pointset2label(
     runner: Runner | None = None,
 ) -> Pointset2labelOutputs:
     """
+    pointset2label
+    
     Tool for applying waypoint labels to a volume.
     
     Author: FreeSurfer Developers

@@ -202,6 +202,8 @@ def bmedits2surf_execute(
     runner: Runner | None = None,
 ) -> Bmedits2surfOutputs:
     """
+    bmedits2surf
+    
     Computes a binary map of surface locations where the brainmask.mgz has been
     edited.
     
@@ -238,6 +240,8 @@ def bmedits2surf(
     runner: Runner | None = None,
 ) -> Bmedits2surfOutputs:
     """
+    bmedits2surf
+    
     Computes a binary map of surface locations where the brainmask.mgz has been
     edited.
     

@@ -123,6 +123,8 @@ def mri_gradient_info_execute(
     runner: Runner | None = None,
 ) -> MriGradientInfoOutputs:
     """
+    mri_gradient_info
+    
     A utility to obtain gradient information from MRI images using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -149,6 +151,8 @@ def mri_gradient_info(
     runner: Runner | None = None,
 ) -> MriGradientInfoOutputs:
     """
+    mri_gradient_info
+    
     A utility to obtain gradient information from MRI images using FreeSurfer.
     
     Author: FreeSurfer Developers

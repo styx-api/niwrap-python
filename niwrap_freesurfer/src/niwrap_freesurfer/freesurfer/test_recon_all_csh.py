@@ -198,6 +198,8 @@ def test_recon_all_csh_execute(
     runner: Runner | None = None,
 ) -> TestReconAllCshOutputs:
     """
+    test_recon-all.csh
+    
     Script for testing recon-all and other utilities with FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -229,6 +231,8 @@ def test_recon_all_csh(
     runner: Runner | None = None,
 ) -> TestReconAllCshOutputs:
     """
+    test_recon-all.csh
+    
     Script for testing recon-all and other utilities with FreeSurfer.
     
     Author: FreeSurfer Developers

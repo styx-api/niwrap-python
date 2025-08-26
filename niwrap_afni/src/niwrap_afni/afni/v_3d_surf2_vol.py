@@ -344,6 +344,8 @@ def v_3d_surf2_vol_execute(
     runner: Runner | None = None,
 ) -> V3dSurf2VolOutputs:
     """
+    3dSurf2Vol
+    
     Map data from a surface domain to an AFNI volume domain.
     
     Author: AFNI Developers
@@ -394,6 +396,8 @@ def v_3d_surf2_vol(
     runner: Runner | None = None,
 ) -> V3dSurf2VolOutputs:
     """
+    3dSurf2Vol
+    
     Map data from a surface domain to an AFNI volume domain.
     
     Author: AFNI Developers

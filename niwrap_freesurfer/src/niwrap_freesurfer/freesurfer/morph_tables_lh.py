@@ -133,6 +133,8 @@ def morph_tables_lh_execute(
     runner: Runner | None = None,
 ) -> MorphTablesLhOutputs:
     """
+    morph_tables-lh
+    
     Morphological analysis tool for left hemisphere in Freesurfer.
     
     Author: FreeSurfer Developers
@@ -160,6 +162,8 @@ def morph_tables_lh(
     runner: Runner | None = None,
 ) -> MorphTablesLhOutputs:
     """
+    morph_tables-lh
+    
     Morphological analysis tool for left hemisphere in Freesurfer.
     
     Author: FreeSurfer Developers

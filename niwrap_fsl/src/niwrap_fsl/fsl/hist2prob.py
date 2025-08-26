@@ -138,7 +138,10 @@ def hist2prob_execute(
     runner: Runner | None = None,
 ) -> Hist2probOutputs:
     """
-    Converts a histogram image to a probability map based on specified thresholds.
+    hist2prob
+    
+    Converts a histogram image to a probability map based on specified
+    thresholds.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -167,7 +170,10 @@ def hist2prob(
     runner: Runner | None = None,
 ) -> Hist2probOutputs:
     """
-    Converts a histogram image to a probability map based on specified thresholds.
+    hist2prob
+    
+    Converts a histogram image to a probability map based on specified
+    thresholds.
     
     Author: FMRIB Analysis Group, University of Oxford
     

@@ -179,6 +179,8 @@ def v_3d_diff_execute(
     runner: Runner | None = None,
 ) -> V3dDiffOutputs:
     """
+    3dDiff
+    
     A program to examine element-wise differences between two images.
     
     Author: AFNI Developers
@@ -212,6 +214,8 @@ def v_3d_diff(
     runner: Runner | None = None,
 ) -> V3dDiffOutputs:
     """
+    3dDiff
+    
     A program to examine element-wise differences between two images.
     
     Author: AFNI Developers

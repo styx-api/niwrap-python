@@ -159,6 +159,8 @@ def mri_twoclass_execute(
     runner: Runner | None = None,
 ) -> MriTwoclassOutputs:
     """
+    mri_twoclass
+    
     Compute cross-subject statistics of two sets of labels.
     
     Author: FreeSurfer Developers
@@ -191,6 +193,8 @@ def mri_twoclass(
     runner: Runner | None = None,
 ) -> MriTwoclassOutputs:
     """
+    mri_twoclass
+    
     Compute cross-subject statistics of two sets of labels.
     
     Author: FreeSurfer Developers

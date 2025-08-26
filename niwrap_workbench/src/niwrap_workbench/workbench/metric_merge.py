@@ -283,6 +283,8 @@ def metric_merge_execute(
     runner: Runner | None = None,
 ) -> MetricMergeOutputs:
     """
+    metric-merge
+    
     Merge metric files into a new file.
     
     Takes one or more metric files and constructs a new metric file by
@@ -320,6 +322,8 @@ def metric_merge(
     runner: Runner | None = None,
 ) -> MetricMergeOutputs:
     """
+    metric-merge
+    
     Merge metric files into a new file.
     
     Takes one or more metric files and constructs a new metric file by

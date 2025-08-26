@@ -126,6 +126,8 @@ def fix_subject_corrected_rh_execute(
     runner: Runner | None = None,
 ) -> FixSubjectCorrectedRhOutputs:
     """
+    fix_subject_corrected-rh
+    
     A tool related to FreeSurfer subject correction.
     
     Author: FreeSurfer Developers
@@ -152,6 +154,8 @@ def fix_subject_corrected_rh(
     runner: Runner | None = None,
 ) -> FixSubjectCorrectedRhOutputs:
     """
+    fix_subject_corrected-rh
+    
     A tool related to FreeSurfer subject correction.
     
     Author: FreeSurfer Developers

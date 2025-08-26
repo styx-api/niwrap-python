@@ -134,6 +134,8 @@ def gifti_all_labels_to_rois_execute(
     runner: Runner | None = None,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
+    gifti-all-labels-to-rois
+    
     Make rois from all labels in a gifti column.
     
     The output metric file has a column for each label in the specified input
@@ -166,6 +168,8 @@ def gifti_all_labels_to_rois(
     runner: Runner | None = None,
 ) -> GiftiAllLabelsToRoisOutputs:
     """
+    gifti-all-labels-to-rois
+    
     Make rois from all labels in a gifti column.
     
     The output metric file has a column for each label in the specified input

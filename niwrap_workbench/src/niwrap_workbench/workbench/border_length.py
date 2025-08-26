@@ -150,6 +150,8 @@ def border_length_execute(
     runner: Runner | None = None,
 ) -> BorderLengthOutputs:
     """
+    border-length
+    
     Report length of borders.
     
     For each border, print its length along the surface, in mm. If a border has
@@ -188,6 +190,8 @@ def border_length(
     runner: Runner | None = None,
 ) -> BorderLengthOutputs:
     """
+    border-length
+    
     Report length of borders.
     
     For each border, print its length along the surface, in mm. If a border has

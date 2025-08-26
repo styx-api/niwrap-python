@@ -123,8 +123,10 @@ def im2niml_execute(
     runner: Runner | None = None,
 ) -> Im2nimlOutputs:
     """
-    Converts the input image(s) to a text-based NIML element and writes the result
-    to stdout.
+    im2niml
+    
+    Converts the input image(s) to a text-based NIML element and writes the
+    result to stdout.
     
     Author: AFNI Developers
     
@@ -150,8 +152,10 @@ def im2niml(
     runner: Runner | None = None,
 ) -> Im2nimlOutputs:
     """
-    Converts the input image(s) to a text-based NIML element and writes the result
-    to stdout.
+    im2niml
+    
+    Converts the input image(s) to a text-based NIML element and writes the
+    result to stdout.
     
     Author: AFNI Developers
     

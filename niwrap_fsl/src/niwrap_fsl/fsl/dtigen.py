@@ -185,6 +185,8 @@ def dtigen_execute(
     runner: Runner | None = None,
 ) -> DtigenOutputs:
     """
+    dtigen
+    
     Generate diffusion data using tensor model.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -218,6 +220,8 @@ def dtigen(
     runner: Runner | None = None,
 ) -> DtigenOutputs:
     """
+    dtigen
+    
     Generate diffusion data using tensor model.
     
     Author: FMRIB Analysis Group, University of Oxford

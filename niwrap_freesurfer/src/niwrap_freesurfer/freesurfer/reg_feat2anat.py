@@ -268,6 +268,8 @@ def reg_feat2anat_execute(
     runner: Runner | None = None,
 ) -> RegFeat2anatOutputs:
     """
+    reg-feat2anat
+    
     Registers FSL-Feat example_func to FreeSurfer anatomical data.
     
     Author: FreeSurfer Developers
@@ -309,6 +311,8 @@ def reg_feat2anat(
     runner: Runner | None = None,
 ) -> RegFeat2anatOutputs:
     """
+    reg-feat2anat
+    
     Registers FSL-Feat example_func to FreeSurfer anatomical data.
     
     Author: FreeSurfer Developers

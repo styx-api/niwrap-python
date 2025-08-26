@@ -328,6 +328,8 @@ def adjunct_apqc_tsnr_general_execute(
     runner: Runner | None = None,
 ) -> AdjunctApqcTsnrGeneralOutputs:
     """
+    adjunct_apqc_tsnr_general
+    
     An adjunct program for making TSNR plots for APQC.
     
     Author: AFNI Developers
@@ -376,6 +378,8 @@ def adjunct_apqc_tsnr_general(
     runner: Runner | None = None,
 ) -> AdjunctApqcTsnrGeneralOutputs:
     """
+    adjunct_apqc_tsnr_general
+    
     An adjunct program for making TSNR plots for APQC.
     
     Author: AFNI Developers

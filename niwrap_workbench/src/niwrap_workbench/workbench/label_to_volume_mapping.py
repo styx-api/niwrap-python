@@ -231,6 +231,8 @@ def label_to_volume_mapping_execute(
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
+    label-to-volume-mapping
+    
     Map label file to volume.
     
     Maps labels from a gifti label file into a volume file. You must specify
@@ -268,6 +270,8 @@ def label_to_volume_mapping(
     runner: Runner | None = None,
 ) -> LabelToVolumeMappingOutputs:
     """
+    label-to-volume-mapping
+    
     Map label file to volume.
     
     Maps labels from a gifti label file into a volume file. You must specify

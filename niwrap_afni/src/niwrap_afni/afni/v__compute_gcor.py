@@ -175,6 +175,8 @@ def v__compute_gcor_execute(
     runner: Runner | None = None,
 ) -> VComputeGcorOutputs:
     """
+    @compute_gcor
+    
     Compute GCOR, the global correlation.
     
     Author: AFNI Developers
@@ -207,6 +209,8 @@ def v__compute_gcor(
     runner: Runner | None = None,
 ) -> VComputeGcorOutputs:
     """
+    @compute_gcor
+    
     Compute GCOR, the global correlation.
     
     Author: AFNI Developers

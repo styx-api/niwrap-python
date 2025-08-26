@@ -122,6 +122,8 @@ def segment_bs_sh_execute(
     runner: Runner | None = None,
 ) -> SegmentBsShOutputs:
     """
+    segmentBS.sh
+    
     Segmentation tool for hippocampal/amygdala and brainstem modules.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def segment_bs_sh(
     runner: Runner | None = None,
 ) -> SegmentBsShOutputs:
     """
+    segmentBS.sh
+    
     Segmentation tool for hippocampal/amygdala and brainstem modules.
     
     Author: FreeSurfer Developers

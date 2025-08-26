@@ -359,8 +359,10 @@ def tkmeditfv_execute(
     runner: Runner | None = None,
 ) -> TkmeditfvOutputs:
     """
-    A wrapper script to run Freeview with arguments similar to tkmedit, providing
-    both functionalities.
+    tkmeditfv
+    
+    A wrapper script to run Freeview with arguments similar to tkmedit,
+    providing both functionalities.
     
     Author: FreeSurfer Developers
     
@@ -417,8 +419,10 @@ def tkmeditfv(
     runner: Runner | None = None,
 ) -> TkmeditfvOutputs:
     """
-    A wrapper script to run Freeview with arguments similar to tkmedit, providing
-    both functionalities.
+    tkmeditfv
+    
+    A wrapper script to run Freeview with arguments similar to tkmedit,
+    providing both functionalities.
     
     Author: FreeSurfer Developers
     

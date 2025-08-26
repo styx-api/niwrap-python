@@ -191,6 +191,8 @@ def tfim_execute(
     runner: Runner | None = None,
 ) -> TfimOutputs:
     """
+    tfim
+    
     MCW TFIM: t-tests on sets of functional images.
     
     Author: AFNI Developers
@@ -223,6 +225,8 @@ def tfim(
     runner: Runner | None = None,
 ) -> TfimOutputs:
     """
+    tfim
+    
     MCW TFIM: t-tests on sets of functional images.
     
     Author: AFNI Developers

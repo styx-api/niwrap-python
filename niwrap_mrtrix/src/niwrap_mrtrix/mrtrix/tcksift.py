@@ -411,8 +411,10 @@ def tcksift_execute(
     runner: Runner | None = None,
 ) -> TcksiftOutputs:
     """
-    Filter a whole-brain fibre-tracking data set such that the streamline densities
-    match the FOD lobe integrals.
+    tcksift
+    
+    Filter a whole-brain fibre-tracking data set such that the streamline
+    densities match the FOD lobe integrals.
     
     
     
@@ -472,8 +474,10 @@ def tcksift(
     runner: Runner | None = None,
 ) -> TcksiftOutputs:
     """
-    Filter a whole-brain fibre-tracking data set such that the streamline densities
-    match the FOD lobe integrals.
+    tcksift
+    
+    Filter a whole-brain fibre-tracking data set such that the streamline
+    densities match the FOD lobe integrals.
     
     
     

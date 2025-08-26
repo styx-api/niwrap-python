@@ -215,8 +215,10 @@ def v_3d_match_execute(
     runner: Runner | None = None,
 ) -> V3dMatchOutputs:
     """
-    Find similar subbricks and rearrange order to ease comparison. Part of FATCAT in
-    AFNI.
+    3dMatch
+    
+    Find similar subbricks and rearrange order to ease comparison. Part of
+    FATCAT in AFNI.
     
     Author: AFNI Developers
     
@@ -250,8 +252,10 @@ def v_3d_match(
     runner: Runner | None = None,
 ) -> V3dMatchOutputs:
     """
-    Find similar subbricks and rearrange order to ease comparison. Part of FATCAT in
-    AFNI.
+    3dMatch
+    
+    Find similar subbricks and rearrange order to ease comparison. Part of
+    FATCAT in AFNI.
     
     Author: AFNI Developers
     

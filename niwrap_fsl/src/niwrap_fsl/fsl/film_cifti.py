@@ -202,6 +202,8 @@ def film_cifti_execute(
     runner: Runner | None = None,
 ) -> FilmCiftiOutputs:
     """
+    film_cifti
+    
     A tool for statistical analysis of CIFTI files using FILM.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -236,6 +238,8 @@ def film_cifti(
     runner: Runner | None = None,
 ) -> FilmCiftiOutputs:
     """
+    film_cifti
+    
     A tool for statistical analysis of CIFTI files using FILM.
     
     Author: FMRIB Analysis Group, University of Oxford

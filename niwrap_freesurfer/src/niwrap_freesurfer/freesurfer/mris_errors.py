@@ -119,6 +119,8 @@ def mris_errors_execute(
     runner: Runner | None = None,
 ) -> MrisErrorsOutputs:
     """
+    mris_errors
+    
     This program will unfold an MRI on the surface of an ellipsoid.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def mris_errors(
     runner: Runner | None = None,
 ) -> MrisErrorsOutputs:
     """
+    mris_errors
+    
     This program will unfold an MRI on the surface of an ellipsoid.
     
     Author: FreeSurfer Developers

@@ -280,8 +280,10 @@ def dirgen_execute(
     runner: Runner | None = None,
 ) -> DirgenOutputs:
     """
-    Generate a set of uniformly distributed directions using a bipolar electrostatic
-    repulsion model.
+    dirgen
+    
+    Generate a set of uniformly distributed directions using a bipolar
+    electrostatic repulsion model.
     
     Directions are distributed by analogy to an electrostatic repulsion system,
     with each direction corresponding to a single electrostatic charge (for
@@ -339,8 +341,10 @@ def dirgen(
     runner: Runner | None = None,
 ) -> DirgenOutputs:
     """
-    Generate a set of uniformly distributed directions using a bipolar electrostatic
-    repulsion model.
+    dirgen
+    
+    Generate a set of uniformly distributed directions using a bipolar
+    electrostatic repulsion model.
     
     Directions are distributed by analogy to an electrostatic repulsion system,
     with each direction corresponding to a single electrostatic charge (for

@@ -181,6 +181,8 @@ def mri_synthstrip_execute(
     runner: Runner | None = None,
 ) -> MriSynthstripOutputs:
     """
+    mri_synthstrip
+    
     Robust, universal skull-stripping for brain images of any type.
     
     Author: FreeSurfer Developers
@@ -213,6 +215,8 @@ def mri_synthstrip(
     runner: Runner | None = None,
 ) -> MriSynthstripOutputs:
     """
+    mri_synthstrip
+    
     Robust, universal skull-stripping for brain images of any type.
     
     Author: FreeSurfer Developers

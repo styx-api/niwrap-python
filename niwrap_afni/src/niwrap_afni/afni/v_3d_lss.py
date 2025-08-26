@@ -195,6 +195,8 @@ def v_3d_lss_execute(
     runner: Runner | None = None,
 ) -> V3dLssOutputs:
     """
+    3dLSS
+    
     Least-Squares-Sum (LSS) estimation tool from a -stim_times_IM matrix for
     multivoxel pattern classification analyses.
     
@@ -229,6 +231,8 @@ def v_3d_lss(
     runner: Runner | None = None,
 ) -> V3dLssOutputs:
     """
+    3dLSS
+    
     Least-Squares-Sum (LSS) estimation tool from a -stim_times_IM matrix for
     multivoxel pattern classification analyses.
     

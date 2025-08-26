@@ -156,6 +156,8 @@ def v__help_afni_execute(
     runner: Runner | None = None,
 ) -> VHelpAfniOutputs:
     """
+    @help.AFNI
+    
     A script to retrieve and search AFNI's help page for all programs.
     
     Author: AFNI Developers
@@ -187,6 +189,8 @@ def v__help_afni(
     runner: Runner | None = None,
 ) -> VHelpAfniOutputs:
     """
+    @help.AFNI
+    
     A script to retrieve and search AFNI's help page for all programs.
     
     Author: AFNI Developers

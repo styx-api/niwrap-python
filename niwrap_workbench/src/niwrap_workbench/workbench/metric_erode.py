@@ -173,6 +173,8 @@ def metric_erode_execute(
     runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
+    metric-erode
+    
     Erode a metric file.
     
     Around each vertex with a value of zero, set surrounding vertices to zero.
@@ -212,6 +214,8 @@ def metric_erode(
     runner: Runner | None = None,
 ) -> MetricErodeOutputs:
     """
+    metric-erode
+    
     Erode a metric file.
     
     Around each vertex with a value of zero, set surrounding vertices to zero.

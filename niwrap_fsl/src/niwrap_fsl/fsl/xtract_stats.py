@@ -207,6 +207,8 @@ def xtract_stats_execute(
     runner: Runner | None = None,
 ) -> XtractStatsOutputs:
     """
+    xtract_stats
+    
     Quantitative evaluation tool of XTRACT results in neuroimaging.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -241,6 +243,8 @@ def xtract_stats(
     runner: Runner | None = None,
 ) -> XtractStatsOutputs:
     """
+    xtract_stats
+    
     Quantitative evaluation tool of XTRACT results in neuroimaging.
     
     Author: FMRIB Analysis Group, University of Oxford

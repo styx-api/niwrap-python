@@ -173,6 +173,8 @@ def siena_diff_execute(
     runner: Runner | None = None,
 ) -> SienaDiffOutputs:
     """
+    siena_diff
+    
     SIENA_diff: Analysis of longitudinal brain image differences.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -206,6 +208,8 @@ def siena_diff(
     runner: Runner | None = None,
 ) -> SienaDiffOutputs:
     """
+    siena_diff
+    
     SIENA_diff: Analysis of longitudinal brain image differences.
     
     Author: FMRIB Analysis Group, University of Oxford

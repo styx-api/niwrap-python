@@ -187,6 +187,8 @@ def mris_warp_execute(
     runner: Runner | None = None,
 ) -> MrisWarpOutputs:
     """
+    mris_warp
+    
     This program will warp a surface using a specified deformation field.
     
     Author: FreeSurfer Developers
@@ -220,6 +222,8 @@ def mris_warp(
     runner: Runner | None = None,
 ) -> MrisWarpOutputs:
     """
+    mris_warp
+    
     This program will warp a surface using a specified deformation field.
     
     Author: FreeSurfer Developers

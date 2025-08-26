@@ -140,6 +140,8 @@ def mri_ca_tissue_parms_execute(
     runner: Runner | None = None,
 ) -> MriCaTissueParmsOutputs:
     """
+    mri_ca_tissue_parms
+    
     Tool for computing tissue parameters in canonical space.
     
     Author: FreeSurfer Developers
@@ -169,6 +171,8 @@ def mri_ca_tissue_parms(
     runner: Runner | None = None,
 ) -> MriCaTissueParmsOutputs:
     """
+    mri_ca_tissue_parms
+    
     Tool for computing tissue parameters in canonical space.
     
     Author: FreeSurfer Developers

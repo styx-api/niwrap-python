@@ -295,7 +295,10 @@ def mri_annotation2label_execute(
     runner: Runner | None = None,
 ) -> MriAnnotation2labelOutputs:
     """
-    Convert an annotation into multiple label files or into a segmentation volume.
+    mri_annotation2label
+    
+    Convert an annotation into multiple label files or into a segmentation
+    volume.
     
     Author: FreeSurfer Developers
     
@@ -339,7 +342,10 @@ def mri_annotation2label(
     runner: Runner | None = None,
 ) -> MriAnnotation2labelOutputs:
     """
-    Convert an annotation into multiple label files or into a segmentation volume.
+    mri_annotation2label
+    
+    Convert an annotation into multiple label files or into a segmentation
+    volume.
     
     Author: FreeSurfer Developers
     

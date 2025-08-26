@@ -125,6 +125,8 @@ def v__4_daverage_execute(
     runner: Runner | None = None,
 ) -> V4DaverageOutputs:
     """
+    @4Daverage
+    
     Script for computing average 3D+time bricks using 3Dcalc.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def v__4_daverage(
     runner: Runner | None = None,
 ) -> V4DaverageOutputs:
     """
+    @4Daverage
+    
     Script for computing average 3D+time bricks using 3Dcalc.
     
     Author: AFNI Developers

@@ -161,6 +161,8 @@ def adjunct_suma_fs_roi_info_execute(
     runner: Runner | None = None,
 ) -> AdjunctSumaFsRoiInfoOutputs:
     """
+    adjunct_suma_fs_roi_info
+    
     Script for making ROI stats for the SUMA/ directory created by
     @SUMA_Make_Spec_FS after running FreeSurfer's recon-all.
     
@@ -192,6 +194,8 @@ def adjunct_suma_fs_roi_info(
     runner: Runner | None = None,
 ) -> AdjunctSumaFsRoiInfoOutputs:
     """
+    adjunct_suma_fs_roi_info
+    
     Script for making ROI stats for the SUMA/ directory created by
     @SUMA_Make_Spec_FS after running FreeSurfer's recon-all.
     

@@ -311,6 +311,8 @@ def mrstats_execute(
     runner: Runner | None = None,
 ) -> MrstatsOutputs:
     """
+    mrstats
+    
     Compute images statistics.
     
     
@@ -355,6 +357,8 @@ def mrstats(
     runner: Runner | None = None,
 ) -> MrstatsOutputs:
     """
+    mrstats
+    
     Compute images statistics.
     
     

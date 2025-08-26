@@ -163,6 +163,8 @@ def cifti_cross_correlation_execute(
     runner: Runner | None = None,
 ) -> CiftiCrossCorrelationOutputs:
     """
+    cifti-cross-correlation
+    
     Correlate a cifti file with another cifti file.
     
     Correlates every row in <cifti-a> with every row in <cifti-b>. The mapping
@@ -203,6 +205,8 @@ def cifti_cross_correlation(
     runner: Runner | None = None,
 ) -> CiftiCrossCorrelationOutputs:
     """
+    cifti-cross-correlation
+    
     Correlate a cifti file with another cifti file.
     
     Correlates every row in <cifti-a> with every row in <cifti-b>. The mapping

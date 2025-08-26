@@ -138,8 +138,10 @@ def mris_compute_layer_intensities_execute(
     runner: Runner | None = None,
 ) -> MrisComputeLayerIntensitiesOutputs:
     """
-    Computes intensity overlays for specified cortical layers based on input volumes
-    and surfaces.
+    mris_compute_layer_intensities
+    
+    Computes intensity overlays for specified cortical layers based on input
+    volumes and surfaces.
     
     Author: FreeSurfer Developers
     
@@ -168,8 +170,10 @@ def mris_compute_layer_intensities(
     runner: Runner | None = None,
 ) -> MrisComputeLayerIntensitiesOutputs:
     """
-    Computes intensity overlays for specified cortical layers based on input volumes
-    and surfaces.
+    mris_compute_layer_intensities
+    
+    Computes intensity overlays for specified cortical layers based on input
+    volumes and surfaces.
     
     Author: FreeSurfer Developers
     

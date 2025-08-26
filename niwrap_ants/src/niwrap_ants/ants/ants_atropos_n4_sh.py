@@ -433,6 +433,8 @@ def ants_atropos_n4_sh_execute(
     runner: Runner | None = None,
 ) -> AntsAtroposN4ShOutputs:
     """
+    antsAtroposN4.sh
+    
     antsAtroposN4.sh iterates between N4 <-> Atropos to improve segmentation
     results.
     
@@ -482,6 +484,8 @@ def ants_atropos_n4_sh(
     runner: Runner | None = None,
 ) -> AntsAtroposN4ShOutputs:
     """
+    antsAtroposN4.sh
+    
     antsAtroposN4.sh iterates between N4 <-> Atropos to improve segmentation
     results.
     

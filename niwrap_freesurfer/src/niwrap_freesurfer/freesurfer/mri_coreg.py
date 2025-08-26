@@ -597,8 +597,10 @@ def mri_coreg_execute(
     runner: Runner | None = None,
 ) -> MriCoregOutputs:
     """
-    mri_coreg performs a linear registration between two volumes using the method
-    compatible with spm_coreg.
+    mri_coreg
+    
+    mri_coreg performs a linear registration between two volumes using the
+    method compatible with spm_coreg.
     
     Author: FreeSurfer Developers
     
@@ -676,8 +678,10 @@ def mri_coreg(
     runner: Runner | None = None,
 ) -> MriCoregOutputs:
     """
-    mri_coreg performs a linear registration between two volumes using the method
-    compatible with spm_coreg.
+    mri_coreg
+    
+    mri_coreg performs a linear registration between two volumes using the
+    method compatible with spm_coreg.
     
     Author: FreeSurfer Developers
     

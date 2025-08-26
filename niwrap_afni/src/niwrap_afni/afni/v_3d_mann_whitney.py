@@ -166,6 +166,8 @@ def v_3d_mann_whitney_execute(
     runner: Runner | None = None,
 ) -> V3dMannWhitneyOutputs:
     """
+    3dMannWhitney
+    
     Performs nonparametric Mann-Whitney two-sample test.
     
     Author: AFNI Developers
@@ -196,6 +198,8 @@ def v_3d_mann_whitney(
     runner: Runner | None = None,
 ) -> V3dMannWhitneyOutputs:
     """
+    3dMannWhitney
+    
     Performs nonparametric Mann-Whitney two-sample test.
     
     Author: AFNI Developers

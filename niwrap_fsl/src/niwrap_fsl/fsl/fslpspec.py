@@ -130,6 +130,8 @@ def fslpspec_execute(
     runner: Runner | None = None,
 ) -> FslpspecOutputs:
     """
+    fslpspec
+    
     Estimate the power spectrum of 4D fMRI time series data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -157,6 +159,8 @@ def fslpspec(
     runner: Runner | None = None,
 ) -> FslpspecOutputs:
     """
+    fslpspec
+    
     Estimate the power spectrum of 4D fMRI time series data.
     
     Author: FMRIB Analysis Group, University of Oxford

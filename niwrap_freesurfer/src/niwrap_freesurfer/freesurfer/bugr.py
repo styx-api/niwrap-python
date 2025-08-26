@@ -148,6 +148,8 @@ def bugr_execute(
     runner: Runner | None = None,
 ) -> BugrOutputs:
     """
+    bugr
+    
     Utility for generating and reporting FreeSurfer bugs.
     
     Author: FreeSurfer Developers
@@ -177,6 +179,8 @@ def bugr(
     runner: Runner | None = None,
 ) -> BugrOutputs:
     """
+    bugr
+    
     Utility for generating and reporting FreeSurfer bugs.
     
     Author: FreeSurfer Developers

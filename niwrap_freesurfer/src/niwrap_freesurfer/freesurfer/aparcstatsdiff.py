@@ -150,8 +150,10 @@ def aparcstatsdiff_execute(
     runner: Runner | None = None,
 ) -> AparcstatsdiffOutputs:
     """
-    Utility to calculate percentage differences in aparc morphometry data between
-    two subjects.
+    aparcstatsdiff
+    
+    Utility to calculate percentage differences in aparc morphometry data
+    between two subjects.
     
     Author: FreeSurfer Developers
     
@@ -182,8 +184,10 @@ def aparcstatsdiff(
     runner: Runner | None = None,
 ) -> AparcstatsdiffOutputs:
     """
-    Utility to calculate percentage differences in aparc morphometry data between
-    two subjects.
+    aparcstatsdiff
+    
+    Utility to calculate percentage differences in aparc morphometry data
+    between two subjects.
     
     Author: FreeSurfer Developers
     

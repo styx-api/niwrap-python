@@ -237,7 +237,10 @@ def mris_thickness_diff_execute(
     runner: Runner | None = None,
 ) -> MrisThicknessDiffOutputs:
     """
-    Computes the difference of two surface data sets defined on two surface meshes.
+    mris_thickness_diff
+    
+    Computes the difference of two surface data sets defined on two surface
+    meshes.
     
     Author: FreeSurfer Developers
     
@@ -275,7 +278,10 @@ def mris_thickness_diff(
     runner: Runner | None = None,
 ) -> MrisThicknessDiffOutputs:
     """
-    Computes the difference of two surface data sets defined on two surface meshes.
+    mris_thickness_diff
+    
+    Computes the difference of two surface data sets defined on two surface
+    meshes.
     
     Author: FreeSurfer Developers
     

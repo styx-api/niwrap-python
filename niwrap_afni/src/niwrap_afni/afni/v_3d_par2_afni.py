@@ -188,6 +188,8 @@ def v_3d_par2_afni_execute(
     runner: Runner | None = None,
 ) -> V3dPar2AfniOutputs:
     """
+    3dPAR2AFNI
+    
     Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format.
     
     Author: AFNI Developers
@@ -223,6 +225,8 @@ def v_3d_par2_afni(
     runner: Runner | None = None,
 ) -> V3dPar2AfniOutputs:
     """
+    3dPAR2AFNI
+    
     Convert Philips PAR/REC files to AFNI's BRIK/HEAD, NIfTI, or ANALYZE format.
     
     Author: AFNI Developers

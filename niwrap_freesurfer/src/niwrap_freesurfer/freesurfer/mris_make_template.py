@@ -229,6 +229,8 @@ def mris_make_template_execute(
     runner: Runner | None = None,
 ) -> MrisMakeTemplateOutputs:
     """
+    mris_make_template
+    
     This program will add a template into an average surface.
     
     Author: FreeSurfer Developers
@@ -269,6 +271,8 @@ def mris_make_template(
     runner: Runner | None = None,
 ) -> MrisMakeTemplateOutputs:
     """
+    mris_make_template
+    
     This program will add a template into an average surface.
     
     Author: FreeSurfer Developers

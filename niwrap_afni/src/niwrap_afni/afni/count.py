@@ -233,6 +233,8 @@ def count_execute(
     runner: Runner | None = None,
 ) -> CountOutputs:
     """
+    count
+    
     Numbered copies generator with custom format support and random sequence
     options.
     
@@ -273,6 +275,8 @@ def count(
     runner: Runner | None = None,
 ) -> CountOutputs:
     """
+    count
+    
     Numbered copies generator with custom format support and random sequence
     options.
     

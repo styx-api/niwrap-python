@@ -205,6 +205,8 @@ def from3d_execute(
     runner: Runner | None = None,
 ) -> From3dOutputs:
     """
+    from3d
+    
     Extract 2D image files from a 3D AFNI dataset.
     
     Author: AFNI Developers
@@ -240,6 +242,8 @@ def from3d(
     runner: Runner | None = None,
 ) -> From3dOutputs:
     """
+    from3d
+    
     Extract 2D image files from a 3D AFNI dataset.
     
     Author: AFNI Developers

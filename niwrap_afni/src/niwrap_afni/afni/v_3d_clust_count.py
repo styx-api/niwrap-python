@@ -158,6 +158,8 @@ def v_3d_clust_count_execute(
     runner: Runner | None = None,
 ) -> V3dClustCountOutputs:
     """
+    3dClustCount
+    
     This program takes as input 1 or more datasets, thresholds them at various
     levels, and counts up the number of clusters of various sizes.
     
@@ -188,6 +190,8 @@ def v_3d_clust_count(
     runner: Runner | None = None,
 ) -> V3dClustCountOutputs:
     """
+    3dClustCount
+    
     This program takes as input 1 or more datasets, thresholds them at various
     levels, and counts up the number of clusters of various sizes.
     

@@ -138,6 +138,8 @@ def mris_deform_execute(
     runner: Runner | None = None,
 ) -> MrisDeformOutputs:
     """
+    mris_deform
+    
     A tool for deforming surface meshes using volumetric information from an
     auxiliary volume.
     
@@ -168,6 +170,8 @@ def mris_deform(
     runner: Runner | None = None,
 ) -> MrisDeformOutputs:
     """
+    mris_deform
+    
     A tool for deforming surface meshes using volumetric information from an
     auxiliary volume.
     

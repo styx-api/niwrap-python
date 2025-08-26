@@ -329,6 +329,8 @@ def mri_sbbr_execute(
     runner: Runner | None = None,
 ) -> MriSbbrOutputs:
     """
+    mri_sbbr
+    
     Special implementation of boundary-based registration for a single slice.
     
     Author: FreeSurfer Developers
@@ -378,6 +380,8 @@ def mri_sbbr(
     runner: Runner | None = None,
 ) -> MriSbbrOutputs:
     """
+    mri_sbbr
+    
     Special implementation of boundary-based registration for a single slice.
     
     Author: FreeSurfer Developers

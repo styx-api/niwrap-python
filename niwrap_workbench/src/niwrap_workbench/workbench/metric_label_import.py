@@ -170,6 +170,8 @@ def metric_label_import_execute(
     runner: Runner | None = None,
 ) -> MetricLabelImportOutputs:
     """
+    metric-label-import
+    
     Import a gifti label file from a metric file.
     
     Creates a gifti label file from a metric file with label-like values. You
@@ -226,6 +228,8 @@ def metric_label_import(
     runner: Runner | None = None,
 ) -> MetricLabelImportOutputs:
     """
+    metric-label-import
+    
     Import a gifti label file from a metric file.
     
     Creates a gifti label file from a metric file with label-like values. You

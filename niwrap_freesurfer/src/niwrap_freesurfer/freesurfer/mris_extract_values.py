@@ -166,8 +166,10 @@ def mris_extract_values_execute(
     runner: Runner | None = None,
 ) -> MrisExtractValuesOutputs:
     """
-    Extracts values from surface, overlay, and annotation files and outputs them to
-    a CSV file.
+    mris_extract_values
+    
+    Extracts values from surface, overlay, and annotation files and outputs them
+    to a CSV file.
     
     Author: FreeSurfer Developers
     
@@ -198,8 +200,10 @@ def mris_extract_values(
     runner: Runner | None = None,
 ) -> MrisExtractValuesOutputs:
     """
-    Extracts values from surface, overlay, and annotation files and outputs them to
-    a CSV file.
+    mris_extract_values
+    
+    Extracts values from surface, overlay, and annotation files and outputs them
+    to a CSV file.
     
     Author: FreeSurfer Developers
     

@@ -191,6 +191,8 @@ def anatomical_average_execute(
     runner: Runner | None = None,
 ) -> AnatomicalAverageOutputs:
     """
+    AnatomicalAverage
+    
     Tool to create an anatomical average of input brain images.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -225,6 +227,8 @@ def anatomical_average(
     runner: Runner | None = None,
 ) -> AnatomicalAverageOutputs:
     """
+    AnatomicalAverage
+    
     Tool to create an anatomical average of input brain images.
     
     Author: FMRIB Analysis Group, University of Oxford

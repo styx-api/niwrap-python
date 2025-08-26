@@ -192,6 +192,8 @@ def cifti_merge_dense_execute(
     runner: Runner | None = None,
 ) -> CiftiMergeDenseOutputs:
     """
+    cifti-merge-dense
+    
     Merge cifti files along dense dimension.
     
     The input cifti files must have matching mappings along the direction not
@@ -225,6 +227,8 @@ def cifti_merge_dense(
     runner: Runner | None = None,
 ) -> CiftiMergeDenseOutputs:
     """
+    cifti-merge-dense
+    
     Merge cifti files along dense dimension.
     
     The input cifti files must have matching mappings along the direction not

@@ -144,6 +144,8 @@ def mris_parcellate_connectivity_execute(
     runner: Runner | None = None,
 ) -> MrisParcellateConnectivityOutputs:
     """
+    mris_parcellate_connectivity
+    
     A tool to parcellate brain connectivity using surface and correlation data.
     
     Author: FreeSurfer Developers
@@ -173,6 +175,8 @@ def mris_parcellate_connectivity(
     runner: Runner | None = None,
 ) -> MrisParcellateConnectivityOutputs:
     """
+    mris_parcellate_connectivity
+    
     A tool to parcellate brain connectivity using surface and correlation data.
     
     Author: FreeSurfer Developers

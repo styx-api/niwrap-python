@@ -134,6 +134,8 @@ def unconfound_execute(
     runner: Runner | None = None,
 ) -> UnconfoundOutputs:
     """
+    unconfound
+    
     Removing confounds from 4D fMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -162,6 +164,8 @@ def unconfound(
     runner: Runner | None = None,
 ) -> UnconfoundOutputs:
     """
+    unconfound
+    
     Removing confounds from 4D fMRI data.
     
     Author: FMRIB Analysis Group, University of Oxford

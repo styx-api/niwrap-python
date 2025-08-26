@@ -214,6 +214,8 @@ def parc_atlas_jackknife_test_execute(
     runner: Runner | None = None,
 ) -> ParcAtlasJackknifeTestOutputs:
     """
+    parc_atlas_jackknife_test
+    
     Tool for conducting a jackknife accuracy test using FreeSurfer atlases.
     
     Author: FreeSurfer Developers
@@ -251,6 +253,8 @@ def parc_atlas_jackknife_test(
     runner: Runner | None = None,
 ) -> ParcAtlasJackknifeTestOutputs:
     """
+    parc_atlas_jackknife_test
+    
     Tool for conducting a jackknife accuracy test using FreeSurfer atlases.
     
     Author: FreeSurfer Developers

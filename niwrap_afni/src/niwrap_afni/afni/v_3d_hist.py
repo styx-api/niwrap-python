@@ -303,6 +303,8 @@ def v_3d_hist_execute(
     runner: Runner | None = None,
 ) -> V3dHistOutputs:
     """
+    3dHist
+    
     Computes histograms using functions for generating priors.
     
     Author: AFNI Developers
@@ -348,6 +350,8 @@ def v_3d_hist(
     runner: Runner | None = None,
 ) -> V3dHistOutputs:
     """
+    3dHist
+    
     Computes histograms using functions for generating priors.
     
     Author: AFNI Developers

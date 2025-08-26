@@ -474,8 +474,10 @@ def amp2sh_execute(
     runner: Runner | None = None,
 ) -> Amp2shOutputs:
     """
-    Convert a set of amplitudes (defined along a set of corresponding directions) to
-    their spherical harmonic representation.
+    amp2sh
+    
+    Convert a set of amplitudes (defined along a set of corresponding
+    directions) to their spherical harmonic representation.
     
     The spherical harmonic decomposition is calculated by least-squares linear
     fitting to the amplitude data.
@@ -537,8 +539,10 @@ def amp2sh(
     runner: Runner | None = None,
 ) -> Amp2shOutputs:
     """
-    Convert a set of amplitudes (defined along a set of corresponding directions) to
-    their spherical harmonic representation.
+    amp2sh
+    
+    Convert a set of amplitudes (defined along a set of corresponding
+    directions) to their spherical harmonic representation.
     
     The spherical harmonic decomposition is calculated by least-squares linear
     fitting to the amplitude data.

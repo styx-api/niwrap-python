@@ -224,6 +224,8 @@ def swi_process_execute(
     runner: Runner | None = None,
 ) -> SwiProcessOutputs:
     """
+    swi_process
+    
     Process the Susceptibility-weighted images. Ensure the inputs are post-phase
     unwrapping using PRELUDE.
     
@@ -261,6 +263,8 @@ def swi_process(
     runner: Runner | None = None,
 ) -> SwiProcessOutputs:
     """
+    swi_process
+    
     Process the Susceptibility-weighted images. Ensure the inputs are post-phase
     unwrapping using PRELUDE.
     

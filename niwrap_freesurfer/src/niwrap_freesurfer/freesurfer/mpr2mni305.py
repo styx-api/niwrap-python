@@ -119,6 +119,8 @@ def mpr2mni305_execute(
     runner: Runner | None = None,
 ) -> Mpr2mni305Outputs:
     """
+    mpr2mni305
+    
     Tool for transforming MPRAGE dataset to MNI305 coordinate space.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def mpr2mni305(
     runner: Runner | None = None,
 ) -> Mpr2mni305Outputs:
     """
+    mpr2mni305
+    
     Tool for transforming MPRAGE dataset to MNI305 coordinate space.
     
     Author: FreeSurfer Developers

@@ -374,6 +374,8 @@ def mris_register_to_volume_execute(
     runner: Runner | None = None,
 ) -> MrisRegisterToVolumeOutputs:
     """
+    mris_register_to_volume
+    
     Aligns cortical surfaces to a volumetric template.
     
     Author: FreeSurfer Developers
@@ -427,6 +429,8 @@ def mris_register_to_volume(
     runner: Runner | None = None,
 ) -> MrisRegisterToVolumeOutputs:
     """
+    mris_register_to_volume
+    
     Aligns cortical surfaces to a volumetric template.
     
     Author: FreeSurfer Developers

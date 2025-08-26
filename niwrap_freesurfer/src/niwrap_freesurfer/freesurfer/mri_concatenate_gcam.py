@@ -169,6 +169,8 @@ def mri_concatenate_gcam_execute(
     runner: Runner | None = None,
 ) -> MriConcatenateGcamOutputs:
     """
+    mri_concatenate_gcam
+    
     Concatenate a combination of input LTAs (linear transform array) and GCAMs
     (Gaussian classifier atlas, M3Z).
     
@@ -202,6 +204,8 @@ def mri_concatenate_gcam(
     runner: Runner | None = None,
 ) -> MriConcatenateGcamOutputs:
     """
+    mri_concatenate_gcam
+    
     Concatenate a combination of input LTAs (linear transform array) and GCAMs
     (Gaussian classifier atlas, M3Z).
     

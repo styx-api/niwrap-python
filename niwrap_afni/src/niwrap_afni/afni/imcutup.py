@@ -167,6 +167,8 @@ def imcutup_execute(
     runner: Runner | None = None,
 ) -> ImcutupOutputs:
     """
+    imcutup
+    
     Breaks up larger images into smaller image files of user-defined size.
     
     Author: AFNI Developers
@@ -200,6 +202,8 @@ def imcutup(
     runner: Runner | None = None,
 ) -> ImcutupOutputs:
     """
+    imcutup
+    
     Breaks up larger images into smaller image files of user-defined size.
     
     Author: AFNI Developers

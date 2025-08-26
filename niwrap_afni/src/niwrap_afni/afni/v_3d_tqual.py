@@ -180,6 +180,8 @@ def v_3d_tqual_execute(
     runner: Runner | None = None,
 ) -> V3dTqualOutputs:
     """
+    3dTqual
+    
     Computes a quality index for each sub-brick in a 3D+time dataset.
     
     Author: AFNI Developers
@@ -213,6 +215,8 @@ def v_3d_tqual(
     runner: Runner | None = None,
 ) -> V3dTqualOutputs:
     """
+    3dTqual
+    
     Computes a quality index for each sub-brick in a 3D+time dataset.
     
     Author: AFNI Developers

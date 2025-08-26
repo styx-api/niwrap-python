@@ -133,6 +133,8 @@ def v_3d_detrend_execute(
     runner: Runner | None = None,
 ) -> V3dDetrendOutputs:
     """
+    3dDetrend
+    
     This program removes components from voxel time series using linear least
     squares.
     
@@ -161,6 +163,8 @@ def v_3d_detrend(
     runner: Runner | None = None,
 ) -> V3dDetrendOutputs:
     """
+    3dDetrend
+    
     This program removes components from voxel time series using linear least
     squares.
     

@@ -138,6 +138,8 @@ def fsl_label2voxel_execute(
     runner: Runner | None = None,
 ) -> FslLabel2voxelOutputs:
     """
+    fsl_label2voxel
+    
     Converts labeled volumes to voxels based on specified labels.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def fsl_label2voxel(
     runner: Runner | None = None,
 ) -> FslLabel2voxelOutputs:
     """
+    fsl_label2voxel
+    
     Converts labeled volumes to voxels based on specified labels.
     
     Author: FreeSurfer Developers

@@ -182,6 +182,8 @@ def rcbf_prep_execute(
     runner: Runner | None = None,
 ) -> RcbfPrepOutputs:
     """
+    rcbf-prep
+    
     Performs integration of rCBF as produced by Siemens scanners with FreeSurfer
     analysis in preparation for group analysis.
     
@@ -214,6 +216,8 @@ def rcbf_prep(
     runner: Runner | None = None,
 ) -> RcbfPrepOutputs:
     """
+    rcbf-prep
+    
     Performs integration of rCBF as produced by Siemens scanners with FreeSurfer
     analysis in preparation for group analysis.
     

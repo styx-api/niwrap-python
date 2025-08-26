@@ -365,6 +365,8 @@ def cifti_dilate_execute(
     runner: Runner | None = None,
 ) -> CiftiDilateOutputs:
     """
+    cifti-dilate
+    
     Dilate a cifti file.
     
     For all data values designated as bad, if they neighbor a good value or are
@@ -418,6 +420,8 @@ def cifti_dilate(
     runner: Runner | None = None,
 ) -> CiftiDilateOutputs:
     """
+    cifti-dilate
+    
     Dilate a cifti file.
     
     For all data values designated as bad, if they neighbor a good value or are

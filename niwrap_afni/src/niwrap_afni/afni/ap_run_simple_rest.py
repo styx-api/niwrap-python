@@ -213,6 +213,8 @@ def ap_run_simple_rest_execute(
     runner: Runner | None = None,
 ) -> ApRunSimpleRestOutputs:
     """
+    ap_run_simple_rest
+    
     Run a quick afni_proc.py analysis for QC.
     
     Author: AFNI Developers
@@ -248,6 +250,8 @@ def ap_run_simple_rest(
     runner: Runner | None = None,
 ) -> ApRunSimpleRestOutputs:
     """
+    ap_run_simple_rest
+    
     Run a quick afni_proc.py analysis for QC.
     
     Author: AFNI Developers

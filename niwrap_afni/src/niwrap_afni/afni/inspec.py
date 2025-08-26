@@ -181,6 +181,8 @@ def inspec_execute(
     runner: Runner | None = None,
 ) -> InspecOutputs:
     """
+    inspec
+    
     Outputs information found from specfile.
     
     Author: AFNI Developers
@@ -213,6 +215,8 @@ def inspec(
     runner: Runner | None = None,
 ) -> InspecOutputs:
     """
+    inspec
+    
     Outputs information found from specfile.
     
     Author: AFNI Developers

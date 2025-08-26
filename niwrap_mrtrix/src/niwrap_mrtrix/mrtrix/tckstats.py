@@ -325,6 +325,8 @@ def tckstats_execute(
     runner: Runner | None = None,
 ) -> TckstatsOutputs:
     """
+    tckstats
+    
     Calculate statistics on streamlines lengths.
     
     
@@ -370,6 +372,8 @@ def tckstats(
     runner: Runner | None = None,
 ) -> TckstatsOutputs:
     """
+    tckstats
+    
     Calculate statistics on streamlines lengths.
     
     

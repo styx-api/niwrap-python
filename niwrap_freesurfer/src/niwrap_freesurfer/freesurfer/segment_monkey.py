@@ -119,6 +119,8 @@ def segment_monkey_execute(
     runner: Runner | None = None,
 ) -> SegmentMonkeyOutputs:
     """
+    segment_monkey
+    
     A tool for segmenting images using specified control points.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def segment_monkey(
     runner: Runner | None = None,
 ) -> SegmentMonkeyOutputs:
     """
+    segment_monkey
+    
     A tool for segmenting images using specified control points.
     
     Author: FreeSurfer Developers

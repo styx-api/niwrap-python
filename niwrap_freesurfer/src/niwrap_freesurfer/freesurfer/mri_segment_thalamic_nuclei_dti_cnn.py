@@ -214,8 +214,10 @@ def mri_segment_thalamic_nuclei_dti_cnn_execute(
     runner: Runner | None = None,
 ) -> MriSegmentThalamicNucleiDtiCnnOutputs:
     """
-    Thalamic segmentation tool providing 0.7mm isotropic thalamus segmentation from
-    registered T1, FA, and V1 volumes.
+    mri_segment_thalamic_nuclei_dti_cnn
+    
+    Thalamic segmentation tool providing 0.7mm isotropic thalamus segmentation
+    from registered T1, FA, and V1 volumes.
     
     Author: FreeSurfer Developers
     
@@ -250,8 +252,10 @@ def mri_segment_thalamic_nuclei_dti_cnn(
     runner: Runner | None = None,
 ) -> MriSegmentThalamicNucleiDtiCnnOutputs:
     """
-    Thalamic segmentation tool providing 0.7mm isotropic thalamus segmentation from
-    registered T1, FA, and V1 volumes.
+    mri_segment_thalamic_nuclei_dti_cnn
+    
+    Thalamic segmentation tool providing 0.7mm isotropic thalamus segmentation
+    from registered T1, FA, and V1 volumes.
     
     Author: FreeSurfer Developers
     

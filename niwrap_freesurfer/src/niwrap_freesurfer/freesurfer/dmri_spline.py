@@ -197,6 +197,8 @@ def dmri_spline_execute(
     runner: Runner | None = None,
 ) -> DmriSplineOutputs:
     """
+    dmri_spline
+    
     Tool for interpolating and analyzing splines within a defined mask.
     
     Author: FreeSurfer Developers
@@ -230,6 +232,8 @@ def dmri_spline(
     runner: Runner | None = None,
 ) -> DmriSplineOutputs:
     """
+    dmri_spline
+    
     Tool for interpolating and analyzing splines within a defined mask.
     
     Author: FreeSurfer Developers

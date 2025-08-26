@@ -175,6 +175,8 @@ def mris_distance_transform_execute(
     runner: Runner | None = None,
 ) -> MrisDistanceTransformOutputs:
     """
+    mris_distance_transform
+    
     Computes the distance transform of a label on the surface.
     
     Author: FreeSurfer Developers
@@ -208,6 +210,8 @@ def mris_distance_transform(
     runner: Runner | None = None,
 ) -> MrisDistanceTransformOutputs:
     """
+    mris_distance_transform
+    
     Computes the distance transform of a label on the surface.
     
     Author: FreeSurfer Developers

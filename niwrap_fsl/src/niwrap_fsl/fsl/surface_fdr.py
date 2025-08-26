@@ -129,6 +129,8 @@ def surface_fdr_execute(
     runner: Runner | None = None,
 ) -> SurfaceFdrOutputs:
     """
+    surface_fdr
+    
     Tool to calculate surface FDR correction for vertex analysis.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def surface_fdr(
     runner: Runner | None = None,
 ) -> SurfaceFdrOutputs:
     """
+    surface_fdr
+    
     Tool to calculate surface FDR correction for vertex analysis.
     
     Author: FMRIB Analysis Group, University of Oxford

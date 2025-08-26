@@ -130,6 +130,8 @@ def basil_var_execute(
     runner: Runner | None = None,
 ) -> BasilVarOutputs:
     """
+    basil_var
+    
     Variance calculator for BASIL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -157,6 +159,8 @@ def basil_var(
     runner: Runner | None = None,
 ) -> BasilVarOutputs:
     """
+    basil_var
+    
     Variance calculator for BASIL.
     
     Author: FMRIB Analysis Group, University of Oxford

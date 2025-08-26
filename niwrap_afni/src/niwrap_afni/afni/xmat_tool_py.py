@@ -268,6 +268,8 @@ def xmat_tool_py_execute(
     runner: Runner | None = None,
 ) -> XmatToolPyOutputs:
     """
+    xmat_tool.py
+    
     A tool for evaluating an AFNI X-matrix.
     
     Author: AFNI Developers
@@ -314,6 +316,8 @@ def xmat_tool_py(
     runner: Runner | None = None,
 ) -> XmatToolPyOutputs:
     """
+    xmat_tool.py
+    
     A tool for evaluating an AFNI X-matrix.
     
     Author: AFNI Developers

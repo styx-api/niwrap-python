@@ -225,6 +225,8 @@ def fslorient_execute(
     runner: Runner | None = None,
 ) -> FslorientOutputs:
     """
+    fslorient
+    
     FSL tool to manipulate NIfTI header orientation information.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -266,6 +268,8 @@ def fslorient(
     runner: Runner | None = None,
 ) -> FslorientOutputs:
     """
+    fslorient
+    
     FSL tool to manipulate NIfTI header orientation information.
     
     Author: FMRIB Analysis Group, University of Oxford

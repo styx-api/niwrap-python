@@ -274,6 +274,8 @@ def tcksample_execute(
     runner: Runner | None = None,
 ) -> TcksampleOutputs:
     """
+    tcksample
+    
     Sample values of an associated image along tracks.
     
     By default, the value of the underlying image at each point along the track
@@ -325,6 +327,8 @@ def tcksample(
     runner: Runner | None = None,
 ) -> TcksampleOutputs:
     """
+    tcksample
+    
     Sample values of an associated image along tracks.
     
     By default, the value of the underlying image at each point along the track

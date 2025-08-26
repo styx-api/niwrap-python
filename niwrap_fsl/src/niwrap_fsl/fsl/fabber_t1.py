@@ -391,6 +391,8 @@ def fabber_t1_execute(
     runner: Runner | None = None,
 ) -> FabberT1Outputs:
     """
+    fabber_t1
+    
     Fabber is a tool for performing model-based analysis of fMRI data, using
     advanced Bayesian inference techniques.
     
@@ -447,6 +449,8 @@ def fabber_t1(
     runner: Runner | None = None,
 ) -> FabberT1Outputs:
     """
+    fabber_t1
+    
     Fabber is a tool for performing model-based analysis of fMRI data, using
     advanced Bayesian inference techniques.
     

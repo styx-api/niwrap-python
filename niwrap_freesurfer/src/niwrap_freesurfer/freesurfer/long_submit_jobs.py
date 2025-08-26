@@ -330,6 +330,8 @@ def long_submit_jobs_execute(
     runner: Runner | None = None,
 ) -> LongSubmitJobsOutputs:
     """
+    long_submit_jobs
+    
     Submits longitudinal processing jobs to the NMR cluster (seychelles or
     launchpad).
     
@@ -381,6 +383,8 @@ def long_submit_jobs(
     runner: Runner | None = None,
 ) -> LongSubmitJobsOutputs:
     """
+    long_submit_jobs
+    
     Submits longitudinal processing jobs to the NMR cluster (seychelles or
     launchpad).
     

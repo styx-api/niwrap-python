@@ -119,6 +119,8 @@ def isnifti_execute(
     runner: Runner | None = None,
 ) -> IsniftiOutputs:
     """
+    isnifti
+    
     A simple tool to check if a file is a NIfTI image.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def isnifti(
     runner: Runner | None = None,
 ) -> IsniftiOutputs:
     """
+    isnifti
+    
     A simple tool to check if a file is a NIfTI image.
     
     Author: FreeSurfer Developers

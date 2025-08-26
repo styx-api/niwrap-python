@@ -225,6 +225,8 @@ def v_3d_gen_feature_dist_execute(
     runner: Runner | None = None,
 ) -> V3dGenFeatureDistOutputs:
     """
+    3dGenFeatureDist
+    
     3dGenFeatureDist produces histogram volume (hives) from input data.
     
     Author: AFNI Developers
@@ -262,6 +264,8 @@ def v_3d_gen_feature_dist(
     runner: Runner | None = None,
 ) -> V3dGenFeatureDistOutputs:
     """
+    3dGenFeatureDist
+    
     3dGenFeatureDist produces histogram volume (hives) from input data.
     
     Author: AFNI Developers

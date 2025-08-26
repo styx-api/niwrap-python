@@ -143,7 +143,10 @@ def mris_make_face_parcellation_execute(
     runner: Runner | None = None,
 ) -> MrisMakeFaceParcellationOutputs:
     """
-    Generates a parcellation based on which icosahedral face each vertex maps to.
+    mris_make_face_parcellation
+    
+    Generates a parcellation based on which icosahedral face each vertex maps
+    to.
     
     Author: FreeSurfer Developers
     
@@ -172,7 +175,10 @@ def mris_make_face_parcellation(
     runner: Runner | None = None,
 ) -> MrisMakeFaceParcellationOutputs:
     """
-    Generates a parcellation based on which icosahedral face each vertex maps to.
+    mris_make_face_parcellation
+    
+    Generates a parcellation based on which icosahedral face each vertex maps
+    to.
     
     Author: FreeSurfer Developers
     

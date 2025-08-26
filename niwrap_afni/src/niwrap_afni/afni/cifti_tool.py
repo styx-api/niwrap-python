@@ -194,6 +194,8 @@ def cifti_tool_execute(
     runner: Runner | None = None,
 ) -> CiftiToolOutputs:
     """
+    cifti_tool
+    
     Example tool for reading/writing CIFTI-2 datasets.
     
     Author: AFNI Developers
@@ -228,6 +230,8 @@ def cifti_tool(
     runner: Runner | None = None,
 ) -> CiftiToolOutputs:
     """
+    cifti_tool
+    
     Example tool for reading/writing CIFTI-2 datasets.
     
     Author: AFNI Developers

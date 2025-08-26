@@ -189,6 +189,8 @@ def cifti_restrict_dense_map_execute(
     runner: Runner | None = None,
 ) -> CiftiRestrictDenseMapOutputs:
     """
+    cifti-restrict-dense-map
+    
     Exclude brainordinates from a cifti file.
     
     Writes a modified version of <cifti-in>, where all brainordinates outside
@@ -229,6 +231,8 @@ def cifti_restrict_dense_map(
     runner: Runner | None = None,
 ) -> CiftiRestrictDenseMapOutputs:
     """
+    cifti-restrict-dense-map
+    
     Exclude brainordinates from a cifti file.
     
     Writes a modified version of <cifti-in>, where all brainordinates outside

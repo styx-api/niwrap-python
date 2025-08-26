@@ -123,6 +123,8 @@ def dicom_to_raw_execute(
     runner: Runner | None = None,
 ) -> DicomToRawOutputs:
     """
+    dicom_to_raw
+    
     Reads images from DICOM file and writes them to raw file(s).
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def dicom_to_raw(
     runner: Runner | None = None,
 ) -> DicomToRawOutputs:
     """
+    dicom_to_raw
+    
     Reads images from DICOM file and writes them to raw file(s).
     
     Author: AFNI Developers

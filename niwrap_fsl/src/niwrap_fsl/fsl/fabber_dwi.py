@@ -405,8 +405,10 @@ def fabber_dwi_execute(
     runner: Runner | None = None,
 ) -> FabberDwiOutputs:
     """
-    Fabber diffusion-weighted imaging tool for model-based analysis using forward
-    models and different inference methods.
+    fabber_dwi
+    
+    Fabber diffusion-weighted imaging tool for model-based analysis using
+    forward models and different inference methods.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -467,8 +469,10 @@ def fabber_dwi(
     runner: Runner | None = None,
 ) -> FabberDwiOutputs:
     """
-    Fabber diffusion-weighted imaging tool for model-based analysis using forward
-    models and different inference methods.
+    fabber_dwi
+    
+    Fabber diffusion-weighted imaging tool for model-based analysis using
+    forward models and different inference methods.
     
     Author: FMRIB Analysis Group, University of Oxford
     

@@ -199,6 +199,8 @@ def surf2surf_execute(
     runner: Runner | None = None,
 ) -> Surf2surfOutputs:
     """
+    surf2surf
+    
     Conversions between surface formats and/or conventions.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -233,6 +235,8 @@ def surf2surf(
     runner: Runner | None = None,
 ) -> Surf2surfOutputs:
     """
+    surf2surf
+    
     Conversions between surface formats and/or conventions.
     
     Author: FMRIB Analysis Group, University of Oxford

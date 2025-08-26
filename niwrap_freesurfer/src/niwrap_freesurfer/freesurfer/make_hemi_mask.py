@@ -134,6 +134,8 @@ def make_hemi_mask_execute(
     runner: Runner | None = None,
 ) -> MakeHemiMaskOutputs:
     """
+    make_hemi_mask
+    
     Generates a hemisphere mask by registering input to the left/right reversed
     version using mri_robust_register, then keeps only the selected hemisphere.
     
@@ -163,6 +165,8 @@ def make_hemi_mask(
     runner: Runner | None = None,
 ) -> MakeHemiMaskOutputs:
     """
+    make_hemi_mask
+    
     Generates a hemisphere mask by registering input to the left/right reversed
     version using mri_robust_register, then keeps only the selected hemisphere.
     

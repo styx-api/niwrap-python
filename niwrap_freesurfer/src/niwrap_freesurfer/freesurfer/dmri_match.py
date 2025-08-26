@@ -199,6 +199,8 @@ def dmri_match_execute(
     runner: Runner | None = None,
 ) -> DmriMatchOutputs:
     """
+    dmri_match
+    
     Tool for matching diffusion MRI parcellations.
     
     Author: FreeSurfer Developers
@@ -235,6 +237,8 @@ def dmri_match(
     runner: Runner | None = None,
 ) -> DmriMatchOutputs:
     """
+    dmri_match
+    
     Tool for matching diffusion MRI parcellations.
     
     Author: FreeSurfer Developers

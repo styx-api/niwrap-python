@@ -223,6 +223,8 @@ def realtime_receiver_execute(
     runner: Runner | None = None,
 ) -> RealtimeReceiverOutputs:
     """
+    realtime_receiver
+    
     Program to receive and display real-time plugin data from AFNI.
     
     Author: AFNI Developers
@@ -260,6 +262,8 @@ def realtime_receiver(
     runner: Runner | None = None,
 ) -> RealtimeReceiverOutputs:
     """
+    realtime_receiver
+    
     Program to receive and display real-time plugin data from AFNI.
     
     Author: AFNI Developers

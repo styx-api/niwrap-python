@@ -140,6 +140,8 @@ def surface_modify_sphere_execute(
     runner: Runner | None = None,
 ) -> SurfaceModifySphereOutputs:
     """
+    surface-modify-sphere
+    
     Change radius and optionally recenter a sphere.
     
     This command may be useful if you have used -surface-resample to resample a
@@ -178,6 +180,8 @@ def surface_modify_sphere(
     runner: Runner | None = None,
 ) -> SurfaceModifySphereOutputs:
     """
+    surface-modify-sphere
+    
     Change radius and optionally recenter a sphere.
     
     This command may be useful if you have used -surface-resample to resample a

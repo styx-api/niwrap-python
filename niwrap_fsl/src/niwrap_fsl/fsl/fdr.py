@@ -212,6 +212,8 @@ def fdr_execute(
     runner: Runner | None = None,
 ) -> FdrOutputs:
     """
+    fdr
+    
     False Discovery Rate (FDR) correction tool from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -249,6 +251,8 @@ def fdr(
     runner: Runner | None = None,
 ) -> FdrOutputs:
     """
+    fdr
+    
     False Discovery Rate (FDR) correction tool from FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

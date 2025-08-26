@@ -213,8 +213,10 @@ def v_3dretroicor_execute(
     runner: Runner | None = None,
 ) -> V3dretroicorOutputs:
     """
-    Performs Retrospective Image Correction for physiological motion effects using a
-    modified RETROICOR algorithm.
+    3dretroicor
+    
+    Performs Retrospective Image Correction for physiological motion effects
+    using a modified RETROICOR algorithm.
     
     Author: AFNI Developers
     
@@ -248,8 +250,10 @@ def v_3dretroicor(
     runner: Runner | None = None,
 ) -> V3dretroicorOutputs:
     """
-    Performs Retrospective Image Correction for physiological motion effects using a
-    modified RETROICOR algorithm.
+    3dretroicor
+    
+    Performs Retrospective Image Correction for physiological motion effects
+    using a modified RETROICOR algorithm.
     
     Author: AFNI Developers
     

@@ -122,6 +122,8 @@ def gcainit_execute(
     runner: Runner | None = None,
 ) -> GcainitOutputs:
     """
+    gcainit
+    
     Initializes the GCA for brain processing tasks.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def gcainit(
     runner: Runner | None = None,
 ) -> GcainitOutputs:
     """
+    gcainit
+    
     Initializes the GCA for brain processing tasks.
     
     Author: FreeSurfer Developers

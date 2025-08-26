@@ -217,6 +217,8 @@ def metric_stats_execute(
     runner: Runner | None = None,
 ) -> MetricStatsOutputs:
     """
+    metric-stats
+    
     Spatial statistics on a metric file.
     
     For each column of the input, a line of text is printed, resulting from the
@@ -275,6 +277,8 @@ def metric_stats(
     runner: Runner | None = None,
 ) -> MetricStatsOutputs:
     """
+    metric-stats
+    
     Spatial statistics on a metric file.
     
     For each column of the input, a line of text is printed, resulting from the

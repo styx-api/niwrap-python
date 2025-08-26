@@ -213,6 +213,8 @@ def volume_math_execute(
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
+    volume-math
+    
     Evaluate expression on volume files.
     
     This command evaluates <expression> at each voxel independently. There must
@@ -311,6 +313,8 @@ def volume_math(
     runner: Runner | None = None,
 ) -> VolumeMathOutputs:
     """
+    volume-math
+    
     Evaluate expression on volume files.
     
     This command evaluates <expression> at each voxel independently. There must

@@ -148,6 +148,8 @@ def surface_to_surface_3d_distance_execute(
     runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
+    surface-to-surface-3d-distance
+    
     Compute distance between corresponding vertices.
     
     Computes the vector difference between the vertices of each surface with the
@@ -181,6 +183,8 @@ def surface_to_surface_3d_distance(
     runner: Runner | None = None,
 ) -> SurfaceToSurface3dDistanceOutputs:
     """
+    surface-to-surface-3d-distance
+    
     Compute distance between corresponding vertices.
     
     Computes the vector difference between the vertices of each surface with the

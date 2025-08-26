@@ -497,6 +497,8 @@ def samseg_execute(
     runner: Runner | None = None,
 ) -> SamsegOutputs:
     """
+    samseg
+    
     SAMSEG (Statistical and Algorithmic Methods for Segmentation) is a tool for
     segmenting neuroimaging data.
     
@@ -567,6 +569,8 @@ def samseg(
     runner: Runner | None = None,
 ) -> SamsegOutputs:
     """
+    samseg
+    
     SAMSEG (Statistical and Algorithmic Methods for Segmentation) is a tool for
     segmenting neuroimaging data.
     

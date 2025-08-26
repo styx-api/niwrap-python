@@ -157,6 +157,8 @@ def zip_scene_file_execute(
     runner: Runner | None = None,
 ) -> ZipSceneFileOutputs:
     """
+    zip-scene-file
+    
     Zip a scene file and its data files.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not
@@ -193,6 +195,8 @@ def zip_scene_file(
     runner: Runner | None = None,
 ) -> ZipSceneFileOutputs:
     """
+    zip-scene-file
+    
     Zip a scene file and its data files.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not

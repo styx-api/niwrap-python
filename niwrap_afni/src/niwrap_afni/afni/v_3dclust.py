@@ -260,6 +260,8 @@ def v_3dclust_execute(
     runner: Runner | None = None,
 ) -> V3dclustOutputs:
     """
+    3dclust
+    
     Performs simple-minded cluster detection in 3D datasets.
     
     Author: AFNI Developers
@@ -305,6 +307,8 @@ def v_3dclust(
     runner: Runner | None = None,
 ) -> V3dclustOutputs:
     """
+    3dclust
+    
     Performs simple-minded cluster detection in 3D datasets.
     
     Author: AFNI Developers

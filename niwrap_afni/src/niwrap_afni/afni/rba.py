@@ -373,6 +373,8 @@ def rba_execute(
     runner: Runner | None = None,
 ) -> RbaOutputs:
     """
+    RBA
+    
     Region-Based Analysis Program through Bayesian Multilevel Modeling.
     
     Author: AFNI Developers
@@ -424,6 +426,8 @@ def rba(
     runner: Runner | None = None,
 ) -> RbaOutputs:
     """
+    RBA
+    
     Region-Based Analysis Program through Bayesian Multilevel Modeling.
     
     Author: AFNI Developers

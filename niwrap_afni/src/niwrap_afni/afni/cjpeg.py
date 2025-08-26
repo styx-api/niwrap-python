@@ -162,6 +162,8 @@ def cjpeg_execute(
     runner: Runner | None = None,
 ) -> CjpegOutputs:
     """
+    cjpeg
+    
     Compresses an image file to a JPEG file.
     
     Author: AFNI Developers
@@ -194,6 +196,8 @@ def cjpeg(
     runner: Runner | None = None,
 ) -> CjpegOutputs:
     """
+    cjpeg
+    
     Compresses an image file to a JPEG file.
     
     Author: AFNI Developers

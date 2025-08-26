@@ -198,6 +198,8 @@ def mris_register_label_map_execute(
     runner: Runner | None = None,
 ) -> MrisRegisterLabelMapOutputs:
     """
+    mris_register_label_map
+    
     Tool for registering label maps in Freesurfer.
     
     Author: FreeSurfer Developers
@@ -234,6 +236,8 @@ def mris_register_label_map(
     runner: Runner | None = None,
 ) -> MrisRegisterLabelMapOutputs:
     """
+    mris_register_label_map
+    
     Tool for registering label maps in Freesurfer.
     
     Author: FreeSurfer Developers

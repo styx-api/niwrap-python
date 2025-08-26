@@ -128,6 +128,8 @@ def sliceanimate_execute(
     runner: Runner | None = None,
 ) -> SliceanimateOutputs:
     """
+    sliceanimate
+    
     A tool for animating slices of an image using whirlgif.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def sliceanimate(
     runner: Runner | None = None,
 ) -> SliceanimateOutputs:
     """
+    sliceanimate
+    
     A tool for animating slices of an image using whirlgif.
     
     Author: FMRIB Analysis Group, University of Oxford

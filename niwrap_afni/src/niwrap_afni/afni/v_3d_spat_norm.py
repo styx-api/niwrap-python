@@ -185,6 +185,8 @@ def v_3d_spat_norm_execute(
     runner: Runner | None = None,
 ) -> V3dSpatNormOutputs:
     """
+    3dSpatNorm
+    
     An obsolete tool for spatial normalization.
     
     Author: AFNI Developers
@@ -219,6 +221,8 @@ def v_3d_spat_norm(
     runner: Runner | None = None,
 ) -> V3dSpatNormOutputs:
     """
+    3dSpatNorm
+    
     An obsolete tool for spatial normalization.
     
     Author: AFNI Developers

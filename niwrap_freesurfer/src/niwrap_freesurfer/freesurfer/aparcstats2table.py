@@ -266,6 +266,8 @@ def aparcstats2table_execute(
     runner: Runner | None = None,
 ) -> Aparcstats2tableOutputs:
     """
+    aparcstats2table
+    
     Converts a cortical stats file into a table format with subjects as rows and
     parcellations as columns.
     
@@ -310,6 +312,8 @@ def aparcstats2table(
     runner: Runner | None = None,
 ) -> Aparcstats2tableOutputs:
     """
+    aparcstats2table
+    
     Converts a cortical stats file into a table format with subjects as rows and
     parcellations as columns.
     

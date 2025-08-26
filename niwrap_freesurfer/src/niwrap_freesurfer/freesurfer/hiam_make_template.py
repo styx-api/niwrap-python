@@ -134,6 +134,8 @@ def hiam_make_template_execute(
     runner: Runner | None = None,
 ) -> HiamMakeTemplateOutputs:
     """
+    hiam_make_template
+    
     This program adds a template into an average surface using FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def hiam_make_template(
     runner: Runner | None = None,
 ) -> HiamMakeTemplateOutputs:
     """
+    hiam_make_template
+    
     This program adds a template into an average surface using FreeSurfer.
     
     Author: FreeSurfer Developers

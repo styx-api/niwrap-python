@@ -124,8 +124,10 @@ def stem2fname_execute(
     runner: Runner | None = None,
 ) -> Stem2fnameOutputs:
     """
-    Determines the full filename with extension for a given file stem by checking
-    various formats.
+    stem2fname
+    
+    Determines the full filename with extension for a given file stem by
+    checking various formats.
     
     Author: FreeSurfer Developers
     
@@ -151,8 +153,10 @@ def stem2fname(
     runner: Runner | None = None,
 ) -> Stem2fnameOutputs:
     """
-    Determines the full filename with extension for a given file stem by checking
-    various formats.
+    stem2fname
+    
+    Determines the full filename with extension for a given file stem by
+    checking various formats.
     
     Author: FreeSurfer Developers
     

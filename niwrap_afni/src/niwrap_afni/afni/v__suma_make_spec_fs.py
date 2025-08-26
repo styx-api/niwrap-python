@@ -254,6 +254,8 @@ def v__suma_make_spec_fs_execute(
     runner: Runner | None = None,
 ) -> VSumaMakeSpecFsOutputs:
     """
+    @SUMA_Make_Spec_FS
+    
     Prepare for surface viewing in SUMA.
     
     Author: AFNI Developers
@@ -295,6 +297,8 @@ def v__suma_make_spec_fs(
     runner: Runner | None = None,
 ) -> VSumaMakeSpecFsOutputs:
     """
+    @SUMA_Make_Spec_FS
+    
     Prepare for surface viewing in SUMA.
     
     Author: AFNI Developers

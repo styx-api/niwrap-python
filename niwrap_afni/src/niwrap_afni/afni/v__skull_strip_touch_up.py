@@ -163,8 +163,10 @@ def v__skull_strip_touch_up_execute(
     runner: Runner | None = None,
 ) -> VSkullStripTouchUpOutputs:
     """
-    Helper program to touch up failed skull stripping by resampling data, allowing
-    manual edits, and outputting corrected data.
+    @SkullStrip_TouchUp
+    
+    Helper program to touch up failed skull stripping by resampling data,
+    allowing manual edits, and outputting corrected data.
     
     Author: AFNI Developers
     
@@ -195,8 +197,10 @@ def v__skull_strip_touch_up(
     runner: Runner | None = None,
 ) -> VSkullStripTouchUpOutputs:
     """
-    Helper program to touch up failed skull stripping by resampling data, allowing
-    manual edits, and outputting corrected data.
+    @SkullStrip_TouchUp
+    
+    Helper program to touch up failed skull stripping by resampling data,
+    allowing manual edits, and outputting corrected data.
     
     Author: AFNI Developers
     

@@ -207,6 +207,8 @@ def xhemireg_execute(
     runner: Runner | None = None,
 ) -> XhemiregOutputs:
     """
+    xhemireg
+    
     Tool for hemisphere registration in neuroimaging.
     
     Author: FreeSurfer Developers
@@ -245,6 +247,8 @@ def xhemireg(
     runner: Runner | None = None,
 ) -> XhemiregOutputs:
     """
+    xhemireg
+    
     Tool for hemisphere registration in neuroimaging.
     
     Author: FreeSurfer Developers

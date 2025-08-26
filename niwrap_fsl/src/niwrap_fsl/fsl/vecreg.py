@@ -218,6 +218,8 @@ def vecreg_execute(
     runner: Runner | None = None,
 ) -> VecregOutputs:
     """
+    vecreg
+    
     Vector Affine/NonLinear Transformation with Orientation Preservation.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -254,6 +256,8 @@ def vecreg(
     runner: Runner | None = None,
 ) -> VecregOutputs:
     """
+    vecreg
+    
     Vector Affine/NonLinear Transformation with Orientation Preservation.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -346,6 +346,8 @@ def make_random_timing_py_execute(
     runner: Runner | None = None,
 ) -> MakeRandomTimingPyOutputs:
     """
+    make_random_timing.py
+    
     Create random stimulus timing files for use with AFNI 3dDeconvolve.
     
     Author: AFNI Developers
@@ -396,6 +398,8 @@ def make_random_timing_py(
     runner: Runner | None = None,
 ) -> MakeRandomTimingPyOutputs:
     """
+    make_random_timing.py
+    
     Create random stimulus timing files for use with AFNI 3dDeconvolve.
     
     Author: AFNI Developers

@@ -140,6 +140,8 @@ def rca_config_execute(
     runner: Runner | None = None,
 ) -> RcaConfigOutputs:
     """
+    rca-config
+    
     A command-line tool that processes configuration files and arguments.
     
     Author: FreeSurfer Developers
@@ -169,6 +171,8 @@ def rca_config(
     runner: Runner | None = None,
 ) -> RcaConfigOutputs:
     """
+    rca-config
+    
     A command-line tool that processes configuration files and arguments.
     
     Author: FreeSurfer Developers

@@ -223,6 +223,8 @@ def mri_easyreg_execute(
     runner: Runner | None = None,
 ) -> MriEasyregOutputs:
     """
+    mri_easyreg
+    
     EasyReg: deep learning registration simple and easy.
     
     Author: FreeSurfer Developers
@@ -258,6 +260,8 @@ def mri_easyreg(
     runner: Runner | None = None,
 ) -> MriEasyregOutputs:
     """
+    mri_easyreg
+    
     EasyReg: deep learning registration simple and easy.
     
     Author: FreeSurfer Developers

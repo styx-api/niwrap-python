@@ -370,6 +370,8 @@ def dmri_trk2trk_execute(
     runner: Runner | None = None,
 ) -> DmriTrk2trkOutputs:
     """
+    dmri_trk2trk
+    
     A tool for transforming and analyzing tractography data.
     
     Author: FreeSurfer Developers
@@ -422,6 +424,8 @@ def dmri_trk2trk(
     runner: Runner | None = None,
 ) -> DmriTrk2trkOutputs:
     """
+    dmri_trk2trk
+    
     A tool for transforming and analyzing tractography data.
     
     Author: FreeSurfer Developers

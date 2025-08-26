@@ -128,8 +128,10 @@ def mri_compute_bias_execute(
     runner: Runner | None = None,
 ) -> MriComputeBiasOutputs:
     """
-    Compute bias correction volumes for the given subjects and outputs the result to
-    a specified volume.
+    mri_compute_bias
+    
+    Compute bias correction volumes for the given subjects and outputs the
+    result to a specified volume.
     
     Author: FreeSurfer Developers
     
@@ -156,8 +158,10 @@ def mri_compute_bias(
     runner: Runner | None = None,
 ) -> MriComputeBiasOutputs:
     """
-    Compute bias correction volumes for the given subjects and outputs the result to
-    a specified volume.
+    mri_compute_bias
+    
+    Compute bias correction volumes for the given subjects and outputs the
+    result to a specified volume.
     
     Author: FreeSurfer Developers
     

@@ -148,6 +148,8 @@ def v_1d_marry_execute(
     runner: Runner | None = None,
 ) -> V1dMarryOutputs:
     """
+    1dMarry
+    
     Joins together 2 (or more) ragged-right .1D files, for use with 3dDeconvolve
     -stim_times_AM2, or breaks up 1 married file into 2 (or more) single-valued
     files.
@@ -178,6 +180,8 @@ def v_1d_marry(
     runner: Runner | None = None,
 ) -> V1dMarryOutputs:
     """
+    1dMarry
+    
     Joins together 2 (or more) ragged-right .1D files, for use with 3dDeconvolve
     -stim_times_AM2, or breaks up 1 married file into 2 (or more) single-valued
     files.

@@ -163,6 +163,8 @@ def analyzeto4dfp_execute(
     runner: Runner | None = None,
 ) -> Analyzeto4dfpOutputs:
     """
+    analyzeto4dfp
+    
     Convert ANALYZE image format to 4dfp format with various options.
     
     Author: FreeSurfer Developers
@@ -195,6 +197,8 @@ def analyzeto4dfp(
     runner: Runner | None = None,
 ) -> Analyzeto4dfpOutputs:
     """
+    analyzeto4dfp
+    
     Convert ANALYZE image format to 4dfp format with various options.
     
     Author: FreeSurfer Developers

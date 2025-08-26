@@ -440,6 +440,8 @@ def v__make_label_table_execute(
     runner: Runner | None = None,
 ) -> VMakeLabelTableOutputs:
     """
+    @MakeLabelTable
+    
     Script used to create, modify, and transform label tables.
     
     Author: AFNI Developers
@@ -500,6 +502,8 @@ def v__make_label_table(
     runner: Runner | None = None,
 ) -> VMakeLabelTableOutputs:
     """
+    @MakeLabelTable
+    
     Script used to create, modify, and transform label tables.
     
     Author: AFNI Developers

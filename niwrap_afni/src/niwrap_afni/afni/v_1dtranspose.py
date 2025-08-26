@@ -131,6 +131,8 @@ def v_1dtranspose_execute(
     runner: Runner | None = None,
 ) -> V1dtransposeOutputs:
     """
+    1dtranspose
+    
     Transpose an AFNI *.1D file (ASCII list of numbers arranged in columns).
     
     Author: AFNI Developers
@@ -158,6 +160,8 @@ def v_1dtranspose(
     runner: Runner | None = None,
 ) -> V1dtransposeOutputs:
     """
+    1dtranspose
+    
     Transpose an AFNI *.1D file (ASCII list of numbers arranged in columns).
     
     Author: AFNI Developers

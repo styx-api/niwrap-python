@@ -128,6 +128,8 @@ def imcp_execute(
     runner: Runner | None = None,
 ) -> ImcpOutputs:
     """
+    imcp
+    
     Copy images from one location to another.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -155,6 +157,8 @@ def imcp(
     runner: Runner | None = None,
 ) -> ImcpOutputs:
     """
+    imcp
+    
     Copy images from one location to another.
     
     Author: FMRIB Analysis Group, University of Oxford

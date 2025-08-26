@@ -130,6 +130,8 @@ def surface_closest_vertex_execute(
     runner: Runner | None = None,
 ) -> SurfaceClosestVertexOutputs:
     """
+    surface-closest-vertex
+    
     Find closest surface vertex to coordinates.
     
     For each coordinate XYZ triple, find the closest vertex in the surface, and
@@ -165,6 +167,8 @@ def surface_closest_vertex(
     runner: Runner | None = None,
 ) -> SurfaceClosestVertexOutputs:
     """
+    surface-closest-vertex
+    
     Find closest surface vertex to coordinates.
     
     For each coordinate XYZ triple, find the closest vertex in the surface, and

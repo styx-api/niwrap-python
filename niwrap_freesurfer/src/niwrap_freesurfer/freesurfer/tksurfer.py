@@ -136,6 +136,8 @@ def tksurfer_execute(
     runner: Runner | None = None,
 ) -> TksurferOutputs:
     """
+    tksurfer
+    
     3D visualization tool for cortical surface models (part of FreeSurfer).
     
     Author: FreeSurfer Developers
@@ -165,6 +167,8 @@ def tksurfer(
     runner: Runner | None = None,
 ) -> TksurferOutputs:
     """
+    tksurfer
+    
     3D visualization tool for cortical surface models (part of FreeSurfer).
     
     Author: FreeSurfer Developers

@@ -129,6 +129,8 @@ def surface_vertex_areas_execute(
     runner: Runner | None = None,
 ) -> SurfaceVertexAreasOutputs:
     """
+    surface-vertex-areas
+    
     Measure surface area each vertex is responsible for.
     
     Each vertex gets one third of the area of each triangle it is a part of.
@@ -159,6 +161,8 @@ def surface_vertex_areas(
     runner: Runner | None = None,
 ) -> SurfaceVertexAreasOutputs:
     """
+    surface-vertex-areas
+    
     Measure surface area each vertex is responsible for.
     
     Each vertex gets one third of the area of each triangle it is a part of.

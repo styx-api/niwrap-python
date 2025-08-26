@@ -165,6 +165,8 @@ def imcalc_execute(
     runner: Runner | None = None,
 ) -> ImcalcOutputs:
     """
+    imcalc
+    
     Tool for arithmetic operations on 2D images, pixel-by-pixel.
     
     Author: AFNI Developers
@@ -194,6 +196,8 @@ def imcalc(
     runner: Runner | None = None,
 ) -> ImcalcOutputs:
     """
+    imcalc
+    
     Tool for arithmetic operations on 2D images, pixel-by-pixel.
     
     Author: AFNI Developers

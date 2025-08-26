@@ -156,8 +156,10 @@ def v_3d_periodogram_execute(
     runner: Runner | None = None,
 ) -> V3dPeriodogramOutputs:
     """
-    Computes the periodogram of each voxel time series. The periodogram is a crude
-    estimate of the power spectrum.
+    3dPeriodogram
+    
+    Computes the periodogram of each voxel time series. The periodogram is a
+    crude estimate of the power spectrum.
     
     Author: AFNI Developers
     
@@ -186,8 +188,10 @@ def v_3d_periodogram(
     runner: Runner | None = None,
 ) -> V3dPeriodogramOutputs:
     """
-    Computes the periodogram of each voxel time series. The periodogram is a crude
-    estimate of the power spectrum.
+    3dPeriodogram
+    
+    Computes the periodogram of each voxel time series. The periodogram is a
+    crude estimate of the power spectrum.
     
     Author: AFNI Developers
     

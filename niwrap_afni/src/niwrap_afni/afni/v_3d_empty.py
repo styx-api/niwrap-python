@@ -160,6 +160,8 @@ def v_3d_empty_execute(
     runner: Runner | None = None,
 ) -> V3dEmptyOutputs:
     """
+    3dEmpty
+    
     Tool to create an 'empty' dataset .HEAD file.
     
     Author: AFNI Developers
@@ -189,6 +191,8 @@ def v_3d_empty(
     runner: Runner | None = None,
 ) -> V3dEmptyOutputs:
     """
+    3dEmpty
+    
     Tool to create an 'empty' dataset .HEAD file.
     
     Author: AFNI Developers

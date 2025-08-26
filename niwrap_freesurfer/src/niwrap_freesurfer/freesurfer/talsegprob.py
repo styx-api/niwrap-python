@@ -271,8 +271,10 @@ def talsegprob_execute(
     runner: Runner | None = None,
 ) -> TalsegprobOutputs:
     """
-    Tool to create a binary probability volume from aseg.mgz based on segmentation
-    numbers, resliced to talirach/MNI305/fsaverage space.
+    talsegprob
+    
+    Tool to create a binary probability volume from aseg.mgz based on
+    segmentation numbers, resliced to talirach/MNI305/fsaverage space.
     
     Author: FreeSurfer Developers
     
@@ -314,8 +316,10 @@ def talsegprob(
     runner: Runner | None = None,
 ) -> TalsegprobOutputs:
     """
-    Tool to create a binary probability volume from aseg.mgz based on segmentation
-    numbers, resliced to talirach/MNI305/fsaverage space.
+    talsegprob
+    
+    Tool to create a binary probability volume from aseg.mgz based on
+    segmentation numbers, resliced to talirach/MNI305/fsaverage space.
     
     Author: FreeSurfer Developers
     

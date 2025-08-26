@@ -151,6 +151,8 @@ def v_3d_edu_01_scale_execute(
     runner: Runner | None = None,
 ) -> V3dEdu01ScaleOutputs:
     """
+    3dEdu_01_scale
+    
     Educational program to create a new AFNI program. Scales and masks dataset
     volumes.
     
@@ -181,6 +183,8 @@ def v_3d_edu_01_scale(
     runner: Runner | None = None,
 ) -> V3dEdu01ScaleOutputs:
     """
+    3dEdu_01_scale
+    
     Educational program to create a new AFNI program. Scales and masks dataset
     volumes.
     

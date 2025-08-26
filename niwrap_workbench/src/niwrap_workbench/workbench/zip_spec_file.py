@@ -150,6 +150,8 @@ def zip_spec_file_execute(
     runner: Runner | None = None,
 ) -> ZipSpecFileOutputs:
     """
+    zip-spec-file
+    
     Zip a spec file and its data files.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not
@@ -187,6 +189,8 @@ def zip_spec_file(
     runner: Runner | None = None,
 ) -> ZipSpecFileOutputs:
     """
+    zip-spec-file
+    
     Zip a spec file and its data files.
     
     If zip-file already exists, it will be overwritten. If -base-dir is not

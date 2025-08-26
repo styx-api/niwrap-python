@@ -274,6 +274,8 @@ def fixel2voxel_execute(
     runner: Runner | None = None,
 ) -> Fixel2voxelOutputs:
     """
+    fixel2voxel
+    
     Convert a fixel-based sparse-data image into some form of scalar image.
     
     Fixel data can be reduced to voxel data in a number of ways:
@@ -343,6 +345,8 @@ def fixel2voxel(
     runner: Runner | None = None,
 ) -> Fixel2voxelOutputs:
     """
+    fixel2voxel
+    
     Convert a fixel-based sparse-data image into some form of scalar image.
     
     Fixel data can be reduced to voxel data in a number of ways:

@@ -185,8 +185,10 @@ def mri_synthsr_execute(
     runner: Runner | None = None,
 ) -> MriSynthsrOutputs:
     """
-    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a scan of
-    any contrast and resolution.
+    mri_synthsr
+    
+    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a scan
+    of any contrast and resolution.
     
     Author: FreeSurfer Developers
     
@@ -221,8 +223,10 @@ def mri_synthsr(
     runner: Runner | None = None,
 ) -> MriSynthsrOutputs:
     """
-    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a scan of
-    any contrast and resolution.
+    mri_synthsr
+    
+    Implementation of SynthSR that generates a synthetic 1mm MP-RAGE from a scan
+    of any contrast and resolution.
     
     Author: FreeSurfer Developers
     

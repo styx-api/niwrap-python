@@ -152,8 +152,10 @@ def beta2sxa_execute(
     runner: Runner | None = None,
 ) -> Beta2sxaOutputs:
     """
-    A script to create files for plotting in tkmedit or tksurfer based on tabular
-    data.
+    beta2sxa
+    
+    A script to create files for plotting in tkmedit or tksurfer based on
+    tabular data.
     
     Author: FreeSurfer Developers
     
@@ -182,8 +184,10 @@ def beta2sxa(
     runner: Runner | None = None,
 ) -> Beta2sxaOutputs:
     """
-    A script to create files for plotting in tkmedit or tksurfer based on tabular
-    data.
+    beta2sxa
+    
+    A script to create files for plotting in tkmedit or tksurfer based on
+    tabular data.
     
     Author: FreeSurfer Developers
     

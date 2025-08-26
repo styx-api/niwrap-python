@@ -165,6 +165,8 @@ def mris_label_area_execute(
     runner: Runner | None = None,
 ) -> MrisLabelAreaOutputs:
     """
+    mris_label_area
+    
     Compute the area of specific labels on a surface of a brain hemisphere in
     FreeSurfer.
     
@@ -199,6 +201,8 @@ def mris_label_area(
     runner: Runner | None = None,
 ) -> MrisLabelAreaOutputs:
     """
+    mris_label_area
+    
     Compute the area of specific labels on a surface of a brain hemisphere in
     FreeSurfer.
     

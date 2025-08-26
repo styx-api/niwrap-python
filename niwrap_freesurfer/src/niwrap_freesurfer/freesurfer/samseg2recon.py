@@ -213,8 +213,10 @@ def samseg2recon_execute(
     runner: Runner | None = None,
 ) -> Samseg2reconOutputs:
     """
-    Creates and populates a subjects directory for use with recon-all from SAMSEG
-    outputs.
+    samseg2recon
+    
+    Creates and populates a subjects directory for use with recon-all from
+    SAMSEG outputs.
     
     Author: FreeSurfer Developers
     
@@ -251,8 +253,10 @@ def samseg2recon(
     runner: Runner | None = None,
 ) -> Samseg2reconOutputs:
     """
-    Creates and populates a subjects directory for use with recon-all from SAMSEG
-    outputs.
+    samseg2recon
+    
+    Creates and populates a subjects directory for use with recon-all from
+    SAMSEG outputs.
     
     Author: FreeSurfer Developers
     

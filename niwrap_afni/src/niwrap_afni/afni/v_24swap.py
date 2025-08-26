@@ -135,6 +135,8 @@ def v_24swap_execute(
     runner: Runner | None = None,
 ) -> V24swapOutputs:
     """
+    24swap
+    
     Swaps bytes pairs and/or quadruples on the files listed.
     
     Author: AFNI Developers
@@ -163,6 +165,8 @@ def v_24swap(
     runner: Runner | None = None,
 ) -> V24swapOutputs:
     """
+    24swap
+    
     Swaps bytes pairs and/or quadruples on the files listed.
     
     Author: AFNI Developers

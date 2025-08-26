@@ -309,6 +309,8 @@ def cifti_average_dense_roi_execute(
     runner: Runner | None = None,
 ) -> CiftiAverageDenseRoiOutputs:
     """
+    cifti-average-dense-roi
+    
     Average cifti rows across subjects by roi.
     
     Averages rows for each map of the ROI(s), across all files. ROI maps are
@@ -351,6 +353,8 @@ def cifti_average_dense_roi(
     runner: Runner | None = None,
 ) -> CiftiAverageDenseRoiOutputs:
     """
+    cifti-average-dense-roi
+    
     Average cifti rows across subjects by roi.
     
     Averages rows for each map of the ROI(s), across all files. ROI maps are

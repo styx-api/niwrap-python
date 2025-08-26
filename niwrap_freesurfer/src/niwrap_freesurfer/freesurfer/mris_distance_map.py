@@ -128,6 +128,8 @@ def mris_distance_map_execute(
     runner: Runner | None = None,
 ) -> MrisDistanceMapOutputs:
     """
+    mris_distance_map
+    
     Tool to compute a distance map of each point on the surface to a reference
     point.
     
@@ -156,6 +158,8 @@ def mris_distance_map(
     runner: Runner | None = None,
 ) -> MrisDistanceMapOutputs:
     """
+    mris_distance_map
+    
     Tool to compute a distance map of each point on the surface to a reference
     point.
     

@@ -212,6 +212,8 @@ def serial_helper_execute(
     runner: Runner | None = None,
 ) -> SerialHelperOutputs:
     """
+    serial_helper
+    
     Passes motion parameters from socket to serial port.
     
     Author: AFNI Developers
@@ -249,6 +251,8 @@ def serial_helper(
     runner: Runner | None = None,
 ) -> SerialHelperOutputs:
     """
+    serial_helper
+    
     Passes motion parameters from socket to serial port.
     
     Author: AFNI Developers

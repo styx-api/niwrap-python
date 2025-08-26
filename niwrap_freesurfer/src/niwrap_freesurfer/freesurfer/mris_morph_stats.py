@@ -139,8 +139,10 @@ def mris_morph_stats_execute(
     runner: Runner | None = None,
 ) -> MrisMorphStatsOutputs:
     """
-    This program generates statistics which characterize a surface-based deformation
-    field.
+    mris_morph_stats
+    
+    This program generates statistics which characterize a surface-based
+    deformation field.
     
     Author: FreeSurfer Developers
     
@@ -169,8 +171,10 @@ def mris_morph_stats(
     runner: Runner | None = None,
 ) -> MrisMorphStatsOutputs:
     """
-    This program generates statistics which characterize a surface-based deformation
-    field.
+    mris_morph_stats
+    
+    This program generates statistics which characterize a surface-based
+    deformation field.
     
     Author: FreeSurfer Developers
     

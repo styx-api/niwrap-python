@@ -140,6 +140,8 @@ def mri_extract_fcd_features_execute(
     runner: Runner | None = None,
 ) -> MriExtractFcdFeaturesOutputs:
     """
+    mri_extract_fcd_features
+    
     A tool for extracting focal cortical dysplasia features.
     
     Author: FreeSurfer Developers
@@ -169,6 +171,8 @@ def mri_extract_fcd_features(
     runner: Runner | None = None,
 ) -> MriExtractFcdFeaturesOutputs:
     """
+    mri_extract_fcd_features
+    
     A tool for extracting focal cortical dysplasia features.
     
     Author: FreeSurfer Developers

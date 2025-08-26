@@ -494,6 +494,8 @@ def connectomestats_execute(
     runner: Runner | None = None,
 ) -> ConnectomestatsOutputs:
     """
+    connectomestats
+    
     Connectome group-wise statistics at the edge level using non-parametric
     permutation testing.
     
@@ -595,6 +597,8 @@ def connectomestats(
     runner: Runner | None = None,
 ) -> ConnectomestatsOutputs:
     """
+    connectomestats
+    
     Connectome group-wise statistics at the edge level using non-parametric
     permutation testing.
     

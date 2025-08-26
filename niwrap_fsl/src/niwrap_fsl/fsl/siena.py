@@ -227,8 +227,10 @@ def siena_execute(
     runner: Runner | None = None,
 ) -> SienaOutputs:
     """
-    Structural Image Evaluation, using Normalization, of Atrophy tool for evaluating
-    brain atrophy between two timepoints.
+    siena
+    
+    Structural Image Evaluation, using Normalization, of Atrophy tool for
+    evaluating brain atrophy between two timepoints.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -266,8 +268,10 @@ def siena(
     runner: Runner | None = None,
 ) -> SienaOutputs:
     """
-    Structural Image Evaluation, using Normalization, of Atrophy tool for evaluating
-    brain atrophy between two timepoints.
+    siena
+    
+    Structural Image Evaluation, using Normalization, of Atrophy tool for
+    evaluating brain atrophy between two timepoints.
     
     Author: FMRIB Analysis Group, University of Oxford
     

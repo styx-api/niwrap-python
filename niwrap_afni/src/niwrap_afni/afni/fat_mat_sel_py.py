@@ -334,6 +334,8 @@ def fat_mat_sel_py_execute(
     runner: Runner | None = None,
 ) -> FatMatSelPyOutputs:
     """
+    fat_mat_sel.py
+    
     Perform simple matrix plotting operations from outputs of FATCAT programs
     3dNetCorr and 3dTrackID.
     
@@ -383,6 +385,8 @@ def fat_mat_sel_py(
     runner: Runner | None = None,
 ) -> FatMatSelPyOutputs:
     """
+    fat_mat_sel.py
+    
     Perform simple matrix plotting operations from outputs of FATCAT programs
     3dNetCorr and 3dTrackID.
     

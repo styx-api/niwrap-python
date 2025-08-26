@@ -144,6 +144,8 @@ def metric_mask_execute(
     runner: Runner | None = None,
 ) -> MetricMaskOutputs:
     """
+    metric-mask
+    
     Mask a metric file.
     
     By default, the output metric is a copy of the input metric, but with zeros
@@ -178,6 +180,8 @@ def metric_mask(
     runner: Runner | None = None,
 ) -> MetricMaskOutputs:
     """
+    metric-mask
+    
     Mask a metric file.
     
     By default, the output metric is a copy of the input metric, but with zeros

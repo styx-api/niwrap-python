@@ -10415,6 +10415,8 @@ def c4d_execute(
     runner: Runner | None = None,
 ) -> C4dOutputs:
     """
+    c4d
+    
     C4D is a command-line tool for medical image processing.
     
     Author: Convert3D Developers
@@ -10443,6 +10445,8 @@ def c4d(
     runner: Runner | None = None,
 ) -> C4dOutputs:
     """
+    c4d
+    
     C4D is a command-line tool for medical image processing.
     
     Author: Convert3D Developers

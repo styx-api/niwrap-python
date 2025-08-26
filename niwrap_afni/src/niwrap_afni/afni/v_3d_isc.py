@@ -210,6 +210,8 @@ def v_3d_isc_execute(
     runner: Runner | None = None,
 ) -> V3dIscOutputs:
     """
+    3dISC
+    
     Program for Voxelwise Inter-Subject Correlation (ISC) Analysis using linear
     mixed-effects modeling.
     
@@ -245,6 +247,8 @@ def v_3d_isc(
     runner: Runner | None = None,
 ) -> V3dIscOutputs:
     """
+    3dISC
+    
     Program for Voxelwise Inter-Subject Correlation (ISC) Analysis using linear
     mixed-effects modeling.
     

@@ -223,7 +223,10 @@ def exvivo_hemi_proc_execute(
     runner: Runner | None = None,
 ) -> ExvivoHemiProcOutputs:
     """
-    Processes whole hemisphere data for Jeans entorhinal subfield labeling project.
+    exvivo-hemi-proc
+    
+    Processes whole hemisphere data for Jeans entorhinal subfield labeling
+    project.
     
     Author: FreeSurfer Developers
     
@@ -263,7 +266,10 @@ def exvivo_hemi_proc(
     runner: Runner | None = None,
 ) -> ExvivoHemiProcOutputs:
     """
-    Processes whole hemisphere data for Jeans entorhinal subfield labeling project.
+    exvivo-hemi-proc
+    
+    Processes whole hemisphere data for Jeans entorhinal subfield labeling
+    project.
     
     Author: FreeSurfer Developers
     

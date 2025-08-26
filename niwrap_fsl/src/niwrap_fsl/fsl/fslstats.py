@@ -329,6 +329,8 @@ def fslstats_execute(
     runner: Runner | None = None,
 ) -> FslstatsOutputs:
     """
+    fslstats
+    
     FSL tool for calculating statistics on image data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -382,6 +384,8 @@ def fslstats(
     runner: Runner | None = None,
 ) -> FslstatsOutputs:
     """
+    fslstats
+    
     FSL tool for calculating statistics on image data.
     
     Author: FMRIB Analysis Group, University of Oxford

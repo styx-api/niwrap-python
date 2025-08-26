@@ -155,6 +155,8 @@ def mris_remove_intersection_execute(
     runner: Runner | None = None,
 ) -> MrisRemoveIntersectionOutputs:
     """
+    mris_remove_intersection
+    
     Tool to remove intersections in surface files.
     
     Author: FreeSurfer Developers
@@ -185,6 +187,8 @@ def mris_remove_intersection(
     runner: Runner | None = None,
 ) -> MrisRemoveIntersectionOutputs:
     """
+    mris_remove_intersection
+    
     Tool to remove intersections in surface files.
     
     Author: FreeSurfer Developers

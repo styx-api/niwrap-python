@@ -355,8 +355,11 @@ def long_stats_slopes_execute(
     runner: Runner | None = None,
 ) -> LongStatsSlopesOutputs:
     """
+    long_stats_slopes
+    
     Computes slopes of statistics in a longitudinal study for each subject from
-    processed results, outputting to designated directories for further analysis.
+    processed results, outputting to designated directories for further
+    analysis.
     
     Author: FreeSurfer Developers
     
@@ -408,8 +411,11 @@ def long_stats_slopes(
     runner: Runner | None = None,
 ) -> LongStatsSlopesOutputs:
     """
+    long_stats_slopes
+    
     Computes slopes of statistics in a longitudinal study for each subject from
-    processed results, outputting to designated directories for further analysis.
+    processed results, outputting to designated directories for further
+    analysis.
     
     Author: FreeSurfer Developers
     

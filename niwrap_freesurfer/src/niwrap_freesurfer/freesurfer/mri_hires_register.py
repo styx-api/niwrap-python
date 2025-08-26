@@ -138,6 +138,8 @@ def mri_hires_register_execute(
     runner: Runner | None = None,
 ) -> MriHiresRegisterOutputs:
     """
+    mri_hires_register
+    
     A tool for high-resolution registration for Freesurfer images.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def mri_hires_register(
     runner: Runner | None = None,
 ) -> MriHiresRegisterOutputs:
     """
+    mri_hires_register
+    
     A tool for high-resolution registration for Freesurfer images.
     
     Author: FreeSurfer Developers

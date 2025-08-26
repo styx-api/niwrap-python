@@ -237,6 +237,8 @@ def pvmfit_execute(
     runner: Runner | None = None,
 ) -> PvmfitOutputs:
     """
+    pvmfit
+    
     Fits diffusion models to multishell DWI data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -277,6 +279,8 @@ def pvmfit(
     runner: Runner | None = None,
 ) -> PvmfitOutputs:
     """
+    pvmfit
+    
     Fits diffusion models to multishell DWI data.
     
     Author: FMRIB Analysis Group, University of Oxford

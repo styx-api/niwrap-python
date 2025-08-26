@@ -143,8 +143,10 @@ def v_3d_aboverlap_execute(
     runner: Runner | None = None,
 ) -> V3dAboverlapOutputs:
     """
-    Counts various metrics about how the automasks of datasets A and B overlap or
-    don't overlap.
+    3dABoverlap
+    
+    Counts various metrics about how the automasks of datasets A and B overlap
+    or don't overlap.
     
     Author: AFNI Developers
     
@@ -174,8 +176,10 @@ def v_3d_aboverlap(
     runner: Runner | None = None,
 ) -> V3dAboverlapOutputs:
     """
-    Counts various metrics about how the automasks of datasets A and B overlap or
-    don't overlap.
+    3dABoverlap
+    
+    Counts various metrics about how the automasks of datasets A and B overlap
+    or don't overlap.
     
     Author: AFNI Developers
     

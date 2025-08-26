@@ -135,6 +135,8 @@ def fslanimate_execute(
     runner: Runner | None = None,
 ) -> FslanimateOutputs:
     """
+    fslanimate
+    
     Tool for creating animations from imaging data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -163,6 +165,8 @@ def fslanimate(
     runner: Runner | None = None,
 ) -> FslanimateOutputs:
     """
+    fslanimate
+    
     Tool for creating animations from imaging data.
     
     Author: FMRIB Analysis Group, University of Oxford

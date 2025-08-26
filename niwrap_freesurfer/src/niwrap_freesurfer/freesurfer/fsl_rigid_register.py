@@ -312,8 +312,10 @@ def fsl_rigid_register_execute(
     runner: Runner | None = None,
 ) -> FslRigidRegisterOutputs:
     """
-    A front-end tool for FSL's FLIRT that computes a rigid registration matrix and
-    resamples the input volume to the reference volume.
+    fsl_rigid_register
+    
+    A front-end tool for FSL's FLIRT that computes a rigid registration matrix
+    and resamples the input volume to the reference volume.
     
     Author: FreeSurfer Developers
     
@@ -360,8 +362,10 @@ def fsl_rigid_register(
     runner: Runner | None = None,
 ) -> FslRigidRegisterOutputs:
     """
-    A front-end tool for FSL's FLIRT that computes a rigid registration matrix and
-    resamples the input volume to the reference volume.
+    fsl_rigid_register
+    
+    A front-end tool for FSL's FLIRT that computes a rigid registration matrix
+    and resamples the input volume to the reference volume.
     
     Author: FreeSurfer Developers
     

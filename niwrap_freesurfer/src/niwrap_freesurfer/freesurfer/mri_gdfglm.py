@@ -127,7 +127,10 @@ def mri_gdfglm_execute(
     runner: Runner | None = None,
 ) -> MriGdfglmOutputs:
     """
-    The mri_gdfglm command has been removed from the current version of FreeSurfer.
+    mri_gdfglm
+    
+    The mri_gdfglm command has been removed from the current version of
+    FreeSurfer.
     
     Author: FreeSurfer Developers
     
@@ -153,7 +156,10 @@ def mri_gdfglm(
     runner: Runner | None = None,
 ) -> MriGdfglmOutputs:
     """
-    The mri_gdfglm command has been removed from the current version of FreeSurfer.
+    mri_gdfglm
+    
+    The mri_gdfglm command has been removed from the current version of
+    FreeSurfer.
     
     Author: FreeSurfer Developers
     

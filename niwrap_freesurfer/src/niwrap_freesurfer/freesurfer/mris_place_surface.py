@@ -503,9 +503,11 @@ def mris_place_surface_execute(
     runner: Runner | None = None,
 ) -> MrisPlaceSurfaceOutputs:
     """
+    mris_place_surface
+    
     This program positions the triangular mesh representing a cortical surface,
-    either the 'white' surface (ie, white/gray boundary) or the 'pial' surface (ie,
-    the gray/csf boundary).
+    either the 'white' surface (ie, white/gray boundary) or the 'pial' surface
+    (ie, the gray/csf boundary).
     
     Author: FreeSurfer Developers
     
@@ -574,9 +576,11 @@ def mris_place_surface(
     runner: Runner | None = None,
 ) -> MrisPlaceSurfaceOutputs:
     """
+    mris_place_surface
+    
     This program positions the triangular mesh representing a cortical surface,
-    either the 'white' surface (ie, white/gray boundary) or the 'pial' surface (ie,
-    the gray/csf boundary).
+    either the 'white' surface (ie, white/gray boundary) or the 'pial' surface
+    (ie, the gray/csf boundary).
     
     Author: FreeSurfer Developers
     

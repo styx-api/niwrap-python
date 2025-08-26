@@ -135,6 +135,8 @@ def fftest_execute(
     runner: Runner | None = None,
 ) -> FftestOutputs:
     """
+    fftest
+    
     A command line tool for testing purposes.
     
     Author: AFNI Developers
@@ -164,6 +166,8 @@ def fftest(
     runner: Runner | None = None,
 ) -> FftestOutputs:
     """
+    fftest
+    
     A command line tool for testing purposes.
     
     Author: AFNI Developers

@@ -165,6 +165,8 @@ def fdrval_execute(
     runner: Runner | None = None,
 ) -> FdrvalOutputs:
     """
+    fdrval
+    
     Computes q-values from FDR curve data stored in dataset headers.
     
     Author: AFNI Developers
@@ -198,6 +200,8 @@ def fdrval(
     runner: Runner | None = None,
 ) -> FdrvalOutputs:
     """
+    fdrval
+    
     Computes q-values from FDR curve data stored in dataset headers.
     
     Author: AFNI Developers

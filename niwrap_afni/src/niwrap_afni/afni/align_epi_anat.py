@@ -252,6 +252,8 @@ def align_epi_anat_execute(
     runner: Runner | None = None,
 ) -> AlignEpiAnatOutputs:
     """
+    align_epi_anat
+    
     Align EPI to anatomical datasets or vice versa.
     
     Author: AFNI Developers
@@ -294,6 +296,8 @@ def align_epi_anat(
     runner: Runner | None = None,
 ) -> AlignEpiAnatOutputs:
     """
+    align_epi_anat
+    
     Align EPI to anatomical datasets or vice versa.
     
     Author: AFNI Developers

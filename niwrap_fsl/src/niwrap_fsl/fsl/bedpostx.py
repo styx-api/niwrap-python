@@ -196,8 +196,10 @@ def bedpostx_execute(
     runner: Runner | None = None,
 ) -> BedpostxOutputs:
     """
-    Bayesian Estimation of Diffusion Parameters Obtained using Sampling Techniques
-    (BEDPOST) for modeling multiple fibers per voxel.
+    bedpostx
+    
+    Bayesian Estimation of Diffusion Parameters Obtained using Sampling
+    Techniques (BEDPOST) for modeling multiple fibers per voxel.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -230,8 +232,10 @@ def bedpostx(
     runner: Runner | None = None,
 ) -> BedpostxOutputs:
     """
-    Bayesian Estimation of Diffusion Parameters Obtained using Sampling Techniques
-    (BEDPOST) for modeling multiple fibers per voxel.
+    bedpostx
+    
+    Bayesian Estimation of Diffusion Parameters Obtained using Sampling
+    Techniques (BEDPOST) for modeling multiple fibers per voxel.
     
     Author: FMRIB Analysis Group, University of Oxford
     

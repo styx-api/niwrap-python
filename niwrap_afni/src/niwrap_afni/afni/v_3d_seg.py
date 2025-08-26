@@ -318,8 +318,10 @@ def v_3d_seg_execute(
     runner: Runner | None = None,
 ) -> V3dSegOutputs:
     """
-    Segments brain volumes into tissue classes with optional global and voxelwise
-    priors.
+    3dSeg
+    
+    Segments brain volumes into tissue classes with optional global and
+    voxelwise priors.
     
     Author: AFNI Developers
     
@@ -363,8 +365,10 @@ def v_3d_seg(
     runner: Runner | None = None,
 ) -> V3dSegOutputs:
     """
-    Segments brain volumes into tissue classes with optional global and voxelwise
-    priors.
+    3dSeg
+    
+    Segments brain volumes into tissue classes with optional global and
+    voxelwise priors.
     
     Author: AFNI Developers
     

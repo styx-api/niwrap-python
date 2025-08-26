@@ -135,6 +135,8 @@ def labels_disjoint_execute(
     runner: Runner | None = None,
 ) -> LabelsDisjointOutputs:
     """
+    labels_disjoint
+    
     Subtracts one label file from another, effectively creating a label that
     represents label1 minus label2.
     
@@ -164,6 +166,8 @@ def labels_disjoint(
     runner: Runner | None = None,
 ) -> LabelsDisjointOutputs:
     """
+    labels_disjoint
+    
     Subtracts one label file from another, effectively creating a label that
     represents label1 minus label2.
     

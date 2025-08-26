@@ -121,6 +121,8 @@ def reinflate_subject_execute(
     runner: Runner | None = None,
 ) -> ReinflateSubjectOutputs:
     """
+    reinflate_subject
+    
     Tool for reinflating brain surfaces.
     
     Author: FreeSurfer Developers
@@ -147,6 +149,8 @@ def reinflate_subject(
     runner: Runner | None = None,
 ) -> ReinflateSubjectOutputs:
     """
+    reinflate_subject
+    
     Tool for reinflating brain surfaces.
     
     Author: FreeSurfer Developers

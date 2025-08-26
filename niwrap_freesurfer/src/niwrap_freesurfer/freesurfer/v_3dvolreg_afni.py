@@ -135,6 +135,8 @@ def v_3dvolreg_afni_execute(
     runner: Runner | None = None,
 ) -> V3dvolregAfniOutputs:
     """
+    3dvolreg.afni
+    
     AFNI program for volume registration.
     
     Author: FreeSurfer Developers
@@ -163,6 +165,8 @@ def v_3dvolreg_afni(
     runner: Runner | None = None,
 ) -> V3dvolregAfniOutputs:
     """
+    3dvolreg.afni
+    
     AFNI program for volume registration.
     
     Author: FreeSurfer Developers

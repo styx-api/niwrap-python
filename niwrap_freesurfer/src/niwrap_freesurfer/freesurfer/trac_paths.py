@@ -213,6 +213,8 @@ def trac_paths_execute(
     runner: Runner | None = None,
 ) -> TracPathsOutputs:
     """
+    trac-paths
+    
     Tractography for a single subject.
     
     Author: FreeSurfer Developers
@@ -251,6 +253,8 @@ def trac_paths(
     runner: Runner | None = None,
 ) -> TracPathsOutputs:
     """
+    trac-paths
+    
     Tractography for a single subject.
     
     Author: FreeSurfer Developers

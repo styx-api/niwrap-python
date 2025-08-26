@@ -188,6 +188,8 @@ def mris_estimate_wm_execute(
     runner: Runner | None = None,
 ) -> MrisEstimateWmOutputs:
     """
+    mris_estimate_wm
+    
     Tool to estimate white matter surfaces using MRI data.
     
     Author: FreeSurfer Developers
@@ -222,6 +224,8 @@ def mris_estimate_wm(
     runner: Runner | None = None,
 ) -> MrisEstimateWmOutputs:
     """
+    mris_estimate_wm
+    
     Tool to estimate white matter surfaces using MRI data.
     
     Author: FreeSurfer Developers

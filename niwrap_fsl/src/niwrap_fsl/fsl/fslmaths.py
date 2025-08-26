@@ -943,6 +943,8 @@ def fslmaths_execute(
     runner: Runner | None = None,
 ) -> FslmathsOutputs:
     """
+    fslmaths
+    
     FSL utility for image arithmetic, statistics, and mathematical operations.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -973,6 +975,8 @@ def fslmaths(
     runner: Runner | None = None,
 ) -> FslmathsOutputs:
     """
+    fslmaths
+    
     FSL utility for image arithmetic, statistics, and mathematical operations.
     
     Author: FMRIB Analysis Group, University of Oxford

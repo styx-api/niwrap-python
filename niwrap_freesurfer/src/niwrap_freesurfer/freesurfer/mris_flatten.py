@@ -187,6 +187,8 @@ def mris_flatten_execute(
     runner: Runner | None = None,
 ) -> MrisFlattenOutputs:
     """
+    mris_flatten
+    
     This program will flatten a surface patch.
     
     Author: FreeSurfer Developers
@@ -220,6 +222,8 @@ def mris_flatten(
     runner: Runner | None = None,
 ) -> MrisFlattenOutputs:
     """
+    mris_flatten
+    
     This program will flatten a surface patch.
     
     Author: FreeSurfer Developers

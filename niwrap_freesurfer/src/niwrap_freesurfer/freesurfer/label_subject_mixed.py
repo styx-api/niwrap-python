@@ -146,6 +146,8 @@ def label_subject_mixed_execute(
     runner: Runner | None = None,
 ) -> LabelSubjectMixedOutputs:
     """
+    label_subject_mixed
+    
     Automatic labeling of brain regions using a Gaussian classifier array.
     
     Author: FreeSurfer Developers
@@ -176,6 +178,8 @@ def label_subject_mixed(
     runner: Runner | None = None,
 ) -> LabelSubjectMixedOutputs:
     """
+    label_subject_mixed
+    
     Automatic labeling of brain regions using a Gaussian classifier array.
     
     Author: FreeSurfer Developers

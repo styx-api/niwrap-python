@@ -137,6 +137,8 @@ def recon_all_clinical_sh_execute(
     runner: Runner | None = None,
 ) -> ReconAllClinicalShOutputs:
     """
+    recon-all-clinical.sh
+    
     Recon-all-like stream for processing clinical brain MRI scans of arbitrary
     orientation, resolution, and contrast using SynthSeg and SynthSR.
     
@@ -167,6 +169,8 @@ def recon_all_clinical_sh(
     runner: Runner | None = None,
 ) -> ReconAllClinicalShOutputs:
     """
+    recon-all-clinical.sh
+    
     Recon-all-like stream for processing clinical brain MRI scans of arbitrary
     orientation, resolution, and contrast using SynthSeg and SynthSR.
     

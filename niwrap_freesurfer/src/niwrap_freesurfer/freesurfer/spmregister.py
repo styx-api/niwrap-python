@@ -230,6 +230,8 @@ def spmregister_execute(
     runner: Runner | None = None,
 ) -> SpmregisterOutputs:
     """
+    spmregister
+    
     Registers a volume to its FreeSurfer anatomical using SPM's spm_coreg.
     
     Author: FreeSurfer Developers
@@ -268,6 +270,8 @@ def spmregister(
     runner: Runner | None = None,
 ) -> SpmregisterOutputs:
     """
+    spmregister
+    
     Registers a volume to its FreeSurfer anatomical using SPM's spm_coreg.
     
     Author: FreeSurfer Developers

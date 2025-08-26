@@ -533,6 +533,8 @@ def tckglobal_execute(
     runner: Runner | None = None,
 ) -> TckglobalOutputs:
     """
+    tckglobal
+    
     Multi-Shell Multi-Tissue Global Tractography.
     
     This command will reconstruct the global white matter fibre tractogram that
@@ -612,6 +614,8 @@ def tckglobal(
     runner: Runner | None = None,
 ) -> TckglobalOutputs:
     """
+    tckglobal
+    
     Multi-Shell Multi-Tissue Global Tractography.
     
     This command will reconstruct the global white matter fibre tractogram that

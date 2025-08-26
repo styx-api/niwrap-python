@@ -210,6 +210,8 @@ def mris_seg2annot_execute(
     runner: Runner | None = None,
 ) -> MrisSeg2annotOutputs:
     """
+    mris_seg2annot
+    
     Converts a surface-based segmentation into a custom annotation file.
     
     Author: FreeSurfer Developers
@@ -246,6 +248,8 @@ def mris_seg2annot(
     runner: Runner | None = None,
 ) -> MrisSeg2annotOutputs:
     """
+    mris_seg2annot
+    
     Converts a surface-based segmentation into a custom annotation file.
     
     Author: FreeSurfer Developers

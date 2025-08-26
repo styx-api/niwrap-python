@@ -318,6 +318,8 @@ def mri_mcsim_execute(
     runner: Runner | None = None,
 ) -> MriMcsimOutputs:
     """
+    mri_mcsim
+    
     Monte Carlo simulation tool for surface-based multiple comparisons.
     
     Author: FreeSurfer Developers
@@ -366,6 +368,8 @@ def mri_mcsim(
     runner: Runner | None = None,
 ) -> MriMcsimOutputs:
     """
+    mri_mcsim
+    
     Monte Carlo simulation tool for surface-based multiple comparisons.
     
     Author: FreeSurfer Developers

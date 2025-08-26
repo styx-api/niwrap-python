@@ -119,6 +119,8 @@ def isanalyze_execute(
     runner: Runner | None = None,
 ) -> IsanalyzeOutputs:
     """
+    isanalyze
+    
     A tool to analyze and process IS files.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def isanalyze(
     runner: Runner | None = None,
 ) -> IsanalyzeOutputs:
     """
+    isanalyze
+    
     A tool to analyze and process IS files.
     
     Author: FreeSurfer Developers

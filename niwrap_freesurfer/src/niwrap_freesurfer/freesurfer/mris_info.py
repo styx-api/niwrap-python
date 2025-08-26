@@ -319,6 +319,8 @@ def mris_info_execute(
     runner: Runner | None = None,
 ) -> MrisInfoOutputs:
     """
+    mris_info
+    
     Prints out information about a surface file.
     
     Author: FreeSurfer Developers
@@ -367,6 +369,8 @@ def mris_info(
     runner: Runner | None = None,
 ) -> MrisInfoOutputs:
     """
+    mris_info
+    
     Prints out information about a surface file.
     
     Author: FreeSurfer Developers

@@ -192,6 +192,8 @@ def label2patch_execute(
     runner: Runner | None = None,
 ) -> Label2patchOutputs:
     """
+    label2patch
+    
     Utility to create patches from label files in Freesurfer.
     
     Author: FreeSurfer Developers
@@ -227,6 +229,8 @@ def label2patch(
     runner: Runner | None = None,
 ) -> Label2patchOutputs:
     """
+    label2patch
+    
     Utility to create patches from label files in Freesurfer.
     
     Author: FreeSurfer Developers

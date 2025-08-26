@@ -133,6 +133,8 @@ def histo_compute_joint_density_execute(
     runner: Runner | None = None,
 ) -> HistoComputeJointDensityOutputs:
     """
+    histo_compute_joint_density
+    
     A tool to compute the joint density of two volumes.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def histo_compute_joint_density(
     runner: Runner | None = None,
 ) -> HistoComputeJointDensityOutputs:
     """
+    histo_compute_joint_density
+    
     A tool to compute the joint density of two volumes.
     
     Author: FreeSurfer Developers

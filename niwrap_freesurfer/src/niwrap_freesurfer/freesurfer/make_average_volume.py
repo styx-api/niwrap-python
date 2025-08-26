@@ -231,6 +231,8 @@ def make_average_volume_execute(
     runner: Runner | None = None,
 ) -> MakeAverageVolumeOutputs:
     """
+    make_average_volume
+    
     Creates average volumes from a set of subjects.
     
     Author: FreeSurfer Developers
@@ -271,6 +273,8 @@ def make_average_volume(
     runner: Runner | None = None,
 ) -> MakeAverageVolumeOutputs:
     """
+    make_average_volume
+    
     Creates average volumes from a set of subjects.
     
     Author: FreeSurfer Developers

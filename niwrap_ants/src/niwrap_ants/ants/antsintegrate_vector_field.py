@@ -143,9 +143,11 @@ def antsintegrate_vector_field_execute(
     runner: Runner | None = None,
 ) -> AntsintegrateVectorFieldOutputs:
     """
-    This tool integrates a vector field, where vectors are voxels, using a region of
-    interest (ROI) mask. The ROI mask controls where the integration is performed
-    and specifies the starting point region.
+    ANTSIntegrateVectorField
+    
+    This tool integrates a vector field, where vectors are voxels, using a
+    region of interest (ROI) mask. The ROI mask controls where the integration
+    is performed and specifies the starting point region.
     
     Author: ANTs Developers
     
@@ -174,9 +176,11 @@ def antsintegrate_vector_field(
     runner: Runner | None = None,
 ) -> AntsintegrateVectorFieldOutputs:
     """
-    This tool integrates a vector field, where vectors are voxels, using a region of
-    interest (ROI) mask. The ROI mask controls where the integration is performed
-    and specifies the starting point region.
+    ANTSIntegrateVectorField
+    
+    This tool integrates a vector field, where vectors are voxels, using a
+    region of interest (ROI) mask. The ROI mask controls where the integration
+    is performed and specifies the starting point region.
     
     Author: ANTs Developers
     

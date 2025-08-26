@@ -160,6 +160,8 @@ def dsetstat2p_execute(
     runner: Runner | None = None,
 ) -> Dsetstat2pOutputs:
     """
+    dsetstat2p
+    
     Converts a statistic to a p-value with reference to a particular dataset.
     
     Author: AFNI Developers
@@ -191,6 +193,8 @@ def dsetstat2p(
     runner: Runner | None = None,
 ) -> Dsetstat2pOutputs:
     """
+    dsetstat2p
+    
     Converts a statistic to a p-value with reference to a particular dataset.
     
     Author: AFNI Developers

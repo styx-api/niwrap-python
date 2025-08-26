@@ -204,7 +204,10 @@ def v_1d_bport_execute(
     runner: Runner | None = None,
 ) -> V1dBportOutputs:
     """
-    Creates a set of columns of sines and cosines for bandpassing via regression.
+    1dBport
+    
+    Creates a set of columns of sines and cosines for bandpassing via
+    regression.
     
     Author: AFNI Developers
     
@@ -239,7 +242,10 @@ def v_1d_bport(
     runner: Runner | None = None,
 ) -> V1dBportOutputs:
     """
-    Creates a set of columns of sines and cosines for bandpassing via regression.
+    1dBport
+    
+    Creates a set of columns of sines and cosines for bandpassing via
+    regression.
     
     Author: AFNI Developers
     

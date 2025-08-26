@@ -156,6 +156,8 @@ def border_to_rois_execute(
     runner: Runner | None = None,
 ) -> BorderToRoisOutputs:
     """
+    border-to-rois
+    
     Make metric rois from borders.
     
     By default, draws ROIs inside all borders in the border file, as separate
@@ -190,6 +192,8 @@ def border_to_rois(
     runner: Runner | None = None,
 ) -> BorderToRoisOutputs:
     """
+    border-to-rois
+    
     Make metric rois from borders.
     
     By default, draws ROIs inside all borders in the border file, as separate

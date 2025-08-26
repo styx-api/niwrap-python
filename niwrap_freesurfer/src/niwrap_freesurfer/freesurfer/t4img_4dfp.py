@@ -136,6 +136,8 @@ def t4img_4dfp_execute(
     runner: Runner | None = None,
 ) -> T4img4dfpOutputs:
     """
+    t4img_4dfp
+    
     Transforms a 4dfp image using a specified t4 file.
     
     Author: FreeSurfer Developers
@@ -164,6 +166,8 @@ def t4img_4dfp(
     runner: Runner | None = None,
 ) -> T4img4dfpOutputs:
     """
+    t4img_4dfp
+    
     Transforms a 4dfp image using a specified t4 file.
     
     Author: FreeSurfer Developers

@@ -138,6 +138,8 @@ def mri_remove_neck_execute(
     runner: Runner | None = None,
 ) -> MriRemoveNeckOutputs:
     """
+    mri_remove_neck
+    
     Tool for removing neck from MRI volumes.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def mri_remove_neck(
     runner: Runner | None = None,
 ) -> MriRemoveNeckOutputs:
     """
+    mri_remove_neck
+    
     Tool for removing neck from MRI volumes.
     
     Author: FreeSurfer Developers

@@ -231,6 +231,8 @@ def file_information_execute(
     runner: Runner | None = None,
 ) -> FileInformationOutputs:
     """
+    file-information
+    
     List information about a file's content.
     
     List information about the content of a data file. Only one -only option may
@@ -309,6 +311,8 @@ def file_information(
     runner: Runner | None = None,
 ) -> FileInformationOutputs:
     """
+    file-information
+    
     List information about a file's content.
     
     List information about the content of a data file. Only one -only option may

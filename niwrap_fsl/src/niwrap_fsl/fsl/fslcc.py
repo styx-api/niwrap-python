@@ -167,6 +167,8 @@ def fslcc_execute(
     runner: Runner | None = None,
 ) -> FslccOutputs:
     """
+    fslcc
+    
     Cross-correlate two time-series, timepoint by timepoint.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -199,6 +201,8 @@ def fslcc(
     runner: Runner | None = None,
 ) -> FslccOutputs:
     """
+    fslcc
+    
     Cross-correlate two time-series, timepoint by timepoint.
     
     Author: FMRIB Analysis Group, University of Oxford

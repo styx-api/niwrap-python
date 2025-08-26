@@ -133,6 +133,8 @@ def mri_joint_density_execute(
     runner: Runner | None = None,
 ) -> MriJointDensityOutputs:
     """
+    mri_joint_density
+    
     Tool for computing joint density from two volumes.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_joint_density(
     runner: Runner | None = None,
 ) -> MriJointDensityOutputs:
     """
+    mri_joint_density
+    
     Tool for computing joint density from two volumes.
     
     Author: FreeSurfer Developers

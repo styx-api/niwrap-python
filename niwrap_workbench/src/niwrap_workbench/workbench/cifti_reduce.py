@@ -208,6 +208,8 @@ def cifti_reduce_execute(
     runner: Runner | None = None,
 ) -> CiftiReduceOutputs:
     """
+    cifti-reduce
+    
     Perform reduction operation on a cifti file.
     
     For the specified direction (default ROW), perform a reduction operation
@@ -261,6 +263,8 @@ def cifti_reduce(
     runner: Runner | None = None,
 ) -> CiftiReduceOutputs:
     """
+    cifti-reduce
+    
     Perform reduction operation on a cifti file.
     
     For the specified direction (default ROW), perform a reduction operation

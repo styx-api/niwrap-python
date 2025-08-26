@@ -124,6 +124,8 @@ def fix_subject_corrected_execute(
     runner: Runner | None = None,
 ) -> FixSubjectCorrectedOutputs:
     """
+    fix_subject_corrected
+    
     Corrects subject data in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def fix_subject_corrected(
     runner: Runner | None = None,
 ) -> FixSubjectCorrectedOutputs:
     """
+    fix_subject_corrected
+    
     Corrects subject data in FreeSurfer.
     
     Author: FreeSurfer Developers

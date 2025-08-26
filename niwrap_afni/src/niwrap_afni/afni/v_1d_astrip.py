@@ -123,6 +123,8 @@ def v_1d_astrip_execute(
     runner: Runner | None = None,
 ) -> V1dAstripOutputs:
     """
+    1dAstrip
+    
     Strips non-numeric characters from a file.
     
     Author: AFNI Developers
@@ -149,6 +151,8 @@ def v_1d_astrip(
     runner: Runner | None = None,
 ) -> V1dAstripOutputs:
     """
+    1dAstrip
+    
     Strips non-numeric characters from a file.
     
     Author: AFNI Developers

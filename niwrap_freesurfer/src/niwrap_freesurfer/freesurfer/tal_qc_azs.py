@@ -119,6 +119,8 @@ def tal_qc_azs_execute(
     runner: Runner | None = None,
 ) -> TalQcAzsOutputs:
     """
+    tal_QC_AZS
+    
     A tool that processes a logfile.
     
     Author: FreeSurfer Developers
@@ -145,6 +147,8 @@ def tal_qc_azs(
     runner: Runner | None = None,
 ) -> TalQcAzsOutputs:
     """
+    tal_QC_AZS
+    
     A tool that processes a logfile.
     
     Author: FreeSurfer Developers

@@ -128,8 +128,10 @@ def morph_only_subject_rh_execute(
     runner: Runner | None = None,
 ) -> MorphOnlySubjectRhOutputs:
     """
-    This tool processes morph-specific operations for the right hemisphere of the
-    brain using Freesurfer.
+    morph_only_subject-rh
+    
+    This tool processes morph-specific operations for the right hemisphere of
+    the brain using Freesurfer.
     
     Author: FreeSurfer Developers
     
@@ -155,8 +157,10 @@ def morph_only_subject_rh(
     runner: Runner | None = None,
 ) -> MorphOnlySubjectRhOutputs:
     """
-    This tool processes morph-specific operations for the right hemisphere of the
-    brain using Freesurfer.
+    morph_only_subject-rh
+    
+    This tool processes morph-specific operations for the right hemisphere of
+    the brain using Freesurfer.
     
     Author: FreeSurfer Developers
     

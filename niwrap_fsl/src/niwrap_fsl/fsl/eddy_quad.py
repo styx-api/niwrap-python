@@ -203,6 +203,8 @@ def eddy_quad_execute(
     runner: Runner | None = None,
 ) -> EddyQuadOutputs:
     """
+    eddy_quad
+    
     QUality Assessment for DMRI.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -238,6 +240,8 @@ def eddy_quad(
     runner: Runner | None = None,
 ) -> EddyQuadOutputs:
     """
+    eddy_quad
+    
     QUality Assessment for DMRI.
     
     Author: FMRIB Analysis Group, University of Oxford

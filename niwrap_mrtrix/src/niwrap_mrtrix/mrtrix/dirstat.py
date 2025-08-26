@@ -336,6 +336,8 @@ def dirstat_execute(
     runner: Runner | None = None,
 ) -> DirstatOutputs:
     """
+    dirstat
+    
     Report statistics on a direction set.
     
     This command will accept as inputs:
@@ -413,6 +415,8 @@ def dirstat(
     runner: Runner | None = None,
 ) -> DirstatOutputs:
     """
+    dirstat
+    
     Report statistics on a direction set.
     
     This command will accept as inputs:

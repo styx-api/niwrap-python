@@ -150,6 +150,8 @@ def v_3ddot_beta_execute(
     runner: Runner | None = None,
 ) -> V3ddotBetaOutputs:
     """
+    3ddot_beta
+    
     Beta version of updating 3ddot, currently only performing eta2 tests and
     outputting a full matrix to a text file.
     
@@ -180,6 +182,8 @@ def v_3ddot_beta(
     runner: Runner | None = None,
 ) -> V3ddotBetaOutputs:
     """
+    3ddot_beta
+    
     Beta version of updating 3ddot, currently only performing eta2 tests and
     outputting a full matrix to a text file.
     

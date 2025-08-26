@@ -148,6 +148,8 @@ def v_3d_acost_execute(
     runner: Runner | None = None,
 ) -> V3dAcostOutputs:
     """
+    3dAcost
+    
     Allineate dataset to a base dataset.
     
     Author: AFNI Developers
@@ -177,6 +179,8 @@ def v_3d_acost(
     runner: Runner | None = None,
 ) -> V3dAcostOutputs:
     """
+    3dAcost
+    
     Allineate dataset to a base dataset.
     
     Author: AFNI Developers

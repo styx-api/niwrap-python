@@ -163,7 +163,10 @@ def biasfield_execute(
     runner: Runner | None = None,
 ) -> BiasfieldOutputs:
     """
-    Computes the bias field by dividing the (unconformed) orig.mgz by the norm.mgz.
+    biasfield
+    
+    Computes the bias field by dividing the (unconformed) orig.mgz by the
+    norm.mgz.
     
     Author: FreeSurfer Developers
     
@@ -194,7 +197,10 @@ def biasfield(
     runner: Runner | None = None,
 ) -> BiasfieldOutputs:
     """
-    Computes the bias field by dividing the (unconformed) orig.mgz by the norm.mgz.
+    biasfield
+    
+    Computes the bias field by dividing the (unconformed) orig.mgz by the
+    norm.mgz.
     
     Author: FreeSurfer Developers
     

@@ -161,6 +161,8 @@ def gifti_label_to_roi_execute(
     runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
+    gifti-label-to-roi
+    
     Make a gifti label into an roi metric.
     
     For each map in <label-in>, a map is created in <metric-out> where all
@@ -196,6 +198,8 @@ def gifti_label_to_roi(
     runner: Runner | None = None,
 ) -> GiftiLabelToRoiOutputs:
     """
+    gifti-label-to-roi
+    
     Make a gifti label into an roi metric.
     
     For each map in <label-in>, a map is created in <metric-out> where all

@@ -141,6 +141,8 @@ def mri_mc_execute(
     runner: Runner | None = None,
 ) -> MriMcOutputs:
     """
+    mri_mc
+    
     Extract a surface from a label volume using Marching Cubes algorithm.
     
     Author: FreeSurfer Developers
@@ -170,6 +172,8 @@ def mri_mc(
     runner: Runner | None = None,
 ) -> MriMcOutputs:
     """
+    mri_mc
+    
     Extract a surface from a label volume using Marching Cubes algorithm.
     
     Author: FreeSurfer Developers

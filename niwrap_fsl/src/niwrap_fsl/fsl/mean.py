@@ -288,6 +288,8 @@ def mean_execute(
     runner: Runner | None = None,
 ) -> MeanOutputs:
     """
+    mean
+    
     Diagnostic tool for analyzing and computing mean values for FSL data.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -332,6 +334,8 @@ def mean(
     runner: Runner | None = None,
 ) -> MeanOutputs:
     """
+    mean
+    
     Diagnostic tool for analyzing and computing mean values for FSL data.
     
     Author: FMRIB Analysis Group, University of Oxford

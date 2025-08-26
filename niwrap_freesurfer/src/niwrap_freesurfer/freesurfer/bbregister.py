@@ -254,8 +254,10 @@ def bbregister_execute(
     runner: Runner | None = None,
 ) -> BbregisterOutputs:
     """
-    Performs within-subject, cross-modal registration using a boundary-based cost
-    function.
+    bbregister
+    
+    Performs within-subject, cross-modal registration using a boundary-based
+    cost function.
     
     Author: FreeSurfer Developers
     
@@ -296,8 +298,10 @@ def bbregister(
     runner: Runner | None = None,
 ) -> BbregisterOutputs:
     """
-    Performs within-subject, cross-modal registration using a boundary-based cost
-    function.
+    bbregister
+    
+    Performs within-subject, cross-modal registration using a boundary-based
+    cost function.
     
     Author: FreeSurfer Developers
     

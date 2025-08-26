@@ -198,6 +198,8 @@ def wmedits2surf_execute(
     runner: Runner | None = None,
 ) -> Wmedits2surfOutputs:
     """
+    wmedits2surf
+    
     Computes binary maps of surface locations where the wm.mgz has been edited.
     Creates files for each hemisphere for each type of edit.
     
@@ -234,6 +236,8 @@ def wmedits2surf(
     runner: Runner | None = None,
 ) -> Wmedits2surfOutputs:
     """
+    wmedits2surf
+    
     Computes binary maps of surface locations where the wm.mgz has been edited.
     Creates files for each hemisphere for each type of edit.
     

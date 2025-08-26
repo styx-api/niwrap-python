@@ -178,6 +178,8 @@ def mergeseg_execute(
     runner: Runner | None = None,
 ) -> MergesegOutputs:
     """
+    mergeseg
+    
     Merges one segmentation into another, replacing the source voxels with those
     from the merge segmentation where non-zero.
     
@@ -211,6 +213,8 @@ def mergeseg(
     runner: Runner | None = None,
 ) -> MergesegOutputs:
     """
+    mergeseg
+    
     Merges one segmentation into another, replacing the source voxels with those
     from the merge segmentation where non-zero.
     

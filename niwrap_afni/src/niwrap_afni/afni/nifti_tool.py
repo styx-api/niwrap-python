@@ -225,6 +225,8 @@ def nifti_tool_execute(
     runner: Runner | None = None,
 ) -> NiftiToolOutputs:
     """
+    nifti_tool
+    
     Display, modify, or compare nifti headers.
     
     Author: AFNI Developers
@@ -262,6 +264,8 @@ def nifti_tool(
     runner: Runner | None = None,
 ) -> NiftiToolOutputs:
     """
+    nifti_tool
+    
     Display, modify, or compare nifti headers.
     
     Author: AFNI Developers

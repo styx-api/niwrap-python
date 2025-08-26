@@ -1090,6 +1090,8 @@ def cifti_resample_dconn_memory_execute(
     runner: Runner | None = None,
 ) -> CiftiResampleDconnMemoryOutputs:
     """
+    cifti-resample-dconn-memory
+    
     Use lots of memory to resample dconn.
     
     This command does the same thing as running -cifti-resample twice, but uses
@@ -1158,6 +1160,8 @@ def cifti_resample_dconn_memory(
     runner: Runner | None = None,
 ) -> CiftiResampleDconnMemoryOutputs:
     """
+    cifti-resample-dconn-memory
+    
     Use lots of memory to resample dconn.
     
     This command does the same thing as running -cifti-resample twice, but uses

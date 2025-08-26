@@ -174,6 +174,8 @@ def fsr_coreg_execute(
     runner: Runner | None = None,
 ) -> FsrCoregOutputs:
     """
+    fsr-coreg
+    
     Co-registers input data in preparation for FreeSurfer analysis.
     
     Author: FreeSurfer Developers
@@ -205,6 +207,8 @@ def fsr_coreg(
     runner: Runner | None = None,
 ) -> FsrCoregOutputs:
     """
+    fsr-coreg
+    
     Co-registers input data in preparation for FreeSurfer analysis.
     
     Author: FreeSurfer Developers

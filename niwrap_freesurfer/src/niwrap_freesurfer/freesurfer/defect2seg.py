@@ -190,6 +190,8 @@ def defect2seg_execute(
     runner: Runner | None = None,
 ) -> Defect2segOutputs:
     """
+    defect2seg
+    
     Converts surface defect labels into a segmentation volume and pointsets.
     
     Author: FreeSurfer Developers
@@ -224,6 +226,8 @@ def defect2seg(
     runner: Runner | None = None,
 ) -> Defect2segOutputs:
     """
+    defect2seg
+    
     Converts surface defect labels into a segmentation volume and pointsets.
     
     Author: FreeSurfer Developers

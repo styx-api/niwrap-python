@@ -139,8 +139,10 @@ def mris_remove_variance_execute(
     runner: Runner | None = None,
 ) -> MrisRemoveVarianceOutputs:
     """
-    This program removes the linear component of the variance accounted for by one
-    curvature vector from another.
+    mris_remove_variance
+    
+    This program removes the linear component of the variance accounted for by
+    one curvature vector from another.
     
     Author: FreeSurfer Developers
     
@@ -169,8 +171,10 @@ def mris_remove_variance(
     runner: Runner | None = None,
 ) -> MrisRemoveVarianceOutputs:
     """
-    This program removes the linear component of the variance accounted for by one
-    curvature vector from another.
+    mris_remove_variance
+    
+    This program removes the linear component of the variance accounted for by
+    one curvature vector from another.
     
     Author: FreeSurfer Developers
     

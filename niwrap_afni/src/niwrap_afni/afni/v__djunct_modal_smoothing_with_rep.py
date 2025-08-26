@@ -171,9 +171,11 @@ def v__djunct_modal_smoothing_with_rep_execute(
     runner: Runner | None = None,
 ) -> VDjunctModalSmoothingWithRepOutputs:
     """
-    A script to perform modal smoothing of ROI maps and check for eliminated ROIs.
-    If any ROIs are eliminated during smoothing, they are restored, potentially in a
-    degraded form.
+    @djunct_modal_smoothing_with_rep
+    
+    A script to perform modal smoothing of ROI maps and check for eliminated
+    ROIs. If any ROIs are eliminated during smoothing, they are restored,
+    potentially in a degraded form.
     
     Author: AFNI Developers
     
@@ -206,9 +208,11 @@ def v__djunct_modal_smoothing_with_rep(
     runner: Runner | None = None,
 ) -> VDjunctModalSmoothingWithRepOutputs:
     """
-    A script to perform modal smoothing of ROI maps and check for eliminated ROIs.
-    If any ROIs are eliminated during smoothing, they are restored, potentially in a
-    degraded form.
+    @djunct_modal_smoothing_with_rep
+    
+    A script to perform modal smoothing of ROI maps and check for eliminated
+    ROIs. If any ROIs are eliminated during smoothing, they are restored,
+    potentially in a degraded form.
     
     Author: AFNI Developers
     

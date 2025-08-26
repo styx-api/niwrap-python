@@ -254,6 +254,8 @@ def mri_warp_convert_execute(
     runner: Runner | None = None,
 ) -> MriWarpConvertOutputs:
     """
+    mri_warp_convert
+    
     This program converts non-linear deformation field warp file formats.
     
     Author: FreeSurfer Developers
@@ -293,6 +295,8 @@ def mri_warp_convert(
     runner: Runner | None = None,
 ) -> MriWarpConvertOutputs:
     """
+    mri_warp_convert
+    
     This program converts non-linear deformation field warp file formats.
     
     Author: FreeSurfer Developers

@@ -139,7 +139,10 @@ def mris_merge_parcellations_execute(
     runner: Runner | None = None,
 ) -> MrisMergeParcellationsOutputs:
     """
-    This program computes the Hausdorff distance between two labels on the surface.
+    mris_merge_parcellations
+    
+    This program computes the Hausdorff distance between two labels on the
+    surface.
     
     Author: FreeSurfer Developers
     
@@ -168,7 +171,10 @@ def mris_merge_parcellations(
     runner: Runner | None = None,
 ) -> MrisMergeParcellationsOutputs:
     """
-    This program computes the Hausdorff distance between two labels on the surface.
+    mris_merge_parcellations
+    
+    This program computes the Hausdorff distance between two labels on the
+    surface.
     
     Author: FreeSurfer Developers
     

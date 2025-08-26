@@ -242,6 +242,8 @@ def tsfinfo_execute(
     runner: Runner | None = None,
 ) -> TsfinfoOutputs:
     """
+    tsfinfo
+    
     Print out information about a track scalar file.
     
     
@@ -284,6 +286,8 @@ def tsfinfo(
     runner: Runner | None = None,
 ) -> TsfinfoOutputs:
     """
+    tsfinfo
+    
     Print out information about a track scalar file.
     
     

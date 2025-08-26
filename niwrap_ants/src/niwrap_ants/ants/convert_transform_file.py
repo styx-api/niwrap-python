@@ -158,10 +158,12 @@ def convert_transform_file_execute(
     runner: Runner | None = None,
 ) -> ConvertTransformFileOutputs:
     """
-    Utility to read in a transform file (presumed to be in binary format) and output
-    it in various formats. Default output is legacy human-readable text format.
-    Without any options, the output filename extension must be .txt or .tfm to
-    signify a text-formatted transform file.
+    ConvertTransformFile
+    
+    Utility to read in a transform file (presumed to be in binary format) and
+    output it in various formats. Default output is legacy human-readable text
+    format. Without any options, the output filename extension must be .txt or
+    .tfm to signify a text-formatted transform file.
     
     Author: ANTs Developers
     
@@ -193,10 +195,12 @@ def convert_transform_file(
     runner: Runner | None = None,
 ) -> ConvertTransformFileOutputs:
     """
-    Utility to read in a transform file (presumed to be in binary format) and output
-    it in various formats. Default output is legacy human-readable text format.
-    Without any options, the output filename extension must be .txt or .tfm to
-    signify a text-formatted transform file.
+    ConvertTransformFile
+    
+    Utility to read in a transform file (presumed to be in binary format) and
+    output it in various formats. Default output is legacy human-readable text
+    format. Without any options, the output filename extension must be .txt or
+    .tfm to signify a text-formatted transform file.
     
     Author: ANTs Developers
     

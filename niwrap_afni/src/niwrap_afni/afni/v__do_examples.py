@@ -126,6 +126,8 @@ def v__do_examples_execute(
     runner: Runner | None = None,
 ) -> VDoExamplesOutputs:
     """
+    @DO.examples
+    
     A script to illustrate the use of Displayable Objects in SUMA.
     
     Author: AFNI Developers
@@ -152,6 +154,8 @@ def v__do_examples(
     runner: Runner | None = None,
 ) -> VDoExamplesOutputs:
     """
+    @DO.examples
+    
     A script to illustrate the use of Displayable Objects in SUMA.
     
     Author: AFNI Developers

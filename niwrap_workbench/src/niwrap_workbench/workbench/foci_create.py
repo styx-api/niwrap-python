@@ -186,6 +186,8 @@ def foci_create_execute(
     runner: Runner | None = None,
 ) -> FociCreateOutputs:
     """
+    foci-create
+    
     Create a foci file.
     
     Creates a foci file from names, coordinates, and RGB values in a text file.
@@ -232,6 +234,8 @@ def foci_create(
     runner: Runner | None = None,
 ) -> FociCreateOutputs:
     """
+    foci-create
+    
     Create a foci file.
     
     Creates a foci file from names, coordinates, and RGB values in a text file.

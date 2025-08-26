@@ -253,6 +253,8 @@ def tck2fixel_execute(
     runner: Runner | None = None,
 ) -> Tck2fixelOutputs:
     """
+    tck2fixel
+    
     Compute a fixel TDI map from a tractogram.
     
     
@@ -297,6 +299,8 @@ def tck2fixel(
     runner: Runner | None = None,
 ) -> Tck2fixelOutputs:
     """
+    tck2fixel
+    
     Compute a fixel TDI map from a tractogram.
     
     

@@ -172,6 +172,8 @@ def surf_localstat_execute(
     runner: Runner | None = None,
 ) -> SurfLocalstatOutputs:
     """
+    SurfLocalstat
+    
     Compute local statistics on a surface mesh.
     
     Author: AFNI Developers
@@ -203,6 +205,8 @@ def surf_localstat(
     runner: Runner | None = None,
 ) -> SurfLocalstatOutputs:
     """
+    SurfLocalstat
+    
     Compute local statistics on a surface mesh.
     
     Author: AFNI Developers

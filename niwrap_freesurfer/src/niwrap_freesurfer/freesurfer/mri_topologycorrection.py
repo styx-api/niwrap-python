@@ -128,6 +128,8 @@ def mri_topologycorrection_execute(
     runner: Runner | None = None,
 ) -> MriTopologycorrectionOutputs:
     """
+    mri_topologycorrection
+    
     Corrects the topology of segmented MRI images.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mri_topologycorrection(
     runner: Runner | None = None,
 ) -> MriTopologycorrectionOutputs:
     """
+    mri_topologycorrection
+    
     Corrects the topology of segmented MRI images.
     
     Author: FreeSurfer Developers

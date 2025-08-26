@@ -281,6 +281,8 @@ def metric_tfce_execute(
     runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
+    metric-tfce
+    
     Do tfce on a metric file.
     
     This command does not do any statistical analysis. Please use something like
@@ -339,6 +341,8 @@ def metric_tfce(
     runner: Runner | None = None,
 ) -> MetricTfceOutputs:
     """
+    metric-tfce
+    
     Do tfce on a metric file.
     
     This command does not do any statistical analysis. Please use something like

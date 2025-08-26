@@ -273,6 +273,8 @@ def fsl_regfilt_execute(
     runner: Runner | None = None,
 ) -> FslRegfiltOutputs:
     """
+    fsl_regfilt
+    
     Data de-noising by regressing out part of a design matrix using simple OLS
     regression on 4D images.
     
@@ -316,6 +318,8 @@ def fsl_regfilt(
     runner: Runner | None = None,
 ) -> FslRegfiltOutputs:
     """
+    fsl_regfilt
+    
     Data de-noising by regressing out part of a design matrix using simple OLS
     regression on 4D images.
     

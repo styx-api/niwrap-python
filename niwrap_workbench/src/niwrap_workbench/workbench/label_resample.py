@@ -298,6 +298,8 @@ def label_resample_execute(
     runner: Runner | None = None,
 ) -> LabelResampleOutputs:
     """
+    label-resample
+    
     Resample a label file to a different mesh.
     
     Resamples a label file, given two spherical surfaces that are in register.
@@ -356,6 +358,8 @@ def label_resample(
     runner: Runner | None = None,
 ) -> LabelResampleOutputs:
     """
+    label-resample
+    
     Resample a label file to a different mesh.
     
     Resamples a label file, given two spherical surfaces that are in register.

@@ -203,9 +203,11 @@ def fat_mat_tableize_execute(
     runner: Runner | None = None,
 ) -> FatMatTableizeOutputs:
     """
+    fat_mat_tableize
+    
     Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and
-    3dTrackID (*.grid) outputs, with optional additional subject information from
-    CSV files.
+    3dTrackID (*.grid) outputs, with optional additional subject information
+    from CSV files.
     
     Author: AFNI Developers
     
@@ -240,9 +242,11 @@ def fat_mat_tableize(
     runner: Runner | None = None,
 ) -> FatMatTableizeOutputs:
     """
+    fat_mat_tableize
+    
     Make tables for AFNI group analysis programs from 3dNetCorr (*.netcc) and
-    3dTrackID (*.grid) outputs, with optional additional subject information from
-    CSV files.
+    3dTrackID (*.grid) outputs, with optional additional subject information
+    from CSV files.
     
     Author: AFNI Developers
     

@@ -134,6 +134,8 @@ def v_3d_mvm_validator_execute(
     runner: Runner | None = None,
 ) -> V3dMvmValidatorOutputs:
     """
+    3dMVM_validator
+    
     Launch the 3dMVM model validation shiny app in a web browser.
     
     Author: AFNI Developers
@@ -161,6 +163,8 @@ def v_3d_mvm_validator(
     runner: Runner | None = None,
 ) -> V3dMvmValidatorOutputs:
     """
+    3dMVM_validator
+    
     Launch the 3dMVM model validation shiny app in a web browser.
     
     Author: AFNI Developers

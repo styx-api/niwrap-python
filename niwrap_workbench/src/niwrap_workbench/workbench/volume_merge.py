@@ -283,6 +283,8 @@ def volume_merge_execute(
     runner: Runner | None = None,
 ) -> VolumeMergeOutputs:
     """
+    volume-merge
+    
     Merge volume files into a new file.
     
     Takes one or more volume files and constructs a new volume file by
@@ -320,6 +322,8 @@ def volume_merge(
     runner: Runner | None = None,
 ) -> VolumeMergeOutputs:
     """
+    volume-merge
+    
     Merge volume files into a new file.
     
     Takes one or more volume files and constructs a new volume file by

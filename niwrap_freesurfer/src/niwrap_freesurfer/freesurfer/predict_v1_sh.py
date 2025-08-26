@@ -158,6 +158,8 @@ def predict_v1_sh_execute(
     runner: Runner | None = None,
 ) -> PredictV1ShOutputs:
     """
+    predict_v1.sh
+    
     A script for predicting brain images using registration.
     
     Author: FreeSurfer Developers
@@ -189,6 +191,8 @@ def predict_v1_sh(
     runner: Runner | None = None,
 ) -> PredictV1ShOutputs:
     """
+    predict_v1.sh
+    
     A script for predicting brain images using registration.
     
     Author: FreeSurfer Developers

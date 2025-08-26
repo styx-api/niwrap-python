@@ -141,6 +141,8 @@ def avscale_execute(
     runner: Runner | None = None,
 ) -> AvscaleOutputs:
     """
+    avscale
+    
     A command line tool for computing affine transformations.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -170,6 +172,8 @@ def avscale(
     runner: Runner | None = None,
 ) -> AvscaleOutputs:
     """
+    avscale
+    
     A command line tool for computing affine transformations.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -171,6 +171,8 @@ def robustfov_execute(
     runner: Runner | None = None,
 ) -> RobustfovOutputs:
     """
+    robustfov
+    
     Reduce FOV of image to remove lower head and neck.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -202,6 +204,8 @@ def robustfov(
     runner: Runner | None = None,
 ) -> RobustfovOutputs:
     """
+    robustfov
+    
     Reduce FOV of image to remove lower head and neck.
     
     Author: FMRIB Analysis Group, University of Oxford

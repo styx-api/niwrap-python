@@ -176,6 +176,8 @@ def dual_regression_execute(
     runner: Runner | None = None,
 ) -> DualRegressionOutputs:
     """
+    dual_regression
+    
     Dual regression algorithm to investigate group-ICA results.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -209,6 +211,8 @@ def dual_regression(
     runner: Runner | None = None,
 ) -> DualRegressionOutputs:
     """
+    dual_regression
+    
     Dual regression algorithm to investigate group-ICA results.
     
     Author: FMRIB Analysis Group, University of Oxford

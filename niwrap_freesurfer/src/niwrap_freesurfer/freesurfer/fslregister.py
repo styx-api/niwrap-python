@@ -377,8 +377,10 @@ def fslregister_execute(
     runner: Runner | None = None,
 ) -> FslregisterOutputs:
     """
-    Registers a volume to its FreeSurfer anatomical using FSL's FLIRT and creates a
-    FreeSurfer register.dat file.
+    fslregister
+    
+    Registers a volume to its FreeSurfer anatomical using FSL's FLIRT and
+    creates a FreeSurfer register.dat file.
     
     Author: FreeSurfer Developers
     
@@ -433,8 +435,10 @@ def fslregister(
     runner: Runner | None = None,
 ) -> FslregisterOutputs:
     """
-    Registers a volume to its FreeSurfer anatomical using FSL's FLIRT and creates a
-    FreeSurfer register.dat file.
+    fslregister
+    
+    Registers a volume to its FreeSurfer anatomical using FSL's FLIRT and
+    creates a FreeSurfer register.dat file.
     
     Author: FreeSurfer Developers
     

@@ -153,6 +153,8 @@ def mris_average_curvature_execute(
     runner: Runner | None = None,
 ) -> MrisAverageCurvatureOutputs:
     """
+    mris_average_curvature
+    
     This tool averages curvature data across multiple subjects and generates an
     output curvature file painted onto the last subject specified. It can also
     generate summary statistics if requested.
@@ -187,6 +189,8 @@ def mris_average_curvature(
     runner: Runner | None = None,
 ) -> MrisAverageCurvatureOutputs:
     """
+    mris_average_curvature
+    
     This tool averages curvature data across multiple subjects and generates an
     output curvature file painted onto the last subject specified. It can also
     generate summary statistics if requested.

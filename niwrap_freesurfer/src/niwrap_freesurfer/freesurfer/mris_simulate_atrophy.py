@@ -163,6 +163,8 @@ def mris_simulate_atrophy_execute(
     runner: Runner | None = None,
 ) -> MrisSimulateAtrophyOutputs:
     """
+    mris_simulate_atrophy
+    
     Simulate atrophy on brain structures.
     
     Author: FreeSurfer Developers
@@ -195,6 +197,8 @@ def mris_simulate_atrophy(
     runner: Runner | None = None,
 ) -> MrisSimulateAtrophyOutputs:
     """
+    mris_simulate_atrophy
+    
     Simulate atrophy on brain structures.
     
     Author: FreeSurfer Developers

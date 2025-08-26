@@ -147,6 +147,8 @@ def dicom_rename_execute(
     runner: Runner | None = None,
 ) -> DicomRenameOutputs:
     """
+    dicom-rename
+    
     Copies dicom file(s) to new path with more meaningful names.
     
     Author: FreeSurfer Developers
@@ -176,6 +178,8 @@ def dicom_rename(
     runner: Runner | None = None,
 ) -> DicomRenameOutputs:
     """
+    dicom-rename
+    
     Copies dicom file(s) to new path with more meaningful names.
     
     Author: FreeSurfer Developers

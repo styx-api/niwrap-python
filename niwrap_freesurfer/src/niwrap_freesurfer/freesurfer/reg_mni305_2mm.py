@@ -135,6 +135,8 @@ def reg_mni305_2mm_execute(
     runner: Runner | None = None,
 ) -> RegMni3052mmOutputs:
     """
+    reg-mni305.2mm
+    
     Computes the registration between the FreeSurfer MNI305 2mm space and a
     subject's FreeSurfer anatomical space.
     
@@ -163,6 +165,8 @@ def reg_mni305_2mm(
     runner: Runner | None = None,
 ) -> RegMni3052mmOutputs:
     """
+    reg-mni305.2mm
+    
     Computes the registration between the FreeSurfer MNI305 2mm space and a
     subject's FreeSurfer anatomical space.
     

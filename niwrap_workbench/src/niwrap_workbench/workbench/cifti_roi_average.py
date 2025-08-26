@@ -179,6 +179,8 @@ def cifti_roi_average_execute(
     runner: Runner | None = None,
 ) -> CiftiRoiAverageOutputs:
     """
+    cifti-roi-average
+    
     Average rows in a single cifti file.
     
     Average the rows that are within the specified ROIs, and write the resulting
@@ -216,6 +218,8 @@ def cifti_roi_average(
     runner: Runner | None = None,
 ) -> CiftiRoiAverageOutputs:
     """
+    cifti-roi-average
+    
     Average rows in a single cifti file.
     
     Average the rows that are within the specified ROIs, and write the resulting

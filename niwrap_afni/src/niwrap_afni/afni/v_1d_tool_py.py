@@ -230,6 +230,8 @@ def v_1d_tool_py_execute(
     runner: Runner | None = None,
 ) -> V1dToolPyOutputs:
     """
+    1d_tool.py
+    
     A tool for manipulating and evaluating 1D files.
     
     Author: AFNI Developers
@@ -268,6 +270,8 @@ def v_1d_tool_py(
     runner: Runner | None = None,
 ) -> V1dToolPyOutputs:
     """
+    1d_tool.py
+    
     A tool for manipulating and evaluating 1D files.
     
     Author: AFNI Developers

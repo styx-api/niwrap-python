@@ -608,9 +608,11 @@ def mris_make_surfaces_execute(
     runner: Runner | None = None,
 ) -> MrisMakeSurfacesOutputs:
     """
-    Positions the tessellation of the cortical surface at the white matter surface,
-    then the gray matter surface, generating surface files along with a curvature
-    file and a surface file for cortical thickness.
+    mris_make_surfaces
+    
+    Positions the tessellation of the cortical surface at the white matter
+    surface, then the gray matter surface, generating surface files along with a
+    curvature file and a surface file for cortical thickness.
     
     Author: FreeSurfer Developers
     
@@ -688,9 +690,11 @@ def mris_make_surfaces(
     runner: Runner | None = None,
 ) -> MrisMakeSurfacesOutputs:
     """
-    Positions the tessellation of the cortical surface at the white matter surface,
-    then the gray matter surface, generating surface files along with a curvature
-    file and a surface file for cortical thickness.
+    mris_make_surfaces
+    
+    Positions the tessellation of the cortical surface at the white matter
+    surface, then the gray matter surface, generating surface files along with a
+    curvature file and a surface file for cortical thickness.
     
     Author: FreeSurfer Developers
     

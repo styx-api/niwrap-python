@@ -423,6 +423,8 @@ def popp_execute(
     runner: Runner | None = None,
 ) -> PoppOutputs:
     """
+    popp
+    
     Physiological data processing tool of FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -481,6 +483,8 @@ def popp(
     runner: Runner | None = None,
 ) -> PoppOutputs:
     """
+    popp
+    
     Physiological data processing tool of FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -157,8 +157,10 @@ def slices_execute(
     runner: Runner | None = None,
 ) -> SlicesOutputs:
     """
-    Generate a set of slices from an image, possibly with some scaling and intensity
-    range options, and save as a GIF.
+    slices
+    
+    Generate a set of slices from an image, possibly with some scaling and
+    intensity range options, and save as a GIF.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -188,8 +190,10 @@ def slices(
     runner: Runner | None = None,
 ) -> SlicesOutputs:
     """
-    Generate a set of slices from an image, possibly with some scaling and intensity
-    range options, and save as a GIF.
+    slices
+    
+    Generate a set of slices from an image, possibly with some scaling and
+    intensity range options, and save as a GIF.
     
     Author: FMRIB Analysis Group, University of Oxford
     

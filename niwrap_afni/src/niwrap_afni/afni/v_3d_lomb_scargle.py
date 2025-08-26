@@ -214,6 +214,8 @@ def v_3d_lomb_scargle_execute(
     runner: Runner | None = None,
 ) -> V3dLombScargleOutputs:
     """
+    3dLombScargle
+    
     Make a periodogram or amplitude-spectrum of a time series that has a
     non-constant sampling rate.
     
@@ -248,6 +250,8 @@ def v_3d_lomb_scargle(
     runner: Runner | None = None,
 ) -> V3dLombScargleOutputs:
     """
+    3dLombScargle
+    
     Make a periodogram or amplitude-spectrum of a time series that has a
     non-constant sampling rate.
     

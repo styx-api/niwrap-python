@@ -158,8 +158,10 @@ def v_3d_vec_rgb_to_hsl_execute(
     runner: Runner | None = None,
 ) -> V3dVecRgbToHslOutputs:
     """
-    Convert a 3-brick RGB (red, green, blue) data set to an HSL (hue, saturation,
-    luminance) one.
+    3dVecRGB_to_HSL
+    
+    Convert a 3-brick RGB (red, green, blue) data set to an HSL (hue,
+    saturation, luminance) one.
     
     Author: AFNI Developers
     
@@ -188,8 +190,10 @@ def v_3d_vec_rgb_to_hsl(
     runner: Runner | None = None,
 ) -> V3dVecRgbToHslOutputs:
     """
-    Convert a 3-brick RGB (red, green, blue) data set to an HSL (hue, saturation,
-    luminance) one.
+    3dVecRGB_to_HSL
+    
+    Convert a 3-brick RGB (red, green, blue) data set to an HSL (hue,
+    saturation, luminance) one.
     
     Author: AFNI Developers
     

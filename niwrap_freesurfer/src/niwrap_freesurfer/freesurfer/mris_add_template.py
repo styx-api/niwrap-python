@@ -125,6 +125,8 @@ def mris_add_template_execute(
     runner: Runner | None = None,
 ) -> MrisAddTemplateOutputs:
     """
+    mris_add_template
+    
     This tool has been removed from the current version of FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def mris_add_template(
     runner: Runner | None = None,
 ) -> MrisAddTemplateOutputs:
     """
+    mris_add_template
+    
     This tool has been removed from the current version of FreeSurfer.
     
     Author: FreeSurfer Developers

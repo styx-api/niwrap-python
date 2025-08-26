@@ -158,6 +158,8 @@ def mri_gcut_execute(
     runner: Runner | None = None,
 ) -> MriGcutOutputs:
     """
+    mri_gcut
+    
     Skull stripping algorithm based on graph cuts.
     
     Author: FreeSurfer Developers
@@ -188,6 +190,8 @@ def mri_gcut(
     runner: Runner | None = None,
 ) -> MriGcutOutputs:
     """
+    mri_gcut
+    
     Skull stripping algorithm based on graph cuts.
     
     Author: FreeSurfer Developers

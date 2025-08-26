@@ -184,8 +184,10 @@ def vecwarp_execute(
     runner: Runner | None = None,
 ) -> VecwarpOutputs:
     """
-    Transforms (warps) a list of 3-vectors into another list of 3-vectors according
-    to the specified options.
+    Vecwarp
+    
+    Transforms (warps) a list of 3-vectors into another list of 3-vectors
+    according to the specified options.
     
     Author: AFNI Developers
     
@@ -217,8 +219,10 @@ def vecwarp(
     runner: Runner | None = None,
 ) -> VecwarpOutputs:
     """
-    Transforms (warps) a list of 3-vectors into another list of 3-vectors according
-    to the specified options.
+    Vecwarp
+    
+    Transforms (warps) a list of 3-vectors into another list of 3-vectors
+    according to the specified options.
     
     Author: AFNI Developers
     

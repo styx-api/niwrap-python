@@ -153,6 +153,8 @@ def dmri_save_histograms_execute(
     runner: Runner | None = None,
 ) -> DmriSaveHistogramsOutputs:
     """
+    dmri_saveHistograms
+    
     A tool to save histograms from diffusion MRI tractography data.
     
     Author: FreeSurfer Developers
@@ -183,6 +185,8 @@ def dmri_save_histograms(
     runner: Runner | None = None,
 ) -> DmriSaveHistogramsOutputs:
     """
+    dmri_saveHistograms
+    
     A tool to save histograms from diffusion MRI tractography data.
     
     Author: FreeSurfer Developers

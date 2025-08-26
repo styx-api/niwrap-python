@@ -259,6 +259,8 @@ def build_afni_py_execute(
     runner: Runner | None = None,
 ) -> BuildAfniPyOutputs:
     """
+    build_afni.py
+    
     Compile an AFNI package from the git repository.
     
     Author: AFNI Developers
@@ -300,6 +302,8 @@ def build_afni_py(
     runner: Runner | None = None,
 ) -> BuildAfniPyOutputs:
     """
+    build_afni.py
+    
     Compile an AFNI package from the git repository.
     
     Author: AFNI Developers

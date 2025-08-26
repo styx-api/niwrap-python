@@ -232,6 +232,8 @@ def gen_ss_review_table_py_execute(
     runner: Runner | None = None,
 ) -> GenSsReviewTablePyOutputs:
     """
+    gen_ss_review_table.py
+    
     Generate a table from ss_review_basic output files.
     
     Author: AFNI Developers
@@ -271,6 +273,8 @@ def gen_ss_review_table_py(
     runner: Runner | None = None,
 ) -> GenSsReviewTablePyOutputs:
     """
+    gen_ss_review_table.py
+    
     Generate a table from ss_review_basic output files.
     
     Author: AFNI Developers

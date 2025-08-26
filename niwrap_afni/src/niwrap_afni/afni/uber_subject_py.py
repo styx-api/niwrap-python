@@ -528,6 +528,8 @@ def uber_subject_py_execute(
     runner: Runner | None = None,
 ) -> UberSubjectPyOutputs:
     """
+    uber_subject.py
+    
     Graphical interface to afni_proc.py.
     
     Author: AFNI Developers
@@ -596,6 +598,8 @@ def uber_subject_py(
     runner: Runner | None = None,
 ) -> UberSubjectPyOutputs:
     """
+    uber_subject.py
+    
     Graphical interface to afni_proc.py.
     
     Author: AFNI Developers

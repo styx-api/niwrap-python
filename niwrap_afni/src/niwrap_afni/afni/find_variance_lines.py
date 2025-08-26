@@ -256,8 +256,10 @@ def find_variance_lines_execute(
     runner: Runner | None = None,
 ) -> FindVarianceLinesOutputs:
     """
-    Look for bars of high variance that might suggest scanner interference in EPI
-    datasets.
+    find_variance_lines
+    
+    Look for bars of high variance that might suggest scanner interference in
+    EPI datasets.
     
     Author: AFNI Developers
     
@@ -297,8 +299,10 @@ def find_variance_lines(
     runner: Runner | None = None,
 ) -> FindVarianceLinesOutputs:
     """
-    Look for bars of high variance that might suggest scanner interference in EPI
-    datasets.
+    find_variance_lines
+    
+    Look for bars of high variance that might suggest scanner interference in
+    EPI datasets.
     
     Author: AFNI Developers
     

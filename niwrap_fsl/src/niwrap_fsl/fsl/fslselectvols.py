@@ -161,6 +161,8 @@ def fslselectvols_execute(
     runner: Runner | None = None,
 ) -> FslselectvolsOutputs:
     """
+    fslselectvols
+    
     Select volumes from a 4D time series and output a subset 4D volume.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -192,6 +194,8 @@ def fslselectvols(
     runner: Runner | None = None,
 ) -> FslselectvolsOutputs:
     """
+    fslselectvols
+    
     Select volumes from a 4D time series and output a subset 4D volume.
     
     Author: FMRIB Analysis Group, University of Oxford

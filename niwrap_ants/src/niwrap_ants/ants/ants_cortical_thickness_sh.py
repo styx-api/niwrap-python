@@ -388,9 +388,11 @@ def ants_cortical_thickness_sh_execute(
     runner: Runner | None = None,
 ) -> AntsCorticalThicknessShOutputs:
     """
-    This script performs T1 anatomical brain processing including brain extraction,
-    brain n-tissue segmentation, cortical thickness estimation, and optional
-    registration to a template.
+    antsCorticalThickness.sh
+    
+    This script performs T1 anatomical brain processing including brain
+    extraction, brain n-tissue segmentation, cortical thickness estimation, and
+    optional registration to a template.
     
     Author: ANTs Developers
     
@@ -440,9 +442,11 @@ def ants_cortical_thickness_sh(
     runner: Runner | None = None,
 ) -> AntsCorticalThicknessShOutputs:
     """
-    This script performs T1 anatomical brain processing including brain extraction,
-    brain n-tissue segmentation, cortical thickness estimation, and optional
-    registration to a template.
+    antsCorticalThickness.sh
+    
+    This script performs T1 anatomical brain processing including brain
+    extraction, brain n-tissue segmentation, cortical thickness estimation, and
+    optional registration to a template.
     
     Author: ANTs Developers
     

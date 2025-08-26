@@ -157,9 +157,11 @@ def abids_tool_execute(
     runner: Runner | None = None,
 ) -> AbidsToolOutputs:
     """
+    abids_tool
+    
     A tool to work with BIDS formatted datasets created with dcm2niix_afni or
-    dcm2niix, mainly to pull information from the matching JSON file and refit the
-    input dataset using 3drefit.
+    dcm2niix, mainly to pull information from the matching JSON file and refit
+    the input dataset using 3drefit.
     
     Author: AFNI Developers
     
@@ -190,9 +192,11 @@ def abids_tool(
     runner: Runner | None = None,
 ) -> AbidsToolOutputs:
     """
+    abids_tool
+    
     A tool to work with BIDS formatted datasets created with dcm2niix_afni or
-    dcm2niix, mainly to pull information from the matching JSON file and refit the
-    input dataset using 3drefit.
+    dcm2niix, mainly to pull information from the matching JSON file and refit
+    the input dataset using 3drefit.
     
     Author: AFNI Developers
     

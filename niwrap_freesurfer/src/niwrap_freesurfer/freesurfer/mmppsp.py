@@ -202,6 +202,8 @@ def mmppsp_execute(
     runner: Runner | None = None,
 ) -> MmppspOutputs:
     """
+    mmppsp
+    
     MultiModal Posterior Probability Surface Placement.
     
     Author: FreeSurfer Developers
@@ -238,6 +240,8 @@ def mmppsp(
     runner: Runner | None = None,
 ) -> MmppspOutputs:
     """
+    mmppsp
+    
     MultiModal Posterior Probability Surface Placement.
     
     Author: FreeSurfer Developers

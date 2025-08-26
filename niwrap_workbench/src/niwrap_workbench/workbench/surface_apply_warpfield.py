@@ -145,6 +145,8 @@ def surface_apply_warpfield_execute(
     runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
+    surface-apply-warpfield
+    
     Apply warpfield to surface file.
     
     NOTE: warping a surface requires the INVERSE of the warpfield used to warp
@@ -182,6 +184,8 @@ def surface_apply_warpfield(
     runner: Runner | None = None,
 ) -> SurfaceApplyWarpfieldOutputs:
     """
+    surface-apply-warpfield
+    
     Apply warpfield to surface file.
     
     NOTE: warping a surface requires the INVERSE of the warpfield used to warp

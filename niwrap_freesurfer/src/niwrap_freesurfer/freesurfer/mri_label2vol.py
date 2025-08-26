@@ -301,6 +301,8 @@ def mri_label2vol_execute(
     runner: Runner | None = None,
 ) -> MriLabel2volOutputs:
     """
+    mri_label2vol
+    
     Converts a label or a set of labels into a volume.
     
     Author: FreeSurfer Developers
@@ -344,6 +346,8 @@ def mri_label2vol(
     runner: Runner | None = None,
 ) -> MriLabel2volOutputs:
     """
+    mri_label2vol
+    
     Converts a label or a set of labels into a volume.
     
     Author: FreeSurfer Developers

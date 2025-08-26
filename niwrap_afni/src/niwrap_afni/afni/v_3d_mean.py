@@ -249,8 +249,10 @@ def v_3d_mean_execute(
     runner: Runner | None = None,
 ) -> V3dMeanOutputs:
     """
-    Takes the voxel-by-voxel mean of all input datasets; designed to be faster than
-    3dcalc.
+    3dMean
+    
+    Takes the voxel-by-voxel mean of all input datasets; designed to be faster
+    than 3dcalc.
     
     Author: AFNI Developers
     
@@ -294,8 +296,10 @@ def v_3d_mean(
     runner: Runner | None = None,
 ) -> V3dMeanOutputs:
     """
-    Takes the voxel-by-voxel mean of all input datasets; designed to be faster than
-    3dcalc.
+    3dMean
+    
+    Takes the voxel-by-voxel mean of all input datasets; designed to be faster
+    than 3dcalc.
     
     Author: AFNI Developers
     

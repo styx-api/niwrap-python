@@ -180,7 +180,10 @@ def v__roi_decluster_execute(
     runner: Runner | None = None,
 ) -> VRoiDeclusterOutputs:
     """
-    Script to remove small clusters or standalone voxels from an ROI/atlas dataset.
+    @ROI_decluster
+    
+    Script to remove small clusters or standalone voxels from an ROI/atlas
+    dataset.
     
     Author: AFNI Developers
     
@@ -211,7 +214,10 @@ def v__roi_decluster(
     runner: Runner | None = None,
 ) -> VRoiDeclusterOutputs:
     """
-    Script to remove small clusters or standalone voxels from an ROI/atlas dataset.
+    @ROI_decluster
+    
+    Script to remove small clusters or standalone voxels from an ROI/atlas
+    dataset.
     
     Author: AFNI Developers
     

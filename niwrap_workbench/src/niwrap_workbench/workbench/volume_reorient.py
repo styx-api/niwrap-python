@@ -130,6 +130,8 @@ def volume_reorient_execute(
     runner: Runner | None = None,
 ) -> VolumeReorientOutputs:
     """
+    volume-reorient
+    
     Change voxel order of a volume file.
     
     Changes the voxel order and the header spacing/origin information such that
@@ -170,6 +172,8 @@ def volume_reorient(
     runner: Runner | None = None,
 ) -> VolumeReorientOutputs:
     """
+    volume-reorient
+    
     Change voxel order of a volume file.
     
     Changes the voxel order and the header spacing/origin information such that

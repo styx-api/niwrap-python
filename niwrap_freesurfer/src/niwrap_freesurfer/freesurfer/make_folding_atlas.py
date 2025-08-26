@@ -284,6 +284,8 @@ def make_folding_atlas_execute(
     runner: Runner | None = None,
 ) -> MakeFoldingAtlasOutputs:
     """
+    make_folding_atlas
+    
     Script to iteratively create a cortical folding atlas.
     
     Author: FreeSurfer Developers
@@ -329,6 +331,8 @@ def make_folding_atlas(
     runner: Runner | None = None,
 ) -> MakeFoldingAtlasOutputs:
     """
+    make_folding_atlas
+    
     Script to iteratively create a cortical folding atlas.
     
     Author: FreeSurfer Developers

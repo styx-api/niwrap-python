@@ -220,8 +220,10 @@ def mris_smooth_execute(
     runner: Runner | None = None,
 ) -> MrisSmoothOutputs:
     """
-    This program smooths the tessellation of a cortical surface and writes out the
-    mean curvature and area files.
+    mris_smooth
+    
+    This program smooths the tessellation of a cortical surface and writes out
+    the mean curvature and area files.
     
     Author: FreeSurfer Developers
     
@@ -257,8 +259,10 @@ def mris_smooth(
     runner: Runner | None = None,
 ) -> MrisSmoothOutputs:
     """
-    This program smooths the tessellation of a cortical surface and writes out the
-    mean curvature and area files.
+    mris_smooth
+    
+    This program smooths the tessellation of a cortical surface and writes out
+    the mean curvature and area files.
     
     Author: FreeSurfer Developers
     

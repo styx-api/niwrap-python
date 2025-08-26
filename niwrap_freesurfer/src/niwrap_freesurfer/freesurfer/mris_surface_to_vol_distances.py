@@ -138,6 +138,8 @@ def mris_surface_to_vol_distances_execute(
     runner: Runner | None = None,
 ) -> MrisSurfaceToVolDistancesOutputs:
     """
+    mris_surface_to_vol_distances
+    
     Tool from FreeSurfer to calculate surface-to-volume distances.
     
     Author: FreeSurfer Developers
@@ -167,6 +169,8 @@ def mris_surface_to_vol_distances(
     runner: Runner | None = None,
 ) -> MrisSurfaceToVolDistancesOutputs:
     """
+    mris_surface_to_vol_distances
+    
     Tool from FreeSurfer to calculate surface-to-volume distances.
     
     Author: FreeSurfer Developers

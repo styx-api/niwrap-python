@@ -174,6 +174,8 @@ def v_3d_tto1_d_execute(
     runner: Runner | None = None,
 ) -> V3dTto1DOutputs:
     """
+    3dTto1D
+    
     Collapse a 4D time series to a 1D time series.
     
     Author: AFNI Developers
@@ -205,6 +207,8 @@ def v_3d_tto1_d(
     runner: Runner | None = None,
 ) -> V3dTto1DOutputs:
     """
+    3dTto1D
+    
     Collapse a 4D time series to a 1D time series.
     
     Author: AFNI Developers

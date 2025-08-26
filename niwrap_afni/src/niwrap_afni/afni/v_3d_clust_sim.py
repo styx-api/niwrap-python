@@ -331,6 +331,8 @@ def v_3d_clust_sim_execute(
     runner: Runner | None = None,
 ) -> V3dClustSimOutputs:
     """
+    3dClustSim
+    
     Program to estimate the probability of false positive (noise-only) clusters.
     
     Author: AFNI Developers
@@ -378,6 +380,8 @@ def v_3d_clust_sim(
     runner: Runner | None = None,
 ) -> V3dClustSimOutputs:
     """
+    3dClustSim
+    
     Program to estimate the probability of false positive (noise-only) clusters.
     
     Author: AFNI Developers

@@ -119,6 +119,8 @@ def v__afni_orient2_raimap_execute(
     runner: Runner | None = None,
 ) -> VAfniOrient2RaimapOutputs:
     """
+    @AfniOrient2RAImap
+    
     Returns the index map for the RAI directions.
     
     Author: AFNI Developers
@@ -145,6 +147,8 @@ def v__afni_orient2_raimap(
     runner: Runner | None = None,
 ) -> VAfniOrient2RaimapOutputs:
     """
+    @AfniOrient2RAImap
+    
     Returns the index map for the RAI directions.
     
     Author: AFNI Developers

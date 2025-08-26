@@ -154,6 +154,8 @@ def v__xyz_to_ijk_execute(
     runner: Runner | None = None,
 ) -> VXyzToIjkOutputs:
     """
+    @xyz_to_ijk
+    
     Helper script to convert (x, y, z) coordinates to (i, j, k) indices for a
     volumetric dataset.
     
@@ -185,6 +187,8 @@ def v__xyz_to_ijk(
     runner: Runner | None = None,
 ) -> VXyzToIjkOutputs:
     """
+    @xyz_to_ijk
+    
     Helper script to convert (x, y, z) coordinates to (i, j, k) indices for a
     volumetric dataset.
     

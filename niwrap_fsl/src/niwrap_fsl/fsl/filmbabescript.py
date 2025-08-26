@@ -124,6 +124,8 @@ def filmbabescript_execute(
     runner: Runner | None = None,
 ) -> FilmbabescriptOutputs:
     """
+    filmbabescript
+    
     A tool/script for processing FEAT directories and FLOBs directories.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -151,6 +153,8 @@ def filmbabescript(
     runner: Runner | None = None,
 ) -> FilmbabescriptOutputs:
     """
+    filmbabescript
+    
     A tool/script for processing FEAT directories and FLOBs directories.
     
     Author: FMRIB Analysis Group, University of Oxford

@@ -126,6 +126,8 @@ def backend_average_roi_correlation_execute(
     runner: Runner | None = None,
 ) -> BackendAverageRoiCorrelationOutputs:
     """
+    backend-average-roi-correlation
+    
     Connectome db backend command for cifti average roi correlation.
     
     This command is probably not the one you are looking for, try
@@ -158,6 +160,8 @@ def backend_average_roi_correlation(
     runner: Runner | None = None,
 ) -> BackendAverageRoiCorrelationOutputs:
     """
+    backend-average-roi-correlation
+    
     Connectome db backend command for cifti average roi correlation.
     
     This command is probably not the one you are looking for, try

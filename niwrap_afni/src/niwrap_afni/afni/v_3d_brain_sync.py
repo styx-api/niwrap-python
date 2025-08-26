@@ -191,6 +191,8 @@ def v_3d_brain_sync_execute(
     runner: Runner | None = None,
 ) -> V3dBrainSyncOutputs:
     """
+    3dBrainSync
+    
     'Synchronizes' the -inset2 dataset to match the -inset1 dataset, using
     orthogonal or permutation transformation.
     
@@ -224,6 +226,8 @@ def v_3d_brain_sync(
     runner: Runner | None = None,
 ) -> V3dBrainSyncOutputs:
     """
+    3dBrainSync
+    
     'Synchronizes' the -inset2 dataset to match the -inset1 dataset, using
     orthogonal or permutation transformation.
     

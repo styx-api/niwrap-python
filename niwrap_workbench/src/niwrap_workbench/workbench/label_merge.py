@@ -283,6 +283,8 @@ def label_merge_execute(
     runner: Runner | None = None,
 ) -> LabelMergeOutputs:
     """
+    label-merge
+    
     Merge label files into a new file.
     
     Takes one or more label files and constructs a new label file by
@@ -320,6 +322,8 @@ def label_merge(
     runner: Runner | None = None,
 ) -> LabelMergeOutputs:
     """
+    label-merge
+    
     Merge label files into a new file.
     
     Takes one or more label files and constructs a new label file by

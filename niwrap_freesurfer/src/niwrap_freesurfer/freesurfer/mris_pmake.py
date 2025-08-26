@@ -234,8 +234,10 @@ def mris_pmake_execute(
     runner: Runner | None = None,
 ) -> MrisPmakeOutputs:
     """
-    Calculates paths and related costs on FreeSurfer surfaces based on an edge cost
-    and Dijkstra's algorithm.
+    mris_pmake
+    
+    Calculates paths and related costs on FreeSurfer surfaces based on an edge
+    cost and Dijkstra's algorithm.
     
     Author: FreeSurfer Developers
     
@@ -273,8 +275,10 @@ def mris_pmake(
     runner: Runner | None = None,
 ) -> MrisPmakeOutputs:
     """
-    Calculates paths and related costs on FreeSurfer surfaces based on an edge cost
-    and Dijkstra's algorithm.
+    mris_pmake
+    
+    Calculates paths and related costs on FreeSurfer surfaces based on an edge
+    cost and Dijkstra's algorithm.
     
     Author: FreeSurfer Developers
     

@@ -141,6 +141,8 @@ def volume_copy_extensions_execute(
     runner: Runner | None = None,
 ) -> VolumeCopyExtensionsOutputs:
     """
+    volume-copy-extensions
+    
     Copy extended data to another volume file.
     
     This command copies the information in a volume file that isn't a critical
@@ -175,6 +177,8 @@ def volume_copy_extensions(
     runner: Runner | None = None,
 ) -> VolumeCopyExtensionsOutputs:
     """
+    volume-copy-extensions
+    
     Copy extended data to another volume file.
     
     This command copies the information in a volume file that isn't a critical

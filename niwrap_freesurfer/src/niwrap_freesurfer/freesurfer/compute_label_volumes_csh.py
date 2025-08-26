@@ -211,6 +211,8 @@ def compute_label_volumes_csh_execute(
     runner: Runner | None = None,
 ) -> ComputeLabelVolumesCshOutputs:
     """
+    compute_label_volumes.csh
+    
     Computes the number of voxels and the volumes of either all or a particular
     label in the input label volume.
     
@@ -242,6 +244,8 @@ def compute_label_volumes_csh(
     runner: Runner | None = None,
 ) -> ComputeLabelVolumesCshOutputs:
     """
+    compute_label_volumes.csh
+    
     Computes the number of voxels and the volumes of either all or a particular
     label in the input label volume.
     

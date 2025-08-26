@@ -128,6 +128,8 @@ def mris_rescale_execute(
     runner: Runner | None = None,
 ) -> MrisRescaleOutputs:
     """
+    mris_rescale
+    
     This program will rescale a surface representation.
     
     Author: FreeSurfer Developers
@@ -155,6 +157,8 @@ def mris_rescale(
     runner: Runner | None = None,
 ) -> MrisRescaleOutputs:
     """
+    mris_rescale
+    
     This program will rescale a surface representation.
     
     Author: FreeSurfer Developers

@@ -122,6 +122,8 @@ def morph_subject_rh_execute(
     runner: Runner | None = None,
 ) -> MorphSubjectRhOutputs:
     """
+    morph_subject-rh
+    
     A tool for morphing the right hemisphere of subject data in FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -148,6 +150,8 @@ def morph_subject_rh(
     runner: Runner | None = None,
 ) -> MorphSubjectRhOutputs:
     """
+    morph_subject-rh
+    
     A tool for morphing the right hemisphere of subject data in FreeSurfer.
     
     Author: FreeSurfer Developers

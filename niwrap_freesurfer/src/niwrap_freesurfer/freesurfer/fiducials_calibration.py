@@ -123,6 +123,8 @@ def fiducials_calibration_execute(
     runner: Runner | None = None,
 ) -> FiducialsCalibrationOutputs:
     """
+    fiducials_calibration
+    
     A tool used for calibrating fiducials.
     
     Author: FreeSurfer Developers
@@ -149,6 +151,8 @@ def fiducials_calibration(
     runner: Runner | None = None,
 ) -> FiducialsCalibrationOutputs:
     """
+    fiducials_calibration
+    
     A tool used for calibrating fiducials.
     
     Author: FreeSurfer Developers

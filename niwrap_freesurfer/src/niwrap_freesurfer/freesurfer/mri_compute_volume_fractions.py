@@ -348,6 +348,8 @@ def mri_compute_volume_fractions_execute(
     runner: Runner | None = None,
 ) -> MriComputeVolumeFractionsOutputs:
     """
+    mri_compute_volume_fractions
+    
     Computes partial volume fractions for cortex, subcortical GM, WM and CSF.
     
     Author: FreeSurfer Developers
@@ -398,6 +400,8 @@ def mri_compute_volume_fractions(
     runner: Runner | None = None,
 ) -> MriComputeVolumeFractionsOutputs:
     """
+    mri_compute_volume_fractions
+    
     Computes partial volume fractions for cortex, subcortical GM, WM and CSF.
     
     Author: FreeSurfer Developers

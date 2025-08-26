@@ -189,7 +189,10 @@ def export_gcam_execute(
     runner: Runner | None = None,
 ) -> ExportGcamOutputs:
     """
-    A tool for exporting GCAM (Geodesic Coordinate-based Anatomic Mapping) morphs.
+    exportGcam
+    
+    A tool for exporting GCAM (Geodesic Coordinate-based Anatomic Mapping)
+    morphs.
     
     Author: FreeSurfer Developers
     
@@ -222,7 +225,10 @@ def export_gcam(
     runner: Runner | None = None,
 ) -> ExportGcamOutputs:
     """
-    A tool for exporting GCAM (Geodesic Coordinate-based Anatomic Mapping) morphs.
+    exportGcam
+    
+    A tool for exporting GCAM (Geodesic Coordinate-based Anatomic Mapping)
+    morphs.
     
     Author: FreeSurfer Developers
     

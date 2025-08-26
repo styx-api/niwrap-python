@@ -172,8 +172,10 @@ def swap_subjectwise_execute(
     runner: Runner | None = None,
 ) -> SwapSubjectwiseOutputs:
     """
-    Reordering of the dyadic vectors and fsamples according to average inter-subject
-    modal orientations.
+    swap_subjectwise
+    
+    Reordering of the dyadic vectors and fsamples according to average
+    inter-subject modal orientations.
     
     Author: FMRIB Analysis Group, University of Oxford
     
@@ -205,8 +207,10 @@ def swap_subjectwise(
     runner: Runner | None = None,
 ) -> SwapSubjectwiseOutputs:
     """
-    Reordering of the dyadic vectors and fsamples according to average inter-subject
-    modal orientations.
+    swap_subjectwise
+    
+    Reordering of the dyadic vectors and fsamples according to average
+    inter-subject modal orientations.
     
     Author: FMRIB Analysis Group, University of Oxford
     

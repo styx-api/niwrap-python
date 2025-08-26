@@ -155,6 +155,8 @@ def mris_entropy_execute(
     runner: Runner | None = None,
 ) -> MrisEntropyOutputs:
     """
+    mris_entropy
+    
     Computes the entropy of a surface activation pattern for FreeSurfer.
     
     Author: FreeSurfer Developers
@@ -186,6 +188,8 @@ def mris_entropy(
     runner: Runner | None = None,
 ) -> MrisEntropyOutputs:
     """
+    mris_entropy
+    
     Computes the entropy of a surface activation pattern for FreeSurfer.
     
     Author: FreeSurfer Developers

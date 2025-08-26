@@ -129,6 +129,8 @@ def possum_plot_execute(
     runner: Runner | None = None,
 ) -> PossumPlotOutputs:
     """
+    possum_plot
+    
     Tool for plotting results from POSSUM simulations in FSL.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -156,6 +158,8 @@ def possum_plot(
     runner: Runner | None = None,
 ) -> PossumPlotOutputs:
     """
+    possum_plot
+    
     Tool for plotting results from POSSUM simulations in FSL.
     
     Author: FMRIB Analysis Group, University of Oxford

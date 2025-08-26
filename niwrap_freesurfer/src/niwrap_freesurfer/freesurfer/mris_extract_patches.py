@@ -124,6 +124,8 @@ def mris_extract_patches_execute(
     runner: Runner | None = None,
 ) -> MrisExtractPatchesOutputs:
     """
+    mris_extract_patches
+    
     A tool for extracting patches from brain surfaces.
     
     Author: FreeSurfer Developers
@@ -151,6 +153,8 @@ def mris_extract_patches(
     runner: Runner | None = None,
 ) -> MrisExtractPatchesOutputs:
     """
+    mris_extract_patches
+    
     A tool for extracting patches from brain surfaces.
     
     Author: FreeSurfer Developers

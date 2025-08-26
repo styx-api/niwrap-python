@@ -193,6 +193,8 @@ def vol2symsurf_execute(
     runner: Runner | None = None,
 ) -> Vol2symsurfOutputs:
     """
+    vol2symsurf
+    
     A tool that samples a volume onto the surface of the left-right symmetric
     subject (fsaverage_sym).
     
@@ -227,6 +229,8 @@ def vol2symsurf(
     runner: Runner | None = None,
 ) -> Vol2symsurfOutputs:
     """
+    vol2symsurf
+    
     A tool that samples a volume onto the surface of the left-right symmetric
     subject (fsaverage_sym).
     

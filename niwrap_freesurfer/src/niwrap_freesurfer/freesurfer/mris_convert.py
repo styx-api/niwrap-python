@@ -425,6 +425,8 @@ def mris_convert_execute(
     runner: Runner | None = None,
 ) -> MrisConvertOutputs:
     """
+    mris_convert
+    
     This program will convert MRI-surface data formats.
     
     Author: FreeSurfer Developers
@@ -488,6 +490,8 @@ def mris_convert(
     runner: Runner | None = None,
 ) -> MrisConvertOutputs:
     """
+    mris_convert
+    
     This program will convert MRI-surface data formats.
     
     Author: FreeSurfer Developers

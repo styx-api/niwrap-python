@@ -236,6 +236,8 @@ def connectomeedit_execute(
     runner: Runner | None = None,
 ) -> ConnectomeeditOutputs:
     """
+    connectomeedit
+    
     Perform basic operations on a connectome.
     
     
@@ -278,6 +280,8 @@ def connectomeedit(
     runner: Runner | None = None,
 ) -> ConnectomeeditOutputs:
     """
+    connectomeedit
+    
     Perform basic operations on a connectome.
     
     

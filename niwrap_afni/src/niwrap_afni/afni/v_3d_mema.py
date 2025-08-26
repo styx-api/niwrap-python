@@ -334,8 +334,10 @@ def v_3d_mema_execute(
     runner: Runner | None = None,
 ) -> V3dMemaOutputs:
     """
-    3dMEMA is a program for performing Mixed Effects Meta Analysis at group level
-    that models both within- and across-subjects variability.
+    3dMEMA
+    
+    3dMEMA is a program for performing Mixed Effects Meta Analysis at group
+    level that models both within- and across-subjects variability.
     
     Author: AFNI Developers
     
@@ -387,8 +389,10 @@ def v_3d_mema(
     runner: Runner | None = None,
 ) -> V3dMemaOutputs:
     """
-    3dMEMA is a program for performing Mixed Effects Meta Analysis at group level
-    that models both within- and across-subjects variability.
+    3dMEMA
+    
+    3dMEMA is a program for performing Mixed Effects Meta Analysis at group
+    level that models both within- and across-subjects variability.
     
     Author: AFNI Developers
     

@@ -252,6 +252,8 @@ def voxel2mesh_execute(
     runner: Runner | None = None,
 ) -> Voxel2meshOutputs:
     """
+    voxel2mesh
+    
     Generate a surface mesh representation from a voxel image.
     
     This command utilises the Marching Cubes algorithm to generate a polygonal
@@ -304,6 +306,8 @@ def voxel2mesh(
     runner: Runner | None = None,
 ) -> Voxel2meshOutputs:
     """
+    voxel2mesh
+    
     Generate a surface mesh representation from a voxel image.
     
     This command utilises the Marching Cubes algorithm to generate a polygonal

@@ -178,6 +178,8 @@ def volume_rois_from_extrema_execute(
     runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
+    volume-rois-from-extrema
+    
     Create volume roi maps from extrema maps.
     
     For each nonzero value in each map, make a map with an ROI around that
@@ -219,6 +221,8 @@ def volume_rois_from_extrema(
     runner: Runner | None = None,
 ) -> VolumeRoisFromExtremaOutputs:
     """
+    volume-rois-from-extrema
+    
     Create volume roi maps from extrema maps.
     
     For each nonzero value in each map, make a map with an ROI around that

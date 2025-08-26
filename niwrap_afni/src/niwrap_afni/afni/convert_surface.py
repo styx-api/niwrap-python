@@ -200,8 +200,10 @@ def convert_surface_execute(
     runner: Runner | None = None,
 ) -> ConvertSurfaceOutputs:
     """
-    Reads in a surface and writes it out in another format. Only fields pertinent to
-    SUMA are preserved.
+    ConvertSurface
+    
+    Reads in a surface and writes it out in another format. Only fields
+    pertinent to SUMA are preserved.
     
     Author: AFNI Developers
     
@@ -236,8 +238,10 @@ def convert_surface(
     runner: Runner | None = None,
 ) -> ConvertSurfaceOutputs:
     """
-    Reads in a surface and writes it out in another format. Only fields pertinent to
-    SUMA are preserved.
+    ConvertSurface
+    
+    Reads in a surface and writes it out in another format. Only fields
+    pertinent to SUMA are preserved.
     
     Author: AFNI Developers
     

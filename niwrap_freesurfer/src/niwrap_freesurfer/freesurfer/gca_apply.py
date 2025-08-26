@@ -285,6 +285,8 @@ def gca_apply_execute(
     runner: Runner | None = None,
 ) -> GcaApplyOutputs:
     """
+    gca-apply
+    
     Applies a GCA, performing the steps of mri_em_register, mri_ca_normalize,
     mri_ca_register, and mri_ca_label. This script replicates the stages in
     recon-all without overwriting files.
@@ -330,6 +332,8 @@ def gca_apply(
     runner: Runner | None = None,
 ) -> GcaApplyOutputs:
     """
+    gca-apply
+    
     Applies a GCA, performing the steps of mri_em_register, mri_ca_normalize,
     mri_ca_register, and mri_ca_label. This script replicates the stages in
     recon-all without overwriting files.

@@ -133,6 +133,8 @@ def mri_nl_align_binary_execute(
     runner: Runner | None = None,
 ) -> MriNlAlignBinaryOutputs:
     """
+    mri_nl_align_binary
+    
     Non-linear alignment tool for MRI data.
     
     Author: FreeSurfer Developers
@@ -161,6 +163,8 @@ def mri_nl_align_binary(
     runner: Runner | None = None,
 ) -> MriNlAlignBinaryOutputs:
     """
+    mri_nl_align_binary
+    
     Non-linear alignment tool for MRI data.
     
     Author: FreeSurfer Developers

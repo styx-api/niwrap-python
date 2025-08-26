@@ -139,6 +139,8 @@ def tbss_deproject_execute(
     runner: Runner | None = None,
 ) -> TbssDeprojectOutputs:
     """
+    tbss_deproject
+    
     Tool to deproject images from skeleton space to final space.
     
     Author: FMRIB Analysis Group, University of Oxford
@@ -167,6 +169,8 @@ def tbss_deproject(
     runner: Runner | None = None,
 ) -> TbssDeprojectOutputs:
     """
+    tbss_deproject
+    
     Tool to deproject images from skeleton space to final space.
     
     Author: FMRIB Analysis Group, University of Oxford

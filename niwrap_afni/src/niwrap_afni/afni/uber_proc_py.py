@@ -122,6 +122,8 @@ def uber_proc_py_execute(
     runner: Runner | None = None,
 ) -> UberProcPyOutputs:
     """
+    uber_proc.py
+    
     Uber processing tool - work in progress.
     
     Author: AFNI Developers
@@ -148,6 +150,8 @@ def uber_proc_py(
     runner: Runner | None = None,
 ) -> UberProcPyOutputs:
     """
+    uber_proc.py
+    
     Uber processing tool - work in progress.
     
     Author: AFNI Developers

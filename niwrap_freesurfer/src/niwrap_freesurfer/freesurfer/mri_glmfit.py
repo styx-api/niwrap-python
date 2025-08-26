@@ -734,6 +734,8 @@ def mri_glmfit_execute(
     runner: Runner | None = None,
 ) -> MriGlmfitOutputs:
     """
+    mri_glmfit
+    
     Performs general linear model (GLM) analysis in the volume or the surface.
     
     Author: FreeSurfer Developers
@@ -831,6 +833,8 @@ def mri_glmfit(
     runner: Runner | None = None,
 ) -> MriGlmfitOutputs:
     """
+    mri_glmfit
+    
     Performs general linear model (GLM) analysis in the volume or the surface.
     
     Author: FreeSurfer Developers

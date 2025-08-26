@@ -129,6 +129,8 @@ def fix_subject_rh_execute(
     runner: Runner | None = None,
 ) -> FixSubjectRhOutputs:
     """
+    fix_subject-rh
+    
     A tool from FreeSurfer that performs operations on the right hemisphere data
     within a specified directory.
     
@@ -157,6 +159,8 @@ def fix_subject_rh(
     runner: Runner | None = None,
 ) -> FixSubjectRhOutputs:
     """
+    fix_subject-rh
+    
     A tool from FreeSurfer that performs operations on the right hemisphere data
     within a specified directory.
     

@@ -195,6 +195,8 @@ def mri_motion_correct2_execute(
     runner: Runner | None = None,
 ) -> MriMotionCorrect2Outputs:
     """
+    mri_motion_correct2
+    
     Aligns and averages two or more volumes using minctracc for alignment and
     mincresample and mincaverage for resampling.
     
@@ -231,6 +233,8 @@ def mri_motion_correct2(
     runner: Runner | None = None,
 ) -> MriMotionCorrect2Outputs:
     """
+    mri_motion_correct2
+    
     Aligns and averages two or more volumes using minctracc for alignment and
     mincresample and mincaverage for resampling.
     
