@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_SYNTHSTRIP_METADATA = Metadata(
-    id="1bad1037e1505334c7abff4075ad10604d8b54f6.boutiques",
+    id="786e74922d4cfe6035092d084ee0d127f0b4dbd5.boutiques",
     name="mri_synthstrip",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -74,7 +74,7 @@ def mri_synthstrip_params(
     output_image: str | None = None,
     mask: InputPathType | None = None,
     gpu: bool = False,
-    border: float | None = 1,
+    border: float | None = None,
     exclude_csf: bool = False,
     model_weights: InputPathType | None = None,
 ) -> MriSynthstripParameters:
@@ -209,7 +209,7 @@ def mri_synthstrip(
     output_image: str | None = None,
     mask: InputPathType | None = None,
     gpu: bool = False,
-    border: float | None = 1,
+    border: float | None = None,
     exclude_csf: bool = False,
     model_weights: InputPathType | None = None,
     runner: Runner | None = None,

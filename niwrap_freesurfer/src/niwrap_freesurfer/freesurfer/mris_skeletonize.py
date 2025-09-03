@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SKELETONIZE_METADATA = Metadata(
-    id="5fc67afd591602c82c098ab2c9b85ebc7853cabf.boutiques",
+    id="0fd18a4509433802a711a64ec204f40b5554f22b.boutiques",
     name="mris_skeletonize",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -91,7 +91,7 @@ def mris_skeletonize_params(
     sphere: str | None = None,
     pointset: str | None = None,
     label: str | None = None,
-    nbrsize: float | None = 2,
+    nbrsize: float | None = None,
     threshold: float | None = None,
     cluster: float | None = None,
     fwhm: float | None = None,
@@ -290,7 +290,7 @@ def mris_skeletonize(
     sphere: str | None = None,
     pointset: str | None = None,
     label: str | None = None,
-    nbrsize: float | None = 2,
+    nbrsize: float | None = None,
     threshold: float | None = None,
     cluster: float | None = None,
     fwhm: float | None = None,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 OVERLAY_METADATA = Metadata(
-    id="f8a4a8f509893b30940a1ef16cf87c7c0609f62c.boutiques",
+    id="bb3b718f143a2a413a158fc66626ce4772a6ee44.boutiques",
     name="overlay",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -80,7 +80,7 @@ def overlay_params(
     auto_thresh_bg: bool = False,
     full_bg_range: bool = False,
     out_file: str | None = None,
-    out_type: typing.Literal["float", "int"] | None = "float",
+    out_type: typing.Literal["float", "int"] | None = None,
     output_type: typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None = None,
     stat_image2: InputPathType | None = None,
     stat_thresh2: list[float] | None = None,
@@ -227,7 +227,7 @@ def overlay(
     auto_thresh_bg: bool = False,
     full_bg_range: bool = False,
     out_file: str | None = None,
-    out_type: typing.Literal["float", "int"] | None = "float",
+    out_type: typing.Literal["float", "int"] | None = None,
     output_type: typing.Literal["NIFTI", "NIFTI_PAIR", "NIFTI_GZ", "NIFTI_PAIR_GZ"] | None = None,
     stat_image2: InputPathType | None = None,
     stat_thresh2: list[float] | None = None,

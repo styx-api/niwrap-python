@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BEDPOSTX_METADATA = Metadata(
-    id="eca810f81792889cfcc3441cdb63663e91cb695b.boutiques",
+    id="8050f909f3316d53a3c9bea79436c827e90f7502.boutiques",
     name="bedpostx",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -72,12 +72,12 @@ class BedpostxOutputs(typing.NamedTuple):
 
 def bedpostx_params(
     subject_dir: str,
-    num_fibres: float | None = 3,
-    ard_weight: float | None = 1,
-    burnin: float | None = 1000,
-    num_jumps: float | None = 1250,
-    sample_every: float | None = 25,
-    model_type: float | None = 2,
+    num_fibres: float | None = None,
+    ard_weight: float | None = None,
+    burnin: float | None = None,
+    num_jumps: float | None = None,
+    sample_every: float | None = None,
+    model_type: float | None = None,
     grad_nonlinear: bool = False,
 ) -> BedpostxParameters:
     """
@@ -222,12 +222,12 @@ def bedpostx_execute(
 
 def bedpostx(
     subject_dir: str,
-    num_fibres: float | None = 3,
-    ard_weight: float | None = 1,
-    burnin: float | None = 1000,
-    num_jumps: float | None = 1250,
-    sample_every: float | None = 25,
-    model_type: float | None = 2,
+    num_fibres: float | None = None,
+    ard_weight: float | None = None,
+    burnin: float | None = None,
+    num_jumps: float | None = None,
+    sample_every: float | None = None,
+    model_type: float | None = None,
     grad_nonlinear: bool = False,
     runner: Runner | None = None,
 ) -> BedpostxOutputs:

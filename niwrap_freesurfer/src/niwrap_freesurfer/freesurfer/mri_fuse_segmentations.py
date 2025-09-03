@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_FUSE_SEGMENTATIONS_METADATA = Metadata(
-    id="3537b502225e1b3b7decc0bf6c52548a364aee6d.boutiques",
+    id="17d51ec1722bbb23f45895a196b89c8b71d5d1b3.boutiques",
     name="mri_fuse_segmentations",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -74,7 +74,7 @@ def mri_fuse_segmentations_params(
     input_file: InputPathType,
     output_file: str,
     transforms: list[InputPathType] | None = None,
-    sigma: float | None = 3.0,
+    sigma: float | None = None,
 ) -> MriFuseSegmentationsParameters:
     """
     Build parameters.
@@ -205,7 +205,7 @@ def mri_fuse_segmentations(
     input_file: InputPathType,
     output_file: str,
     transforms: list[InputPathType] | None = None,
-    sigma: float | None = 3.0,
+    sigma: float | None = None,
     runner: Runner | None = None,
 ) -> MriFuseSegmentationsOutputs:
     """

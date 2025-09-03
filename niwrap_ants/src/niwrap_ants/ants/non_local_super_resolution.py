@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NON_LOCAL_SUPER_RESOLUTION_METADATA = Metadata(
-    id="51aada9b4dbce0b9d25369841901cb709639d1e3.boutiques",
+    id="03123827e70ea9c3395947e4a4ca9f4d8e7f6c42.boutiques",
     name="NonLocalSuperResolution",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -80,9 +80,9 @@ def non_local_super_resolution_params(
     reference_image: InputPathType | None = None,
     patch_radius: typing.Literal["1", "1x1x1"] | None = None,
     search_radius: typing.Literal["3", "3x3x3"] | None = None,
-    intensity_difference_sigma: float | None = 1.0,
-    patch_similarity_sigma: float | None = 1.0,
-    scale_levels: str | None = "32x16x8x2x1",
+    intensity_difference_sigma: float | None = None,
+    patch_similarity_sigma: float | None = None,
+    scale_levels: str | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
     verbose: typing.Literal[0, 1] | None = None,
 ) -> NonLocalSuperResolutionParameters:
@@ -273,9 +273,9 @@ def non_local_super_resolution(
     reference_image: InputPathType | None = None,
     patch_radius: typing.Literal["1", "1x1x1"] | None = None,
     search_radius: typing.Literal["3", "3x3x3"] | None = None,
-    intensity_difference_sigma: float | None = 1.0,
-    patch_similarity_sigma: float | None = 1.0,
-    scale_levels: str | None = "32x16x8x2x1",
+    intensity_difference_sigma: float | None = None,
+    patch_similarity_sigma: float | None = None,
+    scale_levels: str | None = None,
     interpolation: typing.Literal["Linear", "NearestNeighbor", "Gaussian", "BSpline", "CosineWindowedSinc", "WelchWindowedSinc", "HammingWindowedSinc", "LanczosWindowedSinc"] | None = None,
     verbose: typing.Literal[0, 1] | None = None,
     runner: Runner | None = None,

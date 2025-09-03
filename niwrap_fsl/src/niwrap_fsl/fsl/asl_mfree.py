@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ASL_MFREE_METADATA = Metadata(
-    id="e58261a229054027fd5fa9bba2e27ec983d0c0c7.boutiques",
+    id="0666015dbb2d42391f49d67e6c249f2896efa551.boutiques",
     name="asl_mfree",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -93,13 +93,13 @@ def asl_mfree_params(
     bata: InputPathType | None = None,
     batt: InputPathType | None = None,
     bat: bool = False,
-    bat_grad_thr: float | None = 0.2,
+    bat_grad_thr: float | None = None,
     t1: float | None = None,
     fa: float | None = None,
     std: bool = False,
     nwb: float | None = None,
     turbo_quasar: bool = False,
-    shift_factor: float | None = 1,
+    shift_factor: float | None = None,
     verbose: bool = False,
 ) -> AslMfreeParameters:
     """
@@ -321,13 +321,13 @@ def asl_mfree(
     bata: InputPathType | None = None,
     batt: InputPathType | None = None,
     bat: bool = False,
-    bat_grad_thr: float | None = 0.2,
+    bat_grad_thr: float | None = None,
     t1: float | None = None,
     fa: float | None = None,
     std: bool = False,
     nwb: float | None = None,
     turbo_quasar: bool = False,
-    shift_factor: float | None = 1,
+    shift_factor: float | None = None,
     verbose: bool = False,
     runner: Runner | None = None,
 ) -> AslMfreeOutputs:

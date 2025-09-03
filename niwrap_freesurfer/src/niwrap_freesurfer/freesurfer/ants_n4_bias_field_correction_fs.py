@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_N4_BIAS_FIELD_CORRECTION_FS_METADATA = Metadata(
-    id="fa3c503d811c832b99fa1f69e112206d024886d1.boutiques",
+    id="34bd8726eced3d3149fa743ba7bb319ab5e8bfb5.boutiques",
     name="AntsN4BiasFieldCorrectionFs",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -71,9 +71,9 @@ def ants_n4_bias_field_correction_fs_params(
     input_file: InputPathType,
     output_file: str,
     mask_file: InputPathType | None = None,
-    shrink_factor: int | None = 4,
+    shrink_factor: int | None = None,
     iterations: list[float] | None = None,
-    output_dtype: str | None = "float",
+    output_dtype: str | None = None,
     replace_zeros: str | None = None,
 ) -> AntsN4BiasFieldCorrectionFsParameters:
     """
@@ -218,9 +218,9 @@ def ants_n4_bias_field_correction_fs(
     input_file: InputPathType,
     output_file: str,
     mask_file: InputPathType | None = None,
-    shrink_factor: int | None = 4,
+    shrink_factor: int | None = None,
     iterations: list[float] | None = None,
-    output_dtype: str | None = "float",
+    output_dtype: str | None = None,
     replace_zeros: str | None = None,
     runner: Runner | None = None,
 ) -> AntsN4BiasFieldCorrectionFsOutputs:

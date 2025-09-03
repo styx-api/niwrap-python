@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EDDY_CORRECT_METADATA = Metadata(
-    id="c21f792dc85e3c8b5478bfa95141438203590207.boutiques",
+    id="3bce1979212a01e586ad3468dc2d04a7b55e2871.boutiques",
     name="eddy_correct",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -68,7 +68,7 @@ def eddy_correct_params(
     v_4d_input: InputPathType,
     v_4d_output: str,
     reference_no: int,
-    interp_method: typing.Literal["trilinear", "spline"] | None = "trilinear",
+    interp_method: typing.Literal["trilinear", "spline"] | None = None,
 ) -> EddyCorrectParameters:
     """
     Build parameters.
@@ -166,7 +166,7 @@ def eddy_correct(
     v_4d_input: InputPathType,
     v_4d_output: str,
     reference_no: int,
-    interp_method: typing.Literal["trilinear", "spline"] | None = "trilinear",
+    interp_method: typing.Literal["trilinear", "spline"] | None = None,
     runner: Runner | None = None,
 ) -> EddyCorrectOutputs:
     """

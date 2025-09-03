@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXTRACTTXT_METADATA = Metadata(
-    id="4a3bed1da6981adbde061512034e1d96efc6c5c8.boutiques",
+    id="e850a5e0d69d533ab87c46e7a7929106d6071cba.boutiques",
     name="extracttxt",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -67,8 +67,8 @@ class ExtracttxtOutputs(typing.NamedTuple):
 def extracttxt_params(
     search_word: str,
     file: InputPathType,
-    num_trailing_lines: float | None = 0,
-    relative_start: float | None = 0,
+    num_trailing_lines: float | None = None,
+    relative_start: float | None = None,
 ) -> ExtracttxtParameters:
     """
     Build parameters.
@@ -169,8 +169,8 @@ def extracttxt_execute(
 def extracttxt(
     search_word: str,
     file: InputPathType,
-    num_trailing_lines: float | None = 0,
-    relative_start: float | None = 0,
+    num_trailing_lines: float | None = None,
+    relative_start: float | None = None,
     runner: Runner | None = None,
 ) -> ExtracttxtOutputs:
     """

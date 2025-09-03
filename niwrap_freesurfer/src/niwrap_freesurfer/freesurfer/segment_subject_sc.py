@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_SUBJECT_SC_METADATA = Metadata(
-    id="af3f234535976de2949cc6612aaedde219cc1d8b.boutiques",
+    id="8eadb66cf2a9aa5f76642c43c914cc19fc7245b2.boutiques",
     name="segment_subject_sc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -67,7 +67,7 @@ class SegmentSubjectScOutputs(typing.NamedTuple):
 def segment_subject_sc_params(
     invol: InputPathType,
     outxfm: InputPathType,
-    log: str | None = "outdir/talarach.log",
+    log: str | None = None,
     debug: bool = False,
 ) -> SegmentSubjectScParameters:
     """
@@ -177,7 +177,7 @@ def segment_subject_sc_execute(
 def segment_subject_sc(
     invol: InputPathType,
     outxfm: InputPathType,
-    log: str | None = "outdir/talarach.log",
+    log: str | None = None,
     debug: bool = False,
     runner: Runner | None = None,
 ) -> SegmentSubjectScOutputs:

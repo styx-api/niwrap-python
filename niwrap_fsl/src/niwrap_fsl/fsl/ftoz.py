@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FTOZ_METADATA = Metadata(
-    id="02b653d1b97e955d8addcef181e7d486deb64fab.boutiques",
+    id="e4a1cf140a1f114c3574d07e7a280df5a631d9e2.boutiques",
     name="ftoz",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -69,7 +69,7 @@ def ftoz_params(
     input_file: InputPathType,
     dof1: float,
     dof2: float,
-    output_file: str | None = "zstats",
+    output_file: str | None = None,
     help_flag: bool = False,
 ) -> FtozParameters:
     """
@@ -176,7 +176,7 @@ def ftoz(
     input_file: InputPathType,
     dof1: float,
     dof2: float,
-    output_file: str | None = "zstats",
+    output_file: str | None = None,
     help_flag: bool = False,
     runner: Runner | None = None,
 ) -> FtozOutputs:

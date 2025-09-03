@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VERTEXVOL_METADATA = Metadata(
-    id="aedf6bfbc68d398b67ba8bf52f969278f2f9468d.boutiques",
+    id="898fd4926cfe3b5a863ffabd2c7c51dd3a39db87.boutiques",
     name="vertexvol",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -70,7 +70,7 @@ def vertexvol_params(
     subject: str,
     left_hemisphere: bool = False,
     right_hemisphere: bool = False,
-    output_file: str | None = "?h.volume",
+    output_file: str | None = None,
     use_th3: bool = False,
     no_th3: bool = False,
 ) -> VertexvolParameters:
@@ -187,7 +187,7 @@ def vertexvol(
     subject: str,
     left_hemisphere: bool = False,
     right_hemisphere: bool = False,
-    output_file: str | None = "?h.volume",
+    output_file: str | None = None,
     use_th3: bool = False,
     no_th3: bool = False,
     runner: Runner | None = None,

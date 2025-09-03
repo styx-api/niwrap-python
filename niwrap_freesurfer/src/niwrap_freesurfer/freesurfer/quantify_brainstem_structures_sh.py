@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 QUANTIFY_BRAINSTEM_STRUCTURES_SH_METADATA = Metadata(
-    id="458a2cce6618958955b2061c46dc04c83d13a6a3.boutiques",
+    id="8f988b03c631b10672069219edb78fdf16d29e26.boutiques",
     name="quantifyBrainstemStructures.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -64,7 +64,7 @@ class QuantifyBrainstemStructuresShOutputs(typing.NamedTuple):
 
 def quantify_brainstem_structures_sh_params(
     output_file: str,
-    subjects_directory: str | None = "/usr/local/freesurfer/subjects",
+    subjects_directory: str | None = None,
 ) -> QuantifyBrainstemStructuresShParameters:
     """
     Build parameters.
@@ -158,7 +158,7 @@ def quantify_brainstem_structures_sh_execute(
 
 def quantify_brainstem_structures_sh(
     output_file: str,
-    subjects_directory: str | None = "/usr/local/freesurfer/subjects",
+    subjects_directory: str | None = None,
     runner: Runner | None = None,
 ) -> QuantifyBrainstemStructuresShOutputs:
     """

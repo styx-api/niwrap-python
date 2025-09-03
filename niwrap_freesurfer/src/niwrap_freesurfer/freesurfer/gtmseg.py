@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GTMSEG_METADATA = Metadata(
-    id="4ab9659e70272d979f39dad258eeff58c22157fc.boutiques",
+    id="34bcd199df253fe6cc5514cfec9099e8eb5257ca.boutiques",
     name="gtmseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -82,14 +82,14 @@ class GtmsegOutputs(typing.NamedTuple):
 
 def gtmseg_params(
     subject: str,
-    outvol: str | None = "gtmseg.mgz",
-    usf: float | None = 2,
+    outvol: str | None = None,
+    usf: float | None = None,
     subsegwm: bool = False,
     keep_hypo: bool = False,
     keep_cc: bool = False,
-    dmax: float | None = 5,
-    ctx_annot: str | None = "aparc 1000 2000",
-    wm_annot: str | None = "lobes 3200 4200",
+    dmax: float | None = None,
+    ctx_annot: str | None = None,
+    wm_annot: str | None = None,
     output_usf: float | None = None,
     head: str | None = None,
     subseg_cbwm: bool = False,
@@ -291,14 +291,14 @@ def gtmseg_execute(
 
 def gtmseg(
     subject: str,
-    outvol: str | None = "gtmseg.mgz",
-    usf: float | None = 2,
+    outvol: str | None = None,
+    usf: float | None = None,
     subsegwm: bool = False,
     keep_hypo: bool = False,
     keep_cc: bool = False,
-    dmax: float | None = 5,
-    ctx_annot: str | None = "aparc 1000 2000",
-    wm_annot: str | None = "lobes 3200 4200",
+    dmax: float | None = None,
+    ctx_annot: str | None = None,
+    wm_annot: str | None = None,
     output_usf: float | None = None,
     head: str | None = None,
     subseg_cbwm: bool = False,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SWAP_VOXELWISE_METADATA = Metadata(
-    id="6827958c36fce8a19a4ec91e70b4ccc147045d14.boutiques",
+    id="c84b215ba3d1a90ea860815c60f00b8df7204c6f.boutiques",
     name="swap_voxelwise",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -72,10 +72,10 @@ def swap_voxelwise_params(
     vectors_file_list: InputPathType,
     mask: InputPathType,
     scalars_file_list: InputPathType | None = None,
-    output_base_name: str | None = "reordered",
-    reorder_mode: str | None = "voxels",
+    output_base_name: str | None = None,
+    reorder_mode: str | None = None,
     init_mask: InputPathType | None = None,
-    crossing_thresh: float | None = 0.1,
+    crossing_thresh: float | None = None,
     verbose_flag: bool = False,
 ) -> SwapVoxelwiseParameters:
     """
@@ -219,10 +219,10 @@ def swap_voxelwise(
     vectors_file_list: InputPathType,
     mask: InputPathType,
     scalars_file_list: InputPathType | None = None,
-    output_base_name: str | None = "reordered",
-    reorder_mode: str | None = "voxels",
+    output_base_name: str | None = None,
+    reorder_mode: str | None = None,
     init_mask: InputPathType | None = None,
-    crossing_thresh: float | None = 0.1,
+    crossing_thresh: float | None = None,
     verbose_flag: bool = False,
     runner: Runner | None = None,
 ) -> SwapVoxelwiseOutputs:

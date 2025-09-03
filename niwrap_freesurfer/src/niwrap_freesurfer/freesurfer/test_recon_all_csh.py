@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TEST_RECON_ALL_CSH_METADATA = Metadata(
-    id="ad546a46131f123c3acbd5d9a9ec493899bfd06e.boutiques",
+    id="51bff24a8ca6e0b6faa3299c7866e98bdf74ea12.boutiques",
     name="test_recon-all.csh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -83,11 +83,11 @@ class TestReconAllCshOutputs(typing.NamedTuple):
 
 
 def test_recon_all_csh_params(
-    reference_subj_source_dir: str | None = "/space/freesurfer/subjects/test/weekly_test/subjects/x86_64",
-    reference_subjid: str | None = "bert",
-    test_subject_dest_dir: str | None = "/tmp",
-    test_subjid: str | None = "bert",
-    freesurfer_home: str | None = "/usr/local/freesurfer/stable",
+    reference_subj_source_dir: str | None = None,
+    reference_subjid: str | None = None,
+    test_subject_dest_dir: str | None = None,
+    test_subjid: str | None = None,
+    freesurfer_home: str | None = None,
     norecon: bool = False,
 ) -> TestReconAllCshParameters:
     """
@@ -222,11 +222,11 @@ def test_recon_all_csh_execute(
 
 
 def test_recon_all_csh(
-    reference_subj_source_dir: str | None = "/space/freesurfer/subjects/test/weekly_test/subjects/x86_64",
-    reference_subjid: str | None = "bert",
-    test_subject_dest_dir: str | None = "/tmp",
-    test_subjid: str | None = "bert",
-    freesurfer_home: str | None = "/usr/local/freesurfer/stable",
+    reference_subj_source_dir: str | None = None,
+    reference_subjid: str | None = None,
+    test_subject_dest_dir: str | None = None,
+    test_subjid: str | None = None,
+    freesurfer_home: str | None = None,
     norecon: bool = False,
     runner: Runner | None = None,
 ) -> TestReconAllCshOutputs:

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SPHERE_SUBJECT_METADATA = Metadata(
-    id="e4907d9aa35e3f0d55ae261149fe778f0b917dfd.boutiques",
+    id="dd5e67306f283a2927121bcaa1f0c596e772e11a.boutiques",
     name="sphere_subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -66,7 +66,7 @@ class SphereSubjectOutputs(typing.NamedTuple):
 def sphere_subject_params(
     input_dir: str,
     output_file: str,
-    license_file: str | None = "/usr/local/freesurfer/.license",
+    license_file: str | None = None,
 ) -> SphereSubjectParameters:
     """
     Build parameters.
@@ -161,7 +161,7 @@ def sphere_subject_execute(
 def sphere_subject(
     input_dir: str,
     output_file: str,
-    license_file: str | None = "/usr/local/freesurfer/.license",
+    license_file: str | None = None,
     runner: Runner | None = None,
 ) -> SphereSubjectOutputs:
     """

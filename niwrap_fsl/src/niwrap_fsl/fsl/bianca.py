@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BIANCA_METADATA = Metadata(
-    id="bd25ce511d9d69f31a55e55684d0e515a15b3996.boutiques",
+    id="6b620869b49a5b3966a68eca23151e3aa2f93b06.boutiques",
     name="bianca",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -85,16 +85,16 @@ def bianca_params(
     training_nums: str | None = None,
     feature_subset: str | None = None,
     mat_feature_num: float | None = None,
-    spatial_weight: float | None = 1,
+    spatial_weight: float | None = None,
     patch_sizes: str | None = None,
     patch_3d: bool = False,
-    select_pts: str | None = "any",
+    select_pts: str | None = None,
     training_pts: str | None = None,
     non_les_pts: str | None = None,
     load_classifier_data: str | None = None,
     save_classifier_data: str | None = None,
     verbose_flag: bool = False,
-    out_name: str | None = "output_bianca",
+    out_name: str | None = None,
 ) -> BiancaParameters:
     """
     Build parameters.
@@ -274,16 +274,16 @@ def bianca(
     training_nums: str | None = None,
     feature_subset: str | None = None,
     mat_feature_num: float | None = None,
-    spatial_weight: float | None = 1,
+    spatial_weight: float | None = None,
     patch_sizes: str | None = None,
     patch_3d: bool = False,
-    select_pts: str | None = "any",
+    select_pts: str | None = None,
     training_pts: str | None = None,
     non_les_pts: str | None = None,
     load_classifier_data: str | None = None,
     save_classifier_data: str | None = None,
     verbose_flag: bool = False,
-    out_name: str | None = "output_bianca",
+    out_name: str | None = None,
     runner: Runner | None = None,
 ) -> BiancaOutputs:
     """

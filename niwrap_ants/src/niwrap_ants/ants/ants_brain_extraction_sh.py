@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_BRAIN_EXTRACTION_SH_METADATA = Metadata(
-    id="acef12aad7368f10e5b7b7798f7a9e605c5cbd67.boutiques",
+    id="b485303e7e4d99346f604386fa84b160ec8992d4.boutiques",
     name="antsBrainExtraction.sh",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -94,7 +94,7 @@ def ants_brain_extraction_sh_params(
     translation_search_params: str | None = None,
     random_seeding: bool = False,
     debug_mode: bool = False,
-    output_prefix: str | None = "output",
+    output_prefix: str | None = None,
 ) -> AntsBrainExtractionShParameters:
     """
     Build parameters.
@@ -288,7 +288,7 @@ def ants_brain_extraction_sh(
     translation_search_params: str | None = None,
     random_seeding: bool = False,
     debug_mode: bool = False,
-    output_prefix: str | None = "output",
+    output_prefix: str | None = None,
     runner: Runner | None = None,
 ) -> AntsBrainExtractionShOutputs:
     """

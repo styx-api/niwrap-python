@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_FUNC2SPH_METADATA = Metadata(
-    id="07527586a882465863cf7ef1f979d3d044731e6d.boutiques",
+    id="9ad3959f847155588037bf3200d979dd697a7f37.boutiques",
     name="mri-func2sph",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -70,8 +70,8 @@ def mri_func2sph_params(
     outstem: str,
     hemisphere: typing.Literal["lh", "rh"],
     fvitdir: str,
-    hole_filling_iters: float | None = 100,
-    icosahedron_size: float | None = 10242,
+    hole_filling_iters: float | None = None,
+    icosahedron_size: float | None = None,
     input_type: str | None = None,
     umask: str | None = None,
 ) -> MriFunc2sphParameters:
@@ -214,8 +214,8 @@ def mri_func2sph(
     outstem: str,
     hemisphere: typing.Literal["lh", "rh"],
     fvitdir: str,
-    hole_filling_iters: float | None = 100,
-    icosahedron_size: float | None = 10242,
+    hole_filling_iters: float | None = None,
+    icosahedron_size: float | None = None,
     input_type: str | None = None,
     umask: str | None = None,
     runner: Runner | None = None,

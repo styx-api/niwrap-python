@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_ENTROPY_METADATA = Metadata(
-    id="d0ec05255b1b8c8b390b137853362c1447b2a789.boutiques",
+    id="5cafa16187d7cec07d44096ca5032b4f4b4ddbb6.boutiques",
     name="mris_entropy",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -71,7 +71,7 @@ def mris_entropy_params(
     hemi: str,
     wfile: InputPathType,
     curvfile: InputPathType,
-    average_iterations: float | None = 0,
+    average_iterations: float | None = None,
     normalize: bool = False,
 ) -> MrisEntropyParameters:
     """
@@ -183,7 +183,7 @@ def mris_entropy(
     hemi: str,
     wfile: InputPathType,
     curvfile: InputPathType,
-    average_iterations: float | None = 0,
+    average_iterations: float | None = None,
     normalize: bool = False,
     runner: Runner | None = None,
 ) -> MrisEntropyOutputs:

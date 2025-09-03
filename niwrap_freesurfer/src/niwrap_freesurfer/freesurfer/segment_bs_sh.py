@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SEGMENT_BS_SH_METADATA = Metadata(
-    id="ea5de6d87d6861bdf790a471d88443f6b20986d7.boutiques",
+    id="797f0a897e125245194e3910c9310190662644ee.boutiques",
     name="segmentBS.sh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -59,7 +59,7 @@ class SegmentBsShOutputs(typing.NamedTuple):
 
 
 def segment_bs_sh_params(
-    matlab_runtime: str | None = "/usr/local/freesurfer/MCRv97",
+    matlab_runtime: str | None = None,
 ) -> SegmentBsShParameters:
     """
     Build parameters.
@@ -146,7 +146,7 @@ def segment_bs_sh_execute(
 
 
 def segment_bs_sh(
-    matlab_runtime: str | None = "/usr/local/freesurfer/MCRv97",
+    matlab_runtime: str | None = None,
     runner: Runner | None = None,
 ) -> SegmentBsShOutputs:
     """

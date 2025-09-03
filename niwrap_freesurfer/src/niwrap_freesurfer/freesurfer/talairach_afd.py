@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TALAIRACH_AFD_METADATA = Metadata(
-    id="77c3251247380212cdbe7973621a64bff1fd5736.boutiques",
+    id="c212fee328b550929bd0ddd93fe736d0f0ccddac.boutiques",
     name="talairach_afd",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -65,7 +65,7 @@ class TalairachAfdOutputs(typing.NamedTuple):
 def talairach_afd_params(
     subject_name: str | None = None,
     xfm_file: InputPathType | None = None,
-    p_value_threshold: float | None = 0.01,
+    p_value_threshold: float | None = None,
     afd_directory: str | None = None,
     verbose: bool = False,
 ) -> TalairachAfdParameters:
@@ -187,7 +187,7 @@ def talairach_afd_execute(
 def talairach_afd(
     subject_name: str | None = None,
     xfm_file: InputPathType | None = None,
-    p_value_threshold: float | None = 0.01,
+    p_value_threshold: float | None = None,
     afd_directory: str | None = None,
     verbose: bool = False,
     runner: Runner | None = None,

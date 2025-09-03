@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FAST_METADATA = Metadata(
-    id="2263cc2ed42fac42344f5ff5029ee27588a77584.boutiques",
+    id="84a959c5904afcf247138370a7cc84e15d4e5dd8.boutiques",
     name="fast",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -104,7 +104,7 @@ def fast_params(
     output_biascorrected: bool = False,
     no_bias: bool = False,
     channels: int | None = None,
-    out_basename: str | None = "fast_out",
+    out_basename: str | None = None,
     use_priors: bool = False,
     no_pve: bool = False,
     segment_iters: int | None = None,
@@ -368,7 +368,7 @@ def fast(
     output_biascorrected: bool = False,
     no_bias: bool = False,
     channels: int | None = None,
-    out_basename: str | None = "fast_out",
+    out_basename: str | None = None,
     use_priors: bool = False,
     no_pve: bool = False,
     segment_iters: int | None = None,

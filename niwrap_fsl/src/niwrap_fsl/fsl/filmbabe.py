@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FILMBABE_METADATA = Metadata(
-    id="99ed3b3c098c18b899137d170388e99e2fbc4432.boutiques",
+    id="784460545f9291967864fc7df2bca6649c1b1fe6.boutiques",
     name="filmbabe",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -117,13 +117,13 @@ def filmbabe_params(
     log_dir: str | None = None,
     log_dir_alias_1: str | None = None,
     log_dir_alias_2: str | None = None,
-    num_iterations: int | None = 5,
-    temporal_ar_mrf_prec: float | None = -1,
-    temporal_ar_mrf_prec_alias: float | None = -1,
+    num_iterations: int | None = None,
+    temporal_ar_mrf_prec: float | None = None,
+    temporal_ar_mrf_prec_alias: float | None = None,
     temporal_ar_flag: bool = False,
-    num_trace_samples: int | None = 0,
-    num_trace_samples_alias: int | None = 0,
-    temporal_ar_order: int | None = 3,
+    num_trace_samples: int | None = None,
+    num_trace_samples_alias: int | None = None,
+    temporal_ar_order: int | None = None,
 ) -> FilmbabeParameters:
     """
     Build parameters.
@@ -453,13 +453,13 @@ def filmbabe(
     log_dir: str | None = None,
     log_dir_alias_1: str | None = None,
     log_dir_alias_2: str | None = None,
-    num_iterations: int | None = 5,
-    temporal_ar_mrf_prec: float | None = -1,
-    temporal_ar_mrf_prec_alias: float | None = -1,
+    num_iterations: int | None = None,
+    temporal_ar_mrf_prec: float | None = None,
+    temporal_ar_mrf_prec_alias: float | None = None,
     temporal_ar_flag: bool = False,
-    num_trace_samples: int | None = 0,
-    num_trace_samples_alias: int | None = 0,
-    temporal_ar_order: int | None = 3,
+    num_trace_samples: int | None = None,
+    num_trace_samples_alias: int | None = None,
+    temporal_ar_order: int | None = None,
     runner: Runner | None = None,
 ) -> FilmbabeOutputs:
     """

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_REGFILT_METADATA = Metadata(
-    id="da84cf4eed8400abe4e5249776122aacd3bd8e63.boutiques",
+    id="20a1afacec4c7884747e4f8494d0032f4ce51173.boutiques",
     name="fsl_regfilt",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -92,8 +92,8 @@ def fsl_regfilt_params(
     freq_filter_flag: bool = False,
     freq_ic_flag: bool = False,
     freq_ic_smooth: float | None = None,
-    fthresh: float | None = 0.15,
-    fthresh2: float | None = 0.02,
+    fthresh: float | None = None,
+    fthresh2: float | None = None,
     vn_flag: bool = False,
     verbose_flag: bool = False,
     aggressive_flag: bool = False,
@@ -306,8 +306,8 @@ def fsl_regfilt(
     freq_filter_flag: bool = False,
     freq_ic_flag: bool = False,
     freq_ic_smooth: float | None = None,
-    fthresh: float | None = 0.15,
-    fthresh2: float | None = 0.02,
+    fthresh: float | None = None,
+    fthresh2: float | None = None,
     vn_flag: bool = False,
     verbose_flag: bool = False,
     aggressive_flag: bool = False,

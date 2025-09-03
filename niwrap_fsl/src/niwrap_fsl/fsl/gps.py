@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GPS_METADATA = Metadata(
-    id="9f8526f271cdea71eb6af79b924c2a66cba77b2a.boutiques",
+    id="bbbc7a8984f462f111c2f4bb171c39c911950aeb.boutiques",
     name="gps",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -71,7 +71,7 @@ class GpsOutputs(typing.NamedTuple):
 def gps_params(
     ndir: float,
     optws: bool = False,
-    output: str | None = "bvecs#.txt",
+    output: str | None = None,
     ranseed: float | None = None,
     init: InputPathType | None = None,
     report: bool = False,
@@ -207,7 +207,7 @@ def gps_execute(
 def gps(
     ndir: float,
     optws: bool = False,
-    output: str | None = "bvecs#.txt",
+    output: str | None = None,
     ranseed: float | None = None,
     init: InputPathType | None = None,
     report: bool = False,

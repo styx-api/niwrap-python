@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SMOOTH_DISPLACEMENT_FIELD_METADATA = Metadata(
-    id="7b2437454393f060b65a9e4b3b1f97abf404bcc0.boutiques",
+    id="9720ba2fb6e8073a4e5a9081a747582f3894d2ce.boutiques",
     name="SmoothDisplacementField",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -76,9 +76,9 @@ def smooth_displacement_field_params(
     input_field: InputPathType,
     output_field: str,
     variance_or_mesh_size_base_level: float,
-    number_of_levels: int | None = 1,
-    spline_order: int | None = 3,
-    estimate_inverse: typing.Literal[0, 1] | None = 0,
+    number_of_levels: int | None = None,
+    spline_order: int | None = None,
+    estimate_inverse: typing.Literal[0, 1] | None = None,
     confidence_image: InputPathType | None = None,
 ) -> SmoothDisplacementFieldParameters:
     """
@@ -203,9 +203,9 @@ def smooth_displacement_field(
     input_field: InputPathType,
     output_field: str,
     variance_or_mesh_size_base_level: float,
-    number_of_levels: int | None = 1,
-    spline_order: int | None = 3,
-    estimate_inverse: typing.Literal[0, 1] | None = 0,
+    number_of_levels: int | None = None,
+    spline_order: int | None = None,
+    estimate_inverse: typing.Literal[0, 1] | None = None,
     confidence_image: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> SmoothDisplacementFieldOutputs:

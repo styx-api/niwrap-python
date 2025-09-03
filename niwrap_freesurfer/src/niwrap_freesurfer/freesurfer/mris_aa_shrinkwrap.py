@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_AA_SHRINKWRAP_METADATA = Metadata(
-    id="f1b620c2d26413faf9fc31bd238562722d3919d1.boutiques",
+    id="2d63c7ccecc84866bb484eb66274bebf2817ce3d.boutiques",
     name="mris_AA_shrinkwrap",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -70,7 +70,7 @@ def mris_aa_shrinkwrap_params(
     output_dir: str,
     omit_self_intersection: bool = False,
     create_curvature_area: bool = False,
-    average_curvature: float | None = 10,
+    average_curvature: float | None = None,
     white_only: bool = False,
 ) -> MrisAaShrinkwrapParameters:
     """
@@ -192,7 +192,7 @@ def mris_aa_shrinkwrap(
     output_dir: str,
     omit_self_intersection: bool = False,
     create_curvature_area: bool = False,
-    average_curvature: float | None = 10,
+    average_curvature: float | None = None,
     white_only: bool = False,
     runner: Runner | None = None,
 ) -> MrisAaShrinkwrapOutputs:

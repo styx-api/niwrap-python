@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SMOOTH_INTRACORTICAL_METADATA = Metadata(
-    id="40a15a33b82c63e11e7ab868f6bbf4b236de01b3.boutiques",
+    id="16c978d0be4edfbf1259b9d1d78597ac7ee81f24.boutiques",
     name="mris_smooth_intracortical",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -75,7 +75,7 @@ def mris_smooth_intracortical_params(
     surf_name: str,
     overlay_dir: str,
     overlay_name: str,
-    output_dir: str | None = "[OVERLAY_DIR]",
+    output_dir: str | None = None,
     output_name: str | None = None,
     tan_size: int | None = None,
     rad_size: float | None = None,
@@ -245,7 +245,7 @@ def mris_smooth_intracortical(
     surf_name: str,
     overlay_dir: str,
     overlay_name: str,
-    output_dir: str | None = "[OVERLAY_DIR]",
+    output_dir: str | None = None,
     output_name: str | None = None,
     tan_size: int | None = None,
     rad_size: float | None = None,

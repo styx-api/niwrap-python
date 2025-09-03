@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONVERT_SCALAR_IMAGE_TO_RGB_METADATA = Metadata(
-    id="9ca4a7950c397eac7a9318ce90e2920bf4776ea6.boutiques",
+    id="3d2bbf73fe4824b5d14e6ad1dad04dc288964f49.boutiques",
     name="ConvertScalarImageToRGB",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -80,8 +80,8 @@ def convert_scalar_image_to_rgb_params(
     custom_colormap_file: InputPathType | None = None,
     minimum_input: float | None = None,
     maximum_input: float | None = None,
-    minimum_rgb_output: int | None = 0,
-    maximum_rgb_output: int | None = 255,
+    minimum_rgb_output: int | None = None,
+    maximum_rgb_output: int | None = None,
     vtk_lookup_table: str | None = None,
 ) -> ConvertScalarImageToRgbParameters:
     """
@@ -222,8 +222,8 @@ def convert_scalar_image_to_rgb(
     custom_colormap_file: InputPathType | None = None,
     minimum_input: float | None = None,
     maximum_input: float | None = None,
-    minimum_rgb_output: int | None = 0,
-    maximum_rgb_output: int | None = 255,
+    minimum_rgb_output: int | None = None,
+    maximum_rgb_output: int | None = None,
     vtk_lookup_table: str | None = None,
     runner: Runner | None = None,
 ) -> ConvertScalarImageToRgbOutputs:

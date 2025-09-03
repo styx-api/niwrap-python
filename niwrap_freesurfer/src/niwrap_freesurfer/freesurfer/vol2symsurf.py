@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VOL2SYMSURF_METADATA = Metadata(
-    id="f7fafa95d03d4b203414d428de80f8e3b613706f.boutiques",
+    id="47622a295d51e596078a4f70c2397878b0afcc25.boutiques",
     name="vol2symsurf",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -78,9 +78,9 @@ def vol2symsurf_params(
     registration_file: InputPathType,
     input_volume: InputPathType,
     fwhm: float,
-    output_stem: str | None = "instem.fsaverage_sym.smFWHM.lh.hemi",
+    output_stem: str | None = None,
     regheader: str | None = None,
-    projection_fraction: float | None = 0.5,
+    projection_fraction: float | None = None,
     no_diff: bool = False,
     laterality_index: bool = False,
 ) -> Vol2symsurfParameters:
@@ -221,9 +221,9 @@ def vol2symsurf(
     registration_file: InputPathType,
     input_volume: InputPathType,
     fwhm: float,
-    output_stem: str | None = "instem.fsaverage_sym.smFWHM.lh.hemi",
+    output_stem: str | None = None,
     regheader: str | None = None,
-    projection_fraction: float | None = 0.5,
+    projection_fraction: float | None = None,
     no_diff: bool = False,
     laterality_index: bool = False,
     runner: Runner | None = None,

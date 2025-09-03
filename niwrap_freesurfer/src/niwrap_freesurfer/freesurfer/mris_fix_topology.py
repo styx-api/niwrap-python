@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_FIX_TOPOLOGY_METADATA = Metadata(
-    id="64e2b9290f868ea668dfb0ff3a646a7a893619d6.boutiques",
+    id="58396fd034689811ad745779f8b894fb029d9f32.boutiques",
     name="mris_fix_topology",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -86,11 +86,11 @@ class MrisFixTopologyOutputs(typing.NamedTuple):
 def mris_fix_topology_params(
     subject_name: str,
     hemisphere: str,
-    orig_name: str | None = "orig.nofix",
-    sphere_name: str | None = "qsphere.nofix",
-    inflated_name: str | None = "inflated.nofix",
-    output_name: str | None = "orig",
-    defect_base_name: str | None = "defect",
+    orig_name: str | None = None,
+    sphere_name: str | None = None,
+    inflated_name: str | None = None,
+    output_name: str | None = None,
+    defect_base_name: str | None = None,
     write_fixed_inflated: bool = False,
     verbose: bool = False,
     verbose_low: bool = False,
@@ -343,11 +343,11 @@ def mris_fix_topology_execute(
 def mris_fix_topology(
     subject_name: str,
     hemisphere: str,
-    orig_name: str | None = "orig.nofix",
-    sphere_name: str | None = "qsphere.nofix",
-    inflated_name: str | None = "inflated.nofix",
-    output_name: str | None = "orig",
-    defect_base_name: str | None = "defect",
+    orig_name: str | None = None,
+    sphere_name: str | None = None,
+    inflated_name: str | None = None,
+    output_name: str | None = None,
+    defect_base_name: str | None = None,
     write_fixed_inflated: bool = False,
     verbose: bool = False,
     verbose_low: bool = False,

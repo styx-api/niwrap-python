@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLSPLIT_METADATA = Metadata(
-    id="c48f95130d8857206de79580e9c403ce5fb5de9e.boutiques",
+    id="ea47e05e977387a783e990494eca560af6328a97.boutiques",
     name="fslsplit",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -68,7 +68,7 @@ class FslsplitOutputs(typing.NamedTuple):
 
 def fslsplit_params(
     infile: InputPathType,
-    output_basename: str | None = "vol",
+    output_basename: str | None = None,
     separation_x: bool = False,
     separation_y: bool = False,
     separation_z: bool = False,
@@ -179,7 +179,7 @@ def fslsplit_execute(
 
 def fslsplit(
     infile: InputPathType,
-    output_basename: str | None = "vol",
+    output_basename: str | None = None,
     separation_x: bool = False,
     separation_y: bool = False,
     separation_z: bool = False,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_EXVIVO_SURFACES_METADATA = Metadata(
-    id="9aa1e71a4ba662f9bb2d5e13ebea8be3ca4a2485.boutiques",
+    id="7a7dc9f85f5cce89c13a4dbb4546d5a342d1b381.boutiques",
     name="mris_exvivo_surfaces",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -78,7 +78,7 @@ def mris_exvivo_surfaces_params(
     hemisphere: str,
     omit_self_intersection: bool = False,
     create_curvature_area: bool = False,
-    average_curvature: float | None = 10,
+    average_curvature: float | None = None,
     white_only: bool = False,
     formalin: int | None = None,
 ) -> MrisExvivoSurfacesParameters:
@@ -208,7 +208,7 @@ def mris_exvivo_surfaces(
     hemisphere: str,
     omit_self_intersection: bool = False,
     create_curvature_area: bool = False,
-    average_curvature: float | None = 10,
+    average_curvature: float | None = None,
     white_only: bool = False,
     formalin: int | None = None,
     runner: Runner | None = None,

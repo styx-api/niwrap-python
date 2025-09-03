@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REGISTER_ELDERLY_SUBJECT_METADATA = Metadata(
-    id="ebf037d2f39aaad6e9c947d1c24046e604ed947c.boutiques",
+    id="ad2233c9edd8af3027885768891cdc212574829a.boutiques",
     name="register_elderly_subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -74,7 +74,7 @@ def register_elderly_subject_params(
     input_volume: InputPathType,
     gca_file: InputPathType,
     transform_file: InputPathType,
-    sampling_percentage: float | None = 0.5,
+    sampling_percentage: float | None = None,
 ) -> RegisterElderlySubjectParameters:
     """
     Build parameters.
@@ -193,7 +193,7 @@ def register_elderly_subject(
     input_volume: InputPathType,
     gca_file: InputPathType,
     transform_file: InputPathType,
-    sampling_percentage: float | None = 0.5,
+    sampling_percentage: float | None = None,
     runner: Runner | None = None,
 ) -> RegisterElderlySubjectOutputs:
     """

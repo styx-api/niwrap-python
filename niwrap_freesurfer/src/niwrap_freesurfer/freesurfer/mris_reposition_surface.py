@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_REPOSITION_SURFACE_METADATA = Metadata(
-    id="0c77cbb7786fb79ce602e33afe3529727da1fb02.boutiques",
+    id="322c546bf7c7ff666a99b73686d12c7700055eb0.boutiques",
     name="mris_reposition_surface",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -72,9 +72,9 @@ def mris_reposition_surface_params(
     volume: InputPathType,
     points: InputPathType,
     output: str,
-    size: float | None = 1,
-    sigma: float | None = 2.0,
-    iterations: float | None = 1,
+    size: float | None = None,
+    sigma: float | None = None,
+    iterations: float | None = None,
 ) -> MrisRepositionSurfaceParameters:
     """
     Build parameters.
@@ -208,9 +208,9 @@ def mris_reposition_surface(
     volume: InputPathType,
     points: InputPathType,
     output: str,
-    size: float | None = 1,
-    sigma: float | None = 2.0,
-    iterations: float | None = 1,
+    size: float | None = None,
+    sigma: float | None = None,
+    iterations: float | None = None,
     runner: Runner | None = None,
 ) -> MrisRepositionSurfaceOutputs:
     """

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 REREGISTER_SUBJECT_MIXED_METADATA = Metadata(
-    id="ca61724bb570a3556d0152f9f5aef400e41c3b8d.boutiques",
+    id="ca973f45523bf27f4c44624fb53b3730bbd3a5b2.boutiques",
     name="reregister_subject_mixed",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -70,7 +70,7 @@ class ReregisterSubjectMixedOutputs(typing.NamedTuple):
 def reregister_subject_mixed_params(
     input_volume: InputPathType,
     output_directory: str,
-    threads: float | None = 1,
+    threads: float | None = None,
 ) -> ReregisterSubjectMixedParameters:
     """
     Build parameters.
@@ -168,7 +168,7 @@ def reregister_subject_mixed_execute(
 def reregister_subject_mixed(
     input_volume: InputPathType,
     output_directory: str,
-    threads: float | None = 1,
+    threads: float | None = None,
     runner: Runner | None = None,
 ) -> ReregisterSubjectMixedOutputs:
     """

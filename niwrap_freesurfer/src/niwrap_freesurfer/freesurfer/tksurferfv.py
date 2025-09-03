@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TKSURFERFV_METADATA = Metadata(
-    id="cd3fd7dabbb53c8172ce7700f1ac133b0f1b3603.boutiques",
+    id="bf988123763f896a05fb2580e3b31530c1b73b61.boutiques",
     name="tksurferfv",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -79,7 +79,7 @@ def tksurferfv_params(
     no_outline: bool = False,
     neuro_orientation: bool = False,
     rotate_around_cursor: bool = False,
-    heat_scale: str | None = "min_to_max",
+    heat_scale: str | None = None,
 ) -> TksurferfvParameters:
     """
     Build parameters.
@@ -214,7 +214,7 @@ def tksurferfv(
     no_outline: bool = False,
     neuro_orientation: bool = False,
     rotate_around_cursor: bool = False,
-    heat_scale: str | None = "min_to_max",
+    heat_scale: str | None = None,
     runner: Runner | None = None,
 ) -> TksurferfvOutputs:
     """

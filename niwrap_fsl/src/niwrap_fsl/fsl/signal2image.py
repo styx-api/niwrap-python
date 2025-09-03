@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIGNAL2IMAGE_METADATA = Metadata(
-    id="49c8a2ca24a598e9e83ea9066e0f5bc5c7979e72.boutiques",
+    id="958f0a5ead17d4b7a6303ac0dad2305278fe6b28.boutiques",
     name="signal2image",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -85,8 +85,8 @@ def signal2image_params(
     homodyne_flag: bool = False,
     verbose_flag: bool = False,
     apodize_flag: bool = False,
-    cutoff: float | None = 100,
-    rolloff: float | None = 10,
+    cutoff: float | None = None,
+    rolloff: float | None = None,
     save_flag: bool = False,
     help_flag: bool = False,
 ) -> Signal2imageParameters:
@@ -260,8 +260,8 @@ def signal2image(
     homodyne_flag: bool = False,
     verbose_flag: bool = False,
     apodize_flag: bool = False,
-    cutoff: float | None = 100,
-    rolloff: float | None = 10,
+    cutoff: float | None = None,
+    rolloff: float | None = None,
     save_flag: bool = False,
     help_flag: bool = False,
     runner: Runner | None = None,

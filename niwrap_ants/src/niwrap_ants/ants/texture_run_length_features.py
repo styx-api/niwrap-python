@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TEXTURE_RUN_LENGTH_FEATURES_METADATA = Metadata(
-    id="99c3089b305255bec7d6249a4c2fc94894071c52.boutiques",
+    id="cdad220e1f92008ab3b0f50c2e99cfb09db10d4d.boutiques",
     name="TextureRunLengthFeatures",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -86,9 +86,9 @@ class TextureRunLengthFeaturesOutputs(typing.NamedTuple):
 def texture_run_length_features_params(
     image_dimension: int,
     input_image: InputPathType,
-    number_of_bins_per_axis: int | None = 256,
+    number_of_bins_per_axis: int | None = None,
     mask_image: InputPathType | None = None,
-    mask_label: int | None = 1,
+    mask_label: int | None = None,
 ) -> TextureRunLengthFeaturesParameters:
     """
     Build parameters.
@@ -202,9 +202,9 @@ def texture_run_length_features_execute(
 def texture_run_length_features(
     image_dimension: int,
     input_image: InputPathType,
-    number_of_bins_per_axis: int | None = 256,
+    number_of_bins_per_axis: int | None = None,
     mask_image: InputPathType | None = None,
-    mask_label: int | None = 1,
+    mask_label: int | None = None,
     runner: Runner | None = None,
 ) -> TextureRunLengthFeaturesOutputs:
     """

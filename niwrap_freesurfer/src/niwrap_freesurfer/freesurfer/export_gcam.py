@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXPORT_GCAM_METADATA = Metadata(
-    id="433fb1878c30c38bab33359daa220e7ac52950c8.boutiques",
+    id="bd91d1b894313409678dcf687e735865846f54f2.boutiques",
     name="exportGcam",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -75,7 +75,7 @@ def export_gcam_params(
     out_gcam: str,
     zlib_buffer: float | None = None,
     bbox_threshold: float | None = None,
-    interp_method: typing.Literal["linear", "nearest"] | None = "linear",
+    interp_method: typing.Literal["linear", "nearest"] | None = None,
     test: bool = False,
 ) -> ExportGcamParameters:
     """
@@ -220,7 +220,7 @@ def export_gcam(
     out_gcam: str,
     zlib_buffer: float | None = None,
     bbox_threshold: float | None = None,
-    interp_method: typing.Literal["linear", "nearest"] | None = "linear",
+    interp_method: typing.Literal["linear", "nearest"] | None = None,
     test: bool = False,
     runner: Runner | None = None,
 ) -> ExportGcamOutputs:

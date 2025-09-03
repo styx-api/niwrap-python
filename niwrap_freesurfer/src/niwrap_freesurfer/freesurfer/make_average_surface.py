@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_AVERAGE_SURFACE_METADATA = Metadata(
-    id="9afad673a77a680068222efbae2c9b8e26d54dc3.boutiques",
+    id="dcacfeaaf3b9ac96d17eac438d694ef55e584107.boutiques",
     name="make_average_surface",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -82,11 +82,11 @@ class MakeAverageSurfaceOutputs(typing.NamedTuple):
 def make_average_surface_params(
     subjects: list[str],
     fsgd_file: InputPathType | None = None,
-    average_subject_name: str | None = "average",
+    average_subject_name: str | None = None,
     subjects_dir: str | None = None,
     sd_out_dir: str | None = None,
     transform_file: str | None = None,
-    icosahedron_number: float | None = 7,
+    icosahedron_number: float | None = None,
     surf_reg: str | None = None,
     left_hemi: bool = False,
     right_hemi: bool = False,
@@ -308,11 +308,11 @@ def make_average_surface_execute(
 def make_average_surface(
     subjects: list[str],
     fsgd_file: InputPathType | None = None,
-    average_subject_name: str | None = "average",
+    average_subject_name: str | None = None,
     subjects_dir: str | None = None,
     sd_out_dir: str | None = None,
     transform_file: str | None = None,
-    icosahedron_number: float | None = 7,
+    icosahedron_number: float | None = None,
     surf_reg: str | None = None,
     left_hemi: bool = False,
     right_hemi: bool = False,

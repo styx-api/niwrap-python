@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SURF2VOL_METADATA = Metadata(
-    id="cb9d30b60e852e42d3af84e07bf8e781d39d6242.boutiques",
+    id="1cf0f3da562a62fd850b038b70c2a68283092622.boutiques",
     name="surf2vol",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -84,8 +84,8 @@ def surf2vol_params(
     moving_surface: InputPathType,
     fixed_mri: InputPathType,
     moving_mri: InputPathType,
-    output_file: str | None = "out.mgz",
-    output_field: str | None = "out_field.mgz",
+    output_file: str | None = None,
+    output_field: str | None = None,
     output_affine: str | None = None,
     output_surf: str | None = None,
     output_surf_affine: str | None = None,
@@ -311,8 +311,8 @@ def surf2vol(
     moving_surface: InputPathType,
     fixed_mri: InputPathType,
     moving_mri: InputPathType,
-    output_file: str | None = "out.mgz",
-    output_field: str | None = "out_field.mgz",
+    output_file: str | None = None,
+    output_field: str | None = None,
     output_affine: str | None = None,
     output_surf: str | None = None,
     output_surf_affine: str | None = None,

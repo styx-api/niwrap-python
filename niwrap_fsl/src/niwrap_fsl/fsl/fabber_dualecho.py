@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FABBER_DUALECHO_METADATA = Metadata(
-    id="289052fc726f486069f3c7321d2f682e41dc5992.boutiques",
+    id="45b1cb692ff975ec9d8d38b98d9395afa86e12d2.boutiques",
     name="fabber_dualecho",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -100,7 +100,7 @@ def fabber_dualecho_params(
     method: str,
     model: str,
     data: InputPathType,
-    data_order: str | None = "interleave",
+    data_order: str | None = None,
     mask_file: InputPathType | None = None,
     mt_list: float | None = None,
     supp_data: InputPathType | None = None,
@@ -420,7 +420,7 @@ def fabber_dualecho(
     method: str,
     model: str,
     data: InputPathType,
-    data_order: str | None = "interleave",
+    data_order: str | None = None,
     mask_file: InputPathType | None = None,
     mt_list: float | None = None,
     supp_data: InputPathType | None = None,

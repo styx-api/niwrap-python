@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_DISTANCE_TRANSFORM_METADATA = Metadata(
-    id="e70d33e3cab2523df541297c46b2cf585160584b.boutiques",
+    id="c4c2d1bf510cb8dba032932bf928e1944f01a26b.boutiques",
     name="mri_distance_transform",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -70,7 +70,7 @@ def mri_distance_transform_params(
     label: int,
     max_distance: int,
     output_volume: str,
-    mode: int | None = 1,
+    mode: int | None = None,
 ) -> MriDistanceTransformParameters:
     """
     Build parameters.
@@ -174,7 +174,7 @@ def mri_distance_transform(
     label: int,
     max_distance: int,
     output_volume: str,
-    mode: int | None = 1,
+    mode: int | None = None,
     runner: Runner | None = None,
 ) -> MriDistanceTransformOutputs:
     """

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CONF2HIRES_METADATA = Metadata(
-    id="539c4acfba831cfb4f99ac6d61aa594dba2bc3f2.boutiques",
+    id="b592996cd1ae521e14d730e48c43e30b0cebb9c1.boutiques",
     name="conf2hires",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -82,7 +82,7 @@ def conf2hires_params(
     subject: str,
     t2: bool = False,
     no_t2: bool = False,
-    mm_norm_sigma: float | None = 8,
+    mm_norm_sigma: float | None = None,
     flair: bool = False,
     no_flair: bool = False,
     threads: float | None = None,
@@ -295,7 +295,7 @@ def conf2hires(
     subject: str,
     t2: bool = False,
     no_t2: bool = False,
-    mm_norm_sigma: float | None = 8,
+    mm_norm_sigma: float | None = None,
     flair: bool = False,
     no_flair: bool = False,
     threads: float | None = None,

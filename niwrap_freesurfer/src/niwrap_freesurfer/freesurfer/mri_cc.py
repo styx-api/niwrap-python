@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_CC_METADATA = Metadata(
-    id="587b9657e3019c8eef25c4532b4599586af52fc7.boutiques",
+    id="1fdd96fbe56f5787cd8c5cf3784530160d708430.boutiques",
     name="mri_cc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -84,7 +84,7 @@ def mri_cc_params(
     compartments: float | None = None,
     thickness: float | None = None,
     skip_voxels: float | None = None,
-    max_rotation: float | None = 7.0,
+    max_rotation: float | None = None,
 ) -> MriCcParameters:
     """
     Build parameters.
@@ -261,7 +261,7 @@ def mri_cc(
     compartments: float | None = None,
     thickness: float | None = None,
     skip_voxels: float | None = None,
-    max_rotation: float | None = 7.0,
+    max_rotation: float | None = None,
     runner: Runner | None = None,
 ) -> MriCcOutputs:
     """

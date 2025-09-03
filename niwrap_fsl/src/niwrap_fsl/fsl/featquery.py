@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FEATQUERY_METADATA = Metadata(
-    id="3af5fd773a3c2794d8d8e2d956b51362bc61d219.boutiques",
+    id="58190adc00caa3074855d702497875cc7254a360.boutiques",
     name="featquery",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -84,7 +84,7 @@ def featquery_params(
     atlas_flag: str | None = None,
     percent_convert_flag: bool = False,
     thresh_flag: bool = False,
-    interp_thresh: float | None = 0.5,
+    interp_thresh: float | None = None,
     timeseries_flag: bool = False,
     weight_flag: bool = False,
     browser_flag: bool = False,
@@ -243,7 +243,7 @@ def featquery(
     atlas_flag: str | None = None,
     percent_convert_flag: bool = False,
     thresh_flag: bool = False,
-    interp_thresh: float | None = 0.5,
+    interp_thresh: float | None = None,
     timeseries_flag: bool = False,
     weight_flag: bool = False,
     browser_flag: bool = False,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 LABEL_SUBJECT_METADATA = Metadata(
-    id="560f83aa8a7da243f46defe88685f70de1330eb3.boutiques",
+    id="ba417fe8b013b0b26adddf6cbfa81e3fbc235a5b.boutiques",
     name="label_subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -64,7 +64,7 @@ class LabelSubjectOutputs(typing.NamedTuple):
 
 def label_subject_params(
     nu_file: InputPathType | None = None,
-    orig_dir: str | None = "/usr/local/freesurfer/subjects",
+    orig_dir: str | None = None,
 ) -> LabelSubjectParameters:
     """
     Build parameters.
@@ -158,7 +158,7 @@ def label_subject_execute(
 
 def label_subject(
     nu_file: InputPathType | None = None,
-    orig_dir: str | None = "/usr/local/freesurfer/subjects",
+    orig_dir: str | None = None,
     runner: Runner | None = None,
 ) -> LabelSubjectOutputs:
     """

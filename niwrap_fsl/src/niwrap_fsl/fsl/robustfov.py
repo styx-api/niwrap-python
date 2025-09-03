@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ROBUSTFOV_METADATA = Metadata(
-    id="3a5071d68b35032e4f3bb975acdeaa9bc87a8c91.boutiques",
+    id="7648b7c863e2e040e3c93931aa21307be8c46082.boutiques",
     name="robustfov",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -70,7 +70,7 @@ class RobustfovOutputs(typing.NamedTuple):
 
 def robustfov_params(
     input_file: InputPathType,
-    output_image: str | None = "output",
+    output_image: str | None = None,
     brain_size: float | None = None,
     matrix_output: str | None = None,
     debug_flag: bool = False,
@@ -196,7 +196,7 @@ def robustfov_execute(
 
 def robustfov(
     input_file: InputPathType,
-    output_image: str | None = "output",
+    output_image: str | None = None,
     brain_size: float | None = None,
     matrix_output: str | None = None,
     debug_flag: bool = False,

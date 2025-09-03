@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLREORIENT2STD_METADATA = Metadata(
-    id="7d2a23aaff44e7b6adc55de71f4f8bdf7a3b0cf3.boutiques",
+    id="5e6369ad07f486a45aceced58c1fad1460bd0202.boutiques",
     name="fslreorient2std",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -67,7 +67,7 @@ class Fslreorient2stdOutputs(typing.NamedTuple):
 
 def fslreorient2std_params(
     input_image: InputPathType,
-    output_image: str | None = "output",
+    output_image: str | None = None,
     matrix_file: str | None = None,
 ) -> Fslreorient2stdParameters:
     """
@@ -172,7 +172,7 @@ def fslreorient2std_execute(
 
 def fslreorient2std(
     input_image: InputPathType,
-    output_image: str | None = "output",
+    output_image: str | None = None,
     matrix_file: str | None = None,
     runner: Runner | None = None,
 ) -> Fslreorient2stdOutputs:

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTSUSE_LANDMARK_IMAGES_TO_GET_BSPLINE_DISPLACEMENT_FIELD_METADATA = Metadata(
-    id="bb975911b3570b50aaf12e5161a598d6bd9e8b04.boutiques",
+    id="ccd2c57d89d2afd04ff06a69edd6fd4609e3b45b.boutiques",
     name="ANTSUseLandmarkImagesToGetBSplineDisplacementField",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -74,8 +74,8 @@ def antsuse_landmark_images_to_get_bspline_displacement_field_params(
     output_displacement_field: str,
     mesh_size: str,
     number_of_levels: int,
-    order: int | None = 3,
-    enforce_stationary_boundaries: int | None = 1,
+    order: int | None = None,
+    enforce_stationary_boundaries: int | None = None,
     landmark_weights: InputPathType | None = None,
 ) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldParameters:
     """
@@ -206,8 +206,8 @@ def antsuse_landmark_images_to_get_bspline_displacement_field(
     output_displacement_field: str,
     mesh_size: str,
     number_of_levels: int,
-    order: int | None = 3,
-    enforce_stationary_boundaries: int | None = 1,
+    order: int | None = None,
+    enforce_stationary_boundaries: int | None = None,
     landmark_weights: InputPathType | None = None,
     runner: Runner | None = None,
 ) -> AntsuseLandmarkImagesToGetBsplineDisplacementFieldOutputs:

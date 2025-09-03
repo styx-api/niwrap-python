@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIMULATE_DISPLACEMENT_FIELD_METADATA = Metadata(
-    id="ca776aa44d13ed564a1e49ff2d3269669eb9067c.boutiques",
+    id="c1c49671ae59650087ced154b39f3497b3151423.boutiques",
     name="SimulateDisplacementField",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -74,8 +74,8 @@ def dyn_outputs(
 
 
 def simulate_displacement_field_bspline_options_params(
-    number_of_fitting_levels: int | None = 4,
-    number_of_control_points: int | None = 4,
+    number_of_fitting_levels: int | None = None,
+    number_of_control_points: int | None = None,
 ) -> SimulateDisplacementFieldBsplineOptionsParameters:
     """
     Build parameters.
@@ -118,7 +118,7 @@ def simulate_displacement_field_bspline_options_cargs(
 
 
 def simulate_displacement_field_exponential_options_params(
-    smoothing_standard_deviation: float | None = 4,
+    smoothing_standard_deviation: float | None = None,
 ) -> SimulateDisplacementFieldExponentialOptionsParameters:
     """
     Build parameters.
@@ -171,9 +171,9 @@ def simulate_displacement_field_params(
     displacement_field_type: typing.Literal["BSpline", "Exponential"],
     domain_image: InputPathType,
     output_field: str,
-    number_of_random_points: int | None = 1000,
-    standard_deviation_displacement_field: float | None = 10,
-    enforce_stationary_boundary: int | None = 1,
+    number_of_random_points: int | None = None,
+    standard_deviation_displacement_field: float | None = None,
+    enforce_stationary_boundary: int | None = None,
     displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParameters, SimulateDisplacementFieldExponentialOptionsParameters] | None = None,
 ) -> SimulateDisplacementFieldParameters:
     """
@@ -297,9 +297,9 @@ def simulate_displacement_field(
     displacement_field_type: typing.Literal["BSpline", "Exponential"],
     domain_image: InputPathType,
     output_field: str,
-    number_of_random_points: int | None = 1000,
-    standard_deviation_displacement_field: float | None = 10,
-    enforce_stationary_boundary: int | None = 1,
+    number_of_random_points: int | None = None,
+    standard_deviation_displacement_field: float | None = None,
+    enforce_stationary_boundary: int | None = None,
     displacement_specific_options: typing.Union[SimulateDisplacementFieldBsplineOptionsParameters, SimulateDisplacementFieldExponentialOptionsParameters] | None = None,
     runner: Runner | None = None,
 ) -> SimulateDisplacementFieldOutputs:

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_FIND_FLAT_REGIONS_METADATA = Metadata(
-    id="44372d93aad1a76a59c052c0d483b056d5c709e5.boutiques",
+    id="c86aa7c8b5901b904aa92d271ff5970f326850a1.boutiques",
     name="mris_find_flat_regions",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -67,7 +67,7 @@ class MrisFindFlatRegionsOutputs(typing.NamedTuple):
 def mris_find_flat_regions_params(
     surface: InputPathType,
     wfile: str,
-    threshold: float | None = 0.99,
+    threshold: float | None = None,
 ) -> MrisFindFlatRegionsParameters:
     """
     Build parameters.
@@ -166,7 +166,7 @@ def mris_find_flat_regions_execute(
 def mris_find_flat_regions(
     surface: InputPathType,
     wfile: str,
-    threshold: float | None = 0.99,
+    threshold: float | None = None,
     runner: Runner | None = None,
 ) -> MrisFindFlatRegionsOutputs:
     """

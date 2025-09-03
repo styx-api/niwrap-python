@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TBSS_NON_FA_METADATA = Metadata(
-    id="3e2940b3031fd8d5dc6b0531f1f32deecefbd50d.boutiques",
+    id="4cf82d5d61bd3bea2b51f13176b05dd135f1c8fb.boutiques",
     name="tbss_non_FA",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -77,7 +77,7 @@ def tbss_non_fa_params(
     concat_y: bool = False,
     concat_z: bool = False,
     concat_t: bool = False,
-    concat_tr: float | None = 0,
+    concat_tr: float | None = None,
     volume_number: float | None = None,
 ) -> TbssNonFaParameters:
     """
@@ -212,7 +212,7 @@ def tbss_non_fa(
     concat_y: bool = False,
     concat_z: bool = False,
     concat_t: bool = False,
-    concat_tr: float | None = 0,
+    concat_tr: float | None = None,
     volume_number: float | None = None,
     runner: Runner | None = None,
 ) -> TbssNonFaOutputs:

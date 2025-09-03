@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ASL_FILE_METADATA = Metadata(
-    id="38f1899f07fdfe5d935e94eec810da34ce453418.boutiques",
+    id="b145a87b22ac321ce412e95b5179f65b7c044a2f.boutiques",
     name="asl_file",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -95,7 +95,7 @@ def asl_file_params(
     outfile: str,
     mask: InputPathType | None = None,
     inblockform: typing.Literal["rpt", "tis"] | None = None,
-    inaslform: typing.Literal["diff", "tc", "ct", "tcb", "ctb"] | None = "diff",
+    inaslform: typing.Literal["diff", "tc", "ct", "tcb", "ctb"] | None = None,
     rpts: str | None = None,
     pairs: bool = False,
     spairs: bool = False,
@@ -385,7 +385,7 @@ def asl_file(
     outfile: str,
     mask: InputPathType | None = None,
     inblockform: typing.Literal["rpt", "tis"] | None = None,
-    inaslform: typing.Literal["diff", "tc", "ct", "tcb", "ctb"] | None = "diff",
+    inaslform: typing.Literal["diff", "tc", "ct", "tcb", "ctb"] | None = None,
     rpts: str | None = None,
     pairs: bool = False,
     spairs: bool = False,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PVMFIT_METADATA = Metadata(
-    id="2f5feeff275440050d46f82516af1c525bc61659.boutiques",
+    id="85ed04f1e97804c9d67151e0c97c35295e3cbf82.boutiques",
     name="pvmfit",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -83,8 +83,8 @@ def pvmfit_params(
     mask_file: InputPathType,
     bvec_file: InputPathType,
     bval_file: InputPathType,
-    output_basename: str | None = "pvm",
-    number_of_fibres: float | None = 1,
+    output_basename: str | None = None,
+    number_of_fibres: float | None = None,
     model_type: int | None = None,
     fit_all_models: bool = False,
     constrained_nonlinear: bool = False,
@@ -265,8 +265,8 @@ def pvmfit(
     mask_file: InputPathType,
     bvec_file: InputPathType,
     bval_file: InputPathType,
-    output_basename: str | None = "pvm",
-    number_of_fibres: float | None = 1,
+    output_basename: str | None = None,
+    number_of_fibres: float | None = None,
     model_type: int | None = None,
     fit_all_models: bool = False,
     constrained_nonlinear: bool = False,

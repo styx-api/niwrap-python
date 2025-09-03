@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_BSET_METADATA = Metadata(
-    id="91724c14abdc0abe94c9b096e04494e0a0e000cf.boutiques",
+    id="469e3d70202b008f848674ece09aef0855ad92a6.boutiques",
     name="dmri_bset",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -78,7 +78,7 @@ def dmri_bset_params(
     input_dwi: InputPathType,
     output_dwi: str,
     b_values: list[float] | None = None,
-    btol: float | None = 0.05,
+    btol: float | None = None,
     bsort: bool = False,
     bmax: float | None = None,
     input_b_table: InputPathType | None = None,
@@ -243,7 +243,7 @@ def dmri_bset(
     input_dwi: InputPathType,
     output_dwi: str,
     b_values: list[float] | None = None,
-    btol: float | None = 0.05,
+    btol: float | None = None,
     bsort: bool = False,
     bmax: float | None = None,
     input_b_table: InputPathType | None = None,

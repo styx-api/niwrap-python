@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 ANTS_JOINT_TENSOR_FUSION_METADATA = Metadata(
-    id="cb4fe8a4aace4f1fb43afc13b52fb4d917f9af4c.boutiques",
+    id="5bd417526524dd06073d1ab68f8104def16cf5d4.boutiques",
     name="antsJointTensorFusion",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -89,8 +89,8 @@ def ants_joint_tensor_fusion_params(
     atlas_segmentation: InputPathType,
     output: str,
     dimensionality: typing.Literal[2, 3, 4] | None = None,
-    alpha: float | None = 0.1,
-    beta: float | None = 2.0,
+    alpha: float | None = None,
+    beta: float | None = None,
     retain_label_posterior_images: typing.Literal[0, 1] | None = None,
     retain_atlas_voting_images: typing.Literal[0, 1] | None = None,
     constrain_nonnegative: typing.Literal[0, 1] | None = None,
@@ -336,8 +336,8 @@ def ants_joint_tensor_fusion(
     atlas_segmentation: InputPathType,
     output: str,
     dimensionality: typing.Literal[2, 3, 4] | None = None,
-    alpha: float | None = 0.1,
-    beta: float | None = 2.0,
+    alpha: float | None = None,
+    beta: float | None = None,
     retain_label_posterior_images: typing.Literal[0, 1] | None = None,
     retain_atlas_voting_images: typing.Literal[0, 1] | None = None,
     constrain_nonnegative: typing.Literal[0, 1] | None = None,

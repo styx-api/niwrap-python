@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APARCSTATS2TABLE_METADATA = Metadata(
-    id="1521fea28c99f52d4d63d7ca1b13780658752d3a.boutiques",
+    id="a5b02b8f995f62d90daa8ab7ad92ab2234b517fa.boutiques",
     name="aparcstats2table",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -85,9 +85,9 @@ def aparcstats2table_params(
     subjectsfile: InputPathType | None = None,
     qdec: InputPathType | None = None,
     qdec_long: InputPathType | None = None,
-    parcellation: str | None = "aparc",
-    measure: str | None = "area",
-    delimiter: str | None = "tab",
+    parcellation: str | None = None,
+    measure: str | None = None,
+    delimiter: str | None = None,
     skip_missing: bool = False,
     parcid_only: bool = False,
     common_parcs: bool = False,
@@ -96,7 +96,7 @@ def aparcstats2table_params(
     transpose: bool = False,
     debug: bool = False,
     etiv: bool = False,
-    scale: float | None = 1,
+    scale: float | None = None,
 ) -> Aparcstats2tableParameters:
     """
     Build parameters.
@@ -297,9 +297,9 @@ def aparcstats2table(
     subjectsfile: InputPathType | None = None,
     qdec: InputPathType | None = None,
     qdec_long: InputPathType | None = None,
-    parcellation: str | None = "aparc",
-    measure: str | None = "area",
-    delimiter: str | None = "tab",
+    parcellation: str | None = None,
+    measure: str | None = None,
+    delimiter: str | None = None,
     skip_missing: bool = False,
     parcid_only: bool = False,
     common_parcs: bool = False,
@@ -308,7 +308,7 @@ def aparcstats2table(
     transpose: bool = False,
     debug: bool = False,
     etiv: bool = False,
-    scale: float | None = 1,
+    scale: float | None = None,
     runner: Runner | None = None,
 ) -> Aparcstats2tableOutputs:
     """

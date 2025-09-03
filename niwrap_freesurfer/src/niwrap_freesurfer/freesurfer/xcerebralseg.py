@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 XCEREBRALSEG_METADATA = Metadata(
-    id="5fb80211d047813ad88a87144a02240628a74311.boutiques",
+    id="d1772c109f213bb8beac7ed505ba250320b688f8.boutiques",
     name="xcerebralseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -72,10 +72,10 @@ class XcerebralsegOutputs(typing.NamedTuple):
 
 def xcerebralseg_params(
     subject: str,
-    output_volume: str | None = "apas+head.mgz",
-    atlas: str | None = "/usr/local/freesurfer/average/aseg+spmhead+vermis+pons.ixi.gca",
-    mergevol: str | None = "aparc+aseg.mgz",
-    source_volume: str | None = "nu.mgz",
+    output_volume: str | None = None,
+    atlas: str | None = None,
+    mergevol: str | None = None,
+    source_volume: str | None = None,
     no_stats: bool = False,
     seg1_name: str | None = None,
     no_pons: bool = False,
@@ -233,10 +233,10 @@ def xcerebralseg_execute(
 
 def xcerebralseg(
     subject: str,
-    output_volume: str | None = "apas+head.mgz",
-    atlas: str | None = "/usr/local/freesurfer/average/aseg+spmhead+vermis+pons.ixi.gca",
-    mergevol: str | None = "aparc+aseg.mgz",
-    source_volume: str | None = "nu.mgz",
+    output_volume: str | None = None,
+    atlas: str | None = None,
+    mergevol: str | None = None,
+    source_volume: str | None = None,
     no_stats: bool = False,
     seg1_name: str | None = None,
     no_pons: bool = False,

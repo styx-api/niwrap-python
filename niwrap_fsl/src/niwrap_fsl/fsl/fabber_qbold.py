@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FABBER_QBOLD_METADATA = Metadata(
-    id="11adfe4038f22094fff826931064b332128160fc.boutiques",
+    id="bc7fccaf940c2ed8d3cfd4e3f8b55bd32c98a98f.boutiques",
     name="fabber_qbold",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -125,7 +125,7 @@ def fabber_qbold_params(
     model: str,
     data: InputPathType,
     data_n: InputPathType | None = None,
-    data_order: str | None = "interleave",
+    data_order: str | None = None,
     mask: InputPathType | None = None,
     mt_n: float | None = None,
     suppdata: InputPathType | None = None,
@@ -461,7 +461,7 @@ def fabber_qbold(
     model: str,
     data: InputPathType,
     data_n: InputPathType | None = None,
-    data_order: str | None = "interleave",
+    data_order: str | None = None,
     mask: InputPathType | None = None,
     mt_n: float | None = None,
     suppdata: InputPathType | None = None,

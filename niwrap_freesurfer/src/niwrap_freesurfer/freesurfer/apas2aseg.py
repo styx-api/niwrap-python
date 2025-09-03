@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APAS2ASEG_METADATA = Metadata(
-    id="eda1865146654f4bd355ad2e45b11e2c26036db4.boutiques",
+    id="b0d97f3396e26e9aab951655046a2c4a8aae1689.boutiques",
     name="apas2aseg",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -66,7 +66,7 @@ class Apas2asegOutputs(typing.NamedTuple):
 def apas2aseg_params(
     subject: str | None = None,
     input_aparc_aseg: InputPathType | None = None,
-    output_seg: str | None = "apas-aseg.mgz",
+    output_seg: str | None = None,
 ) -> Apas2asegParameters:
     """
     Build parameters.
@@ -176,7 +176,7 @@ def apas2aseg_execute(
 def apas2aseg(
     subject: str | None = None,
     input_aparc_aseg: InputPathType | None = None,
-    output_seg: str | None = "apas-aseg.mgz",
+    output_seg: str | None = None,
     runner: Runner | None = None,
 ) -> Apas2asegOutputs:
     """

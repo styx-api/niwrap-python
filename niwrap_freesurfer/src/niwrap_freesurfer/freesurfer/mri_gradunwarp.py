@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_GRADUNWARP_METADATA = Metadata(
-    id="ea726b9491b22fd7232388a9dbf165e0dd585e33.boutiques",
+    id="ec463955c0b630f4cada74ea02dab0166b49ce8e.boutiques",
     name="mri_gradunwarp",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -80,7 +80,7 @@ def mri_gradunwarp_params(
     output_file: str | None = None,
     out_transtbl: str | None = None,
     save_transtbl_only: bool = False,
-    interpolation_type: str | None = "trilinear",
+    interpolation_type: str | None = None,
     nthreads: float | None = None,
     checkopts: bool = False,
     version: bool = False,
@@ -247,7 +247,7 @@ def mri_gradunwarp(
     output_file: str | None = None,
     out_transtbl: str | None = None,
     save_transtbl_only: bool = False,
-    interpolation_type: str | None = "trilinear",
+    interpolation_type: str | None = None,
     nthreads: float | None = None,
     checkopts: bool = False,
     version: bool = False,

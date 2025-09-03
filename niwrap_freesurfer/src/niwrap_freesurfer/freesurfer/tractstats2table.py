@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TRACTSTATS2TABLE_METADATA = Metadata(
-    id="deb2a42839930436dbac59d0fe2517f06e878809.boutiques",
+    id="a9107cb6cabb3963dd47a02501b1b628f185d350.boutiques",
     name="tractstats2table",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -76,7 +76,7 @@ def tractstats2table_params(
     overall: bool = False,
     byvoxel: bool = False,
     byvoxel_measure: typing.Literal["AD", "RD", "MD", "FA"] | None = None,
-    delimiter: typing.Literal["tab", "comma", "space", "semicolon"] | None = "tab",
+    delimiter: typing.Literal["tab", "comma", "space", "semicolon"] | None = None,
     transpose: bool = False,
     debug: bool = False,
 ) -> Tractstats2tableParameters:
@@ -225,7 +225,7 @@ def tractstats2table(
     overall: bool = False,
     byvoxel: bool = False,
     byvoxel_measure: typing.Literal["AD", "RD", "MD", "FA"] | None = None,
-    delimiter: typing.Literal["tab", "comma", "space", "semicolon"] | None = "tab",
+    delimiter: typing.Literal["tab", "comma", "space", "semicolon"] | None = None,
     transpose: bool = False,
     debug: bool = False,
     runner: Runner | None = None,

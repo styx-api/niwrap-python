@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_BOXPLOT_METADATA = Metadata(
-    id="cc8df2c2f3c12b3005cb31dda7546753717126f5.boutiques",
+    id="f0b59133b6d5e9751a170940a8fa1673c3543966.boutiques",
     name="fsl_boxplot",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -77,7 +77,7 @@ def fsl_boxplot_params(
     legend_file: InputPathType | None = None,
     x_label: str | None = None,
     y_label: str | None = None,
-    plot_height: float | None = 450,
+    plot_height: float | None = None,
     plot_width: float | None = None,
 ) -> FslBoxplotParameters:
     """
@@ -232,7 +232,7 @@ def fsl_boxplot(
     legend_file: InputPathType | None = None,
     x_label: str | None = None,
     y_label: str | None = None,
-    plot_height: float | None = 450,
+    plot_height: float | None = None,
     plot_width: float | None = None,
     runner: Runner | None = None,
 ) -> FslBoxplotOutputs:

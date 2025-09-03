@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 APPLYXFM4_D_METADATA = Metadata(
-    id="0131340ae6f9af1eb23c9061596acf045e5ada72.boutiques",
+    id="7c7a426f45ad4adab9a2ca0d47e1a4c6082435c0.boutiques",
     name="applyxfm4D",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -73,7 +73,7 @@ def applyxfm4_d_params(
     ref_volume: InputPathType,
     output_volume: str,
     transformation_matrix: str,
-    interpolation_method: str | None = "sinc",
+    interpolation_method: str | None = None,
     single_matrix_flag: bool = False,
     four_digit_flag: bool = False,
     user_prefix: str | None = None,
@@ -200,7 +200,7 @@ def applyxfm4_d(
     ref_volume: InputPathType,
     output_volume: str,
     transformation_matrix: str,
-    interpolation_method: str | None = "sinc",
+    interpolation_method: str | None = None,
     single_matrix_flag: bool = False,
     four_digit_flag: bool = False,
     user_prefix: str | None = None,

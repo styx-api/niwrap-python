@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 VECREG_METADATA = Metadata(
-    id="5064b1425f46565055c7ced1a7351b8b583c894d.boutiques",
+    id="5ea97d63fa87872b1a5f5209794810b9f78da5fa.boutiques",
     name="vecreg",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -80,7 +80,7 @@ def vecreg_params(
     help_flag: bool = False,
     secondary_affine: InputPathType | None = None,
     secondary_warp: InputPathType | None = None,
-    interp_method: str | None = "trilinear",
+    interp_method: str | None = None,
     brain_mask: InputPathType | None = None,
     ref_brain_mask: InputPathType | None = None,
 ) -> VecregParameters:
@@ -250,7 +250,7 @@ def vecreg(
     help_flag: bool = False,
     secondary_affine: InputPathType | None = None,
     secondary_warp: InputPathType | None = None,
-    interp_method: str | None = "trilinear",
+    interp_method: str | None = None,
     brain_mask: InputPathType | None = None,
     ref_brain_mask: InputPathType | None = None,
     runner: Runner | None = None,

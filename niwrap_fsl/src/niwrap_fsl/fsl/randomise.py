@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RANDOMISE_METADATA = Metadata(
-    id="b0dd992e52b8d3260f3f90555c2f7b4313e2749e.boutiques",
+    id="57c146a4b03e940f2524254e63f1c931c7391ba4.boutiques",
     name="randomise",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -100,7 +100,7 @@ class RandomiseOutputs(typing.NamedTuple):
 
 def randomise_params(
     in_file: InputPathType,
-    base_name: str | None = "randomise",
+    base_name: str | None = None,
     design_mat: InputPathType | None = None,
     tcon: InputPathType | None = None,
     c_thresh: float | None = None,
@@ -390,7 +390,7 @@ def randomise_execute(
 
 def randomise(
     in_file: InputPathType,
-    base_name: str | None = "randomise",
+    base_name: str | None = None,
     design_mat: InputPathType | None = None,
     tcon: InputPathType | None = None,
     c_thresh: float | None = None,

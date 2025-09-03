@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 TTOLOGP_METADATA = Metadata(
-    id="1dad6c604e07eff7004f91165de03818f938a5ee.boutiques",
+    id="49396f91283bf3a8b5ba6477cdf5eeae4eab2088.boutiques",
     name="ttologp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -69,7 +69,7 @@ def ttologp_params(
     varsfile: InputPathType,
     cbsfile: InputPathType,
     dof: str,
-    outputvol: str | None = "logps",
+    outputvol: str | None = None,
     help_flag: bool = False,
 ) -> TtologpParameters:
     """
@@ -176,7 +176,7 @@ def ttologp(
     varsfile: InputPathType,
     cbsfile: InputPathType,
     dof: str,
-    outputvol: str | None = "logps",
+    outputvol: str | None = None,
     help_flag: bool = False,
     runner: Runner | None = None,
 ) -> TtologpOutputs:

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MASKDYADS_METADATA = Metadata(
-    id="7202ebf9fac4f093011a592184e5ec67cfb619d5.boutiques",
+    id="92489f08c2bebaad41fe95a4857c0ee16b5bf952.boutiques",
     name="maskdyads",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -63,7 +63,7 @@ class MaskdyadsOutputs(typing.NamedTuple):
 def maskdyads_params(
     dyads: InputPathType,
     fsamples: InputPathType,
-    threshold: float | None = 0.05,
+    threshold: float | None = None,
 ) -> MaskdyadsParameters:
     """
     Build parameters.
@@ -160,7 +160,7 @@ def maskdyads_execute(
 def maskdyads(
     dyads: InputPathType,
     fsamples: InputPathType,
-    threshold: float | None = 0.05,
+    threshold: float | None = None,
     runner: Runner | None = None,
 ) -> MaskdyadsOutputs:
     """

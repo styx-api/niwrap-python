@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRIS_SMOOTH_METADATA = Metadata(
-    id="de9358e87f1400c4ea7c69099e7d714065b4d1f6.boutiques",
+    id="5ddfe551ff4f30834ad6bb05e5c9ab00a743812a.boutiques",
     name="mris_smooth",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -78,11 +78,11 @@ class MrisSmoothOutputs(typing.NamedTuple):
 def mris_smooth_params(
     input_surface: InputPathType,
     output_surface: str,
-    average_iters: float | None = 10,
-    smoothing_iters: float | None = 10,
+    average_iters: float | None = None,
+    smoothing_iters: float | None = None,
     no_write: bool = False,
-    curvature_name: str | None = "curv",
-    area_name: str | None = "area",
+    curvature_name: str | None = None,
+    area_name: str | None = None,
     gaussian_params: list[float] | None = None,
     normalize_area: bool = False,
     momentum: float | None = None,
@@ -247,11 +247,11 @@ def mris_smooth_execute(
 def mris_smooth(
     input_surface: InputPathType,
     output_surface: str,
-    average_iters: float | None = 10,
-    smoothing_iters: float | None = 10,
+    average_iters: float | None = None,
+    smoothing_iters: float | None = None,
     no_write: bool = False,
-    curvature_name: str | None = "curv",
-    area_name: str | None = "area",
+    curvature_name: str | None = None,
+    area_name: str | None = None,
     gaussian_params: list[float] | None = None,
     normalize_area: bool = False,
     momentum: float | None = None,

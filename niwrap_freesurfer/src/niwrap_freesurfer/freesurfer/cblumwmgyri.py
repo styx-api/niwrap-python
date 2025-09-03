@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CBLUMWMGYRI_METADATA = Metadata(
-    id="564e3588afc9810c3dc5013f2e056c14a2f92213.boutiques",
+    id="b2c3c3e10c29432429a2203b3a71b0fe8dc29543.boutiques",
     name="cblumwmgyri",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -69,8 +69,8 @@ class CblumwmgyriOutputs(typing.NamedTuple):
 def cblumwmgyri_params(
     subject: str,
     source_seg: InputPathType | None = None,
-    n_erodes_dilates: float | None = 2,
-    out_seg: str | None = "sourceseg+cblumwmgyri.mgz",
+    n_erodes_dilates: float | None = None,
+    out_seg: str | None = None,
     no_segstats: bool = False,
     subjects_dir: str | None = None,
 ) -> CblumwmgyriParameters:
@@ -199,8 +199,8 @@ def cblumwmgyri_execute(
 def cblumwmgyri(
     subject: str,
     source_seg: InputPathType | None = None,
-    n_erodes_dilates: float | None = 2,
-    out_seg: str | None = "sourceseg+cblumwmgyri.mgz",
+    n_erodes_dilates: float | None = None,
+    out_seg: str | None = None,
     no_segstats: bool = False,
     subjects_dir: str | None = None,
     runner: Runner | None = None,

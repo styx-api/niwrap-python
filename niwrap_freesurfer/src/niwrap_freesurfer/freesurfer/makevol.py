@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKEVOL_METADATA = Metadata(
-    id="7ba1673b88b708e09827f8b5508b94dd83a88054.boutiques",
+    id="51781bd00634e4c4a1a74fd53fba1f02cde562b4.boutiques",
     name="makevol",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -69,14 +69,14 @@ class MakevolOutputs(typing.NamedTuple):
 
 
 def makevol_params(
-    filename: str | None = "new_volume.mgz",
-    width: int | None = 256,
-    height: int | None = 256,
-    depth: int | None = 256,
-    sizex: float | None = 1.0,
-    sizey: float | None = 1.0,
-    sizez: float | None = 1.0,
-    set_method: str | None = "xyz",
+    filename: str | None = None,
+    width: int | None = None,
+    height: int | None = None,
+    depth: int | None = None,
+    sizex: float | None = None,
+    sizey: float | None = None,
+    sizez: float | None = None,
+    set_method: str | None = None,
 ) -> MakevolParameters:
     """
     Build parameters.
@@ -223,14 +223,14 @@ def makevol_execute(
 
 
 def makevol(
-    filename: str | None = "new_volume.mgz",
-    width: int | None = 256,
-    height: int | None = 256,
-    depth: int | None = 256,
-    sizex: float | None = 1.0,
-    sizey: float | None = 1.0,
-    sizez: float | None = 1.0,
-    set_method: str | None = "xyz",
+    filename: str | None = None,
+    width: int | None = None,
+    height: int | None = None,
+    depth: int | None = None,
+    sizex: float | None = None,
+    sizey: float | None = None,
+    sizez: float | None = None,
+    set_method: str | None = None,
     runner: Runner | None = None,
 ) -> MakevolOutputs:
     """

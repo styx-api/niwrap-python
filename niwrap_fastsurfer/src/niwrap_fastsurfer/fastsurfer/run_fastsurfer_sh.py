@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 RUN_FASTSURFER_SH_METADATA = Metadata(
-    id="16844320fdd509dd7f0092a139a8a74ff8fc083a.boutiques",
+    id="e427508237f58cd6f7c81d687baf33fd7e1e32f2.boutiques",
     name="run_fastsurfer.sh",
     package="fastsurfer",
     container_image_tag="deepmi/fastsurfer:cpu-v2.3.3",
@@ -119,8 +119,8 @@ def run_fastsurfer_sh_params(
     threads: int | None = None,
     device: str | None = None,
     viewagg_device: str | None = None,
-    batch_size: int | None = 1,
-    python_cmd: str | None = "python3.10 -s",
+    batch_size: int | None = None,
+    python_cmd: str | None = None,
     surf_only: bool = False,
     no_biasfield: bool = False,
     tal_reg: bool = False,
@@ -445,8 +445,8 @@ def run_fastsurfer_sh(
     threads: int | None = None,
     device: str | None = None,
     viewagg_device: str | None = None,
-    batch_size: int | None = 1,
-    python_cmd: str | None = "python3.10 -s",
+    batch_size: int | None = None,
+    python_cmd: str | None = None,
     surf_only: bool = False,
     no_biasfield: bool = False,
     tal_reg: bool = False,

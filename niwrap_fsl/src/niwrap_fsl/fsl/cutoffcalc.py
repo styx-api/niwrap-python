@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 CUTOFFCALC_METADATA = Metadata(
-    id="be1d34daf387c7a5ae9534c1adf950c1b20fb7f3.boutiques",
+    id="dca9318c8811671ff1e1ef7d32871dac61a979dc.boutiques",
     name="cutoffcalc",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -69,9 +69,9 @@ class CutoffcalcOutputs(typing.NamedTuple):
 
 def cutoffcalc_params(
     input_design: InputPathType,
-    threshold: float | None = 0.9,
-    tr: float | None = 3.0,
-    lower_limit: float | None = 90.0,
+    threshold: float | None = None,
+    tr: float | None = None,
+    lower_limit: float | None = None,
     example_sigma: float | None = None,
     verbose_flag: bool = False,
     debug_flag: bool = False,
@@ -191,9 +191,9 @@ def cutoffcalc_execute(
 
 def cutoffcalc(
     input_design: InputPathType,
-    threshold: float | None = 0.9,
-    tr: float | None = 3.0,
-    lower_limit: float | None = 90.0,
+    threshold: float | None = None,
+    tr: float | None = None,
+    lower_limit: float | None = None,
     example_sigma: float | None = None,
     verbose_flag: bool = False,
     debug_flag: bool = False,

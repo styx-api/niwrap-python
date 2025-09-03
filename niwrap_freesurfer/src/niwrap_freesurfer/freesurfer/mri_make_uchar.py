@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_MAKE_UCHAR_METADATA = Metadata(
-    id="125a7b8010e7a6e47c1c93bba9839070d4e12157.boutiques",
+    id="63311bf3f2d1c64684d143aa36f8dcf3acc941e4.boutiques",
     name="mri_make_uchar",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -72,9 +72,9 @@ def mri_make_uchar_params(
     input_volume: InputPathType,
     talairach_xform: InputPathType,
     output_volume: str,
-    first_percentile: float | None = 0.01,
-    wm_percentile: float | None = 0.9,
-    max_radius: float | None = 50,
+    first_percentile: float | None = None,
+    wm_percentile: float | None = None,
+    max_radius: float | None = None,
     cumulative_histo: str | None = None,
     vradvol: str | None = None,
 ) -> MriMakeUcharParameters:
@@ -213,9 +213,9 @@ def mri_make_uchar(
     input_volume: InputPathType,
     talairach_xform: InputPathType,
     output_volume: str,
-    first_percentile: float | None = 0.01,
-    wm_percentile: float | None = 0.9,
-    max_radius: float | None = 50,
+    first_percentile: float | None = None,
+    wm_percentile: float | None = None,
+    max_radius: float | None = None,
     cumulative_histo: str | None = None,
     vradvol: str | None = None,
     runner: Runner | None = None,

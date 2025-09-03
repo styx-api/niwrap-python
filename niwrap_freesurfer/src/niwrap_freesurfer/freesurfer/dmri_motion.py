@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 DMRI_MOTION_METADATA = Metadata(
-    id="cab0386753362d60558aa9f8bff96a94f4b5b4f2.boutiques",
+    id="61dd1bba115f2f3a59d5343efb0333dda6dff3f1.boutiques",
     name="dmri_motion",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -79,8 +79,8 @@ def dmri_motion_params(
     mat: InputPathType | None = None,
     dwi: list[InputPathType] | None = None,
     bval: list[InputPathType] | None = None,
-    threshold: float | None = 100,
-    diffusivity: float | None = 0.001,
+    threshold: float | None = None,
+    diffusivity: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
     help_: bool = False,
@@ -242,8 +242,8 @@ def dmri_motion(
     mat: InputPathType | None = None,
     dwi: list[InputPathType] | None = None,
     bval: list[InputPathType] | None = None,
-    threshold: float | None = 100,
-    diffusivity: float | None = 0.001,
+    threshold: float | None = None,
+    diffusivity: float | None = None,
     debug: bool = False,
     checkopts: bool = False,
     help_: bool = False,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FIDUCIALS_CALIBRATION_METADATA = Metadata(
-    id="b87cb0a61e77503c416b5bd15c7cec1c1ef97456.boutiques",
+    id="7cff05669191ed945adc899c12ac56d41b49e3cf.boutiques",
     name="fiducials_calibration",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -59,7 +59,7 @@ class FiducialsCalibrationOutputs(typing.NamedTuple):
 
 
 def fiducials_calibration_params(
-    qt_plugin_installation: str | None = "Check Qt installation and platform plugin availability",
+    qt_plugin_installation: str | None = None,
 ) -> FiducialsCalibrationParameters:
     """
     Build parameters.
@@ -147,7 +147,7 @@ def fiducials_calibration_execute(
 
 
 def fiducials_calibration(
-    qt_plugin_installation: str | None = "Check Qt installation and platform plugin availability",
+    qt_plugin_installation: str | None = None,
     runner: Runner | None = None,
 ) -> FiducialsCalibrationOutputs:
     """

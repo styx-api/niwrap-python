@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 PASTE_IMAGE_INTO_IMAGE_METADATA = Metadata(
-    id="84fede77ce1571671d2df31a0ca7da2716107704.boutiques",
+    id="9d834deda72a140f802dfa3b6f3bd17b6d523a5e.boutiques",
     name="PasteImageIntoImage",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -74,9 +74,9 @@ def paste_image_into_image_params(
     input_image: InputPathType,
     output_image: str,
     start_index: str,
-    background_label: int | None = 0,
-    paint_over_non_background_voxels: typing.Literal[0, 1, 2] | None = 0,
-    conflict_label: int | None = -1,
+    background_label: int | None = None,
+    paint_over_non_background_voxels: typing.Literal[0, 1, 2] | None = None,
+    conflict_label: int | None = None,
 ) -> PasteImageIntoImageParameters:
     """
     Build parameters.
@@ -200,9 +200,9 @@ def paste_image_into_image(
     input_image: InputPathType,
     output_image: str,
     start_index: str,
-    background_label: int | None = 0,
-    paint_over_non_background_voxels: typing.Literal[0, 1, 2] | None = 0,
-    conflict_label: int | None = -1,
+    background_label: int | None = None,
+    paint_over_non_background_voxels: typing.Literal[0, 1, 2] | None = None,
+    conflict_label: int | None = None,
     runner: Runner | None = None,
 ) -> PasteImageIntoImageOutputs:
     """

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_AVERAGE_SUBJECT_METADATA = Metadata(
-    id="2f5649f2dbb16169830c9e1d7c14f590d2030ea1.boutiques",
+    id="d8d131694715147d0775838921da6857a34d7a75.boutiques",
     name="make_average_subject",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -87,9 +87,9 @@ def make_average_subject_params(
     sd_out: str | None = None,
     no_link: bool = False,
     sdir: str | None = None,
-    ico_order: float | None = 7,
+    ico_order: float | None = None,
     transform_file: InputPathType | None = None,
-    surface_registration: str | None = "sphere.reg",
+    surface_registration: str | None = None,
     no_surfaces: bool = False,
     no_volumes: bool = False,
     force: bool = False,
@@ -315,9 +315,9 @@ def make_average_subject(
     sd_out: str | None = None,
     no_link: bool = False,
     sdir: str | None = None,
-    ico_order: float | None = 7,
+    ico_order: float | None = None,
     transform_file: InputPathType | None = None,
-    surface_registration: str | None = "sphere.reg",
+    surface_registration: str | None = None,
     no_surfaces: bool = False,
     no_volumes: bool = False,
     force: bool = False,

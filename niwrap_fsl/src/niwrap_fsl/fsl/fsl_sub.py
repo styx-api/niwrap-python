@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_SUB_METADATA = Metadata(
-    id="027e69ca7c58056d4c9c91424022f6d56c591d77.boutiques",
+    id="a4032c05d16c1db3e16a3eebe35f9d8db79dcae3.boutiques",
     name="fsl_sub",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -104,7 +104,7 @@ def fsl_sub_params(
     array_hold: str | None = None,
     logdir: str | None = None,
     mailoptions: str | None = None,
-    mailto: str | None = "root@fe8ea96c3a1a",
+    mailto: str | None = None,
     novalidation: bool = False,
     name: str | None = None,
     priority: str | None = None,
@@ -463,7 +463,7 @@ def fsl_sub(
     array_hold: str | None = None,
     logdir: str | None = None,
     mailoptions: str | None = None,
-    mailto: str | None = "root@fe8ea96c3a1a",
+    mailto: str | None = None,
     novalidation: bool = False,
     name: str | None = None,
     priority: str | None = None,

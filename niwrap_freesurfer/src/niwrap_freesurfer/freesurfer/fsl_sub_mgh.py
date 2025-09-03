@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSL_SUB_MGH_METADATA = Metadata(
-    id="4015aeacaae283d33f0b4ca8406dbe45c4046304.boutiques",
+    id="a2908f01db7314d6e60f5eb43e69fb281e1ffccd.boutiques",
     name="fsl_sub_mgh",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -72,10 +72,10 @@ class FslSubMghOutputs(typing.NamedTuple):
 
 def fsl_sub_mgh_params(
     estimated_time: int | None = None,
-    queue_name: str | None = "long.q",
+    queue_name: str | None = None,
     architecture: str | None = None,
-    job_priority: int | None = 0,
-    email_address: str | None = "root@fmrib.ox.ac.uk",
+    job_priority: int | None = None,
+    email_address: str | None = None,
     hold_job: str | None = None,
     task_file: InputPathType | None = None,
     job_name: str | None = None,
@@ -266,10 +266,10 @@ def fsl_sub_mgh_execute(
 
 def fsl_sub_mgh(
     estimated_time: int | None = None,
-    queue_name: str | None = "long.q",
+    queue_name: str | None = None,
     architecture: str | None = None,
-    job_priority: int | None = 0,
-    email_address: str | None = "root@fmrib.ox.ac.uk",
+    job_priority: int | None = None,
+    email_address: str | None = None,
     hold_job: str | None = None,
     task_file: InputPathType | None = None,
     job_name: str | None = None,

@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 NEW_INVWARP_METADATA = Metadata(
-    id="a7795ab8fb8c1a3741d41052e9c9b61e19007cdc.boutiques",
+    id="ccd2309d89287c2f94a353db469d083ace8b7355.boutiques",
     name="new_invwarp",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -77,8 +77,8 @@ def new_invwarp_params(
     relflag: bool = False,
     absflag: bool = False,
     noconstraintflag: bool = False,
-    jmin: float | None = 0.01,
-    jmax: float | None = 100.0,
+    jmin: float | None = None,
+    jmax: float | None = None,
     debugflag: bool = False,
     verboseflag: bool = False,
 ) -> NewInvwarpParameters:
@@ -223,8 +223,8 @@ def new_invwarp(
     relflag: bool = False,
     absflag: bool = False,
     noconstraintflag: bool = False,
-    jmin: float | None = 0.01,
-    jmax: float | None = 100.0,
+    jmin: float | None = None,
+    jmax: float | None = None,
     debugflag: bool = False,
     verboseflag: bool = False,
     runner: Runner | None = None,

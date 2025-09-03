@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 BETA2SXA_METADATA = Metadata(
-    id="f0f822c3fdfc6946f2efbf9d1eba0fc23f0154a3.boutiques",
+    id="00432ae4af64a406f4f622cf8d671b764747774c.boutiques",
     name="beta2sxa",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -68,7 +68,7 @@ def beta2sxa_params(
     beta_files: list[InputPathType],
     number_of_conditions: float,
     number_of_per_subjects: float,
-    sxa_output: str | None = "h.beta",
+    sxa_output: str | None = None,
 ) -> Beta2sxaParameters:
     """
     Build parameters.
@@ -180,7 +180,7 @@ def beta2sxa(
     beta_files: list[InputPathType],
     number_of_conditions: float,
     number_of_per_subjects: float,
-    sxa_output: str | None = "h.beta",
+    sxa_output: str | None = None,
     runner: Runner | None = None,
 ) -> Beta2sxaOutputs:
     """

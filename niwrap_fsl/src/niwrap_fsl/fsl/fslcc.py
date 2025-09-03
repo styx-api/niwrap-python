@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FSLCC_METADATA = Metadata(
-    id="cfb1bd3500e1b7d85d8f4ea2cecbe94864d3f628.boutiques",
+    id="8c77a0c7ac1b13ebdc580e6a9218b4bc6e649528.boutiques",
     name="fslcc",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -70,8 +70,8 @@ def fslcc_params(
     mask: InputPathType | None = None,
     noabs_flag: bool = False,
     nodemean_flag: bool = False,
-    threshold: float | None = 0.1,
-    decimal_places: float | None = 2,
+    threshold: float | None = None,
+    decimal_places: float | None = None,
 ) -> FslccParameters:
     """
     Build parameters.
@@ -196,8 +196,8 @@ def fslcc(
     mask: InputPathType | None = None,
     noabs_flag: bool = False,
     nodemean_flag: bool = False,
-    threshold: float | None = 0.1,
-    decimal_places: float | None = 2,
+    threshold: float | None = None,
+    decimal_places: float | None = None,
     runner: Runner | None = None,
 ) -> FslccOutputs:
     """

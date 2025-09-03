@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SFA2FIELDSIGN_METADATA = Metadata(
-    id="3ddfac468eca45550f7aa9f66a5850af84aa7f1f.boutiques",
+    id="bde229caa86ae6d08eb65062d2de74295dadea9c.boutiques",
     name="sfa2fieldsign",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -89,12 +89,12 @@ class Sfa2fieldsignOutputs(typing.NamedTuple):
 def sfa2fieldsign_params(
     sfadir: str,
     register_dat: str,
-    threshold: float | None = 2,
-    fwhm: float | None = 10,
-    proj_frac: float | None = 0.5,
+    threshold: float | None = None,
+    fwhm: float | None = None,
+    proj_frac: float | None = None,
     occip: bool = False,
     patch: str | None = None,
-    osd: str | None = "fieldsign",
+    osd: str | None = None,
     lh: bool = False,
     rh: bool = False,
 ) -> Sfa2fieldsignParameters:
@@ -253,12 +253,12 @@ def sfa2fieldsign_execute(
 def sfa2fieldsign(
     sfadir: str,
     register_dat: str,
-    threshold: float | None = 2,
-    fwhm: float | None = 10,
-    proj_frac: float | None = 0.5,
+    threshold: float | None = None,
+    fwhm: float | None = None,
+    proj_frac: float | None = None,
     occip: bool = False,
     patch: str | None = None,
-    osd: str | None = "fieldsign",
+    osd: str | None = None,
     lh: bool = False,
     rh: bool = False,
     runner: Runner | None = None,

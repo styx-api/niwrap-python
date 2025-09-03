@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 GRAD_UNWARP_METADATA = Metadata(
-    id="c8a86a5da26d5d46183d8506a6feda47afabaf36.boutiques",
+    id="1de0e1e689455d67e8bfe978e1aface6ac7c1a6a.boutiques",
     name="grad_unwarp",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -80,7 +80,7 @@ def grad_unwarp_params(
     corfov: bool = False,
     cor: bool = False,
     interp: str | None = None,
-    matlab_binary: str | None = "/space/lyon/6/pubsw/common/matlab/6.5/bin/matlab",
+    matlab_binary: str | None = None,
 ) -> GradUnwarpParameters:
     """
     Build parameters.
@@ -226,7 +226,7 @@ def grad_unwarp(
     corfov: bool = False,
     cor: bool = False,
     interp: str | None = None,
-    matlab_binary: str | None = "/space/lyon/6/pubsw/common/matlab/6.5/bin/matlab",
+    matlab_binary: str | None = None,
     runner: Runner | None = None,
 ) -> GradUnwarpOutputs:
     """

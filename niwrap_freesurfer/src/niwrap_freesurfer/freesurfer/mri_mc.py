@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MRI_MC_METADATA = Metadata(
-    id="9e6e0910561ae66cef8a0a6a59788fbf92c19e5f.boutiques",
+    id="43e233404e9fd0353036a4e5a6025a4e78aa5b17.boutiques",
     name="mri_mc",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -68,7 +68,7 @@ def mri_mc_params(
     input_volume: InputPathType,
     label_value: float,
     output_surface: str,
-    connectivity: float | None = 1,
+    connectivity: float | None = None,
 ) -> MriMcParameters:
     """
     Build parameters.
@@ -168,7 +168,7 @@ def mri_mc(
     input_volume: InputPathType,
     label_value: float,
     output_surface: str,
-    connectivity: float | None = 1,
+    connectivity: float | None = None,
     runner: Runner | None = None,
 ) -> MriMcOutputs:
     """

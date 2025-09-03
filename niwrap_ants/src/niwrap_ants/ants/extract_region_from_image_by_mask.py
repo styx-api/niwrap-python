@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 EXTRACT_REGION_FROM_IMAGE_BY_MASK_METADATA = Metadata(
-    id="aec2f60db8048987a495410600ad2f857750da61.boutiques",
+    id="ab525a5463159d5bccf7402118033d761d1bf086.boutiques",
     name="ExtractRegionFromImageByMask",
     package="ants",
     container_image_tag="antsx/ants:v2.5.3",
@@ -68,8 +68,8 @@ def extract_region_from_image_by_mask_params(
     input_image: InputPathType,
     output_image: InputPathType,
     label_mask_image: InputPathType,
-    label: int | None = 1,
-    pad_radius: int | None = 0,
+    label: int | None = None,
+    pad_radius: int | None = None,
 ) -> ExtractRegionFromImageByMaskParameters:
     """
     Build parameters.
@@ -179,8 +179,8 @@ def extract_region_from_image_by_mask(
     input_image: InputPathType,
     output_image: InputPathType,
     label_mask_image: InputPathType,
-    label: int | None = 1,
-    pad_radius: int | None = 0,
+    label: int | None = None,
+    pad_radius: int | None = None,
     runner: Runner | None = None,
 ) -> ExtractRegionFromImageByMaskOutputs:
     """

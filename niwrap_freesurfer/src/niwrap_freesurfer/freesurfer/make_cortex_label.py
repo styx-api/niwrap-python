@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 MAKE_CORTEX_LABEL_METADATA = Metadata(
-    id="231e799f73603ebd33e17c16341a19cbfd26939a.boutiques",
+    id="02e8e249ee9cf1645a268653adb1ce0c0f6e2aac.boutiques",
     name="make_cortex_label",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -70,7 +70,7 @@ def make_cortex_label_params(
     subject: str,
     hemi: str | None = None,
     use_a2009s: bool = False,
-    output_name: str | None = "cortex",
+    output_name: str | None = None,
 ) -> MakeCortexLabelParameters:
     """
     Build parameters.
@@ -184,7 +184,7 @@ def make_cortex_label(
     subject: str,
     hemi: str | None = None,
     use_a2009s: bool = False,
-    output_name: str | None = "cortex",
+    output_name: str | None = None,
     runner: Runner | None = None,
 ) -> MakeCortexLabelOutputs:
     """

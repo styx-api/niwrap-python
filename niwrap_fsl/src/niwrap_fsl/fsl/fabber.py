@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 FABBER_METADATA = Metadata(
-    id="101ab2bd38fcd345ee05713b574dfaa5596da053.boutiques",
+    id="763a4ed025842a4b64029b2963a8037295214888.boutiques",
     name="fabber",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -184,7 +184,7 @@ def fabber_params(
     model: str,
     data_file: InputPathType,
     data_files: InputPathType | None = None,
-    data_order: str | None = "interleave",
+    data_order: str | None = None,
     mask_file: InputPathType | None = None,
     mt_n: float | None = None,
     supp_data: InputPathType | None = None,
@@ -525,7 +525,7 @@ def fabber(
     model: str,
     data_file: InputPathType,
     data_files: InputPathType | None = None,
-    data_order: str | None = "interleave",
+    data_order: str | None = None,
     mask_file: InputPathType | None = None,
     mt_n: float | None = None,
     supp_data: InputPathType | None = None,

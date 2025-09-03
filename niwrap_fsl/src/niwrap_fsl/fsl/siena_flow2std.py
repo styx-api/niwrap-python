@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 SIENA_FLOW2STD_METADATA = Metadata(
-    id="14d113d6d820a92a9866c09d8e160c9b94d46df8.boutiques",
+    id="ee281143cf78f9ade0c749dc32eb09e063c2ae06.boutiques",
     name="siena_flow2std",
     package="fsl",
     container_image_tag="brainlife/fsl:6.0.4-patched2",
@@ -64,7 +64,7 @@ class SienaFlow2stdOutputs(typing.NamedTuple):
 def siena_flow2std_params(
     fileroot1: str,
     fileroot2: str,
-    sigma: float | None = 5,
+    sigma: float | None = None,
     debug_flag: bool = False,
 ) -> SienaFlow2stdParameters:
     """
@@ -167,7 +167,7 @@ def siena_flow2std_execute(
 def siena_flow2std(
     fileroot1: str,
     fileroot2: str,
-    sigma: float | None = 5,
+    sigma: float | None = None,
     debug_flag: bool = False,
     runner: Runner | None = None,
 ) -> SienaFlow2stdOutputs:

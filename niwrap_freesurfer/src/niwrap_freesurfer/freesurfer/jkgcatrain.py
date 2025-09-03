@@ -6,7 +6,7 @@ import pathlib
 from styxdefs import *
 
 JKGCATRAIN_METADATA = Metadata(
-    id="f73394990345946d6f0f0547594b7d0a8c67904f.boutiques",
+    id="1b073a4bde95bf0446c7a3c6603565814010d9f8.boutiques",
     name="jkgcatrain",
     package="freesurfer",
     container_image_tag="freesurfer/freesurfer:7.4.1",
@@ -64,7 +64,7 @@ class JkgcatrainOutputs(typing.NamedTuple):
 
 def jkgcatrain_params(
     gca_directory: str,
-    iteration_number: float | None = 2,
+    iteration_number: float | None = None,
     num_threads: float | None = None,
     no_submit: bool = False,
     mail_flag: bool = False,
@@ -179,7 +179,7 @@ def jkgcatrain_execute(
 
 def jkgcatrain(
     gca_directory: str,
-    iteration_number: float | None = 2,
+    iteration_number: float | None = None,
     num_threads: float | None = None,
     no_submit: bool = False,
     mail_flag: bool = False,
